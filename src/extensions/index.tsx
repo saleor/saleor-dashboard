@@ -4,9 +4,9 @@ import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CustomAppDetailsUrlQueryParams } from "@dashboard/custom-apps/urls";
 import {
+  AppDetailsUrlQueryParams,
   ExtensionInstallQueryParams,
   ExtensionsPaths,
-  PluginUrlQueryParams,
 } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
@@ -16,6 +16,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
+import { PluginUrlQueryParams } from "@dashboard/plugins/urls";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -26,7 +27,10 @@ import { AddCustomExtension } from "./views/AddCustomExtension";
 import { AddCustomExtensionWebhook } from "./views/AddCustomExtensionWebhook";
 import { EditCustomExtension } from "./views/EditCustomExtension";
 import { EditCustomExtensionWebhook } from "./views/EditCustomExtensionWebhook";
+import { EditManifestExtension } from "./views/EditManifestExtension";
+import { EditManifestExtensionPermissions } from "./views/EditManifestExtensionPermissions";
 import { EditPluginExtension } from "./views/EditPluginExtension";
+import { ViewManifestExtensionIframe } from "./views/ViewManifestExtension";
 
 const ExploreExtensionsView = () => {
   return <ExploreExtensions />;
@@ -66,6 +70,21 @@ const EditCustomExtensionView = ({
       onTokenClose={onTokenClose}
     />
   );
+};
+
+const EditManifestExtensionView = ({ match }: RouteComponentProps<{ id: string }>) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: AppDetailsUrlQueryParams = qs;
+
+  return <EditManifestExtension id={decodeURIComponent(match.params.id)} params={params} />;
+};
+
+const ViewManifestExtensionIframeView = ({ match }: RouteComponentProps<{ id: string }>) => {
+  return <ViewManifestExtensionIframe id={decodeURIComponent(match.params.id)} />;
+};
+
+const EditManifestExtensionPermissionsView = ({ match }: RouteComponentProps<{ id: string }>) => {
+  return <EditManifestExtensionPermissions id={decodeURIComponent(match.params.id)} />;
 };
 
 const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id: string }>) => {
@@ -131,6 +150,24 @@ export const ExtensionsSection = () => {
           path={ExtensionsPaths.installCustomExtension}
           component={InstallCustomExtensionView}
         />
+
+        {/* -- Manifest app routes -- */}
+        <Route
+          exact
+          path={ExtensionsPaths.resolveEditManifestExtension(":id")}
+          component={EditManifestExtensionView}
+        />
+        <Route
+          exact
+          path={ExtensionsPaths.resolveAppRequestPermissionsPath(":id")}
+          component={EditManifestExtensionPermissionsView}
+        />
+        <Route
+          path={ExtensionsPaths.resolveViewManifestExtension(":id")}
+          component={ViewManifestExtensionIframeView}
+        />
+
+        {/* -- Plugin routes -- */}
 
         <Route
           exact
