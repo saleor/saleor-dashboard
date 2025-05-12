@@ -189,7 +189,7 @@ const createNumericAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({ inputType: AttributeInputTypeEnum.NUMERIC, value, isRequired });
 const createFileAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({ inputType: AttributeInputTypeEnum.FILE, value, isRequired });
-const createDropdownAttribute = (value: string, isRequired?: boolean) =>
+const createDropdownAttribute = (value: string | null, isRequired?: boolean) =>
   createAttribute({ inputType: AttributeInputTypeEnum.DROPDOWN, value, isRequired });
 
 describe("Multiple select change handler", () => {
