@@ -28,6 +28,12 @@ jest.mock("@dashboard/hooks/useHasManagedAppsPermission", () => ({
   })),
 }));
 
+const useUserPermissionsMock = jest.fn(() => [{ code: "MANAGE_PLUGINS" }, { code: "MANAGE_APPS" }]);
+
+jest.mock("@dashboard/auth/hooks/useUserPermissions", () => ({
+  useUserPermissions: () => useUserPermissionsMock(),
+}));
+
 jest.mock("@dashboard/graphql", () => ({
   ...(jest.requireActual("@dashboard/graphql") as object),
   useInstalledAppsListQuery: jest.fn(() => ({
@@ -107,8 +113,14 @@ jest.mock("@dashboard/featureFlags", () => ({
 }));
 
 describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
-  it("should return list of installed extensions", () => {
+  afterEach(() => {
+    useUserPermissionsMock.mockClear();
+  });
+
+  it("should return list of installed extensions with plugins when user has MANAGE_PLUGINS permission", () => {
     // Arrange
+    useUserPermissionsMock.mockReturnValue([{ code: "MANAGE_PLUGINS" }, { code: "MANAGE_APPS" }]);
+
     const { result } = renderHook(() => useInstalledExtensions());
 
     // Assert
@@ -139,6 +151,30 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
       installedAppsLoading: false,
       refetchInstalledApps: expect.any(Function),
     });
+  });
+
+  it("should not return plugins when user doesn't have MANAGE_PLUGINS permission", () => {
+    // Arrange
+    useUserPermissionsMock.mockReturnValue([{ code: "MANAGE_CHANNELS" }]);
+
+    const { result } = renderHook(() => useInstalledExtensions());
+
+    // Assert
+    // Should only return apps, not plugins
+    expect(result.current.installedExtensions).toHaveLength(2);
+    expect(result.current.installedExtensions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "1", name: "Test App" }),
+        expect.objectContaining({ id: "2", name: "Test App 2" }),
+      ]),
+    );
+
+    // Should not include any plugins
+    expect(result.current.installedExtensions.some(ext => ext.id === "plug1")).toBe(false);
+    expect(result.current.installedExtensions.some(ext => ext.id.startsWith("plug"))).toBe(false);
+
+    // Loading state should be false when apps are loaded, even without MANAGE_PLUGINS permission
+    expect(result.current.installedAppsLoading).toBe(false);
   });
 });
 
