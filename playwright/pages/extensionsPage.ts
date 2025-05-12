@@ -17,6 +17,7 @@ export class ExtensionsPage extends BasePage {
     readonly installAppFromManifestButton = page.getByTestId("install-app-from-manifest"),
     readonly installedExtensionsRow = page.getByTestId("installed-extension-row"),
     readonly extensionViewDetailsButton = page.locator("[data-test-id*='view-details']"),
+    readonly pluginDetailsView = page.locator('[data-test-id="plugin-details"]'),
     readonly appKlaviyoViewDetailsButton = page.getByTestId("klaviyo-view-details"),
     readonly appQA = page.getByTestId("app-saleorqa app"),
     readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
@@ -37,5 +38,38 @@ export class ExtensionsPage extends BasePage {
 
   async waitForContentLoad() {
     await this.availableAppsLoader.waitFor({ state: "hidden" });
+  }
+
+  async clickViewDetailsByIndex(index = 0) {
+    await this.extensionViewDetailsButton.nth(index).click();
+  }
+
+  async expectPluginDetailsViewVisible() {
+    await expect(this.pluginDetailsView).toBeVisible();
+  }
+
+  async clickViewDetailsByPluginName(pluginName: string) {
+    await this.page
+      .getByRole("row", { name: new RegExp(pluginName, "i") })
+      .getByRole("link", { name: /View details/i })
+      .click();
+  }
+
+  async expectPluginRowVisibleByName(name: string) {
+    const row = this.installedExtensionsRow
+      .filter({ hasText: name })
+      .filter({ has: this.page.locator('a[href*="/extensions/plugin/"]') })
+      .first();
+
+    await expect(row).toBeVisible();
+    await expect(row.locator('a[href*="/extensions/plugin/"]')).toBeVisible();
+  }
+
+  async expectInstalledPluginRowsCount(count: number) {
+    await expect(
+      this.installedExtensionsRow.filter({
+        has: this.page.locator('a[href*="/extensions/plugin/"]'),
+      }),
+    ).toHaveCount(count);
   }
 }
