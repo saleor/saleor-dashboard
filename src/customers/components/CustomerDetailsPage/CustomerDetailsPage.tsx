@@ -1,9 +1,4 @@
 // @ts-strict-ignore
-import {
-  extensionMountPoints,
-  mapToMenuItemsForCustomerDetails,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";
@@ -16,6 +11,11 @@ import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { customerAddressesUrl, customerListPath } from "@dashboard/customers/urls";
+import {
+  extensionMountPoints,
+  mapToMenuItemsForCustomerDetails,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import { AccountErrorFragment, CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";

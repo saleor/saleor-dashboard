@@ -1,10 +1,5 @@
 // @ts-strict-ignore
 import {
-  extensionMountPoints,
-  mapToMenuItemsForProductDetails,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
-import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
@@ -20,6 +15,11 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
+import {
+  extensionMountPoints,
+  mapToMenuItemsForProductDetails,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelFragment,
   PermissionEnum,
