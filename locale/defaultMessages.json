@@ -9269,10 +9269,6 @@
     "context": "shipping zones configuration",
     "string": "Change default weight unit"
   },
-  "u7l2jF": {
-    "context": "notification",
-    "string": "Selected models were deleted."
-  },
   "u9/vj9": {
     "context": "webhook input label",
     "string": "Target URL"
@@ -9595,6 +9591,10 @@
   },
   "vuKrlW": {
     "string": "Stock"
+  },
+  "vwA9Fq": {
+    "context": "notification",
+    "string": "Selected models were deleted."
   },
   "vwMO04": {
     "context": "draft order",
