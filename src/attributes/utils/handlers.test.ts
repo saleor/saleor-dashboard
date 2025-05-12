@@ -127,7 +127,7 @@ interface CreateAttribute {
   inputType: AttributeInputTypeEnum;
   initialValue?: AttributeValueDetailsFragment[];
   availableValues?: AttributeValueDetailsFragment[];
-  value?: string;
+  value?: string | null;
   isRequired?: boolean;
 }
 
