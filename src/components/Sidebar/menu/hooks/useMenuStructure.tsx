@@ -194,19 +194,19 @@ export function useMenuStructure() {
     {
       children: !isEmpty(extensions.NAVIGATION_CUSTOMERS)
         ? [
-          {
-            label: intl.formatMessage(sectionNames.customers),
-            permissions: [PermissionEnum.MANAGE_USERS],
-            id: "customers",
-            url: customerListUrl(),
-            type: "item",
-          },
-          ...mapToExtensionsItems(
-            extensions.NAVIGATION_CUSTOMERS,
-            appExtensionsHeaderItem,
-            showExtensions,
-          ),
-        ]
+            {
+              label: intl.formatMessage(sectionNames.customers),
+              permissions: [PermissionEnum.MANAGE_USERS],
+              id: "customers",
+              url: customerListUrl(),
+              type: "item",
+            },
+            ...mapToExtensionsItems(
+              extensions.NAVIGATION_CUSTOMERS,
+              appExtensionsHeaderItem,
+              showExtensions,
+            ),
+          ]
         : undefined,
       icon: renderIcon(<CustomersIcon />),
       label: intl.formatMessage(sectionNames.customers),
@@ -274,12 +274,12 @@ export function useMenuStructure() {
     {
       children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS)
         ? [
-          ...mapToExtensionsItems(
-            extensions.NAVIGATION_TRANSLATIONS,
-            appExtensionsHeaderItem,
-            showExtensions,
-          ),
-        ]
+            ...mapToExtensionsItems(
+              extensions.NAVIGATION_TRANSLATIONS,
+              appExtensionsHeaderItem,
+              showExtensions,
+            ),
+          ]
         : undefined,
       icon: renderIcon(<TranslationsIcon />),
       label: intl.formatMessage(sectionNames.translations),
