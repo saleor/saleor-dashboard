@@ -71,7 +71,7 @@ function searchInViews(
       url: orderListUrl(),
     },
     {
-      label: intl.formatMessage(sectionNames.content),
+      label: intl.formatMessage(sectionNames.models),
       url: pageListUrl(),
     },
     {
