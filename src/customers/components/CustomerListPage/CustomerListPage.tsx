@@ -1,10 +1,4 @@
 // @ts-strict-ignore
-import {
-  extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForCustomerOverviewActions,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -13,6 +7,12 @@ import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { Customers } from "@dashboard/customers/types";
 import { customerAddUrl, CustomerListUrlSortField, customerUrl } from "@dashboard/customers/urls";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  mapToMenuItemsForCustomerOverviewActions,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import { useFlag } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";

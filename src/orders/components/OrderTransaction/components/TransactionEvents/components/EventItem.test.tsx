@@ -8,6 +8,10 @@ import { MemoryRouter } from "react-router";
 
 import { EventItem } from "./EventItem";
 
+jest.mock("@dashboard/featureFlags", () => ({
+  useFlag: jest.fn(() => ({ enabled: true })),
+}));
+
 describe("EventItem", () => {
   it("displays correct event data", () => {
     const onHover = jest.fn();

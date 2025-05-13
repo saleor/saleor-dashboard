@@ -19,7 +19,6 @@ import { useIntl } from "react-intl";
 import { Switch } from "react-router-dom";
 
 import { AppsSectionRoot } from "./apps";
-import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
@@ -55,6 +54,7 @@ import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import { ExtensionsSection } from "./extensions";
+import { ExternalAppProvider } from "./extensions/components/ExternalAppContext";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";

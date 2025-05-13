@@ -1,8 +1,9 @@
 import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
-import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import { AppUrls } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
+import { useExternalApp } from "@dashboard/extensions/components/ExternalAppContext/ExternalAppContext";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
@@ -109,7 +110,7 @@ const useHandleRedirectAction = (appId: string) => {
       debug(`Handling Redirect action with ID: %s`, actionId);
       debug(`Action payload: %O`, action.payload);
 
-      const onlyAppDeepChange = AppUrls.isAppDeepUrlChange(
+      const onlyAppDeepChange = ExtensionsUrls.isAppDeepUrlChange(
         appId,
         location.pathname,
         action.payload.to,
@@ -130,7 +131,7 @@ const useHandleRedirectAction = (appId: string) => {
       }
 
       /**
-       * Assume failure if nothing catched
+       * Assume failure if nothing caught
        */
       console.error("Couldn't handle Redirect action properly, this should not happen");
 

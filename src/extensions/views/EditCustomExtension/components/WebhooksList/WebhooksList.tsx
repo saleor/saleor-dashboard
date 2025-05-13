@@ -8,6 +8,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { isUnnamed } from "@dashboard/custom-apps/utils";
 import { WebhookFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
@@ -29,7 +30,14 @@ export interface WebhooksListProps {
 export const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
   const intl = useIntl();
   const classes = useStyles();
+  const navigate = useNavigator();
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
+
+  const handleCreateWebhook = () => {
+    if (!createHref) return;
+
+    navigate(createHref);
+  };
 
   return (
     <DashboardCard>
@@ -39,7 +47,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
           {!!createHref && (
-            <Button variant="secondary" href={createHref} data-test-id="create-webhook">
+            <Button variant="secondary" onClick={handleCreateWebhook} data-test-id="create-webhook">
               <FormattedMessage {...messages.createWebhook} />
             </Button>
           )}

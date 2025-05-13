@@ -1,11 +1,5 @@
 // @ts-strict-ignore
 import { LazyQueryResult } from "@apollo/client/react";
-import {
-  extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForProductOverviewActions,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
 import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -17,6 +11,12 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  mapToMenuItemsForProductOverviewActions,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import {
   Exact,
   GridAttributesQuery,
