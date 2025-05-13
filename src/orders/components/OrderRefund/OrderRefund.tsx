@@ -54,9 +54,7 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
           disabled={disabled}
           name={"type" as keyof FormData}
           value={data.type}
-          onChange={change => {
-            onChange(change);
-          }}
+          onChange={onChange}
         />
       </DashboardCard.Content>
     </DashboardCard>

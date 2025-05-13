@@ -75,6 +75,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           data-test-id="set-maximal-quantity-unfulfilled-button"
           variant="secondary"
           marginTop={2}
+          size="small"
         >
           <FormattedMessage
             id="2W4EBM"

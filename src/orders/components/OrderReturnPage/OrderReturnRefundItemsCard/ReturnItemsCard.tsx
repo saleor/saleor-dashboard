@@ -14,9 +14,9 @@ import React, { CSSProperties } from "react";
 import { FormattedMessage } from "react-intl";
 
 import OrderCardTitle from "../../OrderCardTitle";
+import { MaximalButton } from "../components/MaximalButton";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
-import MaximalButton from "./MaximalButton";
 import ProductErrorCell from "./ProductErrorCell";
 
 const useStyles = makeStyles(

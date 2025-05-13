@@ -171,7 +171,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                         disabled={disabled}
                         className={classes.quantityInnerInputNoRemaining}
                         data-test-id={"quantityInput" + line?.id}
-                        value={Number(selectedLineQuantity?.value)}
+                        value={Number(selectedLineQuantity?.value || 0)}
                         onChange={event =>
                           onRefundedProductQuantityChange(line.id, event.target.value)
                         }

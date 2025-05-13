@@ -35,9 +35,6 @@ const useStyles = makeStyles(
     refundButton: {
       marginTop: theme.spacing(2),
     },
-    refundCaution: {
-      marginTop: theme.spacing(1),
-    },
     root: {
       ...theme.typography.body1,
       lineHeight: 1.9,
@@ -55,20 +52,10 @@ const messages = defineMessages({
     defaultMessage: "Refund",
     description: "order refund amount button",
   },
-  refundCannotBeFulfilled: {
-    id: "AKv2BI",
-    defaultMessage: "Refunded items can't be fulfilled",
-    description: "order refund subtitle",
-  },
   returnButton: {
     id: "bgO+7G",
     defaultMessage: "Return & Replace products",
     description: "order return amount button",
-  },
-  returnCannotBeFulfilled: {
-    id: "Uo5/Ov",
-    defaultMessage: "Returned items can't be fulfilled",
-    description: "order return subtitle",
   },
 });
 
@@ -309,11 +296,6 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
             intl.formatMessage(isReturn ? messages.returnButton : messages.refundButton)
           )}
         </Button>
-        <Text size={2} fontWeight="light" color="default2" className={classes.refundCaution}>
-          {intl.formatMessage(
-            isReturn ? messages.returnCannotBeFulfilled : messages.refundCannotBeFulfilled,
-          )}
-        </Text>
       </DashboardCard.Content>
     </DashboardCard>
   );
