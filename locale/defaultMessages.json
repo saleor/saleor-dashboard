@@ -287,10 +287,6 @@
     "context": "collection name",
     "string": "Name"
   },
-  "/XGvYd": {
-    "context": "onboarding step description",
-    "string": "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Configuration > Webhooks & Events."
-  },
   "/Xwjww": {
     "context": "button",
     "string": "Fulfill"
@@ -475,6 +471,10 @@
   "0a0fLZ": {
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
+  },
+  "0d6W6p": {
+    "context": "dialog header",
+    "string": "Deactivate App"
   },
   "0dCGBW": {
     "context": "button",
@@ -1039,6 +1039,10 @@
     "context": "datagrid title label",
     "string": "Select transaction to refund"
   },
+  "4IawKc": {
+    "context": "onboarding step description",
+    "string": "Go to all orders where you can create an fulfilment and refund and review corresponding statuses. View the order in GraphQL"
+  },
   "4IgzXs": {
     "context": "label",
     "string": "App Manifest URL"
@@ -1237,10 +1241,6 @@
   "5TUpjG": {
     "context": "product attribute entity type",
     "string": "Products"
-  },
-  "5TzisG": {
-    "context": "btn label",
-    "string": "Go to Webhooks"
   },
   "5Vwnu+": {
     "string": "You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -1588,6 +1588,10 @@
     "context": "option description",
     "string": "This product will act as a payment method"
   },
+  "7oQUMG": {
+    "context": "apps about permissions",
+    "string": "This app has permissions to:"
+  },
   "7qsOwa": {
     "context": "action",
     "string": "Include postal codes"
@@ -1655,6 +1659,10 @@
   "8J81ri": {
     "context": "ordered product sku",
     "string": "SKU"
+  },
+  "8Mq3ku": {
+    "context": "btn label",
+    "string": "Go to Extensions"
   },
   "8Q504V": {
     "string": "Metadata"
@@ -2101,10 +2109,6 @@
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
   },
-  "BHXdXU": {
-    "context": "onboarding step description",
-    "string": "Go to all orders where you can create an fulfillment and refund and review corresponding statuses. View the order in GraphQL"
-  },
   "BJtUQI": {
     "context": "button",
     "string": "Add"
@@ -2286,6 +2290,10 @@
   "CG+awx": {
     "context": "dialog content",
     "string": "Which address would you like to use as shipping address for selected customer:"
+  },
+  "CHoZ8S": {
+    "context": "app privacy policy link",
+    "string": "View this app’s privacy policy."
   },
   "CJEIRC": {
     "string": "Product export has finished and was sent to your email address."
@@ -3542,6 +3550,10 @@
     "context": "csv file exporting has finished, header",
     "string": "Exporting CSV finished"
   },
+  "JTjg1r": {
+    "context": "onboarding step title",
+    "string": "Discover extension capabilities"
+  },
   "JV+EiM": {
     "context": "voucher value",
     "string": "Value"
@@ -4520,6 +4532,10 @@
   "PqMbma": {
     "context": "add attribute value",
     "string": "Add Value"
+  },
+  "PrxZ/P": {
+    "context": "onboarding step description",
+    "string": "We'll guide you through the main features so you can start customizing your store. Explore products, orders, collections, customers, and discounts to get familiar with key functions and concepts."
   },
   "PsRG+v": {
     "context": "use attribute in filtering",
@@ -5901,6 +5917,9 @@
     "context": "header",
     "string": "Edit Authorization Field"
   },
+  "Xy48q5": {
+    "string": "All webhooks registered by this app. In case of failed webhook delivery, list of attempts is displayed."
+  },
   "Xz/sDf": {
     "context": "Dry run items list item",
     "string": "Item:"
@@ -6371,6 +6390,9 @@
   },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
+  },
+  "b088Xv": {
+    "string": "App doesn't provide a description."
   },
   "b1j4K6": {
     "context": "select label",
@@ -6866,6 +6888,9 @@
     "context": "page availability date label",
     "string": "Set availability date"
   },
+  "eQ7bCN": {
+    "string": "App Webhooks"
+  },
   "eR2vV/": {
     "string": "If left unchecked it creates a {link} - used by Payment Plugins"
   },
@@ -6944,6 +6969,9 @@
   "f3B4tc": {
     "context": "attributes, section header",
     "string": "Variant Attributes"
+  },
+  "f3hf+w": {
+    "string": "App doesn't provide a privacy policy."
   },
   "f4oJRg": {
     "context": "order transaction refund summary description",
@@ -7592,6 +7620,10 @@
     "context": "acre-inch unit",
     "string": "acre-inch"
   },
+  "jDIRQV": {
+    "context": "section header",
+    "string": "About this app"
+  },
   "jDWPin": {
     "context": "remove failed installation dialog title",
     "string": "Remove failed installation"
@@ -8132,10 +8164,6 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
-  },
-  "mU695h": {
-    "context": "onboarding step description",
-    "string": "We’ll guide you through the main features so you can start customizing your store. Explore products, orders, collections, customers, and discounts to get familiar with key functions and concepts."
   },
   "mWQt3s": {
     "string": "No. of Products"
@@ -9501,6 +9529,10 @@
   "vUY6ir": {
     "string": "Amount must be higher than 0 when you transfer funds"
   },
+  "vUzuyz": {
+    "context": "onboarding step description",
+    "string": "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Extensions section."
+  },
   "vVviA2": {
     "string": "Those permissions are out of your scope"
   },
@@ -10190,6 +10222,10 @@
   "zqarUF": {
     "context": "modal information under title",
     "string": "Select an address you want to use from the list below"
+  },
+  "zsz6LN": {
+    "context": "onboarding step description",
+    "string": "Review the central hub for managing all available extensions. Here, you can easily oversee your extensions and enhance Saleor with custom solutions using webhooks and APIs."
   },
   "ztQgD8": {
     "string": "No attributes found"
