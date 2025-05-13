@@ -106,30 +106,30 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
           <TopNav href={ExtensionsUrls.resolveInstalledExtensionsUrl()} title={app?.name || ""}>
-            <Tooltip>
-              <Tooltip.Trigger>
-                <Button
-                  variant="secondary"
-                  className={classes.activateButton}
-                  disableFocusRipple
-                  onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
-                  disabled={disabled || !hasManagedAppsPermission}
-                >
-                  <SVG src={activateIcon} />
-                  {data?.isActive ? (
-                    <FormattedMessage id="whTEcF" defaultMessage="Deactivate" description="link" />
-                  ) : (
-                    <FormattedMessage id="P5twxk" defaultMessage="Activate" description="link" />
-                  )}
-                </Button>
-              </Tooltip.Trigger>
-              {!hasManagedAppsPermission && (
-                <Tooltip.Content>
-                  <Tooltip.Arrow />
-                  {noPermissionText}
-                </Tooltip.Content>
-              )}
-            </Tooltip>
+            {hasManagedAppsPermission && (
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <Button
+                    variant="secondary"
+                    className={classes.activateButton}
+                    disableFocusRipple
+                    onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
+                    disabled={disabled}
+                  >
+                    <SVG src={activateIcon} />
+                    {data?.isActive ? (
+                      <FormattedMessage
+                        id="whTEcF"
+                        defaultMessage="Deactivate"
+                        description="link"
+                      />
+                    ) : (
+                      <FormattedMessage id="P5twxk" defaultMessage="Activate" description="link" />
+                    )}
+                  </Button>
+                </Tooltip.Trigger>
+              </Tooltip>
+            )}
           </TopNav>
           <DetailPageLayout.Content>
             {token && (
