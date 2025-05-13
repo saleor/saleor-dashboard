@@ -7,6 +7,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import { appMessages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
   AppErrorFragment,
@@ -82,12 +83,6 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
   const webhooks = app?.webhooks || [];
   const formErrors = getFormErrors(["permissions"], errors || []);
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
-
-  const noPermissionText = intl.formatMessage({
-    id: "e5gJ9u",
-    defaultMessage: "You don't have permission to manage apps",
-    description: "tooltip for disabled buttons",
-  });
 
   // Ensure all values have safe fallbacks
   const initialForm: CustomExtensionDetailsPageFormData = {
@@ -195,7 +190,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
               {!hasManagedAppsPermission && (
                 <Tooltip.Content>
                   <Tooltip.Arrow />
-                  {noPermissionText}
+                  {appMessages.missingManageAppsPermission}
                 </Tooltip.Content>
               )}
             </Tooltip>
@@ -218,7 +213,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
               {!hasManagedAppsPermission && (
                 <Tooltip.Content>
                   <Tooltip.Arrow />
-                  {noPermissionText}
+                  {appMessages.missingManageAppsPermission}
                 </Tooltip.Content>
               )}
             </Tooltip>

@@ -1948,6 +1948,9 @@
     "context": "order refund subtitle",
     "string": "Refunded items can't be fulfilled"
   },
+  "ALe+of": {
+    "string": "You don't have permission to manage webhooks. Contact your administrator for access."
+  },
   "AOI4LW": {
     "context": "navigator placeholder",
     "string": "Search in Catalog"
@@ -6847,6 +6850,10 @@
     "context": "Transaction title",
     "string": "Gift card (**** {code})"
   },
+  "e5gJ9u": {
+    "context": "tooltip for disabled buttons",
+    "string": "You don't have permission to manage apps"
+  },
   "e7Nyu7": {
     "context": "section header",
     "string": "Customer History"
@@ -8121,6 +8128,9 @@
   },
   "m19JfL": {
     "string": "View and update your plugins and their settings."
+  },
+  "m2Jb3P": {
+    "string": "You don't have permission to manage authentication tokens. Contact your administrator for access."
   },
   "m6IBe5": {
     "context": "invoice number prefix",

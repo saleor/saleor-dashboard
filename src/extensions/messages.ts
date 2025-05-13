@@ -364,4 +364,9 @@ export const appMessages = defineMessages({
     defaultMessage: "App deactivated",
     description: "snackbar text",
   },
+  missingManageAppsPermission: {
+    defaultMessage: "You don't have permission to manage apps",
+    id: "e5gJ9u",
+    description: "tooltip for disabled buttons",
+  },
 });
