@@ -1659,6 +1659,7 @@
   "8LWaFr": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
+  },
   "8Mq3ku": {
     "context": "btn label",
     "string": "Go to Extensions"
