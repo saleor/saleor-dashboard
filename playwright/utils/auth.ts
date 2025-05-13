@@ -59,6 +59,47 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
   return storageStatePath;
 };
 
+export function extractTokenFromStateFile(filePath: string): string | undefined {
+  try {
+    const storageStateString = fs.readFileSync(filePath, "utf-8");
+    const storageStateJson = JSON.parse(storageStateString);
+    let token: string | undefined;
+
+    const origins = storageStateJson.origins;
+    // The token is stored under an origin matching process.env.BASE_URL by getStorageState/auth.setup.ts
+    const targetOrigin = origins?.find(
+      (o: { origin: string }) => o.origin === process.env.BASE_URL,
+    );
+
+    if (targetOrigin?.localStorage) {
+      const refreshTokenEntry = targetOrigin.localStorage.find(
+        (item: { name: string; value: string }) => item.name === "_saleorRefreshToken",
+      );
+
+      if (refreshTokenEntry?.value) {
+        token = refreshTokenEntry.value;
+      } else {
+        console.warn(
+          `[extractTokenFromStateFile] '_saleorRefreshToken' not found in localStorage for origin ${process.env.BASE_URL} in ${filePath}`,
+        );
+      }
+    } else {
+      console.warn(
+        `[extractTokenFromStateFile] Origin ${process.env.BASE_URL} or its localStorage not found in ${filePath}`,
+      );
+    }
+
+    return token;
+  } catch (error) {
+    console.error(
+      `[extractTokenFromStateFile] Failed to read, parse, or extract token from ${filePath}:`,
+      error instanceof Error ? error.message : String(error),
+    );
+
+    return undefined;
+  }
+}
+
 const getEmailForPermission = (permission: UserPermission | "admin"): string => {
   if (permission === "admin") {
     return process.env.E2E_USER_NAME!;
