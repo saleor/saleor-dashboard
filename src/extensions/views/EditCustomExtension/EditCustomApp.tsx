@@ -208,11 +208,6 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
     return <NotFoundPage backHref={ExtensionsUrls.resolveInstalledExtensionsUrl()} />;
   }
 
-  // Show loading state if data isn't available yet
-  if (loading && !data) {
-    return null; // Or some loading indicator
-  }
-
   return (
     <>
       <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
