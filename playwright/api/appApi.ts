@@ -1,6 +1,6 @@
 import { APIRequestContext, request } from "@playwright/test";
 
-import { BasicApiService } from "./basics";
+import { extractTokenFromStateFile, getStorageState } from "../utils/auth";
 
 const APP_CREATE_MUTATION = `
   mutation AppCreateMinimal($input: AppInput!) {
@@ -54,22 +54,27 @@ interface AppDeleteResponse {
 }
 
 async function getAdminApiRequestContext(): Promise<APIRequestContext> {
-  const email = process.env.E2E_USER_NAME!;
-  const password = process.env.E2E_USER_PASSWORD!;
+  console.log(
+    "[appApi] Getting admin API request context using stored auth data via getStorageState and extractTokenFromStateFile.",
+  );
 
-  // Create a temporary context to log in and get the token
-  const tempContext = await request.newContext({ baseURL: process.env.API_URL! });
-  const basicApiService = new BasicApiService(tempContext);
-  const loginResponse = await basicApiService.logInUserViaApi({ email, password });
-  const token = loginResponse.data.tokenCreate.token;
+  const storageStatePath = await getStorageState("admin");
 
-  await tempContext.dispose();
+  console.log(`[appApi] Admin storage state path obtained: ${storageStatePath}`);
 
-  if (!token) throw new Error("Admin login failed: No token returned");
+  const token = extractTokenFromStateFile(storageStatePath);
 
-  // Now create a new context with the Authorization header set
+  if (!token) {
+    const errorMessage = `[appApi] Failed to extract admin token from stored state file (${storageStatePath}). Ensure 'auth.setup.ts' has run and 'extractTokenFromStateFile' logic is correct.`;
+
+    console.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+
+  console.log("[appApi] Admin token successfully extracted. Creating API request context.");
+
   const apiRequestContext = await request.newContext({
-    baseURL: process.env.API_URL!,
+    baseURL: process.env.API_URL!, // Use API_URL for the actual API operations
     extraHTTPHeaders: { Authorization: `Bearer ${token}` },
   });
 
