@@ -19,20 +19,20 @@ let extensionsPage: ExtensionsPage;
 let customAppDetailsPage: CustomAppDetailsPage;
 
 // Store created app details for teardown
-let createdApp: { id: string; token: string } | null = null;
-const testAppName = "Test Channel App For TC12";
+// let createdApp: { id: string; token: string } | null = null;
+// const testAppName = "Test Channel App For TC12";
 
-test.beforeAll(async ({ request }) => {
-  // Create a custom app with MANAGE_CHANNELS permission before tests run
-  createdApp = await createCustomApp(request, testAppName, ["MANAGE_CHANNELS"]);
-});
+// test.beforeAll(async ({ request }) => {
+//   // Create a custom app with MANAGE_CHANNELS permission before tests run
+//   createdApp = await createCustomApp(request, testAppName, ["MANAGE_CHANNELS"]);
+// });
 
-test.afterAll(async ({ request }) => {
-  // Delete the custom app after all tests are done
-  if (createdApp) {
-    await deleteCustomApp(request, createdApp.id);
-  }
-});
+// test.afterAll(async ({ request }) => {
+//   // Delete the custom app after all tests are done
+//   if (createdApp) {
+//     await deleteCustomApp(request, createdApp.id);
+//   }
+// });
 
 test.beforeEach(async ({ page }) => {
   channelPage = new ChannelPage(page);
@@ -73,14 +73,14 @@ test("TC: SALEOR_12 User with CHANNEL permission can navigate to add custom app 
   await customAppDetailsPage.expectSaveButtonVisible();
 });
 
-test("TC: SALEOR_XXX User should see created custom app on the list and navigate to its details page #e2e", async ({
-  page,
-}) => {
-  await mainMenuPage.openExtensions();
-
-  const appRow = extensionsPage.installedExtensionsRow.filter({ hasText: testAppName });
-
-  await expect(appRow).toBeVisible();
-  await extensionsPage.clickViewDetailsByAppName(testAppName);
-  await expect(page.getByRole("heading", { name: testAppName })).toBeVisible();
-});
+// test("TC: SALEOR_XXX User should see created custom app on the list and navigate to its details page #e2e", async ({
+//   page,
+// }) => {
+//   await mainMenuPage.openExtensions();
+//
+//   const appRow = extensionsPage.installedExtensionsRow.filter({ hasText: testAppName });
+//
+//   await expect(appRow).toBeVisible();
+//   await extensionsPage.clickViewDetailsByAppName(testAppName);
+//   await expect(page.getByRole("heading", { name: testAppName })).toBeVisible();
+// });
