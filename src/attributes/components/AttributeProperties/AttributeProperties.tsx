@@ -6,7 +6,7 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { Checkbox, Input, Paragraph, Text, Toggle } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Paragraph, Text, Toggle } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -131,26 +131,28 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
           </>
         )}
 
-        <Toggle
-          name={"visibleInStorefront" as keyof FormData}
-          pressed={data.visibleInStorefront}
-          onPressedChange={pressed =>
-            onChange({
-              target: {
-                name: "visibleInStorefront" as keyof FormData,
-                value: pressed as boolean,
-              },
-            })
-          }
-          disabled={disabled}
-        >
-          <Paragraph>
-            <FormattedMessage {...messages.visibleInStorefront} />
-            <Text fontWeight="medium" fontSize={3} display="block">
-              <FormattedMessage {...messages.visibleInStorefrontCaption} />
-            </Text>
-          </Paragraph>
-        </Toggle>
+        <Box className="multiline-toggle-wrapper">
+          <Toggle
+            name={"visibleInStorefront" as keyof FormData}
+            pressed={data.visibleInStorefront}
+            onPressedChange={pressed =>
+              onChange({
+                target: {
+                  name: "visibleInStorefront" as keyof FormData,
+                  value: pressed as boolean,
+                },
+              })
+            }
+            disabled={disabled}
+          >
+            <Paragraph fontWeight="medium" fontSize={3}>
+              <FormattedMessage {...messages.visibleInStorefront} />
+              <Text size={2} fontWeight="light" color="default2" display="block">
+                <FormattedMessage {...messages.visibleInStorefrontCaption} />
+              </Text>
+            </Paragraph>
+          </Toggle>
+        </Box>
       </DashboardCard.Content>
     </DashboardCard>
   );
