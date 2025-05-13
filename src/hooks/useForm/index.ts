@@ -180,9 +180,7 @@ function useForm<T extends FormData, TErrors>(
   function change(event: ChangeEvent) {
     const { name, value } = event.target;
 
-    if (!(name in data)) {
-      console.error(`Unknown form field: ${name}`);
-    } else {
+    if (name in data) {
       addChanged(name);
 
       if (data[name] !== value) {

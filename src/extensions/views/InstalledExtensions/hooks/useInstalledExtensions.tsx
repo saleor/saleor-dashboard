@@ -3,12 +3,14 @@ import {
   LatestWebhookDeliveryWithMoment,
 } from "@dashboard/apps/components/AppAlerts/utils";
 import { AppPaths } from "@dashboard/apps/urls";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { ViewPluginDetails } from "@dashboard/extensions/views/InstalledExtensions/components/ViewPluginDetails";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
 import { useFlag } from "@dashboard/featureFlags";
 import {
   AppTypeEnum,
+  PermissionEnum,
   useEventDeliveryQuery,
   useInstalledAppsListQuery,
   usePluginsQuery,
@@ -78,6 +80,10 @@ export const getExtensionLogo = ({
 export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const userPermissions = useUserPermissions();
+  const hasManagePluginsPermission = !!userPermissions?.find(
+    ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
+  );
 
   const { data, refetch } = useInstalledAppsListQuery({
     displayLoader: true,
@@ -97,9 +103,11 @@ export const useInstalledExtensions = () => {
     variables: {
       first: 100,
     },
-    skip: !isExtensionsDevEnabled,
+    skip: !isExtensionsDevEnabled || !hasManagePluginsPermission,
   });
-  const installedPluginsData = mapEdgesToItems(plugins?.plugins) || [];
+  const installedPluginsData = hasManagePluginsPermission
+    ? mapEdgesToItems(plugins?.plugins) || []
+    : [];
 
   const { data: eventDeliveriesData } = useEventDeliveryQuery({
     displayLoader: true,
@@ -160,7 +168,8 @@ export const useInstalledExtensions = () => {
 
   return {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
-    installedAppsLoading: !data?.apps || (!plugins?.plugins && isExtensionsDevEnabled),
+    installedAppsLoading:
+      !data?.apps || (isExtensionsDevEnabled && hasManagePluginsPermission && !plugins?.plugins),
     refetchInstalledApps: refetch,
   };
 };

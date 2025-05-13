@@ -193,15 +193,17 @@ export const ExtensionsSection = () => {
           )}
         />
 
-        <Route
+        <SectionRoute
           exact
           path={ExtensionsPaths.resolveAddCustomExtensionWebhook(":appId")}
           component={AddCustomExtensionWebhookView}
+          permissions={[PermissionEnum.MANAGE_APPS]}
         />
-        <Route
+        <SectionRoute
           exact
           path={ExtensionsPaths.resolveEditCustomExtensionWebhook(":appId", ":id")}
           component={EditCustomExtensionWebhookView}
+          permissions={[PermissionEnum.MANAGE_APPS]}
         />
         <Route component={NotFound} />
       </Switch>
