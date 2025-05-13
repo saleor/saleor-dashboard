@@ -11,7 +11,7 @@ export class ProductTypePage extends BasePage {
     readonly addProductTypeButton = page.getByTestId("add-product-type"),
     readonly notificationSuccess = page.getByTestId("notification-message"),
     readonly nameInput = page.locator("[name='name']"),
-    readonly isShippingRequired = page.locator("[name='isShippingRequired']"),
+    readonly isShippingRequired = page.getByTestId("isShippingRequired"),
     readonly assignProductAttributeButton = page.getByTestId("assign-products-attributes"),
     readonly hasVariantsButton = page.locator("[name='hasVariants']"),
     readonly shippingWeightInput = page.locator("[name='weight']"),

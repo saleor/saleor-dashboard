@@ -38,6 +38,7 @@ const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
           checked={data.isShippingRequired}
           disabled={disabled}
           name="isShippingRequired"
+          data-test-id="isShippingRequired"
           onCheckedChange={checked =>
             onChange({
               target: { name: "isShippingRequired", value: checked },
