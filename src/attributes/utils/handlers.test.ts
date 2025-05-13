@@ -127,7 +127,7 @@ interface CreateAttribute {
   inputType: AttributeInputTypeEnum;
   initialValue?: AttributeValueDetailsFragment[];
   availableValues?: AttributeValueDetailsFragment[];
-  value?: string;
+  value?: string | null;
   isRequired?: boolean;
 }
 
@@ -189,6 +189,8 @@ const createNumericAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({ inputType: AttributeInputTypeEnum.NUMERIC, value, isRequired });
 const createFileAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({ inputType: AttributeInputTypeEnum.FILE, value, isRequired });
+const createDropdownAttribute = (value: string | null, isRequired?: boolean) =>
+  createAttribute({ inputType: AttributeInputTypeEnum.DROPDOWN, value, isRequired });
 
 describe("Multiple select change handler", () => {
   it("is able to select value", () => {
@@ -906,5 +908,35 @@ describe("handleDeleteMultipleAttributeValues", () => {
     // Assert
     expect(result).toEqual(["val-1"]);
     expect(deleteAttributeValue).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("prepareAttributesInput", () => {
+  it("should create input with desired values for dropdowns", () => {
+    // Arrange & Act
+    const attribute = createDropdownAttribute("val-1");
+    const prevAttribute = createDropdownAttribute("val-2");
+    const result = prepareAttributesInput({
+      attributes: [attribute],
+      prevAttributes: [prevAttribute],
+      updatedFileAttributes: [],
+    });
+
+    // Assert
+    expect(result).toEqual([{ id: ATTR_ID, values: ["val-1"] }]);
+  });
+
+  it("should create input without null values for dropdowns", () => {
+    // Arrange & Act
+    const attribute = createDropdownAttribute(null);
+    const prevAttribute = createDropdownAttribute("val-1");
+    const result = prepareAttributesInput({
+      attributes: [attribute],
+      prevAttributes: [prevAttribute],
+      updatedFileAttributes: [],
+    });
+
+    // Assert
+    expect(result).toEqual([{ id: ATTR_ID, values: [] }]);
   });
 });
