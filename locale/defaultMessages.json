@@ -1945,10 +1945,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
-  "AKv2BI": {
-    "context": "order refund subtitle",
-    "string": "Refunded items can't be fulfilled"
-  },
   "ALe+of": {
     "string": "You don't have permission to manage webhooks. Contact your administrator for access."
   },
@@ -5303,10 +5299,6 @@
   "Um3g00": {
     "context": "send to customer selected label",
     "string": "Send gift card to customer"
-  },
-  "Uo5/Ov": {
-    "context": "order return subtitle",
-    "string": "Returned items can't be fulfilled"
   },
   "Uo5MoU": {
     "context": "product field",
