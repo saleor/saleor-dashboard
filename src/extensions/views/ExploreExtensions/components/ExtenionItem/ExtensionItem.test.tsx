@@ -20,6 +20,10 @@ jest.mock("@dashboard/components/Link", () => {
   );
 });
 
+jest.mock("@dashboard/featureFlags", () => ({
+  useFlag: jest.fn(() => ({ enabled: true })),
+}));
+
 jest.mock("@saleor/macaw-ui-next", () => ({
   ...(jest.requireActual("@saleor/macaw-ui-next") as object),
   useTheme: () => ({ theme: "default" }),

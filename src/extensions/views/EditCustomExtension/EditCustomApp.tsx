@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import AppActivateDialog from "@dashboard/apps/components/AppActivateDialog";
-import AppDeactivateDialog from "@dashboard/apps/components/AppDeactivateDialog";
-import { appMessages } from "@dashboard/apps/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { getApiUrl } from "@dashboard/config";
+import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
+import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
+import { appMessages } from "@dashboard/extensions/messages";
 import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import {
   AppTokenCreateMutation,
