@@ -144,6 +144,7 @@ for (const attribute of attributesWithValuesToBeUpdated) {
       `updated value for ${attribute.name}`,
     );
     await attributesPage.editAttributeValueDialog.saveNewAttributeValue();
+    await attributesPage.checkIfAttrEditValueModalIsNotOpen();
     await attributesPage.clickAssignAttributeValueButton();
     await attributesPage.addValueDialog.typeAndSaveAttributeValue(
       `new value for ${attribute.name}`,
