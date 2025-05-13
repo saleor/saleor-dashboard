@@ -117,7 +117,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({
                             onClick={
                               webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined
                             }
-                            data-test-id={`delete-webhook-${webhook.id}`}
+                            data-test-id={`delete-webhook-${webhook?.id}`}
                           >
                             <DeleteIcon />
                           </IconButton>
