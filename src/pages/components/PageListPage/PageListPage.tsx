@@ -76,7 +76,7 @@ const PageListPage: React.FC<PageListPageProps> = ({
 
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.content)} isAlignToRight={false} withoutBorder>
+      <TopNav title={intl.formatMessage(sectionNames.models)} isAlignToRight={false} withoutBorder>
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={5} display="flex" alignItems="center">
@@ -94,15 +94,15 @@ const PageListPage: React.FC<PageListPageProps> = ({
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
               selectAllLabel={intl.formatMessage({
-                id: "hJrzlT",
-                defaultMessage: "All content",
+                id: "UgCuqX",
+                defaultMessage: "All models",
                 description: "tab name",
               })}
             />
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
             <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
-              <FormattedMessage id="DOVEZF" defaultMessage="Create content" description="button" />
+              <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
             </Button>
           </Box>
         </Box>

@@ -19,6 +19,7 @@ import {
   useWebhookDeleteMutation,
   WebhookDeleteMutation,
 } from "@dashboard/graphql";
+import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
@@ -57,6 +58,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
+  const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   useEffect(() => onTokenClose, []);
 
@@ -66,7 +68,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
   >(navigate, params => ExtensionsUrls.editCustomExtensionUrl(id, params), params);
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id, hasManagedAppsPermission: true },
+    variables: { id, hasManagedAppsPermission },
   });
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {
@@ -80,7 +82,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         refetch();
         closeModal();
       } else {
-        errors.forEach(error =>
+        errors?.forEach(error =>
           notify({
             status: "error",
             text: getAppInstallErrorMessage(error, intl),
@@ -93,7 +95,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
     onCompleted: data => {
       const errors = data?.appDeactivate?.errors;
 
-      if (errors.length === 0) {
+      if (errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(appMessages.appDeactivated),
@@ -101,7 +103,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         refetch();
         closeModal();
       } else {
-        errors.forEach(error =>
+        errors?.forEach(error =>
           notify({
             status: "error",
             text: getAppInstallErrorMessage(error, intl),
@@ -111,7 +113,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
     },
   });
   const onWebhookDelete = (data: WebhookDeleteMutation) => {
-    if (data.webhookDelete.errors.length === 0) {
+    if (data?.webhookDelete?.errors?.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
@@ -141,12 +143,12 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
   };
   const customApp = data?.app;
   const onTokenCreate = (data: AppTokenCreateMutation) => {
-    if (data?.appTokenCreate?.errors.length === 0) {
+    if (data?.appTokenCreate?.errors?.length === 0) {
       refetch();
     }
   };
   const onTokenDelete = (data: AppTokenDeleteMutation) => {
-    if (data?.appTokenDelete?.errors.length === 0) {
+    if (data?.appTokenDelete?.errors?.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
@@ -171,9 +173,10 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
           id,
           input: {
             name: data.name,
-            permissions: data.hasFullAccess
-              ? shop.permissions.map(permission => permission.code)
-              : data.permissions,
+            permissions:
+              data.hasFullAccess && shop?.permissions
+                ? shop.permissions.map(permission => permission.code)
+                : data.permissions,
           },
         },
       }),
@@ -230,16 +233,17 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         }
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
-        permissions={shop?.permissions}
+        permissions={shop?.permissions || []}
         app={data?.app}
         saveButtonBarState={updateAppOpts.status}
+        hasManagedAppsPermission={hasManagedAppsPermission}
       />
       <TokenCreateDialog
         confirmButtonState={createTokenOpts.status}
         onClose={closeModal}
         onCreate={handleTokenCreate}
         open={params.action === "create-token"}
-        token={createTokenOpts.data?.appTokenCreate.authToken}
+        token={createTokenOpts.data?.appTokenCreate?.authToken || ""}
       />
       <TokenDeleteDialog
         confirmButtonState={deleteTokenOpts.status}
@@ -252,21 +256,21 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
       />
       <WebhookDeleteDialog
         confirmButtonState={webhookDeleteOpts.status}
-        name={data?.app?.webhooks.find(webhook => webhook.id === params.id)?.name}
+        name={data?.app?.webhooks?.find(webhook => webhook.id === params.id)?.name || ""}
         onClose={closeModal}
         onConfirm={handleRemoveWebhookConfirm}
         open={params.action === "remove-webhook"}
       />
       <AppActivateDialog
         confirmButtonState={activateAppResult.status}
-        name={data?.app.name}
+        name={data?.app?.name || ""}
         onClose={closeModal}
         onConfirm={handleActivateConfirm}
         open={params.action === "app-activate"}
       />
       <AppDeactivateDialog
         confirmButtonState={deactivateAppResult.status}
-        name={data?.app.name}
+        name={data?.app?.name || ""}
         onClose={closeModal}
         onConfirm={handleDeactivateConfirm}
         thirdParty={false}

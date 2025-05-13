@@ -356,6 +356,10 @@
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
   },
+  "/x7Y7U": {
+    "context": "search models placeholder",
+    "string": "Search models"
+  },
   "/xJSe8": {
     "context": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
     "string": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history."
@@ -395,6 +399,10 @@
   },
   "0Azlrb": {
     "string": "Manage"
+  },
+  "0B0HS2": {
+    "context": "dialog header",
+    "string": "Delete model"
   },
   "0DRBjg": {
     "string": "Token Note"
@@ -903,10 +911,6 @@
   "3SVI5p": {
     "string": "Warning"
   },
-  "3Sz1/t": {
-    "context": "dialog header",
-    "string": "Delete Pages"
-  },
   "3TlhJS": {
     "context": "navigator command mode description",
     "string": "Search Command"
@@ -981,10 +985,6 @@
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink}"
   },
-  "41z2Qi": {
-    "context": "notification",
-    "string": "Removed pages"
-  },
   "423QsF": {
     "context": "option title",
     "string": "Prioritize warehouses with highest stock"
@@ -1015,10 +1015,6 @@
   "48dMqY": {
     "context": "Dry run trigger button",
     "string": "Run"
-  },
-  "4B32Ba": {
-    "context": "delete page",
-    "string": "Are you sure you want to delete {title}?"
   },
   "4C7I61": {
     "context": "sale Details delete button",
@@ -1660,6 +1656,10 @@
     "context": "ordered product sku",
     "string": "SKU"
   },
+  "8LWaFr": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
+  },
   "8Mq3ku": {
     "context": "btn label",
     "string": "Go to Extensions"
@@ -1670,6 +1670,10 @@
   "8RnPGF": {
     "context": "order history message",
     "string": "Payment was voided"
+  },
+  "8a4uf/": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to delete this model?} other{Are you sure you want to delete {displayQuantity} models?}}"
   },
   "8cUEPV": {
     "context": "page title",
@@ -1715,6 +1719,10 @@
   "8xsKUv": {
     "context": "service accounts section name",
     "string": "Service Accounts"
+  },
+  "8y4+0a": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
   },
   "91vQMc": {
     "string": "order management"
@@ -1948,6 +1956,9 @@
     "context": "order refund subtitle",
     "string": "Refunded items can't be fulfilled"
   },
+  "ALe+of": {
+    "string": "You don't have permission to manage webhooks. Contact your administrator for access."
+  },
   "AOI4LW": {
     "context": "navigator placeholder",
     "string": "Search in Catalog"
@@ -1971,6 +1982,10 @@
     "context": "description",
     "string": "Install apps created by Saleor team or install external apps."
   },
+  "AUaL7R": {
+    "context": "notification",
+    "string": "Selected models were published."
+  },
   "AVF5T5": {
     "context": "voucher end date, switch button",
     "string": "Set end date"
@@ -1992,6 +2007,10 @@
   "Aeq79M": {
     "context": "PluginDetailsChannelsCard no channels subtitle",
     "string": "Plugin’s settings are set common across all channels"
+  },
+  "AgHhjW": {
+    "context": "dialog header",
+    "string": "Delete models"
   },
   "AgY5Mv": {
     "context": "attribute properties regarding storefront",
@@ -2043,10 +2062,6 @@
   "AzMSmb": {
     "context": "caption",
     "string": "If enabled this attribute can be used as a column in product table."
-  },
-  "AzshS2": {
-    "context": "notification",
-    "string": "Published pages"
   },
   "B+Ba0R": {
     "string": "Requested Permissions"
@@ -2231,10 +2246,6 @@
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
   },
-  "C1luwg": {
-    "context": "dialog header",
-    "string": "Delete Page"
-  },
   "C3sTzL": {
     "string": "Installed Extensions"
   },
@@ -2308,6 +2319,10 @@
   "CLeDae": {
     "context": "section header",
     "string": "Preferences"
+  },
+  "CQKgD/": {
+    "context": "bulk actions button label",
+    "string": "Delete model"
   },
   "CRAfpd": {
     "context": "gift card export dialog confirm button label",
@@ -2481,10 +2496,6 @@
   "DOHARW": {
     "context": "Refund status failure",
     "string": "Failure"
-  },
-  "DOVEZF": {
-    "context": "button",
-    "string": "Create content"
   },
   "DOkfyZ": {
     "string": "Insufficient permissions"
@@ -5262,10 +5273,6 @@
   "UN+yTt": {
     "string": "Staff Settings"
   },
-  "UNwG+4": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
-  },
   "UQ4Kuh": {
     "context": "input label",
     "string": "Search Staff Members"
@@ -5304,6 +5311,10 @@
   "Uf3oHA": {
     "context": "add new menu item",
     "string": "Create new item"
+  },
+  "UgCuqX": {
+    "context": "tab name",
+    "string": "All models"
   },
   "Uh3NX/": {
     "context": "remove failed installation dialog content",
@@ -5629,10 +5640,6 @@
     "context": "button",
     "string": "Create rate"
   },
-  "WRPQMM": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
-  },
   "WS4ov0": {
     "context": "notifier message",
     "string": "Note was added sucessfully"
@@ -5662,10 +5669,6 @@
   "WbV1Xm": {
     "context": "button",
     "string": "Order Settings"
-  },
-  "Wd8vG7": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to unpublish this page?} other{Are you sure you want to unpublish {displayQuantity} pages?}}"
   },
   "WhKGPA": {
     "context": "page title",
@@ -6539,6 +6542,10 @@
     "context": "ExitFormPrompt ignore changes button",
     "string": "Ignore changes"
   },
+  "bnMF4j": {
+    "context": "notification",
+    "string": "Selected models were unpublished."
+  },
   "bp/i0x": {
     "context": "header",
     "string": "Quantity"
@@ -6846,6 +6853,10 @@
   "e5Mlfh": {
     "context": "Transaction title",
     "string": "Gift card (**** {code})"
+  },
+  "e5gJ9u": {
+    "context": "tooltip for disabled buttons",
+    "string": "You don't have permission to manage apps"
   },
   "e7Nyu7": {
     "context": "section header",
@@ -7330,10 +7341,6 @@
   "hJZwTS": {
     "string": "Email address"
   },
-  "hJrzlT": {
-    "context": "tab name",
-    "string": "All content"
-  },
   "hLOEeb": {
     "context": "button",
     "string": "Set as default billing address"
@@ -7805,6 +7812,10 @@
   "kFsTMN": {
     "string": "Delete customers"
   },
+  "kG44rx": {
+    "context": "dialog header",
+    "string": "Unpublish models"
+  },
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
@@ -7913,6 +7924,10 @@
   "kn7jjd": {
     "context": "section header",
     "string": "General settings"
+  },
+  "knO/IN": {
+    "context": "delete model",
+    "string": "Are you sure you want to delete {title}?"
   },
   "kp2IYP": {
     "context": "option",
@@ -8122,6 +8137,9 @@
   "m19JfL": {
     "string": "View and update your plugins and their settings."
   },
+  "m2Jb3P": {
+    "string": "You don't have permission to manage authentication tokens. Contact your administrator for access."
+  },
   "m6IBe5": {
     "context": "invoice number prefix",
     "string": "Invoice"
@@ -8322,10 +8340,6 @@
   "nOo0oL": {
     "context": "error message",
     "string": "Not enough items to fulfill"
-  },
-  "nP8iex": {
-    "context": "search content placeholder",
-    "string": "Search Content"
   },
   "nRiOg+": {
     "string": "Sorry, the page was not found"
@@ -8678,6 +8692,10 @@
     "context": "error message",
     "string": "Maximum price cannot be lower than minimum"
   },
+  "pyiyxe": {
+    "context": "button",
+    "string": "Create model"
+  },
   "pzSF+b": {
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
@@ -8685,6 +8703,10 @@
   "q+gCyP": {
     "context": "order payment",
     "string": "Refunded amount"
+  },
+  "q/FMPM": {
+    "context": "dialog header",
+    "string": "Publish models"
   },
   "q1shey": {
     "context": "key-value field input",
@@ -9612,6 +9634,10 @@
   "vuKrlW": {
     "string": "Stock"
   },
+  "vwA9Fq": {
+    "context": "notification",
+    "string": "Selected models were deleted."
+  },
   "vwMO04": {
     "context": "draft order",
     "string": "Created"
@@ -9771,10 +9797,6 @@
   "wsDF7X": {
     "context": "product variant attribute entity type",
     "string": "Product variants"
-  },
-  "wyvzh9": {
-    "context": "dialog header",
-    "string": "Publish Pages"
   },
   "x/ZVlU": {
     "string": "Product"
@@ -9947,10 +9969,6 @@
   },
   "yH56V+": {
     "string": "Ooops!..."
-  },
-  "yHQQMQ": {
-    "context": "dialog header",
-    "string": "Unpublish Pages"
   },
   "yHeZRQ": {
     "string": "Product Export Failed"
@@ -10178,10 +10196,6 @@
   "zf48rQ": {
     "context": "sum of captured amount of all transactions",
     "string": "Total captured"
-  },
-  "zfBsje": {
-    "context": "bulk actions button label",
-    "string": "Delete content"
   },
   "zfjAc7": {
     "context": "grant refund, card header",

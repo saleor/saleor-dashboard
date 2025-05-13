@@ -52,7 +52,7 @@ const Component = () => {
 
   return (
     <>
-      <WindowTitle title={intl.formatMessage(sectionNames.content)} />
+      <WindowTitle title={intl.formatMessage(sectionNames.models)} />
       <Switch>
         <Route exact path={pageListPath} component={PageList} />
         <Route exact path={pageCreatePath} component={PageCreate} />
