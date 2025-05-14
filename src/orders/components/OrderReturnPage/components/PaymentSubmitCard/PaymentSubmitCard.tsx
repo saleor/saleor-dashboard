@@ -1,11 +1,12 @@
 // @ts-strict-ignore
+import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -63,6 +64,7 @@ interface PaymentSubmitCardProps {
   data: OrderRefundFormData | OrderReturnFormData;
   order: OrderRefundDataQuery["order"] | OrderDetailsFragment;
   disabled: boolean;
+  loading: boolean;
   disableSubmitButton?: boolean;
   isReturn?: boolean;
   errors: OrderErrorFragment[];
@@ -77,6 +79,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
     data,
     order,
     disabled,
+    loading,
     errors,
     onChange,
     onRefund,
@@ -272,13 +275,14 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
             />
           </>
         )}
-        <Button
+        <ButtonWithLoader
           variant="primary"
           width="100%"
           onClick={onRefund}
           className={classes.refundButton}
-          disabled={disableRefundButton}
+          disabled={disableRefundButton || disabled}
           data-test-id="submit"
+          transitionState={loading ? "loading" : "default"}
         >
           {!disableRefundButton && !isReturn ? (
             <FormattedMessage
@@ -295,7 +299,7 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
           ) : (
             intl.formatMessage(isReturn ? messages.returnButton : messages.refundButton)
           )}
-        </Button>
+        </ButtonWithLoader>
       </DashboardCard.Content>
     </DashboardCard>
   );

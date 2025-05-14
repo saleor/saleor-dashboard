@@ -127,7 +127,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   return (
     <OrderRefundPage
       order={data?.order}
-      disabled={loading || refundOrderOpts.loading || refundOrderFulfillmentProductsOpts.loading}
+      loading={loading || refundOrderOpts.loading || refundOrderFulfillmentProductsOpts.loading}
       errors={[
         ...(refundOrderOpts.data?.orderRefund.errors || []),
         ...(refundOrderFulfillmentProductsOpts.data?.orderFulfillmentRefundProducts.errors || []),
