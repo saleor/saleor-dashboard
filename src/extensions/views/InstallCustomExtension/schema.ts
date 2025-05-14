@@ -13,4 +13,5 @@ export const getFormSchema = (intl: IntlShape) => {
   });
 };
 
-export type ExtensionInstallFormData = z.infer<ReturnType<typeof getFormSchema>>;
+// Due to disabled strictNullChecks in tsconfig.json, we need to use Required<z.infer<...>> to get the correct type
+export type ExtensionInstallFormData = Required<z.infer<ReturnType<typeof getFormSchema>>>;
