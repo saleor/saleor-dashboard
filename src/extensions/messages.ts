@@ -136,8 +136,8 @@ export const notifyMessages = defineMessages({
     id: "EGzGed",
   },
   extensionInstallError: {
-    id: "UMUQCG",
-    defaultMessage: "Couldn’t Install {name}",
+    id: "TPJeJF",
+    defaultMessage: "Couldn't Install {name}",
     description: "extensions list has not been installed",
   },
 });
@@ -180,8 +180,8 @@ export const messages = defineMessages({
     id: "80g19N",
   },
   pluginDescription: {
-    defaultMessage: "Plugin built-in to Saleor’s core codebase",
-    id: "JaLLdQ",
+    defaultMessage: "Plugin built-in to Saleor's core codebase",
+    id: "EEWsPs",
   },
   pluginInfoImportant: {
     defaultMessage: "Important",
@@ -263,8 +263,8 @@ export const messages = defineMessages({
   },
   infoCardText: {
     defaultMessage:
-      "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}",
-    id: "chJmBW",
+      "Uninstalling the app will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}",
+    id: "3fZa8B",
     description: "card text, app install page",
   },
   infoCardLearnMoreLink: {
@@ -314,21 +314,39 @@ export const messages = defineMessages({
 });
 
 export const appManifestErrorMessages = defineMessages({
-  invalidManifestFormat: {
-    id: "pC6/1z",
-    defaultMessage: "Invalid manifest format",
+  invalidManifest: {
+    id: "s4w6QI",
+    defaultMessage:
+      "The extension's manifest contains one or more fields with invalid values. Please check fields like extension 'target'/'mount' or webhook 'isActive' for correctness.",
   },
   invalidPermission: {
-    id: "D2qihU",
-    defaultMessage: "Permission is invalid",
-  },
-  invalidStatus: {
-    id: "v3WWK+",
-    defaultMessage: "Status is invalid",
+    id: "gGIYm5",
+    defaultMessage:
+      "The extensions's manifest requests permissions that are not valid or recognized by Saleor. Please check the 'permissions' list in the manifest.",
   },
   invalidUrlFormat: {
-    id: "nm7IIV",
-    defaultMessage: "URL has invalid format",
+    id: "5g5FHH",
+    defaultMessage:
+      "A URL field within the extension's manifest (e.g., 'tokenTargetUrl', extension URL, or webhook URL) has an invalid format.",
+  },
+  invalidManifestFormat: {
+    defaultMessage:
+      "The extension's manifest has an invalid format. Please ensure it is well-formed (e.g., valid JSON, correct data structures).",
+    id: "eDNOCM",
+  },
+  invalidCustomHeaders: {
+    defaultMessage:
+      "The 'customHeaders' field for a webhook in the extension's manifest is invalid. Please ensure it's a valid JSON object with correct header names and values.",
+    id: "sOhgPN",
+  },
+  invalidManifestUrlCannotConnect: {
+    defaultMessage:
+      "Saleor could not connect to the provided manifest URL. Please check network connectivity, ensure the server is accessible, and the URL is correct.",
+    id: "JOGr6i",
+  },
+  notFound: {
+    defaultMessage: "The extension manifest was not found.",
+    id: "59tdCU",
   },
   outOfScopeApp: {
     id: "C4hCsD",
@@ -339,12 +357,39 @@ export const appManifestErrorMessages = defineMessages({
     defaultMessage: "Group is out of your permission scope",
   },
   outOfScopePermission: {
-    id: "4prRLv",
-    defaultMessage: "Permission is out of your scope",
+    id: "WDQJCi",
+    defaultMessage:
+      "Saleor cannot assign one or more permissions requested in your extension's manifest. This may be because your Saleor user account lacks the necessary privileges to grant them, or a component within your manifest's extensions array is requesting a permission not also declared in the manifest's main permissions list. Please verify your user account's privileges and ensure consistency in permission declarations throughout your ",
   },
   unique: {
-    id: "TDhHMi",
-    defaultMessage: "This needs to be unique",
+    id: "2qfU+C",
+    defaultMessage: "The extension identifier is already in use.",
+  },
+  forbidden: {
+    defaultMessage: "You are not allowed to perform this action",
+    id: "hz2Xpo",
+  },
+  genericError: {
+    defaultMessage: "An unexpected error occurred, please try again later.",
+    id: "jGOGaN",
+  },
+  invalidStatus: {
+    id: "M1PPZT",
+    defaultMessage:
+      "The operation cannot be performed right now, check if app with the same identifier doesn't have already pending installation on the extensions list",
+  },
+  required: {
+    id: "moJfQ4",
+    defaultMessage:
+      "A required field is missing in the extension's manifest. Please ensure all mandatory fields (e.g., 'id', 'version', 'name') are present.",
+  },
+  graphqlError: {
+    id: "jGOGaN",
+    defaultMessage: "An unexpected error occurred, please try again later.",
+  },
+  unsupportedSaleorVersion: {
+    id: "bJiuIR",
+    defaultMessage: "The saleor version that your extension is trying to use is not supported.",
   },
 });
 

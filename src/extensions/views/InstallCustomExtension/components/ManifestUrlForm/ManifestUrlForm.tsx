@@ -23,7 +23,7 @@ export const ManifestUrlForm = ({
       display="flex"
       gap={3}
       flexDirection="column"
-      __width="380px"
+      __width="480px"
       onSubmit={onSubmit}
     >
       <Text size={5} fontWeight="medium" id={EL_ID_MANIFEST_INPUT_LABEL}>
