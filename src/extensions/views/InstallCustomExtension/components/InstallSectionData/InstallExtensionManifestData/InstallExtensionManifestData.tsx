@@ -6,7 +6,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { InstallDetailsManifestData } from "../../types";
+import { InstallDetailsManifestData } from "../../../types";
 import { IconsSection } from "./IconsSection";
 
 export const InstallExtensionManifestData = ({
