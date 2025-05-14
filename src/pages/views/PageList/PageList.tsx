@@ -125,8 +125,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "41z2Qi",
-            defaultMessage: "Removed pages",
+            id: "vwA9Fq",
+            defaultMessage: "Selected models were deleted.",
             description: "notification",
           }),
         });
@@ -139,19 +139,48 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.pageBulkPublish?.errors.length === 0) {
         closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "AzshS2",
-            defaultMessage: "Published pages",
-            description: "notification",
-          }),
-        });
         clearRowSelection();
         refetch();
       }
     },
   });
+
+  const handlePublish = async (selectedRowIds: string[]) => {
+    await bulkPagePublish({
+      variables: {
+        ids: selectedRowIds,
+        isPublished: true,
+      },
+    });
+
+    notify({
+      status: "success",
+      text: intl.formatMessage({
+        id: "AUaL7R",
+        defaultMessage: "Selected models were published.",
+        description: "notification",
+      }),
+    });
+  };
+
+  const handleUnpublish = async (selectedRowIds: string[]) => {
+    await bulkPagePublish({
+      variables: {
+        ids: selectedRowIds,
+        isPublished: false,
+      },
+    });
+
+    notify({
+      status: "success",
+      text: intl.formatMessage({
+        id: "bnMF4j",
+        defaultMessage: "Selected models were unpublished.",
+        description: "notification",
+      }),
+    });
+  };
+
   const handleSort = createSortHandler(navigate, pageListUrl, params);
   const {
     loadMore: loadMoreDialogPageTypes,
@@ -227,23 +256,16 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         open={params.action === "publish"}
         onClose={closeModal}
         confirmButtonState={bulkPagePublishOpts.status}
-        onConfirm={() =>
-          bulkPagePublish({
-            variables: {
-              ids: selectedRowIds,
-              isPublished: true,
-            },
-          })
-        }
+        onConfirm={() => handlePublish(selectedRowIds)}
         title={intl.formatMessage({
-          id: "wyvzh9",
-          defaultMessage: "Publish Pages",
+          id: "q/FMPM",
+          defaultMessage: "Publish models",
           description: "dialog header",
         })}
       >
         <FormattedMessage
-          id="WRPQMM"
-          defaultMessage="{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
+          id="8y4+0a"
+          defaultMessage="{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
           description="dialog content"
           values={{
             counter: selectedRowIds.length,
@@ -255,23 +277,16 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         open={params.action === "unpublish"}
         onClose={closeModal}
         confirmButtonState={bulkPagePublishOpts.status}
-        onConfirm={() =>
-          bulkPagePublish({
-            variables: {
-              ids: selectedRowIds,
-              isPublished: false,
-            },
-          })
-        }
+        onConfirm={() => handleUnpublish(selectedRowIds)}
         title={intl.formatMessage({
-          id: "yHQQMQ",
-          defaultMessage: "Unpublish Pages",
+          id: "kG44rx",
+          defaultMessage: "Unpublish models",
           description: "dialog header",
         })}
       >
         <FormattedMessage
-          id="Wd8vG7"
-          defaultMessage="{counter,plural,one{Are you sure you want to unpublish this page?} other{Are you sure you want to unpublish {displayQuantity} pages?}}"
+          id="8LWaFr"
+          defaultMessage="{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
           description="dialog content"
           values={{
             counter: selectedRowIds.length,
@@ -292,14 +307,14 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
-          id: "3Sz1/t",
-          defaultMessage: "Delete Pages",
+          id: "AgHhjW",
+          defaultMessage: "Delete models",
           description: "dialog header",
         })}
       >
         <FormattedMessage
-          id="UNwG+4"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
+          id="8a4uf/"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this model?} other{Are you sure you want to delete {displayQuantity} models?}}"
           description="dialog content"
           values={{
             counter: selectedRowIds.length,
