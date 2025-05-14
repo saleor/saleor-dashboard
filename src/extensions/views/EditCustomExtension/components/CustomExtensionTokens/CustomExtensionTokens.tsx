@@ -7,7 +7,7 @@ import { AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -17,11 +17,13 @@ export interface CustomAppTokensProps {
   tokens: AppUpdateMutation["appUpdate"]["app"]["tokens"] | null;
   onCreate: () => void;
   onDelete: (id: string) => void;
+  hasManagedAppsPermission: boolean;
 }
 
 const numberOfColumns = 3;
+
 const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
-  const { tokens, onCreate, onDelete } = props;
+  const { tokens, onCreate, onDelete, hasManagedAppsPermission } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
@@ -36,62 +38,82 @@ const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button variant="secondary" onClick={onCreate} data-test-id="create-token">
-            <FormattedMessage id="RMB6fU" defaultMessage="Create Token" description="button" />
-          </Button>
+          {hasManagedAppsPermission && (
+            <Button variant="secondary" onClick={onCreate} data-test-id="create-token">
+              <FormattedMessage id="RMB6fU" defaultMessage="Create Token" description="button" />
+            </Button>
+          )}
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
 
       <DashboardCard.Content paddingX={0}>
         <ResponsiveTable>
-          <TableHead>
-            <TableRowLink>
-              <TableCell className={classes.colNote}>
-                <FormattedMessage id="0DRBjg" defaultMessage="Token Note" />
-              </TableCell>
-              <TableCell className={classes.colKey}>
-                <FormattedMessage
-                  id="MAsLIT"
-                  defaultMessage="Key"
-                  description="custom app token key"
-                />
-              </TableCell>
-              <TableCell className={classes.colActions}>
-                <FormattedMessage
-                  id="VHuzgq"
-                  defaultMessage="Actions"
-                  description="table actions"
-                />
-              </TableCell>
-            </TableRowLink>
-          </TableHead>
+          {hasManagedAppsPermission && (
+            <TableHead>
+              <TableRowLink>
+                <TableCell className={classes.colNote}>
+                  <FormattedMessage id="0DRBjg" defaultMessage="Token Note" />
+                </TableCell>
+                <TableCell className={classes.colKey}>
+                  <FormattedMessage
+                    id="MAsLIT"
+                    defaultMessage="Key"
+                    description="custom app token key"
+                  />
+                </TableCell>
+                <TableCell className={classes.colActions}>
+                  <FormattedMessage
+                    id="VHuzgq"
+                    defaultMessage="Actions"
+                    description="table actions"
+                  />
+                </TableCell>
+              </TableRowLink>
+            </TableHead>
+          )}
           <TableBody>
-            {renderCollection(
-              tokens,
-              token => (
-                <TableRowLink key={token ? token.id : "skeleton"}>
-                  <TableCell className={classes.colNote}>{token?.name || <Skeleton />}</TableCell>
-                  <TableCell className={classes.colKey}>
-                    {token?.authToken ? `**** ${token.authToken}` : <Skeleton />}
-                  </TableCell>
-                  <TableCell className={classes.colActions}>
-                    <IconButton
-                      variant="secondary"
-                      color="primary"
-                      onClick={() => onDelete(token.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRowLink>
-              ),
-              () => (
-                <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage id="bsP4f3" defaultMessage="No tokens found" />
-                  </TableCell>
-                </TableRowLink>
-              ),
+            {hasManagedAppsPermission ? (
+              renderCollection(
+                tokens,
+                token => (
+                  <TableRowLink key={token ? token.id : "skeleton"}>
+                    <TableCell className={classes.colNote}>{token?.name || <Skeleton />}</TableCell>
+                    <TableCell className={classes.colKey}>
+                      {token?.authToken ? `**** ${token.authToken}` : <Skeleton />}
+                    </TableCell>
+                    <TableCell className={classes.colActions}>
+                      {hasManagedAppsPermission && (
+                        <IconButton
+                          variant="secondary"
+                          color="primary"
+                          onClick={() => onDelete(token.id)}
+                          data-test-id={`delete-token-${token.id}`}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      )}
+                    </TableCell>
+                  </TableRowLink>
+                ),
+                () => (
+                  <TableRowLink>
+                    <TableCell colSpan={numberOfColumns}>
+                      <FormattedMessage id="bsP4f3" defaultMessage="No tokens found" />
+                    </TableCell>
+                  </TableRowLink>
+                ),
+              )
+            ) : (
+              <TableRowLink>
+                <TableCell colSpan={numberOfColumns}>
+                  <Text color="default2">
+                    <FormattedMessage
+                      id="m2Jb3P"
+                      defaultMessage="You don't have permission to manage authentication tokens. Contact your administrator for access."
+                    />
+                  </Text>
+                </TableCell>
+              </TableRowLink>
             )}
           </TableBody>
         </ResponsiveTable>

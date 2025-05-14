@@ -13,7 +13,7 @@ import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/i
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -25,13 +25,19 @@ export interface WebhooksListProps {
   webhooks: WebhookFragment[];
   onRemove: (id: string) => void;
   createHref?: string;
+  hasManagedAppsPermission: boolean;
 }
 
-export const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
+export const WebhooksList: React.FC<WebhooksListProps> = ({
+  webhooks,
+  createHref,
+  onRemove,
+  hasManagedAppsPermission,
+}) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
-  const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
+  const numberOfColumns = hasManagedAppsPermission ? 3 : 1;
 
   const handleCreateWebhook = () => {
     if (!createHref) return;
@@ -46,7 +52,7 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref
           {intl.formatMessage(sectionNames.webhooksAndEvents)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          {!!createHref && (
+          {!!createHref && hasManagedAppsPermission && (
             <Button variant="secondary" onClick={handleCreateWebhook} data-test-id="create-webhook">
               <FormattedMessage {...messages.createWebhook} />
             </Button>
@@ -55,70 +61,90 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref
       </DashboardCard.Header>
       <DashboardCard.Content paddingX={0}>
         <ResponsiveTable className={classes.table}>
-          <TableHead>
-            <TableRowLink>
-              <TableCellHeader>{intl.formatMessage(commonMessages.name)}</TableCellHeader>
-              <TableCellHeader>{intl.formatMessage(commonMessages.status)}</TableCellHeader>
-              <TableCell className={clsx(classes.colAction, classes.colRight)}>
-                <FormattedMessage {...messages.action} />
-              </TableCell>
-            </TableRowLink>
-          </TableHead>
+          {hasManagedAppsPermission && (
+            <TableHead>
+              <TableRowLink>
+                <TableCellHeader>{intl.formatMessage(commonMessages.name)}</TableCellHeader>
+                <TableCellHeader>{intl.formatMessage(commonMessages.status)}</TableCellHeader>
+                <TableCell className={clsx(classes.colAction, classes.colRight)}>
+                  <FormattedMessage {...messages.action} />
+                </TableCell>
+              </TableRowLink>
+            </TableHead>
+          )}
           <TableBody>
-            {renderCollection(
-              webhooks,
-              webhook => (
-                <TableRowLink
-                  hover={!!webhook}
-                  className={webhook ? classes.tableRow : undefined}
-                  href={webhook && CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)}
-                  key={webhook ? webhook.id : "skeleton"}
-                >
-                  <TableCell
-                    className={clsx(classes.colName, {
-                      [classes.colNameUnnamed]: isUnnamed(webhook),
-                    })}
+            {hasManagedAppsPermission ? (
+              renderCollection(
+                webhooks,
+                webhook => (
+                  <TableRowLink
+                    hover={!!webhook}
+                    className={webhook ? classes.tableRow : undefined}
+                    href={webhook && CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)}
+                    key={webhook ? webhook.id : "skeleton"}
                   >
-                    {isUnnamed(webhook) ? (
-                      <FormattedMessage {...messages.unnamedWebhook} />
-                    ) : (
-                      webhook?.name || <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {webhook ? (
-                      <Pill
-                        label={
-                          webhook.isActive
-                            ? intl.formatMessage(commonStatusMessages.active)
-                            : intl.formatMessage(commonStatusMessages.notActive)
-                        }
-                        color={webhook.isActive ? "success" : "error"}
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={clsx(classes.colAction, classes.colRight)}>
-                    <TableButtonWrapper>
-                      <IconButton
-                        variant="secondary"
-                        color="primary"
-                        onClick={webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableButtonWrapper>
-                  </TableCell>
-                </TableRowLink>
-              ),
-              () => (
-                <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    {intl.formatMessage(messages.noWebhooks)}
-                  </TableCell>
-                </TableRowLink>
-              ),
+                    <TableCell
+                      className={clsx(classes.colName, {
+                        [classes.colNameUnnamed]: isUnnamed(webhook),
+                      })}
+                    >
+                      {isUnnamed(webhook) ? (
+                        <FormattedMessage {...messages.unnamedWebhook} />
+                      ) : (
+                        webhook?.name || <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {webhook ? (
+                        <Pill
+                          label={
+                            webhook.isActive
+                              ? intl.formatMessage(commonStatusMessages.active)
+                              : intl.formatMessage(commonStatusMessages.notActive)
+                          }
+                          color={webhook.isActive ? "success" : "error"}
+                        />
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell className={clsx(classes.colAction, classes.colRight)}>
+                      {hasManagedAppsPermission && (
+                        <TableButtonWrapper>
+                          <IconButton
+                            variant="secondary"
+                            color="primary"
+                            onClick={
+                              webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined
+                            }
+                            data-test-id={`delete-webhook-${webhook?.id}`}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableButtonWrapper>
+                      )}
+                    </TableCell>
+                  </TableRowLink>
+                ),
+                () => (
+                  <TableRowLink>
+                    <TableCell colSpan={numberOfColumns}>
+                      {intl.formatMessage(messages.noWebhooks)}
+                    </TableCell>
+                  </TableRowLink>
+                ),
+              )
+            ) : (
+              <TableRowLink>
+                <TableCell colSpan={numberOfColumns}>
+                  <Text color="default2">
+                    <FormattedMessage
+                      id="ALe+of"
+                      defaultMessage="You don't have permission to manage webhooks. Contact your administrator for access."
+                    />
+                  </Text>
+                </TableCell>
+              </TableRowLink>
             )}
           </TableBody>
         </ResponsiveTable>

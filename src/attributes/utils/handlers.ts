@@ -341,6 +341,15 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
+    if (inputType === AttributeInputTypeEnum.DROPDOWN) {
+      attrInput.push({
+        id: attr.id,
+        values: attr.value.filter(value => value !== null),
+      });
+
+      return attrInput;
+    }
+
     attrInput.push({
       id: attr.id,
       values: attr.value,

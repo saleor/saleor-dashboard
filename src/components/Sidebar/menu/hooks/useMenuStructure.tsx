@@ -9,7 +9,12 @@ import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { extensionMountPoints, useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
+import {
+  extensionsAppSection,
+  extensionsCustomSection,
+  ExtensionsPaths,
+  extensionsPluginSection,
+} from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -87,6 +92,12 @@ export function useMenuStructure() {
         ),
         id: "installed-extensions",
         url: ExtensionsPaths.installedExtensions,
+        matchUrls: [
+          ExtensionsPaths.installedExtensions,
+          extensionsCustomSection,
+          extensionsAppSection,
+          extensionsPluginSection,
+        ],
         permissions: [],
         type: "item",
       },
