@@ -65,6 +65,7 @@ export const InstallCustomExtensionFromUrl = ({
           manifest={manifest}
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
+          centered
         />
         <InstallSectionErrors errors={flatErrors} />
       </Box>

@@ -11,11 +11,18 @@ import { IconsSection } from "./IconsSection";
 
 export const InstallExtensionManifestData = ({
   manifest,
+  centered,
 }: {
   manifest: InstallDetailsManifestData;
+  centered: boolean;
 }) => {
   return (
-    <Box display="flex" flexDirection="column" gap={6}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      gap={6}
+      alignItems={centered ? "center" : "flex-start"}
+    >
       <Text size={5} fontWeight="medium">
         <FormattedMessage
           {...messages.installExtensionNameHeader}
