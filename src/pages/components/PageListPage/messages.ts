@@ -2,9 +2,9 @@ import { defineMessages } from "react-intl";
 
 export const pagesListSearchAndFiltersMessages = defineMessages({
   searchPlaceholder: {
-    id: "nP8iex",
-    defaultMessage: "Search Content",
-    description: "search content placeholder",
+    id: "/x7Y7U",
+    defaultMessage: "Search models",
+    description: "search models placeholder",
   },
   publish: {
     id: "j/Oo0B",
@@ -17,8 +17,8 @@ export const pagesListSearchAndFiltersMessages = defineMessages({
     description: "bulk actions button label",
   },
   delete: {
-    id: "zfBsje",
-    defaultMessage: "Delete content",
+    id: "CQKgD/",
+    defaultMessage: "Delete model",
     description: "bulk actions button label",
   },
 });
