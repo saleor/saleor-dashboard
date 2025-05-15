@@ -16,7 +16,7 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import {
   MANIFEST_URL_CLIENT_VALIDATION_INVALID_FORMAT,
   MANIFEST_URL_CLIENT_VALIDATION_REQUIRED,
-} from "../schema";
+} from "../../schema";
 
 const getFieldErrorMessage = (error: FieldError, intl: IntlShape): string | React.ReactNode => {
   const backendErrorCode = error.type as AppErrorCode;
