@@ -65,6 +65,7 @@ export const TransactionSelector = ({
         })}
       </Text>
       <Select
+        data-test-id="transaction-selector"
         width="100%"
         size="large"
         endAdornment={() => selectedTransaction?.endAdornment}
