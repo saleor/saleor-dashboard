@@ -44,7 +44,7 @@ export const ManifestUrlFieldController = <
         error={!!fieldState.error}
         aria-invalid={!!fieldState.error}
       />
-      {fieldState.error && <ManifestErrorMessage marginTop={2} errors={fieldState.error} />}
+      {fieldState.error && <ManifestErrorMessage marginTop={2} error={fieldState.error} />}
     </Box>
   );
 };

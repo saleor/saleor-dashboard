@@ -12,7 +12,7 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(({ defaultMessage }) => defaultMessage || ""),
   })),
   FormattedMessage: jest.fn(({ defaultMessage }) => defaultMessage || ""),
-  defineMessages: jest.fn(x => x),
+  defineMessages: (messages: Record<string, any>) => messages,
 }));
 
 jest.mock("react-router-dom", () => ({
