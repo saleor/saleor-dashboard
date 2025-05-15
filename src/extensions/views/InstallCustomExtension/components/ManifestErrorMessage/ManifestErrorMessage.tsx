@@ -77,7 +77,7 @@ export const ManifestErrorMessage = ({
   className,
   ...props
 }: {
-  error: FieldError | null;
+  error: FieldError | null | undefined;
 } & BoxProps) => {
   const intl = useIntl();
 
