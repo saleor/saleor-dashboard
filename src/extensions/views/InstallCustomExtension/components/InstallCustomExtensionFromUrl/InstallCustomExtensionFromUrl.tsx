@@ -63,7 +63,6 @@ export const InstallCustomExtensionFromUrl = ({
           manifest={manifest}
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
-          centered
         />
         <ManifestErrorMessage error={errors.manifestUrl} />
       </Box>
