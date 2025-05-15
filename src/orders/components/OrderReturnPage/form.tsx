@@ -32,6 +32,7 @@ export type FormsetQuantityData = FormsetData<LineItemData, number>;
 export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 
 export interface OrderReturnData {
+  transactionId: string;
   amount: number;
   refundShipmentCosts: boolean;
   autoGrantRefund: boolean;
@@ -75,6 +76,7 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
   refundShipmentCosts: false,
   autoGrantRefund: false,
   autoSendRefund: false,
+  transactionId: "",
 });
 
 function useOrderReturnForm(

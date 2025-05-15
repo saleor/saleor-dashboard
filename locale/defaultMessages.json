@@ -3396,6 +3396,9 @@
     "context": "gift card bulk create success dialog export button",
     "string": "Export To Email"
   },
+  "IWP25U": {
+    "string": "You cannot issue a granted refund for this order. None of your transactions have authorized or charged amount."
+  },
   "IYuKD6": {
     "string": "No discounts found"
   },
@@ -8859,6 +8862,9 @@
     "context": "dialog title",
     "string": "Delete Token"
   },
+  "qy/XqL": {
+    "string": "Select transaction"
+  },
   "qzDwLa": {
     "context": "Invalid url value",
     "string": "Invalid URL"
@@ -8877,6 +8883,9 @@
   "r2dojI": {
     "context": "checkbox label",
     "string": "Restrict order weight"
+  },
+  "r4UnCw": {
+    "string": "When issuing a granted refund, please select the transaction you wish to apply the refund to."
   },
   "r4g/vD": {
     "context": "search modal billing title",

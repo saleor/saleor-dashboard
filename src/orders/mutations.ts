@@ -546,6 +546,7 @@ export const orderGrantRefundAddWithOrderMutation = gql`
     $reason: String
     $lines: [OrderGrantRefundCreateLineInput!]
     $grantRefundForShipping: Boolean
+    $transactionId: ID!
   ) {
     orderGrantRefundCreate(
       id: $orderId
@@ -554,6 +555,7 @@ export const orderGrantRefundAddWithOrderMutation = gql`
         reason: $reason
         lines: $lines
         grantRefundForShipping: $grantRefundForShipping
+        transactionId: $transactionId
       }
     ) {
       errors {
