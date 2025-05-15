@@ -5304,9 +5304,6 @@
     "context": "discount type shipping",
     "string": "Shipping"
   },
-  "UVvex/": {
-    "string": "When issuing a granted refund, please select the transaction you wish to apply the refund to."
-  },
   "UYKEsx": {
     "context": "collection filter published",
     "string": "Published"
@@ -8883,6 +8880,9 @@
   "r2dojI": {
     "context": "checkbox label",
     "string": "Restrict order weight"
+  },
+  "r4UnCw": {
+    "string": "When issuing a granted refund, please select the transaction you wish to apply the refund to."
   },
   "r4g/vD": {
     "context": "search modal billing title",
