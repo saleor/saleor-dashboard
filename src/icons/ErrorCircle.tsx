@@ -1,21 +1,26 @@
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
 export const ErrorCircle = ({
   height = "12px",
   width = "12px",
   viewBox = "0 0 12 12",
+  ...props
 }: {
   height?: string;
   width?: string;
   viewBox?: string;
-}) => {
+} & BoxProps) => {
   return (
-    <svg
-      width={width}
-      height={height}
+    <Box
+      as="svg"
+      __width={width}
+      __height={height}
+      // @ts-expect-error viewBox is not defined as BoxProps, but it works correctly
       viewBox={viewBox}
-      fill="none"
+      __fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0_1226_7835)">
         <path
@@ -45,6 +50,6 @@ export const ErrorCircle = ({
           <rect width="12" height="12" fill="white" />
         </clipPath>
       </defs>
-    </svg>
+    </Box>
   );
 };

@@ -1,12 +1,17 @@
 import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
-import { useAppFetchMutation } from "@dashboard/graphql";
+import { AppErrorCode, useAppFetchMutation } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useFetchManifest } from "./useFetchManifest";
 
-jest.mock("@dashboard/graphql", () => ({
-  useAppFetchMutation: jest.fn(),
-}));
+jest.mock("@dashboard/graphql", () => {
+  const originalModule = jest.requireActual("@dashboard/graphql");
+
+  return {
+    ...originalModule,
+    useAppFetchMutation: jest.fn(),
+  };
+});
 
 jest.mock("@dashboard/extensions/utils", () => ({
   getAppInstallErrorMessage: jest.fn(),
@@ -16,6 +21,8 @@ jest.mock("react-intl", () => ({
   useIntl: () => ({
     formatMessage: jest.fn(),
   }),
+  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage || "",
+  defineMessages: (messages: Record<string, any>) => messages,
 }));
 
 describe("useFetchManifest", () => {
@@ -160,7 +167,7 @@ describe("useFetchManifest", () => {
   it("should set form error when fetch returns errors", async () => {
     // Arrange
     const manifestUrl = "https://example.com/manifest.json";
-    const errorMessage = "Invalid manifest";
+    const errorMessage = "Actual backend error";
 
     mockGetValues.mockReturnValue(manifestUrl);
     (getAppInstallErrorMessage as jest.Mock).mockReturnValue(errorMessage);
@@ -191,7 +198,7 @@ describe("useFetchManifest", () => {
       mockOnCompleted({
         appFetchManifest: {
           manifest: null,
-          errors: [{ message: "Error" }],
+          errors: [{ code: AppErrorCode.INVALID_MANIFEST_FORMAT, message: errorMessage }],
         },
       });
     });
@@ -199,19 +206,22 @@ describe("useFetchManifest", () => {
     // Assert
     expect(mockSetError).toHaveBeenCalledWith("manifestUrl", {
       message: errorMessage,
-      type: "validate",
+      type: AppErrorCode.INVALID_MANIFEST_FORMAT,
     });
   });
 
-  it("should handle multiple errors by joining them with commas", async () => {
+  it("should set form error based on the first GraphQL error when multiple errors are returned", async () => {
     // Arrange
     const manifestUrl = "https://example.com/manifest.json";
-    const errorMessages = ["Error 1", "Error 2"];
+    const errorMessages = [
+      { code: AppErrorCode.INVALID_MANIFEST_FORMAT, message: "First error" },
+      { code: AppErrorCode.INVALID_PERMISSION, message: "Second error" },
+    ];
 
     mockGetValues.mockReturnValue(manifestUrl);
     (getAppInstallErrorMessage as jest.Mock)
-      .mockReturnValueOnce(errorMessages[0])
-      .mockReturnValueOnce(errorMessages[1]);
+      .mockReturnValueOnce(errorMessages[0].message)
+      .mockReturnValueOnce(errorMessages[1].message);
 
     (useAppFetchMutation as jest.Mock).mockImplementation(({ onCompleted }) => {
       mockOnCompleted.mockImplementation(onCompleted);
@@ -238,15 +248,15 @@ describe("useFetchManifest", () => {
       mockOnCompleted({
         appFetchManifest: {
           manifest: null,
-          errors: [{ message: "Error 1" }, { message: "Error 2" }],
+          errors: errorMessages,
         },
       });
     });
 
     // Assert
     expect(mockSetError).toHaveBeenCalledWith("manifestUrl", {
-      message: "Error 1, Error 2",
-      type: "validate",
+      message: errorMessages[0].message,
+      type: errorMessages[0].code,
     });
   });
 });
