@@ -66,7 +66,7 @@ describe("InstallSectionData", () => {
     // Assert
     expect(screen.getByText("Mock Manifest Data")).toBeInTheDocument();
     expect(InstallExtensionManifestData).toHaveBeenCalledWith(
-      { manifest: mockManifest, centered: false },
+      { manifest: mockManifest },
       expect.anything(),
     );
   });
