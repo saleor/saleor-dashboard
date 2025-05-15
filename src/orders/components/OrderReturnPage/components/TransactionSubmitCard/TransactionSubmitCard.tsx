@@ -36,7 +36,7 @@ interface TransactionSubmitCardProps {
   sendRefundErrors: TransactionRequestRefundForGrantedRefundErrorFragment[];
   transactions: OrderDetailsFragment["transactions"];
   isAmountDirty: boolean;
-  transactionId: string;
+  transactionId?: string;
   onAmountChange: (value: number) => void;
 }
 

@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 interface TransactionSelectorProps {
   transactions: OrderDetailsFragment["transactions"];
   onChange: FormChange;
-  value: string;
+  value?: string;
 }
 
 export const TransactionSelector = ({
@@ -73,7 +73,7 @@ export const TransactionSelector = ({
           defaultMessage: "Select transaction",
           id: "qy/XqL",
         })}
-        value={value}
+        value={value || null}
         options={options}
       />
     </Box>
