@@ -708,9 +708,6 @@
     "context": "number of metadata fields in model",
     "string": "{number,plural,one{{number} string} other{{number} strings}}"
   },
-  "2+v6qd": {
-    "string": "Add Custom Extension from manifest"
-  },
   "2/L4zZ": {
     "string": "Select all channels"
   },
@@ -1847,6 +1844,10 @@
   "9UHfux": {
     "string": "Voucher Specific Information"
   },
+  "9W9Sdj": {
+    "context": "page title",
+    "string": "Explore Extensions"
+  },
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
     "string": "Pending auth"
@@ -2259,9 +2260,6 @@
   },
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
-  },
-  "C3sTzL": {
-    "string": "Installed Extensions"
   },
   "C4aDMy": {
     "context": "description",
@@ -2721,6 +2719,10 @@
     "context": "header",
     "string": "{pluginName} Details"
   },
+  "EuB0RV": {
+    "context": "page title",
+    "string": "Installed Extensions"
+  },
   "EuOXmr": {
     "context": "add items title",
     "string": "Add {itemsName}"
@@ -3049,9 +3051,6 @@
   },
   "GTCg9O": {
     "string": "You must add at least one voucher code"
-  },
-  "GUcbBE": {
-    "string": "Explore Extensions"
   },
   "GVM/fi": {
     "context": "order history message",
@@ -4819,6 +4818,10 @@
     "context": "radio button label",
     "string": "Refund with manual amount"
   },
+  "RKxceS": {
+    "context": "page title - installing app with manifestUrl form",
+    "string": "Add Custom Extension from manifest"
+  },
   "RLBLPQ": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
@@ -4899,6 +4902,10 @@
   "Rjs1CD": {
     "context": "button",
     "string": "Continue"
+  },
+  "RkhreQ": {
+    "context": "page title - creating custom app",
+    "string": "Add Custom Extension manually"
   },
   "RlbhwF": {
     "context": "product no longer exists error description",
@@ -7046,9 +7053,6 @@
   "fExm0/": {
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
-  },
-  "fHHHVV": {
-    "string": "Add Custom Extension manually"
   },
   "fITtdb": {
     "context": "helper text",
@@ -9785,6 +9789,10 @@
   "wRvjoc": {
     "context": "app created at label",
     "string": "Created at"
+  },
+  "wSS9YI": {
+    "context": "page title - installing app with manifestUrl provided",
+    "string": "Add Extension"
   },
   "wTHjt3": {
     "string": "Search Orders..."

@@ -1,5 +1,5 @@
 import { Savebar } from "@dashboard/components/Savebar";
-import { messages } from "@dashboard/extensions/messages";
+import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -11,7 +11,7 @@ import {
   useFormState,
   UseFormTrigger,
 } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { previousPagePath } from "../../consts";
 import { useFetchManifest } from "../../hooks/useFetchManifest";
@@ -19,6 +19,7 @@ import { useInstallApp } from "../../hooks/useInstallApp";
 import { useLoadQueryParamsToForm } from "../../hooks/useLoadQueryParamsToForm";
 import { ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData";
+import { InstallTopNav } from "../InstallTopNav";
 import { ManifestErrorMessage } from "../ManifestErrorMessage/ManifestErrorMessage";
 
 export const InstallCustomExtensionFromUrl = ({
@@ -36,6 +37,7 @@ export const InstallCustomExtensionFromUrl = ({
   getValues: UseFormGetValues<ExtensionInstallFormData>;
   params: ExtensionInstallQueryParams;
 }) => {
+  const intl = useIntl();
   const { errors } = useFormState({ control });
 
   const { submitFetchManifest, manifest, lastFetchedManifestUrl, isFetchingManifest } =
@@ -57,6 +59,7 @@ export const InstallCustomExtensionFromUrl = ({
 
   return (
     <>
+      <InstallTopNav title={intl.formatMessage(headerTitles.addCustomExtensionManifestUrl)} />
       <Box marginX={6} marginTop={10} display="flex" flexDirection="column" gap={10}>
         <InstallSectionData
           isFetchingManifest={isFetchingManifest}

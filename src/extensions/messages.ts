@@ -17,19 +17,29 @@ export const getSpecificManifestErrorDocLink = (_errorCode?: string): string => 
 export const headerTitles = defineMessages({
   exploreExtensions: {
     defaultMessage: "Explore Extensions",
-    id: "GUcbBE",
+    description: "page title",
+    id: "9W9Sdj",
   },
   installedExtensions: {
     defaultMessage: "Installed Extensions",
-    id: "C3sTzL",
+    description: "page title",
+    id: "EuB0RV",
   },
   addCustomExtension: {
     defaultMessage: "Add Custom Extension manually",
-    id: "fHHHVV",
+    description: "page title - creating custom app",
+
+    id: "RkhreQ",
   },
   addCustomExtensionManifest: {
     defaultMessage: "Add Custom Extension from manifest",
-    id: "2+v6qd",
+    description: "page title - installing app with manifestUrl form",
+    id: "RKxceS",
+  },
+  addCustomExtensionManifestUrl: {
+    defaultMessage: "Add Extension",
+    description: "page title - installing app with manifestUrl provided",
+    id: "wSS9YI",
   },
 });
 

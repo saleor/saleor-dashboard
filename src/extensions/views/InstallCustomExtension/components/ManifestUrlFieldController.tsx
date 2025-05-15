@@ -4,21 +4,21 @@ import React, { ComponentProps } from "react";
 import { FieldValues, useController, UseControllerProps } from "react-hook-form";
 
 import { ExtensionInstallFormData } from "../schema";
-import { ManifestErrorMessage } from "./ManifestErrorMessage";
+import { ManifestErrorMessage } from "./ManifestErrorMessage/ManifestErrorMessage";
 
 type ManifestUrlFieldControllerProps<TFormValues extends FieldValues> =
   UseControllerProps<TFormValues> &
-    Omit<
-      ComponentProps<typeof InputWithPlaceholder>,
-      | "value"
-      | "onChange"
-      | "onBlur"
-      | "error"
-      | "aria-invalid"
-      | "aria-errormessage"
-      | "name"
-      | "ref"
-    >;
+  Omit<
+    ComponentProps<typeof InputWithPlaceholder>,
+    | "value"
+    | "onChange"
+    | "onBlur"
+    | "error"
+    | "aria-invalid"
+    | "aria-errormessage"
+    | "name"
+    | "ref"
+  >;
 
 export const ManifestUrlFieldController = <
   TFormValues extends FieldValues = ExtensionInstallFormData,
