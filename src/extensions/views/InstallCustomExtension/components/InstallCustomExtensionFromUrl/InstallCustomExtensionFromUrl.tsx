@@ -20,7 +20,7 @@ import { useInstallApp } from "../../hooks/useInstallApp";
 import { useLoadQueryParamsToForm } from "../../hooks/useLoadQueryParamsToForm";
 import { ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData";
-import { InstallSectionErrors } from "../InstallSectionError/InstallSectionError";
+import { ManifestErrorMessage } from "../ManifestErrorMessage";
 
 export const InstallCustomExtensionFromUrl = ({
   trigger,
@@ -38,7 +38,6 @@ export const InstallCustomExtensionFromUrl = ({
   params: ExtensionInstallQueryParams;
 }) => {
   const { errors } = useFormState({ control });
-  const flatErrors = flattenErrors(errors);
 
   const { submitFetchManifest, manifest, lastFetchedManifestUrl, isFetchingManifest } =
     useFetchManifest({
@@ -67,7 +66,7 @@ export const InstallCustomExtensionFromUrl = ({
           control={control}
           centered
         />
-        <InstallSectionErrors errors={flatErrors} />
+        <ManifestErrorMessage error={errors.manifestUrl} />
       </Box>
       <Savebar>
         <Savebar.Spacer />

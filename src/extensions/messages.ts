@@ -1,5 +1,19 @@
 import { defineMessages } from "react-intl";
 
+const DOCS_MANIFEST_COMMON_ERRORS_URL =
+  "https://docs.saleor.io/docs/next/developer/extending/apps/manifest";
+
+// Placeholder for specific error documentation links
+// For now, all errors point to the same general manifest errors page.
+// TODO: Update with specific URLs once available.
+export const getSpecificManifestErrorDocLink = (errorCode?: string): string => {
+  // We'll add this when we add page with specific error code messages
+  // if (errorCode === "INVALID_PERMISSION") {
+  //   return "https://docs.saleor.io/docs/next/developer/extending/apps/manifest#invalid-permission";
+  // }
+  return DOCS_MANIFEST_COMMON_ERRORS_URL;
+};
+
 export const headerTitles = defineMessages({
   exploreExtensions: {
     defaultMessage: "Explore Extensions",
@@ -315,81 +329,105 @@ export const messages = defineMessages({
 
 export const appManifestErrorMessages = defineMessages({
   invalidManifest: {
-    id: "s4w6QI",
+    // AppErrorCode.INVALID
+    id: "ZXOpCJ",
     defaultMessage:
-      "The extension's manifest contains one or more fields with invalid values. Please check fields like extension 'target'/'mount' or webhook 'isActive' for correctness.",
+      "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})",
   },
   invalidPermission: {
-    id: "gGIYm5",
+    // AppErrorCode.INVALID_PERMISSION
+    id: "DRaREj",
     defaultMessage:
-      "The extensions's manifest requests permissions that are not valid or recognized by Saleor. Please check the 'permissions' list in the manifest.",
+      "The extension's manifest requests invalid or unrecognized permissions. {docsLink} ({errorCode})",
   },
   invalidUrlFormat: {
-    id: "5g5FHH",
+    // AppErrorCode.INVALID_URL_FORMAT
+    id: "FXtMVc",
     defaultMessage:
-      "A URL field within the extension's manifest (e.g., 'tokenTargetUrl', extension URL, or webhook URL) has an invalid format.",
+      "A URL field within the extension's manifest has an invalid format. {docsLink} ({errorCode})",
+  },
+  invalidUrlFormatSimple: {
+    // AppErrorCode.INVALID_URL_FORMAT
+    id: "+vzDH4",
+    defaultMessage: "Invalid manifest URL",
+    description:
+      "error message used when manifest URL is incorrect (before any further validation)",
   },
   invalidManifestFormat: {
-    defaultMessage:
-      "The extension's manifest has an invalid format. Please ensure it is well-formed (e.g., valid JSON, correct data structures).",
-    id: "eDNOCM",
+    // AppErrorCode.INVALID_MANIFEST_FORMAT
+    defaultMessage: "The extension's manifest has an invalid format. {docsLink} ({errorCode})",
+    id: "FuIgAe",
   },
   invalidCustomHeaders: {
+    // AppErrorCode.INVALID_CUSTOM_HEADERS
     defaultMessage:
-      "The 'customHeaders' field for a webhook in the extension's manifest is invalid. Please ensure it's a valid JSON object with correct header names and values.",
-    id: "sOhgPN",
+      "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})",
+    id: "CPPACf",
   },
   invalidManifestUrlCannotConnect: {
+    // AppErrorCode.MANIFEST_URL_CANT_CONNECT
     defaultMessage:
-      "Saleor could not connect to the provided manifest URL. Please check network connectivity, ensure the server is accessible, and the URL is correct.",
-    id: "JOGr6i",
+      // TODO: Add docs link when we have docs page with explanation
+      "Saleor could not connect to the provided manifest URL. ({errorCode})",
+    id: "DbNXK5",
   },
   notFound: {
-    defaultMessage: "The extension manifest was not found.",
-    id: "59tdCU",
+    // AppErrorCode.NOT_FOUND
+    // TODO: Add docs link when we have docs page with explanation
+    defaultMessage: "The extension manifest was not found. ({errorCode})",
+    id: "eY+BKQ",
   },
   outOfScopeApp: {
-    id: "C4hCsD",
-    defaultMessage: "App is out of your permissions scope",
-  },
-  outOfScopeGroup: {
-    id: "1n1tOR",
-    defaultMessage: "Group is out of your permission scope",
+    // AppErrorCode.OUT_OF_SCOPE_APP
+    id: "/84FbR",
+    // TODO: Add docs link when we have docs page with explanation
+    defaultMessage:
+      "You don't have permission to manage this app. Please contact your administrator for assistance. ({errorCode})",
   },
   outOfScopePermission: {
-    id: "WDQJCi",
+    // AppErrorCode.OUT_OF_SCOPE_PERMISSION
+    id: "IG+/HP",
     defaultMessage:
-      "Saleor cannot assign one or more permissions requested in your extension's manifest. This may be because your Saleor user account lacks the necessary privileges to grant them, or a component within your manifest's extensions array is requesting a permission not also declared in the manifest's main permissions list. Please verify your user account's privileges and ensure consistency in permission declarations throughout your ",
+      "The app requests permissions you cannot grant or that exceed its allowed scope. Review the app manifest and your permissions. {docsLink} ({errorCode})",
   },
   unique: {
-    id: "2qfU+C",
-    defaultMessage: "The extension identifier is already in use.",
+    // AppErrorCode.UNIQUE
+    id: "MS86iy",
+    // TODO: Add docs link when we have docs page with explanation
+    defaultMessage: "The extension identifier is already in use. ({errorCode})",
   },
   forbidden: {
-    defaultMessage: "You are not allowed to perform this action",
-    id: "hz2Xpo",
+    // AppErrorCode.FORBIDDEN
+    defaultMessage: "You are not allowed to perform this action. ({errorCode})",
+    id: "B0XvpR",
   },
   genericError: {
-    defaultMessage: "An unexpected error occurred, please try again later.",
-    id: "jGOGaN",
+    // AppErrorCode.INVALID
+    defaultMessage: "An unexpected error occurred. ({errorCode})",
+    id: "qACBaj",
   },
   invalidStatus: {
-    id: "M1PPZT",
+    // AppErrorCode.INVALID_STATUS
+    id: "tLM9Jr",
     defaultMessage:
-      "The operation cannot be performed right now, check if app with the same identifier doesn't have already pending installation on the extensions list",
+      "The operation cannot be performed right now. This might be due to a pending installation with the same identifier. {docsLink} ({errorCode})",
   },
   required: {
-    id: "moJfQ4",
+    // AppErrorCode.REQUIRED
+    id: "aXytBR",
     defaultMessage:
-      "A required field is missing in the extension's manifest. Please ensure all mandatory fields (e.g., 'id', 'version', 'name') are present.",
+      "A required field is missing in the extension's manifest. {docsLink} ({errorCode})",
   },
   graphqlError: {
-    id: "jGOGaN",
-    defaultMessage: "An unexpected error occurred, please try again later.",
+    // AppErrorCode.GRAPHQL_ERROR
+    id: "q5I8Ac",
+    defaultMessage: "An unexpected GraphQL error occurred. ({errorCode})",
   },
   unsupportedSaleorVersion: {
-    id: "bJiuIR",
-    defaultMessage: "The saleor version that your extension is trying to use is not supported.",
+    // AppErrorCode.UNSUPPORTED_SALEOR_VERSION
+    id: "fWaj1M",
+    defaultMessage:
+      "The Saleor version your extension is trying to use is newer than your current Saleor version. {docsLink} ({errorCode})",
   },
 });
 

@@ -10,52 +10,62 @@ import { IntlShape } from "react-intl";
 
 import { appManifestErrorMessages } from "./messages";
 
+export const getAppErrorMessageDescriptor = (code: AppErrorCode) => {
+  switch (code) {
+    case AppErrorCode.INVALID_MANIFEST_FORMAT:
+      return appManifestErrorMessages.invalidManifestFormat;
+    case AppErrorCode.INVALID_PERMISSION:
+      return appManifestErrorMessages.invalidPermission;
+    case AppErrorCode.INVALID_URL_FORMAT:
+      return appManifestErrorMessages.invalidUrlFormat;
+    case AppErrorCode.INVALID:
+      return appManifestErrorMessages.invalidManifest;
+    case AppErrorCode.INVALID_CUSTOM_HEADERS:
+      return appManifestErrorMessages.invalidCustomHeaders;
+    case AppErrorCode.MANIFEST_URL_CANT_CONNECT:
+      return appManifestErrorMessages.invalidManifestUrlCannotConnect;
+    case AppErrorCode.REQUIRED:
+      return appManifestErrorMessages.required;
+    case AppErrorCode.UNSUPPORTED_SALEOR_VERSION:
+      return appManifestErrorMessages.unsupportedSaleorVersion;
+    case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
+      return appManifestErrorMessages.outOfScopePermission;
+    case AppErrorCode.INVALID_STATUS:
+      return appManifestErrorMessages.invalidStatus;
+    case AppErrorCode.OUT_OF_SCOPE_APP:
+      return appManifestErrorMessages.outOfScopeApp;
+    case AppErrorCode.UNIQUE:
+      return appManifestErrorMessages.unique;
+    case AppErrorCode.GRAPHQL_ERROR:
+      return appManifestErrorMessages.graphqlError;
+    case AppErrorCode.FORBIDDEN:
+      return appManifestErrorMessages.forbidden;
+    case AppErrorCode.NOT_FOUND:
+      return appManifestErrorMessages.notFound;
+    default:
+      // eslint-disable-next-line no-case-declarations
+      const _exhaustiveCheck: never = code;
+
+      errorTracker.captureException(new Error(`Unhandled AppErrorCode: ${code}`));
+
+      return appManifestErrorMessages.genericError;
+  }
+};
+
+/** This method is used for getting formatted error message in place when we cannot use link for Learn more... */
 export function getAppInstallErrorMessage(
   err: AppErrorFragment,
   intl: IntlShape,
 ): string | undefined {
   if (err) {
-    switch (err.code) {
-      case AppErrorCode.INVALID_MANIFEST_FORMAT:
-        return intl.formatMessage(appManifestErrorMessages.invalidManifestFormat);
-      case AppErrorCode.INVALID_STATUS:
-        return intl.formatMessage(appManifestErrorMessages.invalidStatus);
-      case AppErrorCode.OUT_OF_SCOPE_APP:
-        return intl.formatMessage(appManifestErrorMessages.outOfScopeApp);
-      case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
-        return intl.formatMessage(appManifestErrorMessages.outOfScopePermission);
-      case AppErrorCode.INVALID_PERMISSION:
-        return intl.formatMessage(appManifestErrorMessages.invalidPermission);
-      case AppErrorCode.INVALID_URL_FORMAT:
-        return intl.formatMessage(appManifestErrorMessages.invalidUrlFormat);
-      case AppErrorCode.UNIQUE:
-        return intl.formatMessage(appManifestErrorMessages.unique);
-      case AppErrorCode.INVALID:
-        return intl.formatMessage(appManifestErrorMessages.invalidManifest);
-      case AppErrorCode.INVALID_CUSTOM_HEADERS:
-        return intl.formatMessage(appManifestErrorMessages.invalidCustomHeaders);
-      case AppErrorCode.MANIFEST_URL_CANT_CONNECT:
-        return intl.formatMessage(appManifestErrorMessages.invalidManifestUrlCannotConnect);
-      case AppErrorCode.REQUIRED:
-        return intl.formatMessage(appManifestErrorMessages.required);
-      case AppErrorCode.GRAPHQL_ERROR:
-        return intl.formatMessage(appManifestErrorMessages.graphqlError);
-      case AppErrorCode.UNSUPPORTED_SALEOR_VERSION:
-        return intl.formatMessage(appManifestErrorMessages.unsupportedSaleorVersion);
-      case AppErrorCode.FORBIDDEN:
-        return intl.formatMessage(appManifestErrorMessages.forbidden);
-      case AppErrorCode.NOT_FOUND:
-        return intl.formatMessage(appManifestErrorMessages.notFound);
-      default: {
-        // Check if all cases are handled:
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const _exhaustiveCheck: never = err.code;
+    const errorCode = err.code;
 
-        errorTracker.captureException(new Error(`Unhandled AppErrorCode: ${err.code}`));
+    const messageDescriptor = getAppErrorMessageDescriptor(errorCode);
 
-        return intl.formatMessage(appManifestErrorMessages.genericError);
-      }
-    }
+    return intl.formatMessage(messageDescriptor, {
+      errorCode,
+      docsLink: "",
+    });
   }
 
   return undefined;

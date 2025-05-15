@@ -1,17 +1,16 @@
-import { commonMessages } from "@dashboard/intl";
-import { IntlShape } from "react-intl";
 import { z } from "zod";
 
-import { appManifestErrorMessages } from "../../messages";
+export const MANIFEST_URL_CLIENT_VALIDATION_REQUIRED = "MANIFEST_URL_CLIENT_VALIDATION_REQUIRED";
+export const MANIFEST_URL_CLIENT_VALIDATION_INVALID_FORMAT =
+  "MANIFEST_URL_CLIENT_VALIDATION_INVALID_FORMAT";
 
-export const getFormSchema = (intl: IntlShape) => {
-  return z.object({
-    manifestUrl: z
-      .string()
-      .min(1, intl.formatMessage(commonMessages.requiredField))
-      .url(intl.formatMessage(appManifestErrorMessages.invalidUrlFormat)),
-  });
-};
+export const manifestFormSchema = z.object({
+  manifestUrl: z
+    .string()
+    // Note: error messages are treated as codes and will be mapped to correct error by form
+    .min(1, MANIFEST_URL_CLIENT_VALIDATION_REQUIRED)
+    .url(MANIFEST_URL_CLIENT_VALIDATION_INVALID_FORMAT),
+});
 
 // Due to disabled strictNullChecks in tsconfig.json, we need to use Required<z.infer<...>> to get the correct type
-export type ExtensionInstallFormData = Required<z.infer<ReturnType<typeof getFormSchema>>>;
+export type ExtensionInstallFormData = Required<z.infer<typeof manifestFormSchema>>;
