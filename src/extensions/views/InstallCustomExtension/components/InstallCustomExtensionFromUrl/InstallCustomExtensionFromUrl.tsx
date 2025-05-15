@@ -1,7 +1,6 @@
 import { Savebar } from "@dashboard/components/Savebar";
 import { messages } from "@dashboard/extensions/messages";
 import { ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
-import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import {
@@ -20,7 +19,7 @@ import { useInstallApp } from "../../hooks/useInstallApp";
 import { useLoadQueryParamsToForm } from "../../hooks/useLoadQueryParamsToForm";
 import { ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData";
-import { ManifestErrorMessage } from "../ManifestErrorMessage";
+import { ManifestErrorMessage } from "../ManifestErrorMessage/ManifestErrorMessage";
 
 export const InstallCustomExtensionFromUrl = ({
   trigger,

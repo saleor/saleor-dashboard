@@ -6,7 +6,7 @@ const DOCS_MANIFEST_COMMON_ERRORS_URL =
 // Placeholder for specific error documentation links
 // For now, all errors point to the same general manifest errors page.
 // TODO: Update with specific URLs once available.
-export const getSpecificManifestErrorDocLink = (errorCode?: string): string => {
+export const getSpecificManifestErrorDocLink = (_errorCode?: string): string => {
   // We'll add this when we add page with specific error code messages
   // if (errorCode === "INVALID_PERMISSION") {
   //   return "https://docs.saleor.io/docs/next/developer/extending/apps/manifest#invalid-permission";

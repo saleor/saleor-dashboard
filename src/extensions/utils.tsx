@@ -43,6 +43,7 @@ export const getAppErrorMessageDescriptor = (code: AppErrorCode) => {
     case AppErrorCode.NOT_FOUND:
       return appManifestErrorMessages.notFound;
     default:
+      // @ts-expect-error _exhaustiveCheck is intentionally unused for exhaustiveness checking
       // eslint-disable-next-line no-case-declarations
       const _exhaustiveCheck: never = code;
 
