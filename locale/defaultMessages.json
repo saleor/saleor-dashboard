@@ -5304,6 +5304,9 @@
     "context": "discount type shipping",
     "string": "Shipping"
   },
+  "UVvex/": {
+    "string": "When issuing a granted refund, please select the transaction you wish to apply the refund to."
+  },
   "UYKEsx": {
     "context": "collection filter published",
     "string": "Published"
@@ -8858,6 +8861,9 @@
   "quV5zH": {
     "context": "dialog title",
     "string": "Delete Token"
+  },
+  "qy/XqL": {
+    "string": "Select transaction"
   },
   "qzDwLa": {
     "context": "Invalid url value",
