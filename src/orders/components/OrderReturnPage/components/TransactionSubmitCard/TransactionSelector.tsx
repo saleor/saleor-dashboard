@@ -28,22 +28,40 @@ export const TransactionSelector = ({
     minute: "2-digit",
   });
 
-  const options = transactions.map((transaction, index) => {
-    const number = index + 1;
-    const date = dateIntl.format(new Date(transaction.createdAt));
-    const amount = transaction.chargedAmount.amount;
-    const currency = transaction.chargedAmount.currency;
+  const options = transactions
+    .filter(
+      transaction =>
+        transaction.chargedAmount.amount > 0 || transaction.authorizedAmount.amount > 0,
+    )
+    .map((transaction, index) => {
+      const number = index + 1;
+      const date = dateIntl.format(new Date(transaction.createdAt));
+      const amount = transaction.chargedAmount.amount;
+      const currency = transaction.chargedAmount.currency;
 
-    return {
-      label: `#${number} ${date}`,
-      value: transaction.id,
-      endAdornment: (
-        <Text whiteSpace="nowrap" fontWeight="medium">
-          {amount} {currency}
-        </Text>
-      ),
-    };
-  });
+      return {
+        label: `#${number} ${date}`,
+        value: transaction.id,
+        endAdornment: (
+          <Text whiteSpace="nowrap" fontWeight="medium">
+            {amount} {currency}
+          </Text>
+        ),
+      };
+    });
+
+  if (options.length === 0) {
+    return (
+      <Text as="p" size={2} color="warning1" marginBottom={4}>
+        {intl.formatMessage({
+          defaultMessage:
+            "You cannot issue a granted refund for this order. None of your transactions have authorized or charged amount.",
+          id: "IWP25U",
+        })}
+      </Text>
+    );
+  }
+
   const selectedTransaction = options.find(transaction => transaction.value === value);
 
   const handleChange = (event: ChangeEvent) => {

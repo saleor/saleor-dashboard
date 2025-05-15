@@ -3396,6 +3396,9 @@
     "context": "gift card bulk create success dialog export button",
     "string": "Export To Email"
   },
+  "IWP25U": {
+    "string": "You cannot issue a granted refund for this order. None of your transactions have authorized or charged amount."
+  },
   "IYuKD6": {
     "string": "No discounts found"
   },
