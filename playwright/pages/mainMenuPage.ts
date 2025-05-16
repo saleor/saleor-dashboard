@@ -9,7 +9,8 @@ export class MainMenuPage extends BasePage {
     readonly userMenu = page.getByTestId("userMenu"),
     readonly accountSettings = page.getByTestId("account-settings-button"),
     readonly catalog = page.getByTestId("menu-item-label-catalogue"),
-    readonly content = page.getByTestId("menu-item-label-pages"),
+    readonly models = page.getByTestId("menu-item-label-models"),
+    readonly modelTypes = page.getByTestId("menu-item-label-model-types"),
     readonly categories = page.getByTestId("menu-item-label-categories"),
     readonly collections = page.getByTestId("menu-item-label-collections"),
     readonly configuration = page.getByTestId("menu-item-label-configure"),
@@ -58,8 +59,12 @@ export class MainMenuPage extends BasePage {
     await this.translations.click();
   }
 
-  async openContent() {
-    await this.content.click();
+  async openModels() {
+    await this.models.click();
+  }
+
+  async openModelTypes() {
+    await this.modelTypes.click();
   }
 
   async openCustomers() {
