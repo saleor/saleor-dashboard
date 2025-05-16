@@ -7,6 +7,7 @@ export class ConfigurationPage extends BasePage {
   constructor(
     page: Page,
     readonly pluginsButton = page.locator("[data-test-id*='plugins']"),
+    readonly installedExtensionsButton = page.locator("[data-test-id*='installed-extensions']"),
     readonly permissionGroupsButton = page.locator("[data-test-id*='permission-groups']"),
     readonly staffMembersButton = page.locator("[data-test-id*='staff members']"),
     readonly siteSettingsButton = page.locator("[data-test-id*='site-settings']"),
@@ -55,6 +56,10 @@ export class ConfigurationPage extends BasePage {
 
   async openPlugins() {
     await this.pluginsButton.click();
+  }
+
+  async openInstalledExtensions() {
+    await this.installedExtensionsButton.click();
   }
 
   async goToConfigurationView() {
