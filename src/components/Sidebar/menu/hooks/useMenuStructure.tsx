@@ -31,6 +31,7 @@ import { commonMessages, sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListPath } from "@dashboard/pages/urls";
+import { pageTypeAddUrl, pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import { productListUrl } from "@dashboard/products/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
@@ -248,6 +249,13 @@ export function useMenuStructure() {
           label: intl.formatMessage(sectionNames.models),
           id: "models",
           url: pageListPath,
+          permissions: [PermissionEnum.MANAGE_PAGES],
+          type: "item",
+        },
+        {
+          label: intl.formatMessage(sectionNames.modelTypes),
+          id: "model-types",
+          url: pageTypeListUrl(),
           permissions: [PermissionEnum.MANAGE_PAGES],
           type: "item",
         },

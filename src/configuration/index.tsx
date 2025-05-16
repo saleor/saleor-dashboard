@@ -176,28 +176,6 @@ export function createConfigurationMenu(
     },
     {
       label: intl.formatMessage({
-        id: "HjXnIf",
-        defaultMessage: "Content Management",
-      }),
-      menuItems: [
-        {
-          description: intl.formatMessage({
-            id: "JPH/uP",
-            defaultMessage: "Define types of content pages used in your store",
-          }),
-          icon: <PageTypes />,
-          permissions: [
-            PermissionEnum.MANAGE_PAGES,
-            PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-          ],
-          title: intl.formatMessage(sectionNames.modelTypes),
-          url: pageTypeListUrl(),
-          testId: "configuration-menu-page-types",
-        },
-      ],
-    },
-    {
-      label: intl.formatMessage({
         id: "YZl6cv",
         defaultMessage: "Miscellaneous",
       }),

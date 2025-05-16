@@ -55,7 +55,6 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
       <TopNav
         isAlignToRight={false}
         withoutBorder
-        href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.modelTypes)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">

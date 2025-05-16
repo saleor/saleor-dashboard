@@ -122,8 +122,8 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                   <Text>{intl.formatMessage(commonMessages.generalInformations)}</Text>
                   <Text size={3} fontWeight="regular" display="block">
                     <FormattedMessage
-                      id="kZfIl/"
-                      defaultMessage="These are general information about this Content Type."
+                      id="7usRcR"
+                      defaultMessage="These are general information about this model type."
                     />
                   </Text>
                 </Box>
