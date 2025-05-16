@@ -61,8 +61,8 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
             error={!!formErrors.pageType}
             helperText={getPageErrorMessage(formErrors.pageType, intl)}
             label={intl.formatMessage({
-              id: "W5SK5c",
-              defaultMessage: "Select content type",
+              id: "WVrHXL",
+              defaultMessage: "Select model type",
             })}
             options={pageTypes}
             fetchOptions={fetchPageTypes}

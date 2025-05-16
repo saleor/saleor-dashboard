@@ -90,14 +90,14 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
             <DashboardModal.Header data-test-id="add-menu-item-dialog-title">
               {initial
                 ? intl.formatMessage({
-                    id: "KKQUMK",
+                    id: "GUeIcq",
                     defaultMessage: "Edit Item",
-                    description: "edit menu item, header",
+                    description: "edit structure, header",
                   })
                 : intl.formatMessage({
-                    id: "H3Uirw",
+                    id: "zJpP1T",
                     defaultMessage: "Add Item",
-                    description: "create new menu item, header",
+                    description: "create new structure, header",
                   })}
             </DashboardModal.Header>
 
@@ -110,9 +110,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                   data-test-id="menu-item-name-input"
                   disabled={disabled}
                   label={intl.formatMessage({
-                    id: "0Vyr8h",
+                    id: "z/pKCq",
                     defaultMessage: "Name",
-                    description: "menu item name",
+                    description: "structure name",
                   })}
                   value={value}
                   onChange={onChange}
