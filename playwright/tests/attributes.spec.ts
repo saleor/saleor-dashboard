@@ -44,7 +44,10 @@ for (const attr of attributeClasses) {
         timeout: 10000,
       });
       await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).toBeChecked();
+      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
+        "data-state",
+        "on",
+      );
       await expect(attributesPage.valueRequiredCheckbox).toBeChecked();
     });
   }
@@ -79,7 +82,10 @@ for (const attr of attributeClasses) {
         timeout: 10000,
       });
       await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).not.toBeChecked();
+      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
+        "data-state",
+        "off",
+      );
       await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
     });
   }
@@ -112,7 +118,10 @@ for (const attr of attributeClasses) {
         timeout: 10000,
       });
       await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).toBeChecked();
+      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
+        "data-state",
+        "on",
+      );
       await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
     });
   }

@@ -1,11 +1,10 @@
 import { AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { Select } from "@dashboard/components/Select";
 import { MeasurementUnitsEnum } from "@dashboard/graphql";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Option } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Option, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -115,14 +114,17 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
   return (
     <div>
       <div className={classes.hr} />
-      <ControlledCheckbox
+
+      <Checkbox
         data-test-id="numeric-with-unit"
         name="selectUnit"
-        label={formatMessage(M.messages.selectUnit)}
         checked={data.unit !== null}
-        onChange={({ target }) => setUnitData({ unit: target.value ? undefined : null })}
+        onCheckedChange={checked => setUnitData({ unit: checked ? undefined : null })}
         disabled={disabled}
-      />
+        marginY={2}
+      >
+        <Text fontSize={3}>{formatMessage(M.messages.selectUnit)}</Text>
+      </Checkbox>
       {data.unit !== null && (
         <Box display="flex" gap={4} justifyContent="space-between">
           <Box width="100%">

@@ -92,3 +92,8 @@ body {
 .simple-radio-group > *:first-child {
   margin-top: 4px !important;
 }
+
+.multiline-toggle-wrapper > * > button {
+  align-self: flex-start;
+  margin-top: 4px;
+}
