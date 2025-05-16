@@ -27,8 +27,8 @@ export const PageTypeCreate: React.FC = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "5bJ26s",
-            defaultMessage: "Successfully created page type",
+            id: "TKQiDp",
+            defaultMessage: "Successfully created model type",
           }),
         });
         navigate(pageTypeUrl(updateData.pageTypeCreate.pageType.id));
@@ -59,8 +59,8 @@ export const PageTypeCreate: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: "BftZHy",
-          defaultMessage: "Create Page Type",
+          id: "vY17L8",
+          defaultMessage: "Create Model type",
           description: "window title",
         })}
       />
