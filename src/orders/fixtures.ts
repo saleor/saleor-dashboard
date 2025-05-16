@@ -244,6 +244,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "laura.stone@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -281,6 +286,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "elizabeth.vaughn@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -300,6 +310,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "david.lawson@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -337,6 +352,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "aaron.randall@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -374,6 +394,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "laura.jensen@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -411,6 +436,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "jenna.villa@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -448,6 +478,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "wesley.davis@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -485,6 +520,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "anthony.gonzalez@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -522,6 +562,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "denise.freeman@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -559,6 +604,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "james.ball@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -596,6 +646,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "michael.martinez@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -633,6 +688,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "melissa.simon@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -670,6 +730,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "justin.mccoy@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -707,6 +772,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "anthony.gonzalez@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -744,6 +814,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "bradley.ford@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -781,6 +856,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "david.lawson@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -818,6 +898,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "lauren.watson@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -855,6 +940,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "mark.lee@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -892,6 +982,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "kara.murphy@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -929,6 +1024,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "curtis.bailey@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
 ];
 
