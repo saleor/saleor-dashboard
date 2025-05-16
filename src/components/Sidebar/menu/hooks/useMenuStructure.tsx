@@ -278,7 +278,7 @@ export function useMenuStructure() {
       icon: renderIcon(<ModelingIcon />),
       label: intl.formatMessage(sectionNames.modeling),
       permissions: [PermissionEnum.MANAGE_PAGES, PermissionEnum.MANAGE_MENUS],
-      id: "pages",
+      id: "modeling",
       url: pageListPath,
       type: "itemGroup",
     },
