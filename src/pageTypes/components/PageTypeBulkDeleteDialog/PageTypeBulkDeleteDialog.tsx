@@ -29,17 +29,17 @@ const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        id: "CcEwXH",
-        defaultMessage: "Delete Page Types",
+        id: "/jU+sI",
+        defaultMessage: "Delete model types",
         description: "dialog header",
       })}
       variant="delete"
     >
       {hasPages ? (
         <FormattedMessage
-          id="2Zyit2"
-          defaultMessage="{counter,plural,one{Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Page Types you want to delete are used by some pages. Deleting these page types will also delete those pages. Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
-          description="delete page types with its pages"
+          id="45W13E"
+          defaultMessage="{counter,plural,one{Model type you want to delete is used by some models. Deleting this model type will also delete those models. Are you sure you want to delete this model type? After doing so you won’t be able to revert changes.} other{Model types you want to delete are used by some models. Deleting these model types will also delete those models. Are you sure you want to delete {displayQuantity} model types? After doing so you won’t be able to revert changes.}}"
+          description="delete model types with its models"
           values={{
             counter: quantity,
             displayQuantity: <strong>{quantity}</strong>,
@@ -47,9 +47,9 @@ const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
         />
       ) : (
         <FormattedMessage
-          id="RZmdM3"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}"
-          description="delete page types"
+          id="KIsu7m"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this model type? After doing so you won’t be able to revert changes.} other{Are you sure you want to delete {displayQuantity} model types? After doing so you won’t be able to revert changes.}}"
+          description="delete model types"
           values={{
             counter: quantity,
             displayQuantity: <strong>{quantity}</strong>,

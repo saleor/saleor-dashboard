@@ -45,8 +45,8 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
         })}
         title={intl.formatMessage(
           {
-            id: "IOshTA",
-            defaultMessage: 'Translation MenuItem "{menuItemName}" - {languageCode}',
+            id: "hM40BV",
+            defaultMessage: 'Translation structure "{menuItemName}" - {languageCode}',
             description: "header",
           },
           {
@@ -72,9 +72,9 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
           fields={[
             {
               displayName: intl.formatMessage({
-                id: "0Vyr8h",
+                id: "7vnKNE",
                 defaultMessage: "Name",
-                description: "menu item name",
+                description: "structure item name",
               }),
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,

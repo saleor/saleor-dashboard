@@ -24,9 +24,9 @@ import { inputTypeMessages, messages } from "./messages";
 
 const entityTypeMessages = defineMessages({
   page: {
-    id: "Iafyt5",
-    defaultMessage: "Pages",
-    description: "page attribute entity type",
+    id: "c7cakc",
+    defaultMessage: "Models",
+    description: "model attribute entity type",
   },
   product: {
     id: "5TUpjG",

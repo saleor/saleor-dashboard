@@ -100,8 +100,8 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           />
           <FilterTab
             label={intl.formatMessage({
-              id: "CxfKLC",
-              defaultMessage: "Pages",
+              id: "blWvag",
+              defaultMessage: "Models",
             })}
             onClick={filters.onPagesTabClick}
           />
@@ -121,8 +121,8 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           />
           <FilterTab
             label={intl.formatMessage({
-              id: "AcMzwj",
-              defaultMessage: "Menu items",
+              id: "AN+zaK",
+              defaultMessage: "Structures",
             })}
             onClick={filters.onMenuItemsTabClick}
           />
