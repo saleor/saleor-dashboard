@@ -433,7 +433,7 @@ export const STATIC_COLLECTION_OPTIONS: LeftOperand[] = [
 export const STATIC_PAGE_OPTIONS: LeftOperand[] = [
   {
     value: "pageTypes",
-    label: "Page types",
+    label: "Model types",
     type: "pageTypes",
     slug: "pageTypes",
   },

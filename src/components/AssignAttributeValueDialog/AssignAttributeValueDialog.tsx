@@ -11,23 +11,23 @@ import { filterPagesByAttributeValues, filterProductsByAttributeValues } from ".
 
 const pagesMessages = defineMessages({
   confirmBtn: {
-    id: "idr+JK",
+    id: "ch96Wv",
     defaultMessage: "Assign and save",
-    description: "assign reference to a page, button",
+    description: "assign reference to a model, button",
   },
   header: {
-    id: "5I7Lc2",
-    defaultMessage: "Assign page",
+    id: "Z+m5hG",
+    defaultMessage: "Assign model",
     description: "dialog header",
   },
   searchLabel: {
-    id: "izJvcM",
-    defaultMessage: "Search pages",
+    id: "kTt3D2",
+    defaultMessage: "Search models",
     description: "label",
   },
   searchPlaceholder: {
-    id: "OFW7nq",
-    defaultMessage: "Search by page name, etc...",
+    id: "Z768vg",
+    defaultMessage: "Search by model name, etc...",
     description: "placeholder",
   },
 });

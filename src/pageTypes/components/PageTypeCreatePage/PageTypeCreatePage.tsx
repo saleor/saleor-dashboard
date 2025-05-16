@@ -63,8 +63,8 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
             <TopNav
               href={pageTypeListUrl()}
               title={intl.formatMessage({
-                id: "caqRmN",
-                defaultMessage: "Create Page Type",
+                id: "Gxo/XC",
+                defaultMessage: "Create model type",
                 description: "header",
               })}
             />
@@ -81,8 +81,8 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                   <Text>{intl.formatMessage(commonMessages.generalInformations)}</Text>
                   <Text size={3} fontWeight="regular">
                     <FormattedMessage
-                      id="kZfIl/"
-                      defaultMessage="These are general information about this Content Type."
+                      id="7usRcR"
+                      defaultMessage="These are general information about this model type."
                     />
                   </Text>
                 </div>

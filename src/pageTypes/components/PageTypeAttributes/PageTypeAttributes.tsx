@@ -74,8 +74,8 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
       <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
-            id: "iQxjow",
-            defaultMessage: "Content Attributes",
+            id: "pgTwKM",
+            defaultMessage: "Model attributes",
             description: "section header",
           })}
         </DashboardCard.Title>

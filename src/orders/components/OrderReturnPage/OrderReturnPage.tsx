@@ -130,6 +130,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 refundShipmentCosts={data.refundShipmentCosts}
                 canRefundShipping={canRefundShipping}
                 shippingCosts={order?.shippingPrice?.gross}
+                transactionId={data.transactionId}
                 amountData={getReturnProductsAmountValues(order, data)}
                 onChange={change}
                 disabled={isSaveDisabled}

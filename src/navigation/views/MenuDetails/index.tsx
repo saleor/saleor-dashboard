@@ -180,14 +180,14 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         onConfirm={() => extractMutationErrors(menuDelete({ variables: { id } }))}
         variant="delete"
         title={intl.formatMessage({
-          id: "QzseV7",
-          defaultMessage: "Delete Menu",
+          id: "x79cEk",
+          defaultMessage: "Delete structure",
           description: "dialog header",
         })}
       >
         <FormattedMessage
-          id="G/SYtU"
-          defaultMessage="Are you sure you want to delete menu {menuName}?"
+          id="U2DyeR"
+          defaultMessage="Are you sure you want to delete structure {menuName}?"
           values={{
             menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
           }}

@@ -46,8 +46,8 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
             <Box display="grid" gap={6}>
               <DashboardModal.Header data-test-id="create-menu-dialog-title">
                 <FormattedMessage
-                  id="0OtaXa"
-                  defaultMessage="Create Menu"
+                  id="pSb46V"
+                  defaultMessage="Create structure"
                   description="dialog header"
                 />
               </DashboardModal.Header>
@@ -59,8 +59,8 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
                 fullWidth
                 helperText={getMenuErrorMessage(formErrors.name, intl)}
                 label={intl.formatMessage({
-                  id: "jhh/D6",
-                  defaultMessage: "Menu Title",
+                  id: "5KS3f4",
+                  defaultMessage: "Structure title",
                 })}
                 name={"name" as keyof MenuCreateDialogFormData}
                 value={data.name}

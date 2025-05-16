@@ -64,8 +64,8 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "NGc9kE",
-            defaultMessage: "Page type deleted",
+            id: "W/lDQA",
+            defaultMessage: "Model type deleted",
           }),
         });
         navigate(pageTypeListUrl(), { replace: true });
@@ -226,9 +226,9 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
               }
             >
               <FormattedMessage
-                id="WFG7Zk"
+                id="Y3ELdI"
                 defaultMessage="Unassign"
-                description="unassign attribute from page type, button"
+                description="unassign attribute from model type, button"
               />
             </Button>
           ),
@@ -273,8 +273,8 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
       )}
       <BulkAttributeUnassignDialog
         title={intl.formatMessage({
-          id: "Rpfa+t",
-          defaultMessage: "Unassign Attribute from Page Type",
+          id: "N7tQ9P",
+          defaultMessage: "Unassign attribute from model type",
           description: "dialog header",
         })}
         attributeQuantity={attributeListActions.listElements.length}
@@ -286,8 +286,8 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
       />
       <AttributeUnassignDialog
         title={intl.formatMessage({
-          id: "/L8wzi",
-          defaultMessage: "Unassign Attribute From Page Type",
+          id: "N7tQ9P",
+          defaultMessage: "Unassign attribute from model type",
           description: "dialog header",
         })}
         attributeName={getStringOrPlaceholder(

@@ -58,6 +58,7 @@ const transactionSubmitCardProps = {
   submitStatus: "default" as const,
   onAmountChange: () => undefined,
   isAmountDirty: false,
+  transactionId: "VHJhbnNhY3Rpb25JdGVtOmZjNzhhZDkwLWQ3NDgtNDdlNi04YWM4LWE0YjdiNjRlMmE1MQ==",
 };
 
 describe("TransactionSubmitCard", () => {
@@ -81,6 +82,7 @@ describe("TransactionSubmitCard", () => {
     // Act
     await userEvent.click(autoGrantRefundCheckbox);
     await userEvent.click(submitBtn);
+
     // Assert
     expect(onChangeFn).toHaveBeenCalledWith({
       target: {

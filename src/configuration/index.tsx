@@ -11,7 +11,6 @@ import useShop from "@dashboard/hooks/useShop";
 import Attributes from "@dashboard/icons/Attributes";
 import Channels from "@dashboard/icons/Channels";
 import Miscellaneous from "@dashboard/icons/Miscellaneous";
-import PageTypes from "@dashboard/icons/PageTypes";
 import PermissionGroups from "@dashboard/icons/PermissionGroups";
 import Plugins from "@dashboard/icons/Plugins";
 import ProductTypes from "@dashboard/icons/ProductTypes";
@@ -22,7 +21,6 @@ import Taxes from "@dashboard/icons/Taxes";
 import Warehouses from "@dashboard/icons/Warehouses";
 import { sectionNames } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
-import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { pluginListUrl } from "@dashboard/plugins/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
@@ -171,28 +169,6 @@ export function createConfigurationMenu(
           title: intl.formatMessage(sectionNames.channels),
           url: channelsListUrl(),
           testId: "configuration-menu-channels",
-        },
-      ],
-    },
-    {
-      label: intl.formatMessage({
-        id: "HjXnIf",
-        defaultMessage: "Content Management",
-      }),
-      menuItems: [
-        {
-          description: intl.formatMessage({
-            id: "JPH/uP",
-            defaultMessage: "Define types of content pages used in your store",
-          }),
-          icon: <PageTypes />,
-          permissions: [
-            PermissionEnum.MANAGE_PAGES,
-            PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-          ],
-          title: intl.formatMessage(sectionNames.pageTypes),
-          url: pageTypeListUrl(),
-          testId: "configuration-menu-page-types",
         },
       ],
     },
