@@ -120,9 +120,9 @@ export const AppPermissionsDialog = ({
             marginBottom={6}
             marginTop={4}
             padding={4}
-            backgroundColor="critical1"
+            backgroundColor="critical1Focused"
           >
-            <Text marginBottom={2} as={"p"} color="critical1" size={4} fontWeight="bold">
+            <Text marginBottom={2} as={"p"} color="warning1" size={4} fontWeight="bold">
               {formatMessage(messages.warningHeading)}
             </Text>
             <Text as={"p"}>{formatMessage(messages.warningParagraph1)}</Text>
