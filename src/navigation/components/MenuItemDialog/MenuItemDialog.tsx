@@ -90,14 +90,14 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
             <DashboardModal.Header data-test-id="add-menu-item-dialog-title">
               {initial
                 ? intl.formatMessage({
-                    id: "KKQUMK",
+                    id: "GUeIcq",
                     defaultMessage: "Edit Item",
-                    description: "edit menu item, header",
+                    description: "edit structure, header",
                   })
                 : intl.formatMessage({
-                    id: "H3Uirw",
+                    id: "zJpP1T",
                     defaultMessage: "Add Item",
-                    description: "create new menu item, header",
+                    description: "create new structure, header",
                   })}
             </DashboardModal.Header>
 
