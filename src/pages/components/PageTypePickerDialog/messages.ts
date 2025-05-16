@@ -2,13 +2,13 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   pageType: {
-    id: "V45+rx",
-    defaultMessage: "Page type",
+    id: "OUX4LB",
+    defaultMessage: "Model type",
     description: "input label",
   },
   selectPageType: {
-    id: "F0N1SC",
-    defaultMessage: "Select a page type",
+    id: "QJJke/",
+    defaultMessage: "Select a model type",
     description: "dialog header",
   },
 });

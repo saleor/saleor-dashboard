@@ -14,7 +14,7 @@ export const getLinkTypeOptions = (intl: IntlShape) =>
     },
     {
       value: "page",
-      label: intl.formatMessage(sectionNames.pages),
+      label: intl.formatMessage(sectionNames.models),
     },
     {
       value: "link",

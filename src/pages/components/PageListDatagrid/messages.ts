@@ -2,18 +2,18 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   empty: {
-    id: "iMJka8",
-    defaultMessage: "No pages found",
+    id: "zv9OGI",
+    defaultMessage: "No models found",
   },
   published: {
-    id: "G1KzEx",
+    id: "GhSB79",
     defaultMessage: "Published",
-    description: "page status",
+    description: "model status",
   },
   notPublished: {
-    id: "WvMDHa",
+    id: "3dJ2Sc",
     defaultMessage: "Not published",
-    description: "page status",
+    description: "model status",
   },
 });
 

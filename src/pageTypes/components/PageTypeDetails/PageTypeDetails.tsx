@@ -36,8 +36,8 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
           error={!!formErrors.name}
           helperText={getPageErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
-            id: "jWna9Q",
-            defaultMessage: "Content Type Name",
+            id: "DWWw3M",
+            defaultMessage: "Model type Name",
           })}
           name="name"
           data-test-id="page-type-name"

@@ -3,7 +3,6 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { configurationMenuUrl } from "@dashboard/configuration";
 import { PageTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -55,8 +54,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
       <TopNav
         isAlignToRight={false}
         withoutBorder
-        href={configurationMenuUrl}
-        title={intl.formatMessage(sectionNames.pageTypes)}
+        title={intl.formatMessage(sectionNames.modelTypes)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
@@ -76,9 +74,9 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
               selectAllLabel={intl.formatMessage({
-                id: "ER0uUn",
-                defaultMessage: "All page types",
-                description: "select all page types preset label",
+                id: "P8vgix",
+                defaultMessage: "All model types",
+                description: "select all model types preset label",
               })}
             />
           </Box>
@@ -89,7 +87,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
           variant="primary"
           data-test-id="create-page-type"
         >
-          <FormattedMessage id="6JlXeD" defaultMessage="Create page type" description="button" />
+          <FormattedMessage id="+qDoi0" defaultMessage="Create model type" description="button" />
         </Button>
       </TopNav>
       <DashboardCard gap={0}>
@@ -98,8 +96,8 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
             <SearchInput
               initialSearch={initialSearch}
               placeholder={intl.formatMessage({
-                id: "3UUjQv",
-                defaultMessage: "Search page types...",
+                id: "INw68F",
+                defaultMessage: "Search model types...",
               })}
               onSearchChange={onSearchChange}
             />
