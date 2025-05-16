@@ -1187,10 +1187,6 @@
     "context": "alert",
     "string": "Warehouse limit reached"
   },
-  "5I7Lc2": {
-    "context": "dialog header",
-    "string": "Assign model"
-  },
   "5JT4v2": {
     "context": "dialog header",
     "string": "Send Invoice"
@@ -1267,9 +1263,6 @@
   "5b0Boq": {
     "context": "Dry run items list default message",
     "string": "Choose the object"
-  },
-  "5bJ26s": {
-    "string": "Successfully created model type"
   },
   "5blVMu": {
     "context": "e-mail or full name",
@@ -2195,10 +2188,6 @@
   "BfJGij": {
     "context": "header",
     "string": "Address Information"
-  },
-  "BftZHy": {
-    "context": "window title",
-    "string": "Create Model type"
   },
   "BjxQ3u": {
     "context": "add shipping address first label",
@@ -3254,9 +3243,6 @@
     "context": "attribute's label'",
     "string": "Default Label"
   },
-  "HjXnIf": {
-    "string": "Content Management"
-  },
   "HlCkMT": {
     "string": "Order line added"
   },
@@ -3541,9 +3527,6 @@
   },
   "JMbFNo": {
     "string": "Successfully created new page"
-  },
-  "JPH/uP": {
-    "string": "Define types of content pages used in your store"
   },
   "JQH+Iy": {
     "context": "resent code success message",
@@ -4297,10 +4280,6 @@
   },
   "OFTsI1": {
     "string": "Attempts:"
-  },
-  "OFW7nq": {
-    "context": "placeholder",
-    "string": "Search by model name, etc..."
   },
   "OGemtu": {
     "context": "payment status",
@@ -5110,6 +5089,9 @@
   "TJ7WHA": {
     "context": "tax strategy combobox choice",
     "string": "Use tax app"
+  },
+  "TKQiDp": {
+    "string": "Successfully created model type"
   },
   "TKmub+": {
     "string": "This field is required"
@@ -6056,6 +6038,10 @@
   "YzLUXA": {
     "string": "Ensure this value is greater than 0."
   },
+  "Z+m5hG": {
+    "context": "dialog header",
+    "string": "Assign model"
+  },
   "Z/7hyu": {
     "context": "card balance label",
     "string": "Card Balance"
@@ -6066,6 +6052,10 @@
   },
   "Z6QAbw": {
     "string": "This variant does not have any digital content"
+  },
+  "Z768vg": {
+    "context": "placeholder",
+    "string": "Search by model name, etc..."
   },
   "Z7Tf8e": {
     "context": "stock exceeded dialog description",
@@ -6677,6 +6667,10 @@
   "cgsY/X": {
     "context": "page header",
     "string": "Create New Category"
+  },
+  "ch96Wv": {
+    "context": "assign reference to a model, button",
+    "string": "Assign and save"
   },
   "chJmBW": {
     "context": "card text, app install page",
@@ -7514,10 +7508,6 @@
     "context": "customer",
     "string": "Join Date"
   },
-  "idr+JK": {
-    "context": "assign reference to a model, button",
-    "string": "Assign and save"
-  },
   "if9gAZ": {
     "context": "Transaction event status - unknown status, info without event data",
     "string": "Info"
@@ -7563,10 +7553,6 @@
   },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
-  },
-  "izJvcM": {
-    "context": "label",
-    "string": "Search models"
   },
   "j/Oo0B": {
     "context": "bulk actions button label",
@@ -7829,6 +7815,10 @@
   "kTr2o8": {
     "string": "Attribute name"
   },
+  "kTt3D2": {
+    "context": "label",
+    "string": "Search models"
+  },
   "kVKTwC": {
     "context": "order expiration card title",
     "string": "Order expiration"
@@ -7858,9 +7848,6 @@
   "kYtxJ1": {
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
-  },
-  "kZfIl/": {
-    "string": "These are general information about this Content Type."
   },
   "kak5vT": {
     "context": "order refund amount",
@@ -9572,6 +9559,10 @@
   "vXFPD6": {
     "context": "voucher discount type",
     "string": "Fixed Amount"
+  },
+  "vY17L8": {
+    "context": "window title",
+    "string": "Create Model type"
   },
   "vZMs8f": {
     "context": "default product variant indicator",
