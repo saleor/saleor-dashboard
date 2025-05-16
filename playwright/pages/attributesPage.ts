@@ -144,6 +144,12 @@ export class AttributesPage extends BasePage {
     });
   }
 
+  async checkIfAttrEditValueModalIsNotOpen() {
+    await this.editAttrValueDialog.waitFor({
+      state: "hidden",
+    });
+  }
+
   async typeAttributeDefaultLabel(attributeDefaultLabel: string) {
     await this.attributeDefaultLabelInput.fill(attributeDefaultLabel);
   }
