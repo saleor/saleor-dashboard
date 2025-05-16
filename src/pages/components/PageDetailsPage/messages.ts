@@ -2,33 +2,33 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   title: {
-    id: "gr53VQ",
-    defaultMessage: "Create Page",
+    id: "lDdj6f",
+    defaultMessage: "Create model",
     description: "page header",
   },
   seoOptionsDescription: {
-    id: "Id9vlh",
-    defaultMessage: "Add search engine title and description to make this page easier to find",
-    description: "page seo options description",
+    id: "r7uSVR",
+    defaultMessage: "Add search engine title and description to make this model easier to find",
+    description: "model seo options description",
   },
   hiddenLabel: {
-    id: "/TK7QD",
+    id: "5MtM5w",
     defaultMessage: "Hidden",
-    description: "page label",
+    description: "model label",
   },
   hiddenSecondLabel: {
-    id: "GZgjK7",
+    id: "7X0w8O",
     defaultMessage: "will be visible from {date}",
-    description: "page",
+    description: "model",
   },
   visibleLabel: {
-    id: "X26jCC",
+    id: "GLsIie",
     defaultMessage: "Visible",
-    description: "page label",
+    description: "model label",
   },
   setAvailabilityDate: {
-    id: "eP2yRZ",
+    id: "nK68Sg",
     defaultMessage: "Set availability date",
-    description: "page availability date label",
+    description: "model availability date label",
   },
 });
