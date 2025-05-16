@@ -8,17 +8,17 @@ import { ManifestErrorMessage } from "./ManifestErrorMessage/ManifestErrorMessag
 
 type ManifestUrlFieldControllerProps<TFormValues extends FieldValues> =
   UseControllerProps<TFormValues> &
-  Omit<
-    ComponentProps<typeof InputWithPlaceholder>,
-    | "value"
-    | "onChange"
-    | "onBlur"
-    | "error"
-    | "aria-invalid"
-    | "aria-errormessage"
-    | "name"
-    | "ref"
-  >;
+    Omit<
+      ComponentProps<typeof InputWithPlaceholder>,
+      | "value"
+      | "onChange"
+      | "onBlur"
+      | "error"
+      | "aria-invalid"
+      | "aria-errormessage"
+      | "name"
+      | "ref"
+    >;
 
 export const ManifestUrlFieldController = <
   TFormValues extends FieldValues = ExtensionInstallFormData,
