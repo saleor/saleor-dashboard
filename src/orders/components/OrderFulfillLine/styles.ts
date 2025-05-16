@@ -8,6 +8,8 @@ export const useStyles = makeStyles(
     },
     colName: {
       width: 220,
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
     },
     colQuantity: {
       textAlign: "right",

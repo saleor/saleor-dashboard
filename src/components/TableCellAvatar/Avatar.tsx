@@ -7,7 +7,6 @@ import { useAvatarStyles } from "./styles";
 export const AVATAR_MARGIN = 40;
 
 export interface AvatarProps {
-  initials?: string;
   thumbnail?: string;
   alignRight?: boolean;
   avatarProps?: string;
@@ -19,7 +18,6 @@ export interface AvatarProps {
 const Avatar: React.FC<AvatarProps> = ({
   children,
   alignRight,
-  initials,
   thumbnail,
   avatarProps,
   badge,
@@ -34,7 +32,7 @@ const Avatar: React.FC<AvatarProps> = ({
       })}
     >
       {badge}
-      <AvatarImage thumbnail={thumbnail} initials={initials} avatarProps={avatarProps} />
+      <AvatarImage thumbnail={thumbnail} avatarProps={avatarProps} />
       {!alignRight && <div className={classes.children}>{children}</div>}
     </div>
   );

@@ -132,10 +132,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                           }
                         />
                       </TableCell>
-                      <TableCellAvatar
-                        className={classes.avatar}
-                        thumbnail={maybe(() => product.thumbnail.url)}
-                      />
+                      <TableCellAvatar thumbnail={maybe(() => product.thumbnail.url)} />
                       <TableCell className={classes.colName} colSpan={2}>
                         {maybe(() => product.name)}
                       </TableCell>

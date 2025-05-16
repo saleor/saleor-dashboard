@@ -148,10 +148,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                           }
                         />
                       </TableCell>
-                      <TableCellAvatar
-                        className={classes.avatar}
-                        thumbnail={maybe(() => product.thumbnail.url)}
-                      />
+                      <TableCellAvatar thumbnail={maybe(() => product.thumbnail.url)} />
                       <TableCell
                         className={classes.colName}
                         colSpan={2}
