@@ -76,8 +76,8 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           fields={[
             {
               displayName: intl.formatMessage({
-                id: "gvOzOl",
-                defaultMessage: "Page Title",
+                id: "DaPGcn",
+                defaultMessage: "Model title",
               }),
               name: PageTranslationInputFieldName.title,
               translation: data?.translation?.title || null,
@@ -86,9 +86,9 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             },
             {
               displayName: intl.formatMessage({
-                id: "gMwpNC",
-                defaultMessage: "Content",
-                description: "page content",
+                id: "ymvZrH",
+                defaultMessage: "Models",
+                description: "page models",
               }),
               name: PageTranslationInputFieldName.content,
               translation: data?.translation?.content || null,
