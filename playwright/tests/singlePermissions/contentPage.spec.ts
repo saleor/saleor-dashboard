@@ -43,5 +43,5 @@ test("TC: SALEOR_14 User should be able to navigate to content list as a staff m
 test("TC: SALEOR_15 User should be able to navigate to page types list as a staff member using CONTENT aka PAGE permission #e2e", async () => {
   await mainMenuPage.openModelTypes();
   await expect(pageTypesPage.createPageTypeButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(4);
+  await mainMenuPage.expectMenuItemsCount(5);
 });
