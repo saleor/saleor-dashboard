@@ -118,18 +118,19 @@ export const TransactionSubmitCard = ({
             })}
             currencySymbol={amountData?.refundTotalAmount?.currency}
             disabled={!autoGrantRefund}
+            width="100%"
           />
-          <Box display="flex" alignSelf="end" marginTop={4}>
-            <ConfirmButton
-              data-test-id="return-submit-button"
-              transitionState={submitStatus}
-              disabled={isSubmitDisabled}
-              variant="primary"
-              onClick={onSubmit}
-            >
-              <FormattedMessage {...submitCardMessages.submitButton} />
-            </ConfirmButton>
-          </Box>
+          <ConfirmButton
+            data-test-id="return-submit-button"
+            transitionState={submitStatus}
+            disabled={isSubmitDisabled}
+            variant="primary"
+            onClick={onSubmit}
+            width="100%"
+            marginTop={4}
+          >
+            <FormattedMessage {...submitCardMessages.submitButton} />
+          </ConfirmButton>
         </DashboardCard.Content>
       </DashboardCard>
     </div>

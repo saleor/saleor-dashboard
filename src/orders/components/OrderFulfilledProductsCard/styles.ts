@@ -6,12 +6,6 @@ const useStyles = makeStyles(
       flexDirection: "row-reverse",
       padding: theme.spacing(2, 0),
     },
-    deleteIcon: {
-      height: 40,
-      paddingRight: 0,
-      paddingLeft: theme.spacing(1),
-      width: 40,
-    },
     table: {
       "& td, & th": {
         "&:not(:first-child):not(:last-child)": {

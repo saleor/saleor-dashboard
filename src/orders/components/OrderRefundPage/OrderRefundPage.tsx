@@ -29,17 +29,18 @@ export const refundFulfilledStatuses = [
 export interface OrderRefundPageProps {
   order: OrderRefundData;
   defaultType?: OrderRefundType;
-  disabled: boolean;
+  loading: boolean;
   errors: OrderErrorFragment[];
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
 const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
-  const { order, defaultType = OrderRefundType.PRODUCTS, disabled, errors = [], onSubmit } = props;
+  const { order, defaultType = OrderRefundType.PRODUCTS, loading, errors = [], onSubmit } = props;
   const intl = useIntl();
   const unfulfilledLines = order?.lines.filter(line => line.quantityToFulfill > 0);
   const fulfilledFulfillemnts =
     order?.fulfillments.filter(({ status }) => refundFulfilledStatuses.includes(status)) || [];
+  const disabled = loading;
 
   return (
     <OrderRefundForm
@@ -115,6 +116,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                 errors={errors}
                 onChange={change}
                 onRefund={submit}
+                loading={loading}
               />
             </DetailPageLayout.RightSidebar>
           </DetailPageLayout>

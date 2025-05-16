@@ -1,18 +1,15 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
-import TrashIcon from "@dashboard/icons/Trash";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { IconButton } from "@saleor/macaw-ui";
-import { Box, Divider } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import OrderCardTitle from "../OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
-import useStyles from "./styles";
 
 interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
@@ -52,7 +49,6 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
     onShowMetadata,
     dataTestId,
   } = props;
-  const classes = useStyles(props);
 
   if (!fulfillment) {
     return null;
@@ -77,14 +73,12 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
         toolbar={
           <Box display="flex" alignItems="center" gap={6}>
             {cancelableStatuses.includes(fulfillment?.status) && (
-              <IconButton
+              <Button
                 variant="secondary"
-                className={classes.deleteIcon}
                 onClick={onOrderFulfillmentCancel}
                 data-test-id="cancel-fulfillment-button"
-              >
-                <TrashIcon />
-              </IconButton>
+                icon={<TrashBinIcon />}
+              />
             )}
             <ActionButtons
               orderId={order?.id}
