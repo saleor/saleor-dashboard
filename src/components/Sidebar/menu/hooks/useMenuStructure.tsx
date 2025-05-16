@@ -256,7 +256,10 @@ export function useMenuStructure() {
           label: intl.formatMessage(sectionNames.modelTypes),
           id: "model-types",
           url: pageTypeListUrl(),
-          permissions: [PermissionEnum.MANAGE_PAGES],
+          permissions: [
+            PermissionEnum.MANAGE_PAGES,
+            PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+          ],
           type: "item",
         },
         {
