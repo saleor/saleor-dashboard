@@ -6,8 +6,7 @@ import { getApiUrl } from "@dashboard/config";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import { TextField } from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -74,14 +73,14 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     />
                   </Text>
 
-                  <TextField
+                  <Input // Changed from TextField
                     label={intl.formatMessage({
                       id: "0DRBjg",
                       defaultMessage: "Token Note",
                     })}
                     value={data.name}
                     onChange={change}
-                    fullWidth
+                    width="100%" // Changed from fullWidth
                     name="name"
                   />
                 </>
