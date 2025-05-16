@@ -110,9 +110,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                   data-test-id="menu-item-name-input"
                   disabled={disabled}
                   label={intl.formatMessage({
-                    id: "0Vyr8h",
+                    id: "z/pKCq",
                     defaultMessage: "Name",
-                    description: "menu item name",
+                    description: "structure name",
                   })}
                   value={value}
                   onChange={onChange}

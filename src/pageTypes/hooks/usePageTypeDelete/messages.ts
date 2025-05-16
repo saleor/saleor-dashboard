@@ -29,32 +29,32 @@ export const singleWithItemsMessages = defineMessages({
 
 export const multipleWithItemsMessages = defineMessages({
   description: {
-    id: "TnyLrZ",
+    id: "8NBwu7",
     defaultMessage:
-      "You are about to delete multiple page types. Some of them are assigned to pages. Deleting those page types will also delete those pages",
+      "You are about to delete multiple model types. Some of them are assigned to models. Deleting those model types will also delete those models",
     description: "PageTypeDeleteWarningDialog with items multiple description",
   },
   consentLabel: {
-    id: "qu8b3v",
-    defaultMessage: "Yes, I want to delete those pages types and assigned pages",
+    id: "pc36KX",
+    defaultMessage: "Yes, I want to delete those model types and assigned models",
     description: "PageTypeDeleteWarningDialog multiple consent label",
   },
 });
 
 export const singleWithoutItemsMessages = defineMessages({
   description: {
-    id: "VvFJ/T",
+    id: "gE6aiQ",
     defaultMessage:
-      "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages.",
+      "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created models.",
     description: "PageTypeDeleteWarningDialog single no assigned items description",
   },
 });
 
 export const multipleWithoutItemsMessages = defineMessages({
   description: {
-    id: "ll2dE6",
+    id: "r2i5Fn",
     defaultMessage:
-      "Are you sure you want to delete selected page types? If you remove them you won’t be able to assign them to created pages.",
+      "Are you sure you want to delete selected model types? If you remove them you won’t be able to assign them to created models.",
     description: "PageTypeDeleteWarningDialog multiple assigned items description",
   },
 });

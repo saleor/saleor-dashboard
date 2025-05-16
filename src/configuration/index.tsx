@@ -190,7 +190,7 @@ export function createConfigurationMenu(
             PermissionEnum.MANAGE_PAGES,
             PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
           ],
-          title: intl.formatMessage(sectionNames.pageTypes),
+          title: intl.formatMessage(sectionNames.modelTypes),
           url: pageTypeListUrl(),
           testId: "configuration-menu-page-types",
         },
