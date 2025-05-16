@@ -5,6 +5,8 @@ export const useStyles = makeStyles(
     colName: {
       width: "auto",
       margin: "0px",
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
     },
     colQuantity: {
       textAlign: "right",

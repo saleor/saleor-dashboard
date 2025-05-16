@@ -2,7 +2,7 @@ import { ImageIcon } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const ImagePlaceholder = () => {
+export const ImagePlaceholder = ({ className }: { className?: string }) => {
   return (
     <Box
       width={10}
@@ -15,6 +15,7 @@ export const ImagePlaceholder = () => {
       borderStyle="solid"
       borderWidth={1}
       flexShrink="0"
+      className={className}
     >
       <ImageIcon />
     </Box>

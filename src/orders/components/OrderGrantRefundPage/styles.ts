@@ -5,6 +5,8 @@ export const useProductsCardStyles = makeStyles(
     return {
       colProduct: {
         width: "auto",
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4),
       },
       productName: {
         display: "flex",

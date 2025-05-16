@@ -1,18 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
-export const useStyles = makeStyles(
-  theme => ({
-    root: {
-      "&:not(first-child)": {
-        paddingLeft: 0,
-      },
-      paddingRight: theme.spacing(3),
-      width: "1%",
-    },
-  }),
-  { name: "TableCellAvatar" },
-);
-
 export const useAvatarStyles = makeStyles(
   theme => ({
     alignRight: {

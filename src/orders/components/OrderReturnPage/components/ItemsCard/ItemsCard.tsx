@@ -121,6 +121,7 @@ export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                   <TableCellAvatar
                     thumbnail={thumbnail?.url}
                     style={{ width: productNameCellWidth }}
+                    paddingX={8}
                   >
                     {productName || <Skeleton />}
                   </TableCellAvatar>

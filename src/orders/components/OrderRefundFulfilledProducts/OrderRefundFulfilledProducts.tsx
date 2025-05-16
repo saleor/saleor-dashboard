@@ -153,7 +153,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
 
               return (
                 <TableRowLink key={line?.id}>
-                  <TableCellAvatar thumbnail={line?.orderLine?.thumbnail?.url}>
+                  <TableCellAvatar thumbnail={line?.orderLine?.thumbnail?.url} paddingX={8}>
                     {line?.orderLine?.productName ? line?.orderLine?.productName : <Skeleton />}
                   </TableCellAvatar>
                   <TableCell>

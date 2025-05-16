@@ -169,7 +169,6 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                         />
                       </TableCell>
                       <TableCellAvatar
-                        className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}
                         style={{
                           opacity: !isProductAvailable ? 0.5 : 1,
