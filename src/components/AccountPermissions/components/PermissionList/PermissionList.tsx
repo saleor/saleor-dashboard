@@ -1,6 +1,5 @@
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
-import { Checkbox, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -31,41 +30,40 @@ export const PermissionList = ({
   }
 
   return (
-    <Box data-test-id="permission-group-list">
-      {permissions.map(perm => (
-        <ListItem
+    <Box
+      display="flex"
+      flexDirection="column"
+      gap={3}
+      marginTop={4}
+      data-test-id="permission-group-list"
+    >
+      {permissions.map(permission => (
+        <Box
+          key={permission.code}
+          display="flex"
+          flexDirection="column"
+          gap={1}
           data-test-id="permission-group-list-item"
-          key={perm.code}
-          disabled={disabled || perm.disabled}
-          role={undefined}
-          dense
-          button
-          onClick={() =>
-            onPermissionChange(perm.code, hasPermissionSelected(selectedPermissions, perm.code))
-          }
         >
-          <ListItemIcon>
-            <Checkbox
-              data-test-id="permission-group-checkbox"
-              color="secondary"
-              edge="start"
-              checked={hasPermissionSelected(selectedPermissions, perm.code)}
-              tabIndex={-1}
-              disableRipple
-              name={perm.code}
-              inputProps={{ "aria-labelledby": perm.code }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            id={perm.code}
-            primary={perm.name.replace(/\./, "")}
-            secondary={
-              perm.lastSource
-                ? intl.formatMessage(messages.permissionListItemDescipription)
-                : perm.code
-            }
-          />
-        </ListItem>
+          <Checkbox
+            data-test-id={`permission-checkbox-${permission.code}`}
+            disabled={disabled || permission.disabled}
+            checked={hasPermissionSelected(selectedPermissions, permission.code)}
+            onCheckedChange={value => {
+              onPermissionChange(permission.code, value);
+            }}
+            alignItems="flex-start"
+          >
+            <Box display="flex" flexDirection="column" __marginTop="-4px">
+              <Text>{permission.name.replace(".", "")}</Text>
+              <Text size={2} color="default2">
+                {permission.lastSource
+                  ? intl.formatMessage(messages.permissionListItemDescipription)
+                  : permission.code}
+              </Text>
+            </Box>
+          </Checkbox>
+        </Box>
       ))}
     </Box>
   );

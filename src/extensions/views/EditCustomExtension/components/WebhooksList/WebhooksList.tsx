@@ -112,16 +112,14 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({
                     <TableCell className={clsx(classes.colAction, classes.colRight)}>
                       {hasManagedAppsPermission && (
                         <Box display="flex" justifyContent="flex-end" width="100%">
-                          <TableButtonWrapper>
-                            <Button
-                              variant="tertiary"
-                              onClick={
-                                webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined
-                              }
-                              data-test-id={`delete-webhook-${webhook?.id}`}
-                              icon={<TrashBinIcon />}
-                            />
-                          </TableButtonWrapper>
+                          <Button
+                            variant="tertiary"
+                            onClick={
+                              webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined
+                            }
+                            data-test-id={`delete-webhook-${webhook?.id}`}
+                            icon={<TrashBinIcon />}
+                          />
                         </Box>
                       )}
                     </TableCell>
