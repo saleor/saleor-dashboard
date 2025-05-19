@@ -4,7 +4,6 @@ import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
 import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler,
@@ -26,6 +25,7 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import PermissionAlert from "./components/PermissionAlert";
+import WebhookEvents from "./components/WebhookEvents/";
 import WebhookHeaders from "./components/WebhookHeaders";
 import WebhookInfo from "./components/WebhookInfo";
 import WebhookSubscriptionQuery from "./components/WebhookSubscriptionQuery";

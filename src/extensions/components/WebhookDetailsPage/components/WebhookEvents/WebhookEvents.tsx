@@ -2,23 +2,18 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
-import { Pill } from "@dashboard/components/Pill";
 import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
-import { Checkbox } from "@material-ui/core";
 import {
   List,
   ListBody,
   ListHeader,
   ListItem,
   ListItemCell,
-  PageTab,
-  PageTabPanel,
-  PageTabs,
   useListWidths,
 } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Chip, Switch, Text } from "@saleor/macaw-ui-next";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -78,55 +73,59 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
         <DashboardCard.Header>
           <DashboardCard.Title>{intl.formatMessage(messages.webhookEvents)}</DashboardCard.Title>
         </DashboardCard.Header>
-        <DashboardCard.Content className={classes.cardHeader}>
-          <PageTabs value={tab} onChange={handleTabChange}>
-            <PageTab label={intl.formatMessage(messages.asynchronous)} value="async" />
-            <PageTab label={intl.formatMessage(messages.synchronous)} value="sync" />
-          </PageTabs>
-
-          <Text fontSize={2} style={{ padding: "1rem 0" }}>
-            <PageTabPanel show={tab === "sync"}>
+        <DashboardCard.Content>
+          <Box display="flex" padding={1} borderRadius={3}>
+            <Switch value={tab} onValueChange={handleTabChange}>
+              <Switch.Item id="async" value="async">
+                {intl.formatMessage(messages.asynchronous)}
+              </Switch.Item>
+              <Switch.Item id="sync" value="sync">
+                {intl.formatMessage(messages.synchronous)}
+              </Switch.Item>
+            </Switch>
+          </Box>
+          <Text fontSize={2} paddingLeft={1}>
+            {tab === "sync" ? (
               <FormattedMessage {...messages.synchronousDescription} />
-            </PageTabPanel>
-            <PageTabPanel show={tab === "async"}>
+            ) : (
               <FormattedMessage {...messages.asynchronousDescription} />
-            </PageTabPanel>
+            )}
           </Text>
         </DashboardCard.Content>
         <Hr />
         <Grid variant="uniform">
           <div className={classes.objectsWrapper}>
-            <PageTabPanel show={true}>
-              <List gridTemplate={["1fr 50px"]}>
-                <ListHeader>
-                  <ListItem className={classes.listHeader}>
+            <List gridTemplate={["1fr 50px"]}>
+              <ListHeader>
+                <ListItem className={classes.listHeader}>
+                  <ListItemCell className={classes.listItemCell}>
+                    <FormattedMessage {...messages.objects} />
+                  </ListItemCell>
+                  <ListItemCell></ListItemCell>
+                </ListItem>
+              </ListHeader>
+              <ListBody className={classes.listBody}>
+                {Object.keys(EventTypes[tab]).map((object, idx) => (
+                  <ListItem
+                    data-test-id="webhook-objects-items"
+                    key={idx}
+                    className={classes.listItem}
+                    onClick={() => setObject(object)}
+                  >
                     <ListItemCell className={classes.listItemCell}>
-                      <FormattedMessage {...messages.objects} />
+                      <strong>{capitalize(object.replaceAll("_", " ").toLowerCase())}</strong>
                     </ListItemCell>
-                    <ListItemCell></ListItemCell>
+                    <ListItemCell>
+                      {countEvents(object) > 0 && (
+                        <Chip size="small" backgroundColor="critical1" color="critical1">
+                          {countEvents(object)}
+                        </Chip>
+                      )}
+                    </ListItemCell>
                   </ListItem>
-                </ListHeader>
-                <ListBody className={classes.listBody}>
-                  {Object.keys(EventTypes[tab]).map((object, idx) => (
-                    <ListItem
-                      data-test-id="webhook-objects-items"
-                      key={idx}
-                      className={classes.listItem}
-                      onClick={() => setObject(object)}
-                    >
-                      <ListItemCell className={classes.listItemCell}>
-                        <strong>{capitalize(object.replaceAll("_", " ").toLowerCase())}</strong>
-                      </ListItemCell>
-                      <ListItemCell>
-                        {countEvents(object) > 0 && (
-                          <Pill size="small" color="error" label={countEvents(object)} />
-                        )}
-                      </ListItemCell>
-                    </ListItem>
-                  ))}
-                </ListBody>
-              </List>
-            </PageTabPanel>
+                ))}
+              </ListBody>
+            </List>
           </div>
           <div className={classes.eventsWrapper}>
             <List gridTemplate={["1fr", checkbox]}>
@@ -150,7 +149,15 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
                             name={`${tab}Events`}
                             checked={data[`${tab}Events`].includes(getEventName(object, event))}
                             value={getEventName(object, event)}
-                            onChange={handleEventChange}
+                            onCheckedChange={checked =>
+                              handleEventChange({
+                                target: {
+                                  name: `${tab}Events`,
+                                  value: getEventName(object, event),
+                                  checked,
+                                },
+                              })
+                            }
                             className={classes.checkbox}
                             id={`event-checkbox-${idx}`}
                           />
