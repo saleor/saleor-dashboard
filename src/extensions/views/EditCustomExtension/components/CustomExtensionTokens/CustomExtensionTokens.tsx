@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
@@ -82,13 +83,14 @@ const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
                     <TableCell className={classes.colActions}>
                       {hasManagedAppsPermission && (
                         <Box display="flex" justifyContent="flex-end" width="100%">
-                          <Button
-                            variant="tertiary"
-                            onClick={() => onDelete(token.id)}
-                            data-test-id={`delete-token-${token.id}`}
-                          >
-                            <TrashBinIcon />
-                          </Button>
+                          <TableButtonWrapper>
+                            <Button
+                              variant="tertiary"
+                              onClick={() => onDelete(token.id)}
+                              data-test-id={`delete-token-${token.id}`}
+                              icon={<TrashBinIcon />}
+                            />
+                          </TableButtonWrapper>
                         </Box>
                       )}
                     </TableCell>

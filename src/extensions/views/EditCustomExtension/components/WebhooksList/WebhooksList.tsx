@@ -1,8 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { isUnnamed } from "@dashboard/custom-apps/utils";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { WebhookFragment } from "@dashboard/graphql";
@@ -118,14 +118,14 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({
                     <TableCell className={clsx(classes.colAction, classes.colRight)}>
                       {hasManagedAppsPermission && (
                         <Box display="flex" justifyContent="flex-end" width="100%">
-                          <Button
-                            variant="tertiary"
-                            onClick={
-                              webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined
-                            }
-                            data-test-id={`delete-webhook-${webhook?.id}`}
-                            icon={<TrashBinIcon />}
-                          />
+                          <TableButtonWrapper>
+                            <Button
+                              variant="tertiary"
+                              onClick={stopPropagation(() => onRemove(webhook.id))}
+                              data-test-id={`delete-webhook-${webhook?.id}`}
+                              icon={<TrashBinIcon />}
+                            />
+                          </TableButtonWrapper>
                         </Box>
                       )}
                     </TableCell>
