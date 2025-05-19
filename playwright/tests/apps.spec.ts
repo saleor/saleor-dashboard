@@ -24,7 +24,7 @@ const APP_EXPECT_UI_TIMEOUT = 15 * 1000;
 test("TC: SALEOR_119 User should be able to install and configure app from manifest #e2e", async ({
   page,
 }) => {
-  await appsPage.gotoExtensionsList();
+  await appsPage.gotoInstalledExtensionsList();
   await appsPage.installExternalAppButton.click();
   await appsPage.typeManifestUrl("https://klaviyo.saleor.app/api/manifest");
   await appsPage.installAppFromManifestButton.click();
