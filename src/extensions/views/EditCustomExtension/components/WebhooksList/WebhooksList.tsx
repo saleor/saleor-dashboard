@@ -4,6 +4,7 @@ import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { isUnnamed } from "@dashboard/custom-apps/utils";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { WebhookFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/intl";
@@ -76,7 +77,13 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({
                   <TableRowLink
                     hover={!!webhook}
                     className={webhook ? classes.tableRow : undefined}
-                    href={webhook && CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)}
+                    href={
+                      webhook &&
+                      ExtensionsUrls.resolveEditCustomExtensionWebhookUrl(
+                        webhook.app.id,
+                        webhook.id,
+                      )
+                    }
                     key={webhook ? webhook.id : "skeleton"}
                   >
                     <TableCell
