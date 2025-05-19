@@ -1,4 +1,5 @@
 import { InstallWithManifestFormButton } from "@dashboard/apps/components/InstallWithManifestFormButton";
+import { AppUrls } from "@dashboard/apps/urls";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { RequestExtensionsButton } from "@dashboard/extensions/components/RequestExtensionsButton";
 import { buttonLabels } from "@dashboard/extensions/messages";
@@ -16,8 +17,8 @@ export const AddExtensionDropdown = () => {
   const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
-  const navigateToAppInstallPage = () => {
-    navigate(ExtensionsUrls.installCustomExtensionUrl());
+  const navigateToAppInstallPage = (manifestUrl: string) => {
+    navigate(AppUrls.resolveAppInstallUrl(manifestUrl));
   };
 
   const addExtensionOptions = useMemo(
