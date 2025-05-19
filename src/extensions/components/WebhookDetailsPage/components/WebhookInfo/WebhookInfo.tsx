@@ -2,13 +2,11 @@ import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
-import { Pill } from "@dashboard/components/Pill";
 import { WebhookErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
-import { Popper, TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Chip, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -53,12 +51,11 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           <WebhookStatus data={data.isActive} disabled={disabled} setValue={setValue} />
         </Box>
 
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.name}
           helperText={getWebhookErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage(messages.webhookName)}
-          fullWidth
           name="name"
           value={data.name}
           onChange={onChange}
@@ -66,7 +63,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         <FormSpacer />
         <Hr />
         <FormSpacer />
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.targetUrl}
           helperText={
@@ -74,13 +71,12 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
             intl.formatMessage(messages.targetUrlDescription)
           }
           label={intl.formatMessage(messages.targetUrl)}
-          fullWidth
           name="targetUrl"
           value={data.targetUrl}
           onChange={onChange}
         />
         <FormSpacer />
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.secretKey}
           helperText={
@@ -88,26 +84,35 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
             intl.formatMessage(messages.secretKeyDescription)
           }
           label={intl.formatMessage(messages.secretKey)}
-          fullWidth
           name="secretKey"
           value={data.secretKey}
           onChange={onChange}
-          InputProps={{
-            endAdornment: (
-              <div
-                ref={anchor}
-                onMouseOver={() => setPopupOpen(true)}
-                onMouseLeave={() => setPopupOpen(false)}
-              >
-                <Pill
-                  label={intl.formatMessage(commonMessages.deprecated)}
-                  color={"error"}
-                  outlined
-                  size="small"
-                />
-                <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"top"}>
-                  <DashboardCard boxShadow="defaultModal" className={classes.toolbar}>
-                    <Text>
+          endAdornment={
+            <Tooltip>
+              <Tooltip.Trigger>
+                <Chip
+                  backgroundColor="critical1"
+                  borderColor="critical1"
+                  color="critical1"
+                  size="medium"
+                  style={{ cursor: "pointer" }}
+                >
+                  {intl.formatMessage(commonMessages.deprecated)}
+                </Chip>
+              </Tooltip.Trigger>
+              <Tooltip.Content side="top">
+                <Tooltip.Arrow />
+                <Box
+                  backgroundColor="critical1"
+                  padding={4}
+                  borderRadius={2}
+                  style={{ minWidth: 200 }}
+                >
+                  <Text fontWeight="bold" color="default1" marginBottom={2}>
+                    <FormattedMessage defaultMessage="Deprecated" id="z9c6/C" />
+                  </Text>
+                  <Box display="flex" gap={1} alignItems="center">
+                    <Text color="default1">
                       <FormattedMessage {...messages.useSignature} />
                     </Text>
                     <Link
@@ -117,11 +122,11 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
                     >
                       <FormattedMessage {...messages.learnMore} />
                     </Link>
-                  </DashboardCard>
-                </Popper>
-              </div>
-            ),
-          }}
+                  </Box>
+                </Box>
+              </Tooltip.Content>
+            </Tooltip>
+          }
         />
       </DashboardCard.Content>
     </DashboardCard>
