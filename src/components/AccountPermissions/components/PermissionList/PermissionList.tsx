@@ -50,7 +50,7 @@ export const PermissionList = ({
             disabled={disabled || permission.disabled}
             checked={hasPermissionSelected(selectedPermissions, permission.code)}
             onCheckedChange={value => {
-              onPermissionChange(permission.code, value);
+              onPermissionChange(permission.code, !value);
             }}
             alignItems="flex-start"
           >
