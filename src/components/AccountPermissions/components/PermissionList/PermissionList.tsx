@@ -13,6 +13,13 @@ interface PermissionListProps {
   onPermissionChange: (key: string, value: boolean) => void;
 }
 
+// Utility to render a string with <wbr /> after each underscore, for proper line breaks
+function renderWithWbrAfterUnderscore(str: string) {
+  return str
+    .split("_")
+    .flatMap((part, idx, arr) => (idx < arr.length - 1 ? [part, "_", <wbr key={idx} />] : [part]));
+}
+
 export const PermissionList = ({
   permissions,
   onPermissionChange,
@@ -55,11 +62,11 @@ export const PermissionList = ({
             alignItems="flex-start"
           >
             <Box display="flex" flexDirection="column" __marginTop="-4px">
-              <Text>{permission.name.replace(".", "")}</Text>
-              <Text size={2} color="default2">
+              <Text wordBreak="break-word">{permission.name.replace(".", "")}</Text>
+              <Text size={2} color="default2" wordBreak="break-word">
                 {permission.lastSource
                   ? intl.formatMessage(messages.permissionListItemDescipription)
-                  : permission.code}
+                  : renderWithWbrAfterUnderscore(permission.code)}
               </Text>
             </Box>
           </Checkbox>
