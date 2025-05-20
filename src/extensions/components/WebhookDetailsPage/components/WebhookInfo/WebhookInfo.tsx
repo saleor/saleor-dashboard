@@ -33,8 +33,6 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
-  const [isPopupOpen, setPopupOpen] = React.useState(false);
-  const anchor = React.useRef<HTMLDivElement>(null);
 
   return (
     <DashboardCard className={classes.card}>

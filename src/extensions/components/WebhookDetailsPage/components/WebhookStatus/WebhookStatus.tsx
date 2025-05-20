@@ -1,5 +1,3 @@
-import ControlledSwitch from "@dashboard/components/ControlledSwitch";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { Toggle } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
