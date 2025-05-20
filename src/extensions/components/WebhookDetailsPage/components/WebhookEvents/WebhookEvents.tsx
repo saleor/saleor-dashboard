@@ -144,7 +144,7 @@ const WebhookEvents = ({
                 {object &&
                   EventTypes[tab][object] &&
                   EventTypes[tab][object].map((event, idx) => (
-                    <ListItem className={classes.eventListItem} key={idx}>
+                    <ListItem className={classes.eventListItem} key={event}>
                       <ListItemCell className={classes.eventListItemCell}>
                         <Checkbox
                           data-test-id="events-checkbox"
