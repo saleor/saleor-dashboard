@@ -42,7 +42,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   const headers = createHeadersString(token ?? "");
 
   React.useEffect(() => {
-    if (token !== undefined) {
+    if (token) {
       setStep("summary");
     }
   }, [token]);
@@ -88,8 +88,8 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                 <>
                   <Text>
                     <FormattedMessage
-                      id="4T/RzC"
-                      defaultMessage="Make sure to save token, you won’t be able to see it again."
+                      id="CiWUaq"
+                      defaultMessage="Make sure to save token, you won't be able to see it again."
                     />
                   </Text>
 
