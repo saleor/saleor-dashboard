@@ -14,7 +14,7 @@ export const PermissionsExceeded = ({ userPermissions }: PermissionsExceededProp
 
   return (
     <>
-      <Text as="p">{intl.formatMessage(messages.exeededPermission)}</Text>
+      <Text as="p">{intl.formatMessage(messages.exceededPermission)}</Text>
 
       <Box
         width="100%"

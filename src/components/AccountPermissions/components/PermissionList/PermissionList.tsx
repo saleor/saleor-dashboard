@@ -82,7 +82,7 @@ export const PermissionList = ({
                   <Text wordBreak="break-word">{permission.name.replace(".", "")}</Text>
                   <Text size={2} color="default2" wordBreak="break-word">
                     {permission.lastSource
-                      ? intl.formatMessage(messages.permissionListItemDescipription)
+                      ? intl.formatMessage(messages.permissionListItemDescription)
                       : renderWithWbrAfterUnderscore(permission.code)}
                   </Text>
                 </Box>
