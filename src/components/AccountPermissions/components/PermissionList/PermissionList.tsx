@@ -15,7 +15,7 @@ interface PermissionListProps {
 }
 
 /** Utility to render a string with <wbr /> after each underscore, for proper line breaks
- * in permission codes (e.g. MANAGE_ORDERS  will breka into MANAGE_ <new line>ORDERS */
+ * in permission codes (e.g. MANAGE_ORDERS will break into MANAGE_ <new line>ORDERS */
 function renderWithWbrAfterUnderscore(str: string) {
   return str
     .split("_")
