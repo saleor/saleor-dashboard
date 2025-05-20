@@ -52,14 +52,14 @@ const WebhookEvents = ({
     return onAsyncEventChange(event);
   };
 
-  const handleTabChange = (value: WebhookEventTypeSelection) => {
+  const handleTabChange = (value: string) => {
     setObject(null);
     setQuery("");
-    setTab(value);
+    setTab(value as WebhookEventTypeSelection);
   };
 
   const countEvents = (object: string) => {
-    const selected = tab === "sync" ? data.syncEvents : data.asyncEvents;
+    const selected: string[] = tab === "sync" ? data.syncEvents : data.asyncEvents;
     const objectEvents = EventTypes[tab][object].map(event => {
       if (event === object) {
         return object;
@@ -68,7 +68,7 @@ const WebhookEvents = ({
       return `${object}_${event}`;
     });
 
-    return objectEvents.filter((event: never) => selected.includes(event)).length;
+    return objectEvents.filter(event => selected.includes(event)).length;
   };
 
   return (

@@ -121,7 +121,9 @@ export const WebhooksList: React.FC<WebhooksListProps> = ({
                           <TableButtonWrapper>
                             <Button
                               variant="tertiary"
-                              onClick={stopPropagation(() => onRemove(webhook.id))}
+                              onClick={
+                                webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined
+                              }
                               data-test-id={`delete-webhook-${webhook?.id}`}
                               icon={<TrashBinIcon />}
                             />
