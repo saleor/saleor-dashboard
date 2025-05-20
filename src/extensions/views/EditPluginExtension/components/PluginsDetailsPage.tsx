@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
@@ -16,6 +15,7 @@ import {
 import { ChangeEvent, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -124,7 +124,7 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                     name={plugin?.name || ""}
                     onChange={onChange}
                   />
-                  <CardSpacer />
+                  <Box marginTop={{ mobile: 2, desktop: 4 }} />
                   {data.configuration && (
                     <div>
                       <PluginSettings
@@ -138,7 +138,7 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                         isSecretField(selectedConfig?.configuration, field.name),
                       ) && (
                         <>
-                          <CardSpacer />
+                          <Box marginTop={{ mobile: 2, desktop: 4 }} />
                           <PluginAuthorization
                             fields={selectedConfig.configuration}
                             onClear={onClear}
