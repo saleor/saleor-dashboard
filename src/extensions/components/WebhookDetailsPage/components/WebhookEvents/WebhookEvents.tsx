@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
@@ -31,30 +30,35 @@ interface WebhookEventsProps {
   onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
-const WebhookEvents: React.FC<WebhookEventsProps> = ({
+type WebhookEventTypeSelection = "sync" | "async";
+
+const WebhookEvents = ({
   data,
   setQuery,
   onSyncEventChange,
   onAsyncEventChange,
-}) => {
+}: WebhookEventsProps) => {
   const intl = useIntl();
   const { checkbox } = useListWidths();
   const classes = useStyles({ checkbox });
-  const [tab, setTab] = useState("async");
+  const [tab, setTab] = useState<WebhookEventTypeSelection>("async");
   const [object, setObject] = useState<string | null>(null);
-  const handleEventChange = event => {
+
+  const handleEventChange = (event: ChangeEvent) => {
     if (tab === "sync") {
       return onSyncEventChange(event);
     }
 
     return onAsyncEventChange(event);
   };
-  const handleTabChange = value => {
+
+  const handleTabChange = (value: WebhookEventTypeSelection) => {
     setObject(null);
     setQuery("");
     setTab(value);
   };
-  const countEvents = object => {
+
+  const countEvents = (object: string) => {
     const selected = tab === "sync" ? data.syncEvents : data.asyncEvents;
     const objectEvents = EventTypes[tab][object].map(event => {
       if (event === object) {
@@ -76,10 +80,10 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
         <DashboardCard.Content>
           <Box display="flex" padding={1} borderRadius={3}>
             <Switch value={tab} onValueChange={handleTabChange}>
-              <Switch.Item id="async" value="async">
+              <Switch.Item id="async" value="async" fontWeight="medium">
                 {intl.formatMessage(messages.asynchronous)}
               </Switch.Item>
-              <Switch.Item id="sync" value="sync">
+              <Switch.Item id="sync" value="sync" fontWeight="medium">
                 {intl.formatMessage(messages.synchronous)}
               </Switch.Item>
             </Switch>
@@ -113,7 +117,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
                     onClick={() => setObject(object)}
                   >
                     <ListItemCell className={classes.listItemCell}>
-                      <strong>{capitalize(object.replaceAll("_", " ").toLowerCase())}</strong>
+                      {capitalize(object.replaceAll("_", " ").toLowerCase())}
                     </ListItemCell>
                     <ListItemCell>
                       {countEvents(object) > 0 && (
@@ -142,26 +146,30 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
                   EventTypes[tab][object].map((event, idx) => (
                     <ListItem className={classes.eventListItem} key={idx}>
                       <ListItemCell className={classes.eventListItemCell}>
-                        <label htmlFor={`event-checkbox-${idx}`} className={classes.eventListLabel}>
-                          <strong>{capitalize(event.toLowerCase().replaceAll("_", " "))}</strong>
-                          <Checkbox
-                            data-test-id="events-checkbox"
-                            name={`${tab}Events`}
-                            checked={data[`${tab}Events`].includes(getEventName(object, event))}
-                            value={getEventName(object, event)}
-                            onCheckedChange={checked =>
-                              handleEventChange({
-                                target: {
-                                  name: `${tab}Events`,
-                                  value: getEventName(object, event),
-                                  checked,
-                                },
-                              })
-                            }
-                            className={classes.checkbox}
-                            id={`event-checkbox-${idx}`}
-                          />
-                        </label>
+                        <Checkbox
+                          data-test-id="events-checkbox"
+                          name={`${tab}Events`}
+                          checked={(data[`${tab}Events`] as WebhookEventTypeSyncEnum[]).includes(
+                            getEventName(object, event),
+                          )}
+                          value={getEventName(object, event)}
+                          onCheckedChange={checked =>
+                            handleEventChange({
+                              target: {
+                                name: `${tab}Events`,
+                                value: getEventName(object, event),
+                                // @ts-expect-error incorrect useForm types - cannot set required checked property
+                                checked,
+                              },
+                            })
+                          }
+                          id={`event-checkbox-${idx}`}
+                          paddingX={1.5}
+                          paddingY={3.5}
+                          fontWeight="bold"
+                        >
+                          {capitalize(event.toLowerCase().replaceAll("_", " "))}
+                        </Checkbox>
                       </ListItemCell>
                     </ListItem>
                   ))}

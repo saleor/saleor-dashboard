@@ -30,6 +30,7 @@ export const useStyles = makeStyles<{ checkbox?: string }>(
     listItemCell: {
       paddingLeft: "0 !important",
       wordBreak: "break-all",
+      fontWeight: 600,
     },
     checkbox: {
       padding: 0,
@@ -55,12 +56,6 @@ export const useStyles = makeStyles<{ checkbox?: string }>(
       padding: "0 !important",
       wordBreak: "break-all",
     },
-    eventListLabel: props => ({
-      padding: "1.8rem 0.8rem",
-      display: "grid",
-      cursor: "pointer",
-      gridTemplateColumns: `1fr ${props.checkbox}`,
-    }),
   }),
   { name: "WebhookEvents" },
 );
