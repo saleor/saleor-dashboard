@@ -1,0 +1,10 @@
+.grid {
+  grid-template-columns: 1fr;
+}
+
+/** Show two columns of permissions when we have enough horizontal space */
+@media (min-width: 1640px) or (476px <= width <= 767px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+} 
