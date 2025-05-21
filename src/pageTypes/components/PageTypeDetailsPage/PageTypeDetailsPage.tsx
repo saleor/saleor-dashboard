@@ -107,72 +107,25 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailPageLayout gridTemplateColumns={1}>
+          <DetailPageLayout>
             <TopNav href={pageTypeListBackLink} title={pageTitle} />
             <DetailPageLayout.Content>
-              <Grid
-                variant="inverted"
-                className={sprinkles({
-                  paddingLeft: 9,
-                  height: "100vh",
-                  margin: "auto",
-                })}
-              >
-                <Box paddingTop={6}>
-                  <Text>{intl.formatMessage(commonMessages.generalInformations)}</Text>
-                  <Text size={3} fontWeight="regular" display="block">
-                    <FormattedMessage
-                      id="7usRcR"
-                      defaultMessage="These are general information about this model type."
-                    />
-                  </Text>
-                </Box>
-                <PageTypeDetails
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <Hr className={classes.hr} />
-                <div>
-                  <Text>
-                    <FormattedMessage
-                      id="pgTwKM"
-                      defaultMessage="Model attributes"
-                      description="section header"
-                    />
-                  </Text>
-                  <Text size={3} fontWeight="regular" display="block">
-                    <FormattedMessage
-                      id="YVz54T"
-                      defaultMessage="This list shows all attributes that will be assigned to models that have this model type assigned."
-                    />
-                  </Text>
-                </div>
-                <PageTypeAttributes
-                  attributes={pageType?.attributes}
-                  disabled={disabled}
-                  type={AttributeTypeEnum.PAGE_TYPE}
-                  onAttributeAssign={onAttributeAdd}
-                  onAttributeReorder={(event: ReorderEvent) =>
-                    onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
-                  }
-                  onAttributeUnassign={onAttributeUnassign}
-                  {...attributeList}
-                />
-                <Hr className={classes.hr} />
-                <div>
-                  <Text>
-                    <FormattedMessage
-                      id="OVOU1z"
-                      defaultMessage="Metadata"
-                      description="section header"
-                    />
-                  </Text>
-                </div>
-                <Metadata data={data} onChange={changeMetadata} />
-              </Grid>
+              <PageTypeAttributes
+                attributes={pageType?.attributes}
+                disabled={disabled}
+                type={AttributeTypeEnum.PAGE_TYPE}
+                onAttributeAssign={onAttributeAdd}
+                onAttributeReorder={(event: ReorderEvent) =>
+                  onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
+                }
+                onAttributeUnassign={onAttributeUnassign}
+                {...attributeList}
+              />
+              <Metadata data={data} onChange={changeMetadata} />
             </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
+              <PageTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
+            </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />
