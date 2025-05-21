@@ -2,8 +2,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
-import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
@@ -11,15 +9,14 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { AttributeTypeEnum, PageErrorFragment, PageTypeDetailsFragment } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
 import { pageTypeListPath } from "@dashboard/pageTypes/urls";
 import { ListActions, ReorderEvent } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Option, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
