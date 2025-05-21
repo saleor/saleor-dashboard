@@ -27,7 +27,7 @@ export class ExtensionsPage extends BasePage {
     this.basePage = new BasePage(page);
   }
 
-  async gotoExtensionsList() {
+  async gotoInstalledExtensionsList() {
     await this.page.goto(URL_LIST.extensions);
   }
 
