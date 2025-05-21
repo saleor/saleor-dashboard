@@ -1,21 +1,22 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
+import { QuantityInput } from "@dashboard/components/QuantityInput";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderDetailsFragment, OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
-import { Checkbox, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Checkbox, Skeleton } from "@saleor/macaw-ui-next";
 import React, { CSSProperties } from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import OrderCardTitle from "../../OrderCardTitle";
+import { MaximalButton } from "../components/MaximalButton";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
-import MaximalButton from "./MaximalButton";
 import ProductErrorCell from "./ProductErrorCell";
 
 const useStyles = makeStyles(
@@ -59,24 +60,6 @@ const useStyles = makeStyles(
   },
   { name: "ItemsCard" },
 );
-const messages = defineMessages({
-  improperValue: {
-    id: "xoyCZ/",
-    defaultMessage: "Improper value",
-    description: "error message",
-  },
-
-  titleFulfilled: {
-    id: "NxRsHQ",
-    defaultMessage: "Fulfillment - #{fulfilmentId}",
-    description: "section header",
-  },
-  titleUnfulfilled: {
-    id: "BkFke9",
-    defaultMessage: "Unfulfilled Items",
-    description: "section header",
-  },
-});
 
 interface OrderReturnRefundLinesCardProps {
   onChangeQuantity: FormsetChange<number>;
@@ -102,7 +85,6 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   order,
 }) => {
   const classes = useStyles({});
-  const intl = useIntl();
   const handleChangeQuantity = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
     onChangeQuantity(id, parseInt(event.target.value, 10));
   const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
@@ -193,27 +175,16 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                   </TableCell>
                   <TableCell align="right">
                     {isReturnable && (
-                      <TextField
+                      <QuantityInput
+                        disabled={isPreorder}
                         className={classes.quantityField}
-                        type="number"
-                        inputProps={{
-                          className: classes.quantityInnerInput,
-                          "data-test": "quantityInput",
-                          "data-test-id": id,
-                          max: lineQuantity.toString(),
-                          min: 0,
-                          style: { textAlign: "right" },
-                        }}
-                        fullWidth
+                        data-test-id={"quantityInput" + line?.id}
                         value={currentQuantity}
                         onChange={handleChangeQuantity(id)}
-                        InputProps={{
-                          endAdornment: lineQuantity && (
-                            <div className={classes.remainingQuantity}>/ {lineQuantity}</div>
-                          ),
-                        }}
+                        max={lineQuantity}
+                        min={0}
+                        textAlign="right"
                         error={isValueError}
-                        helperText={isValueError && intl.formatMessage(messages.improperValue)}
                       />
                     )}
                   </TableCell>
@@ -221,7 +192,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     {isReplacable && !isPreorder && (
                       <Checkbox
                         checked={isSelected}
-                        onChange={() => onChangeSelected(id, !isSelected)}
+                        onCheckedChange={value => onChangeSelected(id, value as boolean)}
                       />
                     )}
                   </TableCell>

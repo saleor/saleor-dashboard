@@ -1945,10 +1945,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
-  "AKv2BI": {
-    "context": "order refund subtitle",
-    "string": "Refunded items can't be fulfilled"
-  },
   "ALe+of": {
     "string": "You don't have permission to manage webhooks. Contact your administrator for access."
   },
@@ -2315,6 +2311,10 @@
   "CT5PAn": {
     "context": "CannotDefineChannelsAvailabilityCard title",
     "string": "Availability"
+  },
+  "CWDuMj": {
+    "context": "remaining quantity",
+    "string": "/ {max}"
   },
   "CWqmRU": {
     "context": "customer's address book when no customer name is available, header",
@@ -4808,6 +4808,10 @@
     "context": "tax classes menu label when there are no tax classes",
     "string": "There are no tax classes"
   },
+  "RgdgqJ": {
+    "context": "order draft channel name",
+    "string": "Channel"
+  },
   "RiQ0v1": {
     "context": "installed extensions section name",
     "string": "Installed"
@@ -5302,10 +5306,6 @@
   "Um3g00": {
     "context": "send to customer selected label",
     "string": "Send gift card to customer"
-  },
-  "Uo5/Ov": {
-    "context": "order return subtitle",
-    "string": "Returned items can't be fulfilled"
   },
   "Uo5MoU": {
     "context": "product field",
