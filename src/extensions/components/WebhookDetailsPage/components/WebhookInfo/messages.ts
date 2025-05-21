@@ -27,7 +27,7 @@ export const messages = defineMessages({
     description: "webhook input help text",
   },
   secretKeyDescription: {
-    id: "tA5HJx",
+    id: "lqkgFU",
     defaultMessage:
       "Secret key is used to create a hash signature with each payload. *optional field",
     description: "webhook input help text",

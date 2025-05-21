@@ -8056,6 +8056,10 @@
   "lqIzC8": {
     "string": "This field needs to be unique"
   },
+  "lqkgFU": {
+    "context": "webhook input help text",
+    "string": "Secret key is used to create a hash signature with each payload. *optional field"
+  },
   "lrdAIY": {
     "context": "amount of all cancelled transactions in order",
     "string": "Cancelled"
