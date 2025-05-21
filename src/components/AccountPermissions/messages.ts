@@ -6,7 +6,7 @@ export const messages = defineMessages({
     defaultMessage: "Permissions",
     description: "dialog header",
   },
-  exeededPermission: {
+  exceededPermission: {
     id: "MVU6ol",
     defaultMessage:
       "This groups permissions exceeds your own. You are able only to manage permissions that you have.",
@@ -17,7 +17,7 @@ export const messages = defineMessages({
     defaultMessage: "Available permissions",
     description: "card section description",
   },
-  permissionListItemDescipription: {
+  permissionListItemDescription: {
     id: "VmMDLN",
     defaultMessage: "This group is last source of that permission",
     description: "permission list item description",
