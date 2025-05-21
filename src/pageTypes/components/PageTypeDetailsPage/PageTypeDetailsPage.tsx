@@ -13,7 +13,6 @@ import { pageTypeListPath } from "@dashboard/pageTypes/urls";
 import { ListActions, ReorderEvent } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -39,17 +38,6 @@ export interface PageTypeDetailsPageProps {
   onSubmit: (data: PageTypeForm) => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    hr: {
-      gridColumnEnd: "span 2",
-      margin: theme.spacing(1, 0),
-    },
-  }),
-  {
-    name: "PageTypeDetailsPage",
-  },
-);
 const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   const {
     disabled,
