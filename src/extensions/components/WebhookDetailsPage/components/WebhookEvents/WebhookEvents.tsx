@@ -109,25 +109,29 @@ const WebhookEvents = ({
                 </ListItem>
               </ListHeader>
               <ListBody className={classes.listBody}>
-                {Object.keys(EventTypes[tab]).map((object, idx) => (
-                  <ListItem
-                    data-test-id="webhook-objects-items"
-                    key={idx}
-                    className={classes.listItem}
-                    onClick={() => setObject(object)}
-                  >
-                    <ListItemCell className={classes.listItemCell}>
-                      {capitalize(object.replaceAll("_", " ").toLowerCase())}
-                    </ListItemCell>
-                    <ListItemCell>
-                      {countEvents(object) > 0 && (
-                        <Chip size="small" backgroundColor="critical1" color="critical1">
-                          {countEvents(object)}
-                        </Chip>
-                      )}
-                    </ListItemCell>
-                  </ListItem>
-                ))}
+                {Object.keys(EventTypes[tab]).map((object, idx) => {
+                  const eventCount = countEvents(object);
+
+                  return (
+                    <ListItem
+                      data-test-id="webhook-objects-items"
+                      key={idx}
+                      className={classes.listItem}
+                      onClick={() => setObject(object)}
+                    >
+                      <ListItemCell className={classes.listItemCell}>
+                        {capitalize(object.replaceAll("_", " ").toLowerCase())}
+                      </ListItemCell>
+                      <ListItemCell>
+                        {eventCount > 0 && (
+                          <Chip size="small" backgroundColor="critical1" color="critical1">
+                            {eventCount}
+                          </Chip>
+                        )}
+                      </ListItemCell>
+                    </ListItem>
+                  );
+                })}
               </ListBody>
             </List>
           </div>
