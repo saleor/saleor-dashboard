@@ -33,7 +33,8 @@ import { OutputData } from "@editorjs/editorjs";
 import { Option } from "@saleor/macaw-ui-next";
 
 import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
-import { TSizeTable } from "./ProductSizeTableCard";
+import { ProductMaterialsComposition } from "./ProductMaterialsListCard/types";
+import { TSizeTable } from "./ProductSizeTableCard/types";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -68,6 +69,8 @@ export interface ProductUpdateData extends ProductUpdateFormData {
   channels: ProductChannelListingUpdateInput;
   description: OutputData;
   sizeProperties: Option[];
+  materialsComposition: ProductMaterialsComposition;
+  sizeTable: TSizeTable;
 }
 export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   attributes: AttributeInput[];
@@ -76,7 +79,8 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   collections: Option[];
   description: OutputData;
   variants: DatagridChangeOpts;
-  sizeTable: DatagridChangeOpts;
+  sizeTable: TSizeTable;
+  materialsComposition: ProductMaterialsComposition;
 }
 
 export interface ProductUpdateHandlers
@@ -91,6 +95,7 @@ export interface ProductUpdateHandlers
   selectAttributeFile: FormsetChange<File>;
   changeSizeTableData: (data: DatagridChangeOpts) => void;
   selectSizeProperties: (value: Option[]) => void;
+  selectMaterialsComposition: (value: ProductMaterialsComposition) => void;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
   fetchReferences: (value: string) => void;
@@ -134,7 +139,6 @@ export type SubmitResult = SubmitPromise<
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;
   product: ProductFragment;
-  sizeTable: TSizeTable;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitResult;
   refetch: () => Promise<any>;
   disabled: boolean;

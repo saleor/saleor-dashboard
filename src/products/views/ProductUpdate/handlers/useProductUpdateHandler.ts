@@ -7,7 +7,6 @@ import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
 } from "@dashboard/attributes/utils/handlers";
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   AttributeErrorFragment,
   ErrorPolicyEnum,
@@ -30,14 +29,26 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
-import { TSizeTable } from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard";
-import { SizePropertyEnum } from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard/types";
-import { getProductVariantClothingSizes } from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard/utils";
+import {
+  ProductMaterialEnum,
+  ProductMaterialError,
+  ProductMaterialErrorCode,
+  ProductMaterialsComposition,
+} from "@dashboard/products/components/ProductUpdatePage/ProductMaterialsListCard/types";
+import { getMaterialCompositionRowId } from "@dashboard/products/components/ProductUpdatePage/ProductMaterialsListCard/utils";
+import {
+  ClothingSize,
+  ProductSizeErrorCode,
+  ProductSizeTableError,
+  SizePropertyEnum,
+  TSizeTable,
+} from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard/types";
+import { mapSizePropertyToMessage } from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard/utils";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { useState } from "react";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import {
   getCreateVariantMutationError,
@@ -58,7 +69,9 @@ export type UseProductUpdateHandlerError =
   | AttributeErrorFragment
   | UploadErrorFragment
   | ProductChannelListingErrorFragment
-  | ProductVariantListError;
+  | ProductVariantListError
+  | ProductMaterialError
+  | ProductSizeTableError;
 
 type UseProductUpdateHandler = (
   data: ProductUpdateSubmitData,
@@ -70,15 +83,17 @@ interface UseProductUpdateHandlerOpts {
   errors: ProductErrorWithAttributesFragment[];
   variantListErrors: ProductVariantListError[];
   channelsErrors: ProductChannelListingErrorFragment[];
+  customErrors?: Array<UseProductUpdateHandlerError>;
+  productSizeTableErrors: ProductSizeTableError[];
 }
 
 export function useProductUpdateHandler(
   product: ProductFragment,
-  initSizeTable: TSizeTable,
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
   const [variantListErrors, setVariantListErrors] = useState<ProductVariantListError[]>([]);
+  const [productSizeTableErrors, setProductSizeTableErrors] = useState<ProductSizeTableError[]>([]);
   const [called, setCalled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updateMetadata] = useUpdateMetadataMutation({});
@@ -101,9 +116,13 @@ export function useProductUpdateHandler(
     },
   });
   const [deleteAttributeValue] = useAttributeValueDeleteMutation();
+  const [customErrors, setCustomErrors] = useState<UseProductUpdateHandlerError[]>([]);
   const sendMutations = async (
     data: ProductUpdateSubmitData,
   ): Promise<UseProductUpdateHandlerError[]> => {
+    // reset old errors
+    setCustomErrors([]);
+
     let errors: UseProductUpdateHandlerError[] = [];
     const variantErrors: ProductVariantListError[] = [];
     const uploadFilesResult = await handleUploadMultipleFiles(
@@ -137,12 +156,40 @@ export function useProductUpdateHandler(
       errors = [...errors, ...deleteVaraintsResult.data.productVariantBulkDelete.errors];
     }
 
+    const productMaterialErrors = handleMaterialCompositionUpdate(intl, data.materialsComposition);
+
+    if (productMaterialErrors.length) {
+      productMaterialErrors.forEach(error =>
+        notify({
+          status: "error",
+          text: error.message,
+        }),
+      );
+      errors.push(...productMaterialErrors);
+      setCustomErrors(errs => [...errs, ...productMaterialErrors]);
+
+      return errors;
+    }
+
+    const productSizeTableErrors = getSizeTableErrors(intl, data.sizeTable);
+
+    if (productSizeTableErrors.length) {
+      productSizeTableErrors.forEach(error =>
+        notify({
+          status: "error",
+          text: error.message,
+        }),
+      );
+      errors.push(...productSizeTableErrors);
+      setCustomErrors(errs => [...errs, ...productSizeTableErrors]);
+      setProductSizeTableErrors(productSizeTableErrors);
+
+      // return errors;
+    }
+
     const updateProductResult = await updateProduct({
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
     });
-
-    // eslint-disable-next-line no-console
-    console.log("updateSizeTable", updateSizeTable(product, initSizeTable, data.sizeTable));
 
     if (data.variants.added.length > 0) {
       const createVariantsResults = await createVariants({
@@ -231,35 +278,144 @@ export function useProductUpdateHandler(
       channelsErrors,
       errors,
       variantListErrors,
+      customErrors,
+      productSizeTableErrors,
     },
   ];
 }
 
-const updateSizeTable = (
-  product: ProductFragment,
-  initSizeTable: TSizeTable,
-  sizeTableChangeOpts: DatagridChangeOpts,
-) => {
-  const productVariantClothingSizes = getProductVariantClothingSizes(product.variants);
+const getSizeTableErrors = (
+  // product: ProductFragment,
+  intl: IntlShape,
+  currentSizeTable: TSizeTable,
+): ProductSizeTableError[] => {
+  // const productVariantClothingSizes = getProductVariantClothingSizes(product.variants);
 
-  if (sizeTableChangeOpts.updates.length > 0) {
-    const newSizeTable = { ...initSizeTable };
+  const errors: ProductSizeTableError[] = [];
 
-    sizeTableChangeOpts.updates.forEach(update => {
-      if (update.column in SizePropertyEnum) {
-        const property = update.column as SizePropertyEnum;
-        const value = update.data.value;
-        const size = productVariantClothingSizes[update.row];
+  Object.keys(currentSizeTable).forEach(size => {
+    if (currentSizeTable[size] === undefined) {
+      // if size undefined it's not in the table
+      return;
+    }
 
-        if (newSizeTable[size] === undefined) {
-          newSizeTable[size] = { [property]: value };
-        } else {
-          newSizeTable[size][property] = value;
-        }
-        // newSizeTable[update.row][property] = value;
+    const sizeTableRow = currentSizeTable[size as ClothingSize];
+
+    Object.entries(sizeTableRow).forEach(([property, value]) => {
+      if (!value) {
+        errors.push({
+          __typename: "ProductSizeTableError",
+          code: ProductSizeErrorCode.REQUIRED,
+          field: property as SizePropertyEnum,
+          size: size as ClothingSize,
+          message: `${intl.formatMessage({
+            defaultMessage: "Size table value is required",
+            id: "QdhgFO",
+          })},
+          ${intl.formatMessage({ defaultMessage: "size", id: "oqi+AF" })}: ${size.toUpperCase()},
+          ${intl.formatMessage({ defaultMessage: "dimension", id: "2nHvaR" })}: ${mapSizePropertyToMessage(property as SizePropertyEnum, intl)}`,
+        });
       }
     });
+  });
 
-    return newSizeTable;
+  // if (sizeTableChangeOpts.updates.length > 0) {
+  //   const newSizeTable: TSizeTable = initSizeTable ? { ...initSizeTable } : {};
+
+  //   sizeTableChangeOpts.updates.forEach(update => {
+  //     if (update.column in SizePropertyEnum) {
+  //       const property = update.column as SizePropertyEnum;
+  //       const value = update.data.value;
+  //       const size = productVariantClothingSizes[update.row];
+
+  //       if (!value) {
+  //         errors.push({
+  //           __typename: "ProductSizeTableError",
+  //           code: ProductSizeErrorCode.REQUIRED,
+  //           field: property,
+  //           size,
+  //         });
+
+  //         return;
+  //       }
+
+  //       if (newSizeTable[size] === undefined) {
+  //         newSizeTable[size] = { [property]: value };
+  //       } else {
+  //         newSizeTable[size][property] = value;
+  //       }
+  //     }
+  //   });
+
+  //   return [newSizeTable, errors];
+  // }
+
+  return errors;
+};
+
+const handleMaterialCompositionUpdate = (
+  intl: IntlShape,
+  materialsComposition: ProductMaterialsComposition,
+) => {
+  const productMaterialErrors: ProductMaterialError[] = [];
+
+  // check if at least one material has been selected
+  if (Object.keys(materialsComposition).length === 0) {
+    productMaterialErrors.push({
+      __typename: "ProductMaterialError",
+      message: intl.formatMessage({
+        defaultMessage: "Product material has not been selected",
+        id: "8K+SMr",
+      }),
+      code: ProductMaterialErrorCode.NO_MATERIAL_PROVIDED,
+      field: "material",
+    });
+
+    return productMaterialErrors;
   }
+
+  // check if none of values are empty
+  Object.entries(materialsComposition).forEach(([material, value]) => {
+    if (!value) {
+      const field = getMaterialCompositionRowId(
+        ProductMaterialEnum[material as keyof typeof ProductMaterialEnum],
+      );
+
+      productMaterialErrors.push({
+        __typename: "ProductMaterialError",
+        message: intl.formatMessage({
+          defaultMessage: "Material composition is required",
+          id: "RJ4E+E",
+        }),
+        code: ProductMaterialErrorCode.EMPTY_PERCENTAGE_VALUE,
+        field,
+      });
+    }
+  });
+
+  if (productMaterialErrors.length) return productMaterialErrors;
+
+  // check if sum is equal to 100%
+  const sum = Object.values(materialsComposition).reduce(
+    (acc, value) => acc + (value ? parseFloat(value) : 0),
+    0,
+  );
+
+  if (sum !== 100) {
+    productMaterialErrors.push({
+      __typename: "ProductMaterialError",
+      message: intl.formatMessage({
+        defaultMessage: "Sum of material composition must be 100%",
+        id: "DrMu0f",
+      }),
+      code: ProductMaterialErrorCode.INVALID_PERCENTAGE,
+      field: "material",
+    });
+
+    return productMaterialErrors;
+  }
+
+  // update request
+
+  return [];
 };

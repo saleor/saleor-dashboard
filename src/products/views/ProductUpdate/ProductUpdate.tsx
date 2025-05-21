@@ -18,11 +18,6 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, errorMessages } from "@dashboard/intl";
-import {
-  ClothingSize,
-  TSizeTable,
-} from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard";
-import { SizePropertyEnum } from "@dashboard/products/components/ProductUpdatePage/ProductSizeTableCard/types";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -179,7 +174,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   };
   const handleBack = () => navigate(productListUrl());
   const handleImageDelete = (id: string) => () => deleteProductImage({ variables: { id } });
-  const [submit, submitOpts] = useProductUpdateHandler(product, sizeTableMock);
+  const [submit, submitOpts] = useProductUpdateHandler(product);
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
@@ -238,8 +233,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         collections={collections}
         attributeValues={attributeValues}
         disabled={disableFormSave}
-        errors={submitOpts.errors}
+        errors={[...submitOpts.errors, ...submitOpts.customErrors]}
         variantListErrors={submitOpts.variantListErrors}
+        productSizeTableErrors={submitOpts.productSizeTableErrors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         fetchAttributeValues={searchAttributeValues}
@@ -277,7 +273,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
-        sizeTable={sizeTableMock}
       />
       <ActionDialog
         open={params.action === "remove"}
@@ -296,36 +291,3 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   );
 };
 export default ProductUpdate;
-
-const sizeTableMock = {
-  // [ClothingSize.s]: {
-  //   [SizePropertyEnum.CHEST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.WAIST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.HIPS_CIRCUMFERENCE]: 10,
-  // },
-  // [ClothingSize.xs]: {
-  //   [SizePropertyEnum.CHEST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.WAIST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.HIPS_CIRCUMFERENCE]: 10,
-  // },
-  // [ClothingSize.m]: {
-  //   [SizePropertyEnum.CHEST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.WAIST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.HIPS_CIRCUMFERENCE]: 10,
-  // },
-  // [ClothingSize.l]: {
-  //   [SizePropertyEnum.CHEST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.WAIST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.HIPS_CIRCUMFERENCE]: 10,
-  // },
-  // [ClothingSize.xl]: {
-  //   [SizePropertyEnum.CHEST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.WAIST_CIRCUMFERENCE]: 10,
-  //   [SizePropertyEnum.HIPS_CIRCUMFERENCE]: 10,
-  // },
-  [ClothingSize.xxl]: {
-    [SizePropertyEnum.CHEST_CIRCUMFERENCE]: 10,
-    [SizePropertyEnum.WAIST_CIRCUMFERENCE]: 10,
-    [SizePropertyEnum.HIPS_CIRCUMFERENCE]: 10,
-  },
-} as unknown as TSizeTable;

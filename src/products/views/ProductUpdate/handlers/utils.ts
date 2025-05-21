@@ -86,6 +86,26 @@ export function getProductUpdateVariables(
     variables.input["seo"].title = data.seoTitle;
   }
 
+  if (data.materialsComposition) {
+    variables.input["metadata"] = (variables.input["metadata"] || []).filter(
+      item => item.key !== "materialsComposition",
+    );
+    variables.input["metadata"].push({
+      key: "materialsComposition",
+      value: JSON.stringify(data.materialsComposition),
+    });
+  }
+
+  if (data.sizeTable) {
+    variables.input["metadata"] = (variables.input["metadata"] || []).filter(
+      item => item.key !== "sizeTable",
+    );
+    variables.input["metadata"].push({
+      key: "sizeTable",
+      value: JSON.stringify(data.sizeTable),
+    });
+  }
+
   return variables;
 }
 

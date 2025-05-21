@@ -1,18 +1,17 @@
 // @ts-strict-ignore
-import { ChannelData } from "@dashboard/channels/utils";
-import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { ProductDetailsVariantFragment } from "@dashboard/graphql";
-import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { ProductDetailsVariantFragment, ProductFragment } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
-import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
 import messages from "./messages";
-import { ClothingSize, TSizeTable } from "./ProductSizeTableCard";
-import { SizePropertyEnum } from "./types";
+import { ClothingSize, ProductSizeTableError, SizePropertyEnum, TSizeTable } from "./types";
 
-export const mapSizeTableToOptions = (sizeTable: TSizeTable, intl: IntlShape) => {
+export const mapSizeTableToOptions = (sizeTable: TSizeTable, intl: IntlShape): Option[] => {
+  if (Object.keys(sizeTable).length === 0) {
+    return [];
+  }
+
   const options = Object.keys(Object.values(sizeTable)[0]).flatMap(sizeProperty => {
     if (!(sizeProperty in SizePropertyEnum)) return [];
 
@@ -42,60 +41,26 @@ export const mapSizePropertyToMessage = (sizeProperty: SizePropertyEnum, intl: I
   }
 };
 
-function errorMatchesColumn(_error: ProductVariantListError, _columnId: string): boolean {
-  return false;
-  // if (error.type === "channel") {
-  //   return (
-  //     error.channelIds.includes(getColumnChannel(columnId)) ||
-  //     error.channelIds.includes(getColumnChannelAvailability(columnId))
-  //   );
-  // }
-
-  // if (error.type === "stock") {
-  //   return error.warehouseId.includes(getColumnStock(columnId));
-  // }
-
-  // if (error.type === "variantData") {
-  //   if (error.attributes?.length > 0) {
-  //     return error.attributes.includes(getColumnAttribute(columnId));
-  //   }
-
-  //   return error?.field?.includes(getColumnName(columnId)) ?? false;
-  // }
-}
-
 export function getError(
-  errors: ProductVariantListError[],
-  { availableColumns, removed, column, row, variants }: GetDataOrError,
+  errors: ProductSizeTableError[],
+  { availableColumns, removed, column, row, sizes }: GetDataOrError,
 ): boolean {
   if (column === -1) {
     return false;
   }
 
   const columnId = availableColumns[column]?.id;
-  const variantId = variants[row + removed.filter(r => r <= row).length]?.id;
+  const size = sizes[row + removed.filter(r => r <= row).length];
 
-  if (!variantId) {
-    return errors.some(err => err.type === "create" && err.index === row - variants.length);
-  }
-
-  return errors.some(
-    err =>
-      err.type !== "create" && err.variantId === variantId && errorMatchesColumn(err, columnId),
-  );
+  return errors.some(err => err.size === size && err.field === columnId); // check if error matches row and column
 }
 
 interface GetDataOrError {
   availableColumns: AvailableColumn[];
   column: number;
   row: number;
-  variants: ProductDetailsVariantFragment[];
-  changes: MutableRefObject<DatagridChange[]>;
-  channels: ChannelData[];
-  added: number[];
+  sizes: ClothingSize[];
   removed: number[];
-  searchAttributeValues: (id: string, text: string) => Promise<Option[]>;
-  getChangeIndex: (column: string, row: number) => number;
 }
 
 export const generateSizeTable = (
@@ -117,7 +82,7 @@ export const generateSizeTable = (
           ) {
             acc[property] = initSizeTable[size][property];
           } else {
-            acc[property] = undefined;
+            acc[property] = null;
           }
 
           return acc;
@@ -141,7 +106,7 @@ export const getProductVariantClothingSizes = (
     new Set(
       productVariants?.map(variant => {
         const sizeSlug = variant.attributes.find(
-          attr => attr.attribute.name.toLowerCase() === "rozmiar",
+          attr => attr.attribute.name.toLowerCase() === "size",
         )?.values[0].slug;
         const size = sizeSlug ? sizeSlug : "unknown";
 
@@ -155,4 +120,38 @@ export const getProductVariantClothingSizes = (
     ) as ClothingSize[];
 
   return sizes;
+};
+
+export const getSizeTableFromProductMetadata = (product: ProductFragment): TSizeTable => {
+  const sizeTableString = product?.metadata.find(meta => meta.key === "sizeTable")?.value;
+
+  if (!sizeTableString) {
+    return {};
+  }
+
+  try {
+    const sizeTable = JSON.parse(sizeTableString) as TSizeTable;
+
+    return sizeTable;
+  } catch (error) {
+    console.error("Failed to parse size table from metadata:", error);
+
+    return {};
+  }
+};
+
+export const getInitialSizeTable = (
+  product: ProductFragment,
+  sizeProperties: Option[],
+  sizeTableFromMetadata: TSizeTable,
+) => {
+  if (!product || !product.variants) {
+    return {};
+  }
+
+  const productVariants = product.variants;
+  const sizes = getProductVariantClothingSizes(productVariants);
+  const sizeTable = generateSizeTable(sizeTableFromMetadata, sizes, sizeProperties);
+
+  return sizeTable;
 };

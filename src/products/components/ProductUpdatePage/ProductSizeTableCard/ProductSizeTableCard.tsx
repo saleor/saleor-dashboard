@@ -4,7 +4,6 @@ import { numberCell, readonlyTextCell } from "@dashboard/components/Datagrid/cus
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import Datagrid, { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { ProductDetailsVariantFragment } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, Multiselect, Option, Text } from "@saleor/macaw-ui-next";
@@ -14,36 +13,25 @@ import { useIntl } from "react-intl";
 import { getSizeParametersOptions } from "./consts";
 import { variantsStaticColumnsAdapter } from "./datagrid";
 import messages from "./messages";
-import { generateSizeTable, getProductVariantClothingSizes } from "./utils";
+import { ClothingSize, ProductSizeTableError, TSizeTable } from "./types";
+import { getError } from "./utils";
 
 type Props = {
   initSizeTable: TSizeTable;
   sizeProperties: Option[];
-  productVariants?: ProductDetailsVariantFragment[];
+  errors: ProductSizeTableError[];
   onSizePropertiesChange: (value: Option[]) => void;
   onChangeSizeTableData: (data: DatagridChangeOpts) => void;
 };
 
-export enum ClothingSize {
-  xs = "xs",
-  s = "s",
-  m = "m",
-  l = "l",
-  xl = "xl",
-  xxl = "xxl",
-}
-
-export type TSizeTable = Record<ClothingSize, Record<string, number> | undefined>;
-
 export const ProductSizeTableCard: React.FC<Props> = ({
   initSizeTable,
   sizeProperties,
-  productVariants,
+  errors,
   onSizePropertiesChange,
   onChangeSizeTableData,
 }) => {
-  const sizes = getProductVariantClothingSizes(productVariants);
-  const sizeTable = generateSizeTable(initSizeTable, sizes, sizeProperties);
+  const intl = useIntl();
 
   return (
     <>
@@ -56,7 +44,7 @@ export const ProductSizeTableCard: React.FC<Props> = ({
         flexDirection="column"
       >
         <Text size={5} fontWeight="bold">
-          Tabela rozmiarów
+          {intl.formatMessage(messages.title)}
         </Text>
         <ProductSizePropertiesSelect
           onSizePropertiesChange={onSizePropertiesChange}
@@ -64,8 +52,8 @@ export const ProductSizeTableCard: React.FC<Props> = ({
         />
       </Box>
       <ProductSizeTable
-        productName={"Sukienka"}
-        sizeTable={sizeTable}
+        sizeTable={initSizeTable}
+        errors={errors}
         onRowClick={function (id: string): void {
           // eslint-disable-next-line no-console
           console.log("on row click id:", id);
@@ -100,13 +88,14 @@ const ProductSizePropertiesSelect: React.FC<
 };
 
 type ProductSizeTableProps = {
-  productName: string;
   sizeTable: TSizeTable;
+  errors: ProductSizeTableError[];
   onRowClick: (id: string) => void;
 } & Pick<Props, "onChangeSizeTableData">;
 
 const ProductSizeTable: React.FC<ProductSizeTableProps> = ({
   sizeTable,
+  errors,
   onChangeSizeTableData,
 }) => {
   const intl = useIntl();
@@ -144,6 +133,7 @@ const ProductSizeTable: React.FC<ProductSizeTableProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onSave: () => {},
   });
+
   const getCellContent = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) => {
       const columnId = visibleColumns[column]?.id;
@@ -166,19 +156,17 @@ const ProductSizeTable: React.FC<ProductSizeTableProps> = ({
     [visibleColumns, sizeTable, isTableLoaded],
   );
 
-  // const getCellError = React.useCallback(
-  //   ([column, row]: Item, opts: GetCellContentOpts) =>
-  //     getError(errors, {
-  //       availableColumns: visibleColumns,
-  //       column,
-  //       row,
-  //       channels,
-  //       variants,
-  //       searchAttributeValues: onAttributeValuesSearch,
-  //       ...opts,
-  //     }),
-  //   [errors, visibleColumns, channels, variants, onAttributeValuesSearch],
-  // );
+  const getCellError = React.useCallback(
+    ([column, row]: Item, opts: GetCellContentOpts) =>
+      getError(errors, {
+        availableColumns: visibleColumns,
+        column,
+        row,
+        sizes: Object.keys(sizeTable).filter(k => sizeTable[k] !== undefined) as ClothingSize[],
+        ...opts,
+      }),
+    [errors, visibleColumns],
+  );
 
   return (
     <Datagrid
@@ -187,7 +175,7 @@ const ProductSizeTable: React.FC<ProductSizeTableProps> = ({
       availableColumns={visibleColumns}
       emptyText={intl.formatMessage(messages.empty)}
       getCellContent={getCellContent}
-      getCellError={() => false}
+      getCellError={getCellError}
       menuItems={() => []}
       rows={Object.values(sizeTable)?.filter(v => !!v)?.length ?? 0}
       selectionActions={() => null}

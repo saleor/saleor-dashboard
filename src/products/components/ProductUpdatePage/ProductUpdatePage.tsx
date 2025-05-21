@@ -64,11 +64,14 @@ import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
-import { ProductSizeTableCard, TSizeTable } from "./ProductSizeTableCard";
+import { ProductMaterialsListCard } from "./ProductMaterialsListCard";
+import { ProductMaterialError } from "./ProductMaterialsListCard/types";
+import { ProductSizeTableCard } from "./ProductSizeTableCard";
+import { ProductSizeTableError } from "./ProductSizeTableCard/types";
 import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
 
 interface StylkaProps {
-  sizeTable: TSizeTable;
+  productSizeTableErrors: ProductSizeTableError[];
 }
 
 export interface ProductUpdatePageProps extends StylkaProps {
@@ -165,7 +168,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   refetch,
   onCloseDialog,
   onAttributeSelectBlur,
-  sizeTable,
+  productSizeTableErrors,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -221,6 +224,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       ) as Array<ProductErrorFragment | ProductChannelListingErrorFragment>,
     [errors, channelsErrors],
   );
+  const productMaterialsCompositionErrors = React.useMemo(
+    () =>
+      errors.filter(error => error.__typename === "ProductMaterialError") as ProductMaterialError[],
+    [errors],
+  );
   const extensionMenuItems = mapToMenuItemsForProductDetails(
     PRODUCT_DETAILS_MORE_ACTIONS,
     productId,
@@ -259,7 +267,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
       refetch={refetch}
-      sizeTable={sizeTable}
     >
       {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters }) => {
         const availabilityCommonProps = {
@@ -343,9 +350,16 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
               )}
               {isProductTypeClothes && (
+                <ProductMaterialsListCard
+                  materialsComposition={data.materialsComposition}
+                  errors={productMaterialsCompositionErrors}
+                  onChange={handlers.selectMaterialsComposition}
+                />
+              )}
+              {isProductTypeClothes && (
                 <ProductSizeTableCard
-                  initSizeTable={sizeTable}
-                  productVariants={variants}
+                  initSizeTable={data.sizeTable}
+                  errors={productSizeTableErrors}
                   sizeProperties={data.sizeProperties}
                   onSizePropertiesChange={handlers.selectSizeProperties}
                   onChangeSizeTableData={handlers.changeSizeTableData}

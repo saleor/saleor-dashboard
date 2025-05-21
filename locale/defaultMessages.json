@@ -805,6 +805,9 @@
     "context": "product dimensions, full-screen title",
     "string": "Dimensions of: {name}"
   },
+  "2nHvaR": {
+    "string": "dimension"
+  },
   "2nT0Sm": {
     "string": "No Extensions installed yet"
   },
@@ -1646,6 +1649,9 @@
     "context": "ordered product sku",
     "string": "SKU"
   },
+  "8K+SMr": {
+    "string": "Product material has not been selected"
+  },
   "8Q504V": {
     "string": "Metadata"
   },
@@ -1724,6 +1730,10 @@
   "991li9": {
     "context": "input label",
     "string": "Reason for refund"
+  },
+  "99dnjP": {
+    "context": "wool",
+    "string": "Wool"
   },
   "9AaeXq": {
     "context": "waist circumference, size table",
@@ -1807,6 +1817,10 @@
   },
   "9UHfux": {
     "string": "Voucher Specific Information"
+  },
+  "9Ud1f5": {
+    "context": "nylon",
+    "string": "Nylon"
   },
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
@@ -2504,6 +2518,9 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "DrMu0f": {
+    "string": "Sum of material composition must be 100%"
+  },
   "DyGpz4": {
     "context": "unapproved fulfillment, section header",
     "string": "Waiting for approval"
@@ -2624,6 +2641,10 @@
   "Eh6KYS": {
     "context": "info card title",
     "string": "Card information"
+  },
+  "Em3VTe": {
+    "context": "polyester",
+    "string": "Polyester"
   },
   "EoTI4r": {
     "context": "authorize status none",
@@ -2895,6 +2916,10 @@
   "G3ay2p": {
     "context": "section header",
     "string": "Fulfillment settings"
+  },
+  "G4floC": {
+    "context": "product composition",
+    "string": "Product composition"
   },
   "G4g5Ii": {
     "context": "tab name",
@@ -4612,6 +4637,9 @@
     "context": "number of collections",
     "string": "Collections ({quantity})"
   },
+  "QdhgFO": {
+    "string": "Size table value is required"
+  },
   "Qe4XHv": {
     "context": "years after label",
     "string": "years after issue"
@@ -4684,6 +4712,9 @@
   "REVk27": {
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
+  },
+  "RJ4E+E": {
+    "string": "Material composition is required"
   },
   "RK6l3Z": {
     "context": "radio button label",
@@ -6614,6 +6645,10 @@
     "context": "assign collections to sale and save",
     "string": "Assign and save"
   },
+  "cuBHNE": {
+    "context": "cotton",
+    "string": "Cotton"
+  },
   "cvVIV/": {
     "context": "dialog header",
     "string": "Assign Countries"
@@ -8390,6 +8425,9 @@
     "context": "unassign product from sale and save, button",
     "string": "Unassign and save"
   },
+  "oqi+AF": {
+    "string": "size"
+  },
   "orvpWh": {
     "string": "Go back"
   },
@@ -8729,6 +8767,10 @@
   "r2dojI": {
     "context": "checkbox label",
     "string": "Restrict order weight"
+  },
+  "r3QVgn": {
+    "context": "select materials",
+    "string": "Select materials"
   },
   "r4g/vD": {
     "context": "search modal billing title",
@@ -9345,6 +9387,10 @@
   },
   "vAxm7u": {
     "string": "You must select a channel first and select at least one gift"
+  },
+  "vBPm7g": {
+    "context": "add material",
+    "string": "Add material"
   },
   "vC8vyb": {
     "context": "enabled status option label",

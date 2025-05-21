@@ -53,7 +53,7 @@ export const useColumns = ({
   const [dynamicColumns, updateDynamicColumns] = React.useState<AvailableColumn[] | null>(null);
 
   const { columns: persistedColumns, update } = usePersistance(gridName);
-  const selectedColumns = selectedWithPersistance(_selectedColumns, persistedColumns);
+  const selectedColumns = selectedWithPersistance(_selectedColumns, []);
 
   // Dynamic columns are loaded from the API, thus they need to be updated
   // after query resolves with data. Then we also sort them by order of addition
@@ -72,6 +72,7 @@ export const useColumns = ({
   );
 
   const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<string | null>(null);
+
   const [visibleColumns, setVisibleColumns] = useStateFromProps(initialColumnsState);
 
   const onSave = (columnsIds: string[]) => {

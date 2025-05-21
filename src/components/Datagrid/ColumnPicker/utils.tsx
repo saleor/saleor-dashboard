@@ -78,8 +78,8 @@ export const mergeSelectedColumns = ({
   selectedColumns: string[];
 }) => {
   const mergedColumns = [...staticColumns, ...(dynamicColumns ?? [])];
-  const empty = mergedColumns[0].id === "empty" ? mergedColumns[0] : null;
 
+  const empty = mergedColumns[0].id === "empty" ? mergedColumns[0] : null;
   const columns = selectedColumns
     .map(columnId => mergedColumns.find(column => column.id === columnId))
     .filter(Boolean);

@@ -9551,5 +9551,57 @@
   "6YCv6w": {
     "context": "Size table dimenstion - length",
     "string": "Długość"
+  },
+  "8K+SMr": {
+    "context": "Product material has not been selected",
+    "string": "Nie wybrano żadnych materiałów"
+  },
+  "RJ4E+E": {
+    "context": "Material composition is required",
+    "string": "Wartość wymagana"
+  },
+  "DrMu0f": {
+    "context": "Sum of material composition must be 100%",
+    "string": "Suma wszystkich materiałów musi być równa 100%"
+  },
+  "G4floC": {
+    "context": "Product composition",
+    "string": "Skład produktu"
+  },
+  "r3QVgn": {
+    "context": "Select materials",
+    "string": "Wybierz materiały"
+  },
+  "cuBHNE": {
+    "string": "Bawełna",
+    "context": "Material type"
+  },
+  "Em3VTe": {
+    "string": "Poliester",
+    "context": "Material type"
+  },
+  "99dnjP": {
+    "string": "Wełna",
+    "context": "Material type"
+  },
+  "9Ud1f5": {
+    "string": "Nylon",
+    "context": "Material type"
+  },
+  "vBPm7g": {
+    "string": "Dodaj materiał",
+    "context": "Add material button"
+  },
+  "QdhgFO": {
+    "string": "Nie podano wymiaru produktu",
+    "context": "Size table value is required"
+  },
+  "oqi+AF": {
+    "string": "rozmiar",
+    "context": "Size"
+  },
+  "2nHvaR": {
+    "string": "wymiar",
+    "context": "Dimension"
   }
 }

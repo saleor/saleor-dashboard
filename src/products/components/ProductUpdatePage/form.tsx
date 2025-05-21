@@ -43,8 +43,13 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useIntl } from "react-intl";
 
 import { useProductChannelListingsForm } from "./formChannels";
-import { TSizeTable } from "./ProductSizeTableCard";
-import { mapSizeTableToOptions } from "./ProductSizeTableCard/utils";
+import { ProductMaterialsComposition } from "./ProductMaterialsListCard/types";
+import { TSizeTable } from "./ProductSizeTableCard/types";
+import {
+  getInitialSizeTable,
+  getSizeTableFromProductMetadata,
+  mapSizeTableToOptions,
+} from "./ProductSizeTableCard/utils";
 import {
   ProductUpdateData,
   ProductUpdateFormProps,
@@ -61,7 +66,6 @@ export function useProductUpdateForm(
   disabled: boolean,
   refetch: () => Promise<any>,
   opts: UseProductUpdateFormOpts,
-  initSizeTable: TSizeTable,
 ): UseProductUpdateFormOutput {
   const intl = useIntl();
 
@@ -73,6 +77,7 @@ export function useProductUpdateForm(
     confirmLeave: true,
     formId: PRODUCT_UPDATE_FORM_ID,
   });
+
   const {
     handleChange,
     triggerChange,
@@ -88,11 +93,6 @@ export function useProductUpdateForm(
     removed: [],
     updates: [],
   });
-  const sizeTable = useRef<DatagridChangeOpts>({
-    added: [],
-    removed: [],
-    updates: [],
-  });
   const handleVariantChange = React.useCallback(
     (data: DatagridChangeOpts) => {
       variants.current = prepareVariantChangeData(data, locale, product);
@@ -100,21 +100,74 @@ export function useProductUpdateForm(
     },
     [locale, product, triggerChange],
   );
-  const handleSizeTableDataChange = React.useCallback(
-    (data: DatagridChangeOpts) => {
-      sizeTable.current = data;
-      triggerChange();
-    },
-    [triggerChange],
+
+  const productMaterialsFromProduct =
+    product?.metadata?.find(m => m.key === "materialsComposition")?.value || "{}";
+
+  // product materials composition
+  const [materialsComposition, setMaterialsComposition] = useState<ProductMaterialsComposition>(
+    JSON.parse(product?.metadata?.find(m => m.key === "materialsComposition")?.value || "{}"),
   );
 
+  useEffect(() => {
+    const parsedMaterialsComposition = JSON.parse(productMaterialsFromProduct);
+
+    setMaterialsComposition(parsedMaterialsComposition);
+  }, [productMaterialsFromProduct]);
+
+  const handleMaterialsCompositionChange = (data: ProductMaterialsComposition) => {
+    setMaterialsComposition(data);
+    triggerChange();
+  };
+
+  const sizeTableFromMetadata = useMemo(() => getSizeTableFromProductMetadata(product), [product]);
+
   const [sizeProperties, setSizeProperties] = useState<Option[]>(
-    mapSizeTableToOptions(initSizeTable, intl),
+    mapSizeTableToOptions(sizeTableFromMetadata, intl),
   );
+
+  useEffect(() => {
+    const mappedSizeProperties = mapSizeTableToOptions(sizeTableFromMetadata, intl);
+
+    setSizeProperties(mappedSizeProperties);
+  }, [sizeTableFromMetadata, intl]);
+
   const handleSizePropertiesChange = (data: Option[]) => {
     setSizeProperties(data);
     triggerChange();
   };
+
+  const sizeTableGrid = useRef<DatagridChangeOpts>({
+    added: [],
+    removed: [],
+    updates: [],
+  });
+  const [sizeTable, setSizeTable] = useState<TSizeTable>(
+    getInitialSizeTable(product, sizeProperties, sizeTableFromMetadata),
+  );
+
+  useEffect(() => {
+    const initialSizeTable = getInitialSizeTable(product, sizeProperties, sizeTableFromMetadata);
+
+    setSizeTable(initialSizeTable);
+  }, [sizeProperties]);
+
+  const handleSizeTableDataChange = React.useCallback(
+    (data: DatagridChangeOpts) => {
+      sizeTableGrid.current = data;
+      triggerChange();
+
+      const size = Object.keys(sizeTable).filter(s => !!sizeTable[s])[data.currentUpdate.row];
+
+      const newSizeTable = {
+        ...sizeTable,
+        [size]: { ...sizeTable[size], [data.currentUpdate.column]: data.currentUpdate.data.value },
+      };
+
+      setSizeTable(newSizeTable);
+    },
+    [triggerChange],
+  );
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
@@ -206,6 +259,8 @@ export function useProductUpdateForm(
     channels,
     description: null,
     sizeProperties,
+    materialsComposition,
+    sizeTable,
   };
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...form.changedData,
@@ -223,7 +278,8 @@ export function useProductUpdateForm(
     },
     description: richText.isDirty ? await richText.getValue() : undefined,
     variants: variants.current,
-    sizeTable: sizeTable.current,
+    sizeTable,
+    materialsComposition,
   });
   const handleSubmit = async (data: ProductUpdateSubmitData) => {
     const errors = await onSubmit(data);
@@ -240,6 +296,10 @@ export function useProductUpdateForm(
   });
   const submit = useCallback(async () => {
     const result = await handleFormSubmit(await getSubmitData());
+
+    if (result?.length) {
+      return result;
+    }
 
     cleanChanged();
     await refetch();
@@ -274,7 +334,7 @@ export function useProductUpdateForm(
       removed: [],
       updates: [],
     };
-    sizeTable.current = {
+    sizeTableGrid.current = {
       added: [],
       removed: [],
       updates: [],
@@ -325,6 +385,7 @@ export function useProductUpdateForm(
       selectCollection: handleCollectionSelect,
       selectTaxClass: handleTaxClassSelect,
       selectSizeProperties: handleSizePropertiesChange,
+      selectMaterialsComposition: handleMaterialsCompositionChange,
       updateChannelList: handleChannelListUpdate,
     },
     submit,
@@ -340,7 +401,6 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   onSubmit,
   refetch,
   disabled,
-  sizeTable,
   ...rest
 }) => {
   const { datagrid, richText, ...props } = useProductUpdateForm(
@@ -349,7 +409,6 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
     disabled,
     refetch,
     rest,
-    sizeTable,
   );
 
   return (

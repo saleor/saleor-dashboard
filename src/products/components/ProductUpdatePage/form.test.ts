@@ -2,7 +2,6 @@ import { ProductFragment } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useProductUpdateForm } from "./form";
-import { ClothingSize } from "./ProductSizeTableCard";
 import { UseProductUpdateFormOpts } from "./types";
 
 jest.mock("@dashboard/utils/richText/useRichText", () => {
@@ -40,14 +39,6 @@ describe("useProductUpdateForm", () => {
         false,
         jest.fn(),
         {} as UseProductUpdateFormOpts,
-        {
-          [ClothingSize.xs]: undefined,
-          [ClothingSize.s]: undefined,
-          [ClothingSize.m]: undefined,
-          [ClothingSize.l]: undefined,
-          [ClothingSize.xl]: undefined,
-          [ClothingSize.xxl]: undefined,
-        },
       ),
     );
 
@@ -96,14 +87,6 @@ describe("useProductUpdateForm", () => {
         false,
         jest.fn(),
         {} as UseProductUpdateFormOpts,
-        {
-          [ClothingSize.xs]: undefined,
-          [ClothingSize.s]: undefined,
-          [ClothingSize.m]: undefined,
-          [ClothingSize.l]: undefined,
-          [ClothingSize.xl]: undefined,
-          [ClothingSize.xxl]: undefined,
-        },
       ),
     );
 
