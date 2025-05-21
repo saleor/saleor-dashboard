@@ -2348,6 +2348,9 @@
     "context": "error message",
     "string": "Saleor is unavailable, please check your network connection and try again."
   },
+  "CiWUaq": {
+    "string": "Make sure to save token, you won't be able to see it again."
+  },
   "CjSRT1": {
     "context": "button",
     "string": "Create Category"
@@ -8052,6 +8055,10 @@
   },
   "lqIzC8": {
     "string": "This field needs to be unique"
+  },
+  "lqkgFU": {
+    "context": "webhook input help text",
+    "string": "Secret key is used to create a hash signature with each payload. *optional field"
   },
   "lrdAIY": {
     "context": "amount of all cancelled transactions in order",
