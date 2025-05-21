@@ -16,7 +16,6 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
@@ -65,8 +64,6 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     onDelete,
     onSubmit,
   } = props;
-  const classes = useStyles(props);
-  const intl = useIntl();
   const navigate = useNavigator();
   const {
     isMetadataModified,
