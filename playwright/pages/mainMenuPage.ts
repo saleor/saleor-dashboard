@@ -9,7 +9,9 @@ export class MainMenuPage extends BasePage {
     readonly userMenu = page.getByTestId("userMenu"),
     readonly accountSettings = page.getByTestId("account-settings-button"),
     readonly catalog = page.getByTestId("menu-item-label-catalogue"),
-    readonly content = page.getByTestId("menu-item-label-pages"),
+    readonly modeling = page.getByTestId("menu-item-label-modeling"),
+    readonly models = page.getByTestId("menu-item-label-models"),
+    readonly modelTypes = page.getByTestId("menu-item-label-model-types"),
     readonly categories = page.getByTestId("menu-item-label-categories"),
     readonly collections = page.getByTestId("menu-item-label-collections"),
     readonly configuration = page.getByTestId("menu-item-label-configure"),
@@ -58,8 +60,19 @@ export class MainMenuPage extends BasePage {
     await this.translations.click();
   }
 
-  async openContent() {
-    await this.content.click();
+  async openModeling() {
+    await this.modeling.click();
+  }
+
+  async openModels() {
+    /* Clicking modeling links to the first section which is models */
+    await this.modeling.click();
+  }
+
+  async openModelTypes() {
+    /* Clicking chevron arrow to expand the section */
+    await this.modeling.locator("button").first().click();
+    await this.modelTypes.click();
   }
 
   async openCustomers() {
