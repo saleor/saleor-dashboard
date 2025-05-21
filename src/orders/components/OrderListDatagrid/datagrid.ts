@@ -61,6 +61,11 @@ export const orderListStaticColumnAdapter = (
       title: intl.formatMessage(columnsMessages.total),
       width: 150,
     },
+    {
+      id: "channel",
+      title: intl.formatMessage(columnsMessages.channel),
+      width: 200,
+    },
   ].map(column => ({
     ...column,
     icon: getColumnSortDirectionIcon(sort, column.id),
@@ -100,6 +105,8 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
         return getStatusCellContent(intl, theme, rowData);
       case "total":
         return getTotalCellContent(rowData);
+      case "channel":
+        return getChannelCellContent(rowData);
       default:
         return textCell("");
     }
@@ -182,6 +189,16 @@ export function getPaymentCellContent(
 export function getTotalCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {
   if (rowData?.total?.gross) {
     return moneyCell(rowData.total.gross.amount, rowData.total.gross.currency, COMMON_CELL_PROPS);
+  }
+
+  return readonlyTextCell("-");
+}
+
+export function getChannelCellContent(
+  rowData: RelayToFlat<OrderListQuery["orders"]>[number],
+): TextCell {
+  if (rowData?.channel?.name) {
+    return readonlyTextCell(rowData.channel.name);
   }
 
   return readonlyTextCell("-");
