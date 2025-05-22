@@ -82,9 +82,9 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
             configuration: data.configuration.map(configItem =>
               configItem.name === name
                 ? {
-                    ...configItem,
-                    value,
-                  }
+                  ...configItem,
+                  value,
+                }
                 : configItem,
             ),
           };
@@ -123,6 +123,7 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                     errors={errors}
                     name={plugin?.name || ""}
                     onChange={onChange}
+                    disabled={disabled}
                   />
                   <Box marginTop={{ mobile: 2, desktop: 4 }} />
                   {data.configuration && (
@@ -137,15 +138,15 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       {selectedConfig?.configuration.some(field =>
                         isSecretField(selectedConfig?.configuration, field.name),
                       ) && (
-                        <>
-                          <Box marginTop={{ mobile: 2, desktop: 4 }} />
-                          <PluginAuthorization
-                            fields={selectedConfig.configuration}
-                            onClear={onClear}
-                            onEdit={onEdit}
-                          />
-                        </>
-                      )}
+                          <>
+                            <Box marginTop={{ mobile: 2, desktop: 4 }} />
+                            <PluginAuthorization
+                              fields={selectedConfig.configuration}
+                              onClear={onClear}
+                              onEdit={onEdit}
+                            />
+                          </>
+                        )}
                     </div>
                   )}
                 </div>
