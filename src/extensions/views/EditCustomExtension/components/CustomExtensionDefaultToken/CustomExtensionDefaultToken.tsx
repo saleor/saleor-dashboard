@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import useClipboard from "@dashboard/hooks/useClipboard";
-import { Box, Button, CloseIcon, Text } from "@saleor/macaw-ui-next"; // Corrected import for CloseIcon and aliased Button
+import { Box, Button, CloseIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
