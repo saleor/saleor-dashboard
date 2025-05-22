@@ -1,17 +1,35 @@
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
-import { Checkbox, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
 import { hasPermissionSelected } from "../../utils";
+import styles from "./PermissionList.module.css";
 
 interface PermissionListProps {
   permissions: PermissionData[];
   selectedPermissions: string[];
   disabled?: boolean;
   onPermissionChange: (key: string, value: boolean) => void;
+}
+
+/** Utility to render a string with <wbr /> after each underscore, for proper line breaks
+ * in permission codes (e.g. MANAGE_ORDERS will break into MANAGE_ <new line>ORDERS */
+function renderWithWbrAfterUnderscore(str: string) {
+  return str
+    .split("_")
+    .flatMap((part, idx, arr) => (idx < arr.length - 1 ? [part, "_", <wbr key={idx} />] : [part]));
+}
+
+function getPermissionColumns(permissions: PermissionData[]) {
+  if (permissions.length > 1) {
+    const mid = Math.ceil(permissions.length / 2);
+
+    return [permissions.slice(0, mid), permissions.slice(mid)];
+  }
+
+  return [permissions];
 }
 
 export const PermissionList = ({
@@ -30,42 +48,48 @@ export const PermissionList = ({
     );
   }
 
+  // Split permissions into two columns (displayed only on wide screens via grid)
+  const columns = getPermissionColumns(permissions);
+
   return (
-    <Box data-test-id="permission-group-list">
-      {permissions.map(perm => (
-        <ListItem
-          data-test-id="permission-group-list-item"
-          key={perm.code}
-          disabled={disabled || perm.disabled}
-          role={undefined}
-          dense
-          button
-          onClick={() =>
-            onPermissionChange(perm.code, hasPermissionSelected(selectedPermissions, perm.code))
-          }
-        >
-          <ListItemIcon>
-            <Checkbox
-              data-test-id="permission-group-checkbox"
-              color="secondary"
-              edge="start"
-              checked={hasPermissionSelected(selectedPermissions, perm.code)}
-              tabIndex={-1}
-              disableRipple
-              name={perm.code}
-              inputProps={{ "aria-labelledby": perm.code }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            id={perm.code}
-            primary={perm.name.replace(/\./, "")}
-            secondary={
-              perm.lastSource
-                ? intl.formatMessage(messages.permissionListItemDescipription)
-                : perm.code
-            }
-          />
-        </ListItem>
+    <Box
+      className={styles.grid}
+      display="grid"
+      gap={6}
+      marginTop={4}
+      data-test-id="permission-group-list"
+    >
+      {columns.map((col, colIdx) => (
+        <Box key={colIdx} display="flex" flexDirection="column" gap={3}>
+          {col.map(permission => (
+            <Box
+              key={permission.code}
+              display="flex"
+              flexDirection="column"
+              gap={1}
+              data-test-id="permission-group-list-item"
+            >
+              <Checkbox
+                data-test-id={`permission-checkbox-${permission.code}`}
+                disabled={disabled || permission.disabled}
+                checked={hasPermissionSelected(selectedPermissions, permission.code)}
+                onCheckedChange={value => {
+                  onPermissionChange(permission.code, !value);
+                }}
+                alignItems="flex-start"
+              >
+                <Box display="flex" flexDirection="column" __marginTop="-4px">
+                  <Text wordBreak="break-word">{permission.name.replace(".", "")}</Text>
+                  <Text size={2} color="default2" wordBreak="break-word">
+                    {permission.lastSource
+                      ? intl.formatMessage(messages.permissionListItemDescription)
+                      : renderWithWbrAfterUnderscore(permission.code)}
+                  </Text>
+                </Box>
+              </Checkbox>
+            </Box>
+          ))}
+        </Box>
       ))}
     </Box>
   );

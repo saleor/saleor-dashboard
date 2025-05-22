@@ -181,6 +181,10 @@
     "context": "status",
     "string": "Status"
   },
+  "+vzDH4": {
+    "context": "error message used when manifest URL is incorrect (before any further validation)",
+    "string": "Invalid manifest URL"
+  },
   "+wpvnk": {
     "context": "dialog title",
     "string": "Delete Collection"
@@ -233,6 +237,9 @@
   "/8/Ffn": {
     "context": "button",
     "string": "Show"
+  },
+  "/84FbR": {
+    "string": "You don't have permission to manage this app. Please contact your administrator for assistance. ({errorCode})"
   },
   "/AbHy4": {
     "context": "creation label",
@@ -685,9 +692,6 @@
     "context": "number of metadata fields in model",
     "string": "{number,plural,one{{number} string} other{{number} strings}}"
   },
-  "2+v6qd": {
-    "string": "Add Custom Extension from manifest"
-  },
   "2/L4zZ": {
     "string": "Select all channels"
   },
@@ -919,6 +923,10 @@
   },
   "3evXPj": {
     "string": "Leave your note here..."
+  },
+  "3fZa8B": {
+    "context": "card text, app install page",
+    "string": "Uninstalling the app will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}"
   },
   "3fgyFh": {
     "context": "order history message",
@@ -1615,6 +1623,9 @@
     "context": "WarehouseSettings public stock label",
     "string": "Public Stock"
   },
+  "87NGDZ": {
+    "string": "Plugin doesn't have any configuration fields"
+  },
   "8B8E+3": {
     "context": "navigator placeholder",
     "string": "Order Number"
@@ -1833,6 +1844,10 @@
   "9UHfux": {
     "string": "Voucher Specific Information"
   },
+  "9W9Sdj": {
+    "context": "page title",
+    "string": "Explore Extensions"
+  },
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
     "string": "Pending auth"
@@ -1944,10 +1959,6 @@
   "AHK0K9": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-  },
-  "AKv2BI": {
-    "context": "order refund subtitle",
-    "string": "Refunded items can't be fulfilled"
   },
   "ALe+of": {
     "string": "You don't have permission to manage webhooks. Contact your administrator for access."
@@ -2069,6 +2080,9 @@
   "B0PaVS": {
     "context": "pint unit",
     "string": "pint"
+  },
+  "B0XvpR": {
+    "string": "You are not allowed to perform this action. ({errorCode})"
   },
   "B0fwAj": {
     "string": "and {itemsLength} more"
@@ -2227,9 +2241,6 @@
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
   },
-  "C3sTzL": {
-    "string": "Installed Extensions"
-  },
   "C4IOEN": {
     "string": "Created structure"
   },
@@ -2304,6 +2315,9 @@
     "context": "section header",
     "string": "Preferences"
   },
+  "CPPACf": {
+    "string": "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})"
+  },
   "CQKgD/": {
     "context": "bulk actions button label",
     "string": "Delete model"
@@ -2315,6 +2329,10 @@
   "CT5PAn": {
     "context": "CannotDefineChannelsAvailabilityCard title",
     "string": "Availability"
+  },
+  "CWDuMj": {
+    "context": "remaining quantity",
+    "string": "/ {max}"
   },
   "CWqmRU": {
     "context": "customer's address book when no customer name is available, header",
@@ -2347,6 +2365,9 @@
   "ChGI4V": {
     "context": "error message",
     "string": "Saleor is unavailable, please check your network connection and try again."
+  },
+  "CiWUaq": {
+    "string": "Make sure to save token, you won't be able to see it again."
   },
   "CjSRT1": {
     "context": "button",
@@ -2495,6 +2516,9 @@
   "DRMMDs": {
     "string": "Attribute Name"
   },
+  "DRaREj": {
+    "string": "The extension's manifest requests invalid or unrecognized permissions. {docsLink} ({errorCode})"
+  },
   "DTL7sE": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {warehouseName}?"
@@ -2508,6 +2532,9 @@
   },
   "DaPGcn": {
     "string": "Model title"
+  },
+  "DbNXK5": {
+    "string": "Saleor could not connect to the provided manifest URL. ({errorCode})"
   },
   "Dgp38J": {
     "context": "checkbox label",
@@ -2562,6 +2589,9 @@
   },
   "EEW+ND": {
     "string": "Navigator"
+  },
+  "EEWsPs": {
+    "string": "Plugin built-in to Saleor's core codebase"
   },
   "EGycu/": {
     "context": "voucher status active",
@@ -2670,6 +2700,10 @@
   "EtGDeK": {
     "context": "header",
     "string": "{pluginName} Details"
+  },
+  "EuB0RV": {
+    "context": "page title",
+    "string": "Installed Extensions"
   },
   "EuOXmr": {
     "context": "add items title",
@@ -2792,6 +2826,9 @@
     "context": "error message",
     "string": "Amount should be greater than 0"
   },
+  "FXtMVc": {
+    "string": "A URL field within the extension's manifest has an invalid format. {docsLink} ({errorCode})"
+  },
   "FYfoiF": {
     "context": "section name",
     "string": "Allocation strategy"
@@ -2861,6 +2898,9 @@
   },
   "FuAV5G": {
     "string": "This name is already taken. Please provide another."
+  },
+  "FuIgAe": {
+    "string": "The extension's manifest has an invalid format. {docsLink} ({errorCode})"
   },
   "FvmV6q": {
     "string": "Discord"
@@ -2982,9 +3022,6 @@
   },
   "GTCg9O": {
     "string": "You must add at least one voucher code"
-  },
-  "GUcbBE": {
-    "string": "Explore Extensions"
   },
   "GUeIcq": {
     "context": "edit structure, header",
@@ -3316,6 +3353,9 @@
     "context": "error message",
     "string": "Billing address is not set"
   },
+  "IG+/HP": {
+    "string": "The app requests permissions you cannot grant or that exceed its allowed scope. Review the app manifest and your permissions. {docsLink} ({errorCode})"
+  },
   "IGvQ8k": {
     "context": "button",
     "string": "Create attribute"
@@ -3540,9 +3580,6 @@
   "Ja7gHc": {
     "context": "button",
     "string": "Edit"
-  },
-  "JaLLdQ": {
-    "string": "Plugin built-in to Saleor’s core codebase"
   },
   "Jb1/3V": {
     "context": "add shipping carrier button",
@@ -3934,6 +3971,9 @@
   "MQwT1W": {
     "context": "activate",
     "string": "Activate"
+  },
+  "MS86iy": {
+    "string": "The extension identifier is already in use. ({errorCode})"
   },
   "MSItJD": {
     "string": "You are about to leave the Dashboard. Do you want to continue?"
@@ -4743,6 +4783,10 @@
     "context": "radio button label",
     "string": "Refund with manual amount"
   },
+  "RKxceS": {
+    "context": "page title - installing app with manifestUrl form",
+    "string": "Add Custom Extension from manifest"
+  },
   "RLBLPQ": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
@@ -4805,6 +4849,10 @@
     "context": "tax classes menu label when there are no tax classes",
     "string": "There are no tax classes"
   },
+  "RgdgqJ": {
+    "context": "order draft channel name",
+    "string": "Channel"
+  },
   "RiQ0v1": {
     "context": "installed extensions section name",
     "string": "Installed"
@@ -4819,6 +4867,10 @@
   "Rjs1CD": {
     "context": "button",
     "string": "Continue"
+  },
+  "RkhreQ": {
+    "context": "page title - creating custom app",
+    "string": "Add Custom Extension manually"
   },
   "RlbhwF": {
     "context": "product no longer exists error description",
@@ -5095,6 +5147,10 @@
     "context": "button",
     "string": "Reset"
   },
+  "TPJeJF": {
+    "context": "extensions list has not been installed",
+    "string": "Couldn't Install {name}"
+  },
   "TPP7j+": {
     "context": "section header",
     "string": "Organize Model"
@@ -5226,10 +5282,6 @@
     "context": "note input label",
     "string": "Note"
   },
-  "UMUQCG": {
-    "context": "extensions list has not been installed",
-    "string": "Couldn’t Install {name}"
-  },
   "UN+yTt": {
     "string": "Staff Settings"
   },
@@ -5299,10 +5351,6 @@
   "Um3g00": {
     "context": "send to customer selected label",
     "string": "Send gift card to customer"
-  },
-  "Uo5/Ov": {
-    "context": "order return subtitle",
-    "string": "Returned items can't be fulfilled"
   },
   "Uo5MoU": {
     "context": "product field",
@@ -6110,6 +6158,9 @@
     "context": "dialog header",
     "string": "Delete Sales"
   },
+  "ZXOpCJ": {
+    "string": "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})"
+  },
   "ZayvsI": {
     "context": "metric unit system",
     "string": "Metric"
@@ -6273,6 +6324,9 @@
   },
   "aWzvoq": {
     "string": "{counter,plural,one{Are you sure you want to delete this structure?} other{Are you sure you want to delete {displayQuantity} structures?}}"
+  },
+  "aXytBR": {
+    "string": "A required field is missing in the extension's manifest. {docsLink} ({errorCode})"
   },
   "aY0HAT": {
     "context": "section header",
@@ -6657,10 +6711,6 @@
     "context": "assign reference to a model, button",
     "string": "Assign and save"
   },
-  "chJmBW": {
-    "context": "card text, app install page",
-    "string": "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}"
-  },
   "chvryR": {
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
@@ -6888,6 +6938,9 @@
     "context": "onboarding step title",
     "string": "View webhooks functionalities"
   },
+  "eY+BKQ": {
+    "string": "The extension manifest was not found. ({errorCode})"
+  },
   "eaoi2W": {
     "context": "tab name",
     "string": "All warehouses"
@@ -6963,9 +7016,6 @@
     "context": "gift card history message",
     "string": "Gift card was activated by {activatedBy}"
   },
-  "fHHHVV": {
-    "string": "Add Custom Extension manually"
-  },
   "fITtdb": {
     "context": "helper text",
     "string": "{value} already refunded"
@@ -7003,6 +7053,9 @@
   "fV6yX5": {
     "context": "table head",
     "string": "Category Name"
+  },
+  "fWaj1M": {
+    "string": "The Saleor version your extension is trying to use is newer than your current Saleor version. {docsLink} ({errorCode})"
   },
   "fXdkiI": {
     "string": "is"
@@ -8053,6 +8106,10 @@
   "lqIzC8": {
     "string": "This field needs to be unique"
   },
+  "lqkgFU": {
+    "context": "webhook input help text",
+    "string": "Secret key is used to create a hash signature with each payload. *optional field"
+  },
   "lrdAIY": {
     "context": "amount of all cancelled transactions in order",
     "string": "Cancelled"
@@ -8339,9 +8396,6 @@
   "nki0o/": {
     "context": "replaced products list title",
     "string": "Products replaced"
-  },
-  "nm7IIV": {
-    "string": "URL has invalid format"
   },
   "nngeI3": {
     "context": "amount title",
@@ -8668,6 +8722,9 @@
   "q4EmsW": {
     "string": "Total:"
   },
+  "q5I8Ac": {
+    "string": "An unexpected GraphQL error occurred. ({errorCode})"
+  },
   "q5Lfp4": {
     "context": "tooltip",
     "string": "Order contains products that have \"Track inventory\" enabled."
@@ -8679,6 +8736,9 @@
   "q8ep2I": {
     "context": "dialog header",
     "string": "Delete Customers"
+  },
+  "qACBaj": {
+    "string": "An unexpected error occurred. ({errorCode})"
   },
   "qCH2eZ": {
     "context": "header",
@@ -9151,6 +9211,9 @@
   "tKxCld": {
     "context": "set balance dialog title label",
     "string": "Set balance"
+  },
+  "tLM9Jr": {
+    "string": "The operation cannot be performed right now. This might be due to a pending installation with the same identifier. {docsLink} ({errorCode})"
   },
   "tQuE1q": {
     "string": "Select channels you want for {contentType} to be available on"
@@ -9700,6 +9763,10 @@
   "wRvjoc": {
     "context": "app created at label",
     "string": "Created at"
+  },
+  "wSS9YI": {
+    "context": "page title - installing app with manifestUrl provided",
+    "string": "Add Extension"
   },
   "wTHjt3": {
     "string": "Search Orders..."
