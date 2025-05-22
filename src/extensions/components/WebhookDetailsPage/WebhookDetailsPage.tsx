@@ -4,9 +4,6 @@ import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
-import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
-import WebhookStatus from "@dashboard/custom-apps/components/WebhookStatus";
 import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler,
@@ -28,7 +25,9 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import PermissionAlert from "./components/PermissionAlert";
+import WebhookEvents from "./components/WebhookEvents/";
 import WebhookHeaders from "./components/WebhookHeaders";
+import WebhookInfo from "./components/WebhookInfo";
 import WebhookSubscriptionQuery from "./components/WebhookSubscriptionQuery";
 import { getHeaderTitle, messages } from "./messages";
 import { getWebhookFormInitialFormValues } from "./webhookForm";
@@ -104,7 +103,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
-      {({ data, submit, change }) => {
+      {({ data, submit, change, set: setValue }) => {
         const handleSyncEventsSelect = createSyncEventsSelectHandler({
           change,
           data,
@@ -124,9 +123,14 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
             <DetailPageLayout.Content>
-              <Box padding={6}>
-                <WebhookStatus data={data.isActive} disabled={disabled} onChange={change} />
-                <WebhookInfo data={data} disabled={disabled} errors={errors} onChange={change} />
+              <Box paddingX={6}>
+                <WebhookInfo
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                  setValue={setValue}
+                />
               </Box>
               <FormSpacer />
               <Box>

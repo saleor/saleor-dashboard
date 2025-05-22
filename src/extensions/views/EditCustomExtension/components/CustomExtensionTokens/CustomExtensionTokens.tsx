@@ -1,13 +1,12 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -83,14 +82,16 @@ const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
                     </TableCell>
                     <TableCell className={classes.colActions}>
                       {hasManagedAppsPermission && (
-                        <IconButton
-                          variant="secondary"
-                          color="primary"
-                          onClick={() => onDelete(token.id)}
-                          data-test-id={`delete-token-${token.id}`}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                        <Box display="flex" justifyContent="flex-end" width="100%">
+                          <TableButtonWrapper>
+                            <Button
+                              variant="tertiary"
+                              onClick={() => onDelete(token.id)}
+                              data-test-id={`delete-token-${token.id}`}
+                              icon={<TrashBinIcon />}
+                            />
+                          </TableButtonWrapper>
+                        </Box>
                       )}
                     </TableCell>
                   </TableRowLink>

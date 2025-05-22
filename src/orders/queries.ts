@@ -23,6 +23,10 @@ export const orderListQuery = gql`
           billingAddress {
             ...Address
           }
+          channel {
+            name
+            id
+          }
           created
           id
           number
@@ -73,6 +77,10 @@ export const orderDraftListQuery = gql`
             ...Address
           }
           created
+          channel {
+            name
+            id
+          }
           id
           number
           paymentStatus

@@ -151,6 +151,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 errors={returnErrors}
                 onChange={change}
                 onRefund={submit}
+                loading={loading}
               />
             )}
           </DetailPageLayout.RightSidebar>

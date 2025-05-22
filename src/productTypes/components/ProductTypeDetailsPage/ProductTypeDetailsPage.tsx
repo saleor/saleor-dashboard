@@ -2,7 +2,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
@@ -25,9 +24,9 @@ import { productTypeListPath } from "@dashboard/productTypes/urls";
 import { FetchMoreProps, ListActions, ReorderEvent, UserError } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
@@ -92,7 +91,6 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   selectedVariantAttributes,
   onFetchMoreTaxClasses,
 }) => {
-  const intl = useIntl();
   const navigate = useNavigator();
   const productTypeListBackLink = useBackLinkWithState({
     path: productTypeListPath,
@@ -185,18 +183,23 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 {...productAttributeList}
               />
               <CardSpacer />
-              <ControlledSwitch
-                checked={data.hasVariants}
-                disabled={disabled}
-                label={intl.formatMessage({
-                  id: "5pHBSU",
-                  defaultMessage: "Product type uses Variant Attributes",
-                  description: "switch button",
-                })}
-                name="hasVariants"
-                onChange={event => onHasVariantsToggle(event.target.value)}
-                className={sprinkles({ paddingLeft: 6 })}
-              />
+
+              <Box marginLeft={6}>
+                <Toggle
+                  pressed={data.hasVariants}
+                  disabled={disabled}
+                  name="hasVariants"
+                  onPressedChange={pressed => onHasVariantsToggle(pressed)}
+                >
+                  <Text>
+                    <FormattedMessage
+                      id="5pHBSU"
+                      defaultMessage="Product type uses Variant Attributes"
+                      description="switch button"
+                    />
+                  </Text>
+                </Toggle>
+              </Box>
               {data.hasVariants && (
                 <>
                   <CardSpacer />

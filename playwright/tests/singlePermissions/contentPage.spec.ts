@@ -35,17 +35,13 @@ test.beforeEach(async ({ page }) => {
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
 });
 test("TC: SALEOR_14 User should be able to navigate to content list as a staff member using CONTENT aka PAGE permission #e2e", async () => {
-  await mainMenuPage.openContent();
+  await mainMenuPage.openModels();
   await expect(contentPage.createContentButton).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(5);
   await basePage.expectGridToBeAttached();
 });
 test("TC: SALEOR_15 User should be able to navigate to page types list as a staff member using CONTENT aka PAGE permission #e2e", async () => {
-  await configurationPage.goToConfigurationView();
-  await expect(configurationPage.taxesButton).toBeVisible();
-  await expect(configurationPage.pageTypesButton).toBeVisible();
-  await expect(configurationPage.webhooksAndEventsButton).toBeVisible();
-  await configurationPage.openPageTypes();
+  await mainMenuPage.openModelTypes();
   await expect(pageTypesPage.createPageTypeButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(4);
+  await mainMenuPage.expectMenuItemsCount(5);
 });
