@@ -1,5 +1,6 @@
 import { getExtensionsConfig } from "@dashboard/config";
 import { ExtensionData, ExtensionsGroups } from "@dashboard/extensions/types";
+import { useFlag } from "@dashboard/featureFlags";
 import { InstalledAppFragment, useInstalledAppsQuery } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
@@ -26,6 +27,16 @@ const toExtension = (extension: ExtensionData, installedApps: InstalledAppFragme
   };
 };
 
+const getFilteredExtensions = (
+  extensions: ExtensionData[],
+  installedApps: InstalledAppFragment[],
+  showAllExtensions: boolean,
+) => {
+  const filteredExtensions = showAllExtensions ? extensions : extensions.filter(byAppType);
+
+  return filteredExtensions.map(extension => toExtension(extension, installedApps));
+};
+
 export const useExploreExtensions = () => {
   const { data, loading, error } = useAppStoreExtensions(getExtensionsConfig().extensionsApiUri);
   const { data: installedAppsData } = useInstalledAppsQuery({
@@ -33,6 +44,7 @@ export const useExploreExtensions = () => {
       first: 100,
     },
   });
+  const { enabled: showAllExtensions } = useFlag("extensions_dev");
 
   const installedApps = mapEdgesToItems(installedAppsData?.apps) ?? [];
 
@@ -41,10 +53,7 @@ export const useExploreExtensions = () => {
       group,
       {
         title: extensions.title,
-        items: extensions.items
-          // TODO: Remove filter in phase 3
-          .filter(byAppType)
-          .map(extension => toExtension(extension, installedApps)),
+        items: getFilteredExtensions(extensions.items, installedApps, showAllExtensions),
       },
     ]),
   ) as ExtensionsGroups;
