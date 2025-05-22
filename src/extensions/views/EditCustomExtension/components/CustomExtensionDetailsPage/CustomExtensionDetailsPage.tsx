@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import activateIcon from "@assets/images/activate-icon.svg";
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -19,10 +18,8 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { Button } from "@saleor/macaw-ui";
-import { Tooltip } from "@saleor/macaw-ui-next";
+import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
-import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
@@ -107,11 +104,9 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
                   <Button
                     variant="secondary"
                     className={classes.activateButton}
-                    disableFocusRipple
                     onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
                     disabled={disabled}
                   >
-                    <SVG src={activateIcon} />
                     {data?.isActive ? (
                       <FormattedMessage
                         id="whTEcF"

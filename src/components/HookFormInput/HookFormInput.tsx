@@ -39,7 +39,7 @@ const HookFormInputInner = <TFormValues extends FieldValues>(
       />
       {fieldState.error && (
         <Box color="default2" display="flex" alignItems="center" gap={2} aria-hidden="true">
-          <ErrorCircle width="16px" height="16px" />
+          <ErrorCircle __width="16px" __height="16px" flexShrink="0" />
           {fieldState.error.message}
         </Box>
       )}

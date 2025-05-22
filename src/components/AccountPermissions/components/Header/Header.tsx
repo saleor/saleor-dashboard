@@ -18,7 +18,7 @@ export const Header = ({
 }: HeaderProps) => (
   <Box>
     <Text>{description}</Text>
-    <Box marginTop={6} marginBottom={7}>
+    <Box marginTop={3} marginBottom={2}>
       <Checkbox
         disabled={disabled}
         checked={hasFullAccess}

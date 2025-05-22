@@ -6,7 +6,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { InstallDetailsManifestData } from "../../types";
+import { InstallDetailsManifestData } from "../../../types";
 import { IconsSection } from "./IconsSection";
 
 export const InstallExtensionManifestData = ({
@@ -15,7 +15,7 @@ export const InstallExtensionManifestData = ({
   manifest: InstallDetailsManifestData;
 }) => {
   return (
-    <Box display="flex" flexDirection="column" gap={6}>
+    <Box display="flex" flexDirection="column" gap={6} alignItems="flex-start">
       <Text size={5} fontWeight="medium">
         <FormattedMessage
           {...messages.installExtensionNameHeader}
