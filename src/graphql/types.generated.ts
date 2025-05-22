@@ -9613,6 +9613,13 @@ export type RefreshLimitsQueryVariables = Exact<{
 
 export type RefreshLimitsQuery = { __typename: 'Query', shop: { __typename: 'Shop', limits: { __typename: 'LimitInfo', currentUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null }, allowedUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null } } } };
 
+export type QuickSearchQueryVariables = Exact<{
+  query: Scalars['String'];
+}>;
+
+
+export type QuickSearchQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } }> } | null, categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }> } | null, collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null } }> } | null, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, category: { __typename: 'Category', name: string } | null, thumbnail: { __typename: 'Image', alt: string | null, url: string } | null } }> } | null, productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, media: Array<{ __typename: 'ProductMedia', alt: string, url: string }> | null, product: { __typename: 'Product', id: string, category: { __typename: 'Category', name: string } | null } } }> } | null };
+
 export type CheckExportFileStatusQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;

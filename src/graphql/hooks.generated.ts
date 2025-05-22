@@ -7355,6 +7355,117 @@ export function useRefreshLimitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type RefreshLimitsQueryHookResult = ReturnType<typeof useRefreshLimitsQuery>;
 export type RefreshLimitsLazyQueryHookResult = ReturnType<typeof useRefreshLimitsLazyQuery>;
 export type RefreshLimitsQueryResult = Apollo.QueryResult<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>;
+export const QuickSearchDocument = gql`
+    query QuickSearch($query: String!) {
+  orders(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        number
+        status
+        total {
+          gross {
+            amount
+            currency
+          }
+        }
+      }
+    }
+  }
+  categories(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
+        products(first: 1) {
+          totalCount
+        }
+      }
+    }
+  }
+  collections(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        products(first: 1) {
+          totalCount
+        }
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
+      }
+    }
+  }
+  products(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        category {
+          name
+        }
+        name
+        thumbnail(size: 64) {
+          alt
+          url
+        }
+      }
+    }
+  }
+  productVariants(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        sku
+        media {
+          alt
+          url(size: 64)
+        }
+        product {
+          id
+          category {
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useQuickSearchQuery__
+ *
+ * To run a query within a React component, call `useQuickSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuickSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuickSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useQuickSearchQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>(QuickSearchDocument, options);
+      }
+export function useQuickSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>(QuickSearchDocument, options);
+        }
+export type QuickSearchQueryHookResult = ReturnType<typeof useQuickSearchQuery>;
+export type QuickSearchLazyQueryHookResult = ReturnType<typeof useQuickSearchLazyQuery>;
+export type QuickSearchQueryResult = Apollo.QueryResult<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>;
 export const CheckExportFileStatusDocument = gql`
     query CheckExportFileStatus($id: ID!) {
   exportFile(id: $id) {

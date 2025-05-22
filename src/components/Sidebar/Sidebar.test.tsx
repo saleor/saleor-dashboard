@@ -1,6 +1,5 @@
 import { useCloud } from "@dashboard/auth/hooks/useCloud";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
@@ -37,12 +36,6 @@ jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
     setDevModeContent: jest.fn(),
   })),
 }));
-jest.mock("@dashboard/components/NavigatorSearch/useNavigatorSearchContext", () => ({
-  useNavigatorSearchContext: jest.fn(() => ({
-    isNavigatorVisible: false,
-    setNavigatorVisibility: jest.fn(),
-  })),
-}));
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
@@ -77,7 +70,6 @@ describe("Sidebar", () => {
     // Arrange & Act
     render(<Sidebar />, { wrapper: Wrapper });
     // Assert
-    expect(screen.getByText("Search")).toBeInTheDocument();
     expect(screen.getByText("Playground")).toBeInTheDocument();
   });
   it("should call callback when click on playground shortcut", async () => {
@@ -95,20 +87,6 @@ describe("Sidebar", () => {
     render(<Sidebar />, { wrapper: Wrapper });
     // Act
     await userEvent.click(screen.getByText("Playground"));
-    // Assert
-    expect(actionCallback).toHaveBeenCalledWith(true);
-  });
-  it("should call callback when click on search shortcut", async () => {
-    // Arrange
-    const actionCallback = jest.fn();
-
-    (useNavigatorSearchContext as jest.Mock).mockImplementationOnce(() => ({
-      isNavigatorVisible: false,
-      setNavigatorVisibility: actionCallback,
-    }));
-    render(<Sidebar />, { wrapper: Wrapper });
-    // Act
-    await userEvent.click(screen.getByText("Search"));
     // Assert
     expect(actionCallback).toHaveBeenCalledWith(true);
   });

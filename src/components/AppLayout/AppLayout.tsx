@@ -4,7 +4,6 @@ import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { DevModePanel } from "../DevModePanel/DevModePanel";
-import NavigatorSearch from "../NavigatorSearch";
 import { useSavebarRef } from "../Savebar/SavebarRefContext";
 import { Sidebar } from "../Sidebar";
 import { useStyles } from "./styles";
@@ -22,7 +21,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <>
       <DevModePanel />
-      <NavigatorSearch />
 
       <Box display="grid" __gridTemplateColumns="auto 1fr">
         {appState.loading && <LinearProgress className={classes.appLoader} color="primary" />}

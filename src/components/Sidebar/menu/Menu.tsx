@@ -1,6 +1,7 @@
 import { Box, List } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { SidebarSearch } from "../search/SidebarSearch";
 import { Shortcusts } from "../shortcuts";
 import { useMenuStructure } from "./hooks/useMenuStructure";
 import { MenuItem } from "./Item";
@@ -18,6 +19,9 @@ export const Menu = () => {
       justifyContent="space-between"
     >
       <List as="ol" display="grid" gap={1} data-test-id="menu-list">
+        <Box as="li" marginBottom={2}>
+          <SidebarSearch />
+        </Box>
         {menuStructure.map(menuItem => (
           <MenuItem menuItem={menuItem} key={menuItem.id} />
         ))}
