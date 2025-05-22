@@ -8,7 +8,7 @@ import { TextField } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
 import { Box, Switch, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
 
@@ -41,6 +41,14 @@ export const PluginSettings: React.FC<PluginSettingsProps> = ({
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
+        {data.configuration.length === 0 && (
+          <Text>
+            <FormattedMessage
+              defaultMessage="Plugin doesn't have any configuration fields"
+              id="87NGDZ"
+            />
+          </Text>
+        )}
         {data.configuration.map(field => {
           const fieldData = fields.find(configField => configField.name === field.name);
 

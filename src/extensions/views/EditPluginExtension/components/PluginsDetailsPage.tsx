@@ -116,7 +116,7 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                     setSelectedChannelId={setSelectedChannelId}
                   />
                 </div>
-                <div>
+                <Box paddingBottom={2}>
                   <PluginInfo
                     data={data}
                     description={plugin?.description || ""}
@@ -138,18 +138,15 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       {selectedConfig?.configuration.some(field =>
                         isSecretField(selectedConfig?.configuration, field.name),
                       ) && (
-                          <>
-                            <Box marginTop={{ mobile: 2, desktop: 4 }} />
-                            <PluginAuthorization
-                              fields={selectedConfig.configuration}
-                              onClear={onClear}
-                              onEdit={onEdit}
-                            />
-                          </>
+                          <PluginAuthorization
+                            fields={selectedConfig.configuration}
+                            onClear={onClear}
+                            onEdit={onEdit}
+                          />
                         )}
                     </div>
                   )}
-                </div>
+                </Box>
               </Grid>
               <Savebar>
                 <Savebar.Spacer />

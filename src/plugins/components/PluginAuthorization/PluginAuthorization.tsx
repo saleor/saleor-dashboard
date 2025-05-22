@@ -1,11 +1,10 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { isSecretField } from "@dashboard/plugins/utils";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -55,7 +54,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
           <React.Fragment key={field.name}>
             <div className={classes.item} key={field.name}>
               {field.type === ConfigurationTypeFieldEnum.SECRET ||
-              field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
+                field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
                 <div>
                   <Text size={4} fontWeight="regular">
                     {field.label}
