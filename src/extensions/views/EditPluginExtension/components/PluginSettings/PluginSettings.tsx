@@ -6,7 +6,7 @@ import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
-import { Box, Switch, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
