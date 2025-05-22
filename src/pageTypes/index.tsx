@@ -42,7 +42,7 @@ export const PageTypeRouter: React.FC = () => {
 
   return (
     <>
-      <WindowTitle title={intl.formatMessage(sectionNames.pageTypes)} />
+      <WindowTitle title={intl.formatMessage(sectionNames.modelTypes)} />
       <Switch>
         <Route exact path={pageTypeListPath} component={PageTypeList} />
         <Route exact path={pageTypeAddPath} component={PageTypeCreate} />

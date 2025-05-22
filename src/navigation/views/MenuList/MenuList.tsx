@@ -76,8 +76,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "ugnggZ",
-            defaultMessage: "Created menu",
+            id: "C4IOEN",
+            defaultMessage: "Created structure",
           }),
         });
         navigate(menuUrl(data.menuCreate.menu.id));
@@ -90,8 +90,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "OwG/0z",
-            defaultMessage: "Deleted menu",
+            id: "cRQ9hb",
+            defaultMessage: "Deleted structure",
           }),
         });
         closeModal();
@@ -176,8 +176,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
-          id: "QzseV7",
-          defaultMessage: "Delete Menu",
+          id: "x79cEk",
+          defaultMessage: "Delete structure",
           description: "dialog header",
         })}
       >
@@ -204,14 +204,14 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
-          id: "1LBYpE",
-          defaultMessage: "Delete Menus",
+          id: "wAGThK",
+          defaultMessage: "Delete structures",
           description: "dialog header",
         })}
       >
         <FormattedMessage
-          id="svK+kv"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this menu?} other{Are you sure you want to delete {displayQuantity} menus?}}"
+          id="aWzvoq"
+          defaultMessage="{counter,plural,one{Are you sure you want to delete this structure?} other{Are you sure you want to delete {displayQuantity} structures?}}"
           values={{
             counter: maybe(() => params.ids.length.toString(), "..."),
             displayQuantity: <strong>{maybe(() => params.ids.length.toString(), "...")}</strong>,

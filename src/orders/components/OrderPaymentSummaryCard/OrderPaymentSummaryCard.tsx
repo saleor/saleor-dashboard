@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
-import { Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -76,7 +75,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({ order, onMarkA
           </Text>
           {canMarkAsPaid && (
             <Button
-              variant="tertiary"
+              variant="secondary"
               onClick={() => onMarkAsPaid()}
               data-test-id="markAsPaidButton"
             >

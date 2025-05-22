@@ -1,8 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import useClipboard from "@dashboard/hooks/useClipboard";
-import CloseIcon from "@material-ui/icons/Close";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, CloseIcon, Text } from "@saleor/macaw-ui-next"; // Corrected import for CloseIcon and aliased Button
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -45,7 +44,7 @@ const CustomExtensionDefaultToken: React.FC<CustomExtensionDefaultTokenProps> = 
             </Text>
           </div>
 
-          <Button variant="secondary" onClick={onTokenClose}>
+          <Button variant="secondary" onClick={onTokenClose} data-test-id="close-token-button">
             <CloseIcon />
           </Button>
         </Box>

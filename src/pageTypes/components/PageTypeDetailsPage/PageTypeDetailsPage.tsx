@@ -122,8 +122,8 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                   <Text>{intl.formatMessage(commonMessages.generalInformations)}</Text>
                   <Text size={3} fontWeight="regular" display="block">
                     <FormattedMessage
-                      id="kZfIl/"
-                      defaultMessage="These are general information about this Content Type."
+                      id="7usRcR"
+                      defaultMessage="These are general information about this model type."
                     />
                   </Text>
                 </Box>
@@ -137,15 +137,15 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                 <div>
                   <Text>
                     <FormattedMessage
-                      id="iQxjow"
-                      defaultMessage="Content Attributes"
+                      id="pgTwKM"
+                      defaultMessage="Model attributes"
                       description="section header"
                     />
                   </Text>
                   <Text size={3} fontWeight="regular" display="block">
                     <FormattedMessage
-                      id="lct0qd"
-                      defaultMessage="This list shows all attributes that will be assigned to pages that have this page type assigned."
+                      id="YVz54T"
+                      defaultMessage="This list shows all attributes that will be assigned to models that have this model type assigned."
                     />
                   </Text>
                 </div>

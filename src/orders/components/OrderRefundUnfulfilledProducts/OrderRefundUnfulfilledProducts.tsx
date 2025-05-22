@@ -1,56 +1,34 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
+import { QuantityInput } from "@dashboard/components/QuantityInput";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
-import { Table, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";
 
 const useStyles = makeStyles(
-  theme => {
-    const inputPadding = {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2),
-    };
-
-    return {
-      cartContent: {
-        paddingBottom: 0,
-        paddingTop: 0,
-      },
-      colQuantity: {
-        textAlign: "right",
-        width: 210,
-      },
-      notice: {
-        marginBottom: theme.spacing(1),
-        marginTop: theme.spacing(2),
-      },
-      quantityInnerInput: {
-        ...inputPadding,
-      },
-      quantityInnerInputNoRemaining: {
-        paddingRight: 0,
-      },
-      remainingQuantity: {
-        ...inputPadding,
-        color: theme.palette.text.secondary,
-        whiteSpace: "nowrap",
-      },
-      setMaximalQuantityButton: {
-        marginTop: theme.spacing(1),
-      },
-    };
-  },
+  () => ({
+    colQuantity: {
+      textAlign: "right",
+      width: 210,
+    },
+    colProduct: {
+      width: 400,
+    },
+    colTotal: {
+      textAlign: "right",
+      width: 210,
+    },
+  }),
   { name: "OrderRefundUnfulfilledProducts" },
 );
 
@@ -84,14 +62,8 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           })}
         </DashboardCard.Title>
       </DashboardCard.Header>
-      <DashboardCard.Content className={classes.cartContent}>
-        <Text
-          fontWeight="medium"
-          fontSize={3}
-          color="default2"
-          className={classes.notice}
-          display="block"
-        >
+      <DashboardCard.Content paddingY={0}>
+        <Text fontWeight="medium" fontSize={3} color="default2" display="block">
           <FormattedMessage
             id="iUIn50"
             defaultMessage="Unfulfilled products will be restocked"
@@ -99,9 +71,11 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           />
         </Text>
         <Button
-          className={classes.setMaximalQuantityButton}
           onClick={onSetMaximalQuantities}
           data-test-id="set-maximal-quantity-unfulfilled-button"
+          variant="secondary"
+          marginTop={2}
+          size="small"
         >
           <FormattedMessage
             id="2W4EBM"
@@ -134,7 +108,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                 description="tabel column header"
               />
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.colTotal}>
               <FormattedMessage
                 id="+PclgM"
                 defaultMessage="Total"
@@ -157,7 +131,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
 
               return (
                 <TableRowLink key={line?.id}>
-                  <TableCellAvatar thumbnail={line?.thumbnail?.url}>
+                  <TableCellAvatar thumbnail={line?.thumbnail?.url} className={classes.colProduct}>
                     {line?.productName ? line?.productName : <Skeleton />}
                   </TableCellAvatar>
                   <TableCell>
@@ -165,41 +139,23 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {lineQuantity || lineQuantity === 0 ? (
-                      <TextField
-                        disabled={disabled}
-                        type="number"
-                        inputProps={{
-                          className: classes.quantityInnerInput,
-                          "data-test-id": "quantity-input" + line?.id,
-                          max: lineQuantity.toString(),
-                          min: 0,
-                          style: { textAlign: "right" },
-                        }}
-                        fullWidth
-                        value={selectedLineQuantity?.value}
+                      <QuantityInput
+                        data-test-id="product-quantity-input"
+                        size="small"
+                        value={Number(selectedLineQuantity?.value)}
+                        min={0}
+                        max={lineQuantity}
+                        disabled={lineQuantity === 0 || disabled}
                         onChange={event =>
                           onRefundedProductQuantityChange(line.id, event.target.value)
                         }
-                        InputProps={{
-                          endAdornment: lineQuantity && (
-                            <div className={classes.remainingQuantity}>/ {lineQuantity}</div>
-                          ),
-                        }}
                         error={isError}
-                        helperText={
-                          isError &&
-                          intl.formatMessage({
-                            id: "xoyCZ/",
-                            defaultMessage: "Improper value",
-                            description: "error message",
-                          })
-                        }
                       />
                     ) : (
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={classes.colTotal}>
                     {(line?.unitPrice.gross && (
                       <Money
                         money={{
