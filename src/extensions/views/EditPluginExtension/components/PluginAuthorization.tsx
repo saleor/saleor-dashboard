@@ -1,10 +1,9 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -18,9 +17,6 @@ interface PluginAuthorizationProps {
 
 const useStyles = makeStyles(
   theme => ({
-    button: {
-      marginLeft: theme.spacing(),
-    },
     hr: {
       margin: theme.spacing(2, 0),
     },
@@ -71,15 +67,15 @@ export const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => 
               )}
               <div className={classes.spacer} />
               {field.value === null ? (
-                <Button className={classes.button} onClick={() => onEdit(field.name)}>
+                <Button variant="secondary" onClick={() => onEdit(field.name)}>
                   <FormattedMessage {...buttonMessages.create} />
                 </Button>
               ) : (
                 <>
-                  <Button onClick={() => onClear(field.name)}>
+                  <Button variant="secondary" onClick={() => onClear(field.name)}>
                     <FormattedMessage {...buttonMessages.clear} />
                   </Button>
-                  <Button className={classes.button} onClick={() => onEdit(field.name)}>
+                  <Button variant="secondary" onClick={() => onEdit(field.name)}>
                     <FormattedMessage {...buttonMessages.edit} />
                   </Button>
                 </>

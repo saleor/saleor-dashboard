@@ -1623,6 +1623,9 @@
     "context": "WarehouseSettings public stock label",
     "string": "Public Stock"
   },
+  "87NGDZ": {
+    "string": "Plugin doesn't have any configuration fields"
+  },
   "8B8E+3": {
     "context": "navigator placeholder",
     "string": "Order Number"

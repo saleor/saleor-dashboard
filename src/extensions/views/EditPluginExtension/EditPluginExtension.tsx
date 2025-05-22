@@ -50,6 +50,7 @@ export const EditPluginExtension: React.FC<PluginsDetailsProps> = ({ id, params 
     displayLoader: true,
     variables: { id },
   });
+
   const plugin = pluginData?.plugin;
   const initialSelectedChannelValue =
     plugin && !isPluginGlobal(plugin.globalConfiguration)
@@ -75,6 +76,8 @@ export const EditPluginExtension: React.FC<PluginsDetailsProps> = ({ id, params 
       }
     },
   });
+  const isSubmitting = pluginUpdateOpts.loading;
+
   const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
   const handleFieldUpdate = (value: string) =>
     pluginUpdate({
@@ -112,7 +115,7 @@ export const EditPluginExtension: React.FC<PluginsDetailsProps> = ({ id, params 
     <>
       <WindowTitle title={plugin?.name} />
       <PluginsDetailsPage
-        disabled={loading}
+        disabled={loading || isSubmitting}
         errors={formErrors}
         saveButtonBarState={!params.action ? pluginUpdateOpts.status : "default"}
         plugin={plugin}
