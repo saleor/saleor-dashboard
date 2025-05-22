@@ -82,9 +82,9 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
             configuration: data.configuration.map(configItem =>
               configItem.name === name
                 ? {
-                  ...configItem,
-                  value,
-                }
+                    ...configItem,
+                    value,
+                  }
                 : configItem,
             ),
           };
@@ -138,12 +138,12 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       {selectedConfig?.configuration.some(field =>
                         isSecretField(selectedConfig?.configuration, field.name),
                       ) && (
-                          <PluginAuthorization
-                            fields={selectedConfig.configuration}
-                            onClear={onClear}
-                            onEdit={onEdit}
-                          />
-                        )}
+                        <PluginAuthorization
+                          fields={selectedConfig.configuration}
+                          onClear={onClear}
+                          onEdit={onEdit}
+                        />
+                      )}
                     </div>
                   )}
                 </Box>

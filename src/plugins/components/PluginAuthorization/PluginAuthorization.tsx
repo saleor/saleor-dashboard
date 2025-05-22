@@ -54,7 +54,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
           <React.Fragment key={field.name}>
             <div className={classes.item} key={field.name}>
               {field.type === ConfigurationTypeFieldEnum.SECRET ||
-                field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
+              field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
                 <div>
                   <Text size={4} fontWeight="regular">
                     {field.label}
