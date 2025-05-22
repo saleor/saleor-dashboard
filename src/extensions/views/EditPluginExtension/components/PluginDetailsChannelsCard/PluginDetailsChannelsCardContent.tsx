@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
-import { Pill } from "@dashboard/components/Pill";
 import { PluginsDetailsFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -32,6 +31,17 @@ export interface PluginDetailsChannelsCardProps {
   setSelectedChannelId: (channelId: string) => void;
   selectedChannelId: string;
   plugin: PluginsDetailsFragment;
+}
+
+function mapPluginStatusToChipColor(status: string): "success1" | "critical1" | "default1" {
+  switch (status) {
+    case "success":
+      return "success1";
+    case "error":
+      return "critical1";
+    default:
+      return "default1";
+  }
 }
 
 export const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({
@@ -78,10 +88,9 @@ export const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCar
             )}
             <DashboardCard.Content padding={4} display="flex" alignItems="center" gap={2}>
               <Text>{channel.channel.name}</Text>
-              <Pill
-                color={getPluginStatusColor(channel)}
-                label={intl.formatMessage(getPluginStatusLabel(channel))}
-              />
+              <Chip backgroundColor={mapPluginStatusToChipColor(getPluginStatusColor(channel))}>
+                {intl.formatMessage(getPluginStatusLabel(channel))}
+              </Chip>
             </DashboardCard.Content>
           </div>
         )}
