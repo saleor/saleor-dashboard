@@ -80,6 +80,10 @@ export const buttonLabels = defineMessages({
     defaultMessage: "Save",
     id: "jvo0vs",
   },
+  remove: {
+    defaultMessage: "Remove",
+    id: "G/yZLu",
+  },
   back: {
     defaultMessage: "Back",
     id: "cyR7Kh",

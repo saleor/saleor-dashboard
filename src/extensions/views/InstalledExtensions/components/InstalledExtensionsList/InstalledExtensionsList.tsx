@@ -28,7 +28,13 @@ const ExtensionLink = ({ href, children }: { href?: string; children: React.Reac
   return (
     <Link
       href={href}
-      style={{ display: "flex", alignItems: "center", padding: "5px 20px" }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        padding: "5px 20px",
+        textDecoration: "none",
+        color: "inherit",
+      }}
       data-test-id="extension-link"
     >
       {children}
@@ -80,7 +86,7 @@ export const InstalledExtensionsList = ({
           {installedExtensions.map(extension => (
             <GridTable.Row key={extension.id} data-test-id="installed-extension-row">
               <GridTable.Cell padding={0}>
-                <ExtensionLink>
+                <ExtensionLink href={extension.href}>
                   <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
                     <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
                     <Text
@@ -94,8 +100,11 @@ export const InstalledExtensionsList = ({
                       {extension.name}
                     </Text>
                   </Box>
-                  <Box marginLeft="auto" marginRight={4}>
+                  <Box marginLeft="auto" marginRight={4} display="flex" alignItems="center" gap={4}>
                     {extension.info}
+                    {/* Actions are here only for failed installation case,
+                        type InstalledExtension should be refactored. More info in its definition */}
+                    {extension.actions}
                   </Box>
                 </ExtensionLink>
               </GridTable.Cell>
