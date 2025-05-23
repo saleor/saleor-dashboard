@@ -15,6 +15,10 @@ jest.mock("@dashboard/graphql", () => ({
     },
   })),
 }));
+jest.mock("@dashboard/featureFlags", () => ({
+  ...(jest.requireActual("@dashboard/featureFlags") as object),
+  useFlag: jest.fn(() => ({ enabled: true })),
+}));
 
 const mockedAppStoreExtensions = {
   payments: {
