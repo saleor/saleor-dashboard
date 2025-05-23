@@ -48,7 +48,7 @@ const SearchInput: React.FC<SearchInputProps> = props => {
         };
 
         return (
-          <Box display="flex" alignItems="center" width="100%">
+          <Box as="label" display="flex" alignItems="center" width="100%">
             <MacawSearchInput
               className={className}
               size={size}
