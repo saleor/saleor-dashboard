@@ -1,8 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -61,33 +60,37 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
 
       <DashboardCard.Content>
         {canChangeType ? (
-          <RadioGroupField
-            choices={[
-              {
-                label: intl.formatMessage(messages.productAttribute),
-                value: AttributeTypeEnum.PRODUCT_TYPE,
-              },
-              {
-                label: intl.formatMessage(messages.contentAttribute),
-                value: AttributeTypeEnum.PAGE_TYPE,
-              },
-            ]}
-            disabled={disabled}
-            label={
-              <>
-                <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
-                <Text fontWeight="medium" fontSize={3} display="block">
-                  <FormattedMessage
-                    id="ErNH3D"
-                    defaultMessage="Define where this attribute should be used in Saleor system"
-                  />
-                </Text>
-              </>
-            }
-            name={"type" as keyof FormData}
+          <RadioGroup
+            label={intl.formatMessage({
+              id: "T0lfLH",
+              defaultMessage: "Define where this attribute should be used in Saleor system",
+              description: "Define where this attribute should be used in Saleor system",
+            })}
+            size="medium"
             value={data.type as AttributeTypeEnum}
-            onChange={onChange}
-          />
+            onValueChange={value => {
+              onChange({ target: { name: "type", value } } as React.ChangeEvent<HTMLInputElement>);
+            }}
+            disabled={disabled}
+          >
+            <Box marginTop={2}>
+              <RadioGroup.Item
+                id={AttributeTypeEnum.PRODUCT_TYPE}
+                value={AttributeTypeEnum.PRODUCT_TYPE}
+                data-test-id={AttributeTypeEnum.PRODUCT_TYPE}
+                marginBottom={2}
+              >
+                <Text size={2}>{intl.formatMessage(messages.productAttribute)}</Text>
+              </RadioGroup.Item>
+              <RadioGroup.Item
+                id={AttributeTypeEnum.PAGE_TYPE}
+                value={AttributeTypeEnum.PAGE_TYPE}
+                data-test-id={AttributeTypeEnum.PAGE_TYPE}
+              >
+                <Text size={2}>{intl.formatMessage(messages.contentAttribute)}</Text>
+              </RadioGroup.Item>
+            </Box>
+          </RadioGroup>
         ) : (
           <>
             <Text className={classes.label} size={2} fontWeight="light" display="block">

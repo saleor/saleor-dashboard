@@ -1594,9 +1594,6 @@
     "context": "Label when app is disabled",
     "string": "Disabled"
   },
-  "7usRcR": {
-    "string": "These are general information about this model type."
-  },
   "7v2oBd": {
     "context": "header",
     "string": "Error"
@@ -1622,6 +1619,9 @@
   "86pLaG": {
     "context": "WarehouseSettings public stock label",
     "string": "Public Stock"
+  },
+  "87NGDZ": {
+    "string": "Plugin doesn't have any configuration fields"
   },
   "8B8E+3": {
     "context": "navigator placeholder",
@@ -2682,9 +2682,6 @@
   },
   "Eq3GFh": {
     "string": "Is giftcard"
-  },
-  "ErNH3D": {
-    "string": "Define where this attribute should be used in Saleor system"
   },
   "ErvPaM": {
     "context": "header",
@@ -4333,10 +4330,6 @@
     "context": "input label",
     "string": "Model type"
   },
-  "OVOU1z": {
-    "context": "section header",
-    "string": "Metadata"
-  },
   "OaA0f9": {
     "string": "You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
@@ -5051,6 +5044,10 @@
   "T0Mfxq": {
     "context": "product status title",
     "string": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}"
+  },
+  "T0lfLH": {
+    "context": "Define where this attribute should be used in Saleor system",
+    "string": "Define where this attribute should be used in Saleor system"
   },
   "T1f2Yl": {
     "string": "Variant Name"
@@ -5994,9 +5991,6 @@
   "YVIajc": {
     "context": "product field",
     "string": "Description"
-  },
-  "YVz54T": {
-    "string": "This list shows all attributes that will be assigned to models that have this model type assigned."
   },
   "YYkkhx": {
     "context": "navigator section header",
