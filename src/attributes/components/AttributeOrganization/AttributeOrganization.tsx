@@ -77,11 +77,16 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
               <RadioGroup.Item
                 id={AttributeTypeEnum.PRODUCT_TYPE}
                 value={AttributeTypeEnum.PRODUCT_TYPE}
+                data-test-id={AttributeTypeEnum.PRODUCT_TYPE}
                 marginBottom={2}
               >
                 <Text size={2}>{intl.formatMessage(messages.productAttribute)}</Text>
               </RadioGroup.Item>
-              <RadioGroup.Item id={AttributeTypeEnum.PAGE_TYPE} value={AttributeTypeEnum.PAGE_TYPE}>
+              <RadioGroup.Item
+                id={AttributeTypeEnum.PAGE_TYPE}
+                value={AttributeTypeEnum.PAGE_TYPE}
+                data-test-id={AttributeTypeEnum.PAGE_TYPE}
+              >
                 <Text size={2}>{intl.formatMessage(messages.contentAttribute)}</Text>
               </RadioGroup.Item>
             </Box>
