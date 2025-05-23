@@ -7,6 +7,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
+  ConfigurationItemFragment,
   ConfigurationItemInput,
   PluginConfigurationExtendedFragment,
   PluginErrorFragment,
@@ -27,7 +28,7 @@ import { PluginSettings } from "./PluginSettings";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
-  configuration: ConfigurationItemInput[];
+  configuration: ConfigurationItemFragment[];
 }
 
 export interface PluginsDetailsPageProps {
