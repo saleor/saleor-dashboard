@@ -93,6 +93,12 @@ body {
   margin-top: 4px !important;
 }
 
+
+.multiline-toggle-wrapper > * > button {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
 .simple-radio-group > button {
   min-width: 12px;
 }
