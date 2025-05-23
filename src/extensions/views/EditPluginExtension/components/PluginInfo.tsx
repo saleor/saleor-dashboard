@@ -1,22 +1,20 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
-import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
+import { PluginErrorCode } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import getPluginErrorMessage from "@dashboard/utils/errors/plugins";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PluginDetailsPageFormData } from "./PluginsDetailsPage";
-
 interface PluginInfoProps {
-  data: PluginDetailsPageFormData;
+  data: any;
   description: string;
-  errors: PluginErrorFragment[];
+  errors: any[];
   name: string;
   onChange: (event: React.ChangeEvent<any>) => void;
+  disabled: boolean;
 }
 
 export const PluginInfo: React.FC<PluginInfoProps> = ({
@@ -25,6 +23,7 @@ export const PluginInfo: React.FC<PluginInfoProps> = ({
   errors,
   name,
   onChange,
+  disabled,
 }) => {
   const intl = useIntl();
   const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
@@ -63,26 +62,42 @@ export const PluginInfo: React.FC<PluginInfoProps> = ({
         )}
         <FormSpacer />
         <Hr />
-        <Text lineHeight={2} fontSize={3} color="default2" display="block" paddingTop={4}>
+        <Text
+          lineHeight={2}
+          fontSize={3}
+          marginBottom={2}
+          color="default2"
+          display="block"
+          paddingTop={4}
+        >
           {intl.formatMessage({
             id: "bL/Wrc",
             defaultMessage: "Status",
             description: "plugin status",
           })}
         </Text>
-        <ControlledCheckbox
-          name={"active" as keyof PluginDetailsPageFormData}
-          label={
-            <Text>
-              {intl.formatMessage({
-                id: "FA+MRz",
-                defaultMessage: "Set plugin as active",
-              })}
-            </Text>
-          }
+        <Checkbox
           checked={data.active}
-          onChange={onChange}
-        />
+          disabled={disabled}
+          name="active"
+          onCheckedChange={value =>
+            // @ts-expect-error simulate change event for legacy Form
+            onChange({
+              target: {
+                name: "active",
+                value: value,
+              },
+            })
+          }
+          data-test-id="plugin-active-checkbox"
+        >
+          <Text size={3} fontWeight="medium">
+            {intl.formatMessage({
+              id: "3a5wL8",
+              defaultMessage: "Active",
+            })}
+          </Text>
+        </Checkbox>
         {misconfiguredError && (
           <Text color="critical1">{getPluginErrorMessage(misconfiguredError, intl)}</Text>
         )}
