@@ -5,7 +5,7 @@ import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvata
 import { messages } from "@dashboard/extensions/messages";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -35,6 +35,12 @@ const ExtensionLink = ({ href, children }: { href?: string; children: React.Reac
         textDecoration: "none",
         color: "inherit",
       }}
+      className={sprinkles({
+        backgroundColor: {
+          default: "default1",
+          hover: "default2",
+        },
+      })}
       data-test-id="extension-link"
     >
       {children}
