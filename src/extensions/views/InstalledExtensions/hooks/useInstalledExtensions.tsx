@@ -5,7 +5,7 @@ import {
 import { AppPaths } from "@dashboard/apps/urls";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { InstalledExtension } from "@dashboard/extensions/types";
-import { ViewPluginDetails } from "@dashboard/extensions/views/InstalledExtensions/components/ViewPluginDetails";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
 import { useFlag } from "@dashboard/featureFlags";
 import {
@@ -24,7 +24,6 @@ import React, { useMemo } from "react";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
 import { FailedWebhookInfo } from "../components/InfoLabels/FailedWebhookInfo";
-import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
 
 export const getExtensionInfo = ({
   loading,
@@ -75,6 +74,30 @@ export const getExtensionLogo = ({
   }
 
   return <GenericAppIcon size="medium" color="default2" />;
+};
+
+const resolveExtensionHref = ({
+  id,
+  type,
+  isActive,
+}: {
+  id?: string;
+  type: AppTypeEnum | null;
+  isActive: boolean | null;
+}) => {
+  if (!id) {
+    return undefined;
+  }
+
+  if (!isActive) {
+    return ExtensionsUrls.resolveEditManifestExtensionUrl(id);
+  }
+
+  if (type === AppTypeEnum.LOCAL) {
+    return ExtensionsUrls.editCustomExtensionUrl(id);
+  }
+
+  return ExtensionsUrls.resolveViewManifestExtensionUrl(id);
 };
 
 export const useInstalledExtensions = () => {
@@ -146,9 +169,7 @@ export const useInstalledExtensions = () => {
             loading: !eventDeliveriesData?.apps,
             lastFailedAttempt,
           }),
-          actions: (
-            <ViewDetailsActionButton name={name} id={id} type={type} isDisabled={!isActive} />
-          ),
+          href: resolveExtensionHref({ id, type, isActive }),
         };
       }),
     [eventDeliveries, eventDeliveriesData, installedAppsData],
@@ -161,7 +182,7 @@ export const useInstalledExtensions = () => {
         name: plugin.name,
         logo: <PluginIcon />,
         info: null,
-        actions: <ViewPluginDetails id={plugin.id} />,
+        href: ExtensionsUrls.resolveEditPluginExtensionUrl(plugin.id),
       })),
     [installedPluginsData],
   );
