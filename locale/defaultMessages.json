@@ -2686,9 +2686,6 @@
   "Eq3GFh": {
     "string": "Is giftcard"
   },
-  "ErNH3D": {
-    "string": "Define where this attribute should be used in Saleor system"
-  },
   "ErvPaM": {
     "context": "header",
     "string": "Warehouse Name"
@@ -5054,6 +5051,10 @@
   "T0Mfxq": {
     "context": "product status title",
     "string": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}"
+  },
+  "T0lfLH": {
+    "context": "Define where this attribute should be used in Saleor system",
+    "string": "Define where this attribute should be used in Saleor system"
   },
   "T1f2Yl": {
     "string": "Variant Name"
