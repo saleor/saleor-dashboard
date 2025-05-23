@@ -82,11 +82,11 @@ const resolveExtensionHref = ({
   isActive,
 }: {
   id?: string;
-  type: AppTypeEnum;
-  isActive: boolean;
+  type: AppTypeEnum | null;
+  isActive: boolean | null;
 }) => {
   if (!id) {
-    return null;
+    return undefined;
   }
 
   if (!isActive) {
