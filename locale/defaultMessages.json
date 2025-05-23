@@ -1594,9 +1594,6 @@
     "context": "Label when app is disabled",
     "string": "Disabled"
   },
-  "7usRcR": {
-    "string": "These are general information about this model type."
-  },
   "7v2oBd": {
     "context": "header",
     "string": "Error"
@@ -4333,10 +4330,6 @@
     "context": "input label",
     "string": "Model type"
   },
-  "OVOU1z": {
-    "context": "section header",
-    "string": "Metadata"
-  },
   "OaA0f9": {
     "string": "You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
@@ -5998,9 +5991,6 @@
   "YVIajc": {
     "context": "product field",
     "string": "Description"
-  },
-  "YVz54T": {
-    "string": "This list shows all attributes that will be assigned to models that have this model type assigned."
   },
   "YYkkhx": {
     "context": "navigator section header",
