@@ -50,5 +50,5 @@ export type InstalledExtension = {
   name: string;
   logo: ReactNode;
   info: ReactNode;
-  actions: ReactNode;
+  href?: string;
 };

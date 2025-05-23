@@ -1,4 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
+import Link from "@dashboard/components/Link";
 import { EmptyListState } from "@dashboard/extensions/components/EmptyListState/EmptyListState";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
@@ -14,6 +15,26 @@ interface InstalledExtensionsListProps {
   clearSearch: () => void;
   searchQuery?: string;
 }
+
+const ExtensionLink = ({ href, children }: { href?: string; children: React.ReactNode }) => {
+  if (!href) {
+    return (
+      <Box display="flex" alignItems="center" __padding="5px 20px">
+        {children}
+      </Box>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      style={{ display: "flex", alignItems: "center", padding: "5px 20px" }}
+      data-test-id="extension-link"
+    >
+      {children}
+    </Link>
+  );
+};
 
 export const InstalledExtensionsList = ({
   installedExtensions,
@@ -46,51 +67,37 @@ export const InstalledExtensionsList = ({
     >
       <GridTable>
         <GridTable.Colgroup>
-          <GridTable.Col __width="16px" />
-          <GridTable.Col __width="calc(100% - 250px)" />
-          <GridTable.Col __width="250px" />
+          <GridTable.Col />
         </GridTable.Colgroup>
         <GridTable.Body>
           <GridTable.Row>
-            <GridTable.Cell />
-            <GridTable.Cell paddingY={4}>
+            <GridTable.Cell paddingY={4} paddingX={5}>
               <Text size={3}>
                 <FormattedMessage {...messages.extensionName} />
               </Text>
             </GridTable.Cell>
-            <GridTable.Cell paddingY={4} />
           </GridTable.Row>
           {installedExtensions.map(extension => (
             <GridTable.Row key={extension.id} data-test-id="installed-extension-row">
-              <GridTable.Cell />
-              <GridTable.Cell>
-                <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-                  <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
-                  <Text
-                    size={4}
-                    fontWeight="bold"
-                    __maxWidth="200px"
-                    overflow="hidden"
-                    textOverflow="ellipsis"
-                    whiteSpace="nowrap"
-                  >
-                    {extension.name}
-                  </Text>
-                  <Box
-                    marginLeft={{
-                      tablet: 6,
-                    }}
-                  >
+              <GridTable.Cell padding={0}>
+                <ExtensionLink>
+                  <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+                    <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
+                    <Text
+                      size={4}
+                      fontWeight="bold"
+                      __maxWidth="200px"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      whiteSpace="nowrap"
+                    >
+                      {extension.name}
+                    </Text>
+                  </Box>
+                  <Box marginLeft="auto" marginRight={4}>
                     {extension.info}
                   </Box>
-                </Box>
-              </GridTable.Cell>
-              <GridTable.Cell>
-                <Box display="flex" alignItems="center" justifyContent="space-between">
-                  <Box marginLeft="auto" marginRight={4}>
-                    {extension.actions}
-                  </Box>
-                </Box>
+                </ExtensionLink>
               </GridTable.Cell>
             </GridTable.Row>
           ))}
