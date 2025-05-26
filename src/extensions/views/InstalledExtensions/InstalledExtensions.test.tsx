@@ -53,6 +53,9 @@ jest.mock("./hooks/usePendingInstallation");
 jest.mock("./hooks/useInstalledExtensionsFilter");
 jest.mock("@dashboard/hooks/useHasManagedAppsPermission");
 jest.mock("@dashboard/hooks/useNavigator", () => jest.fn(() => jest.fn()));
+jest.mock("@dashboard/components/AppLayout/ContextualLinks/useContextualLink", () => ({
+  useContextualLink: () => "Extensions",
+}));
 
 jest.mock("@dashboard/featureFlags", () => ({
   useFlag: () => true,
