@@ -69,9 +69,8 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
         </Box>
       </TopNav>
       <Box paddingX={6}>
-        <Box __width="370px" marginY={12}>
+        <Box __width="370px" marginTop={12} marginBottom={7}>
           <SearchInput
-            withBorder
             size="medium"
             initialSearch={query}
             placeholder={intl.formatMessage(messages.searchPlaceholder)}
