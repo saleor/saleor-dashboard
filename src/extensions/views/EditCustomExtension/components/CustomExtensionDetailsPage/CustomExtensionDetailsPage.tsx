@@ -188,7 +188,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
               {!hasManagedAppsPermission && (
                 <Tooltip.Content>
                   <Tooltip.Arrow />
-                  {appMessages.missingManageAppsPermission}
+                  <FormattedMessage {...appMessages.missingManageAppsPermission} />
                 </Tooltip.Content>
               )}
             </Tooltip>
