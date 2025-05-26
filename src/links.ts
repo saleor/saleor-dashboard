@@ -20,7 +20,7 @@ export const USER_PERMISSIONS_DOCS_URL =
 export const ORDER_EVENTS_DOCS_URL =
   "https://docs.saleor.io/developer/extending/api/events#order-events";
 export const GIFT_CARD_PRODUCT_DOCS_URL = "https://docs.saleor.io/developer/gift-cards";
-export const EXTENSIONS_DOCS_URL = "https://docs.saleor.io/developer/extensions";
+export const EXTENSIONS_DOCS_URL = "https://docs.saleor.io/developer/app-store/overview";
 export const PLUGINS_DOCS_URL = "https://docs.saleor.io/developer/app-store/overview#plugins";
 export const CUSTOM_EXTENSIONS_DOCS_URL =
   "https://docs.saleor.io/developer/extending/webhooks/creating";

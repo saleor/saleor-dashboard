@@ -45,10 +45,16 @@ export type APIExtensionsResponse = Array<{
   extensions: ExtensionData[];
 }>;
 
+/*
+  Candidate for refactoring. InstalledExtension is only one case.
+  We have also pending installation, failed installation, etc. and they have different actions.
+  We should create dedicated types for each case (PendingInstallation, FailedInstallation and so on)
+*/
 export type InstalledExtension = {
   id: string;
   name: string;
   logo: ReactNode;
   info: ReactNode;
-  actions: ReactNode;
+  href?: string;
+  actions?: ReactNode;
 };

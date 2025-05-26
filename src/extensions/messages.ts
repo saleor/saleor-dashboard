@@ -16,14 +16,14 @@ export const getSpecificManifestErrorDocLink = (_errorCode?: string): string => 
 
 export const headerTitles = defineMessages({
   exploreExtensions: {
-    defaultMessage: "Explore extensions",
+    defaultMessage: "Explore",
     description: "page title",
-    id: "lBdI+n",
+    id: "32Capp",
   },
   installedExtensions: {
-    defaultMessage: "Installed extensions",
+    defaultMessage: "All installed",
     description: "page title",
-    id: "NMIXpW",
+    id: "VQvNZx",
   },
   addCustomExtension: {
     defaultMessage: "Add extension manually",
@@ -40,6 +40,11 @@ export const headerTitles = defineMessages({
     defaultMessage: "Add extension",
     description: "page title - installing app with manifestUrl provided",
     id: "BYfAwE",
+  },
+  extensions: {
+    defaultMessage: "Extensions",
+    description: "page title - extensions",
+    id: "WD+kjr",
   },
 });
 
@@ -79,6 +84,10 @@ export const buttonLabels = defineMessages({
   save: {
     defaultMessage: "Save",
     id: "jvo0vs",
+  },
+  remove: {
+    defaultMessage: "Remove",
+    id: "G/yZLu",
   },
   back: {
     defaultMessage: "Back",
@@ -168,8 +177,8 @@ export const notifyMessages = defineMessages({
 
 export const messages = defineMessages({
   searchPlaceholder: {
-    defaultMessage: "Search extensions...",
-    id: "D66hpd",
+    defaultMessage: "Search Extensions...",
+    id: "qMEm+l",
   },
   installed: {
     defaultMessage: "Installed",

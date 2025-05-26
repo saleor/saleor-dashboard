@@ -858,6 +858,10 @@
     "context": "gift card history message",
     "string": "Gift card was issued by {issuedBy}"
   },
+  "32Capp": {
+    "context": "page title",
+    "string": "Explore"
+  },
   "32dfzI": {
     "context": "price or ordered products",
     "string": "Price"
@@ -2427,9 +2431,6 @@
     "context": "table header column",
     "string": "Country name"
   },
-  "D66hpd": {
-    "string": "Search extensions..."
-  },
   "D8nsBc": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
@@ -2929,6 +2930,9 @@
   "G/pgG3": {
     "context": "dialog header",
     "string": "Select a channel"
+  },
+  "G/yZLu": {
+    "string": "Remove"
   },
   "G0+gAp": {
     "context": "shipping section header",
@@ -4131,10 +4135,6 @@
   "NLybdq": {
     "context": "voucher channel",
     "string": "Channel"
-  },
-  "NMIXpW": {
-    "context": "page title",
-    "string": "Installed extensions"
   },
   "NNT3Lp": {
     "context": "collections section name",
@@ -5466,6 +5466,10 @@
     "context": "refund type",
     "string": "Refund products"
   },
+  "VQvNZx": {
+    "context": "page title",
+    "string": "All installed"
+  },
   "VS0YOp": {
     "context": "Request extension",
     "string": "Request Extension"
@@ -5580,6 +5584,10 @@
   "WCg2GZ": {
     "context": "change warehouse dialog search placeholder",
     "string": "Search warehouses"
+  },
+  "WD+kjr": {
+    "context": "page title - extensions",
+    "string": "Extensions"
   },
   "WDrC7e": {
     "context": "label",
@@ -7976,10 +7984,6 @@
     "context": "order return error title when cannot refund",
     "string": "Couldn't refund products"
   },
-  "lBdI+n": {
-    "context": "page title",
-    "string": "Explore extensions"
-  },
   "lCPxtT": {
     "context": "resend code label",
     "string": "Resend code"
@@ -8776,6 +8780,9 @@
   "qMB6d2": {
     "context": "weight",
     "string": "to {value} {unit}"
+  },
+  "qMEm+l": {
+    "string": "Search Extensions..."
   },
   "qNcoRY": {
     "context": "notes about customer header",

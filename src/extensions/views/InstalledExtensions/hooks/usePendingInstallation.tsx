@@ -1,5 +1,5 @@
 import { InstalledExtension } from "@dashboard/extensions/types";
-import { AppTypeEnum, JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
+import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { fuzzySearch } from "@dashboard/misc";
 import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
@@ -8,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import { FailedInstallationActions } from "../components/FailedInstallationActions";
 import { FailedInstallationInfo } from "../components/InfoLabels/FailedInstallationInfo";
 import { InstallationPendingInfo } from "../components/InfoLabels/InstallationPendingInfo";
-import { ViewDetailsActionButton } from "../components/ViewDetailsActionButton";
 import { useActiveAppsInstallations } from "./useActiveAppsInstallations";
 import { useInstallationNotify } from "./useInstallationNotify";
 
@@ -89,9 +88,7 @@ export const usePendingInstallation = ({
             onDelete={() => onFailedInstallationRemove(id)}
             onRetry={() => handleAppInstallRetry(id)}
           />
-        ) : (
-          <ViewDetailsActionButton name={appName} type={AppTypeEnum.THIRDPARTY} />
-        ),
+        ) : null,
       };
     },
   );
