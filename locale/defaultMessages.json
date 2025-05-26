@@ -858,6 +858,10 @@
     "context": "gift card history message",
     "string": "Gift card was issued by {issuedBy}"
   },
+  "32Capp": {
+    "context": "page title",
+    "string": "Explore"
+  },
   "32dfzI": {
     "context": "price or ordered products",
     "string": "Price"
@@ -1841,10 +1845,6 @@
   "9UHfux": {
     "string": "Voucher Specific Information"
   },
-  "9W9Sdj": {
-    "context": "page title",
-    "string": "Explore Extensions"
-  },
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
     "string": "Pending auth"
@@ -2691,10 +2691,6 @@
   "EtGDeK": {
     "context": "header",
     "string": "{pluginName} Details"
-  },
-  "EuB0RV": {
-    "context": "page title",
-    "string": "Installed Extensions"
   },
   "EuOXmr": {
     "context": "add items title",
@@ -5470,6 +5466,10 @@
     "context": "refund type",
     "string": "Refund products"
   },
+  "VQvNZx": {
+    "context": "page title",
+    "string": "All installed"
+  },
   "VS0YOp": {
     "context": "Request extension",
     "string": "Request Extension"
@@ -5584,6 +5584,10 @@
   "WCg2GZ": {
     "context": "change warehouse dialog search placeholder",
     "string": "Search warehouses"
+  },
+  "WD+kjr": {
+    "context": "page title - extensions",
+    "string": "Extensions"
   },
   "WDrC7e": {
     "context": "label",
