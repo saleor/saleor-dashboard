@@ -59,7 +59,10 @@ export const InstallCustomExtensionFromUrl = ({
 
   return (
     <>
-      <InstallTopNav title={intl.formatMessage(headerTitles.addCustomExtensionManifestUrl)} />
+      <InstallTopNav
+        title={intl.formatMessage(headerTitles.addCustomExtensionManifestUrl)}
+        showDocsLink={false}
+      />
       <Box marginX={6} marginTop={10} display="flex" flexDirection="column" gap={10}>
         <InstallSectionData
           isFetchingManifest={isFetchingManifest}
