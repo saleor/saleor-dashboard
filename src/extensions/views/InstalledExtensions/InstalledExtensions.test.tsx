@@ -109,7 +109,7 @@ describe("InstalledExtensions", () => {
     const mockHandleQueryChange = jest.fn();
     // Initial render with all extensions
     const { rerender } = render(<InstalledExtensions {...defaultProps} />);
-    const searchInput = screen.getByPlaceholderText("Search extensions...");
+    const searchInput = screen.getByPlaceholderText("Search Extensions...");
 
     // Act: Simulate typing search query
     fireEvent.change(searchInput, { target: { value: "Test App" } });
