@@ -7,7 +7,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
-  ConfigurationItemInput,
+  ConfigurationItemFragment,
   PluginConfigurationExtendedFragment,
   PluginErrorFragment,
   PluginsDetailsFragment,
@@ -27,7 +27,7 @@ import { PluginSettings } from "./PluginSettings";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
-  configuration: ConfigurationItemInput[];
+  configuration: ConfigurationItemFragment[];
 }
 
 export interface PluginsDetailsPageProps {
@@ -130,7 +130,6 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                     <div>
                       <PluginSettings
                         data={data}
-                        fields={selectedConfig?.configuration || []}
                         errors={errors}
                         disabled={disabled}
                         onChange={onChange}
