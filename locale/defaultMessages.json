@@ -264,6 +264,9 @@
     "context": "tax classes menu header",
     "string": "Tax class label"
   },
+  "/JCVue": {
+    "string": "An unexpected error occurred while saving the app."
+  },
   "/KWNJW": {
     "context": "order discount was updated event title",
     "string": "Order discount was updated by"
@@ -1394,6 +1397,9 @@
     "context": "order history message",
     "string": "Note was added to the order"
   },
+  "6Yhjz7": {
+    "string": "You can't give this app permissions you don't have. Please ask an admin if you need more permissions."
+  },
   "6aBkJm": {
     "context": "section header",
     "string": "Authorization"
@@ -1665,6 +1671,9 @@
     "context": "btn label",
     "string": "Go to Extensions"
   },
+  "8N20oq": {
+    "string": "The app requests an invalid or unrecognized permission: {perm}."
+  },
   "8NBwu7": {
     "context": "PageTypeDeleteWarningDialog with items multiple description",
     "string": "You are about to delete multiple model types. Some of them are assigned to models. Deleting those model types will also delete those models"
@@ -1701,6 +1710,9 @@
   "8qL/tV": {
     "context": "CannotDefineChannelsAvailabilityCard subtitle",
     "string": "You will be able to define availability of product after creating variants."
+  },
+  "8tKQGI": {
+    "string": "You can't manage this app because it has more permissions than you. Please ask an admin for help."
   },
   "8u7els": {
     "context": "channel config plugin status popup title",
@@ -2873,6 +2885,10 @@
     "context": "order history message",
     "string": "Oversold {quantity} items"
   },
+  "FmeBxD": {
+    "context": "custom app tokens list - missing token name",
+    "string": "(unknown)"
+  },
   "FmwGVb": {
     "context": "transaction refund tiles charged label",
     "string": "Charged"
@@ -3091,6 +3107,9 @@
   "GibKGn": {
     "context": "success gift card disable message",
     "string": "Successfully disabled gift card"
+  },
+  "GirCE+": {
+    "string": "A required field is missing in the app configuration."
   },
   "GjH9uy": {
     "context": "header",
@@ -4913,6 +4932,9 @@
     "context": "grant refund table, column header",
     "string": "Quantity"
   },
+  "S6W6FM": {
+    "string": "You are not allowed to perform this action."
+  },
   "S7Rwl0": {
     "context": "stock exceeded action question label",
     "string": "Are you sure you want to fulfill those products anyway?"
@@ -5240,6 +5262,9 @@
   "U5aVd8": {
     "context": "product",
     "string": "Shippable"
+  },
+  "U7TW7E": {
+    "string": "The app identifier is already in use."
   },
   "U86VKF": {
     "context": "number of structures",
@@ -5912,6 +5937,9 @@
   "Xz/sDf": {
     "context": "Dry run items list item",
     "string": "Item:"
+  },
+  "Y/SXVb": {
+    "string": "The operation cannot be performed right now. This might be due to a pending installation with the same identifier."
   },
   "Y0NwOq": {
     "context": "dialog subtitle",
