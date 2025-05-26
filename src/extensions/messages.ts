@@ -172,8 +172,8 @@ export const notifyMessages = defineMessages({
 
 export const messages = defineMessages({
   searchPlaceholder: {
-    defaultMessage: "Search extensions...",
-    id: "D66hpd",
+    defaultMessage: "Search Extensions...",
+    id: "qMEm+l",
   },
   installed: {
     defaultMessage: "Installed",
