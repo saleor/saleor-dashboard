@@ -1841,10 +1841,6 @@
   "9UHfux": {
     "string": "Voucher Specific Information"
   },
-  "9W9Sdj": {
-    "context": "page title",
-    "string": "Explore Extensions"
-  },
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
     "string": "Pending auth"
@@ -2168,6 +2164,10 @@
     "context": "Dry run events unavailable",
     "string": "The following events from provided query are currently not available for dry run:"
   },
+  "BYfAwE": {
+    "context": "page title - installing app with manifestUrl provided",
+    "string": "Add extension"
+  },
   "BZ7BkQ": {
     "context": "capture payment, button",
     "string": "Capture"
@@ -2388,6 +2388,10 @@
   "CrY98m": {
     "context": "button, marks order as paid (legacy payments)",
     "string": "Mark order as paid"
+  },
+  "Cxkzpg": {
+    "context": "page title - installing app with manifestUrl form",
+    "string": "Add extension from manifest"
   },
   "D/+84n": {
     "context": "snackbar text",
@@ -2694,10 +2698,6 @@
   "EtGDeK": {
     "context": "header",
     "string": "{pluginName} Details"
-  },
-  "EuB0RV": {
-    "context": "page title",
-    "string": "Installed Extensions"
   },
   "EuOXmr": {
     "context": "add items title",
@@ -4132,6 +4132,10 @@
     "context": "voucher channel",
     "string": "Channel"
   },
+  "NMIXpW": {
+    "context": "page title",
+    "string": "Installed extensions"
+  },
   "NNT3Lp": {
     "context": "collections section name",
     "string": "Collections"
@@ -4773,10 +4777,6 @@
     "context": "radio button label",
     "string": "Refund with manual amount"
   },
-  "RKxceS": {
-    "context": "page title - installing app with manifestUrl form",
-    "string": "Add Custom Extension from manifest"
-  },
   "RLBLPQ": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
@@ -4857,10 +4857,6 @@
   "Rjs1CD": {
     "context": "button",
     "string": "Continue"
-  },
-  "RkhreQ": {
-    "context": "page title - creating custom app",
-    "string": "Add Custom Extension manually"
   },
   "RlbhwF": {
     "context": "product no longer exists error description",
@@ -6936,6 +6932,10 @@
     "context": "tab name",
     "string": "All warehouses"
   },
+  "ecM5eL": {
+    "context": "page title - creating custom app",
+    "string": "Add extension manually"
+  },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
     "string": "Captured"
@@ -7975,6 +7975,10 @@
   "l9Lwjh": {
     "context": "order return error title when cannot refund",
     "string": "Couldn't refund products"
+  },
+  "lBdI+n": {
+    "context": "page title",
+    "string": "Explore extensions"
   },
   "lCPxtT": {
     "context": "resend code label",
@@ -9754,10 +9758,6 @@
   "wRvjoc": {
     "context": "app created at label",
     "string": "Created at"
-  },
-  "wSS9YI": {
-    "context": "page title - installing app with manifestUrl provided",
-    "string": "Add Extension"
   },
   "wTHjt3": {
     "string": "Search Orders..."
