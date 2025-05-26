@@ -17,6 +17,7 @@ interface AccountPermissionsProps {
     permissions: string[];
   };
   disabled: boolean;
+  disabledPermissionsTooltip?: string;
   description: string;
   errorMessage: string | undefined;
   fullAccessLabel: string;
@@ -27,6 +28,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   const {
     data,
     disabled,
+    disabledPermissionsTooltip,
     permissionsExceeded,
     onChange,
     description,
@@ -106,6 +108,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             permissions={permissions}
             onPermissionChange={handlePermissionChange}
             selectedPermissions={data.permissions}
+            disabledPermissionTooltip={disabledPermissionsTooltip}
           />
 
           {!!errorMessage && (
