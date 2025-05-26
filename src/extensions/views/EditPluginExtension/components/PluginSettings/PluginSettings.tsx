@@ -1,12 +1,11 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
+import { ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
-import InfoIcon from "@material-ui/icons/Info";
-import { Box, Checkbox, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

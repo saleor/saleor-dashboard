@@ -8,7 +8,6 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
   ConfigurationItemFragment,
-  ConfigurationItemInput,
   PluginConfigurationExtendedFragment,
   PluginErrorFragment,
   PluginsDetailsFragment,
@@ -131,7 +130,6 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                     <div>
                       <PluginSettings
                         data={data}
-                        fields={selectedConfig?.configuration || []}
                         errors={errors}
                         disabled={disabled}
                         onChange={onChange}
