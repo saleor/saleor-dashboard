@@ -50,10 +50,6 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
     onClose: () => setStep("form"),
   });
 
-  const openPlayground = () => {
-    window.open(getApiUrl(), "_blank");
-  };
-
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm">
@@ -135,13 +131,6 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                         <FormattedMessage
                           id="ZhqH8J"
                           defaultMessage="Copy headers"
-                          description="button"
-                        />
-                      </Button>
-                      <Button variant="secondary" onClick={openPlayground}>
-                        <FormattedMessage
-                          id="0KmZCN"
-                          defaultMessage="Open playground"
                           description="button"
                         />
                       </Button>
