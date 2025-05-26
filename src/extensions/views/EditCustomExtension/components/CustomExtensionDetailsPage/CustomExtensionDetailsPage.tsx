@@ -43,6 +43,7 @@ export interface CustomExtensionDetailsPageProps {
   app: AppUpdateMutation["appUpdate"]["app"] | null | undefined;
   token: string;
   hasManagedAppsPermission: boolean;
+  isLoading: boolean;
   onApiUrlClick: () => void;
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
@@ -73,6 +74,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     onWebhookRemove,
     onAppActivateOpen,
     onAppDeactivateOpen,
+    isLoading,
   } = props;
   const intl = useIntl();
   const classes = useStyles();
@@ -142,7 +144,8 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
             <CardSpacer />
 
             <CustomExtensionTokens
-              tokens={app?.tokens || []}
+              tokens={app?.tokens}
+              isLoading={isLoading}
               onCreate={onTokenCreate}
               onDelete={onTokenDelete}
               hasManagedAppsPermission={hasManagedAppsPermission}

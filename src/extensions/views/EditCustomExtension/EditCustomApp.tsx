@@ -237,6 +237,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         app={data?.app}
         saveButtonBarState={updateAppOpts.status}
         hasManagedAppsPermission={hasManagedAppsPermission}
+        isLoading={loading}
       />
       <TokenCreateDialog
         confirmButtonState={createTokenOpts.status}
