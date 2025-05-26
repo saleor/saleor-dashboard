@@ -63,7 +63,7 @@ const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
         <TableRowLink key={token.id}>
           <TableCell className={classes.colNote}>
             {token.name || (
-              <Box as="span">
+              <Box as="span" fontStyle="italic">
                 <FormattedMessage
                   defaultMessage="(unknown)"
                   description="custom app tokens list - missing token name"
