@@ -2423,9 +2423,6 @@
     "context": "table header column",
     "string": "Country name"
   },
-  "D66hpd": {
-    "string": "Search extensions..."
-  },
   "D8nsBc": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
@@ -8772,6 +8769,9 @@
   "qMB6d2": {
     "context": "weight",
     "string": "to {value} {unit}"
+  },
+  "qMEm+l": {
+    "string": "Search Extensions..."
   },
   "qNcoRY": {
     "context": "notes about customer header",
