@@ -26,9 +26,8 @@ export const ExploreExtensions = () => {
         <ExploreExtensionsActions />
       </TopNav>
       <Box paddingX={6}>
-        <Box __width="370px" marginTop={8} marginBottom={12}>
+        <Box __width="370px" marginTop={12} marginBottom={7}>
           <SearchInput
-            withBorder
             size="medium"
             initialSearch={query}
             placeholder={intl.formatMessage(messages.searchPlaceholder)}
