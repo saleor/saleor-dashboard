@@ -11,6 +11,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Mono } from "./Mono";
+import { useClipboardCopy } from "./useClipboardCopy";
 
 export interface TokenCreateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -21,10 +22,6 @@ export interface TokenCreateDialogProps {
 }
 
 type TokenCreateStep = "form" | "summary";
-
-function handleCopy(token: string) {
-  navigator.clipboard.writeText(token);
-}
 
 const tokenPaperStyles = {
   padding: 4,
@@ -40,6 +37,8 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   const [step, setStep] = React.useState<TokenCreateStep>("form");
   const intl = useIntl();
   const headers = createHeadersString(token ?? "");
+  const { copyToClipboard: copyTokenToClipboard, copyState: tokenCopyState } = useClipboardCopy();
+  const { copyToClipboard: copyHeaderToClipboard, copyState: headerCopyState } = useClipboardCopy();
 
   React.useEffect(() => {
     if (token) {
@@ -102,17 +101,19 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       <Mono>{token}</Mono>
                     </Text>
 
-                    <Button
+                    <ConfirmButton
+                      noTransition
+                      transitionState={tokenCopyState}
                       variant="secondary"
                       marginTop={2}
-                      onClick={() => handleCopy(token ?? "")}
+                      onClick={() => copyTokenToClipboard(token ?? "")}
                     >
                       <FormattedMessage
                         id="HVFq//"
                         defaultMessage="Copy token"
                         description="button"
                       />
-                    </Button>
+                    </ConfirmButton>
                   </Box>
 
                   <Box {...tokenPaperStyles}>
@@ -131,13 +132,18 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                       gap={2}
                       marginTop={2}
                     >
-                      <Button variant="secondary" onClick={() => handleCopy(headers)}>
+                      <ConfirmButton
+                        noTransition
+                        transitionState={headerCopyState}
+                        variant="secondary"
+                        onClick={() => copyHeaderToClipboard(headers)}
+                      >
                         <FormattedMessage
                           id="ZhqH8J"
                           defaultMessage="Copy headers"
                           description="button"
                         />
-                      </Button>
+                      </ConfirmButton>
                       <Button variant="secondary" onClick={openPlayground}>
                         <FormattedMessage
                           id="0KmZCN"

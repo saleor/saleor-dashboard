@@ -6694,6 +6694,9 @@
     "context": "WarehouseSettings no shipping zones assigned",
     "string": "This warehouse has no shipping zones assigned."
   },
+  "ce5Hp1": {
+    "string": "Failed to copy to clipboard"
+  },
   "cfQf0w": {
     "context": "button",
     "string": "Create Order"
