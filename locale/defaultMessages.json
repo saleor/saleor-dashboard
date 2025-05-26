@@ -2927,6 +2927,9 @@
     "context": "dialog header",
     "string": "Select a channel"
   },
+  "G/yZLu": {
+    "string": "Remove"
+  },
   "G0+gAp": {
     "context": "shipping section header",
     "string": "Shipping"
