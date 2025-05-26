@@ -16,7 +16,15 @@ interface InstalledExtensionsListProps {
   searchQuery?: string;
 }
 
-const ExtensionLink = ({ href, children }: { href?: string; children: React.ReactNode }) => {
+const ExtensionLink = ({
+  href,
+  name,
+  children,
+}: {
+  href?: string;
+  name: string;
+  children: React.ReactNode;
+}) => {
   if (!href) {
     return (
       <Box display="flex" alignItems="center" __padding="5px 20px">
@@ -25,9 +33,12 @@ const ExtensionLink = ({ href, children }: { href?: string; children: React.Reac
     );
   }
 
+  const formattedName = name?.toLowerCase().replace(" ", "") ?? "";
+
   return (
     <Link
       href={href}
+      data-test-id={`${formattedName}-view-details`}
       style={{
         display: "flex",
         alignItems: "center",
@@ -41,7 +52,6 @@ const ExtensionLink = ({ href, children }: { href?: string; children: React.Reac
           hover: "default2",
         },
       })}
-      data-test-id="extension-link"
     >
       {children}
     </Link>
@@ -92,7 +102,7 @@ export const InstalledExtensionsList = ({
           {installedExtensions.map(extension => (
             <GridTable.Row key={extension.id} data-test-id="installed-extension-row">
               <GridTable.Cell padding={0}>
-                <ExtensionLink href={extension.href}>
+                <ExtensionLink href={extension.href} name={extension.name}>
                   <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
                     <ExtensionAvatar>{extension.logo}</ExtensionAvatar>
                     <Text
