@@ -450,6 +450,44 @@ export const appManifestErrorMessages = defineMessages({
   },
 });
 
+export const localAppErrorMessages = defineMessages({
+  genericError: {
+    id: "/JCVue",
+    defaultMessage: "An unexpected error occurred while saving the app.",
+  },
+  invalidPermission: {
+    id: "8N20oq",
+    defaultMessage: "The app requests an invalid or unrecognized permission: {perm}.",
+  },
+  outOfScopeApp: {
+    id: "8tKQGI",
+    defaultMessage:
+      "You can't manage this app because it has more permissions than you. Please ask an admin for help.",
+  },
+  outOfScopePermission: {
+    id: "6Yhjz7",
+    defaultMessage:
+      "You can't give this app permissions you don't have. Please ask an admin if you need more permissions.",
+  },
+  unique: {
+    id: "U7TW7E",
+    defaultMessage: "The app identifier is already in use.",
+  },
+  forbidden: {
+    id: "S6W6FM",
+    defaultMessage: "You are not allowed to perform this action.",
+  },
+  invalidStatus: {
+    id: "Y/SXVb",
+    defaultMessage:
+      "The operation cannot be performed right now. This might be due to a pending installation with the same identifier.",
+  },
+  required: {
+    id: "GirCE+",
+    defaultMessage: "A required field is missing in the app configuration.",
+  },
+});
+
 export const appMessages = defineMessages({
   failedToFetchAppSettings: {
     id: "ac+Y98",
