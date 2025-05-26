@@ -69,7 +69,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
         </Box>
       </TopNav>
       <Box paddingX={6}>
-        <Box __width="370px" marginTop={8} marginBottom={12}>
+        <Box __width="370px" marginY={12}>
           <SearchInput
             withBorder
             size="medium"
