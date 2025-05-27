@@ -5,6 +5,19 @@ import { FormattedMessageProps } from "react-intl";
 
 import { ExtensionItem } from "./ExtenionItem";
 
+jest.mock("@dashboard/hooks/useNavigator", () => ({
+  __esModule: true,
+  default: jest.fn(() => jest.fn()),
+}));
+
+jest.mock("@dashboard/auth", () => ({
+  useUser: jest.fn(() => ({
+    user: {
+      permissions: [],
+    },
+  })),
+}));
+
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
