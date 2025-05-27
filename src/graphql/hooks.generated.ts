@@ -4152,11 +4152,11 @@ export const AppUpdatePermissionsDocument = gql`
       }
     }
     errors {
-      message
+      ...AppError
     }
   }
 }
-    `;
+    ${AppErrorFragmentDoc}`;
 export type AppUpdatePermissionsMutationFn = Apollo.MutationFunction<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>;
 
 /**

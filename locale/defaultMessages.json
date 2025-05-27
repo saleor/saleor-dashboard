@@ -117,6 +117,9 @@
   "+bhokL": {
     "string": "Search discounts..."
   },
+  "+djx5u": {
+    "string": "You can't give this extension permissions you don't have."
+  },
   "+do3gl": {
     "context": "input helper text",
     "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
@@ -825,6 +828,9 @@
   "2pw5dQ": {
     "context": "payment status",
     "string": "Fully paid"
+  },
+  "2qfU+C": {
+    "string": "The extension identifier is already in use."
   },
   "2rJcFa": {
     "context": "delete app",
@@ -2168,6 +2174,10 @@
     "context": "Dry run events unavailable",
     "string": "The following events from provided query are currently not available for dry run:"
   },
+  "BYfAwE": {
+    "context": "page title - installing app with manifestUrl provided",
+    "string": "Add extension"
+  },
   "BZ7BkQ": {
     "context": "capture payment, button",
     "string": "Capture"
@@ -2388,6 +2398,10 @@
   "CrY98m": {
     "context": "button, marks order as paid (legacy payments)",
     "string": "Mark order as paid"
+  },
+  "Cxkzpg": {
+    "context": "page title - installing app with manifestUrl form",
+    "string": "Add extension from manifest"
   },
   "D/+84n": {
     "context": "snackbar text",
@@ -2864,6 +2878,10 @@
   "Fl3ORD": {
     "context": "order history message",
     "string": "Oversold {quantity} items"
+  },
+  "FmeBxD": {
+    "context": "custom app tokens list - missing token name",
+    "string": "(unknown)"
   },
   "FmwGVb": {
     "context": "transaction refund tiles charged label",
@@ -3598,6 +3616,9 @@
   "JiRKgJ": {
     "context": "dialog search placeholder",
     "string": "Search by collection name, etc..."
+  },
+  "JiUAB0": {
+    "string": "A required field is missing in the request."
   },
   "Jj0de8": {
     "context": "voucher status",
@@ -4429,6 +4450,9 @@
   "PFXGaR": {
     "string": "Shipping Zones"
   },
+  "PFmBz7": {
+    "string": "You can't manage this extension because it has more permissions than you."
+  },
   "PFnobO": {
     "string": "greater"
   },
@@ -4769,10 +4793,6 @@
     "context": "radio button label",
     "string": "Refund with manual amount"
   },
-  "RKxceS": {
-    "context": "page title - installing app with manifestUrl form",
-    "string": "Add Custom Extension from manifest"
-  },
   "RLBLPQ": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
@@ -4854,10 +4874,6 @@
     "context": "button",
     "string": "Continue"
   },
-  "RkhreQ": {
-    "context": "page title - creating custom app",
-    "string": "Add Custom Extension manually"
-  },
   "RlbhwF": {
     "context": "product no longer exists error description",
     "string": "This product is no longer in database so it can’t be replaced, nor returned"
@@ -4912,6 +4928,9 @@
   "S5/nSq": {
     "context": "grant refund table, column header",
     "string": "Quantity"
+  },
+  "S6W6FM": {
+    "string": "You are not allowed to perform this action."
   },
   "S7Rwl0": {
     "context": "stock exceeded action question label",
@@ -5912,6 +5931,9 @@
   "Xz/sDf": {
     "context": "Dry run items list item",
     "string": "Item:"
+  },
+  "Y/SXVb": {
+    "string": "The operation cannot be performed right now. This might be due to a pending installation with the same identifier."
   },
   "Y0NwOq": {
     "context": "dialog subtitle",
@@ -6942,6 +6964,10 @@
   "eaoi2W": {
     "context": "tab name",
     "string": "All warehouses"
+  },
+  "ecM5eL": {
+    "context": "page title - creating custom app",
+    "string": "Add extension manually"
   },
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
@@ -9205,6 +9231,9 @@
     "context": "tab name",
     "string": "All products"
   },
+  "tI7/Ib": {
+    "string": "Extension requested permissions that are not available in Saleor."
+  },
   "tIc2/h": {
     "context": "input helper text, search attributes",
     "string": "Search by attribute name"
@@ -9477,6 +9506,9 @@
   "utaSh3": {
     "context": "staff member's account",
     "string": "Status"
+  },
+  "uwO3oC": {
+    "string": "An unexpected error occurred while saving the extension."
   },
   "uwk5e9": {
     "string": "Delete products"
@@ -9764,10 +9796,6 @@
   "wRvjoc": {
     "context": "app created at label",
     "string": "Created at"
-  },
-  "wSS9YI": {
-    "context": "page title - installing app with manifestUrl provided",
-    "string": "Add Extension"
   },
   "wTHjt3": {
     "string": "Search Orders..."

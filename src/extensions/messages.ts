@@ -26,20 +26,20 @@ export const headerTitles = defineMessages({
     id: "VQvNZx",
   },
   addCustomExtension: {
-    defaultMessage: "Add Custom Extension manually",
+    defaultMessage: "Add extension manually",
     description: "page title - creating custom app",
 
-    id: "RkhreQ",
+    id: "ecM5eL",
   },
   addCustomExtensionManifest: {
-    defaultMessage: "Add Custom Extension from manifest",
+    defaultMessage: "Add extension from manifest",
     description: "page title - installing app with manifestUrl form",
-    id: "RKxceS",
+    id: "Cxkzpg",
   },
   addCustomExtensionManifestUrl: {
-    defaultMessage: "Add Extension",
+    defaultMessage: "Add extension",
     description: "page title - installing app with manifestUrl provided",
-    id: "wSS9YI",
+    id: "BYfAwE",
   },
   extensions: {
     defaultMessage: "Extensions",
@@ -447,6 +447,43 @@ export const appManifestErrorMessages = defineMessages({
     id: "fWaj1M",
     defaultMessage:
       "The Saleor version your extension is trying to use is newer than your current Saleor version. {docsLink} ({errorCode})",
+  },
+});
+
+/** Messages when saving local apps (aka custom apps) */
+export const localAppErrorMessages = defineMessages({
+  genericError: {
+    id: "uwO3oC",
+    defaultMessage: "An unexpected error occurred while saving the extension.",
+  },
+  invalidPermission: {
+    id: "tI7/Ib",
+    defaultMessage: "Extension requested permissions that are not available in Saleor.",
+  },
+  outOfScopeApp: {
+    id: "PFmBz7",
+    defaultMessage: "You can't manage this extension because it has more permissions than you.",
+  },
+  outOfScopePermission: {
+    id: "+djx5u",
+    defaultMessage: "You can't give this extension permissions you don't have.",
+  },
+  unique: {
+    id: "2qfU+C",
+    defaultMessage: "The extension identifier is already in use.",
+  },
+  forbidden: {
+    id: "S6W6FM",
+    defaultMessage: "You are not allowed to perform this action.",
+  },
+  invalidStatus: {
+    id: "Y/SXVb",
+    defaultMessage:
+      "The operation cannot be performed right now. This might be due to a pending installation with the same identifier.",
+  },
+  required: {
+    id: "JiUAB0",
+    defaultMessage: "A required field is missing in the request.",
   },
 });
 

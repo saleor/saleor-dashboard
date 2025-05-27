@@ -168,7 +168,7 @@ export const appUpdatePermissions = gql`
         }
       }
       errors {
-        message
+        ...AppError
       }
     }
   }

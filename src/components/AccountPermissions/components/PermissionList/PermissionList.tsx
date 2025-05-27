@@ -1,5 +1,5 @@
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
-import { Box, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -12,6 +12,7 @@ interface PermissionListProps {
   selectedPermissions: string[];
   disabled?: boolean;
   onPermissionChange: (key: string, value: boolean) => void;
+  disabledPermissionTooltip: string | undefined;
 }
 
 /** Utility to render a string with <wbr /> after each underscore, for proper line breaks
@@ -37,6 +38,7 @@ export const PermissionList = ({
   onPermissionChange,
   selectedPermissions,
   disabled,
+  disabledPermissionTooltip,
 }: PermissionListProps) => {
   const intl = useIntl();
 
@@ -69,24 +71,32 @@ export const PermissionList = ({
               gap={1}
               data-test-id="permission-group-list-item"
             >
-              <Checkbox
-                data-test-id={`permission-checkbox-${permission.code}`}
-                disabled={disabled || permission.disabled}
-                checked={hasPermissionSelected(selectedPermissions, permission.code)}
-                onCheckedChange={value => {
-                  onPermissionChange(permission.code, !value);
-                }}
-                alignItems="flex-start"
-              >
-                <Box display="flex" flexDirection="column" __marginTop="-4px">
-                  <Text wordBreak="break-word">{permission.name.replace(".", "")}</Text>
-                  <Text size={2} color="default2" wordBreak="break-word">
-                    {permission.lastSource
-                      ? intl.formatMessage(messages.permissionListItemDescription)
-                      : renderWithWbrAfterUnderscore(permission.code)}
-                  </Text>
-                </Box>
-              </Checkbox>
+              <Tooltip open={disabled && disabledPermissionTooltip ? undefined : false}>
+                <Tooltip.Trigger>
+                  <Checkbox
+                    data-test-id={`permission-checkbox-${permission.code}`}
+                    disabled={disabled || permission.disabled}
+                    checked={hasPermissionSelected(selectedPermissions, permission.code)}
+                    onCheckedChange={value => {
+                      onPermissionChange(permission.code, !value);
+                    }}
+                    alignItems="flex-start"
+                  >
+                    <Box display="flex" flexDirection="column" __marginTop="-4px">
+                      <Text wordBreak="break-word">{permission.name.replace(".", "")}</Text>
+                      <Text size={2} color="default2" wordBreak="break-word">
+                        {permission.lastSource
+                          ? intl.formatMessage(messages.permissionListItemDescription)
+                          : renderWithWbrAfterUnderscore(permission.code)}
+                      </Text>
+                    </Box>
+                  </Checkbox>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  <Tooltip.Arrow></Tooltip.Arrow>
+                  {disabledPermissionTooltip}
+                </Tooltip.Content>
+              </Tooltip>
             </Box>
           ))}
         </Box>
