@@ -450,28 +450,27 @@ export const appManifestErrorMessages = defineMessages({
   },
 });
 
+/** Messages when saving local apps (aka custom apps) */
 export const localAppErrorMessages = defineMessages({
   genericError: {
-    id: "/JCVue",
-    defaultMessage: "An unexpected error occurred while saving the app.",
+    id: "uwO3oC",
+    defaultMessage: "An unexpected error occurred while saving the extension.",
   },
   invalidPermission: {
-    id: "8N20oq",
-    defaultMessage: "The app requests an invalid or unrecognized permission: {perm}.",
+    id: "tI7/Ib",
+    defaultMessage: "Extension requested permissions that are not available in Saleor.",
   },
   outOfScopeApp: {
-    id: "8tKQGI",
-    defaultMessage:
-      "You can't manage this app because it has more permissions than you. Please ask an admin for help.",
+    id: "PFmBz7",
+    defaultMessage: "You can't manage this extension because it has more permissions than you.",
   },
   outOfScopePermission: {
-    id: "6Yhjz7",
-    defaultMessage:
-      "You can't give this app permissions you don't have. Please ask an admin if you need more permissions.",
+    id: "+djx5u",
+    defaultMessage: "You can't give this extension permissions you don't have.",
   },
   unique: {
-    id: "U7TW7E",
-    defaultMessage: "The app identifier is already in use.",
+    id: "2qfU+C",
+    defaultMessage: "The extension identifier is already in use.",
   },
   forbidden: {
     id: "S6W6FM",
@@ -483,8 +482,8 @@ export const localAppErrorMessages = defineMessages({
       "The operation cannot be performed right now. This might be due to a pending installation with the same identifier.",
   },
   required: {
-    id: "GirCE+",
-    defaultMessage: "A required field is missing in the app configuration.",
+    id: "JiUAB0",
+    defaultMessage: "A required field is missing in the request.",
   },
 });
 

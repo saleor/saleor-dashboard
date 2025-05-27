@@ -117,6 +117,9 @@
   "+bhokL": {
     "string": "Search discounts..."
   },
+  "+djx5u": {
+    "string": "You can't give this extension permissions you don't have."
+  },
   "+do3gl": {
     "context": "input helper text",
     "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
@@ -263,9 +266,6 @@
   "/ILyIf": {
     "context": "tax classes menu header",
     "string": "Tax class label"
-  },
-  "/JCVue": {
-    "string": "An unexpected error occurred while saving the app."
   },
   "/KWNJW": {
     "context": "order discount was updated event title",
@@ -828,6 +828,9 @@
   "2pw5dQ": {
     "context": "payment status",
     "string": "Fully paid"
+  },
+  "2qfU+C": {
+    "string": "The extension identifier is already in use."
   },
   "2rJcFa": {
     "context": "delete app",
@@ -1397,9 +1400,6 @@
     "context": "order history message",
     "string": "Note was added to the order"
   },
-  "6Yhjz7": {
-    "string": "You can't give this app permissions you don't have. Please ask an admin if you need more permissions."
-  },
   "6aBkJm": {
     "context": "section header",
     "string": "Authorization"
@@ -1671,9 +1671,6 @@
     "context": "btn label",
     "string": "Go to Extensions"
   },
-  "8N20oq": {
-    "string": "The app requests an invalid or unrecognized permission: {perm}."
-  },
   "8NBwu7": {
     "context": "PageTypeDeleteWarningDialog with items multiple description",
     "string": "You are about to delete multiple model types. Some of them are assigned to models. Deleting those model types will also delete those models"
@@ -1710,9 +1707,6 @@
   "8qL/tV": {
     "context": "CannotDefineChannelsAvailabilityCard subtitle",
     "string": "You will be able to define availability of product after creating variants."
-  },
-  "8tKQGI": {
-    "string": "You can't manage this app because it has more permissions than you. Please ask an admin for help."
   },
   "8u7els": {
     "context": "channel config plugin status popup title",
@@ -3108,9 +3102,6 @@
     "context": "success gift card disable message",
     "string": "Successfully disabled gift card"
   },
-  "GirCE+": {
-    "string": "A required field is missing in the app configuration."
-  },
   "GjH9uy": {
     "context": "header",
     "string": "Create New App"
@@ -3625,6 +3616,9 @@
   "JiRKgJ": {
     "context": "dialog search placeholder",
     "string": "Search by collection name, etc..."
+  },
+  "JiUAB0": {
+    "string": "A required field is missing in the request."
   },
   "Jj0de8": {
     "context": "voucher status",
@@ -4456,6 +4450,9 @@
   "PFXGaR": {
     "string": "Shipping Zones"
   },
+  "PFmBz7": {
+    "string": "You can't manage this extension because it has more permissions than you."
+  },
   "PFnobO": {
     "string": "greater"
   },
@@ -5262,9 +5259,6 @@
   "U5aVd8": {
     "context": "product",
     "string": "Shippable"
-  },
-  "U7TW7E": {
-    "string": "The app identifier is already in use."
   },
   "U86VKF": {
     "context": "number of structures",
@@ -9237,6 +9231,9 @@
     "context": "tab name",
     "string": "All products"
   },
+  "tI7/Ib": {
+    "string": "Extension requested permissions that are not available in Saleor."
+  },
   "tIc2/h": {
     "context": "input helper text, search attributes",
     "string": "Search by attribute name"
@@ -9509,6 +9506,9 @@
   "utaSh3": {
     "context": "staff member's account",
     "string": "Status"
+  },
+  "uwO3oC": {
+    "string": "An unexpected error occurred while saving the extension."
   },
   "uwk5e9": {
     "string": "Delete products"
