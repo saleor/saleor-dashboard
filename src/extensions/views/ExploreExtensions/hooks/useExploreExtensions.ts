@@ -5,7 +5,7 @@ import { useFlag } from "@dashboard/featureFlags";
 import {
   InstalledAppFragment,
   PermissionEnum,
-  PluginsQuery,
+  PluginBaseFragment,
   useInstalledAppsQuery,
   usePluginsQuery,
 } from "@dashboard/graphql";
@@ -15,17 +15,17 @@ import { useAppStoreExtensions } from "./useAppStoreExtensions";
 
 const byAppType = (extension: ExtensionData) => extension.type === "APP";
 
-const isPluginEnabled = (plugin: PluginsQuery["plugins"]["edges"][0] | undefined) => {
+const isPluginEnabled = (plugin: PluginBaseFragment | undefined) => {
   if (!plugin) {
     return false;
   }
 
-  if (plugin?.node?.globalConfiguration) {
-    return plugin.node.globalConfiguration.active;
+  if (plugin?.globalConfiguration) {
+    return plugin.globalConfiguration.active;
   }
 
-  if (plugin?.node?.channelConfigurations) {
-    return plugin.node.channelConfigurations?.some(config => config.active);
+  if (plugin?.channelConfigurations) {
+    return plugin.channelConfigurations?.some(config => config.active);
   }
 
   return false;
@@ -34,14 +34,14 @@ const isPluginEnabled = (plugin: PluginsQuery["plugins"]["edges"][0] | undefined
 const toExtension = (
   extension: ExtensionData,
   installedApps: InstalledAppFragment[],
-  allPlugins: PluginsQuery["plugins"]["edges"] | undefined,
+  allPlugins: PluginBaseFragment[] | undefined,
 ) => {
   // Implement checking is plugin installed in phase 3
   if (extension.type === "PLUGIN") {
     return {
       ...extension,
       installed: allPlugins
-        ? isPluginEnabled(allPlugins?.find(plugin => plugin.node.id === extension.id))
+        ? isPluginEnabled(allPlugins?.find(plugin => plugin.id === extension.id))
         : false,
     };
   }
@@ -70,7 +70,7 @@ const getFilteredExtensions = ({
   extensions: ExtensionData[];
   installedApps: InstalledAppFragment[];
   showAllExtensions: boolean;
-  allPlugins: PluginsQuery["plugins"]["edges"] | undefined;
+  allPlugins: PluginBaseFragment[] | undefined;
 }) => {
   const filteredExtensions = showAllExtensions ? extensions : extensions.filter(byAppType);
 
@@ -90,7 +90,7 @@ export const useExploreExtensions = () => {
     ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
   );
 
-  const { data: plugins } = usePluginsQuery({
+  const { data: pluginsQuery } = usePluginsQuery({
     displayLoader: true,
     variables: {
       first: 100,
@@ -101,6 +101,7 @@ export const useExploreExtensions = () => {
   const { enabled: showAllExtensions } = useFlag("extensions_dev");
 
   const installedApps = mapEdgesToItems(installedAppsData?.apps) ?? [];
+  const plugins = mapEdgesToItems(pluginsQuery?.plugins) ?? [];
 
   const extensionsData = Object.fromEntries(
     Object.entries(data).map(([group, extensions]) => [
@@ -111,7 +112,7 @@ export const useExploreExtensions = () => {
           extensions: extensions.items,
           installedApps,
           showAllExtensions,
-          allPlugins: plugins?.plugins?.edges || [],
+          allPlugins: plugins,
         }),
       },
     ]),
