@@ -8,7 +8,7 @@ import {
 import errorTracker from "@dashboard/services/errorTracking";
 import { IntlShape } from "react-intl";
 
-import { appManifestErrorMessages } from "./messages";
+import { appManifestErrorMessages, localAppErrorMessages } from "./messages";
 
 export const getAppErrorMessageDescriptor = (code: AppErrorCode) => {
   switch (code) {
@@ -67,6 +67,38 @@ export function getAppInstallErrorMessage(
       errorCode,
       docsLink: "",
     });
+  }
+
+  return undefined;
+}
+
+function getCustomAppErrorMessageDescriptor(code: AppErrorCode) {
+  switch (code) {
+    case AppErrorCode.INVALID_PERMISSION:
+      return localAppErrorMessages.invalidPermission;
+    case AppErrorCode.OUT_OF_SCOPE_APP:
+      return localAppErrorMessages.outOfScopeApp;
+    case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
+      return localAppErrorMessages.outOfScopePermission;
+    case AppErrorCode.UNIQUE:
+      return localAppErrorMessages.unique;
+    case AppErrorCode.FORBIDDEN:
+      return localAppErrorMessages.forbidden;
+    case AppErrorCode.INVALID_STATUS:
+      return localAppErrorMessages.invalidStatus;
+    case AppErrorCode.REQUIRED:
+      return localAppErrorMessages.required;
+    default:
+      return localAppErrorMessages.genericError;
+  }
+}
+
+export function getCustomAppErrorMessage(
+  err: AppErrorFragment,
+  intl: IntlShape,
+): string | undefined {
+  if (err) {
+    return intl.formatMessage(getCustomAppErrorMessageDescriptor(err.code));
   }
 
   return undefined;

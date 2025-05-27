@@ -1,5 +1,6 @@
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { getCustomAppErrorMessage } from "@dashboard/extensions/utils";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -25,7 +26,7 @@ export const AppPermissionsDialog = ({
   appId,
 }: AppPermissionsDialogProps) => {
   const { availablePermissions } = useGetAvailableAppPermissions();
-  const { formatMessage } = useIntl();
+  const intl = useIntl();
   const {
     updateSelected,
     onConfirmSelection,
@@ -46,8 +47,10 @@ export const AppPermissionsDialog = ({
     },
     onCompleted(data) {
       if (data.appUpdate?.errors.length) {
+        const error = data.appUpdate?.errors[0];
+
         onMutationError(
-          data.appUpdate?.errors[0].message ?? formatMessage(messages.fallbackErrorText),
+          getCustomAppErrorMessage(error, intl) ?? intl.formatMessage(messages.fallbackErrorText),
         );
 
         return;
@@ -56,9 +59,9 @@ export const AppPermissionsDialog = ({
       refetch().then(onClose);
       notify({
         status: "success",
-        title: formatMessage(messages.successNotificationTitle),
+        title: intl.formatMessage(messages.successNotificationTitle),
         autohide: 1000,
-        text: formatMessage(messages.successNotificationBody),
+        text: intl.formatMessage(messages.successNotificationBody),
       });
     },
   });
@@ -112,9 +115,9 @@ export const AppPermissionsDialog = ({
   return (
     <DashboardModal open={true} onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header>{formatMessage(messages.heading)}</DashboardModal.Header>
+        <DashboardModal.Header>{intl.formatMessage(messages.heading)}</DashboardModal.Header>
         <Box display={"grid"} gridAutoFlow={"row"}>
-          <Text as={"p"}>{formatMessage(messages.info)}</Text>
+          <Text as={"p"}>{intl.formatMessage(messages.info)}</Text>
           <Box
             borderRadius={2}
             marginBottom={6}
@@ -123,10 +126,10 @@ export const AppPermissionsDialog = ({
             backgroundColor="critical1Focused"
           >
             <Text marginBottom={2} as={"p"} color="warning1" size={4} fontWeight="bold">
-              {formatMessage(messages.warningHeading)}
+              {intl.formatMessage(messages.warningHeading)}
             </Text>
-            <Text as={"p"}>{formatMessage(messages.warningParagraph1)}</Text>
-            <Text as={"p"}>{formatMessage(messages.warningParagraph2)}</Text>
+            <Text as={"p"}>{intl.formatMessage(messages.warningParagraph1)}</Text>
+            <Text as={"p"}>{intl.formatMessage(messages.warningParagraph2)}</Text>
           </Box>
           {renderDialogContent()}
         </Box>

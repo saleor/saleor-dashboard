@@ -7,23 +7,31 @@ import { FormattedMessage } from "react-intl";
 
 import { previousPagePath } from "../consts";
 
-export const InstallTopNav = ({ title }: { title: string }) => {
+export const InstallTopNav = ({
+  title,
+  showDocsLink = true,
+}: {
+  title: string;
+  showDocsLink?: boolean;
+}) => {
   return (
     <TopNav
       href={previousPagePath}
       __height="auto"
       title={title}
       subtitle={
-        <FormattedMessage
-          {...messages.learnMoreSubheader}
-          values={{
-            manifestFormatLink: (
-              <ExternalLinkUnstyled href={MANIFEST_FORMAT_DOCS_URL} target="_blank">
-                <FormattedMessage {...messages.manifestFormatLink} />
-              </ExternalLinkUnstyled>
-            ),
-          }}
-        />
+        showDocsLink && (
+          <FormattedMessage
+            {...messages.learnMoreSubheader}
+            values={{
+              manifestFormatLink: (
+                <ExternalLinkUnstyled href={MANIFEST_FORMAT_DOCS_URL} target="_blank">
+                  <FormattedMessage {...messages.manifestFormatLink} />
+                </ExternalLinkUnstyled>
+              ),
+            }}
+          />
+        )
       }
     />
   );
