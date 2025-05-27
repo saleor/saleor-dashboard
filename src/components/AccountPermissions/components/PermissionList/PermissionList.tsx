@@ -12,7 +12,7 @@ interface PermissionListProps {
   selectedPermissions: string[];
   disabled?: boolean;
   onPermissionChange: (key: string, value: boolean) => void;
-  disabledPermissionTooltip: string;
+  disabledPermissionTooltip: string | undefined;
 }
 
 /** Utility to render a string with <wbr /> after each underscore, for proper line breaks
