@@ -1,10 +1,9 @@
-import { useUser } from "@dashboard/auth";
-import { hasPermission } from "@dashboard/auth/misc";
 import { messages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
+import { useUserHasPermissions } from "@dashboard/utils/permissions";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -17,8 +16,7 @@ interface PluginActionsProps {
 export const PluginActions = ({ isInstalled, id }: PluginActionsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const user = useUser();
-  const canManagePlugins = hasPermission(PermissionEnum.MANAGE_PLUGINS, user.user);
+  const canManagePlugins = useUserHasPermissions([PermissionEnum.MANAGE_PLUGINS]);
 
   const openPlugin = () => {
     navigate(ExtensionsUrls.resolveEditPluginExtensionUrl(id));

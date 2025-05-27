@@ -10,12 +10,8 @@ jest.mock("@dashboard/hooks/useNavigator", () => ({
   default: jest.fn(() => jest.fn()),
 }));
 
-jest.mock("@dashboard/auth", () => ({
-  useUser: jest.fn(() => ({
-    user: {
-      permissions: [],
-    },
-  })),
+jest.mock("@dashboard/utils/permissions", () => ({
+  useUserHasPermissions: jest.fn(() => true),
 }));
 
 jest.mock("react-intl", () => ({
