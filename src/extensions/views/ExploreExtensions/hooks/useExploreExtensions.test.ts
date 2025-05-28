@@ -1,4 +1,5 @@
-import { useInstalledAppsQuery, usePluginsQuery } from "@dashboard/graphql";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { PermissionEnum, useInstalledAppsQuery, usePluginsQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
@@ -143,6 +144,12 @@ const mockedAppStoreExtensionsWithPlugins = {
 };
 
 describe("Extension / hooks / useExploreExtensions", () => {
+  const pluginsQueryMock = usePluginsQuery as jest.Mock;
+
+  afterEach(() => {
+    pluginsQueryMock.mockClear();
+  });
+
   it("should return loading state when fetching data", () => {
     // Arrange
     (useAppStoreExtensions as jest.Mock).mockReturnValue({
@@ -340,5 +347,34 @@ describe("Extension / hooks / useExploreExtensions", () => {
       expect.objectContaining({ id: "plugin-id-3", installed: true }), // channel active
       expect.objectContaining({ id: "plugin-id-4", installed: false }), // channel inactive
     ]);
+  });
+
+  it("should not fetch plugins if user does not have MANAGE_PLUGINS permission", () => {
+    // Arrange
+    (useUserPermissions as jest.Mock).mockReturnValue([
+      { __typename: "UserPermission", code: PermissionEnum.MANAGE_USERS, name: "Manage users" },
+    ]);
+    (useAppStoreExtensions as jest.Mock).mockReturnValue({
+      data: mockedAppStoreExtensionsWithPlugins,
+      loading: false,
+      error: null,
+    });
+    (useInstalledAppsQuery as jest.Mock).mockReturnValue({
+      data: {
+        apps: {
+          edges: [],
+        },
+      },
+    });
+
+    // Act
+    renderHook(() => useExploreExtensions());
+
+    // Assert
+    expect(pluginsQueryMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        skip: true,
+      }),
+    );
   });
 });
