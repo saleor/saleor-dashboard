@@ -115,6 +115,8 @@ jobs:
           DASHBOARD_VERSION: ${{ needs.initialize-cloud.outputs.RUN_SLUG }}
           BRANCH_NAME: ${{ github.ref}}
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
+          BUILD_NUMBER: ${{ github.run_id }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   tests-complete:
     if: "!cancelled()"
