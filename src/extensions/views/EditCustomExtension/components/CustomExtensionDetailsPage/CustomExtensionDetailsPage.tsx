@@ -8,6 +8,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { appMessages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import {
   AppErrorFragment,
   AppUpdateMutation,
@@ -17,7 +18,6 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
-import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -43,6 +43,7 @@ export interface CustomExtensionDetailsPageProps {
   app: AppUpdateMutation["appUpdate"]["app"] | null | undefined;
   token: string;
   hasManagedAppsPermission: boolean;
+  isLoading: boolean;
   onApiUrlClick: () => void;
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
@@ -73,13 +74,14 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     onWebhookRemove,
     onAppActivateOpen,
     onAppDeactivateOpen,
+    isLoading,
   } = props;
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
   const webhooks = app?.webhooks || [];
   const formErrors = getFormErrors(["permissions"], errors || []);
-  const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
+  const permissionsError = getAppInstallErrorMessage(formErrors.permissions, intl);
 
   // Ensure all values have safe fallbacks
   const initialForm: CustomExtensionDetailsPageFormData = {
@@ -142,7 +144,8 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
             <CardSpacer />
 
             <CustomExtensionTokens
-              tokens={app?.tokens || []}
+              tokens={app?.tokens}
+              isLoading={isLoading}
               onCreate={onTokenCreate}
               onDelete={onTokenDelete}
               hasManagedAppsPermission={hasManagedAppsPermission}
@@ -158,37 +161,31 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
             <CardSpacer />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
-            <Tooltip>
-              <Tooltip.Trigger>
-                <div>
-                  <AccountPermissions
-                    data={data}
-                    errorMessage={permissionsError}
-                    disabled={disabled || !hasManagedAppsPermission}
-                    permissions={permissions || []}
-                    permissionsExceeded={false}
-                    onChange={change}
-                    fullAccessLabel={intl.formatMessage({
-                      id: "D4nzdD",
-                      defaultMessage: "Grant this app full access to the store",
-                      description: "checkbox label",
-                    })}
-                    description={intl.formatMessage({
-                      id: "flP8Hj",
-                      defaultMessage:
-                        "Expand or restrict app permissions to access certain part of Saleor system.",
-                      description: "card description",
-                    })}
-                  />
-                </div>
-              </Tooltip.Trigger>
-              {!hasManagedAppsPermission && (
-                <Tooltip.Content>
-                  <Tooltip.Arrow />
-                  {appMessages.missingManageAppsPermission}
-                </Tooltip.Content>
-              )}
-            </Tooltip>
+            <AccountPermissions
+              data={data}
+              errorMessage={permissionsError}
+              disabled={disabled || !hasManagedAppsPermission}
+              permissions={permissions || []}
+              // TODO: Disable permissions when user has insufficient
+              // or show message
+              permissionsExceeded={false}
+              disabledPermissionsTooltip={
+                !hasManagedAppsPermission &&
+                intl.formatMessage(appMessages.missingManageAppsPermission)
+              }
+              onChange={change}
+              fullAccessLabel={intl.formatMessage({
+                id: "D4nzdD",
+                defaultMessage: "Grant this app full access to the store",
+                description: "checkbox label",
+              })}
+              description={intl.formatMessage({
+                id: "flP8Hj",
+                defaultMessage:
+                  "Expand or restrict app permissions to access certain part of Saleor system.",
+                description: "card description",
+              })}
+            />
           </DetailPageLayout.RightSidebar>
           <Savebar>
             <Savebar.Spacer />
@@ -208,7 +205,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
               {!hasManagedAppsPermission && (
                 <Tooltip.Content>
                   <Tooltip.Arrow />
-                  {appMessages.missingManageAppsPermission}
+                  <FormattedMessage {...appMessages.missingManageAppsPermission} />
                 </Tooltip.Content>
               )}
             </Tooltip>

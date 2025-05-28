@@ -5,7 +5,7 @@ import { getApiUrl } from "@dashboard/config";
 import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
 import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
 import { appMessages } from "@dashboard/extensions/messages";
-import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
+import { getAppInstallErrorMessage, getCustomAppErrorMessage } from "@dashboard/extensions/utils";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,
@@ -24,7 +24,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
+import { extractMutationErrors, getStringOrPlaceholder, parseLogMessage } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -139,6 +139,18 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
+    } else {
+      const error = data?.appUpdate?.errors[0];
+
+      notify({
+        status: "error",
+        text: getCustomAppErrorMessage(error, intl),
+        apiMessage: parseLogMessage({
+          intl,
+          code: error.code,
+          field: error.field,
+        }),
+      });
     }
   };
   const customApp = data?.app;
@@ -159,6 +171,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
   };
   const [updateApp, updateAppOpts] = useAppUpdateMutation({
     onCompleted: onAppUpdate,
+    disableErrorHandling: true,
   });
   const [createToken, createTokenOpts] = useAppTokenCreateMutation({
     onCompleted: onTokenCreate,
@@ -237,6 +250,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         app={data?.app}
         saveButtonBarState={updateAppOpts.status}
         hasManagedAppsPermission={hasManagedAppsPermission}
+        isLoading={loading}
       />
       <TokenCreateDialog
         confirmButtonState={createTokenOpts.status}

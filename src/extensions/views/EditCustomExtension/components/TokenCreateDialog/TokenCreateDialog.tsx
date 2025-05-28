@@ -2,7 +2,6 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { getApiUrl } from "@dashboard/config";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
@@ -48,10 +47,6 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
   useModalDialogOpen(open, {
     onClose: () => setStep("form"),
   });
-
-  const openPlayground = () => {
-    window.open(getApiUrl(), "_blank");
-  };
 
   return (
     <DashboardModal onChange={onClose} open={open}>
@@ -144,13 +139,6 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                           description="button"
                         />
                       </ConfirmButton>
-                      <Button variant="secondary" onClick={openPlayground}>
-                        <FormattedMessage
-                          id="0KmZCN"
-                          defaultMessage="Open playground"
-                          description="button"
-                        />
-                      </Button>
                     </Box>
                   </Box>
                 </>
