@@ -1,14 +1,38 @@
-import { AppErrorCode } from "@dashboard/graphql";
-import { EXTENSION_MANIFEST_DOCS, EXTENSION_MANIFEST_DOCS_LINKS } from "@dashboard/links";
 import { defineMessages } from "react-intl";
 
-export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): string => {
-  if (!errorCode) {
-    return EXTENSION_MANIFEST_DOCS;
-  }
+export const headerTitles = defineMessages({
+  exploreExtensions: {
+    defaultMessage: "Explore",
+    description: "page title",
+    id: "32Capp",
+  },
+  installedExtensions: {
+    defaultMessage: "All installed",
+    description: "page title",
+    id: "VQvNZx",
+  },
+  addCustomExtension: {
+    defaultMessage: "Add extension manually",
+    description: "page title - creating custom app",
 
-  return EXTENSION_MANIFEST_DOCS_LINKS[errorCode] || "";
-};
+    id: "ecM5eL",
+  },
+  addCustomExtensionManifest: {
+    defaultMessage: "Add extension from manifest",
+    description: "page title - installing app with manifestUrl form",
+    id: "Cxkzpg",
+  },
+  addCustomExtensionManifestUrl: {
+    defaultMessage: "Add extension",
+    description: "page title - installing app with manifestUrl provided",
+    id: "BYfAwE",
+  },
+  extensions: {
+    defaultMessage: "Extensions",
+    description: "page title - extensions",
+    id: "WD+kjr",
+  },
+});
 
 export const buttonLabels = defineMessages({
   requestExtension: {
