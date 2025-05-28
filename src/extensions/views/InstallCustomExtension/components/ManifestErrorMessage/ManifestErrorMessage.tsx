@@ -1,12 +1,12 @@
 import {
   appManifestErrorMessages,
-  getSpecificManifestErrorDocLink,
   messages as extensionMessages,
 } from "@dashboard/extensions/messages";
 import { getAppErrorMessageDescriptor } from "@dashboard/extensions/utils";
 import { AppErrorCode } from "@dashboard/graphql";
 import { ErrorCircle } from "@dashboard/icons/ErrorCircle";
 import { commonMessages } from "@dashboard/intl";
+import { getSpecificManifestErrorDocLink } from "@dashboard/links";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -36,28 +36,18 @@ const getFieldErrorMessage = (error: FieldError, intl: IntlShape): string | Reac
 
     if (learnMoreLink) {
       const learnMoreLinkComponent = (
-        <>
-          {" "}
-          <FormattedMessage
-            {...extensionMessages.learnMoreSubheader}
-            values={{
-              manifestFormatLink: (
-                <Text
-                  as="a"
-                  href={learnMoreLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  color="default2"
-                  textDecoration="underline"
-                  size={2}
-                  display="inline-block"
-                >
-                  <FormattedMessage {...extensionMessages.manifestFormatLink} />
-                </Text>
-              ),
-            }}
-          />
-        </>
+        <Text
+          as="a"
+          href={learnMoreLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          color="default2"
+          textDecoration="underline"
+          size={2}
+          display="inline-block"
+        >
+          <FormattedMessage {...extensionMessages.learnMoreError} />
+        </Text>
       );
 
       return intl.formatMessage(messageDescriptor, {

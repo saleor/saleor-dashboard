@@ -1,3 +1,5 @@
+import { AppErrorCode } from "./graphql";
+
 export const TECHNICAL_HELP_CTA_URL =
   "https://www.getclockwise.com/c/rian-dillon-saleor-io/short-call-with-saleor";
 
@@ -26,3 +28,31 @@ export const CUSTOM_EXTENSIONS_DOCS_URL =
   "https://docs.saleor.io/developer/extending/webhooks/creating";
 export const MANIFEST_FORMAT_DOCS_URL =
   "https://docs.saleor.io/developer/extending/apps/architecture/manifest";
+export const EXTENSION_MANIFEST_DOCS =
+  "https://docs.saleor.io/developer/extending/apps/developing-apps/app-error-codes";
+
+export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): string => {
+  if (!errorCode) {
+    return EXTENSION_MANIFEST_DOCS;
+  }
+
+  const codeToLinkMap: Record<AppErrorCode, string> = {
+    [AppErrorCode.INVALID_URL_FORMAT]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_url_format`,
+    [AppErrorCode.INVALID_PERMISSION]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_permission`,
+    [AppErrorCode.OUT_OF_SCOPE_PERMISSION]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeout_of_scope_permission`,
+    [AppErrorCode.MANIFEST_URL_CANT_CONNECT]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodemanifest_url_cant_connect`,
+    [AppErrorCode.INVALID_MANIFEST_FORMAT]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_manifest_format`,
+    [AppErrorCode.REQUIRED]: `${EXTENSION_MANIFEST_DOCS}#apperrorcoderequired`,
+    [AppErrorCode.UNIQUE]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeunique`,
+    [AppErrorCode.UNSUPPORTED_SALEOR_VERSION]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeunsupported_saleor_version`,
+    [AppErrorCode.INVALID_CUSTOM_HEADERS]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_custom_headers`,
+    [AppErrorCode.GRAPHQL_ERROR]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodegraphql_error`,
+    [AppErrorCode.INVALID]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid`,
+    [AppErrorCode.INVALID_STATUS]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_status`,
+    [AppErrorCode.NOT_FOUND]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodenot_found`,
+    [AppErrorCode.FORBIDDEN]: EXTENSION_MANIFEST_DOCS, // No docs section
+    [AppErrorCode.OUT_OF_SCOPE_APP]: EXTENSION_MANIFEST_DOCS, // No docs sect
+  };
+
+  return codeToLinkMap[errorCode] || "";
+};
