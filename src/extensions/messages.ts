@@ -1,73 +1,14 @@
 import { AppErrorCode } from "@dashboard/graphql";
+import { EXTENSION_MANIFEST_DOCS, EXTENSION_MANIFEST_DOCS_LINKS } from "@dashboard/links";
 import { defineMessages } from "react-intl";
 
 export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): string => {
-  const BASE_URL =
-    "https://docs.saleor.io/developer/extending/apps/developing-apps/app-error-codes";
-
   if (!errorCode) {
-    return BASE_URL;
+    return EXTENSION_MANIFEST_DOCS;
   }
 
-  const hashMap: Record<AppErrorCode, string> = {
-    [AppErrorCode.INVALID_URL_FORMAT]: "#apperrorcodeinvalid_url_format",
-    [AppErrorCode.INVALID_PERMISSION]: "#apperrorcodeinvalid_permission",
-    [AppErrorCode.OUT_OF_SCOPE_PERMISSION]: "#apperrorcodeout_of_scope_permission",
-    [AppErrorCode.MANIFEST_URL_CANT_CONNECT]: "#apperrorcodemanifest_url_cant_connect",
-    [AppErrorCode.INVALID_MANIFEST_FORMAT]: "#apperrorcodeinvalid_manifest_format",
-    [AppErrorCode.REQUIRED]: "#apperrorcoderequired",
-    [AppErrorCode.UNIQUE]: "#apperrorcodeunique",
-    [AppErrorCode.UNSUPPORTED_SALEOR_VERSION]: "#apperrorcodeunsupported_saleor_version",
-    [AppErrorCode.INVALID_CUSTOM_HEADERS]: "#apperrorcodeinvalid_custom_headers",
-    [AppErrorCode.GRAPHQL_ERROR]: "#apperrorcodegraphql_error",
-    [AppErrorCode.INVALID]: "#apperrorcodeinvalid",
-    [AppErrorCode.INVALID_STATUS]: "#apperrorcodeinvalid_status",
-    [AppErrorCode.NOT_FOUND]: "#apperrorcodenot_found",
-    [AppErrorCode.FORBIDDEN]: "", // No section for this error, no link
-    [AppErrorCode.OUT_OF_SCOPE_APP]: "", // No section for this error, no link
-  };
-  const hash = hashMap[errorCode];
-
-  if (!hash) {
-    return "";
-  }
-
-  return BASE_URL + hash;
+  return EXTENSION_MANIFEST_DOCS_LINKS[errorCode] || "";
 };
-
-export const headerTitles = defineMessages({
-  exploreExtensions: {
-    defaultMessage: "Explore",
-    description: "page title",
-    id: "32Capp",
-  },
-  installedExtensions: {
-    defaultMessage: "All installed",
-    description: "page title",
-    id: "VQvNZx",
-  },
-  addCustomExtension: {
-    defaultMessage: "Add extension manually",
-    description: "page title - creating custom app",
-
-    id: "ecM5eL",
-  },
-  addCustomExtensionManifest: {
-    defaultMessage: "Add extension from manifest",
-    description: "page title - installing app with manifestUrl form",
-    id: "Cxkzpg",
-  },
-  addCustomExtensionManifestUrl: {
-    defaultMessage: "Add extension",
-    description: "page title - installing app with manifestUrl provided",
-    id: "BYfAwE",
-  },
-  extensions: {
-    defaultMessage: "Extensions",
-    description: "page title - extensions",
-    id: "WD+kjr",
-  },
-});
 
 export const buttonLabels = defineMessages({
   requestExtension: {
