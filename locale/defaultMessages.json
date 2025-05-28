@@ -1905,6 +1905,10 @@
     "context": "no products placeholder",
     "string": "No products are available matching query in the channel assigned to this order."
   },
+  "9pGRfy": {
+    "context": "Add custom extension error link to Saleor Docs",
+    "string": "Learn more about this error"
+  },
   "9pLPLn": {
     "context": "refund amounts were unsettled",
     "string": "Unsettled"
