@@ -14,10 +14,26 @@ jest.mock("@dashboard/graphql", () => ({
       },
     },
   })),
+  usePluginsQuery: jest.fn(() => ({
+    data: {
+      plugins: {
+        edges: [],
+      },
+    },
+  })),
 }));
+
+jest.mock("@dashboard/auth/hooks/useUserPermissions");
 jest.mock("@dashboard/featureFlags", () => ({
   ...(jest.requireActual("@dashboard/featureFlags") as object),
   useFlag: jest.fn(() => ({ enabled: true })),
+}));
+
+jest.mock("react-intl", () => ({
+  useIntl: jest.fn(() => ({
+    formatMessage: jest.fn(x => x.defaultMessage),
+  })),
+  defineMessages: (x: unknown) => x,
 }));
 
 const mockedAppStoreExtensions = {
