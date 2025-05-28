@@ -1,19 +1,5 @@
 import { defineMessages } from "react-intl";
 
-const DOCS_MANIFEST_COMMON_ERRORS_URL =
-  "https://docs.saleor.io/docs/next/developer/extending/apps/manifest";
-
-// Placeholder for specific error documentation links
-// For now, all errors point to the same general manifest errors page.
-// TODO: Update with specific URLs once available.
-export const getSpecificManifestErrorDocLink = (_errorCode?: string): string => {
-  // We'll add this when we add page with specific error code messages
-  // if (errorCode === "INVALID_PERMISSION") {
-  //   return "https://docs.saleor.io/docs/next/developer/extending/apps/manifest#invalid-permission";
-  // }
-  return DOCS_MANIFEST_COMMON_ERRORS_URL;
-};
-
 export const headerTitles = defineMessages({
   exploreExtensions: {
     defaultMessage: "Explore",
@@ -268,6 +254,11 @@ export const messages = defineMessages({
     defaultMessage: "Learn more about {manifestFormatLink}",
     id: "0DTk+2",
     description: "Add custom extension page subheader",
+  },
+  learnMoreError: {
+    defaultMessage: "Learn more about this error",
+    description: "Add custom extension error link to Saleor Docs",
+    id: "9pGRfy",
   },
   manifestFormatLink: {
     defaultMessage: "manifest format",
