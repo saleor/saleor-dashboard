@@ -1,17 +1,38 @@
+import { AppErrorCode } from "@dashboard/graphql";
 import { defineMessages } from "react-intl";
 
-const DOCS_MANIFEST_COMMON_ERRORS_URL =
-  "https://docs.saleor.io/docs/next/developer/extending/apps/manifest";
+export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): string => {
+  const BASE_URL =
+    "https://docs.saleor.io/developer/extending/apps/developing-apps/app-error-codes";
 
-// Placeholder for specific error documentation links
-// For now, all errors point to the same general manifest errors page.
-// TODO: Update with specific URLs once available.
-export const getSpecificManifestErrorDocLink = (_errorCode?: string): string => {
-  // We'll add this when we add page with specific error code messages
-  // if (errorCode === "INVALID_PERMISSION") {
-  //   return "https://docs.saleor.io/docs/next/developer/extending/apps/manifest#invalid-permission";
-  // }
-  return DOCS_MANIFEST_COMMON_ERRORS_URL;
+  if (!errorCode) {
+    return BASE_URL;
+  }
+
+  const hashMap: Record<AppErrorCode, string> = {
+    [AppErrorCode.INVALID_URL_FORMAT]: "#apperrorcodeinvalid_url_format",
+    [AppErrorCode.INVALID_PERMISSION]: "#apperrorcodeinvalid_permission",
+    [AppErrorCode.OUT_OF_SCOPE_PERMISSION]: "#apperrorcodeout_of_scope_permission",
+    [AppErrorCode.MANIFEST_URL_CANT_CONNECT]: "#apperrorcodemanifest_url_cant_connect",
+    [AppErrorCode.INVALID_MANIFEST_FORMAT]: "#apperrorcodeinvalid_manifest_format",
+    [AppErrorCode.REQUIRED]: "#apperrorcoderequired",
+    [AppErrorCode.UNIQUE]: "#apperrorcodeunique",
+    [AppErrorCode.UNSUPPORTED_SALEOR_VERSION]: "#apperrorcodeunsupported_saleor_version",
+    [AppErrorCode.INVALID_CUSTOM_HEADERS]: "#apperrorcodeinvalid_custom_headers",
+    [AppErrorCode.GRAPHQL_ERROR]: "#apperrorcodegraphql_error",
+    [AppErrorCode.INVALID]: "#apperrorcodeinvalid",
+    [AppErrorCode.INVALID_STATUS]: "#apperrorcodeinvalid_status",
+    [AppErrorCode.NOT_FOUND]: "#apperrorcodenot_found",
+    [AppErrorCode.FORBIDDEN]: "", // No section for this error, no link
+    [AppErrorCode.OUT_OF_SCOPE_APP]: "", // No section for this error, no link
+  };
+  const hash = hashMap[errorCode];
+
+  if (!hash) {
+    return "";
+  }
+
+  return BASE_URL + hash;
 };
 
 export const headerTitles = defineMessages({
@@ -268,6 +289,11 @@ export const messages = defineMessages({
     defaultMessage: "Learn more about {manifestFormatLink}",
     id: "0DTk+2",
     description: "Add custom extension page subheader",
+  },
+  learnMoreError: {
+    defaultMessage: "Learn more about this error",
+    description: "Add custom extension error link to Saleor Docs",
+    id: "9pGRfy",
   },
   manifestFormatLink: {
     defaultMessage: "manifest format",

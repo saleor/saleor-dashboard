@@ -36,28 +36,18 @@ const getFieldErrorMessage = (error: FieldError, intl: IntlShape): string | Reac
 
     if (learnMoreLink) {
       const learnMoreLinkComponent = (
-        <>
-          {" "}
-          <FormattedMessage
-            {...extensionMessages.learnMoreSubheader}
-            values={{
-              manifestFormatLink: (
-                <Text
-                  as="a"
-                  href={learnMoreLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  color="default2"
-                  textDecoration="underline"
-                  size={2}
-                  display="inline-block"
-                >
-                  <FormattedMessage {...extensionMessages.manifestFormatLink} />
-                </Text>
-              ),
-            }}
-          />
-        </>
+        <Text
+          as="a"
+          href={learnMoreLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          color="default2"
+          textDecoration="underline"
+          size={2}
+          display="inline-block"
+        >
+          <FormattedMessage {...extensionMessages.learnMoreError} />
+        </Text>
       );
 
       return intl.formatMessage(messageDescriptor, {
