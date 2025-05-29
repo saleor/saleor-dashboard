@@ -65,14 +65,17 @@ describe("ManifestErrorMessage", () => {
 
     renderWithError(error);
     // Assert
-    expect(
-      screen.getByText(
-        content =>
-          content.includes("The extension's manifest has an invalid format.") &&
-          content.includes("Learn more about") && // This will fail
-          content.includes("(INVALID_MANIFEST_FORMAT)"), // This will fail
-      ),
-    ).toBeInTheDocument();
+    // Check the error message text
+    expect(screen.getByText(/The extension's manifest has an invalid format/)).toBeInTheDocument();
+    // Check the link text
+    expect(screen.getByText("Learn more about this error")).toBeInTheDocument();
+    // Check the link href
+    expect(screen.getByRole("link", { name: "Learn more about this error" })).toHaveAttribute(
+      "href",
+      "https://docs.saleor.io/developer/extending/apps/developing-apps/app-error-codes#apperrorcodeinvalid_manifest_format",
+    );
+    // Check the error code is present
+    expect(screen.getByText(/INVALID_MANIFEST_FORMAT/)).toBeInTheDocument();
   });
 
   it("renders backend error without specific documentation link", () => {

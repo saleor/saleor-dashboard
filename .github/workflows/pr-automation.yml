@@ -202,10 +202,10 @@ jobs:
           SHARD: ${{ matrix.shard }}
           BASE_URL: ${{ needs.initialize-cloud.outputs.BASE_URL }}
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          E2E_USER_NAME: ${{ steps.load-secrets.outputs.E2E_USER_NAME }}
-          E2E_USER_PASSWORD: ${{ steps.load-secrets.outputs.E2E_USER_PASSWORD }}
-          E2E_PERMISSIONS_USERS_PASSWORD: ${{ steps.load-secrets.outputs.E2E_PERMISSIONS_USERS_PASSWORD }}
-          MAILPITURL: ${{ steps.load-secrets.outputs.MAILPITURL }}
+          E2E_USER_NAME: ${{ env.E2E_USER_NAME }}
+          E2E_USER_PASSWORD: ${{ env.E2E_USER_PASSWORD }}
+          E2E_PERMISSIONS_USERS_PASSWORD: ${{ env.E2E_PERMISSIONS_USERS_PASSWORD }}
+          MAILPITURL: ${{ env.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           ACCOUNTS: ${{ needs.deploy-dashboard.outputs.ACCOUNTS }}
@@ -213,6 +213,8 @@ jobs:
           DASHBOARD_VERSION: ${{ needs.initialize-cloud.outputs.RUN_SLUG }}
           BRANCH_NAME: ${{ github.ref}}
           SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
+          BUILD_NUMBER: ${{ github.run_id }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   merge-reports:
     if: "!cancelled() && contains(github.event.pull_request.labels.*.name, 'run pw-e2e')"

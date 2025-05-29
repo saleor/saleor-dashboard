@@ -49,7 +49,7 @@ runs:
 
     - name: Send CTRF Report to Slack
       shell: bash
-      run: npx slack-ctrf results "ctrf-reports/merged-report.json"
+      run: npx slack-ctrf results "ctrf-reports/merged-report.json" --title "Saleor Dashboard Test Results"
       
     - name: Publish PR Comment
       uses: ctrf-io/github-test-reporter@15f50159adb465644ec5ddc3b76b92af1e414432 # v1.0.11  

@@ -31,14 +31,15 @@ export class PermissionGroupDetailsPage extends BasePage {
     readonly unassignMembersDialog = page.getByRole("dialog").filter({ hasText: "Unassign users" }),
     readonly permissionGroupList = page.getByTestId("permission-group-list"),
     readonly assignedMemberName = page.getByTestId("member-name"),
-    readonly permissionGroupCheckbox = page
-      .getByTestId("permission-group-checkbox")
-      .locator("input"),
   ) {
     super(page);
     this.assignPermissionGroupMemberDialog = new AssignPermissionGroupMembersDialog(page);
     this.unassignPermissionGroupMemberDialog = new UnassignPermissionGroupMembersDialog(page);
     this.deletePermissionGroupDialog = new DeletePermissionGroupDialog(page);
+  }
+
+  permissionGroupCheckbox(permission: string) {
+    return this.page.locator(`[data-test-id="permission-checkbox-${permission}"] input`);
   }
 
   async fillPermissionGroupNameInput(name: string) {
