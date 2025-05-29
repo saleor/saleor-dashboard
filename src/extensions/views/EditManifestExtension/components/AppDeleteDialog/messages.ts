@@ -2,42 +2,42 @@ import { defineMessages } from "react-intl";
 
 export default defineMessages({
   deleteAppTitle: {
-    id: "zQX6xO",
-    defaultMessage: "Delete App",
+    id: "QdanQw",
+    defaultMessage: "Delete Extension",
     description: "dialog header",
   },
   deleteApp: {
-    id: "2rJcFa",
+    id: "IW4YT7",
     defaultMessage:
-      "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace.",
+      "By deleting this extension, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in Saleor Marketplace.",
     description: "delete app",
   },
   deleteLocalApp: {
-    id: "0vsMRq",
+    id: "8/PQ07",
     defaultMessage:
-      "Deleting this app, you will delete all the data and webhooks regarding this app.",
+      "By deleting this extension, you will delete all the data and webhooks regarding this extension.",
     description: "delete custom app",
   },
   deleteNamedApp: {
-    id: "kYtxJ1",
+    id: "M4hstc",
     defaultMessage:
-      "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace.",
+      "Deleting {name}, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in Saleor Marketplace.",
     description: "delete app",
   },
   deleteLocalNamedApp: {
-    id: "nioOBQ",
+    id: "j08DaB",
     defaultMessage:
-      "Deleting {name}, you will delete all the data and webhooks regarding this app.",
+      "Deleting {name}, you will delete all the data and webhooks regarding this extension.",
     description: "delete custom app",
   },
   deleteAppQuestion: {
-    id: "6hLZNA",
-    defaultMessage: "Are you sure you want to delete this app?",
+    id: "S8ew6Q",
+    defaultMessage: "Are you sure you want to delete this extension?",
     description: "delete app",
   },
   deleteAppWarning: {
-    id: "+Ps1jL",
+    id: "1Znp5B",
     defaultMessage:
-      "Be extra careful with taxes and payment apps, ensure your configuration selects other apps to be used",
+      "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used",
   },
 });
