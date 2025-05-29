@@ -175,14 +175,14 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
               }
               onChange={change}
               fullAccessLabel={intl.formatMessage({
-                id: "D4nzdD",
-                defaultMessage: "Grant this app full access to the store",
+                id: "5hFkdO",
+                defaultMessage: "Grant this extension full access to the store",
                 description: "checkbox label",
               })}
               description={intl.formatMessage({
-                id: "flP8Hj",
+                id: "GuYTfQ",
                 defaultMessage:
-                  "Expand or restrict app permissions to access certain part of Saleor system.",
+                  "Expand or restrict extension permissions to access certain part of Saleor system.",
                 description: "card description",
               })}
             />
