@@ -3972,10 +3972,6 @@
     "context": "collection",
     "string": "Not Published"
   },
-  "M4hstc": {
-    "context": "delete app",
-    "string": "Deleting {name}, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in Saleor Marketplace."
-  },
   "M59JhX": {
     "string": "Manual"
   },
@@ -7730,10 +7726,6 @@
     "context": "channel name",
     "string": "Channel Name"
   },
-  "j08DaB": {
-    "context": "delete custom app",
-    "string": "Deleting {name}, you will delete all the data and webhooks regarding this extension."
-  },
   "j08fR9": {
     "context": "Product collections",
     "string": "Collections"
@@ -8446,6 +8438,10 @@
   "nIuKz3": {
     "context": "Refund status none",
     "string": "Draft"
+  },
+  "nIwoHa": {
+    "context": "delete app",
+    "string": "By deleting {name}, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in Saleor Marketplace."
   },
   "nJ0tek": {
     "context": "tab name",
@@ -9755,6 +9751,10 @@
   "vY17L8": {
     "context": "window title",
     "string": "Create Model type"
+  },
+  "vYMZxh": {
+    "context": "delete custom app",
+    "string": "By deleting {name}, you will delete all the data and webhooks regarding this extension."
   },
   "vZMs8f": {
     "context": "default product variant indicator",
