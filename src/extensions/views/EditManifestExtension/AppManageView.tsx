@@ -2,6 +2,7 @@ import { useApolloClient } from "@apollo/client";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
 import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
+import AppDeleteDialog from "@dashboard/extensions/components/AppDeleteDialog";
 import { appMessages } from "@dashboard/extensions/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -20,7 +21,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { AppDetailsUrlDialog, AppDetailsUrlQueryParams } from "../../urls";
-import AppDeleteDialog from "./components/AppDeleteDialog";
 import { AppDetailsPage } from "./components/AppDetailsPage";
 import { messages } from "./messages";
 

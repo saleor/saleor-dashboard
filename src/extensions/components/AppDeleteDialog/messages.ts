@@ -19,15 +19,15 @@ export default defineMessages({
     description: "delete custom app",
   },
   deleteNamedApp: {
-    id: "M4hstc",
+    id: "nIwoHa",
     defaultMessage:
-      "Deleting {name}, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in Saleor Marketplace.",
+      "By deleting {name}, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in Saleor Marketplace.",
     description: "delete app",
   },
   deleteLocalNamedApp: {
-    id: "j08DaB",
+    id: "vYMZxh",
     defaultMessage:
-      "Deleting {name}, you will delete all the data and webhooks regarding this extension.",
+      "By deleting {name}, you will delete all the data and webhooks regarding this extension.",
     description: "delete custom app",
   },
   deleteAppQuestion: {

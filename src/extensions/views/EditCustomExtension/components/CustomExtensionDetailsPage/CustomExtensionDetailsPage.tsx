@@ -6,6 +6,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import AppHeaderOptions from "@dashboard/extensions/components/AppHeaderOptions";
 import { appMessages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
@@ -53,6 +54,7 @@ export interface CustomExtensionDetailsPageProps {
   onWebhookRemove: (id: string) => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
+  onAppDeleteOpen: () => void;
 }
 
 const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = props => {
@@ -74,6 +76,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     onWebhookRemove,
     onAppActivateOpen,
     onAppDeactivateOpen,
+    onAppDeleteOpen,
     isLoading,
   } = props;
   const intl = useIntl();
@@ -99,31 +102,18 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav href={ExtensionsUrls.resolveInstalledExtensionsUrl()} title={app?.name || ""}>
-            {hasManagedAppsPermission && (
-              <Tooltip>
-                <Tooltip.Trigger>
-                  <Button
-                    variant="secondary"
-                    className={classes.activateButton}
-                    onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
-                    disabled={disabled}
-                  >
-                    {data?.isActive ? (
-                      <FormattedMessage
-                        id="whTEcF"
-                        defaultMessage="Deactivate"
-                        description="link"
-                      />
-                    ) : (
-                      <FormattedMessage id="P5twxk" defaultMessage="Activate" description="link" />
-                    )}
-                  </Button>
-                </Tooltip.Trigger>
-              </Tooltip>
-            )}
-          </TopNav>
+          <TopNav
+            href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
+            title={app?.name || ""}
+          ></TopNav>
           <DetailPageLayout.Content>
+            <AppHeaderOptions
+              isActive={data?.isActive}
+              onAppActivateOpen={onAppActivateOpen}
+              onAppDeactivateOpen={onAppDeactivateOpen}
+              onAppDeleteOpen={onAppDeleteOpen}
+            />
+
             {token && (
               <>
                 <CustomExtensionDefaultToken

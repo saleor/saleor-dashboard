@@ -15,7 +15,6 @@ export const useClipboardCopy = () => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
-
       }
     };
   }, []);

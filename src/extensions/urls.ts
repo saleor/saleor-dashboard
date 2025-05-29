@@ -66,7 +66,8 @@ export type CustomExtensionDetailsUrlDialog =
   | "remove-webhook"
   | "remove-token"
   | "app-activate"
-  | "app-deactivate";
+  | "app-deactivate"
+  | "app-delete";
 export type CustomExtensionDetailsUrlQueryParams = Dialog<CustomExtensionDetailsUrlDialog> &
   SingleAction;
 
