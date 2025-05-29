@@ -37,7 +37,9 @@ test("TC: SALEOR_211 Create a staff member #e2e #staff-members", async () => {
     email: `test.staff.john.create@example.com`,
   };
 
-  await staffMembersPage.clickInviteStaffMemberButton();
+  await expect(async () => {
+    await staffMembersPage.clickInviteStaffMemberButton();
+  }).toPass();
   await staffMembersPage.inviteStaffMembersDialog.typeNameLastNameAndEmail(
     staffMember.name,
     staffMember.lastName,
