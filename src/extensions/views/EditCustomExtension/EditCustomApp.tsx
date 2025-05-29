@@ -6,7 +6,7 @@ import { getApiUrl } from "@dashboard/config";
 import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
 import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
 import AppDeleteDialog from "@dashboard/extensions/components/AppDeleteDialog";
-import { appMessages, messages, notifyMessages } from "@dashboard/extensions/messages";
+import { appMessages, notifyMessages } from "@dashboard/extensions/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import { getAppInstallErrorMessage, getCustomAppErrorMessage } from "@dashboard/extensions/utils";
 import {

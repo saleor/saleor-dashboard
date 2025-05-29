@@ -19,7 +19,7 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -27,7 +27,6 @@ import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
 import CustomExtensionInformation from "../CustomExtensionInformation";
 import CustomExtensionTokens from "../CustomExtensionTokens";
 import { WebhooksList } from "../WebhooksList";
-import { useStyles } from "./styles";
 
 export interface CustomExtensionDetailsPageFormData {
   hasFullAccess: boolean;
@@ -80,7 +79,6 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     isLoading,
   } = props;
   const intl = useIntl();
-  const classes = useStyles();
   const navigate = useNavigator();
   const webhooks = app?.webhooks || [];
   const formErrors = getFormErrors(["permissions"], errors || []);
