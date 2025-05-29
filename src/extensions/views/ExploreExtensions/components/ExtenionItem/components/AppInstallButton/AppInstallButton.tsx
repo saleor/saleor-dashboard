@@ -14,7 +14,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
 
   if (!hasManagedAppsPermission) {
     return (

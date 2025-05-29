@@ -84,7 +84,7 @@ export const useExploreExtensions = () => {
       first: 100,
     },
   });
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const userPermissions = useUserPermissions();
   const hasManagePluginsPermission = !!userPermissions?.find(
     ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
@@ -98,7 +98,7 @@ export const useExploreExtensions = () => {
     skip: !isExtensionsDevEnabled || !hasManagePluginsPermission,
   });
 
-  const { enabled: showAllExtensions } = useFlag("extensions_dev");
+  const { enabled: showAllExtensions } = useFlag("extensions");
 
   const installedApps = mapEdgesToItems(installedAppsData?.apps) ?? [];
   const plugins = mapEdgesToItems(pluginsQuery?.plugins) ?? [];

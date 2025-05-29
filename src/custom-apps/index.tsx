@@ -83,7 +83,7 @@ const Component = () => {
   const intl = useIntl();
   const [token, setToken] = useState<string>(null);
   const navigate = useNavigator();
-  const { enabled: isExtensionsEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
 
   if (isExtensionsEnabled) {
     navigate(ExtensionsUrls.resolveInstalledExtensionsUrl(), { replace: true });
