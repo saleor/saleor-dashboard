@@ -89,12 +89,12 @@ const resolveExtensionHref = ({
     return undefined;
   }
 
-  if (!isActive) {
-    return ExtensionsUrls.resolveEditManifestExtensionUrl(id);
-  }
-
   if (type === AppTypeEnum.LOCAL) {
     return ExtensionsUrls.editCustomExtensionUrl(id);
+  }
+
+  if (!isActive) {
+    return ExtensionsUrls.resolveEditManifestExtensionUrl(id);
   }
 
   return ExtensionsUrls.resolveViewManifestExtensionUrl(id);
