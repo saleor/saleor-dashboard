@@ -1,11 +1,12 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import Link from "@dashboard/components/Link";
-import useClipboard from "@dashboard/hooks/useClipboard";
 import { Box, Button, CloseIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { Mono } from "../TokenCreateDialog/Mono";
+import { useClipboardCopy } from "../TokenCreateDialog/useClipboardCopy";
 
 export interface CustomExtensionDefaultTokenProps {
   apiUrl: string;
@@ -16,7 +17,7 @@ export interface CustomExtensionDefaultTokenProps {
 
 const CustomExtensionDefaultToken: React.FC<CustomExtensionDefaultTokenProps> = props => {
   const { apiUrl, token, onApiUrlClick, onTokenClose } = props;
-  const [copied, copy] = useClipboard();
+  const { copyToClipboard, copyState } = useClipboardCopy();
 
   return (
     <DashboardCard boxShadow="defaultModal" position="relative">
@@ -29,7 +30,7 @@ const CustomExtensionDefaultToken: React.FC<CustomExtensionDefaultTokenProps> = 
                 defaultMessage="We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
               />
             </Text>
-            <Text display="block">
+            <Text display="block" marginTop={1}>
               <FormattedMessage
                 id="DGCzal"
                 defaultMessage="This token gives you access to your shop's API, which you'll find here: {url}"
@@ -44,9 +45,12 @@ const CustomExtensionDefaultToken: React.FC<CustomExtensionDefaultTokenProps> = 
             </Text>
           </div>
 
-          <Button variant="secondary" onClick={onTokenClose} data-test-id="close-token-button">
-            <CloseIcon />
-          </Button>
+          <Button
+            icon={<CloseIcon />}
+            variant="tertiary"
+            onClick={onTokenClose}
+            data-test-id="close-token-button"
+          ></Button>
         </Box>
 
         <Box marginTop={4} backgroundColor="default2" padding={4} borderRadius={8}>
@@ -56,13 +60,15 @@ const CustomExtensionDefaultToken: React.FC<CustomExtensionDefaultTokenProps> = 
 
           <Mono>{token}</Mono>
 
-          <Button marginTop={4} variant="secondary" onClick={() => copy(token)}>
-            {copied ? (
-              <FormattedMessage id="r86alc" defaultMessage="Copied" description="button" />
-            ) : (
-              <FormattedMessage id="HVFq//" defaultMessage="Copy token" description="button" />
-            )}
-          </Button>
+          <ConfirmButton
+            marginTop={4}
+            noTransition
+            transitionState={copyState}
+            variant="secondary"
+            onClick={() => copyToClipboard(token)}
+          >
+            <FormattedMessage id="HVFq//" defaultMessage="Copy token" description="button" />
+          </ConfirmButton>
         </Box>
       </DashboardCard.Content>
     </DashboardCard>
