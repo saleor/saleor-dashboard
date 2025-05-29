@@ -42,7 +42,7 @@ describe("InstalledExtensionsList", () => {
     fireEvent.click(screen.getByText("Clear search"));
 
     // Assert
-    expect(screen.getByText("No Extensions found")).toBeInTheDocument();
+    expect(screen.getByText("No extensions found")).toBeInTheDocument();
     expect(clearSearch).toBeCalledTimes(1);
   });
 
