@@ -229,7 +229,7 @@ export const ConfigurationSection: React.FC = () => {
   };
   const user = useUser();
   const intl = useIntl();
-  const { enabled: isExtensionsEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
 
   return (
     <>

@@ -102,7 +102,7 @@ const resolveExtensionHref = ({
 
 export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const userPermissions = useUserPermissions();
   const hasManagePluginsPermission = !!userPermissions?.find(
     ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,

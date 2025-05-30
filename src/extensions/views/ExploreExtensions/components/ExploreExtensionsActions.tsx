@@ -14,7 +14,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 export const ExploreExtensionsActions = () => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const navigateToAppInstallPage = useCallback(

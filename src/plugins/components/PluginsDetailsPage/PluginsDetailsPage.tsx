@@ -56,7 +56,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   setSelectedChannelId,
 }) => {
   const intl = useIntl();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const navigate = useNavigator();
   const initialFormData: PluginDetailsPageFormData = {
     active: selectedConfig?.active,
