@@ -49,10 +49,7 @@ export class ExtensionsPage extends BasePage {
   }
 
   async clickViewDetailsByPluginName(pluginName: string) {
-    await this.page
-      .getByRole("row", { name: new RegExp(pluginName, "i") })
-      .getByRole("link", { name: /View details/i })
-      .click();
+    await this.page.getByRole("row", { name: new RegExp(pluginName, "i") }).click();
   }
 
   async expectPluginRowVisibleByName(name: string) {
