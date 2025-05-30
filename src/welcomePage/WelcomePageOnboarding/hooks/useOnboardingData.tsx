@@ -152,83 +152,83 @@ const getStepsData = ({
     },
     ...(isExtensionsFlagEnabled
       ? [
-        {
-          id: "view-extensions" as OnboardingStepsIDs,
-          title: intl.formatMessage({
-            defaultMessage: "Discover extension capabilities",
-            id: "JTjg1r",
-            description: "onboarding step title",
-          }),
-          description: intl.formatMessage({
-            defaultMessage:
-              "Review the central hub for managing all available extensions. Here, you can easily oversee your extensions and enhance Saleor with custom solutions using webhooks and APIs.",
-            id: "zsz6LN",
-            description: "onboarding step description",
-          }),
-          isCompleted: isStepCompleted("view-extensions"),
-          actions: (
-            <>
-              <WelcomePageWebhooksButton
-                onClick={() => trackOnboardingEvent("view-extensions")}
-              />
-              {!isStepCompleted("view-extensions") && (
-                <Button
-                  variant="secondary"
-                  onClick={() => onStepComplete("view-extensions")}
-                  data-test-id="view-extensions-mark-as-done"
-                >
-                  <FormattedMessage
-                    defaultMessage="Mark as done"
-                    id="C5gcqL"
-                    description="btn label"
-                  />
-                </Button>
-              )}
-            </>
-          ),
-        },
-      ]
-      : [
-        {
-          id: "view-webhooks" as OnboardingStepsIDs,
-          title: intl.formatMessage({
-            defaultMessage: "View webhooks functionalities",
-            id: "eWrHmu",
-            description: "onboarding step title",
-          }),
-          description: isExtensionsFlagEnabled
-            ? intl.formatMessage({
+          {
+            id: "view-extensions" as OnboardingStepsIDs,
+            title: intl.formatMessage({
+              defaultMessage: "Discover extension capabilities",
+              id: "JTjg1r",
+              description: "onboarding step title",
+            }),
+            description: intl.formatMessage({
               defaultMessage:
-                "Webhooks are available in Saleor to Extensions. To create a Webhook you need to create an Extension. You can do that in the Extensions section.",
-              id: "H+4rvh",
-            })
-            : intl.formatMessage({
-              defaultMessage:
-                "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Extensions section.",
-              id: "vUzuyz",
+                "Review the central hub for managing all available extensions. Here, you can easily oversee your extensions and enhance Saleor with custom solutions using webhooks and APIs.",
+              id: "zsz6LN",
               description: "onboarding step description",
             }),
-          isCompleted: isStepCompleted("view-webhooks"),
-          actions: (
-            <>
-              <WelcomePageWebhooksButton onClick={() => trackOnboardingEvent("view-webhooks")} />
-              {!isStepCompleted("view-webhooks") && (
-                <Button
-                  variant="secondary"
-                  onClick={() => onStepComplete("view-webhooks")}
-                  data-test-id="view-webhooks-mark-as-done"
-                >
-                  <FormattedMessage
-                    defaultMessage="Mark as done"
-                    id="C5gcqL"
-                    description="btn label"
-                  />
-                </Button>
-              )}
-            </>
-          ),
-        },
-      ]),
+            isCompleted: isStepCompleted("view-extensions"),
+            actions: (
+              <>
+                <WelcomePageWebhooksButton
+                  onClick={() => trackOnboardingEvent("view-extensions")}
+                />
+                {!isStepCompleted("view-extensions") && (
+                  <Button
+                    variant="secondary"
+                    onClick={() => onStepComplete("view-extensions")}
+                    data-test-id="view-extensions-mark-as-done"
+                  >
+                    <FormattedMessage
+                      defaultMessage="Mark as done"
+                      id="C5gcqL"
+                      description="btn label"
+                    />
+                  </Button>
+                )}
+              </>
+            ),
+          },
+        ]
+      : [
+          {
+            id: "view-webhooks" as OnboardingStepsIDs,
+            title: intl.formatMessage({
+              defaultMessage: "View webhooks functionalities",
+              id: "eWrHmu",
+              description: "onboarding step title",
+            }),
+            description: isExtensionsFlagEnabled
+              ? intl.formatMessage({
+                  defaultMessage:
+                    "Webhooks are available in Saleor to Extensions. To create a Webhook you need to create an Extension. You can do that in the Extensions section.",
+                  id: "H+4rvh",
+                })
+              : intl.formatMessage({
+                  defaultMessage:
+                    "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Extensions section.",
+                  id: "vUzuyz",
+                  description: "onboarding step description",
+                }),
+            isCompleted: isStepCompleted("view-webhooks"),
+            actions: (
+              <>
+                <WelcomePageWebhooksButton onClick={() => trackOnboardingEvent("view-webhooks")} />
+                {!isStepCompleted("view-webhooks") && (
+                  <Button
+                    variant="secondary"
+                    onClick={() => onStepComplete("view-webhooks")}
+                    data-test-id="view-webhooks-mark-as-done"
+                  >
+                    <FormattedMessage
+                      defaultMessage="Mark as done"
+                      id="C5gcqL"
+                      description="btn label"
+                    />
+                  </Button>
+                )}
+              </>
+            ),
+          },
+        ]),
     {
       id: "invite-staff",
       title: intl.formatMessage({
@@ -238,16 +238,16 @@ const getStepsData = ({
       }),
       description: isExtensionsFlagEnabled
         ? intl.formatMessage({
-          defaultMessage:
-            "Invite team members and assign permissions on Product Information Management (PIM), Order Management System (OMS), Promotions engine, Extensions (apps, plugins)",
-          id: "Z7vQSa",
-        })
+            defaultMessage:
+              "Invite team members and assign permissions on Product Information Management (PIM), Order Management System (OMS), Promotions engine, Extensions (apps, plugins)",
+            id: "Z7vQSa",
+          })
         : intl.formatMessage({
-          defaultMessage:
-            "Invite team members and assign permissions on Product Information Management (PIM), Order Management System (OMS), Promotions engine, Integrations (Apps)",
-          id: "htGz4h",
-          description: "onboarding step description",
-        }),
+            defaultMessage:
+              "Invite team members and assign permissions on Product Information Management (PIM), Order Management System (OMS), Promotions engine, Integrations (Apps)",
+            id: "htGz4h",
+            description: "onboarding step description",
+          }),
       isCompleted: isStepCompleted("invite-staff"),
       actions: (
         <>
