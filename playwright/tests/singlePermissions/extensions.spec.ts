@@ -27,3 +27,29 @@ test("TC: SALEOR_10 User should be able to navigate to extensions list as a staf
   await expect(extensionsPage.installExternalAppButton).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(4);
 });
+
+test("TC: SALEOR_131 User with MANAGE_APPS permission can install apps but not plugins on explore extensions page #e2e", async ({
+  page,
+}) => {
+  // Arrange
+  const mainMenuPage = new MainMenuPage(page);
+  const extensionsPage = new ExtensionsPage(page);
+
+  await page.goto("/");
+  await mainMenuPage.openExploreExtensions();
+  await extensionsPage.waitForContentLoad();
+
+  // Assert: App install buttons should be enabled
+  const appInstallButtons = await extensionsPage.appExtensionExploreInstallButtons.all();
+
+  for (const button of appInstallButtons) {
+    await expect(button).toBeEnabled();
+  }
+
+  // Assert: Plugin install buttons should be disabled
+  const pluginInstallButtons = await extensionsPage.pluginExtensionExploreInstallButtons.all();
+
+  for (const button of pluginInstallButtons) {
+    await expect(button).toBeDisabled();
+  }
+});

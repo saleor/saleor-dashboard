@@ -38,3 +38,29 @@ test("TC: SALEOR_16 User should be able to navigate to installed extensions and 
   await extensionsPage.clickViewDetailsByPluginName("Admin emails");
   await extensionsPage.expectPluginDetailsViewVisible();
 });
+
+test("TC: SALEOR_131 User with MANAGE_PLUGINS permission can install plugins but not apps on explore extensions page #e2e", async ({
+  page,
+}) => {
+  // Arrange
+  const mainMenuPage = new MainMenuPage(page);
+  const extensionsPage = new ExtensionsPage(page);
+
+  await page.goto("/");
+  await mainMenuPage.openExploreExtensions();
+  await extensionsPage.waitForContentLoad();
+
+  // Assert: Plugin install buttons should be enabled
+  const pluginInstallButtons = await extensionsPage.pluginExtensionExploreInstallButtons.all();
+
+  for (const button of pluginInstallButtons) {
+    await expect(button).toBeEnabled();
+  }
+
+  // Assert: App install buttons should be disabled
+  const appInstallButtons = await extensionsPage.appExtensionExploreInstallButtons.all();
+
+  for (const button of appInstallButtons) {
+    await expect(button).toBeDisabled();
+  }
+});
