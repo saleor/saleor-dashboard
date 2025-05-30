@@ -1,5 +1,5 @@
 import { URL_LIST } from "@data/url";
-import { permissions } from "@data/userPermissions";
+import { permissions, UserPermission } from "@data/userPermissions";
 import { AppDetailsPage } from "@pages/appDetailsPage";
 import { AppPage } from "@pages/appPageThirdparty";
 import { ExtensionsPage } from "@pages/extensionsPage";
@@ -7,8 +7,8 @@ import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
 
-const permissionToExclude = "app";
-const permissionList = permissions.filter(item => item !== permissionToExclude);
+const permissionsToExclude = new Set<UserPermission>(["app", "plugin"]);
+const permissionList = permissions.filter(item => !permissionsToExclude.has(item));
 
 for (const permission of permissionList) {
   test.use({ permissionName: permission });
