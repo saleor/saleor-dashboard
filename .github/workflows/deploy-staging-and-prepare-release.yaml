@@ -39,6 +39,10 @@ jobs:
     needs: prepare-release
     if: always()
     runs-on: ubuntu-22.04
+    permissions:
+      id-token: write # needed by aws-actions/configure-aws-credentials
+      contents: read
+      checks: write
     outputs:
       MINOR_VERSION: ${{ env.MINOR_VERSION }}
       CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
@@ -114,10 +118,9 @@ jobs:
           npm run build
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_CLOUD_STAGING_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_CLOUD_STAGING_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_STAGING_ACCOUNT_ID }}:role/${{ secrets.AWS_DASHBOARD_STAGING_CICD_ROLE_NAME }}
           aws-region: us-east-1
 
       - name: Deploy
