@@ -24,7 +24,10 @@ test("TC: SALEOR_10 User should be able to navigate to extensions list as a staf
     state: "visible",
     timeout: 30000,
   });
-  await expect(extensionsPage.installExternalAppButton).toBeVisible();
+  await extensionsPage.addExtensionButton.click();
+  await expect(extensionsPage.exploreExtensionsOption).toBeVisible();
+  await expect(extensionsPage.installCustomExtensionOption).toBeVisible();
+  await expect(extensionsPage.addCustomExtensionOption).toBeVisible();
   await mainMenuPage.expectMenuItemsCount(4);
 });
 

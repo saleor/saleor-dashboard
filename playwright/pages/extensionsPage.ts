@@ -28,6 +28,10 @@ export class ExtensionsPage extends BasePage {
     readonly pluginExtensionExploreInstallButtons = page.locator(
       '[data-test-id="plugin-install-button"]',
     ),
+    readonly addExtensionButton = page.getByTestId("add-extension-button"),
+    readonly exploreExtensionsOption = page.getByTestId("explore-extensions"),
+    readonly installCustomExtensionOption = page.getByTestId("install-custom-extension"),
+    readonly addCustomExtensionOption = page.getByTestId("add-custom-extension"),
   ) {
     super(page);
     this.page = page;
