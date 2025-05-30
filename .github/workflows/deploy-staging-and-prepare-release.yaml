@@ -42,6 +42,7 @@ jobs:
     permissions:
       id-token: write # needed by aws-actions/configure-aws-credentials
       contents: read
+      checks: write
     outputs:
       MINOR_VERSION: ${{ env.MINOR_VERSION }}
       CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
