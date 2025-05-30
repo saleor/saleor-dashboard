@@ -47,7 +47,7 @@ export const getExtensionInfo = ({
   if (lastFailedAttempt) {
     return (
       <FailedWebhookInfo
-        link={AppPaths.resolveAppDetailsPath(id)}
+        link={ExtensionsUrls.resolveEditManifestExtensionUrl(id)}
         date={lastFailedAttempt.createdAt}
       />
     );
