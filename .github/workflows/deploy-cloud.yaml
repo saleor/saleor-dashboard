@@ -6,6 +6,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    permissions:
+      id-token: write # needed by aws-actions/configure-aws-credentials
+      contents: read
     env:
       ## backward compatibility for older versions
       APPS_MARKETPLACE_API_URI: "https://apps.saleor.io/api/v2/saleor-apps"
@@ -60,16 +63,14 @@ jobs:
         if: env.REGION == 'eu'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_CLOUD_EU_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_CLOUD_EU_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_PROD_ACCOUNT_ID }}:role/${{ secrets.AWS_DASHBOARD_EU_CICD_ROLE_NAME }}
           aws-region: eu-west-1
 
       - name: Configure AWS Credentials
         if: env.REGION == 'us'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_CLOUD_US_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_CLOUD_US_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_PROD_ACCOUNT_ID }}:role/${{ secrets.AWS_DASHBOARD_US_CICD_ROLE_NAME }}
           aws-region: us-east-1
 
       - name: Deploy
