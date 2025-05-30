@@ -1,9 +1,8 @@
+import AppHeaderOptions from "@dashboard/extensions/components/AppHeaderOptions";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppPageNav } from "@dashboard/extensions/views/ViewManifestExtension/components/AppPage/AppPageNav";
 import { AppQuery } from "@dashboard/graphql";
 import React from "react";
-
-import HeaderOptions from "./HeaderOptions";
 
 interface HeaderProps {
   data: AppQuery["app"];
@@ -50,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({
         showMangeAppButton={false}
       />
 
-      <HeaderOptions
+      <AppHeaderOptions
         isActive={!!data.isActive}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}

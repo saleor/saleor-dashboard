@@ -1,10 +1,13 @@
 // @ts-strict-ignore
+import { useApolloClient } from "@apollo/client";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { getApiUrl } from "@dashboard/config";
 import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
 import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
-import { appMessages } from "@dashboard/extensions/messages";
+import AppDeleteDialog from "@dashboard/extensions/components/AppDeleteDialog";
+import { appMessages, notifyMessages } from "@dashboard/extensions/messages";
+import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import { getAppInstallErrorMessage, getCustomAppErrorMessage } from "@dashboard/extensions/utils";
 import {
   AppTokenCreateMutation,
@@ -12,6 +15,7 @@ import {
   AppUpdateMutation,
   useAppActivateMutation,
   useAppDeactivateMutation,
+  useAppDeleteMutation,
   useAppQuery,
   useAppTokenCreateMutation,
   useAppTokenDeleteMutation,
@@ -112,6 +116,34 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
       }
     },
   });
+  const client = useApolloClient();
+
+  const refetchExtensionList = () => {
+    client.refetchQueries({
+      include: [EXTENSION_LIST_QUERY],
+    });
+  };
+
+  const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
+    onCompleted: data => {
+      if (!data?.appDelete?.errors?.length) {
+        refetchExtensionList();
+        notify({
+          status: "success",
+          text: intl.formatMessage(notifyMessages.extensionRemoved),
+        });
+        navigate(ExtensionsUrls.resolveInstalledExtensionsUrl());
+      }
+    },
+  });
+
+  const handleRemoveConfirm = () =>
+    deleteApp({
+      variables: {
+        id,
+      },
+    });
+
   const onWebhookDelete = (data: WebhookDeleteMutation) => {
     if (data?.webhookDelete?.errors?.length === 0) {
       notify({
@@ -246,6 +278,7 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         }
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
+        onAppDeleteOpen={() => openModal("app-delete")}
         permissions={shop?.permissions || []}
         app={data?.app}
         saveButtonBarState={updateAppOpts.status}
@@ -289,6 +322,14 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
         onConfirm={handleDeactivateConfirm}
         thirdParty={false}
         open={params.action === "app-deactivate"}
+      />
+      <AppDeleteDialog
+        confirmButtonState={deleteAppOpts.status}
+        name={data?.app?.name || ""}
+        onClose={closeModal}
+        onConfirm={handleRemoveConfirm}
+        type="CUSTOM"
+        open={params.action === "app-delete"}
       />
     </>
   );

@@ -31,8 +31,8 @@ const CustomExtensionInformation: React.FC<CustomExtensionInfoProps> = ({
       <DashboardCard.Header>
         <DashboardCard.Title>
           {intl.formatMessage({
-            id: "imYxM9",
-            defaultMessage: "App Information",
+            id: "YtCaCm",
+            defaultMessage: "Extension Information",
             description: "header",
           })}
         </DashboardCard.Title>
@@ -42,8 +42,8 @@ const CustomExtensionInformation: React.FC<CustomExtensionInfoProps> = ({
           disabled={disabled}
           error={!!formErrors.name}
           label={intl.formatMessage({
-            id: "foNlhn",
-            defaultMessage: "App Name",
+            id: "Crht/3",
+            defaultMessage: "Extension Name",
             description: "custom app name",
           })}
           helperText={getAppErrorMessage(formErrors.name, intl)}

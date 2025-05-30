@@ -43,13 +43,11 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
       onConfirm={onConfirm}
     >
       <Box display="grid" gap={4}>
-        <FormattedMessage id="sfEbeB" defaultMessage="You're going to mark this order as paid." />
-
+        <FormattedMessage id="sfEbeB" defaultMessage="You're going to mark this order as paid." />{" "}
         <FormattedMessage
           id="rwOx2s"
           defaultMessage="Please provide a transaction reference using the input below:"
         />
-
         <TextField
           fullWidth
           name="transactionReference"
@@ -62,7 +60,6 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
           onChange={handleTransactionReference}
           data-test-id="transaction-reference-input"
         />
-
         {errors.length > 0 && (
           <Box display="grid" gap={1}>
             {errors.map((err, index) => (

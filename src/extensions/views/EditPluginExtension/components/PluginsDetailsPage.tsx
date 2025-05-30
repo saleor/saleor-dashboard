@@ -98,9 +98,9 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
               title={intl.formatMessage(
                 {
-                  id: "EtGDeK",
-                  defaultMessage: "{pluginName} Details",
-                  description: "header",
+                  id: "ak62Oe",
+                  defaultMessage: "{pluginName} details",
+                  description: "plugin details page header",
                 },
                 {
                   pluginName: getStringOrPlaceholder(plugin?.name),

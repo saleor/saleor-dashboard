@@ -87,8 +87,8 @@ export const buttonLabels = defineMessages({
 
 export const infoMessages = defineMessages({
   appDisabled: {
-    defaultMessage: "App disabled. Activate the app from the settings.",
-    id: "r9R4OC",
+    defaultMessage: "Extension disabled. Activate the extension from the settings.",
+    id: "qGwKT/",
   },
   installationFailed: {
     defaultMessage: "Installation failed",
@@ -111,24 +111,25 @@ export const infoMessages = defineMessages({
     id: "qkUBLC",
   },
   permissionsDescription: {
-    defaultMessage: "Expand or restrict app permissions to access certain part of Saleor system.",
-    id: "HwlLvq",
+    defaultMessage:
+      "Expand or restrict extension permissions to access certain part of Saleor system.",
+    id: "kr1PlW",
   },
   grantFullAccess: {
-    defaultMessage: "Grant this app full access to the store",
-    id: "VtR2/y",
+    defaultMessage: "Grant this extension full access to the store",
+    id: "Yuv3Ou",
   },
 });
 
 export const formLabels = defineMessages({
   appName: {
-    defaultMessage: "App Name",
-    id: "kExPDx",
+    defaultMessage: "Extension Name",
+    id: "s3xi3B",
     description: "extension form app name field label",
   },
   appNamePlaceholder: {
-    defaultMessage: "App Name",
-    id: "JKoHqo",
+    defaultMessage: "Extension Name",
+    id: "TNlcZ5",
     description: "extension form app name field placeholder",
   },
   permissions: {
@@ -190,9 +191,9 @@ export const messages = defineMessages({
     defaultMessage: "View details",
     id: "MnpUD7",
   },
-  manageApp: {
-    defaultMessage: "Manage app",
-    id: "wZFsmY",
+  manageExtension: {
+    defaultMessage: "Manage extension",
+    id: "aenDwE",
   },
   viewOnGithub: {
     defaultMessage: "View on GitHub",
@@ -220,25 +221,25 @@ export const messages = defineMessages({
     id: "gZ1qnD",
   },
   noExtensionsInstalled: {
-    defaultMessage: "No Extensions installed yet",
-    id: "2nT0Sm",
+    defaultMessage: "No extensions installed yet",
+    id: "6C1RWA",
   },
   exploreAvailableExtensions: {
-    defaultMessage: "Explore available Extensions",
-    id: "MhT1CS",
+    defaultMessage: "Explore available extensions",
+    id: "ulzM2V",
   },
   noExtensionsFound: {
-    defaultMessage: "No Extensions found",
-    id: "jWLXdD",
+    defaultMessage: "No extensions found",
+    id: "obHpf0",
   },
   clearSearch: {
     defaultMessage: "Clear search",
     id: "4YJHut",
   },
   installationCloudOnly: {
-    defaultMessage: "Use Saleor Cloud to access Saleor Apps",
+    defaultMessage: "Use Saleor Cloud to access Saleor Extensions",
     description: "description",
-    id: "IEpmGQ",
+    id: "jm2YzF",
   },
   missingExtensionsButton: {
     id: "VS0YOp",
@@ -276,8 +277,8 @@ export const messages = defineMessages({
     description: "extension install page, extension permissions (from manifest)",
   },
   permissionsExplanation: {
-    defaultMessage: "Installing this app will give it following permissions",
-    id: "O4R3Ni",
+    defaultMessage: "Installing this extension will give it following permissions",
+    id: "3/IQO9",
     description: "extension install page, permissions section",
   },
   infoCardTitle: {
@@ -287,8 +288,8 @@ export const messages = defineMessages({
   },
   infoCardText: {
     defaultMessage:
-      "Uninstalling the app will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}",
-    id: "3fZa8B",
+      "Uninstalling the extension will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}",
+    id: "ObscZF",
     description: "card text, app install page",
   },
   infoCardLearnMoreLink: {
@@ -321,14 +322,14 @@ export const messages = defineMessages({
   },
   customExtensionPermissionWarning: {
     defaultMessage:
-      "Unavailable permissions are those exceeding your own access rights. Apps cannot have more permissions than their creator. Please contact an administrator to either create this app for you or grant your account the necessary permissions",
+      "Unavailable permissions are those exceeding your own access rights. Extensions cannot have more permissions than their creator. Please contact an administrator to either create this extension for you or grant your account the necessary permissions",
     description: "custom extension page create, callout message",
-    id: "ssI7EL",
+    id: "Nmbt6C",
   },
   missingAppNameError: {
-    defaultMessage: "App name is required",
+    defaultMessage: "Extension name is required",
     description: "custom extension page create, error message",
-    id: "nLCEQJ",
+    id: "ij3dWD",
   },
   permissionDisabledTooltip: {
     defaultMessage: "Permission cannot be chosen, because you don't have it yourself",
@@ -389,16 +390,16 @@ export const appManifestErrorMessages = defineMessages({
   },
   outOfScopeApp: {
     // AppErrorCode.OUT_OF_SCOPE_APP
-    id: "/84FbR",
+    id: "D2u4pg",
     // TODO: Add docs link when we have docs page with explanation
     defaultMessage:
-      "You don't have permission to manage this app. Please contact your administrator for assistance. ({errorCode})",
+      "You don't have permission to manage this extension. Please contact your administrator for assistance. ({errorCode})",
   },
   outOfScopePermission: {
     // AppErrorCode.OUT_OF_SCOPE_PERMISSION
-    id: "IG+/HP",
+    id: "hYWxeg",
     defaultMessage:
-      "The app requests permissions you cannot grant or that exceed its allowed scope. Review the app manifest and your permissions. {docsLink} ({errorCode})",
+      "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})",
   },
   unique: {
     // AppErrorCode.UNIQUE
@@ -480,23 +481,23 @@ export const localAppErrorMessages = defineMessages({
 
 export const appMessages = defineMessages({
   failedToFetchAppSettings: {
-    id: "ac+Y98",
-    defaultMessage: "Failed to fetch app settings",
+    id: "S1u2pa",
+    defaultMessage: "Failed to fetch extension settings",
     description: "app settings error",
   },
   appActivated: {
-    id: "D/+84n",
-    defaultMessage: "App activated",
+    id: "0iZ6Ds",
+    defaultMessage: "Extension activated",
     description: "snackbar text",
   },
   appDeactivated: {
-    id: "USO8PB",
-    defaultMessage: "App deactivated",
+    id: "UpgLo/",
+    defaultMessage: "Extension deactivated",
     description: "snackbar text",
   },
   missingManageAppsPermission: {
-    defaultMessage: "You don't have permission to manage apps",
-    id: "e5gJ9u",
+    defaultMessage: "You don't have permission to manage extensions",
+    id: "5ShHx2",
     description: "tooltip for disabled buttons",
   },
 });
