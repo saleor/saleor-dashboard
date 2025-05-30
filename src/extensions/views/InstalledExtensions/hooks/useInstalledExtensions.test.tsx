@@ -192,7 +192,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions / getExtensionInf
 
     // Assert
     expect(
-      screen.getByText("App disabled. Activate the app from the settings."),
+      screen.getByText("Extension disabled. Activate the extension from the settings."),
     ).toBeInTheDocument();
   });
 

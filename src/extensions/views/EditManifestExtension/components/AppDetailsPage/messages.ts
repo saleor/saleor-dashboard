@@ -7,22 +7,22 @@ export default defineMessages({
     description: "link",
   },
   aboutAppTitle: {
-    id: "jDIRQV",
-    defaultMessage: "About this app",
+    id: "6jyoEd",
+    defaultMessage: "About this extension",
     description: "section header",
   },
   appPermissionsTitle: {
-    id: "VsGcdP",
-    defaultMessage: "App permissions",
+    id: "uIYU0D",
+    defaultMessage: "Extension permissions",
     description: "section header",
   },
   appNoPermissions: {
-    defaultMessage: "App doesn't have any permissions granted.",
-    id: "wDYozn",
+    defaultMessage: "Extension doesn't have any permissions granted.",
+    id: "joN8sy",
   },
   appPermissionsDescription: {
-    id: "7oQUMG",
-    defaultMessage: "This app has permissions to:",
+    id: "750Ymk",
+    defaultMessage: "This extension has permissions to:",
     description: "apps about permissions",
   },
   dataPrivacyTitle: {
@@ -31,20 +31,25 @@ export default defineMessages({
     description: "section header",
   },
   dataPrivacyDescription: {
-    id: "CHoZ8S",
-    defaultMessage: "View this app’s privacy policy.",
+    id: "jwTwhf",
+    defaultMessage: "View this extension's privacy policy.",
     description: "app privacy policy link",
   },
   noDataPrivacyPage: {
-    id: "f3hf+w",
-    defaultMessage: "App doesn't provide a privacy policy.",
+    id: "NUBTlN",
+    defaultMessage: "Extension doesn't provide a privacy policy.",
   },
   noAboutApp: {
-    id: "b088Xv",
-    defaultMessage: "App doesn't provide a description.",
+    id: "kbezTI",
+    defaultMessage: "Extension doesn't provide a description.",
   },
   editPermissionsButton: {
     defaultMessage: "Edit permissions",
     id: "psmnv9",
+  },
+  appWebhooksTitle: {
+    defaultMessage: "Extension Webhooks",
+    id: "/z5aI6",
+    description: "section header",
   },
 });

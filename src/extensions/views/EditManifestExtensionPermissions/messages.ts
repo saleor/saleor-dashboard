@@ -8,8 +8,8 @@ export const appPermissionsRequestViewMessages = defineMessages({
   },
   by: {
     defaultMessage: "by",
-    description: "App by Author",
-    id: "jVjsVq",
+    description: "Extension by Author",
+    id: "3R7BmI",
   },
   requestsNewPermissions: {
     defaultMessage: "requests access to new permissions.",
@@ -29,8 +29,8 @@ export const appPermissionsRequestViewMessages = defineMessages({
   },
   approveScenarioHelperBody: {
     defaultMessage:
-      "The app will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the app before you approve.",
-    id: "S1p0Ja",
+      "The extension will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the extension before you approve.",
+    id: "WMNtD2",
   },
   permissionsDocsLink: {
     defaultMessage: "Learn more about permissions",
@@ -42,8 +42,8 @@ export const appPermissionsRequestViewMessages = defineMessages({
   },
   denyScenarioHelperBody: {
     defaultMessage:
-      "Nothing will change in terms of permissions. The Dashboard will redirect to the app and inform it that you denied the request.",
-    id: "SI3/nl",
+      "Nothing will change in terms of permissions. The Dashboard will redirect to the extension and inform it that you denied the request.",
+    id: "E+n6Pt",
   },
   denyButton: {
     defaultMessage: "Deny",

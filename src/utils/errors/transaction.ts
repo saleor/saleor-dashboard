@@ -10,8 +10,9 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 export const transactionRequestMessages = defineMessages({
   missingWebhook: {
-    defaultMessage: "No app or plugin is configured to handle requested transaction action",
-    id: "qDfaDI",
+    defaultMessage:
+      "No extension (app or plugin) is configured to handle requested transaction action",
+    id: "BxuhWZ",
   },
   notFound: {
     defaultMessage: "Transaction wasn't found",

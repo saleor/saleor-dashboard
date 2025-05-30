@@ -2,8 +2,9 @@ import { useAppWebhookDeliveriesQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { Accordion, Box, BoxProps, Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import messages from "../AppDetailsPage/messages";
 import { EventDeliveriesList } from "./EventDeliveriesList";
 import { sortWebhooksByDeliveries } from "./utils";
 
@@ -17,16 +18,13 @@ const Wrapper = (boxProps: BoxProps) => {
   return (
     <Box {...boxProps}>
       <Text size={5} fontWeight="bold" marginBottom={4} as={"h2"}>
-        {intl.formatMessage({
-          defaultMessage: "App Webhooks",
-          id: "eQ7bCN",
-        })}
+        <FormattedMessage {...messages.appWebhooksTitle} />
       </Text>
       <Text>
         {intl.formatMessage({
           defaultMessage:
-            "All webhooks registered by this app. In case of failed webhook delivery, list of attempts is displayed.",
-          id: "Xy48q5",
+            "All webhooks registered by this extension. In case of failed webhook delivery, list of attempts is displayed.",
+          id: "hjEkEH",
         })}
       </Text>
       <Box marginTop={6}>{boxProps.children}</Box>
