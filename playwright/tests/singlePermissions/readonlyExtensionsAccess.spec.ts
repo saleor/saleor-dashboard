@@ -59,5 +59,18 @@ for (const permission of permissionList) {
     await expect(extensionsPage.installExternalAppButton).not.toBeVisible();
 
     await expect(extensionsPage.availableExtensions).toBeVisible();
+
+    // Assert all install buttons are disabled (readonly access)
+    const pluginInstallButtons = await extensionsPage.pluginExtensionExploreInstallButtons.all();
+
+    for (const button of pluginInstallButtons) {
+      await expect(button).toBeDisabled();
+    }
+
+    const extensionInstallButtons = await extensionsPage.appExtensionExploreInstallButtons.all();
+
+    for (const button of extensionInstallButtons) {
+      await expect(button).toBeDisabled();
+    }
   });
 }

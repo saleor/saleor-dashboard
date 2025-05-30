@@ -22,6 +22,12 @@ export class ExtensionsPage extends BasePage {
     readonly appQA = page.getByTestId("app-saleorqa app"),
     readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
     readonly availableAppsLoader = page.getByTestId("available-apps-loader"),
+    readonly appExtensionExploreInstallButtons = page.locator(
+      '[data-test-id="app-install-button"]',
+    ),
+    readonly pluginExtensionExploreInstallButtons = page.locator(
+      '[data-test-id="plugin-install-button"]',
+    ),
   ) {
     super(page);
     this.page = page;

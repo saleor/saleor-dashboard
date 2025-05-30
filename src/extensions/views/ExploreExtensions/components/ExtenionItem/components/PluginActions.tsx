@@ -25,7 +25,12 @@ export const PluginActions = ({ isInstalled, id }: PluginActionsProps) => {
   return (
     <Tooltip open={canManagePlugins ? false : undefined}>
       <Tooltip.Trigger>
-        <Button disabled={!canManagePlugins} variant="secondary" onClick={openPlugin}>
+        <Button
+          disabled={!canManagePlugins}
+          variant="secondary"
+          onClick={openPlugin}
+          data-test-id={"plugin-install-button"}
+        >
           {isInstalled
             ? intl.formatMessage(messages.viewDetails)
             : intl.formatMessage(messages.install)}
