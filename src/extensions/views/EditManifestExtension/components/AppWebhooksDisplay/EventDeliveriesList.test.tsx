@@ -140,4 +140,46 @@ describe("EventDeliveriesList", () => {
     expect(secondContainer.textContent).toContain('{"message":"Failed to connect"}');
     expect(secondContainer.textContent).toContain("1 / 6");
   });
+
+  it("shows empty state message when all deliveries have no attempts", () => {
+    // Arrange
+    const deliveriesWithNoAttempts: EventDelivery[] = [
+      {
+        __typename: "EventDeliveryCountableEdge",
+        node: {
+          __typename: "EventDelivery",
+          id: "event-deliver-1",
+          eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+          createdAt: "2023-01-02T00:00:00Z",
+          status: EventDeliveryStatusEnum.FAILED,
+          attempts: {
+            edges: [],
+            __typename: "EventDeliveryAttemptCountableConnection",
+          },
+        },
+      },
+      {
+        __typename: "EventDeliveryCountableEdge",
+        node: {
+          __typename: "EventDelivery",
+          id: "event-deliver-2",
+          eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+          createdAt: "2023-01-03T00:00:00Z",
+          status: EventDeliveryStatusEnum.FAILED,
+          attempts: {
+            edges: [],
+            __typename: "EventDeliveryAttemptCountableConnection",
+          },
+        },
+      },
+    ];
+
+    // Act
+    const { getByText } = render(
+      <EventDeliveriesList eventDeliveries={deliveriesWithNoAttempts} />,
+    );
+
+    // Assert
+    expect(getByText("Failed deliveries logs are not available")).toBeInTheDocument();
+  });
 });

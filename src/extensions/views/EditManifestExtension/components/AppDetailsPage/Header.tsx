@@ -19,10 +19,14 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const getBackButtonUrl = () => {
     /**
-     * App is null with first render so fallback with HTML-safe fallback
+     * App is null with first render
      */
     if (!data?.id) {
-      return "#";
+      return ExtensionsUrls.resolveInstalledExtensionsUrl();
+    }
+
+    if (data?.type === "LOCAL") {
+      return ExtensionsUrls.resolveInstalledExtensionsUrl();
     }
 
     const isAppActive = data.isActive;
