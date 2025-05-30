@@ -6,4 +6,9 @@ export const messages = defineMessages({
     defaultMessage: "Extension successfully removed",
     description: "app has been removed",
   },
+  failedDeliveriesLogsNoLongerAvailable: {
+    id: "OytSIZ",
+    defaultMessage: "Failed deliveries logs are not available",
+    description: "Shown when there are no available failed delivery logs for a webhook event.",
+  },
 });
