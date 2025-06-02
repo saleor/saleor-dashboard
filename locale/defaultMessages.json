@@ -4434,10 +4434,6 @@
   "OtMtzH": {
     "string": "Product unavailable in collection channels"
   },
-  "OytSIZ": {
-    "context": "Shown when there are no available failed delivery logs for a webhook event.",
-    "string": "Failed deliveries logs are not available"
-  },
   "OzHN0Z": {
     "context": "order history message",
     "string": "Links to the order's digital goods were sent"
@@ -8280,6 +8276,10 @@
   "m8cjcK": {
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
+  },
+  "m9I/YK": {
+    "context": "Shown when there are no available failed delivery logs for a webhook event.",
+    "string": "Failed deliveries logs are not available"
   },
   "mCP0UD": {
     "context": "order draft creation date",
