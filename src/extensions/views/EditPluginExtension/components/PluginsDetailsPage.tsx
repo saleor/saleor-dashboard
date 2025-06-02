@@ -93,7 +93,7 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
         };
 
         return (
-          <DetailPageLayout gridTemplateColumns={1}>
+          <DetailPageLayout gridTemplateColumns={1} testId="plugin-details">
             <TopNav
               href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
               title={intl.formatMessage(
