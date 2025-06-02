@@ -2603,6 +2603,9 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "Dqo3Vf": {
+    "string": "Plugins and Webhook Events have been moved to the \"Extensions\" page, available from the sidebar navigation."
+  },
   "DyGpz4": {
     "context": "unapproved fulfillment, section header",
     "string": "Waiting for approval"
@@ -5499,6 +5502,9 @@
   "V1MytH": {
     "context": "shipping zones section name",
     "string": "Shipping Zones"
+  },
+  "V1aPhG": {
+    "string": "Navigation has changed"
   },
   "V1mqpZ": {
     "context": "button",
@@ -9763,6 +9769,9 @@
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
+  },
+  "vZglQ7": {
+    "string": "Go to Extensions"
   },
   "vcwrgW": {
     "string": "No translatable entities found"
