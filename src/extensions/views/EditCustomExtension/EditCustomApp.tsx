@@ -2,7 +2,6 @@
 import { useApolloClient } from "@apollo/client";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { getApiUrl } from "@dashboard/config";
 import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
 import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
 import AppDeleteDialog from "@dashboard/extensions/components/AppDeleteDialog";
@@ -257,11 +256,9 @@ export const EditCustomExtension: React.FC<OrderListProps> = ({
     <>
       <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
       <CustomExtensionDetailsPage
-        apiUrl={getApiUrl()}
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
-        onApiUrlClick={() => open(getApiUrl(), "blank")}
         onSubmit={handleSubmit}
         onTokenClose={onTokenClose}
         onTokenCreate={() => openModal("create-token")}
