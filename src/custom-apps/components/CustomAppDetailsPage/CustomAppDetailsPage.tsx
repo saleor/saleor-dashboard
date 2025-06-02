@@ -22,10 +22,8 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
-import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import activateIcon from "../../../../assets/images/activate-icon.svg";
 import CustomAppDefaultToken from "../CustomAppDefaultToken";
 import CustomAppInformation from "../CustomAppInformation";
 import CustomAppTokens from "../CustomAppTokens";
@@ -109,7 +107,6 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               className={classes.activateButton}
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
-              <SVG src={activateIcon} />
               {data?.isActive ? (
                 <FormattedMessage id="whTEcF" defaultMessage="Deactivate" description="link" />
               ) : (
