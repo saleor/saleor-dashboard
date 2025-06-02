@@ -96,7 +96,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             ))}
           {isExtensionsEnabled && (
             <Box marginY={4}>
-              <DashboardCard withBorder gap={1} __width="fit-content">
+              <DashboardCard withBorder gap={2} __width="fit-content">
                 <DashboardCard.Title display="flex" gap={3} alignItems="center">
                   <ExclamationIcon />
                   <FormattedMessage defaultMessage="Navigation has changed" id="V1aPhG" />
