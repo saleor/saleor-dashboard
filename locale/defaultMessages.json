@@ -8277,6 +8277,10 @@
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
   },
+  "m9I/YK": {
+    "context": "Shown when there are no available failed delivery logs for a webhook event.",
+    "string": "Failed deliveries logs are not available"
+  },
   "mCP0UD": {
     "context": "order draft creation date",
     "string": "Date"

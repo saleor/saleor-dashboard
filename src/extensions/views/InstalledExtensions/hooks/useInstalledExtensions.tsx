@@ -2,7 +2,6 @@ import {
   getLatestFailedAttemptFromWebhooks,
   LatestWebhookDeliveryWithMoment,
 } from "@dashboard/apps/components/AppAlerts/utils";
-import { AppPaths } from "@dashboard/apps/urls";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -47,7 +46,7 @@ export const getExtensionInfo = ({
   if (lastFailedAttempt) {
     return (
       <FailedWebhookInfo
-        link={AppPaths.resolveAppDetailsPath(id)}
+        link={ExtensionsUrls.resolveEditManifestExtensionUrl(id)}
         date={lastFailedAttempt.createdAt}
       />
     );
