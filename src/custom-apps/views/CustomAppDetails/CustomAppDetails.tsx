@@ -4,7 +4,6 @@ import AppDeactivateDialog from "@dashboard/apps/components/AppDeactivateDialog"
 import { appMessages } from "@dashboard/apps/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { getApiUrl } from "@dashboard/config";
 import TokenCreateDialog from "@dashboard/custom-apps/components/TokenCreateDialog";
 import TokenDeleteDialog from "@dashboard/custom-apps/components/TokenDeleteDialog";
 import WebhookDeleteDialog from "@dashboard/custom-apps/components/WebhookDeleteDialog";
@@ -201,11 +200,9 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
     <>
       <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
       <CustomAppDetailsPage
-        apiUrl={getApiUrl()}
         disabled={loading}
         errors={updateAppOpts.data?.appUpdate?.errors || []}
         token={token}
-        onApiUrlClick={() => open(getApiUrl(), "blank")}
         onSubmit={handleSubmit}
         onTokenClose={onTokenClose}
         onTokenCreate={() => openModal("create-token")}
