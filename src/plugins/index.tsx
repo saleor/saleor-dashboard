@@ -1,4 +1,7 @@
 import { Route } from "@dashboard/components/Router";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
+import { useFlag } from "@dashboard/featureFlags";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -31,6 +34,14 @@ const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
 };
 const Component = () => {
   const intl = useIntl();
+  const navigate = useNavigator();
+  const { enabled: isExtensionsEnabled } = useFlag("extensions");
+
+  if (isExtensionsEnabled) {
+    navigate(ExtensionsPaths.installedExtensions, { replace: true });
+
+    return <>Redirecting...</>;
+  }
 
   return (
     <>
