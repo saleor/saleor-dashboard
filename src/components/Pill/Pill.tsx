@@ -5,14 +5,11 @@ import { useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 
-const useStyles = makeStyles<{
-  color: string;
-}>(
+const useStyles = makeStyles(
   {
     pill: {
       borderRadius: "32px",
       border: "none",
-      backgroundColor: ({ color }) => `${color} !important`,
     },
   },
   { name: "Pill" },
@@ -24,15 +21,23 @@ const useStyles = makeStyles<{
 export const Pill = React.forwardRef<HTMLDivElement, PillProps>(
   ({ color: status, ...props }, ref) => {
     const { theme: currentTheme } = useTheme();
+
     const color = getStatusColor({
       status,
       currentTheme,
     }).base;
-    const classes = useStyles({
-      color,
-    });
+    const classes = useStyles();
 
-    return <MacawuiPill {...props} ref={ref} className={clsx(classes.pill, props.className)} />;
+    return (
+      <MacawuiPill
+        {...props}
+        ref={ref}
+        className={clsx(classes.pill, props.className)}
+        style={{
+          backgroundColor: color,
+        }}
+      />
+    );
   },
 );
 
