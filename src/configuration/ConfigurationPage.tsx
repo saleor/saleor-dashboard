@@ -48,6 +48,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
 
   const { enabled: isExtensionsEnabled } = useFlag("extensions");
   const navigate = useNavigator();
+
   const goToExtensions = () => {
     navigate(ExtensionsUrls.resolveInstalledExtensionsUrl());
   };
