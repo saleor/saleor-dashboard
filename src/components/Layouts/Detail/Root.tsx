@@ -6,6 +6,7 @@ interface DetailPageLayoutProps {
   children: React.ReactNode;
   gridTemplateColumns?: Sprinkles["gridTemplateColumns"];
   withSavebar?: boolean;
+  testId?: string;
 }
 
 const contentWithSidebarHeight = `calc(100vh - ${savebarHeight} - ${borderHeight} * 2)`;
@@ -15,6 +16,7 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
   children,
   gridTemplateColumns = 12,
   withSavebar = true,
+  testId,
 }) => {
   const gridTemplateColumnsValue = useMemo((): Sprinkles["gridTemplateColumns"] => {
     if (gridTemplateColumns instanceof Object) {
@@ -44,6 +46,7 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
       gridTemplateColumns={gridTemplateColumnsValue}
       __gridTemplateRows="auto 1fr"
       __height={heightValue}
+      data-test-id={testId}
     >
       {children}
     </Box>

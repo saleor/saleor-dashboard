@@ -1,23 +1,22 @@
 // @ts-nocheck
 
-import P57291 from "./images/app-alerts.png"
-import C63807 from "./images/discounts-list.png"
-import E32541 from "./images/extensions.png"
-import W29622 from "./images/improved_refunds.png"
+import T35742 from "./images/app-alerts.png"
+import S91352 from "./images/discounts-list.png"
+import G07038 from "./images/extensions.png"
+import F07977 from "./images/improved_refunds.png"
 
-const app_alerts = () => (<><p><img src={P57291} alt="new filters"/>
+const app_alerts = () => (<><p><img src={T35742} alt="new filters"/>
 Benefit from new notifications in your Dashboard that alert you to issues with webhooks for your apps, helping you stay informed about potential problems.
 We’re continuously working to expand this feature to provide more insights for your apps.</p>
 </>)
-const discounts_rules = () => (<><p><img src={C63807} alt="Discount rules"/></p>
+const discounts_rules = () => (<><p><img src={S91352} alt="Discount rules"/></p>
 <p>Apply the new discounts rules to narrow your promotions audience.
 Set up conditions and channels that must be fulfilled to apply defined reward.</p>
 </>)
-const extensions_dev = () => (<></>)
-const extensions = () => (<><p><img src={E32541} alt="Extensions"/></p>
+const extensions = () => (<><p><img src={G07038} alt="Extensions"/></p>
 <p>New, reshaped experience for browsing, installing, and managing Saleor extensions.</p>
 </>)
-const improved_refunds = () => (<><p><img src={W29622} alt="Improved refunds"/></p>
+const improved_refunds = () => (<><p><img src={F07977} alt="Improved refunds"/></p>
 <h3 id="enable-the-enhanced-refund-feature-to-streamline-your-refund-process">Enable the enhanced refund feature to streamline your refund process:</h3>
 <ul>
 <li><p>• Choose between automatic calculations based on selected items or enter refund amounts directly for overcharges and custom adjustments.</p>
@@ -58,15 +57,6 @@ export const AVAILABLE_FLAGS = [{
   visible: true,
   content: {
     enabled: true,
-    payload: "default",
-  }
-},{
-  name: "extensions_dev",
-  displayName: "Extensions dev flag",
-  component: extensions_dev,
-  visible: false,
-  content: {
-    enabled: false,
     payload: "default",
   }
 },{

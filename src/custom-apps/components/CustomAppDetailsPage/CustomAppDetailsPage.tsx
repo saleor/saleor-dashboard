@@ -77,7 +77,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const navigate = useNavigator();
   const webhooks = app?.webhooks;
   const formErrors = getFormErrors(["permissions"], errors || []);
