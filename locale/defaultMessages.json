@@ -2505,9 +2505,6 @@
     "context": "button",
     "string": "Save Search"
   },
-  "DGCzal": {
-    "string": "This token gives you access to your shop's API, which you'll find here: {url}"
-  },
   "DGWVA9": {
     "context": "variant created error message",
     "string": "Variant creation failed"
