@@ -15,6 +15,7 @@ interface ButtonWithDropdownProps extends ButtonProps {
     label: string;
     testId?: string;
     onSelect: <T>(params?: T) => void;
+    renderElement?: () => React.ReactNode;
   }>;
   testId?: string;
   disabled?: boolean;
@@ -47,7 +48,7 @@ export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
                 onClick={item.onSelect}
                 data-test-id={item.testId}
               >
-                <Text>{item.label}</Text>
+                {item.renderElement ? item.renderElement() : <Text>{item.label}</Text>}
               </List.Item>
             </Dropdown.Item>
           ))}

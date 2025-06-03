@@ -7,6 +7,7 @@ import {
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
 
 import { useExternalApp } from "../components/ExternalAppContext";
 import { AppData } from "../components/ExternalAppContext/context";
@@ -65,7 +66,11 @@ const filterAndMapToTarget = (
     url,
     label,
     mount,
-    open: (params: AppDetailsUrlMountQueryParams) =>
+    open: (params: AppDetailsUrlMountQueryParams) => {
+      if (target === "NEW_TAB") {
+        return; // no op
+      }
+
       openApp({
         id: app.id,
         appToken: accessToken || "",
@@ -73,12 +78,18 @@ const filterAndMapToTarget = (
         label,
         target,
         params,
-      }),
+      });
+    },
   }));
-const mapToMenuItem = ({ label, id, open }: ExtensionWithParams) => ({
+const mapToMenuItem = ({ label, id, open, url }: ExtensionWithParams) => ({
   label,
   testId: `extension-${id}`,
   onSelect: open,
+  renderElement: () => (
+    <a href={url} target="_blank" rel="noreferrer">
+      {label}
+    </a>
+  ),
 });
 
 export const mapToMenuItems = (extensions: ExtensionWithParams[]) => extensions.map(mapToMenuItem);

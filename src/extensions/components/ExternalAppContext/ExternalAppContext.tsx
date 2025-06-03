@@ -41,13 +41,23 @@ export const useExternalApp = () => {
   const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
   const navigate = useNavigator();
   const openApp = (appData: AppData) => {
-    if (appData.target === AppExtensionTargetEnum.POPUP) {
-      setOpen(true);
-      setAppData(appData);
-    } else {
-      navigate(ExtensionsUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {
-        resetScroll: true,
-      });
+    switch (appData.target) {
+      case AppExtensionTargetEnum.APP_PAGE: {
+        navigate(ExtensionsUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {
+          resetScroll: true,
+        });
+
+        break;
+      }
+      case AppExtensionTargetEnum.POPUP: {
+        setOpen(true);
+        setAppData(appData);
+
+        break;
+      }
+      case AppExtensionTargetEnum.NEW_TAB: {
+        throw new Error("NEW_TAB can't be opened");
+      }
     }
   };
   const closeApp = () => setOpen(false);
