@@ -58,6 +58,8 @@ export interface AppDetailsUrlMountQueryParams {
   discountId?: string;
   voucherId?: string;
   voucherIds?: string[];
+  modelId?: string;
+  modelIds?: string[];
 }
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;

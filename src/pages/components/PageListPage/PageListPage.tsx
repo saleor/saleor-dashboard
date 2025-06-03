@@ -1,9 +1,16 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  mapToMenuItemsForModelOverviewActions,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import { useFlag } from "@dashboard/featureFlags";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -74,6 +81,15 @@ const PageListPage: React.FC<PageListPageProps> = ({
   const [isFilterPresetOpen, setFilterPresetOpen] = React.useState(false);
   const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
 
+  const { MODEL_OVERVIEW_CREATE, MODEL_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.MODEL_LIST,
+  );
+  const extensionMenuItems = mapToMenuItemsForModelOverviewActions(
+    MODEL_OVERVIEW_MORE_ACTIONS,
+    selectedPageIds,
+  );
+  const extensionCreateButtonItems = mapToMenuItems(MODEL_OVERVIEW_CREATE);
+
   return (
     <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.models)} isAlignToRight={false} withoutBorder>
@@ -101,9 +117,20 @@ const PageListPage: React.FC<PageListPageProps> = ({
             />
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
-            <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
-              <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
-            </Button>
+            {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonGroupWithDropdown
+                options={extensionCreateButtonItems}
+                onClick={onPageCreate}
+                data-test-id="create-page"
+              >
+                <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
+              </ButtonGroupWithDropdown>
+            ) : (
+              <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
+                <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
+              </Button>
+            )}
           </Box>
         </Box>
       </TopNav>
