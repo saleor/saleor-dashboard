@@ -89,7 +89,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
 
         <InfiniteScroll
           id={scrollableTargetId}
-          dataLength={containers?.length}
+          dataLength={containers?.length ?? 0}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
