@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
-import CardMenu from "@dashboard/components/CardMenu/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -94,7 +93,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={customerBackLink} title={getUserName(customer, true)}>
-              {extensionMenuItems.length > 0 && <CardMenu menuItems={extensionMenuItems} />}
+              {extensionMenuItems.length > 0 && (
+                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              )}
             </TopNav>
             <DetailPageLayout.Content>
               <Backlink href={customerBackLink}>

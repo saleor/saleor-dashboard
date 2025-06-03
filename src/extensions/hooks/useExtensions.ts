@@ -52,11 +52,16 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.ORDER_OVERVIEW_CREATE,
     AppExtensionMountEnum.ORDER_OVERVIEW_MORE_ACTIONS,
   ],
+  DRAFT_ORDER_LIST: [
+    AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_CREATE,
+    AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_MORE_ACTIONS,
+  ],
   COLLECTION_DETAILS: [AppExtensionMountEnum.COLLECTION_DETAILS_MORE_ACTIONS],
   CATEGORY_DETAILS: [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS],
   GIFT_CARD_DETAILS: [AppExtensionMountEnum.GIFT_CARD_DETAILS_MORE_ACTIONS],
   CUSTOMER_DETAILS: [AppExtensionMountEnum.CUSTOMER_DETAILS_MORE_ACTIONS],
   ORDER_DETAILS: [AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS],
+  DRAFT_ORDER_DETAILS: [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_MORE_ACTIONS],
   PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
   NAVIGATION_SIDEBAR: [
     AppExtensionMountEnum.NAVIGATION_CATALOG,
@@ -200,6 +205,25 @@ export const mapToMenuItemsForGiftCardDetails = (
 ) =>
   extensions.map(extension =>
     mapToMenuItem({ ...extension, open: () => extension.open({ giftCardId }) }),
+  );
+
+export const mapMenuItemsForDraftOrderOverviewActions = (
+  extensions: ExtensionWithParams[],
+  draftOrderIds: string[],
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({
+      ...extension,
+      open: () => extension.open({ draftOrderIds }),
+    }),
+  );
+
+export const mapToMenuItemsForDraftOrderDetails = (
+  extensions: ExtensionWithParams[],
+  draftOrderId: string,
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({ ...extension, open: () => extension.open({ draftOrderId }) }),
   );
 
 export const useExtensions = <T extends AppExtensionMountEnum>(

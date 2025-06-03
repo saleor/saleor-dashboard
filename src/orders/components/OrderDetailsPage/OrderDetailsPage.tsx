@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -191,8 +190,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
-              <CardMenu
-                menuItems={[
+              <TopNav.Menu
+                dataTestId="menu"
+                items={[
                   ...selectCardMenuItems,
                   ...extensionMenuItems,
                   {

@@ -1,12 +1,16 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DateTime } from "@dashboard/components/Date";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import {
+  extensionMountPoints,
+  mapToMenuItemsForDraftOrderDetails,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
@@ -92,6 +96,14 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     path: draftOrderListUrl,
   });
 
+  const { DRAFT_ORDER_DETAILS_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.DRAFT_ORDER_DETAILS,
+  );
+  const extensionMenuItems = mapToMenuItemsForDraftOrderDetails(
+    DRAFT_ORDER_DETAILS_MORE_ACTIONS,
+    order.id,
+  );
+
   return (
     <DetailPageLayout>
       <TopNav
@@ -111,8 +123,8 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           </Box>
         }
       >
-        <CardMenu
-          menuItems={[
+        <TopNav.Menu
+          items={[
             {
               label: intl.formatMessage({
                 id: "PAqicb",
@@ -121,7 +133,9 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
               }),
               onSelect: onDraftRemove,
             },
+            ...extensionMenuItems,
           ]}
+          dataTestId="menu"
         />
       </TopNav>
       <DetailPageLayout.Content>
