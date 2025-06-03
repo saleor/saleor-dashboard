@@ -55,6 +55,7 @@ export interface AppDetailsUrlMountQueryParams {
   giftCardIds?: string[];
   draftOrderId?: string;
   draftOrderIds?: string[];
+  discountId?: string;
 }
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;

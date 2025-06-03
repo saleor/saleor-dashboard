@@ -4,6 +4,11 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
+  extensionMountPoints,
+  mapToMenuItemsForDiscountDetails,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
+import {
   ChannelFragment,
   PromotionDetailsFragment,
   PromotionRuleCreateErrorFragment,
@@ -60,9 +65,19 @@ export const DiscountDetailsPage = ({
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 
+  const { PROMOTIONS_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.DISCOUNTS_DETAILS);
+  const extensionMenuItems = mapToMenuItemsForDiscountDetails(
+    PROMOTIONS_DETAILS_MORE_ACTIONS,
+    data?.id,
+  );
+
   return (
     <DetailPageLayout gridTemplateColumns={1}>
-      <TopNav href={backLinkHref} title={data?.name} />
+      <TopNav href={backLinkHref} title={data?.name}>
+        {extensionMenuItems.length > 0 && (
+          <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+        )}
+      </TopNav>
       <DetailPageLayout.Content>
         <DiscountDetailsForm
           data={data}

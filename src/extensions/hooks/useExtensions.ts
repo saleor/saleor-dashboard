@@ -56,6 +56,10 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_CREATE,
     AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_MORE_ACTIONS,
   ],
+  DISCOUNTS_LIST: [
+    AppExtensionMountEnum.PROMOTIONS_OVERVIEW_CREATE,
+    AppExtensionMountEnum.PROMOTIONS_OVERVIEW_MORE_ACTIONS,
+  ],
   COLLECTION_DETAILS: [AppExtensionMountEnum.COLLECTION_DETAILS_MORE_ACTIONS],
   CATEGORY_DETAILS: [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS],
   GIFT_CARD_DETAILS: [AppExtensionMountEnum.GIFT_CARD_DETAILS_MORE_ACTIONS],
@@ -63,6 +67,7 @@ export const extensionMountPoints = {
   ORDER_DETAILS: [AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS],
   DRAFT_ORDER_DETAILS: [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_MORE_ACTIONS],
   PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
+  DISCOUNTS_DETAILS: [AppExtensionMountEnum.PROMOTIONS_DETAILS_MORE_ACTIONS],
   NAVIGATION_SIDEBAR: [
     AppExtensionMountEnum.NAVIGATION_CATALOG,
     AppExtensionMountEnum.NAVIGATION_CUSTOMERS,
@@ -224,6 +229,14 @@ export const mapToMenuItemsForDraftOrderDetails = (
 ) =>
   extensions.map(extension =>
     mapToMenuItem({ ...extension, open: () => extension.open({ draftOrderId }) }),
+  );
+
+export const mapToMenuItemsForDiscountDetails = (
+  extensions: ExtensionWithParams[],
+  discountId: string,
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({ ...extension, open: () => extension.open({ discountId }) }),
   );
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
