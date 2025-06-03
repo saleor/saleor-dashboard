@@ -19,6 +19,11 @@ import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { voucherListPath } from "@dashboard/discounts/urls";
 import {
+  extensionMountPoints,
+  mapToMenuItemsForVoucherDetails,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
+import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
@@ -225,6 +230,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     path: voucherListPath,
   });
 
+  const { CATEGORY_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.VOUCHER_DETAILS);
+  const extensionMenuItems = mapToMenuItemsForVoucherDetails(
+    CATEGORY_DETAILS_MORE_ACTIONS,
+    voucher?.id,
+  );
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, submit, triggerChange, set }) => {
@@ -240,7 +251,11 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={voucherListBackLink} title={voucher?.name} />
+            <TopNav href={voucherListBackLink} title={voucher?.name}>
+              {extensionMenuItems.length > 0 && (
+                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <VoucherInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <VoucherCodes
