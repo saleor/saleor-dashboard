@@ -1,8 +1,15 @@
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  mapToMenuItemsForModelTypesOverviewActions,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import { PageTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -49,6 +56,15 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
+  const { MODEL_TYPES_OVERVIEW_CREATE, MODEL_TYPES_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.MODEL_TYPES_LIST,
+  );
+  const extensionMenuItems = mapToMenuItemsForModelTypesOverviewActions(
+    MODEL_TYPES_OVERVIEW_MORE_ACTIONS,
+    listProps.pageTypes.map(pageType => pageType.id),
+  );
+  const extensionCreateButtonItems = mapToMenuItems(MODEL_TYPES_OVERVIEW_CREATE);
+
   return (
     <ListPageLayout>
       <TopNav
@@ -82,13 +98,34 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
           </Box>
         </Box>
 
-        <Button
-          onClick={() => navigate(pageTypeAddUrl)}
-          variant="primary"
-          data-test-id="create-page-type"
-        >
-          <FormattedMessage id="+qDoi0" defaultMessage="Create model type" description="button" />
-        </Button>
+        <Box display="flex" alignItems="center" gap={2}>
+          {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+          {extensionCreateButtonItems.length > 0 ? (
+            <ButtonGroupWithDropdown
+              options={extensionCreateButtonItems}
+              onClick={() => navigate(pageTypeAddUrl)}
+              data-test-id="create-page-type"
+            >
+              <FormattedMessage
+                id="+qDoi0"
+                defaultMessage="Create model type"
+                description="button"
+              />
+            </ButtonGroupWithDropdown>
+          ) : (
+            <Button
+              onClick={() => navigate(pageTypeAddUrl)}
+              variant="primary"
+              data-test-id="create-page-type"
+            >
+              <FormattedMessage
+                id="+qDoi0"
+                defaultMessage="Create model type"
+                description="button"
+              />
+            </Button>
+          )}
+        </Box>
       </TopNav>
       <DashboardCard gap={0}>
         <Box paddingX={6} marginBottom={2}>

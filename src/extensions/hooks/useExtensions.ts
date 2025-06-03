@@ -68,6 +68,10 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.MODEL_OVERVIEW_CREATE,
     AppExtensionMountEnum.MODEL_OVERVIEW_MORE_ACTIONS,
   ],
+  MODEL_TYPES_LIST: [
+    AppExtensionMountEnum.MODEL_TYPES_OVERVIEW_CREATE,
+    AppExtensionMountEnum.MODEL_TYPES_OVERVIEW_MORE_ACTIONS,
+  ],
   COLLECTION_DETAILS: [AppExtensionMountEnum.COLLECTION_DETAILS_MORE_ACTIONS],
   CATEGORY_DETAILS: [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS],
   GIFT_CARD_DETAILS: [AppExtensionMountEnum.GIFT_CARD_DETAILS_MORE_ACTIONS],
@@ -78,6 +82,7 @@ export const extensionMountPoints = {
   DISCOUNTS_DETAILS: [AppExtensionMountEnum.PROMOTIONS_DETAILS_MORE_ACTIONS],
   VOUCHER_DETAILS: [AppExtensionMountEnum.VOUCHER_DETAILS_MORE_ACTIONS],
   MODEL_DETAILS: [AppExtensionMountEnum.MODEL_DETAILS_MORE_ACTIONS],
+  MODEL_TYPE_DETAILS: [AppExtensionMountEnum.MODEL_TYPES_DETAILS_MORE_ACTIONS],
   NAVIGATION_SIDEBAR: [
     AppExtensionMountEnum.NAVIGATION_CATALOG,
     AppExtensionMountEnum.NAVIGATION_CUSTOMERS,
@@ -282,6 +287,25 @@ export const mapToMenuItemsForModelOverviewActions = (
 export const mapToMenuItemsForModelDetails = (extensions: ExtensionWithParams[], modelId: string) =>
   extensions.map(extension =>
     mapToMenuItem({ ...extension, open: () => extension.open({ modelId }) }),
+  );
+
+export const mapToMenuItemsForModelTypesOverviewActions = (
+  extensions: ExtensionWithParams[],
+  modelTypeIds: string[],
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({
+      ...extension,
+      open: () => extension.open({ modelTypeIds }),
+    }),
+  );
+
+export const mapToMenuItemsForModelTypeDetails = (
+  extensions: ExtensionWithParams[],
+  modelTypeId: string,
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({ ...extension, open: () => extension.open({ modelTypeId }) }),
   );
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
