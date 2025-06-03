@@ -47,6 +47,8 @@ export interface AppDetailsUrlMountQueryParams {
   orderId?: string;
   customerId?: string;
   customerIds?: string[];
+  categoryIds?: string[];
+  categoryId?: string;
 }
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;

@@ -7,6 +7,11 @@ import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
+import {
+  extensionMountPoints,
+  mapToMenuItemsForCategoryDetails,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -82,11 +87,21 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
 
   const backHref = category?.parent?.id ? categoryUrl(category?.parent?.id) : categoryBackListUrl;
 
+  const { CATEGORY_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.CATEGORY_DETAILS);
+  const extensionMenuItems = mapToMenuItemsForCategoryDetails(
+    CATEGORY_DETAILS_MORE_ACTIONS,
+    categoryId,
+  );
+
   return (
     <CategoryUpdateForm category={category} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout gridTemplateColumns={1}>
-          <TopNav href={backHref} title={category?.name} />
+          <TopNav href={backHref} title={category?.name}>
+            {extensionMenuItems.length > 0 && (
+              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+            )}
+          </TopNav>
           <DetailPageLayout.Content>
             <CategoryDetailsForm
               data={data}

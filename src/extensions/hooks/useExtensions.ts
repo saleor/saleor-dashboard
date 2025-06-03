@@ -28,6 +28,10 @@ export interface ExtensionWithParams extends Omit<Extension, "open"> {
 }
 
 export const extensionMountPoints = {
+  CATEGORY_LIST: [
+    AppExtensionMountEnum.CATEGORY_OVERVIEW_CREATE,
+    AppExtensionMountEnum.CATEGORY_OVERVIEW_MORE_ACTIONS,
+  ],
   CUSTOMER_LIST: [
     AppExtensionMountEnum.CUSTOMER_OVERVIEW_CREATE,
     AppExtensionMountEnum.CUSTOMER_OVERVIEW_MORE_ACTIONS,
@@ -40,6 +44,7 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.ORDER_OVERVIEW_CREATE,
     AppExtensionMountEnum.ORDER_OVERVIEW_MORE_ACTIONS,
   ],
+  CATEGORY_DETAILS: [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS],
   CUSTOMER_DETAILS: [AppExtensionMountEnum.CUSTOMER_DETAILS_MORE_ACTIONS],
   ORDER_DETAILS: [AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS],
   PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
@@ -128,6 +133,25 @@ export const mapToMenuItemsForOrderDetails = (
       ...extension,
       open: () => extension.open({ orderId }),
     }),
+  );
+
+export const mapMenuItemsForCategoryOverviewActions = (
+  extensions: ExtensionWithParams[],
+  categoryIds: string[],
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({
+      ...extension,
+      open: () => extension.open({ categoryIds }),
+    }),
+  );
+
+export const mapToMenuItemsForCategoryDetails = (
+  extensions: ExtensionWithParams[],
+  categoryId: string,
+) =>
+  extensions.map(extension =>
+    mapToMenuItem({ ...extension, open: () => extension.open({ categoryId }) }),
   );
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
