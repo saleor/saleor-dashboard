@@ -106,7 +106,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
                 <FormattedMessage {...messages.createCategory} />
               </ButtonGroupWithDropdown>
             ) : (
-              <Button data-test-id="create-customer" onClick={() => navigate(categoryAddUrl())}>
+              <Button data-test-id="create-category" onClick={() => navigate(categoryAddUrl())}>
                 <FormattedMessage {...messages.createCategory} />
               </Button>
             )}
