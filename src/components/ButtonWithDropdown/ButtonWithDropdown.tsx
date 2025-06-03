@@ -28,32 +28,34 @@ export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
   testId,
   disabled = false,
   ...buttonProps
-}) => (
-  <Dropdown>
-    <Dropdown.Trigger>
-      <Button data-test-id={testId} onClick={onClick} disabled={disabled} {...buttonProps}>
-        {children}
-        <ChervonDownIcon />
-      </Button>
-    </Dropdown.Trigger>
-    <Dropdown.Content align="end">
-      <Box>
-        <List padding={2} borderRadius={4} boxShadow="defaultOverlay" backgroundColor="default1">
-          {options.map((item, idx) => (
-            <Dropdown.Item key={`dropdown-item-${idx}`}>
-              <List.Item
-                borderRadius={4}
-                paddingX={1.5}
-                paddingY={2}
-                onClick={item.onSelect}
-                data-test-id={item.testId}
-              >
-                {item.renderElement ? item.renderElement() : <Text>{item.label}</Text>}
-              </List.Item>
-            </Dropdown.Item>
-          ))}
-        </List>
-      </Box>
-    </Dropdown.Content>
-  </Dropdown>
-);
+}) => {
+  return (
+    <Dropdown>
+      <Dropdown.Trigger>
+        <Button data-test-id={testId} onClick={onClick} disabled={disabled} {...buttonProps}>
+          {children}
+          <ChervonDownIcon />
+        </Button>
+      </Dropdown.Trigger>
+      <Dropdown.Content align="end">
+        <Box>
+          <List padding={2} borderRadius={4} boxShadow="defaultOverlay" backgroundColor="default1">
+            {options.map((item, idx) => (
+              <Dropdown.Item key={`dropdown-item-${idx}`}>
+                <List.Item
+                  borderRadius={4}
+                  paddingX={1.5}
+                  paddingY={2}
+                  onClick={item.onSelect}
+                  data-test-id={item.testId}
+                >
+                  {item.renderElement ? item.renderElement() : <Text>{item.label}</Text>}
+                </List.Item>
+              </Dropdown.Item>
+            ))}
+          </List>
+        </Box>
+      </Dropdown.Content>
+    </Dropdown>
+  );
+};

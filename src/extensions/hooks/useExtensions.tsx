@@ -81,15 +81,18 @@ const filterAndMapToTarget = (
       });
     },
   }));
+
 const mapToMenuItem = ({ label, id, open, url }: ExtensionWithParams) => ({
   label,
   testId: `extension-${id}`,
   onSelect: open,
-  renderElement: () => (
-    <a href={url} target="_blank" rel="noreferrer">
-      {label}
-    </a>
-  ),
+  renderElement: () => {
+    return (
+      <a href={url} target="_blank" rel="noreferrer">
+        {label}
+      </a>
+    );
+  },
 });
 
 export const mapToMenuItems = (extensions: ExtensionWithParams[]) => extensions.map(mapToMenuItem);

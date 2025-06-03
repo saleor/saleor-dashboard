@@ -28,6 +28,7 @@ export interface CardMenuItem {
   withLoading?: boolean;
   hasError?: boolean;
   Icon?: React.ReactElement;
+  renderElement?: () => React.ReactElement;
 }
 
 export interface CardMenuProps {
@@ -170,34 +171,42 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                   id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
                 >
-                  {menuItems.map((menuItem, menuItemIndex) => (
-                    <MenuItem
-                      data-test-id={menuItem.testId}
-                      disabled={menuItem.loading || menuItem.disabled}
-                      onClick={() => handleMenuClick(menuItemIndex)}
-                      key={menuItem.label}
-                      button
-                    >
-                      <div
-                        className={clsx(className, {
-                          [classes.loadingContent]: isWithLoading,
-                        })}
+                  {menuItems.map((menuItem, menuItemIndex) => {
+                    const contentToRender = menuItem.renderElement ? (
+                      menuItem.renderElement()
+                    ) : (
+                      <Text>
+                        {showMenuIcon && menuItem.Icon} {menuItem.label}
+                      </Text>
+                    );
+
+                    return (
+                      <MenuItem
+                        data-test-id={menuItem.testId}
+                        disabled={menuItem.loading || menuItem.disabled}
+                        onClick={() => handleMenuClick(menuItemIndex)}
+                        key={menuItem.label}
+                        button
                       >
-                        {menuItem.loading ? (
-                          <>
-                            <Text fontSize={3}>
-                              <FormattedMessage {...messages.cardMenuItemLoading} />
-                            </Text>
-                            <CircularProgress size={24} />
-                          </>
-                        ) : (
-                          <Text>
-                            {showMenuIcon && menuItem.Icon} {menuItem.label}
-                          </Text>
-                        )}
-                      </div>
-                    </MenuItem>
-                  ))}
+                        <div
+                          className={clsx(className, {
+                            [classes.loadingContent]: isWithLoading,
+                          })}
+                        >
+                          {menuItem.loading ? (
+                            <>
+                              <Text fontSize={3}>
+                                <FormattedMessage {...messages.cardMenuItemLoading} />
+                              </Text>
+                              <CircularProgress size={24} />
+                            </>
+                          ) : (
+                            contentToRender
+                          )}
+                        </div>
+                      </MenuItem>
+                    );
+                  })}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
