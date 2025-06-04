@@ -1,6 +1,7 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import {
   AppExtensionMountEnum,
+  AppExtensionTargetEnum,
   ExtensionListQuery,
   PermissionEnum,
   useExtensionListQuery,
@@ -21,11 +22,19 @@ export interface Extension {
   label: string;
   mount: AppExtensionMountEnum;
   url: string;
-  open: () => void;
+  open?: () => void;
+  target: AppExtensionTargetEnum;
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {
-  open: (params: AppDetailsUrlMountQueryParams) => void;
+  open?: (params: AppDetailsUrlMountQueryParams) => void;
+}
+
+interface MenuItem {
+  label: string;
+  testId?: string;
+  onSelect?: <T extends AppDetailsUrlMountQueryParams>(params: T) => void;
+  renderElement?: () => React.ReactNode;
 }
 
 export const extensionMountPoints = {
@@ -58,93 +67,153 @@ const filterAndMapToTarget = (
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>,
   openApp: (appData: AppData) => void,
 ): ExtensionWithParams[] =>
-  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app }) => ({
-    id,
-    app,
-    accessToken: accessToken || "",
-    permissions: permissions.map(({ code }) => code),
-    url,
+  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app }) => {
+    const result: ExtensionWithParams = {
+      target,
+      id,
+      app,
+      accessToken: accessToken || "",
+      permissions: permissions.map(({ code }) => code),
+      url,
+      label,
+      mount,
+    };
+
+    if (target !== "NEW_TAB") {
+      result.open = (params: AppDetailsUrlMountQueryParams) => {
+        openApp({
+          id: app.id,
+          appToken: accessToken || "",
+          src: url,
+          label,
+          target,
+          params,
+        });
+      };
+    }
+
+    return result;
+  });
+
+const mapToMenuItem = ({ label, id, open, url, target }: ExtensionWithParams): MenuItem => {
+  const result: MenuItem = {
     label,
-    mount,
-    open: (params: AppDetailsUrlMountQueryParams) => {
-      if (target === "NEW_TAB") {
-        return; // no op
-      }
+    testId: `extension-${id}`,
+  };
 
-      openApp({
-        id: app.id,
-        appToken: accessToken || "",
-        src: url,
-        label,
-        target,
-        params,
-      });
-    },
-  }));
+  if (target == "NEW_TAB") {
+    result.renderElement = () => {
+      return (
+        <a href={url} target="_blank" rel="noreferrer">
+          {label}
+        </a>
+      );
+    };
+  } else {
+    result.onSelect = open;
+  }
 
-const mapToMenuItem = ({ label, id, open, url }: ExtensionWithParams) => ({
-  label,
-  testId: `extension-${id}`,
-  onSelect: open,
-  renderElement: () => {
-    return (
-      <a href={url} target="_blank" rel="noreferrer">
-        {label}
-      </a>
-    );
-  },
-});
+  return result;
+};
 
-export const mapToMenuItems = (extensions: ExtensionWithParams[]) => extensions.map(mapToMenuItem);
+export const mapToMenuItems = (extensions: ExtensionWithParams[]): MenuItem[] =>
+  extensions.map(mapToMenuItem);
 
-export const mapToMenuItemsForOrderListActions = (extensions: ExtensionWithParams[]) =>
-  extensions.map(extension => mapToMenuItem({ ...extension, open: () => extension.open({}) }));
+export const mapToMenuItemsForOrderListActions = (
+  extensions: ExtensionWithParams[],
+): MenuItem[] => {
+  return extensions.map(extension => {
+    const extensionToMap = { ...extension };
+
+    if (typeof extension.open === "function") {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - probably old TS?
+      extensionToMap.open = () => extension.open({});
+    }
+
+    return mapToMenuItem(extensionToMap);
+  });
+};
 
 export const mapToMenuItemsForProductOverviewActions = (
   extensions: ExtensionWithParams[],
   productIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productIds }) }),
-  );
+): MenuItem[] =>
+  extensions.map(extension => {
+    const extensionToMap = { ...extension };
+
+    if (typeof extension.open === "function") {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - probably old TS?
+      extensionToMap.open = () => extension.open({ productIds });
+    }
+
+    return mapToMenuItem(extensionToMap);
+  });
 
 export const mapToMenuItemsForProductDetails = (
   extensions: ExtensionWithParams[],
   productId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productId }) }),
-  );
+): MenuItem[] =>
+  extensions.map(extension => {
+    const extensionToMap = { ...extension };
+
+    if (typeof extension.open === "function") {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - probably old TS?
+      extensionToMap.open = () => extension.open({ productId });
+    }
+
+    return mapToMenuItem(extensionToMap);
+  });
 
 export const mapToMenuItemsForCustomerDetails = (
   extensions: ExtensionWithParams[],
   customerId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ customerId }) }),
-  );
+): MenuItem[] =>
+  extensions.map(extension => {
+    const extensionToMap = { ...extension };
+
+    if (typeof extension.open === "function") {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - probably old TS?
+      extensionToMap.open = () => extension.open({ customerId });
+    }
+
+    return mapToMenuItem(extensionToMap);
+  });
 
 export const mapToMenuItemsForCustomerOverviewActions = (
   extensions: ExtensionWithParams[],
   customerIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ customerIds }),
-    }),
-  );
+): MenuItem[] =>
+  extensions.map(extension => {
+    const extensionToMap = { ...extension };
+
+    if (typeof extension.open === "function") {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - probably old TS?
+      extensionToMap.open = () => extension.open({ customerIds });
+    }
+
+    return mapToMenuItem(extensionToMap);
+  });
 
 export const mapToMenuItemsForOrderDetails = (
   extensions: ExtensionWithParams[],
   orderId?: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ orderId }),
-    }),
-  );
+): MenuItem[] =>
+  extensions.map(extension => {
+    const extensionToMap = { ...extension };
+
+    if (typeof extension.open === "function") {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - probably old TS?
+      extensionToMap.open = () => extension.open({ orderId });
+    }
+
+    return mapToMenuItem(extensionToMap);
+  });
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[],

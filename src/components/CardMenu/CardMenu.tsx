@@ -23,7 +23,7 @@ export interface CardMenuItem {
   disabled?: boolean;
   label: string;
   testId?: string;
-  onSelect: <T>(params?: T) => void;
+  onSelect?: <T>(params?: T) => void;
   loading?: boolean;
   withLoading?: boolean;
   hasError?: boolean;
