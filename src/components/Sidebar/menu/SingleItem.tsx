@@ -16,7 +16,7 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
   const handleMenuItemClick = () => {
     const extension = getMenuItemExtension(extensions, menuItem.id);
 
-    if (extension) {
+    if (extension && extension.open) {
       extension.open();
     }
 
