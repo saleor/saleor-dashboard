@@ -4,7 +4,7 @@ import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLin
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterElement } from "@dashboard/components/Filter";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -193,7 +193,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               ]}
             />
             {extensionCreateButtonItems.length > 0 ? (
-              <ButtonWithDropdown
+              <ButtonGroupWithDropdown
                 onClick={onAdd}
                 testId={"add-product"}
                 options={extensionCreateButtonItems}
@@ -203,7 +203,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                   defaultMessage="Create Product"
                   description="button"
                 />
-              </ButtonWithDropdown>
+              </ButtonGroupWithDropdown>
             ) : (
               <Button data-test-id="add-product" onClick={onAdd}>
                 <FormattedMessage

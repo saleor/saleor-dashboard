@@ -81,9 +81,7 @@ const mapToMenuItem = ({ label, id, open }: ExtensionWithParams) => ({
   onSelect: open,
 });
 
-export const mapToMenuItems = (extensions: ExtensionWithParams[]) => extensions.map(mapToMenuItem);
-
-export const mapToMenuItemsForOrderListActions = (extensions: ExtensionWithParams[]) =>
+export const mapToMenuItems = (extensions: ExtensionWithParams[]) =>
   extensions.map(extension => mapToMenuItem({ ...extension, open: () => extension.open({}) }));
 
 export const mapToMenuItemsForProductOverviewActions = (
