@@ -15,8 +15,8 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   extensionMountPoints,
-  mapMenuItemsForCollectionOverviewActions,
-  mapToMenuItems,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForCollectionOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { useFlag } from "@dashboard/featureFlags";
@@ -79,11 +79,11 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const { COLLECTION_OVERVIEW_CREATE, COLLECTION_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.COLLECTION_LIST,
   );
-  const extensionMenuItems = mapMenuItemsForCollectionOverviewActions(
+  const extensionMenuItems = getExtensionsItemsForCollectionOverviewActions(
     COLLECTION_OVERVIEW_MORE_ACTIONS,
     selectedCollectionIds,
   );
-  const extensionCreateButtonItems = mapToMenuItems(COLLECTION_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(COLLECTION_OVERVIEW_CREATE);
 
   return (
     <ListPageLayout>

@@ -8,8 +8,8 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   extensionMountPoints,
-  mapMenuItemsForCategoryOverviewActions,
-  mapToMenuItems,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForCategoryOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { CategoryFragment } from "@dashboard/graphql";
@@ -62,11 +62,11 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   const { CATEGORY_OVERVIEW_CREATE, CATEGORY_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CATEGORY_LIST,
   );
-  const extensionMenuItems = mapMenuItemsForCategoryOverviewActions(
+  const extensionMenuItems = getExtensionsItemsForCategoryOverviewActions(
     CATEGORY_OVERVIEW_MORE_ACTIONS,
     selectedCategoriesIds,
   );
-  const extensionCreateButtonItems = mapToMenuItems(CATEGORY_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(CATEGORY_OVERVIEW_CREATE);
 
   return (
     <ListPageLayout>

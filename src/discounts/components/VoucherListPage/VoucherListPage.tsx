@@ -10,8 +10,8 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import { voucherAddUrl, VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {
   extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForVouchersOverviewActions,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForVoucherOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { useFlag } from "@dashboard/featureFlags";
@@ -70,11 +70,11 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   const { VOUCHER_OVERVIEW_CREATE, VOUCHER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.VOUCHER_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForVouchersOverviewActions(
+  const extensionMenuItems = getExtensionsItemsForVoucherOverviewActions(
     VOUCHER_OVERVIEW_MORE_ACTIONS,
     selectedVouchersIds,
   );
-  const extensionCreateButtonItems = mapToMenuItems(VOUCHER_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(VOUCHER_OVERVIEW_CREATE);
 
   return (
     <ListPageLayout>

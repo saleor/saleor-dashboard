@@ -6,7 +6,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   extensionMountPoints,
-  mapToMenuItemsForStructureDetails,
+  getExtensionsItemsForMenuDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
@@ -74,11 +74,8 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     setTreeOperations([...treeOperations, ...operations]);
   };
 
-  const { CATEGORY_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.STRUCTURE_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForStructureDetails(
-    CATEGORY_DETAILS_MORE_ACTIONS,
-    menu.id,
-  );
+  const { MENU_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.MENU_DETAILS);
+  const extensionMenuItems = getExtensionsItemsForMenuDetails(MENU_DETAILS_MORE_ACTIONS, menu.id);
 
   return (
     <Form

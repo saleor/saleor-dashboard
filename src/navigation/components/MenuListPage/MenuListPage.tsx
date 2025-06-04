@@ -3,8 +3,8 @@ import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDr
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForStructureOverviewActions,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForMenuOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { MenuFragment } from "@dashboard/graphql";
@@ -34,14 +34,14 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
     navigate(menuListUrl({ action: "add" }));
   };
 
-  const { STRUCTURE_OVERVIEW_CREATE, STRUCTURE_OVERVIEW_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.STRUCTURE_LIST,
+  const { MENU_OVERVIEW_CREATE, MENU_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.MENU_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForStructureOverviewActions(
-    STRUCTURE_OVERVIEW_MORE_ACTIONS,
+  const extensionMenuItems = getExtensionsItemsForMenuOverviewActions(
+    MENU_OVERVIEW_MORE_ACTIONS,
     listProps.menus.map(menu => menu.id),
   );
-  const extensionCreateButtonItems = mapToMenuItems(STRUCTURE_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(MENU_OVERVIEW_CREATE);
 
   return (
     <ListPageLayout>

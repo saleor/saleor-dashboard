@@ -2,7 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import {
   extensionMountPoints,
-  mapToMenuItemsForGiftCardDetails,
+  getExtensionsItemsForGiftCardDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
@@ -32,7 +32,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   const { GIFT_CARD_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.GIFT_CARD_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForGiftCardDetails(
+  const extensionMenuItems = getExtensionsItemsForGiftCardDetails(
     GIFT_CARD_DETAILS_MORE_ACTIONS,
     giftCard.id,
   );

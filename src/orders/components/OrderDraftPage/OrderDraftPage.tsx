@@ -8,7 +8,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   extensionMountPoints,
-  mapToMenuItemsForDraftOrderDetails,
+  getExtensionsItemsForDraftOrderDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import {
@@ -99,7 +99,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   const { DRAFT_ORDER_DETAILS_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.DRAFT_ORDER_DETAILS,
   );
-  const extensionMenuItems = mapToMenuItemsForDraftOrderDetails(
+  const extensionMenuItems = getExtensionsItemsForDraftOrderDetails(
     DRAFT_ORDER_DETAILS_MORE_ACTIONS,
     order.id,
   );

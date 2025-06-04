@@ -20,7 +20,7 @@ import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types
 import { voucherListPath } from "@dashboard/discounts/urls";
 import {
   extensionMountPoints,
-  mapToMenuItemsForVoucherDetails,
+  getExtensionsItemsForVoucherDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import {
@@ -231,7 +231,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   });
 
   const { CATEGORY_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.VOUCHER_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForVoucherDetails(
+  const extensionMenuItems = getExtensionsItemsForVoucherDetails(
     CATEGORY_DETAILS_MORE_ACTIONS,
     voucher?.id,
   );

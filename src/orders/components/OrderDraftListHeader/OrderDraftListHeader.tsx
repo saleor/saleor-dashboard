@@ -5,8 +5,8 @@ import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDr
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import {
   extensionMountPoints,
-  mapMenuItemsForDraftOrderOverviewActions,
-  mapToMenuItems,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForDraftOrderOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { RefreshLimitsQuery } from "@dashboard/graphql";
@@ -50,11 +50,13 @@ export const OrderDraftListHeader = ({
   const { DRAFT_ORDER_OVERVIEW_CREATE, DRAFT_ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.DRAFT_ORDER_LIST,
   );
-  const extensionMenuItems = mapMenuItemsForDraftOrderOverviewActions(
+  const extensionMenuItems = getExtensionsItemsForDraftOrderOverviewActions(
     DRAFT_ORDER_OVERVIEW_MORE_ACTIONS,
     selectedOrderDraftIds,
   );
-  const extensionCreateButtonItems = mapToMenuItems(DRAFT_ORDER_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(
+    DRAFT_ORDER_OVERVIEW_CREATE,
+  );
 
   return (
     <TopNav

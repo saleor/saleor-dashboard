@@ -16,7 +16,7 @@ import { SeoForm } from "@dashboard/components/SeoForm";
 import VisibilityCard from "@dashboard/components/VisibilityCard";
 import {
   extensionMountPoints,
-  mapToMenuItemsForModelDetails,
+  getExtensionsItemForPageDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import {
@@ -128,8 +128,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     path: pagesSection,
   });
 
-  const { MODEL_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.MODEL_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForModelDetails(MODEL_DETAILS_MORE_ACTIONS, page?.id);
+  const { PAGE_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PAGE_DETAILS);
+  const extensionMenuItems = getExtensionsItemForPageDetails(PAGE_DETAILS_MORE_ACTIONS, page?.id);
 
   return (
     <PageForm

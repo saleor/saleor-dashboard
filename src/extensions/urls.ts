@@ -58,12 +58,12 @@ export interface AppDetailsUrlMountQueryParams {
   discountId?: string;
   voucherId?: string;
   voucherIds?: string[];
-  modelId?: string;
-  modelIds?: string[];
-  modelTypeId?: string;
-  modelTypeIds?: string[];
-  structureId?: string;
-  structureIds?: string[];
+  pageId?: string;
+  pageIds?: string[];
+  pageTypeId?: string;
+  pageTypeIds?: string[];
+  menuId?: string;
+  menuIds?: string[];
 }
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;

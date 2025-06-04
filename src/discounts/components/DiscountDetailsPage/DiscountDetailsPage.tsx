@@ -5,7 +5,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
 import {
   extensionMountPoints,
-  mapToMenuItemsForDiscountDetails,
+  getExtensionsItemsForDiscountDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import {
@@ -65,9 +65,9 @@ export const DiscountDetailsPage = ({
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 
-  const { PROMOTIONS_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.DISCOUNTS_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForDiscountDetails(
-    PROMOTIONS_DETAILS_MORE_ACTIONS,
+  const { DISCOUNT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.DISCOUNT_DETAILS);
+  const extensionMenuItems = getExtensionsItemsForDiscountDetails(
+    DISCOUNT_DETAILS_MORE_ACTIONS,
     data?.id,
   );
 

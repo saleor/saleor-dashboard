@@ -7,8 +7,8 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForModelOverviewActions,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForPageOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { useFlag } from "@dashboard/featureFlags";
@@ -81,14 +81,14 @@ const PageListPage: React.FC<PageListPageProps> = ({
   const [isFilterPresetOpen, setFilterPresetOpen] = React.useState(false);
   const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
 
-  const { MODEL_OVERVIEW_CREATE, MODEL_OVERVIEW_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.MODEL_LIST,
+  const { PAGE_OVERVIEW_CREATE, PAGE_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.PAGE_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForModelOverviewActions(
-    MODEL_OVERVIEW_MORE_ACTIONS,
+  const extensionMenuItems = getExtensionsItemsForPageOverviewActions(
+    PAGE_OVERVIEW_MORE_ACTIONS,
     selectedPageIds,
   );
-  const extensionCreateButtonItems = mapToMenuItems(MODEL_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PAGE_OVERVIEW_CREATE);
 
   return (
     <ListPageLayout>

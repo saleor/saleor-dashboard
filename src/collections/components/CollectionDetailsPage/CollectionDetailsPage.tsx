@@ -10,7 +10,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
   extensionMountPoints,
-  mapToMenuItemsForCollectionDetails,
+  getExtensionsItemsForCollectionDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import {
@@ -73,7 +73,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   const { COLLECTION_DETAILS_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.COLLECTION_DETAILS,
   );
-  const extensionMenuItems = mapToMenuItemsForCollectionDetails(
+  const extensionMenuItems = getExtensionsItemsForCollectionDetails(
     COLLECTION_DETAILS_MORE_ACTIONS,
     collection?.id,
   );

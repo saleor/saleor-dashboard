@@ -8,7 +8,7 @@ import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   extensionMountPoints,
-  mapToMenuItemsForModelTypeDetails,
+  getExtensionsItemsForPageTypeDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { AttributeTypeEnum, PageErrorFragment, PageTypeDetailsFragment } from "@dashboard/graphql";
@@ -88,11 +88,9 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
     path: pageTypeListPath,
   });
 
-  const { MODEL_TYPES_DETAILS_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.MODEL_TYPE_DETAILS,
-  );
-  const extensionMenuItems = mapToMenuItemsForModelTypeDetails(
-    MODEL_TYPES_DETAILS_MORE_ACTIONS,
+  const { PAGE_TYPE_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PAGE_TYPE_DETAILS);
+  const extensionMenuItems = getExtensionsItemsForPageTypeDetails(
+    PAGE_TYPE_DETAILS_MORE_ACTIONS,
     pageType.id,
   );
 

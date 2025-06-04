@@ -13,7 +13,8 @@ import {
 } from "@dashboard/discounts/discountsUrls";
 import {
   extensionMountPoints,
-  mapToMenuItems,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForDiscountOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { PromotionFragment } from "@dashboard/graphql";
@@ -61,11 +62,13 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
     });
   };
 
-  const { PROMOTIONS_OVERVIEW_CREATE, PROMOTIONS_OVERVIEW_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.DISCOUNTS_LIST,
+  const { DISCOUNT_OVERVIEW_CREATE, DISCOUNT_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.DISCOUNT_LIST,
   );
-  const extensionMenuItems = mapToMenuItems(PROMOTIONS_OVERVIEW_MORE_ACTIONS);
-  const extensionCreateButtonItems = mapToMenuItems(PROMOTIONS_OVERVIEW_CREATE);
+  const extensionMenuItems = getExtensionsItemsForDiscountOverviewActions(
+    DISCOUNT_OVERVIEW_MORE_ACTIONS,
+  );
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(DISCOUNT_OVERVIEW_CREATE);
 
   return (
     <ListPageLayout>

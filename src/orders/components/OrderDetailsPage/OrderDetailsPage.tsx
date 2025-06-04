@@ -10,7 +10,7 @@ import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   extensionMountPoints,
-  mapToMenuItemsForOrderDetails,
+  getExtensionsItemsForOrderDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import {
@@ -170,7 +170,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     },
   ]);
   const { ORDER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.ORDER_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForOrderDetails(ORDER_DETAILS_MORE_ACTIONS, order?.id);
+  const extensionMenuItems = getExtensionsItemsForOrderDetails(
+    ORDER_DETAILS_MORE_ACTIONS,
+    order?.id,
+  );
   const context = useDevModeContext();
   const openPlaygroundURL = () => {
     context.setDevModeContent(defaultGraphiQLQuery);

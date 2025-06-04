@@ -12,7 +12,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { customerAddressesUrl, customerListPath } from "@dashboard/customers/urls";
 import {
   extensionMountPoints,
-  mapToMenuItemsForCustomerDetails,
+  getExtensionsItemsForCustomerDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
@@ -76,7 +76,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   };
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.CUSTOMER_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForCustomerDetails(
+  const extensionMenuItems = getExtensionsItemsForCustomerDetails(
     CUSTOMER_DETAILS_MORE_ACTIONS,
     customerId,
   );

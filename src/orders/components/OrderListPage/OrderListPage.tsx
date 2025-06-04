@@ -12,7 +12,8 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   extensionMountPoints,
-  mapToMenuItems,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForOrderOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
@@ -77,8 +78,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const { ORDER_OVERVIEW_CREATE, ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.ORDER_LIST,
   );
-  const extensionMenuItems = mapToMenuItems(ORDER_OVERVIEW_MORE_ACTIONS);
-  const extensionCreateButtonItems = mapToMenuItems(ORDER_OVERVIEW_CREATE);
+  const extensionMenuItems = getExtensionsItemsForOrderOverviewActions(ORDER_OVERVIEW_MORE_ACTIONS);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(ORDER_OVERVIEW_CREATE);
   const context = useDevModeContext();
   const { valueProvider } = useConditionalFilterContext();
 

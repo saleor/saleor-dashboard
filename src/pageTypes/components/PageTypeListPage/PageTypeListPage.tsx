@@ -6,8 +6,8 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForModelTypesOverviewActions,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForPageTypeOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import { PageTypeFragment } from "@dashboard/graphql";
@@ -56,14 +56,14 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
-  const { MODEL_TYPES_OVERVIEW_CREATE, MODEL_TYPES_OVERVIEW_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.MODEL_TYPES_LIST,
+  const { PAGE_TYPE_OVERVIEW_CREATE, PAGE_TYPE_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.PAGE_TYPE_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForModelTypesOverviewActions(
-    MODEL_TYPES_OVERVIEW_MORE_ACTIONS,
+  const extensionMenuItems = getExtensionsItemsForPageTypeOverviewActions(
+    PAGE_TYPE_OVERVIEW_MORE_ACTIONS,
     listProps.pageTypes.map(pageType => pageType.id),
   );
-  const extensionCreateButtonItems = mapToMenuItems(MODEL_TYPES_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PAGE_TYPE_OVERVIEW_CREATE);
 
   return (
     <ListPageLayout>

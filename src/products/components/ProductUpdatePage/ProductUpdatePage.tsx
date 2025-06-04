@@ -17,7 +17,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
   extensionMountPoints,
-  mapToMenuItemsForProductDetails,
+  getExtensionsItemsForProductDetails,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import {
@@ -214,7 +214,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       ) as Array<ProductErrorFragment | ProductChannelListingErrorFragment>,
     [errors, channelsErrors],
   );
-  const extensionMenuItems = mapToMenuItemsForProductDetails(
+  const extensionMenuItems = getExtensionsItemsForProductDetails(
     PRODUCT_DETAILS_MORE_ACTIONS,
     productId,
   );

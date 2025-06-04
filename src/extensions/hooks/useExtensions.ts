@@ -56,25 +56,25 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_CREATE,
     AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_MORE_ACTIONS,
   ],
-  DISCOUNTS_LIST: [
-    AppExtensionMountEnum.PROMOTIONS_OVERVIEW_CREATE,
-    AppExtensionMountEnum.PROMOTIONS_OVERVIEW_MORE_ACTIONS,
+  DISCOUNT_LIST: [
+    AppExtensionMountEnum.DISCOUNT_OVERVIEW_CREATE,
+    AppExtensionMountEnum.DISCOUNT_OVERVIEW_MORE_ACTIONS,
   ],
   VOUCHER_LIST: [
     AppExtensionMountEnum.VOUCHER_OVERVIEW_CREATE,
     AppExtensionMountEnum.VOUCHER_OVERVIEW_MORE_ACTIONS,
   ],
-  MODEL_LIST: [
-    AppExtensionMountEnum.MODEL_OVERVIEW_CREATE,
-    AppExtensionMountEnum.MODEL_OVERVIEW_MORE_ACTIONS,
+  PAGE_LIST: [
+    AppExtensionMountEnum.PAGE_OVERVIEW_CREATE,
+    AppExtensionMountEnum.PAGE_OVERVIEW_MORE_ACTIONS,
   ],
-  MODEL_TYPES_LIST: [
-    AppExtensionMountEnum.MODEL_TYPES_OVERVIEW_CREATE,
-    AppExtensionMountEnum.MODEL_TYPES_OVERVIEW_MORE_ACTIONS,
+  PAGE_TYPE_LIST: [
+    AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_CREATE,
+    AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_MORE_ACTIONS,
   ],
-  STRUCTURE_LIST: [
-    AppExtensionMountEnum.STRUCTURE_OVERVIEW_CREATE,
-    AppExtensionMountEnum.STRUCTURE_OVERVIEW_MORE_ACTIONS,
+  MENU_LIST: [
+    AppExtensionMountEnum.MENU_OVERVIEW_CREATE,
+    AppExtensionMountEnum.MENU_OVERVIEW_MORE_ACTIONS,
   ],
   COLLECTION_DETAILS: [AppExtensionMountEnum.COLLECTION_DETAILS_MORE_ACTIONS],
   CATEGORY_DETAILS: [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS],
@@ -83,11 +83,11 @@ export const extensionMountPoints = {
   ORDER_DETAILS: [AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS],
   DRAFT_ORDER_DETAILS: [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_MORE_ACTIONS],
   PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
-  DISCOUNTS_DETAILS: [AppExtensionMountEnum.PROMOTIONS_DETAILS_MORE_ACTIONS],
+  DISCOUNT_DETAILS: [AppExtensionMountEnum.DISCOUNT_DETAILS_MORE_ACTIONS],
   VOUCHER_DETAILS: [AppExtensionMountEnum.VOUCHER_DETAILS_MORE_ACTIONS],
-  MODEL_DETAILS: [AppExtensionMountEnum.MODEL_DETAILS_MORE_ACTIONS],
-  MODEL_TYPE_DETAILS: [AppExtensionMountEnum.MODEL_TYPES_DETAILS_MORE_ACTIONS],
-  STRUCTURE_DETAILS: [AppExtensionMountEnum.STRUCTURE_DETAILS_MORE_ACTIONS],
+  PAGE_DETAILS: [AppExtensionMountEnum.PAGE_DETAILS_MORE_ACTIONS],
+  PAGE_TYPE_DETAILS: [AppExtensionMountEnum.PAGE_TYPE_DETAILS_MORE_ACTIONS],
+  MENU_DETAILS: [AppExtensionMountEnum.MENU_DETAILS_MORE_ACTIONS],
   NAVIGATION_SIDEBAR: [
     AppExtensionMountEnum.NAVIGATION_CATALOG,
     AppExtensionMountEnum.NAVIGATION_CUSTOMERS,
@@ -120,217 +120,58 @@ const filterAndMapToTarget = (
         params,
       }),
   }));
+
 const mapToMenuItem = ({ label, id, open }: ExtensionWithParams) => ({
   label,
   testId: `extension-${id}`,
   onSelect: open,
 });
 
-export const mapToMenuItems = (extensions: ExtensionWithParams[]) =>
+const getExtensionItemsWithoutParams = (extensions: ExtensionWithParams[]) =>
   extensions.map(extension => mapToMenuItem({ ...extension, open: () => extension.open({}) }));
 
-export const mapToMenuItemsForProductOverviewActions = (
-  extensions: ExtensionWithParams[],
-  productIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productIds }) }),
-  );
+const getExtensionsItemsWithParam =
+  (queryParam: keyof AppDetailsUrlMountQueryParams) =>
+  (extensions: ExtensionWithParams[], paramValue: string[] | string | undefined) =>
+    extensions.map(extension =>
+      mapToMenuItem({ ...extension, open: () => extension.open({ [queryParam]: paramValue }) }),
+    );
 
-export const mapToMenuItemsForProductDetails = (
-  extensions: ExtensionWithParams[],
-  productId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productId }) }),
-  );
-
-export const mapToMenuItemsForCustomerDetails = (
-  extensions: ExtensionWithParams[],
-  customerId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ customerId }) }),
-  );
-
-export const mapToMenuItemsForCustomerOverviewActions = (
-  extensions: ExtensionWithParams[],
-  customerIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ customerIds }),
-    }),
-  );
-
-export const mapToMenuItemsForOrderDetails = (
-  extensions: ExtensionWithParams[],
-  orderId?: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ orderId }),
-    }),
-  );
-
-export const mapMenuItemsForCategoryOverviewActions = (
-  extensions: ExtensionWithParams[],
-  categoryIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ categoryIds }),
-    }),
-  );
-
-export const mapToMenuItemsForCategoryDetails = (
-  extensions: ExtensionWithParams[],
-  categoryId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ categoryId }) }),
-  );
-
-export const mapMenuItemsForCollectionOverviewActions = (
-  extensions: ExtensionWithParams[],
-  collectionIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ collectionIds }),
-    }),
-  );
-
-export const mapToMenuItemsForCollectionDetails = (
-  extensions: ExtensionWithParams[],
-  collectionId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ collectionId }) }),
-  );
-
-export const mapMenuItemsForGiftCardOverviewActions = (
-  extensions: ExtensionWithParams[],
-  giftCardIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ giftCardIds }),
-    }),
-  );
-
-export const mapToMenuItemsForGiftCardDetails = (
-  extensions: ExtensionWithParams[],
-  giftCardId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ giftCardId }) }),
-  );
-
-export const mapMenuItemsForDraftOrderOverviewActions = (
-  extensions: ExtensionWithParams[],
-  draftOrderIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ draftOrderIds }),
-    }),
-  );
-
-export const mapToMenuItemsForDraftOrderDetails = (
-  extensions: ExtensionWithParams[],
-  draftOrderId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ draftOrderId }) }),
-  );
-
-export const mapToMenuItemsForDiscountDetails = (
-  extensions: ExtensionWithParams[],
-  discountId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ discountId }) }),
-  );
-
-export const mapToMenuItemsForVouchersOverviewActions = (
-  extensions: ExtensionWithParams[],
-  voucherIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ voucherIds }),
-    }),
-  );
-
-export const mapToMenuItemsForVoucherDetails = (
-  extensions: ExtensionWithParams[],
-  voucherId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ voucherId }) }),
-  );
-
-export const mapToMenuItemsForModelOverviewActions = (
-  extensions: ExtensionWithParams[],
-  modelIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ modelIds }),
-    }),
-  );
-
-export const mapToMenuItemsForModelDetails = (extensions: ExtensionWithParams[], modelId: string) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ modelId }) }),
-  );
-
-export const mapToMenuItemsForModelTypesOverviewActions = (
-  extensions: ExtensionWithParams[],
-  modelTypeIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ modelTypeIds }),
-    }),
-  );
-
-export const mapToMenuItemsForModelTypeDetails = (
-  extensions: ExtensionWithParams[],
-  modelTypeId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ modelTypeId }) }),
-  );
-
-export const mapToMenuItemsForStructureOverviewActions = (
-  extensions: ExtensionWithParams[],
-  structureIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ structureIds }),
-    }),
-  );
-
-export const mapToMenuItemsForStructureDetails = (
-  extensions: ExtensionWithParams[],
-  structureId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ structureId }) }),
-  );
+// Some pages don't have ability to select items - that is why we use the same function
+// for overview actions and create buttons.
+export const getExtensionItemsForOverviewCreate = getExtensionItemsWithoutParams;
+export const getExtensionsItemsForProductOverviewActions =
+  getExtensionsItemsWithParam("productIds");
+export const getExtensionsItemsForProductDetails = getExtensionsItemsWithParam("productId");
+export const getExtensionsItemsForCustomerDetails = getExtensionsItemsWithParam("customerId");
+export const getExtensionsItemsForCustomerOverviewActions =
+  getExtensionsItemsWithParam("customerIds");
+export const getExtensionsItemsForOrderDetails = getExtensionsItemsWithParam("orderId");
+export const getExtensionsItemsForCategoryOverviewActions =
+  getExtensionsItemsWithParam("categoryIds");
+export const getExtensionsItemsForCategoryDetails = getExtensionsItemsWithParam("categoryId");
+export const getExtensionsItemsForCollectionOverviewActions =
+  getExtensionsItemsWithParam("collectionIds");
+export const getExtensionsItemsForCollectionDetails = getExtensionsItemsWithParam("collectionId");
+export const getExtensionsItemsForGiftCardOverviewActions =
+  getExtensionsItemsWithParam("giftCardIds");
+export const getExtensionsItemsForGiftCardDetails = getExtensionsItemsWithParam("giftCardId");
+export const getExtensionsItemsForOrderOverviewActions = getExtensionItemsWithoutParams;
+export const getExtensionsItemsForDraftOrderOverviewActions =
+  getExtensionsItemsWithParam("draftOrderIds");
+export const getExtensionsItemsForDraftOrderDetails = getExtensionsItemsWithParam("draftOrderId");
+export const getExtensionsItemsForDiscountOverviewActions = getExtensionItemsForOverviewCreate;
+export const getExtensionsItemsForDiscountDetails = getExtensionsItemsWithParam("discountId");
+export const getExtensionsItemsForVoucherOverviewActions =
+  getExtensionsItemsWithParam("voucherIds");
+export const getExtensionsItemsForVoucherDetails = getExtensionsItemsWithParam("voucherId");
+export const getExtensionsItemsForPageOverviewActions = getExtensionsItemsWithParam("pageIds");
+export const getExtensionsItemForPageDetails = getExtensionsItemsWithParam("pageId");
+export const getExtensionsItemsForPageTypeOverviewActions =
+  getExtensionsItemsWithParam("pageTypeIds");
+export const getExtensionsItemsForPageTypeDetails = getExtensionsItemsWithParam("pageTypeId");
+export const getExtensionsItemsForMenuOverviewActions = getExtensionsItemsWithParam("menuIds");
+export const getExtensionsItemsForMenuDetails = getExtensionsItemsWithParam("menuId");
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[],

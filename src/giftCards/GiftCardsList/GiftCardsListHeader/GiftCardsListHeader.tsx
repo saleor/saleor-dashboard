@@ -4,8 +4,8 @@ import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDr
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import {
   extensionMountPoints,
-  mapMenuItemsForGiftCardOverviewActions,
-  mapToMenuItems,
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForGiftCardOverviewActions,
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -48,11 +48,11 @@ const GiftCardsListHeader: React.FC = () => {
   const { GIFT_CARD_OVERVIEW_CREATE, GIFT_CARD_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.GIFT_CARD_LIST,
   );
-  const extensionMenuItems = mapMenuItemsForGiftCardOverviewActions(
+  const extensionMenuItems = getExtensionsItemsForGiftCardOverviewActions(
     GIFT_CARD_OVERVIEW_MORE_ACTIONS,
     giftCards.map(giftCard => giftCard.id),
   );
-  const extensionCreateButtonItems = mapToMenuItems(GIFT_CARD_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(GIFT_CARD_OVERVIEW_CREATE);
 
   return (
     <>
