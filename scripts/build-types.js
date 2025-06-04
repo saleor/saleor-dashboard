@@ -11,7 +11,8 @@ for (const rawSuffix of schemaSuffixes) {
 
   generate(
     {
-      schema: `./introspection${suffix}.json`,
+      // schema: `./introspection${suffix}.json`,
+      schema: `./schema.graphql`,
       overwrite: true,
       generates: {
         [getOutputPath("fragmentTypes", suffix)]: {
