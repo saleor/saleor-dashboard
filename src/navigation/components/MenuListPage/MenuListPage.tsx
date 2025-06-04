@@ -1,5 +1,12 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  mapToMenuItemsForStructureOverviewActions,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import { MenuFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -27,6 +34,15 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
     navigate(menuListUrl({ action: "add" }));
   };
 
+  const { STRUCTURE_OVERVIEW_CREATE, STRUCTURE_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.STRUCTURE_LIST,
+  );
+  const extensionMenuItems = mapToMenuItemsForStructureOverviewActions(
+    STRUCTURE_OVERVIEW_MORE_ACTIONS,
+    listProps.menus.map(menu => menu.id),
+  );
+  const extensionCreateButtonItems = mapToMenuItems(STRUCTURE_OVERVIEW_CREATE);
+
   return (
     <ListPageLayout>
       <TopNav
@@ -48,13 +64,28 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
             </Text>
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
-            <Button onClick={handleCreateMenu} variant="primary" data-test-id="add-menu">
-              <FormattedMessage
-                id="0dCGBW"
-                defaultMessage="Create structure"
-                description="button"
-              />
-            </Button>
+            {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonGroupWithDropdown
+                options={extensionCreateButtonItems}
+                onClick={handleCreateMenu}
+                data-test-id="add-menu"
+              >
+                <FormattedMessage
+                  id="0dCGBW"
+                  defaultMessage="Create structure"
+                  description="button"
+                />
+              </ButtonGroupWithDropdown>
+            ) : (
+              <Button onClick={handleCreateMenu} variant="primary" data-test-id="add-menu">
+                <FormattedMessage
+                  id="0dCGBW"
+                  defaultMessage="Create structure"
+                  description="button"
+                />
+              </Button>
+            )}
           </Box>
         </Box>
       </TopNav>

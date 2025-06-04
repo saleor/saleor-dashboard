@@ -62,6 +62,8 @@ export interface AppDetailsUrlMountQueryParams {
   modelIds?: string[];
   modelTypeId?: string;
   modelTypeIds?: string[];
+  structureId?: string;
+  structureIds?: string[];
 }
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;
