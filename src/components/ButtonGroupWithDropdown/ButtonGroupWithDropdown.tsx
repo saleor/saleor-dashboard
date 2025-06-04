@@ -1,7 +1,15 @@
-import { Box, Button, ChervonDownIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  BoxProps,
+  Button,
+  ChervonDownIcon,
+  Dropdown,
+  List,
+  Text,
+} from "@saleor/macaw-ui-next";
 import React from "react";
 
-interface ButtonGroupWithDropdownProps {
+interface ButtonGroupWithDropdownProps extends BoxProps {
   onClick?: () => void;
   options: Array<{
     label: string;
@@ -13,25 +21,24 @@ interface ButtonGroupWithDropdownProps {
 }
 
 // TODO: consider moving this to Macaw UI
-export const ButtonGroupWithDropdown: React.FC<ButtonGroupWithDropdownProps> = ({
+export const ButtonGroupWithDropdown = ({
   children,
   options,
   onClick,
   disabled = false,
   testId,
-}) => {
+  ...boxProps
+}: ButtonGroupWithDropdownProps) => {
   return (
     <Dropdown>
-      <Box display="flex">
+      <Box display="flex" {...boxProps}>
         <Button
           onClick={onClick}
           data-test-id={testId}
           disabled={disabled}
           // TODO: fix this in Macaw UI - allow overriding border radius
-          style={{
-            borderBottomRightRadius: 0,
-            borderTopRightRadius: 0,
-          }}
+          __borderBottomRightRadius={0}
+          __borderTopRightRadius={0}
         >
           {children}
         </Button>
@@ -42,11 +49,9 @@ export const ButtonGroupWithDropdown: React.FC<ButtonGroupWithDropdownProps> = (
             disabled={disabled}
             borderColor="default1"
             borderLeftWidth={1}
-            borderLeftStyle={"solid"}
-            style={{
-              borderBottomLeftRadius: 0,
-              borderTopLeftRadius: 0,
-            }}
+            borderLeftStyle="solid"
+            __borderBottomLeftRadius={0}
+            __borderTopLeftRadius={0}
           />
         </Dropdown.Trigger>
       </Box>
