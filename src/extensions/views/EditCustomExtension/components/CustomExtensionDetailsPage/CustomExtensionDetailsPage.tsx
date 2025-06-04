@@ -35,7 +35,6 @@ export interface CustomExtensionDetailsPageFormData {
   permissions: PermissionEnum[];
 }
 export interface CustomExtensionDetailsPageProps {
-  apiUrl: string;
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"] | null | undefined;
@@ -44,7 +43,6 @@ export interface CustomExtensionDetailsPageProps {
   token: string;
   hasManagedAppsPermission: boolean;
   isLoading: boolean;
-  onApiUrlClick: () => void;
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
@@ -58,7 +56,6 @@ export interface CustomExtensionDetailsPageProps {
 
 const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = props => {
   const {
-    apiUrl,
     disabled,
     errors,
     permissions,
@@ -66,7 +63,6 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     app,
     token,
     hasManagedAppsPermission,
-    onApiUrlClick,
     onTokenClose,
     onTokenCreate,
     onTokenDelete,
@@ -114,12 +110,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
 
             {token && (
               <>
-                <CustomExtensionDefaultToken
-                  apiUrl={apiUrl}
-                  token={token}
-                  onApiUrlClick={onApiUrlClick}
-                  onTokenClose={onTokenClose}
-                />
+                <CustomExtensionDefaultToken token={token} onTokenClose={onTokenClose} />
                 <CardSpacer />
               </>
             )}
