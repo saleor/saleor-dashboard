@@ -34,7 +34,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const { GIFT_CARD_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.GIFT_CARD_DETAILS);
   const extensionMenuItems = getExtensionsItemsForGiftCardDetails(
     GIFT_CARD_DETAILS_MORE_ACTIONS,
-    giftCard.id,
+    giftCard?.id,
   );
 
   if (!giftCard) {
