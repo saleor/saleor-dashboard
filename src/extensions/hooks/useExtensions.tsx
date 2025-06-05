@@ -8,8 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Text } from "@saleor/macaw-ui-next";
-import React, { useRef } from "react";
+import React from "react";
 
 import { useExternalApp } from "../components/ExternalAppContext";
 import { AppData } from "../components/ExternalAppContext/context";
@@ -80,7 +79,52 @@ const filterAndMapToTarget = (
       mount,
     };
 
-    if (target !== "NEW_TAB") {
+    if (target === "NEW_TAB") {
+      const IS_POST = true; // todo from api
+
+      if (IS_POST) {
+        result.open = params => {
+          const formParams = {
+            // params injected by pages
+            ...params,
+            // todo should token be in body or header maybe? or maybe we should wrap params to object?
+            accessToken: accessToken,
+          };
+
+          // todo we should pass params somehow too
+          const form = document.createElement("form");
+
+          form.method = "POST";
+          form.action = url;
+          form.target = "_blank";
+          form.style.display = "none";
+
+          for (const param of Object.entries(formParams)) {
+            const value = param[1];
+
+            if (!value) {
+              break;
+            }
+
+            const elInput = document.createElement("input");
+
+            elInput.type = "hidden";
+            elInput.name = param[0];
+            elInput.value = param[1] as string;
+
+            form.appendChild(elInput);
+          }
+
+          document.body.append(form);
+
+          form.submit();
+
+          document.body.removeChild(form);
+        };
+      } else {
+        window.open(url, "_blank");
+      }
+    } else {
       result.open = (params: AppDetailsUrlMountQueryParams) => {
         openApp({
           id: app.id,
@@ -93,63 +137,14 @@ const filterAndMapToTarget = (
       };
     }
 
-    if (target === "NEW_TAB") {
-      result.open = () => window.open(url, "_blank");
-    }
-
     return result;
   });
 
-const mapToMenuItem = ({
-  label,
-  id,
-  open,
-  url,
-  target,
-  accessToken,
-}: ExtensionWithParams): MenuItem => {
+const mapToMenuItem = ({ label, id, open }: ExtensionWithParams): MenuItem => {
   const result: MenuItem = {
     label,
     testId: `extension-${id}`,
   };
-
-  // todo we need to get it from app extension, which we must have in saleor
-  const isPOST = true;
-
-  if (isPOST) {
-    // todo append form to html vanilla js
-  }
-
-  // if (target == "NEW_TAB" && !isPOST) {
-  //   result.renderElement = () => {
-  //     return (
-  //       <Text>
-  //         <a href={url} target="_blank" rel="noreferrer">
-  //           {label}
-  //         </a>
-  //       </Text>
-  //     );
-  //   };
-  // } else if (target === "NEW_TAB" && isPOST) {
-  //   result.renderElement = () => {
-  //     const ref = useRef<HTMLFormElement>(null);
-  //
-  //     return (
-  //       <form ref={ref} target="_blank" action={url} method="POST">
-  //         <input style={{ display: "none" }} name={"accessToken"} value={accessToken} />
-  //         <Text
-  //           onClick={() => {
-  //             ref.current && ref.current.submit();
-  //           }}
-  //         >
-  //           {label}
-  //         </Text>
-  //       </form>
-  //     );
-  //   };
-  // } else {
-  //   result.onSelect = open;
-  // }
 
   result.onSelect = open;
 
