@@ -14,7 +14,7 @@ interface ButtonWithDropdownProps extends ButtonProps {
   options: Array<{
     label: string;
     testId?: string;
-    onSelect: (...args: any[]) => void;
+    onSelect: <T>(params?: T) => void;
   }>;
   testId?: string;
   disabled?: boolean;
