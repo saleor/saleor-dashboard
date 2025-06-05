@@ -89,7 +89,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   const { PAGE_TYPE_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PAGE_TYPE_DETAILS);
   const extensionMenuItems = getExtensionsItemsForPageTypeDetails(
     PAGE_TYPE_DETAILS_MORE_ACTIONS,
-    pageType.id,
+    pageType?.id,
   );
 
   return (

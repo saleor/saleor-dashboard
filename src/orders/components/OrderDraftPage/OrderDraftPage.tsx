@@ -99,7 +99,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   );
   const extensionMenuItems = getExtensionsItemsForDraftOrderDetails(
     DRAFT_ORDER_DETAILS_MORE_ACTIONS,
-    order.id,
+    order?.id,
   );
 
   return (

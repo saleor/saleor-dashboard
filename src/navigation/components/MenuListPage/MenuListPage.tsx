@@ -24,9 +24,10 @@ export interface MenuListPageProps
     SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
   onDelete: (id: string) => void;
+  selectedMenuIds: string[];
 }
 
-const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
+const MenuListPage: React.FC<MenuListPageProps> = ({ selectedMenuIds, ...listProps }) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
@@ -37,9 +38,10 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
   const { MENU_OVERVIEW_CREATE, MENU_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.MENU_LIST,
   );
+
   const extensionMenuItems = getExtensionsItemsForMenuOverviewActions(
     MENU_OVERVIEW_MORE_ACTIONS,
-    listProps.menus.map(menu => menu.id),
+    selectedMenuIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(MENU_OVERVIEW_CREATE);
 
@@ -94,5 +96,4 @@ const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
   );
 };
 
-MenuListPage.displayName = "MenuListPage";
 export default MenuListPage;

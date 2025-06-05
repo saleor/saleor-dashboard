@@ -228,9 +228,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     path: voucherListPath,
   });
 
-  const { CATEGORY_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.VOUCHER_DETAILS);
+  const { VOUCHER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.VOUCHER_DETAILS);
   const extensionMenuItems = getExtensionsItemsForVoucherDetails(
-    CATEGORY_DETAILS_MORE_ACTIONS,
+    VOUCHER_DETAILS_MORE_ACTIONS,
     voucher?.id,
   );
 

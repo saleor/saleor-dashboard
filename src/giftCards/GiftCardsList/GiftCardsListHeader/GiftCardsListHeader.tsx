@@ -32,7 +32,6 @@ const GiftCardsListHeader: React.FC = () => {
     openSearchSaveDialog,
   } = useGiftCardListDialogs();
   const {
-    giftCards,
     hasPresetsChanged,
     selectedPreset,
     presets,
@@ -42,15 +41,17 @@ const GiftCardsListHeader: React.FC = () => {
     resetFilters,
     isFilterPresetOpen,
     setFilterPresetOpen,
+    selectedRowIds,
   } = useGiftCardList();
   const openSettings = () => navigate(giftCardSettingsUrl);
 
   const { GIFT_CARD_OVERVIEW_CREATE, GIFT_CARD_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.GIFT_CARD_LIST,
   );
+
   const extensionMenuItems = getExtensionsItemsForGiftCardOverviewActions(
     GIFT_CARD_OVERVIEW_MORE_ACTIONS,
-    giftCards.map(giftCard => giftCard.id),
+    selectedRowIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(GIFT_CARD_OVERVIEW_CREATE);
 

@@ -73,7 +73,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   };
 
   const { MENU_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.MENU_DETAILS);
-  const extensionMenuItems = getExtensionsItemsForMenuDetails(MENU_DETAILS_MORE_ACTIONS, menu.id);
+  const extensionMenuItems = getExtensionsItemsForMenuDetails(MENU_DETAILS_MORE_ACTIONS, menu?.id);
 
   return (
     <Form

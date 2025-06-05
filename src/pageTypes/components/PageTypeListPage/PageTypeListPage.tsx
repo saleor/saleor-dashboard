@@ -37,6 +37,7 @@ export interface PageTypeListPageProps
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (id: number) => void;
   hasPresetsChanged: () => boolean;
+  selectedPageTypes: string[];
 }
 
 const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
@@ -50,6 +51,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   onTabUpdate,
   hasPresetsChanged,
   tabs,
+  selectedPageTypes,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -61,7 +63,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   );
   const extensionMenuItems = getExtensionsItemsForPageTypeOverviewActions(
     PAGE_TYPE_OVERVIEW_MORE_ACTIONS,
-    listProps.pageTypes.map(pageType => pageType.id),
+    selectedPageTypes,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PAGE_TYPE_OVERVIEW_CREATE);
 
