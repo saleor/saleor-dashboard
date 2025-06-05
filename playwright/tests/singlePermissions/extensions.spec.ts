@@ -38,7 +38,7 @@ test("TC: SALEOR_131 User with MANAGE_APPS permission can install apps but not p
   const mainMenuPage = new MainMenuPage(page);
   const extensionsPage = new ExtensionsPage(page);
 
-  await page.goto("/");
+  await home.goto();
   await mainMenuPage.openExploreExtensions();
   await extensionsPage.waitForContentLoad();
 
