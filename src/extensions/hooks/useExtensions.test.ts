@@ -230,6 +230,7 @@ describe("Extensions / hooks / useExtensions", () => {
     const { result } = renderHook(() => useExtensions(mountList));
     const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE][0];
 
+    // @ts-expect-error - there are broken types in useExtensions - this hook should return either Extension or ExtensionWithParams
     extension.open(mockParams);
 
     // Assert
@@ -254,7 +255,7 @@ describe("Extensions / hooks / useExtensions", () => {
     const { result } = renderHook(() => useExtensions(mountList));
     const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE][1]; // ext3 has null accessToken
 
-    extension.open({});
+    extension.open();
 
     // Assert
     expect(mockOpenApp).toHaveBeenCalledWith({
