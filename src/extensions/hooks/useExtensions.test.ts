@@ -264,7 +264,7 @@ describe("Extensions / hooks / useExtensions", () => {
       src: "https://example.com/ext3",
       label: "Extension 3",
       target: "POPUP",
-      params: {},
+      params: undefined,
     });
   });
 
