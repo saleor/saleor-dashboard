@@ -78,6 +78,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
     extensionMountPoints.ORDER_LIST,
   );
   const extensionMenuItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_MORE_ACTIONS);
+
   const extensionCreateButtonItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_CREATE);
   const context = useDevModeContext();
   const { valueProvider } = useConditionalFilterContext();

@@ -5,6 +5,7 @@ interface TopNavMenuItem {
   label: string;
   testId?: string;
   onSelect?: <T>(params?: T) => void;
+  renderElement?: () => React.ReactElement;
 }
 
 interface TopNavMenuProps {
@@ -29,7 +30,7 @@ export const Menu: React.FC<TopNavMenuProps> = ({ items, dataTestId }) => (
                 onClick={item.onSelect}
                 data-test-id={item.testId}
               >
-                <Text>{item.label}</Text>
+                {item.renderElement ? item.renderElement() : <Text>{item.label}</Text>}
               </List.Item>
             </Dropdown.Item>
           ))}

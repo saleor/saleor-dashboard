@@ -8,6 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { useExternalApp } from "../components/ExternalAppContext";
@@ -104,9 +105,11 @@ const mapToMenuItem = ({ label, id, open, url, target }: ExtensionWithParams): M
   if (target == "NEW_TAB") {
     result.renderElement = () => {
       return (
-        <a href={url} target="_blank" rel="noreferrer">
-          {label}
-        </a>
+        <Text>
+          <a href={url} target="_blank" rel="noreferrer">
+            {label}
+          </a>
+        </Text>
       );
     };
   } else {
