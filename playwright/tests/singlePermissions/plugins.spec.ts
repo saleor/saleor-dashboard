@@ -1,3 +1,4 @@
+import { URL_LIST } from "@data/url";
 import { ExtensionsPage } from "@pages/extensionsPage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect } from "@playwright/test";
@@ -46,7 +47,7 @@ test("TC: SALEOR_131 User with MANAGE_PLUGINS permission can install plugins but
   const mainMenuPage = new MainMenuPage(page);
   const extensionsPage = new ExtensionsPage(page);
 
-  await page.goto("/");
+  await page.goto(URL_LIST.homePage);
   await mainMenuPage.openExploreExtensions();
   await extensionsPage.waitForContentLoad();
 
