@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.21.1
+
+### Patch Changes
+
+- f5d083b: Updated custom app views to use refreshed look (new UI components)
+- 619d5b9: You can now see radio group with updated UI in channel allocation
+- 772d05e: Improved error messages when installing extension from URL.
+  Error messages will now point to Saleor Docs and display error code from GraphQL response
+- 941ca7c: You can now see updated checkboxes and toggle component in attribute edit form.
+- 71276f2: You can now see udpated UI components in product type details view.
+- 583d2e3: Updated plugin extension details page to use fresh look (new macaw-ui components). Added text when plugin has no configuration.
+- 8393ad7: Fixed create button extensions on Customers, Products, and Orders lists. Apps can now add custom actions alongside the main action (e.g., creating an order) when mounted as extensions.
+- cc10e99: You can now see updated buttons, inputs and checkboxes in fulfillment refund view
+- d1be030: Now model types view was migrated to the the same layout as on the other pages.
+- 2978513: Added success indicator when token / headers in "Create token" modal in custom app details page are successfully copied to clipboard
+- 3430a41: You can now see channel name in fulfillments lists
+- 6158fe0: Fixed Pills color not updating after rerender (previously for example when changing plugin from active to inactive color didn't change from red to green).
+- 4d31f4d: Released changes to Extensions previously behind dev feature flag:
+
+  - **Unified "Installed Extensions" view**: Apps, plugins and custom apps (aka "local" apps) are now listed together on a single "Installed Extensions" page.
+  - **Plugins in "Explore Extensions"**: Legacy plugins are now discoverable in the "Explore Extensions" section.
+  - **Redesigned "Add Custom App" Workflow**: Creating custom apps is now a multi-step process, starting with name and permissions, followed by webhook and token configuration.
+  - **Streamlined "Install from Manifest"**: Providing a manifest URL and accepting app permissions are now combined into a single page.
+  - **Improved error handling**: Error messages now include direct links to Saleor Documentation for easier troubleshooting.
+  - **Removed old views**: Separate list views for plugins and custom apps have been removed.
+
+- 772d05e: When installing extension from URL (e.g. by clicking "Install" on Explore Extensions), `manifestUrl` input will no longer be displayed
+- b8524a8: Improved search element across dashboard: now clicking on search icon or near the search border will focus the input.
+- e7e0412: Extension details page now hides webhook deliveries that have no attempt (e.g. deleted after some time by Saleor) and if no delivery has an attempt is shows a message with explanation.
+
 ## 3.21.0
 
 ### Minor Changes
