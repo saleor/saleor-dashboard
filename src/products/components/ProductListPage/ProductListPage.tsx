@@ -11,12 +11,12 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
   getExtensionItemsForOverviewCreate,
   getExtensionsItemsForProductOverviewActions,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   Exact,
   GridAttributesQuery,

@@ -18,11 +18,9 @@ import {
 import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { voucherListPath } from "@dashboard/discounts/urls";
-import {
-  extensionMountPoints,
-  getExtensionsItemsForVoucherDetails,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForVoucherDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,

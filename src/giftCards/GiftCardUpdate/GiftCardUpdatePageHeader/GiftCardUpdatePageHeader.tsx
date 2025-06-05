@@ -1,10 +1,8 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import {
-  extensionMountPoints,
-  getExtensionsItemsForGiftCardDetails,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForGiftCardDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { giftCardsListPath } from "@dashboard/giftCards/urls";

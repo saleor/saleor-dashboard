@@ -3,12 +3,12 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
   getExtensionItemsForOverviewCreate,
   getExtensionsItemsForDraftOrderOverviewActions,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPresetsProps } from "@dashboard/types";

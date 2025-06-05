@@ -10,12 +10,12 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
   getExtensionItemsForOverviewCreate,
   getExtensionsItemsForOrderOverviewActions,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";

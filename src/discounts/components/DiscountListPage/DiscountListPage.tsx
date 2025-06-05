@@ -11,12 +11,12 @@ import {
   DiscountListUrlSortField,
   discountUrl,
 } from "@dashboard/discounts/discountsUrls";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
   getExtensionItemsForOverviewCreate,
   getExtensionsItemsForDiscountOverviewActions,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { PromotionFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";

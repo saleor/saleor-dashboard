@@ -1,12 +1,12 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
   getExtensionItemsForOverviewCreate,
   getExtensionsItemsForMenuOverviewActions,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { MenuFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";

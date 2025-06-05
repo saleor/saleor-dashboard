@@ -1,4 +1,5 @@
-import { extensionMountPoints, useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Link } from "react-router-dom";

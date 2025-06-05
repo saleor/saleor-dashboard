@@ -6,11 +6,9 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DateTime } from "@dashboard/components/Date";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import {
-  extensionMountPoints,
-  getExtensionsItemsForDraftOrderDetails,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForDraftOrderDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,

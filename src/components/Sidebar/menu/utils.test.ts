@@ -1,4 +1,4 @@
-import { Extension } from "@dashboard/extensions/hooks/useExtensions";
+import { Extension } from "@dashboard/extensions/types";
 import { AppExtensionMountEnum, PermissionEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 
