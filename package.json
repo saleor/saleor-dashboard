@@ -290,5 +290,6 @@
     "knip": "knip --reporter markdown",
     "knip:fix": "knip --fix"
   },
-  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
+  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)",
+  "packageManager": "npm@10.8.2"
 }
