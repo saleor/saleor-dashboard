@@ -89,6 +89,7 @@ const filterAndMapToTarget = (
             ...params,
             // todo should token be in body or header maybe? or maybe we should wrap params to object?
             accessToken: accessToken,
+            saleorApiUrl: process.env.API_URL,
           };
 
           // todo we should pass params somehow too
