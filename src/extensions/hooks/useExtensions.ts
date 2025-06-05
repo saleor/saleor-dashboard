@@ -132,7 +132,7 @@ export const mapToMenuItemsForOrderDetails = (
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[],
-): Record<T, Extension[]> => {
+): Record<T, ExtensionWithParams[]> => {
   const { openApp } = useExternalApp();
   const permissions = useUserPermissions();
   const extensionsPermissions = permissions?.find(perm => perm.code === PermissionEnum.MANAGE_APPS);
