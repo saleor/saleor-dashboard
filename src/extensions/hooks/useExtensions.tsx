@@ -9,7 +9,7 @@ import {
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useRef } from "react";
 
 import { useExternalApp } from "../components/ExternalAppContext";
 import { AppData } from "../components/ExternalAppContext/context";
@@ -93,28 +93,65 @@ const filterAndMapToTarget = (
       };
     }
 
+    if (target === "NEW_TAB") {
+      result.open = () => window.open(url, "_blank");
+    }
+
     return result;
   });
 
-const mapToMenuItem = ({ label, id, open, url, target }: ExtensionWithParams): MenuItem => {
+const mapToMenuItem = ({
+  label,
+  id,
+  open,
+  url,
+  target,
+  accessToken,
+}: ExtensionWithParams): MenuItem => {
   const result: MenuItem = {
     label,
     testId: `extension-${id}`,
   };
 
-  if (target == "NEW_TAB") {
-    result.renderElement = () => {
-      return (
-        <Text>
-          <a href={url} target="_blank" rel="noreferrer">
-            {label}
-          </a>
-        </Text>
-      );
-    };
-  } else {
-    result.onSelect = open;
+  // todo we need to get it from app extension, which we must have in saleor
+  const isPOST = true;
+
+  if (isPOST) {
+    // todo append form to html vanilla js
   }
+
+  // if (target == "NEW_TAB" && !isPOST) {
+  //   result.renderElement = () => {
+  //     return (
+  //       <Text>
+  //         <a href={url} target="_blank" rel="noreferrer">
+  //           {label}
+  //         </a>
+  //       </Text>
+  //     );
+  //   };
+  // } else if (target === "NEW_TAB" && isPOST) {
+  //   result.renderElement = () => {
+  //     const ref = useRef<HTMLFormElement>(null);
+  //
+  //     return (
+  //       <form ref={ref} target="_blank" action={url} method="POST">
+  //         <input style={{ display: "none" }} name={"accessToken"} value={accessToken} />
+  //         <Text
+  //           onClick={() => {
+  //             ref.current && ref.current.submit();
+  //           }}
+  //         >
+  //           {label}
+  //         </Text>
+  //       </form>
+  //     );
+  //   };
+  // } else {
+  //   result.onSelect = open;
+  // }
+
+  result.onSelect = open;
 
   return result;
 };
