@@ -41,7 +41,10 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.ORDER_OVERVIEW_MORE_ACTIONS,
   ],
   CUSTOMER_DETAILS: [AppExtensionMountEnum.CUSTOMER_DETAILS_MORE_ACTIONS],
-  ORDER_DETAILS: [AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS],
+  ORDER_DETAILS: [
+    AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS,
+    AppExtensionMountEnum.ORDER_DETAILS_WIDGETS,
+  ],
   PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
   NAVIGATION_SIDEBAR: [
     AppExtensionMountEnum.NAVIGATION_CATALOG,
@@ -136,6 +139,7 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
   const { openApp } = useExternalApp();
   const permissions = useUserPermissions();
   const extensionsPermissions = permissions?.find(perm => perm.code === PermissionEnum.MANAGE_APPS);
+
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
     variables: {
@@ -145,20 +149,21 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
     },
     skip: !extensionsPermissions,
   });
+
   const extensions = filterAndMapToTarget(
     mapEdgesToItems(data?.appExtensions ?? undefined) || [],
     openApp,
   );
+
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
     {} as Record<AppExtensionMountEnum, Extension[]>,
   );
 
-  return extensions.reduce(
-    (prevExtensionsMap, extension) => ({
+  return extensions.reduce((prevExtensionsMap, extension) => {
+    return {
       ...prevExtensionsMap,
       [extension.mount]: [...(prevExtensionsMap[extension.mount] || []), extension],
-    }),
-    extensionsMap,
-  );
+    };
+  }, extensionsMap);
 };

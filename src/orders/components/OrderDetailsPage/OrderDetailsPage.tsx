@@ -172,7 +172,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
       shouldExist: hasAnyItemsReplaceable(order),
     },
   ]);
-  const { ORDER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.ORDER_DETAILS);
+  const { ORDER_DETAILS_MORE_ACTIONS, ORDER_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.ORDER_DETAILS,
+  );
   const extensionMenuItems = mapToMenuItemsForOrderDetails(ORDER_DETAILS_MORE_ACTIONS, order?.id);
   const context = useDevModeContext();
   const openPlaygroundURL = () => {
@@ -301,7 +303,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
               <CardSpacer />
               <Divider />
-              <AppWidgets />
+              <AppWidgets extensions={ORDER_DETAILS_WIDGETS} />
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.Spacer />
