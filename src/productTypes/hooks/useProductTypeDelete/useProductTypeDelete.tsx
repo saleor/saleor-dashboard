@@ -7,7 +7,7 @@ import { ProductCountQueryVariables, useProductCountQuery } from "@dashboard/gra
 import {
   UseTypeDeleteData,
   UseTypeDeleteProps,
-} from "@dashboard/pageTypes/hooks/usePageTypeDelete/types";
+} from "@dashboard/modelTypes/hooks/usePageTypeDelete/types";
 import {
   ProductTypeListUrlQueryParams,
   ProductTypeUrlQueryParams,
