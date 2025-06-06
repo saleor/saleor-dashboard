@@ -117,7 +117,11 @@ export const extensionList = gql`
           mount
           target
           accessToken
-          options
+          options {
+            newTabTarget {
+              method
+            }
+          }
           permissions {
             code
           }

@@ -2944,7 +2944,7 @@ type AppExtension implements Node @doc(category: "Apps") {
   accessToken: String
 
   """App extension options."""
-  options: JSONString
+  options: AppExtensionOptionsType
 }
 
 """All places where app extension can be mounted."""
@@ -3005,7 +3005,17 @@ enum AppExtensionTargetEnum @doc(category: "Apps") {
   NEW_TAB
 }
 
-scalar JSONString
+"""Represents the options for an app extension."""
+type AppExtensionOptionsType @doc(category: "Apps") {
+  """Options for opening the extension in a new tab."""
+  newTabTarget: NewTabTargetType
+}
+
+"""Represents the new tab target options for an app extension."""
+type NewTabTargetType @doc(category: "Apps") {
+  """HTTP method for new tab target (GET or POST)"""
+  method: String!
+}
 
 """Represents the app's brand data."""
 type AppBrand @doc(category: "Apps") {
@@ -3216,6 +3226,8 @@ input EventDeliveryFilterInput {
   status: EventDeliveryStatusEnum
   eventType: WebhookEventTypeEnum
 }
+
+scalar JSONString
 
 enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
   ACCOUNT_CONFIRMATION_REQUESTED

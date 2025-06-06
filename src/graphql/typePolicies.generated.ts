@@ -365,6 +365,10 @@ export type AppExtensionCountableEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type AppExtensionOptionsTypeKeySpecifier = ('newTabTarget' | AppExtensionOptionsTypeKeySpecifier)[];
+export type AppExtensionOptionsTypeFieldPolicy = {
+	newTabTarget?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type AppFetchManifestKeySpecifier = ('appErrors' | 'errors' | 'manifest' | AppFetchManifestKeySpecifier)[];
 export type AppFetchManifestFieldPolicy = {
 	appErrors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2989,6 +2993,10 @@ export type MutationFieldPolicy = {
 	webhookDryRun?: FieldPolicy<any> | FieldReadFunction<any>,
 	webhookTrigger?: FieldPolicy<any> | FieldReadFunction<any>,
 	webhookUpdate?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type NewTabTargetTypeKeySpecifier = ('method' | NewTabTargetTypeKeySpecifier)[];
+export type NewTabTargetTypeFieldPolicy = {
+	method?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type NodeKeySpecifier = ('id' | NodeKeySpecifier)[];
 export type NodeFieldPolicy = {
@@ -7152,6 +7160,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | AppExtensionCountableEdgeKeySpecifier | (() => undefined | AppExtensionCountableEdgeKeySpecifier),
 		fields?: AppExtensionCountableEdgeFieldPolicy,
 	},
+	AppExtensionOptionsType?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppExtensionOptionsTypeKeySpecifier | (() => undefined | AppExtensionOptionsTypeKeySpecifier),
+		fields?: AppExtensionOptionsTypeFieldPolicy,
+	},
 	AppFetchManifest?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppFetchManifestKeySpecifier | (() => undefined | AppFetchManifestKeySpecifier),
 		fields?: AppFetchManifestFieldPolicy,
@@ -8379,6 +8391,10 @@ export type StrictTypedTypePolicies = {
 	Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | MutationKeySpecifier | (() => undefined | MutationKeySpecifier),
 		fields?: MutationFieldPolicy,
+	},
+	NewTabTargetType?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | NewTabTargetTypeKeySpecifier | (() => undefined | NewTabTargetTypeKeySpecifier),
+		fields?: NewTabTargetTypeFieldPolicy,
 	},
 	Node?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | NodeKeySpecifier | (() => undefined | NodeKeySpecifier),

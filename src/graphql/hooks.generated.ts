@@ -9537,7 +9537,11 @@ export const ExtensionListDocument = gql`
         mount
         target
         accessToken
-        options
+        options {
+          newTabTarget {
+            method
+          }
+        }
         permissions {
           code
         }

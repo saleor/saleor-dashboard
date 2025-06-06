@@ -80,19 +80,17 @@ const filterAndMapToTarget = (
     };
 
     if (target === "NEW_TAB") {
-      const IS_POST = options.newTabTarget.method === "POST";
+      const IS_POST = options?.newTabTarget?.method === "POST";
 
       if (IS_POST) {
         result.open = params => {
           const formParams = {
-            // params injected by pages
             ...params,
-            // todo should token be in body or header maybe? or maybe we should wrap params to object?
             accessToken: accessToken,
+            appId: app.id,
             saleorApiUrl: process.env.API_URL,
           };
 
-          // todo we should pass params somehow too
           const form = document.createElement("form");
 
           form.method = "POST";
@@ -100,19 +98,16 @@ const filterAndMapToTarget = (
           form.target = "_blank";
           form.style.display = "none";
 
-          for (const param of Object.entries(formParams)) {
-            const value = param[1];
-
-            if (!value) {
-              break;
+          for (const [key, value] of Object.entries(formParams)) {
+            if (value === undefined || value === null || typeof value !== "string") {
+              continue;
             }
 
             const elInput = document.createElement("input");
 
             elInput.type = "hidden";
-            elInput.name = param[0];
-            elInput.value = param[1] as string;
-
+            elInput.name = key;
+            elInput.value = value;
             form.appendChild(elInput);
           }
 
