@@ -67,7 +67,7 @@ const filterAndMapToTarget = (
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>,
   openApp: (appData: AppData) => void,
 ): ExtensionWithParams[] =>
-  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app }) => {
+  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
     const result: ExtensionWithParams = {
       target,
       id,
@@ -80,7 +80,7 @@ const filterAndMapToTarget = (
     };
 
     if (target === "NEW_TAB") {
-      const IS_POST = true; // todo from api
+      const IS_POST = options.newTabTarget.method === "POST";
 
       if (IS_POST) {
         result.open = params => {
