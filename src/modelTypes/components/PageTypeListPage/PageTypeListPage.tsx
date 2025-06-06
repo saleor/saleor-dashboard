@@ -6,7 +6,7 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import { PageTypeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { pageTypeAddUrl, PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
+import { pageTypeAddUrl, PageTypeListUrlSortField } from "@dashboard/modelTypes/urls";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -14,7 +14,7 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
-import usePageTypeDelete from "@dashboard/pageTypes/hooks/usePageTypeDelete";
+import usePageTypeDelete from "@dashboard/modelTypes/hooks/usePageTypeDelete";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";

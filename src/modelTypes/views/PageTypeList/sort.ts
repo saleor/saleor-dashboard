@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { PageTypeSortField } from "@dashboard/graphql";
-import { PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
+import { PageTypeListUrlSortField } from "@dashboard/modelTypes/urls";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export function getSortQueryField(sort: PageTypeListUrlSortField): PageTypeSortField {
