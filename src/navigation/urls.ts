@@ -3,9 +3,9 @@ import urlJoin from "url-join";
 
 import { BulkAction, Dialog, Pagination, SingleAction, Sort } from "../types";
 
-export const navigationSection = "/navigation";
+export const navigationSection = "/structures";
 
-export const menuListPath = navigationSection;
+export const structuresListPath = navigationSection;
 export type MenuListUrlDialog = "add" | "remove" | "remove-many";
 export enum MenuListUrlSortField {
   name = "name",
@@ -18,7 +18,7 @@ export type MenuListUrlQueryParams = BulkAction &
   Pagination &
   SingleAction;
 export const menuListUrl = (params?: MenuListUrlQueryParams) =>
-  menuListPath + "?" + stringifyQs(params);
+  structuresListPath + "?" + stringifyQs(params);
 
 export const menuPath = (id: string) => urlJoin(navigationSection, id);
 export type MenuUrlDialog = "add-item" | "edit-item" | "remove";

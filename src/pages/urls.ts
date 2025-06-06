@@ -13,9 +13,9 @@ import {
   TabActionDialog,
 } from "../types";
 
-export const pagesSection = "/pages/";
+export const modelingSection = "/modeling/";
 
-export const pageListPath = pagesSection;
+export const pageListPath = modelingSection;
 export type PageListUrlDialog =
   | "publish"
   | "unpublish"
@@ -48,7 +48,7 @@ export type PageListUrlQueryParams = BulkAction &
 export const pageListUrl = (params?: PageListUrlQueryParams) =>
   pageListPath + "?" + stringifyQs(params);
 
-export const pagePath = (id: string) => urlJoin(pagesSection, id);
+export const pagePath = (id: string) => urlJoin(modelingSection, id);
 export type PageUrlDialog = "remove" | "assign-attribute-value";
 export interface PageCreateUrlPageType {
   "page-type-id"?: string;
@@ -58,6 +58,6 @@ export type PageCreateUrlQueryParams = Dialog<PageUrlDialog> & SingleAction & Pa
 export const pageUrl = (id: string, params?: PageUrlQueryParams) =>
   pagePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const pageCreatePath = urlJoin(pagesSection, "add");
+export const pageCreatePath = urlJoin(modelingSection, "add");
 export const pageCreateUrl = (params?: PageCreateUrlQueryParams) =>
   pageCreatePath + "?" + stringifyQs(params);

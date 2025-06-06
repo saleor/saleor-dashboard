@@ -12,9 +12,9 @@ import {
   TabActionDialog,
 } from "../types";
 
-const pageTypeSection = "/page-types/";
+const modelTypesSection = "/model-types/";
 
-export const pageTypeListPath = pageTypeSection;
+export const pageTypeListPath = modelTypesSection;
 export enum PageTypeListUrlFiltersEnum {
   type = "type",
   query = "query",
@@ -34,10 +34,10 @@ export type PageTypeListUrlQueryParams = ActiveTab &
 export const pageTypeListUrl = (params?: PageTypeListUrlQueryParams) =>
   pageTypeListPath + "?" + stringifyQs(params);
 
-export const pageTypeAddPath = urlJoin(pageTypeSection, "add");
+export const pageTypeAddPath = urlJoin(modelTypesSection, "add");
 export const pageTypeAddUrl = pageTypeAddPath;
 
-export const pageTypePath = (id: string) => urlJoin(pageTypeSection, id);
+export const pageTypePath = (id: string) => urlJoin(modelTypesSection, id);
 export type PageTypeUrlDialog =
   | "assign-attribute"
   | "unassign-attribute"

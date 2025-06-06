@@ -26,7 +26,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { pagesSection } from "@dashboard/pages/urls";
+import { modelingSection } from "@dashboard/pages/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import React from "react";
@@ -120,7 +120,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     onSelectPageType && onSelectPageType(pageTypeId);
 
   const pageListBackLink = useBackLinkWithState({
-    path: pagesSection,
+    path: modelingSection,
   });
 
   return (

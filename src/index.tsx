@@ -62,11 +62,13 @@ import { apolloClient, saleorClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
-import { navigationSection } from "./navigation/urls";
+import { structuresListPath } from "./navigation/urls";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
+import { pageListPath } from "./pages/urls";
 import PageTypesSection from "./pageTypes";
+import { pageTypeListPath } from "./pageTypes/urls";
 import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
@@ -211,7 +213,7 @@ const Routes: React.FC = () => {
                 />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PAGES]}
-                  path="/pages"
+                  path={pageListPath}
                   component={PageSection}
                 />
                 <SectionRoute
@@ -219,7 +221,7 @@ const Routes: React.FC = () => {
                     PermissionEnum.MANAGE_PAGES,
                     PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
                   ]}
-                  path="/page-types"
+                  path={pageTypeListPath}
                   component={PageTypesSection}
                   matchPermission="any"
                 />
@@ -267,7 +269,7 @@ const Routes: React.FC = () => {
                 />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_MENUS]}
-                  path={navigationSection}
+                  path={structuresListPath}
                   component={NavigationSection}
                 />
                 <SectionRoute
