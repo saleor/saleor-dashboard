@@ -117,6 +117,7 @@ export const extensionList = gql`
           mount
           target
           accessToken
+          options
           permissions {
             code
           }

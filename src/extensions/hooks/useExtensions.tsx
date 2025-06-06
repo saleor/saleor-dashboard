@@ -123,7 +123,7 @@ const filterAndMapToTarget = (
           document.body.removeChild(form);
         };
       } else {
-        window.open(url, "_blank");
+        result.open = () => window.open(url, "_blank");
       }
     } else {
       result.open = (params: AppDetailsUrlMountQueryParams) => {
