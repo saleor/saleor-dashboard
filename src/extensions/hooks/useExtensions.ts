@@ -45,7 +45,10 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS,
     AppExtensionMountEnum.ORDER_DETAILS_WIDGETS,
   ],
-  PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
+  PRODUCT_DETAILS: [
+    AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
+    AppExtensionMountEnum.PRODUCT_DETAILS_WIDGETS,
+  ],
   NAVIGATION_SIDEBAR: [
     AppExtensionMountEnum.NAVIGATION_CATALOG,
     AppExtensionMountEnum.NAVIGATION_CUSTOMERS,

@@ -303,7 +303,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
               <CardSpacer />
               <Divider />
-              <AppWidgets extensions={ORDER_DETAILS_WIDGETS} />
+              <AppWidgets extensions={ORDER_DETAILS_WIDGETS} params={{ orderId: order?.id }} />
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.Spacer />
