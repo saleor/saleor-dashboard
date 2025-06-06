@@ -7,7 +7,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { fuzzySearch } from "@dashboard/misc";
-import { menuListUrl } from "@dashboard/navigation/urls";
+import { menuListUrl } from "@dashboard/structures/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListUrl } from "@dashboard/modeling/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";

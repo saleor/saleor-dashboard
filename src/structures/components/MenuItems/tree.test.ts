@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { MenuItemFragment } from "@dashboard/graphql";
-import { MenuTreeItem } from "@dashboard/navigation/types";
+import { MenuTreeItem } from "@dashboard/structures/types";
 
 import { getDiff } from "./tree";
 

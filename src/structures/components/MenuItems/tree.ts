@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 
-import { MenuTreeItem } from "@dashboard/navigation/types";
+import { MenuTreeItem } from "@dashboard/structures/types";
 import { getPatch } from "fast-array-diff";
 
 export type TreeOperationType = "move" | "remove";

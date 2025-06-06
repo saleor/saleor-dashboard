@@ -15,7 +15,7 @@ export const URL_LIST = {
   giftCards: "gift-cards/",
   homePage: "",
   newPassword: "new-password/",
-  navigation: "navigation/",
+  navigation: "structures/",
   orders: "orders/",
   pages: "modeling/",
   pageTypes: "page-types/",

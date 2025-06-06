@@ -7,7 +7,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { menuListUrl } from "@dashboard/navigation/urls";
+import { menuListUrl } from "@dashboard/structures/urls";
 import React from "react";
 
 import { MenuItemType } from "../MenuItemDialog";

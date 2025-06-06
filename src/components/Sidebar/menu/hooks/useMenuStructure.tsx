@@ -28,7 +28,7 @@ import { OrdersIcon } from "@dashboard/icons/Orders";
 import { ProductsIcon } from "@dashboard/icons/Products";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import { menuListUrl } from "@dashboard/navigation/urls";
+import { menuListUrl } from "@dashboard/structures/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";

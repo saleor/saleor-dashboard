@@ -10,7 +10,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { MenuFragment } from "@dashboard/graphql";
 import { maybe, renderCollection } from "@dashboard/misc";
-import { MenuListUrlSortField, menuUrl } from "@dashboard/navigation/urls";
+import { MenuListUrlSortField, menuUrl } from "@dashboard/structures/urls";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";

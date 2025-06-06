@@ -1,4 +1,4 @@
-import { MenuTreeItem, RecursiveMenuItem } from "@dashboard/navigation/types";
+import { MenuTreeItem, RecursiveMenuItem } from "@dashboard/structures/types";
 
 import { MenuItemType } from "../MenuItemDialog";
 
