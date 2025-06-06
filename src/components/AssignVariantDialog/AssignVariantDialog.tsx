@@ -104,7 +104,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
 
         <InfiniteScroll
           id={scrollableTargetId}
-          dataLength={variants?.length}
+          dataLength={variants?.length ?? 0}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
