@@ -7,6 +7,9 @@ import { history, Route, Router } from "@dashboard/components/Router";
 import { extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
+import { pageListPath } from "@dashboard/modeling/urls";
+import { pageTypeListPath } from "@dashboard/modelTypes/urls";
+import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
@@ -61,14 +64,10 @@ import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
-import NavigationSection from "./structures";
-import { structuresListPath } from "@dashboard/structures/urls";
+import PageSection from "./modeling";
+import PageTypesSection from "./modelTypes";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
-import PageSection from "./modeling";
-import { pageListPath } from "@dashboard/modeling/urls";
-import PageTypesSection from "./modelTypes";
-import { pageTypeListPath } from "@dashboard/modelTypes/urls";
 import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
@@ -77,12 +76,14 @@ import errorTracker from "./services/errorTracking";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
+import NavigationSection from "./structures";
 import TaxesSection from "./taxes";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
 import { WelcomePage } from "./welcomePage";
+import { legacyRedirects } from "./components/LegacyRedirects";
 
 if (GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
@@ -185,6 +186,7 @@ const Routes: React.FC = () => {
               )}
             >
               <Switch>
+                {legacyRedirects}
                 <SectionRoute exact path="/" component={WelcomePage} />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PRODUCTS]}
