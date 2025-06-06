@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
+import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -27,6 +28,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
+import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -297,6 +299,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 </>
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
+              <CardSpacer />
+              <Divider />
+              <AppWidgets />
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.Spacer />
