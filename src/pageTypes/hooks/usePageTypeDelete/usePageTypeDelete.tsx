@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { PageCountQueryVariables, usePageCountQuery } from "@dashboard/graphql";
-import { pageListUrl } from "@dashboard/pages/urls";
+import { pageListUrl } from "@dashboard/modeling/urls";
 import { PageTypeListUrlQueryParams, PageTypeUrlQueryParams } from "@dashboard/pageTypes/urls";
 import React from "react";
 

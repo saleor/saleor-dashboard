@@ -40,9 +40,9 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import {
   getAttributeInputFromPage,
   getAttributeInputFromPageType,
-} from "@dashboard/pages/utils/data";
-import { createPageTypeSelectHandler } from "@dashboard/pages/utils/handlers";
-import { validatePageCreateData } from "@dashboard/pages/utils/validation";
+} from "@dashboard/modeling/utils/data";
+import { createPageTypeSelectHandler } from "@dashboard/modeling/utils/handlers";
+import { validatePageCreateData } from "@dashboard/modeling/utils/validation";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
 import getPublicationData from "@dashboard/utils/data/getPublicationData";

@@ -1,8 +1,8 @@
 import { readonlyTextCell, tagsCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { getStatusColor } from "@dashboard/misc";
-import { Pages } from "@dashboard/pages/types";
-import { PageListUrlSortField } from "@dashboard/pages/urls";
+import { Pages } from "@dashboard/modeling/types";
+import { PageListUrlSortField } from "@dashboard/modeling/urls";
 import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";

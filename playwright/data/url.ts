@@ -1,6 +1,6 @@
 export const URL_LIST = {
   addProduct: "products/add",
-  addPageType: "pages/add?page-type-id=",
+  addPageType: "modeling/add?page-type-id=",
   apps: "apps/",
   extensions: "extensions/installed",
   attributes: "attributes/",
@@ -17,7 +17,7 @@ export const URL_LIST = {
   newPassword: "new-password/",
   navigation: "navigation/",
   orders: "orders/",
-  pages: "pages/",
+  pages: "modeling/",
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
   plugins: "plugins/",

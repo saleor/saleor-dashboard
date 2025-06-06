@@ -8,13 +8,13 @@ import { useFlag } from "@dashboard/featureFlags";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Pages } from "@dashboard/pages/types";
+import { Pages } from "@dashboard/modeling/types";
 import {
   PageListUrlDialog,
   PageListUrlQueryParams,
   PageListUrlSortField,
   pageUrl,
-} from "@dashboard/pages/urls";
+} from "@dashboard/modeling/urls";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React from "react";

@@ -6,7 +6,7 @@ import {
   PageListUrlFilters,
   PageListUrlFiltersWithMultipleValues,
   PageListUrlSort,
-} from "@dashboard/pages/urls";
+} from "@dashboard/modeling/urls";
 import {
   ActiveTab,
   AutocompleteFilterOpts,

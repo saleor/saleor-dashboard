@@ -22,7 +22,7 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import PageTypePickerDialog from "@dashboard/pages/components/PageTypePickerDialog";
+import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerDialog";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";

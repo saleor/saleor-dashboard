@@ -30,7 +30,7 @@ import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
-import { pageListPath } from "@dashboard/pages/urls";
+import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/pageTypes/urls";
 import { productListUrl } from "@dashboard/products/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
