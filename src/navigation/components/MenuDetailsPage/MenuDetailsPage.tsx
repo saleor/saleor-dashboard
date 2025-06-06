@@ -4,6 +4,9 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForMenuDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -69,6 +72,9 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     setTreeOperations([...treeOperations, ...operations]);
   };
 
+  const { MENU_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.MENU_DETAILS);
+  const extensionMenuItems = getExtensionsItemsForMenuDetails(MENU_DETAILS_MORE_ACTIONS, menu?.id);
+
   return (
     <Form
       data-test-id="navigation-menu-details-page"
@@ -78,7 +84,11 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     >
       {({ change, data, submit }) => (
         <DetailPageLayout>
-          <TopNav href={menuListUrl()} title={menu?.name} />
+          <TopNav href={menuListUrl()} title={menu?.name}>
+            {extensionMenuItems.length > 0 && (
+              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+            )}
+          </TopNav>
           <DetailPageLayout.Content>
             <MenuItems
               canUndo={treeOperations.length > 0}

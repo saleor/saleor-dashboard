@@ -14,7 +14,7 @@ interface ButtonGroupWithDropdownProps extends BoxProps {
   options: Array<{
     label: string;
     testId?: string;
-    onSelect: <T>(params?: T) => void;
+    onSelect: <T extends object>(params: T) => void;
   }>;
   testId?: string;
   disabled?: boolean;

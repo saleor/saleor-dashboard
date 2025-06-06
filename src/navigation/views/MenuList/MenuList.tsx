@@ -132,6 +132,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         onSort={handleSort}
         isChecked={isSelected}
         selected={listElements.length}
+        selectedMenuIds={listElements}
         sort={getSortParams(params)}
         toggle={toggle}
         toggleAll={toggleAll}

@@ -2,11 +2,18 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { voucherAddUrl, VoucherListUrlSortField } from "@dashboard/discounts/urls";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import {
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForVoucherOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { useFlag } from "@dashboard/featureFlags";
 import { VoucherFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -60,6 +67,15 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterDependency = structure.find(getByName("channel"));
 
+  const { VOUCHER_OVERVIEW_CREATE, VOUCHER_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.VOUCHER_LIST,
+  );
+  const extensionMenuItems = getExtensionsItemsForVoucherOverviewActions(
+    VOUCHER_OVERVIEW_MORE_ACTIONS,
+    selectedVouchersIds,
+  );
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(VOUCHER_OVERVIEW_CREATE);
+
   return (
     <ListPageLayout>
       <TopNav
@@ -91,14 +107,30 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
               })}
             />
           </Box>
-          <Box>
-            <Button
-              onClick={() => navigate(voucherAddUrl())}
-              variant="primary"
-              data-test-id="create-voucher"
-            >
-              <FormattedMessage id="GbhZJ4" defaultMessage="Create voucher" description="button" />
-            </Button>
+          <Box display="flex" alignItems="center" gap={2}>
+            {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonGroupWithDropdown
+                options={extensionCreateButtonItems}
+                data-test-id="create-voucher"
+                onClick={() => navigate(voucherAddUrl())}
+              >
+                <FormattedMessage
+                  id="GbhZJ4"
+                  defaultMessage="Create voucher"
+                  description="button"
+                />
+              </ButtonGroupWithDropdown>
+            ) : (
+              <Button data-test-id="create-voucher" onClick={() => navigate(voucherAddUrl())}>
+                <FormattedMessage
+                  id="GbhZJ4"
+                  defaultMessage="Create voucher"
+                  description="button"
+                />
+              </Button>
+            )}
           </Box>
         </Box>
       </TopNav>

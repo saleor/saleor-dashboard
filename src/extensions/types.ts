@@ -1,4 +1,8 @@
+import { AppExtensionMountEnum, ExtensionListQuery, PermissionEnum } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 import { ReactNode } from "react";
+
+import { AppDetailsUrlMountQueryParams } from "./urls";
 
 interface CommonExtensionData {
   id: string;
@@ -58,3 +62,18 @@ export type InstalledExtension = {
   href?: string;
   actions?: ReactNode;
 };
+
+export interface Extension {
+  id: string;
+  app: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["app"];
+  accessToken: string;
+  permissions: PermissionEnum[];
+  label: string;
+  mount: AppExtensionMountEnum;
+  url: string;
+  open: () => void;
+}
+
+export interface ExtensionWithParams extends Omit<Extension, "open"> {
+  open: (params: AppDetailsUrlMountQueryParams) => void;
+}

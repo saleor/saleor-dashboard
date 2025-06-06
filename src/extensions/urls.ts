@@ -47,6 +47,23 @@ export interface AppDetailsUrlMountQueryParams {
   orderId?: string;
   customerId?: string;
   customerIds?: string[];
+  categoryIds?: string[];
+  categoryId?: string;
+  collectionId?: string;
+  collectionIds?: string[];
+  giftCardId?: string;
+  giftCardIds?: string[];
+  draftOrderId?: string;
+  draftOrderIds?: string[];
+  discountId?: string;
+  voucherId?: string;
+  voucherIds?: string[];
+  pageId?: string;
+  pageIds?: string[];
+  pageTypeId?: string;
+  pageTypeIds?: string[];
+  menuId?: string;
+  menuIds?: string[];
 }
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;

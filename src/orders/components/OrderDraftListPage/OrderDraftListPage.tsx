@@ -73,6 +73,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
         onFilterPresetPresetSave={onFilterPresetPresetSave}
         onFilterPresetUpdate={onFilterPresetUpdate}
         filterPresets={filterPresets}
+        selectedOrderDraftIds={selectedOrderDraftIds}
       />
 
       {limitsReached && <OrderLimitReached />}

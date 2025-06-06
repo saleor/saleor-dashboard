@@ -1,4 +1,4 @@
-import { Extension } from "@dashboard/extensions/hooks/useExtensions";
+import { Extension } from "@dashboard/extensions/types";
 import { AppExtensionMountEnum, PermissionEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 
@@ -263,6 +263,33 @@ describe("getMenuItemExtension", () => {
     [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: [],
     [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [],
     [AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DISCOUNT_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DISCOUNT_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.DISCOUNT_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.VOUCHER_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.VOUCHER_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.VOUCHER_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.PAGE_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.MENU_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.MENU_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.MENU_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.COLLECTION_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CATEGORY_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.CATEGORY_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.COLLECTION_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.COLLECTION_OVERVIEW_MORE_ACTIONS]: [],
   };
 
   const emptyExtensionsRecord: Record<AppExtensionMountEnum, Extension[]> = {
@@ -281,6 +308,33 @@ describe("getMenuItemExtension", () => {
     [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: [],
     [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [],
     [AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DISCOUNT_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DISCOUNT_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.DISCOUNT_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.VOUCHER_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.VOUCHER_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.VOUCHER_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.PAGE_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.MENU_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.MENU_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.MENU_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.COLLECTION_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CATEGORY_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.CATEGORY_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.COLLECTION_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.COLLECTION_OVERVIEW_MORE_ACTIONS]: [],
   };
 
   it("should return the corresponding Extension object when a menu item ID represents a registered extension", () => {

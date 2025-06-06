@@ -3,6 +3,9 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForDiscountDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelFragment,
   PromotionDetailsFragment,
@@ -60,9 +63,19 @@ export const DiscountDetailsPage = ({
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 
+  const { DISCOUNT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.DISCOUNT_DETAILS);
+  const extensionMenuItems = getExtensionsItemsForDiscountDetails(
+    DISCOUNT_DETAILS_MORE_ACTIONS,
+    data?.id,
+  );
+
   return (
     <DetailPageLayout gridTemplateColumns={1}>
-      <TopNav href={backLinkHref} title={data?.name} />
+      <TopNav href={backLinkHref} title={data?.name}>
+        {extensionMenuItems.length > 0 && (
+          <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+        )}
+      </TopNav>
       <DetailPageLayout.Content>
         <DiscountDetailsForm
           data={data}

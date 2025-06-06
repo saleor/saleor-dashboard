@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
-import CardMenu from "@dashboard/components/CardMenu/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -11,11 +10,9 @@ import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { customerAddressesUrl, customerListPath } from "@dashboard/customers/urls";
-import {
-  extensionMountPoints,
-  mapToMenuItemsForCustomerDetails,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForCustomerDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import { AccountErrorFragment, CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
@@ -77,7 +74,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   };
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.CUSTOMER_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForCustomerDetails(
+  const extensionMenuItems = getExtensionsItemsForCustomerDetails(
     CUSTOMER_DETAILS_MORE_ACTIONS,
     customerId,
   );
@@ -94,7 +91,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={customerBackLink} title={getUserName(customer, true)}>
-              {extensionMenuItems.length > 0 && <CardMenu menuItems={extensionMenuItems} />}
+              {extensionMenuItems.length > 0 && (
+                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              )}
             </TopNav>
             <DetailPageLayout.Content>
               <Backlink href={customerBackLink}>
