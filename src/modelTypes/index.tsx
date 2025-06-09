@@ -9,7 +9,7 @@ import { RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   pageTypeAddPath,
-  pageTypeListPath,
+  modelTypesPath,
   PageTypeListUrlQueryParams,
   PageTypeListUrlSortField,
   pageTypePath,
@@ -44,7 +44,7 @@ export const PageTypeRouter: React.FC = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.modelTypes)} />
       <Switch>
-        <Route exact path={pageTypeListPath} component={PageTypeList} />
+        <Route exact path={modelTypesPath} component={PageTypeList} />
         <Route exact path={pageTypeAddPath} component={PageTypeCreate} />
         <Route path={pageTypePath(":id")} component={PageTypeDetails} />
       </Switch>

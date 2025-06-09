@@ -1,5 +1,6 @@
 import { modelingSection } from "@dashboard/modeling/urls";
-import { pageTypeListPath as modelTypesPath } from "@dashboard/modelTypes/urls";
+import { modelTypesPath } from "@dashboard/modelTypes/urls";
+import { structuresListPath } from "@dashboard/structures/urls";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import urlJoin from "url-join";

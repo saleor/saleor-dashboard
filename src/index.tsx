@@ -8,7 +8,7 @@ import { extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { pageListPath } from "@dashboard/modeling/urls";
-import { pageTypeListPath } from "@dashboard/modelTypes/urls";
+import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
@@ -223,7 +223,7 @@ const Routes: React.FC = () => {
                     PermissionEnum.MANAGE_PAGES,
                     PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
                   ]}
-                  path={pageTypeListPath}
+                  path={modelTypesPath}
                   component={PageTypesSection}
                   matchPermission="any"
                 />

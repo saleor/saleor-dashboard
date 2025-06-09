@@ -9,7 +9,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { AttributeTypeEnum, PageErrorFragment, PageTypeDetailsFragment } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { pageTypeListPath } from "@dashboard/modelTypes/urls";
+import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { ListActions, ReorderEvent } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -80,7 +80,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   };
 
   const pageTypeListBackLink = useBackLinkWithState({
-    path: pageTypeListPath,
+    path: modelTypesPath,
   });
 
   return (

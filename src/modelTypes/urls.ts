@@ -14,7 +14,7 @@ import {
 
 const modelTypesSection = "/model-types/";
 
-export const pageTypeListPath = modelTypesSection;
+export const modelTypesPath = modelTypesSection;
 export enum PageTypeListUrlFiltersEnum {
   type = "type",
   query = "query",
@@ -32,7 +32,7 @@ export type PageTypeListUrlQueryParams = ActiveTab &
   PageTypeListUrlFilters &
   PageTypeListUrlSort;
 export const pageTypeListUrl = (params?: PageTypeListUrlQueryParams) =>
-  pageTypeListPath + "?" + stringifyQs(params);
+  modelTypesPath + "?" + stringifyQs(params);
 
 export const pageTypeAddPath = urlJoin(modelTypesSection, "add");
 export const pageTypeAddUrl = pageTypeAddPath;
