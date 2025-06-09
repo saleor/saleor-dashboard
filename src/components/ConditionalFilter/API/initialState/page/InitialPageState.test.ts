@@ -14,7 +14,7 @@ describe("ConditionalFilter / API / Page / InitialPageState", () => {
       },
     ];
 
-    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.modelTypes", "home"));
+    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.pageTypes", "home"));
     const expectedOutput = [
       {
         label: "Home",
