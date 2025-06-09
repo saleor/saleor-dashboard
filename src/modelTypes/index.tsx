@@ -8,8 +8,8 @@ import { RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
-  pageTypeAddPath,
   modelTypesPath,
+  pageTypeAddPath,
   PageTypeListUrlQueryParams,
   PageTypeListUrlSortField,
   pageTypePath,

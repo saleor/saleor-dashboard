@@ -9,13 +9,13 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { pageUrl } from "@dashboard/modeling/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
 import { extractMutationErrors, maybe } from "../../../misc";
-import { pageUrl } from "@dashboard/modeling/urls";
 import MenuDetailsPage, { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
 import MenuItemDialog, {

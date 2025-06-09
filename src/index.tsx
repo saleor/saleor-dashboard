@@ -40,6 +40,7 @@ import { DateProvider } from "./components/Date";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
+import { legacyRedirects } from "./components/LegacyRedirects";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
@@ -83,7 +84,6 @@ import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
 import { WelcomePage } from "./welcomePage";
-import { legacyRedirects } from "./components/LegacyRedirects";
 
 if (GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
