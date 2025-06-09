@@ -8,8 +8,7 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
-import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
-import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import { extensionMountPoints, useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   extensionsAppSection,
   extensionsCustomSection,

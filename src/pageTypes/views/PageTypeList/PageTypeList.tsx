@@ -155,7 +155,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onSort={handleSort}
         isChecked={isSelected}
         selected={selectedPageTypes.length}
-        selectedPageTypes={selectedPageTypes}
         sort={getSortParams(params)}
         toggle={toggle}
         toggleAll={toggleAll}
