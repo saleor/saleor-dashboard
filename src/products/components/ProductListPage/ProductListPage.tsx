@@ -4,19 +4,19 @@ import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLin
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterElement } from "@dashboard/components/Filter";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForProductOverviewActions,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForProductOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   Exact,
   GridAttributesQuery,
@@ -118,11 +118,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.PRODUCT_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForProductOverviewActions(
+  const extensionMenuItems = getExtensionsItemsForProductOverviewActions(
     PRODUCT_OVERVIEW_MORE_ACTIONS,
     selectedProductIds,
   );
-  const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PRODUCT_OVERVIEW_CREATE);
   const [storedProductListViewType, setProductListViewType] = useLocalStorage<ProductListViewType>(
     "productListViewType",
     DEFAULT_PRODUCT_LIST_VIEW_TYPE,
@@ -193,7 +193,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               ]}
             />
             {extensionCreateButtonItems.length > 0 ? (
-              <ButtonWithDropdown
+              <ButtonGroupWithDropdown
                 onClick={onAdd}
                 testId={"add-product"}
                 options={extensionCreateButtonItems}
@@ -203,7 +203,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                   defaultMessage="Create Product"
                   description="button"
                 />
-              </ButtonWithDropdown>
+              </ButtonGroupWithDropdown>
             ) : (
               <Button data-test-id="add-product" onClick={onAdd}>
                 <FormattedMessage

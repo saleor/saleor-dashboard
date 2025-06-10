@@ -27,7 +27,7 @@ describe("Extensions / ExtensionItem / AppActions", () => {
     render(<AppActions isInstalled disabled id="test-id" />);
 
     // Assert
-    expect(screen.getByText("Manage app")).toBeVisible();
+    expect(screen.getByText("Manage extension")).toBeVisible();
     expect(screen.getByRole("link")).toHaveAttribute("href", "/extensions/app/test-id/edit?");
   });
 

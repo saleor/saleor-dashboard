@@ -47,6 +47,12 @@ inputs:
   DASHBOARD_VERSION:
     description: "Dashboard version"
     required: false
+  BUILD_NUMBER:
+    description: "GH Actions run ID"
+    required: false
+  BUILD_URL:
+    description: "GH actions url"
+    required: false
 
 runs:
   using: "composite"
@@ -91,6 +97,8 @@ runs:
         BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
         SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
         DASHBOARD_VERSION: ${{ inputs.DASHBOARD_VERSION }}
+        BUILD_NUMBER: ${{ inputs.BUILD_NUMBER }}
+        BUILD_URL: ${{ inputs.BUILD_URL }}
 
       run: |
         PROJECTS=($PROJECT)

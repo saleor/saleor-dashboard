@@ -4,17 +4,18 @@ import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLin
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
-  mapToMenuItemsForOrderListActions,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForOrderOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
@@ -77,8 +78,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const { ORDER_OVERVIEW_CREATE, ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.ORDER_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_MORE_ACTIONS);
-  const extensionCreateButtonItems = mapToMenuItemsForOrderListActions(ORDER_OVERVIEW_CREATE);
+  const extensionMenuItems = getExtensionsItemsForOrderOverviewActions(ORDER_OVERVIEW_MORE_ACTIONS);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(ORDER_OVERVIEW_CREATE);
   const context = useDevModeContext();
   const { valueProvider } = useConditionalFilterContext();
 
@@ -157,7 +158,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             <Tooltip>
               <Tooltip.Trigger>
                 {extensionCreateButtonItems.length > 0 ? (
-                  <ButtonWithDropdown
+                  <ButtonGroupWithDropdown
                     onClick={onAdd}
                     testId={"create-order-button"}
                     options={extensionCreateButtonItems}
@@ -168,7 +169,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
                       defaultMessage="Create order"
                       description="button"
                     />
-                  </ButtonWithDropdown>
+                  </ButtonGroupWithDropdown>
                 ) : (
                   <Button
                     data-test-id="create-order-button"

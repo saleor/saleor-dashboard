@@ -17,7 +17,7 @@ export const useClipboardCopy = () => {
         clearTimeout(timeoutRef.current);
       }
     };
-  });
+  }, []);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard
@@ -31,13 +31,11 @@ export const useClipboardCopy = () => {
             id: "ce5Hp1",
           }),
         });
-
-        timeoutRef.current = window.setTimeout(() => {
-          setCopyState("default");
-        }, BUTTON_INDIDCATOR_TIMEOUT);
       })
       .then(() => {
         setCopyState("success");
+      })
+      .finally(() => {
         timeoutRef.current = window.setTimeout(() => {
           setCopyState("default");
         }, BUTTON_INDIDCATOR_TIMEOUT);

@@ -38,28 +38,28 @@ const dialogRoot = defineMessages({
     id: "psmnv9",
   },
   info: {
-    defaultMessage: "Manually change permission for the app.",
-    id: "6uy2gU",
+    defaultMessage: "Manually change permission for the extension.",
+    id: "XJm60a",
   },
   warningHeading: {
     defaultMessage: "Warning",
     id: "3SVI5p",
   },
   warningParagraph1: {
-    defaultMessage: "Adding permission allows app to have more access to your data.",
-    id: "azj0kR",
+    defaultMessage: "Adding permission allows extension to have more access to your data.",
+    id: "URUNhT",
   },
   warningParagraph2: {
-    defaultMessage: "Removing permissions may cause app to break.",
-    id: "abpvEI",
+    defaultMessage: "Removing permissions may cause extension to break.",
+    id: "4y3Smi",
   },
   successNotificationTitle: {
     defaultMessage: "Success",
     id: "xrKHS6",
   },
   successNotificationBody: {
-    defaultMessage: "Updated app permissions",
-    id: "47hJzu",
+    defaultMessage: "Updated extension permissions",
+    id: "6Y1YDn",
   },
   fallbackErrorText: {
     defaultMessage: "Failed to save permissions. Refresh the page and try again.",

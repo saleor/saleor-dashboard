@@ -27,8 +27,8 @@ export const giftCardUpdateInfoCardMessages = defineMessages({
     description: "issued by label",
   },
   issuedByAppLabel: {
-    id: "+pLi+M",
-    defaultMessage: "Issued by app",
+    id: "F08wV2",
+    defaultMessage: "Issued by extension",
     description: "issued by app label",
   },
   boughtByLabel: {
