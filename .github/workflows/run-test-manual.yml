@@ -123,6 +123,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Load secrets
+        uses: 1password/load-secrets-action@v2
+        id: load-secrets
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/o2giutzdyhfdylvdw4kwg7lugu/password"
+
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
         with:
@@ -132,6 +142,7 @@ jobs:
         uses: ./.github/actions/flaky-tests-report
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          ctrf_slack_report_webhook: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
 
       - name: Push flaky report
         uses: ./.github/actions/push-flaky-test-report

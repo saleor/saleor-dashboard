@@ -268,10 +268,21 @@ jobs:
         if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
         uses: ./.github/actions/combineReportsFromE2E
 
+      - name: Load secrets
+        uses: 1password/load-secrets-action@v2
+        id: load-secrets
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/o2giutzdyhfdylvdw4kwg7lugu/password"
+          
       - name: Create flaky report
         uses: ./.github/actions/flaky-tests-report
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          ctrf_slack_report_webhook: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
 
       - name: Push flaky report
         uses: ./.github/actions/push-flaky-test-report
