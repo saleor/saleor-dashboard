@@ -35,18 +35,27 @@ jobs:
         with:
           sparse-checkout: ./.github/actions
 
+      - name: Load secrets for initialize-cloud
+        uses: 1password/load-secrets-action@v2
+        id: load-secrets-init
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
+
       - name: Generate variables
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
         with:
-          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
           MODE: pull-request
 
       - name: Prepare instances
         uses: ./.github/actions/prepare-instance
         with:
           STRATEGY: reload
-          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
