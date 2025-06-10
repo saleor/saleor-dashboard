@@ -110,7 +110,7 @@ jobs:
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
       
       - name: Load secrets for initialize-cloud
-        uses: 1password/load-secrets-action@v2
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         id: load-secrets-init
         with:
           export-env: true
@@ -278,7 +278,7 @@ jobs:
         uses: ./.github/actions/combineReportsFromE2E
 
       - name: Load secrets
-        uses: 1password/load-secrets-action@v2
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         id: load-secrets
         with:
           # Export loaded secrets as environment variables
