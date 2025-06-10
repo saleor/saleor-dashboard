@@ -14,6 +14,9 @@ import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import VisibilityCard from "@dashboard/components/VisibilityCard";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemForPageDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
@@ -123,6 +126,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     path: pagesSection,
   });
 
+  const { PAGE_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PAGE_DETAILS);
+  const extensionMenuItems = getExtensionsItemForPageDetails(PAGE_DETAILS_MORE_ACTIONS, page?.id);
+
   return (
     <PageForm
       page={page}
@@ -147,7 +153,11 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             <TopNav
               href={pageListBackLink}
               title={!pageExists ? intl.formatMessage(messages.title) : page?.title}
-            />
+            >
+              {extensionMenuItems.length > 0 && (
+                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <PageInfo data={data} disabled={loading} errors={errors} onChange={change} />
               <CardSpacer />
