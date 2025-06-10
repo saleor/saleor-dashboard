@@ -127,7 +127,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     ...initialStockSettings,
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
-    markAsPaidStrategy: orderSettings?.markAsPaidStrategy,
+    markAsPaidStrategy:
+      orderSettings?.markAsPaidStrategy ?? MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
