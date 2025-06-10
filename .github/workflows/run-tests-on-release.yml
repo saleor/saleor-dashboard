@@ -108,12 +108,21 @@ jobs:
           STATUS: "in_progress"
           TITLE: "Automation tests run"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      
+      - name: Load secrets for initialize-cloud
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        id: load-secrets-init
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
 
       - name: Generate variables
         id: cloud_variables
         uses: ./.github/actions/prepare-tests-variables
         with:
-          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
           MODE: "from-version"
           VERSION: ${{ env.VERSION }}
 
@@ -122,7 +131,7 @@ jobs:
         uses: ./.github/actions/prepare-instance
         with:
           STRATEGY: reload
-          CLI_TOKEN: ${{ secrets.STAGING_TOKEN }}
+          CLI_TOKEN: ${{ env.STAGING_TOKEN }}
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
           API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
@@ -270,10 +279,21 @@ jobs:
         if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
         uses: ./.github/actions/combineReportsFromE2E
 
+      - name: Load secrets
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        id: load-secrets
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
+          
       - name: Create flaky report
         uses: ./.github/actions/flaky-tests-report
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          ctrf_slack_report_webhook: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
 
       - name: Push flaky report
         uses: ./.github/actions/push-flaky-test-report
