@@ -131,7 +131,7 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          SLACK_WEBHOOK_URL: "op://Continuous Integration/o2giutzdyhfdylvdw4kwg7lugu/password"
+          SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
