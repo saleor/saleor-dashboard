@@ -1,12 +1,9 @@
 name: Update GraphQL Schema
 
-# on:
-#   schedule:
-#     # Run daily at 2 AM UTC
-#     - cron: "0 2 * * *"
-#   workflow_dispatch: # Allow manual trigger
-
-on: push
+on:
+  schedule:
+    - cron: "0 7 * * *" # Run daily at 7 AM UTC
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -51,19 +48,24 @@ jobs:
         id: date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
+      - name: Get Saleor schema version
+        if: steps.git-check.outputs.has_changes == 'true'
+        id: schema-version
+        run: echo "version=$(node -p "require('./package.json').config.saleor.schemaVersion")" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request
         if: steps.git-check.outputs.has_changes == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore: update GraphQL schema and generated types"
-          title: "chore: update GraphQL schema and generated types (${{ steps.date.outputs.date }})"
+          title: "chore: update GraphQL schema and generated types (schema: ${{ steps.schema-version.outputs.version }}, ${{ steps.date.outputs.date }})"
           body: |
             This PR was automatically created to update the GraphQL schema and regenerate TypeScript types.
 
             ## Changes
 
-            - Updated `schema.graphql` with the latest schema from Saleor
+            - Updated `schema.graphql` with the latest schema from Saleor (schema version: **${{ steps.schema-version.outputs.version }}**)
             - Regenerated TypeScript types and Apollo Client hooks using GraphQL Code Generator
 
             ## Verification
@@ -73,7 +75,8 @@ jobs:
             - [ ] Generated types are correctly updated
             - [ ] No breaking changes are introduced
 
-            Auto-generated on ${{ steps.date.outputs.date }}
-          branch: chore/update-schema-${{ steps.date.outputs.date }}
+            **Schema Version:** ${{ steps.schema-version.outputs.version }}  
+            **Generated on:** ${{ steps.date.outputs.date }}
+          branch: chore/update-schema-${{ steps.schema-version.outputs.version }}-${{ steps.date.outputs.date }}
           delete-branch: true
           draft: false
