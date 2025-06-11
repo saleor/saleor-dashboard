@@ -52,16 +52,24 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
         {extensions.map(ext => {
           const isIframeType = ext.target === "WIDGET";
 
-          const appIframeUrl = AppUrls.resolveAppIframeUrl(
-            ext.app.id,
-            ext.app.appUrl + ext.url, // todo should url for extension be relative or absolute?
-            {
-              ...params,
-              id: ext.app.id,
-              featureFlags: flags,
-              theme: themeRef.current!, //todo
-            },
-          );
+          let isExtensionAbsoluteUrl = false;
+
+          try {
+            new URL(ext.url);
+
+            isExtensionAbsoluteUrl = true;
+          } catch (e) {
+            isExtensionAbsoluteUrl = false;
+          }
+
+          const extensionUrl = isExtensionAbsoluteUrl ? ext.url : ext.app.appUrl + ext.url;
+
+          const appIframeUrl = AppUrls.resolveAppIframeUrl(ext.app.id, extensionUrl, {
+            ...params,
+            id: ext.app.id,
+            featureFlags: flags,
+            theme: themeRef.current!, //todo
+          });
 
           const appPageUrl = AppUrls.resolveAppUrl(ext.app.id, {
             featureFlags: flags,
@@ -89,6 +97,8 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               }
             }
           };
+
+          // todo POST part
 
           return (
             <Box marginBottom={4} key={ext.id}>
