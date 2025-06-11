@@ -17,10 +17,19 @@ jobs:
         with:
           node-version-file: ".nvmrc"
 
+      - name: Load secrets for initialize-cloud
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
+        id: load-secrets-init
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          STAGING_TOKEN: "op://Continuous Integration/CLOUD_STAGING_TOKEN/password"
+
       - name: Saleor login
         uses: ./.github/actions/cli-login
         with:
-          token: ${{ secrets.STAGING_TOKEN }}
+          token: ${{ env.STAGING_TOKEN }}
 
       - name: Remove instance
         env:
