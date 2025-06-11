@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { AppUrls } from "@dashboard/apps/urls";
-import { Extension } from "@dashboard/extensions/hooks/useExtensions";
+import { Extension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppExtensionMountEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";

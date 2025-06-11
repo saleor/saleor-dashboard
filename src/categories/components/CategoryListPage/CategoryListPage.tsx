@@ -2,16 +2,23 @@ import { categoryAddUrl, CategoryListUrlSortField } from "@dashboard/categories/
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import {
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForCategoryOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { CategoryFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Link } from "react-router-dom";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import { messages } from "./messages";
@@ -47,8 +54,19 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   selectedCategoriesIds,
   ...listProps
 }) => {
+  const navigate = useNavigator();
+
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
+
+  const { CATEGORY_OVERVIEW_CREATE, CATEGORY_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.CATEGORY_LIST,
+  );
+  const extensionMenuItems = getExtensionsItemsForCategoryOverviewActions(
+    CATEGORY_OVERVIEW_MORE_ACTIONS,
+    selectedCategoriesIds,
+  );
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(CATEGORY_OVERVIEW_CREATE);
 
   return (
     <ListPageLayout>
@@ -77,12 +95,26 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
               selectAllLabel={intl.formatMessage(messages.allCategories)}
             />
           </Box>
-
-          <Link to={categoryAddUrl()} data-test-id="create-category">
-            <Button as="div">
-              <FormattedMessage {...messages.createCategory} />
-            </Button>
-          </Link>
+          <Box display="flex" alignItems="center" gap={2}>
+            {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonGroupWithDropdown
+                options={extensionCreateButtonItems}
+                data-test-id="create-category"
+                onClick={() => navigate(categoryAddUrl())}
+              >
+                <FormattedMessage {...messages.createCategory} />
+              </ButtonGroupWithDropdown>
+            ) : (
+              <Button
+                data-test-id="create-category"
+                onClick={() => navigate(categoryAddUrl())}
+                variant="primary"
+              >
+                <FormattedMessage {...messages.createCategory} />
+              </Button>
+            )}
+          </Box>
         </Box>
       </TopNav>
       <DashboardCard>

@@ -8,10 +8,17 @@ import {
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import {
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForCollectionOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { useFlag } from "@dashboard/featureFlags";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -69,6 +76,15 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const { enabled: isNewCollectionListEnabled } = useFlag("new_filters");
   const filterDependency = filterStructure.find(getByName("channel"));
 
+  const { COLLECTION_OVERVIEW_CREATE, COLLECTION_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.COLLECTION_LIST,
+  );
+  const extensionMenuItems = getExtensionsItemsForCollectionOverviewActions(
+    COLLECTION_OVERVIEW_MORE_ACTIONS,
+    selectedCollectionIds,
+  );
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(COLLECTION_OVERVIEW_CREATE);
+
   return (
     <ListPageLayout>
       <TopNav
@@ -100,19 +116,34 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
               })}
             />
           </Box>
-          <Box>
-            <Button
-              disabled={disabled}
-              variant="primary"
-              onClick={() => navigate(collectionAddUrl())}
-              data-test-id="create-collection"
-            >
-              <FormattedMessage
-                id="jyaAlB"
-                defaultMessage="Create collection"
-                description="button"
-              />
-            </Button>
+          <Box display="flex" alignItems="center" gap={2}>
+            {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonGroupWithDropdown
+                options={extensionCreateButtonItems}
+                data-test-id="create-collection"
+                onClick={() => navigate(collectionAddUrl())}
+                disabled={disabled}
+              >
+                <FormattedMessage
+                  id="jyaAlB"
+                  defaultMessage="Create collection"
+                  description="button"
+                />
+              </ButtonGroupWithDropdown>
+            ) : (
+              <Button
+                data-test-id="create-collection"
+                onClick={() => navigate(collectionAddUrl())}
+                disabled={disabled}
+              >
+                <FormattedMessage
+                  id="jyaAlB"
+                  defaultMessage="Create collection"
+                  description="button"
+                />
+              </Button>
+            )}
           </Box>
         </Box>
       </TopNav>

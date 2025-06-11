@@ -1,5 +1,8 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForGiftCardDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { giftCardsListPath } from "@dashboard/giftCards/urls";
@@ -25,6 +28,12 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const { canManageChannels } = useGiftCardPermissions();
   const { giftCard } = useGiftCardDetails();
   const { openResendCodeDialog } = useGiftCardUpdateDialogs();
+
+  const { GIFT_CARD_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.GIFT_CARD_DETAILS);
+  const extensionMenuItems = getExtensionsItemsForGiftCardDetails(
+    GIFT_CARD_DETAILS_MORE_ACTIONS,
+    giftCard?.id,
+  );
 
   if (!giftCard) {
     return <TopNav title={getStringOrPlaceholder(undefined)} />;
@@ -55,6 +64,12 @@ const GiftCardUpdatePageHeader: React.FC = () => {
           <Button variant="primary" onClick={openResendCodeDialog} data-test-id="resend-code">
             {intl.formatMessage(messages.resendButtonLabel)}
           </Button>
+        )}
+        {extensionMenuItems.length > 0 && (
+          <>
+            <HorizontalSpacer />
+            <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+          </>
         )}
       </TopNav>
     </>
