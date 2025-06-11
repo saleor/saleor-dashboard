@@ -17,25 +17,80 @@ const filterAndMapToTarget = (
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>,
   openApp: (appData: AppData) => void,
 ): ExtensionWithParams[] =>
-  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app }) => ({
-    id,
-    app,
-    accessToken: accessToken || "",
-    permissions: permissions.map(({ code }) => code),
-    url,
-    label,
-    mount,
-    target,
-    open: (params: AppDetailsUrlMountQueryParams) =>
-      openApp({
-        id: app.id,
-        appToken: accessToken || "",
-        src: url,
-        label,
-        target,
-        params,
-      }),
-  }));
+  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
+    const isNewTab = target === "NEW_TAB";
+    const newTabMethod = options?.newTabTarget?.method;
+    const isPOST = newTabMethod === "POST";
+
+    const openGETinNewTab = (extensionUrl: string) => {
+      window.open(extensionUrl, "_blank");
+    };
+
+    const openPOSTinNewTab = (params: AppDetailsUrlMountQueryParams) => {
+      const formParams = {
+        ...params,
+        accessToken: accessToken,
+        appId: app.id,
+        saleorApiUrl: process.env.API_URL,
+      };
+
+      const form = document.createElement("form");
+
+      form.method = "POST";
+      form.action = url;
+      form.target = "_blank";
+      form.style.display = "none";
+
+      for (const [key, value] of Object.entries(formParams)) {
+        if (value === undefined || value === null || typeof value !== "string") {
+          continue;
+        }
+
+        const elInput = document.createElement("input");
+
+        elInput.type = "hidden";
+        elInput.name = key;
+        elInput.value = value;
+        form.appendChild(elInput);
+      }
+
+      document.body.append(form);
+
+      form.submit();
+
+      document.body.removeChild(form);
+    };
+
+    return {
+      id,
+      app,
+      accessToken: accessToken || "",
+      permissions: permissions.map(({ code }) => code),
+      url,
+      label,
+      mount,
+      target,
+      open: (params: AppDetailsUrlMountQueryParams) => {
+        if (isNewTab && !isPOST) {
+          // todo apply search params
+          return openGETinNewTab(url);
+        }
+
+        if (isNewTab && isPOST) {
+          return openPOSTinNewTab(params);
+        }
+
+        openApp({
+          id: app.id,
+          appToken: accessToken || "",
+          src: url,
+          label,
+          target,
+          params,
+        });
+      },
+    };
+  });
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[],
