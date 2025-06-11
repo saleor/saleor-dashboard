@@ -9551,6 +9551,7 @@ export const ExtensionListDocument = gql`
         app {
           id
           appUrl
+          name
         }
       }
     }

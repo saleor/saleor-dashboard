@@ -132,6 +132,7 @@ export const extensionList = gql`
           app {
             id
             appUrl
+            name
           }
         }
       }
