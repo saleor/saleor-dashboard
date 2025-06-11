@@ -16,7 +16,7 @@ export type AppWidgetsProps = {
   params: AppDetailsUrlMountQueryParams;
 };
 
-const defaultIframeSize = 50;
+const defaultIframeSize = 200;
 
 // todo translations
 const getNonIframeLabel = (target: AppExtensionTargetEnum) => {
@@ -67,11 +67,6 @@ const IframePost = ({
   );
 };
 
-/**
- * TODO
- * - accept extensions
- * - extension height should be negotiated with sdk
- */
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
   const flags = useAllFlags();
 
@@ -133,8 +128,6 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               }
             }
           };
-
-          // todo POST part
 
           return (
             <Box marginBottom={4} key={ext.id}>
