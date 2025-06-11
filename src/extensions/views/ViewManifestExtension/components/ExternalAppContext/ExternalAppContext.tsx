@@ -41,13 +41,21 @@ export const useExternalApp = () => {
   const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
   const navigate = useNavigator();
   const openApp = (appData: AppData) => {
-    if (appData.target === AppExtensionTargetEnum.POPUP) {
-      setOpen(true);
-      setAppData(appData);
-    } else {
-      navigate(ExtensionsUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {
-        resetScroll: true,
-      });
+    switch (appData.target) {
+      case AppExtensionTargetEnum.POPUP:
+        setOpen(true);
+        setAppData(appData);
+        break;
+
+      case AppExtensionTargetEnum.APP_PAGE:
+        navigate(ExtensionsUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {
+          resetScroll: true,
+        });
+        break;
+      case AppExtensionTargetEnum.NEW_TAB:
+      case AppExtensionTargetEnum.WIDGET: {
+        throw new Error("NEW_TAB and WIDGET targets can be loaded into context");
+      }
     }
   };
   const closeApp = () => setOpen(false);
