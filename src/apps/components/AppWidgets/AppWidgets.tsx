@@ -2,7 +2,7 @@ import { AppFrame } from "@dashboard/apps/components/AppFrame";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import { APP_VERSION } from "@dashboard/config";
-import { Extension } from "@dashboard/extensions/hooks/useExtensions";
+import { Extension } from "@dashboard/extensions/types";
 import { useAllFlags } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -13,6 +13,8 @@ export type AppWidgetsProps = {
   extensions: Extension[];
   params: AppDetailsUrlMountQueryParams;
 };
+
+const defaultIframeSize = 50;
 
 /**
  * TODO
@@ -33,7 +35,9 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         {extensions.map(ext => {
-          const appCompleteUrl = AppUrls.resolveAppIframeUrl(
+          const isIframeType = ext.target === "WIDGET";
+
+          const appIframeUrl = AppUrls.resolveAppIframeUrl(
             ext.app.id,
             ext.app.appUrl + ext.url, // todo should url for extension be relative or absolute?
             {
@@ -63,14 +67,16 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               >
                 {ext.app.name}: {ext.label}
               </Text>
-              <Box marginTop={2} __height={100}>
-                <AppFrame
-                  src={appCompleteUrl}
-                  appToken={ext.accessToken}
-                  appId={ext.app.id}
-                  dashboardVersion={APP_VERSION}
-                />
-              </Box>
+              {isIframeType && (
+                <Box marginTop={2} __height={defaultIframeSize}>
+                  <AppFrame
+                    src={appIframeUrl}
+                    appToken={ext.accessToken}
+                    appId={ext.app.id}
+                    dashboardVersion={APP_VERSION}
+                  />
+                </Box>
+              )}
             </Box>
           );
         })}
