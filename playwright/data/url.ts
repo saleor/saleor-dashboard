@@ -18,7 +18,7 @@ export const URL_LIST = {
   navigation: "structures/",
   orders: "orders/",
   pages: "modeling/",
-  pageTypes: "page-types/",
+  pageTypes: "model-types/",
   permissionsGroups: "permission-groups/",
   plugins: "plugins/",
   products: "products/",
