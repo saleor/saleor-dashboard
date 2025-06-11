@@ -12825,10 +12825,10 @@ input OrderWhereInput @doc(category: "Orders") {
   channelId: GlobalIDFilterInput
 
   """Filter order by created at date."""
-  createdAt: DateTimeFilterInput
+  createdAt: DateTimeRangeInput
 
   """Filter order by updated at date."""
-  updatedAt: DateTimeFilterInput
+  updatedAt: DateTimeRangeInput
 
   """Filter by user."""
   user: GlobalIDFilterInput
@@ -12873,6 +12873,21 @@ input OrderWhereInput @doc(category: "Orders") {
 
   """Filter by invoice data associated with the order."""
   invoices: InvoiceFilterInput
+
+  """Filter by whether the order has any fulfillments."""
+  hasFulfillments: Boolean
+
+  """Filter by fulfillment data associated with the order."""
+  fulfillments: FulfillmentFilterInput
+
+  """Filter by number of lines in the order."""
+  linesCount: IntFilterInput
+
+  """Filter by total gross amount of the order."""
+  totalGross: PriceFilterInput
+
+  """Filter by total net amount of the order."""
+  totalNet: PriceFilterInput
 
   """List of conditions that must be met."""
   AND: [OrderWhereInput!]
@@ -12933,6 +12948,29 @@ input UUIDFilterInput {
 input InvoiceFilterInput @doc(category: "Orders") {
   """Filter invoices by creation date."""
   createdAt: DateTimeRangeInput
+}
+
+"""Filter input for fulfillments."""
+input FulfillmentFilterInput @doc(category: "Orders") {
+  """Filter by fulfillment status."""
+  status: FulfillmentStatusEnumFilterInput
+}
+
+"""Filter by fulfillment status."""
+input FulfillmentStatusEnumFilterInput @doc(category: "Orders") {
+  """The value equal to."""
+  eq: FulfillmentStatus
+
+  """The value included in."""
+  oneOf: [FulfillmentStatus!]
+}
+
+input PriceFilterInput {
+  """The currency of the price to filter by."""
+  currency: String
+
+  """The amount of the price to filter by."""
+  amount: DecimalFilterInput!
 }
 
 input OrderDraftFilterInput @doc(category: "Orders") {

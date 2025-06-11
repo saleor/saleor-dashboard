@@ -2213,6 +2213,12 @@ export type FulfillmentCancelInput = {
   warehouseId?: InputMaybe<Scalars['ID']>;
 };
 
+/** Filter input for fulfillments. */
+export type FulfillmentFilterInput = {
+  /** Filter by fulfillment status. */
+  status?: InputMaybe<FulfillmentStatusEnumFilterInput>;
+};
+
 export enum FulfillmentStatus {
   CANCELED = 'CANCELED',
   FULFILLED = 'FULFILLED',
@@ -2222,6 +2228,14 @@ export enum FulfillmentStatus {
   RETURNED = 'RETURNED',
   WAITING_FOR_APPROVAL = 'WAITING_FOR_APPROVAL'
 }
+
+/** Filter by fulfillment status. */
+export type FulfillmentStatusEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<FulfillmentStatus>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<FulfillmentStatus>>;
+};
 
 export type FulfillmentUpdateTrackingInput = {
   /** If true, send an email notification to the customer. */
@@ -4422,7 +4436,11 @@ export type OrderWhereInput = {
   /** Filter by checkout token. */
   checkoutToken?: InputMaybe<UuidFilterInput>;
   /** Filter order by created at date. */
-  createdAt?: InputMaybe<DateTimeFilterInput>;
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by fulfillment data associated with the order. */
+  fulfillments?: InputMaybe<FulfillmentFilterInput>;
+  /** Filter by whether the order has any fulfillments. */
+  hasFulfillments?: InputMaybe<Scalars['Boolean']>;
   /** Filter by whether the order has any invoices. */
   hasInvoices?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
@@ -4436,12 +4454,18 @@ export type OrderWhereInput = {
   isGiftCardUsed?: InputMaybe<Scalars['Boolean']>;
   /** Filter by whether the order contains preorder items. */
   isPreorder?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by number of lines in the order. */
+  linesCount?: InputMaybe<IntFilterInput>;
   /** Filter by order number. */
   number?: InputMaybe<IntFilterInput>;
   /** Filter by order status. */
   status?: InputMaybe<OrderStatusEnumFilterInput>;
+  /** Filter by total gross amount of the order. */
+  totalGross?: InputMaybe<PriceFilterInput>;
+  /** Filter by total net amount of the order. */
+  totalNet?: InputMaybe<PriceFilterInput>;
   /** Filter order by updated at date. */
-  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by user. */
   user?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by user email. */
@@ -4883,6 +4907,13 @@ export type PreorderSettingsInput = {
   endDate?: InputMaybe<Scalars['DateTime']>;
   /** The global threshold for preorder variant. */
   globalThreshold?: InputMaybe<Scalars['Int']>;
+};
+
+export type PriceFilterInput = {
+  /** The amount of the price to filter by. */
+  amount: DecimalFilterInput;
+  /** The currency of the price to filter by. */
+  currency?: InputMaybe<Scalars['String']>;
 };
 
 export type PriceInput = {
