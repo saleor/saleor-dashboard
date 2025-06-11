@@ -44,6 +44,7 @@ const mockedExtension: ExtensionWithParams = {
   url: "https://example.com/extension",
   open: jest.fn(),
   target: AppExtensionTargetEnum.POPUP,
+  options: null,
 };
 
 describe("getExtensionsItems", () => {
