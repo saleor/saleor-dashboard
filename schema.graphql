@@ -1153,6 +1153,9 @@ type AppExtension implements Node {
   """Place where given extension will be mounted."""
   mount: AppExtensionMountEnum!
 
+  """App extension options."""
+  options: AppExtensionOptionsType
+
   """List of the app extension's permissions."""
   permissions: [Permission!]!
 
@@ -1192,18 +1195,22 @@ enum AppExtensionMountEnum {
   CATEGORY_OVERVIEW_CREATE
   CATEGORY_OVERVIEW_MORE_ACTIONS
   COLLECTION_DETAILS_MORE_ACTIONS
+  COLLECTION_DETAILS_WIDGETS
   COLLECTION_OVERVIEW_CREATE
   COLLECTION_OVERVIEW_MORE_ACTIONS
   CUSTOMER_DETAILS_MORE_ACTIONS
+  CUSTOMER_DETAILS_WIDGETS
   CUSTOMER_OVERVIEW_CREATE
   CUSTOMER_OVERVIEW_MORE_ACTIONS
   DISCOUNT_DETAILS_MORE_ACTIONS
   DISCOUNT_OVERVIEW_CREATE
   DISCOUNT_OVERVIEW_MORE_ACTIONS
   DRAFT_ORDER_DETAILS_MORE_ACTIONS
+  DRAFT_ORDER_DETAILS_WIDGETS
   DRAFT_ORDER_OVERVIEW_CREATE
   DRAFT_ORDER_OVERVIEW_MORE_ACTIONS
   GIFT_CARD_DETAILS_MORE_ACTIONS
+  GIFT_CARD_DETAILS_WIDGETS
   GIFT_CARD_OVERVIEW_CREATE
   GIFT_CARD_OVERVIEW_MORE_ACTIONS
   MENU_DETAILS_MORE_ACTIONS
@@ -1216,6 +1223,7 @@ enum AppExtensionMountEnum {
   NAVIGATION_PAGES
   NAVIGATION_TRANSLATIONS
   ORDER_DETAILS_MORE_ACTIONS
+  ORDER_DETAILS_WIDGETS
   ORDER_OVERVIEW_CREATE
   ORDER_OVERVIEW_MORE_ACTIONS
   PAGE_DETAILS_MORE_ACTIONS
@@ -1225,11 +1233,22 @@ enum AppExtensionMountEnum {
   PAGE_TYPE_OVERVIEW_CREATE
   PAGE_TYPE_OVERVIEW_MORE_ACTIONS
   PRODUCT_DETAILS_MORE_ACTIONS
+  PRODUCT_DETAILS_WIDGETS
   PRODUCT_OVERVIEW_CREATE
   PRODUCT_OVERVIEW_MORE_ACTIONS
   VOUCHER_DETAILS_MORE_ACTIONS
+  VOUCHER_DETAILS_WIDGETS
   VOUCHER_OVERVIEW_CREATE
   VOUCHER_OVERVIEW_MORE_ACTIONS
+}
+
+"""Represents the options for an app extension."""
+type AppExtensionOptionsType {
+  """Options for opening the extension in a new tab."""
+  newTabTarget: NewTabTargetOptions
+
+  """Options for opening the extension in a new tab."""
+  widgetTarget: WidgetTargetOptions
 }
 
 """
@@ -1243,6 +1262,7 @@ enum AppExtensionTargetEnum {
   APP_PAGE
   NEW_TAB
   POPUP
+  WIDGET
 }
 
 """
@@ -7986,6 +8006,12 @@ type FulfillmentCreated implements Event {
   version: String
 }
 
+"""Filter input for fulfillments."""
+input FulfillmentFilterInput {
+  """Filter by fulfillment status."""
+  status: FulfillmentStatusEnumFilterInput
+}
+
 """Represents line of the fulfillment."""
 type FulfillmentLine implements Node {
   """ID of the fulfillment line."""
@@ -8065,6 +8091,15 @@ enum FulfillmentStatus {
   REPLACED
   RETURNED
   WAITING_FOR_APPROVAL
+}
+
+"""Filter by fulfillment status."""
+input FulfillmentStatusEnumFilterInput {
+  """The value equal to."""
+  eq: FulfillmentStatus
+
+  """The value included in."""
+  oneOf: [FulfillmentStatus!]
 }
 
 """Event sent when the tracking number is updated."""
@@ -8998,6 +9033,11 @@ type GroupCountableEdge {
 """The `Hour` scalar type represents number of hours by integer value."""
 scalar Hour
 
+enum HttpMethod {
+  GET
+  POST
+}
+
 """Thumbnail formats for icon images."""
 enum IconThumbnailFormatEnum {
   ORIGINAL
@@ -9180,6 +9220,12 @@ enum InvoiceErrorCode {
   NUMBER_NOT_SET
   REQUIRED
   URL_NOT_SET
+}
+
+"""Filter input for invoices."""
+input InvoiceFilterInput {
+  """Filter invoices by creation date."""
+  createdAt: DateTimeRangeInput
 }
 
 """
@@ -15791,6 +15837,12 @@ enum NavigationType {
   SECONDARY
 }
 
+"""Represents the new tab target options for an app extension."""
+type NewTabTargetOptions {
+  """HTTP method for New Tab target (GET or POST)"""
+  method: HttpMethod!
+}
+
 """An object with an ID"""
 interface Node {
   """The ID of the object."""
@@ -18583,8 +18635,20 @@ input OrderWhereInput {
   checkoutToken: UUIDFilterInput
 
   """Filter order by created at date."""
-  createdAt: DateTimeFilterInput
+  createdAt: DateTimeRangeInput
+
+  """Filter by fulfillment data associated with the order."""
+  fulfillments: FulfillmentFilterInput
+
+  """Filter by whether the order has any fulfillments."""
+  hasFulfillments: Boolean
+
+  """Filter by whether the order has any invoices."""
+  hasInvoices: Boolean
   ids: [ID!]
+
+  """Filter by invoice data associated with the order."""
+  invoices: InvoiceFilterInput
 
   """
   Filter by whether the order uses the click and collect delivery method.
@@ -18600,6 +18664,9 @@ input OrderWhereInput {
   """Filter by whether the order contains preorder items."""
   isPreorder: Boolean
 
+  """Filter by number of lines in the order."""
+  linesCount: IntFilterInput
+
   """Filter by order number."""
   number: IntFilterInput
 
@@ -18607,13 +18674,16 @@ input OrderWhereInput {
   status: OrderStatusEnumFilterInput
 
   """Filter order by updated at date."""
-  updatedAt: DateTimeFilterInput
+  updatedAt: DateTimeRangeInput
 
   """Filter by user."""
   user: GlobalIDFilterInput
 
   """Filter by user email."""
   userEmail: StringFilterInput
+
+  """Filter by voucher code used in the order."""
+  voucherCode: StringFilterInput
 }
 
 """
@@ -34209,6 +34279,12 @@ enum WeightUnitsEnum {
   LB
   OZ
   TONNE
+}
+
+"""Represents the new tab target options for an app extension."""
+type WidgetTargetOptions {
+  """HTTP method for Widget target (GET or POST)"""
+  method: HttpMethod!
 }
 
 """_Any value scalar as defined by Federation spec."""

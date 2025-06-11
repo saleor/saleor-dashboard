@@ -202,18 +202,22 @@ export enum AppExtensionMountEnum {
   CATEGORY_OVERVIEW_CREATE = 'CATEGORY_OVERVIEW_CREATE',
   CATEGORY_OVERVIEW_MORE_ACTIONS = 'CATEGORY_OVERVIEW_MORE_ACTIONS',
   COLLECTION_DETAILS_MORE_ACTIONS = 'COLLECTION_DETAILS_MORE_ACTIONS',
+  COLLECTION_DETAILS_WIDGETS = 'COLLECTION_DETAILS_WIDGETS',
   COLLECTION_OVERVIEW_CREATE = 'COLLECTION_OVERVIEW_CREATE',
   COLLECTION_OVERVIEW_MORE_ACTIONS = 'COLLECTION_OVERVIEW_MORE_ACTIONS',
   CUSTOMER_DETAILS_MORE_ACTIONS = 'CUSTOMER_DETAILS_MORE_ACTIONS',
+  CUSTOMER_DETAILS_WIDGETS = 'CUSTOMER_DETAILS_WIDGETS',
   CUSTOMER_OVERVIEW_CREATE = 'CUSTOMER_OVERVIEW_CREATE',
   CUSTOMER_OVERVIEW_MORE_ACTIONS = 'CUSTOMER_OVERVIEW_MORE_ACTIONS',
   DISCOUNT_DETAILS_MORE_ACTIONS = 'DISCOUNT_DETAILS_MORE_ACTIONS',
   DISCOUNT_OVERVIEW_CREATE = 'DISCOUNT_OVERVIEW_CREATE',
   DISCOUNT_OVERVIEW_MORE_ACTIONS = 'DISCOUNT_OVERVIEW_MORE_ACTIONS',
   DRAFT_ORDER_DETAILS_MORE_ACTIONS = 'DRAFT_ORDER_DETAILS_MORE_ACTIONS',
+  DRAFT_ORDER_DETAILS_WIDGETS = 'DRAFT_ORDER_DETAILS_WIDGETS',
   DRAFT_ORDER_OVERVIEW_CREATE = 'DRAFT_ORDER_OVERVIEW_CREATE',
   DRAFT_ORDER_OVERVIEW_MORE_ACTIONS = 'DRAFT_ORDER_OVERVIEW_MORE_ACTIONS',
   GIFT_CARD_DETAILS_MORE_ACTIONS = 'GIFT_CARD_DETAILS_MORE_ACTIONS',
+  GIFT_CARD_DETAILS_WIDGETS = 'GIFT_CARD_DETAILS_WIDGETS',
   GIFT_CARD_OVERVIEW_CREATE = 'GIFT_CARD_OVERVIEW_CREATE',
   GIFT_CARD_OVERVIEW_MORE_ACTIONS = 'GIFT_CARD_OVERVIEW_MORE_ACTIONS',
   MENU_DETAILS_MORE_ACTIONS = 'MENU_DETAILS_MORE_ACTIONS',
@@ -226,6 +230,7 @@ export enum AppExtensionMountEnum {
   NAVIGATION_PAGES = 'NAVIGATION_PAGES',
   NAVIGATION_TRANSLATIONS = 'NAVIGATION_TRANSLATIONS',
   ORDER_DETAILS_MORE_ACTIONS = 'ORDER_DETAILS_MORE_ACTIONS',
+  ORDER_DETAILS_WIDGETS = 'ORDER_DETAILS_WIDGETS',
   ORDER_OVERVIEW_CREATE = 'ORDER_OVERVIEW_CREATE',
   ORDER_OVERVIEW_MORE_ACTIONS = 'ORDER_OVERVIEW_MORE_ACTIONS',
   PAGE_DETAILS_MORE_ACTIONS = 'PAGE_DETAILS_MORE_ACTIONS',
@@ -235,9 +240,11 @@ export enum AppExtensionMountEnum {
   PAGE_TYPE_OVERVIEW_CREATE = 'PAGE_TYPE_OVERVIEW_CREATE',
   PAGE_TYPE_OVERVIEW_MORE_ACTIONS = 'PAGE_TYPE_OVERVIEW_MORE_ACTIONS',
   PRODUCT_DETAILS_MORE_ACTIONS = 'PRODUCT_DETAILS_MORE_ACTIONS',
+  PRODUCT_DETAILS_WIDGETS = 'PRODUCT_DETAILS_WIDGETS',
   PRODUCT_OVERVIEW_CREATE = 'PRODUCT_OVERVIEW_CREATE',
   PRODUCT_OVERVIEW_MORE_ACTIONS = 'PRODUCT_OVERVIEW_MORE_ACTIONS',
   VOUCHER_DETAILS_MORE_ACTIONS = 'VOUCHER_DETAILS_MORE_ACTIONS',
+  VOUCHER_DETAILS_WIDGETS = 'VOUCHER_DETAILS_WIDGETS',
   VOUCHER_OVERVIEW_CREATE = 'VOUCHER_OVERVIEW_CREATE',
   VOUCHER_OVERVIEW_MORE_ACTIONS = 'VOUCHER_OVERVIEW_MORE_ACTIONS'
 }
@@ -252,7 +259,8 @@ export enum AppExtensionMountEnum {
 export enum AppExtensionTargetEnum {
   APP_PAGE = 'APP_PAGE',
   NEW_TAB = 'NEW_TAB',
-  POPUP = 'POPUP'
+  POPUP = 'POPUP',
+  WIDGET = 'WIDGET'
 }
 
 export type AppFilterInput = {
@@ -2259,6 +2267,12 @@ export type FulfillmentCancelInput = {
   warehouseId?: InputMaybe<Scalars['ID']>;
 };
 
+/** Filter input for fulfillments. */
+export type FulfillmentFilterInput = {
+  /** Filter by fulfillment status. */
+  status?: InputMaybe<FulfillmentStatusEnumFilterInput>;
+};
+
 export enum FulfillmentStatus {
   CANCELED = 'CANCELED',
   FULFILLED = 'FULFILLED',
@@ -2268,6 +2282,14 @@ export enum FulfillmentStatus {
   RETURNED = 'RETURNED',
   WAITING_FOR_APPROVAL = 'WAITING_FOR_APPROVAL'
 }
+
+/** Filter by fulfillment status. */
+export type FulfillmentStatusEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<FulfillmentStatus>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<FulfillmentStatus>>;
+};
 
 export type FulfillmentUpdateTrackingInput = {
   /** If true, send an email notification to the customer. */
@@ -2486,6 +2508,11 @@ export type GlobalIdFilterInput = {
   oneOf?: InputMaybe<Array<Scalars['ID']>>;
 };
 
+export enum HttpMethod {
+  GET = 'GET',
+  POST = 'POST'
+}
+
 /** Thumbnail formats for icon images. */
 export enum IconThumbnailFormatEnum {
   ORIGINAL = 'ORIGINAL',
@@ -2538,6 +2565,12 @@ export enum InvoiceErrorCode {
   REQUIRED = 'REQUIRED',
   URL_NOT_SET = 'URL_NOT_SET'
 }
+
+/** Filter input for invoices. */
+export type InvoiceFilterInput = {
+  /** Filter invoices by creation date. */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+};
 
 export enum JobStatusEnum {
   DELETED = 'DELETED',
@@ -4495,8 +4528,16 @@ export type OrderWhereInput = {
   /** Filter by checkout token. */
   checkoutToken?: InputMaybe<UuidFilterInput>;
   /** Filter order by created at date. */
-  createdAt?: InputMaybe<DateTimeFilterInput>;
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by fulfillment data associated with the order. */
+  fulfillments?: InputMaybe<FulfillmentFilterInput>;
+  /** Filter by whether the order has any fulfillments. */
+  hasFulfillments?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by whether the order has any invoices. */
+  hasInvoices?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter by invoice data associated with the order. */
+  invoices?: InputMaybe<InvoiceFilterInput>;
   /** Filter by whether the order uses the click and collect delivery method. */
   isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
   /** Filter based on whether the order includes a gift card purchase. */
@@ -4505,16 +4546,20 @@ export type OrderWhereInput = {
   isGiftCardUsed?: InputMaybe<Scalars['Boolean']>;
   /** Filter by whether the order contains preorder items. */
   isPreorder?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by number of lines in the order. */
+  linesCount?: InputMaybe<IntFilterInput>;
   /** Filter by order number. */
   number?: InputMaybe<IntFilterInput>;
   /** Filter by order status. */
   status?: InputMaybe<OrderStatusEnumFilterInput>;
   /** Filter order by updated at date. */
-  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by user. */
   user?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by user email. */
   userEmail?: InputMaybe<StringFilterInput>;
+  /** Filter by voucher code used in the order. */
+  voucherCode?: InputMaybe<StringFilterInput>;
 };
 
 export type PageCreateInput = {
