@@ -8,6 +8,9 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForCollectionDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   CollectionChannelListingErrorFragment,
   CollectionDetailsQuery,
@@ -65,6 +68,14 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     path: collectionListPath,
   });
 
+  const { COLLECTION_DETAILS_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.COLLECTION_DETAILS,
+  );
+  const extensionMenuItems = getExtensionsItemsForCollectionDetails(
+    COLLECTION_DETAILS_MORE_ACTIONS,
+    collection?.id,
+  );
+
   return (
     <CollectionUpdateForm
       collection={collection}
@@ -75,7 +86,11 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav href={collectionListBackLink} title={collection?.name} />
+          <TopNav href={collectionListBackLink} title={collection?.name}>
+            {extensionMenuItems.length > 0 && (
+              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+            )}
+          </TopNav>
           <DetailPageLayout.Content>
             <CollectionDetails data={data} disabled={disabled} errors={errors} onChange={change} />
             <CollectionImage

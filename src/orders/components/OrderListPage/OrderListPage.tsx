@@ -10,11 +10,12 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
-  mapToMenuItems,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForOrderOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
@@ -77,8 +78,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const { ORDER_OVERVIEW_CREATE, ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.ORDER_LIST,
   );
-  const extensionMenuItems = mapToMenuItems(ORDER_OVERVIEW_MORE_ACTIONS);
-  const extensionCreateButtonItems = mapToMenuItems(ORDER_OVERVIEW_CREATE);
+  const extensionMenuItems = getExtensionsItemsForOrderOverviewActions(ORDER_OVERVIEW_MORE_ACTIONS);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(ORDER_OVERVIEW_CREATE);
   const context = useDevModeContext();
   const { valueProvider } = useConditionalFilterContext();
 
