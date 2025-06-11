@@ -25,6 +25,7 @@ const filterAndMapToTarget = (
     url,
     label,
     mount,
+    target,
     open: (params: AppDetailsUrlMountQueryParams) =>
       openApp({
         id: app.id,

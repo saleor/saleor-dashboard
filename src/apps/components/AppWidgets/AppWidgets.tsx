@@ -1,9 +1,11 @@
 import { AppFrame } from "@dashboard/apps/components/AppFrame";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
+import Link from "@dashboard/components/Link";
 import { APP_VERSION } from "@dashboard/config";
 import { Extension } from "@dashboard/extensions/types";
 import { useAllFlags } from "@dashboard/featureFlags";
+import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -16,11 +18,24 @@ export type AppWidgetsProps = {
 
 const defaultIframeSize = 50;
 
+// todo translations
+const getNonIframeLabel = (target: AppExtensionTargetEnum) => {
+  switch (target) {
+    case AppExtensionTargetEnum.APP_PAGE:
+      return "Redirect to the App details";
+    case AppExtensionTargetEnum.NEW_TAB:
+      return "Open in a new tab";
+    case AppExtensionTargetEnum.POPUP:
+      return "Open Popup";
+    case AppExtensionTargetEnum.WIDGET:
+      throw new Error("Widget should not render link to click");
+  }
+};
+
 /**
  * TODO
  * - accept extensions
- * - app name link to app page
- * - extension height should be configurable in manifest
+ * - extension height should be negotiated with sdk
  */
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
   const flags = useAllFlags();
@@ -52,6 +67,29 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
             featureFlags: flags,
           });
 
+          const onNonIframeActionClick = () => {
+            switch (ext.target) {
+              case AppExtensionTargetEnum.APP_PAGE: {
+                ext.open();
+
+                return;
+              }
+              case AppExtensionTargetEnum.WIDGET: {
+                throw new Error("Widget should not render link to click");
+              }
+              case AppExtensionTargetEnum.NEW_TAB: {
+                ext.open();
+
+                return;
+              }
+              case AppExtensionTargetEnum.POPUP: {
+                ext.open();
+
+                return;
+              }
+            }
+          };
+
           return (
             <Box marginBottom={4} key={ext.id}>
               <Text
@@ -75,6 +113,11 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                     appId={ext.app.id}
                     dashboardVersion={APP_VERSION}
                   />
+                </Box>
+              )}
+              {!isIframeType && (
+                <Box marginTop={2}>
+                  <Link onClick={onNonIframeActionClick}>{getNonIframeLabel(ext.target)}</Link>
                 </Box>
               )}
             </Box>
