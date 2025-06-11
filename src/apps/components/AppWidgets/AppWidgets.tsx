@@ -9,7 +9,7 @@ import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 export type AppWidgetsProps = {
   extensions: Extension[];
@@ -32,6 +32,41 @@ const getNonIframeLabel = (target: AppExtensionTargetEnum) => {
   }
 };
 
+const IframePost = ({
+  extensionId,
+  extensionUrl,
+  appId,
+  accessToken,
+}: {
+  extensionUrl: string;
+  extensionId: string;
+  accessToken: string;
+  appId: string;
+}) => {
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    formRef.current && formRef.current.submit();
+  }, []);
+
+  return (
+    <Box>
+      <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
+        <input type="hidden" name="saleorApiUrl" value={process.env.API_URL} />
+        <input type="hidden" name="accessToken" value={accessToken} />
+        <input type="hidden" name="appId" value={appId} />
+      </form>
+      <Box
+        as="iframe"
+        borderWidth={0}
+        __height={defaultIframeSize}
+        sandbox="allow-same-origin allow-forms allow-scripts allow-downloads"
+        name={`ext-frame-${extensionId}`}
+      />
+    </Box>
+  );
+};
+
 /**
  * TODO
  * - accept extensions
@@ -51,6 +86,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
       <DashboardCard.Content>
         {extensions.map(ext => {
           const isIframeType = ext.target === "WIDGET";
+          const isPOST = ext.options?.widgetTarget?.method === "POST";
 
           let isExtensionAbsoluteUrl = false;
 
@@ -115,7 +151,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               >
                 {ext.app.name}: {ext.label}
               </Text>
-              {isIframeType && (
+              {isIframeType && !isPOST && (
                 <Box marginTop={2} __height={defaultIframeSize}>
                   <AppFrame
                     src={appIframeUrl}
@@ -124,6 +160,14 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                     dashboardVersion={APP_VERSION}
                   />
                 </Box>
+              )}
+              {isIframeType && isPOST && (
+                <IframePost
+                  appId={ext.app.id}
+                  accessToken={ext.accessToken}
+                  extensionId={ext.id}
+                  extensionUrl={extensionUrl}
+                />
               )}
               {!isIframeType && (
                 <Box marginTop={2}>

@@ -70,6 +70,7 @@ const filterAndMapToTarget = (
       label,
       mount,
       target,
+      options,
       open: (params: AppDetailsUrlMountQueryParams) => {
         if (isNewTab && !isPOST) {
           // todo apply search params

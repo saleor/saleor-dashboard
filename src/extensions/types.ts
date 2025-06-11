@@ -78,6 +78,7 @@ export interface Extension {
   url: string;
   open: () => void;
   target: AppExtensionTargetEnum;
+  options: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["options"];
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {
