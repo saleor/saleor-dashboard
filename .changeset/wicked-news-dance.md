@@ -3,6 +3,6 @@
 ---
 
 Renamed modeling related pages:
-- `/pages` -> `/modeling`
+- `/pages` -> `/models`
 - `/page-types` -> `/model-types`
 - `/navigation` -> `/structures`

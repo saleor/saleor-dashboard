@@ -13,7 +13,7 @@ import {
   TabActionDialog,
 } from "../types";
 
-export const modelingSection = "/modeling/";
+export const modelingSection = "/models/";
 
 export const pageListPath = modelingSection;
 export type PageListUrlDialog =
