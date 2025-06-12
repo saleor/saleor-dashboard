@@ -6,7 +6,7 @@ import { Redirect, Route } from "react-router-dom";
 import urlJoin from "url-join";
 
 export const legacyRedirects = [
-  // Redirect old /pages/* to /modeling/*
+  // Redirect old /pages/* to /models/*
   <Route
     key="pages-redirect"
     path="/pages/:rest(.*)"
