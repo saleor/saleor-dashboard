@@ -2,7 +2,7 @@ name: Update GraphQL Schema
 
 on:
   schedule:
-    - cron: "0 7 * * *" # Run daily at 7 AM UTC
+    - cron: "0 7 * * 1-5" # Mon-Fri at 7 AM UTC
   workflow_dispatch:
 
 permissions:

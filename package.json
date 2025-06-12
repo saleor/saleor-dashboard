@@ -250,7 +250,7 @@
     "dev": "vite --host",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "preview": "vite preview",
-    "generate": "graphql-codegen --config ./graphql.config.ts",
+    "generate": "graphql-codegen",
     "build-flags": "node scripts/build-flags.js",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types:src": "tsc --noEmit && tsc-strict",
