@@ -59,7 +59,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
     <TopNavWrapper>
       <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
         <Box display="flex" gap={2} alignItems="center">
-          {goBackUrl && <TopNavLink to={goBackUrl} variant="tertiary" />}
+          {goBackUrl && <TopNavLink to={goBackUrl} variant="secondary" />}
           <Box display="flex" gap={4} alignItems="center">
             <AppAvatar size={8} logo={logo} />
             <Box display="flex" flexDirection="column">
