@@ -103,7 +103,6 @@
     "@graphql-codegen/cli": "^2.1.1",
     "@graphql-codegen/fragment-matcher": "^3.1.0",
     "@graphql-codegen/import-types-preset": "^2.1.12",
-    "@graphql-codegen/introspection": "^2.1.1",
     "@graphql-codegen/typescript": "^2.4.3",
     "@graphql-codegen/typescript-apollo-client-helpers": "^2.1.10",
     "@graphql-codegen/typescript-operations": "^2.2.4",
@@ -251,7 +250,7 @@
     "dev": "vite --host",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "preview": "vite preview",
-    "build-types": "node scripts/build-types.js",
+    "generate": "graphql-codegen",
     "build-flags": "node scripts/build-flags.js",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
     "check-types:src": "tsc --noEmit && tsc-strict",
@@ -259,17 +258,18 @@
     "check-types": "npm run check-types:src && npm run check-types:playwright",
     "extract-json-messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --out-file locale/defaultMessages.json --format scripts/formatter.js",
     "extract-messages": "npm run extract-json-messages",
-    "fetch-schema": "graphql-codegen --config ./codegen.ts",
+    "fetch-schema": "curl https://raw.githubusercontent.com/saleor/saleor/${npm_package_config_saleor_schemaVersion}/saleor/graphql/schema.graphql > schema.graphql",
+    "fetch-local-schema": "node scripts/fetch-local-schema.js",
     "heroku-postbuild": "npm run build",
     "serve:lhci": "cross-env NODE_ENV=production npm run server",
-    "prestart": "npm run build-types",
+    "prestart": "npm run generate",
     "test": "jest src/",
     "test:ci": "jest src/ --coverage",
     "test:watch": "jest --watch src/",
     "lint": "eslint \"{src,playwright}/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:check-progress": "eslint-nibble \"src/**/*.@(tsx|ts|jsx|js)\"",
-    "prebuild": "npm run build-types",
-    "predev": "npm run build-types",
+    "prebuild": "npm run generate",
+    "predev": "npm run generate",
     "release": "echo $npm_package_version | xargs git tag && git push --follow-tags",
     "prepare": "is-ci || husky install",
     "dep-status": "depcruise --config .dependency-cruiser.js src",
@@ -291,5 +291,10 @@
     "knip:fix": "knip --fix"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)",
-  "packageManager": "npm@10.8.2"
+  "packageManager": "npm@10.8.2",
+  "config": {
+    "saleor": {
+      "schemaVersion": "main"
+    }
+  }
 }

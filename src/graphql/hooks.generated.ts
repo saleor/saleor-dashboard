@@ -10467,252 +10467,291 @@ export function useCustomerGiftCardListLazyQuery(baseOptions?: ApolloReactHooks.
 export type CustomerGiftCardListQueryHookResult = ReturnType<typeof useCustomerGiftCardListQuery>;
 export type CustomerGiftCardListLazyQueryHookResult = ReturnType<typeof useCustomerGiftCardListLazyQuery>;
 export type CustomerGiftCardListQueryResult = Apollo.QueryResult<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>;
-export const MenuCreateDocument = gql`
-    mutation MenuCreate($input: MenuCreateInput!) {
-  menuCreate(input: $input) {
+export const PageTypeUpdateDocument = gql`
+    mutation PageTypeUpdate($id: ID!, $input: PageTypeUpdateInput!) {
+  pageTypeUpdate(id: $id, input: $input) {
     errors {
-      ...MenuError
+      ...PageError
     }
-    menu {
-      id
+    pageType {
+      ...PageTypeDetails
     }
   }
 }
-    ${MenuErrorFragmentDoc}`;
-export type MenuCreateMutationFn = Apollo.MutationFunction<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>;
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
+export type PageTypeUpdateMutationFn = Apollo.MutationFunction<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>;
 
 /**
- * __useMenuCreateMutation__
+ * __usePageTypeUpdateMutation__
  *
- * To run a mutation, you first call `useMenuCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMenuCreateMutation` returns a tuple that includes:
+ * To run a mutation, you first call `usePageTypeUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeUpdateMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [menuCreateMutation, { data, loading, error }] = useMenuCreateMutation({
+ * const [pageTypeUpdateMutation, { data, loading, error }] = usePageTypeUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePageTypeUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>(PageTypeUpdateDocument, options);
+      }
+export type PageTypeUpdateMutationHookResult = ReturnType<typeof usePageTypeUpdateMutation>;
+export type PageTypeUpdateMutationResult = Apollo.MutationResult<Types.PageTypeUpdateMutation>;
+export type PageTypeUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>;
+export const PageTypeCreateDocument = gql`
+    mutation PageTypeCreate($input: PageTypeCreateInput!) {
+  pageTypeCreate(input: $input) {
+    errors {
+      ...PageError
+    }
+    pageType {
+      ...PageTypeDetails
+    }
+  }
+}
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
+export type PageTypeCreateMutationFn = Apollo.MutationFunction<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>;
+
+/**
+ * __usePageTypeCreateMutation__
+ *
+ * To run a mutation, you first call `usePageTypeCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageTypeCreateMutation, { data, loading, error }] = usePageTypeCreateMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useMenuCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>) {
+export function usePageTypeCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>(MenuCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>(PageTypeCreateDocument, options);
       }
-export type MenuCreateMutationHookResult = ReturnType<typeof useMenuCreateMutation>;
-export type MenuCreateMutationResult = Apollo.MutationResult<Types.MenuCreateMutation>;
-export type MenuCreateMutationOptions = Apollo.BaseMutationOptions<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>;
-export const MenuBulkDeleteDocument = gql`
-    mutation MenuBulkDelete($ids: [ID!]!) {
-  menuBulkDelete(ids: $ids) {
+export type PageTypeCreateMutationHookResult = ReturnType<typeof usePageTypeCreateMutation>;
+export type PageTypeCreateMutationResult = Apollo.MutationResult<Types.PageTypeCreateMutation>;
+export type PageTypeCreateMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>;
+export const AssignPageAttributeDocument = gql`
+    mutation AssignPageAttribute($id: ID!, $ids: [ID!]!) {
+  pageAttributeAssign(pageTypeId: $id, attributeIds: $ids) {
     errors {
-      ...MenuError
+      ...PageError
+    }
+    pageType {
+      ...PageTypeDetails
     }
   }
 }
-    ${MenuErrorFragmentDoc}`;
-export type MenuBulkDeleteMutationFn = Apollo.MutationFunction<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>;
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
+export type AssignPageAttributeMutationFn = Apollo.MutationFunction<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>;
 
 /**
- * __useMenuBulkDeleteMutation__
+ * __useAssignPageAttributeMutation__
  *
- * To run a mutation, you first call `useMenuBulkDeleteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMenuBulkDeleteMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAssignPageAttributeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAssignPageAttributeMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [menuBulkDeleteMutation, { data, loading, error }] = useMenuBulkDeleteMutation({
+ * const [assignPageAttributeMutation, { data, loading, error }] = useAssignPageAttributeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useAssignPageAttributeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>(AssignPageAttributeDocument, options);
+      }
+export type AssignPageAttributeMutationHookResult = ReturnType<typeof useAssignPageAttributeMutation>;
+export type AssignPageAttributeMutationResult = Apollo.MutationResult<Types.AssignPageAttributeMutation>;
+export type AssignPageAttributeMutationOptions = Apollo.BaseMutationOptions<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>;
+export const UnassignPageAttributeDocument = gql`
+    mutation UnassignPageAttribute($id: ID!, $ids: [ID!]!) {
+  pageAttributeUnassign(pageTypeId: $id, attributeIds: $ids) {
+    errors {
+      ...PageError
+    }
+    pageType {
+      ...PageTypeDetails
+    }
+  }
+}
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
+export type UnassignPageAttributeMutationFn = Apollo.MutationFunction<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>;
+
+/**
+ * __useUnassignPageAttributeMutation__
+ *
+ * To run a mutation, you first call `useUnassignPageAttributeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnassignPageAttributeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unassignPageAttributeMutation, { data, loading, error }] = useUnassignPageAttributeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useUnassignPageAttributeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>(UnassignPageAttributeDocument, options);
+      }
+export type UnassignPageAttributeMutationHookResult = ReturnType<typeof useUnassignPageAttributeMutation>;
+export type UnassignPageAttributeMutationResult = Apollo.MutationResult<Types.UnassignPageAttributeMutation>;
+export type UnassignPageAttributeMutationOptions = Apollo.BaseMutationOptions<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>;
+export const PageTypeDeleteDocument = gql`
+    mutation PageTypeDelete($id: ID!) {
+  pageTypeDelete(id: $id) {
+    errors {
+      ...PageTypeDeleteErrorFragment
+    }
+    pageType {
+      id
+    }
+  }
+}
+    ${PageTypeDeleteErrorFragmentFragmentDoc}`;
+export type PageTypeDeleteMutationFn = Apollo.MutationFunction<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>;
+
+/**
+ * __usePageTypeDeleteMutation__
+ *
+ * To run a mutation, you first call `usePageTypeDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageTypeDeleteMutation, { data, loading, error }] = usePageTypeDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePageTypeDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>(PageTypeDeleteDocument, options);
+      }
+export type PageTypeDeleteMutationHookResult = ReturnType<typeof usePageTypeDeleteMutation>;
+export type PageTypeDeleteMutationResult = Apollo.MutationResult<Types.PageTypeDeleteMutation>;
+export type PageTypeDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>;
+export const PageTypeBulkDeleteDocument = gql`
+    mutation PageTypeBulkDelete($ids: [ID!]!) {
+  pageTypeBulkDelete(ids: $ids) {
+    errors {
+      ...PageTypeDeleteErrorFragment
+    }
+  }
+}
+    ${PageTypeDeleteErrorFragmentFragmentDoc}`;
+export type PageTypeBulkDeleteMutationFn = Apollo.MutationFunction<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>;
+
+/**
+ * __usePageTypeBulkDeleteMutation__
+ *
+ * To run a mutation, you first call `usePageTypeBulkDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeBulkDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageTypeBulkDeleteMutation, { data, loading, error }] = usePageTypeBulkDeleteMutation({
  *   variables: {
  *      ids: // value for 'ids'
  *   },
  * });
  */
-export function useMenuBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>) {
+export function usePageTypeBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>(MenuBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>(PageTypeBulkDeleteDocument, options);
       }
-export type MenuBulkDeleteMutationHookResult = ReturnType<typeof useMenuBulkDeleteMutation>;
-export type MenuBulkDeleteMutationResult = Apollo.MutationResult<Types.MenuBulkDeleteMutation>;
-export type MenuBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>;
-export const MenuDeleteDocument = gql`
-    mutation MenuDelete($id: ID!) {
-  menuDelete(id: $id) {
+export type PageTypeBulkDeleteMutationHookResult = ReturnType<typeof usePageTypeBulkDeleteMutation>;
+export type PageTypeBulkDeleteMutationResult = Apollo.MutationResult<Types.PageTypeBulkDeleteMutation>;
+export type PageTypeBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>;
+export const PageTypeAttributeReorderDocument = gql`
+    mutation PageTypeAttributeReorder($move: ReorderInput!, $pageTypeId: ID!) {
+  pageTypeReorderAttributes(moves: [$move], pageTypeId: $pageTypeId) {
     errors {
-      ...MenuError
+      ...PageError
+    }
+    pageType {
+      ...PageTypeDetails
     }
   }
 }
-    ${MenuErrorFragmentDoc}`;
-export type MenuDeleteMutationFn = Apollo.MutationFunction<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>;
+    ${PageErrorFragmentDoc}
+${PageTypeDetailsFragmentDoc}`;
+export type PageTypeAttributeReorderMutationFn = Apollo.MutationFunction<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>;
 
 /**
- * __useMenuDeleteMutation__
+ * __usePageTypeAttributeReorderMutation__
  *
- * To run a mutation, you first call `useMenuDeleteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMenuDeleteMutation` returns a tuple that includes:
+ * To run a mutation, you first call `usePageTypeAttributeReorderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeAttributeReorderMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [menuDeleteMutation, { data, loading, error }] = useMenuDeleteMutation({
+ * const [pageTypeAttributeReorderMutation, { data, loading, error }] = usePageTypeAttributeReorderMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      move: // value for 'move'
+ *      pageTypeId: // value for 'pageTypeId'
  *   },
  * });
  */
-export function useMenuDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>) {
+export function usePageTypeAttributeReorderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>(MenuDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>(PageTypeAttributeReorderDocument, options);
       }
-export type MenuDeleteMutationHookResult = ReturnType<typeof useMenuDeleteMutation>;
-export type MenuDeleteMutationResult = Apollo.MutationResult<Types.MenuDeleteMutation>;
-export type MenuDeleteMutationOptions = Apollo.BaseMutationOptions<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>;
-export const MenuItemCreateDocument = gql`
-    mutation MenuItemCreate($input: MenuItemCreateInput!) {
-  menuItemCreate(input: $input) {
-    errors {
-      ...MenuError
-    }
-    menuItem {
-      menu {
-        id
-        items {
-          ...MenuItemNested
-        }
-      }
-    }
-  }
-}
-    ${MenuErrorFragmentDoc}
-${MenuItemNestedFragmentDoc}`;
-export type MenuItemCreateMutationFn = Apollo.MutationFunction<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>;
-
-/**
- * __useMenuItemCreateMutation__
- *
- * To run a mutation, you first call `useMenuItemCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMenuItemCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [menuItemCreateMutation, { data, loading, error }] = useMenuItemCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useMenuItemCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>(MenuItemCreateDocument, options);
-      }
-export type MenuItemCreateMutationHookResult = ReturnType<typeof useMenuItemCreateMutation>;
-export type MenuItemCreateMutationResult = Apollo.MutationResult<Types.MenuItemCreateMutation>;
-export type MenuItemCreateMutationOptions = Apollo.BaseMutationOptions<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>;
-export const MenuUpdateDocument = gql`
-    mutation MenuUpdate($id: ID!, $name: String!, $moves: [MenuItemMoveInput!]!, $removeIds: [ID!]!) {
-  menuUpdate(id: $id, input: {name: $name}) {
-    errors {
-      ...MenuError
-    }
-  }
-  menuItemMove(menu: $id, moves: $moves) {
-    errors {
-      ...MenuError
-    }
-  }
-  menuItemBulkDelete(ids: $removeIds) {
-    errors {
-      ...MenuError
-    }
-  }
-}
-    ${MenuErrorFragmentDoc}`;
-export type MenuUpdateMutationFn = Apollo.MutationFunction<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>;
-
-/**
- * __useMenuUpdateMutation__
- *
- * To run a mutation, you first call `useMenuUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMenuUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [menuUpdateMutation, { data, loading, error }] = useMenuUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      name: // value for 'name'
- *      moves: // value for 'moves'
- *      removeIds: // value for 'removeIds'
- *   },
- * });
- */
-export function useMenuUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>(MenuUpdateDocument, options);
-      }
-export type MenuUpdateMutationHookResult = ReturnType<typeof useMenuUpdateMutation>;
-export type MenuUpdateMutationResult = Apollo.MutationResult<Types.MenuUpdateMutation>;
-export type MenuUpdateMutationOptions = Apollo.BaseMutationOptions<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>;
-export const MenuItemUpdateDocument = gql`
-    mutation MenuItemUpdate($id: ID!, $input: MenuItemInput!) {
-  menuItemUpdate(id: $id, input: $input) {
-    errors {
-      ...MenuError
-    }
-    menuItem {
-      ...MenuItem
-    }
-  }
-}
-    ${MenuErrorFragmentDoc}
-${MenuItemFragmentDoc}`;
-export type MenuItemUpdateMutationFn = Apollo.MutationFunction<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>;
-
-/**
- * __useMenuItemUpdateMutation__
- *
- * To run a mutation, you first call `useMenuItemUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMenuItemUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [menuItemUpdateMutation, { data, loading, error }] = useMenuItemUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useMenuItemUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>(MenuItemUpdateDocument, options);
-      }
-export type MenuItemUpdateMutationHookResult = ReturnType<typeof useMenuItemUpdateMutation>;
-export type MenuItemUpdateMutationResult = Apollo.MutationResult<Types.MenuItemUpdateMutation>;
-export type MenuItemUpdateMutationOptions = Apollo.BaseMutationOptions<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>;
-export const MenuListDocument = gql`
-    query MenuList($first: Int, $after: String, $last: Int, $before: String, $sort: MenuSortingInput) {
-  menus(first: $first, after: $after, before: $before, last: $last, sortBy: $sort) {
+export type PageTypeAttributeReorderMutationHookResult = ReturnType<typeof usePageTypeAttributeReorderMutation>;
+export type PageTypeAttributeReorderMutationResult = Apollo.MutationResult<Types.PageTypeAttributeReorderMutation>;
+export type PageTypeAttributeReorderMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>;
+export const PageTypeListDocument = gql`
+    query PageTypeList($after: String, $before: String, $first: Int, $last: Int, $filter: PageTypeFilterInput, $sort: PageTypeSortingInput) {
+  pageTypes(
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    filter: $filter
+    sortBy: $sort
+  ) {
     edges {
       node {
-        ...Menu
+        ...PageType
       }
     }
     pageInfo {
@@ -10720,75 +10759,451 @@ export const MenuListDocument = gql`
     }
   }
 }
-    ${MenuFragmentDoc}
+    ${PageTypeFragmentDoc}
 ${PageInfoFragmentDoc}`;
 
 /**
- * __useMenuListQuery__
+ * __usePageTypeListQuery__
  *
- * To run a query within a React component, call `useMenuListQuery` and pass it any options that fit your needs.
- * When your component renders, `useMenuListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `usePageTypeListQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeListQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMenuListQuery({
+ * const { data, loading, error } = usePageTypeListQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      filter: // value for 'filter'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function usePageTypeListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>(PageTypeListDocument, options);
+      }
+export function usePageTypeListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>(PageTypeListDocument, options);
+        }
+export type PageTypeListQueryHookResult = ReturnType<typeof usePageTypeListQuery>;
+export type PageTypeListLazyQueryHookResult = ReturnType<typeof usePageTypeListLazyQuery>;
+export type PageTypeListQueryResult = Apollo.QueryResult<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>;
+export const PageTypeDetailsDocument = gql`
+    query PageTypeDetails($id: ID!) {
+  pageType(id: $id) {
+    ...PageTypeDetails
+  }
+}
+    ${PageTypeDetailsFragmentDoc}`;
+
+/**
+ * __usePageTypeDetailsQuery__
+ *
+ * To run a query within a React component, call `usePageTypeDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePageTypeDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePageTypeDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>(PageTypeDetailsDocument, options);
+      }
+export function usePageTypeDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>(PageTypeDetailsDocument, options);
+        }
+export type PageTypeDetailsQueryHookResult = ReturnType<typeof usePageTypeDetailsQuery>;
+export type PageTypeDetailsLazyQueryHookResult = ReturnType<typeof usePageTypeDetailsLazyQuery>;
+export type PageTypeDetailsQueryResult = Apollo.QueryResult<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>;
+export const PageCreateDocument = gql`
+    mutation PageCreate($input: PageCreateInput!) {
+  pageCreate(input: $input) {
+    errors {
+      ...PageErrorWithAttributes
+    }
+    page {
+      id
+    }
+  }
+}
+    ${PageErrorWithAttributesFragmentDoc}`;
+export type PageCreateMutationFn = Apollo.MutationFunction<Types.PageCreateMutation, Types.PageCreateMutationVariables>;
+
+/**
+ * __usePageCreateMutation__
+ *
+ * To run a mutation, you first call `usePageCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageCreateMutation, { data, loading, error }] = usePageCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePageCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageCreateMutation, Types.PageCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PageCreateMutation, Types.PageCreateMutationVariables>(PageCreateDocument, options);
+      }
+export type PageCreateMutationHookResult = ReturnType<typeof usePageCreateMutation>;
+export type PageCreateMutationResult = Apollo.MutationResult<Types.PageCreateMutation>;
+export type PageCreateMutationOptions = Apollo.BaseMutationOptions<Types.PageCreateMutation, Types.PageCreateMutationVariables>;
+export const PageUpdateDocument = gql`
+    mutation PageUpdate($id: ID!, $input: PageInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+  pageUpdate(id: $id, input: $input) {
+    errors {
+      ...PageErrorWithAttributes
+    }
+    page {
+      ...PageDetails
+    }
+  }
+}
+    ${PageErrorWithAttributesFragmentDoc}
+${PageDetailsFragmentDoc}`;
+export type PageUpdateMutationFn = Apollo.MutationFunction<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>;
+
+/**
+ * __usePageUpdateMutation__
+ *
+ * To run a mutation, you first call `usePageUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageUpdateMutation, { data, loading, error }] = usePageUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *      firstValues: // value for 'firstValues'
+ *      afterValues: // value for 'afterValues'
+ *      lastValues: // value for 'lastValues'
+ *      beforeValues: // value for 'beforeValues'
+ *   },
+ * });
+ */
+export function usePageUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>(PageUpdateDocument, options);
+      }
+export type PageUpdateMutationHookResult = ReturnType<typeof usePageUpdateMutation>;
+export type PageUpdateMutationResult = Apollo.MutationResult<Types.PageUpdateMutation>;
+export type PageUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>;
+export const PageRemoveDocument = gql`
+    mutation PageRemove($id: ID!) {
+  pageDelete(id: $id) {
+    errors {
+      ...PageError
+    }
+  }
+}
+    ${PageErrorFragmentDoc}`;
+export type PageRemoveMutationFn = Apollo.MutationFunction<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>;
+
+/**
+ * __usePageRemoveMutation__
+ *
+ * To run a mutation, you first call `usePageRemoveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageRemoveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageRemoveMutation, { data, loading, error }] = usePageRemoveMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePageRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>(PageRemoveDocument, options);
+      }
+export type PageRemoveMutationHookResult = ReturnType<typeof usePageRemoveMutation>;
+export type PageRemoveMutationResult = Apollo.MutationResult<Types.PageRemoveMutation>;
+export type PageRemoveMutationOptions = Apollo.BaseMutationOptions<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>;
+export const PageBulkPublishDocument = gql`
+    mutation PageBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
+  pageBulkPublish(ids: $ids, isPublished: $isPublished) {
+    errors {
+      ...PageBulkPublishErrorFragment
+    }
+  }
+}
+    ${PageBulkPublishErrorFragmentFragmentDoc}`;
+export type PageBulkPublishMutationFn = Apollo.MutationFunction<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>;
+
+/**
+ * __usePageBulkPublishMutation__
+ *
+ * To run a mutation, you first call `usePageBulkPublishMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageBulkPublishMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageBulkPublishMutation, { data, loading, error }] = usePageBulkPublishMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      isPublished: // value for 'isPublished'
+ *   },
+ * });
+ */
+export function usePageBulkPublishMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>(PageBulkPublishDocument, options);
+      }
+export type PageBulkPublishMutationHookResult = ReturnType<typeof usePageBulkPublishMutation>;
+export type PageBulkPublishMutationResult = Apollo.MutationResult<Types.PageBulkPublishMutation>;
+export type PageBulkPublishMutationOptions = Apollo.BaseMutationOptions<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>;
+export const PageBulkRemoveDocument = gql`
+    mutation PageBulkRemove($ids: [ID!]!) {
+  pageBulkDelete(ids: $ids) {
+    errors {
+      ...PageBulkRemoveErrorFragment
+    }
+  }
+}
+    ${PageBulkRemoveErrorFragmentFragmentDoc}`;
+export type PageBulkRemoveMutationFn = Apollo.MutationFunction<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>;
+
+/**
+ * __usePageBulkRemoveMutation__
+ *
+ * To run a mutation, you first call `usePageBulkRemoveMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePageBulkRemoveMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pageBulkRemoveMutation, { data, loading, error }] = usePageBulkRemoveMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function usePageBulkRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>(PageBulkRemoveDocument, options);
+      }
+export type PageBulkRemoveMutationHookResult = ReturnType<typeof usePageBulkRemoveMutation>;
+export type PageBulkRemoveMutationResult = Apollo.MutationResult<Types.PageBulkRemoveMutation>;
+export type PageBulkRemoveMutationOptions = Apollo.BaseMutationOptions<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>;
+export const PageListDocument = gql`
+    query PageList($first: Int, $after: String, $last: Int, $before: String, $sort: PageSortingInput, $filter: PageFilterInput) {
+  pages(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sortBy: $sort
+    filter: $filter
+  ) {
+    edges {
+      node {
+        ...Page
+      }
+    }
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+  }
+}
+    ${PageFragmentDoc}`;
+
+/**
+ * __usePageListQuery__
+ *
+ * To run a query within a React component, call `usePageListQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePageListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePageListQuery({
  *   variables: {
  *      first: // value for 'first'
  *      after: // value for 'after'
  *      last: // value for 'last'
  *      before: // value for 'before'
  *      sort: // value for 'sort'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
-export function useMenuListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.MenuListQuery, Types.MenuListQueryVariables>) {
+export function usePageListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageListQuery, Types.PageListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.MenuListQuery, Types.MenuListQueryVariables>(MenuListDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageListQuery, Types.PageListQueryVariables>(PageListDocument, options);
       }
-export function useMenuListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuListQuery, Types.MenuListQueryVariables>) {
+export function usePageListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageListQuery, Types.PageListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.MenuListQuery, Types.MenuListQueryVariables>(MenuListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageListQuery, Types.PageListQueryVariables>(PageListDocument, options);
         }
-export type MenuListQueryHookResult = ReturnType<typeof useMenuListQuery>;
-export type MenuListLazyQueryHookResult = ReturnType<typeof useMenuListLazyQuery>;
-export type MenuListQueryResult = Apollo.QueryResult<Types.MenuListQuery, Types.MenuListQueryVariables>;
-export const MenuDetailsDocument = gql`
-    query MenuDetails($id: ID!) {
-  menu(id: $id) {
-    ...MenuDetails
+export type PageListQueryHookResult = ReturnType<typeof usePageListQuery>;
+export type PageListLazyQueryHookResult = ReturnType<typeof usePageListLazyQuery>;
+export type PageListQueryResult = Apollo.QueryResult<Types.PageListQuery, Types.PageListQueryVariables>;
+export const PageDetailsDocument = gql`
+    query PageDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+  page(id: $id) {
+    ...PageDetails
   }
 }
-    ${MenuDetailsFragmentDoc}`;
+    ${PageDetailsFragmentDoc}`;
 
 /**
- * __useMenuDetailsQuery__
+ * __usePageDetailsQuery__
  *
- * To run a query within a React component, call `useMenuDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `useMenuDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `usePageDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePageDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMenuDetailsQuery({
+ * const { data, loading, error } = usePageDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      firstValues: // value for 'firstValues'
+ *      afterValues: // value for 'afterValues'
+ *      lastValues: // value for 'lastValues'
+ *      beforeValues: // value for 'beforeValues'
  *   },
  * });
  */
-export function useMenuDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>) {
+export function usePageDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>(MenuDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>(PageDetailsDocument, options);
       }
-export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>) {
+export function usePageDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>(MenuDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>(PageDetailsDocument, options);
         }
-export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
-export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
-export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
+export type PageDetailsQueryHookResult = ReturnType<typeof usePageDetailsQuery>;
+export type PageDetailsLazyQueryHookResult = ReturnType<typeof usePageDetailsLazyQuery>;
+export type PageDetailsQueryResult = Apollo.QueryResult<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>;
+export const PageTypeDocument = gql`
+    query PageType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
+  pageType(id: $id) {
+    id
+    name
+    attributes {
+      id
+      inputType
+      entityType
+      slug
+      name
+      valueRequired
+      choices(
+        first: $firstValues
+        after: $afterValues
+        last: $lastValues
+        before: $beforeValues
+      ) {
+        ...AttributeValueList
+      }
+    }
+  }
+}
+    ${AttributeValueListFragmentDoc}`;
+
+/**
+ * __usePageTypeQuery__
+ *
+ * To run a query within a React component, call `usePageTypeQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePageTypeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      firstValues: // value for 'firstValues'
+ *      afterValues: // value for 'afterValues'
+ *      lastValues: // value for 'lastValues'
+ *      beforeValues: // value for 'beforeValues'
+ *   },
+ * });
+ */
+export function usePageTypeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTypeQuery, Types.PageTypeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PageTypeQuery, Types.PageTypeQueryVariables>(PageTypeDocument, options);
+      }
+export function usePageTypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeQuery, Types.PageTypeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PageTypeQuery, Types.PageTypeQueryVariables>(PageTypeDocument, options);
+        }
+export type PageTypeQueryHookResult = ReturnType<typeof usePageTypeQuery>;
+export type PageTypeLazyQueryHookResult = ReturnType<typeof usePageTypeLazyQuery>;
+export type PageTypeQueryResult = Apollo.QueryResult<Types.PageTypeQuery, Types.PageTypeQueryVariables>;
+export const PageCountDocument = gql`
+    query PageCount($filter: PageFilterInput) {
+  pages(filter: $filter) {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __usePageCountQuery__
+ *
+ * To run a query within a React component, call `usePageCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePageCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePageCountQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function usePageCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageCountQuery, Types.PageCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PageCountQuery, Types.PageCountQueryVariables>(PageCountDocument, options);
+      }
+export function usePageCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageCountQuery, Types.PageCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PageCountQuery, Types.PageCountQueryVariables>(PageCountDocument, options);
+        }
+export type PageCountQueryHookResult = ReturnType<typeof usePageCountQuery>;
+export type PageCountLazyQueryHookResult = ReturnType<typeof usePageCountLazyQuery>;
+export type PageCountQueryResult = Apollo.QueryResult<Types.PageCountQuery, Types.PageCountQueryVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {
@@ -13213,743 +13628,6 @@ export function useDevModeRunLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type DevModeRunQueryHookResult = ReturnType<typeof useDevModeRunQuery>;
 export type DevModeRunLazyQueryHookResult = ReturnType<typeof useDevModeRunLazyQuery>;
 export type DevModeRunQueryResult = Apollo.QueryResult<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>;
-export const PageTypeUpdateDocument = gql`
-    mutation PageTypeUpdate($id: ID!, $input: PageTypeUpdateInput!) {
-  pageTypeUpdate(id: $id, input: $input) {
-    errors {
-      ...PageError
-    }
-    pageType {
-      ...PageTypeDetails
-    }
-  }
-}
-    ${PageErrorFragmentDoc}
-${PageTypeDetailsFragmentDoc}`;
-export type PageTypeUpdateMutationFn = Apollo.MutationFunction<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>;
-
-/**
- * __usePageTypeUpdateMutation__
- *
- * To run a mutation, you first call `usePageTypeUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageTypeUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageTypeUpdateMutation, { data, loading, error }] = usePageTypeUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function usePageTypeUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>(PageTypeUpdateDocument, options);
-      }
-export type PageTypeUpdateMutationHookResult = ReturnType<typeof usePageTypeUpdateMutation>;
-export type PageTypeUpdateMutationResult = Apollo.MutationResult<Types.PageTypeUpdateMutation>;
-export type PageTypeUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>;
-export const PageTypeCreateDocument = gql`
-    mutation PageTypeCreate($input: PageTypeCreateInput!) {
-  pageTypeCreate(input: $input) {
-    errors {
-      ...PageError
-    }
-    pageType {
-      ...PageTypeDetails
-    }
-  }
-}
-    ${PageErrorFragmentDoc}
-${PageTypeDetailsFragmentDoc}`;
-export type PageTypeCreateMutationFn = Apollo.MutationFunction<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>;
-
-/**
- * __usePageTypeCreateMutation__
- *
- * To run a mutation, you first call `usePageTypeCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageTypeCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageTypeCreateMutation, { data, loading, error }] = usePageTypeCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function usePageTypeCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>(PageTypeCreateDocument, options);
-      }
-export type PageTypeCreateMutationHookResult = ReturnType<typeof usePageTypeCreateMutation>;
-export type PageTypeCreateMutationResult = Apollo.MutationResult<Types.PageTypeCreateMutation>;
-export type PageTypeCreateMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>;
-export const AssignPageAttributeDocument = gql`
-    mutation AssignPageAttribute($id: ID!, $ids: [ID!]!) {
-  pageAttributeAssign(pageTypeId: $id, attributeIds: $ids) {
-    errors {
-      ...PageError
-    }
-    pageType {
-      ...PageTypeDetails
-    }
-  }
-}
-    ${PageErrorFragmentDoc}
-${PageTypeDetailsFragmentDoc}`;
-export type AssignPageAttributeMutationFn = Apollo.MutationFunction<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>;
-
-/**
- * __useAssignPageAttributeMutation__
- *
- * To run a mutation, you first call `useAssignPageAttributeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAssignPageAttributeMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [assignPageAttributeMutation, { data, loading, error }] = useAssignPageAttributeMutation({
- *   variables: {
- *      id: // value for 'id'
- *      ids: // value for 'ids'
- *   },
- * });
- */
-export function useAssignPageAttributeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>(AssignPageAttributeDocument, options);
-      }
-export type AssignPageAttributeMutationHookResult = ReturnType<typeof useAssignPageAttributeMutation>;
-export type AssignPageAttributeMutationResult = Apollo.MutationResult<Types.AssignPageAttributeMutation>;
-export type AssignPageAttributeMutationOptions = Apollo.BaseMutationOptions<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>;
-export const UnassignPageAttributeDocument = gql`
-    mutation UnassignPageAttribute($id: ID!, $ids: [ID!]!) {
-  pageAttributeUnassign(pageTypeId: $id, attributeIds: $ids) {
-    errors {
-      ...PageError
-    }
-    pageType {
-      ...PageTypeDetails
-    }
-  }
-}
-    ${PageErrorFragmentDoc}
-${PageTypeDetailsFragmentDoc}`;
-export type UnassignPageAttributeMutationFn = Apollo.MutationFunction<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>;
-
-/**
- * __useUnassignPageAttributeMutation__
- *
- * To run a mutation, you first call `useUnassignPageAttributeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUnassignPageAttributeMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [unassignPageAttributeMutation, { data, loading, error }] = useUnassignPageAttributeMutation({
- *   variables: {
- *      id: // value for 'id'
- *      ids: // value for 'ids'
- *   },
- * });
- */
-export function useUnassignPageAttributeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>(UnassignPageAttributeDocument, options);
-      }
-export type UnassignPageAttributeMutationHookResult = ReturnType<typeof useUnassignPageAttributeMutation>;
-export type UnassignPageAttributeMutationResult = Apollo.MutationResult<Types.UnassignPageAttributeMutation>;
-export type UnassignPageAttributeMutationOptions = Apollo.BaseMutationOptions<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>;
-export const PageTypeDeleteDocument = gql`
-    mutation PageTypeDelete($id: ID!) {
-  pageTypeDelete(id: $id) {
-    errors {
-      ...PageTypeDeleteErrorFragment
-    }
-    pageType {
-      id
-    }
-  }
-}
-    ${PageTypeDeleteErrorFragmentFragmentDoc}`;
-export type PageTypeDeleteMutationFn = Apollo.MutationFunction<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>;
-
-/**
- * __usePageTypeDeleteMutation__
- *
- * To run a mutation, you first call `usePageTypeDeleteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageTypeDeleteMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageTypeDeleteMutation, { data, loading, error }] = usePageTypeDeleteMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function usePageTypeDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>(PageTypeDeleteDocument, options);
-      }
-export type PageTypeDeleteMutationHookResult = ReturnType<typeof usePageTypeDeleteMutation>;
-export type PageTypeDeleteMutationResult = Apollo.MutationResult<Types.PageTypeDeleteMutation>;
-export type PageTypeDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>;
-export const PageTypeBulkDeleteDocument = gql`
-    mutation PageTypeBulkDelete($ids: [ID!]!) {
-  pageTypeBulkDelete(ids: $ids) {
-    errors {
-      ...PageTypeDeleteErrorFragment
-    }
-  }
-}
-    ${PageTypeDeleteErrorFragmentFragmentDoc}`;
-export type PageTypeBulkDeleteMutationFn = Apollo.MutationFunction<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>;
-
-/**
- * __usePageTypeBulkDeleteMutation__
- *
- * To run a mutation, you first call `usePageTypeBulkDeleteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageTypeBulkDeleteMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageTypeBulkDeleteMutation, { data, loading, error }] = usePageTypeBulkDeleteMutation({
- *   variables: {
- *      ids: // value for 'ids'
- *   },
- * });
- */
-export function usePageTypeBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>(PageTypeBulkDeleteDocument, options);
-      }
-export type PageTypeBulkDeleteMutationHookResult = ReturnType<typeof usePageTypeBulkDeleteMutation>;
-export type PageTypeBulkDeleteMutationResult = Apollo.MutationResult<Types.PageTypeBulkDeleteMutation>;
-export type PageTypeBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>;
-export const PageTypeAttributeReorderDocument = gql`
-    mutation PageTypeAttributeReorder($move: ReorderInput!, $pageTypeId: ID!) {
-  pageTypeReorderAttributes(moves: [$move], pageTypeId: $pageTypeId) {
-    errors {
-      ...PageError
-    }
-    pageType {
-      ...PageTypeDetails
-    }
-  }
-}
-    ${PageErrorFragmentDoc}
-${PageTypeDetailsFragmentDoc}`;
-export type PageTypeAttributeReorderMutationFn = Apollo.MutationFunction<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>;
-
-/**
- * __usePageTypeAttributeReorderMutation__
- *
- * To run a mutation, you first call `usePageTypeAttributeReorderMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageTypeAttributeReorderMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageTypeAttributeReorderMutation, { data, loading, error }] = usePageTypeAttributeReorderMutation({
- *   variables: {
- *      move: // value for 'move'
- *      pageTypeId: // value for 'pageTypeId'
- *   },
- * });
- */
-export function usePageTypeAttributeReorderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>(PageTypeAttributeReorderDocument, options);
-      }
-export type PageTypeAttributeReorderMutationHookResult = ReturnType<typeof usePageTypeAttributeReorderMutation>;
-export type PageTypeAttributeReorderMutationResult = Apollo.MutationResult<Types.PageTypeAttributeReorderMutation>;
-export type PageTypeAttributeReorderMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>;
-export const PageTypeListDocument = gql`
-    query PageTypeList($after: String, $before: String, $first: Int, $last: Int, $filter: PageTypeFilterInput, $sort: PageTypeSortingInput) {
-  pageTypes(
-    after: $after
-    before: $before
-    first: $first
-    last: $last
-    filter: $filter
-    sortBy: $sort
-  ) {
-    edges {
-      node {
-        ...PageType
-      }
-    }
-    pageInfo {
-      ...PageInfo
-    }
-  }
-}
-    ${PageTypeFragmentDoc}
-${PageInfoFragmentDoc}`;
-
-/**
- * __usePageTypeListQuery__
- *
- * To run a query within a React component, call `usePageTypeListQuery` and pass it any options that fit your needs.
- * When your component renders, `usePageTypeListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePageTypeListQuery({
- *   variables: {
- *      after: // value for 'after'
- *      before: // value for 'before'
- *      first: // value for 'first'
- *      last: // value for 'last'
- *      filter: // value for 'filter'
- *      sort: // value for 'sort'
- *   },
- * });
- */
-export function usePageTypeListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>(PageTypeListDocument, options);
-      }
-export function usePageTypeListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>(PageTypeListDocument, options);
-        }
-export type PageTypeListQueryHookResult = ReturnType<typeof usePageTypeListQuery>;
-export type PageTypeListLazyQueryHookResult = ReturnType<typeof usePageTypeListLazyQuery>;
-export type PageTypeListQueryResult = Apollo.QueryResult<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>;
-export const PageTypeDetailsDocument = gql`
-    query PageTypeDetails($id: ID!) {
-  pageType(id: $id) {
-    ...PageTypeDetails
-  }
-}
-    ${PageTypeDetailsFragmentDoc}`;
-
-/**
- * __usePageTypeDetailsQuery__
- *
- * To run a query within a React component, call `usePageTypeDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePageTypeDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePageTypeDetailsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function usePageTypeDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>(PageTypeDetailsDocument, options);
-      }
-export function usePageTypeDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>(PageTypeDetailsDocument, options);
-        }
-export type PageTypeDetailsQueryHookResult = ReturnType<typeof usePageTypeDetailsQuery>;
-export type PageTypeDetailsLazyQueryHookResult = ReturnType<typeof usePageTypeDetailsLazyQuery>;
-export type PageTypeDetailsQueryResult = Apollo.QueryResult<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>;
-export const PageCreateDocument = gql`
-    mutation PageCreate($input: PageCreateInput!) {
-  pageCreate(input: $input) {
-    errors {
-      ...PageErrorWithAttributes
-    }
-    page {
-      id
-    }
-  }
-}
-    ${PageErrorWithAttributesFragmentDoc}`;
-export type PageCreateMutationFn = Apollo.MutationFunction<Types.PageCreateMutation, Types.PageCreateMutationVariables>;
-
-/**
- * __usePageCreateMutation__
- *
- * To run a mutation, you first call `usePageCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageCreateMutation, { data, loading, error }] = usePageCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function usePageCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageCreateMutation, Types.PageCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageCreateMutation, Types.PageCreateMutationVariables>(PageCreateDocument, options);
-      }
-export type PageCreateMutationHookResult = ReturnType<typeof usePageCreateMutation>;
-export type PageCreateMutationResult = Apollo.MutationResult<Types.PageCreateMutation>;
-export type PageCreateMutationOptions = Apollo.BaseMutationOptions<Types.PageCreateMutation, Types.PageCreateMutationVariables>;
-export const PageUpdateDocument = gql`
-    mutation PageUpdate($id: ID!, $input: PageInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
-  pageUpdate(id: $id, input: $input) {
-    errors {
-      ...PageErrorWithAttributes
-    }
-    page {
-      ...PageDetails
-    }
-  }
-}
-    ${PageErrorWithAttributesFragmentDoc}
-${PageDetailsFragmentDoc}`;
-export type PageUpdateMutationFn = Apollo.MutationFunction<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>;
-
-/**
- * __usePageUpdateMutation__
- *
- * To run a mutation, you first call `usePageUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageUpdateMutation, { data, loading, error }] = usePageUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *      firstValues: // value for 'firstValues'
- *      afterValues: // value for 'afterValues'
- *      lastValues: // value for 'lastValues'
- *      beforeValues: // value for 'beforeValues'
- *   },
- * });
- */
-export function usePageUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>(PageUpdateDocument, options);
-      }
-export type PageUpdateMutationHookResult = ReturnType<typeof usePageUpdateMutation>;
-export type PageUpdateMutationResult = Apollo.MutationResult<Types.PageUpdateMutation>;
-export type PageUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>;
-export const PageRemoveDocument = gql`
-    mutation PageRemove($id: ID!) {
-  pageDelete(id: $id) {
-    errors {
-      ...PageError
-    }
-  }
-}
-    ${PageErrorFragmentDoc}`;
-export type PageRemoveMutationFn = Apollo.MutationFunction<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>;
-
-/**
- * __usePageRemoveMutation__
- *
- * To run a mutation, you first call `usePageRemoveMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageRemoveMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageRemoveMutation, { data, loading, error }] = usePageRemoveMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function usePageRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>(PageRemoveDocument, options);
-      }
-export type PageRemoveMutationHookResult = ReturnType<typeof usePageRemoveMutation>;
-export type PageRemoveMutationResult = Apollo.MutationResult<Types.PageRemoveMutation>;
-export type PageRemoveMutationOptions = Apollo.BaseMutationOptions<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>;
-export const PageBulkPublishDocument = gql`
-    mutation PageBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
-  pageBulkPublish(ids: $ids, isPublished: $isPublished) {
-    errors {
-      ...PageBulkPublishErrorFragment
-    }
-  }
-}
-    ${PageBulkPublishErrorFragmentFragmentDoc}`;
-export type PageBulkPublishMutationFn = Apollo.MutationFunction<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>;
-
-/**
- * __usePageBulkPublishMutation__
- *
- * To run a mutation, you first call `usePageBulkPublishMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageBulkPublishMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageBulkPublishMutation, { data, loading, error }] = usePageBulkPublishMutation({
- *   variables: {
- *      ids: // value for 'ids'
- *      isPublished: // value for 'isPublished'
- *   },
- * });
- */
-export function usePageBulkPublishMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>(PageBulkPublishDocument, options);
-      }
-export type PageBulkPublishMutationHookResult = ReturnType<typeof usePageBulkPublishMutation>;
-export type PageBulkPublishMutationResult = Apollo.MutationResult<Types.PageBulkPublishMutation>;
-export type PageBulkPublishMutationOptions = Apollo.BaseMutationOptions<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>;
-export const PageBulkRemoveDocument = gql`
-    mutation PageBulkRemove($ids: [ID!]!) {
-  pageBulkDelete(ids: $ids) {
-    errors {
-      ...PageBulkRemoveErrorFragment
-    }
-  }
-}
-    ${PageBulkRemoveErrorFragmentFragmentDoc}`;
-export type PageBulkRemoveMutationFn = Apollo.MutationFunction<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>;
-
-/**
- * __usePageBulkRemoveMutation__
- *
- * To run a mutation, you first call `usePageBulkRemoveMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePageBulkRemoveMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pageBulkRemoveMutation, { data, loading, error }] = usePageBulkRemoveMutation({
- *   variables: {
- *      ids: // value for 'ids'
- *   },
- * });
- */
-export function usePageBulkRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>(PageBulkRemoveDocument, options);
-      }
-export type PageBulkRemoveMutationHookResult = ReturnType<typeof usePageBulkRemoveMutation>;
-export type PageBulkRemoveMutationResult = Apollo.MutationResult<Types.PageBulkRemoveMutation>;
-export type PageBulkRemoveMutationOptions = Apollo.BaseMutationOptions<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>;
-export const PageListDocument = gql`
-    query PageList($first: Int, $after: String, $last: Int, $before: String, $sort: PageSortingInput, $filter: PageFilterInput) {
-  pages(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sortBy: $sort
-    filter: $filter
-  ) {
-    edges {
-      node {
-        ...Page
-      }
-    }
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-  }
-}
-    ${PageFragmentDoc}`;
-
-/**
- * __usePageListQuery__
- *
- * To run a query within a React component, call `usePageListQuery` and pass it any options that fit your needs.
- * When your component renders, `usePageListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePageListQuery({
- *   variables: {
- *      first: // value for 'first'
- *      after: // value for 'after'
- *      last: // value for 'last'
- *      before: // value for 'before'
- *      sort: // value for 'sort'
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function usePageListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageListQuery, Types.PageListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageListQuery, Types.PageListQueryVariables>(PageListDocument, options);
-      }
-export function usePageListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageListQuery, Types.PageListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageListQuery, Types.PageListQueryVariables>(PageListDocument, options);
-        }
-export type PageListQueryHookResult = ReturnType<typeof usePageListQuery>;
-export type PageListLazyQueryHookResult = ReturnType<typeof usePageListLazyQuery>;
-export type PageListQueryResult = Apollo.QueryResult<Types.PageListQuery, Types.PageListQueryVariables>;
-export const PageDetailsDocument = gql`
-    query PageDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
-  page(id: $id) {
-    ...PageDetails
-  }
-}
-    ${PageDetailsFragmentDoc}`;
-
-/**
- * __usePageDetailsQuery__
- *
- * To run a query within a React component, call `usePageDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `usePageDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePageDetailsQuery({
- *   variables: {
- *      id: // value for 'id'
- *      firstValues: // value for 'firstValues'
- *      afterValues: // value for 'afterValues'
- *      lastValues: // value for 'lastValues'
- *      beforeValues: // value for 'beforeValues'
- *   },
- * });
- */
-export function usePageDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>(PageDetailsDocument, options);
-      }
-export function usePageDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>(PageDetailsDocument, options);
-        }
-export type PageDetailsQueryHookResult = ReturnType<typeof usePageDetailsQuery>;
-export type PageDetailsLazyQueryHookResult = ReturnType<typeof usePageDetailsLazyQuery>;
-export type PageDetailsQueryResult = Apollo.QueryResult<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>;
-export const PageTypeDocument = gql`
-    query PageType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
-  pageType(id: $id) {
-    id
-    name
-    attributes {
-      id
-      inputType
-      entityType
-      slug
-      name
-      valueRequired
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeValueList
-      }
-    }
-  }
-}
-    ${AttributeValueListFragmentDoc}`;
-
-/**
- * __usePageTypeQuery__
- *
- * To run a query within a React component, call `usePageTypeQuery` and pass it any options that fit your needs.
- * When your component renders, `usePageTypeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePageTypeQuery({
- *   variables: {
- *      id: // value for 'id'
- *      firstValues: // value for 'firstValues'
- *      afterValues: // value for 'afterValues'
- *      lastValues: // value for 'lastValues'
- *      beforeValues: // value for 'beforeValues'
- *   },
- * });
- */
-export function usePageTypeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTypeQuery, Types.PageTypeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageTypeQuery, Types.PageTypeQueryVariables>(PageTypeDocument, options);
-      }
-export function usePageTypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeQuery, Types.PageTypeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageTypeQuery, Types.PageTypeQueryVariables>(PageTypeDocument, options);
-        }
-export type PageTypeQueryHookResult = ReturnType<typeof usePageTypeQuery>;
-export type PageTypeLazyQueryHookResult = ReturnType<typeof usePageTypeLazyQuery>;
-export type PageTypeQueryResult = Apollo.QueryResult<Types.PageTypeQuery, Types.PageTypeQueryVariables>;
-export const PageCountDocument = gql`
-    query PageCount($filter: PageFilterInput) {
-  pages(filter: $filter) {
-    totalCount
-  }
-}
-    `;
-
-/**
- * __usePageCountQuery__
- *
- * To run a query within a React component, call `usePageCountQuery` and pass it any options that fit your needs.
- * When your component renders, `usePageCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = usePageCountQuery({
- *   variables: {
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function usePageCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageCountQuery, Types.PageCountQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageCountQuery, Types.PageCountQueryVariables>(PageCountDocument, options);
-      }
-export function usePageCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageCountQuery, Types.PageCountQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageCountQuery, Types.PageCountQueryVariables>(PageCountDocument, options);
-        }
-export type PageCountQueryHookResult = ReturnType<typeof usePageCountQuery>;
-export type PageCountLazyQueryHookResult = ReturnType<typeof usePageCountLazyQuery>;
-export type PageCountQueryResult = Apollo.QueryResult<Types.PageCountQuery, Types.PageCountQueryVariables>;
 export const PermissionGroupDeleteDocument = gql`
     mutation PermissionGroupDelete($id: ID!) {
   permissionGroupDelete(id: $id) {
@@ -18556,6 +18234,328 @@ export function useStaffMemberDetailsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type StaffMemberDetailsQueryHookResult = ReturnType<typeof useStaffMemberDetailsQuery>;
 export type StaffMemberDetailsLazyQueryHookResult = ReturnType<typeof useStaffMemberDetailsLazyQuery>;
 export type StaffMemberDetailsQueryResult = Apollo.QueryResult<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>;
+export const MenuCreateDocument = gql`
+    mutation MenuCreate($input: MenuCreateInput!) {
+  menuCreate(input: $input) {
+    errors {
+      ...MenuError
+    }
+    menu {
+      id
+    }
+  }
+}
+    ${MenuErrorFragmentDoc}`;
+export type MenuCreateMutationFn = Apollo.MutationFunction<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>;
+
+/**
+ * __useMenuCreateMutation__
+ *
+ * To run a mutation, you first call `useMenuCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMenuCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [menuCreateMutation, { data, loading, error }] = useMenuCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useMenuCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>(MenuCreateDocument, options);
+      }
+export type MenuCreateMutationHookResult = ReturnType<typeof useMenuCreateMutation>;
+export type MenuCreateMutationResult = Apollo.MutationResult<Types.MenuCreateMutation>;
+export type MenuCreateMutationOptions = Apollo.BaseMutationOptions<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>;
+export const MenuBulkDeleteDocument = gql`
+    mutation MenuBulkDelete($ids: [ID!]!) {
+  menuBulkDelete(ids: $ids) {
+    errors {
+      ...MenuError
+    }
+  }
+}
+    ${MenuErrorFragmentDoc}`;
+export type MenuBulkDeleteMutationFn = Apollo.MutationFunction<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>;
+
+/**
+ * __useMenuBulkDeleteMutation__
+ *
+ * To run a mutation, you first call `useMenuBulkDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMenuBulkDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [menuBulkDeleteMutation, { data, loading, error }] = useMenuBulkDeleteMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useMenuBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>(MenuBulkDeleteDocument, options);
+      }
+export type MenuBulkDeleteMutationHookResult = ReturnType<typeof useMenuBulkDeleteMutation>;
+export type MenuBulkDeleteMutationResult = Apollo.MutationResult<Types.MenuBulkDeleteMutation>;
+export type MenuBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>;
+export const MenuDeleteDocument = gql`
+    mutation MenuDelete($id: ID!) {
+  menuDelete(id: $id) {
+    errors {
+      ...MenuError
+    }
+  }
+}
+    ${MenuErrorFragmentDoc}`;
+export type MenuDeleteMutationFn = Apollo.MutationFunction<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>;
+
+/**
+ * __useMenuDeleteMutation__
+ *
+ * To run a mutation, you first call `useMenuDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMenuDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [menuDeleteMutation, { data, loading, error }] = useMenuDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useMenuDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>(MenuDeleteDocument, options);
+      }
+export type MenuDeleteMutationHookResult = ReturnType<typeof useMenuDeleteMutation>;
+export type MenuDeleteMutationResult = Apollo.MutationResult<Types.MenuDeleteMutation>;
+export type MenuDeleteMutationOptions = Apollo.BaseMutationOptions<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>;
+export const MenuItemCreateDocument = gql`
+    mutation MenuItemCreate($input: MenuItemCreateInput!) {
+  menuItemCreate(input: $input) {
+    errors {
+      ...MenuError
+    }
+    menuItem {
+      menu {
+        id
+        items {
+          ...MenuItemNested
+        }
+      }
+    }
+  }
+}
+    ${MenuErrorFragmentDoc}
+${MenuItemNestedFragmentDoc}`;
+export type MenuItemCreateMutationFn = Apollo.MutationFunction<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>;
+
+/**
+ * __useMenuItemCreateMutation__
+ *
+ * To run a mutation, you first call `useMenuItemCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMenuItemCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [menuItemCreateMutation, { data, loading, error }] = useMenuItemCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useMenuItemCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>(MenuItemCreateDocument, options);
+      }
+export type MenuItemCreateMutationHookResult = ReturnType<typeof useMenuItemCreateMutation>;
+export type MenuItemCreateMutationResult = Apollo.MutationResult<Types.MenuItemCreateMutation>;
+export type MenuItemCreateMutationOptions = Apollo.BaseMutationOptions<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>;
+export const MenuUpdateDocument = gql`
+    mutation MenuUpdate($id: ID!, $name: String!, $moves: [MenuItemMoveInput!]!, $removeIds: [ID!]!) {
+  menuUpdate(id: $id, input: {name: $name}) {
+    errors {
+      ...MenuError
+    }
+  }
+  menuItemMove(menu: $id, moves: $moves) {
+    errors {
+      ...MenuError
+    }
+  }
+  menuItemBulkDelete(ids: $removeIds) {
+    errors {
+      ...MenuError
+    }
+  }
+}
+    ${MenuErrorFragmentDoc}`;
+export type MenuUpdateMutationFn = Apollo.MutationFunction<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>;
+
+/**
+ * __useMenuUpdateMutation__
+ *
+ * To run a mutation, you first call `useMenuUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMenuUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [menuUpdateMutation, { data, loading, error }] = useMenuUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      moves: // value for 'moves'
+ *      removeIds: // value for 'removeIds'
+ *   },
+ * });
+ */
+export function useMenuUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>(MenuUpdateDocument, options);
+      }
+export type MenuUpdateMutationHookResult = ReturnType<typeof useMenuUpdateMutation>;
+export type MenuUpdateMutationResult = Apollo.MutationResult<Types.MenuUpdateMutation>;
+export type MenuUpdateMutationOptions = Apollo.BaseMutationOptions<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>;
+export const MenuItemUpdateDocument = gql`
+    mutation MenuItemUpdate($id: ID!, $input: MenuItemInput!) {
+  menuItemUpdate(id: $id, input: $input) {
+    errors {
+      ...MenuError
+    }
+    menuItem {
+      ...MenuItem
+    }
+  }
+}
+    ${MenuErrorFragmentDoc}
+${MenuItemFragmentDoc}`;
+export type MenuItemUpdateMutationFn = Apollo.MutationFunction<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>;
+
+/**
+ * __useMenuItemUpdateMutation__
+ *
+ * To run a mutation, you first call `useMenuItemUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMenuItemUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [menuItemUpdateMutation, { data, loading, error }] = useMenuItemUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useMenuItemUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>(MenuItemUpdateDocument, options);
+      }
+export type MenuItemUpdateMutationHookResult = ReturnType<typeof useMenuItemUpdateMutation>;
+export type MenuItemUpdateMutationResult = Apollo.MutationResult<Types.MenuItemUpdateMutation>;
+export type MenuItemUpdateMutationOptions = Apollo.BaseMutationOptions<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>;
+export const MenuListDocument = gql`
+    query MenuList($first: Int, $after: String, $last: Int, $before: String, $sort: MenuSortingInput) {
+  menus(first: $first, after: $after, before: $before, last: $last, sortBy: $sort) {
+    edges {
+      node {
+        ...Menu
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${MenuFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useMenuListQuery__
+ *
+ * To run a query within a React component, call `useMenuListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMenuListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMenuListQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useMenuListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.MenuListQuery, Types.MenuListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.MenuListQuery, Types.MenuListQueryVariables>(MenuListDocument, options);
+      }
+export function useMenuListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuListQuery, Types.MenuListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.MenuListQuery, Types.MenuListQueryVariables>(MenuListDocument, options);
+        }
+export type MenuListQueryHookResult = ReturnType<typeof useMenuListQuery>;
+export type MenuListLazyQueryHookResult = ReturnType<typeof useMenuListLazyQuery>;
+export type MenuListQueryResult = Apollo.QueryResult<Types.MenuListQuery, Types.MenuListQueryVariables>;
+export const MenuDetailsDocument = gql`
+    query MenuDetails($id: ID!) {
+  menu(id: $id) {
+    ...MenuDetails
+  }
+}
+    ${MenuDetailsFragmentDoc}`;
+
+/**
+ * __useMenuDetailsQuery__
+ *
+ * To run a query within a React component, call `useMenuDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMenuDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMenuDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useMenuDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>(MenuDetailsDocument, options);
+      }
+export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>(MenuDetailsDocument, options);
+        }
+export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
+export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
+export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
 export const TaxConfigurationUpdateDocument = gql`
     mutation TaxConfigurationUpdate($id: ID!, $input: TaxConfigurationUpdateInput!) {
   taxConfigurationUpdate(id: $id, input: $input) {
