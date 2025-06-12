@@ -1,6 +1,6 @@
 import { AppPaths } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
-import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
@@ -168,7 +168,7 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
 
     const exactLocation = urlJoin(
       getAppMountUri(),
-      ExtensionsPaths.resolveViewManifestExtension(appId),
+      ExtensionsUrls.resolveViewManifestExtensionUrl(appId).replace("?", ""),
       action.payload.newRoute,
     );
 
