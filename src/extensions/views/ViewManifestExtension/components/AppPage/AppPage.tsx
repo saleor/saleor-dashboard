@@ -1,6 +1,7 @@
 import { borderHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { APP_VERSION } from "@dashboard/config";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppQuery } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import { Box } from "@saleor/macaw-ui-next";
@@ -36,6 +37,7 @@ export const AppPage: React.FC<AppPageProps> = ({ data, url, onError, refetch })
         author={data?.author}
         appLogoUrl={data?.brand?.logo.default}
         showMangeAppButton={true}
+        goBackUrl={ExtensionsUrls.resolveInstalledExtensionsUrl()}
       />
       <DetailPageLayout.Content>
         <Box
