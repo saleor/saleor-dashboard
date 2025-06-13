@@ -1,4 +1,4 @@
-import { AppExtensionMountEnum, PermissionEnum } from "@dashboard/graphql";
+import { AppExtensionMountEnum, AppExtensionTargetEnum, PermissionEnum } from "@dashboard/graphql";
 
 import {
   getExtensionItemsForOverviewCreate,
@@ -36,12 +36,15 @@ const mockedExtension: ExtensionWithParams = {
     __typename: "App",
     id: "app-id",
     appUrl: "https://example.com",
+    name: "App name",
   },
   accessToken: "test-token",
   permissions: [PermissionEnum.MANAGE_ORDERS],
   mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
   url: "https://example.com/extension",
   open: jest.fn(),
+  target: AppExtensionTargetEnum.POPUP,
+  options: null,
 };
 
 describe("getExtensionsItems", () => {

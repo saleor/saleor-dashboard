@@ -4326,57 +4326,6 @@ export function useAppLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpti
 export type AppQueryHookResult = ReturnType<typeof useAppQuery>;
 export type AppLazyQueryHookResult = ReturnType<typeof useAppLazyQuery>;
 export type AppQueryResult = Apollo.QueryResult<Types.AppQuery, Types.AppQueryVariables>;
-export const ExtensionListDocument = gql`
-    query ExtensionList($filter: AppExtensionFilterInput!) {
-  appExtensions(filter: $filter, first: 100) {
-    edges {
-      node {
-        id
-        label
-        url
-        mount
-        target
-        accessToken
-        permissions {
-          code
-        }
-        app {
-          id
-          appUrl
-        }
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useExtensionListQuery__
- *
- * To run a query within a React component, call `useExtensionListQuery` and pass it any options that fit your needs.
- * When your component renders, `useExtensionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useExtensionListQuery({
- *   variables: {
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function useExtensionListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
-      }
-export function useExtensionListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
-        }
-export type ExtensionListQueryHookResult = ReturnType<typeof useExtensionListQuery>;
-export type ExtensionListLazyQueryHookResult = ReturnType<typeof useExtensionListLazyQuery>;
-export type ExtensionListQueryResult = Apollo.QueryResult<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>;
 export const AppWebhookDeliveriesDocument = gql`
     query AppWebhookDeliveries($appId: ID!) {
   app(id: $appId) {
@@ -9577,6 +9526,70 @@ export function useEventDeliveryLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type EventDeliveryQueryHookResult = ReturnType<typeof useEventDeliveryQuery>;
 export type EventDeliveryLazyQueryHookResult = ReturnType<typeof useEventDeliveryLazyQuery>;
 export type EventDeliveryQueryResult = Apollo.QueryResult<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>;
+export const ExtensionListDocument = gql`
+    query ExtensionList($filter: AppExtensionFilterInput!) {
+  appExtensions(filter: $filter, first: 100) {
+    edges {
+      node {
+        id
+        label
+        url
+        mount
+        target
+        accessToken
+        options {
+          ... on AppExtensionOptionsWidget {
+            widgetTarget {
+              method
+            }
+          }
+          ... on AppExtensionOptionsNewTab {
+            newTabTarget {
+              method
+            }
+          }
+        }
+        permissions {
+          code
+        }
+        app {
+          id
+          appUrl
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useExtensionListQuery__
+ *
+ * To run a query within a React component, call `useExtensionListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExtensionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExtensionListQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useExtensionListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
+      }
+export function useExtensionListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
+        }
+export type ExtensionListQueryHookResult = ReturnType<typeof useExtensionListQuery>;
+export type ExtensionListLazyQueryHookResult = ReturnType<typeof useExtensionListLazyQuery>;
+export type ExtensionListQueryResult = Apollo.QueryResult<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {

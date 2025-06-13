@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
+import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -24,6 +25,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
+import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -167,7 +169,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
       shouldExist: hasAnyItemsReplaceable(order),
     },
   ]);
-  const { ORDER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.ORDER_DETAILS);
+  const { ORDER_DETAILS_MORE_ACTIONS, ORDER_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.ORDER_DETAILS,
+  );
   const extensionMenuItems = getExtensionsItemsForOrderDetails(
     ORDER_DETAILS_MORE_ACTIONS,
     order?.id,
@@ -298,6 +302,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 </>
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
+              {ORDER_DETAILS_WIDGETS.length > 0 && (
+                <>
+                  <CardSpacer />
+                  <Divider />
+                  <AppWidgets extensions={ORDER_DETAILS_WIDGETS} params={{ orderId: order?.id }} />
+                </>
+              )}
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.Spacer />

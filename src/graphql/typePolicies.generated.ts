@@ -342,13 +342,14 @@ export type AppErrorFieldPolicy = {
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppExtensionKeySpecifier = ('accessToken' | 'app' | 'id' | 'label' | 'mount' | 'permissions' | 'target' | 'url' | AppExtensionKeySpecifier)[];
+export type AppExtensionKeySpecifier = ('accessToken' | 'app' | 'id' | 'label' | 'mount' | 'options' | 'permissions' | 'target' | 'url' | AppExtensionKeySpecifier)[];
 export type AppExtensionFieldPolicy = {
 	accessToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	app?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	label?: FieldPolicy<any> | FieldReadFunction<any>,
 	mount?: FieldPolicy<any> | FieldReadFunction<any>,
+	options?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>,
 	target?: FieldPolicy<any> | FieldReadFunction<any>,
 	url?: FieldPolicy<any> | FieldReadFunction<any>
@@ -363,6 +364,14 @@ export type AppExtensionCountableEdgeKeySpecifier = ('cursor' | 'node' | AppExte
 export type AppExtensionCountableEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AppExtensionOptionsNewTabKeySpecifier = ('newTabTarget' | AppExtensionOptionsNewTabKeySpecifier)[];
+export type AppExtensionOptionsNewTabFieldPolicy = {
+	newTabTarget?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AppExtensionOptionsWidgetKeySpecifier = ('widgetTarget' | AppExtensionOptionsWidgetKeySpecifier)[];
+export type AppExtensionOptionsWidgetFieldPolicy = {
+	widgetTarget?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AppFetchManifestKeySpecifier = ('appErrors' | 'errors' | 'manifest' | AppFetchManifestKeySpecifier)[];
 export type AppFetchManifestFieldPolicy = {
@@ -2988,6 +2997,10 @@ export type MutationFieldPolicy = {
 	webhookDryRun?: FieldPolicy<any> | FieldReadFunction<any>,
 	webhookTrigger?: FieldPolicy<any> | FieldReadFunction<any>,
 	webhookUpdate?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type NewTabTargetOptionsKeySpecifier = ('method' | NewTabTargetOptionsKeySpecifier)[];
+export type NewTabTargetOptionsFieldPolicy = {
+	method?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type NodeKeySpecifier = ('id' | NodeKeySpecifier)[];
 export type NodeFieldPolicy = {
@@ -6982,6 +6995,10 @@ export type WeightFieldPolicy = {
 	unit?: FieldPolicy<any> | FieldReadFunction<any>,
 	value?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type WidgetTargetOptionsKeySpecifier = ('method' | WidgetTargetOptionsKeySpecifier)[];
+export type WidgetTargetOptionsFieldPolicy = {
+	method?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type _ServiceKeySpecifier = ('sdl' | _ServiceKeySpecifier)[];
 export type _ServiceFieldPolicy = {
 	sdl?: FieldPolicy<any> | FieldReadFunction<any>
@@ -7150,6 +7167,14 @@ export type StrictTypedTypePolicies = {
 	AppExtensionCountableEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppExtensionCountableEdgeKeySpecifier | (() => undefined | AppExtensionCountableEdgeKeySpecifier),
 		fields?: AppExtensionCountableEdgeFieldPolicy,
+	},
+	AppExtensionOptionsNewTab?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppExtensionOptionsNewTabKeySpecifier | (() => undefined | AppExtensionOptionsNewTabKeySpecifier),
+		fields?: AppExtensionOptionsNewTabFieldPolicy,
+	},
+	AppExtensionOptionsWidget?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppExtensionOptionsWidgetKeySpecifier | (() => undefined | AppExtensionOptionsWidgetKeySpecifier),
+		fields?: AppExtensionOptionsWidgetFieldPolicy,
 	},
 	AppFetchManifest?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppFetchManifestKeySpecifier | (() => undefined | AppFetchManifestKeySpecifier),
@@ -8378,6 +8403,10 @@ export type StrictTypedTypePolicies = {
 	Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | MutationKeySpecifier | (() => undefined | MutationKeySpecifier),
 		fields?: MutationFieldPolicy,
+	},
+	NewTabTargetOptions?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | NewTabTargetOptionsKeySpecifier | (() => undefined | NewTabTargetOptionsKeySpecifier),
+		fields?: NewTabTargetOptionsFieldPolicy,
 	},
 	Node?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | NodeKeySpecifier | (() => undefined | NodeKeySpecifier),
@@ -10334,6 +10363,10 @@ export type StrictTypedTypePolicies = {
 	Weight?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | WeightKeySpecifier | (() => undefined | WeightKeySpecifier),
 		fields?: WeightFieldPolicy,
+	},
+	WidgetTargetOptions?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | WidgetTargetOptionsKeySpecifier | (() => undefined | WidgetTargetOptionsKeySpecifier),
+		fields?: WidgetTargetOptionsFieldPolicy,
 	},
 	_Service?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | _ServiceKeySpecifier | (() => undefined | _ServiceKeySpecifier),
