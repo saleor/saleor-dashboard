@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.2
+
+### Patch Changes
+
+- d47fb4e: Change how dashboard fetches GraphQL schema. After this change GraphQL schema is fetched from Saleor repository instead of Saleor API. If you wants the old behavior use `npm run fetch-local-schema`.
+
 ## 3.21.1
 
 ### Patch Changes
