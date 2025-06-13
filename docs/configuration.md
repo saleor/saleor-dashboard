@@ -23,3 +23,7 @@ Create or edit `.env` file in a root directory or set environment variables with
 - `EXTENSIONS_API_URL` - URI of Marketplace API to fetch list of Extensions in JSON.
 
 - `APPS_TUNNEL_URL_KEYWORDS` - Custom apps tunnel URL keywords.
+
+## Fetching schema
+
+By default dashboard will use `fetch-schema` script from package.json to get Saleor schema from specific branch e.g `main` for unstable one. If you need to generate types based on your own schema use `fetch-local-schema` that will fetch it from `API_URL`.
