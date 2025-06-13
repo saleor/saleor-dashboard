@@ -365,9 +365,12 @@ export type AppExtensionCountableEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppExtensionOptionsTypeKeySpecifier = ('newTabTarget' | 'widgetTarget' | AppExtensionOptionsTypeKeySpecifier)[];
-export type AppExtensionOptionsTypeFieldPolicy = {
-	newTabTarget?: FieldPolicy<any> | FieldReadFunction<any>,
+export type AppExtensionOptionsNewTabKeySpecifier = ('newTabTarget' | AppExtensionOptionsNewTabKeySpecifier)[];
+export type AppExtensionOptionsNewTabFieldPolicy = {
+	newTabTarget?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AppExtensionOptionsWidgetKeySpecifier = ('widgetTarget' | AppExtensionOptionsWidgetKeySpecifier)[];
+export type AppExtensionOptionsWidgetFieldPolicy = {
 	widgetTarget?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AppFetchManifestKeySpecifier = ('appErrors' | 'errors' | 'manifest' | AppFetchManifestKeySpecifier)[];
@@ -7165,9 +7168,13 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | AppExtensionCountableEdgeKeySpecifier | (() => undefined | AppExtensionCountableEdgeKeySpecifier),
 		fields?: AppExtensionCountableEdgeFieldPolicy,
 	},
-	AppExtensionOptionsType?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | AppExtensionOptionsTypeKeySpecifier | (() => undefined | AppExtensionOptionsTypeKeySpecifier),
-		fields?: AppExtensionOptionsTypeFieldPolicy,
+	AppExtensionOptionsNewTab?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppExtensionOptionsNewTabKeySpecifier | (() => undefined | AppExtensionOptionsNewTabKeySpecifier),
+		fields?: AppExtensionOptionsNewTabFieldPolicy,
+	},
+	AppExtensionOptionsWidget?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppExtensionOptionsWidgetKeySpecifier | (() => undefined | AppExtensionOptionsWidgetKeySpecifier),
+		fields?: AppExtensionOptionsWidgetFieldPolicy,
 	},
 	AppFetchManifest?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppFetchManifestKeySpecifier | (() => undefined | AppFetchManifestKeySpecifier),

@@ -1153,8 +1153,12 @@ type AppExtension implements Node {
   """Place where given extension will be mounted."""
   mount: AppExtensionMountEnum!
 
-  """App extension options."""
-  options: AppExtensionOptionsType
+  """
+  App extension options.
+  
+  Added in Saleor 3.22.
+  """
+  options: AppExtensionPossibleOptions
 
   """List of the app extension's permissions."""
   permissions: [Permission!]!
@@ -1243,13 +1247,18 @@ enum AppExtensionMountEnum {
 }
 
 """Represents the options for an app extension."""
-type AppExtensionOptionsType {
-  """Options for opening the extension in a new tab."""
+type AppExtensionOptionsNewTab {
+  """Options controlling behavior of the NEW_TAB extension target"""
   newTabTarget: NewTabTargetOptions
+}
 
-  """Options for opening the extension in a new tab."""
+"""Represents the options for an app extension."""
+type AppExtensionOptionsWidget {
+  """Options for displaying a Widget"""
   widgetTarget: WidgetTargetOptions
 }
+
+union AppExtensionPossibleOptions = AppExtensionOptionsNewTab | AppExtensionOptionsWidget
 
 """
 All available ways of opening an app extension.
@@ -15837,7 +15846,7 @@ enum NavigationType {
   SECONDARY
 }
 
-"""Represents the new tab target options for an app extension."""
+"""Represents the NEW_TAB target options for an app extension."""
 type NewTabTargetOptions {
   """HTTP method for New Tab target (GET or POST)"""
   method: HttpMethod!
@@ -18673,6 +18682,12 @@ input OrderWhereInput {
   """Filter by order status."""
   status: OrderStatusEnumFilterInput
 
+  """Filter by total gross amount of the order."""
+  totalGross: PriceFilterInput
+
+  """Filter by total net amount of the order."""
+  totalNet: PriceFilterInput
+
   """Filter order by updated at date."""
   updatedAt: DateTimeRangeInput
 
@@ -20719,6 +20734,14 @@ type PreorderThreshold {
 
   """Number of sold product variant in this channel."""
   soldUnits: Int!
+}
+
+input PriceFilterInput {
+  """The amount of the price to filter by."""
+  amount: DecimalFilterInput!
+
+  """The currency of the price to filter by."""
+  currency: String
 }
 
 input PriceInput {
@@ -34281,7 +34304,7 @@ enum WeightUnitsEnum {
   TONNE
 }
 
-"""Represents the new tab target options for an app extension."""
+"""Represents the WIDGET target options for an app extension."""
 type WidgetTargetOptions {
   """HTTP method for Widget target (GET or POST)"""
   method: HttpMethod!

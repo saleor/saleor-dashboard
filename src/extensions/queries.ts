@@ -118,11 +118,15 @@ export const extensionList = gql`
           target
           accessToken
           options {
-            newTabTarget {
-              method
+            ... on AppExtensionOptionsWidget {
+              widgetTarget {
+                method
+              }
             }
-            widgetTarget {
-              method
+            ... on AppExtensionOptionsNewTab {
+              newTabTarget {
+                method
+              }
             }
           }
 

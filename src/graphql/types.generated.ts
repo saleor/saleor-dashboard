@@ -4552,6 +4552,10 @@ export type OrderWhereInput = {
   number?: InputMaybe<IntFilterInput>;
   /** Filter by order status. */
   status?: InputMaybe<OrderStatusEnumFilterInput>;
+  /** Filter by total gross amount of the order. */
+  totalGross?: InputMaybe<PriceFilterInput>;
+  /** Filter by total net amount of the order. */
+  totalNet?: InputMaybe<PriceFilterInput>;
   /** Filter order by updated at date. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by user. */
@@ -5021,6 +5025,13 @@ export type PreorderSettingsInput = {
   endDate?: InputMaybe<Scalars['DateTime']>;
   /** The global threshold for preorder variant. */
   globalThreshold?: InputMaybe<Scalars['Int']>;
+};
+
+export type PriceFilterInput = {
+  /** The amount of the price to filter by. */
+  amount: DecimalFilterInput;
+  /** The currency of the price to filter by. */
+  currency?: InputMaybe<Scalars['String']>;
 };
 
 export type PriceInput = {
@@ -9543,7 +9554,7 @@ export type ExtensionListQueryVariables = Exact<{
 }>;
 
 
-export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mount: AppExtensionMountEnum, target: AppExtensionTargetEnum, accessToken: string | null, options: { __typename: 'AppExtensionOptionsType', newTabTarget: { __typename: 'NewTabTargetOptions', method: HttpMethod } | null, widgetTarget: { __typename: 'WidgetTargetOptions', method: HttpMethod } | null } | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null, name: string | null } } }> } | null };
+export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mount: AppExtensionMountEnum, target: AppExtensionTargetEnum, accessToken: string | null, options: { __typename: 'AppExtensionOptionsNewTab', newTabTarget: { __typename: 'NewTabTargetOptions', method: HttpMethod } | null } | { __typename: 'AppExtensionOptionsWidget', widgetTarget: { __typename: 'WidgetTargetOptions', method: HttpMethod } | null } | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null, name: string | null } } }> } | null };
 
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];
