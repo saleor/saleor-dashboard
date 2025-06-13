@@ -81,7 +81,10 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
       <DashboardCard.Content>
         {extensions.map(ext => {
           const isIframeType = ext.target === "WIDGET";
-          const isPOST = ext.options?.widgetTarget?.method === "POST";
+          const widgetOptions =
+            ext.options?.__typename === "AppExtensionOptionsWidget" && ext.options;
+
+          const isPOST = widgetOptions && widgetOptions?.widgetTarget?.method === "POST";
 
           let isExtensionAbsoluteUrl = false;
 

@@ -19,8 +19,6 @@ const filterAndMapToTarget = (
 ): ExtensionWithParams[] =>
   extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
     const isNewTab = target === "NEW_TAB";
-    const newTabMethod = options?.newTabTarget?.method;
-    const isPOST = newTabMethod === "POST";
 
     const openGETinNewTab = (extensionUrl: string) => {
       window.open(extensionUrl, "_blank");
@@ -61,6 +59,10 @@ const filterAndMapToTarget = (
       document.body.removeChild(form);
     };
 
+    const newTabMethod =
+      (options?.__typename === "AppExtensionOptionsNewTab" && options?.newTabTarget?.method) ||
+      "GET";
+
     return {
       id,
       app,
@@ -72,12 +74,12 @@ const filterAndMapToTarget = (
       target,
       options,
       open: (params: AppDetailsUrlMountQueryParams) => {
-        if (isNewTab && !isPOST) {
+        if (isNewTab && newTabMethod === "GET") {
           // todo apply search params
           return openGETinNewTab(url);
         }
 
-        if (isNewTab && isPOST) {
+        if (isNewTab && newTabMethod === "POST") {
           return openPOSTinNewTab(params);
         }
 
