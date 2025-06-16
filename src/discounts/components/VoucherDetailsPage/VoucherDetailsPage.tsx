@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -35,7 +36,7 @@ import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Text } from "@saleor/macaw-ui-next";
+import { Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -228,7 +229,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     path: voucherListPath,
   });
 
-  const { VOUCHER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.VOUCHER_DETAILS);
+  const { VOUCHER_DETAILS_MORE_ACTIONS, VOUCHER_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.VOUCHER_DETAILS,
+  );
   const extensionMenuItems = getExtensionsItemsForVoucherDetails(
     VOUCHER_DETAILS_MORE_ACTIONS,
     voucher?.id,
@@ -443,6 +446,16 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 disabled={disabled}
                 openModal={openChannelsModal}
               />
+              {VOUCHER_DETAILS_WIDGETS.length > 0 && (
+                <>
+                  <CardSpacer />
+                  <Divider />
+                  <AppWidgets
+                    extensions={VOUCHER_DETAILS_WIDGETS}
+                    params={{ voucherId: voucher?.id }}
+                  />
+                </>
+              )}
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.DeleteButton onClick={onRemove} />

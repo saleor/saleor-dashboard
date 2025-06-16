@@ -1,5 +1,5 @@
 import { Extension } from "@dashboard/extensions/types";
-import { AppExtensionMountEnum, PermissionEnum } from "@dashboard/graphql";
+import { AppExtensionMountEnum, AppExtensionTargetEnum, PermissionEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 
 import { SidebarMenuItem } from "./types";
@@ -35,6 +35,7 @@ describe("mapToExtensionsItems", () => {
     __typename: "App",
     id: "app-1",
     appUrl: "https://app.example.com",
+    name: "App name",
   };
 
   const mockExtension: Extension = {
@@ -46,6 +47,8 @@ describe("mapToExtensionsItems", () => {
     open: jest.fn(),
     accessToken: "mock-token",
     mount: AppExtensionMountEnum.NAVIGATION_CATALOG,
+    target: AppExtensionTargetEnum.APP_PAGE,
+    options: null,
   };
 
   const mockHeader: SidebarMenuItem = {
@@ -226,6 +229,7 @@ describe("getMenuItemExtension", () => {
     __typename: "App",
     id: "app-1",
     appUrl: "https://app.example.com",
+    name: "App name",
   };
 
   const baseMockExtension: Extension = {
@@ -237,6 +241,8 @@ describe("getMenuItemExtension", () => {
     open: jest.fn(),
     accessToken: "mock-token",
     mount: AppExtensionMountEnum.NAVIGATION_CATALOG,
+    options: null,
+    target: AppExtensionTargetEnum.POPUP,
   };
 
   const mockExtension: Extension = {
@@ -290,6 +296,13 @@ describe("getMenuItemExtension", () => {
     [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_MORE_ACTIONS]: [],
     [AppExtensionMountEnum.COLLECTION_OVERVIEW_CREATE]: [],
     [AppExtensionMountEnum.COLLECTION_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CUSTOMER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.ORDER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.COLLECTION_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.PRODUCT_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.VOUCHER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_DETAILS_WIDGETS]: [],
   };
 
   const emptyExtensionsRecord: Record<AppExtensionMountEnum, Extension[]> = {
@@ -335,6 +348,13 @@ describe("getMenuItemExtension", () => {
     [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_MORE_ACTIONS]: [],
     [AppExtensionMountEnum.COLLECTION_OVERVIEW_CREATE]: [],
     [AppExtensionMountEnum.COLLECTION_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CUSTOMER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.ORDER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.COLLECTION_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.PRODUCT_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.VOUCHER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_DETAILS_WIDGETS]: [],
   };
 
   it("should return the corresponding Extension object when a menu item ID represents a registered extension", () => {
@@ -378,6 +398,7 @@ describe("getMenuItemExtension", () => {
       __typename: "App",
       id: "app-2",
       appUrl: "https://app2.example.com",
+      name: "App name",
     };
     const catalogExtension: Extension = {
       ...baseMockExtension,

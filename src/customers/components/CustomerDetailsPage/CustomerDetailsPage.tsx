@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -22,6 +23,7 @@ import { sectionNames } from "@dashboard/intl";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -73,7 +75,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
       : [],
   };
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
-  const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.CUSTOMER_DETAILS);
+  const { CUSTOMER_DETAILS_MORE_ACTIONS, CUSTOMER_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.CUSTOMER_DETAILS,
+  );
   const extensionMenuItems = getExtensionsItemsForCustomerDetails(
     CUSTOMER_DETAILS_MORE_ACTIONS,
     customerId,
@@ -132,6 +136,16 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
                 <CustomerGiftCardsCard />
               </RequirePermissions>
+              {CUSTOMER_DETAILS_WIDGETS.length > 0 && (
+                <>
+                  <CardSpacer />
+                  <Divider />
+                  <AppWidgets
+                    extensions={CUSTOMER_DETAILS_WIDGETS}
+                    params={{ customerId: customer?.id }}
+                  />
+                </>
+              )}
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />

@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -49,7 +50,7 @@ import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/product
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Box, Option } from "@saleor/macaw-ui-next";
+import { Box, Divider, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -197,7 +198,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, attributeValues);
     onCloseDialog();
   };
-  const { PRODUCT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PRODUCT_DETAILS);
+  const { PRODUCT_DETAILS_MORE_ACTIONS, PRODUCT_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.PRODUCT_DETAILS,
+  );
   const productErrors = React.useMemo(
     () =>
       errors.filter(
@@ -392,6 +395,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onFetchMore={fetchMoreTaxClasses}
                 />
               </Box>
+              {PRODUCT_DETAILS_WIDGETS.length > 0 && (
+                <>
+                  <Divider />
+                  <AppWidgets
+                    extensions={PRODUCT_DETAILS_WIDGETS}
+                    params={{
+                      productId: productId,
+                    }}
+                  />
+                </>
+              )}
             </DetailPageLayout.RightSidebar>
 
             <Savebar>
