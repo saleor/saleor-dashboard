@@ -2952,13 +2952,6 @@ type AppExtension implements Node {
 
   """JWT token used to authenticate by third-party app extension."""
   accessToken: String
-
-  """
-  App extension options.
-  
-  Added in Saleor 3.22.
-  """
-  options: AppExtensionPossibleOptions
 }
 
 """All places where app extension can be mounted."""
@@ -2969,19 +2962,15 @@ enum AppExtensionMountEnum {
   COLLECTION_OVERVIEW_CREATE
   COLLECTION_OVERVIEW_MORE_ACTIONS
   COLLECTION_DETAILS_MORE_ACTIONS
-  COLLECTION_DETAILS_WIDGETS
   GIFT_CARD_OVERVIEW_CREATE
   GIFT_CARD_OVERVIEW_MORE_ACTIONS
   GIFT_CARD_DETAILS_MORE_ACTIONS
-  GIFT_CARD_DETAILS_WIDGETS
   CUSTOMER_OVERVIEW_CREATE
   CUSTOMER_OVERVIEW_MORE_ACTIONS
   CUSTOMER_DETAILS_MORE_ACTIONS
-  CUSTOMER_DETAILS_WIDGETS
   PRODUCT_OVERVIEW_CREATE
   PRODUCT_OVERVIEW_MORE_ACTIONS
   PRODUCT_DETAILS_MORE_ACTIONS
-  PRODUCT_DETAILS_WIDGETS
   NAVIGATION_CATALOG
   NAVIGATION_ORDERS
   NAVIGATION_CUSTOMERS
@@ -2991,18 +2980,15 @@ enum AppExtensionMountEnum {
   ORDER_DETAILS_MORE_ACTIONS
   ORDER_OVERVIEW_CREATE
   ORDER_OVERVIEW_MORE_ACTIONS
-  ORDER_DETAILS_WIDGETS
   DRAFT_ORDER_DETAILS_MORE_ACTIONS
   DRAFT_ORDER_OVERVIEW_CREATE
   DRAFT_ORDER_OVERVIEW_MORE_ACTIONS
-  DRAFT_ORDER_DETAILS_WIDGETS
   DISCOUNT_DETAILS_MORE_ACTIONS
   DISCOUNT_OVERVIEW_CREATE
   DISCOUNT_OVERVIEW_MORE_ACTIONS
   VOUCHER_DETAILS_MORE_ACTIONS
   VOUCHER_OVERVIEW_CREATE
   VOUCHER_OVERVIEW_MORE_ACTIONS
-  VOUCHER_DETAILS_WIDGETS
   PAGE_DETAILS_MORE_ACTIONS
   PAGE_OVERVIEW_CREATE
   PAGE_OVERVIEW_MORE_ACTIONS
@@ -3025,38 +3011,6 @@ enum AppExtensionTargetEnum {
   POPUP
   APP_PAGE
   NEW_TAB
-  WIDGET
-}
-
-union AppExtensionPossibleOptions = AppExtensionOptionsWidget | AppExtensionOptionsNewTab
-
-"""Represents the options for an app extension."""
-type AppExtensionOptionsWidget {
-  """Options for displaying a Widget"""
-  widgetTarget: WidgetTargetOptions
-}
-
-"""Represents the WIDGET target options for an app extension."""
-type WidgetTargetOptions {
-  """HTTP method for Widget target (GET or POST)"""
-  method: HttpMethod!
-}
-
-enum HttpMethod {
-  POST
-  GET
-}
-
-"""Represents the options for an app extension."""
-type AppExtensionOptionsNewTab {
-  """Options controlling behavior of the NEW_TAB extension target"""
-  newTabTarget: NewTabTargetOptions
-}
-
-"""Represents the NEW_TAB target options for an app extension."""
-type NewTabTargetOptions {
-  """HTTP method for New Tab target (GET or POST)"""
-  method: HttpMethod!
 }
 
 """Represents the app's brand data."""
@@ -12966,10 +12920,10 @@ input OrderWhereInput {
   channelId: GlobalIDFilterInput
 
   """Filter order by created at date."""
-  createdAt: DateTimeRangeInput
+  createdAt: DateTimeFilterInput
 
   """Filter order by updated at date."""
-  updatedAt: DateTimeRangeInput
+  updatedAt: DateTimeFilterInput
 
   """Filter by user."""
   user: GlobalIDFilterInput
@@ -13008,27 +12962,6 @@ input OrderWhereInput {
 
   """Filter by voucher code used in the order."""
   voucherCode: StringFilterInput
-
-  """Filter by whether the order has any invoices."""
-  hasInvoices: Boolean
-
-  """Filter by invoice data associated with the order."""
-  invoices: InvoiceFilterInput
-
-  """Filter by whether the order has any fulfillments."""
-  hasFulfillments: Boolean
-
-  """Filter by fulfillment data associated with the order."""
-  fulfillments: FulfillmentFilterInput
-
-  """Filter by number of lines in the order."""
-  linesCount: IntFilterInput
-
-  """Filter by total gross amount of the order."""
-  totalGross: PriceFilterInput
-
-  """Filter by total net amount of the order."""
-  totalNet: PriceFilterInput
 
   """List of conditions that must be met."""
   AND: [OrderWhereInput!]
@@ -13083,35 +13016,6 @@ input UUIDFilterInput {
 
   """The value included in."""
   oneOf: [UUID!]
-}
-
-"""Filter input for invoices."""
-input InvoiceFilterInput {
-  """Filter invoices by creation date."""
-  createdAt: DateTimeRangeInput
-}
-
-"""Filter input for fulfillments."""
-input FulfillmentFilterInput {
-  """Filter by fulfillment status."""
-  status: FulfillmentStatusEnumFilterInput
-}
-
-"""Filter by fulfillment status."""
-input FulfillmentStatusEnumFilterInput {
-  """The value equal to."""
-  eq: FulfillmentStatus
-
-  """The value included in."""
-  oneOf: [FulfillmentStatus!]
-}
-
-input PriceFilterInput {
-  """The currency of the price to filter by."""
-  currency: String
-
-  """The amount of the price to filter by."""
-  amount: DecimalFilterInput!
 }
 
 input OrderDraftFilterInput {
