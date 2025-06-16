@@ -1,7 +1,9 @@
 // @ts-strict-ignore
+import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListPath, CollectionUrlQueryParams } from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -20,6 +22,7 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -68,7 +71,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     path: collectionListPath,
   });
 
-  const { COLLECTION_DETAILS_MORE_ACTIONS } = useExtensions(
+  const { COLLECTION_DETAILS_MORE_ACTIONS, COLLECTION_DETAILS_WIDGETS } = useExtensions(
     extensionMountPoints.COLLECTION_DETAILS,
   );
   const extensionMenuItems = getExtensionsItemsForCollectionDetails(
@@ -149,6 +152,16 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 openModal={openChannelsModal}
               />
             </div>
+            {COLLECTION_DETAILS_WIDGETS.length > 0 && (
+              <>
+                <CardSpacer />
+                <Divider />
+                <AppWidgets
+                  extensions={COLLECTION_DETAILS_WIDGETS}
+                  params={{ collectionId: collection?.id }}
+                />
+              </>
+            )}
           </DetailPageLayout.RightSidebar>
           <Savebar>
             <Savebar.DeleteButton onClick={onCollectionRemove} />
