@@ -5252,6 +5252,9 @@
     "context": "delete product dialog title",
     "string": "Delete Product"
   },
+  "TWoYMj": {
+    "string": "Redirect to the App Page"
+  },
   "TZtvTG": {
     "context": "table header required stock label",
     "string": "Required"
@@ -7759,6 +7762,9 @@
   "jBu2yj": {
     "context": "acre-inch unit",
     "string": "acre-inch"
+  },
+  "jCYHA+": {
+    "string": "Open in Popup"
   },
   "jDWPin": {
     "context": "remove failed installation dialog title",
@@ -10310,6 +10316,9 @@
   },
   "z3w/oL": {
     "string": "You must provide amount value"
+  },
+  "z4qMx5": {
+    "string": "Open in a new tab"
   },
   "z8jo8h": {
     "context": "button",
