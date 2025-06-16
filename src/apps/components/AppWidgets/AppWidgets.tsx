@@ -30,7 +30,7 @@ const getNonIframeLabel = (target: AppExtensionTargetEnum, intl: IntlShape) => {
     case AppExtensionTargetEnum.POPUP:
       return intl.formatMessage(extensionActions.openInPopup);
     case AppExtensionTargetEnum.WIDGET:
-      throw new Error("Widget should not render link to click");
+      throw new Error("You should not render widget type as link");
   }
 };
 
@@ -67,6 +67,7 @@ const IframePost = ({
         __height={defaultIframeSize}
         sandbox="allow-same-origin allow-forms allow-scripts allow-downloads"
         name={`ext-frame-${extensionId}`}
+        width={"100%"}
       />
     </Box>
   );
@@ -132,7 +133,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
             }
           };
 
-          const iframeGETvariant = (
+          const renderIframeGETvariant = () => (
             <Box marginTop={2} __height={defaultIframeSize}>
               <AppFrame
                 src={GETappIframeUrl}
@@ -143,7 +144,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
             </Box>
           );
 
-          const iframePOSTvariant = (
+          const renderIframePOSTvariant = () => (
             <IframePost
               appId={ext.app.id}
               accessToken={ext.accessToken}
@@ -152,7 +153,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
             />
           );
 
-          const nonIframeExtensionLabel = (
+          const renderNonIframeExtensionLabel = () => (
             <Box marginTop={2}>
               <Link onClick={onNonIframeActionClick}>{getNonIframeLabel(ext.target, intl)}</Link>
             </Box>
@@ -177,9 +178,9 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               >
                 {ext.app.name}: {ext.label}
               </Text>
-              {renderGETiframe && iframeGETvariant}
-              {renderPOSTiframe && iframePOSTvariant}
-              {renderNonIframe && nonIframeExtensionLabel}
+              {renderGETiframe && renderIframeGETvariant()}
+              {renderPOSTiframe && renderIframePOSTvariant()}
+              {renderNonIframe && renderNonIframeExtensionLabel()}
             </Box>
           );
         })}
