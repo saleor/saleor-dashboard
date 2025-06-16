@@ -4,7 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION } from "@dashboard/config";
 import { extensionActions } from "@dashboard/extensions/messages";
-import { Extension, ExtensionWithParams } from "@dashboard/extensions/types";
+import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
