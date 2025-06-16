@@ -20,6 +20,7 @@ export interface AppDetailsUrlMountQueryParams {
   customerId?: string;
   customerIds?: string[];
   collectionId?: string;
+  giftCardId?: string;
 }
 
 interface FeatureFlagsQueryParams {
