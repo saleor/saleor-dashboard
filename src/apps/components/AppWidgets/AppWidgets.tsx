@@ -18,6 +18,7 @@ export type AppWidgetsProps = {
   params: AppDetailsUrlMountQueryParams;
 };
 
+// TODO We will add size negotiations after render
 const defaultIframeSize = 200;
 
 const getNonIframeLabel = (target: AppExtensionTargetEnum, intl: IntlShape) => {
@@ -33,6 +34,9 @@ const getNonIframeLabel = (target: AppExtensionTargetEnum, intl: IntlShape) => {
   }
 };
 
+/**
+ * Renders a form and iframe, the form is automatically submitted with POST action and <iframe> content is replaced
+ */
 const IframePost = ({
   extensionId,
   extensionUrl,
@@ -68,6 +72,16 @@ const IframePost = ({
   );
 };
 
+const isUrlAbsolute = (url: string) => {
+  try {
+    new URL(url);
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
   const flags = useAllFlags();
 
@@ -88,23 +102,15 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
 
           const isPOST = widgetOptions && widgetOptions?.widgetTarget?.method === "POST";
 
-          let isExtensionAbsoluteUrl = false;
-
-          try {
-            new URL(ext.url);
-
-            isExtensionAbsoluteUrl = true;
-          } catch (e) {
-            isExtensionAbsoluteUrl = false;
-          }
+          const isExtensionAbsoluteUrl = isUrlAbsolute(ext.url);
 
           const extensionUrl = isExtensionAbsoluteUrl ? ext.url : ext.app.appUrl + ext.url;
 
-          const appIframeUrl = AppUrls.resolveAppIframeUrl(ext.app.id, extensionUrl, {
+          const GETappIframeUrl = AppUrls.resolveAppIframeUrl(ext.app.id, extensionUrl, {
             ...params,
             id: ext.app.id,
             featureFlags: flags,
-            theme: themeRef.current!, //todo
+            theme: themeRef.current!,
           });
 
           const appPageUrl = AppUrls.resolveAppUrl(ext.app.id, {
@@ -113,19 +119,11 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
 
           const onNonIframeActionClick = () => {
             switch (ext.target) {
-              case AppExtensionTargetEnum.APP_PAGE: {
-                ext.open();
-
-                return;
-              }
               case AppExtensionTargetEnum.WIDGET: {
                 throw new Error("Widget should not render link to click");
               }
-              case AppExtensionTargetEnum.NEW_TAB: {
-                ext.open();
-
-                return;
-              }
+              case AppExtensionTargetEnum.APP_PAGE:
+              case AppExtensionTargetEnum.NEW_TAB:
               case AppExtensionTargetEnum.POPUP: {
                 ext.open();
 
@@ -133,6 +131,36 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               }
             }
           };
+
+          const iframeGETvariant = (
+            <Box marginTop={2} __height={defaultIframeSize}>
+              <AppFrame
+                src={GETappIframeUrl}
+                appToken={ext.accessToken}
+                appId={ext.app.id}
+                dashboardVersion={APP_VERSION}
+              />
+            </Box>
+          );
+
+          const iframePOSTvariant = (
+            <IframePost
+              appId={ext.app.id}
+              accessToken={ext.accessToken}
+              extensionId={ext.id}
+              extensionUrl={extensionUrl}
+            />
+          );
+
+          const nonIframeExtensionLabel = (
+            <Box marginTop={2}>
+              <Link onClick={onNonIframeActionClick}>{getNonIframeLabel(ext.target, intl)}</Link>
+            </Box>
+          );
+
+          const renderPOSTiframe = isIframeType && isPOST;
+          const renderGETiframe = isIframeType && !isPOST;
+          const renderNonIframe = !isIframeType;
 
           return (
             <Box marginBottom={4} key={ext.id}>
@@ -149,31 +177,9 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               >
                 {ext.app.name}: {ext.label}
               </Text>
-              {isIframeType && !isPOST && (
-                <Box marginTop={2} __height={defaultIframeSize}>
-                  <AppFrame
-                    src={appIframeUrl}
-                    appToken={ext.accessToken}
-                    appId={ext.app.id}
-                    dashboardVersion={APP_VERSION}
-                  />
-                </Box>
-              )}
-              {isIframeType && isPOST && (
-                <IframePost
-                  appId={ext.app.id}
-                  accessToken={ext.accessToken}
-                  extensionId={ext.id}
-                  extensionUrl={extensionUrl}
-                />
-              )}
-              {!isIframeType && (
-                <Box marginTop={2}>
-                  <Link onClick={onNonIframeActionClick}>
-                    {getNonIframeLabel(ext.target, intl)}
-                  </Link>
-                </Box>
-              )}
+              {renderGETiframe && iframeGETvariant}
+              {renderPOSTiframe && iframePOSTvariant}
+              {renderNonIframe && nonIframeExtensionLabel}
             </Box>
           );
         })}
