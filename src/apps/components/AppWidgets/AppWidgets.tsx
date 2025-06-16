@@ -96,8 +96,6 @@ const isUrlAbsolute = (url: string) => {
 };
 
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
-  const flags = useAllFlags();
-
   const navigate = useNavigator();
   const themeRef = useRef<ThemeType>();
   const intl = useIntl();
@@ -120,15 +118,11 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
           const extensionUrl = isExtensionAbsoluteUrl ? ext.url : ext.app.appUrl + ext.url;
 
           const GETappIframeUrl = AppUrls.resolveAppIframeUrl(ext.app.id, extensionUrl, {
-            ...params,
             id: ext.app.id,
-            featureFlags: flags,
             theme: themeRef.current!,
           });
 
-          const appPageUrl = AppUrls.resolveAppUrl(ext.app.id, {
-            featureFlags: flags,
-          });
+          const appPageUrl = AppUrls.resolveAppUrl(ext.app.id);
 
           const onNonIframeActionClick = () => {
             switch (ext.target) {
@@ -138,7 +132,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               case AppExtensionTargetEnum.APP_PAGE:
               case AppExtensionTargetEnum.NEW_TAB:
               case AppExtensionTargetEnum.POPUP: {
-                ext.open();
+                ext.open(params);
 
                 return;
               }
