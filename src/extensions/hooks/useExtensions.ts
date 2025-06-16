@@ -1,4 +1,5 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import {
   AppExtensionMountEnum,
   ExtensionListQuery,
@@ -13,52 +14,20 @@ import { AppData } from "../components/ExternalAppContext/context";
 import { Extension, ExtensionWithParams } from "../types";
 import { AppDetailsUrlMountQueryParams } from "../urls";
 
-const filterAndMapToTarget = (
-  extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>,
-  openApp: (appData: AppData) => void,
-): ExtensionWithParams[] =>
+const prepareExtensionsWithActions = ({
+  extensions,
+  openAppInContext,
+}: {
+  extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
+  openAppInContext: (appData: AppData) => void;
+}): ExtensionWithParams[] =>
   extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
     const isNewTab = target === "NEW_TAB";
+    const isWidget = target === "WIDGET";
 
-    const openGETinNewTab = (extensionUrl: string) => {
-      window.open(extensionUrl, "_blank");
-    };
-
-    const openPOSTinNewTab = (params: AppDetailsUrlMountQueryParams) => {
-      const formParams = {
-        ...params,
-        accessToken: accessToken,
-        appId: app.id,
-        saleorApiUrl: process.env.API_URL,
-      };
-
-      const form = document.createElement("form");
-
-      form.method = "POST";
-      form.action = url;
-      form.target = "_blank";
-      form.style.display = "none";
-
-      for (const [key, value] of Object.entries(formParams)) {
-        if (value === undefined || value === null || typeof value !== "string") {
-          continue;
-        }
-
-        const elInput = document.createElement("input");
-
-        elInput.type = "hidden";
-        elInput.name = key;
-        elInput.value = value;
-        form.appendChild(elInput);
-      }
-
-      document.body.append(form);
-
-      form.submit();
-
-      document.body.removeChild(form);
-    };
-
+    /**
+     * Options are not required so fall back to safe GET
+     */
     const newTabMethod =
       (options?.__typename === "AppExtensionOptionsNewTab" && options?.newTabTarget?.method) ||
       "GET";
@@ -73,17 +42,32 @@ const filterAndMapToTarget = (
       mount,
       target,
       options,
+      /**
+       * Only available for NEW_TAB, POPUP, APP_PAGE
+       * TODO: Change interface to *not* contain this method if type is WIDGET
+       */
       open: (params: AppDetailsUrlMountQueryParams) => {
+        if (isWidget) {
+          console.error("Widget-type app should not execute 'open' method");
+
+          return;
+        }
+
         if (isNewTab && newTabMethod === "GET") {
           // todo apply search params
-          return openGETinNewTab(url);
+          return newTabActions.openGETinNewTab(url);
         }
 
         if (isNewTab && newTabMethod === "POST") {
-          return openPOSTinNewTab(params);
+          return newTabActions.openPOSTinNewTab({
+            appParams: params,
+            accessToken,
+            appId: app.id,
+            extensionUrl: url,
+          });
         }
 
-        openApp({
+        openAppInContext({
           id: app.id,
           appToken: accessToken || "",
           src: url,
@@ -110,10 +94,10 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
     },
     skip: !extensionsPermissions,
   });
-  const extensions = filterAndMapToTarget(
-    mapEdgesToItems(data?.appExtensions ?? undefined) || [],
-    openApp,
-  );
+  const extensions = prepareExtensionsWithActions({
+    extensions: mapEdgesToItems(data?.appExtensions ?? undefined) || [],
+    openAppInContext: openApp,
+  });
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
     {} as Record<AppExtensionMountEnum, Extension[]>,
