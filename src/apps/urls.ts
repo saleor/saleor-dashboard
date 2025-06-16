@@ -21,6 +21,7 @@ export interface AppDetailsUrlMountQueryParams {
   customerIds?: string[];
   collectionId?: string;
   giftCardId?: string;
+  voucherId?: string;
 }
 
 interface FeatureFlagsQueryParams {
