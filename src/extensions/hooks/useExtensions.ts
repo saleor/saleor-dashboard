@@ -64,17 +64,11 @@ const prepareExtensionsWithActions = ({
         }
 
         if (isNewTab && newTabMethod === "POST") {
-          const redirectUrl = new URL(url);
-
-          Object.entries(params ?? {}).forEach(([key, value]) => {
-            redirectUrl.searchParams.append(key, value);
-          });
-
           return newTabActions.openPOSTinNewTab({
             appParams: params,
             accessToken,
             appId: app.id,
-            extensionUrl: redirectUrl.toString(),
+            extensionUrl: url,
           });
         }
 

@@ -1,4 +1,19 @@
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
+import { useRuleConditionsSelectedOptionsDetailsLazyQuery } from "@dashboard/graphql";
+
+const isFormItemValid = (item: unknown): item is string => {
+  return typeof item !== "string";
+};
+
+const createInputElement = (name: string, value: string): HTMLInputElement => {
+  const elInput = document.createElement("input");
+
+  elInput.type = "hidden";
+  elInput.name = name;
+  elInput.value = value;
+
+  return elInput;
+};
 
 /**
  * Manages logic that should be run when extension of target NEW_TAB is executed
@@ -27,18 +42,30 @@ export const newTabActions = {
     form.target = "_blank";
     form.style.display = "none";
 
-    for (const [key, value] of Object.entries(formParams)) {
-      if (value === undefined || value === null || typeof value !== "string") {
-        continue;
+    console.log(Object.entries(formParams));
+
+    Object.entries(formParams).forEach(([paramRootKey, paramRootValue]) => {
+      console.log(paramRootKey, paramRootValue);
+
+      if (Array.isArray(paramRootValue)) {
+        console.log("is array");
+        console.log(paramRootValue);
+        paramRootValue.forEach(paramNestedValue => {
+          console.log("nested value", paramNestedValue);
+
+          if (isFormItemValid(paramNestedValue)) {
+            console.log("valid in array");
+            form.appendChild(createInputElement(paramRootKey, paramNestedValue));
+          }
+        });
+      } else {
+        if (isFormItemValid(paramRootValue)) {
+          form.appendChild(createInputElement(paramRootKey, paramRootValue));
+        }
       }
+    });
 
-      const elInput = document.createElement("input");
-
-      elInput.type = "hidden";
-      elInput.name = key;
-      elInput.value = value;
-      form.appendChild(elInput);
-    }
+    console.log(form.length);
 
     document.body.append(form);
 

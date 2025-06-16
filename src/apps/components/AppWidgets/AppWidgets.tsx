@@ -1,15 +1,10 @@
 import { AppFrame } from "@dashboard/apps/components/AppFrame";
-import {
-  AppDetailsUrlMountQueryParams,
-  AppDetailsUrlQueryParams,
-  AppUrls,
-} from "@dashboard/apps/urls";
+import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION } from "@dashboard/config";
 import { extensionActions } from "@dashboard/extensions/messages";
-import { Extension } from "@dashboard/extensions/types";
-import { useAllFlags } from "@dashboard/featureFlags";
+import { Extension, ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -18,7 +13,7 @@ import React, { useEffect, useRef } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 export type AppWidgetsProps = {
-  extensions: Extension[];
+  extensions: ExtensionWithParams[];
   params: AppDetailsUrlMountQueryParams;
 };
 
@@ -60,6 +55,12 @@ const IframePost = ({
     formRef.current && formRef.current.submit();
   }, []);
 
+  /**
+   * This form is rendered locally, but somewhere above there is another form. Since this is hidden, it is not visible to the user,
+   * but under the hood browser is changing the DOM
+   *
+   * TODO: We should either render form in JS directly in <body> directly or change the tree
+   */
   return (
     <Box>
       <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
