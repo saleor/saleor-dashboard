@@ -3,6 +3,7 @@ import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION } from "@dashboard/config";
+import { extensionActions } from "@dashboard/extensions/messages";
 import { Extension } from "@dashboard/extensions/types";
 import { useAllFlags } from "@dashboard/featureFlags";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
@@ -10,6 +11,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef } from "react";
+import { IntlShape, useIntl } from "react-intl";
 
 export type AppWidgetsProps = {
   extensions: Extension[];
@@ -18,15 +20,14 @@ export type AppWidgetsProps = {
 
 const defaultIframeSize = 200;
 
-// todo translations
-const getNonIframeLabel = (target: AppExtensionTargetEnum) => {
+const getNonIframeLabel = (target: AppExtensionTargetEnum, intl: IntlShape) => {
   switch (target) {
     case AppExtensionTargetEnum.APP_PAGE:
-      return "Redirect to the App details";
+      return intl.formatMessage(extensionActions.redirectToAppPage);
     case AppExtensionTargetEnum.NEW_TAB:
-      return "Open in a new tab";
+      return intl.formatMessage(extensionActions.openInNewTab);
     case AppExtensionTargetEnum.POPUP:
-      return "Open Popup";
+      return intl.formatMessage(extensionActions.openInPopup);
     case AppExtensionTargetEnum.WIDGET:
       throw new Error("Widget should not render link to click");
   }
@@ -72,6 +73,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
 
   const navigate = useNavigator();
   const themeRef = useRef<ThemeType>();
+  const intl = useIntl();
 
   return (
     <DashboardCard>
@@ -167,7 +169,9 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               )}
               {!isIframeType && (
                 <Box marginTop={2}>
-                  <Link onClick={onNonIframeActionClick}>{getNonIframeLabel(ext.target)}</Link>
+                  <Link onClick={onNonIframeActionClick}>
+                    {getNonIframeLabel(ext.target, intl)}
+                  </Link>
                 </Box>
               )}
             </Box>
