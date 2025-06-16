@@ -1,9 +1,4 @@
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
-import { useRuleConditionsSelectedOptionsDetailsLazyQuery } from "@dashboard/graphql";
-
-const isFormItemValid = (item: unknown): item is string => {
-  return typeof item !== "string";
-};
 
 const createInputElement = (name: string, value: string): HTMLInputElement => {
   const elInput = document.createElement("input");
@@ -13,6 +8,35 @@ const createInputElement = (name: string, value: string): HTMLInputElement => {
   elInput.value = value;
 
   return elInput;
+};
+
+export const prepareFormValues = (
+  paramsRecord: Record<string, string | string[] | undefined | null>,
+) => {
+  const entries = Object.entries(paramsRecord);
+
+  return entries.reduce(
+    (acc, [rootKey, rootValue]) => {
+      if (typeof rootValue === "string") {
+        acc.push([rootKey, rootValue]);
+
+        return acc;
+      }
+
+      if (Array.isArray(rootValue)) {
+        rootValue.forEach(value => {
+          if (typeof value === "string") {
+            acc.push([rootKey, value]);
+          }
+        });
+
+        return acc;
+      }
+
+      return acc;
+    },
+    [] as [string, string][],
+  );
 };
 
 /**
@@ -42,30 +66,11 @@ export const newTabActions = {
     form.target = "_blank";
     form.style.display = "none";
 
-    console.log(Object.entries(formParams));
+    const valuesFlatList = prepareFormValues(formParams);
 
-    Object.entries(formParams).forEach(([paramRootKey, paramRootValue]) => {
-      console.log(paramRootKey, paramRootValue);
-
-      if (Array.isArray(paramRootValue)) {
-        console.log("is array");
-        console.log(paramRootValue);
-        paramRootValue.forEach(paramNestedValue => {
-          console.log("nested value", paramNestedValue);
-
-          if (isFormItemValid(paramNestedValue)) {
-            console.log("valid in array");
-            form.appendChild(createInputElement(paramRootKey, paramNestedValue));
-          }
-        });
-      } else {
-        if (isFormItemValid(paramRootValue)) {
-          form.appendChild(createInputElement(paramRootKey, paramRootValue));
-        }
-      }
+    valuesFlatList.forEach(([inputName, inputValue]) => {
+      form.appendChild(createInputElement(inputName, inputValue));
     });
-
-    console.log(form.length);
 
     document.body.append(form);
 
