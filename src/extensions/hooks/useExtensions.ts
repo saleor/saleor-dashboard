@@ -1,4 +1,5 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import {
   AppExtensionMountEnum,
   ExtensionListQuery,
@@ -13,28 +14,70 @@ import { AppData } from "../components/ExternalAppContext/context";
 import { Extension, ExtensionWithParams } from "../types";
 import { AppDetailsUrlMountQueryParams } from "../urls";
 
-const filterAndMapToTarget = (
-  extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>,
-  openApp: (appData: AppData) => void,
-): ExtensionWithParams[] =>
-  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app }) => ({
-    id,
-    app,
-    accessToken: accessToken || "",
-    permissions: permissions.map(({ code }) => code),
-    url,
-    label,
-    mount,
-    open: (params: AppDetailsUrlMountQueryParams) =>
-      openApp({
-        id: app.id,
-        appToken: accessToken || "",
-        src: url,
-        label,
-        target,
-        params,
-      }),
-  }));
+const prepareExtensionsWithActions = ({
+  extensions,
+  openAppInContext,
+}: {
+  extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
+  openAppInContext: (appData: AppData) => void;
+}): ExtensionWithParams[] =>
+  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
+    const isNewTab = target === "NEW_TAB";
+    const isWidget = target === "WIDGET";
+
+    /**
+     * Options are not required so fall back to safe GET
+     */
+    const newTabMethod =
+      (options?.__typename === "AppExtensionOptionsNewTab" && options?.newTabTarget?.method) ||
+      "GET";
+
+    return {
+      id,
+      app,
+      accessToken: accessToken || "",
+      permissions: permissions.map(({ code }) => code),
+      url,
+      label,
+      mount,
+      target,
+      options,
+      /**
+       * Only available for NEW_TAB, POPUP, APP_PAGE
+       * TODO: Change interface to *not* contain this method if type is WIDGET
+       */
+      open: (params: AppDetailsUrlMountQueryParams) => {
+        if (isWidget) {
+          console.error("Widget-type app should not execute 'open' method");
+
+          return;
+        }
+
+        if (isNewTab && newTabMethod === "GET") {
+          // todo apply search params
+          return newTabActions.openGETinNewTab(url);
+        }
+
+        if (isNewTab && newTabMethod === "POST") {
+          return newTabActions.openPOSTinNewTab({
+            appParams: params,
+            accessToken,
+            appId: app.id,
+            extensionUrl: url,
+          });
+        }
+
+        openAppInContext({
+          id: app.id,
+          appToken: accessToken || "",
+          src: url,
+          label,
+          target,
+          params,
+        });
+      },
+    };
+  });
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[],
@@ -51,10 +94,10 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
     },
     skip: !extensionsPermissions,
   });
-  const extensions = filterAndMapToTarget(
-    mapEdgesToItems(data?.appExtensions ?? undefined) || [],
-    openApp,
-  );
+  const extensions = prepareExtensionsWithActions({
+    extensions: mapEdgesToItems(data?.appExtensions ?? undefined) || [],
+    openAppInContext: openApp,
+  });
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
     {} as Record<AppExtensionMountEnum, Extension[]>,
