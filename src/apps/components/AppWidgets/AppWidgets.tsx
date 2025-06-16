@@ -1,5 +1,9 @@
 import { AppFrame } from "@dashboard/apps/components/AppFrame";
-import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
+import {
+  AppDetailsUrlMountQueryParams,
+  AppDetailsUrlQueryParams,
+  AppUrls,
+} from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION } from "@dashboard/config";
@@ -42,11 +46,13 @@ const IframePost = ({
   extensionUrl,
   appId,
   accessToken,
+  params,
 }: {
   extensionUrl: string;
   extensionId: string;
   accessToken: string;
   appId: string;
+  params?: AppDetailsUrlMountQueryParams;
 }) => {
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -60,6 +66,12 @@ const IframePost = ({
         <input type="hidden" name="saleorApiUrl" value={process.env.API_URL} />
         <input type="hidden" name="accessToken" value={accessToken} />
         <input type="hidden" name="appId" value={appId} />
+        <>
+          {params &&
+            Object.entries(params).map(([key, value]) => (
+              <input type="hidden" key={key} name={key} value={value} />
+            ))}
+        </>
       </form>
       <Box
         as="iframe"
@@ -140,6 +152,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 appToken={ext.accessToken}
                 appId={ext.app.id}
                 dashboardVersion={APP_VERSION}
+                params={params}
               />
             </Box>
           );
@@ -150,6 +163,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               accessToken={ext.accessToken}
               extensionId={ext.id}
               extensionUrl={extensionUrl}
+              params={params}
             />
           );
 
