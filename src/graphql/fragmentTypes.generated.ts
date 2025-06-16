@@ -7,6 +7,10 @@
       }
       const result: PossibleTypesResultData = {
   "possibleTypes": {
+    "AppExtensionPossibleOptions": [
+      "AppExtensionOptionsNewTab",
+      "AppExtensionOptionsWidget"
+    ],
     "CheckoutLineProblem": [
       "CheckoutLineProblemInsufficientStock",
       "CheckoutLineProblemVariantNotAvailable"
