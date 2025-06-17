@@ -39,8 +39,8 @@ type ConditionOptionTypes = ConditionOption<
 export interface Row {
   value: { label: string; value: string; type: string } | null;
   loading?: boolean;
-  isAttributeRow: boolean;
-  attributeToSearch?: { label: string; value: string; type: string } | null;
+  isAttribute: boolean;
+  selectedAttribute?: { label: string; value: string; type: string } | null;
   availableAttributesList?: LeftOperatorOption[];
   attributeLoading?: boolean;
   constraint?: {

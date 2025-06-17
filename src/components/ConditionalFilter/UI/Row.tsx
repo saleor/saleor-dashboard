@@ -59,7 +59,7 @@ export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowPr
       {isAttribute && (
         <DynamicCombobox
           data-test-id={`attribute-value-${index}`}
-          value={item.attributeToSearch ?? null}
+          value={item.selectedAttribute ?? null}
           options={item.availableAttributesList ?? []}
           loading={item.attributeLoading}
           onChange={value => {
