@@ -19,6 +19,9 @@ export interface AppDetailsUrlMountQueryParams {
   orderId?: string;
   customerId?: string;
   customerIds?: string[];
+  collectionId?: string;
+  giftCardId?: string;
+  voucherId?: string;
 }
 
 interface FeatureFlagsQueryParams {
