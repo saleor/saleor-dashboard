@@ -51,7 +51,12 @@ const createAPIHandler = (
   }
 
   if (rowType === "attribute") {
-    return new AttributeChoicesHandler(client, selectedRow.value.value, inputValue);
+    if (selectedRow.attributeToSearch?.value) {
+      return new AttributeChoicesHandler(client, selectedRow.attributeToSearch.value, inputValue);
+    }
+
+    // Is this correct?
+    return new BooleanValuesHandler([]);
   }
 
   if (rowType && isStaticBoolean(rowType)) {
@@ -104,7 +109,7 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
 
     return handler.fetch();
   };
-  const fetchLeftOptions = async (inputValue: string) => {
+  const fetchAttributeOptions = async (inputValue: string) => {
     const handler = new AttributesHandler(client, inputValue);
 
     return handler.fetch();
@@ -112,6 +117,6 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
 
   return {
     fetchRightOptions,
-    fetchLeftOptions,
+    fetchAttributeOptions,
   };
 };
