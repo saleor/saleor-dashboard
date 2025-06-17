@@ -4,8 +4,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION } from "@dashboard/config";
 import { extensionActions } from "@dashboard/extensions/messages";
-import { Extension } from "@dashboard/extensions/types";
-import { useAllFlags } from "@dashboard/featureFlags";
+import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -14,7 +13,7 @@ import React, { useEffect, useRef } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 export type AppWidgetsProps = {
-  extensions: Extension[];
+  extensions: ExtensionWithParams[];
   params: AppDetailsUrlMountQueryParams;
 };
 
@@ -42,11 +41,13 @@ const IframePost = ({
   extensionUrl,
   appId,
   accessToken,
+  params,
 }: {
   extensionUrl: string;
   extensionId: string;
   accessToken: string;
   appId: string;
+  params?: AppDetailsUrlMountQueryParams;
 }) => {
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -54,12 +55,24 @@ const IframePost = ({
     formRef.current && formRef.current.submit();
   }, []);
 
+  /**
+   * This form is rendered locally, but somewhere above there is another form. Since this is hidden, it is not visible to the user,
+   * but under the hood browser is changing the DOM
+   *
+   * TODO: We should either render form in JS directly in <body> directly or change the tree
+   */
   return (
     <Box>
       <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
         <input type="hidden" name="saleorApiUrl" value={process.env.API_URL} />
         <input type="hidden" name="accessToken" value={accessToken} />
         <input type="hidden" name="appId" value={appId} />
+        <>
+          {params &&
+            Object.entries(params).map(([key, value]) => (
+              <input type="hidden" key={key} name={key} value={value} />
+            ))}
+        </>
       </form>
       <Box
         as="iframe"
@@ -84,8 +97,6 @@ const isUrlAbsolute = (url: string) => {
 };
 
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
-  const flags = useAllFlags();
-
   const navigate = useNavigator();
   const themeRef = useRef<ThemeType>();
   const intl = useIntl();
@@ -108,15 +119,11 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
           const extensionUrl = isExtensionAbsoluteUrl ? ext.url : ext.app.appUrl + ext.url;
 
           const GETappIframeUrl = AppUrls.resolveAppIframeUrl(ext.app.id, extensionUrl, {
-            ...params,
             id: ext.app.id,
-            featureFlags: flags,
             theme: themeRef.current!,
           });
 
-          const appPageUrl = AppUrls.resolveAppUrl(ext.app.id, {
-            featureFlags: flags,
-          });
+          const appPageUrl = AppUrls.resolveAppUrl(ext.app.id);
 
           const onNonIframeActionClick = () => {
             switch (ext.target) {
@@ -126,7 +133,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               case AppExtensionTargetEnum.APP_PAGE:
               case AppExtensionTargetEnum.NEW_TAB:
               case AppExtensionTargetEnum.POPUP: {
-                ext.open();
+                ext.open(params);
 
                 return;
               }
@@ -140,6 +147,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 appToken={ext.accessToken}
                 appId={ext.app.id}
                 dashboardVersion={APP_VERSION}
+                params={params}
               />
             </Box>
           );
@@ -150,6 +158,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
               accessToken={ext.accessToken}
               extensionId={ext.id}
               extensionUrl={extensionUrl}
+              params={params}
             />
           );
 
