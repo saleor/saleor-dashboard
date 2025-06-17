@@ -216,6 +216,7 @@ export const STATIC_CONDITIONS = {
     },
   ],
   staffMemberStatus: [{ type: "select", label: "is", value: "input-1" }],
+  attribute: [{ type: "multiselect", label: "in", value: "input-2" }],
 };
 
 export const CONSTRAINTS = {
@@ -276,6 +277,12 @@ export const STATIC_PRODUCT_OPTIONS: LeftOperand[] = [
     label: "IsGiftcard",
     type: "giftCard",
     slug: "giftCard",
+  },
+  {
+    value: "attribute",
+    label: "Attribute",
+    type: "attribute",
+    slug: "attribute",
   },
 ];
 

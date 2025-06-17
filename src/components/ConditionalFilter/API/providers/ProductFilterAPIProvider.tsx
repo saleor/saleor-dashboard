@@ -51,8 +51,8 @@ const createAPIHandler = (
   }
 
   if (rowType === "attribute") {
-    if (selectedRow.attributeToSearch?.value) {
-      return new AttributeChoicesHandler(client, selectedRow.attributeToSearch.value, inputValue);
+    if (selectedRow.selectedAttribute?.value) {
+      return new AttributeChoicesHandler(client, selectedRow.selectedAttribute.value, inputValue);
     }
 
     // Is this correct?

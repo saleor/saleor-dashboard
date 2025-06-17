@@ -179,13 +179,19 @@ export const createProductQueryVariables = (value: FilterContainer): ProductQuer
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
-    if (c.isStatic()) {
-      p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(c.condition.selected);
+    if (c.isAttribute) {
+      if (c.selectedAttribute) {
+        p.attributes = p.attributes || [];
+        p.attributes!.push(
+          createAttributeQueryPart(c.selectedAttribute.value, c.condition.selected),
+        );
+      }
+
+      return p;
     }
 
-    if (c.isAttribute()) {
-      p.attributes = p.attributes || [];
-      p.attributes!.push(createAttributeQueryPart(c.value.value, c.condition.selected));
+    if (c.isStatic()) {
+      p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(c.condition.selected);
     }
 
     return p;

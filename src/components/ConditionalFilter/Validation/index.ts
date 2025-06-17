@@ -12,7 +12,7 @@ const toValidated = (
 ): RawValidateEntry => {
   if (!FilterElement.isCompatible(element)) return false;
 
-  const key = element.isAttribute() ? element.value.type : element.value.value;
+  const key = element.isAttribute ? element.value.type : element.value.value;
   const validateFn = VALIDATORS[key as keyof typeof VALIDATORS];
 
   if (validateFn) {
