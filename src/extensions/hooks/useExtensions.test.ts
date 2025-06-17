@@ -233,10 +233,10 @@ describe("Extensions / hooks / useExtensions", () => {
           url: "https://example.com/ext1",
           label: "Extension 1",
           mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-          app: {
+          app: expect.objectContaining({
             id: "app1",
             name: "Test App 1",
-          },
+          }),
           open: expect.any(Function),
         }),
         expect.objectContaining({
@@ -246,10 +246,64 @@ describe("Extensions / hooks / useExtensions", () => {
           url: "https://example.com/ext3",
           label: "Extension 3",
           mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-          app: {
+          app: expect.objectContaining({
             id: "app3",
             name: "Test App 3",
-          },
+          }),
+          open: expect.any(Function),
+        }),
+        expect.objectContaining({
+          id: "ext4",
+          accessToken: "token4",
+          permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          url: "https://example.com/ext4",
+          label: "Extension 4",
+          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          app: expect.objectContaining({
+            id: "app4",
+            name: "Test App 4",
+          }),
+          open: expect.any(Function),
+        }),
+        expect.objectContaining({
+          id: "ext5",
+          accessToken: "token5",
+          permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          url: "https://example.com/ext5",
+          label: "Extension 5",
+          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          app: expect.objectContaining({
+            id: "app5",
+            name: "Test App 5",
+          }),
+          open: expect.any(Function),
+        }),
+        expect.objectContaining({
+          id: "ext6",
+          accessToken: "token6",
+          permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          url: "/ext6",
+          label: "Extension 6",
+          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          app: expect.objectContaining({
+            id: "app6",
+            name: "Test App 6",
+            appUrl: "https://app6.example.com",
+          }),
+          open: expect.any(Function),
+        }),
+        expect.objectContaining({
+          id: "ext7",
+          accessToken: "token7",
+          permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          url: "/ext7",
+          label: "Extension 7",
+          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          app: expect.objectContaining({
+            id: "app7",
+            name: "Test App 7",
+            appUrl: "https://app7.example.com",
+          }),
           open: expect.any(Function),
         }),
       ],
@@ -261,10 +315,10 @@ describe("Extensions / hooks / useExtensions", () => {
           url: "https://example.com/ext2",
           label: "Extension 2",
           mount: AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
-          app: {
+          app: expect.objectContaining({
             id: "app2",
             name: "Test App 2",
-          },
+          }),
           open: expect.any(Function),
         }),
       ],
