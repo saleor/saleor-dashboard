@@ -1,3 +1,4 @@
+import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import {
@@ -24,6 +25,7 @@ const prepareExtensionsWithActions = ({
   extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
     const isNewTab = target === "NEW_TAB";
     const isWidget = target === "WIDGET";
+    const appUrl = app.appUrl;
 
     /**
      * Options are not required so fall back to safe GET
@@ -53,8 +55,11 @@ const prepareExtensionsWithActions = ({
           return;
         }
 
+        const isAbsolute = isUrlAbsolute(url);
+        const absoluteUrl = isAbsolute ? url : `${appUrl}${url}`;
+
         if (isNewTab && newTabMethod === "GET") {
-          const redirectUrl = new URL(url);
+          const redirectUrl = new URL(absoluteUrl);
 
           Object.entries(params ?? {}).forEach(([key, value]) => {
             redirectUrl.searchParams.append(key, value);
@@ -68,7 +73,7 @@ const prepareExtensionsWithActions = ({
             appParams: params,
             accessToken,
             appId: app.id,
-            extensionUrl: url,
+            extensionUrl: absoluteUrl,
           });
         }
 

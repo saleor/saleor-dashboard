@@ -1,4 +1,5 @@
 import { AppFrame } from "@dashboard/apps/components/AppFrame";
+import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
@@ -84,16 +85,6 @@ const IframePost = ({
       />
     </Box>
   );
-};
-
-const isUrlAbsolute = (url: string) => {
-  try {
-    new URL(url);
-
-    return true;
-  } catch (e) {
-    return false;
-  }
 };
 
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
