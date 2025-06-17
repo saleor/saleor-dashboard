@@ -2,7 +2,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import React, { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
-import { FilterContainer, FilterElement } from "./FilterElement";
+import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
 import { useFiltersAreaTranslations } from "./messages";
 import { FilterEvent, Filters, Row } from "./UI";
