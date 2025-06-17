@@ -54,8 +54,13 @@ const prepareExtensionsWithActions = ({
         }
 
         if (isNewTab && newTabMethod === "GET") {
-          // todo apply search params
-          return newTabActions.openGETinNewTab(url);
+          const redirectUrl = new URL(url);
+
+          Object.entries(params ?? {}).forEach(([key, value]) => {
+            redirectUrl.searchParams.append(key, value);
+          });
+
+          return newTabActions.openGETinNewTab(redirectUrl.toString());
         }
 
         if (isNewTab && newTabMethod === "POST") {

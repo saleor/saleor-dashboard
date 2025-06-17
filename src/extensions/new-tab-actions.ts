@@ -1,5 +1,44 @@
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 
+const createInputElement = (name: string, value: string): HTMLInputElement => {
+  const elInput = document.createElement("input");
+
+  elInput.type = "hidden";
+  elInput.name = name;
+  elInput.value = value;
+
+  return elInput;
+};
+
+export const prepareFormValues = (
+  paramsRecord: Record<string, string | string[] | undefined | null>,
+) => {
+  const entries = Object.entries(paramsRecord);
+
+  return entries.reduce(
+    (acc, [rootKey, rootValue]) => {
+      if (typeof rootValue === "string") {
+        acc.push([rootKey, rootValue]);
+
+        return acc;
+      }
+
+      if (Array.isArray(rootValue)) {
+        rootValue.forEach(value => {
+          if (typeof value === "string") {
+            acc.push([rootKey, value]);
+          }
+        });
+
+        return acc;
+      }
+
+      return acc;
+    },
+    [] as [string, string][],
+  );
+};
+
 /**
  * Manages logic that should be run when extension of target NEW_TAB is executed
  */
@@ -27,18 +66,11 @@ export const newTabActions = {
     form.target = "_blank";
     form.style.display = "none";
 
-    for (const [key, value] of Object.entries(formParams)) {
-      if (value === undefined || value === null || typeof value !== "string") {
-        continue;
-      }
+    const valuesFlatList = prepareFormValues(formParams);
 
-      const elInput = document.createElement("input");
-
-      elInput.type = "hidden";
-      elInput.name = key;
-      elInput.value = value;
-      form.appendChild(elInput);
-    }
+    valuesFlatList.forEach(([inputName, inputValue]) => {
+      form.appendChild(createInputElement(inputName, inputValue));
+    });
 
     document.body.append(form);
 
