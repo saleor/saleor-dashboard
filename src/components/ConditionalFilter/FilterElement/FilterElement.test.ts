@@ -46,6 +46,9 @@ describe("ConditionalFilter / FilterElement / FilterElement", () => {
         type: "category",
         value: "category",
       },
+      selectedAttribute: null,
+      availableAttributesList: [],
+      attributeLoading: false,
     });
   });
 });
