@@ -1,10 +1,8 @@
 import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
-import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import {
   AppExtensionMountEnum,
   ExtensionListQuery,
-  PermissionEnum,
   useExtensionListQuery,
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
@@ -93,8 +91,6 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[],
 ): Record<T, Extension[]> => {
   const { openApp } = useExternalApp();
-  const permissions = useUserPermissions();
-  const extensionsPermissions = permissions?.find(perm => perm.code === PermissionEnum.MANAGE_APPS);
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
     variables: {
@@ -102,7 +98,6 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
         mount: mountList,
       },
     },
-    skip: !extensionsPermissions,
   });
   const extensions = prepareExtensionsWithActions({
     extensions: mapEdgesToItems(data?.appExtensions ?? undefined) || [],
