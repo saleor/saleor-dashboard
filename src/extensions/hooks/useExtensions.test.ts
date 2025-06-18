@@ -7,7 +7,6 @@ import { useExtensions } from "./useExtensions";
 
 const mockOpenApp = jest.fn();
 
-// Dodaj mockowanie newTabActions
 jest.mock("../new-tab-actions", () => ({
   newTabActions: {
     openGETinNewTab: jest.fn(),
