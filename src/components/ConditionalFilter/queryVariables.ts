@@ -1,6 +1,7 @@
 import {
   AttributeFilterInput,
   AttributeInput,
+  AttributeInputTypeEnum,
   CollectionFilterInput,
   CollectionPublished,
   CustomerFilterInput,
@@ -121,11 +122,22 @@ const getQueryPartByType = (value: string, type: string, what: "lte" | "gte") =>
 const createAttributeQueryPart = (
   attributeSlug: string,
   selected: ConditionSelected,
+  inputType?: AttributeInputTypeEnum,
 ): AttributeInput => {
   if (!selected.conditionValue) return { slug: attributeSlug };
 
   const { label, type } = selected.conditionValue;
   const { value } = selected;
+
+  if (inputType === "REFERENCE") {
+    if (isItemOption(value)) {
+      return { slug: attributeSlug, valueNames: [value.label] };
+    }
+
+    if (isItemOptionArray(value)) {
+      return { slug: attributeSlug, valueNames: value.map(item => item.label) };
+    }
+  }
 
   if (label === "lower" && typeof value === "string") {
     return { slug: attributeSlug, ...getQueryPartByType(value, type, "lte") };
@@ -183,7 +195,11 @@ export const createProductQueryVariables = (value: FilterContainer): ProductQuer
       if (c.selectedAttribute) {
         p.attributes = p.attributes || [];
         p.attributes!.push(
-          createAttributeQueryPart(c.selectedAttribute.value, c.condition.selected),
+          createAttributeQueryPart(
+            c.selectedAttribute.value,
+            c.condition.selected,
+            c.selectedAttribute.type as AttributeInputTypeEnum,
+          ),
         );
       }
 

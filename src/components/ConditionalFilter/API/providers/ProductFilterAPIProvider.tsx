@@ -12,6 +12,8 @@ import {
   ChannelHandler,
   CollectionHandler,
   Handler,
+  PageHandler,
+  ProductsHandler,
   ProductTypeHandler,
 } from "../Handler";
 import { getFilterElement } from "../utils";
@@ -51,6 +53,16 @@ const createAPIHandler = (
   }
 
   if (rowType === "attribute") {
+    if (selectedRow.selectedAttribute?.type === "REFERENCE") {
+      if (selectedRow.selectedAttribute?.entityType === "PAGE") {
+        return new PageHandler(client, inputValue);
+      }
+
+      if (selectedRow.selectedAttribute?.entityType === "PRODUCT") {
+        return new ProductsHandler(client, inputValue);
+      }
+    }
+
     if (selectedRow.selectedAttribute?.value) {
       return new AttributeChoicesHandler(client, selectedRow.selectedAttribute.value, inputValue);
     }

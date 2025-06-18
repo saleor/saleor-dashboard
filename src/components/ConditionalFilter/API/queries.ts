@@ -7,7 +7,9 @@ export const initialDynamicLeftOperands = gql`
       search: $query
       where: {
         type: { eq: PRODUCT_TYPE }
-        inputType: { oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH] }
+        inputType: {
+          oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE]
+        }
       }
     ) {
       edges {
@@ -16,6 +18,7 @@ export const initialDynamicLeftOperands = gql`
           name
           slug
           inputType
+          entityType
           __typename
         }
         __typename
@@ -98,6 +101,7 @@ export const initialDynamicOperands = gql`
           name
           slug
           inputType
+          entityType
           choices(first: 5, filter: { ids: $choicesIds }) {
             edges {
               node {
@@ -172,6 +176,18 @@ export const dynamicOperandsQueries = gql`
         node {
           id
           name
+          slug
+        }
+      }
+    }
+  }
+
+  query _GetPagesChoices($first: Int!, $query: String!) {
+    pages(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name: title
           slug
         }
       }

@@ -114,6 +114,7 @@ export const createInitialProductStateFromData = (
                   value: node?.id,
                   label: node?.name,
                   inputType: node?.inputType,
+                  entityType: node?.entityType,
                 },
               }),
               {},

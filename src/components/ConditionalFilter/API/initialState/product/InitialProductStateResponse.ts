@@ -1,4 +1,4 @@
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
+import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { createBooleanOption } from "../../../constants";
 import { AttributeInputType } from "../../../FilterElement/ConditionOptions";
@@ -16,6 +16,7 @@ export interface AttributeDTO {
   label: string;
   slug: string;
   value: string;
+  entityType?: AttributeEntityTypeEnum;
 }
 
 export interface InitialProductState {
