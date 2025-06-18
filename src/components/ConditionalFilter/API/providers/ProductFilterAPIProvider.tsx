@@ -55,8 +55,7 @@ const createAPIHandler = (
       return new AttributeChoicesHandler(client, selectedRow.selectedAttribute.value, inputValue);
     }
 
-    // Is this correct?
-    return new BooleanValuesHandler([]);
+    throw new Error("Attribute is not selected, values cannot be fetched");
   }
 
   if (rowType && isStaticBoolean(rowType)) {
