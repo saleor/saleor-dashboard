@@ -56,6 +56,12 @@ const prepareExtensionsWithActions = ({
         const isAbsolute = isUrlAbsolute(url);
         const absoluteUrl = isAbsolute ? url : `${appUrl}${url}`;
 
+        if (!["http:", "https:"].includes(new URL(absoluteUrl).protocol)) {
+          console.error("Invalid url");
+
+          return;
+        }
+
         if (isNewTab && newTabMethod === "GET") {
           const redirectUrl = new URL(absoluteUrl);
 
