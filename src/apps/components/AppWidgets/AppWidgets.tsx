@@ -1,3 +1,4 @@
+import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppFrame } from "@dashboard/apps/components/AppFrame";
 import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
@@ -185,21 +186,26 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
           const renderGETiframe = isIframeType && !isPOST;
           const renderNonIframe = !isIframeType;
 
+          const logo = ext.app.brand?.logo.default;
+
           return (
             <Box marginBottom={4} key={ext.id}>
-              <Text
-                onClick={e => {
-                  navigate(appPageUrl);
+              <Box display="flex" alignItems="center" marginBottom={2}>
+                <AppAvatar size={6} logo={logo ? { source: logo } : undefined} marginRight={2} />
+                <Text
+                  onClick={e => {
+                    navigate(appPageUrl);
 
-                  e.preventDefault();
-                }}
-                as="a"
-                size={3}
-                color="default2"
-                href={appPageUrl}
-              >
-                {ext.app.name}: {ext.label}
-              </Text>
+                    e.preventDefault();
+                  }}
+                  as="a"
+                  size={3}
+                  color="default2"
+                  href={appPageUrl}
+                >
+                  {ext.app.name}: {ext.label}
+                </Text>
+              </Box>
               {renderGETiframe && renderIframeGETvariant()}
               {renderPOSTiframe && renderIframePOSTvariant()}
               {renderNonIframe && renderNonIframeExtensionLabel()}
