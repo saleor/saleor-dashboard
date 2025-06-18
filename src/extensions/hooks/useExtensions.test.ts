@@ -22,7 +22,7 @@ jest.mock("../components/ExternalAppContext", () => ({
   }),
 }));
 
-const { newTabActions } = require("../new-tab-actions");
+import { newTabActions } from "../new-tab-actions";
 
 const useUserPermissionsMock = jest.fn();
 const useExtensionListQueryMock = jest.fn();
