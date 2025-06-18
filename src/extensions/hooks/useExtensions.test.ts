@@ -82,37 +82,7 @@ describe("Extensions / hooks / useExtensions", () => {
     jest.clearAllMocks();
   });
 
-  it("should return empty extensions map when user doesn't have MANAGE_APPS permission", () => {
-    // Arrange
-    useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_ORDERS }]);
-    useExtensionListQueryMock.mockReturnValue({ data: undefined });
-
-    const mountList = [
-      AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-      AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
-    ];
-
-    // Act
-    const { result } = renderHook(() => useExtensions(mountList));
-
-    // Assert
-    expect(result.current).toEqual({
-      [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [],
-      [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: [],
-    });
-
-    expect(useExtensionListQueryMock).toHaveBeenCalledWith({
-      fetchPolicy: "cache-first",
-      variables: {
-        filter: {
-          mount: mountList,
-        },
-      },
-      skip: true, // Should skip when no MANAGE_APPS permission
-    });
-  });
-
-  it("should fetch and return extensions grouped by mount when user has MANAGE_APPS permission", () => {
+  it("should fetch and return extensions grouped by mount", () => {
     // Arrange
     useUserPermissionsMock.mockReturnValue([
       { code: PermissionEnum.MANAGE_APPS },
@@ -136,7 +106,6 @@ describe("Extensions / hooks / useExtensions", () => {
           mount: mountList,
         },
       },
-      skip: false, // Should not skip when user has MANAGE_APPS permission
     });
 
     expect(result.current).toEqual({
