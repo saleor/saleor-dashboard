@@ -302,11 +302,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 </>
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
-              {ORDER_DETAILS_WIDGETS.length > 0 && (
+              {ORDER_DETAILS_WIDGETS.length > 0 && order?.id && (
                 <>
                   <CardSpacer />
                   <Divider />
-                  <AppWidgets extensions={ORDER_DETAILS_WIDGETS} params={{ orderId: order?.id }} />
+                  <AppWidgets extensions={ORDER_DETAILS_WIDGETS} params={{ orderId: order.id }} />
                 </>
               )}
             </DetailPageLayout.RightSidebar>

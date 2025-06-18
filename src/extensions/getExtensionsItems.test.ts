@@ -37,6 +37,7 @@ const mockedExtension: ExtensionWithParams = {
     id: "app-id",
     appUrl: "https://example.com",
     name: "App name",
+    brand: null,
   },
   accessToken: "test-token",
   permissions: [PermissionEnum.MANAGE_ORDERS],

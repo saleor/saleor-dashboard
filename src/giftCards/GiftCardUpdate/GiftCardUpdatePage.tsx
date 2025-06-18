@@ -45,13 +45,13 @@ const GiftCardUpdatePage: React.FC = () => {
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
         <GiftCardUpdateInfoCard />
-        {GIFT_CARD_DETAILS_WIDGETS.length > 0 && (
+        {GIFT_CARD_DETAILS_WIDGETS.length > 0 && giftCard?.id && (
           <>
             <CardSpacer />
             <Divider />
             <AppWidgets
               extensions={GIFT_CARD_DETAILS_WIDGETS}
-              params={{ giftCardId: giftCard?.id }}
+              params={{ giftCardId: giftCard.id }}
             />
           </>
         )}

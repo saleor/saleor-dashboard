@@ -176,11 +176,11 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           onProfileView={onProfileView}
           onShippingAddressEdit={onShippingAddressEdit}
         />
-        {DRAFT_ORDER_DETAILS_WIDGETS.length > 0 && (
+        {DRAFT_ORDER_DETAILS_WIDGETS.length > 0 && order.id && (
           <>
             <CardSpacer />
             <Divider />
-            <AppWidgets extensions={DRAFT_ORDER_DETAILS_WIDGETS} params={{ orderId: order?.id }} />
+            <AppWidgets extensions={DRAFT_ORDER_DETAILS_WIDGETS} params={{ orderId: order.id }} />
           </>
         )}
       </DetailPageLayout.RightSidebar>

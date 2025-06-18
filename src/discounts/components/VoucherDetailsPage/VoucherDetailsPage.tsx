@@ -446,13 +446,13 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 disabled={disabled}
                 openModal={openChannelsModal}
               />
-              {VOUCHER_DETAILS_WIDGETS.length > 0 && (
+              {VOUCHER_DETAILS_WIDGETS.length > 0 && voucher.id && (
                 <>
                   <CardSpacer />
                   <Divider />
                   <AppWidgets
                     extensions={VOUCHER_DETAILS_WIDGETS}
-                    params={{ voucherId: voucher?.id }}
+                    params={{ voucherId: voucher.id }}
                   />
                 </>
               )}
