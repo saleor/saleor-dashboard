@@ -14,7 +14,7 @@ export class ExpressionValue {
     public value: string,
     public label: string,
     public type: string,
-  ) {}
+  ) { }
 
   public setLabel(label: string) {
     this.label = label;
@@ -81,7 +81,7 @@ export class FilterElement {
       }
     } else {
       // Not an attribute filter, use static constraints from config
-      this.constraint = Constraint.fromSlug(this.value.value) ?? undefined;
+      this.constraint = Constraint.fromSlug(this.value.value);
     }
   }
 
