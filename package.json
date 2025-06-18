@@ -42,7 +42,7 @@
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
     "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.1.19",
     "@saleor/sdk": "0.6.0",
-    "@sentry/react": "^8.21.0",
+    "@sentry/react": "^9.29.0",
     "@sentry/vite-plugin": "^2.21.1",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",
@@ -100,7 +100,7 @@
     "@editorjs/embed": "^2.5.3",
     "@formatjs/cli": "^4.5.0",
     "@graphql-codegen/add": "^3.1.1",
-    "@graphql-codegen/cli": "^2.1.1",
+    "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/fragment-matcher": "^3.1.0",
     "@graphql-codegen/import-types-preset": "^2.1.12",
     "@graphql-codegen/typescript": "^2.4.3",
@@ -159,7 +159,7 @@
     "rollup-plugin-polyfill-node": "^0.11.0",
     "typescript": "^5.0.4",
     "typescript-strict-plugin": "^2.1.0",
-    "vite": "^6.2.2",
+    "vite": "^6.3.5",
     "vite-plugin-html": "^3.2.2"
   },
   "optionalDependencies": {
