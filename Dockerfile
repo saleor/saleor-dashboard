@@ -11,10 +11,9 @@ COPY locale/ locale/
 COPY scripts/ scripts/
 COPY vite.config.js ./
 COPY tsconfig.json ./
+COPY codegen.ts ./
 COPY *.d.ts ./
 COPY schema.graphql ./
-COPY introspection.json ./
-COPY introspection*.json ./
 COPY .featureFlags/ .featureFlags/
 
 COPY src/ src/
