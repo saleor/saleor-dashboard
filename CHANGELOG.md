@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.21.2
+
+### Patch Changes
+
+- ddf8023: Fixed navigation in Saleor Apps causing polluted browser's window history, now navigating to another page adds a single entry in history stack.
+- ac3db84: When creating new channels, Transaction flow will be selected as default for "mark as paid" strategy.
+- d47fb4e: Change how dashboard fetches GraphQL schema. After this change GraphQL schema is fetched from Saleor repository instead of Saleor API. If you wants the old behavior use `npm run fetch-local-schema`.
+- 05a0f6f: Fixed exception that happened when voucher details page was opened / refreshed with modal open for selecting collections and variants. Now page loads correctly.
+- ddf8023: Added Back button when viewing Extension (App) details page.
+- a374233: Renamed modeling related pages:
+  - `/pages` -> `/models`
+  - `/page-types` -> `/model-types`
+  - `/navigation` -> `/structures`
+
 ## 3.21.1
 
 ### Patch Changes
