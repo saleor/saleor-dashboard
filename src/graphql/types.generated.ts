@@ -2221,8 +2221,10 @@ export type FulfillmentCancelInput = {
   warehouseId?: InputMaybe<Scalars['ID']>;
 };
 
-/** Filter input for fulfillments. */
+/** Filter input for order fulfillments data. */
 export type FulfillmentFilterInput = {
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
   /** Filter by fulfillment status. */
   status?: InputMaybe<FulfillmentStatusEnumFilterInput>;
 };
@@ -3295,6 +3297,12 @@ export enum LanguageCodeEnum {
   ZU_ZA = 'ZU_ZA'
 }
 
+/** Filter input for order lines data. */
+export type LinesFilterInput = {
+  /** Filter by metadata fields of order lines. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+};
+
 /**
  * Determine the mark as paid strategy for the channel.
  *
@@ -3494,11 +3502,37 @@ export type MetadataFilter = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/**
+ * Allows filtering based on metadata key/value pairs.
+ *
+ *         Examples:
+ *         - `{key: "size"}`
+ *           Matches objects where the metadata key "size" exists, regardless of its value.
+ *         - `{key: "color", value: {oneOf: ["blue", "green"]}}`
+ *           Matches objects where the metadata key "color" is set to either "blue" or "green".
+ *         - `{key: "status", value: {eq: "active"}}`
+ *           Matches objects where the metadata key "status" is set to "active".
+ */
+export type MetadataFilterInput = {
+  /** Key to filter by. If not other fields provided - checking the existence of the key in metadata. */
+  key: Scalars['String'];
+  /** Value to filter by. */
+  value?: InputMaybe<MetadataValueFilterInput>;
+};
+
 export type MetadataInput = {
   /** Key of a metadata item. */
   key: Scalars['String'];
   /** Value of a metadata item. */
   value: Scalars['String'];
+};
+
+/** Define the filtering options for metadata value fields. */
+export type MetadataValueFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<Scalars['String']>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type MoneyInput = {
@@ -4467,10 +4501,16 @@ export type OrderWhereInput = {
   isGiftCardUsed?: InputMaybe<Scalars['Boolean']>;
   /** Filter by whether the order contains preorder items. */
   isPreorder?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by metadata fields of order lines. */
+  lines?: InputMaybe<LinesFilterInput>;
   /** Filter by number of lines in the order. */
   linesCount?: InputMaybe<IntFilterInput>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
   /** Filter by order number. */
   number?: InputMaybe<IntFilterInput>;
+  /** Filter by the product type of related order lines. */
+  productTypeId?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by order status. */
   status?: InputMaybe<OrderStatusEnumFilterInput>;
   /** Filter by total gross amount of the order. */
