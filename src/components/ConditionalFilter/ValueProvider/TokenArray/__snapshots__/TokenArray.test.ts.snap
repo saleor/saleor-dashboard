@@ -3,6 +3,8 @@
 exports[`ConditionalFilter / ValueProvider / TokenArray creates filter container with removing constrain if there is no depepdent rows 1`] = `
 TokenArray [
   FilterElement {
+    "attributeLoading": false,
+    "availableAttributesList": Array [],
     "condition": Condition {
       "loading": false,
       "options": ConditionOptions [
@@ -29,6 +31,7 @@ TokenArray [
     },
     "constraint": undefined,
     "loading": false,
+    "selectedAttribute": null,
     "value": ExpressionValue {
       "label": "Channel",
       "type": "channel",
@@ -41,6 +44,8 @@ TokenArray [
 exports[`ConditionalFilter / ValueProvider / TokenArray should create filter container from a given response 1`] = `
 TokenArray [
   FilterElement {
+    "attributeLoading": false,
+    "availableAttributesList": Array [],
     "condition": Condition {
       "loading": false,
       "options": ConditionOptions [
@@ -78,6 +83,7 @@ TokenArray [
     },
     "constraint": undefined,
     "loading": false,
+    "selectedAttribute": null,
     "value": ExpressionValue {
       "label": "Price",
       "type": "price",
@@ -86,6 +92,8 @@ TokenArray [
   },
   "AND",
   FilterElement {
+    "attributeLoading": false,
+    "availableAttributesList": Array [],
     "condition": Condition {
       "loading": false,
       "options": ConditionOptions [
@@ -125,6 +133,7 @@ TokenArray [
       "removable": false,
     },
     "loading": false,
+    "selectedAttribute": null,
     "value": ExpressionValue {
       "label": "Channel",
       "type": "channel",

@@ -1,6 +1,10 @@
 import { RangeValue } from "@saleor/macaw-ui-next";
 
 import {
+  AttributeBlurData,
+  AttributeChangeData,
+  AttributeFocusData,
+  AttributeInputValueChangeData,
   ConditionBlurData,
   ConditionChangeData,
   ConditionFocusData,
@@ -87,6 +91,56 @@ export class FilterEventEmitter extends EventTarget {
       new CustomEvent<LeftOperatorInputValueChangeData>(this.type, {
         detail: {
           type: "leftOperator.onInputValueChange",
+          path: `${index}`,
+          value,
+          index,
+        },
+      }),
+    );
+  }
+
+  changeAttribute(index: number, value: LeftOperatorOption) {
+    this.dispatchEvent(
+      new CustomEvent<AttributeChangeData>(this.type, {
+        detail: {
+          type: "attribute.onChange",
+          path: `${index}`,
+          value,
+          index,
+        },
+      }),
+    );
+  }
+
+  focusAttribute(index: number) {
+    this.dispatchEvent(
+      new CustomEvent<AttributeFocusData>(this.type, {
+        detail: {
+          type: "attribute.onFocus",
+          path: `${index}`,
+          index,
+        },
+      }),
+    );
+  }
+
+  blurAttribute(index: number) {
+    this.dispatchEvent(
+      new CustomEvent<AttributeBlurData>(this.type, {
+        detail: {
+          type: "attribute.onBlur",
+          path: `${index}`,
+          index,
+        },
+      }),
+    );
+  }
+
+  inputChangeAttribute(index: number, value: string) {
+    this.dispatchEvent(
+      new CustomEvent<AttributeInputValueChangeData>(this.type, {
+        detail: {
+          type: "attribute.onInputValueChange",
           path: `${index}`,
           value,
           index,

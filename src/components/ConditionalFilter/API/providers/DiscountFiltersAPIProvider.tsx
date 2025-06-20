@@ -4,12 +4,13 @@ export const useDiscountFilterAPIProvider = (): FilterAPIProvider => {
   const fetchRightOptions = async () => {
     return [];
   };
-  const fetchLeftOptions = async () => {
+
+  const fetchAttributeOptions = async () => {
     return [];
   };
 
   return {
     fetchRightOptions,
-    fetchLeftOptions,
+    fetchAttributeOptions,
   };
 };

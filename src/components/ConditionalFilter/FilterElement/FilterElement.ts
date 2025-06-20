@@ -63,11 +63,25 @@ export class FilterElement {
     public condition: Condition,
     public loading: boolean,
     public constraint?: Constraint,
+    public selectedAttribute: ExpressionValue | null = null,
+    public availableAttributesList: LeftOperand[] = [],
+    public attributeLoading = false,
   ) {
-    const newConstraint = Constraint.fromSlug(this.value.value);
+    this.updateConstraint();
+  }
 
-    if (newConstraint) {
-      this.constraint = newConstraint;
+  private updateConstraint() {
+    if (this.isAttribute) {
+      if (this.selectedAttribute) {
+        // Attribute is selected, so no constraint on value input
+        this.constraint = undefined;
+      } else {
+        // "Attribute" is selected, but not a specific one. Disable value input.
+        this.constraint = new Constraint([], ["right"]);
+      }
+    } else {
+      // Not an attribute filter, use static constraints from config
+      this.constraint = Constraint.fromSlug(this.value.value) || undefined;
     }
   }
 
@@ -86,10 +100,22 @@ export class FilterElement {
   public updateLeftOperator(leftOperand: LeftOperand) {
     this.value = ExpressionValue.fromLeftOperand(leftOperand);
     this.condition = Condition.emptyFromLeftOperand(leftOperand);
+    this.selectedAttribute = null;
+    this.updateConstraint();
   }
 
-  public updateLeftLoadingState(loading: boolean) {
-    this.loading = loading;
+  public updateSelectedAttribute(leftOperand: LeftOperand) {
+    this.selectedAttribute = ExpressionValue.fromLeftOperand(leftOperand);
+    this.condition = Condition.emptyFromLeftOperand(leftOperand);
+    this.updateConstraint();
+  }
+
+  public updateAvailableAttributesList(options: LeftOperand[]) {
+    this.availableAttributesList = options;
+  }
+
+  public updateAttributeLoadingState(loading: boolean) {
+    this.attributeLoading = loading;
   }
 
   public updateCondition(conditionValue: ConditionItem) {
@@ -122,17 +148,17 @@ export class FilterElement {
     return ConditionOptions.isStaticName(this.value.type);
   }
 
-  public isAttribute() {
-    return ConditionOptions.isAttributeInputType(this.value.type);
+  public get isAttribute() {
+    return this.value.value === "attribute";
+  }
+
+  public isAttributeValueInputDisabled() {
+    return this.isAttribute && !this.selectedAttribute;
   }
 
   public rowType(): RowType | null {
-    if (this.isStatic()) {
+    if (this.isStatic() || this.isAttribute) {
       return this.value.value as RowType;
-    }
-
-    if (this.isAttribute()) {
-      return "attribute";
     }
 
     return null;
@@ -147,8 +173,12 @@ export class FilterElement {
   }
 
   public asUrlEntry(): UrlEntry {
-    if (this.isAttribute()) {
-      return UrlEntry.forAttribute(this.condition.selected, this.value.value);
+    if (this.isAttribute) {
+      if (this.selectedAttribute) {
+        return UrlEntry.forAttribute(this.condition.selected, this.selectedAttribute.value);
+      }
+
+      return UrlEntry.forStatic(this.condition.selected, "attribute");
     }
 
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
@@ -168,11 +198,21 @@ export class FilterElement {
   }
 
   public static createEmpty() {
-    return new FilterElement(ExpressionValue.emptyStatic(), Condition.createEmpty(), false);
+    return new FilterElement(
+      ExpressionValue.emptyStatic(),
+      Condition.createEmpty(),
+      false,
+      undefined,
+    );
   }
 
   public static createStaticBySlug(slug: StaticElementName) {
-    return new FilterElement(ExpressionValue.fromSlug(slug), Condition.emptyFromSlug(slug), false);
+    return new FilterElement(
+      ExpressionValue.fromSlug(slug),
+      Condition.emptyFromSlug(slug),
+      false,
+      undefined,
+    );
   }
 
   public static fromUrlToken(token: UrlToken, response: InitialResponseType) {
@@ -186,9 +226,11 @@ export class FilterElement {
 
     if (token.isAttribute()) {
       return new FilterElement(
-        ExpressionValue.forAttribute(token.name, response as InitialProductStateResponse),
+        ExpressionValue.fromSlug("attribute"),
         Condition.fromUrlToken(token, response),
         false,
+        undefined,
+        ExpressionValue.forAttribute(token.name, response as InitialProductStateResponse),
       );
     }
 

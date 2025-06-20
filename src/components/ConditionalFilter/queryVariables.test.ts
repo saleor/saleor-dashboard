@@ -47,7 +47,7 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
       ),
       "AND",
       new FilterElement(
-        new ExpressionValue("bottle-size", "Bottle size", "DROPDOWN"),
+        new ExpressionValue("attribute", "Attribute", "attribute"),
         new Condition(
           ConditionOptions.fromAttributeType("DROPDOWN"),
           new ConditionSelected(
@@ -75,6 +75,8 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
           false,
         ),
         false,
+        undefined,
+        new ExpressionValue("bottle-size", "Bottle size", "DROPDOWN"),
       ),
     ];
     const expectedOutput = {

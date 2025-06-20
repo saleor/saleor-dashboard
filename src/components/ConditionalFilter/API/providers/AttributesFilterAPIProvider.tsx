@@ -76,12 +76,12 @@ export const useAttributesFilterAPIProvider = (): FilterAPIProvider => {
     return handler.fetch();
   };
 
-  const fetchLeftOptions = async () => {
+  const fetchAttributeOptions = async () => {
     return [];
   };
 
   return {
     fetchRightOptions,
-    fetchLeftOptions,
+    fetchAttributeOptions,
   };
 };

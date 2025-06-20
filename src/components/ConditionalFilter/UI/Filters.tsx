@@ -18,7 +18,7 @@ export const Filters = ({ value, leftOptions, emitter, locale, error }: FiltersP
     <Box
       display="grid"
       __gridTemplateColumns="repeat(2, auto)"
-      alignItems="start"
+      alignItems="center"
       columnGap={2}
       rowGap={3}
       alignSelf="start"
