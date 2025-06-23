@@ -25,7 +25,7 @@ import { FilterContainer } from "./FilterElement";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { isItemOption, isItemOptionArray, isTuple } from "./FilterElement/ConditionValue";
 
-type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
+export type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
 const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => {
   if (!selected.conditionValue) return "";
