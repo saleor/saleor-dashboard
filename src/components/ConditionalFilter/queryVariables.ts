@@ -75,7 +75,7 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
 export const createOrderQueryVariables = (value: FilterContainer): OrderQueryVars =>
   new QueryBuilder<OrderQueryVars>(QueryApiType.WHERE, value, [new MetadataHandler()]).build();
 
-export const creatVoucherQueryVariables = (
+export const createVoucherQueryVariables = (
   value: FilterContainer,
 ): { filters: VoucherFilterInput; channel: string | undefined } => {
   const channelHandler = new VoucherChannelHandler();
@@ -92,7 +92,7 @@ export const creatVoucherQueryVariables = (
 export const createPageQueryVariables = (value: FilterContainer): PageFilterInput =>
   new QueryBuilder<PageFilterInput>(QueryApiType.FILTER, value).build();
 
-export const creatDraftOrderQueryVariables = (value: FilterContainer): OrderDraftFilterInput =>
+export const createDraftOrderQueryVariables = (value: FilterContainer): OrderDraftFilterInput =>
   new QueryBuilder<OrderDraftFilterInput>(QueryApiType.FILTER, value).build();
 
 export const createGiftCardQueryVariables = (value: FilterContainer): GiftCardFilterInput =>
