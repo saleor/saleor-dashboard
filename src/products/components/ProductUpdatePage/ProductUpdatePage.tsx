@@ -395,7 +395,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onFetchMore={fetchMoreTaxClasses}
                 />
               </Box>
-              {PRODUCT_DETAILS_WIDGETS.length > 0 && (
+              {PRODUCT_DETAILS_WIDGETS.length > 0 && productId && (
                 <>
                   <Divider />
                   <AppWidgets

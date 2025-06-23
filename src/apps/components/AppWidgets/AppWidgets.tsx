@@ -1,4 +1,6 @@
+import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppFrame } from "@dashboard/apps/components/AppFrame";
+import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
@@ -8,7 +10,7 @@ import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -16,6 +18,8 @@ export type AppWidgetsProps = {
   extensions: ExtensionWithParams[];
   params: AppDetailsUrlMountQueryParams;
 };
+
+const hiddenStyle = { visibility: "hidden" } as const;
 
 // TODO We will add size negotiations after render
 const defaultIframeSize = 200;
@@ -50,9 +54,24 @@ const IframePost = ({
   params?: AppDetailsUrlMountQueryParams;
 }) => {
   const formRef = useRef<HTMLFormElement | null>(null);
+  const iframeRef = useRef<HTMLFormElement | null>(null);
+  const loadingRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     formRef.current && formRef.current.submit();
+
+    if (iframeRef.current && loadingRef.current) {
+      const onload = () => {
+        loadingRef.current!.style.display = "none";
+        iframeRef.current!.style.visibility = "visible";
+      };
+
+      iframeRef.current.addEventListener("load", onload);
+
+      return () => {
+        iframeRef.current!.removeEventListener("load", onload);
+      };
+    }
   }, []);
 
   /**
@@ -74,7 +93,12 @@ const IframePost = ({
             ))}
         </>
       </form>
+      <Box ref={loadingRef} width={"100%"} __height={defaultIframeSize}>
+        <Skeleton __height={defaultIframeSize} />
+      </Box>
       <Box
+        style={hiddenStyle}
+        ref={iframeRef}
         as="iframe"
         borderWidth={0}
         __height={defaultIframeSize}
@@ -84,16 +108,6 @@ const IframePost = ({
       />
     </Box>
   );
-};
-
-const isUrlAbsolute = (url: string) => {
-  try {
-    new URL(url);
-
-    return true;
-  } catch (e) {
-    return false;
-  }
 };
 
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
@@ -172,21 +186,26 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
           const renderGETiframe = isIframeType && !isPOST;
           const renderNonIframe = !isIframeType;
 
+          const logo = ext.app.brand?.logo.default;
+
           return (
             <Box marginBottom={4} key={ext.id}>
-              <Text
-                onClick={e => {
-                  navigate(appPageUrl);
+              <Box display="flex" alignItems="center" marginBottom={2}>
+                <AppAvatar size={6} logo={logo ? { source: logo } : undefined} marginRight={2} />
+                <Text
+                  onClick={e => {
+                    navigate(appPageUrl);
 
-                  e.preventDefault();
-                }}
-                as="a"
-                size={3}
-                color="default2"
-                href={appPageUrl}
-              >
-                {ext.app.name}: {ext.label}
-              </Text>
+                    e.preventDefault();
+                  }}
+                  as="a"
+                  size={3}
+                  color="default2"
+                  href={appPageUrl}
+                >
+                  {ext.app.name}: {ext.label}
+                </Text>
+              </Box>
               {renderGETiframe && renderIframeGETvariant()}
               {renderPOSTiframe && renderIframePOSTvariant()}
               {renderNonIframe && renderNonIframeExtensionLabel()}

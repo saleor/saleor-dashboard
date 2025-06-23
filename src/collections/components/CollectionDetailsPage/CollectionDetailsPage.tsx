@@ -152,13 +152,13 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 openModal={openChannelsModal}
               />
             </div>
-            {COLLECTION_DETAILS_WIDGETS.length > 0 && (
+            {COLLECTION_DETAILS_WIDGETS.length > 0 && collection?.id && (
               <>
                 <CardSpacer />
                 <Divider />
                 <AppWidgets
                   extensions={COLLECTION_DETAILS_WIDGETS}
-                  params={{ collectionId: collection?.id }}
+                  params={{ collectionId: collection.id }}
                 />
               </>
             )}

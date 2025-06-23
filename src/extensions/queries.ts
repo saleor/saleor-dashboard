@@ -137,6 +137,11 @@ export const extensionList = gql`
             id
             appUrl
             name
+            brand {
+              logo {
+                default(size: 32, format: WEBP)
+              }
+            }
           }
         }
       }

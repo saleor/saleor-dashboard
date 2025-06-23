@@ -136,13 +136,13 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
                 <CustomerGiftCardsCard />
               </RequirePermissions>
-              {CUSTOMER_DETAILS_WIDGETS.length > 0 && (
+              {CUSTOMER_DETAILS_WIDGETS.length > 0 && customer?.id && (
                 <>
                   <CardSpacer />
                   <Divider />
                   <AppWidgets
                     extensions={CUSTOMER_DETAILS_WIDGETS}
-                    params={{ customerId: customer?.id }}
+                    params={{ customerId: customer.id }}
                   />
                 </>
               )}
