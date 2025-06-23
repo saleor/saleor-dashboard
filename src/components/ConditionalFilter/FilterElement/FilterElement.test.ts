@@ -145,11 +145,7 @@ describe("ConditionalFilter / FilterElement / FilterElement", () => {
         loading: false,
         options: [],
         selected: {
-          conditionValue: {
-            label: "",
-            type: "",
-            value: "",
-          },
+          conditionValue: null,
           loading: false,
           options: [],
           value: "",
@@ -164,9 +160,8 @@ describe("ConditionalFilter / FilterElement / FilterElement", () => {
       },
       selectedAttribute: {
         label: "Color",
-        type: "dropdown",
+        type: "DROPDOWN",
         value: "color",
-        slug: "color",
       },
       availableAttributesList: [],
       attributeLoading: false,
