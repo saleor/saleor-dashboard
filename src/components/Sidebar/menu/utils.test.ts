@@ -36,6 +36,7 @@ describe("mapToExtensionsItems", () => {
     id: "app-1",
     appUrl: "https://app.example.com",
     name: "App name",
+    brand: null,
   };
 
   const mockExtension: Extension = {
@@ -230,6 +231,7 @@ describe("getMenuItemExtension", () => {
     id: "app-1",
     appUrl: "https://app.example.com",
     name: "App name",
+    brand: null,
   };
 
   const baseMockExtension: Extension = {
@@ -399,6 +401,7 @@ describe("getMenuItemExtension", () => {
       id: "app-2",
       appUrl: "https://app2.example.com",
       name: "App name",
+      brand: null,
     };
     const catalogExtension: Extension = {
       ...baseMockExtension,
