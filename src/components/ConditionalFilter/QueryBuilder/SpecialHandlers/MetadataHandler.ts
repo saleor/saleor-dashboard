@@ -1,6 +1,5 @@
 import { MetadataFilter } from "@dashboard/graphql";
 
-import { FilterStrategyResolver } from "../../API/strategies";
 import { FilterElement } from "../../FilterElement";
 import { SpecialHandler } from "../types";
 
@@ -9,7 +8,7 @@ export class MetadataHandler implements SpecialHandler<{ metadata?: MetadataFilt
     return element.value.type === "metadata";
   }
 
-  handle(result: { metadata?: MetadataFilter[] | null }, element: FilterElement): boolean {
+  handle(result: { metadata?: MetadataFilter[] | null }, element: FilterElement): void {
     if (!result.metadata) {
       result.metadata = [];
     }
@@ -17,7 +16,5 @@ export class MetadataHandler implements SpecialHandler<{ metadata?: MetadataFilt
     const [key, value] = element.condition.selected.value as [string, string];
 
     result.metadata.push({ key, value });
-
-    return true;
   }
 }

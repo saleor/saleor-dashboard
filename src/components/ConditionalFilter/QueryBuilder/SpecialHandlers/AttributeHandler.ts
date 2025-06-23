@@ -1,6 +1,5 @@
 import { AttributeInput, AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { FilterStrategyResolver } from "../../API/strategies";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray, isTuple } from "../../FilterElement/ConditionValue";
 import { SpecialHandler } from "../types";
