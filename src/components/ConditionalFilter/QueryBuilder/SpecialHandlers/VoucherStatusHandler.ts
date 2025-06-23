@@ -3,6 +3,7 @@ import { VoucherFilterInput } from "@dashboard/graphql";
 import { FilterStrategyResolver } from "../../API/strategies";
 import { FilterElement } from "../../FilterElement";
 import { SpecialHandler } from "../types";
+import { mapStaticQueryPartToLegacyVariables } from "../utils";
 
 export class VoucherStatusHandler implements SpecialHandler<VoucherFilterInput> {
   canHandle(element: FilterElement): boolean {
@@ -17,6 +18,6 @@ export class VoucherStatusHandler implements SpecialHandler<VoucherFilterInput> 
     const strategy = resolver.resolve(element);
     const queryPart = strategy.buildQueryPart(element);
 
-    result.status = queryPart as any;
+    result.status = mapStaticQueryPartToLegacyVariables(queryPart);
   }
 }

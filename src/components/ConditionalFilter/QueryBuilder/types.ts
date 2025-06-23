@@ -6,9 +6,9 @@ export enum QueryApiType {
   FILTER = "filter",
 }
 
-export interface SpecialHandler<T extends Record<string, any>> {
-  canHandle(element: FilterElement): boolean;
-  handle(result: T, element: FilterElement, resolver: FilterStrategyResolver): void;
+export interface SpecialHandler<T> {
+  canHandle: (element: FilterElement) => boolean;
+  handle: (result: T, element: FilterElement, resolver: FilterStrategyResolver) => void;
 }
 
 export type StaticQueryPart = string | any | boolean | any;

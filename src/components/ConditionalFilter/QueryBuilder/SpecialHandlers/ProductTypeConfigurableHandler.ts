@@ -3,33 +3,33 @@ import { ProductTypeConfigurable, ProductTypeFilterInput } from "@dashboard/grap
 import { FilterStrategyResolver } from "../../API/strategies";
 import { FilterElement } from "../../FilterElement";
 import { SpecialHandler } from "../types";
+import { mapStaticQueryPartToLegacyVariables } from "../utils";
 
 export class ProductTypeConfigurableHandler implements SpecialHandler<ProductTypeFilterInput> {
   canHandle(element: FilterElement): boolean {
-    return element.value.type === "typeOfProduct" || element.value.type === "configurable";
+    return element.value.type === "configurable" || element.value.type === "typeOfProduct";
   }
 
   handle(
     result: ProductTypeFilterInput,
     element: FilterElement,
     resolver: FilterStrategyResolver,
-  ): boolean {
+  ): void {
     const strategy = resolver.resolve(element);
     const queryPart = strategy.buildQueryPart(element);
+    const value = mapStaticQueryPartToLegacyVariables(queryPart);
 
     if (element.value.type === "typeOfProduct") {
-      result.productType = queryPart as any;
+      result.productType = value;
 
-      return true;
+      return;
     }
 
     if (element.value.type === "configurable") {
       result.configurable =
-        queryPart === true ? ProductTypeConfigurable.CONFIGURABLE : ProductTypeConfigurable.SIMPLE;
+        value === true ? ProductTypeConfigurable.CONFIGURABLE : ProductTypeConfigurable.SIMPLE;
 
-      return true;
+      return;
     }
-
-    return false;
   }
 }

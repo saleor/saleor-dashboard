@@ -3,27 +3,7 @@ import { AttributeInput } from "@dashboard/graphql";
 import { FilterStrategyResolver } from "../API/strategies";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { QueryApiType, SpecialHandler, StaticQueryPart } from "./types";
-
-// Import from main file to avoid circular dependency
-const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart | AttributeInput) => {
-  if (typeof queryPart !== "object" || queryPart === null) {
-    return queryPart;
-  }
-
-  if ("range" in queryPart && queryPart.range) {
-    return queryPart.range;
-  }
-
-  if ("eq" in queryPart && queryPart.eq) {
-    return queryPart.eq;
-  }
-
-  if ("oneOf" in queryPart && queryPart.oneOf) {
-    return queryPart.oneOf;
-  }
-
-  return queryPart;
-};
+import { mapStaticQueryPartToLegacyVariables } from "./utils";
 
 export class QueryBuilder<T extends Record<string, any>> {
   constructor(

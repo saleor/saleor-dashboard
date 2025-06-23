@@ -2,8 +2,8 @@ import { AttributeFilterInput } from "@dashboard/graphql";
 
 import { FilterStrategyResolver } from "../../API/strategies";
 import { FilterElement } from "../../FilterElement";
-import { mapStaticQueryPartToLegacyVariables } from "../../queryVariables";
 import { SpecialHandler } from "../types";
+import { mapStaticQueryPartToLegacyVariables } from "../utils";
 
 export class AttributeTypeHandler implements SpecialHandler<AttributeFilterInput> {
   canHandle(element: FilterElement): boolean {
@@ -14,12 +14,10 @@ export class AttributeTypeHandler implements SpecialHandler<AttributeFilterInput
     result: AttributeFilterInput,
     element: FilterElement,
     resolver: FilterStrategyResolver,
-  ): boolean {
+  ): void {
     const strategy = resolver.resolve(element);
     const queryPart = strategy.buildQueryPart(element);
 
     result.type = mapStaticQueryPartToLegacyVariables(queryPart);
-
-    return true;
   }
 }

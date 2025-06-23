@@ -3,6 +3,7 @@ import { GiftCardFilterInput } from "@dashboard/graphql";
 import { FilterStrategyResolver } from "../../API/strategies";
 import { FilterElement } from "../../FilterElement";
 import { SpecialHandler } from "../types";
+import { mapStaticQueryPartToLegacyVariables } from "../utils";
 
 export class GiftCardStaticOnlyHandler implements SpecialHandler<GiftCardFilterInput> {
   canHandle(element: FilterElement): boolean {
@@ -13,14 +14,12 @@ export class GiftCardStaticOnlyHandler implements SpecialHandler<GiftCardFilterI
     result: GiftCardFilterInput,
     element: FilterElement,
     resolver: FilterStrategyResolver,
-  ): boolean {
-    const strategy = resolver.resolve(element);
-    const queryPart = strategy.buildQueryPart(element);
+  ): void {
     const fieldName = element.value.value as keyof GiftCardFilterInput;
 
-    // TODO fix any
-    (result as any)[fieldName] = queryPart;
+    const strategy = resolver.resolve(element);
+    const queryPart = strategy.buildQueryPart(element);
 
-    return true;
+    (result as any)[fieldName] = mapStaticQueryPartToLegacyVariables(queryPart);
   }
 }
