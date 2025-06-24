@@ -4405,7 +4405,7 @@
   },
   "ObscZF": {
     "context": "card text, app install page",
-    "string": "Uninstalling the extension will remove all metadata attached to the {extensionName} app. {learnMoreLink}"
+    "string": "Uninstalling the extension will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}"
   },
   "Oe62bR": {
     "context": "product availability",
