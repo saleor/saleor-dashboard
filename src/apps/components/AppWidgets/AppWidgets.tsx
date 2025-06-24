@@ -9,10 +9,11 @@ import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 export type AppWidgetsProps = {
   extensions: ExtensionWithParams[];
@@ -23,19 +24,6 @@ const hiddenStyle = { visibility: "hidden" } as const;
 
 // TODO We will add size negotiations after render
 const defaultIframeSize = 200;
-
-const getNonIframeLabel = (target: AppExtensionTargetEnum, intl: IntlShape) => {
-  switch (target) {
-    case AppExtensionTargetEnum.APP_PAGE:
-      return intl.formatMessage(extensionActions.redirectToAppPage);
-    case AppExtensionTargetEnum.NEW_TAB:
-      return intl.formatMessage(extensionActions.openInNewTab);
-    case AppExtensionTargetEnum.POPUP:
-      return intl.formatMessage(extensionActions.openInPopup);
-    case AppExtensionTargetEnum.WIDGET:
-      throw new Error("You should not render widget type as link");
-  }
-};
 
 /**
  * Renders a form and iframe, the form is automatically submitted with POST action and <iframe> content is replaced
@@ -115,81 +103,42 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
   const themeRef = useRef<ThemeType>();
   const intl = useIntl();
 
+  const groupedByApp = extensions.reduce(
+    (group, extension) => {
+      const appId = extension.app.id;
+      const appGroup = group[appId];
+
+      if (appGroup) {
+        group[appId].extensions.push(extension);
+      } else {
+        group[appId] = {
+          app: extension.app,
+          extensions: [extension],
+        };
+      }
+
+      return group;
+    },
+    {} as Record<string, { app: ExtensionWithParams["app"]; extensions: ExtensionWithParams[] }>,
+  );
+
+  // Sort alphabetically, so order of apps is constant, even if API returns them differently. This allows more consistent UX
+  const sortedByAppName = Object.entries(groupedByApp).sort((a, b) =>
+    a[1].app.name ?? "" < (b[1].app.name ?? "") ? -1 : 1,
+  );
+
   return (
     <DashboardCard>
       <DashboardCard.Header>
         <DashboardCard.Title>Apps</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {extensions.map(ext => {
-          const isIframeType = ext.target === "WIDGET";
-          const widgetOptions =
-            ext.options?.__typename === "AppExtensionOptionsWidget" && ext.options;
-
-          const isPOST = widgetOptions && widgetOptions?.widgetTarget?.method === "POST";
-
-          const isExtensionAbsoluteUrl = isUrlAbsolute(ext.url);
-
-          const extensionUrl = isExtensionAbsoluteUrl ? ext.url : ext.app.appUrl + ext.url;
-
-          const GETappIframeUrl = AppUrls.resolveAppIframeUrl(ext.app.id, extensionUrl, {
-            id: ext.app.id,
-            theme: themeRef.current!,
-          });
-
-          const appPageUrl = AppUrls.resolveAppUrl(ext.app.id);
-
-          const onNonIframeActionClick = () => {
-            switch (ext.target) {
-              case AppExtensionTargetEnum.WIDGET: {
-                throw new Error("Widget should not render link to click");
-              }
-              case AppExtensionTargetEnum.APP_PAGE:
-              case AppExtensionTargetEnum.NEW_TAB:
-              case AppExtensionTargetEnum.POPUP: {
-                ext.open(params);
-
-                return;
-              }
-            }
-          };
-
-          const renderIframeGETvariant = () => (
-            <Box marginTop={2} __height={defaultIframeSize}>
-              <AppFrame
-                src={GETappIframeUrl}
-                appToken={ext.accessToken}
-                appId={ext.app.id}
-                dashboardVersion={APP_VERSION}
-                params={params}
-              />
-            </Box>
-          );
-
-          const renderIframePOSTvariant = () => (
-            <IframePost
-              appId={ext.app.id}
-              accessToken={ext.accessToken}
-              extensionId={ext.id}
-              extensionUrl={extensionUrl}
-              params={params}
-            />
-          );
-
-          const renderNonIframeExtensionLabel = () => (
-            <Box marginTop={2}>
-              <Link onClick={onNonIframeActionClick}>{getNonIframeLabel(ext.target, intl)}</Link>
-            </Box>
-          );
-
-          const renderPOSTiframe = isIframeType && isPOST;
-          const renderGETiframe = isIframeType && !isPOST;
-          const renderNonIframe = !isIframeType;
-
-          const logo = ext.app.brand?.logo.default;
+        {sortedByAppName.map(([appId, appWithExtensions]) => {
+          const logo = appWithExtensions.app.brand?.logo.default;
+          const appPageUrl = AppUrls.resolveAppUrl(appWithExtensions.app.id);
 
           return (
-            <Box marginBottom={4} key={ext.id}>
+            <Box marginBottom={4} key={appId}>
               <Box display="flex" alignItems="center" marginBottom={2}>
                 <AppAvatar size={6} logo={logo ? { source: logo } : undefined} marginRight={2} />
                 <Text
@@ -203,12 +152,112 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                   color="default2"
                   href={appPageUrl}
                 >
-                  {ext.app.name}: {ext.label}
+                  {appWithExtensions.app.name}
                 </Text>
               </Box>
-              {renderGETiframe && renderIframeGETvariant()}
-              {renderPOSTiframe && renderIframePOSTvariant()}
-              {renderNonIframe && renderNonIframeExtensionLabel()}
+              {appWithExtensions.extensions.map(ext => {
+                const isIframeType = ext.target === "WIDGET";
+                const widgetOptions =
+                  ext.options?.__typename === "AppExtensionOptionsWidget" && ext.options;
+
+                const isPOST = widgetOptions && widgetOptions?.widgetTarget?.method === "POST";
+
+                const isExtensionAbsoluteUrl = isUrlAbsolute(ext.url);
+
+                const extensionUrl = isExtensionAbsoluteUrl ? ext.url : ext.app.appUrl + ext.url;
+
+                const GETappIframeUrl = AppUrls.resolveAppIframeUrl(ext.app.id, extensionUrl, {
+                  id: ext.app.id,
+                  theme: themeRef.current!,
+                });
+
+                const renderIframeGETvariant = () => (
+                  <Box __height={defaultIframeSize}>
+                    <Text size={3} color="default2" href={appPageUrl}>
+                      {ext.label}
+                    </Text>
+                    <AppFrame
+                      src={GETappIframeUrl}
+                      appToken={ext.accessToken}
+                      appId={ext.app.id}
+                      dashboardVersion={APP_VERSION}
+                      params={params}
+                    />
+                  </Box>
+                );
+
+                const renderIframePOSTvariant = () => (
+                  <Box>
+                    <Text size={3} color="default2" href={appPageUrl}>
+                      {ext.label}
+                    </Text>
+                    <IframePost
+                      appId={ext.app.id}
+                      accessToken={ext.accessToken}
+                      extensionId={ext.id}
+                      extensionUrl={extensionUrl}
+                      params={params}
+                    />
+                  </Box>
+                );
+
+                const renderNonIframeExtension = () => {
+                  const onClick = () => ext.open(params);
+
+                  switch (ext.target) {
+                    case AppExtensionTargetEnum.APP_PAGE:
+                      return (
+                        <Box marginTop={2}>
+                          <Link
+                            onClick={onClick}
+                            title={intl.formatMessage(extensionActions.redirectToAppPage)}
+                          >
+                            {ext.label}
+                          </Link>
+                        </Box>
+                      );
+                    case AppExtensionTargetEnum.NEW_TAB:
+                      return (
+                        <Box marginTop={2}>
+                          <Link
+                            onClick={onClick}
+                            title={intl.formatMessage(extensionActions.openInNewTab)}
+                          >
+                            {ext.label}{" "}
+                            <LaunchIcon
+                              style={{ width: 16, height: 16, verticalAlign: "text-bottom" }}
+                            />
+                          </Link>
+                        </Box>
+                      );
+                    case AppExtensionTargetEnum.POPUP:
+                      return (
+                        <Box marginTop={2}>
+                          <Link
+                            onClick={onClick}
+                            title={intl.formatMessage(extensionActions.openInPopup)}
+                          >
+                            {ext.label}...
+                          </Link>
+                        </Box>
+                      );
+                    case AppExtensionTargetEnum.WIDGET:
+                      throw new Error("You should not render widget type as link");
+                  }
+                };
+
+                const renderPOSTiframe = isIframeType && isPOST;
+                const renderGETiframe = isIframeType && !isPOST;
+                const renderNonIframe = !isIframeType;
+
+                return (
+                  <>
+                    {renderGETiframe && renderIframeGETvariant()}
+                    {renderPOSTiframe && renderIframePOSTvariant()}
+                    {renderNonIframe && renderNonIframeExtension()}
+                  </>
+                );
+              })}
             </Box>
           );
         })}
