@@ -188,7 +188,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
     }
   }, [recentlyAddedColumn, availableColumns, editor]);
   usePortalClasses({ className: classes.portal });
-  usePreventHistoryBack(scroller);
+
+  const editorContainerRef = useRef<HTMLDivElement>(null);
+
+  usePreventHistoryBack(editorContainerRef);
 
   const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex, onRowAdded } =
     useDatagridChange(availableColumns, rows, onChange, (areCellsDirty: boolean) =>
@@ -405,134 +408,136 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   return (
     <FullScreenContainer open={isOpen} className={fullScreenClasses.fullScreenContainer}>
-      <DashboardCard position="relative" __height={isOpen ? "100%" : "auto"} gap={0}>
-        {renderHeader?.({
-          toggleFullscreen: toggle,
-          addRowOnDatagrid: onRowAdded,
-          isFullscreenOpen: isOpen,
-          isAnimationOpenFinished,
-        })}
-        <DashboardCard.Content
-          height="100%"
-          display="flex"
-          flexDirection="column"
-          paddingX={0}
-          data-test-id="list"
-        >
-          {rowsTotal > 0 || showEmptyDatagrid ? (
-            <>
-              {selection?.rows && selection?.rows.length > 0 && selectionActionsComponent && (
-                <div className={classes.actionBtnBar}>{selectionActionsComponent}</div>
-              )}
-              <div className={classes.editorContainer}>
-                <Box
-                  backgroundColor="default1"
-                  borderTopWidth={1}
-                  borderTopStyle="solid"
-                  borderColor="default1"
-                />
-                <DataEditor
-                  {...datagridProps}
-                  customRenderers={customRenderers}
-                  verticalBorder={verticalBorder}
-                  headerIcons={headerIcons}
-                  theme={datagridTheme}
-                  className={classes.datagrid}
-                  getCellContent={handleGetCellContent}
-                  onCellEdited={handleOnCellEdited}
-                  columns={availableColumns}
-                  rows={rowsTotal}
-                  freezeColumns={freezeColumns}
-                  smoothScrollX
-                  rowMarkers={rowMarkers}
-                  rowSelect="multi"
-                  rowSelectionMode="multi"
-                  rangeSelect="multi-rect"
-                  columnSelect={columnSelect}
-                  getCellsForSelection
-                  onColumnMoved={handleColumnMoved}
-                  onColumnResize={handleColumnResize}
-                  onHeaderClicked={handleHeaderClicked}
-                  onCellClicked={handleCellClick}
-                  onGridSelectionChange={handleGridSelectionChange}
-                  onItemHovered={handleRowHover}
-                  getRowThemeOverride={handleGetThemeOverride}
-                  gridSelection={selection}
-                  rowHeight={rowHeight}
-                  headerHeight={cellHeight}
-                  ref={editor}
-                  onPaste
-                  rightElementProps={{
-                    sticky: true,
-                  }}
-                  rightElement={
-                    <div
-                      className={clsx(classes.rowActionBar, {
-                        [classes.rowActionBarScrolledToRight]: scrolledToRight,
-                        [classes.rowActionvBarWithItems]: hasMenuItem,
-                      })}
-                    >
+      <Box ref={editorContainerRef} position="relative" __height={isOpen ? "100%" : "auto"}>
+        <DashboardCard position="relative" __height={isOpen ? "100%" : "auto"} gap={0}>
+          {renderHeader?.({
+            toggleFullscreen: toggle,
+            addRowOnDatagrid: onRowAdded,
+            isFullscreenOpen: isOpen,
+            isAnimationOpenFinished,
+          })}
+          <DashboardCard.Content
+            height="100%"
+            display="flex"
+            flexDirection="column"
+            paddingX={0}
+            data-test-id="list"
+          >
+            {rowsTotal > 0 || showEmptyDatagrid ? (
+              <>
+                {selection?.rows && selection?.rows.length > 0 && selectionActionsComponent && (
+                  <div className={classes.actionBtnBar}>{selectionActionsComponent}</div>
+                )}
+                <div className={classes.editorContainer}>
+                  <Box
+                    backgroundColor="default1"
+                    borderTopWidth={1}
+                    borderTopStyle="solid"
+                    borderColor="default1"
+                  />
+                  <DataEditor
+                    {...datagridProps}
+                    customRenderers={customRenderers}
+                    verticalBorder={verticalBorder}
+                    headerIcons={headerIcons}
+                    theme={datagridTheme}
+                    className={classes.datagrid}
+                    getCellContent={handleGetCellContent}
+                    onCellEdited={handleOnCellEdited}
+                    columns={availableColumns}
+                    rows={rowsTotal}
+                    freezeColumns={freezeColumns}
+                    smoothScrollX
+                    rowMarkers={rowMarkers}
+                    rowSelect="multi"
+                    rowSelectionMode="multi"
+                    rangeSelect="multi-rect"
+                    columnSelect={columnSelect}
+                    getCellsForSelection
+                    onColumnMoved={handleColumnMoved}
+                    onColumnResize={handleColumnResize}
+                    onHeaderClicked={handleHeaderClicked}
+                    onCellClicked={handleCellClick}
+                    onGridSelectionChange={handleGridSelectionChange}
+                    onItemHovered={handleRowHover}
+                    getRowThemeOverride={handleGetThemeOverride}
+                    gridSelection={selection}
+                    rowHeight={rowHeight}
+                    headerHeight={cellHeight}
+                    ref={editor}
+                    onPaste
+                    rightElementProps={{
+                      sticky: true,
+                    }}
+                    rightElement={
                       <div
-                        className={clsx(classes.rowActionBarShadow, {
-                          [classes.rowActionBarShadowActive]: !scrolledToRight && hasMenuItem,
-                        })}
-                      />
-                      <div
-                        className={clsx(classes.columnPicker, {
-                          [classes.columnPickerBackground]: !hasMenuItem,
+                        className={clsx(classes.rowActionBar, {
+                          [classes.rowActionBarScrolledToRight]: scrolledToRight,
+                          [classes.rowActionvBarWithItems]: hasMenuItem,
                         })}
                       >
-                        {renderColumnPicker ? renderColumnPicker() : null}
-                      </div>
-                      {hasColumnGroups && (
                         <div
-                          className={clsx(classes.rowAction, classes.rowColumnGroup, {
-                            [classes.rowActionScrolledToRight]: scrolledToRight,
+                          className={clsx(classes.rowActionBarShadow, {
+                            [classes.rowActionBarShadowActive]: !scrolledToRight && hasMenuItem,
                           })}
                         />
-                      )}
-                      {hasMenuItem &&
-                        Array(rowsTotal)
-                          .fill(0)
-                          .map((_, index) => (
-                            <RowActions
-                              key={`row-actions-${index}`}
-                              menuItems={menuItems(index)}
-                              disabled={index >= rowsTotal - added.length}
-                            />
-                          ))}
-                    </div>
-                  }
-                  rowMarkerWidth={48}
-                />
-                {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
-                {hasColumnGroups && <div className={classes.columnGroupFixer} />}
-              </div>
-            </>
-          ) : (
-            <Box padding={6} textAlign="center">
-              <Text data-test-id="empty-data-grid-text" size={3}>
-                {emptyText}
-              </Text>
-            </Box>
-          )}
-        </DashboardCard.Content>
-      </DashboardCard>
-      <TooltipContainer
-        clearTooltip={clearTooltip}
-        bounds={tooltip?.bounds}
-        title={tooltip?.title}
-      />
-      {rowAnchor && (
-        <a
-          ref={setRowAnchorRef}
-          style={{ position: "absolute", top: "-1000px", left: "-1000px" }}
-          tabIndex={-1}
-          aria-hidden={true}
-          onWheelCapture={hideLinkAndShowAfterDelay}
-          onClick={rowAnchorHandler}
+                        <div
+                          className={clsx(classes.columnPicker, {
+                            [classes.columnPickerBackground]: !hasMenuItem,
+                          })}
+                        >
+                          {renderColumnPicker ? renderColumnPicker() : null}
+                        </div>
+                        {hasColumnGroups && (
+                          <div
+                            className={clsx(classes.rowAction, classes.rowColumnGroup, {
+                              [classes.rowActionScrolledToRight]: scrolledToRight,
+                            })}
+                          />
+                        )}
+                        {hasMenuItem &&
+                          Array(rowsTotal)
+                            .fill(0)
+                            .map((_, index) => (
+                              <RowActions
+                                key={`row-actions-${index}`}
+                                menuItems={menuItems(index)}
+                                disabled={index >= rowsTotal - added.length}
+                              />
+                            ))}
+                      </div>
+                    }
+                    rowMarkerWidth={48}
+                  />
+                  {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
+                  {hasColumnGroups && <div className={classes.columnGroupFixer} />}
+                </div>
+              </>
+            ) : (
+              <Box padding={6} textAlign="center">
+                <Text data-test-id="empty-data-grid-text" size={3}>
+                  {emptyText}
+                </Text>
+              </Box>
+            )}
+          </DashboardCard.Content>
+        </DashboardCard>
+        <TooltipContainer
+          clearTooltip={clearTooltip}
+          bounds={tooltip?.bounds}
+          title={tooltip?.title}
         />
-      )}
+        {rowAnchor && (
+          <a
+            ref={setRowAnchorRef}
+            style={{ position: "absolute", top: "-1000px", left: "-1000px" }}
+            tabIndex={-1}
+            aria-hidden={true}
+            onWheelCapture={hideLinkAndShowAfterDelay}
+            onClick={rowAnchorHandler}
+          />
+        )}
+      </Box>
     </FullScreenContainer>
   );
 };
