@@ -44,11 +44,6 @@ export const SidebarSearchInput = ({ onChangeQuery, children }: SidebarSearchInp
     setIsOpen(true);
   };
 
-  const handleCrossClick = () => {
-    setIsOpen(false);
-    setQuery("");
-  };
-
   return (
     <Box position="relative" onKeyDown={handleKeyDown}>
       <Popover open={isOpen}>

@@ -1,4 +1,4 @@
-import { OrderStatus, QuickSearchQuery, useQuickSearchLazyQuery } from "@dashboard/graphql";
+import { QuickSearchQuery, useQuickSearchLazyQuery } from "@dashboard/graphql";
 
 export interface Order {
   id: string;
