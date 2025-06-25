@@ -59,7 +59,16 @@ export class InitialProductStateResponse implements InitialProductState {
 
   public filterByUrlToken(token: UrlToken) {
     if (token.isAttribute() && token.hasDynamicValues()) {
-      return this.attribute[token.name].choices.filter(({ value }) => token.value.includes(value));
+      const attribute = this.attribute[token.name];
+      const isReference = attribute?.inputType === "REFERENCE";
+
+      return attribute.choices.filter(({ value, originalSlug }) => {
+        const matchValue = isReference ? originalSlug : value;
+
+        return Array.isArray(token.value)
+          ? token.value.includes(matchValue)
+          : token.value === matchValue;
+      });
     }
 
     if (isDateField(token.name)) {

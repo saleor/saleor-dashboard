@@ -186,12 +186,15 @@ export class FilterElement {
   }
 
   public asUrlEntry(): UrlEntry {
-    if (this.isAttribute) {
-      if (this.selectedAttribute) {
-        return UrlEntry.forAttribute(this.condition.selected, this.selectedAttribute.value);
+    if (this.isAttribute && this.selectedAttribute) {
+      if (this.selectedAttribute.type === "REFERENCE") {
+        return UrlEntry.forReferenceAttribute(
+          this.condition.selected,
+          this.selectedAttribute.value,
+        );
       }
 
-      return UrlEntry.forStatic(this.condition.selected, "attribute");
+      return UrlEntry.forAttribute(this.condition.selected, this.selectedAttribute.value);
     }
 
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
