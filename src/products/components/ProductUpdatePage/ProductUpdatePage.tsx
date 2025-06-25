@@ -215,10 +215,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       ) as Array<ProductErrorFragment | ProductChannelListingErrorFragment>,
     [errors, channelsErrors],
   );
-  const extensionMenuItems = getExtensionsItemsForProductDetails(
-    PRODUCT_DETAILS_MORE_ACTIONS,
-    productId,
-  );
+  const extensionMenuItems = getExtensionsItemsForProductDetails(PRODUCT_DETAILS_MORE_ACTIONS, {
+    productId: productId,
+    productSlug: product.slug,
+  });
   const context = useDevModeContext();
   const openPlaygroundURL = () => {
     context.setDevModeContent(defaultGraphiQLQuery);
@@ -402,6 +402,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     extensions={PRODUCT_DETAILS_WIDGETS}
                     params={{
                       productId: productId,
+                      productSlug: product.slug,
                     }}
                   />
                 </>
