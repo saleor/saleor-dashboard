@@ -243,6 +243,20 @@ export const dynamicOperandsQueries = gql`
       }
     }
   }
+
+  query _SearchPageOperands($first: Int!, $pageSlugs: [String!]) {
+    pages(first: $first, filter: { slugs: $pageSlugs }) {
+      edges {
+        node {
+          id
+          name: title
+          slug
+          originalSlug: slug
+        }
+      }
+    }
+  }
+
   query _SearchProductOperands($first: Int!, $productsIds: [ID!]) {
     products(first: $first, filter: { ids: $productsIds }) {
       edges {

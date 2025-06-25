@@ -8878,6 +8878,14 @@ export type _SearchCustomersOperandsQueryVariables = Exact<{
 
 export type _SearchCustomersOperandsQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', edges: Array<{ __typename: 'UserCountableEdge', node: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } }> } | null };
 
+export type _SearchPageOperandsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  pageSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+
+export type _SearchPageOperandsQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, slug: string, name: string, originalSlug: string } }> } | null };
+
 export type _SearchProductOperandsQueryVariables = Exact<{
   first: Scalars['Int'];
   productsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
