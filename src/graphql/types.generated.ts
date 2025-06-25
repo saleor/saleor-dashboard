@@ -8888,7 +8888,7 @@ export type _SearchPageOperandsQuery = { __typename: 'Query', pages: { __typenam
 
 export type _SearchProductOperandsQueryVariables = Exact<{
   first: Scalars['Int'];
-  productsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  productSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 

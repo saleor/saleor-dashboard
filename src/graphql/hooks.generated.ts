@@ -6960,8 +6960,8 @@ export type _SearchPageOperandsQueryHookResult = ReturnType<typeof use_SearchPag
 export type _SearchPageOperandsLazyQueryHookResult = ReturnType<typeof use_SearchPageOperandsLazyQuery>;
 export type _SearchPageOperandsQueryResult = Apollo.QueryResult<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>;
 export const _SearchProductOperandsDocument = gql`
-    query _SearchProductOperands($first: Int!, $productsIds: [ID!]) {
-  products(first: $first, filter: {ids: $productsIds}) {
+    query _SearchProductOperands($first: Int!, $productSlugs: [String!]) {
+  products(first: $first, where: {slug: {oneOf: $productSlugs}}) {
     edges {
       node {
         id
@@ -6987,7 +6987,7 @@ export const _SearchProductOperandsDocument = gql`
  * const { data, loading, error } = use_SearchProductOperandsQuery({
  *   variables: {
  *      first: // value for 'first'
- *      productsIds: // value for 'productsIds'
+ *      productSlugs: // value for 'productSlugs'
  *   },
  * });
  */

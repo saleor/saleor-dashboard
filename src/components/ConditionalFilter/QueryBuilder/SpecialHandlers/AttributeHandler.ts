@@ -41,7 +41,10 @@ export class AttributeHandler implements SpecialHandler<{ attributes?: Attribute
       }
 
       if (isItemOptionArray(value)) {
-        result.attributes.push({ slug: attributeSlug, valueNames: value.map(item => item.label) });
+        result.attributes.push({
+          slug: attributeSlug,
+          valueNames: value.map(item => item.label),
+        });
 
         return;
       }

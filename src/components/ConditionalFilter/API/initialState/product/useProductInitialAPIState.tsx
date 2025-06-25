@@ -160,7 +160,7 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
                 query: _SearchProductOperandsDocument,
                 variables: {
                   first: values.length,
-                  productsIds: values,
+                  productSlugs: values,
                 },
               })
               .then(result => ({
