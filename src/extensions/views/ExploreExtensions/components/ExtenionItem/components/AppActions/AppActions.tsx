@@ -27,7 +27,7 @@ export const AppActions = ({
   if (isInstalled && disabled && id) {
     return (
       <Link href={ExtensionsUrls.resolveEditManifestExtensionUrl(id)}>
-        <Button variant="secondary">{intl.formatMessage(messages.manageApp)}</Button>
+        <Button variant="secondary">{intl.formatMessage(messages.manageExtension)}</Button>
       </Link>
     );
   }

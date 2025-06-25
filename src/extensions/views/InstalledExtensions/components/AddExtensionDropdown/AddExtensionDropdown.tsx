@@ -7,14 +7,13 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { PlusIcon } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 export const AddExtensionDropdown = () => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
 
   const navigateToAppInstallPage = (manifestUrl: string) => {
@@ -57,11 +56,10 @@ export const AddExtensionDropdown = () => {
   return (
     <ButtonWithDropdown
       variant="primary"
-      icon={<PlusIcon />}
       options={addExtensionOptions}
       testId="add-extension-button"
     >
-      Add Extension
+      {intl.formatMessage(buttonLabels.addExtension)}
     </ButtonWithDropdown>
   );
 };

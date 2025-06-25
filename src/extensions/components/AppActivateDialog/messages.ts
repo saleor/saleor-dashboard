@@ -2,14 +2,14 @@ import { defineMessages } from "react-intl";
 
 export default defineMessages({
   activateAppTitle: {
-    id: "YHNozE",
-    defaultMessage: "Activate App",
+    id: "cEO6Yx",
+    defaultMessage: "Activate Extension",
     description: "dialog header",
   },
   activateApp: {
-    id: "Q47ovw",
+    id: "iK8hZU",
     defaultMessage:
-      "Are you sure you want to activate this app? Activating will start gathering events.",
+      "Are you sure you want to activate this extension? Activating will start gathering events.",
     description: "activate app",
   },
   activateNamedApp: {

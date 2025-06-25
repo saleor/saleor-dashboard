@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
@@ -8,7 +7,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
-  ConfigurationItemInput,
+  ConfigurationItemFragment,
   PluginConfigurationExtendedFragment,
   PluginErrorFragment,
   PluginsDetailsFragment,
@@ -16,6 +15,7 @@ import {
 import { ChangeEvent, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -27,7 +27,7 @@ import { PluginSettings } from "./PluginSettings";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
-  configuration: ConfigurationItemInput[];
+  configuration: ConfigurationItemFragment[];
 }
 
 export interface PluginsDetailsPageProps {
@@ -93,14 +93,14 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
         };
 
         return (
-          <DetailPageLayout gridTemplateColumns={1}>
+          <DetailPageLayout gridTemplateColumns={1} testId="plugin-details">
             <TopNav
               href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
               title={intl.formatMessage(
                 {
-                  id: "EtGDeK",
-                  defaultMessage: "{pluginName} Details",
-                  description: "header",
+                  id: "ak62Oe",
+                  defaultMessage: "{pluginName} details",
+                  description: "plugin details page header",
                 },
                 {
                   pluginName: getStringOrPlaceholder(plugin?.name),
@@ -116,20 +116,20 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                     setSelectedChannelId={setSelectedChannelId}
                   />
                 </div>
-                <div>
+                <Box paddingBottom={2}>
                   <PluginInfo
                     data={data}
                     description={plugin?.description || ""}
                     errors={errors}
                     name={plugin?.name || ""}
                     onChange={onChange}
+                    disabled={disabled}
                   />
-                  <CardSpacer />
+                  <Box marginTop={{ mobile: 2, desktop: 4 }} />
                   {data.configuration && (
                     <div>
                       <PluginSettings
                         data={data}
-                        fields={selectedConfig?.configuration || []}
                         errors={errors}
                         disabled={disabled}
                         onChange={onChange}
@@ -137,18 +137,15 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       {selectedConfig?.configuration.some(field =>
                         isSecretField(selectedConfig?.configuration, field.name),
                       ) && (
-                        <>
-                          <CardSpacer />
-                          <PluginAuthorization
-                            fields={selectedConfig.configuration}
-                            onClear={onClear}
-                            onEdit={onEdit}
-                          />
-                        </>
+                        <PluginAuthorization
+                          fields={selectedConfig.configuration}
+                          onClear={onClear}
+                          onEdit={onEdit}
+                        />
                       )}
                     </div>
                   )}
-                </div>
+                </Box>
               </Grid>
               <Savebar>
                 <Savebar.Spacer />

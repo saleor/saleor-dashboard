@@ -2,13 +2,13 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   manageApp: {
-    id: "LwX0Ug",
-    defaultMessage: "Manage app",
+    id: "bfj3NC",
+    defaultMessage: "Manage extension",
     description: "Button with Manage app label",
   },
   appSettings: {
-    id: "S90DJO",
-    defaultMessage: "App settings",
+    id: "aUUgUV",
+    defaultMessage: "Extension settings",
     description: "Button with  app settings label",
   },
 });

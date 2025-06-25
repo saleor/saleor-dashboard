@@ -5,36 +5,105 @@ import {
   WebhookEventTypeAsyncEnum,
   WebhookFragment,
 } from "@dashboard/graphql";
-import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import errorTracker from "@dashboard/services/errorTracking";
 import { IntlShape } from "react-intl";
 
-import { appManifestErrorMessages } from "./messages";
+import { appManifestErrorMessages, localAppErrorMessages } from "./messages";
 
+export const getAppErrorMessageDescriptor = (code: AppErrorCode) => {
+  switch (code) {
+    case AppErrorCode.INVALID_MANIFEST_FORMAT:
+      return appManifestErrorMessages.invalidManifestFormat;
+    case AppErrorCode.INVALID_PERMISSION:
+      return appManifestErrorMessages.invalidPermission;
+    case AppErrorCode.INVALID_URL_FORMAT:
+      return appManifestErrorMessages.invalidUrlFormat;
+    case AppErrorCode.INVALID:
+      return appManifestErrorMessages.invalidManifest;
+    case AppErrorCode.INVALID_CUSTOM_HEADERS:
+      return appManifestErrorMessages.invalidCustomHeaders;
+    case AppErrorCode.MANIFEST_URL_CANT_CONNECT:
+      return appManifestErrorMessages.invalidManifestUrlCannotConnect;
+    case AppErrorCode.REQUIRED:
+      return appManifestErrorMessages.required;
+    case AppErrorCode.UNSUPPORTED_SALEOR_VERSION:
+      return appManifestErrorMessages.unsupportedSaleorVersion;
+    case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
+      return appManifestErrorMessages.outOfScopePermission;
+    case AppErrorCode.INVALID_STATUS:
+      return appManifestErrorMessages.invalidStatus;
+    case AppErrorCode.OUT_OF_SCOPE_APP:
+      return appManifestErrorMessages.outOfScopeApp;
+    case AppErrorCode.UNIQUE:
+      return appManifestErrorMessages.unique;
+    case AppErrorCode.GRAPHQL_ERROR:
+      return appManifestErrorMessages.graphqlError;
+    case AppErrorCode.FORBIDDEN:
+      return appManifestErrorMessages.forbidden;
+    case AppErrorCode.NOT_FOUND:
+      return appManifestErrorMessages.notFound;
+    default:
+      // @ts-expect-error _exhaustiveCheck is intentionally unused for exhaustiveness checking
+      // eslint-disable-next-line no-case-declarations
+      const _exhaustiveCheck: never = code;
+
+      errorTracker.captureException(new Error(`Unhandled AppErrorCode: ${code}`));
+
+      return appManifestErrorMessages.genericError;
+  }
+};
+
+/** This method is used for getting formatted error message in place when we cannot use link for Learn more... */
 export function getAppInstallErrorMessage(
   err: AppErrorFragment,
   intl: IntlShape,
 ): string | undefined {
   if (err) {
-    switch (err.code) {
-      case AppErrorCode.INVALID_MANIFEST_FORMAT:
-        return intl.formatMessage(appManifestErrorMessages.invalidManifestFormat);
-      case AppErrorCode.OUT_OF_SCOPE_APP:
-        return intl.formatMessage(appManifestErrorMessages.outOfScopeApp);
-      case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
-        return intl.formatMessage(appManifestErrorMessages.outOfScopePermission);
-      case AppErrorCode.INVALID_PERMISSION:
-        return intl.formatMessage(appManifestErrorMessages.invalidPermission);
-      case AppErrorCode.INVALID_STATUS:
-        return intl.formatMessage(appManifestErrorMessages.invalidStatus);
-      case AppErrorCode.INVALID_URL_FORMAT:
-        return intl.formatMessage(appManifestErrorMessages.invalidUrlFormat);
-      case AppErrorCode.UNIQUE:
-        return intl.formatMessage(appManifestErrorMessages.unique);
-    }
+    const errorCode = err.code;
+
+    const messageDescriptor = getAppErrorMessageDescriptor(errorCode);
+
+    return intl.formatMessage(messageDescriptor, {
+      errorCode,
+      docsLink: "",
+    });
   }
 
-  return getCommonFormFieldErrorMessage(err, intl);
+  return undefined;
 }
+
+function getCustomAppErrorMessageDescriptor(code: AppErrorCode) {
+  switch (code) {
+    case AppErrorCode.INVALID_PERMISSION:
+      return localAppErrorMessages.invalidPermission;
+    case AppErrorCode.OUT_OF_SCOPE_APP:
+      return localAppErrorMessages.outOfScopeApp;
+    case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
+      return localAppErrorMessages.outOfScopePermission;
+    case AppErrorCode.UNIQUE:
+      return localAppErrorMessages.unique;
+    case AppErrorCode.FORBIDDEN:
+      return localAppErrorMessages.forbidden;
+    case AppErrorCode.INVALID_STATUS:
+      return localAppErrorMessages.invalidStatus;
+    case AppErrorCode.REQUIRED:
+      return localAppErrorMessages.required;
+    default:
+      return localAppErrorMessages.genericError;
+  }
+}
+
+export function getCustomAppErrorMessage(
+  err: AppErrorFragment,
+  intl: IntlShape,
+): string | undefined {
+  if (err) {
+    return intl.formatMessage(getCustomAppErrorMessageDescriptor(err.code));
+  }
+
+  return undefined;
+}
+
 export function isUnnamed(webhook: WebhookFragment | undefined): boolean {
   return !webhook?.name;
 }

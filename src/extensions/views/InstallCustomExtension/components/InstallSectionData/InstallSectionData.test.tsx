@@ -3,10 +3,10 @@ import React from "react";
 import { Control, useWatch } from "react-hook-form";
 
 import { ExtensionInstallFormData, InstallDetailsManifestData } from "../../types";
-import { InstallExtensionManifestData } from "../InstallExtensionManifestData";
+import { InstallExtensionManifestData } from "./InstallExtensionManifestData/InstallExtensionManifestData";
 import { InstallSectionData } from "./InstallSectionData";
 
-jest.mock("../InstallExtensionManifestData", () => ({
+jest.mock("./InstallExtensionManifestData/InstallExtensionManifestData", () => ({
   InstallExtensionManifestData: jest.fn(() => <div>Mock Manifest Data</div>),
 }));
 

@@ -1,9 +1,8 @@
+import AppHeaderOptions from "@dashboard/extensions/components/AppHeaderOptions";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppPageNav } from "@dashboard/extensions/views/ViewManifestExtension/components/AppPage/AppPageNav";
 import { AppQuery } from "@dashboard/graphql";
 import React from "react";
-
-import HeaderOptions from "./HeaderOptions";
 
 interface HeaderProps {
   data: AppQuery["app"];
@@ -20,10 +19,14 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const getBackButtonUrl = () => {
     /**
-     * App is null with first render so fallback with HTML-safe fallback
+     * App is null with first render
      */
     if (!data?.id) {
-      return "#";
+      return ExtensionsUrls.resolveInstalledExtensionsUrl();
+    }
+
+    if (data?.type === "LOCAL") {
+      return ExtensionsUrls.resolveInstalledExtensionsUrl();
     }
 
     const isAppActive = data.isActive;
@@ -50,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({
         showMangeAppButton={false}
       />
 
-      <HeaderOptions
+      <AppHeaderOptions
         isActive={!!data.isActive}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}

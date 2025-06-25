@@ -1,13 +1,12 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -18,14 +17,87 @@ export interface CustomAppTokensProps {
   onCreate: () => void;
   onDelete: (id: string) => void;
   hasManagedAppsPermission: boolean;
+  isLoading: boolean;
 }
 
 const numberOfColumns = 3;
 
 const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
-  const { tokens, onCreate, onDelete, hasManagedAppsPermission } = props;
+  const { tokens, onCreate, onDelete, hasManagedAppsPermission, isLoading } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+
+  const getTableBody = () => {
+    if (!hasManagedAppsPermission) {
+      return (
+        <TableRowLink>
+          <TableCell colSpan={numberOfColumns}>
+            <Text color="default2">
+              <FormattedMessage
+                id="m2Jb3P"
+                defaultMessage="You don't have permission to manage authentication tokens. Contact your administrator for access."
+              />
+            </Text>
+          </TableCell>
+        </TableRowLink>
+      );
+    }
+
+    if (isLoading) {
+      return (
+        <TableRowLink key={"skeleton"}>
+          <TableCell className={classes.colNote}>
+            <Skeleton />
+          </TableCell>
+          <TableCell className={classes.colKey}>
+            <Skeleton />
+          </TableCell>
+          <TableCell className={classes.colActions}></TableCell>
+        </TableRowLink>
+      );
+    }
+
+    return renderCollection(
+      tokens,
+      token => (
+        <TableRowLink key={token.id}>
+          <TableCell className={classes.colNote}>
+            {token.name || (
+              <Box as="span" fontStyle="italic">
+                <FormattedMessage
+                  defaultMessage="(unknown)"
+                  description="custom app tokens list - missing token name"
+                  id="FmeBxD"
+                />
+              </Box>
+            )}
+          </TableCell>
+          <TableCell className={classes.colKey}>{`**** ${token?.authToken}`}</TableCell>
+          <TableCell className={classes.colActions}>
+            {hasManagedAppsPermission && (
+              <Box display="flex" justifyContent="flex-end" width="100%">
+                <TableButtonWrapper>
+                  <Button
+                    variant="tertiary"
+                    onClick={() => onDelete(token.id)}
+                    data-test-id={`delete-token-${token.id}`}
+                    icon={<TrashBinIcon />}
+                  />
+                </TableButtonWrapper>
+              </Box>
+            )}
+          </TableCell>
+        </TableRowLink>
+      ),
+      () => (
+        <TableRowLink>
+          <TableCell colSpan={numberOfColumns}>
+            <FormattedMessage id="bsP4f3" defaultMessage="No tokens found" />
+          </TableCell>
+        </TableRowLink>
+      ),
+    );
+  };
 
   return (
     <DashboardCard>
@@ -71,51 +143,7 @@ const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
               </TableRowLink>
             </TableHead>
           )}
-          <TableBody>
-            {hasManagedAppsPermission ? (
-              renderCollection(
-                tokens,
-                token => (
-                  <TableRowLink key={token ? token.id : "skeleton"}>
-                    <TableCell className={classes.colNote}>{token?.name || <Skeleton />}</TableCell>
-                    <TableCell className={classes.colKey}>
-                      {token?.authToken ? `**** ${token.authToken}` : <Skeleton />}
-                    </TableCell>
-                    <TableCell className={classes.colActions}>
-                      {hasManagedAppsPermission && (
-                        <IconButton
-                          variant="secondary"
-                          color="primary"
-                          onClick={() => onDelete(token.id)}
-                          data-test-id={`delete-token-${token.id}`}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      )}
-                    </TableCell>
-                  </TableRowLink>
-                ),
-                () => (
-                  <TableRowLink>
-                    <TableCell colSpan={numberOfColumns}>
-                      <FormattedMessage id="bsP4f3" defaultMessage="No tokens found" />
-                    </TableCell>
-                  </TableRowLink>
-                ),
-              )
-            ) : (
-              <TableRowLink>
-                <TableCell colSpan={numberOfColumns}>
-                  <Text color="default2">
-                    <FormattedMessage
-                      id="m2Jb3P"
-                      defaultMessage="You don't have permission to manage authentication tokens. Contact your administrator for access."
-                    />
-                  </Text>
-                </TableCell>
-              </TableRowLink>
-            )}
-          </TableBody>
+          <TableBody>{getTableBody()}</TableBody>
         </ResponsiveTable>
       </DashboardCard.Content>
     </DashboardCard>

@@ -131,21 +131,21 @@ describe("InstalledExtensions / hooks / useInstalledExtensions", () => {
           name: "Test App",
           logo: expect.any(Object),
           info: null,
-          actions: expect.any(Object),
+          href: expect.any(String),
         },
         {
           id: "2",
           name: "Test App 2",
           logo: expect.any(Object),
           info: expect.any(Object),
-          actions: expect.any(Object),
+          href: expect.any(String),
         },
         {
           id: "plug1",
           name: "Test Plugin",
           logo: expect.any(Object),
           info: null,
-          actions: expect.any(Object),
+          href: expect.any(String),
         },
       ],
       installedAppsLoading: false,
@@ -192,7 +192,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions / getExtensionInf
 
     // Assert
     expect(
-      screen.getByText("App disabled. Activate the app from the settings."),
+      screen.getByText("Extension disabled. Activate the extension from the settings."),
     ).toBeInTheDocument();
   });
 

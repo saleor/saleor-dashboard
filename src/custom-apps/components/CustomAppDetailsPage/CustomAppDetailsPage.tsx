@@ -22,10 +22,8 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
-import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import activateIcon from "../../../../assets/images/activate-icon.svg";
 import CustomAppDefaultToken from "../CustomAppDefaultToken";
 import CustomAppInformation from "../CustomAppInformation";
 import CustomAppTokens from "../CustomAppTokens";
@@ -38,14 +36,12 @@ export interface CustomAppDetailsPageFormData {
   permissions: PermissionEnum[];
 }
 export interface CustomAppDetailsPageProps {
-  apiUrl: string;
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"];
   saveButtonBarState: ConfirmButtonTransitionState;
   app: AppUpdateMutation["appUpdate"]["app"];
   token: string;
-  onApiUrlClick: () => void;
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
@@ -58,14 +54,12 @@ export interface CustomAppDetailsPageProps {
 
 const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   const {
-    apiUrl,
     disabled,
     errors,
     permissions,
     saveButtonBarState,
     app,
     token,
-    onApiUrlClick,
     onTokenClose,
     onTokenCreate,
     onTokenDelete,
@@ -77,7 +71,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions_dev");
+  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const navigate = useNavigator();
   const webhooks = app?.webhooks;
   const formErrors = getFormErrors(["permissions"], errors || []);
@@ -109,7 +103,6 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               className={classes.activateButton}
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
-              <SVG src={activateIcon} />
               {data?.isActive ? (
                 <FormattedMessage id="whTEcF" defaultMessage="Deactivate" description="link" />
               ) : (
@@ -120,12 +113,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           <DetailPageLayout.Content>
             {token && (
               <>
-                <CustomAppDefaultToken
-                  apiUrl={apiUrl}
-                  token={token}
-                  onApiUrlClick={onApiUrlClick}
-                  onTokenClose={onTokenClose}
-                />
+                <CustomAppDefaultToken token={token} onTokenClose={onTokenClose} />
                 <CardSpacer />
               </>
             )}

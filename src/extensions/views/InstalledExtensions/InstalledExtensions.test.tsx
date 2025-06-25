@@ -53,6 +53,9 @@ jest.mock("./hooks/usePendingInstallation");
 jest.mock("./hooks/useInstalledExtensionsFilter");
 jest.mock("@dashboard/hooks/useHasManagedAppsPermission");
 jest.mock("@dashboard/hooks/useNavigator", () => jest.fn(() => jest.fn()));
+jest.mock("@dashboard/components/AppLayout/ContextualLinks/useContextualLink", () => ({
+  useContextualLink: () => "Extensions",
+}));
 
 jest.mock("@dashboard/featureFlags", () => ({
   useFlag: () => true,
@@ -109,7 +112,7 @@ describe("InstalledExtensions", () => {
     const mockHandleQueryChange = jest.fn();
     // Initial render with all extensions
     const { rerender } = render(<InstalledExtensions {...defaultProps} />);
-    const searchInput = screen.getByPlaceholderText("Search extensions...");
+    const searchInput = screen.getByPlaceholderText("Search Extensions...");
 
     // Act: Simulate typing search query
     fireEvent.change(searchInput, { target: { value: "Test App" } });

@@ -2,20 +2,35 @@ import { defineMessages } from "react-intl";
 
 export const headerTitles = defineMessages({
   exploreExtensions: {
-    defaultMessage: "Explore Extensions",
-    id: "GUcbBE",
+    defaultMessage: "Explore",
+    description: "page title",
+    id: "32Capp",
   },
   installedExtensions: {
-    defaultMessage: "Installed Extensions",
-    id: "C3sTzL",
+    defaultMessage: "All installed",
+    description: "page title",
+    id: "VQvNZx",
   },
   addCustomExtension: {
-    defaultMessage: "Add Custom Extension manually",
-    id: "fHHHVV",
+    defaultMessage: "Add extension manually",
+    description: "page title - creating custom app",
+
+    id: "ecM5eL",
   },
   addCustomExtensionManifest: {
-    defaultMessage: "Add Custom Extension from manifest",
-    id: "2+v6qd",
+    defaultMessage: "Add extension from manifest",
+    description: "page title - installing app with manifestUrl form",
+    id: "Cxkzpg",
+  },
+  addCustomExtensionManifestUrl: {
+    defaultMessage: "Add extension",
+    description: "page title - installing app with manifestUrl provided",
+    id: "BYfAwE",
+  },
+  extensions: {
+    defaultMessage: "Extensions",
+    description: "page title - extensions",
+    id: "WD+kjr",
   },
 });
 
@@ -56,6 +71,10 @@ export const buttonLabels = defineMessages({
     defaultMessage: "Save",
     id: "jvo0vs",
   },
+  remove: {
+    defaultMessage: "Remove",
+    id: "G/yZLu",
+  },
   back: {
     defaultMessage: "Back",
     id: "cyR7Kh",
@@ -68,8 +87,8 @@ export const buttonLabels = defineMessages({
 
 export const infoMessages = defineMessages({
   appDisabled: {
-    defaultMessage: "App disabled. Activate the app from the settings.",
-    id: "r9R4OC",
+    defaultMessage: "Extension disabled. Activate the extension from the settings.",
+    id: "qGwKT/",
   },
   installationFailed: {
     defaultMessage: "Installation failed",
@@ -92,24 +111,25 @@ export const infoMessages = defineMessages({
     id: "qkUBLC",
   },
   permissionsDescription: {
-    defaultMessage: "Expand or restrict app permissions to access certain part of Saleor system.",
-    id: "HwlLvq",
+    defaultMessage:
+      "Expand or restrict extension permissions to access certain part of Saleor system.",
+    id: "kr1PlW",
   },
   grantFullAccess: {
-    defaultMessage: "Grant this app full access to the store",
-    id: "VtR2/y",
+    defaultMessage: "Grant this extension full access to the store",
+    id: "Yuv3Ou",
   },
 });
 
 export const formLabels = defineMessages({
   appName: {
-    defaultMessage: "App Name",
-    id: "kExPDx",
+    defaultMessage: "Extension Name",
+    id: "s3xi3B",
     description: "extension form app name field label",
   },
   appNamePlaceholder: {
-    defaultMessage: "App Name",
-    id: "JKoHqo",
+    defaultMessage: "Extension Name",
+    id: "TNlcZ5",
     description: "extension form app name field placeholder",
   },
   permissions: {
@@ -136,16 +156,16 @@ export const notifyMessages = defineMessages({
     id: "EGzGed",
   },
   extensionInstallError: {
-    id: "UMUQCG",
-    defaultMessage: "Couldn’t Install {name}",
+    id: "TPJeJF",
+    defaultMessage: "Couldn't Install {name}",
     description: "extensions list has not been installed",
   },
 });
 
 export const messages = defineMessages({
   searchPlaceholder: {
-    defaultMessage: "Search extensions...",
-    id: "D66hpd",
+    defaultMessage: "Search Extensions...",
+    id: "qMEm+l",
   },
   installed: {
     defaultMessage: "Installed",
@@ -171,17 +191,17 @@ export const messages = defineMessages({
     defaultMessage: "View details",
     id: "MnpUD7",
   },
-  manageApp: {
-    defaultMessage: "Manage app",
-    id: "wZFsmY",
+  manageExtension: {
+    defaultMessage: "Manage extension",
+    id: "aenDwE",
   },
   viewOnGithub: {
     defaultMessage: "View on GitHub",
     id: "80g19N",
   },
   pluginDescription: {
-    defaultMessage: "Plugin built-in to Saleor’s core codebase",
-    id: "JaLLdQ",
+    defaultMessage: "Plugin built-in to Saleor's core codebase",
+    id: "EEWsPs",
   },
   pluginInfoImportant: {
     defaultMessage: "Important",
@@ -201,25 +221,25 @@ export const messages = defineMessages({
     id: "gZ1qnD",
   },
   noExtensionsInstalled: {
-    defaultMessage: "No Extensions installed yet",
-    id: "2nT0Sm",
+    defaultMessage: "No extensions installed yet",
+    id: "6C1RWA",
   },
   exploreAvailableExtensions: {
-    defaultMessage: "Explore available Extensions",
-    id: "MhT1CS",
+    defaultMessage: "Explore available extensions",
+    id: "ulzM2V",
   },
   noExtensionsFound: {
-    defaultMessage: "No Extensions found",
-    id: "jWLXdD",
+    defaultMessage: "No extensions found",
+    id: "obHpf0",
   },
   clearSearch: {
     defaultMessage: "Clear search",
     id: "4YJHut",
   },
   installationCloudOnly: {
-    defaultMessage: "Use Saleor Cloud to access Saleor Apps",
+    defaultMessage: "Use Saleor Cloud to access Saleor Extensions",
     description: "description",
-    id: "IEpmGQ",
+    id: "jm2YzF",
   },
   missingExtensionsButton: {
     id: "VS0YOp",
@@ -235,6 +255,11 @@ export const messages = defineMessages({
     defaultMessage: "Learn more about {manifestFormatLink}",
     id: "0DTk+2",
     description: "Add custom extension page subheader",
+  },
+  learnMoreError: {
+    defaultMessage: "Learn more about this error",
+    description: "Add custom extension error link to Saleor Docs",
+    id: "9pGRfy",
   },
   manifestFormatLink: {
     defaultMessage: "manifest format",
@@ -252,8 +277,8 @@ export const messages = defineMessages({
     description: "extension install page, extension permissions (from manifest)",
   },
   permissionsExplanation: {
-    defaultMessage: "Installing this app will give it following permissions",
-    id: "O4R3Ni",
+    defaultMessage: "Installing this extension will give it following permissions",
+    id: "3/IQO9",
     description: "extension install page, permissions section",
   },
   infoCardTitle: {
@@ -263,8 +288,8 @@ export const messages = defineMessages({
   },
   infoCardText: {
     defaultMessage:
-      "Uninstalling the app will remove all your customer’s personal data stored by {extensionName}. {learnMoreLink}",
-    id: "chJmBW",
+      "Uninstalling the extension will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}",
+    id: "ObscZF",
     description: "card text, app install page",
   },
   infoCardLearnMoreLink: {
@@ -297,14 +322,14 @@ export const messages = defineMessages({
   },
   customExtensionPermissionWarning: {
     defaultMessage:
-      "Unavailable permissions are those exceeding your own access rights. Apps cannot have more permissions than their creator. Please contact an administrator to either create this app for you or grant your account the necessary permissions",
+      "Unavailable permissions are those exceeding your own access rights. Extensions cannot have more permissions than their creator. Please contact an administrator to either create this extension for you or grant your account the necessary permissions",
     description: "custom extension page create, callout message",
-    id: "ssI7EL",
+    id: "Nmbt6C",
   },
   missingAppNameError: {
-    defaultMessage: "App name is required",
+    defaultMessage: "Extension name is required",
     description: "custom extension page create, error message",
-    id: "nLCEQJ",
+    id: "ij3dWD",
   },
   permissionDisabledTooltip: {
     defaultMessage: "Permission cannot be chosen, because you don't have it yourself",
@@ -314,59 +339,180 @@ export const messages = defineMessages({
 });
 
 export const appManifestErrorMessages = defineMessages({
-  invalidManifestFormat: {
-    id: "pC6/1z",
-    defaultMessage: "Invalid manifest format",
+  invalidManifest: {
+    // AppErrorCode.INVALID
+    id: "ZXOpCJ",
+    defaultMessage:
+      "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})",
   },
   invalidPermission: {
-    id: "D2qihU",
-    defaultMessage: "Permission is invalid",
-  },
-  invalidStatus: {
-    id: "v3WWK+",
-    defaultMessage: "Status is invalid",
+    // AppErrorCode.INVALID_PERMISSION
+    id: "DRaREj",
+    defaultMessage:
+      "The extension's manifest requests invalid or unrecognized permissions. {docsLink} ({errorCode})",
   },
   invalidUrlFormat: {
-    id: "nm7IIV",
-    defaultMessage: "URL has invalid format",
+    // AppErrorCode.INVALID_URL_FORMAT
+    id: "FXtMVc",
+    defaultMessage:
+      "A URL field within the extension's manifest has an invalid format. {docsLink} ({errorCode})",
+  },
+  invalidUrlFormatSimple: {
+    // AppErrorCode.INVALID_URL_FORMAT
+    id: "+vzDH4",
+    defaultMessage: "Invalid manifest URL",
+    description:
+      "error message used when manifest URL is incorrect (before any further validation)",
+  },
+  invalidManifestFormat: {
+    // AppErrorCode.INVALID_MANIFEST_FORMAT
+    defaultMessage: "The extension's manifest has an invalid format. {docsLink} ({errorCode})",
+    id: "FuIgAe",
+  },
+  invalidCustomHeaders: {
+    // AppErrorCode.INVALID_CUSTOM_HEADERS
+    defaultMessage:
+      "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})",
+    id: "CPPACf",
+  },
+  invalidManifestUrlCannotConnect: {
+    // AppErrorCode.MANIFEST_URL_CANT_CONNECT
+    defaultMessage:
+      // TODO: Add docs link when we have docs page with explanation
+      "Saleor could not connect to the provided manifest URL. ({errorCode})",
+    id: "DbNXK5",
+  },
+  notFound: {
+    // AppErrorCode.NOT_FOUND
+    // TODO: Add docs link when we have docs page with explanation
+    defaultMessage: "The extension manifest was not found. ({errorCode})",
+    id: "eY+BKQ",
   },
   outOfScopeApp: {
-    id: "C4hCsD",
-    defaultMessage: "App is out of your permissions scope",
-  },
-  outOfScopeGroup: {
-    id: "1n1tOR",
-    defaultMessage: "Group is out of your permission scope",
+    // AppErrorCode.OUT_OF_SCOPE_APP
+    id: "D2u4pg",
+    // TODO: Add docs link when we have docs page with explanation
+    defaultMessage:
+      "You don't have permission to manage this extension. Please contact your administrator for assistance. ({errorCode})",
   },
   outOfScopePermission: {
-    id: "4prRLv",
-    defaultMessage: "Permission is out of your scope",
+    // AppErrorCode.OUT_OF_SCOPE_PERMISSION
+    id: "hYWxeg",
+    defaultMessage:
+      "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})",
   },
   unique: {
-    id: "TDhHMi",
-    defaultMessage: "This needs to be unique",
+    // AppErrorCode.UNIQUE
+    id: "MS86iy",
+    // TODO: Add docs link when we have docs page with explanation
+    defaultMessage: "The extension identifier is already in use. ({errorCode})",
+  },
+  forbidden: {
+    // AppErrorCode.FORBIDDEN
+    defaultMessage: "You are not allowed to perform this action. ({errorCode})",
+    id: "B0XvpR",
+  },
+  genericError: {
+    // AppErrorCode.INVALID
+    defaultMessage: "An unexpected error occurred. ({errorCode})",
+    id: "qACBaj",
+  },
+  invalidStatus: {
+    // AppErrorCode.INVALID_STATUS
+    id: "tLM9Jr",
+    defaultMessage:
+      "The operation cannot be performed right now. This might be due to a pending installation with the same identifier. {docsLink} ({errorCode})",
+  },
+  required: {
+    // AppErrorCode.REQUIRED
+    id: "aXytBR",
+    defaultMessage:
+      "A required field is missing in the extension's manifest. {docsLink} ({errorCode})",
+  },
+  graphqlError: {
+    // AppErrorCode.GRAPHQL_ERROR
+    id: "q5I8Ac",
+    defaultMessage: "An unexpected GraphQL error occurred. ({errorCode})",
+  },
+  unsupportedSaleorVersion: {
+    // AppErrorCode.UNSUPPORTED_SALEOR_VERSION
+    id: "fWaj1M",
+    defaultMessage:
+      "The Saleor version your extension is trying to use is newer than your current Saleor version. {docsLink} ({errorCode})",
+  },
+});
+
+/** Messages when saving local apps (aka custom apps) */
+export const localAppErrorMessages = defineMessages({
+  genericError: {
+    id: "uwO3oC",
+    defaultMessage: "An unexpected error occurred while saving the extension.",
+  },
+  invalidPermission: {
+    id: "tI7/Ib",
+    defaultMessage: "Extension requested permissions that are not available in Saleor.",
+  },
+  outOfScopeApp: {
+    id: "PFmBz7",
+    defaultMessage: "You can't manage this extension because it has more permissions than you.",
+  },
+  outOfScopePermission: {
+    id: "+djx5u",
+    defaultMessage: "You can't give this extension permissions you don't have.",
+  },
+  unique: {
+    id: "2qfU+C",
+    defaultMessage: "The extension identifier is already in use.",
+  },
+  forbidden: {
+    id: "S6W6FM",
+    defaultMessage: "You are not allowed to perform this action.",
+  },
+  invalidStatus: {
+    id: "Y/SXVb",
+    defaultMessage:
+      "The operation cannot be performed right now. This might be due to a pending installation with the same identifier.",
+  },
+  required: {
+    id: "JiUAB0",
+    defaultMessage: "A required field is missing in the request.",
   },
 });
 
 export const appMessages = defineMessages({
   failedToFetchAppSettings: {
-    id: "ac+Y98",
-    defaultMessage: "Failed to fetch app settings",
+    id: "S1u2pa",
+    defaultMessage: "Failed to fetch extension settings",
     description: "app settings error",
   },
   appActivated: {
-    id: "D/+84n",
-    defaultMessage: "App activated",
+    id: "0iZ6Ds",
+    defaultMessage: "Extension activated",
     description: "snackbar text",
   },
   appDeactivated: {
-    id: "USO8PB",
-    defaultMessage: "App deactivated",
+    id: "UpgLo/",
+    defaultMessage: "Extension deactivated",
     description: "snackbar text",
   },
   missingManageAppsPermission: {
-    defaultMessage: "You don't have permission to manage apps",
-    id: "e5gJ9u",
+    defaultMessage: "You don't have permission to manage extensions",
+    id: "5ShHx2",
     description: "tooltip for disabled buttons",
+  },
+});
+
+export const extensionActions = defineMessages({
+  redirectToAppPage: {
+    defaultMessage: "Redirect to the App Page",
+    id: "TWoYMj",
+  },
+  openInNewTab: {
+    defaultMessage: "Open in a new tab",
+    id: "z4qMx5",
+  },
+  openInPopup: {
+    defaultMessage: "Open in Popup",
+    id: "jCYHA+",
   },
 });

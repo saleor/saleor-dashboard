@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
+import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -9,11 +9,9 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
-import {
-  extensionMountPoints,
-  mapToMenuItemsForOrderDetails,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForOrderDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
@@ -27,6 +25,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
+import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -170,8 +169,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
       shouldExist: hasAnyItemsReplaceable(order),
     },
   ]);
-  const { ORDER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.ORDER_DETAILS);
-  const extensionMenuItems = mapToMenuItemsForOrderDetails(ORDER_DETAILS_MORE_ACTIONS, order?.id);
+  const { ORDER_DETAILS_MORE_ACTIONS, ORDER_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.ORDER_DETAILS,
+  );
+  const extensionMenuItems = getExtensionsItemsForOrderDetails(
+    ORDER_DETAILS_MORE_ACTIONS,
+    order?.id,
+  );
   const context = useDevModeContext();
   const openPlaygroundURL = () => {
     context.setDevModeContent(defaultGraphiQLQuery);
@@ -191,8 +195,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
-              <CardMenu
-                menuItems={[
+              <TopNav.Menu
+                dataTestId="menu"
+                items={[
                   ...selectCardMenuItems,
                   ...extensionMenuItems,
                   {
@@ -297,6 +302,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 </>
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
+              {ORDER_DETAILS_WIDGETS.length > 0 && order?.id && (
+                <>
+                  <CardSpacer />
+                  <Divider />
+                  <AppWidgets extensions={ORDER_DETAILS_WIDGETS} params={{ orderId: order.id }} />
+                </>
+              )}
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.Spacer />

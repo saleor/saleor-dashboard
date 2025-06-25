@@ -4,19 +4,9 @@ import { AppErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Input } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
-
-const useStyles = makeStyles(
-  {
-    cardTitle: {
-      paddingRight: 16,
-    },
-  },
-  { name: "AccountPermissions" },
-);
 
 export interface CustomExtensionInfoProps {
   data: {
@@ -34,31 +24,30 @@ const CustomExtensionInformation: React.FC<CustomExtensionInfoProps> = ({
   onChange,
 }) => {
   const intl = useIntl();
-  const classes = useStyles();
   const formErrors = getFormErrors(["name"], errors);
 
   return (
     <DashboardCard>
       <DashboardCard.Header>
-        <DashboardCard.Title className={classes.cardTitle}>
+        <DashboardCard.Title>
           {intl.formatMessage({
-            id: "imYxM9",
-            defaultMessage: "App Information",
+            id: "YtCaCm",
+            defaultMessage: "Extension Information",
             description: "header",
           })}
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.name}
           label={intl.formatMessage({
-            id: "foNlhn",
-            defaultMessage: "App Name",
+            id: "Crht/3",
+            defaultMessage: "Extension Name",
             description: "custom app name",
           })}
           helperText={getAppErrorMessage(formErrors.name, intl)}
-          fullWidth
+          width="100%"
           name="name"
           value={data.name}
           onChange={onChange}

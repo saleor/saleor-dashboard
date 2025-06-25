@@ -17,6 +17,7 @@ interface AccountPermissionsProps {
     permissions: string[];
   };
   disabled: boolean;
+  disabledPermissionsTooltip?: string;
   description: string;
   errorMessage: string | undefined;
   fullAccessLabel: string;
@@ -27,6 +28,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   const {
     data,
     disabled,
+    disabledPermissionsTooltip,
     permissionsExceeded,
     onChange,
     description,
@@ -55,7 +57,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     } as ChangeEvent<any>);
   };
   const handlePermissionChange = (key: string, value: boolean) => {
-    const updatedPersmissions = !value
+    const updatedPermissions = !value
       ? data.permissions.concat([key])
       : data.permissions.filter(perm => perm !== key);
 
@@ -63,13 +65,13 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     onChange({
       target: {
         name: "hasFullAccess",
-        value: !!(permissions.length === updatedPersmissions.length && !data.hasFullAccess),
+        value: !!(permissions.length === updatedPermissions.length && !data.hasFullAccess),
       },
     } as ChangeEvent<any>);
     onChange({
       target: {
         name: "permissions",
-        value: updatedPersmissions,
+        value: updatedPermissions,
       },
     } as ChangeEvent<any>);
   };
@@ -106,6 +108,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             permissions={permissions}
             onPermissionChange={handlePermissionChange}
             selectedPermissions={data.permissions}
+            disabledPermissionTooltip={disabledPermissionsTooltip}
           />
 
           {!!errorMessage && (

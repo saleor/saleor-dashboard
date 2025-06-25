@@ -1,8 +1,8 @@
-import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
+import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import {
   AppExtensionMountEnum,
   ExtensionListQuery,
-  PermissionEnum,
   useExtensionListQuery,
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
@@ -10,134 +10,93 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { useExternalApp } from "../components/ExternalAppContext";
 import { AppData } from "../components/ExternalAppContext/context";
+import { Extension, ExtensionWithParams } from "../types";
 import { AppDetailsUrlMountQueryParams } from "../urls";
 
-export interface Extension {
-  id: string;
-  app: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["app"];
-  accessToken: string;
-  permissions: PermissionEnum[];
-  label: string;
-  mount: AppExtensionMountEnum;
-  url: string;
-  open: () => void;
-}
+const prepareExtensionsWithActions = ({
+  extensions,
+  openAppInContext,
+}: {
+  extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
+  openAppInContext: (appData: AppData) => void;
+}): ExtensionWithParams[] =>
+  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
+    const isNewTab = target === "NEW_TAB";
+    const isWidget = target === "WIDGET";
+    const appUrl = app.appUrl;
 
-export interface ExtensionWithParams extends Omit<Extension, "open"> {
-  open: (params: AppDetailsUrlMountQueryParams) => void;
-}
+    /**
+     * Options are not required so fall back to safe GET
+     */
+    const newTabMethod =
+      (options?.__typename === "AppExtensionOptionsNewTab" && options?.newTabTarget?.method) ||
+      "GET";
 
-export const extensionMountPoints = {
-  CUSTOMER_LIST: [
-    AppExtensionMountEnum.CUSTOMER_OVERVIEW_CREATE,
-    AppExtensionMountEnum.CUSTOMER_OVERVIEW_MORE_ACTIONS,
-  ],
-  PRODUCT_LIST: [
-    AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-    AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
-  ],
-  ORDER_LIST: [
-    AppExtensionMountEnum.ORDER_OVERVIEW_CREATE,
-    AppExtensionMountEnum.ORDER_OVERVIEW_MORE_ACTIONS,
-  ],
-  CUSTOMER_DETAILS: [AppExtensionMountEnum.CUSTOMER_DETAILS_MORE_ACTIONS],
-  ORDER_DETAILS: [AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS],
-  PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
-  NAVIGATION_SIDEBAR: [
-    AppExtensionMountEnum.NAVIGATION_CATALOG,
-    AppExtensionMountEnum.NAVIGATION_CUSTOMERS,
-    AppExtensionMountEnum.NAVIGATION_DISCOUNTS,
-    AppExtensionMountEnum.NAVIGATION_ORDERS,
-    AppExtensionMountEnum.NAVIGATION_PAGES,
-    AppExtensionMountEnum.NAVIGATION_TRANSLATIONS,
-  ],
-};
+    return {
+      id,
+      app,
+      accessToken: accessToken || "",
+      permissions: permissions.map(({ code }) => code),
+      url,
+      label,
+      mount,
+      target,
+      options,
+      /**
+       * Only available for NEW_TAB, POPUP, APP_PAGE
+       * TODO: Change interface to *not* contain this method if type is WIDGET
+       */
+      open: (params: AppDetailsUrlMountQueryParams) => {
+        if (isWidget) {
+          console.error("Widget-type app should not execute 'open' method");
 
-const filterAndMapToTarget = (
-  extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>,
-  openApp: (appData: AppData) => void,
-): ExtensionWithParams[] =>
-  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app }) => ({
-    id,
-    app,
-    accessToken: accessToken || "",
-    permissions: permissions.map(({ code }) => code),
-    url,
-    label,
-    mount,
-    open: (params: AppDetailsUrlMountQueryParams) =>
-      openApp({
-        id: app.id,
-        appToken: accessToken || "",
-        src: url,
-        label,
-        target,
-        params,
-      }),
-  }));
-const mapToMenuItem = ({ label, id, open }: ExtensionWithParams) => ({
-  label,
-  testId: `extension-${id}`,
-  onSelect: open,
-});
+          return;
+        }
 
-export const mapToMenuItems = (extensions: ExtensionWithParams[]) => extensions.map(mapToMenuItem);
+        const isAbsolute = isUrlAbsolute(url);
+        const absoluteUrl = isAbsolute ? url : `${appUrl}${url}`;
 
-export const mapToMenuItemsForOrderListActions = (extensions: ExtensionWithParams[]) =>
-  extensions.map(extension => mapToMenuItem({ ...extension, open: () => extension.open({}) }));
+        if (!["http:", "https:"].includes(new URL(absoluteUrl).protocol)) {
+          console.error("Invalid url");
 
-export const mapToMenuItemsForProductOverviewActions = (
-  extensions: ExtensionWithParams[],
-  productIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productIds }) }),
-  );
+          return;
+        }
 
-export const mapToMenuItemsForProductDetails = (
-  extensions: ExtensionWithParams[],
-  productId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productId }) }),
-  );
+        if (isNewTab && newTabMethod === "GET") {
+          const redirectUrl = new URL(absoluteUrl);
 
-export const mapToMenuItemsForCustomerDetails = (
-  extensions: ExtensionWithParams[],
-  customerId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ customerId }) }),
-  );
+          Object.entries(params ?? {}).forEach(([key, value]) => {
+            redirectUrl.searchParams.append(key, value);
+          });
 
-export const mapToMenuItemsForCustomerOverviewActions = (
-  extensions: ExtensionWithParams[],
-  customerIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ customerIds }),
-    }),
-  );
+          return newTabActions.openGETinNewTab(redirectUrl.toString());
+        }
 
-export const mapToMenuItemsForOrderDetails = (
-  extensions: ExtensionWithParams[],
-  orderId?: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({
-      ...extension,
-      open: () => extension.open({ orderId }),
-    }),
-  );
+        if (isNewTab && newTabMethod === "POST") {
+          return newTabActions.openPOSTinNewTab({
+            appParams: params,
+            accessToken,
+            appId: app.id,
+            extensionUrl: absoluteUrl,
+          });
+        }
+
+        openAppInContext({
+          id: app.id,
+          appToken: accessToken || "",
+          src: url,
+          label,
+          target,
+          params,
+        });
+      },
+    };
+  });
 
 export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[],
 ): Record<T, Extension[]> => {
   const { openApp } = useExternalApp();
-  const permissions = useUserPermissions();
-  const extensionsPermissions = permissions?.find(perm => perm.code === PermissionEnum.MANAGE_APPS);
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
     variables: {
@@ -145,12 +104,11 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
         mount: mountList,
       },
     },
-    skip: !extensionsPermissions,
   });
-  const extensions = filterAndMapToTarget(
-    mapEdgesToItems(data?.appExtensions ?? undefined) || [],
-    openApp,
-  );
+  const extensions = prepareExtensionsWithActions({
+    extensions: mapEdgesToItems(data?.appExtensions ?? undefined) || [],
+    openAppInContext: openApp,
+  });
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
     {} as Record<AppExtensionMountEnum, Extension[]>,

@@ -21,10 +21,8 @@ test.beforeEach(async ({ page, request }) => {
   permissionGroupsPage = new PermissionGroupsPage(page);
   basicApiService = new BasicApiService(request);
 });
-/**
- * TODO: flaky test, skipping for now. Let's decide what do with it latter
- */
-test.skip("TC: SALEOR_137 Admin User should be able to deactivate other user #e2e #staff-members", async () => {
+
+test("TC: SALEOR_137 Admin User should be able to deactivate other user #e2e #staff-members", async () => {
   await staffMembersPage.goToStaffDetailsPage(USERS.userToBeDeactivated.id);
   await staffMembersPage.clickIsActiveCheckbox();
   await staffMembersPage.clickSaveButton();
