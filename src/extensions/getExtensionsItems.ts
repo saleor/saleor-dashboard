@@ -25,13 +25,20 @@ const getExtensionsItemsWithParam =
     extensions.map(extension =>
       mapToMenuItem({ ...extension, open: () => extension.open({ [queryParam]: paramValue }) }),
     );
+const getExtensionsItemsWithManyParams = (
+  extensions: ExtensionWithParams[],
+  paramsRecord: AppDetailsUrlMountQueryParams,
+): ExtensionMenuItem[] =>
+  extensions.map(extension =>
+    mapToMenuItem({ ...extension, open: () => extension.open(paramsRecord) }),
+  );
 
 // Some pages don't have ability to select items - that is why we use the same function
 // for overview actions and create buttons.
 export const getExtensionItemsForOverviewCreate = getExtensionItemsWithoutParams;
 export const getExtensionsItemsForProductOverviewActions =
   getExtensionsItemsWithParam("productIds");
-export const getExtensionsItemsForProductDetails = getExtensionsItemsWithParam("productId");
+export const getExtensionsItemsForProductDetails = getExtensionsItemsWithManyParams;
 export const getExtensionsItemsForCustomerDetails = getExtensionsItemsWithParam("customerId");
 export const getExtensionsItemsForCustomerOverviewActions =
   getExtensionsItemsWithParam("customerIds");
