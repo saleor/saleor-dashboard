@@ -8901,22 +8901,6 @@ export type ChannelListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ChannelListQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string }> | null };
 
-export type SearchOrdersByNumberQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
-}>;
-
-
-export type SearchOrdersByNumberQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus } }> } | null };
-
-export type SearchCatalogQueryVariables = Exact<{
-  first: Scalars['Int'];
-  query: Scalars['String'];
-}>;
-
-
-export type SearchCatalogQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, level: number, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null } }> } | null, collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null, channelListings: Array<{ __typename: 'CollectionChannelListing', isPublished: boolean, publishedAt: any | null, channel: { __typename: 'Channel', id: string, name: string } }> | null } }> } | null, products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, category: { __typename: 'Category', id: string, name: string } | null, thumbnail: { __typename: 'Image', alt: string | null, url: string } | null } }> } | null, productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, product: { __typename: 'Product', id: string, name: string, category: { __typename: 'Category', id: string, name: string } | null, thumbnail: { __typename: 'Image', alt: string | null, url: string } | null } } }> } | null };
-
 export type ShopInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 

@@ -59,7 +59,7 @@ export interface QuickSearchResult {
   productVariants: ProductVariant[];
 }
 
-const toOrderItem = (node: QuickSearchQuery["orders"]["edges"][number]): Order => ({
+const toOrderItem = (node: NonNullable<QuickSearchQuery["orders"]>["edges"][number]): Order => ({
   id: node.node.id,
   number: node.node.number,
   status: node.node.status,
@@ -70,55 +70,61 @@ const toOrderItem = (node: QuickSearchQuery["orders"]["edges"][number]): Order =
   type: "order",
 });
 
-const toCategoryItem = (node: QuickSearchQuery["categories"]["edges"][number]): Category => ({
+const toCategoryItem = (
+  node: NonNullable<QuickSearchQuery["categories"]>["edges"][number],
+): Category => ({
   id: node.node.id,
   name: node.node.name,
   thumbnail: {
-    url: node.node.backgroundImage?.url,
-    alt: node.node.backgroundImage?.alt,
+    url: node.node.backgroundImage?.url ?? "",
+    alt: node.node.backgroundImage?.alt ?? "",
   },
-  totalProducts: node.node.products.totalCount,
+  totalProducts: node.node.products?.totalCount ?? 0,
   type: "category",
 });
 
-const toCollectionItem = (node: QuickSearchQuery["collections"]["edges"][number]): Collection => ({
+const toCollectionItem = (
+  node: NonNullable<QuickSearchQuery["collections"]>["edges"][number],
+): Collection => ({
   id: node.node.id,
   name: node.node.name,
-  totalProducts: node.node.products.totalCount,
+  totalProducts: node.node.products?.totalCount ?? 0,
   thumbnail: {
-    url: node.node.backgroundImage?.url,
-    alt: node.node.backgroundImage?.alt,
+    url: node.node.backgroundImage?.url ?? "",
+    alt: node.node.backgroundImage?.alt ?? "",
   },
   type: "collection",
 });
 
-const toProductItem = (node: QuickSearchQuery["products"]["edges"][number]): Product => ({
+const toProductItem = (
+  node: NonNullable<QuickSearchQuery["products"]>["edges"][number],
+): Product => ({
   id: node.node.id,
   name: node.node.name,
   category: {
-    name: node.node.category.name,
+    name: node.node.category?.name ?? "",
   },
   thumbnail: {
-    url: node.node.thumbnail?.url,
-    alt: node.node.thumbnail?.alt,
+    url: node.node.thumbnail?.url ?? "",
+    alt: node.node.thumbnail?.alt ?? "",
   },
   type: "product",
 });
 
 const toProductVariantItem = (
-  node: QuickSearchQuery["productVariants"]["edges"][number],
+  node: NonNullable<QuickSearchQuery["productVariants"]>["edges"][number],
 ): ProductVariant => ({
   id: node.node.id,
   name: node.node.name,
-  sku: node.node.sku,
+  sku: node.node.sku ?? "",
   thumbnail: {
-    url: node.node.media[0]?.url,
-    alt: node.node.media[0]?.alt,
+    url: node.node.media?.[0]?.url ?? "",
+    alt: node.node.media?.[0]?.alt ?? "",
   },
   product: {
     id: node.node.product.id,
     category: {
-      name: node.node.product.category.name,
+      name: node.node.product.category?.name ?? "",
     },
   },
   type: "productVariant",
