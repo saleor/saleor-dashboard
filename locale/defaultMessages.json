@@ -651,9 +651,6 @@
   "1Znp5B": {
     "string": "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used"
   },
-  "1gzck6": {
-    "string": "{firstName} {lastName}"
-  },
   "1lk/oS": {
     "context": "button",
     "string": "Add postal code range"
@@ -1641,16 +1638,9 @@
     "context": "WarehouseSettings public stock label",
     "string": "Public Stock"
   },
-<<<<<<< HEAD
-=======
   "87NGDZ": {
     "string": "Plugin doesn't have any configuration fields"
   },
-  "8B8E+3": {
-    "context": "navigator placeholder",
-    "string": "Order Number"
-  },
->>>>>>> main
   "8BBMRj": {
     "context": "default tax class name for new tax classes",
     "string": "New tax class"
@@ -2386,16 +2376,9 @@
     "context": "error message",
     "string": "Saleor is unavailable, please check your network connection and try again."
   },
-<<<<<<< HEAD
-=======
   "CiWUaq": {
     "string": "Make sure to save token, you won't be able to see it again."
   },
-  "CjSRT1": {
-    "context": "button",
-    "string": "Create Category"
-  },
->>>>>>> main
   "ClKKID": {
     "context": "channel publication status",
     "string": "Not published"
@@ -5449,16 +5432,9 @@
     "context": "shipping zones section name",
     "string": "Shipping Zones"
   },
-<<<<<<< HEAD
-=======
   "V1aPhG": {
     "string": "Navigation has changed"
   },
-  "V1mqpZ": {
-    "context": "button",
-    "string": "Create Permission Group"
-  },
->>>>>>> main
   "V22724": {
     "string": "Installed"
   },
@@ -6047,15 +6023,6 @@
   "YVIajc": {
     "context": "product field",
     "string": "Description"
-  },
-<<<<<<< HEAD
-  "YVz54T": {
-    "string": "This list shows all attributes that will be assigned to models that have this model type assigned."
-=======
-  "YYkkhx": {
-    "context": "navigator section header",
-    "string": "Navigate to"
->>>>>>> main
   },
   "YZl6cv": {
     "string": "Miscellaneous"
@@ -6781,16 +6748,9 @@
     "context": "WarehouseSettings no shipping zones assigned",
     "string": "This warehouse has no shipping zones assigned."
   },
-<<<<<<< HEAD
-=======
   "ce5Hp1": {
     "string": "Failed to copy to clipboard"
   },
-  "cfQf0w": {
-    "context": "button",
-    "string": "Create Order"
-  },
->>>>>>> main
   "cgsY/X": {
     "context": "page header",
     "string": "Create New Category"
