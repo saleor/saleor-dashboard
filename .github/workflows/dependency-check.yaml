@@ -1,5 +1,12 @@
 name: MacawUI migration
-on: [pull_request]
+
+on:
+  pull_request:
+    types:
+      - opened
+      - labeled
+      - edited
+      - synchronize
 
 jobs:
   current_state:
@@ -28,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Migration check"
     needs: current_state
+    if: ${{ !contains( github.event.pull_request.labels.*.name, 'skip macaw migration check') }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
