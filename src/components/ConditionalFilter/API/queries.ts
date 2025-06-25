@@ -116,20 +116,6 @@ export const initialDynamicOperands = gql`
       }
     }
   }
-
-  query _SearchAttributeReferenceOperands($attributesSlugs: [String!], $first: Int!) {
-    attributes(first: $first, filter: { slugs: $attributesSlugs }) {
-      edges {
-        node {
-          id
-          name
-          slug
-          inputType
-          entityType
-        }
-      }
-    }
-  }
 `;
 
 export const dynamicOperandsQueries = gql`
@@ -203,6 +189,7 @@ export const dynamicOperandsQueries = gql`
           id
           name: title
           slug
+          originalSlug: slug
         }
       }
     }
@@ -263,6 +250,7 @@ export const dynamicOperandsQueries = gql`
           id
           name
           slug
+          originalSlug: slug
         }
       }
     }

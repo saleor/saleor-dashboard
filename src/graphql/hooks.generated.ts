@@ -6712,6 +6712,7 @@ export const _GetPagesChoicesDocument = gql`
         id
         name: title
         slug
+        originalSlug: slug
       }
     }
   }
@@ -6923,6 +6924,7 @@ export const _SearchProductOperandsDocument = gql`
         id
         name
         slug
+        originalSlug: slug
       }
     }
   }

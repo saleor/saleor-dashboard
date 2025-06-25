@@ -8844,7 +8844,7 @@ export type _GetPagesChoicesQueryVariables = Exact<{
 }>;
 
 
-export type _GetPagesChoicesQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, slug: string, name: string } }> } | null };
+export type _GetPagesChoicesQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, slug: string, name: string, originalSlug: string } }> } | null };
 
 export type _GetProductChoicesQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -8884,7 +8884,7 @@ export type _SearchProductOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _SearchProductOperandsQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string } }> } | null };
+export type _SearchProductOperandsQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string, originalSlug: string } }> } | null };
 
 export type TriggerWebhookDryRunMutationVariables = Exact<{
   objectId: Scalars['ID'];
