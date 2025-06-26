@@ -80,7 +80,7 @@ export interface ProductUpdatePageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
   media: ProductFragment["media"];
-  product: ProductDetailsQuery["product"];
+  product?: ProductDetailsQuery["product"];
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   taxClasses: TaxClassBaseFragment[];
@@ -217,7 +217,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   );
   const extensionMenuItems = getExtensionsItemsForProductDetails(PRODUCT_DETAILS_MORE_ACTIONS, {
     productId: productId,
-    productSlug: product.slug,
+    productSlug: product?.slug,
   });
   const context = useDevModeContext();
   const openPlaygroundURL = () => {
@@ -402,7 +402,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     extensions={PRODUCT_DETAILS_WIDGETS}
                     params={{
                       productId: productId,
-                      productSlug: product.slug,
+                      productSlug: product?.slug,
                     }}
                   />
                 </>
