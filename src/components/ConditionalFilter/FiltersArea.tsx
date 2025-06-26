@@ -31,8 +31,9 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
     updateRightOperator,
     updateCondition,
     updateRightOptions,
-    updateLeftOptions,
-  } = useFilterContainer(apiProvider, leftOperandsProvider);
+    updateAttribute,
+    updateAvailableAttributesList,
+  } = useFilterContainer(apiProvider);
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;
 
@@ -45,7 +46,14 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
     }
 
     if (event.type === "leftOperator.onChange") {
-      updateLeftOperator(event.path, event.value as LeftOperand);
+      const leftOperand = event.value as LeftOperand;
+
+      updateLeftOperator(event.path, leftOperand);
+
+      if (leftOperand.value === "attribute") {
+        // Fetch list of attributes after user selects "Attribute" search
+        updateAvailableAttributesList(event.path.split(".")[0], "");
+      }
     }
 
     if (event.type === "condition.onChange") {
@@ -64,8 +72,12 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
       updateRightOptions(event.path.split(".")[0], event.value);
     }
 
-    if (event.type === "leftOperator.onInputValueChange") {
-      updateLeftOptions(event.path.split(".")[0], event.value);
+    if (event.type === "attribute.onChange") {
+      updateAttribute(event.path, event.value as LeftOperand);
+    }
+
+    if (event.type === "attribute.onInputValueChange") {
+      updateAvailableAttributesList(event.path.split(".")[0], event.value);
     }
   };
 

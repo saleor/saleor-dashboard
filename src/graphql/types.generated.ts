@@ -11,20 +11,62 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /**
+   * The `Date` scalar type represents a Date
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
   Date: any;
+  /**
+   * The `DateTime` scalar type represents a DateTime
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
   DateTime: any;
+  /** The `Day` scalar type represents number of days by integer value. */
   Day: any;
+  /**
+   * Custom Decimal implementation.
+   *
+   * Returns Decimal as a float in the API,
+   * parses float to the Decimal on the way back.
+   */
   Decimal: any;
+  /**
+   * The `GenericScalar` scalar type represents a generic
+   * GraphQL scalar value that could be:
+   * String, Boolean, Int, Float, List or Object.
+   */
   GenericScalar: any;
+  /** The `Hour` scalar type represents number of hours by integer value. */
   Hour: any;
   JSON: any;
   JSONString: any;
+  /**
+   * Metadata is a map of key-value pairs, both keys and values are `String`.
+   *
+   * Example:
+   * ```
+   * {
+   *     "key1": "value1",
+   *     "key2": "value2"
+   * }
+   * ```
+   */
   Metadata: any;
+  /** The `Minute` scalar type represents number of minutes by integer value. */
   Minute: any;
+  /**
+   * Nonnegative Decimal scalar implementation.
+   *
+   * Should be used in places where value must be nonnegative (0 or greater).
+   */
   PositiveDecimal: any;
   UUID: any;
+  /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
   Upload: any;
   WeightScalar: any;
+  /** _Any value scalar as defined by Federation spec. */
   _Any: any;
 };
 
@@ -166,7 +208,6 @@ export enum AddressTypeEnum {
  *     within the channel
  *
  *     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
- *
  */
 export enum AllocationStrategyEnum {
   PRIORITIZE_HIGH_STOCK = 'PRIORITIZE_HIGH_STOCK',
@@ -202,18 +243,22 @@ export enum AppExtensionMountEnum {
   CATEGORY_OVERVIEW_CREATE = 'CATEGORY_OVERVIEW_CREATE',
   CATEGORY_OVERVIEW_MORE_ACTIONS = 'CATEGORY_OVERVIEW_MORE_ACTIONS',
   COLLECTION_DETAILS_MORE_ACTIONS = 'COLLECTION_DETAILS_MORE_ACTIONS',
+  COLLECTION_DETAILS_WIDGETS = 'COLLECTION_DETAILS_WIDGETS',
   COLLECTION_OVERVIEW_CREATE = 'COLLECTION_OVERVIEW_CREATE',
   COLLECTION_OVERVIEW_MORE_ACTIONS = 'COLLECTION_OVERVIEW_MORE_ACTIONS',
   CUSTOMER_DETAILS_MORE_ACTIONS = 'CUSTOMER_DETAILS_MORE_ACTIONS',
+  CUSTOMER_DETAILS_WIDGETS = 'CUSTOMER_DETAILS_WIDGETS',
   CUSTOMER_OVERVIEW_CREATE = 'CUSTOMER_OVERVIEW_CREATE',
   CUSTOMER_OVERVIEW_MORE_ACTIONS = 'CUSTOMER_OVERVIEW_MORE_ACTIONS',
   DISCOUNT_DETAILS_MORE_ACTIONS = 'DISCOUNT_DETAILS_MORE_ACTIONS',
   DISCOUNT_OVERVIEW_CREATE = 'DISCOUNT_OVERVIEW_CREATE',
   DISCOUNT_OVERVIEW_MORE_ACTIONS = 'DISCOUNT_OVERVIEW_MORE_ACTIONS',
   DRAFT_ORDER_DETAILS_MORE_ACTIONS = 'DRAFT_ORDER_DETAILS_MORE_ACTIONS',
+  DRAFT_ORDER_DETAILS_WIDGETS = 'DRAFT_ORDER_DETAILS_WIDGETS',
   DRAFT_ORDER_OVERVIEW_CREATE = 'DRAFT_ORDER_OVERVIEW_CREATE',
   DRAFT_ORDER_OVERVIEW_MORE_ACTIONS = 'DRAFT_ORDER_OVERVIEW_MORE_ACTIONS',
   GIFT_CARD_DETAILS_MORE_ACTIONS = 'GIFT_CARD_DETAILS_MORE_ACTIONS',
+  GIFT_CARD_DETAILS_WIDGETS = 'GIFT_CARD_DETAILS_WIDGETS',
   GIFT_CARD_OVERVIEW_CREATE = 'GIFT_CARD_OVERVIEW_CREATE',
   GIFT_CARD_OVERVIEW_MORE_ACTIONS = 'GIFT_CARD_OVERVIEW_MORE_ACTIONS',
   MENU_DETAILS_MORE_ACTIONS = 'MENU_DETAILS_MORE_ACTIONS',
@@ -226,6 +271,7 @@ export enum AppExtensionMountEnum {
   NAVIGATION_PAGES = 'NAVIGATION_PAGES',
   NAVIGATION_TRANSLATIONS = 'NAVIGATION_TRANSLATIONS',
   ORDER_DETAILS_MORE_ACTIONS = 'ORDER_DETAILS_MORE_ACTIONS',
+  ORDER_DETAILS_WIDGETS = 'ORDER_DETAILS_WIDGETS',
   ORDER_OVERVIEW_CREATE = 'ORDER_OVERVIEW_CREATE',
   ORDER_OVERVIEW_MORE_ACTIONS = 'ORDER_OVERVIEW_MORE_ACTIONS',
   PAGE_DETAILS_MORE_ACTIONS = 'PAGE_DETAILS_MORE_ACTIONS',
@@ -235,9 +281,11 @@ export enum AppExtensionMountEnum {
   PAGE_TYPE_OVERVIEW_CREATE = 'PAGE_TYPE_OVERVIEW_CREATE',
   PAGE_TYPE_OVERVIEW_MORE_ACTIONS = 'PAGE_TYPE_OVERVIEW_MORE_ACTIONS',
   PRODUCT_DETAILS_MORE_ACTIONS = 'PRODUCT_DETAILS_MORE_ACTIONS',
+  PRODUCT_DETAILS_WIDGETS = 'PRODUCT_DETAILS_WIDGETS',
   PRODUCT_OVERVIEW_CREATE = 'PRODUCT_OVERVIEW_CREATE',
   PRODUCT_OVERVIEW_MORE_ACTIONS = 'PRODUCT_OVERVIEW_MORE_ACTIONS',
   VOUCHER_DETAILS_MORE_ACTIONS = 'VOUCHER_DETAILS_MORE_ACTIONS',
+  VOUCHER_DETAILS_WIDGETS = 'VOUCHER_DETAILS_WIDGETS',
   VOUCHER_OVERVIEW_CREATE = 'VOUCHER_OVERVIEW_CREATE',
   VOUCHER_OVERVIEW_MORE_ACTIONS = 'VOUCHER_OVERVIEW_MORE_ACTIONS'
 }
@@ -247,12 +295,12 @@ export enum AppExtensionMountEnum {
  *
  *     POPUP - app's extension will be mounted as a popup window
  *     APP_PAGE - redirect to app's page
- *
  */
 export enum AppExtensionTargetEnum {
   APP_PAGE = 'APP_PAGE',
   NEW_TAB = 'NEW_TAB',
-  POPUP = 'POPUP'
+  POPUP = 'POPUP',
+  WIDGET = 'WIDGET'
 }
 
 export type AppFilterInput = {
@@ -389,11 +437,7 @@ export type AttributeChoicesSortingInput = {
  * NOTE: Deprecated fields `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are not supported in bulk mutations: `attributeBulkCreate`, `attributeBulkUpdate`.
  */
 export type AttributeCreateInput = {
-  /**
-   * Whether the attribute can be displayed in the admin product list.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Whether the attribute can be displayed in the admin product list. */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
   /** The entity type which can be used as a reference. */
   entityType?: InputMaybe<AttributeEntityTypeEnum>;
@@ -401,11 +445,7 @@ export type AttributeCreateInput = {
   externalReference?: InputMaybe<Scalars['String']>;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Whether the attribute can be filtered in storefront.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Whether the attribute can be filtered in storefront. */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: InputMaybe<AttributeInputTypeEnum>;
@@ -415,11 +455,7 @@ export type AttributeCreateInput = {
   name: Scalars['String'];
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']>;
-  /**
-   * The position of the attribute in the storefront navigation (0 by default).
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** The position of the attribute in the storefront navigation (0 by default). */
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
   /** The attribute type. */
   type: AttributeTypeEnum;
@@ -457,11 +493,7 @@ export enum AttributeErrorCode {
 
 export type AttributeFilterInput = {
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Specifies the channel by which the data should be filtered.
-   *
-   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
-   */
+  /** Specifies the channel by which the data should be filtered. */
   channel?: InputMaybe<Scalars['String']>;
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
@@ -574,21 +606,13 @@ export type AttributeTypeEnumFilterInput = {
 export type AttributeUpdateInput = {
   /** New values to be created for this attribute. */
   addValues?: InputMaybe<Array<AttributeValueUpdateInput>>;
-  /**
-   * Whether the attribute can be displayed in the admin product list.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Whether the attribute can be displayed in the admin product list. */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
   /** External ID of this product. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Whether the attribute can be filtered in storefront.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Whether the attribute can be filtered in storefront. */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: InputMaybe<Scalars['Boolean']>;
@@ -598,11 +622,7 @@ export type AttributeUpdateInput = {
   removeValues?: InputMaybe<Array<Scalars['ID']>>;
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']>;
-  /**
-   * The position of the attribute in the storefront navigation (0 by default).
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** The position of the attribute in the storefront navigation (0 by default). */
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
   /** The unit of attribute values. */
   unit?: InputMaybe<MeasurementUnitsEnum>;
@@ -632,18 +652,12 @@ export type AttributeValueCreateInput = {
   fileUrl?: InputMaybe<Scalars['String']>;
   /** Name of a value displayed in the interface. */
   name: Scalars['String'];
-  /**
-   * Represents the text of the attribute value, plain text without formatting.
-   *
-   * DEPRECATED: this field will be removed.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
-   */
+  /** Represents the text of the attribute value, plain text without formatting. */
   plainText?: InputMaybe<Scalars['String']>;
   /**
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
-   *
-   * DEPRECATED: this field will be removed.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -685,11 +699,7 @@ export type AttributeValueInput = {
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Attribute value ID or external reference. */
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
-  /**
-   * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -737,18 +747,12 @@ export type AttributeValueUpdateInput = {
   fileUrl?: InputMaybe<Scalars['String']>;
   /** Name of a value displayed in the interface. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * Represents the text of the attribute value, plain text without formatting.
-   *
-   * DEPRECATED: this field will be removed.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
-   */
+  /** Represents the text of the attribute value, plain text without formatting. */
   plainText?: InputMaybe<Scalars['String']>;
   /**
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
-   *
-   * DEPRECATED: this field will be removed.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -806,11 +810,7 @@ export type BulkAttributeValueInput = {
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Attribute value ID. */
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
-  /**
-   * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -899,11 +899,7 @@ export enum CategorySortField {
 }
 
 export type CategorySortingInput = {
-  /**
-   * Specifies the channel in which to sort the data.
-   *
-   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
-   */
+  /** Specifies the channel in which to sort the data. */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort categories. */
   direction: OrderDirection;
@@ -1048,7 +1044,6 @@ export type CheckoutAddressValidationRules = {
  *     NONE - the funds are not authorized
  *     PARTIAL - the cover funds don't cover fully the checkout's total
  *     FULL - the cover funds covers the checkout's total
- *
  */
 export enum CheckoutAuthorizeStatusEnum {
   FULL = 'FULL',
@@ -1071,7 +1066,6 @@ export enum CheckoutAuthorizeStatusEnum {
  *     PARTIAL - the funds that are charged don't cover the checkout's total
  *     FULL - the funds that are charged fully cover the checkout's total
  *     OVERCHARGED - the charged funds are bigger than checkout's total
- *
  */
 export enum CheckoutChargeStatusEnum {
   FULL = 'FULL',
@@ -1191,7 +1185,7 @@ export type CheckoutFilterInput = {
 };
 
 export type CheckoutLineInput = {
-  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.  */
+  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. */
   forceNewLine?: InputMaybe<Scalars['Boolean']>;
   /**
    * Fields required to update the object's metadata. Can be read by any API client authorized to read the object it's attached to.
@@ -1222,11 +1216,7 @@ export type CheckoutLineUpdateInput = {
   price?: InputMaybe<Scalars['PositiveDecimal']>;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity?: InputMaybe<Scalars['Int']>;
-  /**
-   * ID of the product variant.
-   *
-   * DEPRECATED: this field will be removed. Use `lineId` instead.
-   */
+  /** ID of the product variant. */
   variantId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -1237,11 +1227,7 @@ export type CheckoutSettingsInput = {
    * Added in Saleor 3.20.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. */
   useLegacyErrorFlow?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1314,11 +1300,7 @@ export type CollectionCreateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of products to be added to the collection. */
   products?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Publication date. ISO 8601 standard.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -1337,11 +1319,7 @@ export enum CollectionErrorCode {
 }
 
 export type CollectionFilterInput = {
-  /**
-   * Specifies the channel by which the data should be filtered.
-   *
-   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
-   */
+  /** Specifies the channel by which the data should be filtered. */
   channel?: InputMaybe<Scalars['String']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
@@ -1377,11 +1355,7 @@ export type CollectionInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Publication date. ISO 8601 standard.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -1420,11 +1394,7 @@ export enum CollectionSortField {
 }
 
 export type CollectionSortingInput = {
-  /**
-   * Specifies the channel in which to sort the data.
-   *
-   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
-   */
+  /** Specifies the channel in which to sort the data. */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort collections. */
   direction: OrderDirection;
@@ -1965,11 +1935,7 @@ export type DraftOrderCreateInput = {
   channelId?: InputMaybe<Scalars['ID']>;
   /** A note from a customer. Visible by customers in the order summary. */
   customerNote?: InputMaybe<Scalars['String']>;
-  /**
-   * Discount amount for the order.
-   *
-   * DEPRECATED: this field will be removed. Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
-   */
+  /** Discount amount for the order. */
   discount?: InputMaybe<Scalars['PositiveDecimal']>;
   /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']>;
@@ -2036,11 +2002,7 @@ export type DraftOrderInput = {
   channelId?: InputMaybe<Scalars['ID']>;
   /** A note from a customer. Visible by customers in the order summary. */
   customerNote?: InputMaybe<Scalars['String']>;
-  /**
-   * Discount amount for the order.
-   *
-   * DEPRECATED: this field will be removed. Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
-   */
+  /** Discount amount for the order. */
   discount?: InputMaybe<Scalars['PositiveDecimal']>;
   /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']>;
@@ -2259,6 +2221,14 @@ export type FulfillmentCancelInput = {
   warehouseId?: InputMaybe<Scalars['ID']>;
 };
 
+/** Filter input for order fulfillments data. */
+export type FulfillmentFilterInput = {
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+  /** Filter by fulfillment status. */
+  status?: InputMaybe<FulfillmentStatusEnumFilterInput>;
+};
+
 export enum FulfillmentStatus {
   CANCELED = 'CANCELED',
   FULFILLED = 'FULFILLED',
@@ -2268,6 +2238,14 @@ export enum FulfillmentStatus {
   RETURNED = 'RETURNED',
   WAITING_FOR_APPROVAL = 'WAITING_FOR_APPROVAL'
 }
+
+/** Filter by fulfillment status. */
+export type FulfillmentStatusEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<FulfillmentStatus>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<FulfillmentStatus>>;
+};
 
 export type FulfillmentUpdateTrackingInput = {
   /** If true, send an email notification to the customer. */
@@ -2301,17 +2279,9 @@ export type GiftCardCreateInput = {
   balance: PriceInput;
   /** Slug of a channel from which the email should be sent. */
   channel?: InputMaybe<Scalars['String']>;
-  /**
-   * Code to use the gift card.
-   *
-   * DEPRECATED: this field will be removed. The code is now auto generated.
-   */
+  /** Code to use the gift card. */
   code?: InputMaybe<Scalars['String']>;
-  /**
-   * End date of the gift card in ISO 8601 format.
-   *
-   * DEPRECATED: this field will be removed. Use `expiryDate` from `expirySettings` instead.
-   */
+  /** End date of the gift card in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['Date']>;
   /** The gift card expiry date. */
   expiryDate?: InputMaybe<Scalars['Date']>;
@@ -2335,11 +2305,7 @@ export type GiftCardCreateInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Start date of the gift card in ISO 8601 format.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Start date of the gift card in ISO 8601 format. */
   startDate?: InputMaybe<Scalars['Date']>;
   /** Email of the customer to whom gift card will be sent. */
   userEmail?: InputMaybe<Scalars['String']>;
@@ -2444,11 +2410,7 @@ export type GiftCardUpdateInput = {
   addTags?: InputMaybe<Array<Scalars['String']>>;
   /** The gift card balance amount. */
   balanceAmount?: InputMaybe<Scalars['PositiveDecimal']>;
-  /**
-   * End date of the gift card in ISO 8601 format.
-   *
-   * DEPRECATED: this field will be removed. Use `expiryDate` from `expirySettings` instead.
-   */
+  /** End date of the gift card in ISO 8601 format. */
   endDate?: InputMaybe<Scalars['Date']>;
   /** The gift card expiry date. */
   expiryDate?: InputMaybe<Scalars['Date']>;
@@ -2470,11 +2432,7 @@ export type GiftCardUpdateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The gift card tags to remove. */
   removeTags?: InputMaybe<Array<Scalars['String']>>;
-  /**
-   * Start date of the gift card in ISO 8601 format.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Start date of the gift card in ISO 8601 format. */
   startDate?: InputMaybe<Scalars['Date']>;
 };
 
@@ -2485,6 +2443,11 @@ export type GlobalIdFilterInput = {
   /** The value included in. */
   oneOf?: InputMaybe<Array<Scalars['ID']>>;
 };
+
+export enum HttpMethod {
+  GET = 'GET',
+  POST = 'POST'
+}
 
 /** Thumbnail formats for icon images. */
 export enum IconThumbnailFormatEnum {
@@ -2538,6 +2501,12 @@ export enum InvoiceErrorCode {
   REQUIRED = 'REQUIRED',
   URL_NOT_SET = 'URL_NOT_SET'
 }
+
+/** Filter input for invoices. */
+export type InvoiceFilterInput = {
+  /** Filter invoices by creation date. */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+};
 
 export enum JobStatusEnum {
   DELETED = 'DELETED',
@@ -3328,6 +3297,12 @@ export enum LanguageCodeEnum {
   ZU_ZA = 'ZU_ZA'
 }
 
+/** Filter input for order lines data. */
+export type LinesFilterInput = {
+  /** Filter by metadata fields of order lines. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+};
+
 /**
  * Determine the mark as paid strategy for the channel.
  *
@@ -3336,8 +3311,6 @@ export enum LanguageCodeEnum {
  *
  *     PAYMENT_FLOW - new orders marked as paid will receive a
  *     `Payment` object, that will cover the `order.total`.
- *
- *
  */
 export enum MarkAsPaidStrategyEnum {
   PAYMENT_FLOW = 'PAYMENT_FLOW',
@@ -3529,11 +3502,37 @@ export type MetadataFilter = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/**
+ * Allows filtering based on metadata key/value pairs.
+ *
+ *         Examples:
+ *         - `{key: "size"}`
+ *           Matches objects where the metadata key "size" exists, regardless of its value.
+ *         - `{key: "color", value: {oneOf: ["blue", "green"]}}`
+ *           Matches objects where the metadata key "color" is set to either "blue" or "green".
+ *         - `{key: "status", value: {eq: "active"}}`
+ *           Matches objects where the metadata key "status" is set to "active".
+ */
+export type MetadataFilterInput = {
+  /** Key to filter by. If not other fields provided - checking the existence of the key in metadata. */
+  key: Scalars['String'];
+  /** Value to filter by. */
+  value?: InputMaybe<MetadataValueFilterInput>;
+};
+
 export type MetadataInput = {
   /** Key of a metadata item. */
   key: Scalars['String'];
   /** Value of a metadata item. */
   value: Scalars['String'];
+};
+
+/** Define the filtering options for metadata value fields. */
+export type MetadataValueFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<Scalars['String']>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type MoneyInput = {
@@ -3592,7 +3591,6 @@ export type OrderAddNoteInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     FULL - the funds that are authorized and charged fully cover the
  *     `order.total`-`order.totalGrantedRefund`
- *
  */
 export enum OrderAuthorizeStatusEnum {
   FULL = 'FULL',
@@ -3894,7 +3892,6 @@ export type OrderBulkCreateUserInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     OVERCHARGED - the charged funds are bigger than the
  *     `order.total`-`order.totalGrantedRefund`
- *
  */
 export enum OrderChargeStatusEnum {
   FULL = 'FULL',
@@ -4000,6 +3997,21 @@ export enum OrderErrorCode {
   ZERO_QUANTITY = 'ZERO_QUANTITY'
 }
 
+/** Filter input for order events data. */
+export type OrderEventFilterInput = {
+  /** Filter order events by date. */
+  date?: InputMaybe<DateTimeRangeInput>;
+  /** Filter order events by type. */
+  type?: InputMaybe<OrderEventTypeEnumFilterInput>;
+};
+
+export type OrderEventTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<OrderEventsEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<OrderEventsEnum>>;
+};
+
 export enum OrderEventsEmailsEnum {
   CONFIRMED = 'CONFIRMED',
   DIGITAL_LINKS = 'DIGITAL_LINKS',
@@ -4012,7 +4024,7 @@ export enum OrderEventsEmailsEnum {
   TRACKING_UPDATED = 'TRACKING_UPDATED'
 }
 
-/** The different order event types.  */
+/** The different order event types. */
 export enum OrderEventsEnum {
   ADDED_PRODUCTS = 'ADDED_PRODUCTS',
   CANCELED = 'CANCELED',
@@ -4207,7 +4219,6 @@ export enum OrderGrantRefundUpdateLineErrorCode {
  *     PENDING - the refund on related transactionItem is pending
  *     FULL - the refund on related transactionItem is fully processed
  *     FAIL - the refund on related transactionItem failed
- *
  */
 export enum OrderGrantedRefundStatusEnum {
   FAILURE = 'FAILURE',
@@ -4217,7 +4228,7 @@ export enum OrderGrantedRefundStatusEnum {
 }
 
 export type OrderLineCreateInput = {
-  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.  */
+  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic. */
   forceNewLine?: InputMaybe<Scalars['Boolean']>;
   /** Custom price of the item.When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
@@ -4378,30 +4389,34 @@ export type OrderSettingsUpdateInput = {
 };
 
 export enum OrderSortField {
-  /**
-   * Sort orders by creation date.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Sort orders by creation date. */
   CREATED_AT = 'CREATED_AT',
   /**
-   * Sort orders by creation date.
-   *
-   * DEPRECATED: this field will be removed.
+   * Sort orders by creation date
+   * @deprecated Use `createdAt` instead.
    */
   CREATION_DATE = 'CREATION_DATE',
   /** Sort orders by customer. */
   CUSTOMER = 'CUSTOMER',
-  /** Sort orders by fulfillment status. */
+  /**
+   * Sort orders by fulfillment status.
+   * @deprecated Use `status` instead.
+   */
   FULFILLMENT_STATUS = 'FULFILLMENT_STATUS',
-  /** Sort orders by last modified at. */
+  /** Sort orders by last modified date. */
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort orders by number. */
   NUMBER = 'NUMBER',
-  /** Sort orders by payment. */
+  /** Sort orders by payment status. */
   PAYMENT = 'PAYMENT',
   /** Sort orders by rank. Note: This option is available only with the `search` filter. */
-  RANK = 'RANK'
+  RANK = 'RANK',
+  /**
+   * Sort orders by order status.
+   *
+   * Added in Saleor 3.22.
+   */
+  STATUS = 'STATUS'
 }
 
 export type OrderSortingInput = {
@@ -4495,8 +4510,18 @@ export type OrderWhereInput = {
   /** Filter by checkout token. */
   checkoutToken?: InputMaybe<UuidFilterInput>;
   /** Filter order by created at date. */
-  createdAt?: InputMaybe<DateTimeFilterInput>;
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by order events. */
+  events?: InputMaybe<OrderEventFilterInput>;
+  /** Filter by fulfillment data associated with the order. */
+  fulfillments?: InputMaybe<FulfillmentFilterInput>;
+  /** Filter by whether the order has any fulfillments. */
+  hasFulfillments?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by whether the order has any invoices. */
+  hasInvoices?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter by invoice data associated with the order. */
+  invoices?: InputMaybe<InvoiceFilterInput>;
   /** Filter by whether the order uses the click and collect delivery method. */
   isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
   /** Filter based on whether the order includes a gift card purchase. */
@@ -4505,16 +4530,30 @@ export type OrderWhereInput = {
   isGiftCardUsed?: InputMaybe<Scalars['Boolean']>;
   /** Filter by whether the order contains preorder items. */
   isPreorder?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by metadata fields of order lines. */
+  lines?: InputMaybe<LinesFilterInput>;
+  /** Filter by number of lines in the order. */
+  linesCount?: InputMaybe<IntFilterInput>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
   /** Filter by order number. */
   number?: InputMaybe<IntFilterInput>;
+  /** Filter by the product type of related order lines. */
+  productTypeId?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by order status. */
   status?: InputMaybe<OrderStatusEnumFilterInput>;
+  /** Filter by total gross amount of the order. */
+  totalGross?: InputMaybe<PriceFilterInput>;
+  /** Filter by total net amount of the order. */
+  totalNet?: InputMaybe<PriceFilterInput>;
   /** Filter order by updated at date. */
-  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by user. */
   user?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by user email. */
   userEmail?: InputMaybe<StringFilterInput>;
+  /** Filter by voucher code used in the order. */
+  voucherCode?: InputMaybe<StringFilterInput>;
 };
 
 export type PageCreateInput = {
@@ -4530,11 +4569,7 @@ export type PageCreateInput = {
   isPublished?: InputMaybe<Scalars['Boolean']>;
   /** ID of the page type that page belongs to. */
   pageType: Scalars['ID'];
-  /**
-   * Publication date. ISO 8601 standard.
-   *
-   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
-   */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: InputMaybe<Scalars['String']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
@@ -4575,11 +4610,7 @@ export type PageInput = {
   content?: InputMaybe<Scalars['JSONString']>;
   /** Determines if page is visible in the storefront. */
   isPublished?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Publication date. ISO 8601 standard.
-   *
-   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
-   */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: InputMaybe<Scalars['String']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
@@ -4592,29 +4623,13 @@ export type PageInput = {
 };
 
 export enum PageSortField {
-  /**
-   * Sort pages by creation date.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Sort pages by creation date. */
   CREATED_AT = 'CREATED_AT',
-  /**
-   * Sort pages by creation date.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Sort pages by creation date. */
   CREATION_DATE = 'CREATION_DATE',
-  /**
-   * Sort pages by publication date.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Sort pages by publication date. */
   PUBLICATION_DATE = 'PUBLICATION_DATE',
-  /**
-   * Sort pages by publication date.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Sort pages by publication date. */
   PUBLISHED_AT = 'PUBLISHED_AT',
   /** Sort pages by slug. */
   SLUG = 'SLUG',
@@ -4759,7 +4774,6 @@ export enum PaymentGatewayInitializeTokenizationErrorCode {
  *     SUCCESSFULLY_INITIALIZED - The payment gateway was successfully initialized.
  *     FAILED_TO_INITIALIZE - The payment gateway was not initialized.
  *     FAILED_TO_DELIVER - The request to initialize payment gateway was not delivered.
- *
  */
 export enum PaymentGatewayInitializeTokenizationResult {
   FAILED_TO_DELIVER = 'FAILED_TO_DELIVER',
@@ -4818,7 +4832,6 @@ export enum PaymentMethodProcessTokenizationErrorCode {
  *     PENDING - The payment method is pending tokenization.
  *     FAILED_TO_TOKENIZE - The payment method was not tokenized.
  *     FAILED_TO_DELIVER - The request to tokenize payment method was not delivered.
- *
  */
 export enum PaymentMethodTokenizationResult {
   ADDITIONAL_ACTION_REQUIRED = 'ADDITIONAL_ACTION_REQUIRED',
@@ -4978,6 +4991,13 @@ export type PreorderSettingsInput = {
   globalThreshold?: InputMaybe<Scalars['Int']>;
 };
 
+export type PriceFilterInput = {
+  /** The amount of the price to filter by. */
+  amount: DecimalFilterInput;
+  /** The currency of the price to filter by. */
+  currency?: InputMaybe<Scalars['String']>;
+};
+
 export type PriceInput = {
   /** Amount of money. */
   amount: Scalars['PositiveDecimal'];
@@ -5038,11 +5058,7 @@ export type ProductBulkCreateInput = {
   category?: InputMaybe<Scalars['ID']>;
   /** List of channels in which the product is available. */
   channelListings?: InputMaybe<Array<ProductChannelListingCreateInput>>;
-  /**
-   * Determine if taxes are being charged for the product.
-   *
-   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
-   */
+  /** Determine if taxes are being charged for the product. */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -5080,11 +5096,7 @@ export type ProductBulkCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /**
-   * Tax rate for enabled tax gateway.
-   *
-   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
-   */
+  /** Tax rate for enabled tax gateway. */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Input list of product variants to create. */
   variants?: InputMaybe<Array<ProductVariantBulkCreateInput>>;
@@ -5108,11 +5120,7 @@ export type ProductChannelListingAddInput = {
   addVariants?: InputMaybe<Array<Scalars['ID']>>;
   /** A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed. */
   availableForPurchaseAt?: InputMaybe<Scalars['DateTime']>;
-  /**
-   * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
-   *
-   * DEPRECATED: this field will be removed. Use `availableForPurchaseAt` field instead.
-   */
+  /** A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed. */
   availableForPurchaseDate?: InputMaybe<Scalars['Date']>;
   /** ID of a channel. */
   channelId: Scalars['ID'];
@@ -5120,11 +5128,7 @@ export type ProductChannelListingAddInput = {
   isAvailableForPurchase?: InputMaybe<Scalars['Boolean']>;
   /** Determines if object is visible to customers. */
   isPublished?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Publication date. ISO 8601 standard.
-   *
-   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
-   */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
@@ -5161,11 +5165,7 @@ export type ProductCreateInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
   category?: InputMaybe<Scalars['ID']>;
-  /**
-   * Determine if taxes are being charged for the product.
-   *
-   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
-   */
+  /** Determine if taxes are being charged for the product. */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -5201,11 +5201,7 @@ export type ProductCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /**
-   * Tax rate for enabled tax gateway.
-   *
-   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
-   */
+  /** Tax rate for enabled tax gateway. */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -5254,11 +5250,7 @@ export type ProductFilterInput = {
   /** Filter by the date of availability for purchase. */
   availableFrom?: InputMaybe<Scalars['DateTime']>;
   categories?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Specifies the channel by which the data should be filtered.
-   *
-   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
-   */
+  /** Specifies the channel by which the data should be filtered. */
   channel?: InputMaybe<Scalars['String']>;
   collections?: InputMaybe<Array<Scalars['ID']>>;
   /** Filter on whether product is a gift card or not. */
@@ -5292,11 +5284,7 @@ export type ProductInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
   category?: InputMaybe<Scalars['ID']>;
-  /**
-   * Determine if taxes are being charged for the product.
-   *
-   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
-   */
+  /** Determine if taxes are being charged for the product. */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -5330,11 +5318,7 @@ export type ProductInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /**
-   * Tax rate for enabled tax gateway.
-   *
-   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
-   */
+  /** Tax rate for enabled tax gateway. */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -5367,11 +5351,7 @@ export type ProductOrder = {
    * Note: this doesn't take translations into account yet.
    */
   attributeId?: InputMaybe<Scalars['ID']>;
-  /**
-   * Specifies the channel in which to sort the data.
-   *
-   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
-   */
+  /** Specifies the channel in which to sort the data. */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort products. */
   direction: OrderDirection;
@@ -5483,11 +5463,7 @@ export type ProductTypeInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product type. All products of this product type would use this tax class, unless it's overridden in the `Product` type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /**
-   * Tax rate for enabled tax gateway.
-   *
-   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
-   */
+  /** Tax rate for enabled tax gateway. */
   taxCode?: InputMaybe<Scalars['String']>;
   /** List of attributes used to distinguish between different variants of a product. */
   variantAttributes?: InputMaybe<Array<Scalars['ID']>>;
@@ -6097,11 +6073,7 @@ export type PublishableChannelListingInput = {
   channelId: Scalars['ID'];
   /** Determines if object is visible to customers. */
   isPublished?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Publication date. ISO 8601 standard.
-   *
-   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
-   */
+  /** Publication date. ISO 8601 standard. */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
@@ -6194,11 +6166,7 @@ export enum SaleSortField {
 }
 
 export type SaleSortingInput = {
-  /**
-   * Specifies the channel in which to sort the data.
-   *
-   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
-   */
+  /** Specifies the channel in which to sort the data. */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort sales. */
   direction: OrderDirection;
@@ -6362,11 +6330,7 @@ export type ShopSettingsInput = {
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']>;
   /** Enable automatic fulfillment for all digital products. */
   automaticFulfillmentDigitalProducts?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Charge taxes on shipping.
-   *
-   * DEPRECATED: this field will be removed. To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
-   */
+  /** Charge taxes on shipping. */
   chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']>;
   /** URL of a view where customers can set their password. */
   customerSetPasswordUrl?: InputMaybe<Scalars['String']>;
@@ -6382,11 +6346,7 @@ export type ShopSettingsInput = {
   defaultWeightUnit?: InputMaybe<WeightUnitsEnum>;
   /** SEO description. */
   description?: InputMaybe<Scalars['String']>;
-  /**
-   * Display prices with tax in store.
-   *
-   * DEPRECATED: this field will be removed. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
-   */
+  /** Display prices with tax in store. */
   displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
   /** Enable automatic account confirmation by email. */
   enableAccountConfirmationByEmail?: InputMaybe<Scalars['Boolean']>;
@@ -6396,11 +6356,7 @@ export type ShopSettingsInput = {
   fulfillmentAutoApprove?: InputMaybe<Scalars['Boolean']>;
   /** Header text. */
   headerText?: InputMaybe<Scalars['String']>;
-  /**
-   * Include taxes in prices.
-   *
-   * DEPRECATED: this field will be removed. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
-   */
+  /** Include taxes in prices. */
   includeTaxesInPrices?: InputMaybe<Scalars['Boolean']>;
   /** Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. */
   limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
@@ -6583,7 +6539,6 @@ export type StockUpdateInput = {
  *     SKIP - stocks are not checked and not updated.
  *     UPDATE - only do update, if there is enough stock.
  *     FORCE - force update, if there is not enough stock.
- *
  */
 export enum StockUpdatePolicyEnum {
   FORCE = 'FORCE',
@@ -6617,7 +6572,6 @@ export enum StoredPaymentMethodRequestDeleteErrorCode {
  *     FAILED_TO_DELETE - The stored payment method was not deleted.
  *     FAILED_TO_DELIVER - The request to delete the stored payment method was not
  *     delivered.
- *
  */
 export enum StoredPaymentMethodRequestDeleteResult {
   FAILED_TO_DELETE = 'FAILED_TO_DELETE',
@@ -6820,7 +6774,6 @@ export enum TimePeriodTypeEnum {
  *     The following flows are possible:
  *     INTERACTIVE - Payment method can be used for 1 click checkout - it's prefilled in
  *     checkout form (might require additional authentication from user)
- *
  */
 export enum TokenizedPaymentFlowEnum {
   INTERACTIVE = 'INTERACTIVE'
@@ -6833,7 +6786,6 @@ export enum TokenizedPaymentFlowEnum {
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
  *     CANCEL - Represents a cancel action. Added in Saleor 3.12.
- *
  */
 export enum TransactionActionEnum {
   CANCEL = 'CANCEL',
@@ -6879,7 +6831,7 @@ export type TransactionCreateInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** PSP Reference of the transaction.  */
+  /** PSP Reference of the transaction. */
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
@@ -6925,7 +6877,6 @@ export enum TransactionEventReportErrorCode {
  *     CANCEL_FAILURE - represents failure cancel.
  *     CANCEL_REQUEST - represents cancel request.
  *     INFO - represents info event.
- *
  */
 export enum TransactionEventTypeEnum {
   AUTHORIZATION_ACTION_REQUIRED = 'AUTHORIZATION_ACTION_REQUIRED',
@@ -6953,7 +6904,6 @@ export enum TransactionEventTypeEnum {
  *
  *     AUTHORIZATION - the processed transaction should be only authorized
  *     CHARGE - the processed transaction should be charged.
- *
  */
 export enum TransactionFlowStrategyEnum {
   AUTHORIZATION = 'AUTHORIZATION',
@@ -7046,7 +6996,7 @@ export type TransactionUpdateInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** PSP Reference of the transaction.  */
+  /** PSP Reference of the transaction. */
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
@@ -7133,13 +7083,7 @@ export type UserCreateInput = {
   firstName?: InputMaybe<Scalars['String']>;
   /** User account is active. */
   isActive?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * User account is confirmed.
-   *
-   * DEPRECATED: this field will be removed.
-   *
-   * The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
-   */
+  /** User account is confirmed. */
   isConfirmed?: InputMaybe<Scalars['Boolean']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
@@ -7260,11 +7204,7 @@ export type VoucherInput = {
   applyOncePerOrder?: InputMaybe<Scalars['Boolean']>;
   /** Categories discounted by the voucher. */
   categories?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Code to use the voucher.
-   *
-   * DEPRECATED: this field will be removed. Use `addCodes` instead.
-   */
+  /** Code to use the voucher. */
   code?: InputMaybe<Scalars['String']>;
   /** Collections discounted by the voucher. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -7303,11 +7243,7 @@ export type VoucherInput = {
 };
 
 export enum VoucherSortField {
-  /**
-   * Sort vouchers by code.
-   *
-   * DEPRECATED: this field will be removed.
-   */
+  /** Sort vouchers by code. */
   CODE = 'CODE',
   /** Sort vouchers by end date. */
   END_DATE = 'END_DATE',
@@ -7338,11 +7274,7 @@ export enum VoucherSortField {
 }
 
 export type VoucherSortingInput = {
-  /**
-   * Specifies the channel in which to sort the data.
-   *
-   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
-   */
+  /** Specifies the channel in which to sort the data. */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort vouchers. */
   direction: OrderDirection;
@@ -7371,11 +7303,7 @@ export type WarehouseCreateInput = {
   externalReference?: InputMaybe<Scalars['String']>;
   /** Warehouse name. */
   name: Scalars['String'];
-  /**
-   * Shipping zones supported by the warehouse.
-   *
-   * DEPRECATED: this field will be removed. Providing the zone ids will raise a ValidationError.
-   */
+  /** Shipping zones supported by the warehouse. */
   shippingZones?: InputMaybe<Array<Scalars['ID']>>;
   /** Warehouse slug. */
   slug?: InputMaybe<Scalars['String']>;
@@ -7436,11 +7364,7 @@ export type WebhookCreateInput = {
   asyncEvents?: InputMaybe<Array<WebhookEventTypeAsyncEnum>>;
   /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
   customHeaders?: InputMaybe<Scalars['JSONString']>;
-  /**
-   * The events that webhook wants to subscribe.
-   *
-   * DEPRECATED: this field will be removed. Use `asyncEvents` or `syncEvents` instead.
-   */
+  /** The events that webhook wants to subscribe. */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -7448,11 +7372,7 @@ export type WebhookCreateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Subscription query used to define a webhook payload. */
   query?: InputMaybe<Scalars['String']>;
-  /**
-   * The secret key used to create a hash signature with each payload.
-   *
-   * DEPRECATED: this field will be removed. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
-   */
+  /** The secret key used to create a hash signature with each payload. */
   secretKey?: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
@@ -7511,7 +7431,7 @@ export enum WebhookEventTypeAsyncEnum {
   ADDRESS_UPDATED = 'ADDRESS_UPDATED',
   /**
    * All the events.
-   * @deprecated No longer supported
+   * @deprecated Field no longer supported
    */
   ANY_EVENTS = 'ANY_EVENTS',
   /** An app deleted. */
@@ -7805,7 +7725,7 @@ export enum WebhookEventTypeEnum {
   ADDRESS_UPDATED = 'ADDRESS_UPDATED',
   /**
    * All the events.
-   * @deprecated No longer supported
+   * @deprecated Field no longer supported
    */
   ANY_EVENTS = 'ANY_EVENTS',
   /** An app deleted. */
@@ -8319,11 +8239,7 @@ export type WebhookUpdateInput = {
   asyncEvents?: InputMaybe<Array<WebhookEventTypeAsyncEnum>>;
   /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
   customHeaders?: InputMaybe<Scalars['JSONString']>;
-  /**
-   * The events that webhook wants to subscribe.
-   *
-   * DEPRECATED: this field will be removed. Use `asyncEvents` or `syncEvents` instead.
-   */
+  /** The events that webhook wants to subscribe. */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -8331,11 +8247,7 @@ export type WebhookUpdateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Subscription query used to define a webhook payload. */
   query?: InputMaybe<Scalars['String']>;
-  /**
-   * Use to create a hash signature with each payload.
-   *
-   * DEPRECATED: this field will be removed. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
-   */
+  /** Use to create a hash signature with each payload. */
   secretKey?: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
@@ -8472,13 +8384,6 @@ export type AppQueryVariables = Exact<{
 
 
 export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, author: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
-
-export type ExtensionListQueryVariables = Exact<{
-  filter: AppExtensionFilterInput;
-}>;
-
-
-export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mount: AppExtensionMountEnum, target: AppExtensionTargetEnum, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null } } }> } | null };
 
 export type AppWebhookDeliveriesQueryVariables = Exact<{
   appId: Scalars['ID'];
@@ -9500,6 +9405,13 @@ export type EventDeliveryQueryVariables = Exact<{
 
 export type EventDeliveryQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null } }> } | null };
 
+export type ExtensionListQueryVariables = Exact<{
+  filter: AppExtensionFilterInput;
+}>;
+
+
+export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mount: AppExtensionMountEnum, target: AppExtensionTargetEnum, accessToken: string | null, options: { __typename: 'AppExtensionOptionsNewTab', newTabTarget: { __typename: 'NewTabTargetOptions', method: HttpMethod } | null } | { __typename: 'AppExtensionOptionsWidget', widgetTarget: { __typename: 'WidgetTargetOptions', method: HttpMethod } | null } | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } } }> } | null };
+
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];
 }>;
@@ -10207,69 +10119,159 @@ export type CustomerGiftCardListQueryVariables = Exact<{
 
 export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } } }> } | null };
 
-export type MenuCreateMutationVariables = Exact<{
-  input: MenuCreateInput;
+export type PageTypeUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: PageTypeUpdateInput;
 }>;
 
 
-export type MenuCreateMutation = { __typename: 'Mutation', menuCreate: { __typename: 'MenuCreate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menu: { __typename: 'Menu', id: string } | null } | null };
+export type PageTypeUpdateMutation = { __typename: 'Mutation', pageTypeUpdate: { __typename: 'PageTypeUpdate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
-export type MenuBulkDeleteMutationVariables = Exact<{
+export type PageTypeCreateMutationVariables = Exact<{
+  input: PageTypeCreateInput;
+}>;
+
+
+export type PageTypeCreateMutation = { __typename: 'Mutation', pageTypeCreate: { __typename: 'PageTypeCreate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+
+export type AssignPageAttributeMutationVariables = Exact<{
+  id: Scalars['ID'];
   ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
-export type MenuBulkDeleteMutation = { __typename: 'Mutation', menuBulkDelete: { __typename: 'MenuBulkDelete', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null };
+export type AssignPageAttributeMutation = { __typename: 'Mutation', pageAttributeAssign: { __typename: 'PageAttributeAssign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
-export type MenuDeleteMutationVariables = Exact<{
+export type UnassignPageAttributeMutationVariables = Exact<{
+  id: Scalars['ID'];
+  ids: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+
+export type UnassignPageAttributeMutation = { __typename: 'Mutation', pageAttributeUnassign: { __typename: 'PageAttributeUnassign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+
+export type PageTypeDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type MenuDeleteMutation = { __typename: 'Mutation', menuDelete: { __typename: 'MenuDelete', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null };
+export type PageTypeDeleteMutation = { __typename: 'Mutation', pageTypeDelete: { __typename: 'PageTypeDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string } | null } | null };
 
-export type MenuItemCreateMutationVariables = Exact<{
-  input: MenuItemCreateInput;
+export type PageTypeBulkDeleteMutationVariables = Exact<{
+  ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
-export type MenuItemCreateMutation = { __typename: 'Mutation', menuItemCreate: { __typename: 'MenuItemCreate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menuItem: { __typename: 'MenuItem', menu: { __typename: 'Menu', id: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } } | null } | null };
+export type PageTypeBulkDeleteMutation = { __typename: 'Mutation', pageTypeBulkDelete: { __typename: 'PageTypeBulkDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
 
-export type MenuUpdateMutationVariables = Exact<{
+export type PageTypeAttributeReorderMutationVariables = Exact<{
+  move: ReorderInput;
+  pageTypeId: Scalars['ID'];
+}>;
+
+
+export type PageTypeAttributeReorderMutation = { __typename: 'Mutation', pageTypeReorderAttributes: { __typename: 'PageTypeReorderAttributes', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+
+export type PageTypeListQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  filter?: InputMaybe<PageTypeFilterInput>;
+  sort?: InputMaybe<PageTypeSortingInput>;
+}>;
+
+
+export type PageTypeListQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type PageTypeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
-  name: Scalars['String'];
-  moves: Array<MenuItemMoveInput> | MenuItemMoveInput;
-  removeIds: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
-export type MenuUpdateMutation = { __typename: 'Mutation', menuUpdate: { __typename: 'MenuUpdate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null, menuItemMove: { __typename: 'MenuItemMove', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null, menuItemBulkDelete: { __typename: 'MenuItemBulkDelete', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null };
+export type PageTypeDetailsQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
 
-export type MenuItemUpdateMutationVariables = Exact<{
+export type PageCreateMutationVariables = Exact<{
+  input: PageCreateInput;
+}>;
+
+
+export type PageCreateMutation = { __typename: 'Mutation', pageCreate: { __typename: 'PageCreate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', id: string } | null } | null };
+
+export type PageUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
-  input: MenuItemInput;
+  input: PageInput;
+  firstValues?: InputMaybe<Scalars['Int']>;
+  afterValues?: InputMaybe<Scalars['String']>;
+  lastValues?: InputMaybe<Scalars['Int']>;
+  beforeValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type MenuItemUpdateMutation = { __typename: 'Mutation', menuItemUpdate: { __typename: 'MenuItemUpdate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menuItem: { __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null } | null };
+export type PageUpdateMutation = { __typename: 'Mutation', pageUpdate: { __typename: 'PageUpdate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
-export type MenuListQueryVariables = Exact<{
+export type PageRemoveMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PageRemoveMutation = { __typename: 'Mutation', pageDelete: { __typename: 'PageDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
+
+export type PageBulkPublishMutationVariables = Exact<{
+  ids: Array<Scalars['ID']> | Scalars['ID'];
+  isPublished: Scalars['Boolean'];
+}>;
+
+
+export type PageBulkPublishMutation = { __typename: 'Mutation', pageBulkPublish: { __typename: 'PageBulkPublish', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
+
+export type PageBulkRemoveMutationVariables = Exact<{
+  ids: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+
+export type PageBulkRemoveMutation = { __typename: 'Mutation', pageBulkDelete: { __typename: 'PageBulkDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
+
+export type PageListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
   after?: InputMaybe<Scalars['String']>;
   last?: InputMaybe<Scalars['Int']>;
   before?: InputMaybe<Scalars['String']>;
-  sort?: InputMaybe<MenuSortingInput>;
+  sort?: InputMaybe<PageSortingInput>;
+  filter?: InputMaybe<PageFilterInput>;
 }>;
 
 
-export type MenuListQuery = { __typename: 'Query', menus: { __typename: 'MenuCountableConnection', edges: Array<{ __typename: 'MenuCountableEdge', node: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type PageListQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string, slug: string, isPublished: boolean } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
-export type MenuDetailsQueryVariables = Exact<{
+export type PageDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
+  firstValues?: InputMaybe<Scalars['Int']>;
+  afterValues?: InputMaybe<Scalars['String']>;
+  lastValues?: InputMaybe<Scalars['Int']>;
+  beforeValues?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type MenuDetailsQuery = { __typename: 'Query', menu: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } | null };
+export type PageDetailsQuery = { __typename: 'Query', page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+
+export type PageTypeQueryVariables = Exact<{
+  id: Scalars['ID'];
+  firstValues?: InputMaybe<Scalars['Int']>;
+  afterValues?: InputMaybe<Scalars['String']>;
+  lastValues?: InputMaybe<Scalars['Int']>;
+  beforeValues?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type PageTypeQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, slug: string | null, name: string | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } | null };
+
+export type PageCountQueryVariables = Exact<{
+  filter?: InputMaybe<PageFilterInput>;
+}>;
+
+
+export type PageCountQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', totalCount: number | null } | null };
 
 export type OrderCancelMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -10713,160 +10715,6 @@ export type DevModeRunQueryVariables = Exact<{
 
 
 export type DevModeRunQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, paymentStatus: PaymentChargeStatusEnum, userEmail: string | null, isPaid: boolean } }> } | null };
-
-export type PageTypeUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
-  input: PageTypeUpdateInput;
-}>;
-
-
-export type PageTypeUpdateMutation = { __typename: 'Mutation', pageTypeUpdate: { __typename: 'PageTypeUpdate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
-
-export type PageTypeCreateMutationVariables = Exact<{
-  input: PageTypeCreateInput;
-}>;
-
-
-export type PageTypeCreateMutation = { __typename: 'Mutation', pageTypeCreate: { __typename: 'PageTypeCreate', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
-
-export type AssignPageAttributeMutationVariables = Exact<{
-  id: Scalars['ID'];
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-}>;
-
-
-export type AssignPageAttributeMutation = { __typename: 'Mutation', pageAttributeAssign: { __typename: 'PageAttributeAssign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
-
-export type UnassignPageAttributeMutationVariables = Exact<{
-  id: Scalars['ID'];
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-}>;
-
-
-export type UnassignPageAttributeMutation = { __typename: 'Mutation', pageAttributeUnassign: { __typename: 'PageAttributeUnassign', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
-
-export type PageTypeDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type PageTypeDeleteMutation = { __typename: 'Mutation', pageTypeDelete: { __typename: 'PageTypeDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string } | null } | null };
-
-export type PageTypeBulkDeleteMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-}>;
-
-
-export type PageTypeBulkDeleteMutation = { __typename: 'Mutation', pageTypeBulkDelete: { __typename: 'PageTypeBulkDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
-
-export type PageTypeAttributeReorderMutationVariables = Exact<{
-  move: ReorderInput;
-  pageTypeId: Scalars['ID'];
-}>;
-
-
-export type PageTypeAttributeReorderMutation = { __typename: 'Mutation', pageTypeReorderAttributes: { __typename: 'PageTypeReorderAttributes', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }>, pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
-
-export type PageTypeListQueryVariables = Exact<{
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  filter?: InputMaybe<PageTypeFilterInput>;
-  sort?: InputMaybe<PageTypeSortingInput>;
-}>;
-
-
-export type PageTypeListQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
-
-export type PageTypeDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type PageTypeDetailsQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, hasPages: boolean | null, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, slug: string | null, type: AttributeTypeEnum | null, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
-
-export type PageCreateMutationVariables = Exact<{
-  input: PageCreateInput;
-}>;
-
-
-export type PageCreateMutation = { __typename: 'Mutation', pageCreate: { __typename: 'PageCreate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', id: string } | null } | null };
-
-export type PageUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
-  input: PageInput;
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type PageUpdateMutation = { __typename: 'Mutation', pageUpdate: { __typename: 'PageUpdate', errors: Array<{ __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null }>, page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
-
-export type PageRemoveMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type PageRemoveMutation = { __typename: 'Mutation', pageDelete: { __typename: 'PageDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
-
-export type PageBulkPublishMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-  isPublished: Scalars['Boolean'];
-}>;
-
-
-export type PageBulkPublishMutation = { __typename: 'Mutation', pageBulkPublish: { __typename: 'PageBulkPublish', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
-
-export type PageBulkRemoveMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-}>;
-
-
-export type PageBulkRemoveMutation = { __typename: 'Mutation', pageBulkDelete: { __typename: 'PageBulkDelete', errors: Array<{ __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null }> } | null };
-
-export type PageListQueryVariables = Exact<{
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  last?: InputMaybe<Scalars['Int']>;
-  before?: InputMaybe<Scalars['String']>;
-  sort?: InputMaybe<PageSortingInput>;
-  filter?: InputMaybe<PageFilterInput>;
-}>;
-
-
-export type PageListQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string, slug: string, isPublished: boolean } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
-
-export type PageDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type PageDetailsQuery = { __typename: 'Query', page: { __typename: 'Page', content: any | null, seoTitle: string | null, seoDescription: string | null, publishedAt: any | null, id: string, title: string, slug: string, isPublished: boolean, attributes: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string, slug: string | null, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, unit: MeasurementUnitsEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }, values: Array<{ __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, name: string | null, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
-
-export type PageTypeQueryVariables = Exact<{
-  id: Scalars['ID'];
-  firstValues?: InputMaybe<Scalars['Int']>;
-  afterValues?: InputMaybe<Scalars['String']>;
-  lastValues?: InputMaybe<Scalars['Int']>;
-  beforeValues?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type PageTypeQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, name: string, attributes: Array<{ __typename: 'Attribute', id: string, inputType: AttributeInputTypeEnum | null, entityType: AttributeEntityTypeEnum | null, slug: string | null, name: string | null, valueRequired: boolean, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } | null };
-
-export type PageCountQueryVariables = Exact<{
-  filter?: InputMaybe<PageFilterInput>;
-}>;
-
-
-export type PageCountQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', totalCount: number | null } | null };
 
 export type PermissionGroupDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -11750,6 +11598,70 @@ export type StaffMemberDetailsQueryVariables = Exact<{
 
 
 export type StaffMemberDetailsQuery = { __typename: 'Query', user: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, permissionGroups: Array<{ __typename: 'Group', id: string, name: string, userCanManage: boolean }> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
+
+export type MenuCreateMutationVariables = Exact<{
+  input: MenuCreateInput;
+}>;
+
+
+export type MenuCreateMutation = { __typename: 'Mutation', menuCreate: { __typename: 'MenuCreate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menu: { __typename: 'Menu', id: string } | null } | null };
+
+export type MenuBulkDeleteMutationVariables = Exact<{
+  ids: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+
+export type MenuBulkDeleteMutation = { __typename: 'Mutation', menuBulkDelete: { __typename: 'MenuBulkDelete', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null };
+
+export type MenuDeleteMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type MenuDeleteMutation = { __typename: 'Mutation', menuDelete: { __typename: 'MenuDelete', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null };
+
+export type MenuItemCreateMutationVariables = Exact<{
+  input: MenuItemCreateInput;
+}>;
+
+
+export type MenuItemCreateMutation = { __typename: 'Mutation', menuItemCreate: { __typename: 'MenuItemCreate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menuItem: { __typename: 'MenuItem', menu: { __typename: 'Menu', id: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } } | null } | null };
+
+export type MenuUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  moves: Array<MenuItemMoveInput> | MenuItemMoveInput;
+  removeIds: Array<Scalars['ID']> | Scalars['ID'];
+}>;
+
+
+export type MenuUpdateMutation = { __typename: 'Mutation', menuUpdate: { __typename: 'MenuUpdate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null, menuItemMove: { __typename: 'MenuItemMove', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null, menuItemBulkDelete: { __typename: 'MenuItemBulkDelete', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }> } | null };
+
+export type MenuItemUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: MenuItemInput;
+}>;
+
+
+export type MenuItemUpdateMutation = { __typename: 'Mutation', menuItemUpdate: { __typename: 'MenuItemUpdate', errors: Array<{ __typename: 'MenuError', code: MenuErrorCode, field: string | null, message: string | null }>, menuItem: { __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null } | null } | null };
+
+export type MenuListQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+  last?: InputMaybe<Scalars['Int']>;
+  before?: InputMaybe<Scalars['String']>;
+  sort?: InputMaybe<MenuSortingInput>;
+}>;
+
+
+export type MenuListQuery = { __typename: 'Query', menus: { __typename: 'MenuCountableConnection', edges: Array<{ __typename: 'MenuCountableEdge', node: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type MenuDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type MenuDetailsQuery = { __typename: 'Query', menu: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } | null };
 
 export type TaxConfigurationUpdateMutationVariables = Exact<{
   id: Scalars['ID'];

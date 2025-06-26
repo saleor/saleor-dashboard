@@ -64,31 +64,6 @@ export const appDetails = gql`
   }
 `;
 
-/** @deprecated use src/extensions/queries */
-export const extensionList = gql`
-  query ExtensionList($filter: AppExtensionFilterInput!) {
-    appExtensions(filter: $filter, first: 100) {
-      edges {
-        node {
-          id
-          label
-          url
-          mount
-          target
-          accessToken
-          permissions {
-            code
-          }
-          app {
-            id
-            appUrl
-          }
-        }
-      }
-    }
-  }
-`;
-
 export const EXTENSION_LIST_QUERY = "ExtensionList";
 
 /** @deprecated use src/extensions/queries */

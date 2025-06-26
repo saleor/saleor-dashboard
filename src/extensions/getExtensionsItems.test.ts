@@ -1,4 +1,4 @@
-import { AppExtensionMountEnum, PermissionEnum } from "@dashboard/graphql";
+import { AppExtensionMountEnum, AppExtensionTargetEnum, PermissionEnum } from "@dashboard/graphql";
 
 import {
   getExtensionItemsForOverviewCreate,
@@ -36,12 +36,16 @@ const mockedExtension: ExtensionWithParams = {
     __typename: "App",
     id: "app-id",
     appUrl: "https://example.com",
+    name: "App name",
+    brand: null,
   },
   accessToken: "test-token",
   permissions: [PermissionEnum.MANAGE_ORDERS],
   mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
   url: "https://example.com/extension",
   open: jest.fn(),
+  target: AppExtensionTargetEnum.POPUP,
+  options: null,
 };
 
 describe("getExtensionsItems", () => {
@@ -117,8 +121,11 @@ describe("getExtensionsItems", () => {
       },
       {
         name: "getExtensionsItemsForProductDetails",
-        params: "prod-1",
-        expectedOpenParams: { productId: "prod-1" },
+        params: {
+          productId: "prod-1",
+          productSlug: "prod-one",
+        },
+        expectedOpenParams: { productId: "prod-1", productSlug: "prod-one" },
         fn: getExtensionsItemsForProductDetails,
       },
       {
@@ -244,6 +251,7 @@ describe("getExtensionsItems", () => {
     ])(
       "$name should call extension open with $expectedOpenParams params when onSelect is called with $params",
       ({ params, expectedOpenParams, fn }) => {
+        // @ts-expect-error params is different depending on function, so TS is complaining, but that's fine
         const [result] = fn([mockedExtension], params);
 
         result.onSelect(expectedOpenParams);

@@ -1,0 +1,82 @@
+name: Update GraphQL Schema
+
+on:
+  schedule:
+    - cron: "0 7 * * 1-5" # Mon-Fri at 7 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-schema:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch schema
+        run: npm run fetch-schema
+
+      - name: Generate GraphQL code
+        run: npm run generate
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          if git diff --exit-code --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get current date
+        if: steps.git-check.outputs.has_changes == 'true'
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Get Saleor schema version
+        if: steps.git-check.outputs.has_changes == 'true'
+        id: schema-version
+        run: echo "version=$(node -p "require('./package.json').config.saleor.schemaVersion")" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update GraphQL schema and generated types"
+          title: "chore: update GraphQL schema and generated types (schema: ${{ steps.schema-version.outputs.version }}, ${{ steps.date.outputs.date }})"
+          body: |
+            This PR was automatically created to update the GraphQL schema and regenerate TypeScript types.
+
+            ## Changes
+
+            - Updated `schema.graphql` with the latest schema from Saleor (schema version: **${{ steps.schema-version.outputs.version }}**)
+            - Regenerated TypeScript types and Apollo Client hooks using GraphQL Code Generator
+
+            ## Verification
+
+            Please review the changes to ensure:
+            - [ ] The schema changes are expected
+            - [ ] Generated types are correctly updated
+            - [ ] No breaking changes are introduced
+
+            **Schema Version:** ${{ steps.schema-version.outputs.version }}  
+            **Generated on:** ${{ steps.date.outputs.date }}
+          branch: chore/update-schema-${{ steps.schema-version.outputs.version }}-${{ steps.date.outputs.date }}
+          delete-branch: true
+          draft: false

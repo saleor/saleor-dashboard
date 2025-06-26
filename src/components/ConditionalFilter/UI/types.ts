@@ -39,6 +39,10 @@ type ConditionOptionTypes = ConditionOption<
 export interface Row {
   value: { label: string; value: string; type: string } | null;
   loading?: boolean;
+  isAttribute: boolean;
+  selectedAttribute?: { label: string; value: string; type: string } | null;
+  availableAttributesList?: LeftOperatorOption[];
+  attributeLoading?: boolean;
   constraint?: {
     dependsOn: string[];
     disabled?: DisabledScope[];
@@ -140,7 +144,11 @@ export interface FilterEvent extends Event {
     | RightOperatorChangeData
     | RightOperatorFocusData
     | RightOperatorBlurData
-    | RightOperatorInputValueChangeData;
+    | RightOperatorInputValueChangeData
+    | AttributeChangeData
+    | AttributeFocusData
+    | AttributeBlurData
+    | AttributeInputValueChangeData;
 }
 
 export interface RowAddData {
@@ -222,6 +230,32 @@ export interface RightOperatorBlurData {
 export interface RightOperatorInputValueChangeData {
   type: "rightOperator.onInputValueChange";
   path: `${number}.condition.selected.value`;
+  index: number;
+  value: string;
+}
+
+export interface AttributeChangeData {
+  type: "attribute.onChange";
+  path: `${number}`;
+  index: number;
+  value: LeftOperatorOption;
+}
+
+export interface AttributeFocusData {
+  type: "attribute.onFocus";
+  path: `${number}`;
+  index: number;
+}
+
+export interface AttributeBlurData {
+  type: "attribute.onBlur";
+  path: `${number}`;
+  index: number;
+}
+
+export interface AttributeInputValueChangeData {
+  type: "attribute.onInputValueChange";
+  path: `${number}`;
   index: number;
   value: string;
 }
