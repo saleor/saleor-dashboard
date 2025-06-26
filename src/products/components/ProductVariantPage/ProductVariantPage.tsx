@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { QueryResult } from "@apollo/client";
+import { IS_ARTISO_ADMIN } from "@dashboard/artiso";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -254,12 +255,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       errors={errors}
                     />
                     <CardSpacer />
-                    <VariantDetailsChannelsAvailabilityCard
-                      variant={variant}
-                      listings={data.channelListings}
-                      disabled={loading}
-                      onManageClick={toggleManageChannels}
-                    />
+                    {IS_ARTISO_ADMIN && (
+                      <VariantDetailsChannelsAvailabilityCard
+                        variant={variant}
+                        listings={data.channelListings}
+                        disabled={loading}
+                        onManageClick={toggleManageChannels}
+                      />
+                    )}
                     {nonSelectionAttributes.length > 0 && (
                       <>
                         <Attributes
@@ -324,46 +327,50 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       onChange={handlers.changeChannels}
                     />
                     <CardSpacer />
-                    <ProductVariantCheckoutSettings
-                      data={data}
-                      disabled={loading}
-                      errors={errors}
-                      onChange={change}
-                    />
-                    <CardSpacer />
 
-                    <ProductShipping
-                      data={data}
-                      disabled={loading}
-                      errors={errors}
-                      weightUnit={variant?.weight?.unit || defaultWeightUnit}
-                      onChange={change}
-                    />
-                    <CardSpacer />
-                    <ProductStocks
-                      productVariantChannelListings={data.channelListings.map(channel => ({
-                        ...channel.data,
-                        ...channel.value,
-                      }))}
-                      warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
-                      fetchMoreWarehouses={fetchMoreWarehouses}
-                      hasMoreWarehouses={
-                        searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage
-                      }
-                      data={data}
-                      disabled={loading}
-                      hasVariants={true}
-                      errors={errors}
-                      stocks={data.stocks}
-                      onChange={handlers.changeStock}
-                      onFormDataChange={change}
-                      onWarehouseStockAdd={handlers.addStock}
-                      onWarehouseStockDelete={handlers.deleteStock}
-                      onWarehouseConfigure={onWarehouseConfigure}
-                      isCreate={false}
-                    />
-                    <CardSpacer />
-                    <Metadata data={data} onChange={handlers.changeMetadata} />
+                    {IS_ARTISO_ADMIN && (
+                      <>
+                        <ProductVariantCheckoutSettings
+                          data={data}
+                          disabled={loading}
+                          errors={errors}
+                          onChange={change}
+                        />
+                        <CardSpacer />
+                        <ProductShipping
+                          data={data}
+                          disabled={loading}
+                          errors={errors}
+                          weightUnit={variant?.weight?.unit || defaultWeightUnit}
+                          onChange={change}
+                        />
+                        <CardSpacer />
+                        <ProductStocks
+                          productVariantChannelListings={data.channelListings.map(channel => ({
+                            ...channel.data,
+                            ...channel.value,
+                          }))}
+                          warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
+                          fetchMoreWarehouses={fetchMoreWarehouses}
+                          hasMoreWarehouses={
+                            searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage
+                          }
+                          data={data}
+                          disabled={loading}
+                          hasVariants={true}
+                          errors={errors}
+                          stocks={data.stocks}
+                          onChange={handlers.changeStock}
+                          onFormDataChange={change}
+                          onWarehouseStockAdd={handlers.addStock}
+                          onWarehouseStockDelete={handlers.deleteStock}
+                          onWarehouseConfigure={onWarehouseConfigure}
+                          isCreate={false}
+                        />
+                        <CardSpacer />
+                        <Metadata data={data} onChange={handlers.changeMetadata} />
+                      </>
+                    )}
                   </div>
                 </Grid>
                 <Savebar>

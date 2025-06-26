@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { IS_ARTISO_ADMIN } from "@dashboard/artiso";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
@@ -205,22 +206,24 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
             id="category-list"
           />
         </Box>
-        <Multiselect
-          disabled={disabled}
-          options={collections}
-          data-test-id="collections"
-          value={collectionsInputDisplayValue}
-          error={!!formErrors.collections}
-          name="collections"
-          onChange={onCollectionChange}
-          fetchOptions={fetchCollections}
-          fetchMore={fetchMoreCollections}
-          label={intl.formatMessage({
-            id: "ulh3kf",
-            defaultMessage: "Collections",
-          })}
-          helperText={getProductErrorMessage(formErrors.collections, intl)}
-        />
+        {IS_ARTISO_ADMIN && (
+          <Multiselect
+            disabled={disabled}
+            options={collections}
+            data-test-id="collections"
+            value={collectionsInputDisplayValue}
+            error={!!formErrors.collections}
+            name="collections"
+            onChange={onCollectionChange}
+            fetchOptions={fetchCollections}
+            fetchMore={fetchMoreCollections}
+            label={intl.formatMessage({
+              id: "ulh3kf",
+              defaultMessage: "Collections",
+            })}
+            helperText={getProductErrorMessage(formErrors.collections, intl)}
+          />
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );

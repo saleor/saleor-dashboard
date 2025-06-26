@@ -1,3 +1,4 @@
+import { IS_ARTISO_ADMIN } from "@dashboard/artiso";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -50,22 +51,24 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
             )}
           </DashboardCard.Subtitle>
         </DashboardCard.Title>
-        <DashboardCard.Toolbar>
-          <RequirePermissions requiredPermissions={managePermissions}>
-            <Button
-              onClick={openModal}
-              data-test-id="channels-availability-manage-button"
-              type="button"
-              variant="secondary"
-            >
-              {intl.formatMessage({
-                id: "2i81/P",
-                defaultMessage: "Manage",
-                description: "section header button",
-              })}
-            </Button>
-          </RequirePermissions>
-        </DashboardCard.Toolbar>
+        {IS_ARTISO_ADMIN && (
+          <DashboardCard.Toolbar>
+            <RequirePermissions requiredPermissions={managePermissions}>
+              <Button
+                onClick={openModal}
+                data-test-id="channels-availability-manage-button"
+                type="button"
+                variant="secondary"
+              >
+                {intl.formatMessage({
+                  id: "2i81/P",
+                  defaultMessage: "Manage",
+                  description: "section header button",
+                })}
+              </Button>
+            </RequirePermissions>
+          </DashboardCard.Toolbar>
+        )}
       </DashboardCard.Header>
       <DashboardCard.Content gap={1} display="flex" flexDirection="column">
         <Box display="flex" flexDirection="column" gap={5}>

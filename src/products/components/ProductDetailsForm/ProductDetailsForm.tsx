@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { IS_ARTISO_ADMIN } from "@dashboard/artiso";
 import { DashboardCard } from "@dashboard/components/Card";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
@@ -73,23 +74,25 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             name="description"
           />
         )}
-        <Box __width="25%">
-          <Input
-            label={intl.formatMessage({
-              id: "L7N+0y",
-              defaultMessage: "Product Rating",
-              description: "product rating",
-            })}
-            size="small"
-            value={data.rating || ""}
-            onChange={onChange}
-            error={!!formErrors.rating}
-            name="rating"
-            type="number"
-            disabled={disabled}
-            helperText={getProductErrorMessage(formErrors.rating, intl)}
-          />
-        </Box>
+        {IS_ARTISO_ADMIN && (
+          <Box __width="25%">
+            <Input
+              label={intl.formatMessage({
+                id: "L7N+0y",
+                defaultMessage: "Product Rating",
+                description: "product rating",
+              })}
+              size="small"
+              value={data.rating || ""}
+              onChange={onChange}
+              error={!!formErrors.rating}
+              name="rating"
+              type="number"
+              disabled={disabled}
+              helperText={getProductErrorMessage(formErrors.rating, intl)}
+            />
+          </Box>
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );

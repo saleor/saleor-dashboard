@@ -162,7 +162,9 @@ const ProductSizeTable: React.FC<ProductSizeTableProps> = ({
         availableColumns: visibleColumns,
         column,
         row,
-        sizes: Object.keys(sizeTable).filter(k => sizeTable[k] !== undefined) as ClothingSize[],
+        sizes: Object.keys(sizeTable).filter(
+          k => sizeTable[k as ClothingSize] !== undefined,
+        ) as ClothingSize[],
         ...opts,
       }),
     [errors, visibleColumns],
