@@ -7036,142 +7036,6 @@ export function useChannelListLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type ChannelListQueryHookResult = ReturnType<typeof useChannelListQuery>;
 export type ChannelListLazyQueryHookResult = ReturnType<typeof useChannelListLazyQuery>;
 export type ChannelListQueryResult = Apollo.QueryResult<Types.ChannelListQuery, Types.ChannelListQueryVariables>;
-export const SearchOrdersByNumberDocument = gql`
-    query SearchOrdersByNumber($first: Int!, $query: [String!]) {
-  orders(first: $first, filter: {numbers: $query}) {
-    edges {
-      node {
-        id
-        number
-        status
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useSearchOrdersByNumberQuery__
- *
- * To run a query within a React component, call `useSearchOrdersByNumberQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchOrdersByNumberQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchOrdersByNumberQuery({
- *   variables: {
- *      first: // value for 'first'
- *      query: // value for 'query'
- *   },
- * });
- */
-export function useSearchOrdersByNumberQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>(SearchOrdersByNumberDocument, options);
-      }
-export function useSearchOrdersByNumberLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>(SearchOrdersByNumberDocument, options);
-        }
-export type SearchOrdersByNumberQueryHookResult = ReturnType<typeof useSearchOrdersByNumberQuery>;
-export type SearchOrdersByNumberLazyQueryHookResult = ReturnType<typeof useSearchOrdersByNumberLazyQuery>;
-export type SearchOrdersByNumberQueryResult = Apollo.QueryResult<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>;
-export const SearchCatalogDocument = gql`
-    query SearchCatalog($first: Int!, $query: String!) {
-  categories(first: $first, filter: {search: $query}) {
-    edges {
-      node {
-        id
-        name
-        backgroundImage(size: 64) {
-          url
-          alt
-        }
-        level
-      }
-    }
-  }
-  collections(first: $first, filter: {search: $query}) {
-    edges {
-      node {
-        ...Collection
-        backgroundImage(size: 64) {
-          url
-          alt
-        }
-      }
-    }
-  }
-  products(first: $first, filter: {search: $query}) {
-    edges {
-      node {
-        id
-        category {
-          id
-          name
-        }
-        name
-        thumbnail(size: 64) {
-          alt
-          url
-        }
-      }
-    }
-  }
-  productVariants(first: $first, filter: {search: $query}) {
-    edges {
-      node {
-        id
-        name
-        sku
-        product {
-          id
-          name
-          category {
-            id
-            name
-          }
-          thumbnail(size: 64) {
-            alt
-            url
-          }
-        }
-      }
-    }
-  }
-}
-    ${CollectionFragmentDoc}`;
-
-/**
- * __useSearchCatalogQuery__
- *
- * To run a query within a React component, call `useSearchCatalogQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchCatalogQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchCatalogQuery({
- *   variables: {
- *      first: // value for 'first'
- *      query: // value for 'query'
- *   },
- * });
- */
-export function useSearchCatalogQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>(SearchCatalogDocument, options);
-      }
-export function useSearchCatalogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>(SearchCatalogDocument, options);
-        }
-export type SearchCatalogQueryHookResult = ReturnType<typeof useSearchCatalogQuery>;
-export type SearchCatalogLazyQueryHookResult = ReturnType<typeof useSearchCatalogLazyQuery>;
-export type SearchCatalogQueryResult = Apollo.QueryResult<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>;
 export const ShopInfoDocument = gql`
     query ShopInfo {
   shop {
@@ -7304,6 +7168,117 @@ export function useRefreshLimitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type RefreshLimitsQueryHookResult = ReturnType<typeof useRefreshLimitsQuery>;
 export type RefreshLimitsLazyQueryHookResult = ReturnType<typeof useRefreshLimitsLazyQuery>;
 export type RefreshLimitsQueryResult = Apollo.QueryResult<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>;
+export const QuickSearchDocument = gql`
+    query QuickSearch($query: String!) {
+  orders(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        number
+        status
+        total {
+          gross {
+            amount
+            currency
+          }
+        }
+      }
+    }
+  }
+  categories(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
+        products(first: 1) {
+          totalCount
+        }
+      }
+    }
+  }
+  collections(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        products(first: 1) {
+          totalCount
+        }
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
+      }
+    }
+  }
+  products(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        category {
+          name
+        }
+        name
+        thumbnail(size: 64) {
+          alt
+          url
+        }
+      }
+    }
+  }
+  productVariants(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        sku
+        media {
+          alt
+          url(size: 64)
+        }
+        product {
+          id
+          category {
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useQuickSearchQuery__
+ *
+ * To run a query within a React component, call `useQuickSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuickSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuickSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useQuickSearchQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>(QuickSearchDocument, options);
+      }
+export function useQuickSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>(QuickSearchDocument, options);
+        }
+export type QuickSearchQueryHookResult = ReturnType<typeof useQuickSearchQuery>;
+export type QuickSearchLazyQueryHookResult = ReturnType<typeof useQuickSearchLazyQuery>;
+export type QuickSearchQueryResult = Apollo.QueryResult<Types.QuickSearchQuery, Types.QuickSearchQueryVariables>;
 export const CheckExportFileStatusDocument = gql`
     query CheckExportFileStatus($id: ID!) {
   exportFile(id: $id) {

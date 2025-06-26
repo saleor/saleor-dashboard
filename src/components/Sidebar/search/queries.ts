@@ -1,22 +1,24 @@
 import { gql } from "@apollo/client";
 
-export const searchOrdersByNumber = gql`
-  query SearchOrdersByNumber($first: Int!, $query: [String!]) {
-    orders(first: $first, filter: { numbers: $query }) {
+export const quickSearch = gql`
+  query QuickSearch($query: String!) {
+    orders(first: 5, filter: { search: $query }) {
       edges {
         node {
           id
           number
           status
+          total {
+            gross {
+              amount
+              currency
+            }
+          }
         }
       }
     }
-  }
-`;
 
-export const searchCatalog = gql`
-  query SearchCatalog($first: Int!, $query: String!) {
-    categories(first: $first, filter: { search: $query }) {
+    categories(first: 5, filter: { search: $query }) {
       edges {
         node {
           id
@@ -25,15 +27,21 @@ export const searchCatalog = gql`
             url
             alt
           }
-          level
+          products(first: 1) {
+            totalCount
+          }
         }
       }
     }
 
-    collections(first: $first, filter: { search: $query }) {
+    collections(first: 5, filter: { search: $query }) {
       edges {
         node {
-          ...Collection
+          id
+          name
+          products(first: 1) {
+            totalCount
+          }
           backgroundImage(size: 64) {
             url
             alt
@@ -42,12 +50,11 @@ export const searchCatalog = gql`
       }
     }
 
-    products(first: $first, filter: { search: $query }) {
+    products(first: 5, filter: { search: $query }) {
       edges {
         node {
           id
           category {
-            id
             name
           }
           name
@@ -59,22 +66,20 @@ export const searchCatalog = gql`
       }
     }
 
-    productVariants(first: $first, filter: { search: $query }) {
+    productVariants(first: 5, filter: { search: $query }) {
       edges {
         node {
           id
           name
           sku
+          media {
+            alt
+            url(size: 64)
+          }
           product {
             id
-            name
             category {
-              id
               name
-            }
-            thumbnail(size: 64) {
-              alt
-              url
             }
           }
         }
