@@ -153,6 +153,11 @@ export type AccountRegisterInput = {
   redirectUrl?: InputMaybe<Scalars['String']>;
 };
 
+/** Filtering options for addresses. */
+export type AddressFilterInput = {
+  phoneNumber?: InputMaybe<StringFilterInput>;
+};
+
 export type AddressInput = {
   /** City. */
   city?: InputMaybe<Scalars['String']>;
@@ -823,6 +828,21 @@ export type CardInput = {
   money: MoneyInput;
 };
 
+export type CardPaymentMethodDetailsInput = {
+  /** Brand of the payment method used for the transaction. Max length is 40 characters. */
+  brand?: InputMaybe<Scalars['String']>;
+  /** Expiration month of the card used for the transaction. Value must be between 1 and 12. */
+  expMonth?: InputMaybe<Scalars['Int']>;
+  /** Expiration year of the card used for the transaction. Value must be between 2000 and 9999. */
+  expYear?: InputMaybe<Scalars['Int']>;
+  /** First digits of the card used for the transaction. Max length is 4 characters. */
+  firstDigits?: InputMaybe<Scalars['String']>;
+  /** Last digits of the card used for the transaction. Max length is 4 characters. */
+  lastDigits?: InputMaybe<Scalars['String']>;
+  /** Name of the payment method used for the transaction. Max length is 256 characters. */
+  name: Scalars['String'];
+};
+
 export type CatalogueInput = {
   /** Categories related to the discount. */
   categories?: InputMaybe<Array<Scalars['ID']>>;
@@ -1383,10 +1403,11 @@ export enum CollectionSortField {
    * Sort collections by publication date.
    *
    * This option requires a channel filter to work as the values can vary between channels.
+   * @deprecated Use `PUBLISHED_AT` instead.
    */
   PUBLICATION_DATE = 'PUBLICATION_DATE',
   /**
-   * Sort collections by publication date.
+   * Sort collections by published at.
    *
    * This option requires a channel filter to work as the values can vary between channels.
    */
@@ -1789,6 +1810,28 @@ export type CustomerInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
+export type CustomerWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<CustomerWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<CustomerWhereInput>>;
+  /** Filter by addresses data associated with user. */
+  addresses?: InputMaybe<AddressFilterInput>;
+  /** Filter by date joined. */
+  dateJoined?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by email address. */
+  email?: InputMaybe<StringFilterInput>;
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter by whether the user is active. */
+  isActive?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+  /** Filter by date when orders were placed. */
+  placedOrdersAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by last updated date. */
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
+};
+
 export type DateRangeInput = {
   /** Start date. */
   gte?: InputMaybe<Scalars['Date']>;
@@ -2132,6 +2175,7 @@ export enum ExportFileSortField {
   CREATED_AT = 'CREATED_AT',
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   STATUS = 'STATUS',
+  /** @deprecated Use `LAST_MODIFIED_AT` instead. */
   UPDATED_AT = 'UPDATED_AT'
 }
 
@@ -4393,14 +4437,14 @@ export enum OrderSortField {
   CREATED_AT = 'CREATED_AT',
   /**
    * Sort orders by creation date
-   * @deprecated Use `createdAt` instead.
+   * @deprecated Use `CREATED_AT` instead.
    */
   CREATION_DATE = 'CREATION_DATE',
   /** Sort orders by customer. */
   CUSTOMER = 'CUSTOMER',
   /**
    * Sort orders by fulfillment status.
-   * @deprecated Use `status` instead.
+   * @deprecated Use `STATUS` instead.
    */
   FULFILLMENT_STATUS = 'FULFILLMENT_STATUS',
   /** Sort orders by last modified date. */
@@ -4556,6 +4600,11 @@ export type OrderWhereInput = {
   voucherCode?: InputMaybe<StringFilterInput>;
 };
 
+export type OtherPaymentMethodDetailsInput = {
+  /** Name of the payment method used for the transaction. */
+  name: Scalars['String'];
+};
+
 export type PageCreateInput = {
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
@@ -4625,9 +4674,15 @@ export type PageInput = {
 export enum PageSortField {
   /** Sort pages by creation date. */
   CREATED_AT = 'CREATED_AT',
-  /** Sort pages by creation date. */
+  /**
+   * Sort pages by creation date.
+   * @deprecated Use `CREATED_AT` instead.
+   */
   CREATION_DATE = 'CREATION_DATE',
-  /** Sort pages by publication date. */
+  /**
+   * Sort pages by publication date.
+   * @deprecated Use `PUBLISHED_AT` instead.
+   */
   PUBLICATION_DATE = 'PUBLICATION_DATE',
   /** Sort pages by publication date. */
   PUBLISHED_AT = 'PUBLISHED_AT',
@@ -4696,6 +4751,20 @@ export type PageTypeUpdateInput = {
   removeAttributes?: InputMaybe<Array<Scalars['ID']>>;
   /** Page type slug. */
   slug?: InputMaybe<Scalars['String']>;
+};
+
+export type PageWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<PageWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<PageWhereInput>>;
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+  /** Filter by page type. */
+  pageType?: InputMaybe<GlobalIdFilterInput>;
+  /** Filter by page slug. */
+  slug?: InputMaybe<StringFilterInput>;
 };
 
 export enum PaymentChargeStatusEnum {
@@ -4805,6 +4874,18 @@ export type PaymentInput = {
   storePaymentMethod?: InputMaybe<StorePaymentMethodEnum>;
   /** Client-side generated payment token, representing customer's billing data in a secure manner. */
   token?: InputMaybe<Scalars['String']>;
+};
+
+/**
+ * Details of the payment method used for the transaction. One of `card` or `other` is required.
+ *
+ * Added in Saleor 3.22.
+ */
+export type PaymentMethodDetailsInput = {
+  /** Details of the card payment method used for the transaction. */
+  card?: InputMaybe<CardPaymentMethodDetailsInput>;
+  /** Details of the non-card payment method used for this transaction. */
+  other?: InputMaybe<OtherPaymentMethodDetailsInput>;
 };
 
 export enum PaymentMethodInitializeTokenizationErrorCode {
@@ -5368,9 +5449,15 @@ export enum ProductOrderField {
   COLLECTION = 'COLLECTION',
   /** Sort products by creation date. */
   CREATED_AT = 'CREATED_AT',
-  /** Sort products by update date. */
+  /**
+   * Sort products by update date.
+   * @deprecated Use `LAST_MODIFIED_AT` instead.
+   */
   DATE = 'DATE',
-  /** Sort products by update date. */
+  /**
+   * Sort products by update date.
+   * @deprecated Use `LAST_MODIFIED_AT` instead.
+   */
   LAST_MODIFIED = 'LAST_MODIFIED',
   /** Sort products by update date. */
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
@@ -5392,6 +5479,7 @@ export enum ProductOrderField {
    * Sort products by publication date.
    *
    * This option requires a channel filter to work as the values can vary between channels.
+   * @deprecated Use `PUBLISHED_AT` instead.
    */
   PUBLICATION_DATE = 'PUBLICATION_DATE',
   /**
@@ -5693,7 +5781,7 @@ export type ProductVariantInput = {
 };
 
 export enum ProductVariantSortField {
-  /** Sort products variants by last modified at. */
+  /** Sort product variants by last modification date. */
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT'
 }
 
@@ -5994,7 +6082,7 @@ export type PromotionRuleUpdateInput = {
 };
 
 export enum PromotionSortField {
-  /** Sort promotions by created at. */
+  /** Sort promotions by creation date. */
   CREATED_AT = 'CREATED_AT',
   /** Sort promotions by end date. */
   END_DATE = 'END_DATE',
@@ -6145,11 +6233,11 @@ export type SaleInput = {
 };
 
 export enum SaleSortField {
-  /** Sort sales by created at. */
+  /** Sort sales by creation date. */
   CREATED_AT = 'CREATED_AT',
   /** Sort sales by end date. */
   END_DATE = 'END_DATE',
-  /** Sort sales by last modified at. */
+  /** Sort sales by last modification date. */
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort sales by name. */
   NAME = 'NAME',
@@ -6826,6 +6914,12 @@ export type TransactionCreateInput = {
   /** Payment name of the transaction. */
   name?: InputMaybe<Scalars['String']>;
   /**
+   * Details of the payment method used for the transaction.
+   *
+   * Added in Saleor 3.22.
+   */
+  paymentMethodDetails?: InputMaybe<PaymentMethodDetailsInput>;
+  /**
    * Payment private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -6990,6 +7084,12 @@ export type TransactionUpdateInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Payment name of the transaction. */
   name?: InputMaybe<Scalars['String']>;
+  /**
+   * Details of the payment method used for the transaction.
+   *
+   * Added in Saleor 3.22.
+   */
+  paymentMethodDetails?: InputMaybe<PaymentMethodDetailsInput>;
   /**
    * Payment private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
@@ -7243,7 +7343,10 @@ export type VoucherInput = {
 };
 
 export enum VoucherSortField {
-  /** Sort vouchers by code. */
+  /**
+   * Sort vouchers by code.
+   * @deprecated Field no longer supported
+   */
   CODE = 'CODE',
   /** Sort vouchers by end date. */
   END_DATE = 'END_DATE',
