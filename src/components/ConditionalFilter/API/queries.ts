@@ -207,6 +207,22 @@ export const dynamicOperandsQueries = gql`
     }
   }
 
+  query _GetProductVariantChoices($first: Int!, $query: String!) {
+    productVariants(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug: id
+          originalSlug: name
+          product {
+            name
+          }
+        }
+      }
+    }
+  }
+
   query _GetGiftCardTagsChoices($first: Int!, $query: String!) {
     giftCardTags(first: $first, filter: { search: $query }) {
       edges {
@@ -265,6 +281,22 @@ export const dynamicOperandsQueries = gql`
           name
           slug
           originalSlug: slug
+        }
+      }
+    }
+  }
+
+  query _SearchProductVariantOperands($first: Int!, $ids: [ID!]) {
+    productVariants(first: $first, where: { ids: $ids }) {
+      edges {
+        node {
+          id
+          name
+          slug: id
+          originalSlug: name
+          product {
+            name
+          }
         }
       }
     }

@@ -3,7 +3,7 @@ import { AttributeInput } from "@dashboard/graphql";
 
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
-import { Handler, PageHandler, ProductsHandler } from "../Handler";
+import { Handler, PageHandler, ProductsHandler, ProductVariantHandler } from "../Handler";
 import { FilterHandlerStrategy } from "./types";
 
 export class ReferenceAttributeStrategy implements FilterHandlerStrategy {
@@ -26,6 +26,8 @@ export class ReferenceAttributeStrategy implements FilterHandlerStrategy {
         return new PageHandler(client, inputValue);
       case "PRODUCT":
         return new ProductsHandler(client, inputValue);
+      case "PRODUCT_VARIANT":
+        return new ProductVariantHandler(client, inputValue);
       default:
         throw new Error(`Unsupported reference entity type: ${entityType}`);
     }

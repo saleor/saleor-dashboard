@@ -3,9 +3,6 @@ import {
   _GetChannelOperandsDocument,
   _GetChannelOperandsQuery,
   _GetChannelOperandsQueryVariables,
-  _GetPagesChoicesDocument,
-  _GetPagesChoicesQuery,
-  _GetPagesChoicesQueryVariables,
   _SearchAttributeOperandsDocument,
   _SearchAttributeOperandsQuery,
   _SearchAttributeOperandsQueryVariables,
@@ -24,12 +21,15 @@ import {
   _SearchProductTypesOperandsDocument,
   _SearchProductTypesOperandsQuery,
   _SearchProductTypesOperandsQueryVariables,
+  _SearchProductVariantOperandsDocument,
+  _SearchProductVariantOperandsQuery,
+  _SearchProductVariantOperandsQueryVariables,
   AttributeEntityTypeEnum,
 } from "@dashboard/graphql";
 import { useState } from "react";
 
 import { FetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
-import { createOptionsFromAPI } from "../../Handler";
+import { createAttributeProductVariantOptionsFromAPI, createOptionsFromAPI } from "../../Handler";
 import {
   createInitialProductStateFromData,
   mergeInitialProductsStateReferenceAttributes,
@@ -166,6 +166,27 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
               .then(result => ({
                 slug,
                 itemOptions: createOptionsFromAPI(result.data.products?.edges ?? []),
+              })),
+          );
+          break;
+        case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+          referenceChoicePromises.push(
+            client
+              .query<
+                _SearchProductVariantOperandsQuery,
+                _SearchProductVariantOperandsQueryVariables
+              >({
+                query: _SearchProductVariantOperandsDocument,
+                variables: {
+                  first: values.length,
+                  ids: values,
+                },
+              })
+              .then(result => ({
+                slug,
+                itemOptions: createAttributeProductVariantOptionsFromAPI(
+                  result.data.productVariants?.edges ?? [],
+                ),
               })),
           );
           break;

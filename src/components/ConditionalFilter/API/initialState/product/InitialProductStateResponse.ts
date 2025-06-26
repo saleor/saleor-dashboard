@@ -62,12 +62,21 @@ export class InitialProductStateResponse implements InitialProductState {
       const attribute = this.attribute[token.name];
       const isReference = attribute?.inputType === "REFERENCE";
 
-      return attribute.choices.filter(({ value, originalSlug }) => {
-        const matchValue = isReference ? originalSlug : value;
+      // Handle reference attributes - match by originalSlug
+      // (except for product variant attributes)
+      if (isReference && attribute?.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT) {
+        return attribute.choices.filter(({ originalSlug }) => {
+          if (!originalSlug) return false;
 
-        return Array.isArray(token.value)
-          ? token.value.includes(matchValue)
-          : token.value === matchValue;
+          return Array.isArray(token.value)
+            ? token.value.includes(originalSlug)
+            : token.value === originalSlug;
+        });
+      }
+
+      // Handle non-reference attributes and product variant attributes - match by value
+      return attribute.choices.filter(({ value }) => {
+        return Array.isArray(token.value) ? token.value.includes(value) : token.value === value;
       });
     }
 

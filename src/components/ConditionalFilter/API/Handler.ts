@@ -34,6 +34,9 @@ import {
   _GetProductTypesChoicesDocument,
   _GetProductTypesChoicesQuery,
   _GetProductTypesChoicesQueryVariables,
+  _GetProductVariantChoicesDocument,
+  _GetProductVariantChoicesQuery,
+  _GetProductVariantChoicesQueryVariables,
   ChannelCurrenciesDocument,
   ChannelCurrenciesQuery,
   ChannelCurrenciesQueryVariables,
@@ -83,6 +86,26 @@ export const createCustomerOptionsFromAPI = (
     })) ?? []
   );
 };
+
+export const createAttributeProductVariantOptionsFromAPI = (
+  data: Array<{
+    node: {
+      name: string | null;
+      id: string;
+      slug?: string;
+      originalSlug?: string | null;
+      product?: {
+        name: string;
+      };
+    };
+  }>,
+): ItemOption[] =>
+  data.map(({ node }) => ({
+    label: node.product ? `${node.product.name}: ${node.name}` : node.name ?? "",
+    value: node.id,
+    slug: node.slug,
+    originalSlug: node.originalSlug,
+  }));
 
 export class AttributeChoicesHandler implements Handler {
   constructor(
@@ -221,6 +244,28 @@ export class ProductsHandler implements Handler {
     });
 
     return createOptionsFromAPI(data.products?.edges ?? []);
+  };
+}
+
+export class ProductVariantHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetProductVariantChoicesQuery,
+      _GetProductVariantChoicesQueryVariables
+    >({
+      query: _GetProductVariantChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return createAttributeProductVariantOptionsFromAPI(data.productVariants?.edges ?? []);
   };
 }
 
