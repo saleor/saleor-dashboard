@@ -2,7 +2,6 @@ import "@glideapps/glide-data-grid/dist/index.css";
 
 import { useRowAnchorHandler } from "@dashboard/components/Datagrid/hooks/useRowAnchorHandler";
 import { NavigatorOpts } from "@dashboard/hooks/useNavigator";
-import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import { getCellAction } from "@dashboard/products/components/ProductListDatagrid/datagrid";
 import DataEditor, {
   CellClickedEventArgs,
@@ -35,6 +34,7 @@ import React, {
 import { DashboardCard } from "../Card";
 import { CardMenuItem } from "../CardMenu";
 import { FullScreenContainer } from "./components/FullScreenContainer";
+import { PreventHistoryBack } from "./components/PreventHistoryBack";
 import { RowActions } from "./components/RowActions";
 import { TooltipContainer } from "./components/TooltipContainer";
 import { useCustomCellRenderers } from "./customCells/useCustomCellRenderers";
@@ -188,10 +188,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
     }
   }, [recentlyAddedColumn, availableColumns, editor]);
   usePortalClasses({ className: classes.portal });
-
-  const editorContainerRef = useRef<HTMLDivElement>(null);
-
-  usePreventHistoryBack(editorContainerRef);
 
   const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex, onRowAdded } =
     useDatagridChange(availableColumns, rows, onChange, (areCellsDirty: boolean) =>
@@ -408,7 +404,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   return (
     <FullScreenContainer open={isOpen} className={fullScreenClasses.fullScreenContainer}>
-      <Box ref={editorContainerRef} position="relative" __height={isOpen ? "100%" : "auto"}>
+      <PreventHistoryBack __height={isOpen ? "100%" : "auto"}>
         <DashboardCard position="relative" __height={isOpen ? "100%" : "auto"} gap={0}>
           {renderHeader?.({
             toggleFullscreen: toggle,
@@ -537,7 +533,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
             onClick={rowAnchorHandler}
           />
         )}
-      </Box>
+      </PreventHistoryBack>
     </FullScreenContainer>
   );
 };
