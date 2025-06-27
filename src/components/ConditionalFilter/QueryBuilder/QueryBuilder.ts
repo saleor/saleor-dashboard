@@ -1,56 +1,65 @@
-import { AttributeInput } from "@dashboard/graphql";
-
-import { FilterStrategyResolver } from "../API/strategies";
+import { FilterDefinitionResolver } from "../filterDefinitions/FilterDefinitionResolver";
+import { FilterDefinition, supportsFilterApi, supportsWhereApi } from "../filterDefinitions/types";
 import { FilterContainer, FilterElement } from "../FilterElement";
-import { QueryApiType, SpecialHandler, StaticQueryPart } from "./types";
-import { mapStaticQueryPartToLegacyVariables } from "./utils";
+import { QueryApiType } from "./types";
 
 export class QueryBuilder<T extends Record<string, any>> {
   constructor(
     private apiType: QueryApiType,
     private filterContainer: FilterContainer,
-    private specialHandlers: SpecialHandler<T>[] = [],
-    private resolver = FilterStrategyResolver.getResolver(),
+    private filterDefinitionResolver: FilterDefinitionResolver = FilterDefinitionResolver.getDefaultResolver(),
   ) {}
 
   build(): T {
-    const result = {} as T;
-    const validElements = this.getValidElements();
+    let query = {} as T;
 
-    for (const element of validElements) {
-      this.processElement(result, element);
-    }
+    for (const element of this.getValidElements()) {
+      const definition = this.filterDefinitionResolver.resolve(element);
 
-    return result;
-  }
+      if (definition) {
+        const updatedQuery = this.updateQueryWithDefinition(query, element, definition);
 
-  private processElement(result: T, element: FilterElement): void {
-    for (const handler of this.specialHandlers) {
-      if (handler.canHandle(element)) {
-        handler.handle(result, element, this.resolver);
-
-        return;
+        query = updatedQuery;
       }
     }
 
-    const strategy = this.resolver.resolve(element);
-    const queryPart = strategy.buildQueryPart(element);
-
-    this.handleField(result, element, queryPart);
+    return query;
   }
 
-  private handleField(
-    result: T,
+  private updateQueryWithDefinition(
+    query: T,
     element: FilterElement,
-    queryPart: StaticQueryPart | AttributeInput,
-  ): void {
-    const fieldName = element.value.value as keyof T;
+    definition: FilterDefinition<T>,
+  ): T {
+    const filterIdentifier = this.getFilterIdentifier(element);
 
     if (this.apiType === QueryApiType.WHERE) {
-      result[fieldName] = queryPart as T[keyof T];
+      if (!supportsWhereApi(definition)) {
+        throw new Error(
+          `Filter definition for element "${filterIdentifier}" does not support WHERE API. ` +
+            `This definition only supports: ${supportsFilterApi(definition) ? "FILTER" : "none"} API.`,
+        );
+      }
+
+      return definition.updateWhereQuery(query, element) as T;
     } else {
-      result[fieldName] = mapStaticQueryPartToLegacyVariables(queryPart) as T[keyof T];
+      if (!supportsFilterApi(definition)) {
+        throw new Error(
+          `Filter definition for element "${filterIdentifier}" does not support FILTER API. ` +
+            `This definition only supports: ${supportsWhereApi(definition) ? "WHERE" : "none"} API.`,
+        );
+      }
+
+      return definition.updateFilterQuery(query, element) as T;
     }
+  }
+
+  private getFilterIdentifier(element: FilterElement): string {
+    if (element.isAttribute && element.selectedAttribute) {
+      return `attribute.${element.selectedAttribute.value}`;
+    }
+
+    return element.value.value || element.value.type || "unknown";
   }
 
   private getValidElements(): FilterElement[] {

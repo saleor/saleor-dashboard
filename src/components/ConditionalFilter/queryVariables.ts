@@ -18,22 +18,7 @@ import {
 } from "@dashboard/graphql";
 
 import { FilterContainer } from "./FilterElement";
-import {
-  AttributeHandler,
-  AttributeTypeHandler,
-  CollectionChannelHandler,
-  CollectionPublishedHandler,
-  CustomerNumberOfOrdersHandler,
-  GiftCardStaticOnlyHandler,
-  MetadataHandler,
-  ProductTypeConfigurableHandler,
-  QueryApiType,
-  QueryBuilder,
-  StaffMemberStatusHandler,
-  VoucherChannelHandler,
-  VoucherStatusHandler,
-  VoucherTimesUsedHandler,
-} from "./QueryBuilder";
+import { QueryApiType, QueryBuilder } from "./QueryBuilder";
 
 export type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
@@ -61,32 +46,27 @@ export const mapStaticQueryPartToLegacyVariables = (
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 export type OrderQueryVars = ProductQueryVars & { created?: DateTimeRangeInput | DateRangeInput };
-type CollectionQueryVars = Omit<CollectionFilterInput, "channel"> & { channel?: { eq: string } };
 
 export const createProductQueryVariables = (value: FilterContainer): ProductQueryVars =>
-  new QueryBuilder<ProductWhereInput>(QueryApiType.WHERE, value, [
-    new AttributeHandler(),
-    new MetadataHandler(),
-  ]).build();
+  new QueryBuilder<ProductQueryVars>(QueryApiType.WHERE, value).build();
 
 export const createDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput =>
   new QueryBuilder<PromotionWhereInput>(QueryApiType.WHERE, value).build();
 
-export const createOrderQueryVariables = (value: FilterContainer): OrderQueryVars =>
-  new QueryBuilder<OrderQueryVars>(QueryApiType.WHERE, value, [new MetadataHandler()]).build();
+export const createOrderQueryVariables = (value: FilterContainer): any =>
+  new QueryBuilder<any>(QueryApiType.WHERE, value).build();
 
 export const createVoucherQueryVariables = (
   value: FilterContainer,
 ): { filters: VoucherFilterInput; channel: string | undefined } => {
-  const channelHandler = new VoucherChannelHandler();
+  const query = new QueryBuilder<VoucherFilterInput & { channel?: string }>(
+    QueryApiType.FILTER,
+    value,
+  ).build();
 
-  const filters = new QueryBuilder<VoucherFilterInput>(QueryApiType.FILTER, value, [
-    channelHandler,
-    new VoucherTimesUsedHandler(),
-    new VoucherStatusHandler(),
-  ]).build();
+  const { channel, ...filters } = query;
 
-  return { filters, channel: channelHandler.getChannel() };
+  return { filters, channel };
 };
 
 export const createPageQueryVariables = (value: FilterContainer): PageFilterInput =>
@@ -96,42 +76,32 @@ export const createDraftOrderQueryVariables = (value: FilterContainer): OrderDra
   new QueryBuilder<OrderDraftFilterInput>(QueryApiType.FILTER, value).build();
 
 export const createGiftCardQueryVariables = (value: FilterContainer): GiftCardFilterInput =>
-  new QueryBuilder<GiftCardFilterInput>(QueryApiType.FILTER, value, [
-    new GiftCardStaticOnlyHandler(),
-  ]).build();
+  new QueryBuilder<GiftCardFilterInput>(QueryApiType.FILTER, value).build();
 
 export const createCustomerQueryVariables = (value: FilterContainer): CustomerFilterInput =>
-  new QueryBuilder<CustomerFilterInput>(QueryApiType.FILTER, value, [
-    new CustomerNumberOfOrdersHandler(),
-    new MetadataHandler(),
-  ]).build();
+  new QueryBuilder<CustomerFilterInput>(QueryApiType.FILTER, value).build();
 
-export const createCollectionsQueryVariables = (value: FilterContainer): CollectionQueryVars => {
-  const channelHandler = new CollectionChannelHandler();
+export const createCollectionsQueryVariables = (
+  value: FilterContainer,
+): Omit<CollectionFilterInput, "channel"> & { channel?: string } => {
+  const query = new QueryBuilder<CollectionFilterInput & { channel?: { eq: string } }>(
+    QueryApiType.FILTER,
+    value,
+  ).build();
 
-  const filters = new QueryBuilder<CollectionFilterInput>(QueryApiType.FILTER, value, [
-    channelHandler,
-    new MetadataHandler(),
-    new CollectionPublishedHandler(),
-  ]).build();
+  const { channel, ...variables } = query;
 
-  return {
-    ...filters,
-    channel: channelHandler.getChannel(),
-  };
+  // Extract the actual channel value from the { eq: string } format
+  const channelValue = channel?.eq;
+
+  return { ...variables, channel: channelValue };
 };
 
 export const createProductTypesQueryVariables = (value: FilterContainer): ProductTypeFilterInput =>
-  new QueryBuilder<ProductTypeFilterInput>(QueryApiType.FILTER, value, [
-    new ProductTypeConfigurableHandler(),
-  ]).build();
+  new QueryBuilder<ProductTypeFilterInput>(QueryApiType.FILTER, value).build();
 
 export const createStaffMembersQueryVariables = (value: FilterContainer): StaffUserInput =>
-  new QueryBuilder<StaffUserInput>(QueryApiType.FILTER, value, [
-    new StaffMemberStatusHandler(),
-  ]).build();
+  new QueryBuilder<StaffUserInput>(QueryApiType.FILTER, value).build();
 
 export const createAttributesQueryVariables = (value: FilterContainer): AttributeFilterInput =>
-  new QueryBuilder<AttributeFilterInput>(QueryApiType.FILTER, value, [
-    new AttributeTypeHandler(),
-  ]).build();
+  new QueryBuilder<AttributeFilterInput>(QueryApiType.FILTER, value).build();

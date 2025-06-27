@@ -1,12 +1,12 @@
 import { useApolloClient } from "@apollo/client";
 
-import { FilterContainer, FilterElement } from "../../FilterElement";
+import { FilterDefinitionResolver } from "../../filterDefinitions/FilterDefinitionResolver";
+import { FilterContainer } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
 import { AttributesHandler } from "../Handler";
-import { FilterStrategyResolver } from "../strategies/FilterStrategyResolver";
 import { getFilterElement } from "../utils";
 
-const strategyResolver = FilterStrategyResolver.getResolver();
+const resolver = FilterDefinitionResolver.getDefaultResolver();
 
 export const useProductFilterAPIProvider = (): FilterAPIProvider => {
   const client = useApolloClient();
@@ -17,13 +17,18 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
     inputValue: string,
   ) => {
     const index = parseInt(position, 10);
-    const filterElement = getFilterElement(value, index) as FilterElement;
+    const filterElement = getFilterElement(value, index);
 
-    const strategy = strategyResolver.resolve(filterElement);
-    const handler = strategy.createHandler(client, inputValue, filterElement);
+    if (!filterElement) {
+      return Promise.resolve([]);
+    }
+
+    const definition = resolver.resolve(filterElement);
+    const handler = definition.createOptionFetcher(client, inputValue, filterElement);
 
     return handler.fetch();
   };
+
   const fetchAttributeOptions = async (inputValue: string) => {
     const handler = new AttributesHandler(client, inputValue);
 
