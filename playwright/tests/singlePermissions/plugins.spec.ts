@@ -8,16 +8,7 @@ test.use({ permissionName: "plugin" });
 let mainMenuPage: MainMenuPage;
 let extensionsPage: ExtensionsPage;
 
-const expectedExtensions = [
-  "Admin emails",
-  "Adyen",
-  "Avalara",
-  "Dummy",
-  "OpenID Connect",
-  "Stripe",
-  "User emails",
-  "Webhooks",
-];
+const expectedExtensions = ["Admin emails", "OpenID Connect", "User emails", "Webhooks"];
 
 test.beforeEach(async ({ page }) => {
   mainMenuPage = new MainMenuPage(page);
