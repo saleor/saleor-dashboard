@@ -1,4 +1,4 @@
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
+import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { createBooleanOption } from "../../../constants";
 import { AttributeInputType } from "../../../FilterElement/ConditionOptions";
@@ -16,6 +16,7 @@ export interface AttributeDTO {
   label: string;
   slug: string;
   value: string;
+  entityType?: AttributeEntityTypeEnum;
 }
 
 export interface InitialProductState {
@@ -58,7 +59,25 @@ export class InitialProductStateResponse implements InitialProductState {
 
   public filterByUrlToken(token: UrlToken) {
     if (token.isAttribute() && token.hasDynamicValues()) {
-      return this.attribute[token.name].choices.filter(({ value }) => token.value.includes(value));
+      const attribute = this.attribute[token.name];
+      const isReference = attribute?.inputType === "REFERENCE";
+
+      // Handle reference attributes - match by originalSlug
+      // (except for product variant attributes)
+      if (isReference && attribute?.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT) {
+        return attribute.choices.filter(({ originalSlug }) => {
+          if (!originalSlug) return false;
+
+          return Array.isArray(token.value)
+            ? token.value.includes(originalSlug)
+            : token.value === originalSlug;
+        });
+      }
+
+      // Handle non-reference attributes and product variant attributes - match by value
+      return attribute.choices.filter(({ value }) => {
+        return Array.isArray(token.value) ? token.value.includes(value) : token.value === value;
+      });
     }
 
     if (isDateField(token.name)) {

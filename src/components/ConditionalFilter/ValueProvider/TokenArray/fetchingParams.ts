@@ -7,6 +7,7 @@ export interface FetchingParams {
   channel: string[];
   productType: string[];
   attribute: Record<string, string[]>;
+  attributeReference: Record<string, string[]>;
 }
 
 export interface OrderFetchingParams {
@@ -56,7 +57,7 @@ export interface AttributesFetchingParams {
   attributeType: string[];
 }
 
-type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
+type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute" | "attributeReference">;
 type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
@@ -71,6 +72,7 @@ export const emptyFetchingParams: FetchingParams = {
   channel: [],
   productType: [],
   attribute: {},
+  attributeReference: {},
 };
 
 export const emptyOrderFetchingParams: OrderFetchingParams = {
@@ -122,10 +124,22 @@ export const emptyAttributesFetchingParams: AttributesFetchingParams = {
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
 const includedInParams = (c: UrlToken) =>
-  TokenType.ATTRIBUTE_DROPDOWN === c.type || TokenType.ATTRIBUTE_MULTISELECT === c.type;
+  TokenType.ATTRIBUTE_DROPDOWN === c.type ||
+  TokenType.ATTRIBUTE_MULTISELECT === c.type ||
+  TokenType.ATTRIBUTE_REFERENCE === c.type;
 
 export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
   const key = c.name as FetchingParamsKeys;
+
+  if (c.type === TokenType.ATTRIBUTE_REFERENCE) {
+    if (!p.attributeReference[c.name]) {
+      p.attributeReference[c.name] = [];
+    }
+
+    p.attributeReference[c.name] = unique(p.attributeReference[c.name].concat(c.value));
+
+    return p;
+  }
 
   if (!c.isAttribute() && !p[key]) {
     p[key] = [];

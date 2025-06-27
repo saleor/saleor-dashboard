@@ -2,7 +2,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { creatVoucherQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { createVoucherQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -44,7 +44,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
   const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
-  const { filters, channel } = creatVoucherQueryVariables(valueProvider.value);
+  const { filters, channel } = createVoucherQueryVariables(valueProvider.value);
 
   usePaginationReset(voucherListUrl, params, settings.rowNumber);
 

@@ -25,6 +25,7 @@ describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
       channel: [],
       productType: [],
       attribute: {},
+      attributeReference: {},
     });
   });
 
