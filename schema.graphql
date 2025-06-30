@@ -341,7 +341,7 @@ type Query {
     """Filtering options for categories."""
     filter: CategoryFilterInput
 
-    """Where filtering options."""
+    """Where filtering options for categories."""
     where: CategoryWhereInput
 
     """Sort categories."""
@@ -411,7 +411,7 @@ type Query {
     """Filtering options for collections."""
     filter: CollectionFilterInput
 
-    """Where filtering options."""
+    """Where filtering options for collections."""
     where: CollectionWhereInput
 
     """Sort collections."""
@@ -466,9 +466,9 @@ type Query {
   """
   products(
     """Filtering options for products."""
-    filter: ProductFilterInput
+    filter: ProductFilterInput @deprecated(reason: "Use `where` filter instead.")
 
-    """Where filtering options."""
+    """Where filtering options for products."""
     where: ProductWhereInput
 
     """Sort products."""
@@ -558,7 +558,7 @@ type Query {
     """Filtering options for product variant."""
     filter: ProductVariantFilterInput
 
-    """Where filtering options."""
+    """Where filtering options for product variants."""
     where: ProductVariantWhereInput
 
     """Sort products variants."""
@@ -685,7 +685,21 @@ type Query {
     sortBy: PageSortingInput
 
     """Filtering options for pages."""
-    filter: PageFilterInput
+    filter: PageFilterInput @deprecated(reason: "+ Use `where` and `search` instead.")
+
+    """
+    Search pages. Overrides filter.search input.
+    
+    Added in Saleor 3.22.
+    """
+    search: String
+
+    """
+    Where filtering options for pages.
+    
+    Added in Saleor 3.22.
+    """
+    where: PageWhereInput
 
     """Return the elements in the list that come before the specified cursor."""
     before: String
@@ -781,7 +795,7 @@ type Query {
     sortBy: OrderSortingInput
 
     """Filtering options for orders."""
-    filter: OrderFilterInput
+    filter: OrderFilterInput @deprecated(reason: "Use `where` filter instead.")
 
     """
     Where filtering options for orders.
@@ -1177,7 +1191,7 @@ type Query {
   Requires one of the following permissions: MANAGE_DISCOUNTS.
   """
   promotions(
-    """Where filtering options."""
+    """Where filtering options for promotions."""
     where: PromotionWhereInput
 
     """Sort promotions."""
@@ -1329,9 +1343,9 @@ type Query {
   """List of the shop's attributes."""
   attributes(
     """Filtering options for attributes."""
-    filter: AttributeFilterInput
+    filter: AttributeFilterInput @deprecated(reason: "Use `where` filter instead.")
 
-    """Filtering options for attributes."""
+    """Where filtering options for attributes."""
     where: AttributeWhereInput
 
     """Search attributes."""
@@ -1486,10 +1500,24 @@ type Query {
   """
   customers(
     """Filtering options for customers."""
-    filter: CustomerFilterInput
+    filter: CustomerFilterInput @deprecated(reason: "Use `where` filter instead.")
+
+    """
+    Where filtering options for customers.
+    
+    Added in Saleor 3.22.
+    """
+    where: CustomerWhereInput
 
     """Sort customers."""
     sortBy: UserSortingInput
+
+    """
+    Search customers.
+    
+    Added in Saleor 3.22.
+    """
+    search: String
 
     """Return the elements in the list that come before the specified cursor."""
     before: String
@@ -5657,7 +5685,7 @@ type Product implements Node & ObjectWithMetadata @doc(category: "Products") {
     """Filtering options for product variant."""
     filter: ProductVariantFilterInput
 
-    """Where filtering options."""
+    """Where filtering options for product variants."""
     where: ProductVariantWhereInput
 
     """Sort products variants."""
@@ -5835,8 +5863,14 @@ type ProductType implements Node & ObjectWithMetadata @doc(category: "Products")
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   availableAttributes(
-    filter: AttributeFilterInput
+    """Filtering options for attributes of this product type."""
+    filter: AttributeFilterInput @deprecated(reason: "Use `where` filter instead.")
+
+    """Where filtering options for attributes of this product type."""
     where: AttributeWhereInput
+
+    """Search attributes."""
+    search: String
 
     """Return the elements in the list that come before the specified cursor."""
     before: String
@@ -6604,14 +6638,19 @@ type Category implements Node & ObjectWithMetadata @doc(category: "Products") {
   List of products in the category. Requires the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
   """
   products(
-    """Filtering options for products."""
+    """
+    Filtering options for products. {DEPRECATED_IN_3X_INPUT} Use `where` filter instead.
+    """
     filter: ProductFilterInput
 
-    """Filtering options for products."""
+    """Where filtering options for products."""
     where: ProductWhereInput
 
     """Sort products."""
     sortBy: ProductOrder
+
+    """Search products."""
+    search: String
 
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -6963,10 +7002,10 @@ enum ProductOrderField @doc(category: "Products") {
   MINIMAL_PRICE
 
   """Sort products by update date."""
-  LAST_MODIFIED
+  LAST_MODIFIED @deprecated(reason: "Use `LAST_MODIFIED_AT` instead.")
 
   """Sort products by update date."""
-  DATE
+  DATE @deprecated(reason: "Use `LAST_MODIFIED_AT` instead.")
 
   """Sort products by type."""
   TYPE
@@ -6983,7 +7022,7 @@ enum ProductOrderField @doc(category: "Products") {
   
   This option requires a channel filter to work as the values can vary between channels.
   """
-  PUBLICATION_DATE
+  PUBLICATION_DATE @deprecated(reason: "Use `PUBLISHED_AT` instead.")
 
   """
   Sort products by publication date.
@@ -7876,7 +7915,7 @@ input ProductVariantSortingInput @doc(category: "Products") {
 }
 
 enum ProductVariantSortField @doc(category: "Products") {
-  """Sort products variants by last modified at."""
+  """Sort product variants by last modification date."""
   LAST_MODIFIED_AT
 }
 
@@ -7962,10 +8001,13 @@ type Collection implements Node & ObjectWithMetadata @doc(category: "Products") 
   """List of products in this collection."""
   products(
     """Filtering options for products."""
-    filter: ProductFilterInput
+    filter: ProductFilterInput @deprecated(reason: "Use `where` filter instead.")
 
-    """Filtering options for products."""
+    """Where filtering options for products."""
     where: ProductWhereInput
+
+    """Search products."""
+    search: String
 
     """Sort products."""
     sortBy: ProductOrder
@@ -8534,8 +8576,14 @@ type PageType implements Node & ObjectWithMetadata @doc(category: "Pages") {
   Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
   """
   availableAttributes(
-    filter: AttributeFilterInput
+    """Filtering options for attributes."""
+    filter: AttributeFilterInput @deprecated(reason: "Use `where` filter instead.")
+
+    """Where filtering options for attributes."""
     where: AttributeWhereInput
+
+    """Search attributes."""
+    search: String
 
     """Return the elements in the list that come before the specified cursor."""
     before: String
@@ -10710,6 +10758,13 @@ type TransactionItem implements Node & ObjectWithMetadata @doc(category: "Paymen
   The url that will allow to redirect user to payment provider page with transaction details.
   """
   externalUrl: String!
+
+  """
+  The payment method used for this transaction.
+  
+  Added in Saleor 3.22.
+  """
+  paymentMethodDetails: PaymentMethodDetails
 }
 
 """
@@ -12178,6 +12233,53 @@ enum TransactionEventTypeEnum @doc(category: "Payments") {
 
 union UserOrApp = User | App
 
+union PaymentMethodDetails = CardPaymentMethodDetails | OtherPaymentMethodDetails
+
+"""
+Represents a card payment method used for a transaction.
+
+Added in Saleor 3.22.
+"""
+type CardPaymentMethodDetails implements GenericPaymentMethodDetails {
+  """Name of the payment method."""
+  name: String!
+
+  """Card brand."""
+  brand: String
+
+  """First 4 digits of the card number."""
+  firstDigits: String
+
+  """Last 4 digits of the card number."""
+  lastDigits: String
+
+  """Two-digit number representing the card’s expiration month."""
+  expMonth: Int
+
+  """Four-digit number representing the card’s expiration year."""
+  expYear: Int
+}
+
+"""
+Represents a payment method used for a transaction.
+
+Added in Saleor 3.22.
+"""
+interface GenericPaymentMethodDetails {
+  """Name of the payment method."""
+  name: String!
+}
+
+"""
+Represents a payment method used for a transaction.
+
+Added in Saleor 3.22.
+"""
+type OtherPaymentMethodDetails implements GenericPaymentMethodDetails {
+  """Name of the payment method."""
+  name: String!
+}
+
 """
 Determine a current authorize status for checkout.
 
@@ -12611,10 +12713,10 @@ enum CollectionSortField @doc(category: "Products") {
   
   This option requires a channel filter to work as the values can vary between channels.
   """
-  PUBLICATION_DATE
+  PUBLICATION_DATE @deprecated(reason: "Use `PUBLISHED_AT` instead.")
 
   """
-  Sort collections by publication date.
+  Sort collections by published at.
   
   This option requires a channel filter to work as the values can vary between channels.
   """
@@ -12719,10 +12821,10 @@ enum PageSortField @doc(category: "Pages") {
   VISIBILITY
 
   """Sort pages by creation date."""
-  CREATION_DATE
+  CREATION_DATE @deprecated(reason: "Use `CREATED_AT` instead.")
 
   """Sort pages by publication date."""
-  PUBLICATION_DATE
+  PUBLICATION_DATE @deprecated(reason: "Use `PUBLISHED_AT` instead.")
 
   """Sort pages by publication date."""
   PUBLISHED_AT
@@ -12737,6 +12839,54 @@ input PageFilterInput @doc(category: "Pages") {
   pageTypes: [ID!]
   ids: [ID!]
   slugs: [String!]
+}
+
+input PageWhereInput @doc(category: "Pages") {
+  """Filter by metadata fields."""
+  metadata: MetadataFilterInput
+  ids: [ID!]
+
+  """Filter by page slug."""
+  slug: StringFilterInput
+
+  """Filter by page type."""
+  pageType: GlobalIDFilterInput
+
+  """List of conditions that must be met."""
+  AND: [PageWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [PageWhereInput!]
+}
+
+"""
+Allows filtering based on metadata key/value pairs.
+
+        Examples:
+        - `{key: "size"}`
+          Matches objects where the metadata key "size" exists, regardless of its value.
+        - `{key: "color", value: {oneOf: ["blue", "green"]}}`
+          Matches objects where the metadata key "color" is set to either "blue" or "green".
+        - `{key: "status", value: {eq: "active"}}`
+          Matches objects where the metadata key "status" is set to "active".
+"""
+input MetadataFilterInput {
+  """
+  Key to filter by. If not other fields provided - checking the existence of the key in metadata.
+  """
+  key: String!
+
+  """Value to filter by."""
+  value: MetadataValueFilterInput
+}
+
+"""Define the filtering options for metadata value fields."""
+input MetadataValueFilterInput {
+  """The value equal to."""
+  eq: String
+
+  """The value included in."""
+  oneOf: [String!]
 }
 
 type PageTypeCountableConnection @doc(category: "Pages") {
@@ -12812,7 +12962,7 @@ enum OrderSortField @doc(category: "Orders") {
   RANK
 
   """Sort orders by creation date"""
-  CREATION_DATE @deprecated(reason: "Use `createdAt` instead.")
+  CREATION_DATE @deprecated(reason: "Use `CREATED_AT` instead.")
 
   """Sort orders by creation date."""
   CREATED_AT
@@ -12827,7 +12977,7 @@ enum OrderSortField @doc(category: "Orders") {
   PAYMENT
 
   """Sort orders by fulfillment status."""
-  FULFILLMENT_STATUS @deprecated(reason: "Use `status` instead.")
+  FULFILLMENT_STATUS @deprecated(reason: "Use `STATUS` instead.")
 
   """
   Sort orders by order status. 
@@ -12911,9 +13061,6 @@ input OrderWhereInput @doc(category: "Orders") {
   """
   isClickAndCollect: Boolean
 
-  """Filter by whether the order contains preorder items."""
-  isPreorder: Boolean
-
   """Filter based on whether a gift card was used in the order."""
   isGiftCardUsed: Boolean
 
@@ -12941,6 +13088,9 @@ input OrderWhereInput @doc(category: "Orders") {
   """Filter by number of lines in the order."""
   linesCount: IntFilterInput
 
+  """Filter by transaction data associated with the order."""
+  transactions: TransactionFilterInput
+
   """Filter by total gross amount of the order."""
   totalGross: PriceFilterInput
 
@@ -12953,41 +13103,17 @@ input OrderWhereInput @doc(category: "Orders") {
   """Filter by order events."""
   events: OrderEventFilterInput
 
+  """Filter by billing address of the order."""
+  billingAddress: AddressFilterInput
+
+  """Filter by shipping address of the order."""
+  shippingAddress: AddressFilterInput
+
   """List of conditions that must be met."""
   AND: [OrderWhereInput!]
 
   """A list of conditions of which at least one must be met."""
   OR: [OrderWhereInput!]
-}
-
-"""
-Allows filtering based on metadata key/value pairs.
-
-        Examples:
-        - `{key: "size"}`
-          Matches objects where the metadata key "size" exists, regardless of its value.
-        - `{key: "color", value: {oneOf: ["blue", "green"]}}`
-          Matches objects where the metadata key "color" is set to either "blue" or "green".
-        - `{key: "status", value: {eq: "active"}}`
-          Matches objects where the metadata key "status" is set to "active".
-"""
-input MetadataFilterInput {
-  """
-  Key to filter by. If not other fields provided - checking the existence of the key in metadata.
-  """
-  key: String!
-
-  """Value to filter by."""
-  value: MetadataValueFilterInput
-}
-
-"""Define the filtering options for metadata value fields."""
-input MetadataValueFilterInput {
-  """The value equal to."""
-  eq: String
-
-  """The value included in."""
-  oneOf: [String!]
 }
 
 """Define the filtering options for integer fields."""
@@ -13068,6 +13194,50 @@ input LinesFilterInput @doc(category: "Orders") {
   metadata: MetadataFilterInput
 }
 
+"""Filter input for transactions."""
+input TransactionFilterInput @doc(category: "Orders") {
+  """Filter by payment method details used to pay for the order."""
+  paymentMethodDetails: PaymentMethodDetailsFilterInput
+
+  """Filter by metadata fields of transactions."""
+  metadata: MetadataFilterInput
+}
+
+input PaymentMethodDetailsFilterInput {
+  """Filter by payment method type used to pay for the order."""
+  type: PaymentMethodTypeEnumFilterInput
+
+  """
+  Filter by card details used to pay for the order. Skips `type` filter if provided.
+  """
+  card: PaymentMethodDetailsCardFilterInput
+}
+
+input PaymentMethodTypeEnumFilterInput {
+  """The value equal to."""
+  eq: PaymentMethodTypeEnum
+
+  """The value included in."""
+  oneOf: [PaymentMethodTypeEnum!]
+}
+
+"""
+Represents possible payment method types.
+
+    The following types are possible:
+    CARD - represents a card payment method.
+    OTHER - represents any payment method that is not a card payment.
+"""
+enum PaymentMethodTypeEnum @doc(category: "Payments") {
+  CARD
+  OTHER
+}
+
+input PaymentMethodDetailsCardFilterInput {
+  """Filter by payment method brand used to pay for the order."""
+  brand: StringFilterInput
+}
+
 input PriceFilterInput {
   """The currency of the price to filter by."""
   currency: String
@@ -13091,6 +13261,24 @@ input OrderEventTypeEnumFilterInput {
 
   """The value included in."""
   oneOf: [OrderEventsEnum!]
+}
+
+"""Filtering options for addresses."""
+input AddressFilterInput @doc(category: "Users") {
+  phoneNumber: StringFilterInput
+  country: CountryCodeEnumFilterInput
+}
+
+"""Filter by country code."""
+input CountryCodeEnumFilterInput @doc(category: "Users") {
+  """The value equal to."""
+  eq: CountryCode
+
+  """The value included in."""
+  oneOf: [CountryCode!]
+
+  """The value not included in."""
+  notOneOf: [CountryCode!]
 }
 
 input OrderDraftFilterInput @doc(category: "Orders") {
@@ -13400,10 +13588,10 @@ enum SaleSortField @doc(category: "Discounts") {
   """Sort sales by type."""
   TYPE
 
-  """Sort sales by created at."""
+  """Sort sales by creation date."""
   CREATED_AT
 
-  """Sort sales by last modified at."""
+  """Sort sales by last modification date."""
   LAST_MODIFIED_AT
 }
 
@@ -13453,7 +13641,7 @@ input VoucherSortingInput @doc(category: "Discounts") {
 
 enum VoucherSortField {
   """Sort vouchers by code."""
-  CODE
+  CODE @deprecated
 
   """
   Sort vouchers by name.
@@ -13904,7 +14092,7 @@ enum PromotionSortField @doc(category: "Discounts") {
   """Sort promotions by end date."""
   END_DATE
 
-  """Sort promotions by created at."""
+  """Sort promotions by creation date."""
   CREATED_AT
 }
 
@@ -14008,7 +14196,7 @@ input ExportFileSortingInput {
 enum ExportFileSortField {
   STATUS
   CREATED_AT
-  UPDATED_AT
+  UPDATED_AT @deprecated(reason: "Use `LAST_MODIFIED_AT` instead.")
   LAST_MODIFIED_AT
 }
 
@@ -14311,6 +14499,45 @@ input CustomerFilterInput @doc(category: "Users") {
   """Filter by ids."""
   ids: [ID!]
   updatedAt: DateTimeRangeInput
+}
+
+input CustomerWhereInput @doc(category: "Users") {
+  """Filter by metadata fields."""
+  metadata: MetadataFilterInput
+  ids: [ID!]
+
+  """Filter by email address."""
+  email: StringFilterInput
+
+  """Filter by first name."""
+  firstName: StringFilterInput
+
+  """Filter by last name."""
+  lastName: StringFilterInput
+
+  """Filter by whether the user is active."""
+  isActive: Boolean
+
+  """Filter by date joined."""
+  dateJoined: DateTimeRangeInput
+
+  """Filter by last updated date."""
+  updatedAt: DateTimeRangeInput
+
+  """Filter by date when orders were placed."""
+  placedOrdersAt: DateTimeRangeInput
+
+  """Filter by addresses data associated with user."""
+  addresses: AddressFilterInput
+
+  """Filter by number of orders placed by the user."""
+  numberOfOrders: IntFilterInput
+
+  """List of conditions that must be met."""
+  AND: [CustomerWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [CustomerWhereInput!]
 }
 
 input UserSortingInput @doc(category: "Users") {
@@ -15797,6 +16024,13 @@ type Mutation {
     The message related to the event. The maximum length is 512 characters; any text exceeding this limit will be truncated.
     """
     message: String
+
+    """
+    Details of the payment method used for the transaction.
+    
+    Added in Saleor 3.22.
+    """
+    paymentMethodDetails: PaymentMethodDetailsInput
 
     """PSP Reference of the event to report."""
     pspReference: String!
@@ -22778,6 +23012,63 @@ input TransactionCreateInput @doc(category: "Payments") {
   The url that will allow to redirect user to payment provider page with transaction event details.
   """
   externalUrl: String
+
+  """
+  Details of the payment method used for the transaction.
+  
+  Added in Saleor 3.22.
+  """
+  paymentMethodDetails: PaymentMethodDetailsInput
+}
+
+"""
+Details of the payment method used for the transaction. One of `card` or `other` is required.
+
+Added in Saleor 3.22.
+"""
+input PaymentMethodDetailsInput {
+  """Details of the card payment method used for the transaction."""
+  card: CardPaymentMethodDetailsInput
+
+  """Details of the non-card payment method used for this transaction."""
+  other: OtherPaymentMethodDetailsInput
+}
+
+input CardPaymentMethodDetailsInput {
+  """
+  Name of the payment method used for the transaction. Max length is 256 characters.
+  """
+  name: String!
+
+  """
+  Brand of the payment method used for the transaction. Max length is 40 characters.
+  """
+  brand: String
+
+  """
+  First digits of the card used for the transaction. Max length is 4 characters.
+  """
+  firstDigits: String
+
+  """
+  Last digits of the card used for the transaction. Max length is 4 characters.
+  """
+  lastDigits: String
+
+  """
+  Expiration month of the card used for the transaction. Value must be between 1 and 12.
+  """
+  expMonth: Int
+
+  """
+  Expiration year of the card used for the transaction. Value must be between 2000 and 9999.
+  """
+  expYear: Int
+}
+
+input OtherPaymentMethodDetailsInput {
+  """Name of the payment method used for the transaction."""
+  name: String!
 }
 
 input TransactionEventInput @doc(category: "Payments") {
@@ -22863,6 +23154,13 @@ input TransactionUpdateInput @doc(category: "Payments") {
   The url that will allow to redirect user to payment provider page with transaction event details.
   """
   externalUrl: String
+
+  """
+  Details of the payment method used for the transaction.
+  
+  Added in Saleor 3.22.
+  """
+  paymentMethodDetails: PaymentMethodDetailsInput
 }
 
 """
