@@ -42,7 +42,7 @@ export class FilterDefinitionResolver {
       new VoucherChannelDefinition(),
       new VoucherStatusDefinition(),
       new VoucherTimesUsedDefinition(),
-      new DefaultDefinition(), // Fallback for fields like "price"
+      new DefaultDefinition(),
     ]);
   }
 
