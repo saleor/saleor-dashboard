@@ -7006,8 +7006,8 @@ export type _SearchPageOperandsQueryHookResult = ReturnType<typeof use_SearchPag
 export type _SearchPageOperandsLazyQueryHookResult = ReturnType<typeof use_SearchPageOperandsLazyQuery>;
 export type _SearchPageOperandsQueryResult = Apollo.QueryResult<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>;
 export const _SearchProductOperandsDocument = gql`
-    query _SearchProductOperands($first: Int!, $productsIds: [ID!]) {
-  products(first: $first, filter: {ids: $productsIds}) {
+    query _SearchProductOperands($first: Int!, $productSlugs: [String!]) {
+  products(first: $first, where: {slug: {oneOf: $productSlugs}}) {
     edges {
       node {
         id
@@ -7033,7 +7033,7 @@ export const _SearchProductOperandsDocument = gql`
  * const { data, loading, error } = use_SearchProductOperandsQuery({
  *   variables: {
  *      first: // value for 'first'
- *      productsIds: // value for 'productsIds'
+ *      productSlugs: // value for 'productSlugs'
  *   },
  * });
  */
@@ -7048,49 +7048,6 @@ export function use_SearchProductOperandsLazyQuery(baseOptions?: ApolloReactHook
 export type _SearchProductOperandsQueryHookResult = ReturnType<typeof use_SearchProductOperandsQuery>;
 export type _SearchProductOperandsLazyQueryHookResult = ReturnType<typeof use_SearchProductOperandsLazyQuery>;
 export type _SearchProductOperandsQueryResult = Apollo.QueryResult<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>;
-export const _SearchProductOperandsBySlugDocument = gql`
-    query _SearchProductOperandsBySlug($first: Int!, $productSlugs: [String!]) {
-  products(first: $first, where: {slug: {oneOf: $productSlugs}}) {
-    edges {
-      node {
-        id
-        name
-        slug
-        originalSlug: slug
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __use_SearchProductOperandsBySlugQuery__
- *
- * To run a query within a React component, call `use_SearchProductOperandsBySlugQuery` and pass it any options that fit your needs.
- * When your component renders, `use_SearchProductOperandsBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = use_SearchProductOperandsBySlugQuery({
- *   variables: {
- *      first: // value for 'first'
- *      productSlugs: // value for 'productSlugs'
- *   },
- * });
- */
-export function use_SearchProductOperandsBySlugQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchProductOperandsBySlugQuery, Types._SearchProductOperandsBySlugQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchProductOperandsBySlugQuery, Types._SearchProductOperandsBySlugQueryVariables>(_SearchProductOperandsBySlugDocument, options);
-      }
-export function use_SearchProductOperandsBySlugLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchProductOperandsBySlugQuery, Types._SearchProductOperandsBySlugQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchProductOperandsBySlugQuery, Types._SearchProductOperandsBySlugQueryVariables>(_SearchProductOperandsBySlugDocument, options);
-        }
-export type _SearchProductOperandsBySlugQueryHookResult = ReturnType<typeof use_SearchProductOperandsBySlugQuery>;
-export type _SearchProductOperandsBySlugLazyQueryHookResult = ReturnType<typeof use_SearchProductOperandsBySlugLazyQuery>;
-export type _SearchProductOperandsBySlugQueryResult = Apollo.QueryResult<Types._SearchProductOperandsBySlugQuery, Types._SearchProductOperandsBySlugQueryVariables>;
 export const _SearchProductVariantOperandsDocument = gql`
     query _SearchProductVariantOperands($first: Int!, $ids: [ID!]) {
   productVariants(first: $first, where: {ids: $ids}) {

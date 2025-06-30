@@ -8896,19 +8896,11 @@ export type _SearchPageOperandsQuery = { __typename: 'Query', pages: { __typenam
 
 export type _SearchProductOperandsQueryVariables = Exact<{
   first: Scalars['Int'];
-  productsIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
-}>;
-
-
-export type _SearchProductOperandsQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string, originalSlug: string } }> } | null };
-
-export type _SearchProductOperandsBySlugQueryVariables = Exact<{
-  first: Scalars['Int'];
   productSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
-export type _SearchProductOperandsBySlugQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string, originalSlug: string } }> } | null };
+export type _SearchProductOperandsQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, slug: string, originalSlug: string } }> } | null };
 
 export type _SearchProductVariantOperandsQueryVariables = Exact<{
   first: Scalars['Int'];
