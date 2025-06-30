@@ -15970,6 +15970,142 @@ export function useGridWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQuery>;
 export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
+export const GlobalSearchDocument = gql`
+    query GlobalSearch($query: String!) {
+  orders(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        number
+        status
+        updatedAt
+        total {
+          gross {
+            amount
+            currency
+          }
+        }
+      }
+    }
+  }
+  categories(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        updatedAt
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
+        products(first: 1) {
+          totalCount
+        }
+      }
+    }
+  }
+  collections(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        products(first: 1) {
+          totalCount
+        }
+        backgroundImage(size: 64) {
+          url
+          alt
+        }
+      }
+    }
+  }
+  products(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        category {
+          name
+        }
+        name
+        updatedAt
+        thumbnail(size: 64) {
+          alt
+          url
+        }
+      }
+    }
+  }
+  productVariants(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        sku
+        updatedAt
+        media {
+          alt
+          url(size: 64)
+        }
+        product {
+          id
+          name
+          category {
+            name
+          }
+        }
+      }
+    }
+  }
+  models: pages(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        title
+        publishedAt
+        pageType {
+          name
+        }
+      }
+    }
+  }
+  modelTypes: pageTypes(first: 5, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGlobalSearchQuery__
+ *
+ * To run a query within a React component, call `useGlobalSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGlobalSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGlobalSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useGlobalSearchQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>(GlobalSearchDocument, options);
+      }
+export function useGlobalSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>(GlobalSearchDocument, options);
+        }
+export type GlobalSearchQueryHookResult = ReturnType<typeof useGlobalSearchQuery>;
+export type GlobalSearchLazyQueryHookResult = ReturnType<typeof useGlobalSearchLazyQuery>;
+export type GlobalSearchQueryResult = Apollo.QueryResult<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>;
 export const SearchAttributesDocument = gql`
     query SearchAttributes($after: String, $first: Int!, $query: String!) {
   search: attributes(after: $after, first: $first, filter: {search: $query}) {
