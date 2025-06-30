@@ -84,17 +84,10 @@ export const createCustomerQueryVariables = (value: FilterContainer): CustomerFi
 export const createCollectionsQueryVariables = (
   value: FilterContainer,
 ): Omit<CollectionFilterInput, "channel"> & { channel?: string } => {
-  const query = new QueryBuilder<CollectionFilterInput & { channel?: { eq: string } }>(
+  return new QueryBuilder<CollectionFilterInput & { channel?: { eq: string } }>(
     QueryApiType.FILTER,
     value,
   ).build();
-
-  const { channel, ...variables } = query;
-
-  // Extract the actual channel value from the { eq: string } format
-  const channelValue = channel?.eq;
-
-  return { ...variables, channel: channelValue };
 };
 
 export const createProductTypesQueryVariables = (value: FilterContainer): ProductTypeFilterInput =>
