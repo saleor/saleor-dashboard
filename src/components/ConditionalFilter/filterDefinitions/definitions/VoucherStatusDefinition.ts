@@ -1,10 +1,11 @@
+import { DiscountStatusEnum, VoucherFilterInput } from "@dashboard/graphql";
+
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { isItemOption } from "../../FilterElement/ConditionValue";
-import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition } from "../types";
+import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
+import { FilterOnlyFilterDefinition } from "../types";
 
-export class VoucherStatusDefinition implements BothApiFilterDefinition<any> {
+export class VoucherStatusDefinition implements FilterOnlyFilterDefinition<VoucherFilterInput> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "voucherStatus";
   }
@@ -13,25 +14,25 @@ export class VoucherStatusDefinition implements BothApiFilterDefinition<any> {
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
+  updateFilterQuery(
+    query: Readonly<VoucherFilterInput>,
+    element: FilterElement,
+  ): VoucherFilterInput {
     const { value: selectedValue } = element.condition.selected;
-    let queryPart;
 
-    if (isItemOption(selectedValue)) {
-      queryPart = { eq: selectedValue.value };
+    let status: DiscountStatusEnum[] | undefined;
+
+    if (isItemOptionArray(selectedValue)) {
+      status = selectedValue.map(item => item.value as DiscountStatusEnum);
+    } else if (isItemOption(selectedValue)) {
+      status = [selectedValue.value as DiscountStatusEnum];
     } else {
-      queryPart = { eq: selectedValue };
+      status = undefined;
     }
-
-    return { ...query, status: queryPart };
-  }
-
-  updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
-    const whereQuery = this.updateWhereQuery(query, element);
 
     return {
       ...query,
-      status: mapStaticQueryPartToLegacyVariables(whereQuery.status),
+      status,
     };
   }
 }

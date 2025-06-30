@@ -1,7 +1,7 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { isItemOption } from "../../FilterElement/ConditionValue";
 import { BothApiFilterDefinition } from "../types";
+import { getBooleanValueFromElement } from "../utils";
 
 export class StaticBooleanDefinition implements BothApiFilterDefinition<any> {
   canHandle(element: FilterElement): boolean {
@@ -13,17 +13,8 @@ export class StaticBooleanDefinition implements BothApiFilterDefinition<any> {
   }
 
   updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
-    const { value: selectedValue } = element.condition.selected;
     const fieldName = element.value.value;
-    let booleanValue: boolean;
-
-    if (isItemOption(selectedValue)) {
-      booleanValue = selectedValue.value === "true";
-    } else if (typeof selectedValue === "boolean") {
-      booleanValue = selectedValue;
-    } else {
-      booleanValue = String(selectedValue) === "true";
-    }
+    const booleanValue = getBooleanValueFromElement(element);
 
     return { ...query, [fieldName]: booleanValue };
   }

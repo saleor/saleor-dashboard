@@ -3,6 +3,7 @@ import { FilterElement } from "../../FilterElement";
 import { isItemOption } from "../../FilterElement/ConditionValue";
 import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
 import { BothApiFilterDefinition } from "../types";
+import { getBooleanValueFromElement } from "../utils";
 
 export class GiftCardDefinition implements BothApiFilterDefinition<any> {
   canHandle(element: FilterElement): boolean {
@@ -19,7 +20,7 @@ export class GiftCardDefinition implements BothApiFilterDefinition<any> {
     let queryPart;
 
     if (fieldName === "isActive" && isItemOption(selectedValue)) {
-      const boolValue = selectedValue.value === "true";
+      const boolValue = getBooleanValueFromElement(element);
 
       queryPart = { eq: boolValue };
     } else if (isItemOption(selectedValue)) {
@@ -36,7 +37,7 @@ export class GiftCardDefinition implements BothApiFilterDefinition<any> {
     const fieldName = element.value.value;
 
     if (fieldName === "isActive" && isItemOption(selectedValue)) {
-      return { ...query, [fieldName]: selectedValue.value === "true" };
+      return { ...query, [fieldName]: getBooleanValueFromElement(element) };
     }
 
     const whereQuery = this.updateWhereQuery(query, element);
