@@ -100,12 +100,16 @@ export const createAttributeProductVariantOptionsFromAPI = (
     };
   }>,
 ): ItemOption[] =>
-  data.map(({ node }) => ({
-    label: node.product ? `${node.product.name}: ${node.name}` : node.name ?? "",
-    value: node.id,
-    slug: node.slug,
-    originalSlug: node.originalSlug,
-  }));
+  data.map(
+    ({ node }) =>
+      ({
+        // AttributeValue.name for product variant reference attributes
+        label: node.product ? `${node.product.name}: ${node.name}` : node.name ?? "",
+        value: node.id,
+        slug: node.slug,
+        originalSlug: node.originalSlug,
+      }) as ItemOption,
+  );
 
 export class AttributeChoicesHandler implements Handler {
   constructor(
