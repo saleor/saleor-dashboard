@@ -5,9 +5,8 @@ import {
   AttributeChoicesHandler,
   Handler,
   PageHandler,
-  PageTypesHandler,
   ProductsHandler,
-  ProductTypeHandler,
+  ProductVariantHandler,
 } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { AttributeQueryBuilder } from "../helpers/AttributeQueryBuilder";
@@ -33,13 +32,8 @@ export class AttributeDefinition
       case AttributeEntityTypeEnum.PRODUCT:
         return new ProductsHandler(client, inputValue);
       case AttributeEntityTypeEnum.PRODUCT_VARIANT:
-        return new ProductTypeHandler(client, inputValue);
+        return new ProductVariantHandler(client, inputValue);
       default:
-        // Handle cases where entityType is null or other string values like "page-type"
-        if (typeof entityType === "string" && entityType === "page-type") {
-          return new PageTypesHandler(client, inputValue);
-        }
-
         return new AttributeChoicesHandler(client, id, inputValue);
     }
   }

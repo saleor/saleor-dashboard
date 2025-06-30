@@ -23,7 +23,7 @@ export class AttributeQueryBuilder {
 
     if (inputType === AttributeInputTypeEnum.REFERENCE) {
       if (isItemOption(value)) {
-        return { slug: attributeSlug, values: [value.value] };
+        return { slug: attributeSlug, valueNames: [value.label] };
       }
 
       if (isItemOptionArray(value)) {
@@ -33,7 +33,7 @@ export class AttributeQueryBuilder {
 
         return {
           slug: attributeSlug,
-          values: value.map(item => item.value),
+          valueNames: value.map(item => item.label),
         };
       }
 
