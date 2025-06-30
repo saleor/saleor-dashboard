@@ -15,6 +15,10 @@ import {
   _SearchPageOperandsDocument,
   _SearchPageOperandsQuery,
   _SearchPageOperandsQueryVariables,
+  _SearchProductOperandsBySlugDocument,
+  _SearchProductOperandsBySlugQuery,
+  _SearchProductOperandsBySlugQueryResult,
+  _SearchProductOperandsBySlugQueryVariables,
   _SearchProductOperandsDocument,
   _SearchProductOperandsQuery,
   _SearchProductOperandsQueryVariables,
@@ -156,13 +160,15 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
         case AttributeEntityTypeEnum.PRODUCT:
           referenceChoicePromises.push(
             client
-              .query<_SearchProductOperandsQuery, _SearchProductOperandsQueryVariables>({
-                query: _SearchProductOperandsDocument,
-                variables: {
-                  first: values.length,
-                  productSlugs: values,
+              .query<_SearchProductOperandsBySlugQuery, _SearchProductOperandsBySlugQueryVariables>(
+                {
+                  query: _SearchProductOperandsBySlugDocument,
+                  variables: {
+                    first: values.length,
+                    productSlugs: values,
+                  },
                 },
-              })
+              )
               .then(result => ({
                 slug,
                 itemOptions: createOptionsFromAPI(result.data.products?.edges ?? []),

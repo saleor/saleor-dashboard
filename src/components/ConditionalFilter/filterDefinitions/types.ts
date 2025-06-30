@@ -3,7 +3,7 @@ import { ApolloClient } from "@apollo/client";
 import { Handler } from "../API/Handler";
 import { FilterElement } from "../FilterElement";
 
-export interface BaseFilterDefinition<TQuery extends Record<string, any>> {
+export interface BaseFilterDefinition {
   /**
    * Determines if this definition should handle the given filter element.
    */
@@ -20,7 +20,7 @@ export interface BaseFilterDefinition<TQuery extends Record<string, any>> {
 }
 
 export interface WhereOnlyFilterDefinition<TQuery extends Record<string, any>>
-  extends BaseFilterDefinition<TQuery> {
+  extends BaseFilterDefinition {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
    * This method MUST treat the input query as immutable and return a new one.
@@ -29,7 +29,7 @@ export interface WhereOnlyFilterDefinition<TQuery extends Record<string, any>>
 }
 
 export interface FilterOnlyFilterDefinition<TQuery extends Record<string, any>>
-  extends BaseFilterDefinition<TQuery> {
+  extends BaseFilterDefinition {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for FILTER API.
    * This method MUST treat the input query as immutable and return a new one.
@@ -38,7 +38,7 @@ export interface FilterOnlyFilterDefinition<TQuery extends Record<string, any>>
 }
 
 export interface BothApiFilterDefinition<TQuery extends Record<string, any>>
-  extends BaseFilterDefinition<TQuery> {
+  extends BaseFilterDefinition {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
    * This method MUST treat the input query as immutable and return a new one.
