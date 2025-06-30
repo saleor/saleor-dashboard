@@ -1,36 +1,38 @@
 import { FilterElement } from "../FilterElement";
-import { AttributeDefinition } from "./definitions/AttributeDefinition";
-import { AttributeTypeDefinition } from "./definitions/AttributeTypeDefinition";
-import { CollectionChannelDefinition } from "./definitions/CollectionChannelDefinition";
-import { CollectionPublishedDefinition } from "./definitions/CollectionPublishedDefinition";
-import { CustomerNumberOfOrdersDefinition } from "./definitions/CustomerNumberOfOrdersDefinition";
-import { DefaultDefinition } from "./definitions/DefaultDefinition";
-import { GiftCardDefinition } from "./definitions/GiftCardDefinition";
-import { MetadataDefinition } from "./definitions/MetadataDefinition";
-import { ProductTypeConfigurableDefinition } from "./definitions/ProductTypeConfigurableDefinition";
-import { StaffMemberStatusDefinition } from "./definitions/StaffMemberStatusDefinition";
-import { StaticBooleanDefinition } from "./definitions/StaticBooleanDefinition";
-import { StaticDefinition } from "./definitions/StaticDefinition";
-import { VoucherChannelDefinition } from "./definitions/VoucherChannelDefinition";
-import { VoucherStatusDefinition } from "./definitions/VoucherStatusDefinition";
-import { VoucherTimesUsedDefinition } from "./definitions/VoucherTimesUsedDefinition";
+import {
+  AttributeDefinition,
+  AttributeTypeDefinition,
+  CollectionPublishedDefinition,
+  CustomerNumberOfOrdersDefinition,
+  DefaultDefinition,
+  GiftCardDefinition,
+  MetadataDefinition,
+  ProductTypeConfigurableDefinition,
+  StaffMemberStatusDefinition,
+  StaticBooleanDefinition,
+  StaticDefinition,
+  VoucherStatusDefinition,
+  VoucherTimesUsedDefinition,
+} from "./definitions";
 import { FilterDefinition } from "./types";
 
 export class FilterDefinitionResolver {
   private definitions: Array<FilterDefinition<any>>;
 
-  private constructor(definitions: Array<FilterDefinition<any>>) {
+  constructor(definitions: Array<FilterDefinition<any>>) {
     this.definitions = definitions;
   }
 
-  public static getDefaultResolver() {
-    // This is the place to register all available definitions.
-    // The order is important, as the first matching definition will be used.
-    // DefaultDefinition should be last as it handles any unmatched element.
-    return new FilterDefinitionResolver([
+  /**
+   * This is a place to register all available definitions.
+   * Returns the default set of filter definitions in the correct order.
+   * The order is important, as the first matching definition will be used.
+   * DefaultDefinition should be last as it handles any unmatched element.
+   */
+  public static getDefaultDefinitions(): Array<FilterDefinition<any>> {
+    return [
       new AttributeDefinition(),
       new AttributeTypeDefinition(),
-      new CollectionChannelDefinition(),
       new CollectionPublishedDefinition(),
       new CustomerNumberOfOrdersDefinition(),
       new GiftCardDefinition(),
@@ -39,11 +41,14 @@ export class FilterDefinitionResolver {
       new StaffMemberStatusDefinition(),
       new StaticBooleanDefinition(),
       new StaticDefinition(),
-      new VoucherChannelDefinition(),
       new VoucherStatusDefinition(),
       new VoucherTimesUsedDefinition(),
       new DefaultDefinition(),
-    ]);
+    ];
+  }
+
+  public static getDefaultResolver() {
+    return new FilterDefinitionResolver(FilterDefinitionResolver.getDefaultDefinitions());
   }
 
   public resolve(element: FilterElement): FilterDefinition<any> {

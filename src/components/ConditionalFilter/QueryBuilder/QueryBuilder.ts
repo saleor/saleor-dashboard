@@ -3,14 +3,15 @@ import { FilterDefinition, supportsFilterApi, supportsWhereApi } from "../filter
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { QueryApiType } from "./types";
 
-export class QueryBuilder<T extends Record<string, any>> {
+export class QueryBuilder<T extends Record<string, any>, K extends keyof T = never> {
   constructor(
     private apiType: QueryApiType,
     private filterContainer: FilterContainer,
+    private topLevelKeys: K[] = [],
     private filterDefinitionResolver: FilterDefinitionResolver = FilterDefinitionResolver.getDefaultResolver(),
   ) {}
 
-  build(): T {
+  build(): { topLevel: Pick<T, K>; filters: Omit<T, K> } {
     let query = {} as T;
 
     for (const element of this.getValidElements()) {
@@ -23,7 +24,18 @@ export class QueryBuilder<T extends Record<string, any>> {
       }
     }
 
-    return query;
+    // Separate top-level keys from filters
+    const topLevel: Pick<T, K> = {} as Pick<T, K>;
+    const filters: Omit<T, K> = { ...query };
+
+    for (const key of this.topLevelKeys) {
+      if (key in query) {
+        topLevel[key] = query[key];
+        delete (filters as Partial<T>)[key];
+      }
+    }
+
+    return { topLevel, filters };
   }
 
   private updateQueryWithDefinition(
@@ -36,8 +48,7 @@ export class QueryBuilder<T extends Record<string, any>> {
     if (this.apiType === QueryApiType.WHERE) {
       if (!supportsWhereApi(definition)) {
         throw new Error(
-          `Filter definition for element "${filterIdentifier}" does not support WHERE API. ` +
-            `This definition only supports: ${supportsFilterApi(definition) ? "FILTER" : "none"} API.`,
+          `Filter definition for element "${filterIdentifier}" does not support WHERE API.`,
         );
       }
 
@@ -45,8 +56,7 @@ export class QueryBuilder<T extends Record<string, any>> {
     } else {
       if (!supportsFilterApi(definition)) {
         throw new Error(
-          `Filter definition for element "${filterIdentifier}" does not support FILTER API. ` +
-            `This definition only supports: ${supportsWhereApi(definition) ? "WHERE" : "none"} API.`,
+          `Filter definition for element "${filterIdentifier}" does not support FILTER API.`,
         );
       }
 
