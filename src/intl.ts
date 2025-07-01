@@ -236,7 +236,7 @@ export const errorMessages = defineMessages({
   imageUploadErrorText: {
     id: "26+K4N",
     defaultMessage:
-      "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file.",
+      "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file.",
   },
   preorderEndDateInFutureErrorText: {
     id: "6QjMei",

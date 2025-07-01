@@ -79,7 +79,7 @@ const useStyles = makeStyles(
           backgroundColor: vars.colors.background.default1,
           position: "absolute",
           top: 0,
-          left: "-186px",
+          left: 0,
         },
         "& .ce-settings": {
           position: "absolute",
