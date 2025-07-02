@@ -54,3 +54,5 @@ django-queries-results.html
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+introspection.json

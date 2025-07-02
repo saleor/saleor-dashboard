@@ -11,23 +11,63 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /**
+   * The `Date` scalar type represents a Date
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
   Date: any;
+  /**
+   * The `DateTime` scalar type represents a DateTime
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
   DateTime: any;
+  /** The `Day` scalar type represents number of days by integer value. */
   Day: any;
+  /**
+   * Custom Decimal implementation.
+   *
+   * Returns Decimal as a float in the API,
+   * parses float to the Decimal on the way back.
+   */
   Decimal: any;
+  /**
+   * The `GenericScalar` scalar type represents a generic
+   * GraphQL scalar value that could be:
+   * String, Boolean, Int, Float, List or Object.
+   */
   GenericScalar: any;
   JSON: any;
   JSONString: any;
+  /**
+   * Metadata is a map of key-value pairs, both keys and values are `String`.
+   *
+   * Example:
+   * ```
+   * {
+   *     "key1": "value1",
+   *     "key2": "value2"
+   * }
+   * ```
+   */
   Metadata: any;
+  /** The `Minute` scalar type represents number of minutes by integer value. */
   Minute: any;
+  /**
+   * Nonnegative Decimal scalar implementation.
+   *
+   * Should be used in places where value must be nonnegative (0 or greater).
+   */
   PositiveDecimal: any;
   UUID: any;
+  /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
   Upload: any;
   WeightScalar: any;
+  /** _Any value scalar as defined by Federation spec. */
   _Any: any;
 };
 
-/** An enumeration. */
 export enum AccountErrorCode {
   ACCOUNT_NOT_CONFIRMED = 'ACCOUNT_NOT_CONFIRMED',
   ACTIVATE_OWN_ACCOUNT = 'ACTIVATE_OWN_ACCOUNT',
@@ -150,7 +190,6 @@ export type AddressInput = {
   streetAddress2?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum AddressTypeEnum {
   BILLING = 'BILLING',
   SHIPPING = 'SHIPPING'
@@ -163,14 +202,12 @@ export enum AddressTypeEnum {
  *     within the channel
  *
  *     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
- *
  */
 export enum AllocationStrategyEnum {
   PRIORITIZE_HIGH_STOCK = 'PRIORITIZE_HIGH_STOCK',
   PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER'
 }
 
-/** An enumeration. */
 export enum AppErrorCode {
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -218,7 +255,6 @@ export enum AppExtensionMountEnum {
  *
  *     POPUP - app's extension will be mounted as a popup window
  *     APP_PAGE - redirect to app's page
- *
  */
 export enum AppExtensionTargetEnum {
   APP_PAGE = 'APP_PAGE',
@@ -284,7 +320,6 @@ export enum AppTypeEnum {
   THIRDPARTY = 'THIRDPARTY'
 }
 
-/** An enumeration. */
 export enum AreaUnitsEnum {
   SQ_CM = 'SQ_CM',
   SQ_DM = 'SQ_DM',
@@ -296,7 +331,6 @@ export enum AreaUnitsEnum {
   SQ_YD = 'SQ_YD'
 }
 
-/** An enumeration. */
 export enum AttributeBulkCreateErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   BLANK = 'BLANK',
@@ -320,7 +354,6 @@ export type AttributeBulkTranslateInput = {
   translationFields: NameTranslationInput;
 };
 
-/** An enumeration. */
 export enum AttributeBulkUpdateErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   BLANK = 'BLANK',
@@ -410,7 +443,6 @@ export type AttributeCreateInput = {
   visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** An enumeration. */
 export enum AttributeEntityTypeEnum {
   PAGE = 'PAGE',
   PRODUCT = 'PRODUCT',
@@ -424,7 +456,6 @@ export type AttributeEntityTypeEnumFilterInput = {
   oneOf?: InputMaybe<Array<AttributeEntityTypeEnum>>;
 };
 
-/** An enumeration. */
 export enum AttributeErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -471,7 +502,6 @@ export type AttributeInput = {
   valuesRange?: InputMaybe<IntRangeInput>;
 };
 
-/** An enumeration. */
 export enum AttributeInputTypeEnum {
   BOOLEAN = 'BOOLEAN',
   DATE = 'DATE',
@@ -521,7 +551,6 @@ export type AttributeSortingInput = {
   field: AttributeSortField;
 };
 
-/** An enumeration. */
 export enum AttributeTranslateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -529,7 +558,6 @@ export enum AttributeTranslateErrorCode {
   REQUIRED = 'REQUIRED'
 }
 
-/** An enumeration. */
 export enum AttributeTypeEnum {
   PAGE_TYPE = 'PAGE_TYPE',
   PRODUCT_TYPE = 'PRODUCT_TYPE'
@@ -715,7 +743,6 @@ export type AttributeValueSelectableTypeInput = {
   value?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum AttributeValueTranslateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -1059,7 +1086,6 @@ export type ChannelDeleteInput = {
   channelId: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum ChannelErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = 'CHANNELS_CURRENCY_MUST_BE_THE_SAME',
@@ -1176,7 +1202,6 @@ export type CheckoutAddressValidationRules = {
  *     NONE - the funds are not authorized
  *     PARTIAL - the cover funds don't cover fully the checkout's total
  *     FULL - the cover funds covers the checkout's total
- *
  */
 export enum CheckoutAuthorizeStatusEnum {
   FULL = 'FULL',
@@ -1199,7 +1224,6 @@ export enum CheckoutAuthorizeStatusEnum {
  *     PARTIAL - the funds that are charged don't cover the checkout's total
  *     FULL - the funds that are charged fully cover the checkout's total
  *     OVERCHARGED - the charged funds are bigger than checkout's total
- *
  */
 export enum CheckoutChargeStatusEnum {
   FULL = 'FULL',
@@ -1208,7 +1232,6 @@ export enum CheckoutChargeStatusEnum {
   PARTIAL = 'PARTIAL'
 }
 
-/** An enumeration. */
 export enum CheckoutCreateFromOrderErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -1217,7 +1240,6 @@ export enum CheckoutCreateFromOrderErrorCode {
   TAX_ERROR = 'TAX_ERROR'
 }
 
-/** An enumeration. */
 export enum CheckoutCreateFromOrderUnavailableVariantErrorCode {
   INSUFFICIENT_STOCK = 'INSUFFICIENT_STOCK',
   NOT_FOUND = 'NOT_FOUND',
@@ -1248,7 +1270,6 @@ export type CheckoutCreateInput = {
   validationRules?: InputMaybe<CheckoutValidationRules>;
 };
 
-/** An enumeration. */
 export enum CheckoutErrorCode {
   BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
@@ -1430,7 +1451,6 @@ export type CollectionCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum CollectionErrorCode {
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -1553,7 +1573,6 @@ export type ConfigurationItemInput = {
   value?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = 'BOOLEAN',
   MULTILINE = 'MULTILINE',
@@ -1815,6 +1834,7 @@ export enum CountryCode {
   VU = 'VU',
   WF = 'WF',
   WS = 'WS',
+  XK = 'XK',
   YE = 'YE',
   YT = 'YT',
   ZA = 'ZA',
@@ -1841,7 +1861,6 @@ export type CountryRateUpdateInput = {
   rate?: InputMaybe<Scalars['Float']>;
 };
 
-/** An enumeration. */
 export enum CustomerBulkUpdateErrorCode {
   BLANK = 'BLANK',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -1862,7 +1881,6 @@ export type CustomerBulkUpdateInput = {
   input: CustomerInput;
 };
 
-/** An enumeration. */
 export enum CustomerEventsEnum {
   ACCOUNT_ACTIVATED = 'ACCOUNT_ACTIVATED',
   ACCOUNT_CREATED = 'ACCOUNT_CREATED',
@@ -2045,7 +2063,6 @@ export type DigitalContentUrlCreateInput = {
   content: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum DiscountErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
@@ -2080,7 +2097,6 @@ export type DiscountedObjectWhereInput = {
   baseTotalPrice?: InputMaybe<DecimalFilterInput>;
 };
 
-/** An enumeration. */
 export enum DistanceUnitsEnum {
   CM = 'CM',
   DM = 'DM',
@@ -2208,7 +2224,6 @@ export enum EventDeliveryStatusEnum {
   SUCCESS = 'SUCCESS'
 }
 
-/** An enumeration. */
 export enum ExportErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -2216,7 +2231,6 @@ export enum ExportErrorCode {
   REQUIRED = 'REQUIRED'
 }
 
-/** An enumeration. */
 export enum ExportEventsEnum {
   EXPORTED_FILE_SENT = 'EXPORTED_FILE_SENT',
   EXPORT_DELETED = 'EXPORT_DELETED',
@@ -2301,7 +2315,6 @@ export type ExportVoucherCodesInput = {
   voucherId?: InputMaybe<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum ExternalNotificationErrorCodes {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   INVALID_MODEL_TYPE = 'INVALID_MODEL_TYPE',
@@ -2318,7 +2331,6 @@ export type ExternalNotificationTriggerInput = {
   ids: Array<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum FileTypesEnum {
   CSV = 'CSV',
   XLSX = 'XLSX'
@@ -2329,7 +2341,6 @@ export type FulfillmentCancelInput = {
   warehouseId?: InputMaybe<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum FulfillmentStatus {
   CANCELED = 'CANCELED',
   FULFILLED = 'FULFILLED',
@@ -2420,7 +2431,6 @@ export type GiftCardCreateInput = {
   userEmail?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum GiftCardErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -2437,7 +2447,6 @@ export type GiftCardEventFilterInput = {
   type?: InputMaybe<GiftCardEventsEnum>;
 };
 
-/** An enumeration. */
 export enum GiftCardEventsEnum {
   ACTIVATED = 'ACTIVATED',
   BALANCE_RESET = 'BALANCE_RESET',
@@ -2476,14 +2485,12 @@ export type GiftCardResendInput = {
   id: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum GiftCardSettingsErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   REQUIRED = 'REQUIRED'
 }
 
-/** An enumeration. */
 export enum GiftCardSettingsExpiryTypeEnum {
   EXPIRY_PERIOD = 'EXPIRY_PERIOD',
   NEVER_EXPIRE = 'NEVER_EXPIRE'
@@ -2607,7 +2614,6 @@ export type InvoiceCreateInput = {
   url: Scalars['String'];
 };
 
-/** An enumeration. */
 export enum InvoiceErrorCode {
   EMAIL_NOT_SET = 'EMAIL_NOT_SET',
   INVALID_STATUS = 'INVALID_STATUS',
@@ -2619,7 +2625,6 @@ export enum InvoiceErrorCode {
   URL_NOT_SET = 'URL_NOT_SET'
 }
 
-/** An enumeration. */
 export enum JobStatusEnum {
   DELETED = 'DELETED',
   FAILED = 'FAILED',
@@ -2627,7 +2632,6 @@ export enum JobStatusEnum {
   SUCCESS = 'SUCCESS'
 }
 
-/** An enumeration. */
 export enum LanguageCodeEnum {
   AF = 'AF',
   AF_NA = 'AF_NA',
@@ -3418,15 +3422,12 @@ export enum LanguageCodeEnum {
  *
  *     PAYMENT_FLOW - new orders marked as paid will receive a
  *     `Payment` object, that will cover the `order.total`.
- *
- *
  */
 export enum MarkAsPaidStrategyEnum {
   PAYMENT_FLOW = 'PAYMENT_FLOW',
   TRANSACTION_FLOW = 'TRANSACTION_FLOW'
 }
 
-/** An enumeration. */
 export enum MeasurementUnitsEnum {
   ACRE_FT = 'ACRE_FT',
   ACRE_IN = 'ACRE_IN',
@@ -3501,7 +3502,6 @@ export type MenuCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum MenuErrorCode {
   CANNOT_ASSIGN_NODE = 'CANNOT_ASSIGN_NODE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -3598,7 +3598,6 @@ export type MenuSortingInput = {
   field: MenuSortField;
 };
 
-/** An enumeration. */
 export enum MetadataErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -3681,7 +3680,6 @@ export type OrderAddNoteInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     FULL - the funds that are authorized and charged fully cover the
  *     `order.total`-`order.totalGrantedRefund`
- *
  */
 export enum OrderAuthorizeStatusEnum {
   FULL = 'FULL',
@@ -3712,7 +3710,6 @@ export type OrderBulkCreateDeliveryMethodInput = {
   warehouseName?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum OrderBulkCreateErrorCode {
   BULK_LIMIT = 'BULK_LIMIT',
   FUTURE_DATE = 'FUTURE_DATE',
@@ -3852,6 +3849,12 @@ export type OrderBulkCreateOrderLineInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The name of the product. */
   productName?: InputMaybe<Scalars['String']>;
+  /**
+   * The SKU of the product.
+   *
+   * Added in Saleor 3.18.
+   */
+  productSku?: InputMaybe<Scalars['String']>;
   /** Number of items in the order line */
   quantity: Scalars['Int'];
   /** The ID of the tax class. */
@@ -3872,6 +3875,24 @@ export type OrderBulkCreateOrderLineInput = {
   translatedVariantName?: InputMaybe<Scalars['String']>;
   /** Price of the order line excluding applied discount. */
   undiscountedTotalPrice: TaxedMoneyInput;
+  /**
+   * Reason of the discount on order line.
+   *
+   * Added in Saleor 3.19.
+   */
+  unitDiscountReason?: InputMaybe<Scalars['String']>;
+  /**
+   * Type of the discount: fixed or percent
+   *
+   * Added in Saleor 3.19.
+   */
+  unitDiscountType?: InputMaybe<DiscountValueTypeEnum>;
+  /**
+   * Value of the discount. Can store fixed value or percent value
+   *
+   * Added in Saleor 3.19.
+   */
+  unitDiscountValue?: InputMaybe<Scalars['PositiveDecimal']>;
   /** The external ID of the product variant. */
   variantExternalReference?: InputMaybe<Scalars['String']>;
   /** The ID of the product variant. */
@@ -3912,7 +3933,6 @@ export type OrderBulkCreateUserInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     OVERCHARGED - the charged funds are bigger than the
  *     `order.total`-`order.totalGrantedRefund`
- *
  */
 export enum OrderChargeStatusEnum {
   FULL = 'FULL',
@@ -3921,7 +3941,6 @@ export enum OrderChargeStatusEnum {
   PARTIAL = 'PARTIAL'
 }
 
-/** An enumeration. */
 export enum OrderCreateFromCheckoutErrorCode {
   BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
@@ -3955,7 +3974,6 @@ export type OrderDiscountCommonInput = {
   valueType: DiscountValueTypeEnum;
 };
 
-/** An enumeration. */
 export enum OrderDiscountType {
   MANUAL = 'MANUAL',
   ORDER_PROMOTION = 'ORDER_PROMOTION',
@@ -3972,7 +3990,6 @@ export type OrderDraftFilterInput = {
   search?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum OrderErrorCode {
   BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
   CANNOT_CANCEL_FULFILLMENT = 'CANNOT_CANCEL_FULFILLMENT',
@@ -4012,7 +4029,6 @@ export enum OrderErrorCode {
   ZERO_QUANTITY = 'ZERO_QUANTITY'
 }
 
-/** An enumeration. */
 export enum OrderEventsEmailsEnum {
   CONFIRMED = 'CONFIRMED',
   DIGITAL_LINKS = 'DIGITAL_LINKS',
@@ -4025,7 +4041,7 @@ export enum OrderEventsEmailsEnum {
   TRACKING_UPDATED = 'TRACKING_UPDATED'
 }
 
-/** The different order event types.  */
+/** The different order event types. */
 export enum OrderEventsEnum {
   ADDED_PRODUCTS = 'ADDED_PRODUCTS',
   CANCELED = 'CANCELED',
@@ -4129,7 +4145,6 @@ export type OrderFulfillStockInput = {
   warehouse: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum OrderGrantRefundCreateErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -4170,7 +4185,6 @@ export type OrderGrantRefundCreateInput = {
   transactionId?: InputMaybe<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum OrderGrantRefundCreateLineErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
@@ -4186,7 +4200,6 @@ export type OrderGrantRefundCreateLineInput = {
   reason?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum OrderGrantRefundUpdateErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -4244,7 +4257,6 @@ export type OrderGrantRefundUpdateLineAddInput = {
   reason?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum OrderGrantRefundUpdateLineErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
@@ -4258,7 +4270,6 @@ export enum OrderGrantRefundUpdateLineErrorCode {
  *     PENDING - the refund on related transactionItem is pending
  *     FULL - the refund on related transactionItem is fully processed
  *     FAIL - the refund on related transactionItem failed
- *
  */
 export enum OrderGrantedRefundStatusEnum {
   FAILURE = 'FAILURE',
@@ -4293,7 +4304,6 @@ export type OrderLineInput = {
   quantity: Scalars['Int'];
 };
 
-/** An enumeration. */
 export enum OrderNoteAddErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   REQUIRED = 'REQUIRED'
@@ -4304,14 +4314,12 @@ export type OrderNoteInput = {
   message: Scalars['String'];
 };
 
-/** An enumeration. */
 export enum OrderNoteUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED'
 }
 
-/** An enumeration. */
 export enum OrderOriginEnum {
   BULK_CREATE = 'BULK_CREATE',
   CHECKOUT = 'CHECKOUT',
@@ -4384,7 +4392,6 @@ export type OrderReturnProductsInput = {
   refund?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** An enumeration. */
 export enum OrderSettingsErrorCode {
   INVALID = 'INVALID'
 }
@@ -4481,7 +4488,6 @@ export type OrderSortingInput = {
   field: OrderSortField;
 };
 
-/** An enumeration. */
 export enum OrderStatus {
   CANCELED = 'CANCELED',
   DRAFT = 'DRAFT',
@@ -4557,7 +4563,6 @@ export type PageCreateInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PageErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -4698,7 +4703,6 @@ export type PageTypeUpdateInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PaymentChargeStatusEnum {
   CANCELLED = 'CANCELLED',
   FULLY_CHARGED = 'FULLY_CHARGED',
@@ -4721,7 +4725,6 @@ export type PaymentCheckBalanceInput = {
   method: Scalars['String'];
 };
 
-/** An enumeration. */
 export enum PaymentErrorCode {
   BALANCE_CHECK_ERROR = 'BALANCE_CHECK_ERROR',
   BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
@@ -4753,21 +4756,18 @@ export type PaymentFilterInput = {
   ids?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum PaymentGatewayConfigErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum PaymentGatewayInitializeErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum PaymentGatewayInitializeTokenizationErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GATEWAY_ERROR = 'GATEWAY_ERROR',
@@ -4783,7 +4783,6 @@ export enum PaymentGatewayInitializeTokenizationErrorCode {
  *     SUCCESSFULLY_INITIALIZED - The payment gateway was successfully initialized.
  *     FAILED_TO_INITIALIZE - The payment gateway was not initialized.
  *     FAILED_TO_DELIVER - The request to initialize payment gateway was not delivered.
- *
  */
 export enum PaymentGatewayInitializeTokenizationResult {
   FAILED_TO_DELIVER = 'FAILED_TO_DELIVER',
@@ -4821,7 +4820,6 @@ export type PaymentInput = {
   token?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PaymentMethodInitializeTokenizationErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GATEWAY_ERROR = 'GATEWAY_ERROR',
@@ -4830,7 +4828,6 @@ export enum PaymentMethodInitializeTokenizationErrorCode {
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum PaymentMethodProcessTokenizationErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GATEWAY_ERROR = 'GATEWAY_ERROR',
@@ -4848,7 +4845,6 @@ export enum PaymentMethodProcessTokenizationErrorCode {
  *     PENDING - The payment method is pending tokenization.
  *     FAILED_TO_TOKENIZE - The payment method was not tokenized.
  *     FAILED_TO_DELIVER - The request to tokenize payment method was not delivered.
- *
  */
 export enum PaymentMethodTokenizationResult {
   ADDITIONAL_ACTION_REQUIRED = 'ADDITIONAL_ACTION_REQUIRED',
@@ -4869,7 +4865,6 @@ export type PaymentSettingsInput = {
   defaultTransactionFlowStrategy?: InputMaybe<TransactionFlowStrategyEnum>;
 };
 
-/** An enumeration. */
 export enum PermissionEnum {
   HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS',
   HANDLE_PAYMENTS = 'HANDLE_PAYMENTS',
@@ -4922,7 +4917,6 @@ export type PermissionGroupCreateInput = {
   restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** An enumeration. */
 export enum PermissionGroupErrorCode {
   ASSIGN_NON_STAFF_MEMBER = 'ASSIGN_NON_STAFF_MEMBER',
   CANNOT_REMOVE_FROM_LAST_GROUP = 'CANNOT_REMOVE_FROM_LAST_GROUP',
@@ -4995,7 +4989,6 @@ export enum PluginConfigurationType {
   PER_CHANNEL = 'PER_CHANNEL'
 }
 
-/** An enumeration. */
 export enum PluginErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -5035,7 +5028,6 @@ export type PluginUpdateInput = {
   configuration?: InputMaybe<Array<ConfigurationItemInput>>;
 };
 
-/** An enumeration. */
 export enum PostalCodeRuleInclusionTypeEnum {
   EXCLUDE = 'EXCLUDE',
   INCLUDE = 'INCLUDE'
@@ -5091,7 +5083,6 @@ export enum ProductAttributeType {
   VARIANT = 'VARIANT'
 }
 
-/** An enumeration. */
 export enum ProductBulkCreateErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
   ATTRIBUTE_CANNOT_BE_ASSIGNED = 'ATTRIBUTE_CANNOT_BE_ASSIGNED',
@@ -5294,7 +5285,6 @@ export type ProductCreateInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
 };
 
-/** An enumeration. */
 export enum ProductErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
@@ -5455,7 +5445,6 @@ export type ProductMediaCreateInput = {
   product: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum ProductMediaType {
   IMAGE = 'IMAGE',
   VIDEO = 'VIDEO'
@@ -5548,7 +5537,6 @@ export type ProductStockFilterInput = {
   warehouseIds?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum ProductTranslateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -5605,7 +5593,6 @@ export type ProductTypeInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
 };
 
-/** An enumeration. */
 export enum ProductTypeKindEnum {
   GIFT_CARD = 'GIFT_CARD',
   NORMAL = 'NORMAL'
@@ -5674,7 +5661,6 @@ export type ProductVariantBulkCreateInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
 };
 
-/** An enumeration. */
 export enum ProductVariantBulkErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
   ATTRIBUTE_CANNOT_BE_ASSIGNED = 'ATTRIBUTE_CANNOT_BE_ASSIGNED',
@@ -5911,7 +5897,6 @@ export type ProductVariantStocksUpdateInput = {
   update?: InputMaybe<Array<StockUpdateInput>>;
 };
 
-/** An enumeration. */
 export enum ProductVariantTranslateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -5975,7 +5960,6 @@ export type ProductWhereInput = {
   updatedAt?: InputMaybe<DateTimeFilterInput>;
 };
 
-/** An enumeration. */
 export enum PromotionCreateErrorCode {
   GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6008,13 +5992,11 @@ export type PromotionCreateInput = {
   type: PromotionTypeEnum;
 };
 
-/** An enumeration. */
 export enum PromotionDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum PromotionEventsEnum {
   PROMOTION_CREATED = 'PROMOTION_CREATED',
   PROMOTION_ENDED = 'PROMOTION_ENDED',
@@ -6025,7 +6007,6 @@ export enum PromotionEventsEnum {
   RULE_UPDATED = 'RULE_UPDATED'
 }
 
-/** An enumeration. */
 export enum PromotionRuleCreateErrorCode {
   GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6080,7 +6061,6 @@ export type PromotionRuleCreateInput = {
   rewardValueType?: InputMaybe<RewardValueTypeEnum>;
 };
 
-/** An enumeration. */
 export enum PromotionRuleDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND'
@@ -6135,7 +6115,6 @@ export type PromotionRuleTranslationInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
@@ -6226,7 +6205,6 @@ export type PromotionTranslationInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PromotionTypeEnum {
   CATALOGUE = 'CATALOGUE',
   ORDER = 'ORDER'
@@ -6239,7 +6217,6 @@ export type PromotionTypeEnumFilterInput = {
   oneOf?: InputMaybe<Array<PromotionTypeEnum>>;
 };
 
-/** An enumeration. */
 export enum PromotionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6306,13 +6283,11 @@ export enum ReportingPeriod {
   TODAY = 'TODAY'
 }
 
-/** An enumeration. */
 export enum RewardTypeEnum {
   GIFT = 'GIFT',
   SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT'
 }
 
-/** An enumeration. */
 export enum RewardValueTypeEnum {
   FIXED = 'FIXED',
   PERCENTAGE = 'PERCENTAGE'
@@ -6400,7 +6375,6 @@ export enum SaleType {
   PERCENTAGE = 'PERCENTAGE'
 }
 
-/** An enumeration. */
 export enum SendConfirmationEmailErrorCode {
   ACCOUNT_CONFIRMED = 'ACCOUNT_CONFIRMED',
   CONFIRMATION_ALREADY_REQUESTED = 'CONFIRMATION_ALREADY_REQUESTED',
@@ -6415,7 +6389,6 @@ export type SeoInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum ShippingErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -6445,7 +6418,6 @@ export type ShippingMethodChannelListingInput = {
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum ShippingMethodTypeEnum {
   PRICE = 'PRICE',
   WEIGHT = 'WEIGHT'
@@ -6539,7 +6511,6 @@ export type ShippingZoneUpdateInput = {
   removeWarehouses?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum ShopErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   CANNOT_FETCH_TAX_RATES = 'CANNOT_FETCH_TAX_RATES',
@@ -6745,7 +6716,6 @@ export enum StockAvailability {
   OUT_OF_STOCK = 'OUT_OF_STOCK'
 }
 
-/** An enumeration. */
 export enum StockBulkUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6766,7 +6736,6 @@ export type StockBulkUpdateInput = {
   warehouseId?: InputMaybe<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum StockErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6806,7 +6775,6 @@ export type StockUpdateInput = {
  *     SKIP - stocks are not checked and not updated.
  *     UPDATE - only do update, if there is enough stock.
  *     FORCE - force update, if there is not enough stock.
- *
  */
 export enum StockUpdatePolicyEnum {
   FORCE = 'FORCE',
@@ -6824,7 +6792,6 @@ export enum StorePaymentMethodEnum {
   ON_SESSION = 'ON_SESSION'
 }
 
-/** An enumeration. */
 export enum StoredPaymentMethodRequestDeleteErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GATEWAY_ERROR = 'GATEWAY_ERROR',
@@ -6841,7 +6808,6 @@ export enum StoredPaymentMethodRequestDeleteErrorCode {
  *     FAILED_TO_DELETE - The stored payment method was not deleted.
  *     FAILED_TO_DELIVER - The request to delete the stored payment method was not
  *     delivered.
- *
  */
 export enum StoredPaymentMethodRequestDeleteResult {
   FAILED_TO_DELETE = 'FAILED_TO_DELETE',
@@ -6868,7 +6834,6 @@ export enum TaxCalculationStrategy {
   TAX_APP = 'TAX_APP'
 }
 
-/** An enumeration. */
 export enum TaxClassCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6882,7 +6847,6 @@ export type TaxClassCreateInput = {
   name: Scalars['String'];
 };
 
-/** An enumeration. */
 export enum TaxClassDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6914,7 +6878,6 @@ export type TaxClassSortingInput = {
   field: TaxClassSortField;
 };
 
-/** An enumeration. */
 export enum TaxClassUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6953,7 +6916,6 @@ export type TaxConfigurationPerCountryInput = {
   taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
 };
 
-/** An enumeration. */
 export enum TaxConfigurationUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6982,14 +6944,12 @@ export type TaxConfigurationUpdateInput = {
   updateCountriesConfiguration?: InputMaybe<Array<TaxConfigurationPerCountryInput>>;
 };
 
-/** An enumeration. */
 export enum TaxCountryConfigurationDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum TaxCountryConfigurationUpdateErrorCode {
   CANNOT_CREATE_NEGATIVE_RATE = 'CANNOT_CREATE_NEGATIVE_RATE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6998,7 +6958,6 @@ export enum TaxCountryConfigurationUpdateErrorCode {
   ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED = 'ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED'
 }
 
-/** An enumeration. */
 export enum TaxExemptionManageErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -7019,7 +6978,6 @@ export type TaxedMoneyInput = {
   net: Scalars['PositiveDecimal'];
 };
 
-/** An enumeration. */
 export enum ThumbnailFormatEnum {
   AVIF = 'AVIF',
   ORIGINAL = 'ORIGINAL',
@@ -7033,7 +6991,6 @@ export type TimePeriodInputType = {
   type: TimePeriodTypeEnum;
 };
 
-/** An enumeration. */
 export enum TimePeriodTypeEnum {
   DAY = 'DAY',
   MONTH = 'MONTH',
@@ -7047,7 +7004,6 @@ export enum TimePeriodTypeEnum {
  *     The following flows are possible:
  *     INTERACTIVE - Payment method can be used for 1 click checkout - it's prefilled in
  *     checkout form (might require additional authentication from user)
- *
  */
 export enum TokenizedPaymentFlowEnum {
   INTERACTIVE = 'INTERACTIVE'
@@ -7060,7 +7016,6 @@ export enum TokenizedPaymentFlowEnum {
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
  *     CANCEL - Represents a cancel action. Added in Saleor 3.12.
- *
  */
 export enum TransactionActionEnum {
   CANCEL = 'CANCEL',
@@ -7068,7 +7023,6 @@ export enum TransactionActionEnum {
   REFUND = 'REFUND'
 }
 
-/** An enumeration. */
 export enum TransactionCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
@@ -7138,7 +7092,6 @@ export type TransactionEventInput = {
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum TransactionEventReportErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7174,7 +7127,6 @@ export enum TransactionEventReportErrorCode {
  *     CANCEL_FAILURE - represents failure cancel.
  *     CANCEL_REQUEST - represents cancel request.
  *     INFO - represents info event.
- *
  */
 export enum TransactionEventTypeEnum {
   AUTHORIZATION_ACTION_REQUIRED = 'AUTHORIZATION_ACTION_REQUIRED',
@@ -7202,14 +7154,12 @@ export enum TransactionEventTypeEnum {
  *
  *     AUTHORIZATION - the processed transaction should be only authorized
  *     CHARGE - the processed transaction should be charged.
- *
  */
 export enum TransactionFlowStrategyEnum {
   AUTHORIZATION = 'AUTHORIZATION',
   CHARGE = 'CHARGE'
 }
 
-/** An enumeration. */
 export enum TransactionInitializeErrorCode {
   CHECKOUT_COMPLETION_IN_PROGRESS = 'CHECKOUT_COMPLETION_IN_PROGRESS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7218,7 +7168,6 @@ export enum TransactionInitializeErrorCode {
   UNIQUE = 'UNIQUE'
 }
 
-/** An enumeration. */
 export enum TransactionKind {
   ACTION_TO_CONFIRM = 'ACTION_TO_CONFIRM',
   AUTH = 'AUTH',
@@ -7232,7 +7181,6 @@ export enum TransactionKind {
   VOID = 'VOID'
 }
 
-/** An enumeration. */
 export enum TransactionProcessErrorCode {
   CHECKOUT_COMPLETION_IN_PROGRESS = 'CHECKOUT_COMPLETION_IN_PROGRESS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7243,7 +7191,6 @@ export enum TransactionProcessErrorCode {
   TRANSACTION_ALREADY_PROCESSED = 'TRANSACTION_ALREADY_PROCESSED'
 }
 
-/** An enumeration. */
 export enum TransactionRequestActionErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -7251,7 +7198,6 @@ export enum TransactionRequestActionErrorCode {
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum TransactionRequestRefundForGrantedRefundErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7262,7 +7208,6 @@ export enum TransactionRequestRefundForGrantedRefundErrorCode {
   REFUND_IS_PENDING = 'REFUND_IS_PENDING'
 }
 
-/** An enumeration. */
 export enum TransactionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
@@ -7333,7 +7278,6 @@ export enum TranslatableKinds {
   VOUCHER = 'VOUCHER'
 }
 
-/** An enumeration. */
 export enum TranslationErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -7372,7 +7316,6 @@ export type UpdateInvoiceInput = {
   url?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum UploadErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR'
 }
@@ -7456,7 +7399,6 @@ export enum VariantAttributeScope {
   VARIANT_SELECTION = 'VARIANT_SELECTION'
 }
 
-/** An enumeration. */
 export enum VolumeUnitsEnum {
   ACRE_FT = 'ACRE_FT',
   ACRE_IN = 'ACRE_IN',
@@ -7489,7 +7431,6 @@ export type VoucherChannelListingInput = {
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum VoucherCodeBulkDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -7623,7 +7564,6 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = 'SPECIFIC_PRODUCT'
 }
 
-/** An enumeration. */
 export enum WarehouseClickAndCollectOptionEnum {
   ALL = 'ALL',
   DISABLED = 'DISABLED',
@@ -7653,7 +7593,6 @@ export type WarehouseCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum WarehouseErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7755,7 +7694,6 @@ export type WebhookCreateInput = {
   targetUrl?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum WebhookDryRunErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID_ID = 'INVALID_ID',
@@ -7768,7 +7706,6 @@ export enum WebhookDryRunErrorCode {
   UNABLE_TO_PARSE = 'UNABLE_TO_PARSE'
 }
 
-/** An enumeration. */
 export enum WebhookErrorCode {
   DELETE_FAILED = 'DELETE_FAILED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -8720,7 +8657,6 @@ export enum WebhookEventTypeSyncEnum {
   TRANSACTION_REFUND_REQUESTED = 'TRANSACTION_REFUND_REQUESTED'
 }
 
-/** An enumeration. */
 export enum WebhookSampleEventTypeEnum {
   ACCOUNT_CHANGE_EMAIL_REQUESTED = 'ACCOUNT_CHANGE_EMAIL_REQUESTED',
   ACCOUNT_CONFIRMATION_REQUESTED = 'ACCOUNT_CONFIRMATION_REQUESTED',
@@ -8865,7 +8801,6 @@ export enum WebhookSampleEventTypeEnum {
   WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED'
 }
 
-/** An enumeration. */
 export enum WebhookTriggerErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID_ID = 'INVALID_ID',
@@ -8920,7 +8855,6 @@ export type WebhookUpdateInput = {
   targetUrl?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum WeightUnitsEnum {
   G = 'G',
   KG = 'KG',
