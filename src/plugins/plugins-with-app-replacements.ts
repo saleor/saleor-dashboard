@@ -8,5 +8,6 @@
  * https://docs.saleor.io/docs/3.x/api-reference/miscellaneous/queries/plugins
  */
 export const getPluginsWithAppReplacementsIds = () => {
-  return ["mirumee.invoicing"];
+  // TODO: remove this function when all plugins are replaced with apps
+  return ["mirumee.payments.adyen", "mirumee.taxes.avalara", "mirumee.invoicing"];
 };
