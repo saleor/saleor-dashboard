@@ -5356,6 +5356,9 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
+  "UE9zNR": {
+    "string": "Recent Searches"
+  },
   "UIM5bq": {
     "context": "charge status full",
     "string": "Full"
@@ -10432,6 +10435,9 @@
   "zf48rQ": {
     "context": "sum of captured amount of all transactions",
     "string": "Total captured"
+  },
+  "zfSKyx": {
+    "string": "Clear history"
   },
   "zfjAc7": {
     "context": "grant refund, card header",
