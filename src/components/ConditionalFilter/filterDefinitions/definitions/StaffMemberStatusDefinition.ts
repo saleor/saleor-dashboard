@@ -1,10 +1,11 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { isItemOption } from "../../FilterElement/ConditionValue";
-import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition, FilterQuery } from "../types";
+import { BaseMappableDefinition } from "./BaseMappableDefinition";
 
-export class StaffMemberStatusDefinition implements BothApiFilterDefinition<FilterQuery> {
+/** `staffMemberStatus` needs to be renamed to `status` in query */
+export class StaffMemberStatusDefinition extends BaseMappableDefinition {
+  protected readonly queryField = "status";
+
   canHandle(element: FilterElement): boolean {
     return element.value.value === "staffMemberStatus";
   }
@@ -13,25 +14,7 @@ export class StaffMemberStatusDefinition implements BothApiFilterDefinition<Filt
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
-    const { value: selectedValue } = element.condition.selected;
-    let queryPart;
-
-    if (isItemOption(selectedValue)) {
-      queryPart = { eq: selectedValue.value };
-    } else {
-      queryPart = { eq: selectedValue };
-    }
-
-    return { ...query, status: queryPart };
-  }
-
-  updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
-    const whereQuery = this.updateWhereQuery(query, element);
-
-    return {
-      ...query,
-      status: mapStaticQueryPartToLegacyVariables(whereQuery.status),
-    };
+  protected getQueryFieldName(_element: FilterElement): string {
+    return this.queryField;
   }
 }

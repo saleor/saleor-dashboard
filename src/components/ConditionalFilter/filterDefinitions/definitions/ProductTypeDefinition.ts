@@ -2,14 +2,12 @@ import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { BaseMappableDefinition } from "./BaseMappableDefinition";
 
-/**
- * `attributeType` needs to be rename to `type` in query
- */
-export class AttributeTypeDefinition extends BaseMappableDefinition {
-  protected readonly queryField = "type";
+/** `typeOfProduct` needs to be renamed to `productType` in query */
+export class ProductTypeDefinition extends BaseMappableDefinition {
+  protected readonly queryField = "productType";
 
   public canHandle(element: FilterElement): boolean {
-    return element.value.value === "attributeType";
+    return element.value.value === "typeOfProduct";
   }
 
   public createOptionFetcher(): Handler {

@@ -1,64 +1,71 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { isItemOption } from "../../FilterElement/ConditionValue";
-import { BothApiFilterDefinition } from "../types";
+import { isTuple } from "../../FilterElement/ConditionValue";
+import { BaseMappableDefinition } from "./BaseMappableDefinition";
 
-export class VoucherTimesUsedDefinition
-  implements BothApiFilterDefinition<{ timesUsed?: { gte: number; lte: number } }>
-{
-  canHandle(element: FilterElement): boolean {
+export class VoucherTimesUsedDefinition extends BaseMappableDefinition {
+  protected readonly queryField = "timesUsed";
+
+  public canHandle(element: FilterElement): boolean {
     return element.value.value === "timesUsed";
   }
 
-  createOptionFetcher(): Handler {
+  public createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(
-    query: Readonly<{ timesUsed?: { gte: number; lte: number } }>,
-    element: FilterElement,
-  ): { timesUsed?: { gte: number; lte: number } } {
-    const { value: selectedValue, conditionValue } = element.condition.selected;
-    const conditionLabel = conditionValue?.label;
-
-    if (Array.isArray(selectedValue) && selectedValue.length === 2) {
-      const gte = isItemOption(selectedValue[0])
-        ? parseInt(selectedValue[0].value, 10)
-        : parseInt(String(selectedValue[0]), 10);
-      const lte = isItemOption(selectedValue[1])
-        ? parseInt(selectedValue[1].value, 10)
-        : parseInt(String(selectedValue[1]), 10);
-
-      return {
-        ...query,
-        timesUsed: { gte, lte },
-      };
-    }
-
-    // Handle single value with "is" condition
-    if (conditionLabel === "is") {
-      const value = isItemOption(selectedValue)
-        ? parseInt(selectedValue.value, 10)
-        : parseInt(String(selectedValue), 10);
-
-      return {
-        ...query,
-        timesUsed: { gte: value, lte: value },
-      };
-    }
-
-    return query;
+  protected getQueryFieldName(_element: FilterElement): string {
+    return this.queryField;
   }
 
-  updateFilterQuery(
-    query: Readonly<{ timesUsed?: { gte: number; lte: number } }>,
-    element: FilterElement,
-  ): { timesUsed?: { gte: number; lte: number } } {
-    const whereQuery = this.updateWhereQuery(query, element);
+  protected getConditionValue(element: FilterElement, forWhere: boolean): unknown {
+    const value = super.getConditionValue(element, forWhere) as any;
 
-    return {
-      ...query,
-      timesUsed: whereQuery.timesUsed,
-    };
+    if (value.range) {
+      return {
+        range: {
+          gte: parseInt(value.range.gte, 10),
+          lte: parseInt(value.range.lte, 10),
+        },
+      };
+    }
+
+    if (value.eq) {
+      const parsedValue = parseInt(value.eq, 10);
+
+      return {
+        range: {
+          gte: parsedValue,
+          lte: parsedValue,
+        },
+      };
+    }
+
+    // Handle "is" condition for single value
+    const { value: selectedValue, conditionValue } = element.condition.selected;
+
+    if (conditionValue?.label === "is") {
+      const parsedValue = parseInt(String(selectedValue), 10);
+
+      return {
+        range: {
+          gte: parsedValue,
+          lte: parsedValue,
+        },
+      };
+    }
+
+    if (isTuple(selectedValue)) {
+      const [gte, lte] = selectedValue as [string, string];
+
+      return {
+        range: {
+          gte: parseInt(gte, 10),
+          lte: parseInt(lte, 10),
+        },
+      };
+    }
+
+    return value;
   }
 }

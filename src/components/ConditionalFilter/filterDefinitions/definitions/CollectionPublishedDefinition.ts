@@ -5,6 +5,7 @@ import { FilterElement } from "../../FilterElement";
 import { FilterOnlyFilterDefinition } from "../types";
 import { getBooleanValueFromElement } from "../utils";
 
+/** Collections don't use boolean values like other filters, we need to use enum */
 export class CollectionPublishedDefinition
   implements FilterOnlyFilterDefinition<{ published?: CollectionPublished }>
 {

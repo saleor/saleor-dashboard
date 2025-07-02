@@ -1,42 +1,51 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { isItemOption } from "../../FilterElement/ConditionValue";
-import { BothApiFilterDefinition } from "../types";
+import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
+import { FilterQuery } from "../types";
+import { BaseMappableDefinition } from "./BaseMappableDefinition";
 
-export class VoucherChannelDefinition implements BothApiFilterDefinition<{ channel?: string }> {
-  canHandle(element: FilterElement): boolean {
+export class VoucherChannelDefinition extends BaseMappableDefinition {
+  protected readonly queryField = "channel";
+
+  public canHandle(element: FilterElement): boolean {
     return element.value.value === "channel";
   }
 
-  createOptionFetcher(): Handler {
+  public createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(
-    query: Readonly<{ channel?: string }>,
-    element: FilterElement,
-  ): { channel?: string } {
-    const { value: selectedValue } = element.condition.selected;
-    let channelValue: string;
-
-    if (isItemOption(selectedValue)) {
-      channelValue = selectedValue.slug;
-    } else {
-      channelValue = String(selectedValue);
-    }
-
-    return { ...query, channel: channelValue };
+  protected getQueryFieldName(_element: FilterElement): string {
+    return this.queryField;
   }
 
-  updateFilterQuery(
-    query: Readonly<{ channel?: string }>,
-    element: FilterElement,
-  ): { channel?: string } {
+  public updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const whereQuery = this.updateWhereQuery(query, element);
 
     return {
       ...query,
-      channel: whereQuery.channel, // String values don't need legacy mapping for channel
+      // String values don't need legacy mapping for channel
+      [this.queryField]: whereQuery[this.queryField],
     };
+  }
+
+  protected getConditionValue(element: FilterElement, forWhere: boolean): unknown {
+    const { value: selectedValue } = element.condition.selected;
+
+    if (isItemOption(selectedValue)) {
+      const eq = selectedValue.slug;
+
+      return forWhere ? { eq } : eq;
+    }
+
+    if (isItemOptionArray(selectedValue)) {
+      const oneOf = selectedValue.map(item => item.slug);
+
+      return forWhere ? { oneOf } : oneOf;
+    }
+
+    const eq = selectedValue;
+
+    return forWhere ? { eq } : eq;
   }
 }
