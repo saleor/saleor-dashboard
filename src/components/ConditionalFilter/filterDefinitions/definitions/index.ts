@@ -4,7 +4,6 @@ export { ChannelSlugDefinition } from "./ChannelSlugDefinition";
 export { CollectionPublishedDefinition } from "./CollectionPublishedDefinition";
 export { CustomerNumberOfOrdersDefinition } from "./CustomerNumberOfOrdersDefinition";
 export { DefaultDefinition } from "./DefaultDefinition";
-export { GiftCardDefinition } from "./GiftCardDefinition";
 export { MetadataDefinition } from "./MetadataDefinition";
 export { ProductTypeConfigurableDefinition } from "./ProductTypeConfigurableDefinition";
 export { StaffMemberStatusDefinition } from "./StaffMemberStatusDefinition";
