@@ -1,19 +1,25 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { parse as parseQs } from "qs";
+import { useState } from "react";
 
 export const useSearchCriteria = () => {
   const navigate = useNavigator();
-  const qs = parseQs(window.location.search.substr(1));
 
-  const query = (qs.q as string) || "";
-  const scope = (qs.scope as string) || "all";
+  const qs = parseQs(window.location.search.substr(1));
+  const urlQuery = (qs.q as string) || "";
+  const urlScope = (qs.scope as string) || "all";
+
+  const [query, setQuery] = useState(urlQuery);
+  const [scope, setScope] = useState(urlScope);
 
   const changeScope = (scope: string) => {
-    navigate(`?q=${query}&scope=${scope}`);
+    setScope(scope);
+    navigate(`?q=${query}&scope=${scope}`, { replace: true });
   };
 
   const changeQuery = (query: string) => {
-    navigate(`?q=${query}&scope=${scope}`);
+    setQuery(query);
+    navigate(`?q=${query}&scope=${scope}`, { replace: true });
   };
 
   return {
