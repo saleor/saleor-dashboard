@@ -1,20 +1,139 @@
 import { FilterElement } from "../FilterElement";
-import { isItemOption } from "../FilterElement/ConditionValue";
+import {
+  ConditionValue,
+  isItemOption,
+  isItemOptionArray,
+  isTuple,
+} from "../FilterElement/ConditionValue";
+
+export type ProcessedConditionValue =
+  | string
+  | boolean
+  | string[]
+  | { range: { gte?: string; lte?: string } }
+  | { eq: string }
+  | { oneOf: string[] };
 
 /**
- * Extracts a boolean value from a FilterElement's selected condition.
- * Handles various input formats: ItemOption with string values, direct boolean, or stringified values.
+ * Extracts a boolean value from various input formats.
+ * Handles ItemOption with string values, direct boolean, or stringified values.
  */
 export function getBooleanValueFromElement(element: FilterElement): boolean {
   const { value: selectedValue } = element.condition.selected;
 
-  if (isItemOption(selectedValue)) {
-    return selectedValue.value === "true";
-  }
-
-  if (typeof selectedValue === "boolean") {
-    return selectedValue;
-  }
-
-  return String(selectedValue) === "true";
+  return extractBooleanValue(selectedValue);
 }
+
+/**
+ * Helper function to extract boolean value from different value types.
+ */
+function extractBooleanValue(value: ConditionValue): boolean {
+  if (isItemOption(value)) {
+    return value.value === "true";
+  }
+
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  return String(value) === "true";
+}
+
+/**
+ * Extracts the actual value from ItemOption or returns the value as-is.
+ */
+function extractValueFromOption(value: ConditionValue): string {
+  return isItemOption(value) ? value.value : (value as string);
+}
+
+/**
+ * Extracts values from ItemOption array using originalSlug if available.
+ */
+function extractValuesFromOptionArray(value: ConditionValue): string[] {
+  if (isItemOptionArray(value)) {
+    return value.map(x => x.originalSlug || x.value);
+  }
+
+  if (Array.isArray(value) && typeof value[0] === "string") {
+    return value;
+  }
+
+  return [];
+}
+
+/**
+ * Processes condition values for different condition types.
+ */
+export const getConditionValue = (
+  element: FilterElement,
+  forWhere: boolean,
+): ProcessedConditionValue => {
+  const { value: selectedValue, conditionValue } = element.condition.selected;
+
+  if (!conditionValue) {
+    return "";
+  }
+
+  const { label } = conditionValue;
+
+  // Handle range conditions
+  if (label === "lower") {
+    const value = extractValueFromOption(selectedValue);
+    const range = { lte: value };
+
+    return forWhere ? { range } : value;
+  }
+
+  if (label === "greater") {
+    const value = extractValueFromOption(selectedValue);
+    const range = { gte: value };
+
+    return forWhere ? { range } : value;
+  }
+
+  if (isTuple(selectedValue) && label === "between") {
+    const [gte, lte] = selectedValue;
+    const range = { gte, lte };
+
+    return forWhere ? { range } : selectedValue;
+  }
+
+  // Handle boolean values
+  if (isItemOption(selectedValue) && ["true", "false"].includes(selectedValue.value)) {
+    return extractBooleanValue(selectedValue);
+  }
+
+  if (typeof selectedValue === "string" && ["true", "false"].includes(selectedValue)) {
+    return extractBooleanValue(selectedValue);
+  }
+
+  // Handle single option values
+  if (isItemOption(selectedValue)) {
+    const eq = selectedValue.originalSlug || selectedValue.value;
+
+    return forWhere ? { eq } : eq;
+  }
+
+  // Handle multiple option values
+  if (isItemOptionArray(selectedValue)) {
+    const oneOf = extractValuesFromOptionArray(selectedValue);
+
+    return forWhere ? { oneOf } : oneOf;
+  }
+
+  // Handle string values
+  if (typeof selectedValue === "string") {
+    const eq = selectedValue;
+
+    return forWhere ? { eq } : eq;
+  }
+
+  // Handle string arrays
+  if (Array.isArray(selectedValue) && typeof selectedValue[0] === "string") {
+    const oneOf = selectedValue;
+
+    return forWhere ? { oneOf } : oneOf;
+  }
+
+  return selectedValue;
+};

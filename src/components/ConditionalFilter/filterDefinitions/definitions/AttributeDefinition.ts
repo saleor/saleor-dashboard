@@ -12,7 +12,14 @@ import {
   ProductsHandler,
   ProductVariantHandler,
 } from "../../API/Handler";
+import { FilterElement } from "../../FilterElement";
+import {
+  ConditionValue,
+  isItemOption,
+  isItemOptionArray,
+} from "../../FilterElement/ConditionValue";
 import { WhereOnlyFilterDefinition } from "../types";
+import { getBooleanValueFromElement, getConditionValue } from "../utils";
 
 export class AttributeDefinition
   implements WhereOnlyFilterDefinition<{ attributes?: AttributeInput[] }>
@@ -44,7 +51,7 @@ export class AttributeDefinition
     query: Readonly<{ attributes?: AttributeInput[] }>,
     element: FilterElement,
   ): { attributes?: AttributeInput[] } {
-    const attribute = AttributeQueryBuilder.build(element);
+    const attribute = this.buildAttributeInput(element);
 
     if (!attribute.slug) {
       return query;
@@ -57,107 +64,148 @@ export class AttributeDefinition
       attributes: [...existingAttributes, attribute],
     };
   }
-}
 
-import { FilterElement } from "../../FilterElement";
-import { isItemOption, isItemOptionArray, isTuple } from "../../FilterElement/ConditionValue";
-
-export class AttributeQueryBuilder {
-  static build(element: FilterElement): AttributeInput {
+  private buildAttributeInput(element: FilterElement): AttributeInput {
     const attributeSlug = element.selectedAttribute?.value;
 
     if (!attributeSlug) {
       return { slug: "" };
     }
 
-    const selected = element.condition.selected;
+    const baseAttribute = { slug: attributeSlug };
+    const { value, conditionValue } = element.condition.selected;
     const inputType = element.selectedAttribute?.type as AttributeInputTypeEnum;
 
-    if (!selected.conditionValue) {
-      return { slug: attributeSlug };
+    if (!conditionValue) {
+      return baseAttribute;
     }
 
-    const { label, type } = selected.conditionValue;
-    const { value } = selected;
-
+    // Handle reference type attributes
     if (inputType === AttributeInputTypeEnum.REFERENCE) {
-      if (isItemOption(value)) {
-        return { slug: attributeSlug, valueNames: [value.label] };
-      }
-
-      if (isItemOptionArray(value)) {
-        if (value.length === 0) {
-          return { slug: attributeSlug };
-        }
-
-        return {
-          slug: attributeSlug,
-          valueNames: value.map(item => item.label),
-        };
-      }
-
-      return { slug: attributeSlug };
+      return this.buildReferenceAttribute(baseAttribute, value);
     }
 
+    // Handle boolean type attributes
     if (inputType === AttributeInputTypeEnum.BOOLEAN) {
       return {
-        slug: attributeSlug,
-        boolean: isItemOption(value) ? value.value === "true" : value === "true",
+        ...baseAttribute,
+        boolean: getBooleanValueFromElement(element),
       };
     }
 
-    if (label === "lower" && typeof value === "string") {
-      return { slug: attributeSlug, ...this.getQueryPartByType(value, type, "lte") };
-    }
+    // Handle other types with condition values
+    return this.buildConditionAttribute(baseAttribute, element, conditionValue.type);
+  }
 
-    if (label === "greater" && typeof value === "string") {
-      return { slug: attributeSlug, ...this.getQueryPartByType(value, type, "gte") };
-    }
-
-    if (isTuple(value) && label === "between") {
-      return { slug: attributeSlug, ...this.getRangeQueryPartByType(value, type) };
-    }
-
+  private buildReferenceAttribute(
+    baseAttribute: AttributeInput,
+    value: ConditionValue,
+  ): AttributeInput {
     if (isItemOption(value)) {
-      return { slug: attributeSlug, values: [value.originalSlug || value.value] };
+      return { ...baseAttribute, valueNames: [value.label] };
     }
 
     if (isItemOptionArray(value)) {
-      return { slug: attributeSlug, values: value.map(x => x.originalSlug || x.value) };
+      if (value.length === 0) {
+        return baseAttribute;
+      }
+
+      return {
+        ...baseAttribute,
+        valueNames: value.map(item => item.label),
+      };
+    }
+
+    return baseAttribute;
+  }
+
+  private buildConditionAttribute(
+    baseAttribute: AttributeInput,
+    element: FilterElement,
+    type: string,
+  ): AttributeInput {
+    const processedValue = getConditionValue(element, true);
+
+    if (typeof processedValue === "object" && processedValue && "range" in processedValue) {
+      return this.buildRangeAttribute(baseAttribute, processedValue.range, type);
+    }
+
+    if (typeof processedValue === "object" && processedValue && "eq" in processedValue) {
+      return { ...baseAttribute, values: [processedValue.eq] };
+    }
+
+    if (typeof processedValue === "object" && processedValue && "oneOf" in processedValue) {
+      return { ...baseAttribute, values: processedValue.oneOf };
+    }
+
+    return baseAttribute;
+  }
+
+  private buildRangeAttribute(
+    baseAttribute: AttributeInput,
+    range: { gte?: string; lte?: string },
+    type: string,
+  ): AttributeInput {
+    const { gte, lte } = range;
+
+    if (gte && lte) {
+      return {
+        ...baseAttribute,
+        ...this.getQueryPartForType([gte, lte], type, "range"),
+      };
+    }
+
+    if (gte) {
+      return {
+        ...baseAttribute,
+        ...this.getQueryPartForType(gte, type, "gte"),
+      };
+    }
+
+    if (lte) {
+      return {
+        ...baseAttribute,
+        ...this.getQueryPartForType(lte, type, "lte"),
+      };
+    }
+
+    return baseAttribute;
+  }
+
+  private getQueryPartForType(
+    value: string | [string, string],
+    type: string,
+    operation: "gte" | "lte" | "range",
+  ) {
+    const isDateTimeType = type === "datetime" || type === "datetime.range";
+    const isDateType = type === "date" || type === "date.range";
+
+    if (operation === "range" && Array.isArray(value)) {
+      const [gte, lte] = value;
+
+      if (isDateTimeType) {
+        return { dateTime: { gte, lte } };
+      }
+
+      if (isDateType) {
+        return { date: { gte, lte } };
+      }
+
+      return { valuesRange: { gte: parseFloat(gte), lte: parseFloat(lte) } };
     }
 
     if (typeof value === "string") {
-      return { slug: attributeSlug, values: [value] };
+      if (isDateTimeType) {
+        return { dateTime: { [operation]: value } };
+      }
+
+      if (isDateType) {
+        return { date: { [operation]: value } };
+      }
+
+      return { valuesRange: { [operation]: parseFloat(value) } };
     }
 
-    if (Array.isArray(value) && typeof value[0] === "string") {
-      return { slug: attributeSlug, values: value as string[] };
-    }
-
-    return { slug: attributeSlug };
-  }
-
-  private static getQueryPartByType(value: string, type: string, what: "lte" | "gte") {
-    switch (type) {
-      case "datetime":
-        return { dateTime: { [what]: value } };
-      case "date":
-        return { date: { [what]: value } };
-      default:
-        return { valuesRange: { [what]: parseFloat(value) } };
-    }
-  }
-
-  private static getRangeQueryPartByType(value: [string, string], type: string) {
-    const [gte, lte] = value;
-
-    switch (type) {
-      case "datetime.range":
-        return { dateTime: { lte, gte } };
-      case "date.range":
-        return { date: { lte, gte } };
-      default:
-        return { valuesRange: { lte: parseFloat(lte), gte: parseFloat(gte) } };
-    }
+    return {};
   }
 }
