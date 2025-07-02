@@ -13,8 +13,7 @@ COPY vite.config.js ./
 COPY tsconfig.json ./
 COPY *.d.ts ./
 COPY schema.graphql ./
-COPY introspection.json ./
-COPY introspection*.json ./
+COPY codegen.ts ./
 COPY .featureFlags/ .featureFlags/
 
 COPY src/ src/
