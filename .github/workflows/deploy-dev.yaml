@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    permissions:
+      id-token: write # needed by aws-actions/configure-aws-credentials
+      contents: read
     env:
       ## backward compatibility for older versions
       APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
@@ -56,10 +59,9 @@ jobs:
           npm run build
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_CLOUD_DEV_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_CLOUD_DEV_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_DEV_ACCOUNT_ID }}:role/${{ secrets.AWS_DASHBOARD_DEV_CICD_ROLE_NAME }}
           aws-region: us-east-1
 
       - name: Deploy dev
