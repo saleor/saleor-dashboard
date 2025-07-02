@@ -2,10 +2,10 @@ import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { BooleanValuesHandler, Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { BothApiFilterDefinition } from "../types";
+import { BothApiFilterDefinition, FilterQuery } from "../types";
 import { getBooleanValueFromElement } from "../utils";
 
-export class StaticBooleanDefinition implements BothApiFilterDefinition<any> {
+export class StaticBooleanDefinition implements BothApiFilterDefinition<FilterQuery> {
   canHandle(element: FilterElement): boolean {
     return [
       "isPublished",
@@ -14,6 +14,7 @@ export class StaticBooleanDefinition implements BothApiFilterDefinition<any> {
       "isAvailable",
       "isVisibleInListing",
       "giftCard",
+      "isActive",
     ].includes(element.value.value);
   }
 
@@ -34,14 +35,14 @@ export class StaticBooleanDefinition implements BothApiFilterDefinition<any> {
     ]);
   }
 
-  updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
+  updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const fieldName = element.value.value;
     const booleanValue = getBooleanValueFromElement(element);
 
     return { ...query, [fieldName]: booleanValue };
   }
 
-  updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
+  updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const whereQuery = this.updateWhereQuery(query, element);
     const fieldName = element.value.value;
 

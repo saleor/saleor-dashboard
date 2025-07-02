@@ -4,14 +4,14 @@ import { ChannelHandler, Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
 import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition } from "../types";
+import { BothApiFilterDefinition, FilterQuery } from "../types";
 
 /**
  * Specialized definition for channel filters that need to use the slug instead of the ID.
  * This is used specifically for Products, Vouchers, and Collections views where the
  * GraphQL API expects a channel slug in the top-level channel argument.
  */
-export class ChannelSlugDefinition implements BothApiFilterDefinition<any> {
+export class ChannelSlugDefinition implements BothApiFilterDefinition<FilterQuery> {
   public canHandle(element: FilterElement): boolean {
     return element.isStatic() && element.value.value === "channel";
   }
@@ -20,7 +20,7 @@ export class ChannelSlugDefinition implements BothApiFilterDefinition<any> {
     return new ChannelHandler(client, inputValue);
   }
 
-  public updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
+  public updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const { value: selectedValue } = element.condition.selected;
     let queryPart;
 
@@ -35,7 +35,7 @@ export class ChannelSlugDefinition implements BothApiFilterDefinition<any> {
     return { ...query, channel: queryPart };
   }
 
-  public updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
+  public updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const whereQuery = this.updateWhereQuery(query, element);
 
     return {

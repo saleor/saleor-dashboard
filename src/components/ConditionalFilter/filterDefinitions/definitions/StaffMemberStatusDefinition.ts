@@ -2,9 +2,9 @@ import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption } from "../../FilterElement/ConditionValue";
 import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition } from "../types";
+import { BothApiFilterDefinition, FilterQuery } from "../types";
 
-export class StaffMemberStatusDefinition implements BothApiFilterDefinition<any> {
+export class StaffMemberStatusDefinition implements BothApiFilterDefinition<FilterQuery> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "staffMemberStatus";
   }
@@ -13,7 +13,7 @@ export class StaffMemberStatusDefinition implements BothApiFilterDefinition<any>
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
+  updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const { value: selectedValue } = element.condition.selected;
     let queryPart;
 
@@ -26,7 +26,7 @@ export class StaffMemberStatusDefinition implements BothApiFilterDefinition<any>
     return { ...query, status: queryPart };
   }
 
-  updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
+  updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const whereQuery = this.updateWhereQuery(query, element);
 
     return {

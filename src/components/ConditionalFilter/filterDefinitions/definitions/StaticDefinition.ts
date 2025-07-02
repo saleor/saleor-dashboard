@@ -14,7 +14,7 @@ import {
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
 import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition } from "../types";
+import { BothApiFilterDefinition, FilterQuery } from "../types";
 
 const SUPPORTED_STATIC_FIELDS = [
   "collection",
@@ -27,7 +27,9 @@ const SUPPORTED_STATIC_FIELDS = [
   "customer",
 ];
 
-export class StaticDefinition implements BothApiFilterDefinition<any> {
+type StaticWhereQueryPart = { eq: string } | { oneOf: string[] };
+
+export class StaticDefinition implements BothApiFilterDefinition<FilterQuery> {
   public canHandle(element: FilterElement): boolean {
     return element.isStatic() && SUPPORTED_STATIC_FIELDS.includes(element.value.value);
   }
@@ -59,29 +61,36 @@ export class StaticDefinition implements BothApiFilterDefinition<any> {
     }
   }
 
-  public updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
+  public updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const { value: selectedValue } = element.condition.selected;
     const fieldName = element.value.value;
-    let queryPart;
+    let queryPart: StaticWhereQueryPart | undefined;
 
     if (isItemOption(selectedValue)) {
       queryPart = { eq: selectedValue.value };
     } else if (isItemOptionArray(selectedValue)) {
       queryPart = { oneOf: selectedValue.map(item => item.value) };
-    } else {
+    } else if (typeof selectedValue === "string") {
       queryPart = { eq: selectedValue };
     }
 
     return { ...query, [fieldName]: queryPart };
   }
 
-  public updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
+  public updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const whereQuery = this.updateWhereQuery(query, element);
     const fieldName = element.value.value;
+    const whereQueryPart = whereQuery[fieldName] as StaticWhereQueryPart;
+
+    if (!whereQueryPart) {
+      return query;
+    }
 
     return {
       ...query,
-      [fieldName]: mapStaticQueryPartToLegacyVariables(whereQuery[fieldName]),
+      [fieldName]: mapStaticQueryPartToLegacyVariables(
+        whereQueryPart as { eq?: string; oneOf?: string[] },
+      ),
     };
   }
 }

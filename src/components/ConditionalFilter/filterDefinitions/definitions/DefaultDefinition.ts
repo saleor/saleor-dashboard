@@ -1,9 +1,9 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray, isTuple } from "../../FilterElement/ConditionValue";
-import { BothApiFilterDefinition } from "../types";
+import { BothApiFilterDefinition, FilterQuery } from "../types";
 
-export class DefaultDefinition implements BothApiFilterDefinition<any> {
+export class DefaultDefinition implements BothApiFilterDefinition<FilterQuery> {
   public canHandle(): boolean {
     // Default definition handles all elements that no other definition can handle
     return true;
@@ -13,7 +13,7 @@ export class DefaultDefinition implements BothApiFilterDefinition<any> {
     return new NoopValuesHandler([]);
   }
 
-  private processValue(element: FilterElement, forWhere: boolean): any {
+  private processValue(element: FilterElement, forWhere: boolean) {
     const { value: selectedValue, conditionValue } = element.condition.selected;
 
     if (!conditionValue) {
@@ -79,14 +79,14 @@ export class DefaultDefinition implements BothApiFilterDefinition<any> {
     return selectedValue;
   }
 
-  public updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
+  public updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const fieldName = element.value.value || element.value.label || "unknown";
     const processedValue = this.processValue(element, true);
 
     return { ...query, [fieldName]: processedValue };
   }
 
-  public updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
+  public updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const fieldName = element.value.value || element.value.label || "unknown";
     const processedValue = this.processValue(element, false);
 

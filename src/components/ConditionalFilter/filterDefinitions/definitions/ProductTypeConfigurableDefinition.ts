@@ -3,9 +3,9 @@ import { ProductTypeConfigurable } from "@dashboard/graphql";
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption } from "../../FilterElement/ConditionValue";
-import { BothApiFilterDefinition } from "../types";
+import { BothApiFilterDefinition, FilterQuery } from "../types";
 
-export class ProductTypeConfigurableDefinition implements BothApiFilterDefinition<any> {
+export class ProductTypeConfigurableDefinition implements BothApiFilterDefinition<FilterQuery> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "configurable" || element.value.value === "typeOfProduct";
   }
@@ -14,7 +14,7 @@ export class ProductTypeConfigurableDefinition implements BothApiFilterDefinitio
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
+  updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const { value: selectedValue } = element.condition.selected;
 
     if (element.value.value === "typeOfProduct") {
@@ -23,7 +23,7 @@ export class ProductTypeConfigurableDefinition implements BothApiFilterDefinitio
       if (isItemOption(selectedValue)) {
         productTypeValue = selectedValue.value;
       } else {
-        productTypeValue = selectedValue;
+        productTypeValue = selectedValue as string;
       }
 
       return { ...query, productType: { eq: productTypeValue } };
@@ -44,7 +44,7 @@ export class ProductTypeConfigurableDefinition implements BothApiFilterDefinitio
     return query;
   }
 
-  updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
+  updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const { value: selectedValue } = element.condition.selected;
 
     if (element.value.value === "typeOfProduct") {

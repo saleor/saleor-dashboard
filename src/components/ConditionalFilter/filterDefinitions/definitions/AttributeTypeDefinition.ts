@@ -2,9 +2,9 @@ import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption } from "../../FilterElement/ConditionValue";
 import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition } from "../types";
+import { BothApiFilterDefinition, FilterQuery } from "../types";
 
-export class AttributeTypeDefinition implements BothApiFilterDefinition<any> {
+export class AttributeTypeDefinition implements BothApiFilterDefinition<FilterQuery> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "attributeType";
   }
@@ -13,7 +13,7 @@ export class AttributeTypeDefinition implements BothApiFilterDefinition<any> {
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
+  updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const { value: selectedValue } = element.condition.selected;
     let queryPart;
 
@@ -26,7 +26,7 @@ export class AttributeTypeDefinition implements BothApiFilterDefinition<any> {
     return { ...query, type: queryPart };
   }
 
-  updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
+  updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const whereQuery = this.updateWhereQuery(query, element);
 
     return {

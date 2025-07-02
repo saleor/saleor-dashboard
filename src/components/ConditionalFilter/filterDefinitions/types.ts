@@ -3,6 +3,8 @@ import { ApolloClient } from "@apollo/client";
 import { Handler } from "../API/Handler";
 import { FilterElement } from "../FilterElement";
 
+export type FilterQuery = Record<string, unknown>;
+
 export interface BaseFilterDefinition {
   /**
    * Determines if this definition should handle the given filter element.
@@ -19,7 +21,7 @@ export interface BaseFilterDefinition {
   ): Handler;
 }
 
-export interface WhereOnlyFilterDefinition<TQuery extends Record<string, any>>
+export interface WhereOnlyFilterDefinition<TQuery extends FilterQuery>
   extends BaseFilterDefinition {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
@@ -28,7 +30,7 @@ export interface WhereOnlyFilterDefinition<TQuery extends Record<string, any>>
   updateWhereQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
 }
 
-export interface FilterOnlyFilterDefinition<TQuery extends Record<string, any>>
+export interface FilterOnlyFilterDefinition<TQuery extends FilterQuery>
   extends BaseFilterDefinition {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for FILTER API.
@@ -37,8 +39,7 @@ export interface FilterOnlyFilterDefinition<TQuery extends Record<string, any>>
   updateFilterQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
 }
 
-export interface BothApiFilterDefinition<TQuery extends Record<string, any>>
-  extends BaseFilterDefinition {
+export interface BothApiFilterDefinition<TQuery extends FilterQuery> extends BaseFilterDefinition {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
    * This method MUST treat the input query as immutable and return a new one.
@@ -55,7 +56,7 @@ export interface BothApiFilterDefinition<TQuery extends Record<string, any>>
 /**
  * A discriminating union that ensures at least one of the update methods is implemented.
  */
-export type FilterDefinition<TQuery extends Record<string, any>> =
+export type FilterDefinition<TQuery extends FilterQuery> =
   | WhereOnlyFilterDefinition<TQuery>
   | FilterOnlyFilterDefinition<TQuery>
   | BothApiFilterDefinition<TQuery>;
@@ -63,13 +64,13 @@ export type FilterDefinition<TQuery extends Record<string, any>> =
 /**
  * Type guards to check which API methods are supported by a definition.
  */
-export function supportsWhereApi<TQuery extends Record<string, any>>(
+export function supportsWhereApi<TQuery extends FilterQuery>(
   definition: FilterDefinition<TQuery>,
 ): definition is WhereOnlyFilterDefinition<TQuery> | BothApiFilterDefinition<TQuery> {
   return "updateWhereQuery" in definition;
 }
 
-export function supportsFilterApi<TQuery extends Record<string, any>>(
+export function supportsFilterApi<TQuery extends FilterQuery>(
   definition: FilterDefinition<TQuery>,
 ): definition is FilterOnlyFilterDefinition<TQuery> | BothApiFilterDefinition<TQuery> {
   return "updateFilterQuery" in definition;

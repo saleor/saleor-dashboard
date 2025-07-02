@@ -1,9 +1,14 @@
 import { FilterDefinitionResolver } from "../filterDefinitions/FilterDefinitionResolver";
-import { FilterDefinition, supportsFilterApi, supportsWhereApi } from "../filterDefinitions/types";
+import {
+  FilterDefinition,
+  FilterQuery,
+  supportsFilterApi,
+  supportsWhereApi,
+} from "../filterDefinitions/types";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { QueryApiType } from "./types";
 
-export class QueryBuilder<T extends Record<string, any>, K extends keyof T = never> {
+export class QueryBuilder<T extends FilterQuery, K extends keyof T = never> {
   constructor(
     private apiType: QueryApiType,
     private filterContainer: FilterContainer,
@@ -52,7 +57,7 @@ export class QueryBuilder<T extends Record<string, any>, K extends keyof T = nev
         );
       }
 
-      return definition.updateWhereQuery(query, element) as T;
+      return definition.updateWhereQuery(query, element);
     } else {
       if (!supportsFilterApi(definition)) {
         throw new Error(
@@ -60,7 +65,7 @@ export class QueryBuilder<T extends Record<string, any>, K extends keyof T = nev
         );
       }
 
-      return definition.updateFilterQuery(query, element) as T;
+      return definition.updateFilterQuery(query, element);
     }
   }
 

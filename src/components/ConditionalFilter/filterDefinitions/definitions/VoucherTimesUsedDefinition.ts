@@ -1,7 +1,6 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption } from "../../FilterElement/ConditionValue";
-import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
 import { BothApiFilterDefinition } from "../types";
 
 export class VoucherTimesUsedDefinition
@@ -59,9 +58,7 @@ export class VoucherTimesUsedDefinition
 
     return {
       ...query,
-      timesUsed: whereQuery.timesUsed
-        ? mapStaticQueryPartToLegacyVariables(whereQuery.timesUsed)
-        : undefined,
+      timesUsed: whereQuery.timesUsed,
     };
   }
 }
