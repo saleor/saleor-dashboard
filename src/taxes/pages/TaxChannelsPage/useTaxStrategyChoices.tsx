@@ -12,6 +12,7 @@ const flatTaxRateChoice = {
   label: <FlatTaxRateLabel />,
   value: TaxCalculationStrategy.FLAT_RATES,
 };
+// Keep this choice for backward compatibility with Avalara plugin - remove after migration to AvaTax app
 const legacyPluginTaxChoice = {
   label: <PluginLabel />,
   value: "plugin:mirumee.taxes.avalara",
