@@ -1,6 +1,6 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
+import { isItemOption, isItemOptionArray, isTuple } from "../../FilterElement/ConditionValue";
 import { BothApiFilterDefinition } from "../types";
 
 export class DefaultDefinition implements BothApiFilterDefinition<any> {
@@ -13,55 +13,67 @@ export class DefaultDefinition implements BothApiFilterDefinition<any> {
     return new NoopValuesHandler([]);
   }
 
-  private processValue(element: FilterElement): any {
+  private processValue(element: FilterElement, forWhere: boolean): any {
     const { value: selectedValue, conditionValue } = element.condition.selected;
-    const conditionType = conditionValue?.type;
-    const conditionLabel = conditionValue?.label;
 
-    // Handle range types
-    if (
-      conditionType === "datetime.range" ||
-      conditionType === "date.range" ||
-      conditionType === "number.range"
-    ) {
-      if (Array.isArray(selectedValue) && selectedValue.length === 2) {
-        const gte =
-          typeof selectedValue[0] === "string" ? selectedValue[0] : String(selectedValue[0]);
-        const lte =
-          typeof selectedValue[1] === "string" ? selectedValue[1] : String(selectedValue[1]);
-
-        return { gte, lte };
-      }
+    if (!conditionValue) {
+      return "";
     }
 
-    // Handle "greater" condition
-    if (conditionLabel === "greater") {
-      const value = isItemOption(selectedValue) ? selectedValue.value : String(selectedValue);
+    const { label } = conditionValue;
 
-      return { gte: value };
+    if (label === "lower") {
+      const value = isItemOption(selectedValue) ? selectedValue.value : selectedValue;
+      const range = { lte: value };
+
+      return forWhere ? { range } : range;
     }
 
-    // Handle "lower" condition
-    if (conditionLabel === "lower") {
-      const value = isItemOption(selectedValue) ? selectedValue.value : String(selectedValue);
+    if (label === "greater") {
+      const value = isItemOption(selectedValue) ? selectedValue.value : selectedValue;
+      const range = { gte: value };
 
-      return { lte: value };
+      return forWhere ? { range } : range;
     }
 
-    // Handle boolean conversion for select types
-    if (conditionType === "select" && isItemOption(selectedValue)) {
-      const value = selectedValue.value;
+    if (isTuple(selectedValue) && label === "between") {
+      const [gte, lte] = selectedValue;
+      const range = { gte, lte };
 
-      if (value === "true" || value === "false") {
-        return value === "true";
-      }
+      return forWhere ? { range } : range;
     }
 
-    // Handle regular cases
+    if (isItemOption(selectedValue) && ["true", "false"].includes(selectedValue.value)) {
+      return selectedValue.value === "true";
+    }
+
     if (isItemOption(selectedValue)) {
-      return selectedValue.value;
-    } else if (isItemOptionArray(selectedValue)) {
-      return selectedValue.map(item => item.value);
+      const eq = selectedValue.value;
+
+      return forWhere ? { eq } : eq;
+    }
+
+    if (isItemOptionArray(selectedValue)) {
+      const oneOf = selectedValue.map(x => x.value);
+
+      return forWhere ? { oneOf } : oneOf;
+    }
+
+    if (typeof selectedValue === "string") {
+      // Convert string boolean values to actual booleans
+      if (["true", "false"].includes(selectedValue)) {
+        return selectedValue === "true";
+      }
+
+      const eq = selectedValue;
+
+      return forWhere ? { eq } : eq;
+    }
+
+    if (Array.isArray(selectedValue)) {
+      const eq = selectedValue;
+
+      return forWhere ? { eq } : eq;
     }
 
     return selectedValue;
@@ -69,38 +81,15 @@ export class DefaultDefinition implements BothApiFilterDefinition<any> {
 
   public updateWhereQuery(query: Readonly<any>, element: FilterElement): any {
     const fieldName = element.value.value || element.value.label || "unknown";
-    const processedValue = this.processValue(element);
+    const processedValue = this.processValue(element, true);
 
-    // If it's already a range object, use it directly
-    if (
-      typeof processedValue === "object" &&
-      (processedValue.gte !== undefined || processedValue.lte !== undefined)
-    ) {
-      return { ...query, [fieldName]: processedValue };
-    }
-
-    // For arrays, use oneOf
-    if (Array.isArray(processedValue)) {
-      return { ...query, [fieldName]: { oneOf: processedValue } };
-    }
-
-    // For simple values, use eq
-    return { ...query, [fieldName]: { eq: processedValue } };
+    return { ...query, [fieldName]: processedValue };
   }
 
   public updateFilterQuery(query: Readonly<any>, element: FilterElement): any {
     const fieldName = element.value.value || element.value.label || "unknown";
-    const processedValue = this.processValue(element);
+    const processedValue = this.processValue(element, false);
 
-    // For range objects, use them directly
-    if (
-      typeof processedValue === "object" &&
-      (processedValue.gte !== undefined || processedValue.lte !== undefined)
-    ) {
-      return { ...query, [fieldName]: processedValue };
-    }
-
-    // For other cases, use the processed value directly
     return { ...query, [fieldName]: processedValue };
   }
 }

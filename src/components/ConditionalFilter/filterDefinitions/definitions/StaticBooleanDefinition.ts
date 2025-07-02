@@ -1,15 +1,37 @@
-import { Handler, NoopValuesHandler } from "../../API/Handler";
+import { AttributeInputTypeEnum } from "@dashboard/graphql";
+
+import { BooleanValuesHandler, Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { BothApiFilterDefinition } from "../types";
 import { getBooleanValueFromElement } from "../utils";
 
 export class StaticBooleanDefinition implements BothApiFilterDefinition<any> {
   canHandle(element: FilterElement): boolean {
-    return ["isPublished", "hasCategory", "hasVariants"].includes(element.value.value);
+    return [
+      "isPublished",
+      "hasCategory",
+      "hasVariants",
+      "isAvailable",
+      "isVisibleInListing",
+      "giftCard",
+    ].includes(element.value.value);
   }
 
   createOptionFetcher(): Handler {
-    return new NoopValuesHandler([]);
+    return new BooleanValuesHandler([
+      {
+        label: "Yes",
+        value: "true",
+        type: AttributeInputTypeEnum.BOOLEAN,
+        slug: "true",
+      },
+      {
+        label: "No",
+        value: "false",
+        type: AttributeInputTypeEnum.BOOLEAN,
+        slug: "false",
+      },
+    ]);
   }
 
   updateWhereQuery(query: Readonly<any>, element: FilterElement): any {

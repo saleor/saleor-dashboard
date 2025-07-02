@@ -24,6 +24,8 @@ import { QueryApiType, QueryBuilder } from "./QueryBuilder";
 export type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
+type VoucherQueryVars = VoucherFilterInput & { channel?: string };
+type CollectionQueryVars = CollectionFilterInput & { channel?: string };
 export type OrderQueryVars = ProductQueryVars & { created?: DateTimeRangeInput | DateRangeInput };
 
 // Create a resolver with ChannelSlugDefinition for views that need channel slug handling
@@ -62,10 +64,12 @@ export const createOrderQueryVariables = (value: FilterContainer): any => {
 export const createVoucherQueryVariables = (
   value: FilterContainer,
 ): { filters: VoucherFilterInput; channel: string | undefined } => {
-  const { topLevel, filters } = new QueryBuilder<
-    VoucherFilterInput & { channel?: string },
-    "channel"
-  >(QueryApiType.FILTER, value, ["channel"], createChannelSlugResolver()).build();
+  const { topLevel, filters } = new QueryBuilder<VoucherQueryVars, "channel">(
+    QueryApiType.FILTER,
+    value,
+    ["channel"],
+    createChannelSlugResolver(),
+  ).build();
 
   return {
     channel: topLevel.channel,
@@ -100,10 +104,12 @@ export const createCustomerQueryVariables = (value: FilterContainer): CustomerFi
 export const createCollectionsQueryVariables = (
   value: FilterContainer,
 ): { filter: CollectionFilterInput; channel: string | undefined } => {
-  const { topLevel, filters } = new QueryBuilder<
-    CollectionFilterInput & { channel?: string },
-    "channel"
-  >(QueryApiType.FILTER, value, ["channel"], createChannelSlugResolver()).build();
+  const { topLevel, filters } = new QueryBuilder<CollectionQueryVars, "channel">(
+    QueryApiType.FILTER,
+    value,
+    ["channel"],
+    createChannelSlugResolver(),
+  ).build();
 
   return {
     channel: topLevel.channel,
