@@ -1637,6 +1637,7 @@ export enum CountryCode {
   VU = 'VU',
   WF = 'WF',
   WS = 'WS',
+  XK = 'XK',
   YE = 'YE',
   YT = 'YT',
   ZA = 'ZA',
