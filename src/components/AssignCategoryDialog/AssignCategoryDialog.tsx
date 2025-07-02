@@ -12,7 +12,7 @@ type Categories = {
 
 interface AssignCategoryDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
-  categories: Categories;
+  categories: Categories | null;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 

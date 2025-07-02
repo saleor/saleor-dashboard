@@ -161,18 +161,10 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const {
-    loadMore: loadMoreCollections,
-    search: searchCollections,
-    result: searchCollectionsOpts,
-  } = useCollectionSearch({
+  const { result: searchCollectionsOpts } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const {
-    loadMore: loadMoreCategories,
-    search: searchCategories,
-    result: searchCategoriesOpts,
-  } = useCategorySearch({
+  const { result: searchCategoriesOpts } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {

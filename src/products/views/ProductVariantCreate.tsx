@@ -20,7 +20,7 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import useCategorySearch, { searchCategories } from "@dashboard/searches/useCategorySearch";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
@@ -197,18 +197,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const {
-    loadMore: loadMoreCategories,
-    search: searchCategories,
-    result: searchCategoriesOpts,
-  } = useCategorySearch({
+  const { result: searchCategoriesOpts } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const {
-    loadMore: loadMoreCollections,
-    search: searchCollections,
-    result: searchCollectionsOpts,
-  } = useCollectionSearch({
+  const { result: searchCollectionsOpts } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {

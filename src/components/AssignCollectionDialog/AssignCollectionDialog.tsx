@@ -12,7 +12,7 @@ type Collections = {
 
 interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
-  collections: Collections;
+  collections: Collections | null;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 

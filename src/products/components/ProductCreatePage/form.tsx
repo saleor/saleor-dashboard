@@ -66,7 +66,6 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import { init } from "@graphql-codegen/cli";
 import { Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";

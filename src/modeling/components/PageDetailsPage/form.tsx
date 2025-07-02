@@ -222,6 +222,8 @@ function usePageForm(
       attributesWithNewFileValue.data,
       opts.referencePages,
       opts.referenceProducts,
+      opts.referenceCollections,
+      opts.referenceCategories,
     ),
     content: null,
     pageType: pageExists ? page?.pageType : opts.selectedPageType,

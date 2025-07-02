@@ -436,7 +436,7 @@ export const getProductVariantReferenceAttributeDisplayData = (
 
 export const getCollectionReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referenceCollections: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>,
+  referenceCollections: RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>,
 ) => ({
   ...attribute,
   data: {
@@ -444,7 +444,7 @@ export const getCollectionReferenceAttributeDisplayData = (
     references:
       referenceCollections?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>>(
+            attribute.value.reduce<RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>>(
               (acc, value) => {
                 const reference = referenceCollections.find(reference => reference.id === value);
 
