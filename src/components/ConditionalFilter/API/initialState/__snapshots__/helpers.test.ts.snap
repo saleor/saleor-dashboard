@@ -7,17 +7,16 @@ Object {
       "choices": Array [
         Object {
           "label": "Choice 1",
-          "originalSlug": undefined,
           "slug": "choice-1",
           "value": "1",
         },
         Object {
           "label": "Choice 2",
-          "originalSlug": undefined,
           "slug": "choice-2",
           "value": "2",
         },
       ],
+      "entityType": undefined,
       "inputType": "MULTISELECT",
       "label": "Attribute 1",
       "slug": "attribute-1",
@@ -28,16 +27,15 @@ Object {
         Object {
           "label": "Yes",
           "slug": "true",
-          "type": undefined,
           "value": "true",
         },
         Object {
           "label": "No",
           "slug": "false",
-          "type": undefined,
           "value": "false",
         },
       ],
+      "entityType": undefined,
       "inputType": "BOOLEAN",
       "label": "Attribute 2",
       "slug": "attribute-2",
