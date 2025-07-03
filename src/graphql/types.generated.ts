@@ -476,6 +476,8 @@ export type AttributeCreateInput = {
 };
 
 export enum AttributeEntityTypeEnum {
+  CATEGORY = 'CATEGORY',
+  COLLECTION = 'COLLECTION',
   PAGE = 'PAGE',
   PRODUCT = 'PRODUCT',
   PRODUCT_VARIANT = 'PRODUCT_VARIANT'
@@ -555,6 +557,13 @@ export type AttributeInputTypeEnumFilterInput = {
   eq?: InputMaybe<AttributeInputTypeEnum>;
   /** The value included in. */
   oneOf?: InputMaybe<Array<AttributeInputTypeEnum>>;
+};
+
+export type AttributePageWhereInput = {
+  /** Filter by attribute slug. */
+  slug: Scalars['String'];
+  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. */
+  value?: InputMaybe<AttributeValuePageInput>;
 };
 
 export enum AttributeSortField {
@@ -707,6 +716,21 @@ export type AttributeValueInput = {
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
   /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: InputMaybe<Array<Scalars['String']>>;
+};
+
+export type AttributeValuePageInput = {
+  /** Filter by boolean value for attributes of boolean type. */
+  boolean?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by date value for attributes of date type. */
+  date?: InputMaybe<DateRangeInput>;
+  /** Filter by date time value for attributes of date time type. */
+  dateTime?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by name assigned to AttributeValue. */
+  name?: InputMaybe<StringFilterInput>;
+  /** Filter by numeric value for attributes of numeric type. */
+  numeric?: InputMaybe<DecimalFilterInput>;
+  /** Filter by slug assigned to AttributeValue. */
+  slug?: InputMaybe<StringFilterInput>;
 };
 
 /**
@@ -4828,6 +4852,8 @@ export type PageWhereInput = {
   AND?: InputMaybe<Array<PageWhereInput>>;
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<PageWhereInput>>;
+  /** Filter by attributes associated with the page. */
+  attributes?: InputMaybe<Array<AttributePageWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   /** Filter by metadata fields. */
   metadata?: InputMaybe<MetadataFilterInput>;
