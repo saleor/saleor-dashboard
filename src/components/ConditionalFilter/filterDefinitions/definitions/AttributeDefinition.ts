@@ -124,7 +124,7 @@ export class AttributeDefinition
     element: FilterElement,
     type: string,
   ): AttributeInput {
-    const processedValue = getConditionValue(element, true);
+    const processedValue = getConditionValue(element);
 
     if (typeof processedValue === "object" && processedValue && "range" in processedValue) {
       return this.buildRangeAttribute(baseAttribute, processedValue.range, type);

@@ -64,10 +64,7 @@ function extractValuesFromOptionArray(value: ConditionValue): string[] {
 /**
  * Processes condition values for different condition types.
  */
-export const getConditionValue = (
-  element: FilterElement,
-  forWhere: boolean,
-): ProcessedConditionValue => {
+export const getConditionValue = (element: FilterElement): ProcessedConditionValue => {
   const { value: selectedValue, conditionValue } = element.condition.selected;
 
   if (!conditionValue) {
@@ -81,21 +78,21 @@ export const getConditionValue = (
     const value = extractValueFromOption(selectedValue);
     const range = { lte: value };
 
-    return forWhere ? { range } : value;
+    return { range };
   }
 
   if (label === "greater") {
     const value = extractValueFromOption(selectedValue);
     const range = { gte: value };
 
-    return forWhere ? { range } : value;
+    return { range };
   }
 
   if (isTuple(selectedValue) && label === "between") {
     const [gte, lte] = selectedValue;
     const range = { gte, lte };
 
-    return forWhere ? { range } : selectedValue;
+    return { range };
   }
 
   // Handle boolean values
@@ -111,28 +108,28 @@ export const getConditionValue = (
   if (isItemOption(selectedValue)) {
     const eq = selectedValue.originalSlug || selectedValue.value;
 
-    return forWhere ? { eq } : eq;
+    return { eq };
   }
 
   // Handle multiple option values
   if (isItemOptionArray(selectedValue)) {
     const oneOf = extractValuesFromOptionArray(selectedValue);
 
-    return forWhere ? { oneOf } : oneOf;
+    return { oneOf };
   }
 
   // Handle string values
   if (typeof selectedValue === "string") {
     const eq = selectedValue;
 
-    return forWhere ? { eq } : eq;
+    return { eq };
   }
 
   // Handle string arrays
   if (Array.isArray(selectedValue) && typeof selectedValue[0] === "string") {
     const oneOf = selectedValue;
 
-    return forWhere ? { oneOf } : oneOf;
+    return { oneOf };
   }
 
   return selectedValue;

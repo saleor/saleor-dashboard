@@ -20,7 +20,7 @@ export abstract class BaseMappableDefinition<T extends FilterQuery = FilterQuery
   protected abstract getQueryFieldName(element: FilterElement): string;
 
   protected getConditionValue(element: FilterElement): T[keyof T] {
-    return getConditionValue(element, true) as T[keyof T];
+    return getConditionValue(element) as T[keyof T];
   }
 
   public updateWhereQuery(query: Readonly<T>, element: FilterElement): T {
