@@ -1,17 +1,10 @@
 import { FilterElement } from "../FilterElement";
 import {
   AttributeDefinition,
-  AttributeTypeDefinition,
-  CollectionPublishedDefinition,
-  CustomerNumberOfOrdersDefinition,
   DefaultDefinition,
-  MetadataDefinition,
   ProductTypeDefinition,
-  StaffMemberStatusDefinition,
   StaticBooleanDefinition,
   StaticDefinition,
-  VoucherStatusDefinition,
-  VoucherTimesUsedDefinition,
 } from "./definitions";
 import { FilterDefinition } from "./types";
 
@@ -31,16 +24,9 @@ export class FilterDefinitionResolver {
   public static getDefaultDefinitions(): Array<FilterDefinition<any>> {
     return [
       new AttributeDefinition(),
-      new AttributeTypeDefinition(),
-      new CollectionPublishedDefinition(),
-      new CustomerNumberOfOrdersDefinition(),
-      new MetadataDefinition(),
       new ProductTypeDefinition(),
-      new StaffMemberStatusDefinition(),
       new StaticBooleanDefinition(),
       new StaticDefinition(),
-      new VoucherStatusDefinition(),
-      new VoucherTimesUsedDefinition(),
       new DefaultDefinition(),
     ];
   }

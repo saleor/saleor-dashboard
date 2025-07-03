@@ -1,12 +1,9 @@
 import { Condition, FilterElement } from "../FilterElement";
 import { ExpressionValue } from "../FilterElement/FilterElement";
 import { AttributeDefinition } from "./definitions/AttributeDefinition";
-import { CollectionPublishedDefinition } from "./definitions/CollectionPublishedDefinition";
 import { DefaultDefinition } from "./definitions/DefaultDefinition";
-import { MetadataDefinition } from "./definitions/MetadataDefinition";
 import { StaticBooleanDefinition } from "./definitions/StaticBooleanDefinition";
 import { StaticDefinition } from "./definitions/StaticDefinition";
-import { VoucherStatusDefinition } from "./definitions/VoucherStatusDefinition";
 import { FilterDefinitionResolver } from "./FilterDefinitionResolver";
 
 // Helper to create a mock FilterDefinition with required methods
@@ -93,60 +90,6 @@ describe("FilterDefinitionResolver", () => {
 
       // Assert
       expect(def).toBeInstanceOf(StaticBooleanDefinition);
-    });
-
-    it("should resolve MetadataDefinition for metadata elements", () => {
-      // Arrange
-      const element = new FilterElement(
-        new ExpressionValue("metadata", "Metadata", "metadata"),
-        Condition.createEmpty(),
-        false,
-      );
-      const resolver = new FilterDefinitionResolver([
-        new MetadataDefinition(),
-        new DefaultDefinition(),
-      ]);
-      // Act
-      const def = resolver.resolve(element);
-
-      // Assert
-      expect(def).toBeInstanceOf(MetadataDefinition);
-    });
-
-    it("should resolve CollectionPublishedDefinition for collection published elements", () => {
-      // Arrange
-      const element = new FilterElement(
-        new ExpressionValue("published", "Published", "published"),
-        Condition.createEmpty(),
-        false,
-      );
-      const resolver = new FilterDefinitionResolver([
-        new CollectionPublishedDefinition(),
-        new DefaultDefinition(),
-      ]);
-      // Act
-      const def = resolver.resolve(element);
-
-      // Assert
-      expect(def).toBeInstanceOf(CollectionPublishedDefinition);
-    });
-
-    it("should resolve VoucherStatusDefinition for voucher status elements", () => {
-      // Arrange
-      const element = new FilterElement(
-        new ExpressionValue("voucherStatus", "Voucher Status", "voucherStatus"),
-        Condition.createEmpty(),
-        false,
-      );
-      const resolver = new FilterDefinitionResolver([
-        new VoucherStatusDefinition(),
-        new DefaultDefinition(),
-      ]);
-      // Act
-      const def = resolver.resolve(element);
-
-      // Assert
-      expect(def).toBeInstanceOf(VoucherStatusDefinition);
     });
 
     it("should resolve DefaultDefinition when no specific definition matches", () => {
