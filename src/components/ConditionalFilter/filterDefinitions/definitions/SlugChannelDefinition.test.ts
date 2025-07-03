@@ -1,19 +1,18 @@
-import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ItemOption } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { VoucherChannelDefinition } from "./VoucherChannelDefinition";
+import { SlugChannelDefinition } from "./SlugChannelDefinition";
 
-describe("VoucherChannelDefinition", () => {
+describe("SlugChannelDefinition", () => {
   describe("canHandle", () => {
     it("should return true for elements with value 'channel'", () => {
       // Arrange
       const value = new ExpressionValue("channel", "Channel", "channel");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new VoucherChannelDefinition();
+      const def = new SlugChannelDefinition();
       // Act
       const result = def.canHandle(element);
 
@@ -25,7 +24,7 @@ describe("VoucherChannelDefinition", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new VoucherChannelDefinition();
+      const def = new SlugChannelDefinition();
       // Act
       const result = def.canHandle(element);
 
@@ -34,21 +33,9 @@ describe("VoucherChannelDefinition", () => {
     });
   });
 
-  describe("createOptionFetcher", () => {
-    it("should return a NoopValuesHandler", () => {
-      // Arrange
-      const def = new VoucherChannelDefinition();
-      // Act
-      const handler = def.createOptionFetcher();
-
-      // Assert
-      expect(handler).toBeInstanceOf(NoopValuesHandler);
-    });
-  });
-
   // Note: This filter has support only for legacy FILTER API
   describe("updateFilterQuery", () => {
-    const def = new VoucherChannelDefinition();
+    const def = new SlugChannelDefinition();
     const value = new ExpressionValue("channel", "Channel", "channel");
     const options = ConditionOptions.fromName("channel");
     const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-5" };
