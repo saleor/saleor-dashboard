@@ -6147,7 +6147,7 @@ export const _GetDynamicLeftOperandsDocument = gql`
   attributes(
     first: $first
     search: $query
-    where: {type: {eq: PRODUCT_TYPE}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH]}}
+    where: {type: {eq: PRODUCT_TYPE}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE]}}
   ) {
     edges {
       node {
@@ -6155,6 +6155,7 @@ export const _GetDynamicLeftOperandsDocument = gql`
         name
         slug
         inputType
+        entityType
         __typename
       }
       __typename
@@ -6443,6 +6444,7 @@ export const _SearchAttributeOperandsDocument = gql`
         name
         slug
         inputType
+        entityType
         choices(first: 5, filter: {ids: $choicesIds}) {
           edges {
             node {
@@ -6702,6 +6704,49 @@ export function use_GetPageTypesChoicesLazyQuery(baseOptions?: ApolloReactHooks.
 export type _GetPageTypesChoicesQueryHookResult = ReturnType<typeof use_GetPageTypesChoicesQuery>;
 export type _GetPageTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetPageTypesChoicesLazyQuery>;
 export type _GetPageTypesChoicesQueryResult = Apollo.QueryResult<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>;
+export const _GetPagesChoicesDocument = gql`
+    query _GetPagesChoices($first: Int!, $query: String!) {
+  pages(first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name: title
+        slug
+        originalSlug: slug
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __use_GetPagesChoicesQuery__
+ *
+ * To run a query within a React component, call `use_GetPagesChoicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetPagesChoicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetPagesChoicesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function use_GetPagesChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>(_GetPagesChoicesDocument, options);
+      }
+export function use_GetPagesChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>(_GetPagesChoicesDocument, options);
+        }
+export type _GetPagesChoicesQueryHookResult = ReturnType<typeof use_GetPagesChoicesQuery>;
+export type _GetPagesChoicesLazyQueryHookResult = ReturnType<typeof use_GetPagesChoicesLazyQuery>;
+export type _GetPagesChoicesQueryResult = Apollo.QueryResult<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>;
 export const _GetProductChoicesDocument = gql`
     query _GetProductChoices($first: Int!, $query: String!) {
   products(first: $first, filter: {search: $query}) {
@@ -6744,6 +6789,52 @@ export function use_GetProductChoicesLazyQuery(baseOptions?: ApolloReactHooks.La
 export type _GetProductChoicesQueryHookResult = ReturnType<typeof use_GetProductChoicesQuery>;
 export type _GetProductChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductChoicesLazyQuery>;
 export type _GetProductChoicesQueryResult = Apollo.QueryResult<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>;
+export const _GetProductVariantChoicesDocument = gql`
+    query _GetProductVariantChoices($first: Int!, $query: String!) {
+  productVariants(first: $first, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        slug: id
+        originalSlug: name
+        product {
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __use_GetProductVariantChoicesQuery__
+ *
+ * To run a query within a React component, call `use_GetProductVariantChoicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetProductVariantChoicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetProductVariantChoicesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function use_GetProductVariantChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>(_GetProductVariantChoicesDocument, options);
+      }
+export function use_GetProductVariantChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>(_GetProductVariantChoicesDocument, options);
+        }
+export type _GetProductVariantChoicesQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesQuery>;
+export type _GetProductVariantChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesLazyQuery>;
+export type _GetProductVariantChoicesQueryResult = Apollo.QueryResult<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>;
 export const _GetGiftCardTagsChoicesDocument = gql`
     query _GetGiftCardTagsChoices($first: Int!, $query: String!) {
   giftCardTags(first: $first, filter: {search: $query}) {
@@ -6871,14 +6962,58 @@ export function use_SearchCustomersOperandsLazyQuery(baseOptions?: ApolloReactHo
 export type _SearchCustomersOperandsQueryHookResult = ReturnType<typeof use_SearchCustomersOperandsQuery>;
 export type _SearchCustomersOperandsLazyQueryHookResult = ReturnType<typeof use_SearchCustomersOperandsLazyQuery>;
 export type _SearchCustomersOperandsQueryResult = Apollo.QueryResult<Types._SearchCustomersOperandsQuery, Types._SearchCustomersOperandsQueryVariables>;
+export const _SearchPageOperandsDocument = gql`
+    query _SearchPageOperands($first: Int!, $pageSlugs: [String!]) {
+  pages(first: $first, filter: {slugs: $pageSlugs}) {
+    edges {
+      node {
+        id
+        name: title
+        slug
+        originalSlug: slug
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __use_SearchPageOperandsQuery__
+ *
+ * To run a query within a React component, call `use_SearchPageOperandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_SearchPageOperandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_SearchPageOperandsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      pageSlugs: // value for 'pageSlugs'
+ *   },
+ * });
+ */
+export function use_SearchPageOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>(_SearchPageOperandsDocument, options);
+      }
+export function use_SearchPageOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>(_SearchPageOperandsDocument, options);
+        }
+export type _SearchPageOperandsQueryHookResult = ReturnType<typeof use_SearchPageOperandsQuery>;
+export type _SearchPageOperandsLazyQueryHookResult = ReturnType<typeof use_SearchPageOperandsLazyQuery>;
+export type _SearchPageOperandsQueryResult = Apollo.QueryResult<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>;
 export const _SearchProductOperandsDocument = gql`
-    query _SearchProductOperands($first: Int!, $productsIds: [ID!]) {
-  products(first: $first, filter: {ids: $productsIds}) {
+    query _SearchProductOperands($first: Int!, $productSlugs: [String!]) {
+  products(first: $first, where: {slug: {oneOf: $productSlugs}}) {
     edges {
       node {
         id
         name
         slug
+        originalSlug: slug
       }
     }
   }
@@ -6898,7 +7033,7 @@ export const _SearchProductOperandsDocument = gql`
  * const { data, loading, error } = use_SearchProductOperandsQuery({
  *   variables: {
  *      first: // value for 'first'
- *      productsIds: // value for 'productsIds'
+ *      productSlugs: // value for 'productSlugs'
  *   },
  * });
  */
@@ -6913,6 +7048,52 @@ export function use_SearchProductOperandsLazyQuery(baseOptions?: ApolloReactHook
 export type _SearchProductOperandsQueryHookResult = ReturnType<typeof use_SearchProductOperandsQuery>;
 export type _SearchProductOperandsLazyQueryHookResult = ReturnType<typeof use_SearchProductOperandsLazyQuery>;
 export type _SearchProductOperandsQueryResult = Apollo.QueryResult<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>;
+export const _SearchProductVariantOperandsDocument = gql`
+    query _SearchProductVariantOperands($first: Int!, $ids: [ID!]) {
+  productVariants(first: $first, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        slug: id
+        originalSlug: name
+        product {
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __use_SearchProductVariantOperandsQuery__
+ *
+ * To run a query within a React component, call `use_SearchProductVariantOperandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_SearchProductVariantOperandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_SearchProductVariantOperandsQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function use_SearchProductVariantOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>(_SearchProductVariantOperandsDocument, options);
+      }
+export function use_SearchProductVariantOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>(_SearchProductVariantOperandsDocument, options);
+        }
+export type _SearchProductVariantOperandsQueryHookResult = ReturnType<typeof use_SearchProductVariantOperandsQuery>;
+export type _SearchProductVariantOperandsLazyQueryHookResult = ReturnType<typeof use_SearchProductVariantOperandsLazyQuery>;
+export type _SearchProductVariantOperandsQueryResult = Apollo.QueryResult<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>;
 export const TriggerWebhookDryRunDocument = gql`
     mutation TriggerWebhookDryRun($objectId: ID!, $query: String!) {
   webhookDryRun(objectId: $objectId, query: $query) {
