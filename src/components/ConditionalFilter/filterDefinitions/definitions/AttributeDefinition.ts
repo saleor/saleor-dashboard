@@ -1,14 +1,13 @@
 import { ApolloClient } from "@apollo/client";
 import { AttributeInput, AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { AttributeChoicesHandler, Handler, ProductsHandler } from "../../API/Handler";
+import { AttributeChoicesHandler, Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { WhereOnlyFilterDefinition } from "../types";
 import { extractConditionValueFromFilterElement, getBooleanValueFromElement } from "../utils";
 
 export class AttributeDefinition
-  implements WhereOnlyFilterDefinition<{ attributes?: AttributeInput[] }>
-{
+  implements WhereOnlyFilterDefinition<{ attributes?: AttributeInput[] }> {
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
