@@ -13,7 +13,7 @@ import {
   isItemOptionArray,
 } from "../../FilterElement/ConditionValue";
 import { WhereOnlyFilterDefinition } from "../types";
-import { getBooleanValueFromElement, getConditionValue } from "../utils";
+import { extractConditionValueFromFilterElement, getBooleanValueFromElement } from "../utils";
 
 export class AttributeDefinition
   implements WhereOnlyFilterDefinition<{ attributes?: AttributeInput[] }>
@@ -82,7 +82,7 @@ export class AttributeDefinition
     element: FilterElement,
     type: string,
   ): AttributeInput {
-    const processedValue = getConditionValue(element);
+    const processedValue = extractConditionValueFromFilterElement(element);
 
     if (typeof processedValue === "object" && processedValue && "range" in processedValue) {
       return this.buildRangeAttribute(baseAttribute, processedValue.range, type);

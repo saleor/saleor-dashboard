@@ -4,7 +4,7 @@ import { Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
 import { BothApiFilterDefinition, FilterQuery } from "../types";
-import { getConditionValue } from "../utils";
+import { extractConditionValueFromFilterElement } from "../utils";
 
 export abstract class BaseMappableDefinition<T extends FilterQuery = FilterQuery>
   implements BothApiFilterDefinition<T>
@@ -20,7 +20,7 @@ export abstract class BaseMappableDefinition<T extends FilterQuery = FilterQuery
   protected abstract getQueryFieldName(element: FilterElement): string;
 
   protected getConditionValue(element: FilterElement): T[keyof T] {
-    return getConditionValue(element) as T[keyof T];
+    return extractConditionValueFromFilterElement(element) as T[keyof T];
   }
 
   public updateWhereQuery(query: Readonly<T>, element: FilterElement): T {

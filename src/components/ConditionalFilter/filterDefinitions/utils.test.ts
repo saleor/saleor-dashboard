@@ -3,7 +3,7 @@ import { ConditionOptions } from "../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../FilterElement/ConditionSelected";
 import { ItemOption } from "../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../FilterElement/FilterElement";
-import { getBooleanValueFromElement, getConditionValue } from "./utils";
+import { extractConditionValueFromFilterElement, getBooleanValueFromElement } from "./utils";
 
 describe("ConditionalFilter / filterDefinitions / utils", () => {
   describe("getBooleanValueFromElement", () => {
@@ -13,7 +13,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, itemOption);
       const condition = new Condition(ConditionOptions.fromName("isActive"), selected, false);
       const element = new FilterElement(
-        new ExpressionValue("isActive", "Is Active", "isActive", null),
+        new ExpressionValue("isActive", "Is Active", "isActive"),
         condition,
         false,
       );
@@ -26,7 +26,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, itemOption);
       const condition = new Condition(ConditionOptions.fromName("isActive"), selected, false);
       const element = new FilterElement(
-        new ExpressionValue("isActive", "Is Active", "isActive", null),
+        new ExpressionValue("isActive", "Is Active", "isActive"),
         condition,
         false,
       );
@@ -38,7 +38,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "true");
       const condition = new Condition(ConditionOptions.fromName("isActive"), selected, false);
       const element = new FilterElement(
-        new ExpressionValue("isActive", "Is Active", "isActive", null),
+        new ExpressionValue("isActive", "Is Active", "isActive"),
         condition,
         false,
       );
@@ -50,7 +50,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "false");
       const condition = new Condition(ConditionOptions.fromName("isActive"), selected, false);
       const element = new FilterElement(
-        new ExpressionValue("isActive", "Is Active", "isActive", null),
+        new ExpressionValue("isActive", "Is Active", "isActive"),
         condition,
         false,
       );
@@ -62,7 +62,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "notabool");
       const condition = new Condition(ConditionOptions.fromName("isActive"), selected, false);
       const element = new FilterElement(
-        new ExpressionValue("isActive", "Is Active", "isActive", null),
+        new ExpressionValue("isActive", "Is Active", "isActive"),
         condition,
         false,
       );
@@ -71,43 +71,45 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
     });
   });
 
-  describe("getConditionValue", () => {
+  describe("extractConditionValueFromFilterElement", () => {
     describe("range conditions", () => {
       it("should process 'lower' condition into a range object with lte", () => {
         const conditionItem = { type: "number", label: "lower", value: "input-2" };
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "10");
         const condition = new Condition(ConditionOptions.fromName("price"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("price", "Price", "price", null),
+          new ExpressionValue("price", "Price", "price"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ range: { lte: "10" } });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ range: { lte: "10" } });
       });
       it("should process 'greater' condition into a range object with gte", () => {
         const conditionItem = { type: "number", label: "greater", value: "input-3" };
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "5");
         const condition = new Condition(ConditionOptions.fromName("price"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("price", "Price", "price", null),
+          new ExpressionValue("price", "Price", "price"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ range: { gte: "5" } });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ range: { gte: "5" } });
       });
       it("should process 'between' condition with tuple into a range object", () => {
         const conditionItem = { type: "number.range", label: "between", value: "input-4" };
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, ["1", "10"]);
         const condition = new Condition(ConditionOptions.fromName("price"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("price", "Price", "price", null),
+          new ExpressionValue("price", "Price", "price"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ range: { gte: "1", lte: "10" } });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({
+          range: { gte: "1", lte: "10" },
+        });
       });
     });
 
@@ -118,12 +120,12 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, itemOption);
         const condition = new Condition(ConditionOptions.fromName("isActive"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("isActive", "Is Active", "isActive", null),
+          new ExpressionValue("isActive", "Is Active", "isActive"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toBe(true);
+        expect(extractConditionValueFromFilterElement(element)).toBe(true);
       });
       it("should process ItemOption with 'false' value", () => {
         const itemOption: ItemOption = { label: "No", value: "false", slug: "false" };
@@ -131,12 +133,12 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, itemOption);
         const condition = new Condition(ConditionOptions.fromName("isActive"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("isActive", "Is Active", "isActive", null),
+          new ExpressionValue("isActive", "Is Active", "isActive"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toBe(false);
+        expect(extractConditionValueFromFilterElement(element)).toBe(false);
       });
     });
 
@@ -152,12 +154,12 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, itemOption);
         const condition = new Condition(ConditionOptions.fromName("category"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("category", "Category", "category", null),
+          new ExpressionValue("category", "Category", "category"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ eq: "orig-foo" });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ eq: "orig-foo" });
       });
       it("should process single ItemOption into an 'eq' object using value when originalSlug is not available", () => {
         const itemOption: ItemOption = { label: "Foo", value: "foo", slug: "foo" };
@@ -165,24 +167,24 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, itemOption);
         const condition = new Condition(ConditionOptions.fromName("category"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("category", "Category", "category", null),
+          new ExpressionValue("category", "Category", "category"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ eq: "foo" });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ eq: "foo" });
       });
       it("should process single string into an 'eq' object", () => {
         const conditionItem = { type: "combobox", label: "is", value: "input-1" };
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "foo");
         const condition = new Condition(ConditionOptions.fromName("category"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("category", "Category", "category", null),
+          new ExpressionValue("category", "Category", "category"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ eq: "foo" });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ eq: "foo" });
       });
     });
 
@@ -207,12 +209,14 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         ]);
         const condition = new Condition(ConditionOptions.fromName("category"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("category", "Category", "category", null),
+          new ExpressionValue("category", "Category", "category"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ oneOf: ["orig-foo", "orig-bar"] });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({
+          oneOf: ["orig-foo", "orig-bar"],
+        });
       });
       it("should process ItemOption array into an 'oneOf' object using value when originalSlug is not available", () => {
         const itemOption1: ItemOption = { label: "Foo", value: "foo", slug: "foo" };
@@ -224,24 +228,24 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         ]);
         const condition = new Condition(ConditionOptions.fromName("category"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("category", "Category", "category", null),
+          new ExpressionValue("category", "Category", "category"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ oneOf: ["foo", "bar"] });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ oneOf: ["foo", "bar"] });
       });
       it("should process string array into an 'oneOf' object", () => {
         const conditionItem = { type: "multiselect", label: "in", value: "input-2" };
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, ["foo", "bar"]);
         const condition = new Condition(ConditionOptions.fromName("category"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("category", "Category", "category", null),
+          new ExpressionValue("category", "Category", "category"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toEqual({ oneOf: ["foo", "bar"] });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ oneOf: ["foo", "bar"] });
       });
     });
 
@@ -250,25 +254,25 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         const selected = new ConditionSelected("foo", null, [], false);
         const condition = new Condition(ConditionOptions.fromName("category"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("category", "Category", "category", null),
+          new ExpressionValue("category", "Category", "category"),
           condition,
           false,
         );
 
-        expect(getConditionValue(element)).toBe("");
+        expect(extractConditionValueFromFilterElement(element)).toBe("");
       });
       it("should handle unknown condition labels gracefully", () => {
         const conditionItem = { type: "combobox", label: "unknown", value: "input-1" };
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "foo");
         const condition = new Condition(ConditionOptions.fromName("category"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("category", "Category", "category", null),
+          new ExpressionValue("category", "Category", "category"),
           condition,
           false,
         );
 
         // Should fallback to eq for string
-        expect(getConditionValue(element)).toEqual({ eq: "foo" });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ eq: "foo" });
       });
       it("should handle malformed tuple values", () => {
         const conditionItem = { type: "number.range", label: "between", value: "input-4" };
@@ -276,13 +280,13 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, ["1"]);
         const condition = new Condition(ConditionOptions.fromName("price"), selected, false);
         const element = new FilterElement(
-          new ExpressionValue("price", "Price", "price", null),
+          new ExpressionValue("price", "Price", "price"),
           condition,
           false,
         );
 
         // Should fallback to returning a oneOf object for string arrays
-        expect(getConditionValue(element)).toEqual({ oneOf: ["1"] });
+        expect(extractConditionValueFromFilterElement(element)).toEqual({ oneOf: ["1"] });
       });
     });
   });

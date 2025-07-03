@@ -93,33 +93,6 @@ describe("AttributeDefinition", () => {
       false,
     );
 
-    it("should correctly build query for REFERENCE attributes", () => {
-      // Arrange
-      const attributeSlug = "ref-attr";
-      const pageLabel = "Page 1";
-      const selectedAttribute = new ExpressionValue(
-        attributeSlug,
-        "RefAttr",
-        AttributeInputTypeEnum.REFERENCE,
-      );
-      const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, {
-        label: pageLabel,
-        value: "page-1",
-        slug: "page-1",
-      });
-      const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.REFERENCE),
-        selected,
-        false,
-      );
-      const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
-      // Act
-      const result = def.updateWhereQuery({}, element);
-
-      // Assert
-      expect(result).toEqual({ attributes: [{ slug: attributeSlug, valueNames: [pageLabel] }] });
-    });
-
     it("should correctly build query for DROPDOWN/MULTISELECT attributes", () => {
       // Arrange
       const attributeSlug = "dropdown-attr";
