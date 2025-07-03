@@ -16,7 +16,7 @@ export class AttributeTypeDefinition extends BaseMappableDefinition<{ type?: str
     return new NoopValuesHandler([]);
   }
 
-  protected getQueryFieldName(_element: FilterElement): string {
+  protected getQueryFieldName(): string {
     return this.queryField;
   }
 }
