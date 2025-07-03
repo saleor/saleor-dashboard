@@ -16001,6 +16001,19 @@ export const GlobalSearchDocument = gql`
         products(first: 1) {
           totalCount
         }
+        parent {
+          id
+          name
+        }
+        level
+        ancestors(first: 1) {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
       }
     }
   }

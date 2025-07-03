@@ -8,6 +8,7 @@ import { pageUrl } from "@dashboard/modeling/urls";
 import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { orderUrl } from "@dashboard/orders/urls";
 import { productUrl, productVariantEditPath } from "@dashboard/products/urls";
+import { getAncestorsLabel } from "@dashboard/products/utils/utils";
 import { Box, Skeleton, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
@@ -112,7 +113,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={orderUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box display="flex" alignItems="center" gap={2}>
               <Box
                 display="flex"
                 alignItems="start"
@@ -152,6 +153,8 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   }
 
   if (node.__typename === "Category") {
+    const ancestorsLabel = getAncestorsLabel(node);
+
     return (
       <Row>
         <TypeCell href={categoryUrl(node.id)}>
@@ -159,7 +162,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={categoryUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box display="flex" alignItems="center" gap={2}>
               <Thumbnail url={node?.backgroundImage?.url} name={node?.name} />
               <Box
                 display="flex"
@@ -169,7 +172,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
                 gap={1}
               >
                 <Text size={2} fontWeight="medium">
-                  {node?.name}
+                  {ancestorsLabel} {node?.name}
                 </Text>
                 <Text size={2} fontWeight="medium" color="default2">
                   <FormattedMessage
@@ -199,7 +202,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={collectionUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box display="flex" alignItems="center" gap={2}>
               <Thumbnail url={node?.backgroundImage?.url} name={node?.name} />
               <Box
                 display="flex"
@@ -237,7 +240,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={productUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box display="flex" alignItems="center" gap={2}>
               <Thumbnail url={node?.thumbnail?.url} name={node?.name} />
               <Box
                 display="flex"
@@ -273,7 +276,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={productVariantEditPath(node.product.id, node.id)}>
-            <Box display="flex" alignItems="center" gap={1} width="100%">
+            <Box display="flex" alignItems="center" gap={2} width="100%">
               <Thumbnail url={node?.media?.[0]?.url} name={node?.name} />
               <Box
                 display="flex"
@@ -309,7 +312,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={pageUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={1} width="100%">
+            <Box display="flex" alignItems="center" gap={2} width="100%">
               <Box
                 display="flex"
                 alignItems="start"
@@ -344,7 +347,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={pageTypeUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={1} width="100%">
+            <Box display="flex" alignItems="center" gap={2} width="100%">
               <Box
                 display="flex"
                 alignItems="start"
