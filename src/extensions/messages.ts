@@ -501,3 +501,18 @@ export const appMessages = defineMessages({
     description: "tooltip for disabled buttons",
   },
 });
+
+export const extensionActions = defineMessages({
+  redirectToAppPage: {
+    defaultMessage: "Redirect to the App Page",
+    id: "TWoYMj",
+  },
+  openInNewTab: {
+    defaultMessage: "Open in a new tab",
+    id: "z4qMx5",
+  },
+  openInPopup: {
+    defaultMessage: "Open in Popup",
+    id: "jCYHA+",
+  },
+});

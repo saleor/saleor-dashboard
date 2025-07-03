@@ -16,9 +16,13 @@ export type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delet
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
   productIds?: string[];
+  productSlug?: string;
   orderId?: string;
   customerId?: string;
   customerIds?: string[];
+  collectionId?: string;
+  giftCardId?: string;
+  voucherId?: string;
 }
 
 interface FeatureFlagsQueryParams {

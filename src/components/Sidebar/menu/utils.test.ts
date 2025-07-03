@@ -1,5 +1,5 @@
-import { Extension } from "@dashboard/extensions/hooks/useExtensions";
-import { AppExtensionMountEnum, PermissionEnum } from "@dashboard/graphql";
+import { Extension } from "@dashboard/extensions/types";
+import { AppExtensionMountEnum, AppExtensionTargetEnum, PermissionEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 
 import { SidebarMenuItem } from "./types";
@@ -35,6 +35,8 @@ describe("mapToExtensionsItems", () => {
     __typename: "App",
     id: "app-1",
     appUrl: "https://app.example.com",
+    name: "App name",
+    brand: null,
   };
 
   const mockExtension: Extension = {
@@ -46,6 +48,8 @@ describe("mapToExtensionsItems", () => {
     open: jest.fn(),
     accessToken: "mock-token",
     mount: AppExtensionMountEnum.NAVIGATION_CATALOG,
+    target: AppExtensionTargetEnum.APP_PAGE,
+    options: null,
   };
 
   const mockHeader: SidebarMenuItem = {
@@ -226,6 +230,8 @@ describe("getMenuItemExtension", () => {
     __typename: "App",
     id: "app-1",
     appUrl: "https://app.example.com",
+    name: "App name",
+    brand: null,
   };
 
   const baseMockExtension: Extension = {
@@ -237,6 +243,8 @@ describe("getMenuItemExtension", () => {
     open: jest.fn(),
     accessToken: "mock-token",
     mount: AppExtensionMountEnum.NAVIGATION_CATALOG,
+    options: null,
+    target: AppExtensionTargetEnum.POPUP,
   };
 
   const mockExtension: Extension = {
@@ -263,6 +271,40 @@ describe("getMenuItemExtension", () => {
     [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: [],
     [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [],
     [AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DISCOUNT_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DISCOUNT_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.DISCOUNT_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.VOUCHER_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.VOUCHER_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.VOUCHER_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.PAGE_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.MENU_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.MENU_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.MENU_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.COLLECTION_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CATEGORY_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.CATEGORY_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.COLLECTION_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.COLLECTION_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CUSTOMER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.ORDER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.COLLECTION_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.PRODUCT_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.VOUCHER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_DETAILS_WIDGETS]: [],
   };
 
   const emptyExtensionsRecord: Record<AppExtensionMountEnum, Extension[]> = {
@@ -281,6 +323,40 @@ describe("getMenuItemExtension", () => {
     [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: [],
     [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [],
     [AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DISCOUNT_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.DISCOUNT_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.DISCOUNT_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.VOUCHER_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.VOUCHER_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.VOUCHER_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.PAGE_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.PAGE_TYPE_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.MENU_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.MENU_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.MENU_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.COLLECTION_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CATEGORY_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_DETAILS_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CATEGORY_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.CATEGORY_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.GIFT_CARD_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.COLLECTION_OVERVIEW_CREATE]: [],
+    [AppExtensionMountEnum.COLLECTION_OVERVIEW_MORE_ACTIONS]: [],
+    [AppExtensionMountEnum.CUSTOMER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.ORDER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.COLLECTION_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.PRODUCT_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.VOUCHER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.DRAFT_ORDER_DETAILS_WIDGETS]: [],
+    [AppExtensionMountEnum.GIFT_CARD_DETAILS_WIDGETS]: [],
   };
 
   it("should return the corresponding Extension object when a menu item ID represents a registered extension", () => {
@@ -324,6 +400,8 @@ describe("getMenuItemExtension", () => {
       __typename: "App",
       id: "app-2",
       appUrl: "https://app2.example.com",
+      name: "App name",
+      brand: null,
     };
     const catalogExtension: Extension = {
       ...baseMockExtension,

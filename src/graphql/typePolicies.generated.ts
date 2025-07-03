@@ -244,13 +244,15 @@ export type AllocationFieldPolicy = {
 	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouse?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppKeySpecifier = ('aboutApp' | 'accessToken' | 'appUrl' | 'author' | 'brand' | 'configurationUrl' | 'created' | 'dataPrivacy' | 'dataPrivacyUrl' | 'extensions' | 'homepageUrl' | 'id' | 'identifier' | 'isActive' | 'manifestUrl' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'permissions' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'supportUrl' | 'tokens' | 'type' | 'version' | 'webhooks' | AppKeySpecifier)[];
+export type AppKeySpecifier = ('aboutApp' | 'accessToken' | 'appUrl' | 'author' | 'brand' | 'breakerLastStateChange' | 'breakerState' | 'configurationUrl' | 'created' | 'dataPrivacy' | 'dataPrivacyUrl' | 'extensions' | 'homepageUrl' | 'id' | 'identifier' | 'isActive' | 'manifestUrl' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'permissions' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'supportUrl' | 'tokens' | 'type' | 'version' | 'webhooks' | AppKeySpecifier)[];
 export type AppFieldPolicy = {
 	aboutApp?: FieldPolicy<any> | FieldReadFunction<any>,
 	accessToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	appUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	author?: FieldPolicy<any> | FieldReadFunction<any>,
 	brand?: FieldPolicy<any> | FieldReadFunction<any>,
+	breakerLastStateChange?: FieldPolicy<any> | FieldReadFunction<any>,
+	breakerState?: FieldPolicy<any> | FieldReadFunction<any>,
 	configurationUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	created?: FieldPolicy<any> | FieldReadFunction<any>,
 	dataPrivacy?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -340,13 +342,14 @@ export type AppErrorFieldPolicy = {
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppExtensionKeySpecifier = ('accessToken' | 'app' | 'id' | 'label' | 'mount' | 'permissions' | 'target' | 'url' | AppExtensionKeySpecifier)[];
+export type AppExtensionKeySpecifier = ('accessToken' | 'app' | 'id' | 'label' | 'mount' | 'options' | 'permissions' | 'target' | 'url' | AppExtensionKeySpecifier)[];
 export type AppExtensionFieldPolicy = {
 	accessToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	app?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	label?: FieldPolicy<any> | FieldReadFunction<any>,
 	mount?: FieldPolicy<any> | FieldReadFunction<any>,
+	options?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>,
 	target?: FieldPolicy<any> | FieldReadFunction<any>,
 	url?: FieldPolicy<any> | FieldReadFunction<any>
@@ -361,6 +364,14 @@ export type AppExtensionCountableEdgeKeySpecifier = ('cursor' | 'node' | AppExte
 export type AppExtensionCountableEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AppExtensionOptionsNewTabKeySpecifier = ('newTabTarget' | AppExtensionOptionsNewTabKeySpecifier)[];
+export type AppExtensionOptionsNewTabFieldPolicy = {
+	newTabTarget?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AppExtensionOptionsWidgetKeySpecifier = ('widgetTarget' | AppExtensionOptionsWidgetKeySpecifier)[];
+export type AppExtensionOptionsWidgetFieldPolicy = {
+	widgetTarget?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AppFetchManifestKeySpecifier = ('appErrors' | 'errors' | 'manifest' | AppFetchManifestKeySpecifier)[];
 export type AppFetchManifestFieldPolicy = {
@@ -421,6 +432,12 @@ export type AppManifestWebhookFieldPolicy = {
 	query?: FieldPolicy<any> | FieldReadFunction<any>,
 	syncEvents?: FieldPolicy<any> | FieldReadFunction<any>,
 	targetUrl?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AppReenableSyncWebhooksKeySpecifier = ('app' | 'appErrors' | 'errors' | AppReenableSyncWebhooksKeySpecifier)[];
+export type AppReenableSyncWebhooksFieldPolicy = {
+	app?: FieldPolicy<any> | FieldReadFunction<any>,
+	appErrors?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AppRetryInstallKeySpecifier = ('appErrors' | 'appInstallation' | 'errors' | AppRetryInstallKeySpecifier)[];
 export type AppRetryInstallFieldPolicy = {
@@ -807,6 +824,15 @@ export type CalculateTaxesFieldPolicy = {
 	taxBase?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type CardPaymentMethodDetailsKeySpecifier = ('brand' | 'expMonth' | 'expYear' | 'firstDigits' | 'lastDigits' | 'name' | CardPaymentMethodDetailsKeySpecifier)[];
+export type CardPaymentMethodDetailsFieldPolicy = {
+	brand?: FieldPolicy<any> | FieldReadFunction<any>,
+	expMonth?: FieldPolicy<any> | FieldReadFunction<any>,
+	expYear?: FieldPolicy<any> | FieldReadFunction<any>,
+	firstDigits?: FieldPolicy<any> | FieldReadFunction<any>,
+	lastDigits?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type CategoryKeySpecifier = ('ancestors' | 'backgroundImage' | 'children' | 'description' | 'descriptionJson' | 'id' | 'level' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'parent' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'products' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | 'updatedAt' | CategoryKeySpecifier)[];
 export type CategoryFieldPolicy = {
 	ancestors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -876,7 +902,7 @@ export type CategoryDeletedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CategoryTranslatableContentKeySpecifier = ('category' | 'categoryId' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'translation' | CategoryTranslatableContentKeySpecifier)[];
+export type CategoryTranslatableContentKeySpecifier = ('category' | 'categoryId' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CategoryTranslatableContentKeySpecifier)[];
 export type CategoryTranslatableContentFieldPolicy = {
 	category?: FieldPolicy<any> | FieldReadFunction<any>,
 	categoryId?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -886,6 +912,7 @@ export type CategoryTranslatableContentFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CategoryTranslateKeySpecifier = ('category' | 'errors' | 'translationErrors' | CategoryTranslateKeySpecifier)[];
@@ -894,7 +921,7 @@ export type CategoryTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CategoryTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'translatableContent' | CategoryTranslationKeySpecifier)[];
+export type CategoryTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translatableContent' | CategoryTranslationKeySpecifier)[];
 export type CategoryTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -903,6 +930,7 @@ export type CategoryTranslationFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CategoryUpdateKeySpecifier = ('category' | 'errors' | 'productErrors' | CategoryUpdateKeySpecifier)[];
@@ -1026,7 +1054,7 @@ export type ChannelUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CheckoutKeySpecifier = ('authorizeStatus' | 'availableCollectionPoints' | 'availablePaymentGateways' | 'availableShippingMethods' | 'billingAddress' | 'channel' | 'chargeStatus' | 'created' | 'deliveryMethod' | 'discount' | 'discountName' | 'displayGrossPrices' | 'email' | 'giftCards' | 'id' | 'isShippingRequired' | 'languageCode' | 'lastChange' | 'lines' | 'metadata' | 'metafield' | 'metafields' | 'note' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'problems' | 'quantity' | 'shippingAddress' | 'shippingMethod' | 'shippingMethods' | 'shippingPrice' | 'stockReservationExpires' | 'storedPaymentMethods' | 'subtotalPrice' | 'taxExemption' | 'token' | 'totalBalance' | 'totalPrice' | 'transactions' | 'translatedDiscountName' | 'updatedAt' | 'user' | 'voucher' | 'voucherCode' | CheckoutKeySpecifier)[];
+export type CheckoutKeySpecifier = ('authorizeStatus' | 'availableCollectionPoints' | 'availablePaymentGateways' | 'availableShippingMethods' | 'billingAddress' | 'channel' | 'chargeStatus' | 'created' | 'customerNote' | 'deliveryMethod' | 'discount' | 'discountName' | 'displayGrossPrices' | 'email' | 'giftCards' | 'id' | 'isShippingRequired' | 'languageCode' | 'lastChange' | 'lines' | 'metadata' | 'metafield' | 'metafields' | 'note' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'problems' | 'quantity' | 'shippingAddress' | 'shippingMethod' | 'shippingMethods' | 'shippingPrice' | 'stockReservationExpires' | 'storedPaymentMethods' | 'subtotalPrice' | 'taxExemption' | 'token' | 'totalBalance' | 'totalPrice' | 'transactions' | 'translatedDiscountName' | 'updatedAt' | 'user' | 'voucher' | 'voucherCode' | CheckoutKeySpecifier)[];
 export type CheckoutFieldPolicy = {
 	authorizeStatus?: FieldPolicy<any> | FieldReadFunction<any>,
 	availableCollectionPoints?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1036,6 +1064,7 @@ export type CheckoutFieldPolicy = {
 	channel?: FieldPolicy<any> | FieldReadFunction<any>,
 	chargeStatus?: FieldPolicy<any> | FieldReadFunction<any>,
 	created?: FieldPolicy<any> | FieldReadFunction<any>,
+	customerNote?: FieldPolicy<any> | FieldReadFunction<any>,
 	deliveryMethod?: FieldPolicy<any> | FieldReadFunction<any>,
 	discount?: FieldPolicy<any> | FieldReadFunction<any>,
 	discountName?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1151,6 +1180,12 @@ export type CheckoutCustomerDetachFieldPolicy = {
 	checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type CheckoutCustomerNoteUpdateKeySpecifier = ('checkout' | 'checkoutErrors' | 'errors' | CheckoutCustomerNoteUpdateKeySpecifier)[];
+export type CheckoutCustomerNoteUpdateFieldPolicy = {
+	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type CheckoutDeliveryMethodUpdateKeySpecifier = ('checkout' | 'errors' | CheckoutDeliveryMethodUpdateKeySpecifier)[];
 export type CheckoutDeliveryMethodUpdateFieldPolicy = {
 	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1194,13 +1229,15 @@ export type CheckoutLanguageCodeUpdateFieldPolicy = {
 	checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CheckoutLineKeySpecifier = ('id' | 'isGift' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'problems' | 'quantity' | 'requiresShipping' | 'totalPrice' | 'undiscountedTotalPrice' | 'undiscountedUnitPrice' | 'unitPrice' | 'variant' | CheckoutLineKeySpecifier)[];
+export type CheckoutLineKeySpecifier = ('id' | 'isGift' | 'metadata' | 'metafield' | 'metafields' | 'priorTotalPrice' | 'priorUnitPrice' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'problems' | 'quantity' | 'requiresShipping' | 'totalPrice' | 'undiscountedTotalPrice' | 'undiscountedUnitPrice' | 'unitPrice' | 'variant' | CheckoutLineKeySpecifier)[];
 export type CheckoutLineFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	isGift?: FieldPolicy<any> | FieldReadFunction<any>,
 	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafields?: FieldPolicy<any> | FieldReadFunction<any>,
+	priorTotalPrice?: FieldPolicy<any> | FieldReadFunction<any>,
+	priorUnitPrice?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1430,7 +1467,7 @@ export type CollectionReorderProductsFieldPolicy = {
 	collectionErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CollectionTranslatableContentKeySpecifier = ('collection' | 'collectionId' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'translation' | CollectionTranslatableContentKeySpecifier)[];
+export type CollectionTranslatableContentKeySpecifier = ('collection' | 'collectionId' | 'description' | 'descriptionJson' | 'id' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | CollectionTranslatableContentKeySpecifier)[];
 export type CollectionTranslatableContentFieldPolicy = {
 	collection?: FieldPolicy<any> | FieldReadFunction<any>,
 	collectionId?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1440,6 +1477,7 @@ export type CollectionTranslatableContentFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CollectionTranslateKeySpecifier = ('collection' | 'errors' | 'translationErrors' | CollectionTranslateKeySpecifier)[];
@@ -1448,7 +1486,7 @@ export type CollectionTranslateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CollectionTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'translatableContent' | CollectionTranslationKeySpecifier)[];
+export type CollectionTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translatableContent' | CollectionTranslationKeySpecifier)[];
 export type CollectionTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1457,6 +1495,7 @@ export type CollectionTranslationFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CollectionUpdateKeySpecifier = ('collection' | 'collectionErrors' | 'errors' | CollectionUpdateKeySpecifier)[];
@@ -2034,6 +2073,10 @@ export type GatewayConfigLineKeySpecifier = ('field' | 'value' | GatewayConfigLi
 export type GatewayConfigLineFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type GenericPaymentMethodDetailsKeySpecifier = ('name' | GenericPaymentMethodDetailsKeySpecifier)[];
+export type GenericPaymentMethodDetailsFieldPolicy = {
+	name?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type GiftCardKeySpecifier = ('app' | 'boughtInChannel' | 'code' | 'created' | 'createdBy' | 'createdByEmail' | 'currentBalance' | 'displayCode' | 'endDate' | 'events' | 'expiryDate' | 'id' | 'initialBalance' | 'isActive' | 'last4CodeChars' | 'lastUsedOn' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'product' | 'startDate' | 'tags' | 'usedBy' | 'usedByEmail' | 'user' | GiftCardKeySpecifier)[];
 export type GiftCardFieldPolicy = {
@@ -2639,7 +2682,7 @@ export type MoneyRangeFieldPolicy = {
 	start?: FieldPolicy<any> | FieldReadFunction<any>,
 	stop?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('accountAddressCreate' | 'accountAddressDelete' | 'accountAddressUpdate' | 'accountDelete' | 'accountRegister' | 'accountRequestDeletion' | 'accountSetDefaultAddress' | 'accountUpdate' | 'addressCreate' | 'addressDelete' | 'addressSetDefault' | 'addressUpdate' | 'appActivate' | 'appCreate' | 'appDeactivate' | 'appDelete' | 'appDeleteFailedInstallation' | 'appFetchManifest' | 'appInstall' | 'appRetryInstall' | 'appTokenCreate' | 'appTokenDelete' | 'appTokenVerify' | 'appUpdate' | 'assignNavigation' | 'assignWarehouseShippingZone' | 'attributeBulkCreate' | 'attributeBulkDelete' | 'attributeBulkTranslate' | 'attributeBulkUpdate' | 'attributeCreate' | 'attributeDelete' | 'attributeReorderValues' | 'attributeTranslate' | 'attributeUpdate' | 'attributeValueBulkDelete' | 'attributeValueBulkTranslate' | 'attributeValueCreate' | 'attributeValueDelete' | 'attributeValueTranslate' | 'attributeValueUpdate' | 'categoryBulkDelete' | 'categoryCreate' | 'categoryDelete' | 'categoryTranslate' | 'categoryUpdate' | 'channelActivate' | 'channelCreate' | 'channelDeactivate' | 'channelDelete' | 'channelReorderWarehouses' | 'channelUpdate' | 'checkoutAddPromoCode' | 'checkoutBillingAddressUpdate' | 'checkoutComplete' | 'checkoutCreate' | 'checkoutCreateFromOrder' | 'checkoutCustomerAttach' | 'checkoutCustomerDetach' | 'checkoutDeliveryMethodUpdate' | 'checkoutEmailUpdate' | 'checkoutLanguageCodeUpdate' | 'checkoutLineDelete' | 'checkoutLinesAdd' | 'checkoutLinesDelete' | 'checkoutLinesUpdate' | 'checkoutPaymentCreate' | 'checkoutRemovePromoCode' | 'checkoutShippingAddressUpdate' | 'checkoutShippingMethodUpdate' | 'collectionAddProducts' | 'collectionBulkDelete' | 'collectionChannelListingUpdate' | 'collectionCreate' | 'collectionDelete' | 'collectionRemoveProducts' | 'collectionReorderProducts' | 'collectionTranslate' | 'collectionUpdate' | 'confirmAccount' | 'confirmEmailChange' | 'createWarehouse' | 'customerBulkDelete' | 'customerBulkUpdate' | 'customerCreate' | 'customerDelete' | 'customerUpdate' | 'deleteMetadata' | 'deletePrivateMetadata' | 'deleteWarehouse' | 'digitalContentCreate' | 'digitalContentDelete' | 'digitalContentUpdate' | 'digitalContentUrlCreate' | 'draftOrderBulkDelete' | 'draftOrderComplete' | 'draftOrderCreate' | 'draftOrderDelete' | 'draftOrderLinesBulkDelete' | 'draftOrderUpdate' | 'eventDeliveryRetry' | 'exportGiftCards' | 'exportProducts' | 'exportVoucherCodes' | 'externalAuthenticationUrl' | 'externalLogout' | 'externalNotificationTrigger' | 'externalObtainAccessTokens' | 'externalRefresh' | 'externalVerify' | 'fileUpload' | 'giftCardActivate' | 'giftCardAddNote' | 'giftCardBulkActivate' | 'giftCardBulkCreate' | 'giftCardBulkDeactivate' | 'giftCardBulkDelete' | 'giftCardCreate' | 'giftCardDeactivate' | 'giftCardDelete' | 'giftCardResend' | 'giftCardSettingsUpdate' | 'giftCardUpdate' | 'invoiceCreate' | 'invoiceDelete' | 'invoiceRequest' | 'invoiceRequestDelete' | 'invoiceSendNotification' | 'invoiceUpdate' | 'menuBulkDelete' | 'menuCreate' | 'menuDelete' | 'menuItemBulkDelete' | 'menuItemCreate' | 'menuItemDelete' | 'menuItemMove' | 'menuItemTranslate' | 'menuItemUpdate' | 'menuUpdate' | 'orderAddNote' | 'orderBulkCancel' | 'orderBulkCreate' | 'orderCancel' | 'orderCapture' | 'orderConfirm' | 'orderCreateFromCheckout' | 'orderDiscountAdd' | 'orderDiscountDelete' | 'orderDiscountUpdate' | 'orderFulfill' | 'orderFulfillmentApprove' | 'orderFulfillmentCancel' | 'orderFulfillmentRefundProducts' | 'orderFulfillmentReturnProducts' | 'orderFulfillmentUpdateTracking' | 'orderGrantRefundCreate' | 'orderGrantRefundUpdate' | 'orderLineDelete' | 'orderLineDiscountRemove' | 'orderLineDiscountUpdate' | 'orderLineUpdate' | 'orderLinesCreate' | 'orderMarkAsPaid' | 'orderNoteAdd' | 'orderNoteUpdate' | 'orderRefund' | 'orderSettingsUpdate' | 'orderUpdate' | 'orderUpdateShipping' | 'orderVoid' | 'pageAttributeAssign' | 'pageAttributeUnassign' | 'pageBulkDelete' | 'pageBulkPublish' | 'pageCreate' | 'pageDelete' | 'pageReorderAttributeValues' | 'pageTranslate' | 'pageTypeBulkDelete' | 'pageTypeCreate' | 'pageTypeDelete' | 'pageTypeReorderAttributes' | 'pageTypeUpdate' | 'pageUpdate' | 'passwordChange' | 'paymentCapture' | 'paymentCheckBalance' | 'paymentGatewayInitialize' | 'paymentGatewayInitializeTokenization' | 'paymentInitialize' | 'paymentMethodInitializeTokenization' | 'paymentMethodProcessTokenization' | 'paymentRefund' | 'paymentVoid' | 'permissionGroupCreate' | 'permissionGroupDelete' | 'permissionGroupUpdate' | 'pluginUpdate' | 'productAttributeAssign' | 'productAttributeAssignmentUpdate' | 'productAttributeUnassign' | 'productBulkCreate' | 'productBulkDelete' | 'productBulkTranslate' | 'productChannelListingUpdate' | 'productCreate' | 'productDelete' | 'productMediaBulkDelete' | 'productMediaCreate' | 'productMediaDelete' | 'productMediaReorder' | 'productMediaUpdate' | 'productReorderAttributeValues' | 'productTranslate' | 'productTypeBulkDelete' | 'productTypeCreate' | 'productTypeDelete' | 'productTypeReorderAttributes' | 'productTypeUpdate' | 'productUpdate' | 'productVariantBulkCreate' | 'productVariantBulkDelete' | 'productVariantBulkTranslate' | 'productVariantBulkUpdate' | 'productVariantChannelListingUpdate' | 'productVariantCreate' | 'productVariantDelete' | 'productVariantPreorderDeactivate' | 'productVariantReorder' | 'productVariantReorderAttributeValues' | 'productVariantSetDefault' | 'productVariantStocksCreate' | 'productVariantStocksDelete' | 'productVariantStocksUpdate' | 'productVariantTranslate' | 'productVariantUpdate' | 'promotionBulkDelete' | 'promotionCreate' | 'promotionDelete' | 'promotionRuleCreate' | 'promotionRuleDelete' | 'promotionRuleTranslate' | 'promotionRuleUpdate' | 'promotionTranslate' | 'promotionUpdate' | 'requestEmailChange' | 'requestPasswordReset' | 'saleBulkDelete' | 'saleCataloguesAdd' | 'saleCataloguesRemove' | 'saleChannelListingUpdate' | 'saleCreate' | 'saleDelete' | 'saleTranslate' | 'saleUpdate' | 'sendConfirmationEmail' | 'setPassword' | 'shippingMethodChannelListingUpdate' | 'shippingPriceBulkDelete' | 'shippingPriceCreate' | 'shippingPriceDelete' | 'shippingPriceExcludeProducts' | 'shippingPriceRemoveProductFromExclude' | 'shippingPriceTranslate' | 'shippingPriceUpdate' | 'shippingZoneBulkDelete' | 'shippingZoneCreate' | 'shippingZoneDelete' | 'shippingZoneUpdate' | 'shopAddressUpdate' | 'shopDomainUpdate' | 'shopFetchTaxRates' | 'shopSettingsTranslate' | 'shopSettingsUpdate' | 'staffBulkDelete' | 'staffCreate' | 'staffDelete' | 'staffNotificationRecipientCreate' | 'staffNotificationRecipientDelete' | 'staffNotificationRecipientUpdate' | 'staffUpdate' | 'stockBulkUpdate' | 'storedPaymentMethodRequestDelete' | 'taxClassCreate' | 'taxClassDelete' | 'taxClassUpdate' | 'taxConfigurationUpdate' | 'taxCountryConfigurationDelete' | 'taxCountryConfigurationUpdate' | 'taxExemptionManage' | 'tokenCreate' | 'tokenRefresh' | 'tokenVerify' | 'tokensDeactivateAll' | 'transactionCreate' | 'transactionEventReport' | 'transactionInitialize' | 'transactionProcess' | 'transactionRequestAction' | 'transactionRequestRefundForGrantedRefund' | 'transactionUpdate' | 'unassignWarehouseShippingZone' | 'updateMetadata' | 'updatePrivateMetadata' | 'updateWarehouse' | 'userAvatarDelete' | 'userAvatarUpdate' | 'userBulkSetActive' | 'variantMediaAssign' | 'variantMediaUnassign' | 'voucherBulkDelete' | 'voucherCataloguesAdd' | 'voucherCataloguesRemove' | 'voucherChannelListingUpdate' | 'voucherCodeBulkDelete' | 'voucherCreate' | 'voucherDelete' | 'voucherTranslate' | 'voucherUpdate' | 'webhookCreate' | 'webhookDelete' | 'webhookDryRun' | 'webhookTrigger' | 'webhookUpdate' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('accountAddressCreate' | 'accountAddressDelete' | 'accountAddressUpdate' | 'accountDelete' | 'accountRegister' | 'accountRequestDeletion' | 'accountSetDefaultAddress' | 'accountUpdate' | 'addressCreate' | 'addressDelete' | 'addressSetDefault' | 'addressUpdate' | 'appActivate' | 'appCreate' | 'appDeactivate' | 'appDelete' | 'appDeleteFailedInstallation' | 'appFetchManifest' | 'appInstall' | 'appReenableSyncWebhooks' | 'appRetryInstall' | 'appTokenCreate' | 'appTokenDelete' | 'appTokenVerify' | 'appUpdate' | 'assignNavigation' | 'assignWarehouseShippingZone' | 'attributeBulkCreate' | 'attributeBulkDelete' | 'attributeBulkTranslate' | 'attributeBulkUpdate' | 'attributeCreate' | 'attributeDelete' | 'attributeReorderValues' | 'attributeTranslate' | 'attributeUpdate' | 'attributeValueBulkDelete' | 'attributeValueBulkTranslate' | 'attributeValueCreate' | 'attributeValueDelete' | 'attributeValueTranslate' | 'attributeValueUpdate' | 'categoryBulkDelete' | 'categoryCreate' | 'categoryDelete' | 'categoryTranslate' | 'categoryUpdate' | 'channelActivate' | 'channelCreate' | 'channelDeactivate' | 'channelDelete' | 'channelReorderWarehouses' | 'channelUpdate' | 'checkoutAddPromoCode' | 'checkoutBillingAddressUpdate' | 'checkoutComplete' | 'checkoutCreate' | 'checkoutCreateFromOrder' | 'checkoutCustomerAttach' | 'checkoutCustomerDetach' | 'checkoutCustomerNoteUpdate' | 'checkoutDeliveryMethodUpdate' | 'checkoutEmailUpdate' | 'checkoutLanguageCodeUpdate' | 'checkoutLineDelete' | 'checkoutLinesAdd' | 'checkoutLinesDelete' | 'checkoutLinesUpdate' | 'checkoutPaymentCreate' | 'checkoutRemovePromoCode' | 'checkoutShippingAddressUpdate' | 'checkoutShippingMethodUpdate' | 'collectionAddProducts' | 'collectionBulkDelete' | 'collectionChannelListingUpdate' | 'collectionCreate' | 'collectionDelete' | 'collectionRemoveProducts' | 'collectionReorderProducts' | 'collectionTranslate' | 'collectionUpdate' | 'confirmAccount' | 'confirmEmailChange' | 'createWarehouse' | 'customerBulkDelete' | 'customerBulkUpdate' | 'customerCreate' | 'customerDelete' | 'customerUpdate' | 'deleteMetadata' | 'deletePrivateMetadata' | 'deleteWarehouse' | 'digitalContentCreate' | 'digitalContentDelete' | 'digitalContentUpdate' | 'digitalContentUrlCreate' | 'draftOrderBulkDelete' | 'draftOrderComplete' | 'draftOrderCreate' | 'draftOrderDelete' | 'draftOrderLinesBulkDelete' | 'draftOrderUpdate' | 'eventDeliveryRetry' | 'exportGiftCards' | 'exportProducts' | 'exportVoucherCodes' | 'externalAuthenticationUrl' | 'externalLogout' | 'externalNotificationTrigger' | 'externalObtainAccessTokens' | 'externalRefresh' | 'externalVerify' | 'fileUpload' | 'giftCardActivate' | 'giftCardAddNote' | 'giftCardBulkActivate' | 'giftCardBulkCreate' | 'giftCardBulkDeactivate' | 'giftCardBulkDelete' | 'giftCardCreate' | 'giftCardDeactivate' | 'giftCardDelete' | 'giftCardResend' | 'giftCardSettingsUpdate' | 'giftCardUpdate' | 'invoiceCreate' | 'invoiceDelete' | 'invoiceRequest' | 'invoiceRequestDelete' | 'invoiceSendNotification' | 'invoiceUpdate' | 'menuBulkDelete' | 'menuCreate' | 'menuDelete' | 'menuItemBulkDelete' | 'menuItemCreate' | 'menuItemDelete' | 'menuItemMove' | 'menuItemTranslate' | 'menuItemUpdate' | 'menuUpdate' | 'orderAddNote' | 'orderBulkCancel' | 'orderBulkCreate' | 'orderCancel' | 'orderCapture' | 'orderConfirm' | 'orderCreateFromCheckout' | 'orderDiscountAdd' | 'orderDiscountDelete' | 'orderDiscountUpdate' | 'orderFulfill' | 'orderFulfillmentApprove' | 'orderFulfillmentCancel' | 'orderFulfillmentRefundProducts' | 'orderFulfillmentReturnProducts' | 'orderFulfillmentUpdateTracking' | 'orderGrantRefundCreate' | 'orderGrantRefundUpdate' | 'orderLineDelete' | 'orderLineDiscountRemove' | 'orderLineDiscountUpdate' | 'orderLineUpdate' | 'orderLinesCreate' | 'orderMarkAsPaid' | 'orderNoteAdd' | 'orderNoteUpdate' | 'orderRefund' | 'orderSettingsUpdate' | 'orderUpdate' | 'orderUpdateShipping' | 'orderVoid' | 'pageAttributeAssign' | 'pageAttributeUnassign' | 'pageBulkDelete' | 'pageBulkPublish' | 'pageCreate' | 'pageDelete' | 'pageReorderAttributeValues' | 'pageTranslate' | 'pageTypeBulkDelete' | 'pageTypeCreate' | 'pageTypeDelete' | 'pageTypeReorderAttributes' | 'pageTypeUpdate' | 'pageUpdate' | 'passwordChange' | 'paymentCapture' | 'paymentCheckBalance' | 'paymentGatewayInitialize' | 'paymentGatewayInitializeTokenization' | 'paymentInitialize' | 'paymentMethodInitializeTokenization' | 'paymentMethodProcessTokenization' | 'paymentRefund' | 'paymentVoid' | 'permissionGroupCreate' | 'permissionGroupDelete' | 'permissionGroupUpdate' | 'pluginUpdate' | 'productAttributeAssign' | 'productAttributeAssignmentUpdate' | 'productAttributeUnassign' | 'productBulkCreate' | 'productBulkDelete' | 'productBulkTranslate' | 'productChannelListingUpdate' | 'productCreate' | 'productDelete' | 'productMediaBulkDelete' | 'productMediaCreate' | 'productMediaDelete' | 'productMediaReorder' | 'productMediaUpdate' | 'productReorderAttributeValues' | 'productTranslate' | 'productTypeBulkDelete' | 'productTypeCreate' | 'productTypeDelete' | 'productTypeReorderAttributes' | 'productTypeUpdate' | 'productUpdate' | 'productVariantBulkCreate' | 'productVariantBulkDelete' | 'productVariantBulkTranslate' | 'productVariantBulkUpdate' | 'productVariantChannelListingUpdate' | 'productVariantCreate' | 'productVariantDelete' | 'productVariantPreorderDeactivate' | 'productVariantReorder' | 'productVariantReorderAttributeValues' | 'productVariantSetDefault' | 'productVariantStocksCreate' | 'productVariantStocksDelete' | 'productVariantStocksUpdate' | 'productVariantTranslate' | 'productVariantUpdate' | 'promotionBulkDelete' | 'promotionCreate' | 'promotionDelete' | 'promotionRuleCreate' | 'promotionRuleDelete' | 'promotionRuleTranslate' | 'promotionRuleUpdate' | 'promotionTranslate' | 'promotionUpdate' | 'requestEmailChange' | 'requestPasswordReset' | 'saleBulkDelete' | 'saleCataloguesAdd' | 'saleCataloguesRemove' | 'saleChannelListingUpdate' | 'saleCreate' | 'saleDelete' | 'saleTranslate' | 'saleUpdate' | 'sendConfirmationEmail' | 'setPassword' | 'shippingMethodChannelListingUpdate' | 'shippingPriceBulkDelete' | 'shippingPriceCreate' | 'shippingPriceDelete' | 'shippingPriceExcludeProducts' | 'shippingPriceRemoveProductFromExclude' | 'shippingPriceTranslate' | 'shippingPriceUpdate' | 'shippingZoneBulkDelete' | 'shippingZoneCreate' | 'shippingZoneDelete' | 'shippingZoneUpdate' | 'shopAddressUpdate' | 'shopDomainUpdate' | 'shopFetchTaxRates' | 'shopSettingsTranslate' | 'shopSettingsUpdate' | 'staffBulkDelete' | 'staffCreate' | 'staffDelete' | 'staffNotificationRecipientCreate' | 'staffNotificationRecipientDelete' | 'staffNotificationRecipientUpdate' | 'staffUpdate' | 'stockBulkUpdate' | 'storedPaymentMethodRequestDelete' | 'taxClassCreate' | 'taxClassDelete' | 'taxClassUpdate' | 'taxConfigurationUpdate' | 'taxCountryConfigurationDelete' | 'taxCountryConfigurationUpdate' | 'taxExemptionManage' | 'tokenCreate' | 'tokenRefresh' | 'tokenVerify' | 'tokensDeactivateAll' | 'transactionCreate' | 'transactionEventReport' | 'transactionInitialize' | 'transactionProcess' | 'transactionRequestAction' | 'transactionRequestRefundForGrantedRefund' | 'transactionUpdate' | 'unassignWarehouseShippingZone' | 'updateMetadata' | 'updatePrivateMetadata' | 'updateWarehouse' | 'userAvatarDelete' | 'userAvatarUpdate' | 'userBulkSetActive' | 'variantMediaAssign' | 'variantMediaUnassign' | 'voucherBulkDelete' | 'voucherCataloguesAdd' | 'voucherCataloguesRemove' | 'voucherChannelListingUpdate' | 'voucherCodeBulkDelete' | 'voucherCreate' | 'voucherDelete' | 'voucherTranslate' | 'voucherUpdate' | 'webhookCreate' | 'webhookDelete' | 'webhookDryRun' | 'webhookTrigger' | 'webhookUpdate' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	accountAddressCreate?: FieldPolicy<any> | FieldReadFunction<any>,
 	accountAddressDelete?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2660,6 +2703,7 @@ export type MutationFieldPolicy = {
 	appDeleteFailedInstallation?: FieldPolicy<any> | FieldReadFunction<any>,
 	appFetchManifest?: FieldPolicy<any> | FieldReadFunction<any>,
 	appInstall?: FieldPolicy<any> | FieldReadFunction<any>,
+	appReenableSyncWebhooks?: FieldPolicy<any> | FieldReadFunction<any>,
 	appRetryInstall?: FieldPolicy<any> | FieldReadFunction<any>,
 	appTokenCreate?: FieldPolicy<any> | FieldReadFunction<any>,
 	appTokenDelete?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2700,6 +2744,7 @@ export type MutationFieldPolicy = {
 	checkoutCreateFromOrder?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutCustomerAttach?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutCustomerDetach?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutCustomerNoteUpdate?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutDeliveryMethodUpdate?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutEmailUpdate?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutLanguageCodeUpdate?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2966,6 +3011,10 @@ export type MutationFieldPolicy = {
 	webhookTrigger?: FieldPolicy<any> | FieldReadFunction<any>,
 	webhookUpdate?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type NewTabTargetOptionsKeySpecifier = ('method' | NewTabTargetOptionsKeySpecifier)[];
+export type NewTabTargetOptionsFieldPolicy = {
+	method?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type NodeKeySpecifier = ('id' | NodeKeySpecifier)[];
 export type NodeFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>
@@ -3168,12 +3217,13 @@ export type OrderCreatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type OrderDiscountKeySpecifier = ('amount' | 'id' | 'name' | 'reason' | 'translatedName' | 'type' | 'value' | 'valueType' | OrderDiscountKeySpecifier)[];
+export type OrderDiscountKeySpecifier = ('amount' | 'id' | 'name' | 'reason' | 'total' | 'translatedName' | 'type' | 'value' | 'valueType' | OrderDiscountKeySpecifier)[];
 export type OrderDiscountFieldPolicy = {
 	amount?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	reason?: FieldPolicy<any> | FieldReadFunction<any>,
+	total?: FieldPolicy<any> | FieldReadFunction<any>,
 	translatedName?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	value?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3374,10 +3424,11 @@ export type OrderGrantedRefundLineFieldPolicy = {
 	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
 	reason?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type OrderLineKeySpecifier = ('allocations' | 'digitalContentUrl' | 'id' | 'isGift' | 'isPriceOverridden' | 'isShippingRequired' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productName' | 'productSku' | 'productVariantId' | 'quantity' | 'quantityFulfilled' | 'quantityToFulfill' | 'saleId' | 'taxClass' | 'taxClassMetadata' | 'taxClassName' | 'taxClassPrivateMetadata' | 'taxRate' | 'thumbnail' | 'totalPrice' | 'translatedProductName' | 'translatedVariantName' | 'undiscountedTotalPrice' | 'undiscountedUnitPrice' | 'unitDiscount' | 'unitDiscountReason' | 'unitDiscountType' | 'unitDiscountValue' | 'unitPrice' | 'variant' | 'variantName' | 'voucherCode' | OrderLineKeySpecifier)[];
+export type OrderLineKeySpecifier = ('allocations' | 'digitalContentUrl' | 'discounts' | 'id' | 'isGift' | 'isPriceOverridden' | 'isShippingRequired' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productName' | 'productSku' | 'productVariantId' | 'quantity' | 'quantityFulfilled' | 'quantityToFulfill' | 'saleId' | 'taxClass' | 'taxClassMetadata' | 'taxClassName' | 'taxClassPrivateMetadata' | 'taxRate' | 'thumbnail' | 'totalPrice' | 'translatedProductName' | 'translatedVariantName' | 'undiscountedTotalPrice' | 'undiscountedUnitPrice' | 'unitDiscount' | 'unitDiscountReason' | 'unitDiscountType' | 'unitDiscountValue' | 'unitPrice' | 'variant' | 'variantName' | 'voucherCode' | OrderLineKeySpecifier)[];
 export type OrderLineFieldPolicy = {
 	allocations?: FieldPolicy<any> | FieldReadFunction<any>,
 	digitalContentUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	discounts?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	isGift?: FieldPolicy<any> | FieldReadFunction<any>,
 	isPriceOverridden?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3421,6 +3472,18 @@ export type OrderLineDeleteFieldPolicy = {
 	order?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderLine?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type OrderLineDiscountKeySpecifier = ('id' | 'name' | 'reason' | 'total' | 'translatedName' | 'type' | 'unit' | 'value' | 'valueType' | OrderLineDiscountKeySpecifier)[];
+export type OrderLineDiscountFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	reason?: FieldPolicy<any> | FieldReadFunction<any>,
+	total?: FieldPolicy<any> | FieldReadFunction<any>,
+	translatedName?: FieldPolicy<any> | FieldReadFunction<any>,
+	type?: FieldPolicy<any> | FieldReadFunction<any>,
+	unit?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>,
+	valueType?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type OrderLineDiscountRemoveKeySpecifier = ('errors' | 'order' | 'orderErrors' | 'orderLine' | OrderLineDiscountRemoveKeySpecifier)[];
 export type OrderLineDiscountRemoveFieldPolicy = {
@@ -3510,15 +3573,17 @@ export type OrderRefundedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type OrderSettingsKeySpecifier = ('allowUnpaidOrders' | 'automaticallyConfirmAllNewOrders' | 'automaticallyFulfillNonShippableGiftCard' | 'deleteExpiredOrdersAfter' | 'expireOrdersAfter' | 'includeDraftOrderInVoucherUsage' | 'markAsPaidStrategy' | OrderSettingsKeySpecifier)[];
+export type OrderSettingsKeySpecifier = ('allowUnpaidOrders' | 'automaticallyConfirmAllNewOrders' | 'automaticallyFulfillNonShippableGiftCard' | 'deleteExpiredOrdersAfter' | 'draftOrderLinePriceFreezePeriod' | 'expireOrdersAfter' | 'includeDraftOrderInVoucherUsage' | 'markAsPaidStrategy' | 'useLegacyLineDiscountPropagation' | OrderSettingsKeySpecifier)[];
 export type OrderSettingsFieldPolicy = {
 	allowUnpaidOrders?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticallyConfirmAllNewOrders?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticallyFulfillNonShippableGiftCard?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteExpiredOrdersAfter?: FieldPolicy<any> | FieldReadFunction<any>,
+	draftOrderLinePriceFreezePeriod?: FieldPolicy<any> | FieldReadFunction<any>,
 	expireOrdersAfter?: FieldPolicy<any> | FieldReadFunction<any>,
 	includeDraftOrderInVoucherUsage?: FieldPolicy<any> | FieldReadFunction<any>,
-	markAsPaidStrategy?: FieldPolicy<any> | FieldReadFunction<any>
+	markAsPaidStrategy?: FieldPolicy<any> | FieldReadFunction<any>,
+	useLegacyLineDiscountPropagation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type OrderSettingsErrorKeySpecifier = ('code' | 'field' | 'message' | OrderSettingsErrorKeySpecifier)[];
 export type OrderSettingsErrorFieldPolicy = {
@@ -3558,8 +3623,13 @@ export type OrderVoidFieldPolicy = {
 	order?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PageKeySpecifier = ('attributes' | 'content' | 'contentJson' | 'created' | 'id' | 'isPublished' | 'metadata' | 'metafield' | 'metafields' | 'pageType' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'publicationDate' | 'publishedAt' | 'seoDescription' | 'seoTitle' | 'slug' | 'title' | 'translation' | PageKeySpecifier)[];
+export type OtherPaymentMethodDetailsKeySpecifier = ('name' | OtherPaymentMethodDetailsKeySpecifier)[];
+export type OtherPaymentMethodDetailsFieldPolicy = {
+	name?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PageKeySpecifier = ('attribute' | 'attributes' | 'content' | 'contentJson' | 'created' | 'id' | 'isPublished' | 'metadata' | 'metafield' | 'metafields' | 'pageType' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'publicationDate' | 'publishedAt' | 'seoDescription' | 'seoTitle' | 'slug' | 'title' | 'translation' | PageKeySpecifier)[];
 export type PageFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	content?: FieldPolicy<any> | FieldReadFunction<any>,
 	contentJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3665,7 +3735,7 @@ export type PageReorderAttributeValuesFieldPolicy = {
 	page?: FieldPolicy<any> | FieldReadFunction<any>,
 	pageErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PageTranslatableContentKeySpecifier = ('attributeValues' | 'content' | 'contentJson' | 'id' | 'page' | 'pageId' | 'seoDescription' | 'seoTitle' | 'title' | 'translation' | PageTranslatableContentKeySpecifier)[];
+export type PageTranslatableContentKeySpecifier = ('attributeValues' | 'content' | 'contentJson' | 'id' | 'page' | 'pageId' | 'seoDescription' | 'seoTitle' | 'slug' | 'title' | 'translation' | PageTranslatableContentKeySpecifier)[];
 export type PageTranslatableContentFieldPolicy = {
 	attributeValues?: FieldPolicy<any> | FieldReadFunction<any>,
 	content?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3675,6 +3745,7 @@ export type PageTranslatableContentFieldPolicy = {
 	pageId?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	title?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -3684,7 +3755,7 @@ export type PageTranslateFieldPolicy = {
 	page?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PageTranslationKeySpecifier = ('content' | 'contentJson' | 'id' | 'language' | 'seoDescription' | 'seoTitle' | 'title' | 'translatableContent' | PageTranslationKeySpecifier)[];
+export type PageTranslationKeySpecifier = ('content' | 'contentJson' | 'id' | 'language' | 'seoDescription' | 'seoTitle' | 'slug' | 'title' | 'translatableContent' | PageTranslationKeySpecifier)[];
 export type PageTranslationFieldPolicy = {
 	content?: FieldPolicy<any> | FieldReadFunction<any>,
 	contentJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3692,6 +3763,7 @@ export type PageTranslationFieldPolicy = {
 	language?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	title?: FieldPolicy<any> | FieldReadFunction<any>,
 	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -4165,7 +4237,7 @@ export type PreorderThresholdFieldPolicy = {
 	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
 	soldUnits?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductKeySpecifier = ('attribute' | 'attributes' | 'availableForPurchase' | 'availableForPurchaseAt' | 'category' | 'channel' | 'channelListings' | 'chargeTaxes' | 'collections' | 'created' | 'defaultVariant' | 'description' | 'descriptionJson' | 'externalReference' | 'id' | 'imageById' | 'images' | 'isAvailable' | 'isAvailableForPurchase' | 'media' | 'mediaById' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'pricing' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productType' | 'rating' | 'seoDescription' | 'seoTitle' | 'slug' | 'taxClass' | 'taxType' | 'thumbnail' | 'translation' | 'updatedAt' | 'variant' | 'variants' | 'weight' | ProductKeySpecifier)[];
+export type ProductKeySpecifier = ('attribute' | 'attributes' | 'availableForPurchase' | 'availableForPurchaseAt' | 'category' | 'channel' | 'channelListings' | 'chargeTaxes' | 'collections' | 'created' | 'defaultVariant' | 'description' | 'descriptionJson' | 'externalReference' | 'id' | 'imageById' | 'images' | 'isAvailable' | 'isAvailableForPurchase' | 'media' | 'mediaById' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'pricing' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productType' | 'productVariants' | 'rating' | 'seoDescription' | 'seoTitle' | 'slug' | 'taxClass' | 'taxType' | 'thumbnail' | 'translation' | 'updatedAt' | 'variant' | 'variants' | 'weight' | ProductKeySpecifier)[];
 export type ProductFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributes?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4197,6 +4269,7 @@ export type ProductFieldPolicy = {
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
 	productType?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariants?: FieldPolicy<any> | FieldReadFunction<any>,
 	rating?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4451,14 +4524,16 @@ export type ProductMetadataUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductPricingInfoKeySpecifier = ('discount' | 'discountLocalCurrency' | 'displayGrossPrices' | 'onSale' | 'priceRange' | 'priceRangeLocalCurrency' | 'priceRangeUndiscounted' | ProductPricingInfoKeySpecifier)[];
+export type ProductPricingInfoKeySpecifier = ('discount' | 'discountLocalCurrency' | 'discountPrior' | 'displayGrossPrices' | 'onSale' | 'priceRange' | 'priceRangeLocalCurrency' | 'priceRangePrior' | 'priceRangeUndiscounted' | ProductPricingInfoKeySpecifier)[];
 export type ProductPricingInfoFieldPolicy = {
 	discount?: FieldPolicy<any> | FieldReadFunction<any>,
 	discountLocalCurrency?: FieldPolicy<any> | FieldReadFunction<any>,
+	discountPrior?: FieldPolicy<any> | FieldReadFunction<any>,
 	displayGrossPrices?: FieldPolicy<any> | FieldReadFunction<any>,
 	onSale?: FieldPolicy<any> | FieldReadFunction<any>,
 	priceRange?: FieldPolicy<any> | FieldReadFunction<any>,
 	priceRangeLocalCurrency?: FieldPolicy<any> | FieldReadFunction<any>,
+	priceRangePrior?: FieldPolicy<any> | FieldReadFunction<any>,
 	priceRangeUndiscounted?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductReorderAttributeValuesKeySpecifier = ('errors' | 'product' | 'productErrors' | ProductReorderAttributeValuesKeySpecifier)[];
@@ -4467,7 +4542,7 @@ export type ProductReorderAttributeValuesFieldPolicy = {
 	product?: FieldPolicy<any> | FieldReadFunction<any>,
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductTranslatableContentKeySpecifier = ('attributeValues' | 'description' | 'descriptionJson' | 'id' | 'name' | 'product' | 'productId' | 'seoDescription' | 'seoTitle' | 'translation' | ProductTranslatableContentKeySpecifier)[];
+export type ProductTranslatableContentKeySpecifier = ('attributeValues' | 'description' | 'descriptionJson' | 'id' | 'name' | 'product' | 'productId' | 'seoDescription' | 'seoTitle' | 'slug' | 'translation' | ProductTranslatableContentKeySpecifier)[];
 export type ProductTranslatableContentFieldPolicy = {
 	attributeValues?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4478,6 +4553,7 @@ export type ProductTranslatableContentFieldPolicy = {
 	productId?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductTranslateKeySpecifier = ('errors' | 'product' | 'translationErrors' | ProductTranslateKeySpecifier)[];
@@ -4486,7 +4562,7 @@ export type ProductTranslateFieldPolicy = {
 	product?: FieldPolicy<any> | FieldReadFunction<any>,
 	translationErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'translatableContent' | ProductTranslationKeySpecifier)[];
+export type ProductTranslationKeySpecifier = ('description' | 'descriptionJson' | 'id' | 'language' | 'name' | 'seoDescription' | 'seoTitle' | 'slug' | 'translatableContent' | ProductTranslationKeySpecifier)[];
 export type ProductTranslationFieldPolicy = {
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
 	descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4495,6 +4571,7 @@ export type ProductTranslationFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoDescription?: FieldPolicy<any> | FieldReadFunction<any>,
 	seoTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	translatableContent?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductTypeKeySpecifier = ('assignedVariantAttributes' | 'availableAttributes' | 'hasVariants' | 'id' | 'isDigital' | 'isShippingRequired' | 'kind' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productAttributes' | 'products' | 'slug' | 'taxClass' | 'taxType' | 'variantAttributes' | 'weight' | ProductTypeKeySpecifier)[];
@@ -4674,14 +4751,15 @@ export type ProductVariantBulkUpdateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	results?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductVariantChannelListingKeySpecifier = ('channel' | 'costPrice' | 'id' | 'margin' | 'preorderThreshold' | 'price' | ProductVariantChannelListingKeySpecifier)[];
+export type ProductVariantChannelListingKeySpecifier = ('channel' | 'costPrice' | 'id' | 'margin' | 'preorderThreshold' | 'price' | 'priorPrice' | ProductVariantChannelListingKeySpecifier)[];
 export type ProductVariantChannelListingFieldPolicy = {
 	channel?: FieldPolicy<any> | FieldReadFunction<any>,
 	costPrice?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	margin?: FieldPolicy<any> | FieldReadFunction<any>,
 	preorderThreshold?: FieldPolicy<any> | FieldReadFunction<any>,
-	price?: FieldPolicy<any> | FieldReadFunction<any>
+	price?: FieldPolicy<any> | FieldReadFunction<any>,
+	priorPrice?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ProductVariantChannelListingUpdateKeySpecifier = ('errors' | 'productChannelListingErrors' | 'variant' | ProductVariantChannelListingUpdateKeySpecifier)[];
 export type ProductVariantChannelListingUpdateFieldPolicy = {
@@ -5936,8 +6014,12 @@ export type StoredPaymentMethodRequestDeleteFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	result?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SubscriptionKeySpecifier = ('draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | SubscriptionKeySpecifier)[];
+export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | SubscriptionKeySpecifier)[];
 export type SubscriptionFieldPolicy = {
+	checkoutCreated?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutFullyPaid?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutMetadataUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
 	draftOrderCreated?: FieldPolicy<any> | FieldReadFunction<any>,
 	draftOrderDeleted?: FieldPolicy<any> | FieldReadFunction<any>,
 	draftOrderUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6019,7 +6101,7 @@ export type TaxClassUpdateErrorFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TaxConfigurationKeySpecifier = ('channel' | 'chargeTaxes' | 'countries' | 'displayGrossPrices' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'pricesEnteredWithTax' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'taxAppId' | 'taxCalculationStrategy' | TaxConfigurationKeySpecifier)[];
+export type TaxConfigurationKeySpecifier = ('channel' | 'chargeTaxes' | 'countries' | 'displayGrossPrices' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'pricesEnteredWithTax' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'taxAppId' | 'taxCalculationStrategy' | 'useWeightedTaxForShipping' | TaxConfigurationKeySpecifier)[];
 export type TaxConfigurationFieldPolicy = {
 	channel?: FieldPolicy<any> | FieldReadFunction<any>,
 	chargeTaxes?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6034,7 +6116,8 @@ export type TaxConfigurationFieldPolicy = {
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
 	taxAppId?: FieldPolicy<any> | FieldReadFunction<any>,
-	taxCalculationStrategy?: FieldPolicy<any> | FieldReadFunction<any>
+	taxCalculationStrategy?: FieldPolicy<any> | FieldReadFunction<any>,
+	useWeightedTaxForShipping?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TaxConfigurationCountableConnectionKeySpecifier = ('edges' | 'pageInfo' | 'totalCount' | TaxConfigurationCountableConnectionKeySpecifier)[];
 export type TaxConfigurationCountableConnectionFieldPolicy = {
@@ -6047,13 +6130,14 @@ export type TaxConfigurationCountableEdgeFieldPolicy = {
 	cursor?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TaxConfigurationPerCountryKeySpecifier = ('chargeTaxes' | 'country' | 'displayGrossPrices' | 'taxAppId' | 'taxCalculationStrategy' | TaxConfigurationPerCountryKeySpecifier)[];
+export type TaxConfigurationPerCountryKeySpecifier = ('chargeTaxes' | 'country' | 'displayGrossPrices' | 'taxAppId' | 'taxCalculationStrategy' | 'useWeightedTaxForShipping' | TaxConfigurationPerCountryKeySpecifier)[];
 export type TaxConfigurationPerCountryFieldPolicy = {
 	chargeTaxes?: FieldPolicy<any> | FieldReadFunction<any>,
 	country?: FieldPolicy<any> | FieldReadFunction<any>,
 	displayGrossPrices?: FieldPolicy<any> | FieldReadFunction<any>,
 	taxAppId?: FieldPolicy<any> | FieldReadFunction<any>,
-	taxCalculationStrategy?: FieldPolicy<any> | FieldReadFunction<any>
+	taxCalculationStrategy?: FieldPolicy<any> | FieldReadFunction<any>,
+	useWeightedTaxForShipping?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TaxConfigurationUpdateKeySpecifier = ('errors' | 'taxConfiguration' | TaxConfigurationUpdateKeySpecifier)[];
 export type TaxConfigurationUpdateFieldPolicy = {
@@ -6266,7 +6350,7 @@ export type TransactionInitializeSessionFieldPolicy = {
 	transaction?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TransactionItemKeySpecifier = ('actions' | 'authorizePendingAmount' | 'authorizedAmount' | 'cancelPendingAmount' | 'canceledAmount' | 'chargePendingAmount' | 'chargedAmount' | 'checkout' | 'createdAt' | 'createdBy' | 'events' | 'externalUrl' | 'id' | 'message' | 'metadata' | 'metafield' | 'metafields' | 'modifiedAt' | 'name' | 'order' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'pspReference' | 'refundPendingAmount' | 'refundedAmount' | 'token' | TransactionItemKeySpecifier)[];
+export type TransactionItemKeySpecifier = ('actions' | 'authorizePendingAmount' | 'authorizedAmount' | 'cancelPendingAmount' | 'canceledAmount' | 'chargePendingAmount' | 'chargedAmount' | 'checkout' | 'createdAt' | 'createdBy' | 'events' | 'externalUrl' | 'id' | 'message' | 'metadata' | 'metafield' | 'metafields' | 'modifiedAt' | 'name' | 'order' | 'paymentMethodDetails' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'pspReference' | 'refundPendingAmount' | 'refundedAmount' | 'token' | TransactionItemKeySpecifier)[];
 export type TransactionItemFieldPolicy = {
 	actions?: FieldPolicy<any> | FieldReadFunction<any>,
 	authorizePendingAmount?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6288,6 +6372,7 @@ export type TransactionItemFieldPolicy = {
 	modifiedAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	order?: FieldPolicy<any> | FieldReadFunction<any>,
+	paymentMethodDetails?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6525,13 +6610,15 @@ export type VariantMediaUnassignFieldPolicy = {
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	productVariant?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type VariantPricingInfoKeySpecifier = ('discount' | 'discountLocalCurrency' | 'onSale' | 'price' | 'priceLocalCurrency' | 'priceUndiscounted' | VariantPricingInfoKeySpecifier)[];
+export type VariantPricingInfoKeySpecifier = ('discount' | 'discountLocalCurrency' | 'discountPrior' | 'onSale' | 'price' | 'priceLocalCurrency' | 'pricePrior' | 'priceUndiscounted' | VariantPricingInfoKeySpecifier)[];
 export type VariantPricingInfoFieldPolicy = {
 	discount?: FieldPolicy<any> | FieldReadFunction<any>,
 	discountLocalCurrency?: FieldPolicy<any> | FieldReadFunction<any>,
+	discountPrior?: FieldPolicy<any> | FieldReadFunction<any>,
 	onSale?: FieldPolicy<any> | FieldReadFunction<any>,
 	price?: FieldPolicy<any> | FieldReadFunction<any>,
 	priceLocalCurrency?: FieldPolicy<any> | FieldReadFunction<any>,
+	pricePrior?: FieldPolicy<any> | FieldReadFunction<any>,
 	priceUndiscounted?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type VerifyTokenKeySpecifier = ('accountErrors' | 'errors' | 'isValid' | 'payload' | 'user' | VerifyTokenKeySpecifier)[];
@@ -6926,6 +7013,10 @@ export type WeightFieldPolicy = {
 	unit?: FieldPolicy<any> | FieldReadFunction<any>,
 	value?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type WidgetTargetOptionsKeySpecifier = ('method' | WidgetTargetOptionsKeySpecifier)[];
+export type WidgetTargetOptionsFieldPolicy = {
+	method?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type _ServiceKeySpecifier = ('sdl' | _ServiceKeySpecifier)[];
 export type _ServiceFieldPolicy = {
 	sdl?: FieldPolicy<any> | FieldReadFunction<any>
@@ -7095,6 +7186,14 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | AppExtensionCountableEdgeKeySpecifier | (() => undefined | AppExtensionCountableEdgeKeySpecifier),
 		fields?: AppExtensionCountableEdgeFieldPolicy,
 	},
+	AppExtensionOptionsNewTab?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppExtensionOptionsNewTabKeySpecifier | (() => undefined | AppExtensionOptionsNewTabKeySpecifier),
+		fields?: AppExtensionOptionsNewTabFieldPolicy,
+	},
+	AppExtensionOptionsWidget?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppExtensionOptionsWidgetKeySpecifier | (() => undefined | AppExtensionOptionsWidgetKeySpecifier),
+		fields?: AppExtensionOptionsWidgetFieldPolicy,
+	},
 	AppFetchManifest?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppFetchManifestKeySpecifier | (() => undefined | AppFetchManifestKeySpecifier),
 		fields?: AppFetchManifestFieldPolicy,
@@ -7130,6 +7229,10 @@ export type StrictTypedTypePolicies = {
 	AppManifestWebhook?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppManifestWebhookKeySpecifier | (() => undefined | AppManifestWebhookKeySpecifier),
 		fields?: AppManifestWebhookFieldPolicy,
+	},
+	AppReenableSyncWebhooks?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AppReenableSyncWebhooksKeySpecifier | (() => undefined | AppReenableSyncWebhooksKeySpecifier),
+		fields?: AppReenableSyncWebhooksFieldPolicy,
 	},
 	AppRetryInstall?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AppRetryInstallKeySpecifier | (() => undefined | AppRetryInstallKeySpecifier),
@@ -7343,6 +7446,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | CalculateTaxesKeySpecifier | (() => undefined | CalculateTaxesKeySpecifier),
 		fields?: CalculateTaxesFieldPolicy,
 	},
+	CardPaymentMethodDetails?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CardPaymentMethodDetailsKeySpecifier | (() => undefined | CardPaymentMethodDetailsKeySpecifier),
+		fields?: CardPaymentMethodDetailsFieldPolicy,
+	},
 	Category?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CategoryKeySpecifier | (() => undefined | CategoryKeySpecifier),
 		fields?: CategoryFieldPolicy,
@@ -7498,6 +7605,10 @@ export type StrictTypedTypePolicies = {
 	CheckoutCustomerDetach?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CheckoutCustomerDetachKeySpecifier | (() => undefined | CheckoutCustomerDetachKeySpecifier),
 		fields?: CheckoutCustomerDetachFieldPolicy,
+	},
+	CheckoutCustomerNoteUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CheckoutCustomerNoteUpdateKeySpecifier | (() => undefined | CheckoutCustomerNoteUpdateKeySpecifier),
+		fields?: CheckoutCustomerNoteUpdateFieldPolicy,
 	},
 	CheckoutDeliveryMethodUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CheckoutDeliveryMethodUpdateKeySpecifier | (() => undefined | CheckoutDeliveryMethodUpdateKeySpecifier),
@@ -7987,6 +8098,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | GatewayConfigLineKeySpecifier | (() => undefined | GatewayConfigLineKeySpecifier),
 		fields?: GatewayConfigLineFieldPolicy,
 	},
+	GenericPaymentMethodDetails?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | GenericPaymentMethodDetailsKeySpecifier | (() => undefined | GenericPaymentMethodDetailsKeySpecifier),
+		fields?: GenericPaymentMethodDetailsFieldPolicy,
+	},
 	GiftCard?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | GiftCardKeySpecifier | (() => undefined | GiftCardKeySpecifier),
 		fields?: GiftCardFieldPolicy,
@@ -8315,6 +8430,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | MutationKeySpecifier | (() => undefined | MutationKeySpecifier),
 		fields?: MutationFieldPolicy,
 	},
+	NewTabTargetOptions?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | NewTabTargetOptionsKeySpecifier | (() => undefined | NewTabTargetOptionsKeySpecifier),
+		fields?: NewTabTargetOptionsFieldPolicy,
+	},
 	Node?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | NodeKeySpecifier | (() => undefined | NodeKeySpecifier),
 		fields?: NodeFieldPolicy,
@@ -8495,6 +8614,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | OrderLineDeleteKeySpecifier | (() => undefined | OrderLineDeleteKeySpecifier),
 		fields?: OrderLineDeleteFieldPolicy,
 	},
+	OrderLineDiscount?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OrderLineDiscountKeySpecifier | (() => undefined | OrderLineDiscountKeySpecifier),
+		fields?: OrderLineDiscountFieldPolicy,
+	},
 	OrderLineDiscountRemove?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | OrderLineDiscountRemoveKeySpecifier | (() => undefined | OrderLineDiscountRemoveKeySpecifier),
 		fields?: OrderLineDiscountRemoveFieldPolicy,
@@ -8574,6 +8697,10 @@ export type StrictTypedTypePolicies = {
 	OrderVoid?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | OrderVoidKeySpecifier | (() => undefined | OrderVoidKeySpecifier),
 		fields?: OrderVoidFieldPolicy,
+	},
+	OtherPaymentMethodDetails?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OtherPaymentMethodDetailsKeySpecifier | (() => undefined | OtherPaymentMethodDetailsKeySpecifier),
+		fields?: OtherPaymentMethodDetailsFieldPolicy,
 	},
 	Page?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PageKeySpecifier | (() => undefined | PageKeySpecifier),
@@ -10266,6 +10393,10 @@ export type StrictTypedTypePolicies = {
 	Weight?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | WeightKeySpecifier | (() => undefined | WeightKeySpecifier),
 		fields?: WeightFieldPolicy,
+	},
+	WidgetTargetOptions?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | WidgetTargetOptionsKeySpecifier | (() => undefined | WidgetTargetOptionsKeySpecifier),
+		fields?: WidgetTargetOptionsFieldPolicy,
 	},
 	_Service?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | _ServiceKeySpecifier | (() => undefined | _ServiceKeySpecifier),

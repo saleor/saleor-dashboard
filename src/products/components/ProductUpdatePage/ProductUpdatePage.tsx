@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -15,11 +16,9 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
-import {
-  extensionMountPoints,
-  mapToMenuItemsForProductDetails,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForProductDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelFragment,
   PermissionEnum,
@@ -51,7 +50,7 @@ import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/product
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Box, Option } from "@saleor/macaw-ui-next";
+import { Box, Divider, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -81,7 +80,7 @@ export interface ProductUpdatePageProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
   media: ProductFragment["media"];
-  product: ProductDetailsQuery["product"];
+  product?: ProductDetailsQuery["product"];
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   taxClasses: TaxClassBaseFragment[];
@@ -199,7 +198,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, attributeValues);
     onCloseDialog();
   };
-  const { PRODUCT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PRODUCT_DETAILS);
+  const { PRODUCT_DETAILS_MORE_ACTIONS, PRODUCT_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.PRODUCT_DETAILS,
+  );
   const productErrors = React.useMemo(
     () =>
       errors.filter(
@@ -214,10 +215,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       ) as Array<ProductErrorFragment | ProductChannelListingErrorFragment>,
     [errors, channelsErrors],
   );
-  const extensionMenuItems = mapToMenuItemsForProductDetails(
-    PRODUCT_DETAILS_MORE_ACTIONS,
-    productId,
-  );
+  const extensionMenuItems = getExtensionsItemsForProductDetails(PRODUCT_DETAILS_MORE_ACTIONS, {
+    productId: productId,
+    productSlug: product?.slug,
+  });
   const context = useDevModeContext();
   const openPlaygroundURL = () => {
     context.setDevModeContent(defaultGraphiQLQuery);
@@ -394,6 +395,18 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onFetchMore={fetchMoreTaxClasses}
                 />
               </Box>
+              {PRODUCT_DETAILS_WIDGETS.length > 0 && productId && (
+                <>
+                  <Divider />
+                  <AppWidgets
+                    extensions={PRODUCT_DETAILS_WIDGETS}
+                    params={{
+                      productId: productId,
+                      productSlug: product?.slug,
+                    }}
+                  />
+                </>
+              )}
             </DetailPageLayout.RightSidebar>
 
             <Savebar>

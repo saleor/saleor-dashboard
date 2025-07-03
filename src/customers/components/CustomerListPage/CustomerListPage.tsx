@@ -7,12 +7,12 @@ import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDr
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { Customers } from "@dashboard/customers/types";
 import { customerAddUrl, CustomerListUrlSortField, customerUrl } from "@dashboard/customers/urls";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
-  extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForCustomerOverviewActions,
-  useExtensions,
-} from "@dashboard/extensions/hooks/useExtensions";
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForCustomerOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { useFlag } from "@dashboard/featureFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -61,11 +61,11 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForCustomerOverviewActions(
+  const extensionMenuItems = getExtensionsItemsForCustomerOverviewActions(
     CUSTOMER_OVERVIEW_MORE_ACTIONS,
     selectedCustomerIds,
   );
-  const extensionCreateButtonItems = mapToMenuItems(CUSTOMER_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(CUSTOMER_OVERVIEW_CREATE);
 
   return (
     <>

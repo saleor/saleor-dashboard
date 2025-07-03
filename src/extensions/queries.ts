@@ -117,12 +117,31 @@ export const extensionList = gql`
           mount
           target
           accessToken
+          options {
+            ... on AppExtensionOptionsWidget {
+              widgetTarget {
+                method
+              }
+            }
+            ... on AppExtensionOptionsNewTab {
+              newTabTarget {
+                method
+              }
+            }
+          }
+
           permissions {
             code
           }
           app {
             id
             appUrl
+            name
+            brand {
+              logo {
+                default(size: 32, format: WEBP)
+              }
+            }
           }
         }
       }
