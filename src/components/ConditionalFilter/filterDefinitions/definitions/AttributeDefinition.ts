@@ -7,7 +7,8 @@ import { WhereOnlyFilterDefinition } from "../types";
 import { extractConditionValueFromFilterElement, getBooleanValueFromElement } from "../utils";
 
 export class AttributeDefinition
-  implements WhereOnlyFilterDefinition<{ attributes?: AttributeInput[] }> {
+  implements WhereOnlyFilterDefinition<{ attributes?: AttributeInput[] }>
+{
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
