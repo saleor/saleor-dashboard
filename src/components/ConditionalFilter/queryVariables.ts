@@ -16,6 +16,8 @@ import {
   VoucherFilterInput,
 } from "@dashboard/graphql";
 
+import { SlugChannelDefinition } from "./filterDefinitions/definitions/SlugChannelDefinition";
+import { FilterDefinitionResolver } from "./filterDefinitions/FilterDefinitionResolver";
 import { FilterContainer } from "./FilterElement";
 import { QueryApiType, QueryBuilder } from "./QueryBuilder";
 
@@ -51,15 +53,20 @@ export const createOrderQueryVariables = (value: FilterContainer): any => {
 export const createVoucherQueryVariables = (
   value: FilterContainer,
 ): { filters: VoucherFilterInput; channel: string | undefined } => {
-  const { topLevel, filters } = new QueryBuilder<VoucherQueryVars, "channel">(
+  const { filters, topLevel } = new QueryBuilder<VoucherQueryVars, "channel">(
     QueryApiType.FILTER,
     value,
     ["channel"],
+    // VoucherPage expects channel to be a slug, not id
+    new FilterDefinitionResolver([
+      new SlugChannelDefinition(),
+      ...FilterDefinitionResolver.getDefaultDefinitions(),
+    ]),
   ).build();
 
   return {
-    channel: topLevel.channel,
     filters,
+    channel: topLevel.channel,
   };
 };
 
