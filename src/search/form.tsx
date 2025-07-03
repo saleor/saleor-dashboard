@@ -1,6 +1,7 @@
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { Box, Switch, SwitchItemProps } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef } from "react";
+import { FormattedMessage } from "react-intl";
 
 const SwitchItem = ({ children, ...props }: SwitchItemProps) => {
   return (
@@ -45,25 +46,28 @@ export const SearchForm = ({
       <Box display="flex" justifyContent="flex-end">
         <Switch defaultValue={scope} onValueChange={onScopeChange}>
           <SwitchItem id="all" value="all">
-            All
+            <FormattedMessage id="zQvVDJ" defaultMessage="All" />
           </SwitchItem>
           <SwitchItem id="products" value="products">
-            Products
+            <FormattedMessage id="7NFfmz" defaultMessage="Products" />
+          </SwitchItem>
+          <SwitchItem id="variants" value="variants">
+            <FormattedMessage id="h5P++h" defaultMessage="Variants" />
           </SwitchItem>
           <SwitchItem id="orders" value="orders">
-            Orders
+            <FormattedMessage id="X7jl6w" defaultMessage="Orders" />
           </SwitchItem>
           <SwitchItem id="categories" value="categories">
-            Categories
+            <FormattedMessage id="VKb1MS" defaultMessage="Categories" />
           </SwitchItem>
           <SwitchItem id="collections" value="collections">
-            Collections
+            <FormattedMessage id="ulh3kf" defaultMessage="Collections" />
           </SwitchItem>
           <SwitchItem id="models" value="models">
-            Models
+            <FormattedMessage id="blWvag" defaultMessage="Models" />
           </SwitchItem>
           <SwitchItem id="model-types" value="model-types">
-            Models Types
+            <FormattedMessage id="GgvbdW" defaultMessage="Model types" />
           </SwitchItem>
         </Switch>
       </Box>

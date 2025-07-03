@@ -1,8 +1,17 @@
 import { gql } from "@apollo/client";
 
 export const globalSearch = gql`
-  query GlobalSearch($query: String!) {
-    orders(first: 5, filter: { search: $query }) {
+  query GlobalSearch(
+    $query: String!
+    $includeOrders: Boolean!
+    $includeCategories: Boolean!
+    $includeCollections: Boolean!
+    $includeProducts: Boolean!
+    $includeVariants: Boolean!
+    $includeModels: Boolean!
+    $includeModelTypes: Boolean!
+  ) {
+    orders(first: 5, filter: { search: $query }) @include(if: $includeOrders) {
       edges {
         node {
           id
@@ -19,7 +28,7 @@ export const globalSearch = gql`
       }
     }
 
-    categories(first: 5, filter: { search: $query }) {
+    categories(first: 5, filter: { search: $query }) @include(if: $includeCategories) {
       edges {
         node {
           id
@@ -36,7 +45,7 @@ export const globalSearch = gql`
       }
     }
 
-    collections(first: 5, filter: { search: $query }) {
+    collections(first: 5, filter: { search: $query }) @include(if: $includeCollections) {
       edges {
         node {
           id
@@ -52,7 +61,7 @@ export const globalSearch = gql`
       }
     }
 
-    products(first: 5, filter: { search: $query }) {
+    products(first: 5, filter: { search: $query }) @include(if: $includeProducts) {
       edges {
         node {
           id
@@ -69,7 +78,7 @@ export const globalSearch = gql`
       }
     }
 
-    productVariants(first: 5, filter: { search: $query }) {
+    productVariants(first: 5, filter: { search: $query }) @include(if: $includeVariants) {
       edges {
         node {
           id
@@ -91,7 +100,7 @@ export const globalSearch = gql`
       }
     }
 
-    models: pages(first: 5, filter: { search: $query }) {
+    models: pages(first: 5, filter: { search: $query }) @include(if: $includeModels) {
       edges {
         node {
           id
@@ -104,7 +113,7 @@ export const globalSearch = gql`
       }
     }
 
-    modelTypes: pageTypes(first: 5, filter: { search: $query }) {
+    modelTypes: pageTypes(first: 5, filter: { search: $query }) @include(if: $includeModelTypes) {
       edges {
         node {
           id

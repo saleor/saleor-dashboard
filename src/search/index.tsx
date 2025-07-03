@@ -33,7 +33,16 @@ const Component = () => {
   const { query, scope, changeQuery, changeScope } = useSearchCriteria();
   const { history, addToHistory, clearHistory } = useHistoryCriteria();
   const { data, loading } = useGlobalSearchQuery({
-    variables: { query },
+    variables: {
+      query,
+      includeOrders: ["orders", "all"].includes(scope),
+      includeCategories: ["categories", "all"].includes(scope),
+      includeCollections: ["collections", "all"].includes(scope),
+      includeProducts: ["products", "all"].includes(scope),
+      includeVariants: ["variants", "all"].includes(scope),
+      includeModels: ["models", "all"].includes(scope),
+      includeModelTypes: ["model-types", "all"].includes(scope),
+    },
     skip: !query,
   });
 

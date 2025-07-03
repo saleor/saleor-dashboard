@@ -3122,6 +3122,9 @@
   "Gg4+K7": {
     "string": "No Products"
   },
+  "GgvbdW": {
+    "string": "Model types"
+  },
   "GhSB79": {
     "context": "model status",
     "string": "Published"
@@ -4418,9 +4421,6 @@
   "OhdPS1": {
     "context": "amount of refunded money",
     "string": "Amount"
-  },
-  "OpYmID": {
-    "string": "Model Type"
   },
   "OrMr/k": {
     "context": "window title",
@@ -5843,6 +5843,9 @@
   "X7fqfM": {
     "context": "title",
     "string": "Reserved stock"
+  },
+  "X7jl6w": {
+    "string": "Orders"
   },
   "X8qjg3": {
     "context": "inactive",
@@ -9333,6 +9336,9 @@
     "context": "header",
     "string": "Unnamed Webhook Details"
   },
+  "sokfIy": {
+    "string": "No. of products: {count}"
+  },
   "stjHjY": {
     "context": "error message",
     "string": "Promo code already exists"
@@ -10385,6 +10391,9 @@
   "zQnYKn": {
     "context": "status section subtitle",
     "string": "Channel status"
+  },
+  "zQvVDJ": {
+    "string": "All"
   },
   "zR9Ozi": {
     "context": "select all channels label",

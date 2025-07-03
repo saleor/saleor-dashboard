@@ -15971,8 +15971,8 @@ export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQ
 export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
 export const GlobalSearchDocument = gql`
-    query GlobalSearch($query: String!) {
-  orders(first: 5, filter: {search: $query}) {
+    query GlobalSearch($query: String!, $includeOrders: Boolean!, $includeCategories: Boolean!, $includeCollections: Boolean!, $includeProducts: Boolean!, $includeVariants: Boolean!, $includeModels: Boolean!, $includeModelTypes: Boolean!) {
+  orders(first: 5, filter: {search: $query}) @include(if: $includeOrders) {
     edges {
       node {
         id
@@ -15988,7 +15988,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  categories(first: 5, filter: {search: $query}) {
+  categories(first: 5, filter: {search: $query}) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -16004,7 +16004,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  collections(first: 5, filter: {search: $query}) {
+  collections(first: 5, filter: {search: $query}) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -16019,7 +16019,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  products(first: 5, filter: {search: $query}) {
+  products(first: 5, filter: {search: $query}) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -16035,7 +16035,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  productVariants(first: 5, filter: {search: $query}) {
+  productVariants(first: 5, filter: {search: $query}) @include(if: $includeVariants) {
     edges {
       node {
         id
@@ -16056,7 +16056,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  models: pages(first: 5, filter: {search: $query}) {
+  models: pages(first: 5, filter: {search: $query}) @include(if: $includeModels) {
     edges {
       node {
         id
@@ -16068,7 +16068,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  modelTypes: pageTypes(first: 5, filter: {search: $query}) {
+  modelTypes: pageTypes(first: 5, filter: {search: $query}) @include(if: $includeModelTypes) {
     edges {
       node {
         id
@@ -16092,6 +16092,13 @@ export const GlobalSearchDocument = gql`
  * const { data, loading, error } = useGlobalSearchQuery({
  *   variables: {
  *      query: // value for 'query'
+ *      includeOrders: // value for 'includeOrders'
+ *      includeCategories: // value for 'includeCategories'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeVariants: // value for 'includeVariants'
+ *      includeModels: // value for 'includeModels'
+ *      includeModelTypes: // value for 'includeModelTypes'
  *   },
  * });
  */

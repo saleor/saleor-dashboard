@@ -1,8 +1,14 @@
+import { categoryUrl } from "@dashboard/categories/urls";
+import { collectionUrl } from "@dashboard/collections/urls";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
 import { getStatusColor, PillStatusType, transformOrderStatus } from "@dashboard/misc";
-import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
+import { pageUrl } from "@dashboard/modeling/urls";
+import { pageTypeUrl } from "@dashboard/modelTypes/urls";
+import { orderUrl } from "@dashboard/orders/urls";
+import { productUrl, productVariantEditPath } from "@dashboard/products/urls";
+import { Box, Skeleton, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 
@@ -23,15 +29,38 @@ const Row = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Thumbnail = ({ url, name }: { url: string; name: string }) => {
+  const [imageError, setImageError] = React.useState(false);
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
-    <Box padding={2} display="flex" alignItems="center" gap={2} height="100%">
-      {url ? (
-        <Box borderColor="default1" borderWidth={1} borderRadius={2} borderStyle="solid">
-          <Box as="img" src={url} alt={name} __width="31px" __height="31px" />
-        </Box>
-      ) : (
-        <EmptyImage />
-      )}
+    <Box display="flex" alignItems="center" gap={2} height="100%">
+      <Box borderColor="default1" borderWidth={1} borderRadius={2} borderStyle="solid">
+        {!imageError ? (
+          <>
+            <Box
+              as="img"
+              src={url}
+              alt={name}
+              __width="31px"
+              __height="31px"
+              display={imageLoaded ? "block" : "none"}
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+            />
+            {!imageLoaded && <Skeleton __width="31px" __height="31px" borderRadius={2} />}
+          </>
+        ) : (
+          <EmptyImage />
+        )}
+      </Box>
     </Box>
   );
 };
@@ -52,11 +81,11 @@ const LinkCell = ({ href, children }: { href: string; children: React.ReactNode 
   );
 };
 
-const TypeCell = ({ children }: { children: React.ReactNode }) => {
+const TypeCell = ({ children, href }: { children: React.ReactNode; href: string }) => {
   return (
     <GridTable.Cell __height="inherit" padding={0}>
-      <LinkCell href="/">
-        <Text paddingLeft={6} size={2} fontWeight="medium" color="default2">
+      <LinkCell href={href}>
+        <Text paddingLeft={6} paddingRight={3} size={2} fontWeight="medium" color="default2">
           {children}
         </Text>
       </LinkCell>
@@ -78,11 +107,11 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
 
     return (
       <Row>
-        <TypeCell>
+        <TypeCell href={orderUrl(node.id)}>
           <FormattedMessage id="XPruqs" defaultMessage="Order" />
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={orderUrl(node.id)}>
             <Box display="flex" alignItems="center" gap={1}>
               <Box
                 display="flex"
@@ -114,7 +143,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
           </LinkCell>
         </GridTable.Cell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={orderUrl(node.id)}>
             <DisplayDate date={node?.updatedAt} />
           </LinkCell>
         </GridTable.Cell>
@@ -125,11 +154,11 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   if (node.__typename === "Category") {
     return (
       <Row>
-        <TypeCell>
+        <TypeCell href={categoryUrl(node.id)}>
           <FormattedMessage id="ccXLVi" defaultMessage="Category" />
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={categoryUrl(node.id)}>
             <Box display="flex" alignItems="center" gap={1}>
               <Thumbnail url={node?.backgroundImage?.url} name={node?.name} />
               <Box
@@ -143,14 +172,18 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
                   {node?.name}
                 </Text>
                 <Text size={2} fontWeight="medium" color="default2">
-                  No. of products: {node?.products?.totalCount}
+                  <FormattedMessage
+                    id="sokfIy"
+                    defaultMessage=" No. of products: {count}"
+                    values={{ count: node?.products?.totalCount }}
+                  />
                 </Text>
               </Box>
             </Box>
           </LinkCell>
         </GridTable.Cell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={categoryUrl(node.id)}>
             <DisplayDate date={node?.updatedAt} />
           </LinkCell>
         </GridTable.Cell>
@@ -161,11 +194,11 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   if (node.__typename === "Collection") {
     return (
       <Row>
-        <TypeCell>
+        <TypeCell href={collectionUrl(node.id)}>
           <FormattedMessage id="phAZoj" defaultMessage="Collection" />
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={collectionUrl(node.id)}>
             <Box display="flex" alignItems="center" gap={1}>
               <Thumbnail url={node?.backgroundImage?.url} name={node?.name} />
               <Box
@@ -179,14 +212,18 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
                   {node?.name}
                 </Text>
                 <Text size={2} fontWeight="medium" color="default2">
-                  No. of products: {node?.products?.totalCount}
+                  <FormattedMessage
+                    id="sokfIy"
+                    defaultMessage=" No. of products: {count}"
+                    values={{ count: node?.products?.totalCount }}
+                  />
                 </Text>
               </Box>
             </Box>
           </LinkCell>
         </GridTable.Cell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">-</LinkCell>
+          <LinkCell href={collectionUrl(node.id)}>-</LinkCell>
         </GridTable.Cell>
       </Row>
     );
@@ -195,11 +232,11 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   if (node.__typename === "Product") {
     return (
       <Row>
-        <TypeCell>
+        <TypeCell href={productUrl(node.id)}>
           <FormattedMessage id="x/ZVlU" defaultMessage="Product" />
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={productUrl(node.id)}>
             <Box display="flex" alignItems="center" gap={1}>
               <Thumbnail url={node?.thumbnail?.url} name={node?.name} />
               <Box
@@ -220,7 +257,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
           </LinkCell>
         </GridTable.Cell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={productUrl(node.id)}>
             <DisplayDate date={node?.updatedAt} />
           </LinkCell>
         </GridTable.Cell>
@@ -231,11 +268,11 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   if (node.__typename === "ProductVariant") {
     return (
       <Row>
-        <TypeCell>
+        <TypeCell href={productVariantEditPath(node.product.id, node.id)}>
           <FormattedMessage id="OK5+Fh" defaultMessage="Variant" />
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={productVariantEditPath(node.product.id, node.id)}>
             <Box display="flex" alignItems="center" gap={1} width="100%">
               <Thumbnail url={node?.media?.[0]?.url} name={node?.name} />
               <Box
@@ -256,7 +293,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
           </LinkCell>
         </GridTable.Cell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={productVariantEditPath(node.product.id, node.id)}>
             <DisplayDate date={node?.updatedAt} />
           </LinkCell>
         </GridTable.Cell>
@@ -267,11 +304,11 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   if (node.__typename === "Page") {
     return (
       <Row>
-        <TypeCell>
+        <TypeCell href={pageUrl(node.id)}>
           <FormattedMessage id="rhSI1/" defaultMessage="Model" />
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={pageUrl(node.id)}>
             <Box display="flex" alignItems="center" gap={1} width="100%">
               <Box
                 display="flex"
@@ -291,7 +328,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
           </LinkCell>
         </GridTable.Cell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">
+          <LinkCell href={pageUrl(node.id)}>
             <DisplayDate date={node?.publishedAt} />
           </LinkCell>
         </GridTable.Cell>
@@ -302,11 +339,11 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   if (node.__typename === "PageType") {
     return (
       <Row>
-        <TypeCell>
-          <FormattedMessage id="OpYmID" defaultMessage="Model Type" />
+        <TypeCell href={pageTypeUrl(node.id)}>
+          <FormattedMessage id="9FCrIN" defaultMessage="Model type" />
         </TypeCell>
-        <GridTable.Cell padding={0}>
-          <LinkCell href="/">
+        <GridTable.Cell __height="inherit" padding={0}>
+          <LinkCell href={pageTypeUrl(node.id)}>
             <Box display="flex" alignItems="center" gap={1} width="100%">
               <Box
                 display="flex"
@@ -323,7 +360,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
           </LinkCell>
         </GridTable.Cell>
         <GridTable.Cell __height="inherit" padding={0}>
-          <LinkCell href="/">-</LinkCell>
+          <LinkCell href={pageTypeUrl(node.id)}>-</LinkCell>
         </GridTable.Cell>
       </Row>
     );
