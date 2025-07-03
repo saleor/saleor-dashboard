@@ -126,6 +126,12 @@ export function useMenuStructure() {
       label: intl.formatMessage(sectionNames.search),
       id: "search",
       url: "/search",
+      permissions: [
+        PermissionEnum.MANAGE_PRODUCTS,
+        PermissionEnum.MANAGE_PAGES,
+        PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+        PermissionEnum.MANAGE_ORDERS,
+      ],
       type: "item",
     },
     {

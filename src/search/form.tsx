@@ -1,7 +1,10 @@
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
+import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Switch, SwitchItemProps } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef } from "react";
 import { FormattedMessage } from "react-intl";
+
+import { useHasPermission } from "./useHasPermission";
 
 const SwitchItem = ({ children, ...props }: SwitchItemProps) => {
   return (
@@ -22,6 +25,7 @@ export const SearchForm = ({
   scope: string;
   query: string;
 }) => {
+  const hasPermission = useHasPermission();
   const inputSearchContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,27 +52,37 @@ export const SearchForm = ({
           <SwitchItem id="all" value="all">
             <FormattedMessage id="zQvVDJ" defaultMessage="All" />
           </SwitchItem>
-          <SwitchItem id="products" value="products">
-            <FormattedMessage id="7NFfmz" defaultMessage="Products" />
-          </SwitchItem>
-          <SwitchItem id="variants" value="variants">
-            <FormattedMessage id="h5P++h" defaultMessage="Variants" />
-          </SwitchItem>
-          <SwitchItem id="orders" value="orders">
-            <FormattedMessage id="X7jl6w" defaultMessage="Orders" />
-          </SwitchItem>
-          <SwitchItem id="categories" value="categories">
-            <FormattedMessage id="VKb1MS" defaultMessage="Categories" />
-          </SwitchItem>
-          <SwitchItem id="collections" value="collections">
-            <FormattedMessage id="ulh3kf" defaultMessage="Collections" />
-          </SwitchItem>
-          <SwitchItem id="models" value="models">
-            <FormattedMessage id="blWvag" defaultMessage="Models" />
-          </SwitchItem>
-          <SwitchItem id="model-types" value="model-types">
-            <FormattedMessage id="GgvbdW" defaultMessage="Model types" />
-          </SwitchItem>
+          {hasPermission(PermissionEnum.MANAGE_PRODUCTS) && (
+            <>
+              <SwitchItem id="products" value="products">
+                <FormattedMessage id="7NFfmz" defaultMessage="Products" />
+              </SwitchItem>
+              <SwitchItem id="variants" value="variants">
+                <FormattedMessage id="h5P++h" defaultMessage="Variants" />
+              </SwitchItem>
+              <SwitchItem id="categories" value="categories">
+                <FormattedMessage id="VKb1MS" defaultMessage="Categories" />
+              </SwitchItem>
+              <SwitchItem id="collections" value="collections">
+                <FormattedMessage id="ulh3kf" defaultMessage="Collections" />
+              </SwitchItem>
+            </>
+          )}
+          {hasPermission(PermissionEnum.MANAGE_ORDERS) && (
+            <SwitchItem id="orders" value="orders">
+              <FormattedMessage id="X7jl6w" defaultMessage="Orders" />
+            </SwitchItem>
+          )}
+          {hasPermission(PermissionEnum.MANAGE_PAGES) && (
+            <SwitchItem id="models" value="models">
+              <FormattedMessage id="blWvag" defaultMessage="Models" />
+            </SwitchItem>
+          )}
+          {hasPermission(PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES) && (
+            <SwitchItem id="model-types" value="model-types">
+              <FormattedMessage id="GgvbdW" defaultMessage="Model types" />
+            </SwitchItem>
+          )}
         </Switch>
       </Box>
     </Box>

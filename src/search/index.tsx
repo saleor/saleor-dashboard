@@ -11,37 +11,18 @@ import { ListSkeleton } from "./resultsTable/ListSkeleton";
 import { ResultsTable } from "./resultsTable/ResultsTable";
 import { SearchHistory } from "./SearchHistory";
 import { useHistoryCriteria } from "./useHistoryCriteria";
+import { useInclusionVariables } from "./useInclusionVariables";
 import { useSearchCriteria } from "./useSearchCriteria";
-
-/*
-- w kategoriach parenta dodac tak jak w produktach na edycji
-- dopracowac design wynikow
-- auto focus na input
-- usunac breadcrumb
-- historia wyszukiwania w LS (last 20)
-- persisted wybor taba w LS, ale GET moze to overridowac, ale nie zapisac
-- LS jest stanem tylko kiedy
-
-
-
-- dowiedziec sie jak dziala wyszukiwanie, po jakich polach i na jakich zasadach
-
-*/
 
 const Component = () => {
   const intl = useIntl();
   const { query, scope, changeQuery, changeScope } = useSearchCriteria();
   const { history, addToHistory, clearHistory } = useHistoryCriteria();
+  const inclusionVariables = useInclusionVariables(scope);
   const { data, loading } = useGlobalSearchQuery({
     variables: {
       query,
-      includeOrders: ["orders", "all"].includes(scope),
-      includeCategories: ["categories", "all"].includes(scope),
-      includeCollections: ["collections", "all"].includes(scope),
-      includeProducts: ["products", "all"].includes(scope),
-      includeVariants: ["variants", "all"].includes(scope),
-      includeModels: ["models", "all"].includes(scope),
-      includeModelTypes: ["model-types", "all"].includes(scope),
+      ...inclusionVariables,
     },
     skip: !query,
   });
