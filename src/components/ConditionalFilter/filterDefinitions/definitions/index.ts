@@ -1,7 +1,6 @@
 export { AttributeDefinition } from "./AttributeDefinition";
 export { AttributeTypeDefinition } from "./AttributeTypeDefinition";
 export { BaseMappableDefinition } from "./BaseMappableDefinition";
-export { ChannelSlugDefinition } from "./ChannelSlugDefinition";
 export { CollectionPublishedDefinition } from "./CollectionPublishedDefinition";
 export { CustomerNumberOfOrdersDefinition } from "./CustomerNumberOfOrdersDefinition";
 export { DefaultDefinition } from "./DefaultDefinition";

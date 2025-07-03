@@ -6,24 +6,23 @@ import {
   CollectionHandler,
   CustomerHandler,
   Handler,
-  PageHandler,
   PageTypesHandler,
   ProductsHandler,
   ProductTypeHandler,
 } from "../../API/Handler";
+import { STATIC_CONDITIONS } from "../../constants";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
 import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
 import { BothApiFilterDefinition, FilterQuery } from "../types";
 
-const SUPPORTED_STATIC_FIELDS = [
+const SUPPORTED_STATIC_FIELDS: Array<keyof typeof STATIC_CONDITIONS> = [
   "collection",
   "category",
   "productType",
   "channel",
-  "product",
-  "page",
-  "pageType",
+  "products",
+  "pageTypes",
   "customer",
 ];
 
@@ -31,7 +30,7 @@ type StaticWhereQueryPart = { eq: string } | { oneOf: string[] };
 
 export class StaticDefinition implements BothApiFilterDefinition<FilterQuery> {
   public canHandle(element: FilterElement): boolean {
-    return element.isStatic() && SUPPORTED_STATIC_FIELDS.includes(element.value.value);
+    return SUPPORTED_STATIC_FIELDS.includes(element.value.type as keyof typeof STATIC_CONDITIONS);
   }
 
   public createOptionFetcher(
@@ -39,7 +38,7 @@ export class StaticDefinition implements BothApiFilterDefinition<FilterQuery> {
     inputValue: string,
     element: FilterElement,
   ): Handler {
-    switch (element.value.value) {
+    switch (element.value.type as keyof typeof STATIC_CONDITIONS) {
       case "collection":
         return new CollectionHandler(client, inputValue);
       case "category":
@@ -48,11 +47,9 @@ export class StaticDefinition implements BothApiFilterDefinition<FilterQuery> {
         return new ProductTypeHandler(client, inputValue);
       case "channel":
         return new ChannelHandler(client, inputValue);
-      case "product":
+      case "products":
         return new ProductsHandler(client, inputValue);
-      case "page":
-        return new PageHandler(client, inputValue);
-      case "pageType":
+      case "pageTypes":
         return new PageTypesHandler(client, inputValue);
       case "customer":
         return new CustomerHandler(client, inputValue);

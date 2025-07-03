@@ -29,23 +29,23 @@ export class VoucherChannelDefinition extends BaseMappableDefinition {
     };
   }
 
-  protected getConditionValue(element: FilterElement, forWhere: boolean): unknown {
+  protected getConditionValue(element: FilterElement) {
     const { value: selectedValue } = element.condition.selected;
 
     if (isItemOption(selectedValue)) {
       const eq = selectedValue.slug;
 
-      return forWhere ? { eq } : eq;
+      return { eq };
     }
 
     if (isItemOptionArray(selectedValue)) {
       const oneOf = selectedValue.map(item => item.slug);
 
-      return forWhere ? { oneOf } : oneOf;
+      return { oneOf };
     }
 
     const eq = selectedValue;
 
-    return forWhere ? { eq } : eq;
+    return { eq };
   }
 }

@@ -6,7 +6,9 @@ import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionVa
 import { FilterOnlyFilterDefinition } from "../types";
 
 /** `voucherStatus` needs to be renamed to `status` in query - it's not supported in WHERE API */
-export class VoucherStatusDefinition implements FilterOnlyFilterDefinition<VoucherFilterInput> {
+export class VoucherStatusDefinition
+  implements FilterOnlyFilterDefinition<Pick<VoucherFilterInput, "status">>
+{
   canHandle(element: FilterElement): boolean {
     return element.value.value === "voucherStatus";
   }

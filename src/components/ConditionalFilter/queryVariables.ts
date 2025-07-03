@@ -16,8 +16,6 @@ import {
   VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { ChannelSlugDefinition } from "./filterDefinitions/definitions";
-import { FilterDefinitionResolver } from "./filterDefinitions/FilterDefinitionResolver";
 import { FilterContainer } from "./FilterElement";
 import { QueryApiType, QueryBuilder } from "./QueryBuilder";
 
@@ -28,22 +26,11 @@ type VoucherQueryVars = VoucherFilterInput & { channel?: string };
 type CollectionQueryVars = CollectionFilterInput & { channel?: string };
 export type OrderQueryVars = ProductQueryVars & { created?: DateTimeRangeInput | DateRangeInput };
 
-// Create a resolver with ChannelSlugDefinition for views that need channel slug handling
-const createChannelSlugResolver = () => {
-  const definitions = [
-    new ChannelSlugDefinition(),
-    ...FilterDefinitionResolver.getDefaultDefinitions(),
-  ];
-
-  return new FilterDefinitionResolver(definitions);
-};
-
 export const createProductQueryVariables = (value: FilterContainer): ProductQueryVars => {
   const { topLevel, filters } = new QueryBuilder<ProductQueryVars, "channel">(
     QueryApiType.WHERE,
     value,
     ["channel"],
-    createChannelSlugResolver(),
   ).build();
 
   return { ...filters, ...topLevel };
@@ -68,7 +55,6 @@ export const createVoucherQueryVariables = (
     QueryApiType.FILTER,
     value,
     ["channel"],
-    createChannelSlugResolver(),
   ).build();
 
   return {
@@ -108,7 +94,6 @@ export const createCollectionsQueryVariables = (
     QueryApiType.FILTER,
     value,
     ["channel"],
-    createChannelSlugResolver(),
   ).build();
 
   return {
