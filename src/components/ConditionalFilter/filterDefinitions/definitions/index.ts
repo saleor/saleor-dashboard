@@ -9,6 +9,5 @@ export { ProductTypeDefinition } from "./ProductTypeDefinition";
 export { StaffMemberStatusDefinition } from "./StaffMemberStatusDefinition";
 export { StaticBooleanDefinition } from "./StaticBooleanDefinition";
 export { StaticDefinition } from "./StaticDefinition";
-export { VoucherChannelDefinition } from "./VoucherChannelDefinition";
 export { VoucherStatusDefinition } from "./VoucherStatusDefinition";
 export { VoucherTimesUsedDefinition } from "./VoucherTimesUsedDefinition";

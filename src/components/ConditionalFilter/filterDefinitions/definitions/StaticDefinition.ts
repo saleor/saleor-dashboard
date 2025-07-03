@@ -28,6 +28,8 @@ const SUPPORTED_STATIC_FIELDS: Array<keyof typeof STATIC_CONDITIONS> = [
 
 type StaticWhereQueryPart = { eq: string } | { oneOf: string[] };
 
+/** Static definitions provide a list of chosable elements based on entity type (e.g. category)
+ * and return a list of selected entity IDs */
 export class StaticDefinition implements BothApiFilterDefinition<FilterQuery> {
   public canHandle(element: FilterElement): boolean {
     return SUPPORTED_STATIC_FIELDS.includes(element.value.type as keyof typeof STATIC_CONDITIONS);

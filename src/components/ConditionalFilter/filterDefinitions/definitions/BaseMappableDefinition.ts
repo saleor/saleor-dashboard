@@ -6,6 +6,9 @@ import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
 import { BothApiFilterDefinition, FilterQuery } from "../types";
 import { extractConditionValueFromFilterElement } from "../utils";
 
+/** This class is used when we need a simple rename from FilterElement value
+ * to different query variables
+ * For example: attributeType -> type */
 export abstract class BaseMappableDefinition<T extends FilterQuery = FilterQuery>
   implements BothApiFilterDefinition<T>
 {

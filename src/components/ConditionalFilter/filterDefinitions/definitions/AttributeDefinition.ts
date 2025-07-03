@@ -1,17 +1,8 @@
 import { ApolloClient } from "@apollo/client";
-import {
-  AttributeEntityTypeEnum,
-  AttributeInput,
-  AttributeInputTypeEnum,
-} from "@dashboard/graphql";
+import { AttributeInput, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { AttributeChoicesHandler, Handler, ProductsHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import {
-  ConditionValue,
-  isItemOption,
-  isItemOptionArray,
-} from "../../FilterElement/ConditionValue";
 import { WhereOnlyFilterDefinition } from "../types";
 import { extractConditionValueFromFilterElement, getBooleanValueFromElement } from "../utils";
 
