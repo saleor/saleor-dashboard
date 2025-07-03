@@ -5,13 +5,7 @@ import {
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
 
-import {
-  AttributeChoicesHandler,
-  Handler,
-  PageHandler,
-  ProductsHandler,
-  ProductVariantHandler,
-} from "../../API/Handler";
+import { AttributeChoicesHandler, Handler, ProductsHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import {
   ConditionValue,
@@ -33,18 +27,9 @@ export class AttributeDefinition
     inputValue: string,
     element: FilterElement,
   ): Handler {
-    const { entityType, value: id } = element.selectedAttribute || element.value;
+    const { value: id } = element.selectedAttribute || element.value;
 
-    switch (entityType) {
-      case AttributeEntityTypeEnum.PAGE:
-        return new PageHandler(client, inputValue);
-      case AttributeEntityTypeEnum.PRODUCT:
-        return new ProductsHandler(client, inputValue);
-      case AttributeEntityTypeEnum.PRODUCT_VARIANT:
-        return new ProductVariantHandler(client, inputValue);
-      default:
-        return new AttributeChoicesHandler(client, id, inputValue);
-    }
+    return new AttributeChoicesHandler(client, id, inputValue);
   }
 
   public updateWhereQuery(
@@ -73,16 +58,11 @@ export class AttributeDefinition
     }
 
     const baseAttribute = { slug: attributeSlug };
-    const { value, conditionValue } = element.condition.selected;
+    const { conditionValue } = element.condition.selected;
     const inputType = element.selectedAttribute?.type as AttributeInputTypeEnum;
 
     if (!conditionValue) {
       return baseAttribute;
-    }
-
-    // Handle reference type attributes
-    if (inputType === AttributeInputTypeEnum.REFERENCE) {
-      return this.buildReferenceAttribute(baseAttribute, value);
     }
 
     // Handle boolean type attributes
@@ -95,28 +75,6 @@ export class AttributeDefinition
 
     // Handle other types with condition values
     return this.buildConditionAttribute(baseAttribute, element, conditionValue.type);
-  }
-
-  private buildReferenceAttribute(
-    baseAttribute: AttributeInput,
-    value: ConditionValue,
-  ): AttributeInput {
-    if (isItemOption(value)) {
-      return { ...baseAttribute, valueNames: [value.label] };
-    }
-
-    if (isItemOptionArray(value)) {
-      if (value.length === 0) {
-        return baseAttribute;
-      }
-
-      return {
-        ...baseAttribute,
-        valueNames: value.map(item => item.label),
-      };
-    }
-
-    return baseAttribute;
   }
 
   private buildConditionAttribute(
