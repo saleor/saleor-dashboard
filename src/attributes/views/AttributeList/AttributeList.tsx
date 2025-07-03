@@ -4,7 +4,7 @@ import {
   storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { creatAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { createAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useFlag } from "@dashboard/featureFlags";
@@ -46,7 +46,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_LIST);
   const { enabled: isAttributesFilteringEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
-  const filters = creatAttributesQueryVariables(valueProvider.value);
+  const filters = createAttributesQueryVariables(valueProvider.value);
 
   usePaginationReset(attributeListUrl, params, settings.rowNumber);
 
