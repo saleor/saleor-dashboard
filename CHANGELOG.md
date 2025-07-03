@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.20.40
+
+### Patch Changes
+
+- 5832525: Update Saleor GraphQL schema to support XK (Kosovo).
+
 ## 3.20.39
 
 ### Patch Changes
