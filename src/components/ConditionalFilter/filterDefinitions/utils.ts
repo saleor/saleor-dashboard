@@ -64,7 +64,9 @@ function extractValuesFromOptionArray(value: ConditionValue): string[] {
 /**
  * Processes condition values for different condition types.
  */
-export const getConditionValue = (element: FilterElement): ProcessedConditionValue => {
+export const extractConditionValueFromFilterElement = (
+  element: FilterElement,
+): ProcessedConditionValue => {
   const { value: selectedValue, conditionValue } = element.condition.selected;
 
   if (!conditionValue) {
