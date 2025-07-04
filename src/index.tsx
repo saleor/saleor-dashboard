@@ -73,6 +73,7 @@ import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
+import SearchSection from "./search";
 import errorTracker from "./services/errorTracking";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
@@ -188,6 +189,11 @@ const Routes: React.FC = () => {
               <Switch>
                 {legacyRedirects}
                 <SectionRoute exact path="/" component={WelcomePage} />
+                <SectionRoute
+                  // permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  path="/search"
+                  component={SearchSection}
+                />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                   path="/categories"

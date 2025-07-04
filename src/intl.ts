@@ -426,6 +426,16 @@ export const sectionNames = defineMessages({
     defaultMessage: "Catalog",
     description: "catalog section name",
   },
+  search: {
+    id: "PeMebc",
+    defaultMessage: "Search",
+    description: "search section name",
+  },
+  allSearchResults: {
+    id: "a0TDWs",
+    defaultMessage: "All Search Results",
+    description: "search section name",
+  },
   modeling: {
     id: "NVp0fa",
     defaultMessage: "Modeling",

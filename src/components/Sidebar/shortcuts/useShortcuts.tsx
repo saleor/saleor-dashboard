@@ -19,25 +19,15 @@ export interface Shortcut {
 export const useShortcuts = (): Shortcut[] => {
   const intl = useIntl();
   const devContext = useDevModeContext();
-  const { setNavigatorVisibility } = useNavigatorSearchContext();
   const controlKey = getShortcutLeadingKey();
   const handleOpenPlayground = useCallback(() => {
     devContext.setDevModeContent("");
     devContext.setVariables("");
     devContext.setDevModeVisibility(true);
   }, []);
-  const handleOpenSearch = useCallback(() => {
-    setNavigatorVisibility(true);
-  }, []);
+
   const shortcuts = useMemo(
     () => [
-      {
-        id: "search",
-        name: intl.formatMessage(shortcutsMessages.search),
-        icon: <SearchIcon />,
-        shortcut: `${controlKey} + K`,
-        action: handleOpenSearch,
-      },
       {
         id: "playground",
         name: intl.formatMessage(shortcutsMessages.playground),

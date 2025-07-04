@@ -102,3 +102,18 @@ body {
 .simple-radio-group > button {
   min-width: 12px;
 }
+
+
+.global-search-history-clear-button {
+  color: var(--mu-colors-text-default1);
+  &:hover {
+    color: var(--mu-colors-text-default1-hovered);
+  }
+}
+
+.global-search-history-item {
+  color: var(--mu-colors-text-default2);
+  &:hover {
+    color: var(--mu-colors-text-default2-hovered);
+  }
+}
