@@ -25,6 +25,7 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   page,
 }) => {
   await appsPage.gotoInstalledExtensionsList();
+  await appsPage.addExtensionButton.click();
   await appsPage.installExternalAppButton.click();
   await appsPage.typeManifestUrl("https://klaviyo.saleor.app/api/manifest");
   await appsPage.installAppFromManifestButton.click();
