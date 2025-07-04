@@ -158,7 +158,7 @@ export const createOrderQueryVariables = (value: FilterContainer) => {
   }, {} as OrderQueryVars);
 };
 
-export const creatVoucherQueryVariables = (
+export const createVoucherQueryVariables = (
   value: FilterContainer,
 ): { filters: VoucherFilterInput; channel: string | undefined } => {
   let channel: string | undefined;
@@ -220,7 +220,7 @@ export const createPageQueryVariables = (value: FilterContainer): PageFilterInpu
   }, {} as PageFilterInput);
 };
 
-export const creatDraftOrderQueryVariables = (value: FilterContainer): OrderDraftFilterInput => {
+export const createDraftOrderQueryVariables = (value: FilterContainer): OrderDraftFilterInput => {
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 
@@ -354,7 +354,7 @@ export const createStaffMembersQueryVariables = (value: FilterContainer): StaffU
   }, {} as StaffUserInput);
 };
 
-export const creatAttributesQueryVariables = (value: FilterContainer): AttributeFilterInput => {
+export const createAttributesQueryVariables = (value: FilterContainer): AttributeFilterInput => {
   return value.reduce((p, c) => {
     if (typeof c === "string" || Array.isArray(c)) return p;
 

@@ -71,6 +71,7 @@ export const TokenType = {
   ATTRIBUTE_DATE_TIME: "t",
   ATTRIBUTE_DATE: "d",
   ATTRIBUTE_BOOLEAN: "b",
+  ATTRIBUTE_REFERENCE: "r",
   STATIC: "s",
 } as const;
 
@@ -101,6 +102,12 @@ export class UrlEntry {
   public static forAttribute(condition: ConditionSelected, paramName: string) {
     const inputType = getAttributeInputType(condition.conditionValue);
     const tokenSlug = resolveTokenType(inputType || "");
+
+    return UrlEntry.fromConditionSelected(condition, paramName, tokenSlug);
+  }
+
+  public static forReferenceAttribute(condition: ConditionSelected, paramName: string) {
+    const tokenSlug = resolveTokenType("REFERENCE");
 
     return UrlEntry.fromConditionSelected(condition, paramName, tokenSlug);
   }
@@ -162,7 +169,9 @@ export class UrlToken {
 
   public hasDynamicValues() {
     return (
-      TokenType.ATTRIBUTE_DROPDOWN === this.type || TokenType.ATTRIBUTE_MULTISELECT === this.type
+      TokenType.ATTRIBUTE_DROPDOWN === this.type ||
+      TokenType.ATTRIBUTE_MULTISELECT === this.type ||
+      TokenType.ATTRIBUTE_REFERENCE === this.type
     );
   }
 

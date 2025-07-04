@@ -33,6 +33,7 @@ TokenArray [
     "loading": false,
     "selectedAttribute": null,
     "value": ExpressionValue {
+      "entityType": null,
       "label": "Channel",
       "type": "channel",
       "value": "channel",
@@ -85,6 +86,7 @@ TokenArray [
     "loading": false,
     "selectedAttribute": null,
     "value": ExpressionValue {
+      "entityType": null,
       "label": "Price",
       "type": "price",
       "value": "price",
@@ -135,6 +137,7 @@ TokenArray [
     "loading": false,
     "selectedAttribute": null,
     "value": ExpressionValue {
+      "entityType": null,
       "label": "Channel",
       "type": "channel",
       "value": "channel",

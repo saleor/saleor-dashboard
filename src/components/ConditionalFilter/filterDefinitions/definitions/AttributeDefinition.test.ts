@@ -1,7 +1,12 @@
 import { ApolloClient } from "@apollo/client";
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
+import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { AttributeChoicesHandler } from "../../API/Handler";
+import {
+  AttributeChoicesHandler,
+  PageHandler,
+  ProductsHandler,
+  ProductVariantHandler,
+} from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
@@ -40,12 +45,85 @@ describe("AttributeDefinition", () => {
   describe("createOptionFetcher", () => {
     const client = {} as ApolloClient<unknown>;
     const inputValue = "test";
+    const baseAttribute = new ExpressionValue(
+      "attr-slug",
+      "Attr",
+      AttributeInputTypeEnum.REFERENCE,
+      AttributeEntityTypeEnum.PAGE,
+    );
     const baseElement = new FilterElement(
       new ExpressionValue("attribute", "Attribute", "attribute"),
       Condition.createEmpty(),
       false,
       undefined,
+      baseAttribute,
     );
+
+    it("should create PageHandler for REFERENCE attributes with PAGE entity type", () => {
+      // Arrange
+      const element = new FilterElement(
+        baseElement.value,
+        baseElement.condition,
+        false,
+        undefined,
+        new ExpressionValue(
+          "attr-slug",
+          "Attr",
+          AttributeInputTypeEnum.REFERENCE,
+          AttributeEntityTypeEnum.PAGE,
+        ),
+      );
+      const def = new AttributeDefinition();
+      // Act
+      const handler = def.createOptionFetcher(client, inputValue, element);
+
+      // Assert
+      expect(handler).toBeInstanceOf(PageHandler);
+    });
+
+    it("should create ProductsHandler for REFERENCE attributes with PRODUCT entity type", () => {
+      // Arrange
+      const element = new FilterElement(
+        baseElement.value,
+        baseElement.condition,
+        false,
+        undefined,
+        new ExpressionValue(
+          "attr-slug",
+          "Attr",
+          AttributeInputTypeEnum.REFERENCE,
+          AttributeEntityTypeEnum.PRODUCT,
+        ),
+      );
+      const def = new AttributeDefinition();
+      // Act
+      const handler = def.createOptionFetcher(client, inputValue, element);
+
+      // Assert
+      expect(handler).toBeInstanceOf(ProductsHandler);
+    });
+
+    it("should create ProductVariantHandler for REFERENCE attributes with PRODUCT_VARIANT entity type", () => {
+      // Arrange
+      const element = new FilterElement(
+        baseElement.value,
+        baseElement.condition,
+        false,
+        undefined,
+        new ExpressionValue(
+          "attr-slug",
+          "Attr",
+          AttributeInputTypeEnum.REFERENCE,
+          AttributeEntityTypeEnum.PRODUCT_VARIANT,
+        ),
+      );
+      const def = new AttributeDefinition();
+      // Act
+      const handler = def.createOptionFetcher(client, inputValue, element);
+
+      // Assert
+      expect(handler).toBeInstanceOf(ProductVariantHandler);
+    });
 
     it("should create AttributeChoicesHandler for other attribute types", () => {
       // Arrange
@@ -54,7 +132,7 @@ describe("AttributeDefinition", () => {
         baseElement.condition,
         false,
         undefined,
-        new ExpressionValue("attr-slug", "Attr", AttributeInputTypeEnum.DROPDOWN),
+        new ExpressionValue("attr-slug", "Attr", AttributeInputTypeEnum.DROPDOWN, null),
       );
       const def = new AttributeDefinition();
       // Act
@@ -93,6 +171,34 @@ describe("AttributeDefinition", () => {
       false,
     );
 
+    it("should correctly build query for REFERENCE attributes", () => {
+      // Arrange
+      const attributeSlug = "ref-attr";
+      const pageLabel = "Page 1";
+      const selectedAttribute = new ExpressionValue(
+        attributeSlug,
+        "RefAttr",
+        AttributeInputTypeEnum.REFERENCE,
+        AttributeEntityTypeEnum.PAGE,
+      );
+      const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, {
+        label: pageLabel,
+        value: "page-1",
+        slug: "page-1",
+      });
+      const condition = new Condition(
+        ConditionOptions.fromName(AttributeInputTypeEnum.REFERENCE),
+        selected,
+        false,
+      );
+      const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
+      // Act
+      const result = def.updateWhereQuery({}, element);
+
+      // Assert
+      expect(result).toEqual({ attributes: [{ slug: attributeSlug, valueNames: [pageLabel] }] });
+    });
+
     it("should correctly build query for DROPDOWN/MULTISELECT attributes", () => {
       // Arrange
       const attributeSlug = "dropdown-attr";
@@ -101,6 +207,7 @@ describe("AttributeDefinition", () => {
         attributeSlug,
         "DropdownAttr",
         AttributeInputTypeEnum.DROPDOWN,
+        null,
       );
       const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, {
         label: "Option 1",
@@ -127,6 +234,7 @@ describe("AttributeDefinition", () => {
         attributeSlug,
         "NumericAttr",
         AttributeInputTypeEnum.NUMERIC,
+        null,
       );
       const rangeConditionItem: ConditionItem = {
         type: "number.range",
@@ -161,6 +269,7 @@ describe("AttributeDefinition", () => {
         attributeSlug,
         "DateAttr",
         AttributeInputTypeEnum.DATE,
+        null,
       );
       const rangeConditionItem: ConditionItem = {
         type: "date.range",
@@ -195,6 +304,7 @@ describe("AttributeDefinition", () => {
         attributeSlug,
         "DatetimeAttr",
         AttributeInputTypeEnum.DATE_TIME,
+        null,
       );
       const rangeConditionItem: ConditionItem = {
         type: "datetime.range",
@@ -228,6 +338,7 @@ describe("AttributeDefinition", () => {
         attributeSlug,
         "BoolAttr",
         AttributeInputTypeEnum.BOOLEAN,
+        null,
       );
       const boolConditionItem: ConditionItem = { type: "select", label: "is", value: "input-5" };
       const selected = ConditionSelected.fromConditionItemAndValue(boolConditionItem, {
