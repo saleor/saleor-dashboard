@@ -24,7 +24,7 @@ test("TC: SALEOR_10 User should be able to navigate to extensions list as a staf
     state: "visible",
     timeout: 30000,
   });
-  await extensionsPage.addExtensionButton.click();
+  await extensionsPage.addExtensionsOpenDropdownButton.click();
   await expect(extensionsPage.exploreExtensionsOption).toBeVisible();
   await expect(extensionsPage.installCustomExtensionOption).toBeVisible();
   await expect(extensionsPage.addCustomExtensionOption).toBeVisible();
@@ -34,11 +34,8 @@ test("TC: SALEOR_10 User should be able to navigate to extensions list as a staf
 test("TC: SALEOR_131 User with MANAGE_APPS permission can install apps but not plugins on explore extensions page #e2e", async ({
   page,
 }) => {
-  // Arrange
-  const mainMenuPage = new MainMenuPage(page);
-  const extensionsPage = new ExtensionsPage(page);
-
-  await page.goto("/");
+  await home.goto();
+  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
   await mainMenuPage.openExploreExtensions();
   await extensionsPage.waitForContentLoad();
 
