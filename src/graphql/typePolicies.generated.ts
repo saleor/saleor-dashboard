@@ -674,7 +674,7 @@ export type AttributeUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AttributeValueKeySpecifier = ('boolean' | 'date' | 'dateTime' | 'externalReference' | 'file' | 'id' | 'inputType' | 'name' | 'plainText' | 'reference' | 'richText' | 'slug' | 'translation' | 'value' | AttributeValueKeySpecifier)[];
+export type AttributeValueKeySpecifier = ('boolean' | 'date' | 'dateTime' | 'externalReference' | 'file' | 'id' | 'inputType' | 'name' | 'plainText' | 'reference' | 'referencedObject' | 'richText' | 'slug' | 'translation' | 'value' | AttributeValueKeySpecifier)[];
 export type AttributeValueFieldPolicy = {
 	boolean?: FieldPolicy<any> | FieldReadFunction<any>,
 	date?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -686,6 +686,7 @@ export type AttributeValueFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	plainText?: FieldPolicy<any> | FieldReadFunction<any>,
 	reference?: FieldPolicy<any> | FieldReadFunction<any>,
+	referencedObject?: FieldPolicy<any> | FieldReadFunction<any>,
 	richText?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>,
