@@ -7,13 +7,7 @@ const defaultProps = {
   __minWidth: "40px",
 };
 
-export const NavigatorThumbnail = ({
-  src,
-  alt,
-}: {
-  src: string | undefined;
-  alt: string | undefined;
-}) => {
+export const Thumbnail = ({ src, alt }: { src: string | undefined; alt: string | undefined }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false || !src);
 
