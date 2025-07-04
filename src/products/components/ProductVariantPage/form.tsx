@@ -25,6 +25,8 @@ import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
   ProductErrorWithAttributesFragment,
   ProductVariantFragment,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchProductsQuery,
 } from "@dashboard/graphql";
@@ -98,6 +100,8 @@ export interface UseProductVariantUpdateFormOpts {
   currentChannels: ChannelPriceAndPreorderData[];
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -319,6 +323,8 @@ function useProductVariantUpdateForm(
       attributesWithNewFileValue.data,
       opts.referencePages,
       opts.referenceProducts,
+      opts.referenceCollections,
+      opts.referenceCategories,
     ),
     channelListings: channels.data,
     stocks: stocks.data,

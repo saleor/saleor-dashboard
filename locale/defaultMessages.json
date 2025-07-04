@@ -2434,6 +2434,10 @@
     "context": "custom app name",
     "string": "Extension Name"
   },
+  "Crn8DZ": {
+    "context": "collection attribute entity type",
+    "string": "Collections"
+  },
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
@@ -3838,6 +3842,10 @@
   "Kyyr7D": {
     "context": "dialog header",
     "string": "Unassign Variant From Sale"
+  },
+  "KzgcFV": {
+    "context": "category attribute entity type",
+    "string": "Categories"
   },
   "L/O4LQ": {
     "context": "order refund amount",

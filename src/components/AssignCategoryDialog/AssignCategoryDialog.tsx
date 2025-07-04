@@ -1,14 +1,18 @@
 // @ts-strict-ignore
-import { CategoryWithTotalProductsFragment } from "@dashboard/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
 import { messages } from "./messages";
 
+type Categories = {
+  id: string;
+  name: string;
+}[];
+
 interface AssignCategoryDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
-  categories: CategoryWithTotalProductsFragment[];
+  categories: Categories | null;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 

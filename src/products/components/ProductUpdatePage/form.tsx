@@ -174,6 +174,8 @@ export function useProductUpdateForm(
       attributesWithNewFileValue.data,
       opts.referencePages,
       opts.referenceProducts,
+      opts.referenceCollections,
+      opts.referenceCategories,
     ),
     channels,
     description: null,
