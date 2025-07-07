@@ -1,10 +1,10 @@
-import { Condition, FilterElement } from "../FilterElement";
-import { ExpressionValue } from "../FilterElement/FilterElement";
-import { AttributeDefinition } from "./definitions/AttributeDefinition";
-import { DefaultDefinition } from "./definitions/DefaultDefinition";
-import { StaticBooleanDefinition } from "./definitions/StaticBooleanDefinition";
-import { StaticDefinition } from "./definitions/StaticDefinition";
-import { FilterDefinitionResolver } from "./FilterDefinitionResolver";
+import { Condition, FilterElement } from "../../FilterElement";
+import { ExpressionValue } from "../../FilterElement/FilterElement";
+import { AttributeDefinition } from "./definitions";
+import { DefaultQueryVarsBuilder } from "./definitions/DefaultQueryVarsBuilder";
+import { StaticBooleanQueryVarsBuilder } from "./definitions/StaticBooleanQueryVarsBuilder";
+import { StaticQueryVarsBuilder } from "./definitions/StaticQueryVarsBuilder";
+import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 
 // Helper to create a mock FilterDefinition with required methods
 function createMockDefinition(canHandleImpl: (element: FilterElement) => boolean) {
@@ -20,24 +20,24 @@ describe("FilterDefinitionResolver", () => {
   describe("getDefaultDefinitions", () => {
     it("should have DefaultDefinition as the last item", () => {
       // Arrange & Act
-      const defs = FilterDefinitionResolver.getDefaultDefinitions();
+      const defs = FilterQueryVarsBuilderResolver.getDefaultDefinitions();
 
       // Assert
-      expect(defs[defs.length - 1]).toBeInstanceOf(DefaultDefinition);
+      expect(defs[defs.length - 1]).toBeInstanceOf(DefaultQueryVarsBuilder);
     });
   });
 
   describe("getDefaultResolver", () => {
     it("should create resolver with default definitions", () => {
       // Arrange & Act
-      const resolver = FilterDefinitionResolver.getDefaultResolver();
+      const resolver = FilterQueryVarsBuilderResolver.getDefaultResolver();
 
       // Assert
-      expect(resolver).toBeInstanceOf(FilterDefinitionResolver);
+      expect(resolver).toBeInstanceOf(FilterQueryVarsBuilderResolver);
 
       const defs = resolver["definitions"];
 
-      expect(defs).toEqual(FilterDefinitionResolver.getDefaultDefinitions());
+      expect(defs).toEqual(FilterQueryVarsBuilderResolver.getDefaultDefinitions());
     });
   });
 
@@ -49,9 +49,9 @@ describe("FilterDefinitionResolver", () => {
         Condition.createEmpty(),
         false,
       );
-      const resolver = new FilterDefinitionResolver([
+      const resolver = new FilterQueryVarsBuilderResolver([
         new AttributeDefinition(),
-        new DefaultDefinition(),
+        new DefaultQueryVarsBuilder(),
       ]);
       // Act
       const def = resolver.resolve(element);
@@ -63,15 +63,15 @@ describe("FilterDefinitionResolver", () => {
     it("should resolve StaticDefinition for supported static elements", () => {
       // Arrange
       const element = FilterElement.createStaticBySlug("category");
-      const resolver = new FilterDefinitionResolver([
-        new StaticDefinition(),
-        new DefaultDefinition(),
+      const resolver = new FilterQueryVarsBuilderResolver([
+        new StaticQueryVarsBuilder(),
+        new DefaultQueryVarsBuilder(),
       ]);
       // Act
       const def = resolver.resolve(element);
 
       // Assert
-      expect(def).toBeInstanceOf(StaticDefinition);
+      expect(def).toBeInstanceOf(StaticQueryVarsBuilder);
     });
 
     it("should resolve StaticBooleanDefinition for boolean static elements", () => {
@@ -81,15 +81,15 @@ describe("FilterDefinitionResolver", () => {
         Condition.createEmpty(),
         false,
       );
-      const resolver = new FilterDefinitionResolver([
-        new StaticBooleanDefinition(),
-        new DefaultDefinition(),
+      const resolver = new FilterQueryVarsBuilderResolver([
+        new StaticBooleanQueryVarsBuilder(),
+        new DefaultQueryVarsBuilder(),
       ]);
       // Act
       const def = resolver.resolve(element);
 
       // Assert
-      expect(def).toBeInstanceOf(StaticBooleanDefinition);
+      expect(def).toBeInstanceOf(StaticBooleanQueryVarsBuilder);
     });
 
     it("should resolve DefaultDefinition when no specific definition matches", () => {
@@ -99,12 +99,12 @@ describe("FilterDefinitionResolver", () => {
         Condition.createEmpty(),
         false,
       );
-      const resolver = new FilterDefinitionResolver([new DefaultDefinition()]);
+      const resolver = new FilterQueryVarsBuilderResolver([new DefaultQueryVarsBuilder()]);
       // Act
       const def = resolver.resolve(element);
 
       // Assert
-      expect(def).toBeInstanceOf(DefaultDefinition);
+      expect(def).toBeInstanceOf(DefaultQueryVarsBuilder);
     });
 
     it("should respect definition order (first match wins)", () => {
@@ -112,7 +112,7 @@ describe("FilterDefinitionResolver", () => {
       const element = FilterElement.createStaticBySlug("category");
       const defA = createMockDefinition(() => true);
       const defB = createMockDefinition(() => true);
-      const resolver = new FilterDefinitionResolver([defA, defB]);
+      const resolver = new FilterQueryVarsBuilderResolver([defA, defB]);
       // Act
       const def = resolver.resolve(element);
 
@@ -127,7 +127,7 @@ describe("FilterDefinitionResolver", () => {
       const element = FilterElement.createStaticBySlug("category");
       const defA = createMockDefinition(() => false);
       const defB = createMockDefinition(() => true);
-      const resolver = new FilterDefinitionResolver([defA, defB]);
+      const resolver = new FilterQueryVarsBuilderResolver([defA, defB]);
       // Act
       const def = resolver.resolve(element);
 
@@ -144,7 +144,7 @@ describe("FilterDefinitionResolver", () => {
         Condition.createEmpty(),
         false,
       );
-      const resolver = new FilterDefinitionResolver([]);
+      const resolver = new FilterQueryVarsBuilderResolver([]);
 
       // Act & Assert
       expect(() => resolver.resolve(element)).toThrow(

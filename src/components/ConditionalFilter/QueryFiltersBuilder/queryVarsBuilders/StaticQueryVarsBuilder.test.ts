@@ -12,11 +12,11 @@ import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOp
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ItemOption } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { StaticDefinition } from "./StaticDefinition";
+import { StaticQueryVarsBuilder } from "./StaticQueryVarsBuilder";
 
 const mockClient = {} as any;
 
-describe("StaticDefinition", () => {
+describe("StaticQueryVarsBuilder", () => {
   describe("canHandle", () => {
     it.each([
       "collection",
@@ -31,7 +31,7 @@ describe("StaticDefinition", () => {
       const value = new ExpressionValue(field, field, field);
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new StaticDefinition();
+      const def = new StaticQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -41,7 +41,7 @@ describe("StaticDefinition", () => {
 
     it("should return false for unsupported static elements", () => {
       // Arrange
-      const def = new StaticDefinition();
+      const def = new StaticQueryVarsBuilder();
       const value = new ExpressionValue("unsupported", "Unsupported", "unsupported");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
@@ -54,7 +54,7 @@ describe("StaticDefinition", () => {
 
     it("should return false for non-static elements", () => {
       // Arrange
-      const def = new StaticDefinition();
+      const def = new StaticQueryVarsBuilder();
       const value = new ExpressionValue("collection", "Collection", "notstatic");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
@@ -69,7 +69,7 @@ describe("StaticDefinition", () => {
   describe("createOptionFetcher", () => {
     it("should create the correct handler for each supported field type", () => {
       // Arrange
-      const def = new StaticDefinition();
+      const def = new StaticQueryVarsBuilder();
       const supportedFields = [
         ["collection", CollectionHandler],
         ["category", CategoryHandler],
@@ -93,7 +93,7 @@ describe("StaticDefinition", () => {
     });
     it("should throw an error for unsupported static element types", () => {
       // Arrange
-      const def = new StaticDefinition();
+      const def = new StaticQueryVarsBuilder();
       const value = new ExpressionValue("unsupported", "Unsupported", "unsupported");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
@@ -106,7 +106,7 @@ describe("StaticDefinition", () => {
   });
 
   describe("updateWhereQuery", () => {
-    const def = new StaticDefinition();
+    const def = new StaticQueryVarsBuilder();
     const value = new ExpressionValue("collection", "Collection", "collection");
     const options = ConditionOptions.fromName("collection");
     const conditionItem: ConditionItem = { type: "multiselect", label: "in", value: "input-4" };
@@ -169,7 +169,7 @@ describe("StaticDefinition", () => {
   });
 
   describe("updateFilterQuery", () => {
-    const def = new StaticDefinition();
+    const def = new StaticQueryVarsBuilder();
     const value = new ExpressionValue("collection", "Collection", "collection");
     const options = ConditionOptions.fromName("collection");
     const conditionItem: ConditionItem = { type: "multiselect", label: "in", value: "input-4" };

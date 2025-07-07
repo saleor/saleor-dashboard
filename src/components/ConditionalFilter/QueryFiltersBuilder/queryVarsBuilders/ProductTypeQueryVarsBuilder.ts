@@ -1,9 +1,9 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { BaseMappableDefinition } from "./BaseMappableDefinition";
+import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
 /** `typeOfProduct` needs to be renamed to `productType` in query */
-export class ProductTypeDefinition extends BaseMappableDefinition {
+export class ProductTypeQueryVarsBuilder extends BaseMappableQueryVarsBuilder {
   protected readonly queryField = "productType";
 
   public canHandle(element: FilterElement): boolean {

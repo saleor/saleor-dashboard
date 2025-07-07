@@ -6,16 +6,16 @@ import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { AttributeDefinition } from "./AttributeDefinition";
+import { AttributeQueryVarsBuilder } from "./AttributeQueryVarsBuilder";
 
-describe("AttributeDefinition", () => {
+describe("AttributeQueryVarsBuilder", () => {
   describe("canHandle", () => {
     it("should return true for elements with rowType 'attribute'", () => {
       // Arrange
       const value = new ExpressionValue("attribute", "Attribute", "attribute");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new AttributeDefinition();
+      const def = new AttributeQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -28,7 +28,7 @@ describe("AttributeDefinition", () => {
       const value = new ExpressionValue("not-attribute", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new AttributeDefinition();
+      const def = new AttributeQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -56,7 +56,7 @@ describe("AttributeDefinition", () => {
         undefined,
         new ExpressionValue("attr-slug", "Attr", AttributeInputTypeEnum.DROPDOWN),
       );
-      const def = new AttributeDefinition();
+      const def = new AttributeQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher(client, inputValue, element);
 
@@ -73,7 +73,7 @@ describe("AttributeDefinition", () => {
         undefined,
         null,
       );
-      const def = new AttributeDefinition();
+      const def = new AttributeQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher(client, inputValue, element);
 
@@ -83,7 +83,7 @@ describe("AttributeDefinition", () => {
   });
 
   describe("updateWhereQuery", () => {
-    const def = new AttributeDefinition();
+    const def = new AttributeQueryVarsBuilder();
     const baseValue = new ExpressionValue("attribute", "Attribute", "attribute");
     const baseConditionItem: ConditionItem = { type: "multiselect", label: "in", value: "input-2" };
     const baseSelected = ConditionSelected.fromConditionItem(baseConditionItem);

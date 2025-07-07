@@ -2,10 +2,10 @@ import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { BooleanValuesHandler, Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { BothApiFilterDefinition, FilterQuery } from "../types";
-import { getBooleanValueFromElement } from "../utils";
+import { QueryVarsBuilderUtils } from "../utils";
+import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
 
-export class StaticBooleanDefinition implements BothApiFilterDefinition<FilterQuery> {
+export class StaticBooleanQueryVarsBuilder implements BothApiQueryVarsBuilder<FilterQuery> {
   canHandle(element: FilterElement): boolean {
     return [
       "isPublished",
@@ -37,7 +37,7 @@ export class StaticBooleanDefinition implements BothApiFilterDefinition<FilterQu
 
   updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const fieldName = element.value.value;
-    const booleanValue = getBooleanValueFromElement(element);
+    const booleanValue = QueryVarsBuilderUtils.getBooleanValueFromElement(element);
 
     return { ...query, [fieldName]: booleanValue };
   }

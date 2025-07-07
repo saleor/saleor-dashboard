@@ -1,11 +1,11 @@
-import { Condition } from "../FilterElement/Condition";
-import { ConditionOptions } from "../FilterElement/ConditionOptions";
-import { ConditionSelected } from "../FilterElement/ConditionSelected";
-import { ItemOption } from "../FilterElement/ConditionValue";
-import { ExpressionValue, FilterElement } from "../FilterElement/FilterElement";
-import { extractConditionValueFromFilterElement, getBooleanValueFromElement } from "./utils";
+import { Condition } from "../../FilterElement/Condition";
+import { ConditionOptions } from "../../FilterElement/ConditionOptions";
+import { ConditionSelected } from "../../FilterElement/ConditionSelected";
+import { ItemOption } from "../../FilterElement/ConditionValue";
+import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
+import { QueryVarsBuilderUtils } from "../utils";
 
-describe("ConditionalFilter / filterDefinitions / utils", () => {
+describe("QueryVarsBuilderUtils", () => {
   describe("getBooleanValueFromElement", () => {
     it("should extract boolean value from ItemOption with 'true' value", () => {
       const itemOption: ItemOption = { label: "Yes", value: "true", slug: "true" };
@@ -18,7 +18,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         false,
       );
 
-      expect(getBooleanValueFromElement(element)).toBe(true);
+      expect(QueryVarsBuilderUtils.getBooleanValueFromElement(element)).toBe(true);
     });
     it("should extract boolean value from ItemOption with 'false' value", () => {
       const itemOption: ItemOption = { label: "No", value: "false", slug: "false" };
@@ -31,7 +31,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         false,
       );
 
-      expect(getBooleanValueFromElement(element)).toBe(false);
+      expect(QueryVarsBuilderUtils.getBooleanValueFromElement(element)).toBe(false);
     });
     it("should extract boolean value from direct boolean true", () => {
       const conditionItem = { type: "select", label: "is", value: "input-1" };
@@ -43,7 +43,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         false,
       );
 
-      expect(getBooleanValueFromElement(element)).toBe(true);
+      expect(QueryVarsBuilderUtils.getBooleanValueFromElement(element)).toBe(true);
     });
     it("should extract boolean value from direct boolean false", () => {
       const conditionItem = { type: "select", label: "is", value: "input-1" };
@@ -55,7 +55,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         false,
       );
 
-      expect(getBooleanValueFromElement(element)).toBe(false);
+      expect(QueryVarsBuilderUtils.getBooleanValueFromElement(element)).toBe(false);
     });
     it("should handle edge case with non-boolean strings", () => {
       const conditionItem = { type: "select", label: "is", value: "input-1" };
@@ -67,11 +67,11 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         false,
       );
 
-      expect(getBooleanValueFromElement(element)).toBe(false);
+      expect(QueryVarsBuilderUtils.getBooleanValueFromElement(element)).toBe(false);
     });
   });
 
-  describe("extractConditionValueFromFilterElement", () => {
+  describe("QueryVarsBuilderUtils.extractConditionValueFromFilterElement", () => {
     describe("range conditions", () => {
       it("should process 'lower' condition into a range object with lte", () => {
         const conditionItem = { type: "number", label: "lower", value: "input-2" };
@@ -83,7 +83,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ range: { lte: "10" } });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          range: { lte: "10" },
+        });
       });
       it("should process 'greater' condition into a range object with gte", () => {
         const conditionItem = { type: "number", label: "greater", value: "input-3" };
@@ -95,7 +97,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ range: { gte: "5" } });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          range: { gte: "5" },
+        });
       });
       it("should process 'between' condition with tuple into a range object", () => {
         const conditionItem = { type: "number.range", label: "between", value: "input-4" };
@@ -107,7 +111,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
           range: { gte: "1", lte: "10" },
         });
       });
@@ -125,7 +129,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toBe(true);
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toBe(true);
       });
       it("should process ItemOption with 'false' value", () => {
         const itemOption: ItemOption = { label: "No", value: "false", slug: "false" };
@@ -138,7 +142,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toBe(false);
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toBe(false);
       });
     });
 
@@ -159,7 +163,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ eq: "orig-foo" });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          eq: "orig-foo",
+        });
       });
       it("should process single ItemOption into an 'eq' object using value when originalSlug is not available", () => {
         const itemOption: ItemOption = { label: "Foo", value: "foo", slug: "foo" };
@@ -172,7 +178,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ eq: "foo" });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          eq: "foo",
+        });
       });
       it("should process single string into an 'eq' object", () => {
         const conditionItem = { type: "combobox", label: "is", value: "input-1" };
@@ -184,7 +192,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ eq: "foo" });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          eq: "foo",
+        });
       });
     });
 
@@ -214,7 +224,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
           oneOf: ["orig-foo", "orig-bar"],
         });
       });
@@ -233,7 +243,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ oneOf: ["foo", "bar"] });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          oneOf: ["foo", "bar"],
+        });
       });
       it("should process string array into an 'oneOf' object", () => {
         const conditionItem = { type: "multiselect", label: "in", value: "input-2" };
@@ -245,7 +257,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ oneOf: ["foo", "bar"] });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          oneOf: ["foo", "bar"],
+        });
       });
     });
 
@@ -259,7 +273,7 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
           false,
         );
 
-        expect(extractConditionValueFromFilterElement(element)).toBe("");
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toBe("");
       });
       it("should handle unknown condition labels gracefully", () => {
         const conditionItem = { type: "combobox", label: "unknown", value: "input-1" };
@@ -272,7 +286,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         );
 
         // Should fallback to eq for string
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ eq: "foo" });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          eq: "foo",
+        });
       });
       it("should handle malformed tuple values", () => {
         const conditionItem = { type: "number.range", label: "between", value: "input-4" };
@@ -286,7 +302,9 @@ describe("ConditionalFilter / filterDefinitions / utils", () => {
         );
 
         // Should fallback to returning a oneOf object for string arrays
-        expect(extractConditionValueFromFilterElement(element)).toEqual({ oneOf: ["1"] });
+        expect(QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element)).toEqual({
+          oneOf: ["1"],
+        });
       });
     });
   });

@@ -1,16 +1,16 @@
 import { ApolloClient } from "@apollo/client";
+import { mapStaticQueryPartToLegacyVariables } from "@dashboard/components/ConditionalFilter/QueryFiltersBuilder/utils";
 
 import { Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition, FilterQuery } from "../types";
-import { extractConditionValueFromFilterElement } from "../utils";
+import { QueryVarsBuilderUtils } from "../utils";
+import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
 
 /** This class is used when we need a simple rename from FilterElement value
  * to different query variables
  * For example: attributeType -> type */
-export abstract class BaseMappableDefinition<T extends FilterQuery = FilterQuery>
-  implements BothApiFilterDefinition<T>
+export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = FilterQuery>
+  implements BothApiQueryVarsBuilder<T>
 {
   public abstract canHandle(element: FilterElement): boolean;
 
@@ -23,7 +23,7 @@ export abstract class BaseMappableDefinition<T extends FilterQuery = FilterQuery
   protected abstract getQueryFieldName(element: FilterElement): string;
 
   protected getConditionValue(element: FilterElement): T[keyof T] {
-    return extractConditionValueFromFilterElement(element) as T[keyof T];
+    return QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element) as T[keyof T];
   }
 
   public updateWhereQuery(query: Readonly<T>, element: FilterElement): T {

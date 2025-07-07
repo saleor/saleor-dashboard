@@ -3,16 +3,16 @@ import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { ProductTypeDefinition } from "./ProductTypeDefinition";
+import { ProductTypeQueryVarsBuilder } from "./ProductTypeQueryVarsBuilder";
 
-describe("ProductTypeDefinition", () => {
+describe("ProductTypeQueryVarsBuilder", () => {
   describe("canHandle", () => {
     it("should return true for elements with value 'typeOfProduct'", () => {
       // Arrange
       const value = new ExpressionValue("typeOfProduct", "Type of Product", "typeOfProduct");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new ProductTypeDefinition();
+      const def = new ProductTypeQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -24,7 +24,7 @@ describe("ProductTypeDefinition", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new ProductTypeDefinition();
+      const def = new ProductTypeQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -36,7 +36,7 @@ describe("ProductTypeDefinition", () => {
   describe("createOptionFetcher", () => {
     it("should return a NoopValuesHandler", () => {
       // Arrange
-      const def = new ProductTypeDefinition();
+      const def = new ProductTypeQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher();
 
@@ -46,7 +46,7 @@ describe("ProductTypeDefinition", () => {
   });
 
   describe("query updates (FILTER API only)", () => {
-    const def = new ProductTypeDefinition();
+    const def = new ProductTypeQueryVarsBuilder();
     const value = new ExpressionValue("typeOfProduct", "Type of Product", "typeOfProduct");
     const options = ConditionOptions.fromName("productType");
     const conditionItem: ConditionItem = { type: "combobox", label: "is", value: "input-1" };

@@ -1,10 +1,10 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { BaseMappableDefinition } from "./BaseMappableDefinition";
+import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
 /** Class used when other filter definition doesn't support an element
  * it re-uses mapping from BaseMappableDefinition */
-export class DefaultDefinition extends BaseMappableDefinition {
+export class DefaultQueryVarsBuilder extends BaseMappableQueryVarsBuilder {
   public canHandle(): boolean {
     // Default definition handles all elements that no other definition can handle
     return true;

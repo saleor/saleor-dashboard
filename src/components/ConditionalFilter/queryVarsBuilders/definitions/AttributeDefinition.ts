@@ -3,11 +3,11 @@ import { AttributeInput, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { AttributeChoicesHandler, Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { WhereOnlyFilterDefinition } from "../types";
-import { extractConditionValueFromFilterElement, getBooleanValueFromElement } from "../utils";
+import { WhereOnlyQueryVarsBuilder } from "../types";
+import { QueryVarsBuilderUtils } from "../utils";
 
-export class AttributeDefinition
-  implements WhereOnlyFilterDefinition<{ attributes?: AttributeInput[] }>
+export class AttributeQueryVarsBuilder
+  implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }>
 {
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
@@ -60,7 +60,7 @@ export class AttributeDefinition
     if (inputType === AttributeInputTypeEnum.BOOLEAN) {
       return {
         ...baseAttribute,
-        boolean: getBooleanValueFromElement(element),
+        boolean: QueryVarsBuilderUtils.getBooleanValueFromElement(element),
       };
     }
 
@@ -73,7 +73,7 @@ export class AttributeDefinition
     element: FilterElement,
     type: string,
   ): AttributeInput {
-    const processedValue = extractConditionValueFromFilterElement(element);
+    const processedValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element);
 
     if (typeof processedValue === "object" && processedValue && "range" in processedValue) {
       return this.buildRangeAttribute(baseAttribute, processedValue.range, type);

@@ -22,11 +22,11 @@ import {
 import { FilterContainer } from "./FilterElement";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { isItemOption, isItemOptionArray, isTuple } from "./FilterElement/ConditionValue";
-import { QueryApiType, QueryBuilder } from "./QueryBuilder";
+import { QueryApiType, QueryBuilder } from "./QueryFiltersBuilder";
 
 type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
-/** @deprecated use QueryBuilder */
+/** @deprecated use QueryFiltersBuilder */
 const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => {
   if (!selected.conditionValue) return "";
 
@@ -74,7 +74,7 @@ const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => 
   return value;
 };
 
-/** @deprecated use QueryBuilder */
+/** @deprecated use QueryFiltersBuilder */
 export const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart) => {
   if (typeof queryPart !== "object") {
     return queryPart;

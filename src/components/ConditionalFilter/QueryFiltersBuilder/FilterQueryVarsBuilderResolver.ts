@@ -1,14 +1,14 @@
-import { FilterElement } from "../FilterElement";
+import { FilterElement } from "../../FilterElement";
 import {
   AttributeDefinition,
-  DefaultDefinition,
-  ProductTypeDefinition,
-  StaticBooleanDefinition,
-  StaticDefinition,
+  DefaultQueryVarsBuilder,
+  ProductTypeQueryVarsBuilder,
+  StaticBooleanQueryVarsBuilder,
+  StaticQueryVarsBuilder,
 } from "./definitions";
 import { FilterDefinition } from "./types";
 
-export class FilterDefinitionResolver {
+export class FilterQueryVarsBuilderResolver {
   private definitions: Array<FilterDefinition<any>>;
 
   constructor(definitions: Array<FilterDefinition<any>>) {
@@ -24,15 +24,17 @@ export class FilterDefinitionResolver {
   public static getDefaultDefinitions(): Array<FilterDefinition<any>> {
     return [
       new AttributeDefinition(),
-      new ProductTypeDefinition(),
-      new StaticBooleanDefinition(),
-      new StaticDefinition(),
-      new DefaultDefinition(),
+      new ProductTypeQueryVarsBuilder(),
+      new StaticBooleanQueryVarsBuilder(),
+      new StaticQueryVarsBuilder(),
+      new DefaultQueryVarsBuilder(),
     ];
   }
 
   public static getDefaultResolver() {
-    return new FilterDefinitionResolver(FilterDefinitionResolver.getDefaultDefinitions());
+    return new FilterQueryVarsBuilderResolver(
+      FilterQueryVarsBuilderResolver.getDefaultDefinitions(),
+    );
   }
 
   public resolve(element: FilterElement): FilterDefinition<any> {

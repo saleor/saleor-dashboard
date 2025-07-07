@@ -1,11 +1,11 @@
 import { ApolloClient } from "@apollo/client";
 
-import { Handler } from "../API/Handler";
-import { FilterElement } from "../FilterElement";
+import { Handler } from "../../API/Handler";
+import { FilterElement } from "../../FilterElement";
 
 export type FilterQuery = Record<string, unknown>;
 
-export interface BaseFilterDefinition {
+export interface QueryVarsBuilder {
   /**
    * Determines if this definition should handle the given filter element.
    */
@@ -21,8 +21,7 @@ export interface BaseFilterDefinition {
   ): Handler;
 }
 
-export interface WhereOnlyFilterDefinition<TQuery extends FilterQuery>
-  extends BaseFilterDefinition {
+export interface WhereOnlyQueryVarsBuilder<TQuery extends FilterQuery> extends QueryVarsBuilder {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
    * This method MUST treat the input query as immutable and return a new one.
@@ -30,8 +29,7 @@ export interface WhereOnlyFilterDefinition<TQuery extends FilterQuery>
   updateWhereQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
 }
 
-export interface FilterOnlyFilterDefinition<TQuery extends FilterQuery>
-  extends BaseFilterDefinition {
+export interface FilterOnlyQueryVarsBuilder<TQuery extends FilterQuery> extends QueryVarsBuilder {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for FILTER API.
    * This method MUST treat the input query as immutable and return a new one.
@@ -39,39 +37,28 @@ export interface FilterOnlyFilterDefinition<TQuery extends FilterQuery>
   updateFilterQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
 }
 
-export interface BothApiFilterDefinition<TQuery extends FilterQuery> extends BaseFilterDefinition {
-  /**
-   * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
-   * This method MUST treat the input query as immutable and return a new one.
-   */
-  updateWhereQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
-
-  /**
-   * Processes a filter element and returns a new query object with the element's contribution for FILTER API.
-   * This method MUST treat the input query as immutable and return a new one.
-   */
-  updateFilterQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
-}
+export type BothApiQueryVarsBuilder<TQuery extends FilterQuery> =
+  WhereOnlyQueryVarsBuilder<TQuery> & FilterOnlyQueryVarsBuilder<TQuery>;
 
 /**
  * A discriminating union that ensures at least one of the update methods is implemented.
  */
 export type FilterDefinition<TQuery extends FilterQuery> =
-  | WhereOnlyFilterDefinition<TQuery>
-  | FilterOnlyFilterDefinition<TQuery>
-  | BothApiFilterDefinition<TQuery>;
+  | WhereOnlyQueryVarsBuilder<TQuery>
+  | FilterOnlyQueryVarsBuilder<TQuery>
+  | BothApiQueryVarsBuilder<TQuery>;
 
 /**
  * Type guards to check which API methods are supported by a definition.
  */
 export function supportsWhereApi<TQuery extends FilterQuery>(
   definition: FilterDefinition<TQuery>,
-): definition is WhereOnlyFilterDefinition<TQuery> | BothApiFilterDefinition<TQuery> {
+): definition is WhereOnlyQueryVarsBuilder<TQuery> | BothApiQueryVarsBuilder<TQuery> {
   return "updateWhereQuery" in definition;
 }
 
 export function supportsFilterApi<TQuery extends FilterQuery>(
   definition: FilterDefinition<TQuery>,
-): definition is FilterOnlyFilterDefinition<TQuery> | BothApiFilterDefinition<TQuery> {
+): definition is FilterOnlyQueryVarsBuilder<TQuery> | BothApiQueryVarsBuilder<TQuery> {
   return "updateFilterQuery" in definition;
 }

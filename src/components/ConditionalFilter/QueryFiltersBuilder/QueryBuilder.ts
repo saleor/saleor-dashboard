@@ -1,11 +1,12 @@
-import { FilterDefinitionResolver } from "../filterDefinitions/FilterDefinitionResolver";
 import {
   FilterDefinition,
   FilterQuery,
   supportsFilterApi,
   supportsWhereApi,
-} from "../filterDefinitions/types";
+} from "@dashboard/components/ConditionalFilter/QueryFiltersBuilder/queryVarsBuilders/types";
+
 import { FilterContainer, FilterElement } from "../FilterElement";
+import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 import { QueryApiType } from "./types";
 
 export class QueryBuilder<T extends FilterQuery, K extends keyof T = never> {
@@ -13,7 +14,7 @@ export class QueryBuilder<T extends FilterQuery, K extends keyof T = never> {
     private apiType: QueryApiType,
     private filterContainer: FilterContainer,
     private topLevelKeys: K[] = [],
-    private filterDefinitionResolver: FilterDefinitionResolver = FilterDefinitionResolver.getDefaultResolver(),
+    private filterDefinitionResolver: FilterQueryVarsBuilderResolver = FilterQueryVarsBuilderResolver.getDefaultResolver(),
   ) {}
 
   build(): { topLevel: Pick<T, K>; filters: Omit<T, K> } {

@@ -1,4 +1,5 @@
 import { ApolloClient } from "@apollo/client";
+import { mapStaticQueryPartToLegacyVariables } from "@dashboard/components/ConditionalFilter/QueryFiltersBuilder/utils";
 
 import {
   CategoryHandler,
@@ -13,8 +14,7 @@ import {
 import { STATIC_CONDITIONS } from "../../constants";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
-import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition, FilterQuery } from "../types";
+import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
 
 const SUPPORTED_STATIC_FIELDS: Array<keyof typeof STATIC_CONDITIONS> = [
   "collection",
@@ -29,8 +29,11 @@ const SUPPORTED_STATIC_FIELDS: Array<keyof typeof STATIC_CONDITIONS> = [
 type StaticWhereQueryPart = { eq: string } | { oneOf: string[] };
 
 /** Static definitions provide a list of chosable elements based on entity type (e.g. category)
- * and return a list of selected entity IDs */
-export class StaticDefinition implements BothApiFilterDefinition<FilterQuery> {
+ * and return a list of selected entity IDs
+ *
+ * These are actually not static, we fetch dynamically list from API, but we left name "static"
+ * to be consistent with other parts of Dashboard */
+export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<FilterQuery> {
   public canHandle(element: FilterElement): boolean {
     return SUPPORTED_STATIC_FIELDS.includes(element.value.type as keyof typeof STATIC_CONDITIONS);
   }

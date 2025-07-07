@@ -5,9 +5,9 @@ import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { StaticBooleanDefinition } from "./StaticBooleanDefinition";
+import { StaticBooleanQueryVarsBuilder } from "./StaticBooleanQueryVarsBuilder";
 
-describe("StaticBooleanDefinition", () => {
+describe("StaticBooleanQueryVarsBuilder", () => {
   describe("canHandle", () => {
     const supportedFields = [
       "isPublished",
@@ -24,7 +24,7 @@ describe("StaticBooleanDefinition", () => {
       const value = new ExpressionValue(field, field, field);
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new StaticBooleanDefinition();
+      const def = new StaticBooleanQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -37,7 +37,7 @@ describe("StaticBooleanDefinition", () => {
       const value = new ExpressionValue("unsupported", "Unsupported", "unsupported");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new StaticBooleanDefinition();
+      const def = new StaticBooleanQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -50,7 +50,7 @@ describe("StaticBooleanDefinition", () => {
       const value = new ExpressionValue("attribute", "Attribute", "attribute");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new StaticBooleanDefinition();
+      const def = new StaticBooleanQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -62,7 +62,7 @@ describe("StaticBooleanDefinition", () => {
   describe("createOptionFetcher", () => {
     it("should return a BooleanValuesHandler with correct 'Yes'/'No' options", () => {
       // Arrange
-      const def = new StaticBooleanDefinition();
+      const def = new StaticBooleanQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher();
 
@@ -89,7 +89,7 @@ describe("StaticBooleanDefinition", () => {
   });
 
   describe("updateWhereQuery", () => {
-    const def = new StaticBooleanDefinition();
+    const def = new StaticBooleanQueryVarsBuilder();
     const value = new ExpressionValue("isActive", "Is Active", "isActive");
     const options = ConditionOptions.fromName("isActive");
     const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };
@@ -119,7 +119,7 @@ describe("StaticBooleanDefinition", () => {
   });
 
   describe("updateFilterQuery", () => {
-    const def = new StaticBooleanDefinition();
+    const def = new StaticBooleanQueryVarsBuilder();
     const value = new ExpressionValue("isActive", "Is Active", "isActive");
     const options = ConditionOptions.fromName("isActive");
     const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };

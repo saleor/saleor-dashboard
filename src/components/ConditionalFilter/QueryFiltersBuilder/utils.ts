@@ -1,3 +1,28 @@
+import { AttributeInput } from "../../../graphql";
+import { StaticQueryPart } from "./types";
+
+export const mapStaticQueryPartToLegacyVariables = (
+  queryPart: StaticQueryPart | AttributeInput,
+) => {
+  if (typeof queryPart !== "object" || queryPart === null) {
+    return queryPart;
+  }
+
+  if ("range" in queryPart && queryPart.range) {
+    return queryPart.range;
+  }
+
+  if ("eq" in queryPart && queryPart.eq) {
+    return queryPart.eq;
+  }
+
+  if ("oneOf" in queryPart && queryPart.oneOf) {
+    return queryPart.oneOf;
+  }
+
+  return queryPart;
+};
+
 import { FilterElement } from "../FilterElement";
 import {
   ConditionValue,
@@ -13,16 +38,6 @@ export type ProcessedConditionValue =
   | { range: { gte?: string; lte?: string } }
   | { eq: string }
   | { oneOf: string[] };
-
-/**
- * Extracts a boolean value from various input formats.
- * Handles ItemOption with string values, direct boolean, or stringified values.
- */
-export function getBooleanValueFromElement(element: FilterElement): boolean {
-  const { value: selectedValue } = element.condition.selected;
-
-  return extractBooleanValue(selectedValue);
-}
 
 /**
  * Helper function to extract boolean value from different value types.
@@ -59,6 +74,16 @@ function extractValuesFromOptionArray(value: ConditionValue): string[] {
   }
 
   return [];
+}
+
+/**
+ * Extracts a boolean value from various input formats.
+ * Handles ItemOption with string values, direct boolean, or stringified values.
+ */
+export function getBooleanValueFromElement(element: FilterElement): boolean {
+  const { value: selectedValue } = element.condition.selected;
+
+  return extractBooleanValue(selectedValue);
 }
 
 /**
@@ -135,4 +160,9 @@ export const extractConditionValueFromFilterElement = (
   }
 
   return selectedValue;
+};
+
+export const QueryVarsBuilderUtils = {
+  getBooleanValueFromElement,
+  extractConditionValueFromFilterElement,
 };
