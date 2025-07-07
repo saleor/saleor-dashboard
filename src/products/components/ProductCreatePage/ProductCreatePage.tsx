@@ -6,6 +6,7 @@ import {
 } from "@dashboard/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@dashboard/channels/utils";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import { Container } from "@dashboard/components/AssignContainerDialog";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
@@ -111,6 +112,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreCategories,
   fetchMoreCollections,
   fetchMoreProductTypes,
+  header,
   initial,
   productTypes: productTypeChoiceList,
   referencePages = [],
@@ -225,6 +227,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
         return (
           <DetailPageLayout>
+            <TopNav href={productListUrl()} title={header} />
             <DetailPageLayout.Content>
               <ProductDetailsForm
                 data={data}
