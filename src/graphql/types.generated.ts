@@ -789,6 +789,17 @@ export type AttributeValueUpdateInput = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+/** Where filtering options for attribute values. */
+export type AttributeValueWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<AttributeValueWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<AttributeValueWhereInput>>;
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  name?: InputMaybe<StringFilterInput>;
+  slug?: InputMaybe<StringFilterInput>;
+};
+
 /** Where filtering options. */
 export type AttributeWhereInput = {
   /** List of conditions that must be met. */
@@ -5942,6 +5953,10 @@ export type ProductVariantWhereInput = {
   OR?: InputMaybe<Array<ProductVariantWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  /** Filter by product SKU. */
+  sku?: InputMaybe<StringFilterInput>;
+  /** Filter by when was the most recent update. */
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type ProductWhereInput = {
