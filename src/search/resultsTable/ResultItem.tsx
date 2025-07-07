@@ -113,8 +113,8 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={orderUrl(node.id)}>
-            <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
-              <Box __width="100px">
+            <Box display="flex" alignItems="center" justifyContent="center" gap={5}>
+              <Box>
                 <Box
                   __backgroundColor={color.base}
                   __color={color.text}
@@ -128,7 +128,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
                   {localized}
                 </Box>
               </Box>
-              <Box display="flex" alignItems="center" gap={0.5} __width="70px">
+              <Box display="flex" alignItems="center" gap={0.5}>
                 <Text fontSize={2} fontWeight="medium" color="default2">
                   #
                 </Text>
@@ -136,14 +136,14 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
                   {node?.number}
                 </Text>
               </Box>
-            </Box>
-            <Box display="flex" alignItems="center" gap={1}>
-              <Text size={2} fontWeight="medium" color="default2">
-                {node?.total?.gross?.currency}
-              </Text>
-              <Text size={2} fontWeight="medium">
-                {node?.total?.gross?.amount} {node?.total?.gross?.currency}
-              </Text>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Text size={2} fontWeight="medium" color="default2">
+                  {node?.total?.gross?.currency}
+                </Text>
+                <Text size={2} fontWeight="medium">
+                  {node?.total?.gross?.amount}
+                </Text>
+              </Box>
             </Box>
           </LinkCell>
         </GridTable.Cell>

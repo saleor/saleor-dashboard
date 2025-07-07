@@ -77,7 +77,7 @@ describe("Sidebar", () => {
     // Arrange & Act
     render(<Sidebar />, { wrapper: Wrapper });
     // Assert
-    expect(screen.getByText("Search")).toBeInTheDocument();
+    expect(screen.getByText("Command menu")).toBeInTheDocument();
     expect(screen.getByText("Playground")).toBeInTheDocument();
   });
   it("should call callback when click on playground shortcut", async () => {
@@ -108,7 +108,7 @@ describe("Sidebar", () => {
     }));
     render(<Sidebar />, { wrapper: Wrapper });
     // Act
-    await userEvent.click(screen.getByText("Search"));
+    await userEvent.click(screen.getByText("Command menu"));
     // Assert
     expect(actionCallback).toHaveBeenCalledWith(true);
   });
