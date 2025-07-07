@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { useGlobalSearchQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import React from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { WindowTitle } from "../components/WindowTitle";
@@ -35,6 +35,20 @@ const Component = () => {
     addToHistory(value);
     changeQuery(value);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        window.history.back();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <>

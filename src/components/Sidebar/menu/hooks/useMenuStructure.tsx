@@ -33,6 +33,7 @@ import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box, SearchIcon } from "@saleor/macaw-ui-next";
@@ -123,7 +124,12 @@ export function useMenuStructure() {
     },
     {
       icon: renderIcon(<SearchIcon />),
-      label: intl.formatMessage(sectionNames.search),
+      label: (
+        <Box display="flex" alignItems="center" gap={2}>
+          {intl.formatMessage(sectionNames.search)}
+          <SearchShortcut />
+        </Box>
+      ),
       id: "search",
       url: "/search",
       permissions: [

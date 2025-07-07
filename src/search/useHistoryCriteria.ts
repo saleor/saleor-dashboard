@@ -1,5 +1,7 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 
+const MAX_HISTORY_ITEMS = 20;
+
 export const useHistoryCriteria = () => {
   const [history, setHistory] = useLocalStorage<string[]>("search-history", []);
 
@@ -9,7 +11,7 @@ export const useHistoryCriteria = () => {
     setHistory((prev: string[]) => {
       const newHistory = prev.filter(item => item !== query);
 
-      return [query, ...newHistory].slice(0, 20);
+      return [query, ...newHistory].slice(0, MAX_HISTORY_ITEMS);
     });
   };
 

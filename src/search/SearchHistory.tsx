@@ -14,36 +14,43 @@ export const SearchHistory = ({
   if (history.length === 0) return null;
 
   return (
-    <Box paddingLeft={6}>
-      <Text size={2} fontWeight="medium" color="default2">
+    <Box width="100%">
+      <Text size={2} fontWeight="medium" color="default2" paddingLeft={6}>
         <FormattedMessage id="UE9zNR" defaultMessage="Recent Searches" />
       </Text>
       <Box
         display="flex"
-        flexDirection="column"
+        width="100%"
+        flexWrap="wrap"
         alignItems="flex-start"
         gap={2}
         marginTop={5}
         marginBottom={5}
       >
         {history.map(item => (
-          <Box key={item}>
+          <Box
+            key={item}
+            width="100%"
+            paddingLeft={6}
+            cursor="pointer"
+            display="flex"
+            alignItems="center"
+            paddingY={1}
+            onClick={() => onItemClick(item)}
+            backgroundColor={{
+              default: "default1",
+              hover: "default1Hovered",
+            }}
+          >
             <Box
-              key={item}
-              cursor="pointer"
-              display="inline-block"
-              onClick={() => onItemClick(item)}
+              display="flex"
+              alignItems="center"
+              gap={1}
+              fontSize={3}
+              className="global-search-history-item"
             >
-              <Box
-                display="flex"
-                alignItems="center"
-                gap={1}
-                fontSize={3}
-                className="global-search-history-item"
-              >
-                <SearchIcon size="small" />
-                {item}
-              </Box>
+              <SearchIcon size="small" />
+              {item}
             </Box>
           </Box>
         ))}
@@ -54,14 +61,19 @@ export const SearchHistory = ({
           gap={1}
           padding={0}
           margin={0}
-          marginTop={3}
-          backgroundColor="transparent"
+          marginTop={1}
+          paddingLeft={6}
           borderWidth={0}
+          width="100%"
           fontSize={3}
           fontWeight="medium"
           cursor="pointer"
-          className="global-search-history-clear-button"
+          __height="50px"
           onClick={onClearHistory}
+          backgroundColor={{
+            default: "default1",
+            hover: "default1Hovered",
+          }}
         >
           <CloseIcon size="small" />
           <FormattedMessage id="zfSKyx" defaultMessage="Clear history" />

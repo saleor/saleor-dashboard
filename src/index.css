@@ -103,17 +103,13 @@ body {
   min-width: 12px;
 }
 
-
-.global-search-history-clear-button {
-  color: var(--mu-colors-text-default1);
-  &:hover {
-    color: var(--mu-colors-text-default1-hovered);
+.sidebar-item-group-trigger {
+  button,
+  button:hover {
+    background-color: transparent;
   }
-}
 
-.global-search-history-item {
-  color: var(--mu-colors-text-default2);
-  &:hover {
-    color: var(--mu-colors-text-default2-hovered);
+  button[data-state="open"] {
+    background-color: transparent !important;
   }
 }
