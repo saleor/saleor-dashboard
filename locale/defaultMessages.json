@@ -5640,6 +5640,10 @@
     "context": "header",
     "string": "Order settings"
   },
+  "VvhNCi": {
+    "context": "command menu shortcut",
+    "string": "Command menu"
+  },
   "VyC+Bm": {
     "context": "radio button label",
     "string": "Enter the refund amount without using the product list. Best for overcharges and custom adjustments."
@@ -7427,10 +7431,6 @@
   "gt05TH": {
     "context": "tooltip message",
     "string": "You don't have permission to manage staff"
-  },
-  "gx6b6x": {
-    "context": "search shortcut",
-    "string": "Search"
   },
   "gxPjIQ": {
     "string": "Are you sure you want to delete {email} from staff members?"
@@ -9335,9 +9335,6 @@
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
-  },
-  "sokfIy": {
-    "string": "No. of products: {count}"
   },
   "stjHjY": {
     "context": "error message",

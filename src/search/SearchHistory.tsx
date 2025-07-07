@@ -5,13 +5,20 @@ import { FormattedMessage } from "react-intl";
 export const SearchHistory = ({
   history,
   onClearHistory,
+  onClearItem,
   onItemClick,
 }: {
   history: string[];
   onClearHistory: () => void;
+  onClearItem: (item: string) => void;
   onItemClick: (item: string) => void;
 }) => {
   if (history.length === 0) return null;
+
+  const handleRemoveItem = (event: React.MouseEvent<HTMLButtonElement>, item: string) => {
+    event.stopPropagation();
+    onClearItem(item);
+  };
 
   return (
     <Box width="100%">
@@ -31,7 +38,7 @@ export const SearchHistory = ({
           <Box
             key={item}
             width="100%"
-            paddingLeft={6}
+            paddingX={6}
             cursor="pointer"
             display="flex"
             alignItems="center"
@@ -45,12 +52,33 @@ export const SearchHistory = ({
             <Box
               display="flex"
               alignItems="center"
+              justifyContent="space-between"
               gap={1}
               fontSize={3}
-              className="global-search-history-item"
+              width="100%"
             >
-              <SearchIcon size="small" />
-              {item}
+              <Box display="flex" alignItems="center" gap={1}>
+                <SearchIcon size="small" />
+                {item}
+              </Box>
+              <Box
+                as="button"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                padding={0}
+                margin={0}
+                borderWidth={0}
+                backgroundColor="transparent"
+                color={{
+                  default: "default1",
+                  hover: "default2",
+                }}
+                cursor="pointer"
+                onClick={(evt: React.MouseEvent<HTMLButtonElement>) => handleRemoveItem(evt, item)}
+              >
+                <CloseIcon size="small" />
+              </Box>
             </Box>
           </Box>
         ))}

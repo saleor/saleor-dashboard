@@ -17,7 +17,7 @@ import { useSearchCriteria } from "./useSearchCriteria";
 const Component = () => {
   const intl = useIntl();
   const { query, scope, changeQuery, changeScope } = useSearchCriteria();
-  const { history, addToHistory, clearHistory } = useHistoryCriteria();
+  const { history, addToHistory, clearHistory, clearItem } = useHistoryCriteria();
   const inclusionVariables = useInclusionVariables(scope);
   const { data, loading } = useGlobalSearchQuery({
     variables: {
@@ -68,6 +68,7 @@ const Component = () => {
               history={history}
               onClearHistory={clearHistory}
               onItemClick={handleSearchChange}
+              onClearItem={clearItem}
             />
           )}
         </DashboardCard>

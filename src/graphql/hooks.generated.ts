@@ -15979,6 +15979,8 @@ export const GlobalSearchDocument = gql`
         number
         status
         updatedAt
+        paymentStatus
+        chargeStatus
         total {
           gross {
             amount

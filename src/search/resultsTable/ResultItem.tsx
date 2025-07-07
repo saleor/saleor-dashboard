@@ -3,16 +3,15 @@ import { collectionUrl } from "@dashboard/collections/urls";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
-import { getStatusColor, PillStatusType, transformOrderStatus } from "@dashboard/misc";
 import { pageUrl } from "@dashboard/modeling/urls";
 import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { orderUrl } from "@dashboard/orders/urls";
 import { productUrl, productVariantEditPath } from "@dashboard/products/urls";
-import { getAncestorsLabel } from "@dashboard/products/utils/utils";
 import { Box, Skeleton, Text, useTheme } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
 
+import { getCategoryHierarchyLabel, getPaymentLabel } from "./labels";
 import { ItemData } from "./prepareResults";
 
 const Row = ({ children }: { children: React.ReactNode }) => {
@@ -100,11 +99,12 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   const { node } = result;
 
   if (node.__typename === "Order") {
-    const { localized, status } = transformOrderStatus(node.status, intl);
-    const color = getStatusColor({
-      status: status as unknown as PillStatusType,
-      currentTheme: theme,
-    });
+    const { color, localized } = getPaymentLabel(
+      intl,
+      theme,
+      node.chargeStatus,
+      node.paymentStatus,
+    );
 
     return (
       <Row>
@@ -113,18 +113,8 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={orderUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={2}>
-              <Box
-                display="flex"
-                alignItems="start"
-                justifyContent="center"
-                flexDirection="column"
-                gap={1}
-                __width="140px"
-              >
-                <Text size={1} fontWeight="medium">
-                  No. {node?.number}
-                </Text>
+            <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
+              <Box __width="100px">
                 <Box
                   __backgroundColor={color.base}
                   __color={color.text}
@@ -133,10 +123,24 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
                   paddingY={0.5}
                   borderRadius={3}
                   fontSize={1}
+                  display="inline-block"
                 >
                   {localized}
                 </Box>
               </Box>
+              <Box display="flex" alignItems="center" gap={0.5} __width="70px">
+                <Text fontSize={2} fontWeight="medium" color="default2">
+                  #
+                </Text>
+                <Text size={2} fontWeight="medium" color="default1">
+                  {node?.number}
+                </Text>
+              </Box>
+            </Box>
+            <Box display="flex" alignItems="center" gap={1}>
+              <Text size={2} fontWeight="medium" color="default2">
+                {node?.total?.gross?.currency}
+              </Text>
               <Text size={2} fontWeight="medium">
                 {node?.total?.gross?.amount} {node?.total?.gross?.currency}
               </Text>
@@ -153,7 +157,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
   }
 
   if (node.__typename === "Category") {
-    const ancestorsLabel = getAncestorsLabel(node);
+    const ancestorsLabel = getCategoryHierarchyLabel(node);
 
     return (
       <Row>
@@ -162,26 +166,14 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={categoryUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={2}>
+            <Box display="flex" alignItems="center" gap={5}>
               <Thumbnail url={node?.backgroundImage?.url} name={node?.name} />
-              <Box
-                display="flex"
-                alignItems="start"
-                justifyContent="center"
-                flexDirection="column"
-                gap={1}
-              >
-                <Text size={2} fontWeight="medium">
-                  {ancestorsLabel} {node?.name}
-                </Text>
-                <Text size={2} fontWeight="medium" color="default2">
-                  <FormattedMessage
-                    id="sokfIy"
-                    defaultMessage=" No. of products: {count}"
-                    values={{ count: node?.products?.totalCount }}
-                  />
-                </Text>
-              </Box>
+              <Text size={2} fontWeight="medium">
+                {node?.name}
+              </Text>
+              <Text size={2} fontWeight="medium" color="default2">
+                {ancestorsLabel}
+              </Text>
             </Box>
           </LinkCell>
         </GridTable.Cell>
@@ -202,7 +194,7 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={collectionUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={2}>
+            <Box display="flex" alignItems="center" gap={5}>
               <Thumbnail url={node?.backgroundImage?.url} name={node?.name} />
               <Box
                 display="flex"
@@ -213,13 +205,6 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
               >
                 <Text size={2} fontWeight="medium">
                   {node?.name}
-                </Text>
-                <Text size={2} fontWeight="medium" color="default2">
-                  <FormattedMessage
-                    id="sokfIy"
-                    defaultMessage=" No. of products: {count}"
-                    values={{ count: node?.products?.totalCount }}
-                  />
                 </Text>
               </Box>
             </Box>
@@ -240,22 +225,14 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={productUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={2}>
+            <Box display="flex" alignItems="center" gap={5}>
               <Thumbnail url={node?.thumbnail?.url} name={node?.name} />
-              <Box
-                display="flex"
-                alignItems="start"
-                justifyContent="center"
-                flexDirection="column"
-                gap={1}
-              >
-                <Text size={2} fontWeight="medium">
-                  {node?.name}
-                </Text>
-                <Text size={2} fontWeight="medium" color="default2">
-                  {node?.category?.name}
-                </Text>
-              </Box>
+              <Text size={2} fontWeight="medium">
+                {node?.name}
+              </Text>
+              <Text size={2} fontWeight="medium" color="default2">
+                {node?.category?.name}
+              </Text>
             </Box>
           </LinkCell>
         </GridTable.Cell>
@@ -276,22 +253,14 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={productVariantEditPath(node.product.id, node.id)}>
-            <Box display="flex" alignItems="center" gap={2} width="100%">
+            <Box display="flex" alignItems="center" gap={5} width="100%">
               <Thumbnail url={node?.media?.[0]?.url} name={node?.name} />
-              <Box
-                display="flex"
-                alignItems="start"
-                justifyContent="center"
-                flexDirection="column"
-                gap={1}
-              >
-                <Text size={2} fontWeight="medium">
-                  {node?.product?.name} • {node?.name}
-                </Text>
-                <Text size={2} fontWeight="medium" color="default2">
-                  {node?.product?.category?.name}
-                </Text>
-              </Box>
+              <Text size={2} fontWeight="medium">
+                {node?.product?.name} • {node?.name}
+              </Text>
+              <Text size={2} fontWeight="medium" color="default2">
+                {node?.product?.category?.name}
+              </Text>
             </Box>
           </LinkCell>
         </GridTable.Cell>
@@ -312,21 +281,13 @@ export const ResultItem = ({ result }: { result: ItemData }) => {
         </TypeCell>
         <GridTable.Cell __height="inherit" padding={0}>
           <LinkCell href={pageUrl(node.id)}>
-            <Box display="flex" alignItems="center" gap={2} width="100%">
-              <Box
-                display="flex"
-                alignItems="start"
-                justifyContent="center"
-                flexDirection="column"
-                gap={1}
-              >
-                <Text size={2} fontWeight="medium">
-                  {node?.title}
-                </Text>
-                <Text size={2} fontWeight="medium" color="default2">
-                  {node?.pageType?.name}
-                </Text>
-              </Box>
+            <Box display="flex" alignItems="center" gap={5} width="100%">
+              <Text size={2} fontWeight="medium">
+                {node?.title}
+              </Text>
+              <Text size={2} fontWeight="medium" color="default2">
+                {node?.pageType?.name}
+              </Text>
             </Box>
           </LinkCell>
         </GridTable.Cell>

@@ -15,9 +15,13 @@ export const useHistoryCriteria = () => {
     });
   };
 
+  const clearItem = (query: string) => {
+    setHistory((prev: string[]) => prev.filter(item => item !== query));
+  };
+
   const clearHistory = () => {
     setHistory([]);
   };
 
-  return { history, addToHistory, clearHistory };
+  return { history, addToHistory, clearHistory, clearItem };
 };
