@@ -82,7 +82,7 @@ describe("AttributeQueryVarsBuilder", () => {
     });
   });
 
-  describe("updateWhereQuery", () => {
+  describe("updateWhereQueryVariables", () => {
     const def = new AttributeQueryVarsBuilder();
     const baseValue = new ExpressionValue("attribute", "Attribute", "attribute");
     const baseConditionItem: ConditionItem = { type: "multiselect", label: "in", value: "input-2" };
@@ -114,7 +114,7 @@ describe("AttributeQueryVarsBuilder", () => {
       );
       const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result).toEqual({ attributes: [{ slug: attributeSlug, values: [optionValue] }] });
@@ -144,7 +144,7 @@ describe("AttributeQueryVarsBuilder", () => {
       );
       const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result).toEqual({
@@ -178,7 +178,7 @@ describe("AttributeQueryVarsBuilder", () => {
       );
       const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result).toEqual({
@@ -212,7 +212,7 @@ describe("AttributeQueryVarsBuilder", () => {
       );
       const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result).toEqual({
@@ -242,7 +242,7 @@ describe("AttributeQueryVarsBuilder", () => {
       );
       const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result).toEqual({ attributes: [{ slug: attributeSlug, boolean: boolValue }] });
@@ -259,7 +259,7 @@ describe("AttributeQueryVarsBuilder", () => {
         selectedAttribute,
       );
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result).toEqual({});

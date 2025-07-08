@@ -35,15 +35,15 @@ export class StaticBooleanQueryVarsBuilder implements BothApiQueryVarsBuilder<Fi
     ]);
   }
 
-  updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
+  updateWhereQueryVariables(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const fieldName = element.value.value;
     const booleanValue = QueryVarsBuilderUtils.getBooleanValueFromElement(element);
 
     return { ...query, [fieldName]: booleanValue };
   }
 
-  updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
-    const whereQuery = this.updateWhereQuery(query, element);
+  updateFilterQueryVariables(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
+    const whereQuery = this.updateWhereQueryVariables(query, element);
     const fieldName = element.value.value;
 
     return {

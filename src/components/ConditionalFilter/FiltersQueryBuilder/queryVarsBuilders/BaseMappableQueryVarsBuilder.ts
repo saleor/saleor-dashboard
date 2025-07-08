@@ -24,15 +24,15 @@ export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = Filte
     return QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element) as T[keyof T];
   }
 
-  public updateWhereQuery(query: Readonly<T>, element: FilterElement): T {
+  public updateWhereQueryVariables(query: Readonly<T>, element: FilterElement): T {
     const fieldName = this.getQueryFieldName(element);
     const processedValue = this.getConditionValue(element);
 
     return { ...query, [fieldName]: processedValue };
   }
 
-  public updateFilterQuery(query: Readonly<T>, element: FilterElement): T {
-    const whereQuery = this.updateWhereQuery(query, element);
+  public updateFilterQueryVariables(query: Readonly<T>, element: FilterElement): T {
+    const whereQuery = this.updateWhereQueryVariables(query, element);
     const fieldName = this.getQueryFieldName(element);
     const whereQueryPart = whereQuery[fieldName];
 

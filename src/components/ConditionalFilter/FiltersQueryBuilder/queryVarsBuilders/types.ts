@@ -27,7 +27,7 @@ export interface WhereOnlyQueryVarsBuilder<TQuery extends FilterQuery>
    * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
    * This method MUST treat the input query as immutable and return a new one.
    */
-  updateWhereQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
+  updateWhereQueryVariables(query: Readonly<TQuery>, element: FilterElement): TQuery;
 }
 
 export interface FilterOnlyQueryVarsBuilder<TQuery extends FilterQuery>
@@ -36,7 +36,7 @@ export interface FilterOnlyQueryVarsBuilder<TQuery extends FilterQuery>
    * Processes a filter element and returns a new query object with the element's contribution for FILTER API.
    * This method MUST treat the input query as immutable and return a new one.
    */
-  updateFilterQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
+  updateFilterQueryVariables(query: Readonly<TQuery>, element: FilterElement): TQuery;
 }
 
 export type BothApiQueryVarsBuilder<TQuery extends FilterQuery> =
@@ -56,11 +56,11 @@ export type QueryVarsBuilder<TQuery extends FilterQuery> =
 export function supportsWhereApi<TQuery extends FilterQuery>(
   definition: QueryVarsBuilder<TQuery>,
 ): definition is WhereOnlyQueryVarsBuilder<TQuery> | BothApiQueryVarsBuilder<TQuery> {
-  return "updateWhereQuery" in definition;
+  return "updateWhereQueryVariables" in definition;
 }
 
 export function supportsFilterApi<TQuery extends FilterQuery>(
   definition: QueryVarsBuilder<TQuery>,
 ): definition is FilterOnlyQueryVarsBuilder<TQuery> | BothApiQueryVarsBuilder<TQuery> {
-  return "updateFilterQuery" in definition;
+  return "updateFilterQueryVariables" in definition;
 }

@@ -105,7 +105,7 @@ describe("StaticQueryVarsBuilder", () => {
     });
   });
 
-  describe("updateWhereQuery", () => {
+  describe("updateWhereQueryVariables", () => {
     const def = new StaticQueryVarsBuilder();
     const value = new ExpressionValue("collection", "Collection", "collection");
     const options = ConditionOptions.fromName("collection");
@@ -117,7 +117,7 @@ describe("StaticQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.collection).toEqual({ eq: "foo" });
@@ -129,7 +129,7 @@ describe("StaticQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.collection).toEqual({ eq: "foo" });
@@ -145,7 +145,7 @@ describe("StaticQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.collection).toEqual({ oneOf: ["foo", "bar"] });
@@ -161,14 +161,14 @@ describe("StaticQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.collection).toEqual({ oneOf: ["foo", "bar"] });
     });
   });
 
-  describe("updateFilterQuery", () => {
+  describe("updateFilterQueryVariables", () => {
     const def = new StaticQueryVarsBuilder();
     const value = new ExpressionValue("collection", "Collection", "collection");
     const options = ConditionOptions.fromName("collection");
@@ -180,7 +180,7 @@ describe("StaticQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.collection).toBe("foo");
@@ -196,7 +196,7 @@ describe("StaticQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.collection).toEqual(["foo", "bar"]);

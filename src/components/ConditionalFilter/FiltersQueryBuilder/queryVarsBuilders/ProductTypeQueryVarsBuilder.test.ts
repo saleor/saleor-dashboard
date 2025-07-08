@@ -57,7 +57,7 @@ describe("ProductTypeQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.productType).toBeDefined();
@@ -68,7 +68,7 @@ describe("ProductTypeQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.productType).toBe("foo");
@@ -79,7 +79,7 @@ describe("ProductTypeQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.productType).toEqual(["foo", "bar"]);

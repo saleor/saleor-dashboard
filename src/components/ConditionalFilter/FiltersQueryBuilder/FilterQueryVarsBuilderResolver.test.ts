@@ -11,8 +11,8 @@ function createMockDefinition(canHandleImpl: (element: FilterElement) => boolean
   return {
     canHandle: jest.fn(canHandleImpl),
     createOptionFetcher: jest.fn(),
-    updateWhereQuery: jest.fn(),
-    updateFilterQuery: jest.fn(),
+    updateWhereQueryVariables: jest.fn(),
+    updateFilterQueryVariables: jest.fn(),
   };
 }
 

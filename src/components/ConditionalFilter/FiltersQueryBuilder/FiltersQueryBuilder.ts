@@ -82,7 +82,7 @@ export class FiltersQueryBuilder<
         );
       }
 
-      return definition.updateWhereQuery(query, element);
+      return definition.updateWhereQueryVariables(query, element);
     } else {
       if (!supportsFilterApi(definition)) {
         throw new Error(
@@ -90,7 +90,7 @@ export class FiltersQueryBuilder<
         );
       }
 
-      return definition.updateFilterQuery(query, element);
+      return definition.updateFilterQueryVariables(query, element);
     }
   }
 

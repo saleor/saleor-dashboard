@@ -32,7 +32,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
+        updateWhereQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new FiltersQueryBuilder({
@@ -48,7 +48,7 @@ describe("FiltersQueryBuilder", () => {
       // Assert
       expect(result.filters).toEqual({ foo: "where" });
       expect(result.topLevel).toEqual({});
-      expect(mockDef.updateWhereQuery as jest.Mock).toHaveBeenCalled();
+      expect(mockDef.updateWhereQueryVariables as jest.Mock).toHaveBeenCalled();
     });
 
     it("should build query with multiple filter elements", () => {
@@ -66,7 +66,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
+        updateWhereQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new FiltersQueryBuilder({
@@ -94,7 +94,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        // no updateWhereQuery property
+        // no updateWhereQueryVariables property
       } as unknown as QueryVarsBuilder<Record<string, unknown>>;
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new FiltersQueryBuilder({
@@ -135,7 +135,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateFilterQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "filter" })),
+        updateFilterQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "filter" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new FiltersQueryBuilder({
@@ -151,7 +151,7 @@ describe("FiltersQueryBuilder", () => {
       // Assert
       expect(result.filters).toEqual({ foo: "filter" });
       expect(result.topLevel).toEqual({});
-      expect(mockDef.updateFilterQuery as jest.Mock).toHaveBeenCalled();
+      expect(mockDef.updateFilterQueryVariables as jest.Mock).toHaveBeenCalled();
     });
 
     it("should build query with multiple filter elements", () => {
@@ -169,7 +169,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateFilterQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "filter" })),
+        updateFilterQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "filter" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new FiltersQueryBuilder({
@@ -195,7 +195,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        // no updateFilterQuery property
+        // no updateFilterQueryVariables property
       } as unknown as QueryVarsBuilder<Record<string, unknown>>;
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new FiltersQueryBuilder({
@@ -221,7 +221,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
+        updateWhereQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       // Container includes a string and a valid element
@@ -249,7 +249,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
+        updateWhereQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
 
@@ -278,7 +278,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
+        updateWhereQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new FiltersQueryBuilder({
@@ -311,7 +311,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
+        updateWhereQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       // The query will have both foo and channel keys
@@ -340,7 +340,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
+        updateWhereQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new FiltersQueryBuilder({
@@ -368,7 +368,7 @@ describe("FiltersQueryBuilder", () => {
       const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
-        updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
+        updateWhereQueryVariables: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       // topLevelKeys includes a key not present in the query

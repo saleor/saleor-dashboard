@@ -7,7 +7,8 @@ import { WhereOnlyQueryVarsBuilder } from "../../FiltersQueryBuilder/queryVarsBu
 import { QueryVarsBuilderUtils } from "../../FiltersQueryBuilder/utils";
 
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }> {
+  implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }>
+{
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
@@ -22,7 +23,7 @@ export class AttributeQueryVarsBuilder
     return new AttributeChoicesHandler(client, id, inputValue);
   }
 
-  public updateWhereQuery(
+  public updateWhereQueryVariables(
     query: Readonly<{ attributes?: AttributeInput[] }>,
     element: FilterElement,
   ): { attributes?: AttributeInput[] } {

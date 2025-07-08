@@ -63,7 +63,7 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<FilterQue
     }
   }
 
-  public updateWhereQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
+  public updateWhereQueryVariables(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
     const { value: selectedValue } = element.condition.selected;
     const fieldName = element.value.value;
     let queryPart: StaticWhereQueryPart | undefined;
@@ -79,8 +79,8 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<FilterQue
     return { ...query, [fieldName]: queryPart };
   }
 
-  public updateFilterQuery(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
-    const whereQuery = this.updateWhereQuery(query, element);
+  public updateFilterQueryVariables(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
+    const whereQuery = this.updateWhereQueryVariables(query, element);
     const fieldName = element.value.value;
     const whereQueryPart = whereQuery[fieldName] as StaticWhereQueryPart;
 

@@ -23,7 +23,7 @@ export class AttributeQueryVarsBuilder
     return new AttributeChoicesHandler(client, id, inputValue);
   }
 
-  public updateWhereQuery(
+  public updateWhereQueryVariables(
     query: Readonly<{ attributes?: AttributeInput[] }>,
     element: FilterElement,
   ): { attributes?: AttributeInput[] } {

@@ -88,7 +88,7 @@ describe("StaticBooleanQueryVarsBuilder", () => {
     });
   });
 
-  describe("updateWhereQuery", () => {
+  describe("updateWhereQueryVariables", () => {
     const def = new StaticBooleanQueryVarsBuilder();
     const value = new ExpressionValue("isActive", "Is Active", "isActive");
     const options = ConditionOptions.fromName("isActive");
@@ -100,7 +100,7 @@ describe("StaticBooleanQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.isActive).toBe(true);
@@ -111,27 +111,27 @@ describe("StaticBooleanQueryVarsBuilder", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.isActive).toBe(false);
     });
   });
 
-  describe("updateFilterQuery", () => {
+  describe("updateFilterQueryVariables", () => {
     const def = new StaticBooleanQueryVarsBuilder();
     const value = new ExpressionValue("isActive", "Is Active", "isActive");
     const options = ConditionOptions.fromName("isActive");
     const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };
 
-    it("should produce the same boolean value as updateWhereQuery", () => {
+    it("should produce the same boolean value as updateWhereQueryVariables", () => {
       // Arrange
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "true");
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const whereResult = def.updateWhereQuery({}, element);
-      const filterResult = def.updateFilterQuery({}, element);
+      const whereResult = def.updateWhereQueryVariables({}, element);
+      const filterResult = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(filterResult.isActive).toBe(whereResult.isActive);
