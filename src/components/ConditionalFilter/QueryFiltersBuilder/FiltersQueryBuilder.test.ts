@@ -1,16 +1,19 @@
 import { Condition } from "../FilterElement/Condition";
 import { ExpressionValue, FilterElement } from "../FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
-import { QueryBuilder } from "./QueryBuilder";
+import { FiltersQueryBuilder } from "./FiltersQueryBuilder";
 import { QueryVarsBuilder } from "./queryVarsBuilders/types";
 import { QueryApiType } from "./types";
 
-describe("QueryBuilder", () => {
+describe("FiltersQueryBuilder", () => {
   describe("build for WHERE API", () => {
     it("should build empty query for empty filter container", () => {
       // Arrange
       const container: FilterElement[] = [];
-      const builder = new QueryBuilder(QueryApiType.WHERE, container);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: container,
+      });
 
       // Act
       const result = builder.build();
@@ -32,7 +35,12 @@ describe("QueryBuilder", () => {
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
-      const builder = new QueryBuilder(QueryApiType.WHERE, [element], [], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
 
       // Act
       const result = builder.build();
@@ -61,7 +69,12 @@ describe("QueryBuilder", () => {
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
-      const builder = new QueryBuilder(QueryApiType.WHERE, [element1, element2], [], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element1, element2],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
 
       // Act
       const result = builder.build();
@@ -84,7 +97,12 @@ describe("QueryBuilder", () => {
         // no updateWhereQuery property
       } as unknown as QueryVarsBuilder<Record<string, unknown>>;
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
-      const builder = new QueryBuilder(QueryApiType.WHERE, [element], [], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
 
       // Act & Assert
       expect(() => builder.build()).toThrow(/does not support WHERE API/);
@@ -95,7 +113,10 @@ describe("QueryBuilder", () => {
     it("should build empty query for empty filter container", () => {
       // Arrange
       const container: FilterElement[] = [];
-      const builder = new QueryBuilder(QueryApiType.FILTER, container);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.FILTER,
+        filterContainer: container,
+      });
 
       // Act
       const result = builder.build();
@@ -117,7 +138,12 @@ describe("QueryBuilder", () => {
         updateFilterQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "filter" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
-      const builder = new QueryBuilder(QueryApiType.FILTER, [element], [], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.FILTER,
+        filterContainer: [element],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
 
       // Act
       const result = builder.build();
@@ -146,7 +172,12 @@ describe("QueryBuilder", () => {
         updateFilterQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "filter" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
-      const builder = new QueryBuilder(QueryApiType.FILTER, [element1, element2], [], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.FILTER,
+        filterContainer: [element1, element2],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
       // Act
       const result = builder.build();
 
@@ -167,7 +198,12 @@ describe("QueryBuilder", () => {
         // no updateFilterQuery property
       } as unknown as QueryVarsBuilder<Record<string, unknown>>;
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
-      const builder = new QueryBuilder(QueryApiType.FILTER, [element], [], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.FILTER,
+        filterContainer: [element],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
 
       // Act & Assert
       expect(() => builder.build()).toThrow(/does not support FILTER API/);
@@ -189,12 +225,12 @@ describe("QueryBuilder", () => {
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       // Container includes a string and a valid element
-      const builder = new QueryBuilder(
-        QueryApiType.WHERE,
-        ["notAFilter", element] as (string | FilterElement)[],
-        [],
-        resolver,
-      );
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: ["notAFilter", element] as (string | FilterElement)[],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
       // Act
       const result = builder.build();
 
@@ -218,12 +254,12 @@ describe("QueryBuilder", () => {
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
 
       // Container includes an incompatible object and a valid element
-      const builder = new QueryBuilder(
-        QueryApiType.WHERE,
-        [incompatible as unknown as FilterElement, element],
-        [],
-        resolver,
-      );
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [incompatible as unknown as FilterElement, element],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
 
       // Act
       const result = builder.build();
@@ -245,7 +281,12 @@ describe("QueryBuilder", () => {
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
-      const builder = new QueryBuilder(QueryApiType.WHERE, [element], [], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
       // Act
       const result = builder.build();
 
@@ -274,12 +315,12 @@ describe("QueryBuilder", () => {
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       // The query will have both foo and channel keys
-      const builder = new QueryBuilder(
-        QueryApiType.WHERE,
-        [element1, element2],
-        ["channel"],
-        resolver,
-      );
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element1, element2],
+        topLevelKeys: ["channel"],
+        filterDefinitionResolver: resolver,
+      });
 
       // Act
       const result = builder.build();
@@ -302,7 +343,12 @@ describe("QueryBuilder", () => {
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
-      const builder = new QueryBuilder(QueryApiType.WHERE, [element], [], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element],
+        topLevelKeys: [],
+        filterDefinitionResolver: resolver,
+      });
 
       // Act
       const result = builder.build();
@@ -326,7 +372,12 @@ describe("QueryBuilder", () => {
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       // topLevelKeys includes a key not present in the query
-      const builder = new QueryBuilder(QueryApiType.WHERE, [element], ["notPresent"], resolver);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element],
+        topLevelKeys: ["notPresent"],
+        filterDefinitionResolver: resolver,
+      });
       // Act
       const result = builder.build();
 

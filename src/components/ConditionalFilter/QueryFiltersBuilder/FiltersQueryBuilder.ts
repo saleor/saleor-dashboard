@@ -9,13 +9,38 @@ import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 import { QueryApiType } from "./types";
 
-export class QueryBuilder<TQuery extends FilterQuery, TTopLevelKeys extends keyof TQuery = never> {
-  constructor(
-    private apiType: QueryApiType,
-    private filterContainer: FilterContainer,
-    private topLevelKeys: TTopLevelKeys[] = [],
-    private filterDefinitionResolver: FilterQueryVarsBuilderResolver<TQuery> = FilterQueryVarsBuilderResolver.getDefaultResolver(),
-  ) { }
+interface QueryBuilderOptions<
+  TQuery extends FilterQuery,
+  TTopLevelKeys extends keyof TQuery = never,
+> {
+  apiType: QueryApiType;
+
+  filterContainer: FilterContainer;
+
+  topLevelKeys?: TTopLevelKeys[];
+
+  filterDefinitionResolver?: FilterQueryVarsBuilderResolver<TQuery>;
+}
+
+export class FiltersQueryBuilder<
+  TQuery extends FilterQuery,
+  TTopLevelKeys extends keyof TQuery = never,
+> {
+  private apiType: QueryApiType;
+
+  private filterContainer: FilterContainer;
+
+  private topLevelKeys: TTopLevelKeys[];
+
+  private filterDefinitionResolver: FilterQueryVarsBuilderResolver<TQuery>;
+
+  constructor(options: QueryBuilderOptions<TQuery, TTopLevelKeys>) {
+    this.apiType = options.apiType;
+    this.filterContainer = options.filterContainer;
+    this.topLevelKeys = options.topLevelKeys || [];
+    this.filterDefinitionResolver =
+      options.filterDefinitionResolver || FilterQueryVarsBuilderResolver.getDefaultResolver();
+  }
 
   build(): { topLevel: Pick<TQuery, TTopLevelKeys>; filters: Omit<TQuery, TTopLevelKeys> } {
     let query = {} as TQuery;
