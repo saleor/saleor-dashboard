@@ -7,8 +7,7 @@ import { QueryVarsBuilderUtils } from "../utils";
 import { WhereOnlyQueryVarsBuilder } from "./types";
 
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }>
-{
+  implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }> {
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
@@ -76,7 +75,7 @@ export class AttributeQueryVarsBuilder
     const processedValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element);
 
     if (typeof processedValue === "object" && processedValue && "range" in processedValue) {
-      return this.buildRangeAttribute(baseAttribute, processedValue.range, type);
+      return this.buildRangeCondition(baseAttribute, processedValue.range, type);
     }
 
     if (typeof processedValue === "object" && processedValue && "eq" in processedValue) {
@@ -90,7 +89,7 @@ export class AttributeQueryVarsBuilder
     return baseAttribute;
   }
 
-  private buildRangeAttribute(
+  private buildRangeCondition(
     baseAttribute: AttributeInput,
     range: { gte?: string; lte?: string },
     type: string,
@@ -100,28 +99,28 @@ export class AttributeQueryVarsBuilder
     if (gte && lte) {
       return {
         ...baseAttribute,
-        ...this.getQueryPartForType([gte, lte], type, "range"),
+        ...this.getRangeQueryPart([gte, lte], type, "range"),
       };
     }
 
     if (gte) {
       return {
         ...baseAttribute,
-        ...this.getQueryPartForType(gte, type, "gte"),
+        ...this.getRangeQueryPart(gte, type, "gte"),
       };
     }
 
     if (lte) {
       return {
         ...baseAttribute,
-        ...this.getQueryPartForType(lte, type, "lte"),
+        ...this.getRangeQueryPart(lte, type, "lte"),
       };
     }
 
     return baseAttribute;
   }
 
-  private getQueryPartForType(
+  private getRangeQueryPart(
     value: string | [string, string],
     type: string,
     operation: "gte" | "lte" | "range",
