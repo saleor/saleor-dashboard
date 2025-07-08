@@ -15972,7 +15972,7 @@ export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehou
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
 export const GlobalSearchDocument = gql`
     query GlobalSearch($query: String!, $includeOrders: Boolean!, $includeCategories: Boolean!, $includeCollections: Boolean!, $includeProducts: Boolean!, $includeVariants: Boolean!, $includeModels: Boolean!, $includeModelTypes: Boolean!) {
-  orders(first: 5, filter: {search: $query}) @include(if: $includeOrders) {
+  orders(first: 10, filter: {search: $query}) @include(if: $includeOrders) {
     edges {
       node {
         id
@@ -15990,7 +15990,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  categories(first: 5, filter: {search: $query}) @include(if: $includeCategories) {
+  categories(first: 10, filter: {search: $query}) @include(if: $includeCategories) {
     edges {
       node {
         id
@@ -16019,7 +16019,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  collections(first: 5, filter: {search: $query}) @include(if: $includeCollections) {
+  collections(first: 10, filter: {search: $query}) @include(if: $includeCollections) {
     edges {
       node {
         id
@@ -16034,7 +16034,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  products(first: 5, filter: {search: $query}) @include(if: $includeProducts) {
+  products(first: 10, filter: {search: $query}) @include(if: $includeProducts) {
     edges {
       node {
         id
@@ -16050,7 +16050,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  productVariants(first: 5, filter: {search: $query}) @include(if: $includeVariants) {
+  productVariants(first: 10, filter: {search: $query}) @include(if: $includeVariants) {
     edges {
       node {
         id
@@ -16071,7 +16071,7 @@ export const GlobalSearchDocument = gql`
       }
     }
   }
-  models: pages(first: 5, filter: {search: $query}) @include(if: $includeModels) {
+  models: pages(first: 10, filter: {search: $query}) @include(if: $includeModels) {
     edges {
       node {
         id

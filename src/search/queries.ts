@@ -11,7 +11,7 @@ export const globalSearch = gql`
     $includeModels: Boolean!
     $includeModelTypes: Boolean!
   ) {
-    orders(first: 5, filter: { search: $query }) @include(if: $includeOrders) {
+    orders(first: 10, filter: { search: $query }) @include(if: $includeOrders) {
       edges {
         node {
           id
@@ -30,7 +30,7 @@ export const globalSearch = gql`
       }
     }
 
-    categories(first: 5, filter: { search: $query }) @include(if: $includeCategories) {
+    categories(first: 10, filter: { search: $query }) @include(if: $includeCategories) {
       edges {
         node {
           id
@@ -60,7 +60,7 @@ export const globalSearch = gql`
       }
     }
 
-    collections(first: 5, filter: { search: $query }) @include(if: $includeCollections) {
+    collections(first: 10, filter: { search: $query }) @include(if: $includeCollections) {
       edges {
         node {
           id
@@ -76,7 +76,7 @@ export const globalSearch = gql`
       }
     }
 
-    products(first: 5, filter: { search: $query }) @include(if: $includeProducts) {
+    products(first: 10, filter: { search: $query }) @include(if: $includeProducts) {
       edges {
         node {
           id
@@ -93,7 +93,7 @@ export const globalSearch = gql`
       }
     }
 
-    productVariants(first: 5, filter: { search: $query }) @include(if: $includeVariants) {
+    productVariants(first: 10, filter: { search: $query }) @include(if: $includeVariants) {
       edges {
         node {
           id
@@ -115,7 +115,7 @@ export const globalSearch = gql`
       }
     }
 
-    models: pages(first: 5, filter: { search: $query }) @include(if: $includeModels) {
+    models: pages(first: 10, filter: { search: $query }) @include(if: $includeModels) {
       edges {
         node {
           id

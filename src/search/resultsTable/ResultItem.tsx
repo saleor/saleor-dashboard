@@ -17,7 +17,7 @@ import { ItemData } from "./prepareResults";
 const Row = ({ children }: { children: React.ReactNode }) => {
   return (
     <GridTable.Row
-      __height="50px"
+      __height="39px"
       backgroundColor={{
         hover: "default1Hovered",
         default: "default1",
