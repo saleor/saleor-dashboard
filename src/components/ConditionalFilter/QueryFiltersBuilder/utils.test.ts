@@ -1,9 +1,9 @@
-import { Condition } from "../../FilterElement/Condition";
-import { ConditionOptions } from "../../FilterElement/ConditionOptions";
-import { ConditionSelected } from "../../FilterElement/ConditionSelected";
-import { ItemOption } from "../../FilterElement/ConditionValue";
-import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { QueryVarsBuilderUtils } from "../utils";
+import { Condition } from "../FilterElement/Condition";
+import { ConditionOptions } from "../FilterElement/ConditionOptions";
+import { ConditionSelected } from "../FilterElement/ConditionSelected";
+import { ItemOption } from "../FilterElement/ConditionValue";
+import { ExpressionValue, FilterElement } from "../FilterElement/FilterElement";
+import { QueryVarsBuilderUtils } from "./utils";
 
 describe("QueryVarsBuilderUtils", () => {
   describe("getBooleanValueFromElement", () => {

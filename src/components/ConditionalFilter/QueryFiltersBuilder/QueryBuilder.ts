@@ -1,6 +1,6 @@
 import {
-  FilterDefinition,
   FilterQuery,
+  QueryVarsBuilder,
   supportsFilterApi,
   supportsWhereApi,
 } from "@dashboard/components/ConditionalFilter/QueryFiltersBuilder/queryVarsBuilders/types";
@@ -9,16 +9,16 @@ import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 import { QueryApiType } from "./types";
 
-export class QueryBuilder<T extends FilterQuery, K extends keyof T = never> {
+export class QueryBuilder<TQuery extends FilterQuery, TTopLevelKeys extends keyof TQuery = never> {
   constructor(
     private apiType: QueryApiType,
     private filterContainer: FilterContainer,
-    private topLevelKeys: K[] = [],
-    private filterDefinitionResolver: FilterQueryVarsBuilderResolver = FilterQueryVarsBuilderResolver.getDefaultResolver(),
-  ) {}
+    private topLevelKeys: TTopLevelKeys[] = [],
+    private filterDefinitionResolver: FilterQueryVarsBuilderResolver<TQuery> = FilterQueryVarsBuilderResolver.getDefaultResolver(),
+  ) { }
 
-  build(): { topLevel: Pick<T, K>; filters: Omit<T, K> } {
-    let query = {} as T;
+  build(): { topLevel: Pick<TQuery, TTopLevelKeys>; filters: Omit<TQuery, TTopLevelKeys> } {
+    let query = {} as TQuery;
 
     for (const element of this.getValidElements()) {
       const definition = this.filterDefinitionResolver.resolve(element);
@@ -31,13 +31,13 @@ export class QueryBuilder<T extends FilterQuery, K extends keyof T = never> {
     }
 
     // Separate top-level keys from filters
-    const topLevel: Pick<T, K> = {} as Pick<T, K>;
-    const filters: Omit<T, K> = { ...query };
+    const topLevel: Pick<TQuery, TTopLevelKeys> = {} as Pick<TQuery, TTopLevelKeys>;
+    const filters: Omit<TQuery, TTopLevelKeys> = { ...query };
 
     for (const key of this.topLevelKeys) {
       if (key in query) {
         topLevel[key] = query[key];
-        delete (filters as Partial<T>)[key];
+        delete (filters as Partial<TQuery>)[key];
       }
     }
 
@@ -45,10 +45,10 @@ export class QueryBuilder<T extends FilterQuery, K extends keyof T = never> {
   }
 
   private updateQueryWithDefinition(
-    query: T,
+    query: TQuery,
     element: FilterElement,
-    definition: FilterDefinition<T>,
-  ): T {
+    definition: QueryVarsBuilder<TQuery>,
+  ): TQuery {
     const filterIdentifier = this.getFilterIdentifier(element);
 
     if (this.apiType === QueryApiType.WHERE) {

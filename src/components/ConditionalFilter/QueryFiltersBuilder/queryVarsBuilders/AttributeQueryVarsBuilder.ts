@@ -1,10 +1,10 @@
 import { ApolloClient } from "@apollo/client";
 import { AttributeInput, AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { AttributeChoicesHandler, Handler } from "../../../API/Handler";
-import { FilterElement } from "../../../FilterElement";
-import { QueryVarsBuilderUtils } from "../../utils";
-import { WhereOnlyQueryVarsBuilder } from "../types";
+import { AttributeChoicesHandler, Handler } from "../../API/Handler";
+import { FilterElement } from "../../FilterElement";
+import { QueryVarsBuilderUtils } from "../utils";
+import { WhereOnlyQueryVarsBuilder } from "./types";
 
 export class AttributeQueryVarsBuilder
   implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }>

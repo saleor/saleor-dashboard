@@ -2,7 +2,7 @@ import { Condition } from "../FilterElement/Condition";
 import { ExpressionValue, FilterElement } from "../FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 import { QueryBuilder } from "./QueryBuilder";
-import { FilterDefinition } from "./queryVarsBuilders/types";
+import { QueryVarsBuilder } from "./queryVarsBuilders/types";
 import { QueryApiType } from "./types";
 
 describe("QueryBuilder", () => {
@@ -26,7 +26,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
@@ -55,7 +55,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
@@ -82,7 +82,7 @@ describe("QueryBuilder", () => {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         // no updateWhereQuery property
-      } as unknown as FilterDefinition<Record<string, unknown>>;
+      } as unknown as QueryVarsBuilder<Record<string, unknown>>;
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new QueryBuilder(QueryApiType.WHERE, [element], [], resolver);
 
@@ -111,7 +111,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateFilterQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "filter" })),
@@ -140,7 +140,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateFilterQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "filter" })),
@@ -165,7 +165,7 @@ describe("QueryBuilder", () => {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         // no updateFilterQuery property
-      } as unknown as FilterDefinition<Record<string, unknown>>;
+      } as unknown as QueryVarsBuilder<Record<string, unknown>>;
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
       const builder = new QueryBuilder(QueryApiType.FILTER, [element], [], resolver);
 
@@ -182,7 +182,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
@@ -210,7 +210,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
@@ -239,7 +239,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
@@ -267,7 +267,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
@@ -296,7 +296,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),
@@ -319,7 +319,7 @@ describe("QueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const mockDef: FilterDefinition<Record<string, unknown>> = {
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
         canHandle: jest.fn(() => true),
         createOptionFetcher: jest.fn(),
         updateWhereQuery: jest.fn((query, el) => ({ ...query, [el.value.value]: "where" })),

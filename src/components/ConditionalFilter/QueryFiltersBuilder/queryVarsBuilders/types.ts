@@ -5,7 +5,7 @@ import { FilterElement } from "../../FilterElement";
 
 export type FilterQuery = Record<string, unknown>;
 
-export interface QueryVarsBuilder {
+export interface BaseQueryVarsBuilder {
   /**
    * Determines if this definition should handle the given filter element.
    */
@@ -21,7 +21,8 @@ export interface QueryVarsBuilder {
   ): Handler;
 }
 
-export interface WhereOnlyQueryVarsBuilder<TQuery extends FilterQuery> extends QueryVarsBuilder {
+export interface WhereOnlyQueryVarsBuilder<TQuery extends FilterQuery>
+  extends BaseQueryVarsBuilder {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
    * This method MUST treat the input query as immutable and return a new one.
@@ -29,7 +30,8 @@ export interface WhereOnlyQueryVarsBuilder<TQuery extends FilterQuery> extends Q
   updateWhereQuery(query: Readonly<TQuery>, element: FilterElement): TQuery;
 }
 
-export interface FilterOnlyQueryVarsBuilder<TQuery extends FilterQuery> extends QueryVarsBuilder {
+export interface FilterOnlyQueryVarsBuilder<TQuery extends FilterQuery>
+  extends BaseQueryVarsBuilder {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for FILTER API.
    * This method MUST treat the input query as immutable and return a new one.
@@ -43,7 +45,7 @@ export type BothApiQueryVarsBuilder<TQuery extends FilterQuery> =
 /**
  * A discriminating union that ensures at least one of the update methods is implemented.
  */
-export type FilterDefinition<TQuery extends FilterQuery> =
+export type QueryVarsBuilder<TQuery extends FilterQuery> =
   | WhereOnlyQueryVarsBuilder<TQuery>
   | FilterOnlyQueryVarsBuilder<TQuery>
   | BothApiQueryVarsBuilder<TQuery>;
@@ -52,13 +54,13 @@ export type FilterDefinition<TQuery extends FilterQuery> =
  * Type guards to check which API methods are supported by a definition.
  */
 export function supportsWhereApi<TQuery extends FilterQuery>(
-  definition: FilterDefinition<TQuery>,
+  definition: QueryVarsBuilder<TQuery>,
 ): definition is WhereOnlyQueryVarsBuilder<TQuery> | BothApiQueryVarsBuilder<TQuery> {
   return "updateWhereQuery" in definition;
 }
 
 export function supportsFilterApi<TQuery extends FilterQuery>(
-  definition: FilterDefinition<TQuery>,
+  definition: QueryVarsBuilder<TQuery>,
 ): definition is FilterOnlyQueryVarsBuilder<TQuery> | BothApiQueryVarsBuilder<TQuery> {
   return "updateFilterQuery" in definition;
 }

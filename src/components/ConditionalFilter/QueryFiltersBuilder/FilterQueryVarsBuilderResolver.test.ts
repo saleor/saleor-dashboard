@@ -1,10 +1,10 @@
-import { Condition, FilterElement } from "../../FilterElement";
-import { ExpressionValue } from "../../FilterElement/FilterElement";
-import { AttributeDefinition } from "./definitions";
-import { DefaultQueryVarsBuilder } from "./definitions/DefaultQueryVarsBuilder";
-import { StaticBooleanQueryVarsBuilder } from "./definitions/StaticBooleanQueryVarsBuilder";
-import { StaticQueryVarsBuilder } from "./definitions/StaticQueryVarsBuilder";
+import { Condition, FilterElement } from "../FilterElement";
+import { ExpressionValue } from "../FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
+import { AttributeQueryVarsBuilder } from "./queryVarsBuilders";
+import { DefaultQueryVarsBuilder } from "./queryVarsBuilders/DefaultQueryVarsBuilder";
+import { StaticBooleanQueryVarsBuilder } from "./queryVarsBuilders/StaticBooleanQueryVarsBuilder";
+import { StaticQueryVarsBuilder } from "./queryVarsBuilders/StaticQueryVarsBuilder";
 
 // Helper to create a mock FilterDefinition with required methods
 function createMockDefinition(canHandleImpl: (element: FilterElement) => boolean) {
@@ -20,7 +20,7 @@ describe("FilterDefinitionResolver", () => {
   describe("getDefaultDefinitions", () => {
     it("should have DefaultDefinition as the last item", () => {
       // Arrange & Act
-      const defs = FilterQueryVarsBuilderResolver.getDefaultDefinitions();
+      const defs = FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders();
 
       // Assert
       expect(defs[defs.length - 1]).toBeInstanceOf(DefaultQueryVarsBuilder);
@@ -37,12 +37,12 @@ describe("FilterDefinitionResolver", () => {
 
       const defs = resolver["definitions"];
 
-      expect(defs).toEqual(FilterQueryVarsBuilderResolver.getDefaultDefinitions());
+      expect(defs).toEqual(FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders());
     });
   });
 
   describe("resolve", () => {
-    it("should resolve AttributeDefinition for attribute elements", () => {
+    it("should resolve AttributeQueryVarsBuilder for attribute elements", () => {
       // Arrange
       const element = new FilterElement(
         new ExpressionValue("attribute", "Attribute", "attribute"),
@@ -50,14 +50,14 @@ describe("FilterDefinitionResolver", () => {
         false,
       );
       const resolver = new FilterQueryVarsBuilderResolver([
-        new AttributeDefinition(),
+        new AttributeQueryVarsBuilder(),
         new DefaultQueryVarsBuilder(),
       ]);
       // Act
       const def = resolver.resolve(element);
 
       // Assert
-      expect(def).toBeInstanceOf(AttributeDefinition);
+      expect(def).toBeInstanceOf(AttributeQueryVarsBuilder);
     });
 
     it("should resolve StaticDefinition for supported static elements", () => {
