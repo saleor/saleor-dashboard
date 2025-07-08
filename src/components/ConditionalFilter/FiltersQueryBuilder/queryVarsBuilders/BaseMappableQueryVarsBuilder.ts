@@ -1,5 +1,4 @@
 import { ApolloClient } from "@apollo/client";
-import { mapStaticQueryPartToLegacyVariables } from "@dashboard/components/ConditionalFilter/QueryFiltersBuilder/utils";
 
 import { Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
@@ -10,8 +9,7 @@ import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
  * to different query variables
  * For example: attributeType -> type */
 export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = FilterQuery>
-  implements BothApiQueryVarsBuilder<T>
-{
+  implements BothApiQueryVarsBuilder<T> {
   public abstract canHandle(element: FilterElement): boolean;
 
   public abstract createOptionFetcher(
@@ -40,7 +38,7 @@ export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = Filte
 
     return {
       ...query,
-      [fieldName]: mapStaticQueryPartToLegacyVariables(
+      [fieldName]: QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(
         whereQueryPart as { eq?: string; oneOf?: string[] },
       ),
     };

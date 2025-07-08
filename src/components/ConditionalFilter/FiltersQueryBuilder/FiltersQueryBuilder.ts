@@ -1,12 +1,11 @@
+import { FilterContainer, FilterElement } from "../FilterElement";
+import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
 import {
   FilterQuery,
   QueryVarsBuilder,
   supportsFilterApi,
   supportsWhereApi,
-} from "@dashboard/components/ConditionalFilter/QueryFiltersBuilder/queryVarsBuilders/types";
-
-import { FilterContainer, FilterElement } from "../FilterElement";
-import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
+} from "./queryVarsBuilders/types";
 import { QueryApiType } from "./types";
 
 interface QueryBuilderOptions<

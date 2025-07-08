@@ -3,12 +3,11 @@ import { AttributeInput, AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { AttributeChoicesHandler, Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { WhereOnlyQueryVarsBuilder } from "../types";
-import { QueryVarsBuilderUtils } from "../utils";
+import { WhereOnlyQueryVarsBuilder } from "../../FiltersQueryBuilder/queryVarsBuilders/types";
+import { QueryVarsBuilderUtils } from "../../FiltersQueryBuilder/utils";
 
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }>
-{
+  implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }> {
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }

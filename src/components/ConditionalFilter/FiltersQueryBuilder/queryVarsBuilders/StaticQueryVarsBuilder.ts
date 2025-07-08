@@ -1,5 +1,4 @@
 import { ApolloClient } from "@apollo/client";
-import { mapStaticQueryPartToLegacyVariables } from "@dashboard/components/ConditionalFilter/QueryFiltersBuilder/utils";
 
 import {
   CategoryHandler,
@@ -14,6 +13,7 @@ import {
 import { STATIC_CONDITIONS } from "../../constants";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
+import { QueryVarsBuilderUtils } from "../utils";
 import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
 
 const SUPPORTED_STATIC_FIELDS: Array<keyof typeof STATIC_CONDITIONS> = [
@@ -90,7 +90,7 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<FilterQue
 
     return {
       ...query,
-      [fieldName]: mapStaticQueryPartToLegacyVariables(
+      [fieldName]: QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(
         whereQueryPart as { eq?: string; oneOf?: string[] },
       ),
     };
