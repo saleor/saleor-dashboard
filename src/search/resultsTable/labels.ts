@@ -1,6 +1,9 @@
-import { OrderChargeStatusEnum, PaymentChargeStatusEnum } from "@dashboard/graphql";
+import {
+  GlobalSearchQuery,
+  OrderChargeStatusEnum,
+  PaymentChargeStatusEnum,
+} from "@dashboard/graphql";
 import { getStatusColor, transformChargedStatus, transformPaymentStatus } from "@dashboard/misc";
-import { ChoiceWithAncestors } from "@dashboard/products/utils/utils";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
@@ -35,7 +38,9 @@ export const getPaymentLabel = (
   };
 };
 
-export const getCategoryHierarchyLabel = (choice: ChoiceWithAncestors): string => {
+type CategoryNode = NonNullable<GlobalSearchQuery["categories"]>["edges"][number]["node"];
+
+export const getCategoryHierarchyLabel = (choice: CategoryNode): string => {
   const { parent, level, ancestors } = choice;
 
   if (level === 0) {

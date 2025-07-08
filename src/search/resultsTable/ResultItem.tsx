@@ -28,7 +28,7 @@ const Row = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const Thumbnail = ({ url, name }: { url: string; name: string }) => {
+const Thumbnail = ({ url, name }: { url?: string; name: string }) => {
   const [imageError, setImageError] = React.useState(false);
   const [imageLoaded, setImageLoaded] = React.useState(false);
 
