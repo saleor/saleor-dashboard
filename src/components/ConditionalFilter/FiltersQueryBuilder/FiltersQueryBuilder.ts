@@ -21,6 +21,8 @@ interface QueryBuilderOptions<
   filterDefinitionResolver?: FilterQueryVarsBuilderResolver<TQuery>;
 }
 
+/** Builds query based on filters selected by user in Dashboard's UI
+ * it can also extract variables to be used in top-level query, e.g. `channel`, which shouldn't be used in `where` input */
 export class FiltersQueryBuilder<
   TQuery extends FilterQuery,
   TTopLevelKeys extends keyof TQuery = never,
