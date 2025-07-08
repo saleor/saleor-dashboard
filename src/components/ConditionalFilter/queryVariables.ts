@@ -22,7 +22,7 @@ import {
 import { FilterContainer } from "./FilterElement";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { isItemOption, isItemOptionArray, isTuple } from "./FilterElement/ConditionValue";
-import { FiltersQueryBuilder, QueryApiType } from "./QueryFiltersBuilder";
+import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 
 type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
