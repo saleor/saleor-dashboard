@@ -1,4 +1,5 @@
 /**
+ * @deprecated remove this function when all plugins are replaced with apps
  * Provides a static list of plugins IDs that are already re-implemented
  * as apps and available in the App Store.
  *

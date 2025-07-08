@@ -1,13 +1,25 @@
-import { AttributeEntityTypeEnum, SearchPagesQuery } from "@dashboard/graphql";
+import {
+  AttributeEntityTypeEnum,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
+import AssignCategoryDialog from "../AssignCategoryDialog";
+import AssignCollectionDialog from "../AssignCollectionDialog";
 import AssignContainerDialog from "../AssignContainerDialog";
 import AssignProductDialog, { AssignProductDialogProps } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
 import { AttributeInput } from "../Attributes";
-import { filterPagesByAttributeValues, filterProductsByAttributeValues } from "./utils";
+import {
+  filterCategoriesByAttributeValues,
+  filterCollectionsByAttributeValues,
+  filterPagesByAttributeValues,
+  filterProductsByAttributeValues,
+} from "./utils";
 
 const pagesMessages = defineMessages({
   confirmBtn: {
@@ -36,12 +48,16 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   entityType: AttributeEntityTypeEnum;
   attribute: AttributeInput;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 };
 
 const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
   entityType,
   pages,
   products,
+  collections,
+  categories,
   attribute,
   labels,
   ...rest
@@ -49,6 +65,8 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
   const intl = useIntl();
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
+  const filteredCollections = filterCollectionsByAttributeValues(collections, attribute);
+  const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
@@ -74,6 +92,10 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
       return <AssignProductDialog products={filteredProducts ?? []} {...rest} />;
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
       return <AssignVariantDialog products={filteredProducts} {...rest} />;
+    case AttributeEntityTypeEnum.COLLECTION:
+      return <AssignCollectionDialog collections={filteredCollections} {...rest} />;
+    case AttributeEntityTypeEnum.CATEGORY:
+      return <AssignCategoryDialog categories={filteredCategories} {...rest} />;
   }
 };
 

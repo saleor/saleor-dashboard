@@ -30,7 +30,6 @@ export const URL_LIST = {
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
   staffMembers: "staff/",
-  stripeApiPaymentMethods: "https://api.stripe.com/v1/payment_methods",
   translations: "translations/",
   variants: "variant/",
   vouchers: "discounts/vouchers/",

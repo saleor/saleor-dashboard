@@ -69,6 +69,8 @@ interface ProductCreatePageProps {
   productTypes?: RelayToFlat<SearchProductTypesQuery["search"]>;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
@@ -115,6 +117,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   productTypes: productTypeChoiceList,
   referencePages = [],
   referenceProducts = [],
+  referenceCategories = [],
+  referenceCollections = [],
   saveButtonBarState,
   taxClasses,
   fetchMoreTaxClasses,
@@ -188,6 +192,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       productTypes={productTypeChoiceList}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
+      referenceCategories={referenceCategories}
+      referenceCollections={referenceCollections}
       selectedCollections={selectedCollections}
       setSelectedCategory={setSelectedCategory}
       setSelectedCollections={setSelectedCollections}
@@ -374,6 +380,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
+                collections={referenceCollections}
+                categories={referenceCategories}
                 attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
