@@ -53,11 +53,20 @@ jobs:
         id: schema-version
         run: echo "version=$(node -p "require('./package.json').config.saleor.schemaVersion")" >> $GITHUB_OUTPUT
 
+      - name: Generate github access token
+        id: generate-token
+        if: steps.git-check.outputs.has_changes == 'true'
+        run: |
+          token=$(
+            curl --request GET --url ${{ secrets.VAULT_URL }} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token
+          )
+          echo "token=${token}" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request
         if: steps.git-check.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.generate-token.outputs.token }}
           commit-message: "chore: update GraphQL schema and generated types"
           title: "chore: update GraphQL schema and generated types (schema: ${{ steps.schema-version.outputs.version }}, ${{ steps.date.outputs.date }})"
           body: |
@@ -77,6 +86,6 @@ jobs:
 
             **Schema Version:** ${{ steps.schema-version.outputs.version }}  
             **Generated on:** ${{ steps.date.outputs.date }}
-          branch: chore/update-schema-${{ steps.schema-version.outputs.version }}-${{ steps.date.outputs.date }}
+          branch: chore/update-schema-${{ steps.schema-version.outputs.version }}
           delete-branch: true
           draft: false
