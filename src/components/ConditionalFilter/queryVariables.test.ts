@@ -9,7 +9,6 @@ import { Condition, FilterContainer, FilterElement } from "./FilterElement";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
-import { mapStaticQueryPartToLegacyVariables } from "./QueryBuilder/utils";
 import {
   createAttributesQueryVariables,
   createCustomerQueryVariables,
@@ -782,54 +781,6 @@ describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", 
     };
     // Act
     const result = createAttributesQueryVariables(filters);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-});
-
-describe("ConditionalFilter / queryVariables / mapStaticQueryPartToLegacyVariables", () => {
-  it("should return queryPart if it is not an object", () => {
-    // Arrange
-    const queryPart = "queryPart";
-    const expectedOutput = "queryPart";
-
-    // Act
-    const result = mapStaticQueryPartToLegacyVariables(queryPart);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-
-  it("should transform range input to legacy format", () => {
-    // Arrange
-    const queryPart = { range: { lte: "value" } };
-    const expectedOutput = { lte: "value" };
-
-    // Act
-    const result = mapStaticQueryPartToLegacyVariables(queryPart);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-
-  it("should transform eq input to legacy format", () => {
-    // Arrange
-    const queryPart = { eq: "value" };
-    const expectedOutput = "value";
-    // Act
-    const result = mapStaticQueryPartToLegacyVariables(queryPart);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-
-  it("should transform oneOf input to legacy format", () => {
-    // Arrange
-    const queryPart = { oneOf: ["value1", "value2"] };
-    const expectedOutput = ["value1", "value2"];
-    // Act
-    const result = mapStaticQueryPartToLegacyVariables(queryPart);
 
     // Assert
     expect(result).toEqual(expectedOutput);

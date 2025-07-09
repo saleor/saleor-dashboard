@@ -1,12 +1,12 @@
 import { useApolloClient } from "@apollo/client";
 
-import { FilterDefinitionResolver } from "../../filterDefinitions/FilterDefinitionResolver";
 import { FilterContainer } from "../../FilterElement";
+import { FilterQueryVarsBuilderResolver } from "../../FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { FilterAPIProvider } from "../FilterAPIProvider";
 import { AttributesHandler } from "../Handler";
 import { getFilterElement } from "../utils";
 
-const resolver = FilterDefinitionResolver.getDefaultResolver();
+const resolver = FilterQueryVarsBuilderResolver.getDefaultResolver();
 
 export const useProductFilterAPIProvider = (): FilterAPIProvider => {
   const client = useApolloClient();
