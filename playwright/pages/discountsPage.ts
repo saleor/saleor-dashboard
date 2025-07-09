@@ -15,7 +15,7 @@ export class DiscountsPage extends BasePage {
 
   constructor(
     page: Page,
-    readonly createDiscountButton = page.getByTestId("create-discount"),
+    readonly createDiscountButton = page.getByTestId("create-sale"),
     readonly discountForm = page.getByTestId("discount-form"),
     readonly discountNameInput = page.getByTestId("discount-name-input"),
     readonly discountTypeSelect = page.getByTestId("discount-type-select"),
