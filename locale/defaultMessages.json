@@ -3123,6 +3123,9 @@
   "Gg4+K7": {
     "string": "No Products"
   },
+  "GgvbdW": {
+    "string": "Model types"
+  },
   "GhSB79": {
     "context": "model status",
     "string": "Published"
@@ -4584,6 +4587,10 @@
     "context": "no channels found title",
     "string": "No Channels Found"
   },
+  "PeMebc": {
+    "context": "search section name",
+    "string": "Search"
+  },
   "PiSXjb": {
     "context": "check to require numeric attribute unit",
     "string": "Select unit"
@@ -5357,6 +5364,9 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
+  "UE9zNR": {
+    "string": "Recent Searches"
+  },
   "UIM5bq": {
     "context": "charge status full",
     "string": "Full"
@@ -5638,6 +5648,10 @@
     "context": "header",
     "string": "Order settings"
   },
+  "VvhNCi": {
+    "context": "command menu shortcut",
+    "string": "Command menu"
+  },
   "VyC+Bm": {
     "context": "radio button label",
     "string": "Enter the refund amount without using the product list. Best for overcharges and custom adjustments."
@@ -5841,6 +5855,9 @@
   "X7fqfM": {
     "context": "title",
     "string": "Reserved stock"
+  },
+  "X7jl6w": {
+    "string": "Orders"
   },
   "X8qjg3": {
     "context": "inactive",
@@ -6359,6 +6376,10 @@
   "a/QJBx": {
     "context": "user action bar",
     "string": "Action"
+  },
+  "a0TDWs": {
+    "context": "search section name",
+    "string": "All Search Results"
   },
   "a1uffz": {
     "context": "draft created from replace products list title",
@@ -7418,10 +7439,6 @@
   "gt05TH": {
     "context": "tooltip message",
     "string": "You don't have permission to manage staff"
-  },
-  "gx6b6x": {
-    "context": "search shortcut",
-    "string": "Search"
   },
   "gxPjIQ": {
     "string": "Are you sure you want to delete {email} from staff members?"
@@ -9137,6 +9154,9 @@
     "context": "select all options, button",
     "string": "Select All"
   },
+  "rhSI1/": {
+    "string": "Model"
+  },
   "ri3kK9": {
     "context": "order placement date",
     "string": "Date"
@@ -10377,6 +10397,9 @@
     "context": "status section subtitle",
     "string": "Channel status"
   },
+  "zQvVDJ": {
+    "string": "All"
+  },
   "zR9Ozi": {
     "context": "select all channels label",
     "string": "Select All Channels"
@@ -10426,6 +10449,9 @@
   "zf48rQ": {
     "context": "sum of captured amount of all transactions",
     "string": "Total captured"
+  },
+  "zfSKyx": {
+    "string": "Clear history"
   },
   "zfjAc7": {
     "context": "grant refund, card header",
