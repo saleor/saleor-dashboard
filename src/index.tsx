@@ -196,6 +196,7 @@ const Routes: React.FC = () => {
                     PermissionEnum.MANAGE_PAGES,
                     PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
                   ]}
+                  matchPermission="any"
                   path="/search"
                   component={SearchSection}
                 />
