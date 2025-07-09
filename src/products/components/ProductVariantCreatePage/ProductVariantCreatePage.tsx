@@ -22,6 +22,8 @@ import {
   ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
   SearchAttributeValuesQuery,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchProductsQuery,
   SearchWarehousesQuery,
@@ -88,6 +90,8 @@ interface ProductVariantCreatePageProps {
   weightUnit: string;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   onVariantClick: (variantId: string) => void;
@@ -118,6 +122,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   weightUnit,
   referencePages = [],
   referenceProducts = [],
+  referenceCategories = [],
+  referenceCollections = [],
   attributeValues,
   onSubmit,
   onVariantReorder,
@@ -319,6 +325,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   confirmButtonState={"default"}
                   products={referenceProducts}
                   pages={referencePages}
+                  collections={referenceCollections}
+                  categories={referenceCategories}
                   attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
                   hasMore={handlers.fetchMoreReferences?.hasMore}
                   open={canOpenAssignReferencesAttributeDialog}
