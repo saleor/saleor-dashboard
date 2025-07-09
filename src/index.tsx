@@ -190,7 +190,12 @@ const Routes: React.FC = () => {
                 {legacyRedirects}
                 <SectionRoute exact path="/" component={WelcomePage} />
                 <SectionRoute
-                  // permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  permissions={[
+                    PermissionEnum.MANAGE_PRODUCTS,
+                    PermissionEnum.MANAGE_ORDERS,
+                    PermissionEnum.MANAGE_PAGES,
+                    PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                  ]}
                   path="/search"
                   component={SearchSection}
                 />
