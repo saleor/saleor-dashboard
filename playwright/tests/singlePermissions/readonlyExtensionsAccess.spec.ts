@@ -25,7 +25,7 @@ for (const permission of permissionList) {
     await mainMenuPage.openExtensions();
     await extensionsPage.waitForContentLoad();
 
-    await expect(extensionsPage.installExternalAppButton).not.toBeVisible();
+    await expect(extensionsPage.addExtensionsOpenDropdownButton).not.toBeVisible();
 
     await expect(extensionsPage.installedExtensionsList).toBeVisible();
 
@@ -56,7 +56,7 @@ for (const permission of permissionList) {
     await mainMenuPage.openExploreExtensions();
     await extensionsPage.waitForContentLoad();
 
-    await expect(extensionsPage.installExternalAppButton).not.toBeVisible();
+    await expect(extensionsPage.addExtensionsOpenDropdownButton).not.toBeVisible();
 
     await expect(extensionsPage.availableExtensions).toBeVisible();
 

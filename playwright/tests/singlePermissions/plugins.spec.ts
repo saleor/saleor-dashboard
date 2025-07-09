@@ -12,7 +12,6 @@ const expectedExtensions = [
   "Admin emails",
   "Adyen",
   "Avalara",
-  "Dummy",
   "OpenID Connect",
   "Stripe",
   "User emails",
