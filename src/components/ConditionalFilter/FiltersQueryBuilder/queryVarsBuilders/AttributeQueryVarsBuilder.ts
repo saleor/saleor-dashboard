@@ -24,7 +24,8 @@ import { WhereOnlyQueryVarsBuilder } from "./types";
 export type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart> {
+  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart>
+{
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
