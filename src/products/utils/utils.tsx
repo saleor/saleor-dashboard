@@ -20,7 +20,7 @@ export type ChoiceWithAncestors = Choice & {
   } | null;
 };
 
-const getAncestorsLabel = (choice: ChoiceWithAncestors): string => {
+export const getAncestorsLabel = (choice: ChoiceWithAncestors): string => {
   const { parent, level, ancestors } = choice;
 
   if (level === 0) {
