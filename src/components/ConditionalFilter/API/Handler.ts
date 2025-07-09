@@ -103,7 +103,8 @@ export const createAttributeProductVariantOptionsFromAPI = (
   data.map(
     ({ node }) =>
       ({
-        // AttributeValue.name for product variant reference attributes
+        // This label matches value from AttributeValue.name for product variant reference attributes
+        // It's used by Saleor for searching ProductVariants
         label: node.product ? `${node.product.name}: ${node.name}` : node.name ?? "",
         value: node.id,
         slug: node.slug,
@@ -116,7 +117,7 @@ export class AttributeChoicesHandler implements Handler {
     public client: ApolloClient<unknown>,
     public attributeSlug: string,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { client, attributeSlug, query } = this;
@@ -140,7 +141,7 @@ export class CollectionHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -162,7 +163,7 @@ export class CurrencyHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -189,7 +190,7 @@ export class CategoryHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -211,7 +212,7 @@ export class ProductTypeHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -233,7 +234,7 @@ export class ProductsHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -255,7 +256,7 @@ export class ProductVariantHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -277,7 +278,7 @@ export class PageHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<_GetPagesChoicesQuery, _GetPagesChoicesQueryVariables>(
@@ -298,7 +299,7 @@ export class GiftCardTagsHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -326,7 +327,7 @@ export class ChannelHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -351,7 +352,7 @@ export class CustomerHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -374,7 +375,7 @@ export class LegacyChannelHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -399,7 +400,7 @@ export class AttributesHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async (): Promise<LeftOperand[]> => {
     const { data } = await this.client.query<
@@ -424,7 +425,7 @@ export class AttributesHandler implements Handler {
 }
 
 export class BooleanValuesHandler implements Handler {
-  constructor(public options: LeftOperand[]) {}
+  constructor(public options: LeftOperand[]) { }
 
   fetch = async (): Promise<LeftOperand[]> => {
     return this.options;
@@ -467,7 +468,7 @@ export class EnumValuesHandler implements Handler {
 }
 
 export class TextInputValuesHandler implements Handler {
-  constructor(public options: LeftOperand[]) {}
+  constructor(public options: LeftOperand[]) { }
 
   fetch = async (): Promise<LeftOperand[]> => {
     return this.options;
@@ -478,7 +479,7 @@ export class PageTypesHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
-  ) {}
+  ) { }
 
   fetch = async () => {
     const { data } = await this.client.query<
