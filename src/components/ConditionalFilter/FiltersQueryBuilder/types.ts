@@ -3,4 +3,4 @@ export enum QueryApiType {
   FILTER = "filter",
 }
 
-export type StaticQueryPart = string | any | boolean | any;
+export type StaticQueryPart = string | boolean | Record<string, unknown>;

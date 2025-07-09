@@ -5,17 +5,25 @@ import { FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
 
-export class StaticBooleanQueryVarsBuilder implements BothApiQueryVarsBuilder<FilterQuery> {
+const SUPPORTED_STATIC_BOOLEAN_FILTERS = new Set([
+  "isPublished",
+  "hasCategory",
+  "hasVariants",
+  "isAvailable",
+  "isVisibleInListing",
+  "giftCard",
+  "isActive",
+] as const);
+
+type SupportedStaticBooleanKeys =
+  typeof SUPPORTED_STATIC_BOOLEAN_FILTERS extends Set<infer T> ? T : never;
+
+export type StaticBooleanFilterQueryPart = Partial<Record<SupportedStaticBooleanKeys, boolean>>;
+
+export class StaticBooleanQueryVarsBuilder
+  implements BothApiQueryVarsBuilder<StaticBooleanFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
-    return [
-      "isPublished",
-      "hasCategory",
-      "hasVariants",
-      "isAvailable",
-      "isVisibleInListing",
-      "giftCard",
-      "isActive",
-    ].includes(element.value.value);
+    return SUPPORTED_STATIC_BOOLEAN_FILTERS.has(element.value.value as SupportedStaticBooleanKeys);
   }
 
   createOptionFetcher(): Handler {
@@ -35,20 +43,20 @@ export class StaticBooleanQueryVarsBuilder implements BothApiQueryVarsBuilder<Fi
     ]);
   }
 
-  updateWhereQueryVariables(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
+  updateWhereQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
     const fieldName = element.value.value;
     const booleanValue = QueryVarsBuilderUtils.getBooleanValueFromElement(element);
 
-    return { ...query, [fieldName]: booleanValue };
+    return { ...query, [fieldName as SupportedStaticBooleanKeys]: booleanValue };
   }
 
-  updateFilterQueryVariables(query: Readonly<FilterQuery>, element: FilterElement): FilterQuery {
+  updateFilterQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
     const whereQuery = this.updateWhereQueryVariables(query, element);
     const fieldName = element.value.value;
 
     return {
       ...query,
-      [fieldName]: whereQuery[fieldName], // Boolean values don't need legacy mapping
+      [fieldName as SupportedStaticBooleanKeys]: whereQuery[fieldName], // Boolean values don't need legacy mapping
     };
   }
 }

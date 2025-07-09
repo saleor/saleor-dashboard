@@ -35,7 +35,7 @@ describe("FilterDefinitionResolver", () => {
       // Assert
       expect(resolver).toBeInstanceOf(FilterQueryVarsBuilderResolver);
 
-      const defs = resolver["definitions"];
+      const defs = resolver["queryVarsBuilders"];
 
       expect(defs).toEqual(FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders());
     });

@@ -40,7 +40,8 @@ export class FiltersQueryBuilder<
     this.filterContainer = options.filterContainer;
     this.topLevelKeys = options.topLevelKeys || [];
     this.filterDefinitionResolver =
-      options.filterDefinitionResolver || FilterQueryVarsBuilderResolver.getDefaultResolver();
+      options.filterDefinitionResolver ||
+      (FilterQueryVarsBuilderResolver.getDefaultResolver() as FilterQueryVarsBuilderResolver<TQuery>);
   }
 
   build(): { topLevel: Pick<TQuery, TTopLevelKeys>; filters: Omit<TQuery, TTopLevelKeys> } {

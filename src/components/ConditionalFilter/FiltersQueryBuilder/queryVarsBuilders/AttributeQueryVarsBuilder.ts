@@ -6,8 +6,10 @@ import { FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { WhereOnlyQueryVarsBuilder } from "./types";
 
+export type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
+
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<{ attributes?: AttributeInput[] }> {
+  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart> {
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
