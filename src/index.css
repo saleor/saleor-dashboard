@@ -102,3 +102,14 @@ body {
 .simple-radio-group > button {
   min-width: 12px;
 }
+
+.sidebar-item-group-trigger {
+  button,
+  button:hover {
+    background-color: transparent;
+  }
+
+  button[data-state="open"] {
+    background-color: transparent !important;
+  }
+}
