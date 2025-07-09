@@ -34,6 +34,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
         data-test-id={`menu-item-label-${menuItem.id}`}
         position="relative"
         onClick={handleMenuGroupClick}
+        className="sidebar-item-group-trigger"
       >
         <Link
           replace={isActive}

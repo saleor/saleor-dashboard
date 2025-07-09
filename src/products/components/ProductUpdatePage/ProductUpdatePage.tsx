@@ -87,6 +87,8 @@ export interface ProductUpdatePageProps {
   fetchMoreTaxClasses: FetchMoreProps;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
   assignReferencesAttributeId?: string;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
@@ -137,6 +139,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreTaxClasses,
   referencePages = [],
   referenceProducts = [],
+  referenceCategories = [],
+  referenceCollections = [],
   onDelete,
   onImageDelete,
   onImageReorder,
@@ -244,6 +248,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       hasVariants={hasVariants}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
+      referenceCategories={referenceCategories}
+      referenceCollections={referenceCollections}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}
@@ -426,6 +432,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
+                collections={referenceCollections}
+                categories={referenceCategories}
                 attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}

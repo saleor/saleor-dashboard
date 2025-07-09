@@ -1,10 +1,17 @@
-import { SearchPagesQuery, SearchProductsQuery } from "@dashboard/graphql";
+import {
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery,
+  SearchProductsQuery,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 
 import { AttributeInput } from "../Attributes";
 
 type ProductsToFilter = RelayToFlat<SearchProductsQuery["search"]>;
 type PagesToFilter = RelayToFlat<SearchPagesQuery["search"]>;
+type CollectionsToFilter = RelayToFlat<SearchCollectionsQuery["search"]>;
+type CategoriesToFilter = RelayToFlat<SearchCategoriesQuery["search"]>;
 
 export const filterProductsByAttributeValues = (
   products: ProductsToFilter,
@@ -31,4 +38,18 @@ export const filterPagesByAttributeValues = (
   attribute: AttributeInput,
 ): PagesToFilter => {
   return pages?.filter(page => !attribute.value.includes(page.id)) ?? [];
+};
+
+export const filterCollectionsByAttributeValues = (
+  collections: CollectionsToFilter,
+  attribute: AttributeInput,
+): CollectionsToFilter => {
+  return collections?.filter(collection => !attribute.value.includes(collection.id)) ?? [];
+};
+
+export const filterCategoriesByAttributeValues = (
+  categories: CategoriesToFilter,
+  attribute: AttributeInput,
+): CategoriesToFilter => {
+  return categories?.filter(category => !attribute.value.includes(category.id)) ?? [];
 };

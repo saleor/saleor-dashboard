@@ -22,6 +22,8 @@ import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchPageTypesQuery,
   SearchProductsQuery,
@@ -101,6 +103,8 @@ export interface UsePageFormOpts {
   pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCategories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections: RelayToFlat<SearchCollectionsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -218,6 +222,8 @@ function usePageForm(
       attributesWithNewFileValue.data,
       opts.referencePages,
       opts.referenceProducts,
+      opts.referenceCollections,
+      opts.referenceCategories,
     ),
     content: null,
     pageType: pageExists ? page?.pageType : opts.selectedPageType,

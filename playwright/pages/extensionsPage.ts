@@ -9,7 +9,7 @@ export class ExtensionsPage extends BasePage {
 
   constructor(
     page: Page,
-    readonly installExternalAppButton = page.getByTestId("add-app-from-manifest"),
+    readonly addExtensionsOpenDropdownButton = page.getByTestId("add-extension-button"),
     readonly installedExtensionsList = page.getByTestId("extensions-installed"),
     readonly availableExtensions = page.getByTestId("extensions-list"),
 
@@ -28,7 +28,6 @@ export class ExtensionsPage extends BasePage {
     readonly pluginExtensionExploreInstallButtons = page.locator(
       '[data-test-id="plugin-install-button"]',
     ),
-    readonly addExtensionButton = page.getByTestId("add-extension-button"),
     readonly exploreExtensionsOption = page.getByTestId("explore-extensions"),
     readonly installCustomExtensionOption = page.getByTestId("install-custom-extension"),
     readonly addCustomExtensionOption = page.getByTestId("add-custom-extension"),

@@ -37,6 +37,16 @@ const entityTypeMessages = defineMessages({
     defaultMessage: "Product variants",
     description: "product variant attribute entity type",
   },
+  category: {
+    id: "KzgcFV",
+    defaultMessage: "Categories",
+    description: "category attribute entity type",
+  },
+  collection: {
+    id: "Crn8DZ",
+    defaultMessage: "Collections",
+    description: "collection attribute entity type",
+  },
 });
 
 export interface AttributeDetailsProps
@@ -112,6 +122,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(entityTypeMessages.productVariant),
       value: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+    },
+    {
+      label: intl.formatMessage(entityTypeMessages.category),
+      value: AttributeEntityTypeEnum.CATEGORY,
+    },
+    {
+      label: intl.formatMessage(entityTypeMessages.collection),
+      value: AttributeEntityTypeEnum.COLLECTION,
     },
   ];
   const formApiErrors = getFormErrors(

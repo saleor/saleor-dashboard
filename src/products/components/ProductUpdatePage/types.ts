@@ -11,6 +11,8 @@ import {
   MetadataErrorFragment,
   ProductChannelListingUpdateInput,
   ProductFragment,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchProductsQuery,
 } from "@dashboard/graphql";
@@ -114,6 +116,8 @@ export interface UseProductUpdateFormOpts
   hasVariants: boolean;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
