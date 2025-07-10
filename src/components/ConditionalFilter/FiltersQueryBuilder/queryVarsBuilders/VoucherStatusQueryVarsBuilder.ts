@@ -11,7 +11,8 @@ import { FilterOnlyQueryVarsBuilder } from "./types";
  * we must always returns an array
  * */
 export class VoucherStatusQueryVarsBuilder
-  implements FilterOnlyQueryVarsBuilder<Pick<VoucherFilterInput, "status">> {
+  implements FilterOnlyQueryVarsBuilder<Pick<VoucherFilterInput, "status">>
+{
   canHandle(element: FilterElement): boolean {
     return element.value.value === "voucherStatus";
   }

@@ -7,7 +7,8 @@ import { FilterOnlyQueryVarsBuilder } from "./types";
 
 /** Collections don't use boolean values like other filters, we need to use enum */
 export class CollectionPublishedQueryVarsBuilder
-  implements FilterOnlyQueryVarsBuilder<{ published?: CollectionPublished }> {
+  implements FilterOnlyQueryVarsBuilder<{ published?: CollectionPublished }>
+{
   canHandle(element: FilterElement): boolean {
     return element.value.value === "published";
   }

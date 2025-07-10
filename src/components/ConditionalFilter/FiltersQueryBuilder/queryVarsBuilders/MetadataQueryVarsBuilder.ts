@@ -4,7 +4,8 @@ import { isTuple } from "../../FilterElement/ConditionValue";
 import { BothApiQueryVarsBuilder } from "./types";
 
 export class MetadataQueryVarsBuilder
-  implements BothApiQueryVarsBuilder<{ metadata?: Array<{ key: string; value: string }> }> {
+  implements BothApiQueryVarsBuilder<{ metadata?: Array<{ key: string; value: string }> }>
+{
   canHandle(element: FilterElement): boolean {
     return element.value.value === "metadata";
   }

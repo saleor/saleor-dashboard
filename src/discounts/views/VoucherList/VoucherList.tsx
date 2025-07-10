@@ -44,7 +44,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
   const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
-  const {filters, channel} = createVoucherQueryVariables(valueProvider.value);
+  const { filters, channel } = createVoucherQueryVariables(valueProvider.value);
 
   usePaginationReset(voucherListUrl, params, settings.rowNumber);
 
