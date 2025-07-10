@@ -3,16 +3,16 @@ import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOp
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ItemOption } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { SlugChannelDefinition } from "./SlugChannelDefinition";
+import { SlugChannelQueryVarsBuilder } from "./SlugChannelQueryVarsBuilder";
 
-describe("SlugChannelDefinition", () => {
+describe("SlugChannelQueryVarsBuilder", () => {
   describe("canHandle", () => {
     it("should return true for elements with value 'channel'", () => {
       // Arrange
       const value = new ExpressionValue("channel", "Channel", "channel");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new SlugChannelDefinition();
+      const def = new SlugChannelQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -24,7 +24,7 @@ describe("SlugChannelDefinition", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new SlugChannelDefinition();
+      const def = new SlugChannelQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -34,8 +34,8 @@ describe("SlugChannelDefinition", () => {
   });
 
   // Note: This filter has support only for legacy FILTER API
-  describe("updateFilterQuery", () => {
-    const def = new SlugChannelDefinition();
+  describe("updateFilterQueryVariables", () => {
+    const def = new SlugChannelQueryVarsBuilder();
     const value = new ExpressionValue("channel", "Channel", "channel");
     const options = ConditionOptions.fromName("channel");
     const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-5" };
@@ -47,7 +47,7 @@ describe("SlugChannelDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.channel).toBe("slugA");
@@ -63,7 +63,7 @@ describe("SlugChannelDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.channel).toEqual(["slugA", "slugB"]);

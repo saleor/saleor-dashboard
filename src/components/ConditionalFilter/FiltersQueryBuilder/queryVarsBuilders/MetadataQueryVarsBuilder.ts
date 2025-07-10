@@ -1,11 +1,10 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isTuple } from "../../FilterElement/ConditionValue";
-import { BothApiFilterDefinition } from "../types";
+import { BothApiQueryVarsBuilder } from "./types";
 
-export class MetadataDefinition
-  implements BothApiFilterDefinition<{ metadata?: Array<{ key: string; value: string }> }>
-{
+export class MetadataQueryVarsBuilder
+  implements BothApiQueryVarsBuilder<{ metadata?: Array<{ key: string; value: string }> }> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "metadata";
   }
@@ -15,7 +14,7 @@ export class MetadataDefinition
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(
+  updateWhereQueryVariables(
     query: Readonly<{ metadata?: Array<{ key: string; value: string }> }>,
     element: FilterElement,
   ): { metadata?: Array<{ key: string; value: string }> } {
@@ -41,11 +40,11 @@ export class MetadataDefinition
     };
   }
 
-  updateFilterQuery(
+  updateFilterQueryVariables(
     query: Readonly<{ metadata?: Array<{ key: string; value: string }> }>,
     element: FilterElement,
   ): { metadata?: Array<{ key: string; value: string }> } {
     // For metadata, both WHERE and FILTER APIs use the same format
-    return this.updateWhereQuery(query, element);
+    return this.updateWhereQueryVariables(query, element);
   }
 }

@@ -3,16 +3,15 @@ import { DiscountStatusEnum, VoucherFilterInput } from "@dashboard/graphql";
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
-import { FilterOnlyFilterDefinition } from "../types";
+import { FilterOnlyQueryVarsBuilder } from "./types";
 
 /**
  * `voucherStatus` needs to be renamed to `status` in query
  * it's not supported in WHERE API
  * we must always returns an array
  * */
-export class VoucherStatusDefinition
-  implements FilterOnlyFilterDefinition<Pick<VoucherFilterInput, "status">>
-{
+export class VoucherStatusQueryVarsBuilder
+  implements FilterOnlyQueryVarsBuilder<Pick<VoucherFilterInput, "status">> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "voucherStatus";
   }
@@ -21,7 +20,7 @@ export class VoucherStatusDefinition
     return new NoopValuesHandler([]);
   }
 
-  updateFilterQuery(
+  updateFilterQueryVariables(
     query: Readonly<VoucherFilterInput>,
     element: FilterElement,
   ): VoucherFilterInput {

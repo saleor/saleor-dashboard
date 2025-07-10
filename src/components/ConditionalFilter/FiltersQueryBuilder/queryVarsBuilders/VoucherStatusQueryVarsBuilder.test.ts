@@ -6,16 +6,16 @@ import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOp
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ItemOption } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { VoucherStatusDefinition } from "./VoucherStatusDefinition";
+import { VoucherStatusQueryVarsBuilder } from "./VoucherStatusQueryVarsBuilder";
 
-describe("VoucherStatusDefinition", () => {
+describe("VoucherStatusQueryVarsBuilder", () => {
   describe("canHandle", () => {
     it("should return true for elements with value 'voucherStatus'", () => {
       // Arrange
       const value = new ExpressionValue("voucherStatus", "Voucher Status", "voucherStatus");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new VoucherStatusDefinition();
+      const def = new VoucherStatusQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -27,7 +27,7 @@ describe("VoucherStatusDefinition", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new VoucherStatusDefinition();
+      const def = new VoucherStatusQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -39,7 +39,7 @@ describe("VoucherStatusDefinition", () => {
   describe("createOptionFetcher", () => {
     it("should return a NoopValuesHandler", () => {
       // Arrange
-      const def = new VoucherStatusDefinition();
+      const def = new VoucherStatusQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher();
 
@@ -49,8 +49,8 @@ describe("VoucherStatusDefinition", () => {
   });
 
   // Note: This filter has support only for legacy FILTER API
-  describe("updateFilterQuery", () => {
-    const def = new VoucherStatusDefinition();
+  describe("updateFilterQueryVariables", () => {
+    const def = new VoucherStatusQueryVarsBuilder();
     const value = new ExpressionValue("voucherStatus", "Voucher Status", "voucherStatus");
     const options = ConditionOptions.fromName("voucherStatus");
     const conditionItem: ConditionItem = { type: "combobox", label: "is", value: "input-1" };
@@ -61,7 +61,7 @@ describe("VoucherStatusDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result).toHaveProperty("status");
@@ -77,7 +77,7 @@ describe("VoucherStatusDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.status).toEqual([DiscountStatusEnum.ACTIVE]);
@@ -101,7 +101,7 @@ describe("VoucherStatusDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.status).toEqual([DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED]);
@@ -112,7 +112,7 @@ describe("VoucherStatusDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.status).toBeUndefined();

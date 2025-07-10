@@ -3,15 +3,14 @@ import { VoucherFilterInput } from "@dashboard/graphql";
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isTuple } from "../../FilterElement/ConditionValue";
-import { FilterOnlyFilterDefinition } from "../types";
-import { BaseMappableDefinition } from "./BaseMappableDefinition";
+import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
+import { FilterOnlyQueryVarsBuilder } from "./types";
 
 type VoucherTimesUsedQuery = Pick<VoucherFilterInput, "timesUsed">;
 
-export class VoucherTimesUsedDefinition
-  extends BaseMappableDefinition<VoucherTimesUsedQuery>
-  implements FilterOnlyFilterDefinition<VoucherTimesUsedQuery>
-{
+export class VoucherTimesUsedQueryVarsBuilder
+  extends BaseMappableQueryVarsBuilder<VoucherTimesUsedQuery>
+  implements FilterOnlyQueryVarsBuilder<VoucherTimesUsedQuery> {
   protected readonly queryField = "timesUsed" as const;
 
   public canHandle(element: FilterElement): boolean {

@@ -1,12 +1,11 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption } from "../../FilterElement/ConditionValue";
-import { mapStaticQueryPartToLegacyVariables } from "../../QueryBuilder/utils";
-import { BothApiFilterDefinition } from "../types";
+import { QueryVarsBuilderUtils } from "../utils";
+import { BothApiQueryVarsBuilder } from "./types";
 
-export class CustomerNumberOfOrdersDefinition
-  implements BothApiFilterDefinition<{ numberOfOrders?: { gte: string; lte: string } }>
-{
+export class CustomerNumberOfOrdersQueryVarsBuilder
+  implements BothApiQueryVarsBuilder<{ numberOfOrders?: { gte: string; lte: string } }> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "numberOfOrders";
   }
@@ -15,7 +14,7 @@ export class CustomerNumberOfOrdersDefinition
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQuery(
+  updateWhereQueryVariables(
     query: Readonly<{ numberOfOrders?: { gte: string; lte: string } }>,
     element: FilterElement,
   ): { numberOfOrders?: { gte: string; lte: string } } {
@@ -38,16 +37,16 @@ export class CustomerNumberOfOrdersDefinition
     return query;
   }
 
-  updateFilterQuery(
+  updateFilterQueryVariables(
     query: Readonly<{ numberOfOrders?: { gte: string; lte: string } }>,
     element: FilterElement,
   ): { numberOfOrders?: { gte: string; lte: string } } {
-    const whereQuery = this.updateWhereQuery(query, element);
+    const whereQuery = this.updateWhereQueryVariables(query, element);
 
     return {
       ...query,
       numberOfOrders: whereQuery.numberOfOrders
-        ? mapStaticQueryPartToLegacyVariables(whereQuery.numberOfOrders)
+        ? QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(whereQuery.numberOfOrders)
         : undefined,
     };
   }

@@ -3,10 +3,10 @@ import { ApolloClient } from "@apollo/client";
 import { ChannelHandler, Handler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
-import { BaseMappableDefinition } from "./BaseMappableDefinition";
+import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
 /** When using channels sometimes we need to use slug instead of value (which is base64 ID) */
-export class SlugChannelDefinition extends BaseMappableDefinition {
+export class SlugChannelQueryVarsBuilder extends BaseMappableQueryVarsBuilder {
   protected readonly queryField = "channel";
 
   public canHandle(element: FilterElement): boolean {

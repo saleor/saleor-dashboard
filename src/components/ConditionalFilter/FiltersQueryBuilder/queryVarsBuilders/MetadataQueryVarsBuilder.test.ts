@@ -3,16 +3,16 @@ import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { MetadataDefinition } from "./MetadataDefinition";
+import { MetadataQueryVarsBuilder } from "./MetadataQueryVarsBuilder";
 
-describe("MetadataDefinition", () => {
+describe("MetadataQueryVarsBuilder", () => {
   describe("canHandle", () => {
     it("should return true for elements with value 'metadata'", () => {
       // Arrange
       const value = new ExpressionValue("metadata", "Metadata", "metadata");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new MetadataDefinition();
+      const def = new MetadataQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -24,7 +24,7 @@ describe("MetadataDefinition", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new MetadataDefinition();
+      const def = new MetadataQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -36,7 +36,7 @@ describe("MetadataDefinition", () => {
   describe("createOptionFetcher", () => {
     it("should return a NoopValuesHandler", () => {
       // Arrange
-      const def = new MetadataDefinition();
+      const def = new MetadataQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher();
 
@@ -45,8 +45,8 @@ describe("MetadataDefinition", () => {
     });
   });
 
-  describe("updateWhereQuery", () => {
-    const def = new MetadataDefinition();
+  describe("updateWhereQueryVariables", () => {
+    const def = new MetadataQueryVarsBuilder();
     const value = new ExpressionValue("metadata", "Meta Label", "metadata");
     const options = ConditionOptions.fromName("metadata");
     const conditionItem: ConditionItem = { type: "text.double", label: "is", value: "input-1" };
@@ -57,7 +57,7 @@ describe("MetadataDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.metadata).toEqual([{ key: "foo", value: "bar" }]);
@@ -68,7 +68,7 @@ describe("MetadataDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.metadata).toEqual([{ key: "Meta Label", value: "baz" }]);
@@ -80,7 +80,7 @@ describe("MetadataDefinition", () => {
       const element = new FilterElement(value, condition, false);
       const initialQuery = { metadata: [{ key: "a", value: "b" }] };
       // Act
-      const result = def.updateWhereQuery(initialQuery, element);
+      const result = def.updateWhereQueryVariables(initialQuery, element);
 
       // Assert
       expect(result.metadata).toEqual([
@@ -94,15 +94,15 @@ describe("MetadataDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQuery({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.metadata).toEqual([{ key: "foo", value: "bar" }]);
     });
   });
 
-  describe("updateFilterQuery", () => {
-    const def = new MetadataDefinition();
+  describe("updateFilterQueryVariables", () => {
+    const def = new MetadataQueryVarsBuilder();
     const value = new ExpressionValue("metadata", "Meta Label", "metadata");
     const options = ConditionOptions.fromName("metadata");
     const conditionItem: ConditionItem = { type: "text.double", label: "is", value: "input-1" };
@@ -113,7 +113,7 @@ describe("MetadataDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.metadata).toEqual([{ key: "foo", value: "bar" }]);
@@ -125,7 +125,7 @@ describe("MetadataDefinition", () => {
       const element = new FilterElement(value, condition, false);
       const initialQuery = { metadata: [{ key: "a", value: "b" }] };
       // Act
-      const result = def.updateFilterQuery(initialQuery, element);
+      const result = def.updateFilterQueryVariables(initialQuery, element);
 
       // Assert
       expect(result.metadata).toEqual([

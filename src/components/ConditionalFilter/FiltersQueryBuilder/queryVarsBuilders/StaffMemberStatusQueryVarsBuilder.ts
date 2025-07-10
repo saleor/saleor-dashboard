@@ -1,9 +1,9 @@
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { BaseMappableDefinition } from "./BaseMappableDefinition";
+import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
 /** `staffMemberStatus` needs to be renamed to `status` in query */
-export class StaffMemberStatusDefinition extends BaseMappableDefinition {
+export class StaffMemberStatusQueryVarsBuilder extends BaseMappableQueryVarsBuilder {
   protected readonly queryField = "status";
 
   canHandle(element: FilterElement): boolean {

@@ -3,16 +3,20 @@ import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { ProductTypeDefinition } from "./ProductTypeDefinition";
+import { StaffMemberStatusQueryVarsBuilder } from "./StaffMemberStatusQueryVarsBuilder";
 
-describe("ProductTypeDefinition", () => {
+describe("StaffMemberStatusQueryVarsBuilder", () => {
   describe("canHandle", () => {
-    it("should return true for elements with value 'typeOfProduct'", () => {
+    it("should return true for elements with value 'staffMemberStatus'", () => {
       // Arrange
-      const value = new ExpressionValue("typeOfProduct", "Type of Product", "typeOfProduct");
+      const value = new ExpressionValue(
+        "staffMemberStatus",
+        "Staff Member Status",
+        "staffMemberStatus",
+      );
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new ProductTypeDefinition();
+      const def = new StaffMemberStatusQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -24,7 +28,7 @@ describe("ProductTypeDefinition", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new ProductTypeDefinition();
+      const def = new StaffMemberStatusQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -36,7 +40,7 @@ describe("ProductTypeDefinition", () => {
   describe("createOptionFetcher", () => {
     it("should return a NoopValuesHandler", () => {
       // Arrange
-      const def = new ProductTypeDefinition();
+      const def = new StaffMemberStatusQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher();
 
@@ -46,43 +50,50 @@ describe("ProductTypeDefinition", () => {
   });
 
   describe("query updates (FILTER API only)", () => {
-    const def = new ProductTypeDefinition();
-    const value = new ExpressionValue("typeOfProduct", "Type of Product", "typeOfProduct");
-    const options = ConditionOptions.fromName("productType");
+    const def = new StaffMemberStatusQueryVarsBuilder();
+    const value = new ExpressionValue(
+      "staffMemberStatus",
+      "Staff Member Status",
+      "staffMemberStatus",
+    );
+    const options = ConditionOptions.fromName("status");
     const conditionItem: ConditionItem = { type: "combobox", label: "is", value: "input-1" };
 
-    it("should map the field to 'productType' in the filter query", () => {
+    it("should map the field to 'status' in the filter query", () => {
       // Arrange
-      const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "foo");
+      const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "ACTIVE");
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
-      expect(result.productType).toBeDefined();
+      expect(result.status).toBeDefined();
     });
-    it("should correctly map a single value", () => {
+    it("should correctly map a single value (e.g., 'ACTIVE')", () => {
       // Arrange
-      const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "foo");
+      const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, "ACTIVE");
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
-      expect(result.productType).toBe("foo");
+      expect(result.status).toBe("ACTIVE");
     });
     it("should correctly map multiple values", () => {
       // Arrange
-      const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, ["foo", "bar"]);
+      const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, [
+        "ACTIVE",
+        "DEACTIVATED",
+      ]);
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
-      expect(result.productType).toEqual(["foo", "bar"]);
+      expect(result.status).toEqual(["ACTIVE", "DEACTIVATED"]);
     });
   });
 });

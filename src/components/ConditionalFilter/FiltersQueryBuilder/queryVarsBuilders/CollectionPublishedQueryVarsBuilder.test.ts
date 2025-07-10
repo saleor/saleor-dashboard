@@ -6,16 +6,16 @@ import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOp
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ItemOption } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { CollectionPublishedDefinition } from "./CollectionPublishedDefinition";
+import { CollectionPublishedQueryVarsBuilder } from "./CollectionPublishedQueryVarsBuilder";
 
-describe("CollectionPublishedDefinition", () => {
+describe("CollectionPublishedQueryVarsBuilder", () => {
   describe("canHandle", () => {
     it("should return true for elements with value 'published'", () => {
       // Arrange
       const value = new ExpressionValue("published", "Published", "published");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new CollectionPublishedDefinition();
+      const def = new CollectionPublishedQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -27,7 +27,7 @@ describe("CollectionPublishedDefinition", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new CollectionPublishedDefinition();
+      const def = new CollectionPublishedQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -39,7 +39,7 @@ describe("CollectionPublishedDefinition", () => {
   describe("createOptionFetcher", () => {
     it("should return a NoopValuesHandler", () => {
       // Arrange
-      const def = new CollectionPublishedDefinition();
+      const def = new CollectionPublishedQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher();
 
@@ -49,8 +49,8 @@ describe("CollectionPublishedDefinition", () => {
   });
 
   // Note: This filter has support only for legacy FILTER API
-  describe("updateFilterQuery", () => {
-    const def = new CollectionPublishedDefinition();
+  describe("updateFilterQueryVariables", () => {
+    const def = new CollectionPublishedQueryVarsBuilder();
     const value = new ExpressionValue("published", "Published", "published");
     const options = ConditionOptions.fromName("published");
     const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };
@@ -62,7 +62,7 @@ describe("CollectionPublishedDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.published).toBe(CollectionPublished.PUBLISHED);
@@ -74,7 +74,7 @@ describe("CollectionPublishedDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.published).toBe(CollectionPublished.HIDDEN);

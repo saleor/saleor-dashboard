@@ -2,13 +2,12 @@ import { CollectionPublished } from "@dashboard/graphql";
 
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
-import { FilterOnlyFilterDefinition } from "../types";
-import { getBooleanValueFromElement } from "../utils";
+import { QueryVarsBuilderUtils } from "../utils";
+import { FilterOnlyQueryVarsBuilder } from "./types";
 
 /** Collections don't use boolean values like other filters, we need to use enum */
-export class CollectionPublishedDefinition
-  implements FilterOnlyFilterDefinition<{ published?: CollectionPublished }>
-{
+export class CollectionPublishedQueryVarsBuilder
+  implements FilterOnlyQueryVarsBuilder<{ published?: CollectionPublished }> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "published";
   }
@@ -17,11 +16,11 @@ export class CollectionPublishedDefinition
     return new NoopValuesHandler([]);
   }
 
-  updateFilterQuery(
+  updateFilterQueryVariables(
     query: Readonly<{ published?: CollectionPublished }>,
     element: FilterElement,
   ): { published?: CollectionPublished } {
-    const booleanValue = getBooleanValueFromElement(element);
+    const booleanValue = QueryVarsBuilderUtils.getBooleanValueFromElement(element);
 
     return {
       ...query,

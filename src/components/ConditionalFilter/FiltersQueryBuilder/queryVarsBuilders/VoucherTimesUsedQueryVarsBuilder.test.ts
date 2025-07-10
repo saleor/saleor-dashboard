@@ -3,16 +3,16 @@ import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { VoucherTimesUsedDefinition } from "./VoucherTimesUsedDefinition";
+import { VoucherTimesUsedQueryVarsBuilder } from "./VoucherTimesUsedQueryVarsBuilder";
 
-describe("VoucherTimesUsedDefinition", () => {
+describe("VoucherTimesUsedQueryVarsBuilder", () => {
   describe("canHandle", () => {
     it("should return true for elements with value 'timesUsed'", () => {
       // Arrange
       const value = new ExpressionValue("timesUsed", "Times Used", "timesUsed");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new VoucherTimesUsedDefinition();
+      const def = new VoucherTimesUsedQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -24,7 +24,7 @@ describe("VoucherTimesUsedDefinition", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new VoucherTimesUsedDefinition();
+      const def = new VoucherTimesUsedQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -36,7 +36,7 @@ describe("VoucherTimesUsedDefinition", () => {
   describe("createOptionFetcher", () => {
     it("should return a NoopValuesHandler", () => {
       // Arrange
-      const def = new VoucherTimesUsedDefinition();
+      const def = new VoucherTimesUsedQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher();
 
@@ -45,8 +45,8 @@ describe("VoucherTimesUsedDefinition", () => {
     });
   });
 
-  describe("updateFilterQuery", () => {
-    const def = new VoucherTimesUsedDefinition();
+  describe("updateFilterQueryVariables", () => {
+    const def = new VoucherTimesUsedQueryVarsBuilder();
     const value = new ExpressionValue("timesUsed", "Times Used", "timesUsed");
     const options = ConditionOptions.fromName("timesUsed");
 
@@ -57,7 +57,7 @@ describe("VoucherTimesUsedDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.timesUsed).toEqual({ gte: 10, lte: 10 });
@@ -74,7 +74,7 @@ describe("VoucherTimesUsedDefinition", () => {
       const condition = new Condition(options, selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQuery({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.timesUsed).toEqual({ gte: 10, lte: 20 });
