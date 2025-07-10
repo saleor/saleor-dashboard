@@ -5,7 +5,7 @@ import { ExitFormDialogData, SubmitFn, WithFormId } from "./types";
 
 export interface UseExitFormDialogResult
   extends Omit<ExitFormDialogData, "setIsDirty" | "setExitDialogSubmitRef">,
-    WithFormId {
+  WithFormId {
   setIsDirty: (isDirty: boolean) => void;
   setExitDialogSubmitRef: (submitFn: SubmitFn) => void;
 }
@@ -15,6 +15,7 @@ export interface UseExitFormDialogProps {
   isDisabled?: boolean;
 }
 
+/** @deprecated Use react-hook-form instead */
 export const useExitFormDialog = (
   { formId, isDisabled }: UseExitFormDialogProps = { formId: undefined },
 ): UseExitFormDialogResult => {
