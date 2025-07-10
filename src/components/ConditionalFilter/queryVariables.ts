@@ -48,7 +48,7 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
   return filters;
 };
 
-export const createOrderQueryVariables = (value: FilterContainer): any => {
+export const createOrderQueryVariables = (value: FilterContainer): OrderFilterInput => {
   const { filters } = new FiltersQueryBuilder<OrderFilterInput>({
     apiType: QueryApiType.FILTER,
     filterContainer: value,
