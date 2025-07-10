@@ -11,6 +11,11 @@
       "AppExtensionOptionsNewTab",
       "AppExtensionOptionsWidget"
     ],
+    "AttributeValueReferencedObject": [
+      "Page",
+      "Product",
+      "ProductVariant"
+    ],
     "CheckoutLineProblem": [
       "CheckoutLineProblemInsufficientStock",
       "CheckoutLineProblemVariantNotAvailable"

@@ -264,6 +264,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
+        referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
+        referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

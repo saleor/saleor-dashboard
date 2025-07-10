@@ -1,7 +1,8 @@
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { Graphql } from "@dashboard/icons/Graphql";
-import { SearchIcon } from "@saleor/macaw-ui-next";
+import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -18,23 +19,29 @@ export interface Shortcut {
 
 export const useShortcuts = (): Shortcut[] => {
   const intl = useIntl();
-  const devContext = useDevModeContext();
   const { setNavigatorVisibility } = useNavigatorSearchContext();
+  const devContext = useDevModeContext();
   const controlKey = getShortcutLeadingKey();
   const handleOpenPlayground = useCallback(() => {
     devContext.setDevModeContent("");
     devContext.setVariables("");
     devContext.setDevModeVisibility(true);
   }, []);
+
   const handleOpenSearch = useCallback(() => {
     setNavigatorVisibility(true);
   }, []);
+
   const shortcuts = useMemo(
     () => [
       {
         id: "search",
         name: intl.formatMessage(shortcutsMessages.search),
-        icon: <SearchIcon />,
+        icon: (
+          <Box __width="22px" __height="22px">
+            <TerminalIcon />
+          </Box>
+        ),
         shortcut: `${controlKey} + K`,
         action: handleOpenSearch,
       },

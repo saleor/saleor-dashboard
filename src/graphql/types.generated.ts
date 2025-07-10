@@ -476,6 +476,8 @@ export type AttributeCreateInput = {
 };
 
 export enum AttributeEntityTypeEnum {
+  CATEGORY = 'CATEGORY',
+  COLLECTION = 'COLLECTION',
   PAGE = 'PAGE',
   PRODUCT = 'PRODUCT',
   PRODUCT_VARIANT = 'PRODUCT_VARIANT'
@@ -555,6 +557,13 @@ export type AttributeInputTypeEnumFilterInput = {
   eq?: InputMaybe<AttributeInputTypeEnum>;
   /** The value included in. */
   oneOf?: InputMaybe<Array<AttributeInputTypeEnum>>;
+};
+
+export type AttributePageWhereInput = {
+  /** Filter by attribute slug. */
+  slug: Scalars['String'];
+  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. */
+  value?: InputMaybe<AttributeValuePageInput>;
 };
 
 export enum AttributeSortField {
@@ -709,6 +718,21 @@ export type AttributeValueInput = {
   values?: InputMaybe<Array<Scalars['String']>>;
 };
 
+export type AttributeValuePageInput = {
+  /** Filter by boolean value for attributes of boolean type. */
+  boolean?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by date value for attributes of date type. */
+  date?: InputMaybe<DateRangeInput>;
+  /** Filter by date time value for attributes of date time type. */
+  dateTime?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by name assigned to AttributeValue. */
+  name?: InputMaybe<StringFilterInput>;
+  /** Filter by numeric value for attributes of numeric type. */
+  numeric?: InputMaybe<DecimalFilterInput>;
+  /** Filter by slug assigned to AttributeValue. */
+  slug?: InputMaybe<StringFilterInput>;
+};
+
 /**
  * Represents attribute value.
  * 1. If ID is provided, then attribute value will be resolved by ID.
@@ -763,6 +787,17 @@ export type AttributeValueUpdateInput = {
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
   value?: InputMaybe<Scalars['String']>;
+};
+
+/** Where filtering options for attribute values. */
+export type AttributeValueWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<AttributeValueWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<AttributeValueWhereInput>>;
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  name?: InputMaybe<StringFilterInput>;
+  slug?: InputMaybe<StringFilterInput>;
 };
 
 /** Where filtering options. */
@@ -4828,6 +4863,8 @@ export type PageWhereInput = {
   AND?: InputMaybe<Array<PageWhereInput>>;
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<PageWhereInput>>;
+  /** Filter by attributes associated with the page. */
+  attributes?: InputMaybe<Array<AttributePageWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   /** Filter by metadata fields. */
   metadata?: InputMaybe<MetadataFilterInput>;
@@ -5916,6 +5953,10 @@ export type ProductVariantWhereInput = {
   OR?: InputMaybe<Array<ProductVariantWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  /** Filter by product SKU. */
+  sku?: InputMaybe<StringFilterInput>;
+  /** Filter by when was the most recent update. */
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type ProductWhereInput = {
@@ -11376,6 +11417,20 @@ export type GridWarehousesQueryVariables = Exact<{
 
 
 export type GridWarehousesQuery = { __typename: 'Query', availableWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
+
+export type GlobalSearchQueryVariables = Exact<{
+  query: Scalars['String'];
+  includeOrders: Scalars['Boolean'];
+  includeCategories: Scalars['Boolean'];
+  includeCollections: Scalars['Boolean'];
+  includeProducts: Scalars['Boolean'];
+  includeVariants: Scalars['Boolean'];
+  includeModels: Scalars['Boolean'];
+  includeModelTypes: Scalars['Boolean'];
+}>;
+
+
+export type GlobalSearchQuery = { __typename: 'Query', orders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, updatedAt: any, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } }> } | null, categories?: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, updatedAt: any, level: number, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, parent: { __typename: 'Category', id: string, name: string } | null, ancestors: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null } }> } | null, collections?: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, backgroundImage: { __typename: 'Image', url: string, alt: string | null } | null } }> } | null, products?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, updatedAt: any, category: { __typename: 'Category', name: string } | null, thumbnail: { __typename: 'Image', alt: string | null, url: string } | null } }> } | null, productVariants?: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, sku: string | null, updatedAt: any, media: Array<{ __typename: 'ProductMedia', alt: string, url: string }> | null, product: { __typename: 'Product', id: string, name: string, category: { __typename: 'Category', name: string } | null } } }> } | null, models: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string, publishedAt: any | null, pageType: { __typename: 'PageType', name: string } } }> } | null, modelTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string } }> } | null };
 
 export type SearchAttributesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;

@@ -21,6 +21,8 @@ import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
   SearchAttributeValuesQuery,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchPageTypesQuery,
   SearchProductsQuery,
@@ -47,6 +49,8 @@ export interface PageDetailsPageProps {
   pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
+  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedPageType?: PageDetailsFragment["pageType"];
@@ -75,6 +79,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   pageTypes: pageTypeChoiceList,
   referencePages,
   referenceProducts,
+  referenceCollections,
+  referenceCategories,
   saveButtonBarState,
   selectedPageType,
   attributeValues,
@@ -137,6 +143,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       onSelectPageType={handleSelectPageType}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
+      referenceCollections={referenceCollections}
+      referenceCategories={referenceCategories}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}
@@ -246,6 +254,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 confirmButtonState={"default"}
                 products={referenceProducts}
                 pages={referencePages}
+                collections={referenceCollections}
+                categories={referenceCategories}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
                 onFetch={handlers.fetchReferences}

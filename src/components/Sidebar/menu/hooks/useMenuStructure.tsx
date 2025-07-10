@@ -33,9 +33,10 @@ import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, SearchIcon } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -119,6 +120,24 @@ export function useMenuStructure() {
       label: intl.formatMessage(sectionNames.home),
       id: "home",
       url: "/",
+      type: "item",
+    },
+    {
+      icon: renderIcon(<SearchIcon />),
+      label: (
+        <Box display="flex" alignItems="center" gap={2}>
+          {intl.formatMessage(sectionNames.search)}
+          <SearchShortcut />
+        </Box>
+      ),
+      id: "search",
+      url: "/search",
+      permissions: [
+        PermissionEnum.MANAGE_PRODUCTS,
+        PermissionEnum.MANAGE_PAGES,
+        PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+        PermissionEnum.MANAGE_ORDERS,
+      ],
       type: "item",
     },
     {

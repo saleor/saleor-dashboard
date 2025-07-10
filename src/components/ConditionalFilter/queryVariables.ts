@@ -8,6 +8,7 @@ import {
   GiftCardFilterInput,
   GlobalIdFilterInput,
   OrderDraftFilterInput,
+  OrderFilterInput,
   PageFilterInput,
   ProductTypeFilterInput,
   ProductWhereInput,
@@ -16,10 +17,10 @@ import {
   VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { SlugChannelDefinition } from "./filterDefinitions/definitions/SlugChannelDefinition";
-import { FilterDefinitionResolver } from "./filterDefinitions/FilterDefinitionResolver";
 import { FilterContainer } from "./FilterElement";
-import { QueryApiType, QueryBuilder } from "./QueryBuilder";
+import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
+import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
+import { StaticQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/StaticQueryVarsBuilder";
 
 export type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
@@ -28,24 +29,30 @@ type VoucherQueryVars = VoucherFilterInput & { channel?: string };
 type CollectionQueryVars = CollectionFilterInput & { channel?: string };
 export type OrderQueryVars = ProductQueryVars & { created?: DateTimeRangeInput | DateRangeInput };
 
-export const createProductQueryVariables = (value: FilterContainer): ProductQueryVars => {
-  const { topLevel, filters } = new QueryBuilder<ProductQueryVars, "channel">(
-    QueryApiType.WHERE,
-    value,
-    ["channel"],
-  ).build();
+export const createProductQueryVariables = (filterContainer: FilterContainer): ProductQueryVars => {
+  const { topLevel, filters } = new FiltersQueryBuilder<ProductQueryVars, "channel">({
+    apiType: QueryApiType.WHERE,
+    filterContainer,
+    topLevelKeys: ["channel"],
+  }).build();
 
   return { ...filters, ...topLevel };
 };
 
 export const createDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput => {
-  const { filters } = new QueryBuilder<PromotionWhereInput>(QueryApiType.WHERE, value).build();
+  const { filters } = new FiltersQueryBuilder<PromotionWhereInput>({
+    apiType: QueryApiType.WHERE,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };
 
 export const createOrderQueryVariables = (value: FilterContainer): any => {
-  const { filters } = new QueryBuilder<any>(QueryApiType.WHERE, value).build();
+  const { filters } = new FiltersQueryBuilder<OrderFilterInput>({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };
@@ -53,16 +60,15 @@ export const createOrderQueryVariables = (value: FilterContainer): any => {
 export const createVoucherQueryVariables = (
   value: FilterContainer,
 ): { filters: VoucherFilterInput; channel: string | undefined } => {
-  const { filters, topLevel } = new QueryBuilder<VoucherQueryVars, "channel">(
-    QueryApiType.FILTER,
-    value,
-    ["channel"],
-    // VoucherPage expects channel to be a slug, not id
-    new FilterDefinitionResolver([
-      new SlugChannelDefinition(),
-      ...FilterDefinitionResolver.getDefaultDefinitions(),
+  const { filters, topLevel } = new FiltersQueryBuilder<VoucherQueryVars, "channel">({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+    topLevelKeys: ["channel"],
+    filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
+      new StaticQueryVarsBuilder(),
+      ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
     ]),
-  ).build();
+  }).build();
 
   return {
     filters,
@@ -71,25 +77,37 @@ export const createVoucherQueryVariables = (
 };
 
 export const createPageQueryVariables = (value: FilterContainer): PageFilterInput => {
-  const { filters } = new QueryBuilder<PageFilterInput>(QueryApiType.FILTER, value).build();
+  const { filters } = new FiltersQueryBuilder<PageFilterInput>({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };
 
 export const createDraftOrderQueryVariables = (value: FilterContainer): OrderDraftFilterInput => {
-  const { filters } = new QueryBuilder<OrderDraftFilterInput>(QueryApiType.FILTER, value).build();
+  const { filters } = new FiltersQueryBuilder<OrderDraftFilterInput>({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };
 
 export const createGiftCardQueryVariables = (value: FilterContainer): GiftCardFilterInput => {
-  const { filters } = new QueryBuilder<GiftCardFilterInput>(QueryApiType.FILTER, value).build();
+  const { filters } = new FiltersQueryBuilder<GiftCardFilterInput>({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };
 
 export const createCustomerQueryVariables = (value: FilterContainer): CustomerFilterInput => {
-  const { filters } = new QueryBuilder<CustomerFilterInput>(QueryApiType.FILTER, value).build();
+  const { filters } = new FiltersQueryBuilder<CustomerFilterInput>({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };
@@ -97,11 +115,11 @@ export const createCustomerQueryVariables = (value: FilterContainer): CustomerFi
 export const createCollectionsQueryVariables = (
   value: FilterContainer,
 ): { filter: CollectionFilterInput; channel: string | undefined } => {
-  const { topLevel, filters } = new QueryBuilder<CollectionQueryVars, "channel">(
-    QueryApiType.FILTER,
-    value,
-    ["channel"],
-  ).build();
+  const { topLevel, filters } = new FiltersQueryBuilder<CollectionQueryVars, "channel">({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+    topLevelKeys: ["channel"],
+  }).build();
 
   return {
     channel: topLevel.channel,
@@ -112,19 +130,28 @@ export const createCollectionsQueryVariables = (
 export const createProductTypesQueryVariables = (
   value: FilterContainer,
 ): ProductTypeFilterInput => {
-  const { filters } = new QueryBuilder<ProductTypeFilterInput>(QueryApiType.FILTER, value).build();
+  const { filters } = new FiltersQueryBuilder<ProductTypeFilterInput>({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };
 
 export const createStaffMembersQueryVariables = (value: FilterContainer): StaffUserInput => {
-  const { filters } = new QueryBuilder<StaffUserInput>(QueryApiType.FILTER, value).build();
+  const { filters } = new FiltersQueryBuilder<StaffUserInput>({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };
 
 export const createAttributesQueryVariables = (value: FilterContainer): AttributeFilterInput => {
-  const { filters } = new QueryBuilder<AttributeFilterInput>(QueryApiType.FILTER, value).build();
+  const { filters } = new FiltersQueryBuilder<AttributeFilterInput>({
+    apiType: QueryApiType.FILTER,
+    filterContainer: value,
+  }).build();
 
   return filters;
 };

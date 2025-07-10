@@ -25,6 +25,8 @@ import {
   ProductErrorWithAttributesFragment,
   ProductVariantFragment,
   SearchAttributeValuesQuery,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchProductsQuery,
   SearchWarehousesQuery,
@@ -103,6 +105,8 @@ interface ProductVariantPageProps {
   variant?: ProductVariantFragment;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
@@ -138,6 +142,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   variant,
   referencePages = [],
   referenceProducts = [],
+  referenceCategories = [],
+  referenceCollections = [],
   attributeValues,
   onDelete,
   onSubmit,
@@ -385,6 +391,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     confirmButtonState={"default"}
                     products={referenceProducts}
                     pages={referencePages}
+                    collections={referenceCollections}
+                    categories={referenceCategories}
                     attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
                     hasMore={handlers.fetchMoreReferences?.hasMore}
                     open={canOpenAssignReferencesAttributeDialog}
