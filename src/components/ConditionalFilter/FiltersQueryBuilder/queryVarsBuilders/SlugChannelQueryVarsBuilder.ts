@@ -5,7 +5,8 @@ import { FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
-/** When using channels sometimes we need to use slug instead of value (which is base64 ID) */
+/** This query vars builder for `channel` is using slug instead of value (which is base64 ID)
+ * for inputs that require this format */
 export class SlugChannelQueryVarsBuilder extends BaseMappableQueryVarsBuilder {
   protected readonly queryField = "channel";
 

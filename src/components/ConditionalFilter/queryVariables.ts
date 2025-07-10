@@ -20,7 +20,7 @@ import {
 import { FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
-import { StaticQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/StaticQueryVarsBuilder";
+import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders";
 
 export type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
@@ -65,7 +65,8 @@ export const createVoucherQueryVariables = (
     filterContainer: value,
     topLevelKeys: ["channel"],
     filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
-      new StaticQueryVarsBuilder(),
+      // VoucherPage expects channel to be a slug, not id
+      new SlugChannelQueryVarsBuilder(),
       ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
     ]),
   }).build();
