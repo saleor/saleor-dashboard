@@ -45,7 +45,7 @@ export interface UseFormOpts<T> {
 /** @deprecated Use react-hook-form instead */
 export interface UseFormResult<TData>
   extends CommonUseFormResult<TData>,
-  Pick<UseExitFormDialogResult, "formId"> {
+    Pick<UseExitFormDialogResult, "formId"> {
   reset: () => void;
   set: (data: Partial<TData>) => void;
   triggerChange: (value?: boolean) => void;

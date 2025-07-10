@@ -86,9 +86,9 @@ function useFormset<TData = {}, TValue = any, TMetadata = any>(
       data.map(item =>
         item.id === id
           ? {
-            ...item,
-            metadata: merge ? merge(item.metadata, metadata) : metadata,
-          }
+              ...item,
+              metadata: merge ? merge(item.metadata, metadata) : metadata,
+            }
           : item,
       ),
     );

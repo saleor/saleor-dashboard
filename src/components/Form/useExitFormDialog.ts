@@ -5,7 +5,7 @@ import { ExitFormDialogData, SubmitFn, WithFormId } from "./types";
 
 export interface UseExitFormDialogResult
   extends Omit<ExitFormDialogData, "setIsDirty" | "setExitDialogSubmitRef">,
-  WithFormId {
+    WithFormId {
   setIsDirty: (isDirty: boolean) => void;
   setExitDialogSubmitRef: (submitFn: SubmitFn) => void;
 }
