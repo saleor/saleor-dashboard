@@ -14,20 +14,36 @@ import useStateFromProps from "./../useStateFromProps";
 import { FormData } from "./types";
 import { useChangedData } from "./useChangedData";
 
+/**
+ * @deprecated use react-hook-form
+ */
 export interface ChangeEvent<TData = any> {
   target: {
     name: string;
     value: TData;
   };
 }
+
+/**
+ * @deprecated use react-hook-form
+ */
 export type SubmitPromise<TData = any> = Promise<TData>;
 
+/**
+ * @deprecated use react-hook-form
+ */
 export type FormChange<T = any> = (event: ChangeEvent<T>, cb?: () => void) => void;
 
+/**
+ * @deprecated use react-hook-form
+ */
 export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
 };
 
+/**
+ * @deprecated use react-hook-form
+ */
 export interface UseFormOpts<T> {
   confirmLeave: boolean;
   formId?: FormId;
@@ -36,6 +52,9 @@ export interface UseFormOpts<T> {
   mergeData?: boolean;
 }
 
+/**
+ * @deprecated use react-hook-form
+ */
 export interface UseFormResult<TData>
   extends CommonUseFormResult<TData>,
     Pick<UseExitFormDialogResult, "formId"> {
@@ -53,6 +72,9 @@ export interface UseFormResult<TData>
   changedData: TData;
 }
 
+/**
+ * @deprecated use react-hook-form
+ */
 export interface CommonUseFormResult<TData> {
   data: TData;
   change: FormChange;
@@ -60,6 +82,9 @@ export interface CommonUseFormResult<TData> {
   isSaveDisabled?: boolean;
 }
 
+/**
+ * @deprecated use react-hook-form
+ */
 export interface CommonUseFormResultWithHandlers<TData, THandlers>
   extends CommonUseFormResult<TData> {
   handlers: THandlers;
@@ -246,4 +271,7 @@ function useForm<T extends FormData, TErrors>(
   };
 }
 
+/**
+ * @deprecated use react-hook-form
+ */
 export default useForm;
