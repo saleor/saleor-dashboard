@@ -2,6 +2,7 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { Graphql } from "@dashboard/icons/Graphql";
 import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
+import { Box } from "@saleor/macaw-ui-next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -36,7 +37,11 @@ export const useShortcuts = (): Shortcut[] => {
       {
         id: "search",
         name: intl.formatMessage(shortcutsMessages.search),
-        icon: <TerminalIcon />,
+        icon: (
+          <Box __width="22px" __height="22px">
+            <TerminalIcon />
+          </Box>
+        ),
         shortcut: `${controlKey} + K`,
         action: handleOpenSearch,
       },

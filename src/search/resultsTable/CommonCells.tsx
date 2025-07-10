@@ -58,13 +58,13 @@ export const Thumbnail = ({ url, name }: { url?: string; name: string }) => {
 
 export const DisplayDate = ({ date }: { date: string }) => {
   return (
-    <Text size={2} fontWeight="medium" color="default2" paddingRight={6}>
+    <Text size={2} fontWeight="medium" textAlign="right" color="default2" paddingRight={6}>
       <FormattedDate value={date} year="numeric" month="long" day="2-digit" />
     </Text>
   );
 };
 
-export const LinkCell = ({ href, children }: { href: string; children: React.ReactNode }) => {
+export const LinkCell = ({ href, children }: { href: string; children?: React.ReactNode }) => {
   return (
     <Link href={href} style={{ display: "flex", alignItems: "center", height: "100%" }}>
       {children}
