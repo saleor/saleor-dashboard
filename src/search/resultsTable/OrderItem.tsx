@@ -34,28 +34,49 @@ export const OrderItem = ({ node }: { node: OrderNode }) => {
                 borderRadius={3}
                 fontSize={1}
                 display="inline-block"
+                style={{ textWrap: "nowrap" }}
               >
                 {localized}
               </Box>
             </Box>
-            <Box display="flex" alignItems="center" gap={0.5}>
-              <Text fontSize={2} fontWeight="medium" color="default2">
-                #
-              </Text>
-              <Text size={2} fontWeight="medium" color="default1">
-                {node?.number}
-              </Text>
-            </Box>
-            <Box display="flex" alignItems="center" gap={1}>
-              <Text size={2} fontWeight="medium" color="default2">
-                {node?.total?.gross?.currency}
-              </Text>
-              <Text size={2} fontWeight="medium">
-                {node?.total?.gross?.amount}
-              </Text>
-            </Box>
           </Box>
         </LinkCell>
+      </GridTable.Cell>
+      <GridTable.Cell __height="inherit" padding={0}>
+        <LinkCell href={orderUrl(node.id)}>
+          <Box display="flex" alignItems="center" gap={0.5} paddingLeft={5}>
+            <Text fontSize={2} fontWeight="medium" color="default2">
+              #
+            </Text>
+            <Text size={2} fontWeight="medium" color="default1">
+              {node?.number}
+            </Text>
+          </Box>
+        </LinkCell>
+      </GridTable.Cell>
+      <GridTable.Cell __height="inherit" padding={0}>
+        <LinkCell href={orderUrl(node.id)}>
+          <Text size={2} fontWeight="medium" color="default2" paddingLeft={5}>
+            {node?.total?.gross?.currency}
+          </Text>
+        </LinkCell>
+      </GridTable.Cell>
+      <GridTable.Cell __height="inherit" padding={0}>
+        <LinkCell href={orderUrl(node.id)}>
+          <Text
+            size={2}
+            fontWeight="medium"
+            textAlign="right"
+            paddingLeft={2}
+            width="100%"
+            style={{ textWrap: "nowrap", fontVariantNumeric: "tabular-nums" }}
+          >
+            {node?.total?.gross?.amount}
+          </Text>
+        </LinkCell>
+      </GridTable.Cell>
+      <GridTable.Cell __height="inherit" padding={0}>
+        <LinkCell href={orderUrl(node.id)} />
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
         <LinkCell href={orderUrl(node.id)}>
