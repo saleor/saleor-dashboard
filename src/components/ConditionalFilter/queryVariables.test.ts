@@ -196,7 +196,7 @@ describe("ConditionalFilter / queryVariables / createVoucherQueryVariables", () 
       discountType: ["discount-1", "discount-2"],
       started: { lte: "2025-02-15T16:24", gte: "2025-01-31T16:24" },
       timesUsed: { gte: 10, lte: 10 },
-      status: "status-1",
+      status: ["status-1"],
     };
     // Act
     const result = createVoucherQueryVariables(filters);
