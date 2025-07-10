@@ -7,6 +7,7 @@ const mockQuery = jest.fn();
 const mockClient = { query: mockQuery };
 
 jest.mock("@apollo/client", () => ({
+  ...(jest.requireActual("@apollo/client") as jest.Mocked<typeof import("@apollo/client")>),
   useApolloClient: jest.fn(() => mockClient),
 }));
 
@@ -453,4 +454,3 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
     });
   });
 });
-
