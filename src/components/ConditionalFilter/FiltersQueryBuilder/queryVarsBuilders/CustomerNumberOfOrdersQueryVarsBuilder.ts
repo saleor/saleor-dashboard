@@ -5,7 +5,8 @@ import { QueryVarsBuilderUtils } from "../utils";
 import { BothApiQueryVarsBuilder } from "./types";
 
 export class CustomerNumberOfOrdersQueryVarsBuilder
-  implements BothApiQueryVarsBuilder<{ numberOfOrders?: { gte: string; lte: string } }> {
+  implements BothApiQueryVarsBuilder<{ numberOfOrders?: { gte: string; lte: string } }>
+{
   canHandle(element: FilterElement): boolean {
     return element.value.value === "numberOfOrders";
   }
@@ -46,7 +47,10 @@ export class CustomerNumberOfOrdersQueryVarsBuilder
     return {
       ...query,
       numberOfOrders: whereQuery.numberOfOrders
-        ? QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(whereQuery.numberOfOrders)
+        ? (QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(whereQuery.numberOfOrders) as {
+            gte: string;
+            lte: string;
+          })
         : undefined,
     };
   }

@@ -5,16 +5,15 @@ import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
 import {
-  creatAttributesQueryVariables,
-  creatDraftOrderQueryVariables,
+  createAttributesQueryVariables,
   createCustomerQueryVariables,
+  createDraftOrderQueryVariables,
   createGiftCardQueryVariables,
   createPageQueryVariables,
   createProductQueryVariables,
   createProductTypesQueryVariables,
   createStaffMembersQueryVariables,
-  creatVoucherQueryVariables,
-  mapStaticQueryPartToLegacyVariables,
+  createVoucherQueryVariables,
 } from "./queryVariables";
 
 describe("ConditionalFilter / queryVariables / createProductQueryVariables", () => {
@@ -91,13 +90,13 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
   });
 });
 
-describe("ConditionalFilter / queryVariables / creatVoucherQueryVariables", () => {
+describe("ConditionalFilter / queryVariables / createVoucherQueryVariables", () => {
   it("should return empty variables for empty filters", () => {
     // Arrange
     const filters: FilterContainer = [];
     const expectedOutput = {};
     // Act
-    const result = creatVoucherQueryVariables(filters);
+    const result = createVoucherQueryVariables(filters);
 
     // Assert
     expect(result).toEqual({
@@ -200,7 +199,7 @@ describe("ConditionalFilter / queryVariables / creatVoucherQueryVariables", () =
       status: "status-1",
     };
     // Act
-    const result = creatVoucherQueryVariables(filters);
+    const result = createVoucherQueryVariables(filters);
 
     // Assert
     expect(result).toEqual({
@@ -253,13 +252,13 @@ describe("ConditionalFilter / queryVariables / createPageQueryVariables", () => 
   });
 });
 
-describe("ConditionalFilter / queryVariables / creatDraftOrderQueryVariables", () => {
+describe("ConditionalFilter / queryVariables / createDraftOrderQueryVariables", () => {
   it("should return empty variables for empty filters", () => {
     // Arrange
     const filters: FilterContainer = [];
     const expectedOutput = {};
     // Act
-    const result = creatDraftOrderQueryVariables(filters);
+    const result = createDraftOrderQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);
@@ -303,7 +302,7 @@ describe("ConditionalFilter / queryVariables / creatDraftOrderQueryVariables", (
       customer: "value1",
     };
     // Act
-    const result = creatDraftOrderQueryVariables(filters);
+    const result = createDraftOrderQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);
@@ -647,13 +646,13 @@ describe("ConditionalFilter / queryVariables / createStaffMembersQueryVariables"
   });
 });
 
-describe("ConditionalFilter / queryVariables / creatAttributesQueryVariables", () => {
+describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", () => {
   it("should return empty variables for empty filters", () => {
     // Arrange
     const filters: FilterContainer = [];
     const expectedOutput = {};
     // Act
-    const result = creatAttributesQueryVariables(filters);
+    const result = createAttributesQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);
@@ -661,7 +660,7 @@ describe("ConditionalFilter / queryVariables / creatAttributesQueryVariables", (
 
   it("should create variables with selected filters", () => {
     // Arrange
-    const channelFilterElemen = new FilterElement(
+    const channelFilterElement = new FilterElement(
       new ExpressionValue("channel", "Channel", "channel"),
       new Condition(
         ConditionOptions.fromStaticElementName("channel"),
@@ -691,61 +690,13 @@ describe("ConditionalFilter / queryVariables / creatAttributesQueryVariables", (
       false,
     );
 
-    const filters: FilterContainer = [channelFilterElemen, "AND", typeFilterElement];
+    const filters: FilterContainer = [channelFilterElement, "AND", typeFilterElement];
     const expectedOutput = {
       channel: "default-channel",
       type: "PRODUCT_TYPE",
     };
     // Act
-    const result = creatAttributesQueryVariables(filters);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-});
-
-describe("ConditionalFilter / queryVariables / mapStaticQueryPartToLegacyVariables", () => {
-  it("should return queryPart if it is not an object", () => {
-    // Arrange
-    const queryPart = "queryPart";
-    const expectedOutput = "queryPart";
-
-    // Act
-    const result = mapStaticQueryPartToLegacyVariables(queryPart);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-
-  it("should transform range input to legacy format", () => {
-    // Arrange
-    const queryPart = { range: { lte: "value" } };
-    const expectedOutput = { lte: "value" };
-
-    // Act
-    const result = mapStaticQueryPartToLegacyVariables(queryPart);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-
-  it("should transform eq input to legacy format", () => {
-    // Arrange
-    const queryPart = { eq: "value" };
-    const expectedOutput = "value";
-    // Act
-    const result = mapStaticQueryPartToLegacyVariables(queryPart);
-
-    // Assert
-    expect(result).toEqual(expectedOutput);
-  });
-
-  it("should transform oneOf input to legacy format", () => {
-    // Arrange
-    const queryPart = { oneOf: ["value1", "value2"] };
-    const expectedOutput = ["value1", "value2"];
-    // Act
-    const result = mapStaticQueryPartToLegacyVariables(queryPart);
+    const result = createAttributesQueryVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);

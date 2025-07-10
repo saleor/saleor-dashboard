@@ -48,7 +48,7 @@ describe("AttributeTypeQueryVarsBuilder", () => {
   const def = new AttributeTypeQueryVarsBuilder();
   const value = new ExpressionValue("attributeType", "Attribute Type", "attributeType");
 
-  describe("getWhereQuery", () => {
+  describe("updateWhereQueryVariables", () => {
     it("should rename field to 'type' in the where query", () => {
       // Arrange
       const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };
@@ -56,7 +56,7 @@ describe("AttributeTypeQueryVarsBuilder", () => {
       const condition = new Condition(ConditionOptions.fromName("attributeType"), selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQueryVariablesVariables({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result).toHaveProperty("type");
@@ -68,7 +68,7 @@ describe("AttributeTypeQueryVarsBuilder", () => {
       const condition = new Condition(ConditionOptions.fromName("attributeType"), selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQueryVariablesVariables({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.type).toEqual({ eq: "PRODUCT_TYPE" });
@@ -83,14 +83,14 @@ describe("AttributeTypeQueryVarsBuilder", () => {
       const condition = new Condition(ConditionOptions.fromName("attributeType"), selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateWhereQueryVariablesVariables({}, element);
+      const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
       expect(result.type).toEqual({ oneOf: ["PRODUCT_TYPE", "PAGE_TYPE"] });
     });
   });
 
-  describe("getFilterQuery", () => {
+  describe("updateFilterQueryVariables", () => {
     it("should rename field to 'type' in the filter query", () => {
       // Arrange
       const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };
@@ -98,7 +98,7 @@ describe("AttributeTypeQueryVarsBuilder", () => {
       const condition = new Condition(ConditionOptions.fromName("attributeType"), selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQueryVariablesVariables({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result).toHaveProperty("type");
@@ -110,7 +110,7 @@ describe("AttributeTypeQueryVarsBuilder", () => {
       const condition = new Condition(ConditionOptions.fromName("attributeType"), selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQueryVariablesVariables({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.type).toBe("PRODUCT_TYPE");
@@ -125,7 +125,7 @@ describe("AttributeTypeQueryVarsBuilder", () => {
       const condition = new Condition(ConditionOptions.fromName("attributeType"), selected, false);
       const element = new FilterElement(value, condition, false);
       // Act
-      const result = def.updateFilterQueryVariablesVariables({}, element);
+      const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
       expect(result.type).toEqual(["PRODUCT_TYPE", "PAGE_TYPE"]);

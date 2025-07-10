@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
-import {
-  createOrderQueryVariables,
-  OrderQueryVars,
-} from "@dashboard/components/ConditionalFilter/queryVariables";
+import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { findInEnum, parseBoolean } from "@dashboard/misc";
 import {
