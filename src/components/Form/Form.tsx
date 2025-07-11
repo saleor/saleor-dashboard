@@ -18,6 +18,7 @@ export interface FormProps<TData, TErrors>
   mergeData?: boolean;
 }
 
+/** @deprecated Use react-hook-form instead */
 function Form<TData, Terrors>({
   children,
   initial,
