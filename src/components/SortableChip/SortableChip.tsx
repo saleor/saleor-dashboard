@@ -1,10 +1,8 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Box, Button, CloseIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, CloseIcon, GripIcon, Text } from "@saleor/macaw-ui-next";
 import React, { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
-
-import SortableHandle from "./SortableHandle";
 
 export interface SortableChipProps {
   id: string;
@@ -13,15 +11,11 @@ export interface SortableChipProps {
   onClose?: () => void;
   loading?: boolean;
   url?: string;
-  isDragging?: boolean;
 }
 
 const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   const labelContent = (
-    <Text
-      data-test-id="chip-label"
-      color={url ? "info1" : undefined}
-    >
+    <Text data-test-id="chip-label" color={url ? "info1" : undefined}>
       {label}
     </Text>
   );
@@ -33,28 +27,21 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   return labelContent;
 };
 
-const SortableChip: React.FC<SortableChipProps> = ({ 
+const SortableChip: React.FC<SortableChipProps> = ({
   id,
-  className, 
-  label, 
-  onClose, 
-  loading, 
+  className,
+  label,
+  onClose,
+  loading,
   url,
-  isDragging = false
 }) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging: sortableIsDragging,
-  } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  });
 
   const style: CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: sortableIsDragging ? 0.5 : 1,
   };
 
   const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,23 +60,34 @@ const SortableChip: React.FC<SortableChipProps> = ({
       className={className}
       borderWidth={1}
       borderStyle="solid"
-      borderColor="default1"
+      borderColor={isDragging ? "transparent" : "default1"}
       borderRadius={4}
       display="inline-block"
       paddingY={1}
       paddingX={1.5}
       paddingRight={1}
-      backgroundColor="default1"
+      backgroundColor={isDragging ? "default3" : "default1"}
+      opacity={isDragging ? "0.2" : "1"}
     >
-      <Box display="flex" alignItems="center">
+      <Box
+        display="flex"
+        alignItems="center"
+        style={{ visibility: isDragging ? "hidden" : "visible" }}
+      >
         <Box
           display="flex"
-          alignItems="baseline"
+          alignItems="center"
           __cursor={loading ? "not-allowed" : "grab"}
           marginRight={1}
         >
-          <SortableHandle 
+          <GripIcon
+            className={className}
+            color="default2"
+            size="small"
             data-test-id="button-drag-handle"
+            tabIndex={0}
+            // @ts-expect-error - style is not a valid prop for GripIcon
+            style={{ cursor: "grab", outline: "none" }}
             {...attributes}
             {...listeners}
           />

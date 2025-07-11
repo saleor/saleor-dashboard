@@ -95,7 +95,6 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
                 url={value.url}
                 loading={loading}
                 onClose={() => onValueDelete(value.value)}
-                isDragging={activeId === value.value}
               />
             ))}
           </Box>
@@ -108,7 +107,8 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
                 label={activeItem.label}
                 url={activeItem.url}
                 loading={loading}
-                isDragging={true}
+                // Need to add onClose to avoid layout shifts
+                onClose={() => {}}
               />
             ) : null}
           </DragOverlay>,
