@@ -22,13 +22,20 @@ import {
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { RelayToFlat } from "@dashboard/types";
-import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@dashboard/utils/maps";
+import {
+  mapCategoriesToChoices,
+  mapCollectionsToChoices,
+  mapEdgesToItems,
+  mapPagesToChoices,
+  mapProductsToChoices,
+  mapProductVariantsToChoices,
+} from "@dashboard/utils/maps";
 import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
 
-type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
+type AttributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
 
 export interface RichTextProps {
   richText: RichTextContextValues;
@@ -58,6 +65,7 @@ export function filterable(attribute: Pick<AttributeFragment, "inputType">): boo
 export interface AttributeReference {
   label: string;
   value: string;
+  url?: string;
 }
 
 export interface AttributeValueEditDialogFormData {
@@ -298,7 +306,7 @@ export const getFileValuesRemovedFromAttributes = (
 
 export const getAttributesOfRemovedFiles = (
   fileAttributesRemoved: FormsetData<null, File>,
-): AtributesOfFiles[] =>
+): AttributesOfFiles[] =>
   fileAttributesRemoved.map(attribute => ({
     file: undefined,
     id: attribute.id,
@@ -309,7 +317,7 @@ export const getAttributesOfRemovedFiles = (
 export const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
   uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
-): AtributesOfFiles[] =>
+): AttributesOfFiles[] =>
   uploadFilesResult.map((uploadFileResult, index) => {
     const attribute = fileValuesToUpload[index];
 
@@ -390,7 +398,7 @@ export const getProductReferenceAttributeDisplayData = (
     ...attribute.data,
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
+        ? mapProductsToChoices(
             attribute.value.reduce<RelayToFlat<NonNullable<SearchProductsQuery["search"]>>>(
               (acc, value) => {
                 const reference = referenceProducts.find(reference => reference.id === value);
@@ -417,19 +425,23 @@ export const getProductVariantReferenceAttributeDisplayData = (
     ...attribute.data,
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<Array<Node & Record<"name", string>>>((acc, value) => {
-              const reference = mapReferenceProductsToVariants(referenceProducts).find(
-                reference => reference.id === value,
-              );
+        ? mapProductVariantsToChoices(
+            attribute.value.reduce<RelayToFlat<NonNullable<SearchProductsQuery["search"]>>>(
+              (acc, value) => {
+                // Find products that contain the variant we're looking for
+                const productWithVariant = referenceProducts.find(product =>
+                  product.variants?.some(variant => variant.id === value),
+                );
 
-              if (reference) {
-                acc.push(reference);
-              }
+                if (productWithVariant) {
+                  acc.push(productWithVariant);
+                }
 
-              return acc;
-            }, []),
-          )
+                return acc;
+              },
+              [],
+            ),
+          ).filter(choice => attribute.value?.includes(choice.value))
         : [],
   },
 });
@@ -443,7 +455,7 @@ export const getCollectionReferenceAttributeDisplayData = (
     ...attribute.data,
     references:
       referenceCollections?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
+        ? mapCollectionsToChoices(
             attribute.value.reduce<RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>>(
               (acc, value) => {
                 const reference = referenceCollections.find(reference => reference.id === value);
@@ -470,7 +482,7 @@ export const getCategoryReferenceAttributeDisplayData = (
     ...attribute.data,
     references:
       referenceCategories?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
+        ? mapCategoriesToChoices(
             attribute.value.reduce<RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>>(
               (acc, value) => {
                 const reference = referenceCategories.find(reference => reference.id === value);

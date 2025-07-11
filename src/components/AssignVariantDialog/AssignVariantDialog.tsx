@@ -15,13 +15,12 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AssignContainerDialogProps, Container } from "../AssignContainerDialog";
+import { AssignContainerDialogProps } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import {
-  getCompositeLabel,
   handleProductAssign,
   handleVariantAssign,
   hasAllVariantsSelected,
@@ -38,7 +37,7 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
   onFetch: (value: string) => void;
-  onSubmit: (data: Container[]) => void;
+  onSubmit: (data: VariantWithProductLabel[]) => void;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
@@ -69,14 +68,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   const productsWithAllVariantsSelected = productChoices
     ? productChoices.map(product => hasAllVariantsSelected(product.variants, variants))
     : [];
-  const handleSubmit = () =>
-    onSubmit(
-      variants.map(variant => ({
-        name: getCompositeLabel(variant),
-        id: variant.id,
-        ...variant,
-      })),
-    );
+  const handleSubmit = () => onSubmit(variants);
   const handleClose = () => {
     queryReset();
     onClose();

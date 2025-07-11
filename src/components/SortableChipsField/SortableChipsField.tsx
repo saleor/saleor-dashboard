@@ -1,43 +1,27 @@
 import { ReorderAction, ReorderEvent } from "@dashboard/types";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
-import { SortableContainerProps } from "react-sortable-hoc";
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors
+} from "@dnd-kit/core";
+import { rectSortingStrategy, SortableContext } from "@dnd-kit/sortable";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import React, { useState } from "react";
+import { createPortal } from "react-dom";
 
-import DraggableChip from "../SortableChip";
-import SortableContainer from "./SortableContainer";
-
-const useStyles = makeStyles(
-  theme => ({
-    chip: {
-      background: theme.palette.background.paper,
-      color: theme.palette.primary.dark,
-      marginBottom: theme.spacing(1),
-    },
-    chipHelper: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: 0,
-    },
-    grabbing: {
-      cursor: "grabbing",
-    },
-    errorText: {
-      color: theme.palette.error.light,
-    },
-  }),
-  {
-    name: "SortableChipsField",
-  },
-);
+import SortableChip from "../SortableChip";
 
 export interface SortableChipsFieldValueType {
   label: string;
   value: string;
+  url?: string;
 }
 
-export interface SortableChipsFieldProps extends SortableContainerProps {
+export interface SortableChipsFieldProps {
   loading?: boolean;
   values: SortableChipsFieldValueType[];
   error?: boolean;
@@ -46,45 +30,99 @@ export interface SortableChipsFieldProps extends SortableContainerProps {
   onValueReorder: ReorderAction;
 }
 
-const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
-  const { loading, values, error, helperText, onValueDelete, onValueReorder } = props;
-  const classes = useStyles(props);
-  const handleSortStart = () => {
-    document.body.classList.add(classes.grabbing);
-  };
-  const handleSortEnd = (event: ReorderEvent) => {
-    document.body.classList.remove(classes.grabbing);
-    onValueReorder(event);
+const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
+  loading,
+  values,
+  error,
+  helperText,
+  onValueDelete,
+  onValueReorder,
+}) => {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
+
+  const handleDragStart = (event: any) => {
+    setActiveId(event.active.id);
+    document.body.style.cursor = "grabbing";
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    document.body.style.cursor = "";
+    setActiveId(null);
+
+    if (over && active.id !== over.id) {
+      const oldIndex = values.findIndex((item) => item.value === active.id);
+      const newIndex = values.findIndex((item) => item.value === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        onValueReorder({ oldIndex, newIndex } as ReorderEvent);
+      }
+    }
+  };
+
+  const handleDragCancel = () => {
+    document.body.style.cursor = "";
+    setActiveId(null);
+  };
+
+  const itemIds = values.map(item => item.value);
+  const activeItem = activeId ? values.find(item => item.value === activeId) : null;
+
   return (
-    <SortableContainer
-      axis="xy"
-      lockAxis="xy"
-      useDragHandle
-      onSortStart={handleSortStart}
-      onSortEnd={handleSortEnd}
-      helperClass={classes.chipHelper}
-    >
-      <div>
-        {values.map((value, valueIndex) => (
-          <DraggableChip
-            className={classes.chip}
-            loading={loading}
-            disabled={loading}
-            key={valueIndex}
-            index={valueIndex}
-            label={value.label}
-            onClose={() => onValueDelete(value.value)}
-          />
-        ))}
-        {error && (
+    <Box>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <SortableContext items={itemIds} strategy={rectSortingStrategy}>
+          <Box display="flex" flexWrap="wrap" gap={2}>
+            {values.map((value) => (
+              <SortableChip
+                key={value.value}
+                id={value.value}
+                label={value.label}
+                url={value.url}
+                loading={loading}
+                onClose={() => onValueDelete(value.value)}
+              />
+            ))}
+          </Box>
+        </SortableContext>
+        {createPortal(
+          <DragOverlay>
+            {activeId && activeItem ? (
+              <SortableChip
+                id={activeItem.value}
+                label={activeItem.label}
+                url={activeItem.url}
+                loading={loading}
+                // Need to add onClose to avoid layout shifts
+                onClose={() => {}}
+              />
+            ) : null}
+          </DragOverlay>,
+          document.body
+        )}
+      </DndContext>
+      {error && (
+        <Box marginTop={2}>
           <Text size={2} color="critical1">
             {helperText}
           </Text>
-        )}
-      </div>
-    </SortableContainer>
+        </Box>
+      )}
+    </Box>
   );
 };
 

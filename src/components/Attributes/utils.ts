@@ -52,11 +52,23 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
   }
 
   return attribute.value.map(attributeValue => {
+    const definedAttributeReference = attribute.data.references?.find(
+      reference => reference.value === attributeValue,
+    );
+
+    // If value has not been yet assigned, use data of reference
+    if (definedAttributeReference) {
+      return {
+        label: definedAttributeReference.label,
+        value: definedAttributeReference.value,
+        url: definedAttributeReference.url,
+      };
+    }
+
     const definedAttributeValue = attribute.data.values.find(
       definedValue => definedValue.reference === attributeValue,
     );
 
-    // If value has been previously assigned, use it's data
     if (definedAttributeValue) {
       return {
         label: definedAttributeValue.name,
@@ -64,24 +76,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
       };
     }
 
-    const definedAttributeReference = attribute.data.references?.find(
-      reference => reference.value === attributeValue,
-    );
-
-    // If value has not been yet assigned, use data of reference
-    if (definedAttributeReference) {
-      return definedAttributeReference;
-    }
-
-    // If value has not been yet assigned and data
-    // is no longer available, use metadata
-    if (attribute.metadata) {
-      return {
-        label: attribute.metadata.find(metadata => metadata.value === attributeValue)?.label,
-        value: attributeValue,
-      };
-    }
-
+    // Fallback if reference data is not available
     return {
       label: attributeValue,
       value: attributeValue,
