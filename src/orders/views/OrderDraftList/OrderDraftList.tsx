@@ -4,7 +4,7 @@ import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDia
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { creatDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { createDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -53,7 +53,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
   const { enabled: isDraftOrdersFilteringEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
-  const filter = creatDraftOrderQueryVariables(valueProvider.value);
+  const filter = createDraftOrderQueryVariables(valueProvider.value);
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 

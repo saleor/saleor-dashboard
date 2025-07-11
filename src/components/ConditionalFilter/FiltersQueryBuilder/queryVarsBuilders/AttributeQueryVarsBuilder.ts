@@ -1,8 +1,23 @@
 import { ApolloClient } from "@apollo/client";
-import { AttributeInput, AttributeInputTypeEnum } from "@dashboard/graphql";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInput,
+  AttributeInputTypeEnum,
+} from "@dashboard/graphql";
 
-import { AttributeChoicesHandler, Handler } from "../../API/Handler";
+import {
+  AttributeChoicesHandler,
+  Handler,
+  PageHandler,
+  ProductsHandler,
+  ProductVariantHandler,
+} from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
+import {
+  ConditionValue,
+  isItemOption,
+  isItemOptionArray,
+} from "../../FilterElement/ConditionValue";
 import { QueryVarsBuilderUtils } from "../utils";
 import { WhereOnlyQueryVarsBuilder } from "./types";
 
@@ -20,9 +35,18 @@ export class AttributeQueryVarsBuilder
     inputValue: string,
     element: FilterElement,
   ): Handler {
-    const { value: id } = element.selectedAttribute || element.value;
+    const { entityType, value: id } = element.selectedAttribute || element.value;
 
-    return new AttributeChoicesHandler(client, id, inputValue);
+    switch (entityType) {
+      case AttributeEntityTypeEnum.PAGE:
+        return new PageHandler(client, inputValue);
+      case AttributeEntityTypeEnum.PRODUCT:
+        return new ProductsHandler(client, inputValue);
+      case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+        return new ProductVariantHandler(client, inputValue);
+      default:
+        return new AttributeChoicesHandler(client, id, inputValue);
+    }
   }
 
   public updateWhereQueryVariables(
@@ -51,14 +75,17 @@ export class AttributeQueryVarsBuilder
     }
 
     const baseAttribute = { slug: attributeSlug };
-    const { conditionValue } = element.condition.selected;
+    const { value, conditionValue } = element.condition.selected;
     const inputType = element.selectedAttribute?.type as AttributeInputTypeEnum;
 
     if (!conditionValue) {
       return baseAttribute;
     }
 
-    // Handle boolean type attributes
+    if (inputType === AttributeInputTypeEnum.REFERENCE) {
+      return this.buildReferenceAttribute(baseAttribute, value);
+    }
+
     if (inputType === AttributeInputTypeEnum.BOOLEAN) {
       return {
         ...baseAttribute,
@@ -66,8 +93,29 @@ export class AttributeQueryVarsBuilder
       };
     }
 
-    // Handle other types with condition values
     return this.buildConditionAttribute(baseAttribute, element, conditionValue.type);
+  }
+
+  private buildReferenceAttribute(
+    baseAttribute: AttributeInput,
+    value: ConditionValue,
+  ): AttributeInput {
+    if (isItemOption(value)) {
+      return { ...baseAttribute, valueNames: [value.label] };
+    }
+
+    if (isItemOptionArray(value)) {
+      if (value.length === 0) {
+        return baseAttribute;
+      }
+
+      return {
+        ...baseAttribute,
+        valueNames: value.map(item => item.label),
+      };
+    }
+
+    return baseAttribute;
   }
 
   private buildConditionAttribute(

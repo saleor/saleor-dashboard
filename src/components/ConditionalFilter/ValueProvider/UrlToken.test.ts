@@ -79,4 +79,69 @@ describe("UrlEntry", () => {
       conditionKid: "is",
     });
   });
+
+  it("should create an instance for a REFERENCE attribute condition", () => {
+    // Arrange
+    const condition = new ConditionSelected(
+      {
+        label: "Reference Value",
+        slug: "ref-value",
+        value: "ref-value",
+        originalSlug: "ref-value",
+      },
+      { label: "is", value: "is", type: "DROPDOWN" },
+      [],
+      false,
+    );
+
+    // Act
+    const entry = UrlEntry.forReferenceAttribute(condition, "ref-attr");
+
+    // Assert
+    // Should use tokenSlug for REFERENCE ("r") and correct condition index (should be 0 for "is")
+    expect(entry).toEqual({ "r0.ref-attr": "ref-value" });
+    expect(entry.getInfo()).toEqual({
+      key: "r0.ref-attr",
+      value: "ref-value",
+      entryName: "ref-attr",
+      type: "r",
+      conditionKid: "is",
+    });
+  });
+
+  it("should create a UrlToken for REFERENCE with multiple selected values", () => {
+    // Arrange
+    const condition = new ConditionSelected(
+      [
+        {
+          label: "Reference Value 1",
+          slug: "ref-value-1",
+          value: "ref-value-1",
+          originalSlug: "ref-value-1",
+        },
+        {
+          label: "Reference Value 2",
+          slug: "ref-value-2",
+          value: "ref-value-2",
+          originalSlug: "ref-value-2",
+        },
+      ],
+      { label: "in", value: "in", type: "DROPDOWN" },
+      [],
+      false,
+    );
+
+    // Act
+    const entry = UrlEntry.forReferenceAttribute(condition, "ref-attr");
+
+    // Assert
+    expect(entry).toEqual({ "r2.ref-attr": ["ref-value-1", "ref-value-2"] });
+    expect(entry.getInfo()).toEqual({
+      key: "r2.ref-attr",
+      value: ["ref-value-1", "ref-value-2"],
+      entryName: "ref-attr",
+      type: "r",
+      conditionKid: "in",
+    });
+  });
 });
