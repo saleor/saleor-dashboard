@@ -1,96 +1,88 @@
-import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
-import React from "react";
+import { Box, Button, CloseIcon, Text } from "@saleor/macaw-ui-next";
+import React, { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import SortableHandle from "./SortableHandle";
 
 export interface SortableChipProps extends SortableElementProps {
   className?: string;
-  label: React.ReactNode;
+  label: ReactNode;
   onClose?: () => void;
   loading?: boolean;
+  url?: string;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    closeButton: {
-      marginLeft: theme.spacing(),
-      background: "none",
-      border: "none",
-    },
-    closeIcon: {
-      cursor: "pointer",
-      fontSize: 16,
-      verticalAlign: "middle",
-    },
-    content: {
-      alignItems: "center",
-      display: "flex",
-    },
-    root: {
-      border: `1px solid ${theme.palette.divider}`,
-      borderRadius: 18,
-      display: "inline-block",
-      marginRight: theme.spacing(2),
-      padding: "6px 12px",
-    },
-    sortableHandle: {
-      marginRight: theme.spacing(1),
-    },
-    disabled: {
-      cursor: "not-allowed",
-    },
-  }),
-  { name: "SortableChip" },
-);
-const SortableChip = SortableElement((props: SortableChipProps) => {
-  const { className, label, onClose, loading } = props;
-  const classes = useStyles(props);
-  const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    if (onClose) {
-      onClose();
-    }
-  };
-
-  return (
-    <div
-      className={clsx(classes.root, className, {
-        [classes.disabled]: loading,
-      })}
+const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
+  const labelContent = (
+    <Text
+      data-test-id="chip-label"
+      color={url ? "info1" : undefined}
+      textDecoration={url ? "underline" : "none"}
     >
-      <div className={classes.content}>
-        <SortableHandle
-          className={clsx(classes.sortableHandle, {
-            [classes.disabled]: loading,
-          })}
-          data-test-id="button-drag-handle"
-        />
-        <Text data-test-id="chip-label">{label}</Text>
-        {onClose && (
-          <button
-            className={clsx(classes.closeButton, {
-              [classes.disabled]: loading,
-            })}
-            onClick={handleClose}
-            data-test-id="button-close"
-            disabled={loading}
-          >
-            <CloseIcon
-              className={clsx(classes.closeIcon, {
-                [classes.disabled]: loading,
-              })}
-            />
-          </button>
-        )}
-      </div>
-    </div>
+      {label}
+    </Text>
   );
-});
+
+  if (url) {
+    return <Link to={url}>{labelContent}</Link>;
+  }
+
+  return labelContent;
+};
+
+const SortableChip = SortableElement(
+  ({ className, label, onClose, loading, url }: SortableChipProps) => {
+    const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+
+      if (onClose) {
+        onClose();
+      }
+    };
+
+    return (
+      <Box
+        as="div"
+        className={className}
+        borderWidth={1}
+        borderStyle="solid"
+        borderColor="default1"
+        borderRadius={4}
+        display="inline-block"
+        paddingY={1}
+        paddingX={1.5}
+        paddingRight={1}
+        backgroundColor="default1"
+      >
+        <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="baseline"
+            __cursor={loading ? "not-allowed" : undefined}
+            marginRight={1}
+          >
+            <SortableHandle data-test-id="button-drag-handle" />
+          </Box>
+          <ChipLabel label={label} url={url} />
+          {onClose && (
+            <Box marginLeft={1}>
+              <Button
+                variant="tertiary"
+                size="small"
+                onClick={handleClose}
+                data-test-id="button-close"
+                disabled={loading}
+                type="button"
+                icon={<CloseIcon size="small" />}
+              ></Button>
+            </Box>
+          )}
+        </Box>
+      </Box>
+    );
+  },
+);
 
 SortableChip.displayName = "SortableChip";
 export default SortableChip;

@@ -1,0 +1,7 @@
+/** Overrides for react-sortable-hoc */
+.sortableChipHelper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+} 

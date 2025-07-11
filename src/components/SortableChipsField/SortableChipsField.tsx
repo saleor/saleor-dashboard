@@ -1,40 +1,16 @@
 import { ReorderAction, ReorderEvent } from "@dashboard/types";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
 
-import DraggableChip from "../SortableChip";
+import SortableChip from "../SortableChip";
+import styles from "./SortableChipsField.module.css";
 import SortableContainer from "./SortableContainer";
-
-const useStyles = makeStyles(
-  theme => ({
-    chip: {
-      background: theme.palette.background.paper,
-      color: theme.palette.primary.dark,
-      marginBottom: theme.spacing(1),
-    },
-    chipHelper: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: 0,
-    },
-    grabbing: {
-      cursor: "grabbing",
-    },
-    errorText: {
-      color: theme.palette.error.light,
-    },
-  }),
-  {
-    name: "SortableChipsField",
-  },
-);
 
 export interface SortableChipsFieldValueType {
   label: string;
   value: string;
+  url?: string;
 }
 
 export interface SortableChipsFieldProps extends SortableContainerProps {
@@ -46,14 +22,19 @@ export interface SortableChipsFieldProps extends SortableContainerProps {
   onValueReorder: ReorderAction;
 }
 
-const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
-  const { loading, values, error, helperText, onValueDelete, onValueReorder } = props;
-  const classes = useStyles(props);
+const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
+  loading,
+  values,
+  error,
+  helperText,
+  onValueDelete,
+  onValueReorder,
+}: SortableChipsFieldProps) => {
   const handleSortStart = () => {
-    document.body.classList.add(classes.grabbing);
+    document.body.style.cursor = "grabbing";
   };
   const handleSortEnd = (event: ReorderEvent) => {
-    document.body.classList.remove(classes.grabbing);
+    document.body.style.cursor = "";
     onValueReorder(event);
   };
 
@@ -64,20 +45,25 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
       useDragHandle
       onSortStart={handleSortStart}
       onSortEnd={handleSortEnd}
-      helperClass={classes.chipHelper}
+      // We need this class to avoid layout shifts when dragging elements
+      // in order to override default styles from react-sortable-hoc
+      helperClass={styles.sortableChipHelper}
     >
       <div>
-        {values.map((value, valueIndex) => (
-          <DraggableChip
-            className={classes.chip}
-            loading={loading}
-            disabled={loading}
-            key={valueIndex}
-            index={valueIndex}
-            label={value.label}
-            onClose={() => onValueDelete(value.value)}
-          />
-        ))}
+        {values.map((value, valueIndex) => {
+          return (
+            <Box key={valueIndex} marginBottom={1}>
+              <SortableChip
+                loading={loading}
+                disabled={loading}
+                index={valueIndex}
+                label={value.label}
+                onClose={() => onValueDelete(value.value)}
+                url={value.url}
+              />
+            </Box>
+          );
+        })}
         {error && (
           <Text size={2} color="critical1">
             {helperText}

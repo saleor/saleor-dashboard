@@ -1,12 +1,19 @@
+import { categoryUrl } from "@dashboard/categories/urls";
+import { collectionUrl } from "@dashboard/collections/urls";
 import {
   CountryFragment,
   CountryWithCodeFragment,
   MetadataInput,
   MetadataItemFragment,
   PageFragment,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchProductsQuery,
 } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
-import { Node, SlugNode, TagNode } from "@dashboard/types";
+import { pageUrl } from "@dashboard/modeling/urls";
+import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
+import { Node, RelayToFlat, SlugNode, TagNode } from "@dashboard/types";
 import { Choice } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
 
@@ -36,7 +43,50 @@ export function mapPagesToChoices(pages: Array<Pick<PageFragment, "title" | "id"
   return pages.map(page => ({
     label: page.title,
     value: page.id,
+    url: pageUrl(page.id),
   }));
+}
+
+export function mapProductsToChoices(
+  products: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
+): Choice[] {
+  return products.map(product => ({
+    label: product.name,
+    value: product.id,
+    url: productUrl(product.id),
+  }));
+}
+
+export function mapCollectionsToChoices(
+  collections: RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>,
+): Choice[] {
+  return collections.map(collection => ({
+    label: collection.name,
+    value: collection.id,
+    url: collectionUrl(collection.id),
+  }));
+}
+
+export function mapCategoriesToChoices(
+  categories: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>,
+): Choice[] {
+  return categories.map(category => ({
+    label: category.name,
+    value: category.id,
+    url: categoryUrl(category.id),
+  }));
+}
+
+export function mapProductVariantsToChoices(
+  products: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
+): Choice[] {
+  return products.flatMap(product =>
+    (product.variants || []).map(variant => ({
+      label: `${product.name} ${variant.name}`,
+      value: variant.id,
+      url: productVariantEditUrl(product.id, variant.id),
+    })),
+  );
 }
 
 type ExtendedNode = Node & Record<"name", string>;
