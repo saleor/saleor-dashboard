@@ -1,10 +1,17 @@
 import { FilterElement } from "../FilterElement";
 import {
   AttributeQueryVarsBuilder,
+  AttributeTypeQueryVarsBuilder,
+  CollectionPublishedQueryVarsBuilder,
+  CustomerNumberOfOrdersQueryVarsBuilder,
   DefaultQueryVarsBuilder,
+  MetadataQueryVarsBuilder,
   ProductTypeQueryVarsBuilder,
+  StaffMemberStatusQueryVarsBuilder,
   StaticBooleanQueryVarsBuilder,
   StaticQueryVarsBuilder,
+  VoucherStatusQueryVarsBuilder,
+  VoucherTimesUsedQueryVarsBuilder,
 } from "./queryVarsBuilders";
 import { FilterQuery, QueryVarsBuilder } from "./queryVarsBuilders/types";
 
@@ -24,9 +31,16 @@ export class FilterQueryVarsBuilderResolver<TQuery extends FilterQuery> {
   public static getDefaultQueryVarsBuilders() {
     return [
       new AttributeQueryVarsBuilder(),
+      new AttributeTypeQueryVarsBuilder(),
+      new CollectionPublishedQueryVarsBuilder(),
+      new CustomerNumberOfOrdersQueryVarsBuilder(),
+      new MetadataQueryVarsBuilder(),
       new ProductTypeQueryVarsBuilder(),
+      new StaffMemberStatusQueryVarsBuilder(),
       new StaticBooleanQueryVarsBuilder(),
       new StaticQueryVarsBuilder(),
+      new VoucherStatusQueryVarsBuilder(),
+      new VoucherTimesUsedQueryVarsBuilder(),
       new DefaultQueryVarsBuilder(),
     ];
   }
