@@ -1,26 +1,22 @@
-import { DragIcon, makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
+import Drag from "@dashboard/icons/Drag";
 import React from "react";
-import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
-
-const useStyles = makeStyles(
-  {
-    drag: {
-      cursor: "grab",
-    },
-  },
-  { name: "SortableHandle" },
-);
 
 interface SortableHandleProps {
   className?: string;
+  [key: string]: any; // For dnd-kit attributes and listeners
 }
 
-const SortableHandle = SortableHandleHoc((props: SortableHandleProps) => {
+const SortableHandle: React.FC<SortableHandleProps> = (props) => {
   const { className, ...restProps } = props;
-  const classes = useStyles(props);
 
-  return <DragIcon className={clsx(classes.drag, className)} tabIndex={0} {...restProps} />;
-});
+  return (
+    <Drag 
+      className={className} 
+      tabIndex={0} 
+      style={{ cursor: "grab" }}
+      {...restProps} 
+    />
+  );
+};
 
 export default SortableHandle;

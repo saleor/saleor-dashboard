@@ -1,11 +1,19 @@
 import { ReorderAction, ReorderEvent } from "@dashboard/types";
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors
+} from "@dnd-kit/core";
+import { rectSortingStrategy, SortableContext } from "@dnd-kit/sortable";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
-import { SortableContainerProps } from "react-sortable-hoc";
+import React, { useState } from "react";
+import { createPortal } from "react-dom";
 
 import SortableChip from "../SortableChip";
-import styles from "./SortableChipsField.module.css";
-import SortableContainer from "./SortableContainer";
 
 export interface SortableChipsFieldValueType {
   label: string;
@@ -13,7 +21,7 @@ export interface SortableChipsFieldValueType {
   url?: string;
 }
 
-export interface SortableChipsFieldProps extends SortableContainerProps {
+export interface SortableChipsFieldProps {
   loading?: boolean;
   values: SortableChipsFieldValueType[];
   error?: boolean;
@@ -29,48 +37,92 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
   helperText,
   onValueDelete,
   onValueReorder,
-}: SortableChipsFieldProps) => {
-  const handleSortStart = () => {
+}) => {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
+
+  const handleDragStart = (event: any) => {
+    setActiveId(event.active.id);
     document.body.style.cursor = "grabbing";
   };
-  const handleSortEnd = (event: ReorderEvent) => {
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
     document.body.style.cursor = "";
-    onValueReorder(event);
+    setActiveId(null);
+
+    if (over && active.id !== over.id) {
+      const oldIndex = values.findIndex((item) => item.value === active.id);
+      const newIndex = values.findIndex((item) => item.value === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        onValueReorder({ oldIndex, newIndex } as ReorderEvent);
+      }
+    }
   };
 
+  const handleDragCancel = () => {
+    document.body.style.cursor = "";
+    setActiveId(null);
+  };
+
+  const itemIds = values.map(item => item.value);
+  const activeItem = activeId ? values.find(item => item.value === activeId) : null;
+
   return (
-    <SortableContainer
-      axis="xy"
-      lockAxis="xy"
-      useDragHandle
-      onSortStart={handleSortStart}
-      onSortEnd={handleSortEnd}
-      // We need this class to avoid layout shifts when dragging elements
-      // in order to override default styles from react-sortable-hoc
-      helperClass={styles.sortableChipHelper}
-    >
-      <div>
-        {values.map((value, valueIndex) => {
-          return (
-            <Box key={valueIndex} marginBottom={1} display="inline-block" marginRight={1}>
+    <Box>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <SortableContext items={itemIds} strategy={rectSortingStrategy}>
+          <Box display="flex" flexWrap="wrap" gap={2}>
+            {values.map((value) => (
               <SortableChip
-                loading={loading}
-                disabled={loading}
-                index={valueIndex}
+                key={value.value}
+                id={value.value}
                 label={value.label}
-                onClose={() => onValueDelete(value.value)}
                 url={value.url}
+                loading={loading}
+                onClose={() => onValueDelete(value.value)}
+                isDragging={activeId === value.value}
               />
-            </Box>
-          );
-        })}
-        {error && (
+            ))}
+          </Box>
+        </SortableContext>
+        {createPortal(
+          <DragOverlay>
+            {activeId && activeItem ? (
+              <SortableChip
+                id={activeItem.value}
+                label={activeItem.label}
+                url={activeItem.url}
+                loading={loading}
+                isDragging={true}
+              />
+            ) : null}
+          </DragOverlay>,
+          document.body
+        )}
+      </DndContext>
+      {error && (
+        <Box marginTop={2}>
           <Text size={2} color="critical1">
             {helperText}
           </Text>
-        )}
-      </div>
-    </SortableContainer>
+        </Box>
+      )}
+    </Box>
   );
 };
 
