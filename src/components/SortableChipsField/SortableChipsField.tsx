@@ -52,7 +52,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
       <div>
         {values.map((value, valueIndex) => {
           return (
-            <Box key={valueIndex} marginBottom={1}>
+            <Box key={valueIndex} marginBottom={1} display="inline-block" marginRight={1}>
               <SortableChip
                 loading={loading}
                 disabled={loading}

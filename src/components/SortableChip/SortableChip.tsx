@@ -18,7 +18,6 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
     <Text
       data-test-id="chip-label"
       color={url ? "info1" : undefined}
-      textDecoration={url ? "underline" : "none"}
     >
       {label}
     </Text>
