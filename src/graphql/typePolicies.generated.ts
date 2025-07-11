@@ -4110,9 +4110,12 @@ export type PaymentRefundEventFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PaymentSettingsKeySpecifier = ('defaultTransactionFlowStrategy' | PaymentSettingsKeySpecifier)[];
+export type PaymentSettingsKeySpecifier = ('checkoutReleaseFundsCutOffDate' | 'checkoutTtlBeforeReleasingFunds' | 'defaultTransactionFlowStrategy' | 'releaseFundsForExpiredCheckouts' | PaymentSettingsKeySpecifier)[];
 export type PaymentSettingsFieldPolicy = {
-	defaultTransactionFlowStrategy?: FieldPolicy<any> | FieldReadFunction<any>
+	checkoutReleaseFundsCutOffDate?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutTtlBeforeReleasingFunds?: FieldPolicy<any> | FieldReadFunction<any>,
+	defaultTransactionFlowStrategy?: FieldPolicy<any> | FieldReadFunction<any>,
+	releaseFundsForExpiredCheckouts?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PaymentSourceKeySpecifier = ('creditCardInfo' | 'gateway' | 'metadata' | 'paymentMethodId' | PaymentSourceKeySpecifier)[];
 export type PaymentSourceFieldPolicy = {
