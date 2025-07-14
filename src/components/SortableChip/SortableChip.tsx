@@ -15,9 +15,7 @@ export interface SortableChipProps {
 
 const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   const labelContent = (
-    <Text data-test-id="chip-label" color={url ? "info1" : undefined}>
-      {label}
-    </Text>
+    <Text textDecoration={url ? { hover: "underline" } : undefined}>{label}</Text>
   );
 
   if (url) {
@@ -81,12 +79,11 @@ const SortableChip: React.FC<SortableChipProps> = ({
           marginRight={1}
         >
           <GripIcon
-            className={className}
             color="default2"
             size="small"
             data-test-id="button-drag-handle"
             tabIndex={0}
-            // @ts-expect-error - style is not a valid prop for GripIcon
+            // @ts-expect-error - style is not a valid prop for GripIcon, but is still accepted
             style={{ cursor: "grab", outline: "none" }}
             {...attributes}
             {...listeners}
