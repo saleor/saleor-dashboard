@@ -306,4 +306,39 @@ describe("AppActionsHandler", function () {
       );
     });
   });
+  describe("useUnknownActionRequest", () => {
+    it("Responds with ok: false and action ID if provided", () => {
+      const hookRenderResult = renderHook(() => AppActionsHandler.useUnknownActionRequest());
+
+      const res = hookRenderResult.result.current.handle({
+        type: "unknown",
+        payload: {
+          actionId: "123",
+        },
+      });
+
+      expect(res).toEqual({
+        payload: {
+          actionId: "123",
+          ok: false,
+        },
+        type: "response",
+      });
+    });
+    it("Responds with ok: false and fake action ID if not provided", () => {
+      const hookRenderResult = renderHook(() => AppActionsHandler.useUnknownActionRequest());
+
+      const res = hookRenderResult.result.current.handle({
+        type: "unknown",
+      });
+
+      expect(res).toEqual({
+        payload: {
+          actionId: "missing-id",
+          ok: false,
+        },
+        type: "response",
+      });
+    });
+  });
 });

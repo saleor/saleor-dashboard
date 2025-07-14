@@ -224,6 +224,21 @@ const useHandlePermissionRequest = (appId: string) => {
     },
   };
 };
+const useUnknownActionRequest = () => {
+  return {
+    handle: (action: unknown) => {
+      debug("Received unknown action type");
+
+      // @ts-expect-error - action is unknown by its safely accessed
+      if ("payload" in action && "actionId" in action.payload) {
+        // @ts-expect-error - action.payload is unknown by its safely accessed
+        return createResponseStatus(action.payload.actionId, false);
+      }
+
+      return createResponseStatus("missing-id", false);
+    },
+  };
+};
 
 export const AppActionsHandler = {
   useHandleNotificationAction,
@@ -232,4 +247,5 @@ export const AppActionsHandler = {
   useNotifyReadyAction,
   createResponseStatus,
   useHandlePermissionRequest,
+  useUnknownActionRequest,
 };
