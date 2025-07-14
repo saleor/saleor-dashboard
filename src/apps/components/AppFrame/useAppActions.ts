@@ -27,6 +27,7 @@ export const useAppActions = (
     versions,
   );
   const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
+  const { handle: handleUnknownRequest } = AppActionsHandler.useUnknownActionRequest();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
@@ -56,7 +57,10 @@ export const useAppActions = (
         return handlePermissionRequest(action);
       }
       default: {
-        throw new Error("Unknown action type");
+        /**
+         * Instead of throwing, try to respond with failed action response
+         */
+        return handleUnknownRequest(action);
       }
     }
   };
