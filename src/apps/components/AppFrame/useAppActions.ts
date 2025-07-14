@@ -3,19 +3,19 @@ import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostT
 import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import React, { useState } from "react";
 
-/**
- * TODO Refactor to named attributes
- */
-export const useAppActions = (
-  frameEl: HTMLIFrameElement | null,
-  appOrigin: string,
-  appId: string,
-  appToken: string,
-  versions: {
-    core: string;
-    dashboard: string;
-  },
-) => {
+export const useAppActions = ({
+  frameEl,
+  appOrigin,
+  appId,
+  appToken,
+  versions,
+}: {
+  frameEl: HTMLIFrameElement | null;
+  appOrigin: string;
+  appId: string;
+  appToken: string;
+  versions: { core: string; dashboard: string };
+}) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
   const { handle: handleNotification } = AppActionsHandler.useHandleNotificationAction();
   const { handle: handleUpdateRouting } = AppActionsHandler.useHandleUpdateRoutingAction(appId);

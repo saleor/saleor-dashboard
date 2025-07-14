@@ -44,16 +44,16 @@ export const AppFrame: React.FC<Props> = ({
   /**
    * React on messages from App
    */
-  const { postToExtension, handshakeDone, setHandshakeDone } = useAppActions(
-    frameRef.current,
-    appOrigin,
-    appId,
-    appToken,
-    {
+  const { postToExtension, handshakeDone, setHandshakeDone } = useAppActions({
+    frameEl: frameRef.current,
+    appOrigin: appOrigin,
+    appId: appId,
+    appToken: appToken,
+    versions: {
       core: coreVersion,
       dashboard: dashboardVersion,
     },
-  );
+  });
 
   /**
    * Listen to Dashboard context like theme or locale and inform app about it
