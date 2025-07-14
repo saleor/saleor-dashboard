@@ -225,6 +225,7 @@ const useHandlePermissionRequest = (appId: string) => {
   };
 };
 
+/** @deprecated Use utils from extensions/ */
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleUpdateRoutingAction,
