@@ -4,6 +4,7 @@ import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
 import React, { useState } from "react";
 
 /**
+ * @deprecated Use hook from extensions/
  * TODO Refactor to named attributes
  */
 export const useAppActions = (

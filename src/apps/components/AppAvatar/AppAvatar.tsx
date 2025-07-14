@@ -5,6 +5,7 @@ import React from "react";
 type Logo = AppLogo | undefined;
 type Size = 4 | 6 | 8 | 12;
 
+/** @deprecated Use component from extensions/ */
 export const AppAvatar = ({ logo, size = 8, ...props }: { logo?: Logo; size?: Size } & BoxProps) =>
   logo ? (
     <Box
