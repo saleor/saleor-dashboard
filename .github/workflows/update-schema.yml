@@ -89,3 +89,4 @@ jobs:
           branch: chore/update-schema-${{ steps.schema-version.outputs.version }}
           delete-branch: true
           draft: false
+          labels: "skip changeset"
