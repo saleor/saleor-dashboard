@@ -1,8 +1,6 @@
-import { Box, Button, CloseIcon, GripIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, CloseIcon, GripIcon, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
-
-import { SortableChipProps } from "../SortableChip/SortableChip";
 
 const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   const labelContent = (
@@ -16,15 +14,25 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   return labelContent;
 };
 
-export interface DraggableChipProps extends Omit<SortableChipProps, "id"> {
-  isDragging?: boolean;
-  style?: React.CSSProperties;
-  attributes?: React.HTMLAttributes<HTMLDivElement>;
-  listeners?: React.HTMLAttributes<HTMLDivElement>;
-}
+export type SortableChipProps = {
+  label: ReactNode;
+  onClose?: () => void;
+  loading?: boolean;
+  url?: string;
+  /** Indicates that element is held by user and is dragged around screen */
+  isDragged?: boolean;
+  /** Indicates that element is being rendered as "overlay":
+   * preview of list state after user stops dragging */
+  isDraggedOverlay?: boolean;
+} & BoxProps;
 
-export const DraggableChip = React.forwardRef<HTMLDivElement, DraggableChipProps>(
-  ({ label, onClose, loading, url, isDragging, className, style, attributes, listeners }, ref) => {
+/** Chip which can be used within a list of sortable elements, should be used with
+ * Draggable component which returns correct handlers from @dnd-kit */
+export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
+  (
+    { label, onClose, loading, url, isDragged, isDraggedOverlay, className, style, ...props },
+    ref,
+  ) => {
     const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
 
@@ -32,7 +40,6 @@ export const DraggableChip = React.forwardRef<HTMLDivElement, DraggableChipProps
         onClose();
       }
     };
-    const borderColor: "transparent" | "default1" = isDragging ? "transparent" : "default1";
 
     return (
       <Box
@@ -42,19 +49,19 @@ export const DraggableChip = React.forwardRef<HTMLDivElement, DraggableChipProps
         className={className}
         borderWidth={1}
         borderStyle="solid"
-        borderColor={borderColor}
+        borderColor={isDraggedOverlay ? "transparent" : "default1"}
         borderRadius={4}
         paddingY={1}
         paddingX={1.5}
         paddingRight={1}
-        // backgroundColor="default1"
-        backgroundColor={isDragging ? "default3" : "default1"}
-        opacity={isDragging ? "0.2" : "1"}
+        backgroundColor={isDraggedOverlay ? "default3" : "default1"}
+        opacity={isDraggedOverlay ? "0.2" : "1"}
+        {...props}
       >
         <Box
           display="flex"
           alignItems="center"
-          style={{ visibility: isDragging ? "hidden" : "visible" }}
+          style={{ visibility: isDraggedOverlay ? "hidden" : "visible" }}
         >
           <Box
             display="flex"
@@ -66,9 +73,8 @@ export const DraggableChip = React.forwardRef<HTMLDivElement, DraggableChipProps
               color="default2"
               size="small"
               data-test-id="button-drag-handle"
-              style={{ cursor: "grab", outline: "none" }}
-              {...attributes}
-              {...listeners}
+              // @ts-expect-error - style is not accepted in types, but can be used
+              style={{ cursor: isDragged ? "grabbing" : "grab", outline: "none" }}
             />
           </Box>
           <ChipLabel label={label} url={url} />
@@ -88,4 +94,4 @@ export const DraggableChip = React.forwardRef<HTMLDivElement, DraggableChipProps
     );
   },
 );
-DraggableChip.displayName = "DraggableChip";
+SortableChip.displayName = "SortableChip";
