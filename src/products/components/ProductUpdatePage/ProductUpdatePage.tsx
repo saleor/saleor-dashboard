@@ -7,10 +7,6 @@ import {
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import {
-  getCompositeLabel,
-  VariantWithProductLabel,
-} from "@dashboard/components/AssignVariantDialog/utils";
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
@@ -24,7 +20,6 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { getExtensionsItemsForProductDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
-  AttributeEntityTypeEnum,
   ChannelFragment,
   PermissionEnum,
   ProductChannelListingErrorFragment,
@@ -59,7 +54,7 @@ import { Box, Divider, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getChoices } from "../../utils/data";
+import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import ProductTaxes from "../ProductTaxes";
@@ -68,8 +63,6 @@ import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
 import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
-
-type Products = RelayToFlat<SearchProductsQuery["search"]>;
 
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
@@ -194,43 +187,19 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     })) || [];
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
   const handleAssignReferenceAttribute = (
-    attributeValues: Array<
-      (VariantWithProductLabel & { product: { id: string } }) | Pick<Products[0], "id" | "name">
-    >,
+    attributeValues: AttributeValuesMetadata[],
     data: ProductUpdateData,
     handlers: ProductUpdateHandlers,
   ) => {
-    const entityType = getReferenceAttributeEntityTypeFromAttribute(
-      assignReferencesAttributeId,
-      data.attributes,
-    );
-
-    const metadataValues = attributeValues.map(value => {
-      if (entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT) {
-        return {
-          label: getCompositeLabel(value as VariantWithProductLabel),
-          value: value.id,
-          metadata: {
-            productId: (value as VariantWithProductLabel).product?.id,
-          },
-        };
-      }
-
-      return {
-        label: value.name,
-        value: value.id,
-      };
-    });
-
     handlers.selectAttributeReference(
       assignReferencesAttributeId,
       mergeAttributeValues(
         assignReferencesAttributeId,
-        metadataValues.map(({ value }) => value),
+        attributeValues.map(({ value }) => value),
         data.attributes,
       ),
     );
-    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, metadataValues);
+    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, attributeValues);
     onCloseDialog();
   };
   const { PRODUCT_DETAILS_MORE_ACTIONS, PRODUCT_DETAILS_WIDGETS } = useExtensions(
@@ -356,7 +325,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   attributes={data.attributes}
                   attributeValues={attributeValues}
                   errors={productErrors}
-                  loading={false}
+                  loading={disabled}
                   disabled={disabled}
                   onChange={handlers.selectAttribute}
                   onMultiChange={handlers.selectAttributeMultiple}
@@ -368,7 +337,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   fetchMoreAttributeValues={fetchMoreAttributeValues}
                   onAttributeSelectBlur={onAttributeSelectBlur}
                   richTextGetters={attributeRichTextGetters}
-                  product={product}
                 />
               )}
               <ProductVariants
@@ -476,14 +444,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(
                     attributeValues.map(container => ({
-                      id: container.id,
-                      name: container.name,
-                      product: container.metadata?.productId
-                        ? {
-                            id: container.metadata.productId,
-                            __typename: "Product",
-                          }
-                        : undefined,
+                      value: container.id,
+                      label: container.name,
                     })),
                     data,
                     handlers,
