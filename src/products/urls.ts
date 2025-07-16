@@ -93,6 +93,10 @@ export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
 
 export const productVariantEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
+
+export const productVariantEditRedirectPath = (variantId: string) =>
+  urlJoin(productSection, "variant", variantId);
+
 export type ProductVariantEditUrlDialog = "remove" | "assign-attribute-value";
 export type ProductVariantEditUrlQueryParams = Dialog<ProductVariantEditUrlDialog> & SingleAction;
 export const productVariantEditUrl = (
@@ -103,6 +107,9 @@ export const productVariantEditUrl = (
   productVariantEditPath(encodeURIComponent(productId), encodeURIComponent(variantId)) +
   "?" +
   stringifyQs(params);
+
+export const productVariantRedirectUrl = (variantId: string) =>
+  productVariantEditRedirectPath(encodeURIComponent(variantId));
 
 export type ProductVariantAddUrlDialog = "assign-attribute-value";
 export type ProductVariantAddUrlQueryParams = Dialog<ProductVariantAddUrlDialog> & SingleAction;

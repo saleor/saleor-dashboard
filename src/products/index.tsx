@@ -22,6 +22,7 @@ import {
   productVariantAddPath,
   ProductVariantAddUrlQueryParams,
   productVariantEditPath,
+  productVariantEditRedirectPath,
   ProductVariantEditUrlQueryParams,
 } from "./urls";
 import ProductCreateComponent from "./views/ProductCreate";
@@ -94,6 +95,21 @@ const ProductVariant: React.FC<RouteComponentProps<matchParamsProductVariant>> =
     />
   );
 };
+/** Special page for use case when we only know productVariant.id and not product.id
+ * it renders exactly the same, and updates URL to correct ProductVariant page once
+ * we fetch data about productVariant */
+const ProductVariantRedirect = ({ match }: RouteComponentProps<MatchParams>) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: MatchParams = qs;
+
+  return (
+    <ProductVariantComponent
+      variantId={decodeURIComponent(match.params.id ?? "")}
+      params={params as ProductVariantEditUrlQueryParams}
+    />
+  );
+};
+
 const ProductImage: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductImageUrlQueryParams = qs;
@@ -127,6 +143,11 @@ const Component = () => {
         <Route exact path={productListPath} component={ProductList} />
         <Route exact path={productAddPath} component={ProductCreate} />
         <Route exact path={productVariantAddPath(":id")} component={ProductVariantCreate} />
+        <Route
+          exact
+          path={productVariantEditRedirectPath(":id")}
+          component={ProductVariantRedirect}
+        />
         <Route
           path={productVariantEditPath(":productId", ":variantId")}
           component={ProductVariant}

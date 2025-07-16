@@ -61,11 +61,13 @@ import {
 } from "../../urls";
 import { mapFormsetStockToStockInput } from "../../utils/data";
 import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
+import { useHandleProductVariantSilentRedirect } from "./useHandleProductVariantSilentRedirect";
 import { useSubmitChannels } from "./useSubmitChannels";
 
 interface ProductUpdateProps {
   variantId: string;
-  productId: string;
+  /** Optional to allow rendering when we don't know product.id, only productVariant.id */
+  productId?: string;
   params: ProductVariantEditUrlQueryParams;
 }
 
@@ -87,6 +89,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
       firstValues: 10,
     },
   });
+
+  useHandleProductVariantSilentRedirect({
+    data,
+    urlVariantId: variantId,
+    urlProductId: productId,
+  });
+
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal] = createDialogActionHandlers<

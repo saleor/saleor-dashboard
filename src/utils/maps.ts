@@ -10,11 +10,7 @@ import {
 } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { pageUrl } from "@dashboard/modeling/urls";
-import {
-  productUrl,
-  productVariantEditUrl,
-  productVariantRedirectUrl,
-} from "@dashboard/products/urls";
+import { productUrl, productVariantRedirectUrl } from "@dashboard/products/urls";
 import { Node, SlugNode, TagNode } from "@dashboard/types";
 import { Choice } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
