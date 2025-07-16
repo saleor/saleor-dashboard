@@ -74,7 +74,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
     );
   }, [values]);
 
-  const activeItem = itemIdToValueMap.get(activeId);
+  const activeItem = itemIdToValueMap.get(activeId as UniqueIdentifier);
 
   return (
     <Box>
