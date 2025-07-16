@@ -3,6 +3,7 @@ import { DashboardEventFactory, Events } from "@saleor/app-sdk/app-bridge";
 import { useEffect, useRef } from "react";
 
 /**
+ * @deprecated Use hook from extensions/
  * https://usehooks.com/usePrevious/
  */
 function usePreviousValue(value: unknown) {

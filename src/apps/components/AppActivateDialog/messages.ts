@@ -1,5 +1,6 @@
 import { defineMessages } from "react-intl";
 
+/** @deprecated use messages from extensions/ */
 export default defineMessages({
   activateAppTitle: {
     id: "YHNozE",
