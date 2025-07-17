@@ -30,5 +30,5 @@ export const useHandleProductVariantSilentRedirect = ({
       // This doesn't trigger a re-render or data refetch
       window.history.replaceState(null, "", productVariantEditUrl(productId, urlVariantId));
     }
-  }, [data, urlVariantId, navigate]);
+  }, [data, urlVariantId, urlProductId]);
 };
