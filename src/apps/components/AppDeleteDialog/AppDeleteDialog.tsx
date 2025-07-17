@@ -16,6 +16,7 @@ export interface AppDeleteDialogProps {
   type: "CUSTOM" | "EXTERNAL";
 }
 
+/** @deprecated Use component from extensions/ */
 const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
   confirmButtonState,
   open,
