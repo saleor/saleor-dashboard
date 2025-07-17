@@ -10,7 +10,7 @@ import {
 } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { pageUrl } from "@dashboard/modeling/urls";
-import { productUrl, productVariantRedirectUrl } from "@dashboard/products/urls";
+import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { Node, SlugNode, TagNode } from "@dashboard/types";
 import { Choice } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
@@ -165,7 +165,7 @@ export function getEntityUrl({
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
       // Note: we don't know product.id here, redirect will fetch data as usual ProductVariant page
       // and update URL with replace
-      return productVariantRedirectUrl(entityId);
+      return productVariantEditUrl(entityId);
     default:
       return undefined;
   }
