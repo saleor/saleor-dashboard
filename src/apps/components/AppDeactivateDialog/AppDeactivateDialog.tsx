@@ -8,6 +8,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import msgs from "./messages";
 
+/** @deprecated use component from extensions/ */
 export interface AppDeactivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
@@ -17,6 +18,7 @@ export interface AppDeactivateDialogProps {
   onConfirm: () => void;
 }
 
+/** @deprecated use component from extensions/ */
 const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
   confirmButtonState,
   open,

@@ -58,4 +58,5 @@ const useTokenRefresh = (token?: string, refetch?: () => void) => {
   }, [token]);
 };
 
+/** Use hook from extensions/ */
 export default useTokenRefresh;

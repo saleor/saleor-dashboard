@@ -5,6 +5,7 @@ import { useTheme } from "@saleor/macaw-ui";
 import { useEffect } from "react";
 
 /**
+ * @deprecated Use hook from extensions/
  * TODO: Refactor prop-drilling, use context or some atomic state
  */
 export const useAppDashboardUpdates = (
