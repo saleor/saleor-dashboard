@@ -48,6 +48,7 @@ export const getAppstoreAppsLists = (
   };
 };
 
+/** @deprecated This is no longer used on production (tunnelUrlKeywords are empty) */
 export const isAppInTunnel = (manifestUrl: string) =>
   Boolean(
     getAppsConfig().tunnelUrlKeywords.find(keyword => new URL(manifestUrl).host.includes(keyword)),

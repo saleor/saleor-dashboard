@@ -5061,8 +5061,26 @@ export type PaymentMethodTypeEnumFilterInput = {
 };
 
 export type PaymentSettingsInput = {
+  /**
+   * Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date.
+   *
+   * Added in Saleor 3.20.
+   */
+  checkoutReleaseFundsCutOffDate?: InputMaybe<Scalars['DateTime']>;
+  /**
+   * The time in hours after which funds for expired checkouts will be released.
+   *
+   * Added in Saleor 3.20.
+   */
+  checkoutTtlBeforeReleasingFunds?: InputMaybe<Scalars['Hour']>;
   /** Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction. */
   defaultTransactionFlowStrategy?: InputMaybe<TransactionFlowStrategyEnum>;
+  /**
+   * Determine if the funds for expired checkouts should be released automatically.
+   *
+   * Added in Saleor 3.20.
+   */
+  releaseFundsForExpiredCheckouts?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum PermissionEnum {

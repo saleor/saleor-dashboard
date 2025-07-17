@@ -1,5 +1,7 @@
 /**
  * Interfaces for shapes of data fetched from AppStore API.
+ * @deprecated This Appstore SDK is deprecated, and was replaced by Extensions endpoint
+ * It's now used in extensions/
  */
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace AppstoreApi {

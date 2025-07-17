@@ -15,6 +15,7 @@ interface AppIFrameProps {
   className: string;
 }
 
+/** @deprecated Use component from extensions/ */
 const _AppIFrame = forwardRef<HTMLIFrameElement, AppIFrameProps>(
   ({ appId, src, featureFlags, params, onLoad, onError, className }, ref) => {
     const themeRef = useRef<ThemeType>();
