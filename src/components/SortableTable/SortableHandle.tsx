@@ -2,6 +2,7 @@ import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { GripIcon } from "@saleor/macaw-ui-next";
 import React from "react";
+// TODO: Remove and use @dnd-kit instead
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 
 const useStyles = makeStyles(
@@ -17,6 +18,8 @@ const useStyles = makeStyles(
   }),
   { name: "SortableHandle" },
 );
+
+/** @deprecatged This componnt should use @dnd-kit instead of react-sortable-hoc */
 const SortableHandle = SortableHandleHoc(() => {
   const classes = useStyles({});
 

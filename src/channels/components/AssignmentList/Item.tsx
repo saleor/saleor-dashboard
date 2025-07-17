@@ -1,6 +1,7 @@
 import DeletableItem from "@dashboard/components/DeletableItem";
 import { Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+// TODO: Remove and use @dnd-kit instead
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import SortableHandle from "./SortableHandle";
@@ -13,6 +14,7 @@ interface ItemProps extends SortableElementProps {
   onDelete: (id: string) => void;
 }
 
+/** @deprecatged This componnt should use @dnd-kit instead of react-sortable-hoc */
 const Item = SortableElement(({ item, sortable = false, onDelete }: ItemProps) => {
   const { id, name } = item;
   const classes = useStyles();

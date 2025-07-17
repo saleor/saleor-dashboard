@@ -8,6 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { ReorderEvent } from "@dashboard/types";
 import { move } from "@dashboard/utils/lists";
+// TODO: Remove and use @dnd-kit instead
 import { arrayMove } from "react-sortable-hoc";
 
 export function createImageUploadHandler(
@@ -22,6 +23,7 @@ export function createImageUploadHandler(
     });
 }
 
+/** @deprecatged This componnt should use @dnd-kit instead of react-sortable-hoc */
 export function createImageReorderHandler(
   product: ProductFragment,
   reorderProductImages: (variables: ProductMediaReorderMutationVariables) => void,

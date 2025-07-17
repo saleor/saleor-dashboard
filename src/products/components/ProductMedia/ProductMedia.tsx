@@ -8,6 +8,7 @@ import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUpl
 import { Box, Button, Dropdown, List, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+// TODO: Remove and use @dnd-kit instead
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import { messages } from "./messages";
@@ -65,6 +66,7 @@ interface ProductMediaProps {
   openMediaUrlModal: () => any;
 }
 
+/** @deprecatged This componnt should use @dnd-kit instead of react-sortable-hoc */
 const ProductMedia: React.FC<ProductMediaProps> = props => {
   const {
     media,

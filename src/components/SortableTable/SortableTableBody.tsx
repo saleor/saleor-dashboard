@@ -4,6 +4,7 @@ import { TableBody } from "@material-ui/core";
 import { TableBodyProps } from "@material-ui/core/TableBody";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
+// TODO: Remove and use @dnd-kit instead
 import { SortableContainer } from "react-sortable-hoc";
 
 const InnerSortableTableBody = SortableContainer<TableBodyProps>(({ children, ...props }) => (
@@ -29,6 +30,8 @@ const useStyles = makeStyles(
   }),
   { name: "SortableTableBody" },
 );
+
+/** @deprecatged This componnt should use @dnd-kit instead of react-sortable-hoc */
 const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, "ref">> = props => {
   const classes = useStyles({});
 
