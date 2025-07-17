@@ -10,7 +10,7 @@ import {
 } from "@dnd-kit/core";
 import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import React, { useMemo } from "react";
 import { createPortal } from "react-dom";
 
@@ -27,11 +27,13 @@ export interface SortableChipsFieldValueType {
 
 export interface SortableChipsFieldProps {
   loading?: boolean;
+  disabled?: boolean;
   values: SortableChipsFieldValueType[];
   error?: boolean;
   helperText?: string;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
+  onAdd?: () => void;
 }
 
 /** We cannot use any sorting strategy from @dnd-kit
@@ -48,11 +50,13 @@ function disableSortingStrategy() {
 
 const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
   loading,
+  disabled,
   values,
   error,
   helperText,
   onValueDelete,
   onValueReorder,
+  onAdd,
 }) => {
   const { activeId, handleDragStart, handleDragEnd } = useActiveDragId();
   const { handleDragOver } = useSortableDragOver({
@@ -89,22 +93,33 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
       >
         <SortableContext items={[...itemIdToValueMap.keys()]} strategy={disableSortingStrategy}>
           <Box display="flex" flexWrap="wrap" gap={2}>
-            {values.map(value => (
-              <Draggable key={value.value} id={value.value}>
-                {({ isDragging, ...props }) => (
-                  <SortableChip
-                    label={value.label}
-                    url={value.url}
-                    loading={loading}
-                    onClose={() => onValueDelete(value.value)}
-                    // Overlay is the shadow that appears where element will be dropped
-                    // while dragging
-                    isDraggedOverlay={isDragging}
-                    {...props}
-                  />
-                )}
-              </Draggable>
-            ))}
+            <>
+              {values.map(value => (
+                <Draggable key={value.value} id={value.value} disabled={disabled}>
+                  {({ isDragging, ...props }) => (
+                    <SortableChip
+                      label={value.label}
+                      url={value.url}
+                      loading={loading}
+                      onClose={() => onValueDelete(value.value)}
+                      // Overlay is the shadow that appears where element will be dropped
+                      // while dragging
+                      isDraggedOverlay={isDragging}
+                      {...props}
+                    />
+                  )}
+                </Draggable>
+              ))}
+              {onAdd ? (
+                <Button
+                  variant="secondary"
+                  disabled={disabled}
+                  marginLeft="auto"
+                  onClick={onAdd}
+                  icon={<PlusIcon />}
+                />
+              ) : null}
+            </>
           </Box>
         </SortableContext>
         {createPortal(

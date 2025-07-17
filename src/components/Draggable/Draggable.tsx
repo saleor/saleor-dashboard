@@ -12,13 +12,15 @@ export type DraggableRenderProps = {
 interface DraggableProps {
   id: string;
   children: (props: DraggableRenderProps) => React.ReactElement;
+  disabled?: boolean;
 }
 
 /** This element is used as wrapper in @dnd-kit sortable list
  * in order to make children element interactive */
-export const Draggable = ({ id, children }: DraggableProps) => {
+export const Draggable = ({ id, children, disabled }: DraggableProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
+    disabled,
   });
 
   const style = {
