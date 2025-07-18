@@ -45,7 +45,7 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
     { status: mutationStatus, loading: mutationInProgress },
   ] = useTaxCountryConfigurationUpdateMutation({
     onCompleted: data => {
-      const errors = data?.taxCountryConfigurationUpdate?.errors;
+      const errors = data?.taxCountryConfigurationUpdate?.errors ?? [];
 
       if (errors.length === 0) {
         notify({
@@ -57,7 +57,7 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
   });
   const [taxCountryConfigurationDeleteMutation] = useTaxCountryConfigurationDeleteMutation({
     onCompleted: data => {
-      const errors = data?.taxCountryConfigurationDelete?.errors;
+      const errors = data?.taxCountryConfigurationDelete?.errors ?? [];
 
       if (errors.length === 0) {
         notify({
