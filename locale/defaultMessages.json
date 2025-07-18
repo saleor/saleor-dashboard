@@ -2708,10 +2708,6 @@
   "EcglP9": {
     "string": "Key"
   },
-  "Ediw6/": {
-    "context": "button label",
-    "string": "Assign references"
-  },
   "EewziG": {
     "context": "checkbox gift cards label description",
     "string": "When activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"

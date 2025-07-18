@@ -101,7 +101,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                 <TableRowLink
                   hover={!!variant}
                   key={variant ? variant.id : "skeleton"}
-                  href={variant && productVariantEditPath(variant.product.id, variant.id)}
+                  href={variant && productVariantEditPath(variant.id)}
                   className={classes.tableRow}
                   selected={isSelected}
                 >

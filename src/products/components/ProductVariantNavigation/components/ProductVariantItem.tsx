@@ -25,7 +25,6 @@ export const VariantItem = ({
   thumbnail,
   isDefault,
   isActive,
-  productId,
   draggable,
 }: VariantItemProps) => {
   const intl = useIntl();
@@ -60,7 +59,7 @@ export const VariantItem = ({
           <Drag />
         </Box>
 
-        <Link to={productVariantEditUrl(productId, variant.id)} style={{ width: "100%" }}>
+        <Link to={productVariantEditUrl(variant.id)} style={{ width: "100%" }}>
           <Box display="flex" alignItems="center" gap={5}>
             {thumbnail?.url ? (
               <Box

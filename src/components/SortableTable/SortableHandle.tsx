@@ -17,6 +17,8 @@ const useStyles = makeStyles(
   }),
   { name: "SortableHandle" },
 );
+
+/** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
 const SortableHandle = SortableHandleHoc(() => {
   const classes = useStyles({});
 

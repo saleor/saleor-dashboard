@@ -252,7 +252,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={submit}
         onVariantShow={variantId =>
-          navigate(productVariantEditUrl(product.id, variantId), {
+          navigate(productVariantEditUrl(variantId), {
             resetScroll: true,
           })
         }

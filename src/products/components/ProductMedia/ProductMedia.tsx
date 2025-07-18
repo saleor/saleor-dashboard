@@ -65,6 +65,7 @@ interface ProductMediaProps {
   openMediaUrlModal: () => any;
 }
 
+/** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
 const ProductMedia: React.FC<ProductMediaProps> = props => {
   const {
     media,

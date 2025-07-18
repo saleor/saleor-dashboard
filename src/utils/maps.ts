@@ -1,4 +1,7 @@
+import { categoryUrl } from "@dashboard/categories/urls";
+import { collectionUrl } from "@dashboard/collections/urls";
 import {
+  AttributeEntityTypeEnum,
   CountryFragment,
   CountryWithCodeFragment,
   MetadataInput,
@@ -6,6 +9,8 @@ import {
   PageFragment,
 } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
+import { pageUrl } from "@dashboard/modeling/urls";
+import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { Node, SlugNode, TagNode } from "@dashboard/types";
 import { Choice } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
@@ -135,4 +140,33 @@ export function getLoadableList<T>(data: Connection<T> | undefined | null): T[] 
   }
 
   return mapEdgesToItems(data) ?? [];
+}
+
+export function getEntityUrl({
+  entityType,
+  entityId,
+}: {
+  entityType: AttributeEntityTypeEnum | null | undefined;
+  entityId: string;
+}): string | undefined {
+  if (!entityType || !entityId) {
+    return undefined;
+  }
+
+  switch (entityType) {
+    case AttributeEntityTypeEnum.CATEGORY:
+      return categoryUrl(entityId);
+    case AttributeEntityTypeEnum.COLLECTION:
+      return collectionUrl(entityId);
+    case AttributeEntityTypeEnum.PAGE:
+      return pageUrl(entityId);
+    case AttributeEntityTypeEnum.PRODUCT:
+      return productUrl(entityId);
+    case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+      // Note: we don't know product.id here, redirect will fetch data as usual ProductVariant page
+      // and update URL with replace
+      return productVariantEditUrl(entityId);
+    default:
+      return undefined;
+  }
 }

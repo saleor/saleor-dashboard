@@ -90,7 +90,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         status: "success",
         text: intl.formatMessage(messages.variantCreatedSuccess),
       });
-      navigate(productVariantEditUrl(productId, variantId), {
+      navigate(productVariantEditUrl(variantId), {
         resetScroll: true,
       });
     },
@@ -174,7 +174,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
     updateMetadata,
     updatePrivateMetadata,
   );
-  const handleVariantClick = (id: string) => navigate(productVariantEditUrl(productId, id));
+  const handleVariantClick = (id: string) => navigate(productVariantEditUrl(id));
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productVariantAddUrl(productId, {

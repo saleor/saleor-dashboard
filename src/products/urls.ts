@@ -91,18 +91,19 @@ export type ProductCreateUrlQueryParams = Dialog<ProductCreateUrlDialog> &
 export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
   productPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const productVariantEditPath = (productId: string, variantId: string) =>
+export const productVariantEditPath = (variantId: string) =>
+  urlJoin(productSection, "variant", variantId);
+
+/** @deprecated TODO: Remove in Saleor Dashboard 3.23 */
+export const productVariantLegacyEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
+
 export type ProductVariantEditUrlDialog = "remove" | "assign-attribute-value";
 export type ProductVariantEditUrlQueryParams = Dialog<ProductVariantEditUrlDialog> & SingleAction;
 export const productVariantEditUrl = (
-  productId: string,
   variantId: string,
   params?: ProductVariantEditUrlQueryParams,
-) =>
-  productVariantEditPath(encodeURIComponent(productId), encodeURIComponent(variantId)) +
-  "?" +
-  stringifyQs(params);
+) => productVariantEditPath(encodeURIComponent(variantId)) + "?" + stringifyQs(params);
 
 export type ProductVariantAddUrlDialog = "assign-attribute-value";
 export type ProductVariantAddUrlQueryParams = Dialog<ProductVariantAddUrlDialog> & SingleAction;
@@ -115,7 +116,6 @@ export const productVariantAddUrl = (
 
 export const productImagePath = (productId: string, imageId: string) =>
   urlJoin(productSection, productId, "image", imageId);
-export type ProductImageUrlDialog = "remove";
 export type ProductImageUrlQueryParams = Dialog<"remove">;
 export const productImageUrl = (
   productId: string,

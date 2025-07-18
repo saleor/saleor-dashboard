@@ -12,6 +12,7 @@ type SortableTableRowProps<T extends SortableTableRowTypesUnion> = T extends "li
   ? TableRowLinkProps
   : TableRowProps;
 
+/** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
 const SortableTableRow = SortableElement<any>(({ children, ...props }) => (
   <TableRowLink {...props}>
     <SortableHandle />

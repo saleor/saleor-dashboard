@@ -73,7 +73,7 @@ export function searchInCatalog(
     label: getProductVariantLabel(variant),
     searchValue: `${variant.product.name} ${variant.name} ${variant.sku}`,
     onClick: () => {
-      navigate(productVariantEditUrl(variant.product.id, variant.id));
+      navigate(productVariantEditUrl(variant.id));
 
       return false;
     },
