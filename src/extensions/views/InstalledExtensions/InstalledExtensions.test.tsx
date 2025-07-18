@@ -193,7 +193,7 @@ describe("InstalledExtensions", () => {
     expect(mockCloseModal).toHaveBeenCalled();
   });
 
-  it("shows Install App button when user has permission", () => {
+  it("shows Add Extension button when user has permission", () => {
     // Arrange
     mockUseHasManagedAppsPermission.mockImplementation(() => ({ hasManagedAppsPermission: true }));
 
@@ -201,10 +201,10 @@ describe("InstalledExtensions", () => {
     render(<InstalledExtensions {...defaultProps} />);
 
     // Assert
-    expect(screen.getByText("Install external app")).toBeInTheDocument();
+    expect(screen.getByText("Add Extension")).toBeInTheDocument();
   });
 
-  it("does not show Install App button when user lacks permission", () => {
+  it("does not show Add Extension button when user lacks permission", () => {
     // Arrange
     mockUseHasManagedAppsPermission.mockImplementation(() => ({ hasManagedAppsPermission: false }));
 
@@ -212,6 +212,6 @@ describe("InstalledExtensions", () => {
     render(<InstalledExtensions {...defaultProps} />);
 
     // Assert
-    expect(screen.queryByText("Install external app")).not.toBeInTheDocument();
+    expect(screen.queryByText("Add Extension")).not.toBeInTheDocument();
   });
 });
