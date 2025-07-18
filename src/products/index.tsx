@@ -133,14 +133,20 @@ const Component = () => {
         <Route
           path={productVariantLegacyEditPath(":productId", ":variantId")}
           exact
-          render={({ match, location }) => (
-            <Redirect
-              to={{
-                pathname: productVariantEditPath(match.params.variantId),
-                search: location.search,
-              }}
-            />
-          )}
+          render={({ match, location }) => {
+            if (!match.params.variantId) {
+              return <Redirect to={productListPath} />;
+            }
+
+            return (
+              <Redirect
+                to={{
+                  pathname: productVariantEditPath(match.params.variantId),
+                  search: location.search,
+                }}
+              />
+            );
+          }}
         />
         <Route path={productVariantEditPath(":variantId")} component={ProductVariant} />
         <Route path={productImagePath(":productId", ":imageId")} component={ProductImage} />
