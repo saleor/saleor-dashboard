@@ -1,7 +1,6 @@
 import { DragIcon, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
-// TODO: Remove and use @dnd-kit instead
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 
 const useStyles = makeStyles(

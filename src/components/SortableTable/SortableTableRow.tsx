@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { TableRowProps } from "@material-ui/core";
 import React from "react";
-// TODO: Remove and use @dnd-kit instead
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import TableRowLink, { TableRowLinkProps } from "../TableRowLink";

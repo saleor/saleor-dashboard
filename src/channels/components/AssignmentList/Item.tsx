@@ -1,7 +1,6 @@
 import DeletableItem from "@dashboard/components/DeletableItem";
 import { Divider, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-// TODO: Remove and use @dnd-kit instead
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import SortableHandle from "./SortableHandle";
