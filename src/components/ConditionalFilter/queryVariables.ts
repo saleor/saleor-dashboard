@@ -4,9 +4,7 @@ import {
   CustomerFilterInput,
   DateRangeInput,
   DateTimeRangeInput,
-  DecimalFilterInput,
   GiftCardFilterInput,
-  GlobalIdFilterInput,
   OrderDraftFilterInput,
   OrderFilterInput,
   PageFilterInput,
@@ -21,8 +19,6 @@ import { FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders";
-
-export type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
