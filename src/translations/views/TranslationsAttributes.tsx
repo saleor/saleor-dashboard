@@ -131,8 +131,8 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
   const saveButtonState = getMutationState(
     updateAttributeTranslationsOpts.called || updateAttributeValueTranslationsOpts.called,
     updateAttributeTranslationsOpts.loading || updateAttributeValueTranslationsOpts.loading,
-    maybe(() => updateAttributeTranslationsOpts.data.attributeTranslate.errors, []),
-    maybe(() => updateAttributeValueTranslationsOpts.data.attributeValueTranslate.errors, []),
+    maybe(() => updateAttributeTranslationsOpts.data.attributeTranslate?.errors, []),
+    maybe(() => updateAttributeValueTranslationsOpts.data.attributeValueTranslate?.errors, []),
   );
 
   return (
