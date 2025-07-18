@@ -1,4 +1,9 @@
-import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
+  ProductTypeConfigurable,
+  ProductTypeEnum,
+} from "@dashboard/graphql";
 
 import { Condition, FilterContainer, FilterElement } from "./FilterElement";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
@@ -82,6 +87,85 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
       attributes: [{ slug: "bottle-size", values: ["0-5l"] }],
       price: { eq: "123" },
     };
+    // Act
+    const result = createProductQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables for REFERENCE attribute (single value)", () => {
+    // Arrange
+    // Simulate a reference attribute (e.g. reference to a Page)
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("attribute", "Attribute", "attribute"),
+        new Condition(
+          ConditionOptions.fromAttributeType("REFERENCE"),
+          new ConditionSelected(
+            { label: "Page 1", slug: "page-1", value: "page-1" },
+            { type: "REFERENCE", value: "page-1", label: "Page 1" },
+            [{ label: "Page 1", slug: "page-1", value: "page-1" }],
+            false,
+          ),
+          false,
+        ),
+        false,
+        undefined,
+        new ExpressionValue(
+          "ref-attr", // slug
+          "Reference Attribute", // label
+          AttributeInputTypeEnum.REFERENCE,
+          AttributeEntityTypeEnum.PAGE,
+        ),
+      ),
+    ];
+    const expectedOutput = {
+      attributes: [{ slug: "ref-attr", valueNames: ["Page 1"] }],
+    };
+
+    // Act
+    const result = createProductQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create variables for REFERENCE attribute (multiple values)", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("attribute", "Attribute", "attribute"),
+        new Condition(
+          ConditionOptions.fromAttributeType("REFERENCE"),
+          new ConditionSelected(
+            [
+              { label: "Page 1", slug: "page-1", value: "page-1" },
+              { label: "Page 2", slug: "page-2", value: "page-2" },
+            ],
+            { type: "REFERENCE", value: "page-1", label: "Page 1" },
+            [
+              { label: "Page 1", slug: "page-1", value: "page-1" },
+              { label: "Page 2", slug: "page-2", value: "page-2" },
+            ],
+            false,
+          ),
+          false,
+        ),
+        false,
+        undefined,
+        new ExpressionValue(
+          "ref-attr", // slug
+          "Reference Attribute", // label
+          AttributeInputTypeEnum.REFERENCE,
+          AttributeEntityTypeEnum.PAGE,
+        ),
+      ),
+    ];
+    const expectedOutput = {
+      attributes: [{ slug: "ref-attr", valueNames: ["Page 1", "Page 2"] }],
+    };
+
     // Act
     const result = createProductQueryVariables(filters);
 

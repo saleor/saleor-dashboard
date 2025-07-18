@@ -13,13 +13,15 @@ import {
 } from "@dashboard/graphql";
 
 import { createBooleanOptions } from "../../constants";
+import { AttributeInputType } from "../../FilterElement/ConditionOptions";
+import { ItemOption } from "../../FilterElement/ConditionValue";
 import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
 import { InitialAttributesState } from "./attributes/InitialAttributesState";
 import { InitialCollectionState } from "./collections/InitialCollectionState";
 import { InitialGiftCardsState } from "./giftCards/InitialGiftCardsState";
 import { InitialOrderState } from "./orders/InitialOrderState";
 import { InitialPageState } from "./page/InitialPageState";
-import { InitialProductState } from "./product/InitialProductStateResponse";
+import { AttributeDTO, InitialProductState } from "./product/InitialProductStateResponse";
 import {
   InitialAttributesAPIResponse,
   InitialCollectionAPIResponse,
@@ -31,33 +33,64 @@ import {
 } from "./types";
 import { InitialVouchersState } from "./vouchers/InitialVouchersState";
 
+// Helper function to convert ItemOption[] to AttributeDTO choices format
+const convertItemOptionsToAttributeChoices = (
+  itemOptions: ItemOption[],
+): AttributeDTO["choices"] => {
+  return itemOptions.map(option => {
+    const choice: any = {
+      label: option.label,
+      value: option.value,
+      slug: option.slug,
+    };
+
+    // Only include originalSlug if it exists and is not null
+    if (option.originalSlug != null) {
+      choice.originalSlug = option.originalSlug;
+    }
+
+    return choice;
+  });
+};
+
 const isChannelQuery = (
   query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_GetChannelOperandsQuery> => "channels" in query.data;
+
 const isChannelsQuery = (
   query: InitialOrderAPIResponse,
 ): query is ApolloQueryResult<_GetLegacyChannelOperandsQuery> => "channels" in query.data;
+
 const isCollectionQuery = (
   query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_SearchCollectionsOperandsQuery> => "collections" in query.data;
+
 const isCategoryQuery = (
   query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_SearchCategoriesOperandsQuery> => "categories" in query.data;
+
 const isProductTypeQuery = (
   query: InitialProductAPIResponse,
 ): query is ApolloQueryResult<_SearchProductTypesOperandsQuery> => "productTypes" in query.data;
+
 const isAttributeQuery = (
   query: InitialProductAPIResponse,
-): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
+): query is ApolloQueryResult<_SearchAttributeOperandsQuery> =>
+  "attributes" in query.data &&
+  Boolean(query.data.attributes?.edges.some((edge: any) => Boolean(edge.node.choices)));
+
 const isPageTypesQuery = (
   query: InitialPageAPIResponse,
 ): query is ApolloQueryResult<_SearchPageTypesOperandsQuery> => "pageTypes" in query.data;
+
 const isCustomerQuery = (
   query: InitialGiftCardsAPIResponse,
 ): query is ApolloQueryResult<_SearchCustomersOperandsQuery> => "customers" in query.data;
+
 const isProductQuery = (
   query: InitialGiftCardsAPIResponse,
 ): query is ApolloQueryResult<_SearchProductOperandsQuery> => "products" in query.data;
+
 const isCurrencyQuery = (
   query: InitialGiftCardsAPIResponse,
 ): query is ApolloQueryResult<ChannelCurrenciesQuery> => "shop" in query.data;
@@ -65,8 +98,8 @@ const isCurrencyQuery = (
 export const createInitialProductStateFromData = (
   data: InitialProductAPIResponse[],
   channel: string[],
-) =>
-  data.reduce<InitialProductState>(
+): InitialProductState => {
+  return data.reduce<InitialProductState>(
     (acc, query) => {
       if (isChannelQuery(query)) {
         return {
@@ -102,22 +135,28 @@ export const createInitialProductStateFromData = (
         return {
           ...acc,
           attribute:
-            query.data?.attributes?.edges.reduce(
-              (acc, { node }) => ({
-                ...acc,
-                [node.slug ?? ""]: {
-                  choices:
-                    node.inputType === "BOOLEAN"
-                      ? createBooleanOptions()
-                      : createOptionsFromAPI(node.choices?.edges ?? []),
-                  slug: node?.slug,
-                  value: node?.id,
-                  label: node?.name,
-                  inputType: node?.inputType,
+            query.data?.attributes?.edges.reduce((accAttr, { node }) => {
+              if (!node.slug || !node.inputType) return accAttr;
+
+              const attributeChoices =
+                node.inputType === "BOOLEAN"
+                  ? convertItemOptionsToAttributeChoices(createBooleanOptions())
+                  : convertItemOptionsToAttributeChoices(
+                      createOptionsFromAPI(node.choices?.edges ?? []),
+                    );
+
+              return {
+                ...accAttr,
+                [node.slug]: {
+                  choices: attributeChoices,
+                  slug: node.slug,
+                  value: node.id,
+                  label: node.name ?? "",
+                  inputType: node.inputType as AttributeInputType,
+                  entityType: node.entityType ?? undefined,
                 },
-              }),
-              {},
-            ) ?? {},
+              };
+            }, acc.attribute || {}) ?? acc.attribute,
         };
       }
 
@@ -136,6 +175,22 @@ export const createInitialProductStateFromData = (
       attribute: {},
     },
   );
+};
+
+export type ReferenceAttributeChoices = { slug: string; itemOptions: ItemOption[] };
+export const mergeInitialProductsStateReferenceAttributes = (
+  initialState: InitialProductState,
+  referenceChoices: ReferenceAttributeChoices[],
+) => {
+  return referenceChoices.reduce((acc, { slug, itemOptions }) => {
+    if (acc.attribute[slug]) {
+      // Convert choices to ensure type compatibility
+      acc.attribute[slug].choices = convertItemOptionsToAttributeChoices(itemOptions);
+    }
+
+    return acc;
+  }, initialState);
+};
 
 export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
   data.reduce<InitialOrderState>(

@@ -22,6 +22,9 @@ import {
   _GetGiftCardTagsChoicesQuery,
   _GetGiftCardTagsChoicesQueryVariables,
   _GetLegacyChannelOperandsDocument,
+  _GetPagesChoicesDocument,
+  _GetPagesChoicesQuery,
+  _GetPagesChoicesQueryVariables,
   _GetPageTypesChoicesDocument,
   _GetPageTypesChoicesQuery,
   _GetPageTypesChoicesQueryVariables,
@@ -31,6 +34,9 @@ import {
   _GetProductTypesChoicesDocument,
   _GetProductTypesChoicesQuery,
   _GetProductTypesChoicesQueryVariables,
+  _GetProductVariantChoicesDocument,
+  _GetProductVariantChoicesQuery,
+  _GetProductVariantChoicesQueryVariables,
   ChannelCurrenciesDocument,
   ChannelCurrenciesQuery,
   ChannelCurrenciesQueryVariables,
@@ -80,6 +86,31 @@ export const createCustomerOptionsFromAPI = (
     })) ?? []
   );
 };
+
+export const createAttributeProductVariantOptionsFromAPI = (
+  data: Array<{
+    node: {
+      name: string | null;
+      id: string;
+      slug?: string;
+      originalSlug?: string | null;
+      product?: {
+        name: string;
+      };
+    };
+  }>,
+): ItemOption[] =>
+  data.map(
+    ({ node }) =>
+      ({
+        // This label matches value from AttributeValue.name for product variant reference attributes
+        // It's used by Saleor for searching ProductVariants
+        label: node.product ? `${node.product.name}: ${node.name}` : node.name ?? "",
+        value: node.id,
+        slug: node.slug,
+        originalSlug: node.originalSlug,
+      }) as ItemOption,
+  );
 
 export class AttributeChoicesHandler implements Handler {
   constructor(
@@ -221,6 +252,49 @@ export class ProductsHandler implements Handler {
   };
 }
 
+export class ProductVariantHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetProductVariantChoicesQuery,
+      _GetProductVariantChoicesQueryVariables
+    >({
+      query: _GetProductVariantChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return createAttributeProductVariantOptionsFromAPI(data.productVariants?.edges ?? []);
+  };
+}
+
+export class PageHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<_GetPagesChoicesQuery, _GetPagesChoicesQueryVariables>(
+      {
+        query: _GetPagesChoicesDocument,
+        variables: {
+          first: 5,
+          query: this.query,
+        },
+      },
+    );
+
+    return createOptionsFromAPI(data.pages?.edges ?? []);
+  };
+}
+
 export class GiftCardTagsHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
@@ -340,14 +414,13 @@ export class AttributesHandler implements Handler {
       },
     });
 
-    return (
-      data.attributes?.edges.map(({ node }) => ({
-        label: node.name ?? "",
-        value: node.id,
-        type: node.inputType ?? ("" as LeftOperand["type"]),
-        slug: node.slug ?? "",
-      })) ?? []
-    );
+    return (data.attributes?.edges.map(({ node }) => ({
+      label: node.name ?? "",
+      value: node.id,
+      type: node.inputType ?? ("" as LeftOperand["type"]),
+      slug: node.slug ?? "",
+      entityType: node.entityType,
+    })) ?? []) as LeftOperand[];
   };
 }
 
