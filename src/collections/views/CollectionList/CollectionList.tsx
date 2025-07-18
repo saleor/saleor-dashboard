@@ -98,12 +98,12 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       };
     }
 
-    const { channel, ...variables } = createCollectionsQueryVariables(valueProvider.value);
+    const { channel, filter } = createCollectionsQueryVariables(valueProvider.value);
 
     return {
       ...paginationState,
       filter: {
-        ...variables,
+        ...filter,
         search: params.query,
       },
       sort: getSortQueryVariables(params),

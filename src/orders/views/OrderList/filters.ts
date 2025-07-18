@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
-import {
-  createOrderQueryVariables,
-  OrderQueryVars,
-} from "@dashboard/components/ConditionalFilter/queryVariables";
+import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { findInEnum, parseBoolean } from "@dashboard/misc";
 import {
@@ -36,50 +33,11 @@ import {
 
 export const ORDER_FILTERS_KEY = "orderFiltersPresets";
 
-const whereInputTypes = ["oneOf", "eq", "range", "gte", "lte"];
-const orderBooleanFilters = ["isClickAndCollect", "isPreorder"];
-
-const _whereToLegacyVariables = (where: OrderQueryVars) => {
-  return where
-    ? Object.keys(where).reduce((acc, key) => {
-        if (typeof where[key] === "object") {
-          const valueKeys = Object.keys(where[key]);
-
-          valueKeys.forEach(valueKey => {
-            if (whereInputTypes.includes(valueKey)) {
-              const valueObj = where[key];
-              const value = valueObj[valueKey];
-
-              acc[key] = value;
-
-              if (orderBooleanFilters.includes(key)) {
-                acc[key] = acc[key] === "true";
-
-                return;
-              }
-            }
-          });
-        }
-
-        if (typeof where[key] === "boolean") {
-          acc[key] = where[key];
-        }
-
-        if (Array.isArray(where[key])) {
-          acc[key] = where[key];
-        }
-
-        return acc;
-      }, {})
-    : {};
-};
-
 export function getFilterVariables(
   params: OrderListUrlFilters,
   filterContainer: FilterContainer,
 ): OrderFilterInput {
-  // TODO: Cleanup this function to use the new filter system
-  const queryVariables = _whereToLegacyVariables(createOrderQueryVariables(filterContainer));
+  const queryVariables = createOrderQueryVariables(filterContainer);
 
   return {
     channels: params.channel as unknown as string[],
