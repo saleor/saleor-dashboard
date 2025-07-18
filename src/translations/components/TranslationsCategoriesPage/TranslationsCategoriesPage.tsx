@@ -78,14 +78,14 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
               type: "short" as const,
-              value: data?.category?.name,
+              value: data?.category?.name || "",
             },
             {
               displayName: intl.formatMessage(commonMessages.description),
               name: TranslationInputFieldName.description,
               translation: data?.translation?.description || null,
               type: "rich" as const,
-              value: data?.category?.description,
+              value: data?.category?.description || "",
             },
           ]}
           saveButtonState={saveButtonState}
@@ -112,7 +112,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               name: TranslationInputFieldName.seoTitle,
               translation: data?.translation?.seoTitle || null,
               type: "short" as const,
-              value: data?.category?.seoTitle,
+              value: data?.category?.seoTitle || "",
             },
             {
               displayName: intl.formatMessage({
@@ -122,7 +122,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               name: TranslationInputFieldName.seoDescription,
               translation: data?.translation?.seoDescription || null,
               type: "long" as const,
-              value: data?.category?.seoDescription,
+              value: data?.category?.seoDescription || "",
             },
           ]}
           saveButtonState={saveButtonState}

@@ -79,14 +79,14 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
               type: "short" as const,
-              value: data?.collection?.name,
+              value: data?.collection?.name || "",
             },
             {
               displayName: intl.formatMessage(commonMessages.description),
               name: TranslationInputFieldName.description,
               translation: data?.translation?.description || null,
               type: "rich" as const,
-              value: data?.collection?.description,
+              value: data?.collection?.description || "",
             },
           ]}
           saveButtonState={saveButtonState}
@@ -113,7 +113,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
               name: TranslationInputFieldName.seoTitle,
               translation: data?.translation?.seoTitle || null,
               type: "short" as const,
-              value: data?.collection?.seoTitle,
+              value: data?.collection?.seoTitle || "",
             },
             {
               displayName: intl.formatMessage({
@@ -123,7 +123,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
               name: TranslationInputFieldName.seoDescription,
               translation: data?.translation?.seoDescription || null,
               type: "long" as const,
-              value: data?.collection?.seoDescription,
+              value: data?.collection?.seoDescription || "",
             },
           ]}
           saveButtonState={saveButtonState}

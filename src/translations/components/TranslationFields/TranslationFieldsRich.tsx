@@ -44,7 +44,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
           onChange={handleChange}
           disabled={disabled}
           error={undefined}
-          helperText={undefined}
+          helperText={""}
           label={intl.formatMessage({
             id: "/vCXIP",
             defaultMessage: "Translation",

@@ -88,10 +88,10 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
                 id: "DRMMDs",
                 defaultMessage: "Attribute Name",
               }),
-              name: fieldNames.attribute + ":" + data?.attribute.id,
+              name: fieldNames.attribute + ":" + (data?.attribute?.id || ""),
               translation: data?.translation?.name || null,
               type: "short" as const,
-              value: data?.attribute?.name,
+              value: data?.attribute?.name || "",
             },
           ]}
           saveButtonState={saveButtonState}
@@ -101,24 +101,26 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           onSubmit={onSubmit}
         />
         <CardSpacer />
-        {data?.attribute?.choices.edges.length > 0 && withChoices && (
-          <TranslationFields
-            activeField={activeField}
-            disabled={disabled}
-            initialState={true}
-            title={intl.formatMessage(messages.values)}
-            fields={getTranslationFields(data?.attribute?.choices, intl)}
-            saveButtonState={saveButtonState}
-            richTextResetKey={languageCode}
-            pagination={{
-              settings,
-              onUpdateListSettings,
-            }}
-            onEdit={onEdit}
-            onDiscard={onDiscard}
-            onSubmit={onSubmit}
-          />
-        )}
+        {data?.attribute?.choices?.edges &&
+          data.attribute.choices.edges.length > 0 &&
+          withChoices && (
+            <TranslationFields
+              activeField={activeField}
+              disabled={disabled}
+              initialState={true}
+              title={intl.formatMessage(messages.values)}
+              fields={getTranslationFields(data?.attribute?.choices, intl)}
+              saveButtonState={saveButtonState}
+              richTextResetKey={languageCode}
+              pagination={{
+                settings,
+                onUpdateListSettings,
+              }}
+              onEdit={onEdit}
+              onDiscard={onDiscard}
+              onSubmit={onSubmit}
+            />
+          )}
       </DetailPageLayout.Content>
     </DetailPageLayout>
   );
