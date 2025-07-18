@@ -12,14 +12,29 @@ import {
   _SearchCollectionsOperandsDocument,
   _SearchCollectionsOperandsQuery,
   _SearchCollectionsOperandsQueryVariables,
+  _SearchPageOperandsDocument,
+  _SearchPageOperandsQuery,
+  _SearchPageOperandsQueryVariables,
+  _SearchProductOperandsDocument,
+  _SearchProductOperandsQuery,
+  _SearchProductOperandsQueryVariables,
   _SearchProductTypesOperandsDocument,
   _SearchProductTypesOperandsQuery,
   _SearchProductTypesOperandsQueryVariables,
+  _SearchProductVariantOperandsDocument,
+  _SearchProductVariantOperandsQuery,
+  _SearchProductVariantOperandsQueryVariables,
+  AttributeEntityTypeEnum,
 } from "@dashboard/graphql";
 import { useState } from "react";
 
 import { FetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
-import { createInitialProductStateFromData } from "../helpers";
+import { createAttributeProductVariantOptionsFromAPI, createOptionsFromAPI } from "../../Handler";
+import {
+  createInitialProductStateFromData,
+  mergeInitialProductsStateReferenceAttributes,
+  ReferenceAttributeChoices,
+} from "../helpers";
 import { InitialProductAPIResponse } from "../types";
 import { InitialProductStateResponse } from "./InitialProductStateResponse";
 
@@ -36,12 +51,14 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
   );
   const [loading, setLoading] = useState(true);
   const queriesToRun: Array<Promise<InitialProductAPIResponse>> = [];
+
   const fetchQueries = async ({
     category,
     collection,
     productType,
     channel,
     attribute,
+    attributeReference,
   }: FetchingParams) => {
     if (channel.length > 0) {
       queriesToRun.push(
@@ -87,21 +104,100 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
       );
     }
 
-    if (Object.keys(attribute).length > 0) {
+    // Fetch attribute definitions for both regular and reference attributes
+    // (We need the definitions for URL parsing, but values are fetched separately)
+    const allAttributeSlugs = [...Object.keys(attribute), ...Object.keys(attributeReference)];
+
+    if (allAttributeSlugs.length > 0) {
+      // Only fetch choices values for regular attributes, not reference attributes
+      // (if we try fetching reference attribute options Saleor returns 500 error)
+      const regularChoiceIds = Object.values(attribute).flat().filter(Boolean);
+
       queriesToRun.push(
         client.query<_SearchAttributeOperandsQuery, _SearchAttributeOperandsQueryVariables>({
           query: _SearchAttributeOperandsDocument,
           variables: {
-            attributesSlugs: Object.keys(attribute),
-            choicesIds: Object.values<string[]>(attribute).flat(),
-            first: Object.keys(attribute).length,
+            attributesSlugs: allAttributeSlugs,
+            choicesIds: regularChoiceIds,
+            first: allAttributeSlugs.length,
           },
         }),
       );
     }
 
     const data = await Promise.all(queriesToRun);
-    const initialState = createInitialProductStateFromData(data, channel);
+    let initialState = createInitialProductStateFromData(data, channel);
+
+    // Fetch Choices for Reference Attributes
+    const referenceChoicePromises: Array<Promise<ReferenceAttributeChoices>> = [];
+
+    for (const [slug, values] of Object.entries(attributeReference)) {
+      const attributeDef = initialState.attribute[slug];
+
+      if (!attributeDef) continue;
+
+      switch (attributeDef.entityType) {
+        case AttributeEntityTypeEnum.PAGE:
+          referenceChoicePromises.push(
+            client
+              .query<_SearchPageOperandsQuery, _SearchPageOperandsQueryVariables>({
+                query: _SearchPageOperandsDocument,
+                variables: {
+                  first: values.length,
+                  pageSlugs: values,
+                },
+              })
+              .then(result => ({
+                slug,
+                itemOptions: createOptionsFromAPI(result.data.pages?.edges ?? []),
+              })),
+          );
+          break;
+        case AttributeEntityTypeEnum.PRODUCT:
+          referenceChoicePromises.push(
+            client
+              .query<_SearchProductOperandsQuery, _SearchProductOperandsQueryVariables>({
+                query: _SearchProductOperandsDocument,
+                variables: {
+                  first: values.length,
+                  productSlugs: values,
+                },
+              })
+              .then(result => ({
+                slug,
+                itemOptions: createOptionsFromAPI(result.data.products?.edges ?? []),
+              })),
+          );
+          break;
+        case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+          referenceChoicePromises.push(
+            client
+              .query<
+                _SearchProductVariantOperandsQuery,
+                _SearchProductVariantOperandsQueryVariables
+              >({
+                query: _SearchProductVariantOperandsDocument,
+                variables: {
+                  first: values.length,
+                  ids: values,
+                },
+              })
+              .then(result => ({
+                slug,
+                itemOptions: createAttributeProductVariantOptionsFromAPI(
+                  result.data.productVariants?.edges ?? [],
+                ),
+              })),
+          );
+          break;
+      }
+    }
+
+    if (referenceChoicePromises.length > 0) {
+      const referenceChoices = await Promise.all(referenceChoicePromises);
+
+      initialState = mergeInitialProductsStateReferenceAttributes(initialState, referenceChoices);
+    }
 
     setData(
       new InitialProductStateResponse(

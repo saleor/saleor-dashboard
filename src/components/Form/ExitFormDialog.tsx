@@ -12,6 +12,7 @@ interface ExitFormDialogProps {
   isOpen: boolean;
 }
 
+/** @deprecated Use react-hook-form instead */
 const ExitFormDialog: React.FC<ExitFormDialogProps> = ({ onLeave, onClose, isOpen }) => {
   const intl = useIntl();
 

@@ -1,3 +1,5 @@
+import { AttributeEntityTypeEnum } from "@dashboard/graphql";
+
 import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
@@ -14,6 +16,7 @@ export class ExpressionValue {
     public value: string,
     public label: string,
     public type: string,
+    public entityType: AttributeEntityTypeEnum | null = null,
   ) {}
 
   public setLabel(label: string) {
@@ -33,7 +36,12 @@ export class ExpressionValue {
   }
 
   public static fromLeftOperand(leftOperand: LeftOperand) {
-    return new ExpressionValue(leftOperand.slug, leftOperand.label, leftOperand.type);
+    return new ExpressionValue(
+      leftOperand.slug,
+      leftOperand.label,
+      leftOperand.type,
+      leftOperand.entityType,
+    );
   }
 
   public static fromUrlToken(token: UrlToken) {
@@ -49,7 +57,12 @@ export class ExpressionValue {
   public static forAttribute(attributeName: string, response: InitialProductStateResponse) {
     const attribute = response.attributeByName(attributeName);
 
-    return new ExpressionValue(attributeName, attribute.label, attribute.inputType);
+    return new ExpressionValue(
+      attributeName,
+      attribute.label,
+      attribute.inputType,
+      attribute.entityType,
+    );
   }
 
   public static emptyStatic() {
@@ -173,12 +186,15 @@ export class FilterElement {
   }
 
   public asUrlEntry(): UrlEntry {
-    if (this.isAttribute) {
-      if (this.selectedAttribute) {
-        return UrlEntry.forAttribute(this.condition.selected, this.selectedAttribute.value);
+    if (this.isAttribute && this.selectedAttribute) {
+      if (this.selectedAttribute.type === "REFERENCE") {
+        return UrlEntry.forReferenceAttribute(
+          this.condition.selected,
+          this.selectedAttribute.value,
+        );
       }
 
-      return UrlEntry.forStatic(this.condition.selected, "attribute");
+      return UrlEntry.forAttribute(this.condition.selected, this.selectedAttribute.value);
     }
 
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
