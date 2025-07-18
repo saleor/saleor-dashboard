@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import {
   LanguageCodeEnum,
+  SaleTranslationFragment,
   useSaleTranslationDetailsQuery,
   useUpdateSaleTranslationsMutation,
 } from "@dashboard/graphql";
@@ -36,7 +37,7 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({ id, languageCode,
   });
   const [updateTranslations, updateTranslationsOpts] = useUpdateSaleTranslationsMutation({
     onCompleted: data => {
-      if (data.saleTranslate.errors.length === 0) {
+      if (data.saleTranslate?.errors && data.saleTranslate.errors.length === 0) {
         saleTranslations.refetch();
         notify({
           status: "success",
@@ -86,7 +87,11 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({ id, languageCode,
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={translation?.__typename === "SaleTranslatableContent" ? translation : null}
+      data={
+        translation?.__typename === "SaleTranslatableContent"
+          ? (translation as SaleTranslationFragment)
+          : (null as unknown as SaleTranslationFragment)
+      }
     />
   );
 };

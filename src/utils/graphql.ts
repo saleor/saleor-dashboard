@@ -54,5 +54,10 @@ export const playgroundOpenHandler =
       operationName,
       variables,
     });
-    window.open(playgroundURL, "_blank").focus();
+
+    const newWindow = window.open(playgroundURL, "_blank");
+
+    if (newWindow) {
+      newWindow.focus();
+    }
   };

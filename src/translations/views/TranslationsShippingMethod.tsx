@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import {
   LanguageCodeEnum,
+  ShippingMethodTranslationFragment,
   useShippingMethodTranslationDetailsQuery,
   useUpdateShippingMethodTranslationsMutation,
 } from "@dashboard/graphql";
@@ -40,7 +41,7 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
   });
   const [updateTranslations, updateTranslationsOpts] = useUpdateShippingMethodTranslationsMutation({
     onCompleted: data => {
-      if (data.shippingPriceTranslate.errors.length === 0) {
+      if (data.shippingPriceTranslate?.errors.length === 0) {
         shippingMethodTranslations.refetch();
         notify({
           status: "success",
@@ -87,7 +88,11 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={translation?.__typename === "ShippingMethodTranslatableContent" ? translation : null}
+      data={
+        translation?.__typename === "ShippingMethodTranslatableContent"
+          ? (translation as ShippingMethodTranslationFragment)
+          : (null as unknown as ShippingMethodTranslationFragment)
+      }
     />
   );
 };

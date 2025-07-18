@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import {
   LanguageCodeEnum,
+  ProductVariantTranslationFragment,
   useProductVariantTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
   useUpdateProductVariantTranslationsMutation,
@@ -55,10 +56,10 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
     }
   };
   const [updateTranslations, updateTranslationsOpts] = useUpdateProductVariantTranslationsMutation({
-    onCompleted: data => onUpdate(data.productVariantTranslate.errors),
+    onCompleted: data => onUpdate(data.productVariantTranslate?.errors || []),
   });
   const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
+    onCompleted: data => onUpdate(data.attributeValueTranslate?.errors || []),
   });
   const onEdit = (field: string) =>
     navigate(
@@ -90,8 +91,12 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
   const handleAttributeValueSubmit = (
     { id, type }: TranslationField<TranslationInputFieldName>,
     data: HandleSubmitAttributeValue,
-  ) =>
-    extractMutationErrors(
+  ) => {
+    if (!id) {
+      return;
+    }
+
+    return extractMutationErrors(
       updateAttributeValueTranslations({
         variables: {
           id,
@@ -100,6 +105,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
         },
       }),
     );
+  };
   const translation = productVariantTranslations?.data?.translation;
 
   return (
@@ -116,7 +122,11 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
       onAttributeValueSubmit={handleAttributeValueSubmit}
-      data={translation?.__typename === "ProductVariantTranslatableContent" ? translation : null}
+      data={
+        translation?.__typename === "ProductVariantTranslatableContent"
+          ? (translation as ProductVariantTranslationFragment)
+          : (null as unknown as ProductVariantTranslationFragment)
+      }
     />
   );
 };
