@@ -549,6 +549,7 @@ export enum AttributeInputTypeEnum {
   PLAIN_TEXT = 'PLAIN_TEXT',
   REFERENCE = 'REFERENCE',
   RICH_TEXT = 'RICH_TEXT',
+  SINGLE_REFERENCE = 'SINGLE_REFERENCE',
   SWATCH = 'SWATCH'
 }
 
@@ -708,6 +709,12 @@ export type AttributeValueInput = {
   numeric?: InputMaybe<Scalars['String']>;
   /** Plain text content. */
   plainText?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of the referenced entity for single reference attribute.
+   *
+   * Added in Saleor 3.22.
+   */
+  reference?: InputMaybe<Scalars['ID']>;
   /** List of entity IDs that will be used as references. */
   references?: InputMaybe<Array<Scalars['ID']>>;
   /** Text content in JSON format. */
@@ -729,6 +736,8 @@ export type AttributeValuePageInput = {
   name?: InputMaybe<StringFilterInput>;
   /** Filter by numeric value for attributes of numeric type. */
   numeric?: InputMaybe<DecimalFilterInput>;
+  /** Filter by reference attribute value. */
+  reference?: InputMaybe<ReferenceAttributeWhereInput>;
   /** Filter by slug assigned to AttributeValue. */
   slug?: InputMaybe<StringFilterInput>;
 };
@@ -845,6 +854,12 @@ export type BulkAttributeValueInput = {
   numeric?: InputMaybe<Scalars['String']>;
   /** Plain text content. */
   plainText?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of the referenced entity for single reference attribute.
+   *
+   * Added in Saleor 3.22.
+   */
+  reference?: InputMaybe<Scalars['ID']>;
   /** List of entity IDs that will be used as references. */
   references?: InputMaybe<Array<Scalars['ID']>>;
   /** Text content in JSON format. */
@@ -1484,6 +1499,14 @@ export enum ConfigurationTypeFieldEnum {
   SECRETMULTILINE = 'SECRETMULTILINE',
   STRING = 'STRING'
 }
+
+/** Define the filtering options for fields that can contain multiple values. */
+export type ContainsFilterInput = {
+  /** The field contains all of the specified values. */
+  containsAll?: InputMaybe<Array<Scalars['String']>>;
+  /** The field contains at least one of the specified values. */
+  containsAny?: InputMaybe<Array<Scalars['String']>>;
+};
 
 /**
  * Represents country codes defined by the ISO 3166-1 alpha-2 standard.
@@ -6325,6 +6348,17 @@ export type PublishableChannelListingInput = {
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ReferenceAttributeWhereInput = {
+  /** Returns objects with a reference pointing to a page identified by the given slug. */
+  pageSlugs?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to a product identified by the given slug. */
+  productSlugs?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to a product variant identified by the given sku. */
+  productVariantSkus?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to an object identified by the given ID. */
+  referencedIds?: InputMaybe<ContainsFilterInput>;
 };
 
 export type ReorderInput = {
