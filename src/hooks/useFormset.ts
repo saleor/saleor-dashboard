@@ -3,7 +3,10 @@ import { removeAtIndex } from "@dashboard/utils/lists";
 
 import useStateFromProps from "./useStateFromProps";
 
+/** @deprecated Use react-hook-form instead */
 export type FormsetChange<TValue = any> = (id: string, value: TValue) => void;
+
+/** @deprecated Use react-hook-form instead */
 export interface FormsetAtomicData<TData = {}, TValue = any, TMetadata = any> {
   data: TData;
   metadata?: TMetadata;
@@ -11,14 +14,20 @@ export interface FormsetAtomicData<TData = {}, TValue = any, TMetadata = any> {
   label: string;
   value: TValue;
 }
+
+/** @deprecated Use react-hook-form instead */
 export type FormsetData<TData = {}, TValue = any, TMetadata = any> = Array<
   FormsetAtomicData<TData, TValue, TMetadata>
 >;
+
+/** @deprecated Use react-hook-form instead */
 export type FormsetMetadataChange<TMetadata = any> = (
   id: string,
   metadata: TMetadata,
   merge?: (prev: TMetadata, next: TMetadata) => TMetadata,
 ) => void;
+
+/** @deprecated Use react-hook-form instead */
 export interface UseFormsetOutput<TData = {}, TValue = any, TMetadata = any> {
   add: (data: FormsetAtomicData<TData, TValue, TMetadata>) => void;
   change: FormsetChange<TValue>;
@@ -29,6 +38,8 @@ export interface UseFormsetOutput<TData = {}, TValue = any, TMetadata = any> {
   set: (data: FormsetData<TData, TValue>) => void;
   remove: (id: string) => void;
 }
+
+/** @deprecated Use react-hook-form instead */
 function useFormset<TData = {}, TValue = any, TMetadata = any>(
   initial: FormsetData<TData, TValue>,
 ): UseFormsetOutput<TData, TValue> {
