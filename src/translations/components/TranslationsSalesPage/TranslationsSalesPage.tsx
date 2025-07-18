@@ -79,7 +79,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
               name: fieldNames.name,
               translation: data?.translation?.name || null,
               type: "short" as const,
-              value: data?.sale?.name,
+              value: data?.sale?.name || "",
             },
           ]}
           saveButtonState={saveButtonState}

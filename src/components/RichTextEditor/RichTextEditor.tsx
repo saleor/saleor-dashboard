@@ -16,7 +16,7 @@ export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
 export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   id?: string;
   disabled: boolean;
-  error: boolean;
+  error?: boolean;
   helperText?: string;
   label: string;
   name: string;

@@ -90,7 +90,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
               type: "short",
-              value: data?.product?.name,
+              value: data?.product?.name || "",
             },
             {
               displayName: intl.formatMessage({
@@ -100,7 +100,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
               name: TranslationInputFieldName.description,
               translation: data?.translation?.description || null,
               type: "rich",
-              value: data?.product?.description,
+              value: data?.product?.description || "",
             },
           ]}
           saveButtonState={saveButtonState}
@@ -127,7 +127,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
               name: TranslationInputFieldName.seoTitle,
               translation: data?.translation?.seoTitle || null,
               type: "short",
-              value: data?.product?.seoTitle,
+              value: data?.product?.seoTitle || "",
             },
             {
               displayName: intl.formatMessage({
@@ -137,7 +137,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
               name: TranslationInputFieldName.seoDescription,
               translation: data?.translation?.seoDescription || null,
               type: "long",
-              value: data?.product?.seoDescription,
+              value: data?.product?.seoDescription || "",
             },
           ]}
           saveButtonState={saveButtonState}

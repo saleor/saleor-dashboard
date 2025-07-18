@@ -82,7 +82,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               name: PageTranslationInputFieldName.title,
               translation: data?.translation?.title || null,
               type: "short",
-              value: data?.page?.title,
+              value: data?.page?.title || "",
             },
             {
               displayName: intl.formatMessage({
@@ -93,7 +93,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               name: PageTranslationInputFieldName.content,
               translation: data?.translation?.content || null,
               type: "rich",
-              value: data?.page?.content,
+              value: data?.page?.content || "",
             },
           ]}
           saveButtonState={saveButtonState}
@@ -121,7 +121,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               name: PageTranslationInputFieldName.seoTitle,
               translation: data?.translation?.seoTitle || null,
               type: "short",
-              value: data?.page?.seoTitle,
+              value: data?.page?.seoTitle || "",
             },
             {
               displayName: intl.formatMessage({
@@ -131,7 +131,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               name: PageTranslationInputFieldName.seoDescription,
               translation: data?.translation?.seoDescription || null,
               type: "long",
-              value: data?.page?.seoDescription,
+              value: data?.page?.seoDescription || "",
             },
           ]}
           saveButtonState={saveButtonState}

@@ -165,7 +165,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         initial={field.value}
                         saveButtonState="default"
                         onDiscard={onDiscard}
-                        onSubmit={undefined}
+                        onSubmit={async _data => []}
                       />
                     ) : field.type === TranslationFieldType.LONG ? (
                       <TranslationFieldsLong
@@ -174,7 +174,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         initial={field.value}
                         saveButtonState="default"
                         onDiscard={onDiscard}
-                        onSubmit={undefined}
+                        onSubmit={async _data => []}
                       />
                     ) : (
                       <TranslationFieldsRich
@@ -184,7 +184,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         initial={field.value}
                         saveButtonState="default"
                         onDiscard={onDiscard}
-                        onSubmit={undefined}
+                        onSubmit={async _data => []}
                       />
                     )
                   ) : (

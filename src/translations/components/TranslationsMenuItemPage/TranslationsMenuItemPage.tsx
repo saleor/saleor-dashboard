@@ -51,7 +51,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
           },
           {
             languageCode,
-            menuItemName: getStringOrPlaceholder(data?.menuItem.name),
+            menuItemName: getStringOrPlaceholder(data?.menuItem?.name),
           },
         )}
       >
@@ -79,7 +79,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
               name: TranslationInputFieldName.name,
               translation: data?.translation?.name || null,
               type: "short" as const,
-              value: data?.menuItem.name,
+              value: data?.menuItem?.name || "",
             },
           ]}
           saveButtonState={saveButtonState}

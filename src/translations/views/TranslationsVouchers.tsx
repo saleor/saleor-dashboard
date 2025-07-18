@@ -3,6 +3,7 @@ import {
   LanguageCodeEnum,
   useUpdateVoucherTranslationsMutation,
   useVoucherTranslationDetailsQuery,
+  VoucherTranslationFragment,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -40,7 +41,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   });
   const [updateTranslations, updateTranslationsOpts] = useUpdateVoucherTranslationsMutation({
     onCompleted: data => {
-      if (data.voucherTranslate.errors.length === 0) {
+      if (data.voucherTranslate?.errors && data.voucherTranslate.errors.length === 0) {
         voucherTranslations.refetch();
         notify({
           status: "success",
@@ -90,7 +91,11 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={translation?.__typename === "VoucherTranslatableContent" ? translation : null}
+      data={
+        translation?.__typename === "VoucherTranslatableContent"
+          ? (translation as VoucherTranslationFragment)
+          : (null as unknown as VoucherTranslationFragment)
+      }
     />
   );
 };

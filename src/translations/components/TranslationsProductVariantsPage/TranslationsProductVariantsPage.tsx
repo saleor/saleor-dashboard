@@ -88,7 +88,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
             type: "short",
-            value: data?.name,
+            value: data?.name || "",
           },
         ]}
         saveButtonState={saveButtonState}
