@@ -1,8 +1,4 @@
-// @ts-strict-ignore
 import React from "react";
 
-export const DateContext = React.createContext<number>(undefined);
-
-const { Provider, Consumer } = DateContext;
-
-export { Consumer, Provider };
+// Casting - we want context to always assume value is set, so littly hacky here, so it's clean in other places
+export const DateContext = React.createContext<number>(undefined as unknown as number);
