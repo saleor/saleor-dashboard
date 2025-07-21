@@ -15,6 +15,7 @@ export interface UseExitFormDialogProps {
   isDisabled?: boolean;
 }
 
+/** @deprecated Use react-hook-form instead */
 export const useExitFormDialog = (
   { formId, isDisabled }: UseExitFormDialogProps = { formId: undefined },
 ): UseExitFormDialogResult => {
