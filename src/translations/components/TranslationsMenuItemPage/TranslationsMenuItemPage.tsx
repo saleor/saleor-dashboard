@@ -20,7 +20,7 @@ import { useIntl } from "react-intl";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsMenuItemPageProps extends TranslationsEntitiesPageProps {
-  data: MenuItemTranslationFragment;
+  data: MenuItemTranslationFragment | null;
 }
 
 const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { CollectionSortField } from "@dashboard/graphql";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
@@ -17,7 +16,9 @@ export function canBeSorted(sort: CollectionListUrlSortField, isChannelSelected:
   }
 }
 
-export function getSortQueryField(sort: CollectionListUrlSortField): CollectionSortField {
+export function getSortQueryField(
+  sort: CollectionListUrlSortField,
+): CollectionSortField | undefined {
   switch (sort) {
     case CollectionListUrlSortField.name:
       return CollectionSortField.NAME;
