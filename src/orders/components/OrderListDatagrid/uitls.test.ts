@@ -14,14 +14,11 @@ describe("OrderListDatagrid utils", () => {
       expect(rowLength).toBe(1);
     });
     it("should return orders length", () => {
+      type NonNullQuery = Exclude<OrderListQuery["orders"], null>;
+
       // Arrange & Act
       const rowLength = getOrdersRowsLength(
-        [
-          // @ts-expect-error - Query can be null, so TS doesn't like [number] here
-          {} as RelayToFlat<OrderListQuery["orders"]>[number],
-          // @ts-expect-error - Query can be null, so TS doesn't like [number] here
-          {} as RelayToFlat<OrderListQuery["orders"]>[number],
-        ],
+        [{} as RelayToFlat<NonNullQuery>[number], {} as RelayToFlat<NonNullQuery>[number]],
         false,
       );
 
