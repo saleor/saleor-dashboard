@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Saleor Dashboard is a GraphQL-powered, single-page React application built with TypeScript that serves as the admin interface for the Saleor e-commerce platform. It uses modern web technologies including React 17, Material-UI v4, Apollo Client, and Vite for bundling.
+Saleor Dashboard is a GraphQL-powered, single-page React application built with TypeScript that serves as the admin interface for the Saleor e-commerce platform. It uses modern web technologies including React 17, @saleor/macaw-ui-next, Apollo Client, and Vite for bundling.
 
 ## Development Commands
 
@@ -17,7 +17,6 @@ Saleor Dashboard is a GraphQL-powered, single-page React application built with 
 - `npm run lint` - Run ESLint with auto-fix on src/ and playwright/ directories
 - `npm run test` - Run Jest tests for src/ directory
 - `npm run test:ci` - Run tests with coverage report
-- `npm run test:watch` - Run tests in watch mode
 - `npm run check-types` - Run TypeScript type checking for both src and playwright
 - `npm run check-types:src` - Type check src/ directory with strict plugin
 - `npm run check-types:playwright` - Type check playwright test files
@@ -28,11 +27,7 @@ Saleor Dashboard is a GraphQL-powered, single-page React application built with 
 - `npm run fetch-local-schema` - Fetch schema from local Saleor instance
 
 ### Internationalization
-- `npm run extract-messages` - Extract translatable messages from TypeScript files
-
-### Playwright Testing
-- `npm run qa:pw-e2e` - Run E2E tests tagged with #e2e
-- `npm run qa:pw-ui` - Run Playwright tests with UI mode
+- `npm run extract-messages` - Extract translatable messages from TypeScript files, run it after changing messages in `react-intl`
 
 ## Architecture Overview
 
@@ -53,13 +48,13 @@ The codebase follows a feature-based architecture with shared components:
 - **Services**: Business logic and utilities in `/services/` and `/utils/`
 
 ### Key Technologies
-- **React 17** with TypeScript (strict mode disabled, using typescript-strict-plugin)
-- **Material-UI v4** for UI components (legacy version)
+- **React 17** with TypeScript (strict mode disabled for old views using typescript-strict-plugin, new ones should use strict mode)
 - **Apollo Client 3.4** for GraphQL state management
 - **Vite** for build tooling and development server
 - **React Hook Form** for form management
 - **React Router v5** for navigation
 - **React Intl** for internationalization
+- **@saleor/macaw-ui-next** for UI components and design system
 
 ### TypeScript Configuration
 - Base URL mapping with path aliases:
@@ -111,3 +106,5 @@ The codebase follows a feature-based architecture with shared components:
 - Use Playwright for E2E testing of critical user flows
 - Mock GraphQL operations in tests using fixtures
 - Ensure type safety with TypeScript strict plugin
+
+Add // Arrange // Act // Assert comments in tests to clarify test structure
