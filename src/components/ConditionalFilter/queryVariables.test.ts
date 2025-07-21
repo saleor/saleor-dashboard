@@ -280,7 +280,7 @@ describe("ConditionalFilter / queryVariables / createVoucherQueryVariables", () 
       discountType: ["discount-1", "discount-2"],
       started: { lte: "2025-02-15T16:24", gte: "2025-01-31T16:24" },
       timesUsed: { gte: 10, lte: 10 },
-      status: "status-1",
+      status: ["status-1"],
     };
     // Act
     const result = createVoucherQueryVariables(filters);
@@ -744,7 +744,7 @@ describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", 
 
   it("should create variables with selected filters", () => {
     // Arrange
-    const channelFilterElemen = new FilterElement(
+    const channelFilterElement = new FilterElement(
       new ExpressionValue("channel", "Channel", "channel"),
       new Condition(
         ConditionOptions.fromStaticElementName("channel"),
@@ -774,7 +774,7 @@ describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", 
       false,
     );
 
-    const filters: FilterContainer = [channelFilterElemen, "AND", typeFilterElement];
+    const filters: FilterContainer = [channelFilterElement, "AND", typeFilterElement];
     const expectedOutput = {
       channel: "default-channel",
       type: "PRODUCT_TYPE",
