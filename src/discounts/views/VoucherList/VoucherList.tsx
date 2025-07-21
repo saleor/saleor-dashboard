@@ -64,9 +64,9 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
       ...paginationState,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params),
-      channel: params.channel,
+      channel,
     }),
-    [params, settings.rowNumber],
+    [params, settings.rowNumber, channel],
   );
   const newFiltersQueryVariables = React.useMemo(
     () => ({
@@ -78,7 +78,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
       sort: getSortQueryVariables(params),
       channel,
     }),
-    [params, settings.rowNumber, valueProvider.value],
+    [params, settings.rowNumber, valueProvider.value, channel],
   );
 
   const { data, refetch } = useVoucherListQuery({
