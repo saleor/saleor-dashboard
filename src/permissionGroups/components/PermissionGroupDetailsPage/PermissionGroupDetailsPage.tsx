@@ -89,7 +89,7 @@ export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps
   const hasUserRestrictedChannels = checkIfUserHasRestictedAccessToChannels(user.user);
   const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
-    hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
+    hasAllChannels: !permissionGroup?.restrictedAccessToChannels,
     channels: getInitialChannels(permissionGroup, channels?.length ?? 0),
     isActive: false,
     name: permissionGroup?.name || "",
