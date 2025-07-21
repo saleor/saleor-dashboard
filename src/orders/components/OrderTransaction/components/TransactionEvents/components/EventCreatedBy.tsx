@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AppUrls } from "@dashboard/apps/urls";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";

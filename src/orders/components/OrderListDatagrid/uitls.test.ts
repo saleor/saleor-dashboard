@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat } from "@dashboard/types";
@@ -18,7 +17,9 @@ describe("OrderListDatagrid utils", () => {
       // Arrange & Act
       const rowLength = getOrdersRowsLength(
         [
+          // @ts-expect-error - Query can be null, so TS doesn't like [number] here
           {} as RelayToFlat<OrderListQuery["orders"]>[number],
+          // @ts-expect-error - Query can be null, so TS doesn't like [number] here
           {} as RelayToFlat<OrderListQuery["orders"]>[number],
         ],
         false,
