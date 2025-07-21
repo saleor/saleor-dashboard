@@ -12,11 +12,11 @@ type VariantNode = NonNullable<GlobalSearchQuery["productVariants"]>["edges"][nu
 export const VariantItem = ({ node }: { node: VariantNode }) => {
   return (
     <Row>
-      <TypeCell href={productVariantEditPath(node.product.id, node.id)}>
+      <TypeCell href={productVariantEditPath(node.id)}>
         <FormattedMessage id="OK5+Fh" defaultMessage="Variant" />
       </TypeCell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={productVariantEditPath(node.product.id, node.id)}>
+        <LinkCell href={productVariantEditPath(node.id)}>
           <Box display="flex" alignItems="center" gap={5} width="100%">
             <Thumbnail url={node?.media?.[0]?.url} name={node?.name} />
             <Text size={2} fontWeight="medium">
@@ -29,7 +29,7 @@ export const VariantItem = ({ node }: { node: VariantNode }) => {
         </LinkCell>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={productVariantEditPath(node.product.id, node.id)}>
+        <LinkCell href={productVariantEditPath(node.id)}>
           <DisplayDate date={node?.updatedAt} />
         </LinkCell>
       </GridTable.Cell>

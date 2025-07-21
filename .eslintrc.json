@@ -20,10 +20,18 @@
       "version": "detect"
     }
   },
-  "plugins": ["import", "local-rules", "formatjs", "react-refresh", "simple-import-sort"],
+  "plugins": [
+    "import",
+    "local-rules",
+    "formatjs",
+    "react-refresh",
+    "simple-import-sort"
+  ],
   "overrides": [
     {
-      "files": ["playwright/**/*.ts"],
+      "files": [
+        "playwright/**/*.ts"
+      ],
       "parserOptions": {
         "project": "./playwright/tsconfig.json"
       },
@@ -32,9 +40,30 @@
       }
     },
     {
-      "files": ["src/**/*.test.*", "src/**/*.stories.*"],
+      "files": [
+        "src/**/*.test.*",
+        "src/**/*.stories.*"
+      ],
       "rules": {
         "react-refresh/only-export-components": "off"
+      }
+    },
+    {
+      "files": [
+        "src/**/*"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "warn",
+          {
+            "paths": [
+              {
+                "name": "react-sortable-hoc",
+                "message": "Use @dnd-kit instead of react-sortable-hoc."
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -47,28 +76,95 @@
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "react-refresh/only-export-components": "warn",
-    "lines-between-class-members": ["error", "always"],
+    "lines-between-class-members": [
+      "error",
+      "always"
+    ],
     "padding-line-between-statements": [
       "error",
       // After directives (like 'use-strict'), except between directives
-      { "blankLine": "always", "prev": "directive", "next": "*" },
-      { "blankLine": "any", "prev": "directive", "next": "directive" },
-
+      {
+        "blankLine": "always",
+        "prev": "directive",
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": "directive",
+        "next": "directive"
+      },
       // After imports, except between imports
-      { "blankLine": "always", "prev": "import", "next": "*" },
-      { "blankLine": "any", "prev": "import", "next": "import" },
-
+      {
+        "blankLine": "always",
+        "prev": "import",
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": "import",
+        "next": "import"
+      },
       // Before and after every sequence of variable declarations
-      { "blankLine": "always", "prev": "*", "next": ["const", "let", "var"] },
-      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
-      { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] },
-
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": [
+          "const",
+          "let",
+          "var"
+        ]
+      },
+      {
+        "blankLine": "always",
+        "prev": [
+          "const",
+          "let",
+          "var"
+        ],
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": [
+          "const",
+          "let",
+          "var"
+        ],
+        "next": [
+          "const",
+          "let",
+          "var"
+        ]
+      },
       // Before and after class declaration, if, while, switch, try
-      { "blankLine": "always", "prev": "*", "next": ["class", "if", "while", "switch", "try"] },
-      { "blankLine": "always", "prev": ["class", "if", "while", "switch", "try"], "next": "*" },
-
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": [
+          "class",
+          "if",
+          "while",
+          "switch",
+          "try"
+        ]
+      },
+      {
+        "blankLine": "always",
+        "prev": [
+          "class",
+          "if",
+          "while",
+          "switch",
+          "try"
+        ],
+        "next": "*"
+      },
       // Before return statements
-      { "blankLine": "always", "prev": "*", "next": "return" }
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
+      }
     ],
     "formatjs/enforce-id": [
       "error",
@@ -80,13 +176,20 @@
     "no-restricted-imports": [
       "error",
       {
-        "paths": ["lodash", "@material-ui/icons/Delete", "classnames"]
+        "paths": [
+          "lodash",
+          "@material-ui/icons/Delete",
+          "classnames"
+        ]
       }
     ],
     "no-console": [
       "error",
       {
-        "allow": ["warn", "error"]
+        "allow": [
+          "warn",
+          "error"
+        ]
       }
     ],
     // Decided to turn off:
@@ -105,5 +208,10 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off"
   },
-  "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts", "playwright/auth.js"]
+  "ignorePatterns": [
+    "node_modules/",
+    "**/types/**/*",
+    "type-policies.ts",
+    "playwright/auth.js"
+  ]
 }
