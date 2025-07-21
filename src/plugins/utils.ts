@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
 
 export function isSecretField(config: ConfigurationItemFragment[], field: string) {
@@ -6,5 +5,5 @@ export function isSecretField(config: ConfigurationItemFragment[], field: string
     ConfigurationTypeFieldEnum.PASSWORD,
     ConfigurationTypeFieldEnum.SECRET,
     ConfigurationTypeFieldEnum.SECRETMULTILINE,
-  ].includes(config.find(configField => configField.name === field).type);
+  ].includes(config.find(configField => configField.name === field)?.type);
 }

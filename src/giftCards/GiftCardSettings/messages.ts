@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { GiftCardSettingsErrorFragment } from "@dashboard/graphql";
 import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
