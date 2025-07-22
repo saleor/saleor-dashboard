@@ -19,7 +19,7 @@ import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/u
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ProductContextSwitcher from "../ProductContextSwitcher";
+import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {

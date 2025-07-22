@@ -11,12 +11,10 @@ type CutProps = Omit<BaseSelectProps, "onChange" | "options" | "value">;
 export interface ProductContextSwitcherProps extends CutProps {
   productId: string;
   selectedId: string;
-  languageCode: string;
   onItemChange(id: string, type: "variant" | "main"): void;
 }
 
 export const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
-  languageCode,
   productId,
   selectedId,
   onItemChange,
@@ -33,13 +31,10 @@ export const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
         defaultMessage: "Main Product",
       }),
       value: productId,
-      // onClick: () =>
-      //   navigate(languageEntityUrl(languageCode, TranslatableEntities.products, productId)),
     },
     ...(data?.product?.variants?.map(({ name, sku, id }) => ({
       label: name ?? sku ?? id,
       value: id,
-      // onClick: () => navigate(productVariantUrl(languageCode, productId, id)),
     })) || []),
   ];
 
