@@ -20,11 +20,12 @@ export const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
   return (
     <Combobox
       // Hacky, because minWidth was not applied properly. We set min width to ensure it's not cut
-      __minWidth={150}
+      __minWidth={200}
       {...rest}
       value={currentLanguage}
       label="Choose language"
       options={languages.map(l => ({
+        // Adding code to label, so search works. TODO: Macaw should allow 3rd value for search only
         label: `${l.language} (${l.code})`,
         value: l.code,
       }))}
