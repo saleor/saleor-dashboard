@@ -20,10 +20,14 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -91,6 +95,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   children,
 }) => {
   const intl = useIntl();
+  const { locale } = useLocale();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: AttributePageFormData = !attribute
@@ -159,7 +164,21 @@ const AttributePage: React.FC<AttributePageProps> = ({
                       })
                     : attribute?.name
                 }
-              />
+              >
+                <Button
+                  variant="secondary"
+                  icon={<TranslationsIcon />}
+                  onClick={() =>
+                    navigate(
+                      languageEntityUrl(
+                        locale.toLocaleUpperCase(),
+                        TranslatableEntities.attributes,
+                        attribute?.id ?? "",
+                      ),
+                    )
+                  }
+                />
+              </TopNav>
               <DetailPageLayout.Content>
                 <AttributeDetails
                   canChangeType={attribute === null}
