@@ -1,16 +1,16 @@
-// @ts-strict-ignore
 import React from "react";
 
-import { Provider } from "./DateContext";
+import { DateContext } from "./DateContext";
 
 interface DateProviderState {
   date: number;
 }
 
+// todo rewrite to hook
 export class DateProvider extends React.Component<{}, DateProviderState> {
   static contextTypes = {};
 
-  intervalId: number;
+  intervalId = 0;
 
   state = {
     date: Date.now(),
@@ -28,6 +28,6 @@ export class DateProvider extends React.Component<{}, DateProviderState> {
     const { children } = this.props;
     const { date } = this.state;
 
-    return <Provider value={date}>{children}</Provider>;
+    return <DateContext.Provider value={date}>{children}</DateContext.Provider>;
   }
 }

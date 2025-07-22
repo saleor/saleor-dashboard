@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { PageInfoFragment } from "@dashboard/graphql";
 import { DocumentNode } from "graphql";
 
@@ -10,7 +9,7 @@ export interface SearchData {
       node: any;
     }>;
     pageInfo: PageInfoFragment;
-  };
+  } | null;
 }
 
 export interface ResultSearchData {
@@ -33,13 +32,14 @@ function makeTopLevelSearch<TData extends SearchData, TVariables extends SearchV
             search: {
               ...prev.search,
               edges: [...(prev.search?.edges ?? []), ...(next.search?.edges ?? [])],
-              pageInfo: next.search.pageInfo,
+              pageInfo: next.search?.pageInfo,
             },
           };
         },
+        // @ts-expect-error - todo
         {
           ...result.variables,
-          after: result.data.search.pageInfo.endCursor,
+          after: result.data.search?.pageInfo.endCursor ?? null,
         },
       );
     }

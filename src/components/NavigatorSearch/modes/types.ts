@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { SearchCatalogQuery, SearchCustomersQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 

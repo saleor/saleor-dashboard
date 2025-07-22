@@ -6,7 +6,7 @@ import ReactMoment from "react-moment";
 
 import { LocaleConsumer } from "../Locale";
 import { TimezoneConsumer } from "../Timezone";
-import { Consumer } from "./DateContext";
+import { DateContext } from "./DateContext";
 
 interface DateTimeProps {
   date: string;
@@ -29,7 +29,7 @@ export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
       {tz => (
         <LocaleConsumer>
           {({ locale }) => (
-            <Consumer>
+            <DateContext.Consumer>
               {currentDate =>
                 plain ? (
                   getTitle(date, locale, tz)
@@ -49,7 +49,7 @@ export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
                   </Tooltip>
                 )
               }
-            </Consumer>
+            </DateContext.Consumer>
           )}
         </LocaleConsumer>
       )}

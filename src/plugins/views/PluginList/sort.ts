@@ -1,9 +1,8 @@
-// @ts-strict-ignore
 import { PluginSortField } from "@dashboard/graphql";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
-export function getSortQueryField(sort: PluginListUrlSortField): PluginSortField {
+export function getSortQueryField(sort: PluginListUrlSortField): PluginSortField | undefined {
   switch (sort) {
     case PluginListUrlSortField.name:
       return PluginSortField.NAME;
