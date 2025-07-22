@@ -14,6 +14,7 @@ export interface LanguageSwitchProps extends CutProps {
   onLanguageChange: (lang: LanguageCodeEnum) => void;
 }
 
+// todo add LanguageSwitchWithLocalStorage, make it decorated and use in other places
 export const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
   const { currentLanguage, languages, onLanguageChange, ...rest } = props;
 
