@@ -13,8 +13,11 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sprinkles } from "@saleor/macaw-ui-next";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { Button, sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -77,6 +80,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   onUpdateListSettings,
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
+  const { locale } = useLocale();
   const navigate = useNavigator();
 
   const categoryBackListUrl = useBackLinkWithState({
@@ -96,6 +100,19 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout gridTemplateColumns={1}>
           <TopNav href={backHref} title={category?.name}>
+            <Button
+              variant="secondary"
+              icon={<TranslationsIcon />}
+              onClick={() =>
+                navigate(
+                  languageEntityUrl(
+                    locale.toLocaleUpperCase(),
+                    TranslatableEntities.categories,
+                    categoryId,
+                  ),
+                )
+              }
+            />
             {extensionMenuItems.length > 0 && (
               <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
             )}
