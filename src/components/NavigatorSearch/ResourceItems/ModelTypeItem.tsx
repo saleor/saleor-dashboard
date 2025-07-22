@@ -9,9 +9,9 @@ import { LinkCell, Row, TypeCell } from "./CommonCells";
 
 type ModelTypeNode = NonNullable<GlobalSearchQuery["modelTypes"]>["edges"][number]["node"];
 
-export const ModelTypeItem = ({ node, className }: { node: ModelTypeNode; className?: string }) => {
+export const ModelTypeItem = ({ node }: { node: ModelTypeNode }) => {
   return (
-    <Row href={pageTypeUrl(node.id)} className={className}>
+    <Row>
       <TypeCell href={pageTypeUrl(node.id)}>
         <FormattedMessage id="9FCrIN" defaultMessage="Model type" />
       </TypeCell>

@@ -10,14 +10,14 @@ import { getPaymentLabel } from "./labels";
 
 type OrderNode = NonNullable<GlobalSearchQuery["orders"]>["edges"][number]["node"];
 
-export const OrderItem = ({ node, className }: { node: OrderNode; className?: string }) => {
+export const OrderItem = ({ node }: { node: OrderNode }) => {
   const intl = useIntl();
   const { theme } = useTheme();
 
   const { color, localized } = getPaymentLabel(intl, theme, node.chargeStatus, node.paymentStatus);
 
   return (
-    <Row href={orderUrl(node.id)} className={className}>
+    <Row>
       <TypeCell href={orderUrl(node.id)}>
         <FormattedMessage id="XPruqs" defaultMessage="Order" />
       </TypeCell>

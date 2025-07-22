@@ -9,9 +9,15 @@ import { LinkCell, Row, Thumbnail, TypeCell } from "./CommonCells";
 
 type CollectionNode = NonNullable<GlobalSearchQuery["collections"]>["edges"][number]["node"];
 
-export const CollectionItem = ({ node }: { node: CollectionNode }) => {
+export const CollectionItem = ({
+  node,
+  className,
+}: {
+  node: CollectionNode;
+  className?: string;
+}) => {
   return (
-    <Row>
+    <Row href={collectionUrl(node.id)} className={className}>
       <TypeCell href={collectionUrl(node.id)}>
         <FormattedMessage id="phAZoj" defaultMessage="Collection" />
       </TypeCell>

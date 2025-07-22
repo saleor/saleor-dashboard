@@ -113,3 +113,11 @@ body {
     background-color: transparent !important;
   }
 }
+
+a.command-menu-item {
+  display: block;
+}
+
+.command-menu-item[data-focus="true"] {
+  background-color: var(--mu-colors-background-default1-hovered) !important;
+}

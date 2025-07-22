@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const navigatorSearch = gql`
   query NavigatorSearch($query: String!) {
-    orders(first: 5, filter: { search: $query }) {
+    orders(first: 2, filter: { search: $query }) {
       edges {
         node {
           id
@@ -21,7 +21,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    categories(first: 5, filter: { search: $query }) {
+    categories(first: 2, filter: { search: $query }) {
       edges {
         node {
           id
@@ -51,7 +51,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    collections(first: 5, filter: { search: $query }) {
+    collections(first: 2, filter: { search: $query }) {
       edges {
         node {
           id
@@ -67,7 +67,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    products(first: 5, filter: { search: $query }) {
+    products(first: 2, filter: { search: $query }) {
       edges {
         node {
           id
@@ -84,7 +84,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    productVariants(first: 5, filter: { search: $query }) {
+    productVariants(first: 2, filter: { search: $query }) {
       edges {
         node {
           id
@@ -106,7 +106,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    models: pages(first: 5, filter: { search: $query }) {
+    models: pages(first: 2, filter: { search: $query }) {
       edges {
         node {
           id
@@ -119,7 +119,7 @@ export const navigatorSearch = gql`
       }
     }
 
-    modelTypes: pageTypes(first: 5, filter: { search: $query }) {
+    modelTypes: pageTypes(first: 2, filter: { search: $query }) {
       edges {
         node {
           id

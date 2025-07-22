@@ -9,9 +9,9 @@ import { DisplayDate, LinkCell, Row, Thumbnail, TypeCell } from "./CommonCells";
 
 type ProductNode = NonNullable<GlobalSearchQuery["products"]>["edges"][number]["node"];
 
-export const ProductItem = ({ node }: { node: ProductNode }) => {
+export const ProductItem = ({ node, className }: { node: ProductNode; className?: string }) => {
   return (
-    <Row>
+    <Row href={productUrl(node.id)} className={className}>
       <TypeCell href={productUrl(node.id)}>
         <FormattedMessage id="x/ZVlU" defaultMessage="Product" />
       </TypeCell>

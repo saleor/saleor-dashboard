@@ -10,11 +10,11 @@ import { getCategoryHierarchyLabel } from "./labels";
 
 type CategoryNode = NonNullable<GlobalSearchQuery["categories"]>["edges"][number]["node"];
 
-export const CategoryItem = ({ node, className }: { node: CategoryNode; className?: string }) => {
+export const CategoryItem = ({ node }: { node: CategoryNode }) => {
   const ancestorsLabel = getCategoryHierarchyLabel(node);
 
   return (
-    <Row href={categoryUrl(node.id)} className={className}>
+    <Row>
       <TypeCell href={categoryUrl(node.id)}>
         <FormattedMessage id="ccXLVi" defaultMessage="Category" />
       </TypeCell>

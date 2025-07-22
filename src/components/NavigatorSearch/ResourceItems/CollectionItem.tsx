@@ -1,23 +1,24 @@
+import { collectionUrl } from "@dashboard/collections/urls";
 import { GridTable } from "@dashboard/components/GridTable";
 import { GlobalSearchQuery } from "@dashboard/graphql";
-import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { LinkCell, Row, TypeCell } from "./CommonCells";
+import { LinkCell, Row, Thumbnail, TypeCell } from "./CommonCells";
 
-type ModelTypeNode = NonNullable<GlobalSearchQuery["modelTypes"]>["edges"][number]["node"];
+type CollectionNode = NonNullable<GlobalSearchQuery["collections"]>["edges"][number]["node"];
 
-export const ModelTypeItem = ({ node, className }: { node: ModelTypeNode; className?: string }) => {
+export const CollectionItem = ({ node }: { node: CollectionNode }) => {
   return (
-    <Row href={pageTypeUrl(node.id)} className={className}>
-      <TypeCell href={pageTypeUrl(node.id)}>
-        <FormattedMessage id="9FCrIN" defaultMessage="Model type" />
+    <Row>
+      <TypeCell href={collectionUrl(node.id)}>
+        <FormattedMessage id="phAZoj" defaultMessage="Collection" />
       </TypeCell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={pageTypeUrl(node.id)}>
-          <Box display="flex" alignItems="center" gap={2} width="100%">
+        <LinkCell href={collectionUrl(node.id)}>
+          <Box display="flex" alignItems="center" gap={5}>
+            <Thumbnail url={node?.backgroundImage?.url} name={node?.name} />
             <Box
               display="flex"
               alignItems="start"
@@ -33,7 +34,7 @@ export const ModelTypeItem = ({ node, className }: { node: ModelTypeNode; classN
         </LinkCell>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={pageTypeUrl(node.id)}>-</LinkCell>
+        <LinkCell href={collectionUrl(node.id)}>-</LinkCell>
       </GridTable.Cell>
     </Row>
   );

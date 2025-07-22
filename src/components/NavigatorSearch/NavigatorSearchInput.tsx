@@ -1,6 +1,6 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { Box, SearchIcon, sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useState } from "react";
 
 interface NavigatorSearchInputProps {
   onSearch: (query: string) => void;
@@ -8,7 +8,13 @@ interface NavigatorSearchInputProps {
 }
 
 const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) => {
+  const [inputValue, setInputValue] = useState(value);
   const onSearchDebounced = useDebounce(onSearch);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    onSearchDebounced(e.target.value);
+  };
 
   return (
     <Box display="flex" padding={4} height={12}>
@@ -23,8 +29,8 @@ const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) =>
         as="input"
         role="input"
         autoFocus
-        onChange={e => onSearchDebounced((e.target as HTMLInputElement).value)}
-        value={value}
+        onChange={handleSearch}
+        value={inputValue}
         autoComplete="off"
         style={{
           border: "none",
@@ -34,6 +40,8 @@ const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) =>
           padding: 0,
         }}
         placeholder="Search"
+        aria-activedescendant="/orders/"
+        aria-expanded
       />
     </Box>
   );

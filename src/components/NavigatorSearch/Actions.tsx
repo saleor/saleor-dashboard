@@ -1,203 +1,190 @@
-import { fuzzySearch } from "@dashboard/misc";
-import { ArrowRightIcon, Box, PlusIcon, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { categoryAddUrl, categoryListUrl } from "@dashboard/categories/urls";
+import { collectionAddUrl, collectionListUrl } from "@dashboard/collections/urls";
 import Link from "@dashboard/components/Link";
+import { fuzzySearch } from "@dashboard/misc";
+import { pageCreateUrl, pageListUrl } from "@dashboard/modeling/urls";
+import { pageTypeAddPath, pageTypeListUrl } from "@dashboard/modelTypes/urls";
+import { orderListUrl } from "@dashboard/orders/urls";
+import { productListUrl } from "@dashboard/products/urls";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const ActionLinkItem = ({ href, icon, children }: { href: string, icon: React.ReactNode, children: React.ReactNode }) => {
+const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
   return (
-    <Link href={href}>
+    <Link href={href} data-href={href} id={href} className="command-menu-item" data-focus={false}>
       <Box
         display="flex"
         alignItems="center"
         color="default1"
         gap={2}
-        paddingY={2}
+        paddingY={1.5}
         backgroundColor={{
-          default: "default1",
           hover: "default1Hovered",
         }}
-        paddingX={4}
+        paddingX={6}
+        role="option"
+        tabIndex={-1}
       >
-        <Box
-          __width="16px"
-          __height="16px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          color="default1"
-        >
-          {icon}
-        </Box>
-        <Text size={3} fontWeight="regular">{children}</Text>
+        <Text size={2} fontWeight="medium" color="default1">
+          {children}
+        </Text>
       </Box>
     </Link>
   );
 };
 
-const orderActions = [
-  {
-    name: "Create new order",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<PlusIcon />}>
-        <FormattedMessage id="Create new order" defaultMessage="Create new order" />
-      </ActionLinkItem>
-    </Box>
-  },
-  {
-    name: "Go to orders",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<ArrowRightIcon />}>
-        <FormattedMessage id="Go to orders" defaultMessage="Go to orders" />
-      </ActionLinkItem>
-    </Box>
-  },
-]
-
-const productActions = [
-  {
-    name: "Create new product",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<PlusIcon />}>
-        <FormattedMessage id="Create new product" defaultMessage="Create new product" />
-      </ActionLinkItem>
-    </Box>
-  },
-  {
-    name: "Go to products",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<ArrowRightIcon />}>
-        <FormattedMessage id="Go to products" defaultMessage="Go to products" />
-      </ActionLinkItem>
-    </Box>
-  },
-]
-
-const categoryActions = [
-  {
-    name: "Create new category",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<PlusIcon />}>
-        <FormattedMessage id="Create new category" defaultMessage="Create new category" />
-      </ActionLinkItem>
-    </Box>
-  },
-  {
-    name: "Go to categories",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<ArrowRightIcon />}>
-        <FormattedMessage id="Go to categories" defaultMessage="Go to categories" />
-      </ActionLinkItem>
-    </Box>
-  },
-]
-
-const collectionActions = [
-  {
-    name: "Create new collection",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<PlusIcon />}>
-        <FormattedMessage id="Create new collection" defaultMessage="Create new collection" />
-      </ActionLinkItem>
-    </Box>
-  },
-  {
-    name: "Go to collections",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<ArrowRightIcon />}>
-        <FormattedMessage id="Go to collections" defaultMessage="Go to collections" />
-      </ActionLinkItem>
-    </Box>
-  },
-]
-
-const modelActions = [
-  {
-    name: "Create new model",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<PlusIcon />}>
-        <FormattedMessage id="Create new model" defaultMessage="Create new model" />
-      </ActionLinkItem>
-    </Box>
-  },
-  {
-    name: "Go to models",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<ArrowRightIcon />}>
-        <FormattedMessage id="Go to models" defaultMessage="Go to models" />
-      </ActionLinkItem>
-    </Box>
-  },
-]
-
-const modelTypeActions = [
-  {
-    name: "Create new model type",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<PlusIcon />}>
-        <FormattedMessage id="Create new model type" defaultMessage="Create new model type" />
-      </ActionLinkItem>
-    </Box>
-  },
-  {
-    name: "Go to model types",
-    component: <Box>
-      <ActionLinkItem href="/" icon={<ArrowRightIcon />}>
-        <FormattedMessage id="Go to model types" defaultMessage="Go to model types" />
-      </ActionLinkItem>
-    </Box>
-  },
-]
-
 const allActions = [
   {
     section: "Orders",
-    actions: orderActions
+    name: "Create new order",
+    component: (
+      <Box>
+        <ActionLinkItem href={orderListUrl({ action: "create-order" })}>
+          <FormattedMessage id="QOm7+P" defaultMessage="Create new order" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Orders",
+    name: "Go to orders",
+    component: (
+      <Box>
+        <ActionLinkItem href={orderListUrl()}>
+          <FormattedMessage id="ofewGR" defaultMessage="Go to orders" />
+        </ActionLinkItem>
+      </Box>
+    ),
   },
   {
     section: "Products",
-    actions: productActions
+    name: "Create new product",
+    component: (
+      <Box>
+        <ActionLinkItem href={productListUrl({ action: "create-product" })}>
+          <FormattedMessage id="Sz6CRr" defaultMessage="Create new product" />
+        </ActionLinkItem>
+      </Box>
+    ),
   },
   {
-    section: "Categories",
-    actions: categoryActions
+    section: "Products",
+    name: "Go to products",
+    component: (
+      <Box>
+        <ActionLinkItem href={productListUrl()}>
+          <FormattedMessage id="lTrKHs" defaultMessage="Go to products" />
+        </ActionLinkItem>
+      </Box>
+    ),
   },
   {
-    section: "Collections",
-    actions: collectionActions
+    section: "Products",
+    name: "Create new category",
+    component: (
+      <Box>
+        <ActionLinkItem href={categoryAddUrl()}>
+          <FormattedMessage id="Uqf8Ny" defaultMessage="Create new category" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Products",
+    name: "Go to categories",
+    component: (
+      <Box>
+        <ActionLinkItem href={categoryListUrl()}>
+          <FormattedMessage id="QjwEr6" defaultMessage="Go to categories" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Products",
+    name: "Create new collection",
+    component: (
+      <Box>
+        <ActionLinkItem href={collectionAddUrl()}>
+          <FormattedMessage id="O+3CZK" defaultMessage="Create new collection" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Products",
+    name: "Go to collections",
+    component: (
+      <Box>
+        <ActionLinkItem href={collectionListUrl()}>
+          <FormattedMessage id="ITYiRy" defaultMessage="Go to collections" />
+        </ActionLinkItem>
+      </Box>
+    ),
   },
   {
     section: "Models",
-    actions: modelActions
+    name: "Create new model",
+    component: (
+      <Box>
+        <ActionLinkItem href={pageCreateUrl()}>
+          <FormattedMessage id="vbop3G" defaultMessage="Create new model" />
+        </ActionLinkItem>
+      </Box>
+    ),
   },
   {
-    section: "Model types",
-    actions: modelTypeActions
+    section: "Models",
+    name: "Go to models",
+    component: (
+      <Box>
+        <ActionLinkItem href={pageListUrl()}>
+          <FormattedMessage id="dQn96a" defaultMessage="Go to models" />
+        </ActionLinkItem>
+      </Box>
+    ),
   },
-]
+  {
+    section: "Models",
+    name: "Create new model type",
+    component: (
+      <Box>
+        <ActionLinkItem href={pageTypeAddPath}>
+          <FormattedMessage id="Ed2705" defaultMessage="Create new model type" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Models",
+    name: "Go to model types",
+    component: (
+      <Box>
+        <ActionLinkItem href={pageTypeListUrl()}>
+          <FormattedMessage id="5nrCxC" defaultMessage="Go to model types" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+];
 
 interface ActionsProps {
   query: string;
 }
 
 export const Actions = ({ query }: ActionsProps) => {
-  const searchResults = fuzzySearch(allActions, query, ["section", "actions.name"]);
-
-  console.log(searchResults);
+  const searchResults = fuzzySearch(allActions, query, ["name"]);
+  const groupedBySection = Object.groupBy(searchResults, result => result.section);
 
   return (
     <Box>
-      {searchResults.map((result) => (
-        <Box key={result.section} paddingY={1.5}>
-          <Text
-            fontWeight="medium"
-            size={2}
-            color="default2"
-            paddingX={4}
-          >
-            {result.section}
+      {Object.entries(groupedBySection).map(([section, actions]) => (
+        <Box key={section} paddingY={1}>
+          <Text fontWeight="medium" size={2} color="default2" paddingX={6}>
+            {section}
           </Text>
-          {result.actions.map((action) => action.component)}
+          {actions.map(action => action.component)}
         </Box>
       ))}
     </Box>
