@@ -52,3 +52,6 @@ export const productVariantUrl = (code: string, productId: string, variantId: st
     TranslatableEntities.productVariants,
     variantId,
   );
+
+export const productUrl = (code: string, productId: string) =>
+  languageEntityUrl(code, TranslatableEntities.products, productId);
