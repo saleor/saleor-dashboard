@@ -17,7 +17,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
-import { Button, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -114,7 +114,9 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               }
             />
             {extensionMenuItems.length > 0 && (
-              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              <Box marginLeft={3}>
+                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              </Box>
             )}
           </TopNav>
           <DetailPageLayout.Content>
