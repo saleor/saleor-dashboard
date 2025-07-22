@@ -2,14 +2,19 @@ import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
 import { Combobox, ComboboxProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export interface LanguageSwitchProps
-  extends ComboboxProps<{ value: LanguageCodeEnum; label: string }, LanguageCodeEnum> {
+type BaseComboboxProps = ComboboxProps<
+  { value: LanguageCodeEnum; label: string },
+  LanguageCodeEnum
+>;
+type CutProps = Omit<BaseComboboxProps, "options" | "value">;
+
+export interface LanguageSwitchProps extends CutProps {
   currentLanguage: LanguageCodeEnum;
   languages: LanguageFragment[];
-  onLanguageChange: (lang: LanguageCodeEnum) => string;
+  onLanguageChange: (lang: LanguageCodeEnum) => void;
 }
 
-const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
+export const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
   const { currentLanguage, languages, onLanguageChange, ...rest } = props;
 
   return (
@@ -35,4 +40,3 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
 };
 
 LanguageSwitch.displayName = "LanguageSwitch";
-export default LanguageSwitch;
