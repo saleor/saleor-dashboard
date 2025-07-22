@@ -11,7 +11,7 @@ const NavigatorSearch: React.FC = () => {
   const [query, setQuery] = useState("");
   const { handleKeyDown, isCommandMenuOpen, closeCommandMenu } = useKeyboardNavigation();
 
-  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleClick = () => {
     closeCommandMenu();
   };
 

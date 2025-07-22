@@ -16,7 +16,7 @@ export const ResultItem = ({
 }: {
   result: ItemData;
   className?: string;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onClick?: () => void;
 }) => {
   const { node } = result;
 

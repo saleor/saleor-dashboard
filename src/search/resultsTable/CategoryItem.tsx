@@ -17,7 +17,7 @@ export const CategoryItem = ({
 }: {
   node: CategoryNode;
   className?: string;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onClick?: () => void;
 }) => {
   const ancestorsLabel = getCategoryHierarchyLabel(node);
 

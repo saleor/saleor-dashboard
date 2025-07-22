@@ -17,7 +17,7 @@ export const OrderItem = ({
 }: {
   node: OrderNode;
   className?: string;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onClick?: () => void;
 }) => {
   const intl = useIntl();
   const { theme } = useTheme();

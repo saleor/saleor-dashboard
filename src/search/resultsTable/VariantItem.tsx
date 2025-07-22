@@ -16,7 +16,7 @@ export const VariantItem = ({
 }: {
   node: VariantNode;
   className?: string;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onClick?: () => void;
 }) => {
   return (
     <Row

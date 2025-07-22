@@ -9,7 +9,7 @@ export const ResourcesTable = ({
   onResourceClick,
 }: {
   data: NavigatorSearchQuery;
-  onResourceClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onResourceClick: () => void;
 }) => {
   const results = prepareResults(data);
 

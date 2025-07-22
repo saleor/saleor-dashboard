@@ -16,7 +16,7 @@ export const ModelTypeItem = ({
 }: {
   node: ModelTypeNode;
   className?: string;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onClick?: () => void;
 }) => {
   return (
     <Row href={pageTypeUrl(node.id)} className={className} onClick={onClick}>

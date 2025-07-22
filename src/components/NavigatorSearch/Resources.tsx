@@ -11,7 +11,7 @@ export const Resources = ({
   onResourceClick,
 }: {
   query: string;
-  onResourceClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onResourceClick: () => void;
 }) => {
   const { data } = useNavigatorSearchQuery({
     variables: {

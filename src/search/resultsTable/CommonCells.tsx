@@ -14,7 +14,7 @@ export const Row = ({
   children: React.ReactNode;
   href: string;
   className?: string;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onClick?: () => void;
 }) => {
   return (
     <GridTable.Row
