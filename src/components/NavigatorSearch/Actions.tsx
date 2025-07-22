@@ -38,8 +38,12 @@ const allActions = [
   {
     section: "Orders",
     name: "Create new order",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={orderListUrl({ action: "create-order" })}>
           <FormattedMessage id="QOm7+P" defaultMessage="Create new order" />
         </ActionLinkItem>
@@ -49,8 +53,12 @@ const allActions = [
   {
     section: "Orders",
     name: "Go to orders",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={orderListUrl()}>
           <FormattedMessage id="ofewGR" defaultMessage="Go to orders" />
         </ActionLinkItem>
@@ -60,8 +68,12 @@ const allActions = [
   {
     section: "Products",
     name: "Create new product",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={productListUrl({ action: "create-product" })}>
           <FormattedMessage id="Sz6CRr" defaultMessage="Create new product" />
         </ActionLinkItem>
@@ -71,8 +83,12 @@ const allActions = [
   {
     section: "Products",
     name: "Go to products",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={productListUrl()}>
           <FormattedMessage id="lTrKHs" defaultMessage="Go to products" />
         </ActionLinkItem>
@@ -82,8 +98,12 @@ const allActions = [
   {
     section: "Products",
     name: "Create new category",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={categoryAddUrl()}>
           <FormattedMessage id="Uqf8Ny" defaultMessage="Create new category" />
         </ActionLinkItem>
@@ -93,8 +113,12 @@ const allActions = [
   {
     section: "Products",
     name: "Go to categories",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={categoryListUrl()}>
           <FormattedMessage id="QjwEr6" defaultMessage="Go to categories" />
         </ActionLinkItem>
@@ -104,8 +128,12 @@ const allActions = [
   {
     section: "Products",
     name: "Create new collection",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={collectionAddUrl()}>
           <FormattedMessage id="O+3CZK" defaultMessage="Create new collection" />
         </ActionLinkItem>
@@ -115,8 +143,12 @@ const allActions = [
   {
     section: "Products",
     name: "Go to collections",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={collectionListUrl()}>
           <FormattedMessage id="ITYiRy" defaultMessage="Go to collections" />
         </ActionLinkItem>
@@ -126,8 +158,12 @@ const allActions = [
   {
     section: "Models",
     name: "Create new model",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={pageCreateUrl()}>
           <FormattedMessage id="vbop3G" defaultMessage="Create new model" />
         </ActionLinkItem>
@@ -137,8 +173,12 @@ const allActions = [
   {
     section: "Models",
     name: "Go to models",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={pageListUrl()}>
           <FormattedMessage id="dQn96a" defaultMessage="Go to models" />
         </ActionLinkItem>
@@ -148,8 +188,12 @@ const allActions = [
   {
     section: "Models",
     name: "Create new model type",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={pageTypeAddPath}>
           <FormattedMessage id="Ed2705" defaultMessage="Create new model type" />
         </ActionLinkItem>
@@ -159,8 +203,12 @@ const allActions = [
   {
     section: "Models",
     name: "Go to model types",
-    component: (
-      <Box>
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
         <ActionLinkItem href={pageTypeListUrl()}>
           <FormattedMessage id="5nrCxC" defaultMessage="Go to model types" />
         </ActionLinkItem>
@@ -171,16 +219,19 @@ const allActions = [
 
 interface ActionsProps {
   query: string;
+  onActionClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
-export const Actions = ({ query }: ActionsProps) => {
+export const Actions = ({ query, onActionClick }: ActionsProps) => {
   const searchResults = fuzzySearch(allActions, query, ["name"]);
 
   // @ts-expect-error - Old types for nodejs that does not have "groupBy"
   const groupedBySection = Object.groupBy(searchResults, result => result.section) as Record<
     string,
     {
-      component: React.ReactNode;
+      Component: React.ComponentType<{
+        onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+      }>;
     }[]
   >;
 
@@ -191,7 +242,9 @@ export const Actions = ({ query }: ActionsProps) => {
           <Text fontWeight="medium" size={2} color="default2" paddingX={6}>
             {section}
           </Text>
-          {actions.map(action => action.component)}
+          {actions.map(({ Component }, index) => (
+            <Component key={index} onClick={onActionClick} />
+          ))}
         </Box>
       ))}
     </Box>

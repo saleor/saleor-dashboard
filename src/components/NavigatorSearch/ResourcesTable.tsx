@@ -4,7 +4,13 @@ import { prepareResults } from "@dashboard/search/resultsTable/prepareResults";
 import { ResultItem } from "@dashboard/search/resultsTable/ResultItem";
 import React from "react";
 
-export const ResourcesTable = ({ data }: { data: NavigatorSearchQuery }) => {
+export const ResourcesTable = ({
+  data,
+  onResourceClick,
+}: {
+  data: NavigatorSearchQuery;
+  onResourceClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+}) => {
   const results = prepareResults(data);
 
   return (
@@ -16,7 +22,12 @@ export const ResourcesTable = ({ data }: { data: NavigatorSearchQuery }) => {
       </GridTable.Colgroup>
       <GridTable.Body>
         {results.map(result => (
-          <ResultItem key={result.node.id} result={result} className="command-menu-item" />
+          <ResultItem
+            key={result.node.id}
+            result={result}
+            className="command-menu-item"
+            onClick={onResourceClick}
+          />
         ))}
       </GridTable.Body>
     </GridTable>

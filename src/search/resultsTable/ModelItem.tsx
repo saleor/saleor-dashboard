@@ -9,9 +9,17 @@ import { DisplayDate, LinkCell, Row, TypeCell } from "./CommonCells";
 
 type ModelNode = NonNullable<GlobalSearchQuery["models"]>["edges"][number]["node"];
 
-export const ModelItem = ({ node, className }: { node: ModelNode; className?: string }) => {
+export const ModelItem = ({
+  node,
+  className,
+  onClick,
+}: {
+  node: ModelNode;
+  className?: string;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+}) => {
   return (
-    <Row href={pageUrl(node.id)} className={className}>
+    <Row href={pageUrl(node.id)} className={className} onClick={onClick}>
       <TypeCell href={pageUrl(node.id)}>
         <FormattedMessage id="rhSI1/" defaultMessage="Model" />
       </TypeCell>

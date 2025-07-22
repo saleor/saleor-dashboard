@@ -11,6 +11,10 @@ const NavigatorSearch: React.FC = () => {
   const [query, setQuery] = useState("");
   const { handleKeyDown, isCommandMenuOpen, closeCommandMenu } = useKeyboardNavigation();
 
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    closeCommandMenu();
+  };
+
   return (
     <DashboardModal open={isCommandMenuOpen} onChange={closeCommandMenu}>
       <DashboardModal.Content
@@ -25,8 +29,8 @@ const NavigatorSearch: React.FC = () => {
       >
         <Box width="100%" onKeyDown={handleKeyDown}>
           <NavigatorSearchInput onSearch={setQuery} value={query} />
-          <Actions query={query} />
-          <Resources query={query} />
+          <Actions query={query} onActionClick={handleClick} />
+          <Resources query={query} onResourceClick={handleClick} />
         </Box>
       </DashboardModal.Content>
     </DashboardModal>

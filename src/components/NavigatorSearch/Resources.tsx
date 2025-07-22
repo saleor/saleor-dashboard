@@ -6,7 +6,13 @@ import { FormattedMessage } from "react-intl";
 
 import { ResourcesTable } from "./ResourcesTable";
 
-export const Resources = ({ query }: { query: string }) => {
+export const Resources = ({
+  query,
+  onResourceClick,
+}: {
+  query: string;
+  onResourceClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+}) => {
   const { data } = useNavigatorSearchQuery({
     variables: {
       query,
@@ -40,7 +46,7 @@ export const Resources = ({ query }: { query: string }) => {
           </Text>
         </Box>
       </Link>
-      <ResourcesTable data={data} />
+      <ResourcesTable data={data} onResourceClick={onResourceClick} />
     </Box>
   );
 };

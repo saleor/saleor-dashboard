@@ -9,9 +9,21 @@ import { DisplayDate, LinkCell, Row, Thumbnail, TypeCell } from "./CommonCells";
 
 type VariantNode = NonNullable<GlobalSearchQuery["productVariants"]>["edges"][number]["node"];
 
-export const VariantItem = ({ node, className }: { node: VariantNode; className?: string }) => {
+export const VariantItem = ({
+  node,
+  className,
+  onClick,
+}: {
+  node: VariantNode;
+  className?: string;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+}) => {
   return (
-    <Row href={productVariantEditPath(node.product.id, node.id)} className={className}>
+    <Row
+      href={productVariantEditPath(node.product.id, node.id)}
+      className={className}
+      onClick={onClick}
+    >
       <TypeCell href={productVariantEditPath(node.product.id, node.id)}>
         <FormattedMessage id="OK5+Fh" defaultMessage="Variant" />
       </TypeCell>

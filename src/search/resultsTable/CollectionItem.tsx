@@ -12,12 +12,14 @@ type CollectionNode = NonNullable<GlobalSearchQuery["collections"]>["edges"][num
 export const CollectionItem = ({
   node,
   className,
+  onClick,
 }: {
   node: CollectionNode;
   className?: string;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 }) => {
   return (
-    <Row href={collectionUrl(node.id)} className={className}>
+    <Row href={collectionUrl(node.id)} className={className} onClick={onClick}>
       <TypeCell href={collectionUrl(node.id)}>
         <FormattedMessage id="phAZoj" defaultMessage="Collection" />
       </TypeCell>
