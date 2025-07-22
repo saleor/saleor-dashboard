@@ -1348,10 +1348,6 @@
   "6230rS": {
     "string": "Discount rules for carts and draft orders."
   },
-  "62T585": {
-    "context": "button",
-    "string": "{languageName} - {languageCode}"
-  },
   "62Ywh2": {
     "context": "number of countries",
     "string": "{number} Countries"
