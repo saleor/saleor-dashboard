@@ -9,13 +9,15 @@ const navigatorHotkey = "ctrl+k, command+k";
 const NAVIGATION_KEYS = ["Tab", "ArrowDown", "ArrowUp"];
 
 const useInput = () => {
-  const container = useRef<HTMLInputElement>(null);
+  const container = useRef<HTMLInputElement | null>(null);
 
   const attach = (e: React.KeyboardEvent<HTMLDivElement>) => {
     container.current = e.currentTarget.querySelector("input") as HTMLInputElement;
   };
 
   const updateAriaActiveDescendant = (id: string) => {
+    if (!container.current) return;
+
     container.current.setAttribute("aria-activedescendant", id);
   };
 
@@ -29,7 +31,7 @@ const useInput = () => {
 const useActionItems = () => {
   const navigate = useNavigator();
   const items = useRef<HTMLElement[]>([]);
-  const currentFocusIndex = useRef<number>(undefined);
+  const currentFocusIndex = useRef<number | undefined>(undefined);
 
   const attach = (e: React.KeyboardEvent<HTMLDivElement>) => {
     items.current = Array.from(e.currentTarget.querySelectorAll(".command-menu-item"));
@@ -46,12 +48,16 @@ const useActionItems = () => {
   };
 
   const focusNext = () => {
+    if (typeof currentFocusIndex.current === "undefined") return;
+
     focusElement(currentFocusIndex.current, false);
     currentFocusIndex.current = (currentFocusIndex.current + 1) % items.current.length;
     focusElement(currentFocusIndex.current, true);
   };
 
   const focusPrevious = () => {
+    if (typeof currentFocusIndex.current === "undefined") return;
+
     focusElement(currentFocusIndex.current, false);
     currentFocusIndex.current = (currentFocusIndex.current - 1) % items.current.length;
     focusElement(currentFocusIndex.current, true);
@@ -77,7 +83,7 @@ const useActionItems = () => {
   const takeAction = () => {
     const element = getActiveFocusedElement();
 
-    if (!element) return;
+    if (!element || !element.dataset.href) return;
 
     navigate(element.dataset.href);
   };
@@ -124,7 +130,12 @@ export const useKeyboardNavigation = () => {
 
       if (!hasAnyFocus()) {
         resetFocus();
-        updateAriaActiveDescendant(getActiveFocusedElement().id);
+
+        const activeFocusedElement = getActiveFocusedElement();
+
+        if (activeFocusedElement) {
+          updateAriaActiveDescendant(activeFocusedElement.id);
+        }
 
         return;
       }

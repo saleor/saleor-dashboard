@@ -175,7 +175,14 @@ interface ActionsProps {
 
 export const Actions = ({ query }: ActionsProps) => {
   const searchResults = fuzzySearch(allActions, query, ["name"]);
-  const groupedBySection = Object.groupBy(searchResults, result => result.section);
+
+  // @ts-expect-error - Old types for nodejs that does not have "groupBy"
+  const groupedBySection = Object.groupBy(searchResults, result => result.section) as Record<
+    string,
+    {
+      component: React.ReactNode;
+    }[]
+  >;
 
   return (
     <Box>
