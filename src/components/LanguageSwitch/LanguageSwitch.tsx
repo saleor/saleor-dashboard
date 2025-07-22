@@ -50,7 +50,9 @@ export const LanguageSwitchWithCaching = (props: LanguageSwitchProps) => {
     .map(code => props.languages.find(l => l.code === code))
     .filter(v => !!v) as LanguageFragment[];
 
-  const withoutDuplicates = [...Array.from(new Set(cachedWithLabel))] as LanguageFragment[];
+  const summed = [...cachedWithLabel, ...props.languages];
+
+  const withoutDuplicates = [...Array.from(new Set(summed))] as LanguageFragment[];
 
   return (
     <LanguageSwitch
