@@ -22,6 +22,7 @@ export function createImageUploadHandler(
     });
 }
 
+/** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
 export function createImageReorderHandler(
   product: ProductFragment,
   reorderProductImages: (variables: ProductMediaReorderMutationVariables) => void,

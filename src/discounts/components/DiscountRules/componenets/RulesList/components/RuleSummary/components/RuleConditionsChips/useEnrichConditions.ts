@@ -29,7 +29,7 @@ export const useEnrichConditions = (
 
   return conditions.map(condition => {
     const conditionInputType = getConditionTypeByLabel(condition.id ?? "", condition.type);
-    const conditionLabel = conditionNames.find(option => option.value === condition.id ?? "");
+    const conditionLabel = conditionNames.find(option => option.value === (condition.id ?? ""));
     const enrichedCondition = {
       ...condition,
       inputType: conditionInputType,

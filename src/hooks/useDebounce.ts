@@ -1,18 +1,17 @@
-// @ts-strict-ignore
 import { useEffect, useRef } from "react";
 
 export type UseDebounceFn<T> = (...args: T[]) => void;
 function useDebounce<T>(debounceFn: UseDebounceFn<T>, time = 200): UseDebounceFn<T> {
-  const timer = useRef(null);
+  const timer = useRef<number | null>(null);
 
-  useEffect(() => () => clearTimeout(timer.current), []);
+  useEffect(() => () => window.clearTimeout(timer.current as number), []);
 
   return (...args: T[]) => {
     if (timer.current) {
       clearTimeout(timer.current);
     }
 
-    timer.current = setTimeout(() => debounceFn(...args), time);
+    timer.current = window.setTimeout(() => debounceFn(...args), time);
   };
 }
 

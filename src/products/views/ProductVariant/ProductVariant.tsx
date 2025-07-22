@@ -65,11 +65,10 @@ import { useSubmitChannels } from "./useSubmitChannels";
 
 interface ProductUpdateProps {
   variantId: string;
-  productId: string;
   params: ProductVariantEditUrlQueryParams;
 }
 
-export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, productId, params }) => {
+export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, params }) => {
   const shop = useShop();
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -87,12 +86,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
       firstValues: 10,
     },
   });
+  const productId = data?.productVariant?.product.id;
+
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
     ProductVariantEditUrlQueryParams
-  >(navigate, params => productVariantEditUrl(productId, variantId, params), params);
+  >(navigate, params => productVariantEditUrl(variantId, params), params);
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
   const [assignMedia, assignMediaOpts] = useVariantMediaAssignMutation({});
   const [unassignMedia, unassignMediaOpts] = useVariantMediaUnassignMutation({});
@@ -223,7 +224,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
   );
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
-      productVariantEditUrl(productId, variantId, {
+      productVariantEditUrl(variantId, {
         ...params,
         action: "assign-attribute-value",
         id: attribute.id,
@@ -313,12 +314,12 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productVariantEditUrl(productId, variantId))}
+        onCloseDialog={() => navigate(productVariantEditUrl(variantId))}
         onAttributeSelectBlur={searchAttributeReset}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}
-        onClose={() => navigate(productVariantEditUrl(productId, variantId))}
+        onClose={() => navigate(productVariantEditUrl(variantId))}
         onConfirm={() =>
           deleteVariant({
             variables: {

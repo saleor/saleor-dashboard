@@ -19,16 +19,12 @@ export const VariantItem = ({
   onClick?: () => void;
 }) => {
   return (
-    <Row
-      href={productVariantEditPath(node.product.id, node.id)}
-      className={className}
-      onClick={onClick}
-    >
-      <TypeCell href={productVariantEditPath(node.product.id, node.id)}>
+    <Row href={productVariantEditPath(node.product.id)} className={className} onClick={onClick}>
+      <TypeCell href={productVariantEditPath(node.product.id)}>
         <FormattedMessage id="OK5+Fh" defaultMessage="Variant" />
       </TypeCell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={productVariantEditPath(node.product.id, node.id)}>
+        <LinkCell href={productVariantEditPath(node.id)}>
           <Box display="flex" alignItems="center" gap={5} width="100%">
             <Thumbnail url={node?.media?.[0]?.url} name={node?.name} />
             <Text size={2} fontWeight="medium">
@@ -41,7 +37,7 @@ export const VariantItem = ({
         </LinkCell>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
-        <LinkCell href={productVariantEditPath(node.product.id, node.id)}>
+        <LinkCell href={productVariantEditPath(node.id)}>
           <DisplayDate date={node?.updatedAt} />
         </LinkCell>
       </GridTable.Cell>

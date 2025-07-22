@@ -1,13 +1,12 @@
-// @ts-strict-ignore
 import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { IntlShape } from "react-intl";
 
 export function getErrorMessage(
-  err: AccountErrorFragment | OrderErrorFragment,
+  err: AccountErrorFragment | OrderErrorFragment | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (err?.message) {
     return err.message;
   }

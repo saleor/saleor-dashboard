@@ -38,7 +38,7 @@ export const useInitialGiftCardsState = () => {
           query: _SearchProductOperandsDocument,
           variables: {
             first: products.length,
-            productsIds: products,
+            productSlugs: products,
           },
         }),
       );

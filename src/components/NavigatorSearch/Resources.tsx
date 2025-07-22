@@ -1,10 +1,9 @@
 import Link from "@dashboard/components/Link";
 import { useNavigatorSearchQuery } from "@dashboard/graphql";
+import { ResultsTable } from "@dashboard/search/resultsTable/ResultsTable";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { ResourcesTable } from "./ResourcesTable";
 
 export const Resources = ({
   query,
@@ -46,7 +45,7 @@ export const Resources = ({
           </Text>
         </Box>
       </Link>
-      <ResourcesTable data={data} onResourceClick={onResourceClick} />
+      <ResultsTable data={data} onItemClick={onResourceClick} />
     </Box>
   );
 };

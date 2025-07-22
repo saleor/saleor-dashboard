@@ -1,9 +1,8 @@
-// @ts-strict-ignore
 import { useEffect, useRef, useState } from "react";
 
 function useClipboard(): [boolean, (text: string) => void] {
   const [copied, setCopyStatus] = useState(false);
-  const timeout = useRef(null);
+  const timeout = useRef<null | number>(null);
   const clear = () => {
     if (timeout.current) {
       clearTimeout(timeout.current);
@@ -13,7 +12,8 @@ function useClipboard(): [boolean, (text: string) => void] {
   const copy = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopyStatus(true);
-      timeout.current = setTimeout(() => {
+
+      timeout.current = window.setTimeout(() => {
         clear();
         setCopyStatus(false);
       }, 2000);

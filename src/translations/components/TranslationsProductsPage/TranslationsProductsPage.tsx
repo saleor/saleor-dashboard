@@ -1,9 +1,10 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { LanguageSwitch } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
@@ -13,13 +14,15 @@ import {
 import {
   languageEntitiesUrl,
   languageEntityUrl,
+  productVariantUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ProductContextSwitcher from "../ProductContextSwitcher";
+import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
@@ -43,6 +46,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   onAttributeValueSubmit,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -62,18 +66,29 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           },
         )}
       >
-        <ProductContextSwitcher
-          languageCode={languageCode}
-          productId={productId}
-          selectedId={productId}
-        />
-        <LanguageSwitch
-          currentLanguage={LanguageCodeEnum[languageCode]}
-          languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(lang, TranslatableEntities.products, translationId)
-          }
-        />
+        <Box display="flex" gap={3}>
+          <ProductContextSwitcher
+            productId={productId}
+            selectedId={productId}
+            onItemChange={(id, type) => {
+              if (type === "main") {
+                navigate(languageEntityUrl(languageCode, TranslatableEntities.products, productId));
+              } else if (type === "variant") {
+                navigate(productVariantUrl(languageCode, productId, id));
+              } else {
+                throw new Error("Invalid type, must be main or variant");
+              }
+            }}
+          />
+          <LanguageSwitch
+            currentLanguage={LanguageCodeEnum[languageCode]}
+            languages={languages}
+            onLanguageChange={lang => {
+              // todo save in local storage
+              navigate(languageEntityUrl(lang, TranslatableEntities.products, translationId));
+            }}
+          />
+        </Box>
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields

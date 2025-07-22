@@ -1,8 +1,9 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { LanguageSwitch } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { LanguageCodeEnum, VoucherTranslationFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
@@ -37,6 +38,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   onSubmit,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -59,9 +61,9 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(lang, TranslatableEntities.vouchers, translationId)
-          }
+          onLanguageChange={lang => {
+            navigate(languageEntityUrl(lang, TranslatableEntities.vouchers, translationId));
+          }}
         />
       </TopNav>
       <DetailPageLayout.Content>

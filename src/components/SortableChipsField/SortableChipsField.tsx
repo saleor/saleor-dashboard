@@ -1,90 +1,152 @@
-import { ReorderAction, ReorderEvent } from "@dashboard/types";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
-import { SortableContainerProps } from "react-sortable-hoc";
+import { ReorderAction } from "@dashboard/types";
+import {
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  pointerWithin,
+  UniqueIdentifier,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
+import { SortableContext } from "@dnd-kit/sortable";
+import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import React, { useMemo } from "react";
+import { createPortal } from "react-dom";
 
-import DraggableChip from "../SortableChip";
-import SortableContainer from "./SortableContainer";
-
-const useStyles = makeStyles(
-  theme => ({
-    chip: {
-      background: theme.palette.background.paper,
-      color: theme.palette.primary.dark,
-      marginBottom: theme.spacing(1),
-    },
-    chipHelper: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: 0,
-    },
-    grabbing: {
-      cursor: "grabbing",
-    },
-    errorText: {
-      color: theme.palette.error.light,
-    },
-  }),
-  {
-    name: "SortableChipsField",
-  },
-);
+import { Draggable } from "../Draggable/Draggable";
+import { SortableChip } from "../SortableChip/SortableChip";
+import { useActiveDragId } from "./useActiveDragId";
+import { useSortableDragOver } from "./useSortableDragOver";
 
 export interface SortableChipsFieldValueType {
   label: string;
   value: string;
+  url?: string;
 }
 
-export interface SortableChipsFieldProps extends SortableContainerProps {
+export interface SortableChipsFieldProps {
   loading?: boolean;
+  disabled?: boolean;
   values: SortableChipsFieldValueType[];
   error?: boolean;
   helperText?: string;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
+  onAdd?: () => void;
 }
 
-const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
-  const { loading, values, error, helperText, onValueDelete, onValueReorder } = props;
-  const classes = useStyles(props);
-  const handleSortStart = () => {
-    document.body.classList.add(classes.grabbing);
-  };
-  const handleSortEnd = (event: ReorderEvent) => {
-    document.body.classList.remove(classes.grabbing);
-    onValueReorder(event);
-  };
+/** We cannot use any sorting strategy from @dnd-kit
+ * this is because our layout is dynamic and the library cannot calculate
+ * position of elements. It's explained in this issue:
+ * https://github.com/clauderic/dnd-kit/issues/44#issuecomment-757312037
+ *
+ * We instead rely on updating **actual** order of elements which re-renders page.
+ * Dragged element is displayed as shadow. This works with our flexbox layout.
+ * */
+function disableSortingStrategy() {
+  return null;
+}
+
+const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
+  loading,
+  disabled,
+  values,
+  error,
+  helperText,
+  onValueDelete,
+  onValueReorder,
+  onAdd,
+}) => {
+  const { activeId, handleDragStart, handleDragEnd } = useActiveDragId();
+  const { handleDragOver } = useSortableDragOver({
+    items: values,
+    onReorder: onValueReorder,
+  });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+  );
+
+  const itemIdToValueMap = useMemo(() => {
+    return new Map<UniqueIdentifier, SortableChipsFieldValueType>(
+      (values || []).map(item => [item.value, item]),
+    );
+  }, [values]);
+
+  const activeItem = itemIdToValueMap.get(activeId as UniqueIdentifier);
 
   return (
-    <SortableContainer
-      axis="xy"
-      lockAxis="xy"
-      useDragHandle
-      onSortStart={handleSortStart}
-      onSortEnd={handleSortEnd}
-      helperClass={classes.chipHelper}
-    >
-      <div>
-        {values.map((value, valueIndex) => (
-          <DraggableChip
-            className={classes.chip}
-            loading={loading}
-            disabled={loading}
-            key={valueIndex}
-            index={valueIndex}
-            label={value.label}
-            onClose={() => onValueDelete(value.value)}
-          />
-        ))}
-        {error && (
+    <Box>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={pointerWithin}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragEnd}
+        modifiers={[restrictToFirstScrollableAncestor]}
+      >
+        <SortableContext items={[...itemIdToValueMap.keys()]} strategy={disableSortingStrategy}>
+          <Box display="flex" flexWrap="wrap" gap={2}>
+            <>
+              {values.map(value => (
+                <Draggable key={value.value} id={value.value} disabled={disabled}>
+                  {({ isDragging, ...props }) => (
+                    <SortableChip
+                      label={value.label}
+                      url={value.url}
+                      loading={loading}
+                      onClose={() => onValueDelete(value.value)}
+                      // Overlay is the shadow that appears where element will be dropped
+                      // while dragging
+                      isDraggedOverlay={isDragging}
+                      {...props}
+                    />
+                  )}
+                </Draggable>
+              ))}
+              {onAdd ? (
+                <Button
+                  variant="secondary"
+                  disabled={disabled}
+                  marginLeft="auto"
+                  onClick={onAdd}
+                  icon={<PlusIcon />}
+                />
+              ) : null}
+            </>
+          </Box>
+        </SortableContext>
+        {createPortal(
+          // Note: Ovelay is the element that user holds with mouse while dragging
+          // this is exactly the same element as on the list, except it has no handlers for @dnd-kit
+          // it moves with the cursor
+          <DragOverlay>
+            {activeId && activeItem ? (
+              <SortableChip
+                label={activeItem.label}
+                url={activeItem.url}
+                loading={loading}
+                isDragged
+              />
+            ) : null}
+          </DragOverlay>,
+          document.body,
+        )}
+      </DndContext>
+      {error && (
+        <Box marginTop={2}>
           <Text size={2} color="critical1">
             {helperText}
           </Text>
-        )}
-      </div>
-    </SortableContainer>
+        </Box>
+      )}
+    </Box>
   );
 };
 
