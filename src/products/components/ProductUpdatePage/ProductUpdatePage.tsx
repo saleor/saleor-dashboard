@@ -41,6 +41,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { maybe } from "@dashboard/misc";
 import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
@@ -52,7 +53,7 @@ import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Box, Button, Divider, Option, TranslationsIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
