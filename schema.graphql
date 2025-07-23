@@ -6217,6 +6217,7 @@ enum AttributeInputTypeEnum @doc(category: "Attributes") {
   MULTISELECT
   FILE
   REFERENCE
+  SINGLE_REFERENCE
   NUMERIC
   RICH_TEXT
   PLAIN_TEXT
@@ -13033,6 +13034,42 @@ input AttributeValuePageInput {
 
   """Filter by boolean value for attributes of boolean type."""
   boolean: Boolean
+
+  """Filter by reference attribute value."""
+  reference: ReferenceAttributeWhereInput
+}
+
+input ReferenceAttributeWhereInput {
+  """
+  Returns objects with a reference pointing to an object identified by the given ID.
+  """
+  referencedIds: ContainsFilterInput
+
+  """
+  Returns objects with a reference pointing to a page identified by the given slug.
+  """
+  pageSlugs: ContainsFilterInput
+
+  """
+  Returns objects with a reference pointing to a product identified by the given slug.
+  """
+  productSlugs: ContainsFilterInput
+
+  """
+  Returns objects with a reference pointing to a product variant identified by the given sku.
+  """
+  productVariantSkus: ContainsFilterInput
+}
+
+"""
+Define the filtering options for fields that can contain multiple values.
+"""
+input ContainsFilterInput {
+  """The field contains at least one of the specified values."""
+  containsAny: [String!]
+
+  """The field contains all of the specified values."""
+  containsAll: [String!]
 }
 
 type PageTypeCountableConnection @doc(category: "Pages") {
@@ -13219,23 +13256,31 @@ input OrderWhereInput @doc(category: "Orders") {
   """Filter by whether the order has any invoices."""
   hasInvoices: Boolean
 
-  """Filter by invoice data associated with the order."""
-  invoices: InvoiceFilterInput
+  """
+  Filter by invoice data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions.
+  """
+  invoices: [InvoiceFilterInput!]
 
   """Filter by whether the order has any fulfillments."""
   hasFulfillments: Boolean
 
-  """Filter by fulfillment data associated with the order."""
-  fulfillments: FulfillmentFilterInput
+  """
+  Filter by fulfillment data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions.
+  """
+  fulfillments: [FulfillmentFilterInput!]
 
-  """Filter by metadata fields of order lines."""
-  lines: LinesFilterInput
+  """
+  Filter by line items associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions.
+  """
+  lines: [LinesFilterInput!]
 
   """Filter by number of lines in the order."""
   linesCount: IntFilterInput
 
-  """Filter by transaction data associated with the order."""
-  transactions: TransactionFilterInput
+  """
+  Filter by transaction data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions.
+  """
+  transactions: [TransactionFilterInput!]
 
   """Filter by total gross amount of the order."""
   totalGross: PriceFilterInput
@@ -13246,8 +13291,10 @@ input OrderWhereInput @doc(category: "Orders") {
   """Filter by the product type of related order lines."""
   productTypeId: GlobalIDFilterInput
 
-  """Filter by order events."""
-  events: OrderEventFilterInput
+  """
+  Filter by order events. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions.
+  """
+  events: [OrderEventFilterInput!]
 
   """Filter by billing address of the order."""
   billingAddress: AddressFilterInput
@@ -13472,14 +13519,18 @@ input DraftOrderWhereInput @doc(category: "Orders") {
   """Filter by voucher code used in the order."""
   voucherCode: StringFilterInput
 
-  """Filter by metadata fields of order lines."""
-  lines: LinesFilterInput
+  """
+  Filter by line items associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions.
+  """
+  lines: [LinesFilterInput!]
 
   """Filter by number of lines in the order."""
   linesCount: IntFilterInput
 
-  """Filter by transaction data associated with the order."""
-  transactions: TransactionFilterInput
+  """
+  Filter by transaction data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions.
+  """
+  transactions: [TransactionFilterInput!]
 
   """Filter by total gross amount of the order."""
   totalGross: PriceFilterInput
@@ -13490,8 +13541,10 @@ input DraftOrderWhereInput @doc(category: "Orders") {
   """Filter by the product type of related order lines."""
   productTypeId: GlobalIDFilterInput
 
-  """Filter by order events."""
-  events: OrderEventFilterInput
+  """
+  Filter by order events. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions.
+  """
+  events: [OrderEventFilterInput!]
 
   """Filter by billing address of the order."""
   billingAddress: AddressFilterInput
@@ -21500,6 +21553,13 @@ input AttributeValueInput @doc(category: "Attributes") {
   """File content type."""
   contentType: String
 
+  """
+  ID of the referenced entity for single reference attribute.
+  
+  Added in Saleor 3.22.
+  """
+  reference: ID
+
   """List of entity IDs that will be used as references."""
   references: [ID!]
 
@@ -21804,6 +21864,13 @@ input BulkAttributeValueInput @doc(category: "Products") {
 
   """File content type."""
   contentType: String
+
+  """
+  ID of the referenced entity for single reference attribute.
+  
+  Added in Saleor 3.22.
+  """
+  reference: ID
 
   """List of entity IDs that will be used as references."""
   references: [ID!]
