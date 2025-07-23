@@ -1,4 +1,6 @@
 import { useNavigatorSearchQuery } from "@dashboard/graphql";
+import { ListSkeleton } from "@dashboard/search/resultsTable/ListSkeleton";
+import { prepareResults } from "@dashboard/search/resultsTable/prepareResults";
 import { ResultsTable } from "@dashboard/search/resultsTable/ResultsTable";
 import React from "react";
 
@@ -19,8 +21,12 @@ export const ResourcesTable = ({
   });
 
   if (!data) {
-    return null;
+    return <ListSkeleton />;
   }
 
-  return <ResultsTable data={data} onItemClick={onResourceClick} />;
+  const results = prepareResults(data);
+
+  if (results.empty) return null;
+
+  return <ResultsTable data={results} onItemClick={onResourceClick} />;
 };

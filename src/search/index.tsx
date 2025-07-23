@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "../components/WindowTitle";
 import { SearchForm } from "./form";
 import { ListSkeleton } from "./resultsTable/ListSkeleton";
+import { ResultsList } from "./resultsTable/ResultsList";
 import { ResultsTable } from "./resultsTable/ResultsTable";
 import { SearchHistory } from "./SearchHistory";
 import { useHistoryCriteria } from "./useHistoryCriteria";
@@ -62,7 +63,7 @@ const Component = () => {
             query={query}
           />
           {displaySkeleton && <ListSkeleton />}
-          {displayResults && <ResultsTable data={data} />}
+          {displayResults && <ResultsList data={data} />}
           {displayHistory && (
             <SearchHistory
               history={history}

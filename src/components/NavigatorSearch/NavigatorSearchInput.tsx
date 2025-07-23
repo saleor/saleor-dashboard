@@ -17,7 +17,14 @@ const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) =>
   };
 
   return (
-    <Box display="flex" padding={4} height={12}>
+    <Box
+      display="flex"
+      padding={4}
+      __height="50px"
+      borderBottomWidth={1}
+      borderBottomStyle="solid"
+      borderColor="default1"
+    >
       <SearchIcon
         size="small"
         className={sprinkles({

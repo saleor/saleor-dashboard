@@ -21,8 +21,14 @@ const useInput = () => {
     container.current.setAttribute("aria-activedescendant", id);
   };
 
+  const resetInput = () => {
+    if (!container.current) return;
+
+    container.current.value = null;
+  };
+
   return {
-    container,
+    resetInput,
     updateAriaActiveDescendant,
   };
 };
@@ -118,7 +124,7 @@ const useActionItems = () => {
 
 export const useKeyboardNavigation = () => {
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
-  const { updateAriaActiveDescendant } = useInput();
+  const { updateAriaActiveDescendant, resetInput } = useInput();
   const {
     resetFocus,
     collectLinks,
@@ -172,6 +178,8 @@ export const useKeyboardNavigation = () => {
     if (e.key === "Enter") {
       setNavigatorVisibility(false);
       takeAction();
+      resetFocus();
+      resetInput();
     }
   };
 
