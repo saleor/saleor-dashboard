@@ -16,10 +16,13 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Option } from "@saleor/macaw-ui-next";
+import { Button, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -98,6 +101,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   allChannels,
 }) => {
   const intl = useIntl();
+  const { locale } = useLocale();
   const navigate = useNavigator();
   const initialForm = getInitialFormData(shippingZone);
   const warehouseChoices = warehouses.map(warehouseToChoice);
@@ -114,7 +118,21 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={shippingZonesListBackLink} title={shippingZone?.name} />
+            <TopNav href={shippingZonesListBackLink} title={shippingZone?.name}>
+              <Button
+                variant="secondary"
+                icon={<TranslationsIcon />}
+                onClick={() =>
+                  navigate(
+                    languageEntityUrl(
+                      locale.toLocaleUpperCase(),
+                      TranslatableEntities.shippingMethods,
+                      shippingZone?.id,
+                    ),
+                  )
+                }
+              />
+            </TopNav>
             <DetailPageLayout.Content>
               <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
