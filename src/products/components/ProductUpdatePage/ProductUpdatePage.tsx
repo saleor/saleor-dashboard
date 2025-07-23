@@ -38,7 +38,6 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
@@ -52,6 +51,7 @@ import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/product
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Button, Divider, Option } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -167,7 +167,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
-  const { locale } = useLocale();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
   const [selectedCategory, setSelectedCategory] = useStateFromProps(product?.category?.name || "");
@@ -301,7 +301,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 variant="secondary"
                 icon={<TranslationsIcon />}
                 onClick={() =>
-                  navigate(createTranslateProductUrl(locale.toLocaleUpperCase(), productId))
+                  navigate(createTranslateProductUrl(lastUsedLocaleOrFallback, productId))
                 }
               />
               <TopNav.Menu

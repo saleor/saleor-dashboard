@@ -31,13 +31,13 @@ import {
   SearchProductsQuery,
   SearchWarehousesQuery,
 } from "@dashboard/graphql";
-import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
 import { productVariantUrl } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Button } from "@saleor/macaw-ui-next";
@@ -170,7 +170,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   searchWarehousesResult,
 }) => {
   const intl = useIntl();
-  const { locale } = useLocale();
+
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
   const [isModalOpened, setModalStatus] = React.useState(false);
@@ -216,7 +217,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           variant="secondary"
           icon={<TranslationsIcon />}
           onClick={() =>
-            navigate(productVariantUrl(locale.toLocaleUpperCase(), productId, variant?.id))
+            navigate(productVariantUrl(lastUsedLocaleOrFallback, productId, variant?.id))
           }
         />
       </TopNav>
