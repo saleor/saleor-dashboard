@@ -65,6 +65,14 @@
           }
         ]
       }
+    },{
+      "files": ["vite.config.js"],
+      "rules": {
+        "no-console": "off"
+      },
+      "env": {
+        "node": true
+      }
     }
   ],
   "rules": {
