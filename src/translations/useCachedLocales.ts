@@ -1,4 +1,5 @@
 import { LanguageCodeEnum } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 
 export class CachedLocalesStack {
@@ -22,6 +23,11 @@ export class CachedLocalesStack {
       this.members.delete(firstItem);
       this.members.add(member);
     } else {
+      // push to front - delete first so we can add it again
+      if (this.members.has(member)) {
+        this.members.delete(member);
+      }
+
       this.members.add(member);
     }
 
@@ -30,13 +36,17 @@ export class CachedLocalesStack {
 }
 
 export const useCachedLocales = () => {
+  const { locale } = useLocale();
   const [cachedValues, setValues] = useLocalStorage<LanguageCodeEnum[]>(
     "cachedTranslationLocales",
     [],
   );
 
+  const reversedValues = [...cachedValues].reverse();
+
   return {
-    cachedValues: [...cachedValues].reverse(),
+    lastUsedLocaleOrFallback: reversedValues[0]?.toUpperCase() ?? locale.toUpperCase(),
+    cachedValues: reversedValues,
     pushValue(code: LanguageCodeEnum) {
       setValues(current => {
         const stack = new CachedLocalesStack(current);

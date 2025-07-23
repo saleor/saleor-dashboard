@@ -38,7 +38,6 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
@@ -51,10 +50,8 @@ import { productImageUrl, productListPath, productListUrl } from "@dashboard/pro
 import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
-import {
-  productUrl as createTranslateProductUrl,
-  productVariantUrl,
-} from "@dashboard/translations/urls";
+import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Button, Divider, Option } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -170,7 +167,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
-  const { locale } = useLocale();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
   const [selectedCategory, setSelectedCategory] = useStateFromProps(product?.category?.name || "");
@@ -304,7 +301,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 variant="secondary"
                 icon={<TranslationsIcon />}
                 onClick={() =>
-                  navigate(createTranslateProductUrl(locale.toLocaleUpperCase(), productId))
+                  navigate(createTranslateProductUrl(lastUsedLocaleOrFallback, productId))
                 }
               />
               <TopNav.Menu
@@ -365,9 +362,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onAttributeValuesSearch={onAttributeValuesSearch}
                 onChange={handlers.changeVariants}
                 onRowClick={onVariantShow}
-                onTranslateRequest={id => {
-                  navigate(productVariantUrl(locale.toUpperCase(), product?.id, id));
-                }}
               />
               <CardSpacer />
               <SeoForm

@@ -21,10 +21,10 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Box, Button as MacawNextButton, Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -68,7 +68,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
-  const { locale } = useLocale();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
 
   const collectionListBackLink = useBackLinkWithState({
@@ -100,7 +100,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               onClick={() =>
                 navigate(
                   languageEntityUrl(
-                    locale.toLocaleUpperCase(),
+                    lastUsedLocaleOrFallback,
                     TranslatableEntities.collections,
                     collection.id,
                   ),

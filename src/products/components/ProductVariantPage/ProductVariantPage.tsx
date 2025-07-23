@@ -32,11 +32,15 @@ import {
   SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
+import { productVariantUrl } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -166,6 +170,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   searchWarehousesResult,
 }) => {
   const intl = useIntl();
+
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
   const [isModalOpened, setModalStatus] = React.useState(false);
@@ -203,8 +209,17 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav href={productUrl(productId)} title={header}>
         {variant?.product?.defaultVariant?.id !== variant?.id && (
-          <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
+          <Box marginRight={3}>
+            <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
+          </Box>
         )}
+        <Button
+          variant="secondary"
+          icon={<TranslationsIcon />}
+          onClick={() =>
+            navigate(productVariantUrl(lastUsedLocaleOrFallback, productId, variant?.id))
+          }
+        />
       </TopNav>
       <DetailPageLayout.Content>
         <ProductVariantUpdateForm
