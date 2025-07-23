@@ -11,9 +11,11 @@ export enum TranslatableEntities {
   collections = "collections",
   sales = "sales",
   vouchers = "vouchers",
+  // This is "pages" now
   pages = "pages",
   attributes = "attributes",
   shippingMethods = "shippingMethods",
+  //  This is "structures" now
   menuItems = "menuItems",
 }
 
