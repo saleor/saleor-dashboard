@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { LanguageSwitch } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
+import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { LanguageCodeEnum, VoucherTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -58,7 +58,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
           },
         )}
       >
-        <LanguageSwitch
+        <LanguageSwitchWithCaching
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
           onLanguageChange={lang => {
