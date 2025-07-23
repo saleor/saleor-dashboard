@@ -51,7 +51,10 @@ import { productImageUrl, productListPath, productListUrl } from "@dashboard/pro
 import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
-import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
+import {
+  productUrl as createTranslateProductUrl,
+  productVariantUrl,
+} from "@dashboard/translations/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Button, Divider, Option } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -362,6 +365,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 onAttributeValuesSearch={onAttributeValuesSearch}
                 onChange={handlers.changeVariants}
                 onRowClick={onVariantShow}
+                onTranslateRequest={id => {
+                  navigate(productVariantUrl(locale.toUpperCase(), product?.id, id));
+                }}
               />
               <CardSpacer />
               <SeoForm

@@ -35,6 +35,7 @@ export interface MenuDetailsPageProps {
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
+  onTranslate: (id: string) => void;
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
@@ -48,8 +49,10 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onItemClick,
   onItemEdit,
   onSubmit,
+  onTranslate,
 }) => {
   const navigate = useNavigator();
+
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
   };
@@ -97,6 +100,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               onItemAdd={onItemAdd}
               onItemClick={onItemClick}
               onItemEdit={onItemEdit}
+              onTranslate={onTranslate}
               onUndo={() =>
                 setTreeOperations(operations => {
                   if (operations.length > 1) {

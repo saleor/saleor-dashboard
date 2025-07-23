@@ -1,4 +1,3 @@
-// import { isLimitReached } from "@dashboard/utils/limits";
 import { ChannelData } from "@dashboard/channels/utils";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
@@ -13,6 +12,7 @@ import {
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import EditIcon from "@dashboard/icons/Edit";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -44,6 +44,7 @@ interface ProductVariantsProps {
   onAttributeValuesSearch: (id: string, query: string) => Promise<Option[]>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
+  onTranslateRequest: (id: string) => void;
 }
 
 export const ProductVariants: React.FC<ProductVariantsProps> = ({
@@ -56,6 +57,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   onAttributeValuesSearch,
   onChange,
   onRowClick,
+  onTranslateRequest,
 }) => {
   const intl = useIntl();
 
@@ -189,6 +191,11 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
           label: "Edit Variant",
           onSelect: () => onRowClick(variants[index].id),
           Icon: <EditIcon />,
+        },
+        {
+          label: "Translate Variant",
+          onSelect: () => onTranslateRequest(variants[index].id),
+          Icon: <TranslationsIcon />,
         },
       ]}
       rows={variants?.length ?? 0}
