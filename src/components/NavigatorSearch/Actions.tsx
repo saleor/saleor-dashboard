@@ -7,7 +7,7 @@ import { pageTypeAddPath, pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
 const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
@@ -220,9 +220,10 @@ const allActions = [
 interface ActionsProps {
   query: string;
   onActionClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onActionsLoaded: () => void;
 }
 
-export const Actions = ({ query, onActionClick }: ActionsProps) => {
+export const Actions = ({ query, onActionClick, onActionsLoaded }: ActionsProps) => {
   const searchResults = fuzzySearch(allActions, query, ["name"]);
 
   // @ts-expect-error - Old types for nodejs that does not have "groupBy"
@@ -234,6 +235,8 @@ export const Actions = ({ query, onActionClick }: ActionsProps) => {
       }>;
     }[]
   >;
+
+  useEffect(onActionsLoaded, [query]);
 
   return (
     <Box>

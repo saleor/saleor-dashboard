@@ -11,9 +11,9 @@ const NAVIGATION_KEYS = ["Tab", "ArrowDown", "ArrowUp"];
 const useInput = () => {
   const container = useRef<HTMLInputElement | null>(null);
 
-  const attach = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    container.current = e.currentTarget.querySelector("input") as HTMLInputElement;
-  };
+  useEffect(() => {
+    container.current = document.getElementById("navigator-search-input") as HTMLInputElement;
+  }, []);
 
   const updateAriaActiveDescendant = (id: string) => {
     if (!container.current) return;
@@ -23,7 +23,6 @@ const useInput = () => {
 
   return {
     container,
-    attach,
     updateAriaActiveDescendant,
   };
 };
@@ -33,9 +32,18 @@ const useActionItems = () => {
   const items = useRef<HTMLElement[]>([]);
   const currentFocusIndex = useRef<number | undefined>(undefined);
 
-  const attach = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    items.current = Array.from(e.currentTarget.querySelectorAll(".command-menu-item"));
+  const collectLinks = () => {
+    const elements = document.querySelectorAll(".command-menu-item");
+
+    items.current.push(...(Array.from(elements) as HTMLElement[]));
   };
+
+  const collectTableRows = () => {
+    const elements = document.querySelectorAll(".command-menu tr");
+
+    items.current.push(...(Array.from(elements) as HTMLElement[]));
+  };
+
   const focusElement = (index: number, value: boolean) => {
     const element = items.current[index];
 
@@ -58,14 +66,21 @@ const useActionItems = () => {
   const focusPrevious = () => {
     if (typeof currentFocusIndex.current === "undefined") return;
 
+    if (currentFocusIndex.current === 0) return;
+
     focusElement(currentFocusIndex.current, false);
     currentFocusIndex.current = (currentFocusIndex.current - 1) % items.current.length;
     focusElement(currentFocusIndex.current, true);
   };
 
-  const resetFocus = () => {
+  const focusFirst = () => {
     currentFocusIndex.current = 0;
     focusElement(currentFocusIndex.current, true);
+  };
+
+  const resetFocus = () => {
+    currentFocusIndex.current = undefined;
+    items.current = [];
   };
 
   const hasAnyFocus = () => {
@@ -89,11 +104,13 @@ const useActionItems = () => {
   };
 
   return {
-    attach,
+    resetFocus,
+    collectLinks,
+    collectTableRows,
     focusNext,
     focusPrevious,
     hasAnyFocus,
-    resetFocus,
+    focusFirst,
     getActiveFocusedElement,
     takeAction,
   };
@@ -101,11 +118,13 @@ const useActionItems = () => {
 
 export const useKeyboardNavigation = () => {
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
-  const { attach: attachInput, updateAriaActiveDescendant } = useInput();
+  const { updateAriaActiveDescendant } = useInput();
   const {
-    attach: attachActionsItems,
-    hasAnyFocus,
     resetFocus,
+    collectLinks,
+    collectTableRows,
+    hasAnyFocus,
+    focusFirst,
     focusNext,
     focusPrevious,
     getActiveFocusedElement,
@@ -122,14 +141,11 @@ export const useKeyboardNavigation = () => {
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    attachInput(e);
-    attachActionsItems(e);
-
     if (NAVIGATION_KEYS.includes(e.key)) {
       e.preventDefault();
 
       if (!hasAnyFocus()) {
-        resetFocus();
+        focusFirst();
 
         const activeFocusedElement = getActiveFocusedElement();
 
@@ -159,9 +175,17 @@ export const useKeyboardNavigation = () => {
     }
   };
 
+  const closeCommandMenu = () => {
+    setNavigatorVisibility(false);
+    resetFocus();
+  };
+
   return {
+    resetFocus,
+    collectLinks,
+    collectTableRows,
     handleKeyDown,
-    closeCommandMenu: () => setNavigatorVisibility(false),
+    closeCommandMenu,
     isCommandMenuOpen: isNavigatorVisible,
   };
 };

@@ -121,3 +121,7 @@ a.command-menu-item {
 .command-menu-item[data-focus="true"] {
   background-color: var(--mu-colors-background-default1-hovered) !important;
 }
+
+.command-menu tr[data-focus="true"] {
+  background-color: var(--mu-colors-background-default1-hovered) !important;
+}

@@ -26,6 +26,7 @@ const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) =>
         })}
       />
       <Box
+        id="navigator-search-input"
         as="input"
         role="input"
         autoFocus
