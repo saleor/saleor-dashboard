@@ -37,7 +37,7 @@ const NavigatorSearch: React.FC = () => {
         className="command-menu"
         overflowY="hidden"
       >
-        <HotkeysProvider initiallyActiveScopes={["command-menu-no-focus"]}>
+        <HotkeysProvider initiallyActiveScopes={["command-menu"]}>
           <CommandContent />
         </HotkeysProvider>
       </DashboardModal.Content>

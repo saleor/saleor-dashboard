@@ -1,4 +1,6 @@
+import { attributeAddUrl, attributeListUrl } from "@dashboard/attributes/urls";
 import { categoryAddUrl, categoryListUrl } from "@dashboard/categories/urls";
+import { channelAddUrl, channelsListUrl } from "@dashboard/channels/urls";
 import { collectionAddUrl, collectionListUrl } from "@dashboard/collections/urls";
 import Link from "@dashboard/components/Link";
 import { fuzzySearch } from "@dashboard/misc";
@@ -6,6 +8,8 @@ import { pageCreateUrl, pageListUrl } from "@dashboard/modeling/urls";
 import { pageTypeAddPath, pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { shippingZoneAddUrl, shippingZonesListUrl } from "@dashboard/shipping/urls";
+import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
@@ -211,6 +215,126 @@ const allActions = [
       <Box onClick={onClick}>
         <ActionLinkItem href={pageTypeListUrl()}>
           <FormattedMessage id="5nrCxC" defaultMessage="Go to model types" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Configuration",
+    name: "Go to model attributes",
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={attributeListUrl()}>
+          <FormattedMessage id="LLS4re" defaultMessage="Go to attributes" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Configuration",
+    name: "Create new attribute",
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={attributeAddUrl()}>
+          <FormattedMessage id="5FSIZp" defaultMessage="Create new attribute" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Configuration",
+    name: "Go to channels",
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={channelsListUrl()}>
+          <FormattedMessage id="HwTMFL" defaultMessage="Go to channels" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Configuration",
+    name: "Go to channels",
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={channelAddUrl}>
+          <FormattedMessage id="Nuq83+" defaultMessage="Create new channel" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Configuration",
+    name: "Go to warehouses",
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={warehouseListUrl()}>
+          <FormattedMessage id="wFVOKJ" defaultMessage="Go to warehouses" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Configuration",
+    name: "Create new warehouse",
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={warehouseAddUrl}>
+          <FormattedMessage id="LVtwcF" defaultMessage="Create new warehouse" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Configuration",
+    name: "Go to shipping zones",
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={shippingZonesListUrl()}>
+          <FormattedMessage id="tIc6ZH" defaultMessage="Go to shipping methods" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: "Configuration",
+    name: "Create new shipping zone",
+    Component: ({
+      onClick,
+    }: {
+      onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={shippingZoneAddUrl}>
+          <FormattedMessage id="P4Hja1" defaultMessage="Create new shipping zone" />
         </ActionLinkItem>
       </Box>
     ),

@@ -1,7 +1,7 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { globalSearchUrl } from "@dashboard/search/urls";
 import { useEffect, useRef } from "react";
-import { useHotkeys, useHotkeysContext } from "react-hotkeys-hook";
+import { useHotkeys } from "react-hotkeys-hook";
 
 import { useActionItems } from "./useActionItems";
 import { useInput } from "./useInput";
@@ -12,18 +12,7 @@ const hotkeysSettings = {
   scopes: ["command-menu"],
 };
 
-const hotkeysSettingsNoFocus = {
-  enableOnFormTags: true,
-  scopes: ["command-menu-no-focus"],
-};
-
-const hotkeysSettingsViewAllResults = {
-  enableOnFormTags: true,
-  scopes: ["command-menu", "command-menu-no-focus"],
-};
-
 export const useKeyboardNavigation = ({ query }: { query: string }) => {
-  const { toggleScope, disableScope } = useHotkeysContext();
   const navigate = useNavigator();
 
   const scope = useRef<HTMLDivElement | null>(null);
@@ -33,7 +22,6 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
     resetFocus,
     collectLinks,
     collectTableRows,
-    hasAnyFocus,
     focusFirst,
     focusNext,
     focusPrevious,
@@ -41,28 +29,15 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
     takeAction,
   } = useActionItems();
 
-  useHotkeys(
-    "up, down, tab",
-    event => {
-      event.preventDefault();
+  useEffect(() => {
+    focusFirst();
 
-      if (hasAnyFocus()) return;
+    const activeFocusedElement = getActiveFocusedElement();
 
-      focusFirst();
-
-      const activeFocusedElement = getActiveFocusedElement();
-
-      if (activeFocusedElement) {
-        updateAriaActiveDescendant(activeFocusedElement.id);
-      }
-
-      disableScope("command-menu-no-focus");
-      toggleScope("command-menu");
-
-      return false;
-    },
-    hotkeysSettingsNoFocus,
-  );
+    if (activeFocusedElement) {
+      updateAriaActiveDescendant(activeFocusedElement.id);
+    }
+  }, [query]);
 
   useHotkeys(
     "tab",
@@ -108,7 +83,7 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
 
       return false;
     },
-    hotkeysSettingsViewAllResults,
+    hotkeysSettings,
   );
 
   useHotkeys(
@@ -118,8 +93,6 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
       takeAction();
       resetInput();
 
-      disableScope("command-menu");
-      toggleScope("command-menu-no-focus");
       setNavigatorVisibility(false);
 
       return false;
