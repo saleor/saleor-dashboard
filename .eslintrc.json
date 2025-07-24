@@ -54,6 +54,7 @@
         "src/**/*.stories.*"
       ],
       "rules": {
+        "@typescript-eslint/no-empty-function": "off",
         "react-hooks/rules-of-hooks": "off",
         "import/no-anonymous-default-export": "off",
         "storybook/await-interactions": "error",
