@@ -379,6 +379,41 @@ export enum AreaUnitsEnum {
   SQ_YD = 'SQ_YD'
 }
 
+export type AssignedAttributeReferenceInput = {
+  /** Returns objects with a reference pointing to a page identified by the given slug. */
+  pageSlugs?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to a product identified by the given slug. */
+  productSlugs?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to a product variant identified by the given sku. */
+  productVariantSkus?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to an object identified by the given ID. */
+  referencedIds?: InputMaybe<ContainsFilterInput>;
+};
+
+export type AssignedAttributeValueInput = {
+  /** Filter by boolean value for attributes of boolean type. */
+  boolean?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by date value for attributes of date type. */
+  date?: InputMaybe<DateRangeInput>;
+  /** Filter by date time value for attributes of date time type. */
+  dateTime?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by name assigned to AttributeValue. */
+  name?: InputMaybe<StringFilterInput>;
+  /** Filter by numeric value for attributes of numeric type. */
+  numeric?: InputMaybe<DecimalFilterInput>;
+  /** Filter by reference attribute value. */
+  reference?: InputMaybe<AssignedAttributeReferenceInput>;
+  /** Filter by slug assigned to AttributeValue. */
+  slug?: InputMaybe<StringFilterInput>;
+};
+
+export type AssignedAttributeWhereInput = {
+  /** Filter by attribute slug. */
+  slug?: InputMaybe<Scalars['String']>;
+  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. */
+  value?: InputMaybe<AssignedAttributeValueInput>;
+};
+
 export enum AttributeBulkCreateErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   BLANK = 'BLANK',
@@ -560,13 +595,6 @@ export type AttributeInputTypeEnumFilterInput = {
   oneOf?: InputMaybe<Array<AttributeInputTypeEnum>>;
 };
 
-export type AttributePageWhereInput = {
-  /** Filter by attribute slug. */
-  slug: Scalars['String'];
-  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. */
-  value?: InputMaybe<AttributeValuePageInput>;
-};
-
 export enum AttributeSortField {
   /** Sort attributes based on whether they can be displayed or not in a product grid. */
   AVAILABLE_IN_GRID = 'AVAILABLE_IN_GRID',
@@ -723,23 +751,6 @@ export type AttributeValueInput = {
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
   /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: InputMaybe<Array<Scalars['String']>>;
-};
-
-export type AttributeValuePageInput = {
-  /** Filter by boolean value for attributes of boolean type. */
-  boolean?: InputMaybe<Scalars['Boolean']>;
-  /** Filter by date value for attributes of date type. */
-  date?: InputMaybe<DateRangeInput>;
-  /** Filter by date time value for attributes of date time type. */
-  dateTime?: InputMaybe<DateTimeRangeInput>;
-  /** Filter by name assigned to AttributeValue. */
-  name?: InputMaybe<StringFilterInput>;
-  /** Filter by numeric value for attributes of numeric type. */
-  numeric?: InputMaybe<DecimalFilterInput>;
-  /** Filter by reference attribute value. */
-  reference?: InputMaybe<ReferenceAttributeWhereInput>;
-  /** Filter by slug assigned to AttributeValue. */
-  slug?: InputMaybe<StringFilterInput>;
 };
 
 /**
@@ -4887,7 +4898,7 @@ export type PageWhereInput = {
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<PageWhereInput>>;
   /** Filter by attributes associated with the page. */
-  attributes?: InputMaybe<Array<AttributePageWhereInput>>;
+  attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   /** Filter by metadata fields. */
   metadata?: InputMaybe<MetadataFilterInput>;
@@ -6348,17 +6359,6 @@ export type PublishableChannelListingInput = {
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type ReferenceAttributeWhereInput = {
-  /** Returns objects with a reference pointing to a page identified by the given slug. */
-  pageSlugs?: InputMaybe<ContainsFilterInput>;
-  /** Returns objects with a reference pointing to a product identified by the given slug. */
-  productSlugs?: InputMaybe<ContainsFilterInput>;
-  /** Returns objects with a reference pointing to a product variant identified by the given sku. */
-  productVariantSkus?: InputMaybe<ContainsFilterInput>;
-  /** Returns objects with a reference pointing to an object identified by the given ID. */
-  referencedIds?: InputMaybe<ContainsFilterInput>;
 };
 
 export type ReorderInput = {
