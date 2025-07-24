@@ -25,10 +25,14 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { modelingSection } from "@dashboard/modeling/urls";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -92,6 +96,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
+  const { locale } = useLocale();
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();
   const pageExists = page !== null;
@@ -147,7 +152,21 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             <TopNav
               href={pageListBackLink}
               title={!pageExists ? intl.formatMessage(messages.title) : page?.title}
-            />
+            >
+              <Button
+                variant="secondary"
+                icon={<TranslationsIcon />}
+                onClick={() =>
+                  navigate(
+                    languageEntityUrl(
+                      locale.toLocaleUpperCase(),
+                      TranslatableEntities.pages,
+                      page?.id,
+                    ),
+                  )
+                }
+              />
+            </TopNav>
             <DetailPageLayout.Content>
               <PageInfo data={data} disabled={loading} errors={errors} onChange={change} />
               <CardSpacer />

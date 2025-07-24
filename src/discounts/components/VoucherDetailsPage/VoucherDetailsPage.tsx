@@ -28,11 +28,14 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
+import useLocale from "@dashboard/hooks/useLocale";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -175,6 +178,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   voucherCodesSettings,
 }) => {
   const intl = useIntl();
+  const { locale } = useLocale();
   const navigate = useNavigator();
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
@@ -240,7 +244,21 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={voucherListBackLink} title={voucher?.name} />
+            <TopNav href={voucherListBackLink} title={voucher?.name}>
+              <Button
+                variant="secondary"
+                icon={<TranslationsIcon />}
+                onClick={() =>
+                  navigate(
+                    languageEntityUrl(
+                      locale.toLocaleUpperCase(),
+                      TranslatableEntities.vouchers,
+                      voucher?.id,
+                    ),
+                  )
+                }
+              />
+            </TopNav>
             <DetailPageLayout.Content>
               <VoucherInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <VoucherCodes

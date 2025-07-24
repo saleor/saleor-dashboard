@@ -16,7 +16,11 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -59,6 +63,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
+  const { locale } = useLocale();
   const navigate = useNavigator();
 
   const collectionListBackLink = useBackLinkWithState({
@@ -75,7 +80,21 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav href={collectionListBackLink} title={collection?.name} />
+          <TopNav href={collectionListBackLink} title={collection?.name}>
+            <Button
+              variant="secondary"
+              icon={<TranslationsIcon />}
+              onClick={() =>
+                navigate(
+                  languageEntityUrl(
+                    locale.toLocaleUpperCase(),
+                    TranslatableEntities.collections,
+                    collection.id,
+                  ),
+                )
+              }
+            />
+          </TopNav>
           <DetailPageLayout.Content>
             <CollectionDetails data={data} disabled={disabled} errors={errors} onChange={change} />
             <CollectionImage

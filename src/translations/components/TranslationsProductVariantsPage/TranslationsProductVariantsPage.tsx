@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch";
 import { LanguageCodeEnum, ProductVariantTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -12,6 +12,7 @@ import {
 } from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,
+  languageEntityUrl,
   productVariantUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
@@ -66,11 +67,17 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         )}
       >
         <ProductContextSwitcher
-          languageCode={languageCode}
           productId={productId}
           selectedId={variantId}
+          onItemChange={(id, type) => {
+            if (type === "variant") {
+              navigate(productVariantUrl(languageCode, productId, id));
+            } else {
+              navigate(languageEntityUrl(languageCode, TranslatableEntities.products, productId));
+            }
+          }}
         />
-        <LanguageSwitch
+        <LanguageSwitchWithCaching
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
           onLanguageChange={lang => navigate(productVariantUrl(lang, productId, translationId))}
