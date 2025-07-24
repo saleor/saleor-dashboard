@@ -19,8 +19,8 @@ export const VariantItem = ({
   onClick?: () => void;
 }) => {
   return (
-    <Row href={productVariantEditPath(node.product.id)} className={className} onClick={onClick}>
-      <TypeCell href={productVariantEditPath(node.product.id)}>
+    <Row href={productVariantEditPath(node.id)} className={className} onClick={onClick}>
+      <TypeCell href={productVariantEditPath(node.id)}>
         <FormattedMessage id="OK5+Fh" defaultMessage="Variant" />
       </TypeCell>
       <GridTable.Cell __height="inherit" padding={0}>
