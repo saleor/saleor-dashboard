@@ -11,7 +11,7 @@ import { grantRefundPageMessages } from "../messages";
 
 interface ShippingIncludedProps {
   currency: string;
-  amount: IMoney;
+  amount?: IMoney;
   canRefundShipping: boolean;
 }
 
@@ -33,7 +33,7 @@ export const ShippingIncluded = ({
         data-test-id="refundShippingCheckbox"
         disabled={!currency || !canRefundShipping}
       >
-        {!currency ? (
+        {!currency || !amount ? (
           <Skeleton />
         ) : (
           <FormattedMessage
