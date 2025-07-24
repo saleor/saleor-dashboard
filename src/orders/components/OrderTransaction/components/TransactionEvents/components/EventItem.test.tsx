@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { transactionEvent } from "@dashboard/orders/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
@@ -22,7 +21,7 @@ describe("EventItem", () => {
           <EventItem
             event={transactionEvent}
             onHover={onHover}
-            hoveredPspReference={null}
+            hoveredPspReference={"PSP"}
             hasCreatedBy={true}
           />
         </Wrapper>
@@ -37,7 +36,7 @@ describe("EventItem", () => {
     expect(row).toHaveTextContent(transactionEvent.amount.currency);
     expect(row).toHaveTextContent(transactionEvent.pspReference);
     expect(row).toHaveTextContent("Aug 12, 2022, 02:40 PM"); // date from transactionEvent
-    expect(row).toHaveTextContent(transactionEvent.createdBy.name);
+    expect(row).toHaveTextContent(transactionEvent.createdBy.name as string);
     expect(onHover).not.toHaveBeenCalled();
   });
   it("hides created by cell if prop is passed", () => {
@@ -46,7 +45,7 @@ describe("EventItem", () => {
         <EventItem
           event={transactionEvent}
           onHover={() => undefined}
-          hoveredPspReference={null}
+          hoveredPspReference={"PSP"}
           hasCreatedBy={false}
         />
       </Wrapper>,
@@ -54,7 +53,7 @@ describe("EventItem", () => {
 
     const row = screen.getByRole("row");
 
-    expect(row).not.toHaveTextContent(transactionEvent.createdBy.name);
+    expect(row).not.toHaveTextContent(transactionEvent.createdBy.name as string);
   });
   it("calls onHover function when hovered", async () => {
     const onHover = jest.fn();
@@ -64,7 +63,7 @@ describe("EventItem", () => {
         <EventItem
           event={transactionEvent}
           onHover={onHover}
-          hoveredPspReference={null}
+          hoveredPspReference={"PSP"}
           hasCreatedBy={false}
         />
       </Wrapper>,
