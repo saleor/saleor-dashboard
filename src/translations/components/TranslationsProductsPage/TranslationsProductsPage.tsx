@@ -18,6 +18,7 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -65,17 +66,28 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           },
         )}
       >
-        <ProductContextSwitcher
-          productId={productId}
-          selectedId={productId}
-          onItemChange={(id, type) => {
-            if (type === "variant") {
-              navigate(productVariantUrl(languageCode, productId, id));
-            } else {
-              navigate(languageEntityUrl(languageCode, TranslatableEntities.products, productId));
-            }
-          }}
-        />
+        <Box display="flex" gap={3}>
+          <ProductContextSwitcher
+            productId={productId}
+            selectedId={productId}
+            onItemChange={(id, type) => {
+              if (type === "main") {
+                navigate(languageEntityUrl(languageCode, TranslatableEntities.products, productId));
+              } else if (type === "variant") {
+                navigate(productVariantUrl(languageCode, productId, id));
+              } else {
+                throw new Error("Invalid type, must be main or variant");
+              }
+            }}
+          />
+          <LanguageSwitchWithCaching
+            currentLanguage={LanguageCodeEnum[languageCode]}
+            languages={languages}
+            onLanguageChange={lang => {
+              navigate(languageEntityUrl(lang, TranslatableEntities.products, translationId));
+            }}
+          />
+        </Box>
         <LanguageSwitchWithCaching
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}

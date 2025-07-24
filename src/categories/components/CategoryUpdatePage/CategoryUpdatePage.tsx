@@ -14,6 +14,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Button, sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -76,8 +77,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   settings,
   onUpdateListSettings,
 }: CategoryUpdatePageProps) => {
-  const intl = useIntl();
-  const { locale } = useLocale();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
 
   const categoryBackListUrl = useBackLinkWithState({
@@ -97,7 +97,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               onClick={() =>
                 navigate(
                   languageEntityUrl(
-                    locale.toLocaleUpperCase(),
+                    lastUsedLocaleOrFallback,
                     TranslatableEntities.categories,
                     categoryId,
                   ),

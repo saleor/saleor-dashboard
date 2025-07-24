@@ -55,4 +55,3 @@ export const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
 };
 
 ProductContextSwitcher.displayName = "ProductContextSwitcher";
-export default ProductContextSwitcher;

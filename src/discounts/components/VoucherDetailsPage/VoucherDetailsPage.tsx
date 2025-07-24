@@ -28,11 +28,11 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
-import useLocale from "@dashboard/hooks/useLocale";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Button, Text } from "@saleor/macaw-ui-next";
@@ -178,7 +178,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   voucherCodesSettings,
 }) => {
   const intl = useIntl();
-  const { locale } = useLocale();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
@@ -251,7 +251,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onClick={() =>
                   navigate(
                     languageEntityUrl(
-                      locale.toLocaleUpperCase(),
+                      lastUsedLocaleOrFallback,
                       TranslatableEntities.vouchers,
                       voucher?.id,
                     ),

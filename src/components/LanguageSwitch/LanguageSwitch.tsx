@@ -65,5 +65,3 @@ export const LanguageSwitchWithCaching = (props: LanguageSwitchProps) => {
     />
   );
 };
-
-export default LanguageSwitch;

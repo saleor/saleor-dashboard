@@ -20,10 +20,10 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -95,7 +95,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   children,
 }) => {
   const intl = useIntl();
-  const { locale } = useLocale();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: AttributePageFormData = !attribute
@@ -171,7 +171,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   onClick={() =>
                     navigate(
                       languageEntityUrl(
-                        locale.toLocaleUpperCase(),
+                        lastUsedLocaleOrFallback,
                         TranslatableEntities.attributes,
                         attribute?.id ?? "",
                       ),
