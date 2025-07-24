@@ -153,6 +153,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-storybook": "^9.0.18",
     "html-to-react": "^1.6.0",
     "identity-obj-proxy": "^3.0.0",
     "is-ci": "^3.0.1",
