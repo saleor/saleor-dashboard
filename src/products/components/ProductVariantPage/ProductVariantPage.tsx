@@ -205,6 +205,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
         )}
         <Button
+          marginLeft={3}
           variant="secondary"
           icon={<TranslationsIcon />}
           onClick={() =>

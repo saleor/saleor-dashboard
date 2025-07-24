@@ -10,7 +10,6 @@ import { Tab, TabContainer } from "@dashboard/components/Tab";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
@@ -79,6 +78,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
 }: CategoryUpdatePageProps) => {
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
+  const intl = useIntl();
 
   const categoryBackListUrl = useBackLinkWithState({
     path: categoryListPath,

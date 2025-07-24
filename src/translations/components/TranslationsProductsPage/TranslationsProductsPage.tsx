@@ -88,13 +88,6 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             }}
           />
         </Box>
-        <LanguageSwitchWithCaching
-          currentLanguage={LanguageCodeEnum[languageCode]}
-          languages={languages}
-          onLanguageChange={lang =>
-            navigate(languageEntityUrl(lang, TranslatableEntities.products, translationId))
-          }
-        />
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields
