@@ -5,6 +5,7 @@ import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import { AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
@@ -48,6 +49,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   onUpdateListSettings,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const withChoices = data?.attribute?.withChoices;
 
   return (
@@ -71,8 +73,8 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(lang, TranslatableEntities.attributes, translationId)
+          onLanguageChange={lang =>
+            navigate(languageEntityUrl(lang, TranslatableEntities.attributes, translationId))
           }
         />
       </TopNav>

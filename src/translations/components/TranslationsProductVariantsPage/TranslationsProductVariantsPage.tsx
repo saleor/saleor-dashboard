@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
 import { LanguageCodeEnum, ProductVariantTranslationFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
@@ -44,6 +45,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   onAttributeValueSubmit,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <>
@@ -71,7 +73,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang => productVariantUrl(lang, productId, translationId)}
+          onLanguageChange={lang => navigate(productVariantUrl(lang, productId, translationId))}
         />
       </TopNav>
       <TranslationFields
