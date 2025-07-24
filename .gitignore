@@ -23,6 +23,7 @@
 !.husky
 !.changeset
 !.knip.json
+!.storybook/
 *.log
 *.pyc
 *.mo
@@ -56,3 +57,6 @@ django-queries-results.html
 /playwright/.cache/
 
 introspection.json
+
+*storybook.log
+storybook-static
