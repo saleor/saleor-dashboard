@@ -1,128 +1,32 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
-import hotkeys from "hotkeys-js";
-import React, { useEffect, useRef } from "react";
+import { globalSearchUrl } from "@dashboard/search/urls";
+import { useEffect, useRef } from "react";
+import { useHotkeys, useHotkeysContext } from "react-hotkeys-hook";
 
+import { useActionItems } from "./useActionItems";
+import { useInput } from "./useInput";
 import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
 
-const navigatorHotkey = "ctrl+k, command+k";
-
-const NAVIGATION_KEYS = ["Tab", "ArrowDown", "ArrowUp"];
-
-const useInput = () => {
-  const container = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    container.current = document.getElementById("navigator-search-input") as HTMLInputElement;
-  }, []);
-
-  const updateAriaActiveDescendant = (id: string) => {
-    if (!container.current) return;
-
-    container.current.setAttribute("aria-activedescendant", id);
-  };
-
-  const resetInput = () => {
-    if (!container.current) return;
-
-    container.current.value = null;
-  };
-
-  return {
-    resetInput,
-    updateAriaActiveDescendant,
-  };
+const hotkeysSettings = {
+  enableOnFormTags: true,
+  scopes: ["command-menu"],
 };
 
-const useActionItems = () => {
+const hotkeysSettingsNoFocus = {
+  enableOnFormTags: true,
+  scopes: ["command-menu-no-focus"],
+};
+
+const hotkeysSettingsViewAllResults = {
+  enableOnFormTags: true,
+  scopes: ["command-menu", "command-menu-no-focus"],
+};
+
+export const useKeyboardNavigation = ({ query }: { query: string }) => {
+  const { toggleScope, disableScope } = useHotkeysContext();
   const navigate = useNavigator();
-  const items = useRef<HTMLElement[]>([]);
-  const currentFocusIndex = useRef<number | undefined>(undefined);
 
-  const collectLinks = () => {
-    const elements = document.querySelectorAll(".command-menu-item");
-
-    items.current.push(...(Array.from(elements) as HTMLElement[]));
-  };
-
-  const collectTableRows = () => {
-    const elements = document.querySelectorAll(".command-menu tr");
-
-    items.current.push(...(Array.from(elements) as HTMLElement[]));
-  };
-
-  const focusElement = (index: number, value: boolean) => {
-    const element = items.current[index];
-
-    element.setAttribute("data-focus", value.toString());
-    element.setAttribute("aria-selected", value.toString());
-
-    if (value) {
-      element.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-  };
-
-  const focusNext = () => {
-    if (typeof currentFocusIndex.current === "undefined") return;
-
-    focusElement(currentFocusIndex.current, false);
-    currentFocusIndex.current = (currentFocusIndex.current + 1) % items.current.length;
-    focusElement(currentFocusIndex.current, true);
-  };
-
-  const focusPrevious = () => {
-    if (typeof currentFocusIndex.current === "undefined") return;
-
-    if (currentFocusIndex.current === 0) return;
-
-    focusElement(currentFocusIndex.current, false);
-    currentFocusIndex.current = (currentFocusIndex.current - 1) % items.current.length;
-    focusElement(currentFocusIndex.current, true);
-  };
-
-  const focusFirst = () => {
-    currentFocusIndex.current = 0;
-    focusElement(currentFocusIndex.current, true);
-  };
-
-  const resetFocus = () => {
-    currentFocusIndex.current = undefined;
-    items.current = [];
-  };
-
-  const hasAnyFocus = () => {
-    return typeof currentFocusIndex.current !== "undefined";
-  };
-
-  const getActiveFocusedElement = () => {
-    if (typeof currentFocusIndex.current === "undefined") {
-      return undefined;
-    }
-
-    return items.current[currentFocusIndex.current];
-  };
-
-  const takeAction = () => {
-    const element = getActiveFocusedElement();
-
-    if (!element || !element.dataset.href) return;
-
-    navigate(element.dataset.href);
-  };
-
-  return {
-    resetFocus,
-    collectLinks,
-    collectTableRows,
-    focusNext,
-    focusPrevious,
-    hasAnyFocus,
-    focusFirst,
-    getActiveFocusedElement,
-    takeAction,
-  };
-};
-
-export const useKeyboardNavigation = () => {
+  const scope = useRef<HTMLDivElement | null>(null);
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
   const { updateAriaActiveDescendant, resetInput } = useInput();
   const {
@@ -137,63 +41,102 @@ export const useKeyboardNavigation = () => {
     takeAction,
   } = useActionItems();
 
-  useEffect(() => {
-    hotkeys(navigatorHotkey, event => {
+  useHotkeys(
+    "up, down, tab",
+    event => {
       event.preventDefault();
-      setNavigatorVisibility(!isNavigatorVisible);
-    });
 
-    return () => hotkeys.unbind(navigatorHotkey);
-  }, []);
+      if (hasAnyFocus()) return;
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (NAVIGATION_KEYS.includes(e.key)) {
-      e.preventDefault();
+      focusFirst();
 
-      if (!hasAnyFocus()) {
-        focusFirst();
+      const activeFocusedElement = getActiveFocusedElement();
 
-        const activeFocusedElement = getActiveFocusedElement();
-
-        if (activeFocusedElement) {
-          updateAriaActiveDescendant(activeFocusedElement.id);
-        }
-
-        return;
+      if (activeFocusedElement) {
+        updateAriaActiveDescendant(activeFocusedElement.id);
       }
-    }
 
-    if (e.key === "Tab") {
+      disableScope("command-menu-no-focus");
+      toggleScope("command-menu");
+
+      return false;
+    },
+    hotkeysSettingsNoFocus,
+  );
+
+  useHotkeys(
+    "tab",
+    event => {
+      event.preventDefault();
       focusNext();
-    }
 
-    if (e.key === "ArrowDown") {
-      focusNext();
-    }
+      return false;
+    },
+    hotkeysSettings,
+  );
 
-    if (e.key === "ArrowUp") {
+  useHotkeys(
+    "up",
+    event => {
+      event.preventDefault();
       focusPrevious();
-    }
 
-    if (e.key === "Enter") {
+      return false;
+    },
+    hotkeysSettings,
+  );
+
+  useHotkeys(
+    "down",
+    event => {
+      event.preventDefault();
+      focusNext();
+
+      return false;
+    },
+    hotkeysSettings,
+  );
+
+  useHotkeys(
+    "ctrl+enter, meta+enter",
+    event => {
+      event.preventDefault();
       setNavigatorVisibility(false);
-      takeAction();
       resetFocus();
-      resetInput();
-    }
-  };
 
-  const closeCommandMenu = () => {
-    setNavigatorVisibility(false);
+      navigate(globalSearchUrl({ query }));
+
+      return false;
+    },
+    hotkeysSettingsViewAllResults,
+  );
+
+  useHotkeys(
+    "enter",
+    event => {
+      event.preventDefault();
+      takeAction();
+      resetInput();
+
+      disableScope("command-menu");
+      toggleScope("command-menu-no-focus");
+      setNavigatorVisibility(false);
+
+      return false;
+    },
+    hotkeysSettings,
+  );
+
+  useEffect(() => {
+    if (isNavigatorVisible) return;
+
     resetFocus();
-  };
+  }, [isNavigatorVisible]);
 
   return {
+    scope,
     resetFocus,
     collectLinks,
     collectTableRows,
-    handleKeyDown,
-    closeCommandMenu,
-    isCommandMenuOpen: isNavigatorVisible,
   };
 };

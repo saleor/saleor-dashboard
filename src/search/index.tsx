@@ -9,7 +9,6 @@ import { WindowTitle } from "../components/WindowTitle";
 import { SearchForm } from "./form";
 import { ListSkeleton } from "./resultsTable/ListSkeleton";
 import { ResultsList } from "./resultsTable/ResultsList";
-import { ResultsTable } from "./resultsTable/ResultsTable";
 import { SearchHistory } from "./SearchHistory";
 import { useHistoryCriteria } from "./useHistoryCriteria";
 import { useInclusionVariables } from "./useInclusionVariables";
