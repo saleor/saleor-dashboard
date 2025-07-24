@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useOrderDetailsGrantRefundQuery,
@@ -32,7 +31,7 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
   });
   const [grantRefund, grantRefundOptions] = useOrderGrantRefundAddMutation({
     onCompleted: submitData => {
-      if (submitData.orderGrantRefundCreate.errors.length === 0) {
+      if (submitData.orderGrantRefundCreate?.errors.length === 0) {
         navigate(orderUrl(orderId), { replace: true });
         notify({
           status: "success",
@@ -82,7 +81,7 @@ const OrderGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId }) => {
       />
 
       <OrderGrantRefundPage
-        order={data?.order}
+        order={data?.order ?? undefined}
         loading={loading}
         submitState={grantRefundOptions.status}
         onSubmit={handleSubmit}
