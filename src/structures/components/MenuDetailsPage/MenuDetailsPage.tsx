@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import React from "react";
+
 import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -11,12 +13,11 @@ import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { menuListUrl } from "@dashboard/structures/urls";
-import React from "react";
 
+import { computeRelativeTree } from "./tree";
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
 import MenuProperties from "../MenuProperties";
-import { computeRelativeTree } from "./tree";
 
 export interface MenuDetailsFormData {
   name: string;
@@ -35,7 +36,8 @@ export interface MenuDetailsPageProps {
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
-  onTranslate: (id: string) => void;
+  // If not passed, it will not render the button. Use to control permissions
+  onTranslate?: (id: string) => void;
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 

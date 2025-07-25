@@ -1,12 +1,14 @@
+import { UniqueIdentifier } from "@dnd-kit/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+
+import { Box, Button, EditIcon, GripIcon, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
+
 import { TreeItemComponentProps } from "@dashboard/components/SortableTree/types";
-import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { buttonMessages } from "@dashboard/intl";
 import { MenuItemType } from "@dashboard/structures/components/MenuItemDialog";
 import { RecursiveMenuItem } from "@dashboard/structures/types";
-import { UniqueIdentifier } from "@dnd-kit/core";
-import { Box, Button, EditIcon, GripIcon, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 
 import { getItemId, getItemType } from "./utils";
 
@@ -14,7 +16,8 @@ interface TreeItemProps extends TreeItemComponentProps<RecursiveMenuItem> {
   onClick: (id: UniqueIdentifier, menuItemType: MenuItemType) => void;
   onEdit: (id: UniqueIdentifier) => void;
   onRemove: (id: UniqueIdentifier) => void;
-  onTranslate: (id: UniqueIdentifier) => void;
+  // If not passed, it will not render the button. Use to control permissions
+  onTranslate?: (id: UniqueIdentifier) => void;
 }
 
 /**
@@ -83,11 +86,9 @@ export const MenuItemsSortableTreeItem = ({
             onClick={() => onEdit(id)}
             icon={<EditIcon />}
           />
-          <Button
+          <TranslationsButton
             data-test-id="translate-menu-item-button"
-            variant="secondary"
-            onClick={() => onTranslate(id)}
-            icon={<TranslationsIcon />}
+            onClick={() => onTranslate && onTranslate(id)}
           />
           <Button
             data-test-id="remove-menu-item-button"

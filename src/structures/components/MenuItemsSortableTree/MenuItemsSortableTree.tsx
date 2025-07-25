@@ -1,13 +1,15 @@
-import { SortableTree } from "@dashboard/components/SortableTree";
-import { MenuTreeItem, RecursiveMenuItem } from "@dashboard/structures/types";
 import { UniqueIdentifier } from "@dnd-kit/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { MenuItemType } from "../MenuItemDialog";
+import { Box, Text } from "@saleor/macaw-ui-next";
+
+import { SortableTree } from "@dashboard/components/SortableTree";
+import { MenuTreeItem, RecursiveMenuItem } from "@dashboard/structures/types";
+
 import { MenuItemsSortableTreeItem } from "./MenuItemsSortableTreeItem";
 import { getNodeData } from "./utils";
+import { MenuItemType } from "../MenuItemDialog";
 
 interface MenuItemsSortableTreeProps {
   items: RecursiveMenuItem[];
@@ -15,7 +17,8 @@ interface MenuItemsSortableTreeProps {
   onItemClick: (id: UniqueIdentifier, type: MenuItemType) => void;
   onItemEdit: (id: UniqueIdentifier) => void;
   onItemRemove: (id: UniqueIdentifier) => void;
-  onTranslate: (id: UniqueIdentifier) => void;
+  // If not passed, it will not render the button. Use to control permissions
+  onTranslate?: (id: UniqueIdentifier) => void;
 }
 
 export const MenuItemsSortableTree = ({
