@@ -54,8 +54,8 @@ export const CommandContent = () => {
             <FormattedMessage id="49vo8t" defaultMessage="Quick search" />
           </Text>
           <Link
-            href={globalSearchUrl({ query })}
-            data-href={globalSearchUrl({ query })}
+            href={globalSearchUrl({ query, trigger: true })}
+            data-href={globalSearchUrl({ query, trigger: true })}
             className="command-menu-item"
             data-focus={false}
           >
