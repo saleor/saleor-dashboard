@@ -1,5 +1,7 @@
 import { attributeListPath } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -17,17 +19,17 @@ import {
   AttributeInputTypeEnum,
   AttributeTypeEnum,
   MeasurementUnitsEnum,
+  PermissionEnum,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Button } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -96,6 +98,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
 }) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: AttributePageFormData = !attribute
@@ -165,19 +169,19 @@ const AttributePage: React.FC<AttributePageProps> = ({
                     : attribute?.name
                 }
               >
-                <Button
-                  variant="secondary"
-                  icon={<TranslationsIcon />}
-                  onClick={() =>
-                    navigate(
-                      languageEntityUrl(
-                        lastUsedLocaleOrFallback,
-                        TranslatableEntities.attributes,
-                        attribute?.id ?? "",
-                      ),
-                    )
-                  }
-                />
+                {canTranslate && (
+                  <TranslationsButton
+                    onClick={() =>
+                      navigate(
+                        languageEntityUrl(
+                          lastUsedLocaleOrFallback,
+                          TranslatableEntities.attributes,
+                          attribute?.id ?? "",
+                        ),
+                      )
+                    }
+                  />
+                )}
               </TopNav>
               <DetailPageLayout.Content>
                 <AttributeDetails

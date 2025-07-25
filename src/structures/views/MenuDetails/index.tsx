@@ -1,6 +1,9 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import {
+  PermissionEnum,
   useMenuDeleteMutation,
   useMenuDetailsQuery,
   useMenuItemCreateMutation,
@@ -48,6 +51,8 @@ interface MenuDetailsProps {
 const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const intl = useIntl();
   const { data, loading, refetch } = useMenuDetailsQuery({
@@ -173,11 +178,18 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
             }),
           )
         }
-        onTranslate={itemId => {
-          navigate(
-            languageEntityUrl(lastUsedLocaleOrFallback, TranslatableEntities.menuItems, itemId),
-          );
-        }}
+        onTranslate={
+          canTranslate
+            ? itemId =>
+                navigate(
+                  languageEntityUrl(
+                    lastUsedLocaleOrFallback,
+                    TranslatableEntities.menuItems,
+                    itemId,
+                  ),
+                )
+            : undefined
+        }
         onSubmit={handleSubmit}
         saveButtonState={menuUpdateOpts.status}
       />

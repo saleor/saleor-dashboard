@@ -3,6 +3,8 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import { Container } from "@dashboard/components/AssignContainerDialog";
@@ -20,6 +22,7 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
+  PermissionEnum,
   SearchAttributeValuesQuery,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
@@ -31,13 +34,13 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { modelingSection } from "@dashboard/modeling/urls";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -106,6 +109,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();
   const pageExists = page !== null;
@@ -167,19 +172,19 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               href={pageListBackLink}
               title={!pageExists ? intl.formatMessage(messages.title) : page?.title}
             >
-              <Button
-                variant="secondary"
-                icon={<TranslationsIcon />}
-                onClick={() =>
-                  navigate(
-                    languageEntityUrl(
-                      lastUsedLocaleOrFallback,
-                      TranslatableEntities.pages,
-                      page?.id,
-                    ),
-                  )
-                }
-              />
+              {canTranslate && (
+                <TranslationsButton
+                  onClick={() =>
+                    navigate(
+                      languageEntityUrl(
+                        lastUsedLocaleOrFallback,
+                        TranslatableEntities.pages,
+                        page?.id,
+                      ),
+                    )
+                  }
+                />
+              )}
 
               {extensionMenuItems.length > 0 && (
                 <Box marginLeft={3}>
