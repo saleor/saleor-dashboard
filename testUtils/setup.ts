@@ -3,6 +3,11 @@ import "@testing-library/jest-dom";
 import { configure } from "@testing-library/react";
 
 jest.mock("@sentry/react");
+jest.mock("react-hotkeys-hook", () => ({
+  useHotkeys: jest.fn(),
+  useHotkeysContext: jest.fn(),
+  HotkeysProvider: ({ children }: { children: React.ReactNode }) => children,
+}));
 
 document.getElementById = () => document.createElement("div");
 

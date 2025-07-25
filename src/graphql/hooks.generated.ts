@@ -7217,67 +7217,63 @@ export function useChannelListLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type ChannelListQueryHookResult = ReturnType<typeof useChannelListQuery>;
 export type ChannelListLazyQueryHookResult = ReturnType<typeof useChannelListLazyQuery>;
 export type ChannelListQueryResult = Apollo.QueryResult<Types.ChannelListQuery, Types.ChannelListQueryVariables>;
-export const SearchOrdersByNumberDocument = gql`
-    query SearchOrdersByNumber($first: Int!, $query: [String!]) {
-  orders(first: $first, filter: {numbers: $query}) {
+export const NavigatorSearchDocument = gql`
+    query NavigatorSearch($query: String!) {
+  orders(first: 2, filter: {search: $query}) {
     edges {
       node {
         id
         number
         status
+        updatedAt
+        paymentStatus
+        chargeStatus
+        total {
+          gross {
+            amount
+            currency
+          }
+        }
       }
     }
   }
-}
-    `;
-
-/**
- * __useSearchOrdersByNumberQuery__
- *
- * To run a query within a React component, call `useSearchOrdersByNumberQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchOrdersByNumberQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchOrdersByNumberQuery({
- *   variables: {
- *      first: // value for 'first'
- *      query: // value for 'query'
- *   },
- * });
- */
-export function useSearchOrdersByNumberQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>(SearchOrdersByNumberDocument, options);
-      }
-export function useSearchOrdersByNumberLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>(SearchOrdersByNumberDocument, options);
-        }
-export type SearchOrdersByNumberQueryHookResult = ReturnType<typeof useSearchOrdersByNumberQuery>;
-export type SearchOrdersByNumberLazyQueryHookResult = ReturnType<typeof useSearchOrdersByNumberLazyQuery>;
-export type SearchOrdersByNumberQueryResult = Apollo.QueryResult<Types.SearchOrdersByNumberQuery, Types.SearchOrdersByNumberQueryVariables>;
-export const SearchCatalogDocument = gql`
-    query SearchCatalog($first: Int!, $query: String!) {
-  categories(first: $first, filter: {search: $query}) {
+  categories(first: 2, filter: {search: $query}) {
     edges {
       node {
         id
         name
+        updatedAt
         backgroundImage(size: 64) {
           url
           alt
+        }
+        products(first: 1) {
+          totalCount
+        }
+        parent {
+          id
+          name
         }
         level
+        ancestors(first: 1) {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
       }
     }
   }
-  collections(first: $first, filter: {search: $query}) {
+  collections(first: 2, filter: {search: $query}) {
     edges {
       node {
-        ...Collection
+        id
+        name
+        products(first: 1) {
+          totalCount
+        }
         backgroundImage(size: 64) {
           url
           alt
@@ -7285,15 +7281,15 @@ export const SearchCatalogDocument = gql`
       }
     }
   }
-  products(first: $first, filter: {search: $query}) {
+  products(first: 2, filter: {search: $query}) {
     edges {
       node {
         id
         category {
-          id
           name
         }
         name
+        updatedAt
         thumbnail(size: 64) {
           alt
           url
@@ -7301,58 +7297,77 @@ export const SearchCatalogDocument = gql`
       }
     }
   }
-  productVariants(first: $first, filter: {search: $query}) {
+  productVariants(first: 2, filter: {search: $query}) {
     edges {
       node {
         id
         name
         sku
+        updatedAt
+        media {
+          alt
+          url(size: 64)
+        }
         product {
           id
           name
           category {
-            id
             name
-          }
-          thumbnail(size: 64) {
-            alt
-            url
           }
         }
       }
     }
   }
+  models: pages(first: 2, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        title
+        publishedAt
+        pageType {
+          name
+        }
+      }
+    }
+  }
+  modelTypes: pageTypes(first: 2, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
 }
-    ${CollectionFragmentDoc}`;
+    `;
 
 /**
- * __useSearchCatalogQuery__
+ * __useNavigatorSearchQuery__
  *
- * To run a query within a React component, call `useSearchCatalogQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchCatalogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useNavigatorSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNavigatorSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSearchCatalogQuery({
+ * const { data, loading, error } = useNavigatorSearchQuery({
  *   variables: {
- *      first: // value for 'first'
  *      query: // value for 'query'
  *   },
  * });
  */
-export function useSearchCatalogQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>) {
+export function useNavigatorSearchQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>(SearchCatalogDocument, options);
+        return ApolloReactHooks.useQuery<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>(NavigatorSearchDocument, options);
       }
-export function useSearchCatalogLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>) {
+export function useNavigatorSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>(SearchCatalogDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>(NavigatorSearchDocument, options);
         }
-export type SearchCatalogQueryHookResult = ReturnType<typeof useSearchCatalogQuery>;
-export type SearchCatalogLazyQueryHookResult = ReturnType<typeof useSearchCatalogLazyQuery>;
-export type SearchCatalogQueryResult = Apollo.QueryResult<Types.SearchCatalogQuery, Types.SearchCatalogQueryVariables>;
+export type NavigatorSearchQueryHookResult = ReturnType<typeof useNavigatorSearchQuery>;
+export type NavigatorSearchLazyQueryHookResult = ReturnType<typeof useNavigatorSearchLazyQuery>;
+export type NavigatorSearchQueryResult = Apollo.QueryResult<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>;
 export const ShopInfoDocument = gql`
     query ShopInfo {
   shop {

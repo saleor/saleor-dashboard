@@ -8,6 +8,8 @@ export const useSearchCriteria = () => {
   const [lsScope, setLsScope] = useLocalStorage<string>("search-scope", "all");
 
   const qs = parseQs(window.location.search.substr(1));
+  const triggerSearch = (qs.t as string) || false;
+
   const urlQuery = (qs.q as string) || "";
   const urlScope = (qs.scope as string) || "";
 
@@ -30,6 +32,12 @@ export const useSearchCriteria = () => {
 
     navigate(`?q=${query}&scope=${lsScope}`, { replace: true });
   }, []);
+
+  useEffect(() => {
+    if (!triggerSearch) false;
+
+    changeQuery(urlQuery);
+  }, [urlQuery, triggerSearch]);
 
   return {
     query,
