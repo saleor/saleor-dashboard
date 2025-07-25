@@ -4,6 +4,8 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelPriceData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
@@ -21,6 +23,7 @@ import { MetadataFormData } from "@dashboard/components/Metadata";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
+  PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductVariantFragment,
@@ -166,6 +169,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
@@ -204,14 +209,16 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
         {variant?.product?.defaultVariant?.id !== variant?.id && (
           <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
         )}
-        <Button
-          marginLeft={3}
-          variant="secondary"
-          icon={<TranslationsIcon />}
-          onClick={() =>
-            navigate(productVariantUrl(lastUsedLocaleOrFallback, productId, variant?.id))
-          }
-        />
+        {canTranslate && (
+          <Button
+            marginLeft={3}
+            variant="secondary"
+            icon={<TranslationsIcon />}
+            onClick={() =>
+              navigate(productVariantUrl(lastUsedLocaleOrFallback, productId, variant?.id))
+            }
+          />
+        )}
       </TopNav>
       <DetailPageLayout.Content>
         <ProductVariantUpdateForm

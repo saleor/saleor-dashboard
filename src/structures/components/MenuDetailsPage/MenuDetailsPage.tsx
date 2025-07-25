@@ -33,7 +33,8 @@ export interface MenuDetailsPageProps {
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
-  onTranslate: (id: string) => void;
+  // If not passed, it will not render the button. Use to control permissions
+  onTranslate?: (id: string) => void;
 }
 
 const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({

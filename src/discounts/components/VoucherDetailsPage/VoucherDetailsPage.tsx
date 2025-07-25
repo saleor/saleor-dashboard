@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -180,6 +182,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const channel = voucher?.channelListings?.find(
@@ -245,19 +249,21 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={voucherListBackLink} title={voucher?.name}>
-              <Button
-                variant="secondary"
-                icon={<TranslationsIcon />}
-                onClick={() =>
-                  navigate(
-                    languageEntityUrl(
-                      lastUsedLocaleOrFallback,
-                      TranslatableEntities.vouchers,
-                      voucher?.id,
-                    ),
-                  )
-                }
-              />
+              {canTranslate && (
+                <Button
+                  variant="secondary"
+                  icon={<TranslationsIcon />}
+                  onClick={() =>
+                    navigate(
+                      languageEntityUrl(
+                        lastUsedLocaleOrFallback,
+                        TranslatableEntities.vouchers,
+                        voucher?.id,
+                      ),
+                    )
+                  }
+                />
+              )}
             </TopNav>
             <DetailPageLayout.Content>
               <VoucherInfo data={data} disabled={disabled} errors={errors} onChange={change} />

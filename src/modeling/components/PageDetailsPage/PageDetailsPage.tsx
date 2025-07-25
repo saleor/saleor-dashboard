@@ -3,6 +3,8 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import { Container } from "@dashboard/components/AssignContainerDialog";
@@ -17,6 +19,7 @@ import VisibilityCard from "@dashboard/components/VisibilityCard";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
+  PermissionEnum,
   SearchAttributeValuesQuery,
   SearchPagesQuery,
   SearchPageTypesQuery,
@@ -97,6 +100,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();
   const pageExists = page !== null;
@@ -153,19 +158,21 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               href={pageListBackLink}
               title={!pageExists ? intl.formatMessage(messages.title) : page?.title}
             >
-              <Button
-                variant="secondary"
-                icon={<TranslationsIcon />}
-                onClick={() =>
-                  navigate(
-                    languageEntityUrl(
-                      lastUsedLocaleOrFallback,
-                      TranslatableEntities.pages,
-                      page?.id,
-                    ),
-                  )
-                }
-              />
+              {canTranslate && (
+                <Button
+                  variant="secondary"
+                  icon={<TranslationsIcon />}
+                  onClick={() =>
+                    navigate(
+                      languageEntityUrl(
+                        lastUsedLocaleOrFallback,
+                        TranslatableEntities.pages,
+                        page?.id,
+                      ),
+                    )
+                  }
+                />
+              )}
             </TopNav>
             <DetailPageLayout.Content>
               <PageInfo data={data} disabled={loading} errors={errors} onChange={change} />

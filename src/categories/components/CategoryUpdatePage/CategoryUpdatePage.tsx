@@ -1,3 +1,5 @@
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -7,7 +9,7 @@ import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { Tab, TabContainer } from "@dashboard/components/Tab";
-import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
+import { CategoryDetailsQuery, PermissionEnum, ProductErrorFragment } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -79,6 +81,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const intl = useIntl();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
 
   const categoryBackListUrl = useBackLinkWithState({
     path: categoryListPath,
@@ -91,19 +95,21 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout gridTemplateColumns={1}>
           <TopNav href={backHref} title={category?.name}>
-            <Button
-              variant="secondary"
-              icon={<TranslationsIcon />}
-              onClick={() =>
-                navigate(
-                  languageEntityUrl(
-                    lastUsedLocaleOrFallback,
-                    TranslatableEntities.categories,
-                    categoryId,
-                  ),
-                )
-              }
-            />
+            {canTranslate && (
+              <Button
+                variant="secondary"
+                icon={<TranslationsIcon />}
+                onClick={() =>
+                  navigate(
+                    languageEntityUrl(
+                      lastUsedLocaleOrFallback,
+                      TranslatableEntities.categories,
+                      categoryId,
+                    ),
+                  )
+                }
+              />
+            )}
           </TopNav>
           <DetailPageLayout.Content>
             <CategoryDetailsForm
