@@ -75,12 +75,49 @@
   ],
   "rules": {
     "import/no-duplicates": "error",
-    "import/no-extraneous-dependencies": "off", // imports are handled by simple-import-sort/sort
-    "import/no-internal-modules": "off", // imports are handled by simple-import-sort/sort
-    "import/order": "off", // imports are handled by simple-import-sort/sort
-    "sort-imports": "off", // imports are handled by simple-import-sort/sort
+    "import/no-extraneous-dependencies": "off",
+    "import/no-internal-modules": "off",
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          ["internal", "parent", "sibling", "index"]
+        ],
+        "pathGroups": [
+          {
+            "pattern": "@saleor/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@assets/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@locale/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@dashboard/**",
+            "group": "internal",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "sort-imports": "off",
     "import/no-default-export": "warn",
-    "simple-import-sort/imports": "warn",
+    "simple-import-sort/imports": "off",
     "simple-import-sort/exports": "warn",
     "react-refresh/only-export-components": "warn",
     "lines-between-class-members": ["error", "always"],

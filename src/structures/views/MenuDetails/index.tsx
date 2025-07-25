@@ -1,4 +1,7 @@
 // @ts-strict-ignore
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
 import ActionDialog from "@dashboard/components/ActionDialog";
 import {
   useMenuDeleteMutation,
@@ -12,9 +15,16 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { pageUrl } from "@dashboard/modeling/urls";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
+import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
+import {
+  getInitialMenuItemLabel,
+  getInitialMenuItemValue,
+  getMenuItemCreateInputData,
+  getMenuItemInputData,
+  getMoves,
+  getRemoveIds,
+} from "./utils";
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
 import { extractMutationErrors, maybe } from "../../../misc";
@@ -30,15 +40,6 @@ import {
   unknownTypeError,
 } from "../../components/MenuItemsSortableTree/utils";
 import { menuUrl, MenuUrlQueryParams } from "../../urls";
-import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
-import {
-  getInitialMenuItemLabel,
-  getInitialMenuItemValue,
-  getMenuItemCreateInputData,
-  getMenuItemInputData,
-  getMoves,
-  getRemoveIds,
-} from "./utils";
 
 interface MenuDetailsProps {
   id: string;
