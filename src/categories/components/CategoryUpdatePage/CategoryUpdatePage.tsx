@@ -1,3 +1,8 @@
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { Box, sprinkles } from "@saleor/macaw-ui-next";
+
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
@@ -20,16 +25,13 @@ import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { Box, sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
+import CategoryUpdateForm, { CategoryUpdateData } from "./form";
 import { ListProps, ListViews, RelayToFlat } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryBackground from "../CategoryBackground";
 import { CategoryProducts } from "../CategoryProducts";
 import { CategorySubcategories } from "../CategorySubcategories";
-import CategoryUpdateForm, { CategoryUpdateData } from "./form";
 
 export enum CategoryPageTab {
   categories = "categories",

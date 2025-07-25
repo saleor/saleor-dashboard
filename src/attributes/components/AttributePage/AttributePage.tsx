@@ -1,3 +1,7 @@
+import React from "react";
+import { useIntl } from "react-intl";
+import slugify from "slugify";
+
 import { attributeListPath } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
@@ -30,9 +34,6 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import React from "react";
-import { useIntl } from "react-intl";
-import slugify from "slugify";
 
 import AttributeDetails from "../AttributeDetails";
 import AttributeOrganization from "../AttributeOrganization";

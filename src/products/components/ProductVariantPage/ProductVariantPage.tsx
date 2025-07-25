@@ -1,5 +1,10 @@
 // @ts-strict-ignore
 import { QueryResult } from "@apollo/client";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
+
+import { Box } from "@saleor/macaw-ui-next";
+
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -43,10 +48,12 @@ import { productVariantUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
 
+import ProductVariantUpdateForm, {
+  ProductVariantUpdateData,
+  ProductVariantUpdateHandlers,
+  ProductVariantUpdateSubmitData,
+} from "./form";
 import { ProductShipping } from "../ProductShipping";
 import { ProductStockInput, ProductStocks } from "../ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
@@ -59,11 +66,6 @@ import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import { ProductVariantPrice } from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
-import ProductVariantUpdateForm, {
-  ProductVariantUpdateData,
-  ProductVariantUpdateHandlers,
-  ProductVariantUpdateSubmitData,
-} from "./form";
 
 const messages = defineMessages({
   nonSelectionAttributes: {
