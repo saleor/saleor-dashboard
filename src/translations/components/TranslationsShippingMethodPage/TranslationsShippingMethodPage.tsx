@@ -1,8 +1,9 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { LanguageCodeEnum, ShippingMethodTranslationFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
@@ -36,6 +37,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
   onSubmit,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -55,11 +57,11 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
           },
         )}
       >
-        <LanguageSwitch
+        <LanguageSwitchWithCaching
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(lang, TranslatableEntities.shippingMethods, translationId)
+          onLanguageChange={lang =>
+            navigate(languageEntityUrl(lang, TranslatableEntities.shippingMethods, translationId))
           }
         />
       </TopNav>

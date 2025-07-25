@@ -18,11 +18,13 @@ export interface MenuItemsProps {
   onItemAdd: () => void;
   onItemClick: (id: string, type: MenuItemType) => void;
   onItemEdit: (id: string) => void;
+  onTranslate: (id: string) => void;
   onUndo: () => void;
 }
 
 const MenuItems: React.FC<MenuItemsProps> = props => {
-  const { canUndo, items, onChange, onItemAdd, onItemClick, onItemEdit, onUndo } = props;
+  const { canUndo, items, onChange, onItemAdd, onItemClick, onItemEdit, onUndo, onTranslate } =
+    props;
   const intl = useIntl();
   const currentTree = useMemo(() => items.map(getNodeData), [items]);
 
@@ -55,6 +57,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
               onItemRemove={id => onChange([{ id: id.toString(), type: "remove" }])}
               onItemClick={onItemClick}
               onItemEdit={onItemEdit}
+              onTranslate={onTranslate}
             />
           )}
         </Box>

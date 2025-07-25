@@ -15,6 +15,7 @@ interface MenuItemsSortableTreeProps {
   onItemClick: (id: UniqueIdentifier, type: MenuItemType) => void;
   onItemEdit: (id: UniqueIdentifier) => void;
   onItemRemove: (id: UniqueIdentifier) => void;
+  onTranslate: (id: UniqueIdentifier) => void;
 }
 
 export const MenuItemsSortableTree = ({
@@ -23,6 +24,7 @@ export const MenuItemsSortableTree = ({
   onItemEdit,
   onItemRemove,
   onChange,
+  onTranslate,
 }: MenuItemsSortableTreeProps) => {
   if (!items.length) {
     return (
@@ -53,6 +55,7 @@ export const MenuItemsSortableTree = ({
           onRemove={onItemRemove}
           onClick={onItemClick}
           onEdit={onItemEdit}
+          onTranslate={onTranslate}
         />
       )}
     />

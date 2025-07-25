@@ -50,8 +50,10 @@ import { productImageUrl, productListPath, productListUrl } from "@dashboard/pro
 import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
+import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Box, Option } from "@saleor/macaw-ui-next";
+import { Box, Button, Option, TranslationsIcon } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -161,6 +163,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
   const [selectedCategory, setSelectedCategory] = useStateFromProps(product?.category?.name || "");
@@ -285,6 +288,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={backLinkProductUrl} title={header}>
+              <Button
+                marginRight={3}
+                variant="secondary"
+                icon={<TranslationsIcon />}
+                onClick={() =>
+                  navigate(createTranslateProductUrl(lastUsedLocaleOrFallback, productId))
+                }
+              />
               <TopNav.Menu
                 items={[
                   ...extensionMenuItems,

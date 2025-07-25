@@ -1,4 +1,5 @@
 import { TreeItemComponentProps } from "@dashboard/components/SortableTree/types";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { buttonMessages } from "@dashboard/intl";
 import { MenuItemType } from "@dashboard/structures/components/MenuItemDialog";
 import { RecursiveMenuItem } from "@dashboard/structures/types";
@@ -13,6 +14,7 @@ interface TreeItemProps extends TreeItemComponentProps<RecursiveMenuItem> {
   onClick: (id: UniqueIdentifier, menuItemType: MenuItemType) => void;
   onEdit: (id: UniqueIdentifier) => void;
   onRemove: (id: UniqueIdentifier) => void;
+  onTranslate: (id: UniqueIdentifier) => void;
 }
 
 export const MenuItemsSortableTreeItem = ({
@@ -31,6 +33,7 @@ export const MenuItemsSortableTreeItem = ({
   onEdit,
   onClick,
   onRemove,
+  onTranslate,
 }: TreeItemProps) => {
   return (
     <Box
@@ -76,6 +79,12 @@ export const MenuItemsSortableTreeItem = ({
             variant="secondary"
             onClick={() => onEdit(id)}
             icon={<EditIcon />}
+          />
+          <Button
+            data-test-id="translate-menu-item-button"
+            variant="secondary"
+            onClick={() => onTranslate(id)}
+            icon={<TranslationsIcon />}
           />
           <Button
             data-test-id="remove-menu-item-button"
