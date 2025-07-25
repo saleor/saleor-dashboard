@@ -14,7 +14,8 @@ interface TreeItemProps extends TreeItemComponentProps<RecursiveMenuItem> {
   onClick: (id: UniqueIdentifier, menuItemType: MenuItemType) => void;
   onEdit: (id: UniqueIdentifier) => void;
   onRemove: (id: UniqueIdentifier) => void;
-  onTranslate: (id: UniqueIdentifier) => void;
+  // If not passed, it will not render the button. Use to control permissions
+  onTranslate?: (id: UniqueIdentifier) => void;
 }
 
 export const MenuItemsSortableTreeItem = ({
@@ -80,12 +81,14 @@ export const MenuItemsSortableTreeItem = ({
             onClick={() => onEdit(id)}
             icon={<EditIcon />}
           />
-          <Button
-            data-test-id="translate-menu-item-button"
-            variant="secondary"
-            onClick={() => onTranslate(id)}
-            icon={<TranslationsIcon />}
-          />
+          {onTranslate && (
+            <Button
+              data-test-id="translate-menu-item-button"
+              variant="secondary"
+              onClick={() => onTranslate(id)}
+              icon={<TranslationsIcon />}
+            />
+          )}
           <Button
             data-test-id="remove-menu-item-button"
             variant="secondary"

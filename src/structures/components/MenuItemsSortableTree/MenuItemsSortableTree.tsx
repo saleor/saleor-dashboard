@@ -15,7 +15,8 @@ interface MenuItemsSortableTreeProps {
   onItemClick: (id: UniqueIdentifier, type: MenuItemType) => void;
   onItemEdit: (id: UniqueIdentifier) => void;
   onItemRemove: (id: UniqueIdentifier) => void;
-  onTranslate: (id: UniqueIdentifier) => void;
+  // If not passed, it will not render the button. Use to control permissions
+  onTranslate?: (id: UniqueIdentifier) => void;
 }
 
 export const MenuItemsSortableTree = ({

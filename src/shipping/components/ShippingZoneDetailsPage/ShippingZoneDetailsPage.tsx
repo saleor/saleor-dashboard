@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -9,6 +11,7 @@ import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   ChannelFragment,
+  PermissionEnum,
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
   ShippingZoneDetailsFragment,
@@ -102,6 +105,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 }) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const navigate = useNavigator();
   const initialForm = getInitialFormData(shippingZone);
   const warehouseChoices = warehouses.map(warehouseToChoice);
@@ -119,19 +124,21 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={shippingZonesListBackLink} title={shippingZone?.name}>
-              <Button
-                variant="secondary"
-                icon={<TranslationsIcon />}
-                onClick={() =>
-                  navigate(
-                    languageEntityUrl(
-                      lastUsedLocaleOrFallback,
-                      TranslatableEntities.shippingMethods,
-                      shippingZone?.id,
-                    ),
-                  )
-                }
-              />
+              {canTranslate && (
+                <Button
+                  variant="secondary"
+                  icon={<TranslationsIcon />}
+                  onClick={() =>
+                    navigate(
+                      languageEntityUrl(
+                        lastUsedLocaleOrFallback,
+                        TranslatableEntities.shippingMethods,
+                        shippingZone?.id,
+                      ),
+                    )
+                  }
+                />
+              )}
             </TopNav>
             <DetailPageLayout.Content>
               <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
