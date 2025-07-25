@@ -1,5 +1,7 @@
 // @ts-strict-ignore
 import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListPath, CollectionUrlQueryParams } from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -23,6 +25,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Box, Button as MacawNextButton, Divider } from "@saleor/macaw-ui-next";
@@ -70,6 +73,8 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
 
   const collectionListBackLink = useBackLinkWithState({
     path: collectionListPath,
@@ -94,19 +99,19 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout>
           <TopNav href={collectionListBackLink} title={collection?.name}>
-            <MacawNextButton
-              variant="secondary"
-              icon={<TranslationsIcon />}
-              onClick={() =>
-                navigate(
-                  languageEntityUrl(
-                    lastUsedLocaleOrFallback,
-                    TranslatableEntities.collections,
-                    collection.id,
-                  ),
-                )
-              }
-            />
+            {canTranslate && (
+              <TranslationsButton
+                onClick={() =>
+                  navigate(
+                    languageEntityUrl(
+                      lastUsedLocaleOrFallback,
+                      TranslatableEntities.collections,
+                      collection.id,
+                    ),
+                  )
+                }
+              />
+            )}
             {extensionMenuItems.length > 0 && (
               <Box marginLeft={3}>
                 <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
