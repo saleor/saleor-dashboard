@@ -43,16 +43,27 @@
         "no-restricted-imports": [
           "warn",
           {
+            "patterns": [
+              {
+                "group": ["@material-ui/*"],
+                "message": "Material-UI is deprecated. Use @saleor/macaw-ui-next"
+              }
+            ],
             "paths": [
               {
                 "name": "react-sortable-hoc",
                 "message": "Use @dnd-kit instead of react-sortable-hoc."
+              },
+              {
+                "name": "@saleor/macaw-ui",
+                "message": "Legacy Macaw UI is deprecated. Use @saleor/macaw-ui-next"
               }
             ]
           }
         ]
       }
-    },{
+    },
+    {
       "files": ["vite.config.js"],
       "rules": {
         "no-console": "off"
