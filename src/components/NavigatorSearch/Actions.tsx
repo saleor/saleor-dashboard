@@ -350,7 +350,6 @@ interface ActionsProps {
 export const Actions = ({ query, onActionClick, onActionsLoaded }: ActionsProps) => {
   const searchResults = fuzzySearch(allActions, query, ["name"]);
 
-  // @ts-expect-error - Old types for nodejs that does not have "groupBy"
   const groupedBySection = Object.groupBy(searchResults, result => result.section) as Record<
     string,
     {
