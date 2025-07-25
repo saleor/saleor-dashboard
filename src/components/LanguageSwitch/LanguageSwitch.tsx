@@ -1,4 +1,5 @@
 import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Combobox, ComboboxProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
@@ -14,8 +15,7 @@ export interface LanguageSwitchProps extends CutProps {
   onLanguageChange: (lang: LanguageCodeEnum) => void;
 }
 
-// todo add LanguageSwitchWithLocalStorage, make it decorated and use in other places
-export const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
+export const LanguageSwitch = (props: LanguageSwitchProps) => {
   const { currentLanguage, languages, onLanguageChange, ...rest } = props;
 
   return (
@@ -42,3 +42,26 @@ export const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
 };
 
 LanguageSwitch.displayName = "LanguageSwitch";
+
+export const LanguageSwitchWithCaching = (props: LanguageSwitchProps) => {
+  const { cachedValues, pushValue } = useCachedLocales();
+
+  const cachedWithLabel = cachedValues
+    .map(code => props.languages.find(l => l.code === code))
+    .filter(v => !!v) as LanguageFragment[];
+
+  const summed = [...cachedWithLabel, ...props.languages];
+
+  const withoutDuplicates = [...Array.from(new Set(summed))] as LanguageFragment[];
+
+  return (
+    <LanguageSwitch
+      {...props}
+      languages={withoutDuplicates}
+      onLanguageChange={langCode => {
+        pushValue(langCode);
+        props.onLanguageChange(langCode);
+      }}
+    />
+  );
+};

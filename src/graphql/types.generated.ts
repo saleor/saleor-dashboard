@@ -379,6 +379,41 @@ export enum AreaUnitsEnum {
   SQ_YD = 'SQ_YD'
 }
 
+export type AssignedAttributeReferenceInput = {
+  /** Returns objects with a reference pointing to a page identified by the given slug. */
+  pageSlugs?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to a product identified by the given slug. */
+  productSlugs?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to a product variant identified by the given sku. */
+  productVariantSkus?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to an object identified by the given ID. */
+  referencedIds?: InputMaybe<ContainsFilterInput>;
+};
+
+export type AssignedAttributeValueInput = {
+  /** Filter by boolean value for attributes of boolean type. */
+  boolean?: InputMaybe<Scalars['Boolean']>;
+  /** Filter by date value for attributes of date type. */
+  date?: InputMaybe<DateRangeInput>;
+  /** Filter by date time value for attributes of date time type. */
+  dateTime?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by name assigned to AttributeValue. */
+  name?: InputMaybe<StringFilterInput>;
+  /** Filter by numeric value for attributes of numeric type. */
+  numeric?: InputMaybe<DecimalFilterInput>;
+  /** Filter by reference attribute value. */
+  reference?: InputMaybe<AssignedAttributeReferenceInput>;
+  /** Filter by slug assigned to AttributeValue. */
+  slug?: InputMaybe<StringFilterInput>;
+};
+
+export type AssignedAttributeWhereInput = {
+  /** Filter by attribute slug. */
+  slug?: InputMaybe<Scalars['String']>;
+  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. */
+  value?: InputMaybe<AssignedAttributeValueInput>;
+};
+
 export enum AttributeBulkCreateErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   BLANK = 'BLANK',
@@ -549,6 +584,7 @@ export enum AttributeInputTypeEnum {
   PLAIN_TEXT = 'PLAIN_TEXT',
   REFERENCE = 'REFERENCE',
   RICH_TEXT = 'RICH_TEXT',
+  SINGLE_REFERENCE = 'SINGLE_REFERENCE',
   SWATCH = 'SWATCH'
 }
 
@@ -557,13 +593,6 @@ export type AttributeInputTypeEnumFilterInput = {
   eq?: InputMaybe<AttributeInputTypeEnum>;
   /** The value included in. */
   oneOf?: InputMaybe<Array<AttributeInputTypeEnum>>;
-};
-
-export type AttributePageWhereInput = {
-  /** Filter by attribute slug. */
-  slug: Scalars['String'];
-  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. */
-  value?: InputMaybe<AttributeValuePageInput>;
 };
 
 export enum AttributeSortField {
@@ -708,6 +737,12 @@ export type AttributeValueInput = {
   numeric?: InputMaybe<Scalars['String']>;
   /** Plain text content. */
   plainText?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of the referenced entity for single reference attribute.
+   *
+   * Added in Saleor 3.22.
+   */
+  reference?: InputMaybe<Scalars['ID']>;
   /** List of entity IDs that will be used as references. */
   references?: InputMaybe<Array<Scalars['ID']>>;
   /** Text content in JSON format. */
@@ -716,21 +751,6 @@ export type AttributeValueInput = {
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
   /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
   values?: InputMaybe<Array<Scalars['String']>>;
-};
-
-export type AttributeValuePageInput = {
-  /** Filter by boolean value for attributes of boolean type. */
-  boolean?: InputMaybe<Scalars['Boolean']>;
-  /** Filter by date value for attributes of date type. */
-  date?: InputMaybe<DateRangeInput>;
-  /** Filter by date time value for attributes of date time type. */
-  dateTime?: InputMaybe<DateTimeRangeInput>;
-  /** Filter by name assigned to AttributeValue. */
-  name?: InputMaybe<StringFilterInput>;
-  /** Filter by numeric value for attributes of numeric type. */
-  numeric?: InputMaybe<DecimalFilterInput>;
-  /** Filter by slug assigned to AttributeValue. */
-  slug?: InputMaybe<StringFilterInput>;
 };
 
 /**
@@ -845,6 +865,12 @@ export type BulkAttributeValueInput = {
   numeric?: InputMaybe<Scalars['String']>;
   /** Plain text content. */
   plainText?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of the referenced entity for single reference attribute.
+   *
+   * Added in Saleor 3.22.
+   */
+  reference?: InputMaybe<Scalars['ID']>;
   /** List of entity IDs that will be used as references. */
   references?: InputMaybe<Array<Scalars['ID']>>;
   /** Text content in JSON format. */
@@ -1484,6 +1510,14 @@ export enum ConfigurationTypeFieldEnum {
   SECRETMULTILINE = 'SECRETMULTILINE',
   STRING = 'STRING'
 }
+
+/** Define the filtering options for fields that can contain multiple values. */
+export type ContainsFilterInput = {
+  /** The field contains all of the specified values. */
+  containsAll?: InputMaybe<Array<Scalars['String']>>;
+  /** The field contains at least one of the specified values. */
+  containsAny?: InputMaybe<Array<Scalars['String']>>;
+};
 
 /**
  * Represents country codes defined by the ISO 3166-1 alpha-2 standard.
@@ -2171,13 +2205,13 @@ export type DraftOrderWhereInput = {
   chargeStatus?: InputMaybe<OrderChargeStatusEnumFilterInput>;
   /** Filter order by created at date. */
   createdAt?: InputMaybe<DateTimeRangeInput>;
-  /** Filter by order events. */
-  events?: InputMaybe<OrderEventFilterInput>;
+  /** Filter by order events. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  events?: InputMaybe<Array<OrderEventFilterInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   /** Filter by whether the order uses the click and collect delivery method. */
   isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
-  /** Filter by metadata fields of order lines. */
-  lines?: InputMaybe<LinesFilterInput>;
+  /** Filter by line items associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  lines?: InputMaybe<Array<LinesFilterInput>>;
   /** Filter by number of lines in the order. */
   linesCount?: InputMaybe<IntFilterInput>;
   /** Filter by metadata fields. */
@@ -2192,8 +2226,8 @@ export type DraftOrderWhereInput = {
   totalGross?: InputMaybe<PriceFilterInput>;
   /** Filter by total net amount of the order. */
   totalNet?: InputMaybe<PriceFilterInput>;
-  /** Filter by transaction data associated with the order. */
-  transactions?: InputMaybe<TransactionFilterInput>;
+  /** Filter by transaction data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  transactions?: InputMaybe<Array<TransactionFilterInput>>;
   /** Filter order by updated at date. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by user. */
@@ -4658,25 +4692,25 @@ export type OrderWhereInput = {
   checkoutToken?: InputMaybe<UuidFilterInput>;
   /** Filter order by created at date. */
   createdAt?: InputMaybe<DateTimeRangeInput>;
-  /** Filter by order events. */
-  events?: InputMaybe<OrderEventFilterInput>;
-  /** Filter by fulfillment data associated with the order. */
-  fulfillments?: InputMaybe<FulfillmentFilterInput>;
+  /** Filter by order events. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  events?: InputMaybe<Array<OrderEventFilterInput>>;
+  /** Filter by fulfillment data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  fulfillments?: InputMaybe<Array<FulfillmentFilterInput>>;
   /** Filter by whether the order has any fulfillments. */
   hasFulfillments?: InputMaybe<Scalars['Boolean']>;
   /** Filter by whether the order has any invoices. */
   hasInvoices?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
-  /** Filter by invoice data associated with the order. */
-  invoices?: InputMaybe<InvoiceFilterInput>;
+  /** Filter by invoice data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  invoices?: InputMaybe<Array<InvoiceFilterInput>>;
   /** Filter by whether the order uses the click and collect delivery method. */
   isClickAndCollect?: InputMaybe<Scalars['Boolean']>;
   /** Filter based on whether the order includes a gift card purchase. */
   isGiftCardBought?: InputMaybe<Scalars['Boolean']>;
   /** Filter based on whether a gift card was used in the order. */
   isGiftCardUsed?: InputMaybe<Scalars['Boolean']>;
-  /** Filter by metadata fields of order lines. */
-  lines?: InputMaybe<LinesFilterInput>;
+  /** Filter by line items associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  lines?: InputMaybe<Array<LinesFilterInput>>;
   /** Filter by number of lines in the order. */
   linesCount?: InputMaybe<IntFilterInput>;
   /** Filter by metadata fields. */
@@ -4693,8 +4727,8 @@ export type OrderWhereInput = {
   totalGross?: InputMaybe<PriceFilterInput>;
   /** Filter by total net amount of the order. */
   totalNet?: InputMaybe<PriceFilterInput>;
-  /** Filter by transaction data associated with the order. */
-  transactions?: InputMaybe<TransactionFilterInput>;
+  /** Filter by transaction data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  transactions?: InputMaybe<Array<TransactionFilterInput>>;
   /** Filter order by updated at date. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by user. */
@@ -4864,7 +4898,7 @@ export type PageWhereInput = {
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<PageWhereInput>>;
   /** Filter by attributes associated with the page. */
-  attributes?: InputMaybe<Array<AttributePageWhereInput>>;
+  attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   /** Filter by metadata fields. */
   metadata?: InputMaybe<MetadataFilterInput>;

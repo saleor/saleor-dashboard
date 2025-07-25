@@ -1,3 +1,5 @@
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -10,11 +12,15 @@ import { Tab, TabContainer } from "@dashboard/components/Tab";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForCategoryDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
+import { CategoryDetailsQuery, PermissionEnum, ProductErrorFragment } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sprinkles } from "@saleor/macaw-ui-next";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
+import { Box, sprinkles } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -77,7 +83,10 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   onUpdateListSettings,
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
 
   const categoryBackListUrl = useBackLinkWithState({
     path: categoryListPath,
@@ -96,8 +105,25 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout gridTemplateColumns={1}>
           <TopNav href={backHref} title={category?.name}>
+            {canTranslate && (
+              <TranslationsButton
+                variant="secondary"
+                icon={<TranslationsIcon />}
+                onClick={() =>
+                  navigate(
+                    languageEntityUrl(
+                      lastUsedLocaleOrFallback,
+                      TranslatableEntities.categories,
+                      categoryId,
+                    ),
+                  )
+                }
+              />
+            )}
             {extensionMenuItems.length > 0 && (
-              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              <Box marginLeft={3}>
+                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              </Box>
             )}
           </TopNav>
           <DetailPageLayout.Content>

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { LanguageSwitch } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
+import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import { AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@dashboard/graphql";
@@ -70,7 +70,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           },
         )}
       >
-        <LanguageSwitch
+        <LanguageSwitchWithCaching
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
           onLanguageChange={lang =>

@@ -20,18 +20,10 @@
       "version": "detect"
     }
   },
-  "plugins": [
-    "import",
-    "local-rules",
-    "formatjs",
-    "react-refresh",
-    "simple-import-sort"
-  ],
+  "plugins": ["import", "local-rules", "formatjs", "react-refresh", "simple-import-sort"],
   "overrides": [
     {
-      "files": [
-        "playwright/**/*.ts"
-      ],
+      "files": ["playwright/**/*.ts"],
       "parserOptions": {
         "project": "./playwright/tsconfig.json"
       },
@@ -40,18 +32,13 @@
       }
     },
     {
-      "files": [
-        "src/**/*.test.*",
-        "src/**/*.stories.*"
-      ],
+      "files": ["src/**/*.test.*", "src/**/*.stories.*"],
       "rules": {
         "react-refresh/only-export-components": "off"
       }
     },
     {
-      "files": [
-        "src/**/*"
-      ],
+      "files": ["src/**/*"],
       "rules": {
         "no-restricted-imports": [
           "warn",
@@ -65,6 +52,14 @@
           }
         ]
       }
+    },{
+      "files": ["vite.config.js"],
+      "rules": {
+        "no-console": "off"
+      },
+      "env": {
+        "node": true
+      }
     }
   ],
   "rules": {
@@ -73,13 +68,11 @@
     "import/no-internal-modules": "off", // imports are handled by simple-import-sort/sort
     "import/order": "off", // imports are handled by simple-import-sort/sort
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
+    "import/no-default-export": "warn",
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "react-refresh/only-export-components": "warn",
-    "lines-between-class-members": [
-      "error",
-      "always"
-    ],
+    "lines-between-class-members": ["error", "always"],
     "padding-line-between-statements": [
       "error",
       // After directives (like 'use-strict'), except between directives
@@ -108,55 +101,27 @@
       {
         "blankLine": "always",
         "prev": "*",
-        "next": [
-          "const",
-          "let",
-          "var"
-        ]
+        "next": ["const", "let", "var"]
       },
       {
         "blankLine": "always",
-        "prev": [
-          "const",
-          "let",
-          "var"
-        ],
+        "prev": ["const", "let", "var"],
         "next": "*"
       },
       {
         "blankLine": "any",
-        "prev": [
-          "const",
-          "let",
-          "var"
-        ],
-        "next": [
-          "const",
-          "let",
-          "var"
-        ]
+        "prev": ["const", "let", "var"],
+        "next": ["const", "let", "var"]
       },
       // Before and after class declaration, if, while, switch, try
       {
         "blankLine": "always",
         "prev": "*",
-        "next": [
-          "class",
-          "if",
-          "while",
-          "switch",
-          "try"
-        ]
+        "next": ["class", "if", "while", "switch", "try"]
       },
       {
         "blankLine": "always",
-        "prev": [
-          "class",
-          "if",
-          "while",
-          "switch",
-          "try"
-        ],
+        "prev": ["class", "if", "while", "switch", "try"],
         "next": "*"
       },
       // Before return statements
@@ -176,20 +141,13 @@
     "no-restricted-imports": [
       "error",
       {
-        "paths": [
-          "lodash",
-          "@material-ui/icons/Delete",
-          "classnames"
-        ]
+        "paths": ["lodash", "@material-ui/icons/Delete", "classnames"]
       }
     ],
     "no-console": [
       "error",
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ],
     // Decided to turn off:
@@ -208,10 +166,5 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off"
   },
-  "ignorePatterns": [
-    "node_modules/",
-    "**/types/**/*",
-    "type-policies.ts",
-    "playwright/auth.js"
-  ]
+  "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts", "playwright/auth.js"]
 }

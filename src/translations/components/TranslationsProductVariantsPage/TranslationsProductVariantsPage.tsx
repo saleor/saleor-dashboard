@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { LanguageSwitch } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
+import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { LanguageCodeEnum, ProductVariantTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -81,7 +81,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             productId={productId}
             selectedId={variantId}
           />
-          <LanguageSwitch
+          <LanguageSwitchWithCaching
             currentLanguage={LanguageCodeEnum[languageCode]}
             languages={languages}
             onLanguageChange={lang => navigate(productVariantUrl(lang, productId, translationId))}

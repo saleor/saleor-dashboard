@@ -1,5 +1,7 @@
 // @ts-strict-ignore
 import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListPath, CollectionUrlQueryParams } from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -22,7 +24,10 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Divider } from "@saleor/macaw-ui-next";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
+import { Box, Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -65,7 +70,10 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
   ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
   const intl = useIntl();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
 
   const collectionListBackLink = useBackLinkWithState({
     path: collectionListPath,
@@ -90,8 +98,23 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout>
           <TopNav href={collectionListBackLink} title={collection?.name}>
+            {canTranslate && (
+              <TranslationsButton
+                onClick={() =>
+                  navigate(
+                    languageEntityUrl(
+                      lastUsedLocaleOrFallback,
+                      TranslatableEntities.collections,
+                      collection.id,
+                    ),
+                  )
+                }
+              />
+            )}
             {extensionMenuItems.length > 0 && (
-              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              <Box marginLeft={3}>
+                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+              </Box>
             )}
           </TopNav>
           <DetailPageLayout.Content>
