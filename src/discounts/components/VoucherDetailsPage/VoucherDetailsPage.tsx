@@ -205,36 +205,59 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       : voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
-  const initialForm: VoucherDetailsPageFormData = {
-    applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
-    applyOncePerOrder: voucher?.applyOncePerOrder || false,
-    onlyForStaff: voucher?.onlyForStaff || false,
-    channelListings,
-    name: voucher?.name || "",
-    discountType,
-    codes: addedVoucherCodes,
-    endDate: splitDateTime(voucher?.endDate ?? "").date,
-    endTime: splitDateTime(voucher?.endDate ?? "").time,
-    hasEndDate: !!voucher?.endDate,
-    hasUsageLimit: !!voucher?.usageLimit,
-    minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
-    requirementsPicker: requirementsPickerInitValue,
-    startDate: splitDateTime(voucher?.startDate ?? "").date,
-    startTime: splitDateTime(voucher?.startDate ?? "").time,
-    type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: voucher?.usageLimit ?? 1,
-    used: voucher?.used ?? 0,
-    singleUse: voucher?.singleUse ?? false,
-    metadata: voucher?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
-  };
+
+  // Memoize the initial form data to prevent unnecessary reinitialization
+  const initialForm: VoucherDetailsPageFormData = React.useMemo(
+    () => ({
+      applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
+      applyOncePerOrder: voucher?.applyOncePerOrder || false,
+      onlyForStaff: voucher?.onlyForStaff || false,
+      channelListings,
+      name: voucher?.name || "",
+      discountType,
+      codes: addedVoucherCodes,
+      endDate: splitDateTime(voucher?.endDate ?? "").date,
+      endTime: splitDateTime(voucher?.endDate ?? "").time,
+      hasEndDate: !!voucher?.endDate,
+      hasUsageLimit: !!voucher?.usageLimit,
+      minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
+      requirementsPicker: requirementsPickerInitValue,
+      startDate: splitDateTime(voucher?.startDate ?? "").date,
+      startTime: splitDateTime(voucher?.startDate ?? "").time,
+      type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
+      usageLimit: voucher?.usageLimit ?? 1,
+      used: voucher?.used ?? 0,
+      singleUse: voucher?.singleUse ?? false,
+      metadata: voucher?.metadata.map(mapMetadataItemToInput),
+      privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
+    }),
+    [
+      voucher?.applyOncePerCustomer,
+      voucher?.applyOncePerOrder,
+      voucher?.onlyForStaff,
+      channelListings,
+      voucher?.name,
+      discountType,
+      addedVoucherCodes,
+      voucher?.endDate,
+      voucher?.usageLimit,
+      voucher?.minCheckoutItemsQuantity,
+      requirementsPickerInitValue,
+      voucher?.startDate,
+      voucher?.type,
+      voucher?.used,
+      voucher?.singleUse,
+      voucher?.metadata,
+      voucher?.privateMetadata,
+    ],
+  );
 
   const voucherListBackLink = useBackLinkWithState({
     path: voucherListPath,
   });
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} key={voucher?.id}>
       {({ change, data, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(change);
         const handleChannelChange = createChannelsChangeHandler(

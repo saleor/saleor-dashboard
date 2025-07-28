@@ -190,13 +190,16 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         notifySaved();
         handleClearAddedVoucherCodes();
         voucherCodesRefetch();
-        updateQuery(prev => ({
-          ...prev,
-          voucher: {
-            ...prev.voucher,
-            ...data.voucherUpdate.voucher,
-          },
-        }));
+        // Delay the cache update to prevent form re-initialization
+        setTimeout(() => {
+          updateQuery(prev => ({
+            ...prev,
+            voucher: {
+              ...prev.voucher,
+              ...data.voucherUpdate.voucher,
+            },
+          }));
+        }, 100);
       }
     },
   });
