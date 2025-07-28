@@ -23,6 +23,12 @@
   "plugins": ["import", "local-rules", "formatjs", "react-refresh", "simple-import-sort"],
   "overrides": [
     {
+      "files": ["src/**/*.stories.@(ts|tsx)"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
       "files": ["playwright/**/*.ts"],
       "parserOptions": {
         "project": "./playwright/tsconfig.json"
@@ -52,7 +58,8 @@
           }
         ]
       }
-    },{
+    },
+    {
       "files": ["vite.config.js"],
       "rules": {
         "no-console": "off"
