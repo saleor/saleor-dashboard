@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { useActionItems } from "./useActionItems";
-import { useInput } from "./useInput";
+import { useCommandMenuInput } from "./useCommandMenuInput";
 import { useKeyboardNavigation } from "./useKeyboardNavigation";
 import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
 
@@ -12,13 +12,14 @@ jest.mock("@dashboard/hooks/useNavigator");
 jest.mock("@dashboard/search/urls");
 jest.mock("react-hotkeys-hook");
 jest.mock("./useActionItems");
-jest.mock("./useInput");
+jest.mock("./useCommandMenuInput");
 jest.mock("./useNavigatorSearchContext");
 
 describe("useKeyboardNavigation", () => {
   const mockNavigate = jest.fn();
   const mockSetNavigatorVisibility = jest.fn();
   const mockUpdateAriaActiveDescendant = jest.fn();
+  const mockClearActiveDescendant = jest.fn();
   const mockResetInput = jest.fn();
   const mockResetFocus = jest.fn();
   const mockCollectLinks = jest.fn();
@@ -48,8 +49,9 @@ describe("useKeyboardNavigation", () => {
       setNavigatorVisibility: mockSetNavigatorVisibility,
     });
 
-    (useInput as jest.Mock).mockReturnValue({
+    (useCommandMenuInput as jest.Mock).mockReturnValue({
       updateAriaActiveDescendant: mockUpdateAriaActiveDescendant,
+      clearActiveDescendant: mockClearActiveDescendant,
       resetInput: mockResetInput,
     });
 
@@ -124,7 +126,7 @@ describe("useKeyboardNavigation", () => {
       expect(mockUpdateAriaActiveDescendant).toHaveBeenCalledWith("test-element-id");
     });
 
-    it("should not update aria active descendant when no active focused element", () => {
+    it("should clear aria active descendant when no active focused element", () => {
       mockGetActiveFocusedElement.mockReturnValue(undefined);
 
       renderHook(() => useKeyboardNavigation({ query: "test" }));
@@ -132,6 +134,7 @@ describe("useKeyboardNavigation", () => {
       expect(mockFocusFirst).toHaveBeenCalled();
       expect(mockGetActiveFocusedElement).toHaveBeenCalled();
       expect(mockUpdateAriaActiveDescendant).not.toHaveBeenCalled();
+      expect(mockClearActiveDescendant).toHaveBeenCalled();
     });
   });
 
@@ -243,7 +246,7 @@ describe("useKeyboardNavigation", () => {
 
       expect(useNavigator).toHaveBeenCalled();
       expect(useNavigatorSearchContext).toHaveBeenCalled();
-      expect(useInput).toHaveBeenCalled();
+      expect(useCommandMenuInput).toHaveBeenCalled();
       expect(useActionItems).toHaveBeenCalled();
     });
   });

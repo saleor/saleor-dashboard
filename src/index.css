@@ -124,9 +124,9 @@ a.command-menu-item {
   - You cannot easily override the current style set when used prop in Box (eg. override current backgroundColor=...)
 */
 .command-menu-item[data-focus="true"] {
-  background-color: var(--mu-colors-background-default1-hovered);
+  background-color: var(--mu-colors-background-default1-hovered) !important;
 }
 
 .command-menu tr[data-focus="true"] {
-  background-color: var(--mu-colors-background-default1-hovered);
+  background-color: var(--mu-colors-background-default1-hovered) !important;
 }

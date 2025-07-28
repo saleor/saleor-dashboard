@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import { useActionItems } from "./useActionItems";
-import { useInput } from "./useInput";
+import { useCommandMenuInput } from "./useCommandMenuInput";
 import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
 
 const hotkeysSettings = {
@@ -17,7 +17,7 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
 
   const scope = useRef<HTMLDivElement | null>(null);
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
-  const { updateAriaActiveDescendant, resetInput } = useInput();
+  const { updateAriaActiveDescendant, clearActiveDescendant, resetInput } = useCommandMenuInput();
   const {
     resetFocus,
     collectLinks,
@@ -29,14 +29,21 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
     takeAction,
   } = useActionItems();
 
-  useEffect(() => {
-    focusFirst();
-
+  const updateDescendant = () => {
     const activeFocusedElement = getActiveFocusedElement();
 
     if (activeFocusedElement) {
       updateAriaActiveDescendant(activeFocusedElement.id);
+
+      return;
     }
+
+    clearActiveDescendant();
+  };
+
+  useEffect(() => {
+    focusFirst();
+    updateDescendant();
   }, [query]);
 
   useHotkeys(
@@ -44,6 +51,7 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
     event => {
       event.preventDefault();
       focusNext();
+      updateDescendant();
 
       return false;
     },
@@ -55,6 +63,7 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
     event => {
       event.preventDefault();
       focusPrevious();
+      updateDescendant();
 
       return false;
     },
@@ -66,6 +75,7 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
     event => {
       event.preventDefault();
       focusNext();
+      updateDescendant();
 
       return false;
     },
@@ -78,6 +88,7 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
       event.preventDefault();
       setNavigatorVisibility(false);
       resetFocus();
+      updateDescendant();
 
       navigate(globalSearchUrl({ query }));
 
@@ -104,6 +115,7 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
     if (isNavigatorVisible) return;
 
     resetFocus();
+    updateDescendant();
   }, [isNavigatorVisible]);
 
   return {

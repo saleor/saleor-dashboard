@@ -119,7 +119,7 @@ describe("useActionItems", () => {
         expect(result.current.currentFocusIndex.current).toBe(0);
         expect(mockElements[0].setAttribute).toHaveBeenCalledWith("data-focus", "true");
         expect(mockElements[0].setAttribute).toHaveBeenCalledWith("aria-selected", "true");
-        expect(mockScrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "nearest" });
+        expect(mockScrollIntoView).toHaveBeenCalled();
       });
     });
 

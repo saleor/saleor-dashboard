@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export const useInput = () => {
+export const useCommandMenuInput = () => {
   const container = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -13,14 +13,22 @@ export const useInput = () => {
     container.current.setAttribute("aria-activedescendant", id);
   };
 
+  const clearActiveDescendant = () => {
+    if (!container.current) return;
+
+    container.current.removeAttribute("aria-activedescendant");
+  };
+
   const resetInput = () => {
     if (!container.current) return;
 
+    clearActiveDescendant();
     container.current = null;
   };
 
   return {
     resetInput,
+    clearActiveDescendant,
     updateAriaActiveDescendant,
   };
 };
