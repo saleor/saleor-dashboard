@@ -81,6 +81,7 @@ export const InstallCustomExtensionFromForm = ({
           disabled={!manifest}
           transitionState={isSubmittingInstallation ? "loading" : "default"}
           onClick={() => submitInstallApp()}
+          data-test-id="install-app-from-manifest"
         >
           <FormattedMessage {...messages.install} />
         </Savebar.ConfirmButton>

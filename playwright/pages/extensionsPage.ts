@@ -13,7 +13,7 @@ export class ExtensionsPage extends BasePage {
     readonly installedExtensionsList = page.getByTestId("extensions-installed"),
     readonly availableExtensions = page.getByTestId("extensions-list"),
 
-    readonly appManifestUrlInput = page.getByTestId("manifest-url-input").locator("input"),
+    readonly appManifestUrlInput = page.getByTestId("manifest-url-input"),
     readonly installAppFromManifestButton = page.getByTestId("install-app-from-manifest"),
     readonly installedExtensionsRow = page.getByTestId("installed-extension-row"),
     readonly extensionViewDetailsButton = page.locator("[data-test-id*='view-details']"),

@@ -7,12 +7,10 @@ import { test } from "utils/testWithPermission";
 test.use({ permissionName: "admin" });
 
 let extensionsPage: ExtensionsPage;
-let installationPage: AppInstallationPage;
 let appPage: AppPage;
 
 test.beforeEach(({ page }) => {
   extensionsPage = new ExtensionsPage(page);
-  installationPage = new AppInstallationPage(page);
   appPage = new AppPage(page);
 });
 
