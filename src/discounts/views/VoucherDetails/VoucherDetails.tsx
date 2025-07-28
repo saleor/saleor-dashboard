@@ -77,15 +77,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
   const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
   const intl = useIntl();
-  const isMountedRef = useRef(true);
-
-  // Cleanup ref on unmount to prevent memory leaks and race conditions
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
-
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -199,20 +190,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         notifySaved();
         handleClearAddedVoucherCodes();
         voucherCodesRefetch();
-
-        // Use requestAnimationFrame to defer cache update until after current render cycle
-        // this prevents flicker after user clicks "Save"
-        requestAnimationFrame(() => {
-          if (isMountedRef.current) {
-            updateQuery(prev => ({
-              ...prev,
-              voucher: {
-                ...prev.voucher,
-                ...data.voucherUpdate.voucher,
-              },
-            }));
-          }
-        });
+        updateQuery(prev => ({
+          ...prev,
+          voucher: {
+            ...prev.voucher,
+            ...data.voucherUpdate.voucher,
+          },
+        }));
       }
     },
   });
