@@ -1,5 +1,4 @@
 import { APPS } from "@data/e2eTestData";
-import { AppInstallationPage } from "@pages/appInstallationPage";
 import { AppPage } from "@pages/appPageThirdparty";
 import { ExtensionsPage } from "@pages/extensionsPage";
 import { expect } from "@playwright/test";
@@ -28,17 +27,12 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await extensionsPage.addExtensionsOpenDropdownButton.click();
   await extensionsPage.installCustomExtensionOption.click();
   await extensionsPage.typeManifestUrl("https://klaviyo.saleor.app/api/manifest");
+  await expect(page.getByText("You are about to install Klaviyo")).toBeVisible({
+    // Klaviyo app can take a while to respond with manifest if it's
+    // cold-starting
+    timeout: PRE_INSTALLATION_TIMEOUT,
+  });
   await extensionsPage.installAppFromManifestButton.click();
-  await expect(installationPage.appInstallationPageHeader).toHaveText(
-    "You are about to install Klaviyo",
-    {
-      // Klaviyo app can take a while to respond with manifest if it's
-      // cold-starting
-      timeout: PRE_INSTALLATION_TIMEOUT,
-    },
-  );
-  await installationPage.installAppButton.click();
-
   await extensionsPage.expectSuccessBanner({ timeout: INSTALLATION_PENDING_TIMEOUT });
   await expect(extensionsPage.installedExtensionsRow.first()).toBeVisible();
   await expect(extensionsPage.installationPendingLabel).not.toBeVisible();
