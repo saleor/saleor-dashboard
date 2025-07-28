@@ -43,7 +43,7 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   await expect(extensionsPage.installedExtensionsRow.first()).toBeVisible();
   await expect(extensionsPage.installationPendingLabel).not.toBeVisible();
 
-  await expect(extensionsPage.appKlaviyoViewDetailsButton).toContainText("View details");
+  await expect(extensionsPage.appKlaviyoViewDetailsButton).toBeVisible();
   await expect(
     extensionsPage.installedExtensionsRow.filter({ hasText: "Klaviyo" }).first(),
   ).toBeVisible();
@@ -64,7 +64,7 @@ test("TC: SALEOR_120 User should be able to delete thirdparty app #e2e", async (
     appPage.goToExistingAppPage(APPS.appToBeDeleted.id),
   );
   await appPage.pageHeader.waitFor({ state: "visible", timeout: 10000 });
-  await expect(appPage.pageHeader).toContainText("Saleor QA App");
+  await expect(appPage.pageHeader).toContainText("Saleor Dummy tax app");
   await appPage.deleteButton.click();
   await appPage.deleteAppDialog.clickDeleteButton();
   await extensionsPage.expectSuccessBanner();

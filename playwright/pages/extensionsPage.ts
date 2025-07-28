@@ -19,7 +19,7 @@ export class ExtensionsPage extends BasePage {
     readonly extensionViewDetailsButton = page.locator("[data-test-id*='view-details']"),
     readonly pluginDetailsView = page.locator('[data-test-id="plugin-details"]'),
     readonly appKlaviyoViewDetailsButton = page.getByTestId("klaviyo-view-details"),
-    readonly appQA = page.getByTestId("app-saleorqa app"),
+    readonly appQA = page.getByTestId("saleordummytaxapp-view-details"),
     readonly installationPendingLabel = page.getByTestId("app-pending-label").first(),
     readonly availableAppsLoader = page.getByTestId("available-apps-loader"),
     readonly appExtensionExploreInstallButtons = page.locator(
