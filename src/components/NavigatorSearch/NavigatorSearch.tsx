@@ -5,6 +5,7 @@ import { DashboardModal } from "../Modal";
 import { CommandContent } from "./CommandContent";
 import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
 
+// TODO: probably can be fully handled by https://github.com/pacocoursey/cmdk
 const NavigatorSearch: React.FC = () => {
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
 
