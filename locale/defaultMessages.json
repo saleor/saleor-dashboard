@@ -1536,9 +1536,6 @@
   "7NFfmz": {
     "string": "Products"
   },
-  "7OW8BT": {
-    "string": "Configuration"
-  },
   "7QPLu0": {
     "context": "empty state message",
     "string": "No transactions made for this order."
@@ -4571,9 +4568,6 @@
   "PkjQS6": {
     "context": "description",
     "string": "No results found"
-  },
-  "Pl/ilB": {
-    "string": "Go to shipping zones"
   },
   "PlAdWI": {
     "string": "You are going to"
@@ -8785,9 +8779,6 @@
   "pkjXPD": {
     "context": "order status",
     "string": "Fulfilled"
-  },
-  "plp5Oc": {
-    "string": "Go to model attributes"
   },
   "ppLwx3": {
     "context": "number of categories",
