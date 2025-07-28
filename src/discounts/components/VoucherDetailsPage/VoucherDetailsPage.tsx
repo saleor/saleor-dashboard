@@ -206,7 +206,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
 
-  // Memoize the initial form data to prevent unnecessary reinitialization
+  // Memoize the initial form data to prevent form reinitialization which causes flickering
+  // during save operations. This ensures form state remains stable across re-renders.
   const initialForm: VoucherDetailsPageFormData = React.useMemo(
     () => ({
       applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
@@ -249,6 +250,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       voucher?.singleUse,
       voucher?.metadata,
       voucher?.privateMetadata,
+      voucher?.discountValueType,
     ],
   );
 

@@ -58,7 +58,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button } from "@saleor/macaw-ui-next";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
@@ -77,6 +77,15 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
   const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
   const intl = useIntl();
+  const isMountedRef = useRef(true);
+
+  // Cleanup ref on unmount to prevent memory leaks and race conditions
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -190,16 +199,20 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         notifySaved();
         handleClearAddedVoucherCodes();
         voucherCodesRefetch();
-        // Delay the cache update to prevent form re-initialization
-        setTimeout(() => {
-          updateQuery(prev => ({
-            ...prev,
-            voucher: {
-              ...prev.voucher,
-              ...data.voucherUpdate.voucher,
-            },
-          }));
-        }, 100);
+
+        // Use requestAnimationFrame to defer cache update until after current render cycle
+        // this prevents flicker after user clicks "Save"
+        requestAnimationFrame(() => {
+          if (isMountedRef.current) {
+            updateQuery(prev => ({
+              ...prev,
+              voucher: {
+                ...prev.voucher,
+                ...data.voucherUpdate.voucher,
+              },
+            }));
+          }
+        });
       }
     },
   });
