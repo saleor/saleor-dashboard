@@ -25,7 +25,7 @@ export const useActionItems = () => {
     element.setAttribute("aria-selected", value.toString());
 
     if (value) {
-      element.scrollIntoView({ behavior: "instant", block: "nearest" });
+      element.scrollIntoView({ behavior: "auto", block: "nearest" });
     }
   };
 
