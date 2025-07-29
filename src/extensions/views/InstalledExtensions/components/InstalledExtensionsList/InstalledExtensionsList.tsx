@@ -33,7 +33,7 @@ const ExtensionLink = ({
     );
   }
 
-  const formattedName = name?.toLowerCase().replace(" ", "") ?? "";
+  const formattedName = name?.toLowerCase().replace(/\s/g, "") ?? "";
 
   return (
     <Link

@@ -1,10 +1,12 @@
 import { ExtensionsPage } from "@pages/extensionsPage";
+import { HomePage } from "@pages/homePage";
 import { MainMenuPage } from "@pages/mainMenuPage";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "plugin" });
 
+let home: HomePage;
 let mainMenuPage: MainMenuPage;
 let extensionsPage: ExtensionsPage;
 
@@ -19,8 +21,13 @@ const expectedExtensions = [
 ];
 
 test.beforeEach(async ({ page }) => {
+  home = new HomePage(page);
+
   mainMenuPage = new MainMenuPage(page);
   extensionsPage = new ExtensionsPage(page);
+
+  await home.goto();
+  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
 });
 
 test("TC: SALEOR_16 User should be able to navigate to installed extensions and view plugin details as a staff member using PLUGINS permission #e2e", async ({
@@ -45,7 +52,6 @@ test("TC: SALEOR_131 User with MANAGE_PLUGINS permission can install plugins but
   const mainMenuPage = new MainMenuPage(page);
   const extensionsPage = new ExtensionsPage(page);
 
-  await page.goto("/");
   await mainMenuPage.openExploreExtensions();
   await extensionsPage.waitForContentLoad();
 
