@@ -35,6 +35,7 @@ export const ManifestUrlForm = ({
         aria-labelledby={EL_ID_MANIFEST_INPUT_LABEL}
         placeholder={PLACEHOLDER_MANIFEST_URL}
         onPaste={onPaste}
+        data-test-id="manifest-url-input"
       />
     </Box>
   );
