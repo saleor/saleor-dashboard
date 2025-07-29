@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import useShop from "@dashboard/hooks/useShop";
 import React from "react";
 
@@ -8,7 +7,7 @@ import TranslationsLanguageListPage from "../components/TranslationsLanguageList
 const TranslationsLanguageList: React.FC = () => {
   const shop = useShop();
 
-  return <TranslationsLanguageListPage languages={maybe(() => shop.languages)} />;
+  return <TranslationsLanguageListPage languages={shop?.languages} />;
 };
 
 TranslationsLanguageList.displayName = "TranslationsLanguageList";

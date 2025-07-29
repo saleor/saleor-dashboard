@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useEffect } from "react";
 
 /**
@@ -9,6 +8,6 @@ const portalRoot = document.getElementById("portal");
 
 export const usePortalClasses = ({ className }: { className: string }) => {
   useEffect(() => {
-    portalRoot.classList.add(className);
+    portalRoot?.classList.add(className);
   }, []);
 };

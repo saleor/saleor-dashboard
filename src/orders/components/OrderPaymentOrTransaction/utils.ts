@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { OrderDetailsFragment } from "@dashboard/graphql";
 
 /** Returns paymetns from order that were used to pay for the order */
