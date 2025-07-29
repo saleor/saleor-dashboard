@@ -113,3 +113,20 @@ body {
     background-color: transparent !important;
   }
 }
+
+a.command-menu-item {
+  display: block;
+}
+
+/**
+  TODO: Remove this when we have a way to style this via macaw.
+  - Currently there is no way in macaw to style conditions attached to attributes.
+  - You cannot easily override the current style set when used prop in Box (eg. override current backgroundColor=...)
+*/
+.command-menu-item[data-focus="true"] {
+  background-color: var(--mu-colors-background-default1-hovered) !important;
+}
+
+.command-menu tr[data-focus="true"] {
+  background-color: var(--mu-colors-background-default1-hovered) !important;
+}
