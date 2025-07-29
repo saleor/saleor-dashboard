@@ -57,6 +57,7 @@
     "@sentry/vite-plugin",
     "code-inspector-plugin",
     "faker",
-    "@types/faker"
+    "@types/faker",
+    "downshift"
   ]
 }
