@@ -4,12 +4,11 @@ import {
   PaymentGatewayFragment,
   TransactionActionEnum,
 } from "@dashboard/graphql";
-import { OrderTransactionProps } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
+import OrderTransaction, { OrderTransactionProps } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
 import React from "react";
 
-import OrderTransaction from "../OrderTransaction/OrderTransaction";
 import {
   findMethodName,
   getTransactionAmount,

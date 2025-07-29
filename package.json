@@ -140,6 +140,7 @@
     "dotenv": "^10.0.0",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-nibble": "^8.1.0",
     "eslint-plugin-formatjs": "^5.4.0",
     "eslint-plugin-import": "^2.32.0",

@@ -1,8 +1,7 @@
 import {
   getFilterOpts,
-  getFilterVariables,
-  storageUtils,
-} from "@dashboard/attributes/views/AttributeList/filters";
+ getFilterQueryParam,  getFilterVariables,
+  storageUtils } from "@dashboard/attributes/views/AttributeList/filters";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
@@ -32,7 +31,6 @@ import { useIntl } from "react-intl";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import { attributeListUrl, AttributeListUrlDialog, AttributeListUrlQueryParams } from "../../urls";
-import { getFilterQueryParam } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface AttributeListProps {
