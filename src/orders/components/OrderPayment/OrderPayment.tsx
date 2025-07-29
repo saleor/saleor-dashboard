@@ -172,13 +172,13 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 classes.supportText,
               )}
             >
-              {<Money money={order?.total.tax} /> ?? <Skeleton />}
+              {order?.total.tax ? <Money money={order.total.tax} /> : <Skeleton />}
             </div>
           </div>
           <div className={classes.totalRow}>
             <FormattedMessage {...orderPaymentMessages.total} />
             <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.total.gross} /> ?? <Skeleton />}
+              {order?.total.gross ? <Money money={order.total.gross} /> : <Skeleton />}
             </div>
           </div>
         </div>
@@ -202,13 +202,13 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           <div>
             <FormattedMessage {...orderPaymentMessages.preauthorized} />
             <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.totalAuthorized} /> ?? <Skeleton />}
+              {order?.totalAuthorized ? <Money money={order.totalAuthorized} /> : <Skeleton />}
             </div>
           </div>
           <div>
             <FormattedMessage {...orderPaymentMessages.captured} />
             <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.totalCaptured} /> ?? <Skeleton />}
+              {order?.totalCaptured ? <Money money={order.totalCaptured} /> : <Skeleton />}
             </div>
           </div>
           {!!refundedAmount?.amount && (
@@ -233,7 +233,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {order?.totalBalance.amount === 0 ? (
                 <FormattedMessage {...orderPaymentMessages.settled} />
               ) : (
-                <Money money={order?.totalBalance} /> ?? <Skeleton />
+                order?.totalBalance ? <Money money={order.totalBalance} /> : <Skeleton />
               )}
               {}
             </div>

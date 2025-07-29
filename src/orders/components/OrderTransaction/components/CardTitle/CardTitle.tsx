@@ -140,9 +140,7 @@ export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
 
         {showActionButtons && (
           <Box display="flex" flexDirection="row" gap={2}>
-            {actions
-              .filter(action => action !== TransactionActionEnum.REFUND)
-              .map(action => (
+            {actions.map(action => (
                 <div key={`transaction-action-${action}`}>
                   <Button
                     variant="secondary"
