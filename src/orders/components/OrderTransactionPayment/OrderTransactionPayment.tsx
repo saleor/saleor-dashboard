@@ -35,7 +35,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   const captured = payment?.capturedAmount?.amount ?? 0;
   const authorized = payment?.availableCaptureAmount?.amount ?? 0;
   const refunded = total - captured - authorized;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   const fakeEvents = React.useMemo(
     () => mapPaymentToTransactionEvents(payment),
     [payment.transactions],

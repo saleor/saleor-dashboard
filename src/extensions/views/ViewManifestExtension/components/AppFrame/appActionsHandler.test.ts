@@ -63,7 +63,7 @@ describe("AppActionsHandler", function () {
     };
   });
   afterAll((): void => {
-    window.location = location;
+    (window.location as any) = location;
   });
   describe("useHandleNotificationAction", () => {
     it("Calls useNotifier with payload from action", () => {

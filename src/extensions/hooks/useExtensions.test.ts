@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+ 
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionMountEnum, PermissionEnum } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
