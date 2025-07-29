@@ -206,10 +206,16 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
 
-  // Memoize the initial form data to prevent form reinitialization which causes flickering
-  // during save operations. This ensures form state remains stable across re-renders.
-  const initialForm: VoucherDetailsPageFormData = React.useMemo(
-    () => ({
+  // Use ref to store initial form data and only update it when viewing different voucher
+  // This prevents form reset during tab navigation (assign tabs) and flickers when saving form
+  const initialFormRef = React.useRef<VoucherDetailsPageFormData | null>(null);
+
+  if (
+    !initialFormRef.current ||
+    initialFormRef.current?.name !== voucher?.name ||
+    initialFormRef.current?.channelListings.length !== channelListings.length
+  ) {
+    initialFormRef.current = {
       applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
       applyOncePerOrder: voucher?.applyOncePerOrder || false,
       onlyForStaff: voucher?.onlyForStaff || false,
@@ -229,37 +235,19 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       usageLimit: voucher?.usageLimit ?? 1,
       used: voucher?.used ?? 0,
       singleUse: voucher?.singleUse ?? false,
-      metadata: voucher?.metadata.map(mapMetadataItemToInput),
-      privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
-    }),
-    [
-      voucher?.applyOncePerCustomer,
-      voucher?.applyOncePerOrder,
-      voucher?.onlyForStaff,
-      channelListings,
-      voucher?.name,
-      discountType,
-      addedVoucherCodes,
-      voucher?.endDate,
-      voucher?.usageLimit,
-      voucher?.minCheckoutItemsQuantity,
-      requirementsPickerInitValue,
-      voucher?.startDate,
-      voucher?.type,
-      voucher?.used,
-      voucher?.singleUse,
-      voucher?.metadata,
-      voucher?.privateMetadata,
-      voucher?.discountValueType,
-    ],
-  );
+      metadata: voucher?.metadata?.map(mapMetadataItemToInput) || [],
+      privateMetadata: voucher?.privateMetadata?.map(mapMetadataItemToInput) || [],
+    };
+  }
+
+  const initialForm = initialFormRef.current;
 
   const voucherListBackLink = useBackLinkWithState({
     path: voucherListPath,
   });
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} key={voucher?.id}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(change);
         const handleChannelChange = createChannelsChangeHandler(

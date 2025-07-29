@@ -90,10 +90,12 @@ export class VouchersPage extends BasePage {
   }
 
   async clickAssignCollectionButton() {
+    await this.assignCollectionButton.waitFor({ state: "visible" });
     await this.assignCollectionButton.click();
   }
 
   async clickAssignProductButton() {
+    await this.assignProductButton.waitFor({ state: "visible" });
     await this.assignProductButton.click();
   }
 
