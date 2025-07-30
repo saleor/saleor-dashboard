@@ -41,23 +41,26 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.client_payload.ref }}
+      - name: Setup PNPM
+        uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+        with:
+          run_install: false
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
+          cache: "pnpm"
       - name: Set sentry release
         run: |
           HASH=$(git rev-parse --short HEAD)
           CURRENT_VERSION=$(jq -r .version package.json)
           RELEASE="${CURRENT_VERSION}-${HASH}"
           echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
-      - name: Package
-        timeout-minutes: 15
-        run: |
-          npm ci
+      - name: Install dependencies
+        run: pnpm install
       - name: Build
         run: |
-          npm run build
+          pnpm run build
 
       - name: Configure AWS Credentials
         if: env.REGION == 'eu'

@@ -1,22 +1,20 @@
 name: QA
-
-on: push
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+  push:
+    branches:
+      - main
 
 jobs:
-  check-lock:
-    runs-on: ubuntu-latest
+  lint:
+    runs-on: ubuntu-22.04
+    env:
+      HUSKY: 0
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Validate lock file
-        run: |
-          npx lockfile-lint --path pnpm-lock.yaml --allowed-hosts npm yarn
-
-  tsc-and-linters:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@v4
       - name: Setup PNPM
         uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
         with:
@@ -25,26 +23,25 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-
       - name: Install dependencies
         run: pnpm install
-
-      - name: Run tsc
-        run: |
-          pnpm run check-types
-
-      - name: Run lint
-        run: |
-          pnpm run lint
-          git diff --exit-code ./src
-      
+      - name: Check linter
+        run: pnpm lint
+      - name: Check types
+        run: pnpm check-types
       - name: Knip for unused files, dependencies and exports
-        run: pnpm run knip
+        run: pnpm knip
+      - name: Check for changes in graphql files
+        run: |
+          pnpm generate
+          git diff --name-status --exit-code .
 
-  jest-tests:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-22.04
+    env:
+      HUSKY: 0
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup PNPM
         uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
         with:
@@ -53,14 +50,10 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-
       - name: Install dependencies
         run: pnpm install
-
-      - name: Run jest
-        run: |
-          pnpm run test:ci
-
+      - name: Run tests
+        run: pnpm test:ci
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
@@ -68,23 +61,22 @@ jobs:
           slug: saleor/saleor-dashboard
 
   translation-messages:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    env:
+      HUSKY: 0
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup PNPM
         uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
         with:
           run_install: false
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-
       - name: Install dependencies
         run: pnpm install
-
       - name: Check message extraction
         run: |
-          pnpm run extract-messages
+          pnpm extract-messages
           git diff --exit-code ./locale
