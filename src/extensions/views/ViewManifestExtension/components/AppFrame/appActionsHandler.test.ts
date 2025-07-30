@@ -55,15 +55,15 @@ describe("AppActionsHandler", function () {
    */
   beforeEach((): void => {
     delete (window as { location?: unknown }).location;
-    // @ts-expect-error error
+    // Mock window.location for testing purposes
     window.location = {
       href: "http://localhost:3000",
       hostname: "localhost",
       pathname: "/extensions/XYZ",
-    };
+    } as Location;
   });
   afterAll((): void => {
-    (window.location as any) = location;
+    window.location = location;
   });
   describe("useHandleNotificationAction", () => {
     it("Calls useNotifier with payload from action", () => {
