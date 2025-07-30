@@ -1,8 +1,8 @@
-import "@saleor/macaw-ui-next/style";
-import "../src/index.css";
-import { IntlProvider } from "react-intl";
-import type { Preview } from "@storybook/react-vite";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
+import "@saleor/macaw-ui-next/style";
+import type { Preview } from "@storybook/react-vite";
+import { IntlProvider } from "react-intl";
+import "../src/index.css";
 import { ThemeProvider } from "../src/theme";
 import { paletteOverrides, themeOverrides } from "../src/themeOverrides";
 
@@ -14,7 +14,7 @@ if (typeof window !== "undefined") {
 
 const preview: Preview = {
   decorators: [
-    (Story) => (
+    Story => (
       <IntlProvider locale="en" onError={() => {}}>
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
@@ -30,13 +30,6 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
-    },
-
-    a11y: {
-      // 'todo' - show a11y violations in the test UI only
-      // 'error' - fail CI on a11y violations
-      // 'off' - skip a11y checks entirely
-      test: "todo",
     },
   },
 };

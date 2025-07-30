@@ -58,5 +58,5 @@ django-queries-results.html
 
 introspection.json
 
-*storybook.log
-storybook-static
+!.storybook
+storybook-static/
