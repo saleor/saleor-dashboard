@@ -4,6 +4,8 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
@@ -49,6 +51,9 @@ import { productImageUrl, productListPath, productListUrl } from "@dashboard/pro
 import { ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Divider, Option } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -164,6 +169,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onAttributeSelectBlur,
 }) => {
   const intl = useIntl();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
   const [selectedCategory, setSelectedCategory] = useStateFromProps(product?.category?.name || "");
@@ -292,6 +300,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={backLinkProductUrl} title={header}>
+              {canTranslate && (
+                <TranslationsButton
+                  marginRight={3}
+                  onClick={() =>
+                    navigate(createTranslateProductUrl(lastUsedLocaleOrFallback, productId))
+                  }
+                />
+              )}
               <TopNav.Menu
                 items={[
                   ...extensionMenuItems,

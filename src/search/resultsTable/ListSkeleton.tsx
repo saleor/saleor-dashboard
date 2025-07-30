@@ -12,7 +12,7 @@ export const ListSkeleton = () => {
       </GridTable.Colgroup>
       <GridTable.Body>
         {Array.from({ length: 10 }).map((_, index) => (
-          <GridTable.Row __height="50px" key={index}>
+          <GridTable.Row __height="38px" key={index}>
             <GridTable.Cell __height="inherit" padding={0}>
               <Box paddingLeft={6}>
                 <Skeleton height={4} />

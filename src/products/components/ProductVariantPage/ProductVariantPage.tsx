@@ -4,6 +4,8 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelPriceData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
@@ -21,6 +23,7 @@ import { MetadataFormData } from "@dashboard/components/Metadata";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
+  PermissionEnum,
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
   ProductVariantFragment,
@@ -35,8 +38,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { productVariantUrl } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -166,6 +173,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   searchWarehousesResult,
 }) => {
   const intl = useIntl();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
   const [isModalOpened, setModalStatus] = React.useState(false);
@@ -203,7 +213,16 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav href={productUrl(productId)} title={header}>
         {variant?.product?.defaultVariant?.id !== variant?.id && (
-          <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
+          <Box marginRight={3}>
+            <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
+          </Box>
+        )}
+        {canTranslate && (
+          <TranslationsButton
+            onClick={() =>
+              navigate(productVariantUrl(lastUsedLocaleOrFallback, productId, variant?.id))
+            }
+          />
         )}
       </TopNav>
       <DetailPageLayout.Content>

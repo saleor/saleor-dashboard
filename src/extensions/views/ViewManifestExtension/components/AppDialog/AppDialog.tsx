@@ -20,5 +20,3 @@ export const AppDialog: React.FC<AppDialogProps> = ({ children, title, onClose, 
     </DashboardModal>
   );
 };
-
-export default AppDialog;

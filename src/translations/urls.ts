@@ -11,9 +11,11 @@ export enum TranslatableEntities {
   collections = "collections",
   sales = "sales",
   vouchers = "vouchers",
+  // This is "pages" now
   pages = "pages",
   attributes = "attributes",
   shippingMethods = "shippingMethods",
+  //  This is "structures" now
   menuItems = "menuItems",
 }
 
@@ -52,3 +54,6 @@ export const productVariantUrl = (code: string, productId: string, variantId: st
     TranslatableEntities.productVariants,
     variantId,
   );
+
+export const productUrl = (code: string, productId: string) =>
+  languageEntityUrl(code, TranslatableEntities.products, productId);
