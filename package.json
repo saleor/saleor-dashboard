@@ -111,7 +111,7 @@
     "@playwright/test": "^1.47.0",
     "@saleor/app-sdk": "1.1.0",
     "@sentry/cli": "^2.33.0",
-    "@storybook/addon-actions": "9.0.18",
+    "@storybook/addon-actions": "9.0.8",
     "@storybook/react-vite": "9.0.18",
     "@swc/jest": "^0.2.26",
     "@types/apollo-upload-client": "^17.0.2",
