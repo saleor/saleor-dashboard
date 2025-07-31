@@ -29,7 +29,7 @@ const ExternalLink: React.FC<ExternalLinkProps> = props => {
       href={href}
       className={classes.link}
       target={target}
-      rel={rel ?? opensNewTab ? "noopener noreferer" : ""}
+      rel={(rel ?? opensNewTab) ? "noopener noreferer" : ""}
       {...rest}
     >
       <Text className={className} color="default1">
@@ -52,7 +52,7 @@ export const ExternalLinkNext = (
       textDecoration="none"
       {...props}
       as="a"
-      rel={props.rel ?? opensNewTab ? "noopener noreferer" : ""}
+      rel={(props.rel ?? opensNewTab) ? "noopener noreferer" : ""}
     />
   );
 };

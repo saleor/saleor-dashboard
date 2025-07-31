@@ -1,6 +1,9 @@
 // @ts-strict-ignore
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { ProductListUrlFilters , ProductListUrlFiltersAsDictWithMultipleValues } from "@dashboard/products/urls";
+import {
+  ProductListUrlFilters,
+  ProductListUrlFiltersAsDictWithMultipleValues,
+} from "@dashboard/products/urls";
 
 import { FilterParam, getAttributeValuesFromParams, parseFilterValue } from "./filters";
 

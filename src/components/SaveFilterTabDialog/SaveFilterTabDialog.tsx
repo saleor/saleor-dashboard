@@ -1,4 +1,4 @@
-import { ConfirmButton,ConfirmButtonTransitionState  } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";

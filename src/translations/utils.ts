@@ -4,7 +4,12 @@ import {
   AttributeValueTranslatableFragment,
   AttributeValueTranslationInput,
 } from "@dashboard/graphql";
-import { PageTranslationInputFieldName, TranslationField, TranslationFieldType , TranslationInputFieldName } from "@dashboard/translations/types";
+import {
+  PageTranslationInputFieldName,
+  TranslationField,
+  TranslationFieldType,
+  TranslationInputFieldName,
+} from "@dashboard/translations/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { OutputData } from "@editorjs/editorjs";

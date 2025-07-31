@@ -25,7 +25,7 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-       
+
       const resetFilters = result.current[1];
 
       // Act
@@ -223,7 +223,7 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-       
+
       const handleSearchChange = result.current[2];
 
       // Act
@@ -257,7 +257,7 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-       
+
       const handleSearchChange = result.current[2];
 
       // Act

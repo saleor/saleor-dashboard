@@ -38,7 +38,10 @@ export function usePriceField(currency: string | undefined, onChange: FormChange
     }
 
     // ignore separator input when currency doesn't support decimal values
-    if ((maxDecimalLength ?? 0) === 0 && SEPARATOR_CHARACTERS.some(separator => e.key === separator)) {
+    if (
+      (maxDecimalLength ?? 0) === 0 &&
+      SEPARATOR_CHARACTERS.some(separator => e.key === separator)
+    ) {
       e.preventDefault();
     }
   };

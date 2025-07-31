@@ -66,7 +66,9 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
           marginTop={1}
           gap="px"
         >
-          {menuItem.children?.map(child => <MenuItem menuItem={child} key={child.id} />)}
+          {menuItem.children?.map(child => (
+            <MenuItem menuItem={child} key={child.id} />
+          ))}
         </Box>
       </List.ItemGroup.Content>
     </List.ItemGroup>

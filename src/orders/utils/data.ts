@@ -289,7 +289,6 @@ export function mergeRepeatedOrderLines(
 }
 
 export function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
-   
   const { id, __typename, ...rest } = address;
 
   return {

@@ -35,7 +35,10 @@ import useOnSetDefaultVariant from "@dashboard/hooks/useOnSetDefaultVariant";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { weight } from "@dashboard/misc";
-import { getAttributeInputFromVariant , mapFormsetStockToStockInput } from "@dashboard/products/utils/data";
+import {
+  getAttributeInputFromVariant,
+  mapFormsetStockToStockInput,
+} from "@dashboard/products/utils/data";
 import { handleAssignMedia } from "@dashboard/products/utils/handlers";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";

@@ -4,7 +4,9 @@ import {
   PaymentGatewayFragment,
   TransactionActionEnum,
 } from "@dashboard/graphql";
-import OrderTransaction, { OrderTransactionProps } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
+import OrderTransaction, {
+  OrderTransactionProps,
+} from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
 import React from "react";
@@ -34,7 +36,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
   const captured = payment?.capturedAmount?.amount ?? 0;
   const authorized = payment?.availableCaptureAmount?.amount ?? 0;
   const refunded = total - captured - authorized;
-   
+
   const fakeEvents = React.useMemo(
     () => mapPaymentToTransactionEvents(payment),
     [payment.transactions],

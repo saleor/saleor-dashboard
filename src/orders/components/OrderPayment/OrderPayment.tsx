@@ -145,7 +145,11 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <HorizontalSpacer spacing={4} />
             <div className={classes.supportText}>{getDeliveryMethodName(order)}</div>
             <div className={classes.leftmostRightAlignedElement}>
-              {order?.shippingPrice.gross ? <Money money={order.shippingPrice.gross} /> : <Skeleton />}
+              {order?.shippingPrice.gross ? (
+                <Money money={order.shippingPrice.gross} />
+              ) : (
+                <Skeleton />
+              )}
             </div>
           </div>
           <div>
@@ -232,8 +236,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             >
               {order?.totalBalance.amount === 0 ? (
                 <FormattedMessage {...orderPaymentMessages.settled} />
+              ) : order?.totalBalance ? (
+                <Money money={order.totalBalance} />
               ) : (
-                order?.totalBalance ? <Money money={order.totalBalance} /> : <Skeleton />
+                <Skeleton />
               )}
               {}
             </div>

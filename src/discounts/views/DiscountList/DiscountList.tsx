@@ -64,7 +64,7 @@ export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
     variables: queryVariables,
   });
   const promotions: PromotionFragment[] = mapEdgesToItems(data?.promotions) ?? [];
-   
+
   const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: discountListUrl,
     getFilterQueryParam: () => 0,

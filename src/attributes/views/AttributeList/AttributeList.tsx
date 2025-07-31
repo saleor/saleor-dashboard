@@ -1,7 +1,9 @@
 import {
   getFilterOpts,
- getFilterQueryParam,  getFilterVariables,
-  storageUtils } from "@dashboard/attributes/views/AttributeList/filters";
+  getFilterQueryParam,
+  getFilterVariables,
+  storageUtils,
+} from "@dashboard/attributes/views/AttributeList/filters";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";

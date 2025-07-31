@@ -20,7 +20,6 @@ export const getGrantedRefundStatus = (status: OrderGrantedRefundStatusEnum): Pi
     case OrderGrantedRefundStatusEnum.NONE:
       return "warning";
     default:
-       
       const _exhaustiveCheck: never = status;
 
       return _exhaustiveCheck;
@@ -41,7 +40,6 @@ export const getGrantedRefundStatusMessage = (
     case OrderGrantedRefundStatusEnum.NONE:
       return intl.formatMessage(refundStatuses.draft);
     default:
-       
       const _exhaustiveCheck: never = status;
 
       return _exhaustiveCheck;

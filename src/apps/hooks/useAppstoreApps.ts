@@ -91,7 +91,6 @@ function useAppstoreApps(appstoreUrl?: string): State {
     return () => {
       cancelRequest.current = true;
     };
-     
   }, [appstoreUrl]);
 
   return state;

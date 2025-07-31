@@ -7,7 +7,11 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import TokenCreateDialog from "@dashboard/custom-apps/components/TokenCreateDialog";
 import TokenDeleteDialog from "@dashboard/custom-apps/components/TokenDeleteDialog";
 import WebhookDeleteDialog from "@dashboard/custom-apps/components/WebhookDeleteDialog";
-import { CustomAppDetailsUrlDialog, CustomAppDetailsUrlQueryParams,CustomAppUrls  } from "@dashboard/custom-apps/urls";
+import {
+  CustomAppDetailsUrlDialog,
+  CustomAppDetailsUrlQueryParams,
+  CustomAppUrls,
+} from "@dashboard/custom-apps/urls";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,

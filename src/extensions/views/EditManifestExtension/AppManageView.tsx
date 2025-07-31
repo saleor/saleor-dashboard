@@ -5,7 +5,12 @@ import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateD
 import AppDeleteDialog from "@dashboard/extensions/components/AppDeleteDialog";
 import { appMessages } from "@dashboard/extensions/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
-import { AppDetailsUrlDialog, AppDetailsUrlQueryParams,ExtensionsPaths, ExtensionsUrls  } from "@dashboard/extensions/urls";
+import {
+  AppDetailsUrlDialog,
+  AppDetailsUrlQueryParams,
+  ExtensionsPaths,
+  ExtensionsUrls,
+} from "@dashboard/extensions/urls";
 import {
   useAppActivateMutation,
   useAppDeactivateMutation,

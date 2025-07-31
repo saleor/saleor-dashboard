@@ -219,7 +219,7 @@ export const getAvailableWarehousesData = ({
   mapEdgesToItems(availableWarehouses.data?.warehouses) ??
   (availableWarehouses.loading
     ? undefined
-    : mapEdgesToItems(initialWarehouses.data?.availableWarehouses) ?? []);
+    : (mapEdgesToItems(initialWarehouses.data?.availableWarehouses) ?? []));
 
 const parseWarehousesColumns = (data: WarehouseFragment[] | undefined, intl: IntlShape) => {
   return data?.map(warehouse => ({

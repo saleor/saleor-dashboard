@@ -50,7 +50,9 @@ import {
 import {
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
- createPreorderEndDateChangeHandler,  createProductTypeSelectHandler } from "@dashboard/products/utils/handlers";
+  createPreorderEndDateChangeHandler,
+  createProductTypeSelectHandler,
+} from "@dashboard/products/utils/handlers";
 import {
   validateCostPrice,
   validatePrice,

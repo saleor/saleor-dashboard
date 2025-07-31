@@ -1,5 +1,5 @@
 // @ts-strict-ignore
- 
+
 import { OrderDetailsQuery } from "@dashboard/graphql";
 import {
   OrderDiscountContext,

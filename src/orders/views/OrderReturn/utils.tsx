@@ -116,7 +116,6 @@ class ReturnFormDataParser {
     );
   };
 
-   
   private static readonly isLineRefundable = function <
     T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput,
   >({ replace }: T) {

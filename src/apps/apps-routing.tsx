@@ -1,4 +1,9 @@
-import { AppDetailsUrlQueryParams, AppInstallUrlQueryParams , AppListUrlQueryParams, AppPaths } from "@dashboard/apps/urls";
+import {
+  AppDetailsUrlQueryParams,
+  AppInstallUrlQueryParams,
+  AppListUrlQueryParams,
+  AppPaths,
+} from "@dashboard/apps/urls";
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
