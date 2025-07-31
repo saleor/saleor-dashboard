@@ -1,21 +1,17 @@
+import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import typescript from "@typescript-eslint/eslint-plugin";
 import typescriptParser from "@typescript-eslint/parser";
 import reactHooks from "eslint-plugin-react-hooks";
 import react from "eslint-plugin-react";
-// Storybook plugin disabled - no Storybook files found in project
-// import storybook from "eslint-plugin-storybook";
 import importPlugin from "eslint-plugin-import";
 import formatjs from "eslint-plugin-formatjs";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import localRules from "./lint/rules/named-styles.js";
 
-export default [
-  // Global ignores
-  {
-    ignores: ["node_modules/", "build/", "dist/", "dev-dist/", "coverage/"],
-  },
+export default defineConfig([
+  globalIgnores(["node_modules/", "build/", "dist/", "dev-dist/", "coverage/"]),
 
   // Base configuration for all files
   {
@@ -78,11 +74,6 @@ export default [
     settings: {
       react: {
         version: "detect",
-      },
-      "import/resolver": {
-        typescript: {
-          alwaysTryTypes: true,
-        },
       },
     },
     plugins: {
@@ -223,7 +214,4 @@ export default [
       ],
     },
   },
-
-  // Storybook configuration disabled - no Storybook files found in project
-  // ...storybook.configs["flat/recommended"],
-];
+]);
