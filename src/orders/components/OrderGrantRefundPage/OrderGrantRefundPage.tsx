@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -9,6 +8,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
+  OrderLineGrantRefundFragment,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -38,7 +38,7 @@ import {
 } from "./utils";
 
 export interface OrderGrantRefundPageProps {
-  order: OrderDetailsGrantRefundFragment;
+  order?: OrderDetailsGrantRefundFragment;
   loading: boolean;
   submitState: ConfirmButtonTransitionState;
   onSubmit: (data: OrderGrantRefundFormData) => void;
@@ -90,7 +90,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
         ? undefined
         : state.refundShipping,
   });
-  const totalSelectedPrice = calculateTotalPrice(state, order);
+  const totalSelectedPrice = order ? calculateTotalPrice(state, order) : 0;
   const amountValue = getRefundAmountValue({
     isEditedRefundAmount: grantedRefund !== undefined,
     isAmountInputDirty: isFormDirty.amount,
@@ -120,7 +120,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
-        href={orderUrl(order?.id)}
+        href={order ? orderUrl(order?.id) : "#"}
         title={
           <FormattedMessage
             {...(isEdit
@@ -166,13 +166,16 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                             {getFulfilmentSubtitle(order, fulfillment)}
                           </Text>
                         }
-                        lines={fulfillment.lines.map(({ orderLine, id, quantity }) => {
-                          return {
-                            ...orderLine,
-                            id,
-                            quantity,
-                          };
-                        })}
+                        lines={
+                          fulfillment.lines?.map(({ orderLine, id, quantity }) => {
+                            return {
+                              ...orderLine,
+                              id,
+                              quantity,
+                              // satisfy TypeScript but it should be fix properly
+                            } as OrderLineGrantRefundFragment;
+                          }) ?? []
+                        }
                       />
                     ))}
                   </>
@@ -215,7 +218,15 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
       </form>
       <Savebar>
         <Savebar.Spacer />
-        <Savebar.CancelButton onClick={() => navigate(orderUrl(order?.id))} />
+        <Savebar.CancelButton
+          onClick={() => {
+            if (!order) {
+              return;
+            }
+
+            navigate(orderUrl(order?.id));
+          }}
+        />
         <Savebar.ConfirmButton transitionState={submitState} onClick={submit} disabled={loading}>
           {isEdit
             ? intl.formatMessage(grantRefundPageMessages.editRefundBtn)

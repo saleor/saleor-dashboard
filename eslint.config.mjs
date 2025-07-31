@@ -60,6 +60,8 @@ export default [
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
     },
   },
 
@@ -100,6 +102,7 @@ export default [
       ...reactHooks.configs.recommended.rules,
       "react/prop-types": "off",
       "react-refresh/only-export-components": "warn",
+      "react-hooks/exhaustive-deps": "warn",
       "import/no-duplicates": "error",
       "lines-between-class-members": ["error", "always"],
       "padding-line-between-statements": [

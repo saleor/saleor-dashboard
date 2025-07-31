@@ -1,6 +1,9 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import {
+  PermissionEnum,
   useMenuDeleteMutation,
   useMenuDetailsQuery,
   useMenuItemCreateMutation,
@@ -10,6 +13,8 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { pageUrl } from "@dashboard/modeling/urls";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -46,6 +51,9 @@ interface MenuDetailsProps {
 const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const intl = useIntl();
   const { data, loading, refetch } = useMenuDetailsQuery({
     variables: { id },
@@ -169,6 +177,18 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
               id: itemId,
             }),
           )
+        }
+        onTranslate={
+          canTranslate
+            ? itemId =>
+                navigate(
+                  languageEntityUrl(
+                    lastUsedLocaleOrFallback,
+                    TranslatableEntities.menuItems,
+                    itemId,
+                  ),
+                )
+            : undefined
         }
         onSubmit={handleSubmit}
         saveButtonState={menuUpdateOpts.status}

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { appAvatar } from "@dashboard/apps/fixtures";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";
@@ -27,7 +26,7 @@ describe("EventCreatedBy", () => {
 
     const link = screen.getByRole("link");
 
-    expect(link).toHaveTextContent(appAvatar.name);
+    expect(link).toHaveTextContent(appAvatar.name as string);
     expect(link).toHaveProperty(
       "href",
       "http://localhost" +

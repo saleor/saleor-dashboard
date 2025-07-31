@@ -46,7 +46,9 @@ const IframePost = ({
   const loadingRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    formRef.current && formRef.current.submit();
+    if (formRef.current) {
+      formRef.current.submit();
+    }
 
     if (iframeRef.current && loadingRef.current) {
       const onload = () => {

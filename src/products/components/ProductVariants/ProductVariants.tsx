@@ -1,4 +1,3 @@
-// import { isLimitReached } from "@dashboard/utils/limits";
 import { ChannelData } from "@dashboard/channels/utils";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";

@@ -20,7 +20,6 @@ import {
   UploadErrorFragment,
 } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@dashboard/utils/maps";
 import { RichTextContextValues } from "@dashboard/utils/richText/context";
@@ -247,16 +246,6 @@ export const mergeAttributeValues = (
   const attribute = attributes.find(attribute => attribute.id === attributeId);
 
   return attribute?.value ? [...attribute.value, ...attributeValues] : attributeValues;
-};
-
-export const mergeAttributeValuesWithLabels = (
-  attributeId: string,
-  attributeMetadata: AttributeValuesMetadata[],
-  attributes: FormsetData<AttributeInputData, string[], AttributeValuesMetadata[]>,
-) => {
-  const attribute = attributes.find(attribute => attribute.id === attributeId);
-
-  return attribute?.metadata ? [...attribute.metadata, ...attributeMetadata] : attributeMetadata;
 };
 
 export const mergeAttributes = (...attributeLists: AttributeInput[][]): AttributeInput[] =>
@@ -533,14 +522,6 @@ export const getAttributesDisplayData = (
 
     return attribute;
   });
-
-export const getSelectedReferencesFromAttribute = <T extends Node>(
-  attribute?: AttributeInput,
-  references?: T[],
-) =>
-  references?.filter(
-    value => !attribute?.value?.some(selectedValue => selectedValue === value.id),
-  ) || [];
 
 export const getReferenceAttributeEntityTypeFromAttribute = (
   attributeId: string,

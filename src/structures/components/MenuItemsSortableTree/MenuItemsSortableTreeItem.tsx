@@ -2,6 +2,7 @@ import { TreeItemComponentProps } from "@dashboard/components/SortableTree/types
 import { buttonMessages } from "@dashboard/intl";
 import { MenuItemType } from "@dashboard/structures/components/MenuItemDialog";
 import { RecursiveMenuItem } from "@dashboard/structures/types";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { Box, Button, EditIcon, GripIcon, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -13,8 +14,13 @@ interface TreeItemProps extends TreeItemComponentProps<RecursiveMenuItem> {
   onClick: (id: UniqueIdentifier, menuItemType: MenuItemType) => void;
   onEdit: (id: UniqueIdentifier) => void;
   onRemove: (id: UniqueIdentifier) => void;
+  // If not passed, it will not render the button. Use to control permissions
+  onTranslate?: (id: UniqueIdentifier) => void;
 }
 
+/**
+ * TODO instead of hardcoding buttons, allow to inject them in props. That will allow reusing it in different contexts
+ */
 export const MenuItemsSortableTreeItem = ({
   innerRef,
   id,
@@ -31,6 +37,7 @@ export const MenuItemsSortableTreeItem = ({
   onEdit,
   onClick,
   onRemove,
+  onTranslate,
 }: TreeItemProps) => {
   return (
     <Box
@@ -76,6 +83,10 @@ export const MenuItemsSortableTreeItem = ({
             variant="secondary"
             onClick={() => onEdit(id)}
             icon={<EditIcon />}
+          />
+          <TranslationsButton
+            data-test-id="translate-menu-item-button"
+            onClick={() => onTranslate && onTranslate(id)}
           />
           <Button
             data-test-id="remove-menu-item-button"

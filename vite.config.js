@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
 import { CodeInspectorPlugin } from "code-inspector-plugin";
@@ -25,6 +24,8 @@ const copyOgImage = () => ({
     copyFileSync(path.resolve("assets", "og.png"), path.resolve("build", "dashboard", "og.png"));
   },
 });
+
+/** @type {import('vite').UserConfig} */
 
 export default defineConfig(({ command, mode }) => {
   const isDev = command !== "build";

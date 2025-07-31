@@ -1,10 +1,5 @@
 import { gql } from "@apollo/client";
-import {
-  AppErrorCode,
-  AppErrorFragment,
-  WebhookEventTypeAsyncEnum,
-  WebhookFragment,
-} from "@dashboard/graphql";
+import { AppErrorCode, AppErrorFragment } from "@dashboard/graphql";
 import errorTracker from "@dashboard/services/errorTracking";
 import { IntlShape } from "react-intl";
 
@@ -103,20 +98,6 @@ export function getCustomAppErrorMessage(
 
   return undefined;
 }
-
-export function isUnnamed(webhook: WebhookFragment | undefined): boolean {
-  return !webhook?.name;
-}
-
-export const filterSelectedAsyncEvents = (asyncEvents: WebhookEventTypeAsyncEnum[]) => {
-  const anyEvent = asyncEvents.find(event => event === WebhookEventTypeAsyncEnum.ANY_EVENTS);
-
-  if (anyEvent) {
-    return [anyEvent];
-  }
-
-  return asyncEvents;
-};
 
 export interface IntrospectionNode {
   name: string;
