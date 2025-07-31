@@ -21,7 +21,7 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     inlineToolbar,
   },
   list: {
-    class: List,
+    class: List as unknown as ToolConstructable,
     inlineToolbar,
   },
   quote: {

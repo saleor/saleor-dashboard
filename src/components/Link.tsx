@@ -37,7 +37,7 @@ export interface LinkState {
   from?: string;
 }
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "dangerouslySetInnerHTML"> {
   href?: string;
   color?: "primary" | "secondary";
   inline?: boolean;
