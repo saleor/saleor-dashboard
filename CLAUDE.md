@@ -9,25 +9,25 @@ Saleor Dashboard is a GraphQL-powered, single-page React application built with 
 ## Development Commands
 
 ### Basic Development
-- `npm run dev` - Start development server on port 9000 with host binding
-- `npm run build` - Build production bundle with 8GB memory allocation
-- `npm run preview` - Preview production build locally
+- `pnpm run dev` - Start development server on port 9000 with host binding
+- `pnpm run build` - Build production bundle with 8GB memory allocation
+- `pnpm run preview` - Preview production build locally
 
 ### Code Quality & Testing
-- `npm run lint` - Run ESLint with auto-fix on src/ and playwright/ directories
-- `npm run test` - Run Jest tests for src/ directory
-- `npm run test:ci` - Run tests with coverage report
-- `npm run check-types` - Run TypeScript type checking for both src and playwright
-- `npm run check-types:src` - Type check src/ directory with strict plugin
-- `npm run check-types:playwright` - Type check playwright test files
+- `pnpm run lint` - Run ESLint with auto-fix on src/ and playwright/ directories
+- `pnpm run test` - Run Jest tests for src/ directory
+- `pnpm run test:ci` - Run tests with coverage report
+- `pnpm run check-types` - Run TypeScript type checking for both src and playwright
+- `pnpm run check-types:src` - Type check src/ directory with strict plugin
+- `pnpm run check-types:playwright` - Type check playwright test files
 
 ### GraphQL & Code Generation
-- `npm run generate` - Generate GraphQL types and hooks from schema
-- `npm run fetch-schema` - Download GraphQL schema from Saleor repository
-- `npm run fetch-local-schema` - Fetch schema from local Saleor instance
+- `pnpm run generate` - Generate GraphQL types and hooks from schema
+- `pnpm run fetch-schema` - Download GraphQL schema from Saleor repository
+- `pnpm run fetch-local-schema` - Fetch schema from local Saleor instance
 
 ### Internationalization
-- `npm run extract-messages` - Extract translatable messages from TypeScript files, run it after changing messages in `react-intl`
+- `pnpm run extract-messages` - Extract translatable messages from TypeScript files, run it after changing messages in `react-intl`
 
 ## Architecture Overview
 
@@ -84,7 +84,7 @@ The codebase follows a feature-based architecture with shared components:
 ### Before Starting Development
 1. Ensure you have a running Saleor backend instance
 2. Configure environment variables as described in `docs/configuration.md`
-3. Run `npm run generate` to generate GraphQL types
+3. Run `pnpm run generate` to generate GraphQL types
 4. Install dependencies with `npm i`
 
 ### Adding New Features

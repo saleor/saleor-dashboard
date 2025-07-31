@@ -23,5 +23,5 @@ MAILPITURL=
 You are ready to run PW commands like:
 
 ```shell
-npm run qa:pw-ui
+pnpm run qa:pw-ui
 ```

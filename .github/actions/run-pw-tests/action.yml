@@ -63,7 +63,7 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: npm ci
+      run: pnpm install --frozen-lockfile
 
     - name: Restore accounts
       uses: ./.github/actions/restore-accounts

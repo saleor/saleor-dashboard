@@ -46,8 +46,8 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-qa-${{ env.cache-name }}-
             ${{ runner.os }}-qa-
@@ -55,7 +55,7 @@ jobs:
 
       - name: Install deps
         run: |
-          npm ci
+          pnpm install --frozen-lockfile
 
       - name: Run build
         env:
@@ -67,7 +67,7 @@ jobs:
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
         run: |
-          npm run build
+          pnpm run build
 
       - name: Set domain
         id: set-domain

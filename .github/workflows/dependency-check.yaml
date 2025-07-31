@@ -23,7 +23,7 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install deps
         run: |
-          npm ci
+          pnpm install --frozen-lockfile
       - name: Store import stats
         id: store_import_stats
         run: |
@@ -43,7 +43,7 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install deps
         run: |
-          npm ci
+          pnpm install --frozen-lockfile
       - name: "Calculate stats"
         env:
           latest: ${{ needs.current_state.outputs.main_statistics }}

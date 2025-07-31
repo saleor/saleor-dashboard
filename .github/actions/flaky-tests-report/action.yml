@@ -11,7 +11,7 @@ runs:
       shell: bash
       run: |
         cd .github/actions/flaky-tests-report
-        npm ci
+        pnpm install --frozen-lockfile
 
     - name: Download CTRF reports
       uses: actions/download-artifact@v4
