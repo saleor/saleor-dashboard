@@ -245,9 +245,6 @@
       ]
     }
   },
-  "overrides": {
-    "resolve": "1.20.0"
-  },
   "lint-staged": {
     "./{src,playwright}/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix"
