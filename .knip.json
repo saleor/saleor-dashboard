@@ -54,6 +54,7 @@
     "code-inspector-plugin",
     "faker",
     "@types/faker",
-    "sort-package-json"
+    "sort-package-json",
+    "downshift"
   ]
 }
