@@ -1,4 +1,4 @@
- 
+
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionMountEnum, PermissionEnum, useExtensionListQuery } from "@dashboard/graphql";
@@ -20,6 +20,7 @@ jest.mock("@dashboard/auth/hooks/useUserPermissions", () => ({
 }));
 
 jest.mock("@dashboard/graphql", () => ({
+  ...jest.requireActual("@dashboard/graphql") as jest.Mocked<typeof import("@dashboard/graphql")>,
   useExtensionListQuery: jest.fn(),
 }));
 jest.mock("../components/ExternalAppContext", () => ({
