@@ -10,7 +10,6 @@ import formatjs from "eslint-plugin-formatjs";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import localRules from "./lint/rules/named-styles.js";
-import prettierConfig from "eslint-config-prettier";
 
 export default [
   // Global ignores
