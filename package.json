@@ -111,7 +111,6 @@
     "@playwright/test": "^1.47.0",
     "@saleor/app-sdk": "1.1.0",
     "@sentry/cli": "^2.33.0",
-    "@swc/jest": "^0.2.26",
     "@types/apollo-upload-client": "^17.0.2",
     "@types/chroma-js": "^2.4.0",
     "@types/color-convert": "^2.0.0",
@@ -163,7 +162,9 @@
     "vite": "^6.2.2",
     "vite-plugin-html": "^3.2.2",
     "@storybook/react-vite": "9.0.18",
-    "storybook": "9.0.18"
+    "storybook": "9.0.18",
+    "vitest": "^3.2.4",
+    "jsdom": "^24.0.0"
   },
   "optionalDependencies": {
     "@swc/core-darwin-arm64": "1.3.40",
@@ -180,67 +181,18 @@
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.5.2",
-    "@types/jest": "^26.0.14",
-    "@types/setup-polly-jest": "^0.5.0",
     "fsevents": "^1.2.9",
     "husky": "^8.0.3",
-    "jest": "^27.5.1",
     "jest-canvas-mock": "^2.4.0",
-    "jest-environment-jsdom": "^27.5.1",
-    "jest-file": "^1.0.0",
     "jest-localstorage-mock": "^2.4.26",
     "lint-staged": "^10.5.1",
     "mocha-junit-reporter": "^2.0.2",
     "mochawesome": "^7.0.1",
     "mochawesome-merge": "^4.2.2",
     "mochawesome-report-generator": "^6.0.1",
-    "prettier": "^3.2.5",
-    "setup-polly-jest": "^0.9.1",
-    "ts-jest": "^27.1.5"
+    "prettier": "^3.2.5"
   },
   "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed",
-  "jest": {
-    "resetMocks": false,
-    "globals": {
-      "FLAGS_SERVICE_ENABLED": false,
-      "FLAGS": {}
-    },
-    "globalSetup": "<rootDir>/testUtils/globalSetup.ts",
-    "setupFilesAfterEnv": [
-      "jest-canvas-mock",
-      "jest-localstorage-mock",
-      "<rootDir>/testUtils/setup.ts"
-    ],
-    "testEnvironment": "jest-environment-jsdom",
-    "transform": {
-      "^.+\\.(jsx?|tsx?)$": "@swc/jest",
-      "^.+\\.(png|svg|jpe?g)$": "jest-file"
-    },
-    "testRegex": ".*\\.test\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "moduleNameMapper": {
-      "\\.(css)$": "identity-obj-proxy",
-      "@assets(.*)$": "<rootDir>/assets/$1",
-      "@locale(.*)$": "<rootDir>/locale/$1",
-      "@dashboard(.*)$": "<rootDir>/src/$1",
-      "@test/(.*)$": "<rootDir>/testUtils/$1",
-      "^@material-ui/core$": "<rootDir>/node_modules/@material-ui/core",
-      "^@material-ui/icons$": "<rootDir>/node_modules/@material-ui/icons",
-      "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
-      "^react$": "<rootDir>/node_modules/react",
-      "^react-dom$": "<rootDir>/node_modules/react-dom",
-      "collectCoverageFrom": [
-        "<rootDir>/src/**/*.{ts,tsx}"
-      ]
-    }
-  },
   "overrides": {
     "resolve": "1.20.0"
   },
@@ -266,9 +218,9 @@
     "heroku-postbuild": "npm run build",
     "serve:lhci": "cross-env NODE_ENV=production npm run server",
     "prestart": "npm run generate",
-    "test": "jest src/",
-    "test:ci": "jest src/ --coverage",
-    "test:watch": "jest --watch src/",
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage",
+    "test:watch": "vitest",
     "lint": "eslint \"{src,playwright}/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:check-progress": "eslint-nibble \"src/**/*.@(tsx|ts|jsx|js)\"",
     "prebuild": "npm run generate",

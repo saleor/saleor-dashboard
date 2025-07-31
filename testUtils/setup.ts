@@ -1,11 +1,16 @@
 import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 import { configure } from "@testing-library/react";
 
-jest.mock("@sentry/react");
-jest.mock("react-hotkeys-hook", () => ({
-  useHotkeys: jest.fn(),
-  useHotkeysContext: jest.fn(),
+// Vitest doesn't expose `jest` globals, alias them for compatibility
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(global as any).jest = vi;
+
+vi.mock("@sentry/react");
+vi.mock("react-hotkeys-hook", () => ({
+  useHotkeys: vi.fn(),
+  useHotkeysContext: vi.fn(),
   HotkeysProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
@@ -16,12 +21,12 @@ document.getElementById = () => document.createElement("div");
 document.createRange = () => {
   const range = new Range();
 
-  range.getBoundingClientRect = jest.fn();
+  range.getBoundingClientRect = vi.fn();
 
   range.getClientRects = () => ({
     item: () => null,
     length: 0,
-    [Symbol.iterator]: jest.fn(),
+    [Symbol.iterator]: vi.fn(),
   });
 
   return range;

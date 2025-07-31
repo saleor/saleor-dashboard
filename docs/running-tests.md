@@ -1,3 +1,25 @@
+# Running unit tests
+
+Unit tests use [Vitest](https://vitest.dev/). To run all tests execute:
+
+```bash
+npm test
+```
+
+To watch files for changes run:
+
+```bash
+npm run test:watch
+```
+
+Coverage report can be generated with:
+
+```bash
+npm run test:ci
+```
+
+---
+
 # Running E2E tests
 
 Cypress tests work until version 3.18. From version 3.19 we moved the tests to PW. 
