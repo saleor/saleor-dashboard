@@ -81,8 +81,9 @@ export default [
         version: "detect",
       },
       "import/resolver": {
-        typescript: true,
-        node: true,
+        typescript: {
+          alwaysTryTypes: true,
+        },
       },
     },
     plugins: {
