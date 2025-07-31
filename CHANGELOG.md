@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.21.4
+
+### Patch Changes
+
+- 64f07a9: Now you can perform the global search by using dedicated page.
+- 63e5b4e: Fix horizontal overscroll when using datagrids
+- 7d432b5: Now you can trigger actions from CMD+K menu
+- d71b5b9: Improved UI for translations. Now pickers are refreshed and languages are cached locally, so recent languages are on top of the picker. Additionally translatable entities like products or categories have contextual link/button that redirects to translations
+- 1dd9497: Fix voucher details page flickering state when saving.
+  Now form toggles will no longer change state for a brief moment, but will stay consistent.
+
 ## 3.21.3
 
 ### Patch Changes
