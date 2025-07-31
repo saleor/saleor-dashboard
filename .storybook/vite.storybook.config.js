@@ -3,6 +3,7 @@ import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig } from "vite";
 
+// This is a minimal version of main vite.config.js for Storybook, so that it builds fast
 export default defineConfig({
   resolve: {
     alias: {
@@ -14,6 +15,7 @@ export default defineConfig({
     },
   },
 
+  // Note: We don't need plugins for production (e.g. Sentry)
   plugins: [react()],
 
   define: {

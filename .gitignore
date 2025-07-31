@@ -23,6 +23,7 @@
 !.husky
 !.changeset
 !.knip.json
+!.storybook/
 *.log
 *.pyc
 *.mo
