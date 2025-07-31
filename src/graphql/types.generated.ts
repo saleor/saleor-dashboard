@@ -553,23 +553,25 @@ export type AttributeFilterInput = {
 };
 
 export type AttributeInput = {
-  /** The boolean value of the attribute. */
+  /** The boolean value of the attribute. Requires `slug` to be provided. */
   boolean?: InputMaybe<Scalars['Boolean']>;
-  /** The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. */
+  /** The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. Requires `slug` to be provided. */
   date?: InputMaybe<DateRangeInput>;
-  /** The date/time range that the returned values should be in. */
+  /** The date/time range that the returned values should be in. Requires `slug` to be provided. */
   dateTime?: InputMaybe<DateTimeRangeInput>;
   /** Internal representation of an attribute name. */
-  slug: Scalars['String'];
+  slug?: InputMaybe<Scalars['String']>;
+  /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. Cannot be combined with deprecated fields of `AttributeInput`. */
+  value?: InputMaybe<AssignedAttributeValueInput>;
   /**
    * Names corresponding to the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values.
    *
    * Added in Saleor 3.22.
    */
   valueNames?: InputMaybe<Array<Scalars['String']>>;
-  /** Slugs identifying the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values. */
+  /** Slugs identifying the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values. Requires `slug` to be provided. */
   values?: InputMaybe<Array<Scalars['String']>>;
-  /** The range that the returned values should be in. */
+  /** The range that the returned values should be in. Requires `slug` to be provided. */
   valuesRange?: InputMaybe<IntRangeInput>;
 };
 
