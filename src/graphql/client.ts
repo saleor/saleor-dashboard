@@ -34,7 +34,7 @@ export const link = attachVariablesLink.concat(
   createUploadLink({
     credentials: "include",
     uri: getApiUrl(),
-    fetch: createFetch(),
+    fetch: createFetch() as typeof fetch,
   }) as unknown as ApolloLink, // type mismatch between apollo-upload-client and @apollo/cient
 );
 
