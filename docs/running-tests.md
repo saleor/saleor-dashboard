@@ -1,6 +1,6 @@
 # Running E2E tests
 
-Cypress tests work until version 3.18. From version 3.19 we moved the tests to PW. 
+The dashboard uses Playwright for running E2E tests.
 
 > [!NOTE]
 > The tests are based on Saleor Cloud and use snapshots with prepared data.
@@ -20,7 +20,7 @@ E2E_PERMISSIONS_USERS_PASSWORD=
 MAILPITURL=
 ```
 
-You are ready to run PW commands like:
+You are ready to run Playwright commands like:
 
 ```shell
 npm run qa:pw-ui
