@@ -2,12 +2,14 @@ import { channelUrl } from "@dashboard/channels/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import Link from "@dashboard/components/Link";
 import { OrderStatus } from "@dashboard/graphql";
-import { PillStatusType, transformOrderStatus } from "@dashboard/misc";
+import { transformOrderStatus } from "@dashboard/misc";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
 import moment from "moment-timezone";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { StatusPill } from "./status-pill";
 
 interface Props {
   status: OrderStatus;
@@ -18,42 +20,6 @@ interface Props {
     name: string;
   };
 }
-
-const StatusPill = ({
-  status,
-  children,
-}: {
-  status: PillStatusType;
-  children: React.ReactNode;
-}) => {
-  // TODO: move to MacawUI
-
-  const getFillColorsBasedOnStatus = (status: PillStatusType) => {
-    switch (status) {
-      case "success":
-        return {
-          __backgroundColor: "#B1FFDB",
-          __borderColor: "#02DD77",
-        };
-    }
-  };
-
-  return (
-    <Box
-      paddingX={2}
-      paddingY={1}
-      borderRadius={6}
-      borderWidth={1}
-      borderStyle="solid"
-      data-test-id="status-info"
-      {...getFillColorsBasedOnStatus(status)}
-    >
-      <Text color="default1" fontWeight="medium" size={2}>
-        {children}
-      </Text>
-    </Box>
-  );
-};
 
 export const OrderHeader = ({ status, orderNumber, created, channel }: Props) => {
   const intl = useIntl();
@@ -106,6 +72,7 @@ export const OrderHeader = ({ status, orderNumber, created, channel }: Props) =>
           </Box>
         </Box>
       </Box>
+      {/* TODO: add menu items */}
       <TopNav.Menu dataTestId="menu" items={[]} />
     </>
   );
