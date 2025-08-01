@@ -98,7 +98,6 @@
     "@changesets/cli": "^2.27.9",
     "@editorjs/embed": "^2.5.3",
     "@formatjs/cli": "^4.5.0",
-    "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "^2.1.1",
     "@graphql-codegen/fragment-matcher": "^3.1.0",
     "@graphql-codegen/import-types-preset": "^2.1.12",

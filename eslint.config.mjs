@@ -11,7 +11,7 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 import localRules from "./lint/rules/named-styles.js";
 
 export default defineConfig([
-  globalIgnores(["node_modules/", "build/", "dist/", "dev-dist/", "coverage/"]),
+  globalIgnores(["node_modules/", "build/", "dist/", "dev-dist/", "coverage/", "**/*.generated.ts"]),
 
   // Base configuration for all files
   {
