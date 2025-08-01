@@ -5,14 +5,29 @@ import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedDate } from "react-intl";
 
-export const Row = ({ children }: { children: React.ReactNode }) => {
+export const Row = ({
+  children,
+  href,
+  className,
+  onClick,
+}: {
+  children: React.ReactNode;
+  href: string;
+  className?: string;
+  onClick?: () => void;
+}) => {
   return (
     <GridTable.Row
       __height="39px"
       backgroundColor={{
         hover: "default1Hovered",
-        default: "default1",
       }}
+      tabIndex={0}
+      data-href={href}
+      id={href}
+      data-focus={false}
+      className={className}
+      onClick={onClick}
     >
       {children}
     </GridTable.Row>
@@ -66,7 +81,11 @@ export const DisplayDate = ({ date }: { date: string }) => {
 
 export const LinkCell = ({ href, children }: { href: string; children?: React.ReactNode }) => {
   return (
-    <Link href={href} style={{ display: "flex", alignItems: "center", height: "100%" }}>
+    <Link
+      href={href}
+      style={{ display: "flex", alignItems: "center", height: "100%" }}
+      tabIndex={-1}
+    >
       {children}
     </Link>
   );
