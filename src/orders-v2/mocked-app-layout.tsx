@@ -3,7 +3,7 @@ import React from "react";
 
 export const MockedAppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Box display="grid" __gridTemplateColumns="auto 1fr">
+    <Box display="grid" __gridTemplateColumns="auto 1fr" style={{ fontFamily: "Geist" }}>
       <Box
         __width={"260px"}
         height="100vh"

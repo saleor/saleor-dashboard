@@ -10,7 +10,7 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
     <>
       {/* __height="100vh" - Disables savebar space */}
       <DetailPageLayout backgroundColor="default2" padding={4} __height="100vh">
-        <TopNavWrapper>
+        <TopNavWrapper __height="100%">
           <OrderHeader
             orderNumber={order.number}
             status={order.status}

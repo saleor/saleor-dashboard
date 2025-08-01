@@ -14,15 +14,15 @@ export const StatusPill = ({
     switch (status) {
       case "success":
         return {
-          __backgroundColor: "oklch(0.92 0.16 145)",
-          __borderColor: "oklch(0.72 0.27 145)",
+          __backgroundColor: "oklch(94% 0.0898 164deg)",
+          __borderColor: "oklch(79% 0.204 153deg)",
         };
     }
   };
 
   return (
     <Box
-      paddingX={2}
+      paddingX={3}
       paddingY={1}
       borderRadius={6}
       borderWidth={1}

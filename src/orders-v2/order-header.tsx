@@ -1,6 +1,5 @@
 import { channelUrl } from "@dashboard/channels/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
-import Link from "@dashboard/components/Link";
 import { OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -10,6 +9,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { StatusPill } from "./status-pill";
+import { UnderlineLink } from "./underline-link";
 
 interface Props {
   status: OrderStatus;
@@ -65,15 +65,21 @@ export const OrderHeader = ({ status, orderNumber, created, channel }: Props) =>
                   id: "VxBOta",
                 },
                 {
-                  channelNameLink: <Link href={channelUrl(channel.id)}>{channel.name}</Link>,
+                  channelNameLink: (
+                    <UnderlineLink href={channelUrl(channel.id)} size={2}>
+                      {channel.name}
+                    </UnderlineLink>
+                  ),
                 },
               )}
             </Text>
           </Box>
         </Box>
       </Box>
-      {/* TODO: add menu items */}
-      <TopNav.Menu dataTestId="menu" items={[]} />
+      <Box alignSelf="start" gap={2}>
+        {/* TODO: add menu items */}
+        <TopNav.Menu dataTestId="menu" items={[]} />
+      </Box>
     </>
   );
 };
