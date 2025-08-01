@@ -197,7 +197,7 @@ export default defineConfig([
     },
   },
 
-  // Source files specific configuration
+  // Additional rules (needs to be here, because other imports have "error", not "warn")
   {
     files: ["src/**/*"],
     rules: {

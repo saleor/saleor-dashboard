@@ -73,6 +73,7 @@ export const ProductAnalytics = ({ children }: ProductAnalyticsProps) => {
   }
 
   return (
+    // Note: Non-null assertion is fine here, it must be defined thanks to `canRenderAnalytics` check
     <PostHogProvider apiKey={config.apiKey!} options={config.options}>
       {children}
     </PostHogProvider>

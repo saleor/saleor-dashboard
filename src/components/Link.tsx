@@ -37,6 +37,8 @@ export interface LinkState {
   from?: string;
 }
 
+// Note: we need to skip the `dangerouslySetInnerHTML` prop from the `React.AnchorHTMLAttributes`
+// in order to match react-router-dom Link props
 interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "dangerouslySetInnerHTML"> {
   href?: string;
   color?: "primary" | "secondary";
@@ -98,11 +100,11 @@ const Link: React.FC<LinkProps> = props => {
             disabled
               ? undefined
               : {
-                  pathname: urlObject.pathname,
-                  search: urlObject.search,
-                  hash: urlObject.hash,
-                  state,
-                }
+                pathname: urlObject.pathname,
+                search: urlObject.search,
+                hash: urlObject.hash,
+                state,
+              }
           }
           {...commonLinkProps}
         >
