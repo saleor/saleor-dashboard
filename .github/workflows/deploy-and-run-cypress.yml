@@ -36,26 +36,16 @@ jobs:
           env: ${{ env.GITHUB_HEAD_REF_SLUG_URL }}
           ref: ${{ github.head_ref }}
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup PNPM
+        uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+        with:
+          run_install: false
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-
-      - name: Install deps
-        run: |
-          npm ci
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Run build
         env:
@@ -66,8 +56,7 @@ jobs:
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
-        run: |
-          npm run build
+        run: pnpm run build
 
       - name: Set domain
         id: set-domain

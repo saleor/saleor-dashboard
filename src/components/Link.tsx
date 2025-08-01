@@ -85,7 +85,7 @@ const Link: React.FC<LinkProps> = props => {
       onClick(event);
     },
     target,
-    rel: rel ?? (opensNewTab && isExternalURL(href)) ? "noopener noreferer" : "",
+    rel: (rel ?? (opensNewTab && isExternalURL(href))) ? "noopener noreferer" : "",
     ...linkProps,
   };
   const urlObject = new URL(href, window.location.origin);

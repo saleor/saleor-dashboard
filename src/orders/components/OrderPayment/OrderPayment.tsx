@@ -233,7 +233,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {order?.totalBalance.amount === 0 ? (
                 <FormattedMessage {...orderPaymentMessages.settled} />
               ) : (
-                <Money money={order?.totalBalance} /> ?? <Skeleton />
+                (<Money money={order?.totalBalance} /> ?? <Skeleton />)
               )}
               {}
             </div>

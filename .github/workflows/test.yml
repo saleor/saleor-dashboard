@@ -10,69 +10,56 @@ jobs:
 
       - name: Validate lock file
         run: |
-          npx lockfile-lint --path package-lock.json --allowed-hosts npm yarn
+          npx lockfile-lint --path pnpm-lock.yaml --allowed-hosts npm yarn
 
   tsc-and-linters:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
+      - name: Setup PNPM
+        uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
 
-      - name: Install deps
-        run: |
-          npm ci
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Run tsc
         run: |
-          npm run check-types
+          pnpm run check-types
 
       - name: Run lint
         run: |
-          npm run lint
+          pnpm run lint
           git diff --exit-code ./src
       
       - name: Knip for unused files, dependencies and exports
-        run: npm run knip
+        run: pnpm run knip
 
   jest-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - name: Setup PNPM
+        uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+        with:
+          run_install: false
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
+          cache: "pnpm"
 
-      - name: Install deps
-        run: |
-          npm ci
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Run jest
         run: |
-          npm run test:ci
+          pnpm run test:ci
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
@@ -84,28 +71,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup PNPM
+        uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+        with:
+          run_install: false
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
+          cache: "pnpm"
 
-      - name: Install deps
-        run: |
-          npm ci
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Check message extraction
         run: |
-          npm run extract-messages
+          pnpm run extract-messages
           git diff --exit-code ./locale
