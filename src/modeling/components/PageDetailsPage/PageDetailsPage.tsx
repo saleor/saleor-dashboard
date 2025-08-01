@@ -1,4 +1,9 @@
 // @ts-strict-ignore
+import React from "react";
+import { useIntl } from "react-intl";
+
+import { Box } from "@saleor/macaw-ui-next";
+
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -40,14 +45,11 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
-import { useIntl } from "react-intl";
 
-import PageInfo from "../PageInfo";
-import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
 import { messages } from "./messages";
+import PageInfo from "../PageInfo";
+import PageOrganizeContent from "../PageOrganizeContent";
 
 export interface PageDetailsPageProps {
   loading: boolean;

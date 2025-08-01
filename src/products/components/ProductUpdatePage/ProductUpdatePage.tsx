@@ -1,4 +1,9 @@
 // @ts-strict-ignore
+import React from "react";
+import { useIntl } from "react-intl";
+
+import { Box, Divider, Option } from "@saleor/macaw-ui-next";
+
 import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
@@ -55,19 +60,16 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Box, Divider, Option } from "@saleor/macaw-ui-next";
-import React from "react";
-import { useIntl } from "react-intl";
 
+import ProductUpdateForm from "./form";
+import { messages } from "./messages";
+import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
+import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
-import ProductUpdateForm from "./form";
-import { messages } from "./messages";
-import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
-import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
 
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];

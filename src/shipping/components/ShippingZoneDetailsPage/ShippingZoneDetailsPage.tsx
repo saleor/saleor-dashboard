@@ -1,4 +1,9 @@
 // @ts-strict-ignore
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
+
+import { Option } from "@saleor/macaw-ui-next";
+
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -25,17 +30,14 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
 
+import { getInitialFormData } from "./utils";
 import { getStringOrPlaceholder } from "../../../misc";
 import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 import ShippingZoneRates from "../ShippingZoneRates";
 import ShippingZoneSettingsCard from "../ShippingZoneSettingsCard";
-import { getInitialFormData } from "./utils";
 
 const messages = defineMessages({
   countries: {

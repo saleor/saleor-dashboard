@@ -2,6 +2,16 @@ import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
+import React from "react";
+import { render } from "react-dom";
+import { ErrorBoundary } from "react-error-boundary";
+import TagManager from "react-gtm-module";
+import { useIntl } from "react-intl";
+import { Switch } from "react-router-dom";
+
+import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
+import { SaleorProvider } from "@saleor/sdk";
+
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
 import { extensionsSection } from "@dashboard/extensions/urls";
@@ -12,14 +22,6 @@ import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { SaleorProvider } from "@saleor/sdk";
-import React from "react";
-import { render } from "react-dom";
-import { ErrorBoundary } from "react-error-boundary";
-import TagManager from "react-gtm-module";
-import { useIntl } from "react-intl";
-import { Switch } from "react-router-dom";
 
 import { AppsSectionRoot } from "./apps";
 import { AppSections } from "./apps/urls";
