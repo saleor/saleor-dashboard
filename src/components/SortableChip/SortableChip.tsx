@@ -73,7 +73,6 @@ export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
               color="default2"
               size="small"
               data-test-id="button-drag-handle"
-              // @ts-expect-error - style is not accepted in types, but can be used
               style={{ cursor: isDragged ? "grabbing" : "grab", outline: "none" }}
             />
           </Box>

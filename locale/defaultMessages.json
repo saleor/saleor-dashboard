@@ -5610,6 +5610,9 @@
     "context": "command menu shortcut",
     "string": "Command menu"
   },
+  "VxBOta": {
+    "string": "Channel {channelNameLink}"
+  },
   "VyC+Bm": {
     "context": "radio button label",
     "string": "Enter the refund amount without using the product list. Best for overcharges and custom adjustments."
@@ -6377,6 +6380,9 @@
   "aFVFeH": {
     "context": "submit button",
     "string": "Add manual capture"
+  },
+  "aGx3Z5": {
+    "string": "Created {formattedDate}"
   },
   "aHc89n": {
     "context": "select warehouse to restock items",
