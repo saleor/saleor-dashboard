@@ -4,11 +4,10 @@ import { OrderDetailsFragment } from "@dashboard/graphql";
 import React from "react";
 
 import { OrderHeader } from "./order-header";
-import { Wrapper } from "./wrapper";
 
 export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => {
   return (
-    <Wrapper>
+    <>
       {/* __height="100vh" - Disables savebar space */}
       <DetailPageLayout backgroundColor="default2" padding={4} __height="100vh">
         <TopNavWrapper>
@@ -31,6 +30,6 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
           Right sidebar
         </DetailPageLayout.RightSidebar>
       </DetailPageLayout>
-    </Wrapper>
+    </>
   );
 };
