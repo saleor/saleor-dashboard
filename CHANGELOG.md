@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.5
+
+### Patch Changes
+
+- 2c55166: Fixed bulk gift card issue modal re-rendering issues. After this change modal shouldn't rerender itself.
+
 ## 3.21.4
 
 ### Patch Changes
