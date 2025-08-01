@@ -13,7 +13,6 @@ export const useRowHover = ({
   const handleRowHover = useCallback(
     (args: GridMouseEventArgs) => {
       if (hasRowHover) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, row] = args.location;
 
         setHoverRow(args.kind !== "cell" ? undefined : row);

@@ -1,4 +1,9 @@
-import { AppDetailsUrlQueryParams, AppInstallUrlQueryParams } from "@dashboard/apps/urls";
+import {
+  AppDetailsUrlQueryParams,
+  AppInstallUrlQueryParams,
+  AppListUrlQueryParams,
+  AppPaths,
+} from "@dashboard/apps/urls";
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
@@ -19,7 +24,6 @@ import {
 } from "src/apps/views";
 
 import { WindowTitle } from "../components/WindowTitle";
-import { AppListUrlQueryParams, AppPaths } from "./urls";
 
 /** @deprecated use /extensions view */
 const AppManageRoute: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {

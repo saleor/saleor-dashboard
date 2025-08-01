@@ -34,7 +34,7 @@ export const useSearchCriteria = () => {
   }, []);
 
   useEffect(() => {
-    if (!triggerSearch) false;
+    if (!triggerSearch) return;
 
     changeQuery(urlQuery);
   }, [urlQuery, triggerSearch]);

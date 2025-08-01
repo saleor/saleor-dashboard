@@ -13,7 +13,7 @@ export const legacyRedirects = [
     render={({ match, location }) => (
       <Redirect
         to={{
-          pathname: urlJoin(modelingSection, match.params["rest(.*)"] || ""),
+          pathname: urlJoin(modelingSection, match.params.rest || ""),
           search: location.search,
         }}
       />
@@ -26,7 +26,7 @@ export const legacyRedirects = [
     render={({ match, location }) => (
       <Redirect
         to={{
-          pathname: urlJoin(modelTypesPath, match.params["rest(.*)"] || ""),
+          pathname: urlJoin(modelTypesPath, match.params.rest || ""),
           search: location.search,
         }}
       />
@@ -39,7 +39,7 @@ export const legacyRedirects = [
     render={({ match, location }) => (
       <Redirect
         to={{
-          pathname: urlJoin(structuresListPath, match.params["rest(.*)"] || ""),
+          pathname: urlJoin(structuresListPath, match.params.rest || ""),
           search: location.search,
         }}
       />

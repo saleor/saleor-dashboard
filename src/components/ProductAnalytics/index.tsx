@@ -14,8 +14,16 @@ const isDomainExcluded = () => {
   return excludedDomains.some(domain => window.location.hostname.includes(domain));
 };
 
-const useConfig = () => {
-  const options = {
+interface UseConfig {
+  config: {
+    options: Partial<PostHogConfig>;
+    apiKey: string | undefined;
+  };
+  canRenderAnalytics: () => boolean;
+}
+
+const useConfig = (): UseConfig => {
+  const options: Partial<PostHogConfig> = {
     api_host: process.env.POSTHOG_HOST,
     capture_pageview: false,
     autocapture: false,
@@ -24,7 +32,7 @@ const useConfig = () => {
     loaded: posthog => {
       if (process.env.NODE_ENV === "development") posthog.debug();
     },
-  } satisfies Partial<PostHogConfig>;
+  };
   const apiKey = process.env.POSTHOG_KEY;
   const isCloudInstance = process.env.IS_CLOUD_INSTANCE;
 
@@ -65,7 +73,8 @@ export const ProductAnalytics = ({ children }: ProductAnalyticsProps) => {
   }
 
   return (
-    <PostHogProvider apiKey={config.apiKey} options={config.options}>
+    // Note: Non-null assertion is fine here, it must be defined thanks to `canRenderAnalytics` check
+    <PostHogProvider apiKey={config.apiKey!} options={config.options}>
       {children}
     </PostHogProvider>
   );

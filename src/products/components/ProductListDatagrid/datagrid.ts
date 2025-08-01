@@ -519,7 +519,7 @@ export const getAvailableAttributesData = ({
   mapEdgesToItems(availableColumnsAttributesData.data?.attributes) ??
   (availableColumnsAttributesData.loading
     ? undefined
-    : mapEdgesToItems(gridAttributesOpts.data?.availableAttributes) ?? []);
+    : (mapEdgesToItems(gridAttributesOpts.data?.availableAttributes) ?? []));
 
 export const getAttributesFetchMoreProps = ({
   queryAvailableColumnsAttributes,

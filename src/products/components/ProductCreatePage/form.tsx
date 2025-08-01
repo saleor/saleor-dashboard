@@ -50,6 +50,7 @@ import {
 import {
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
+  createPreorderEndDateChangeHandler,
   createProductTypeSelectHandler,
 } from "@dashboard/products/utils/handlers";
 import {
@@ -70,7 +71,6 @@ import { Option } from "@saleor/macaw-ui-next";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {

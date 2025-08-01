@@ -72,8 +72,8 @@ export class IssueGiftCardDialog extends BasePage {
     await expect(this.sendToCustomerCheckbox).toBeEnabled();
     await this.waitForNetworkIdleAfterAction(async () => {
       await this.sendToCustomerCheckbox.check({ force: true });
-    }),
-      await this.waitForDOMToFullyLoad();
+    });
+    await this.waitForDOMToFullyLoad();
     await expect(this.sendToCustomerCheckbox).toBeChecked();
     await this.customerInput.waitFor({ state: "visible" });
     await expect(this.customerInput).toBeEnabled();

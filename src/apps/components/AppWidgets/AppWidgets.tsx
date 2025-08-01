@@ -46,7 +46,9 @@ const IframePost = ({
   const loadingRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    formRef.current && formRef.current.submit();
+    if (formRef.current) {
+      formRef.current.submit();
+    }
 
     if (iframeRef.current && loadingRef.current) {
       const onload = () => {
@@ -124,7 +126,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
 
   // Sort alphabetically, so order of apps is constant, even if API returns them differently. This allows more consistent UX
   const sortedByAppName = Object.entries(groupedByApp).sort((a, b) =>
-    a[1].app.name ?? "" < (b[1].app.name ?? "") ? -1 : 1,
+    (a[1].app.name ?? "" < (b[1].app.name ?? "")) ? -1 : 1,
   );
 
   return (

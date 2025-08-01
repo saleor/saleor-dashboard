@@ -39,7 +39,7 @@ export const getAppErrorMessageDescriptor = (code: AppErrorCode) => {
       return appManifestErrorMessages.notFound;
     default:
       // @ts-expect-error _exhaustiveCheck is intentionally unused for exhaustiveness checking
-      // eslint-disable-next-line no-case-declarations
+
       const _exhaustiveCheck: never = code;
 
       errorTracker.captureException(new Error(`Unhandled AppErrorCode: ${code}`));

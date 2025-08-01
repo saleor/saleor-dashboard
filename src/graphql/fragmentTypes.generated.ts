@@ -1,4 +1,3 @@
-/* eslint-disable */
 
       export interface PossibleTypesResultData {
         possibleTypes: {
