@@ -6005,6 +6005,12 @@ export type ProductVariantWhereInput = {
   AND?: InputMaybe<Array<ProductVariantWhereInput>>;
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<ProductVariantWhereInput>>;
+  /**
+   * Filter by attributes associated with the variant.
+   *
+   * Added in Saleor 3.22.
+   */
+  attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   /** Filter by product SKU. */
