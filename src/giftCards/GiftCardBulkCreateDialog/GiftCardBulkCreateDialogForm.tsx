@@ -15,7 +15,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardCreateExpirySelect from "../GiftCardCreateDialog/GiftCardCreateExpirySelect";
-import GiftCardCreateMoneyInput from "../GiftCardCreateDialog/GiftCardCreateMoneyInput";
+import { GiftCardCreateMoneyInput } from "../GiftCardCreateDialog/GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "../GiftCardCreateDialog/messages";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
@@ -40,7 +40,7 @@ export const initialData: GiftCardBulkCreateFormData = {
 
 interface GiftCardBulkCreateDialogFormProps {
   opts: { status: ConfirmButtonTransitionState };
-  formErrors: GiftCardBulkCreateFormErrors;
+  formErrors: GiftCardBulkCreateFormErrors | null;
   onSubmit: (data: GiftCardBulkCreateFormData) => void;
   onClose: () => void;
 }
