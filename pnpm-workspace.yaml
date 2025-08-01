@@ -1,2 +1,9 @@
-packages:
-  - "."
+onlyBuiltDependencies:
+  - "@sentry/cli"
+  - "@swc/core"
+  - core-js
+  - esbuild
+  - fsevents
+  - sharp
+overrides:
+  "resolve": "1.20.0"
