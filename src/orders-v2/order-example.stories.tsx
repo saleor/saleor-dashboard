@@ -1,20 +1,19 @@
-import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
 
-const ExampleComponent = () => {
-  return <Box>Order Example Component</Box>;
-};
+import { fulfilledOrderFixture } from "./fixtures";
+import { OrderDetailsPage } from "./order-detail-page";
 
 const meta = {
-  title: "OrderExample",
-  component: ExampleComponent,
-} satisfies Meta<typeof ExampleComponent>;
+  title: "Order Detail Page",
+  component: OrderDetailsPage,
+} satisfies Meta<typeof OrderDetailsPage>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {},
+export const Fulfilled: Story = {
+  args: {
+    order: fulfilledOrderFixture,
+  },
 };
