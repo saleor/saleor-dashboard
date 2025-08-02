@@ -3240,6 +3240,10 @@
     "context": "button",
     "string": "Копировать токен"
   },
+  "HVlMK2": {
+    "context": "number of variants",
+    "string": "Варианты ({quantity})"
+  },
   "HW6Vef": {
     "string": "Эта транзакция не подлежит возврату"
   },
