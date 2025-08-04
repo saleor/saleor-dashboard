@@ -2,6 +2,13 @@ import { createSvgIcon } from "@material-ui/core/utils";
 import { useTheme } from "@saleor/macaw-ui";
 import React from "react";
 
+/**
+ * @deprecated This icon uses Material-UI and Macaw-UI which are deprecated. Please use Lucide React icons instead.
+ * @see https://lucide.dev/ for available icons
+ * @example
+ * import { Trash2 } from "lucide-react";
+ * // Use <Trash2 /> instead
+ */
 const Trash: React.FC = () => {
   const { themeType } = useTheme();
   const TrashComponent = createSvgIcon(
