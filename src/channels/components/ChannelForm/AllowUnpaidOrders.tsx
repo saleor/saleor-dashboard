@@ -1,4 +1,3 @@
-import PreviewPill from "@dashboard/components/PreviewPill";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -31,7 +30,6 @@ export const AllowUnpaidOrders = ({
       <Text>
         <FormattedMessage {...messages.allowUnpaidOrdersLabel} />
       </Text>{" "}
-      <PreviewPill />
     </Checkbox>
     <Box paddingLeft={4}>
       {" "}

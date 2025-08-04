@@ -1,5 +1,4 @@
 import Link from "@dashboard/components/Link";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -26,7 +25,6 @@ export const MarkAsPaid = ({ hasError, isChecked, onCheckedChange, disabled }: M
       <Text>
         <FormattedMessage {...messages.markAsPaid} />
       </Text>
-      <PreviewPill />
     </Checkbox>
     <Box display="flex" flexDirection="column" paddingLeft={4}>
       <Text size={3} color="default2" paddingLeft={0.5}>
