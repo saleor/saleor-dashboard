@@ -8,8 +8,7 @@ import { OrderHeader } from "./order-header";
 export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => {
   return (
     <>
-      {/* __height="100vh" - Disables savebar space */}
-      <DetailPageLayout backgroundColor="default2" padding={4} __height="100vh">
+      <DetailPageLayout backgroundColor="default2" padding={4}>
         <TopNavWrapper __height="100%">
           <OrderHeader
             orderNumber={order.number}

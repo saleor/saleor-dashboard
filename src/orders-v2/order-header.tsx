@@ -2,16 +2,15 @@ import { channelUrl } from "@dashboard/channels/urls";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
-import moment from "moment-timezone";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { StatusPill } from "./status-pill";
 import { UnderlineLink } from "./underline-link";
 
-interface Props {
+interface Props extends BoxProps {
   status: OrderStatus;
   orderNumber: string;
   created: string;
@@ -21,15 +20,21 @@ interface Props {
   };
 }
 
-export const OrderHeader = ({ status, orderNumber, created, channel }: Props) => {
+export const OrderHeader = ({ status, orderNumber, created, channel, ...props }: Props) => {
   const intl = useIntl();
 
   const { localized, status: orderStatus } = transformOrderStatus(status, intl);
 
-  const formattedDate = moment(created).format("Do MMM, YY HH:mm");
+  const formattedDate = intl.formatDate(created, {
+    day: "numeric",
+    month: "short",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
-    <>
+    <Box display="flex" width="100%" {...props}>
       <Box display="flex" alignItems="center" width="100%" gap={3}>
         <Button icon={<Package />} variant="secondary" alignSelf="start" />
         <Box display="flex" flexDirection="column" gap={1}>
@@ -80,6 +85,6 @@ export const OrderHeader = ({ status, orderNumber, created, channel }: Props) =>
         {/* TODO: add menu items */}
         <TopNav.Menu dataTestId="menu" items={[]} />
       </Box>
-    </>
+    </Box>
   );
 };

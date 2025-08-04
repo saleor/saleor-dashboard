@@ -2,6 +2,16 @@ import { PillStatusType } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
+const getFillColorsBasedOnStatus = (status: PillStatusType) => {
+  switch (status) {
+    case "success":
+      return {
+        __backgroundColor: "oklch(94% 0.0898 164deg)",
+        __borderColor: "oklch(79% 0.204 153deg)",
+      };
+  }
+};
+
 // TODO: move to MacawUI
 export const StatusPill = ({
   status,
@@ -10,16 +20,6 @@ export const StatusPill = ({
   status: PillStatusType;
   children: React.ReactNode;
 }) => {
-  const getFillColorsBasedOnStatus = (status: PillStatusType) => {
-    switch (status) {
-      case "success":
-        return {
-          __backgroundColor: "oklch(94% 0.0898 164deg)",
-          __borderColor: "oklch(79% 0.204 153deg)",
-        };
-    }
-  };
-
   return (
     <Box
       paddingX={3}

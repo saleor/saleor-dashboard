@@ -1,7 +1,7 @@
 import { Box } from "@saleor/macaw-ui-next";
 import React from "react";
 
-export const MockedAppLayout = ({ children }: { children: React.ReactNode }) => {
+export const StorybookAppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box display="grid" __gridTemplateColumns="auto 1fr" style={{ fontFamily: "Geist" }}>
       <Box

@@ -7,9 +7,10 @@ interface Props extends TextProps {
   children: React.ReactNode;
 }
 
+// TODO: move to MacawUI
 export const UnderlineLink = ({ href, children, ...props }: Props) => (
   <Link to={href}>
-    <Text as="span" textDecoration="underline" {...props}>
+    <Text as="span" textDecoration="underline" {...props} data-macaw-ui-candidate>
       {children}
     </Text>
   </Link>

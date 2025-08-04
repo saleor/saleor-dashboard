@@ -12,7 +12,6 @@ import { useStyles } from "./styles";
 interface AppLayoutProps {
   children: React.ReactNode;
   fullSize?: boolean;
-  disableBorder?: boolean;
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {

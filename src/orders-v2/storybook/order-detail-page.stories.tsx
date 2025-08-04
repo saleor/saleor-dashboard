@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import React from "react";
 
+import { OrderDetailsPage } from "../order-detail-page";
 import { fulfilledOrderFixture } from "./fixtures";
-import { MockedAppLayout } from "./mocked-app-layout";
-import { OrderDetailsPage } from "./order-detail-page";
+import { StorybookAppLayout } from "./storybook-app-layout";
 
 const meta = {
   title: "Order Detail Page",
   component: OrderDetailsPage,
   decorators: [
     Story => (
-      <MockedAppLayout>
+      <StorybookAppLayout>
         <Story />
-      </MockedAppLayout>
+      </StorybookAppLayout>
     ),
   ],
 } satisfies Meta<typeof OrderDetailsPage>;
