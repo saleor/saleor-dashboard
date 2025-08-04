@@ -153,6 +153,7 @@
       }
     ],
     "local-rules/named-styles": "error",
+    "local-rules/no-deprecated-icons": "warn",
     "no-restricted-imports": [
       "error",
       {
