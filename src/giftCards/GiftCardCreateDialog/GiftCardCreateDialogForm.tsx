@@ -20,7 +20,7 @@ import { useIntl } from "react-intl";
 import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
-import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
+import { GiftCardCreateMoneyInput } from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "./messages";
 import { GiftCardCreateFormCommonProps, GiftCardCreateFormCustomer } from "./types";
