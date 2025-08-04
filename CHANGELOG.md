@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.6
+
+### Patch Changes
+
+- d787131: Revert storing intial form data for voucher details page. After this change voucher values (fixed amount / precentage) should editable.
+
 ## 3.21.5
 
 ### Patch Changes
