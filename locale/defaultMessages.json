@@ -651,6 +651,9 @@
   "1Znp5B": {
     "string": "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used"
   },
+  "1gzck6": {
+    "string": "{firstName} {lastName}"
+  },
   "1lk/oS": {
     "context": "button",
     "string": "Add postal code range"
@@ -4079,6 +4082,9 @@
     "context": "customer details, header",
     "string": "{fullName} Details"
   },
+  "MpkCXQ": {
+    "string": "{type, select, shipping {Shipping Address} billing {Billing Address} other {}}"
+  },
   "MwfSVA": {
     "context": "input helper text",
     "string": "Customers can not add quantities to a single cart above the limit when value is provided."
@@ -4720,6 +4726,9 @@
   "QOm7+P": {
     "string": "Create new order"
   },
+  "QQT/md": {
+    "string": "{streetAddress1} {streetAddress2}"
+  },
   "QSnh4Y": {
     "context": "add button label",
     "string": "Add"
@@ -5322,6 +5331,9 @@
   "U9CIo7": {
     "context": "button",
     "string": "Save variant"
+  },
+  "U9rdJc": {
+    "string": "{countryArea} {country}"
   },
   "UBuKZ9": {
     "context": "searchbar placeholder",
@@ -7757,6 +7769,9 @@
     "context": "page header",
     "string": "Primary Address"
   },
+  "jLAXqy": {
+    "string": "{postalCode} {city}"
+  },
   "jMzyU8": {
     "context": "tax classes card header",
     "string": "Tax classes"
@@ -9877,6 +9892,9 @@
   },
   "wDYozn": {
     "string": "App doesn't have any permissions granted."
+  },
+  "wEQDC6": {
+    "string": "Edit"
   },
   "wFVOKJ": {
     "string": "Go to warehouses"
