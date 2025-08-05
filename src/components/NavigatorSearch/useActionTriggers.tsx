@@ -75,14 +75,14 @@ interface TriggerDescriptor {
 
 const allActions: TriggerDescriptor[] = [
   {
-    section: {
+    section: defineMessage({
       id: "X7jl6w",
       defaultMessage: "Orders",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "QOm7+P",
       defaultMessage: "Create new order",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={orderListUrl({ action: "create-order" })}>
@@ -92,14 +92,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "X7jl6w",
       defaultMessage: "Orders",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "ofewGR",
       defaultMessage: "Go to orders",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={orderListUrl()}>
@@ -109,14 +109,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7NFfmz",
       defaultMessage: "Products",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "Sz6CRr",
       defaultMessage: "Create new product",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={productListUrl({ action: "create-product" })}>
@@ -126,14 +126,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7NFfmz",
       defaultMessage: "Products",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "lTrKHs",
       defaultMessage: "Go to products",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={productListUrl()}>
@@ -143,14 +143,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7NFfmz",
       defaultMessage: "Products",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "Uqf8Ny",
       defaultMessage: "Create new category",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={categoryAddUrl()}>
@@ -160,14 +160,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7NFfmz",
       defaultMessage: "Products",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "QjwEr6",
       defaultMessage: "Go to categories",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={categoryListUrl()}>
@@ -177,14 +177,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7NFfmz",
       defaultMessage: "Products",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "O+3CZK",
       defaultMessage: "Create new collection",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={collectionAddUrl()}>
@@ -194,14 +194,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7NFfmz",
       defaultMessage: "Products",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "ITYiRy",
       defaultMessage: "Go to collections",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={collectionListUrl()}>
@@ -211,14 +211,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "blWvag",
       defaultMessage: "Models",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "vbop3G",
       defaultMessage: "Create new model",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={pageCreateUrl()}>
@@ -228,14 +228,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "blWvag",
       defaultMessage: "Models",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "dQn96a",
       defaultMessage: "Go to models",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={pageListUrl()}>
@@ -245,14 +245,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "blWvag",
       defaultMessage: "Models",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "Ed2705",
       defaultMessage: "Create new model type",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={pageTypeAddPath}>
@@ -262,14 +262,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "blWvag",
       defaultMessage: "Models",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "5nrCxC",
       defaultMessage: "Go to model types",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={pageTypeListUrl()}>
@@ -279,14 +279,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7OW8BT",
       defaultMessage: "Configuration",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "LLS4re",
       defaultMessage: "Go to model attributes",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={attributeListUrl()}>
@@ -296,14 +296,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7OW8BT",
       defaultMessage: "Configuration",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "5FSIZp",
       defaultMessage: "Create new attribute",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={attributeAddUrl()}>
@@ -313,14 +313,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7OW8BT",
       defaultMessage: "Configuration",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "HwTMFL",
       defaultMessage: "Go to channels",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={channelsListUrl()}>
@@ -330,14 +330,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7OW8BT",
       defaultMessage: "Configuration",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "Nuq83+",
-      defaultMessage: "Go to channels",
-    },
+      defaultMessage: "Create new channel",
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={channelAddUrl}>
@@ -347,14 +347,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7OW8BT",
       defaultMessage: "Configuration",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "wFVOKJ",
       defaultMessage: "Go to warehouses",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={warehouseListUrl()}>
