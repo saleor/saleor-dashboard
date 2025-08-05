@@ -6,11 +6,11 @@ import { useActionTriggers } from "./useActionTriggers";
 
 interface ActionsProps {
   query: string;
-  onActionClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onAction: (cb: Function, event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => void;
   onActionsLoaded: () => void;
 }
 
-export const Actions = ({ query, onActionClick, onActionsLoaded }: ActionsProps) => {
+export const Actions = ({ query, onAction, onActionsLoaded }: ActionsProps) => {
   const triggers = useActionTriggers();
   const searchResults = fuzzySearch(triggers, query, ["name"]);
 
@@ -18,7 +18,10 @@ export const Actions = ({ query, onActionClick, onActionsLoaded }: ActionsProps)
     string,
     {
       Component: React.ComponentType<{
-        onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+        onAction?: (
+          cb: Function,
+          event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>,
+        ) => void;
       }>;
     }[]
   >;
@@ -39,7 +42,7 @@ export const Actions = ({ query, onActionClick, onActionsLoaded }: ActionsProps)
             {section}
           </Text>
           {actions.map(({ Component }, index) => (
-            <Component key={index} onClick={onActionClick} />
+            <Component key={index} onAction={onAction} />
           ))}
         </Box>
       ))}

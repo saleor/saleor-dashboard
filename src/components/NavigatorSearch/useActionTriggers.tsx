@@ -12,7 +12,6 @@ import { shippingZoneAddUrl, shippingZonesListUrl } from "@dashboard/shipping/ur
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { defineMessage, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 const ActionLinkItem = ({ href, children }: { href?: string; children: React.ReactNode }) => {
@@ -68,7 +67,7 @@ interface TriggerDescriptor {
   section: MessageDescriptor;
   name: MessageDescriptor;
   Component: React.ComponentType<{
-    onClick?: (event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => void;
+    onAction: (cb: Function, event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => void;
   }>;
   id?: string;
 }
@@ -83,8 +82,8 @@ const allActions: TriggerDescriptor[] = [
       id: "QOm7+P",
       defaultMessage: "Create new order",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={orderListUrl({ action: "create-order" })}>
           <FormattedMessage id="QOm7+P" defaultMessage="Create new order" />
         </ActionLinkItem>
@@ -100,8 +99,8 @@ const allActions: TriggerDescriptor[] = [
       id: "ofewGR",
       defaultMessage: "Go to orders",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={orderListUrl()}>
           <FormattedMessage id="ofewGR" defaultMessage="Go to orders" />
         </ActionLinkItem>
@@ -117,8 +116,8 @@ const allActions: TriggerDescriptor[] = [
       id: "Sz6CRr",
       defaultMessage: "Create new product",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={productListUrl({ action: "create-product" })}>
           <FormattedMessage id="Sz6CRr" defaultMessage="Create new product" />
         </ActionLinkItem>
@@ -134,8 +133,8 @@ const allActions: TriggerDescriptor[] = [
       id: "lTrKHs",
       defaultMessage: "Go to products",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={productListUrl()}>
           <FormattedMessage id="lTrKHs" defaultMessage="Go to products" />
         </ActionLinkItem>
@@ -151,8 +150,8 @@ const allActions: TriggerDescriptor[] = [
       id: "Uqf8Ny",
       defaultMessage: "Create new category",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={categoryAddUrl()}>
           <FormattedMessage id="Uqf8Ny" defaultMessage="Create new category" />
         </ActionLinkItem>
@@ -168,8 +167,8 @@ const allActions: TriggerDescriptor[] = [
       id: "QjwEr6",
       defaultMessage: "Go to categories",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={categoryListUrl()}>
           <FormattedMessage id="QjwEr6" defaultMessage="Go to categories" />
         </ActionLinkItem>
@@ -185,8 +184,8 @@ const allActions: TriggerDescriptor[] = [
       id: "O+3CZK",
       defaultMessage: "Create new collection",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={collectionAddUrl()}>
           <FormattedMessage id="O+3CZK" defaultMessage="Create new collection" />
         </ActionLinkItem>
@@ -202,8 +201,8 @@ const allActions: TriggerDescriptor[] = [
       id: "ITYiRy",
       defaultMessage: "Go to collections",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={collectionListUrl()}>
           <FormattedMessage id="ITYiRy" defaultMessage="Go to collections" />
         </ActionLinkItem>
@@ -219,8 +218,8 @@ const allActions: TriggerDescriptor[] = [
       id: "vbop3G",
       defaultMessage: "Create new model",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={pageCreateUrl()}>
           <FormattedMessage id="vbop3G" defaultMessage="Create new model" />
         </ActionLinkItem>
@@ -236,8 +235,8 @@ const allActions: TriggerDescriptor[] = [
       id: "dQn96a",
       defaultMessage: "Go to models",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={pageListUrl()}>
           <FormattedMessage id="dQn96a" defaultMessage="Go to models" />
         </ActionLinkItem>
@@ -253,8 +252,8 @@ const allActions: TriggerDescriptor[] = [
       id: "Ed2705",
       defaultMessage: "Create new model type",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={pageTypeAddPath}>
           <FormattedMessage id="Ed2705" defaultMessage="Create new model type" />
         </ActionLinkItem>
@@ -270,8 +269,8 @@ const allActions: TriggerDescriptor[] = [
       id: "5nrCxC",
       defaultMessage: "Go to model types",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={pageTypeListUrl()}>
           <FormattedMessage id="5nrCxC" defaultMessage="Go to model types" />
         </ActionLinkItem>
@@ -284,11 +283,11 @@ const allActions: TriggerDescriptor[] = [
       defaultMessage: "Configuration",
     }),
     name: defineMessage({
-      id: "LLS4re",
+      id: "plp5Oc",
       defaultMessage: "Go to model attributes",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={attributeListUrl()}>
           <FormattedMessage id="LLS4re" defaultMessage="Go to attributes" />
         </ActionLinkItem>
@@ -304,8 +303,8 @@ const allActions: TriggerDescriptor[] = [
       id: "5FSIZp",
       defaultMessage: "Create new attribute",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={attributeAddUrl()}>
           <FormattedMessage id="5FSIZp" defaultMessage="Create new attribute" />
         </ActionLinkItem>
@@ -321,8 +320,8 @@ const allActions: TriggerDescriptor[] = [
       id: "HwTMFL",
       defaultMessage: "Go to channels",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={channelsListUrl()}>
           <FormattedMessage id="HwTMFL" defaultMessage="Go to channels" />
         </ActionLinkItem>
@@ -338,8 +337,8 @@ const allActions: TriggerDescriptor[] = [
       id: "Nuq83+",
       defaultMessage: "Create new channel",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={channelAddUrl}>
           <FormattedMessage id="Nuq83+" defaultMessage="Create new channel" />
         </ActionLinkItem>
@@ -355,8 +354,8 @@ const allActions: TriggerDescriptor[] = [
       id: "wFVOKJ",
       defaultMessage: "Go to warehouses",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={warehouseListUrl()}>
           <FormattedMessage id="wFVOKJ" defaultMessage="Go to warehouses" />
         </ActionLinkItem>
@@ -372,8 +371,8 @@ const allActions: TriggerDescriptor[] = [
       id: "LVtwcF",
       defaultMessage: "Create new warehouse",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={warehouseAddUrl}>
           <FormattedMessage id="LVtwcF" defaultMessage="Create new warehouse" />
         </ActionLinkItem>
@@ -389,8 +388,8 @@ const allActions: TriggerDescriptor[] = [
       id: "Pl/ilB",
       defaultMessage: "Go to shipping zones",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={shippingZonesListUrl()}>
           <FormattedMessage id="tIc6ZH" defaultMessage="Go to shipping methods" />
         </ActionLinkItem>
@@ -406,8 +405,8 @@ const allActions: TriggerDescriptor[] = [
       id: "P4Hja1",
       defaultMessage: "Create new shipping zone",
     }),
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
+    Component: ({ onAction }) => (
+      <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(() => ({}), e)}>
         <ActionLinkItem href={shippingZoneAddUrl}>
           <FormattedMessage id="P4Hja1" defaultMessage="Create new shipping zone" />
         </ActionLinkItem>
@@ -424,7 +423,7 @@ const allActions: TriggerDescriptor[] = [
       defaultMessage: "Actions",
       id: "wL7VAE",
     }),
-    Component: ({ onClick }) => {
+    Component: ({ onAction }) => {
       const idToCopy = extractIdFromUrlContext();
 
       const copy = () => {
@@ -433,29 +432,9 @@ const allActions: TriggerDescriptor[] = [
         }
       };
 
-      useHotkeys(
-        "enter",
-        () => {
-          console.log("y u no work? :(((");
-          copy();
-        },
-        {
-          preventDefault: true,
-          eventListenerOptions: {
-            capture: true,
-          },
-        },
-        [idToCopy],
-      );
-
       // It's a littly hacky but the design of this component doesn't allow to easily work with non-link components. Hence we need some extra lifting linline
       return (
-        <Box
-          onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-            copy();
-            onClick && onClick(e);
-          }}
-        >
+        <Box onClick={(e: React.MouseEvent<HTMLDivElement>) => onAction(copy, e)}>
           <ActionLinkItem href={"#"}>
             <FormattedMessage id="wtLjP6" defaultMessage="Copy ID" />
           </ActionLinkItem>
