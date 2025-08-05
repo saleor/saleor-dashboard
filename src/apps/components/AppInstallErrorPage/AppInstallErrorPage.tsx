@@ -1,6 +1,6 @@
 import errorImg from "@assets/images/app-install-error.svg";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
@@ -10,7 +10,7 @@ interface AppInstallErrorPageProps {
   onBack: () => void;
 }
 
-export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({ onBack }) => {
+export const AppInstallErrorPage = ({ onBack }: PropsWithChildren<AppInstallErrorPageProps>) => {
   return (
     <Box alignItems="center" display="flex" height="100vh">
       <Box

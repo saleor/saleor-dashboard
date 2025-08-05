@@ -50,7 +50,7 @@ interface MatchParams {
   id?: string;
 }
 
-const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
+const OrderList = ({ location }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderListUrlQueryParams = asSortParams(
     qs,

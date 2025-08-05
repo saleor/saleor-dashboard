@@ -1,6 +1,6 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 interface AppDialogProps {
   title?: string;
@@ -8,7 +8,12 @@ interface AppDialogProps {
   open: boolean;
 }
 
-export const AppDialog: React.FC<AppDialogProps> = ({ children, title, onClose, ...props }) => {
+export const AppDialog = ({
+  children,
+  title,
+  onClose,
+  ...props
+}: PropsWithChildren<AppDialogProps>) => {
   return (
     <DashboardModal aria-labelledby="extension app dialog" {...props} onChange={onClose}>
       <DashboardModal.Content size="lg">

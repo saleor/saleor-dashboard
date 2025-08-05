@@ -52,7 +52,7 @@ export interface OrderListPageProps
   onTabDelete: (tabIndex: number) => void;
 }
 
-const OrderListPage: React.FC<OrderListPageProps> = ({
+const OrderListPage = ({
   initialSearch,
   limits,
   onAdd,
@@ -68,7 +68,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   currentTab,
   hasPresetsChanged,
   ...listProps
-}) => {
+}: OrderListPageProps) => {
   const intl = useIntl();
   const subtitle = useContextualLink("order_list");
   const userAccessibleChannels = useUserAccessibleChannels();

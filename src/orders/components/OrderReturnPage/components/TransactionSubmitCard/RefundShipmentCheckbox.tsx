@@ -14,13 +14,13 @@ interface RefundShipmentCheckboxProps {
   onChange: FormChange;
 }
 
-const RefundShipmentCheckbox: React.FC<RefundShipmentCheckboxProps> = ({
+const RefundShipmentCheckbox = ({
   refundShipmentCosts,
   canRefundShipping,
   autoGrantRefund,
   shipmentCost,
   onChange,
-}) => {
+}: RefundShipmentCheckboxProps) => {
   const handleRefundShipmentCosts = React.useCallback(
     checked => {
       onChange({
