@@ -3,6 +3,7 @@ import { categoryAddUrl, categoryListUrl } from "@dashboard/categories/urls";
 import { channelAddUrl, channelsListUrl } from "@dashboard/channels/urls";
 import { collectionAddUrl, collectionListUrl } from "@dashboard/collections/urls";
 import Link from "@dashboard/components/Link";
+import { extractIdFromUrlContext } from "@dashboard/components/NavigatorSearch/extract-id-from-url-context";
 import { pageCreateUrl, pageListUrl } from "@dashboard/modeling/urls";
 import { pageTypeAddPath, pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderListUrl } from "@dashboard/orders/urls";
@@ -11,12 +12,38 @@ import { shippingZoneAddUrl, shippingZonesListUrl } from "@dashboard/shipping/ur
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useHotkeys } from "react-hotkeys-hook";
+import { defineMessage, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
-const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
-  return (
-    <Link href={href} data-href={href} id={href} className="command-menu-item" data-focus={false}>
+const ActionLinkItem = ({ href, children }: { href?: string; children: React.ReactNode }) => {
+  if (href) {
+    return (
+      <Link href={href} data-href={href} id={href} className="command-menu-item" data-focus={false}>
+        <Box
+          display="flex"
+          alignItems="center"
+          color="default1"
+          gap={2}
+          paddingY={1.5}
+          backgroundColor={{
+            hover: "default1Hovered",
+          }}
+          paddingX={6}
+          role="option"
+          tabIndex={-1}
+        >
+          <Text size={2} fontWeight="medium" color="default1">
+            {children}
+          </Text>
+        </Box>
+      </Link>
+    );
+  } else {
+    return (
       <Box
+        cursor="pointer"
+        data-focus={false}
+        className="command-menu-item"
         display="flex"
         alignItems="center"
         color="default1"
@@ -33,22 +60,17 @@ const ActionLinkItem = ({ href, children }: { href: string; children: React.Reac
           {children}
         </Text>
       </Box>
-    </Link>
-  );
+    );
+  }
 };
 
 interface TriggerDescriptor {
-  section: {
-    id: string;
-    defaultMessage: string;
-  };
-  name: {
-    id: string;
-    defaultMessage: string;
-  };
+  section: MessageDescriptor;
+  name: MessageDescriptor;
   Component: React.ComponentType<{
-    onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => void;
   }>;
+  id?: string;
 }
 
 const allActions: TriggerDescriptor[] = [
@@ -342,14 +364,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7OW8BT",
       defaultMessage: "Configuration",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "LVtwcF",
       defaultMessage: "Create new warehouse",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={warehouseAddUrl}>
@@ -359,14 +381,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7OW8BT",
       defaultMessage: "Configuration",
-    },
-    name: {
-      id: "tIc6ZH",
+    }),
+    name: defineMessage({
+      id: "Pl/ilB",
       defaultMessage: "Go to shipping zones",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={shippingZonesListUrl()}>
@@ -376,14 +398,14 @@ const allActions: TriggerDescriptor[] = [
     ),
   },
   {
-    section: {
+    section: defineMessage({
       id: "7OW8BT",
       defaultMessage: "Configuration",
-    },
-    name: {
+    }),
+    name: defineMessage({
       id: "P4Hja1",
       defaultMessage: "Create new shipping zone",
-    },
+    }),
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
         <ActionLinkItem href={shippingZoneAddUrl}>
@@ -392,14 +414,73 @@ const allActions: TriggerDescriptor[] = [
       </Box>
     ),
   },
+  {
+    id: "copy-id",
+    name: defineMessage({
+      defaultMessage: "Copy ID",
+      id: "wtLjP6",
+    }),
+    section: defineMessage({
+      defaultMessage: "Actions",
+      id: "wL7VAE",
+    }),
+    Component: ({ onClick }) => {
+      const idToCopy = extractIdFromUrlContext();
+
+      const copy = () => {
+        if (idToCopy && navigator.clipboard) {
+          navigator.clipboard.writeText(idToCopy);
+        }
+      };
+
+      useHotkeys(
+        "enter",
+        () => {
+          console.log("y u no work? :(((");
+          copy();
+        },
+        {
+          preventDefault: true,
+          eventListenerOptions: {
+            capture: true,
+          },
+        },
+        [idToCopy],
+      );
+
+      // It's a littly hacky but the design of this component doesn't allow to easily work with non-link components. Hence we need some extra lifting linline
+      return (
+        <Box
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+            copy();
+            onClick && onClick(e);
+          }}
+        >
+          <ActionLinkItem href={"#"}>
+            <FormattedMessage id="wtLjP6" defaultMessage="Copy ID" />
+          </ActionLinkItem>
+        </Box>
+      );
+    },
+  },
 ];
 
 export const useActionTriggers = () => {
   const intl = useIntl();
+  const idInContext = extractIdFromUrlContext();
 
-  return allActions.map(action => ({
-    ...action,
-    section: intl.formatMessage(action.section),
-    name: intl.formatMessage(action.name),
-  }));
+  // Hide copy ID action if page doesn't provide id in context, like list or homepage
+  return allActions
+    .filter(action => {
+      if (action.id === "copy-id" && !idInContext) {
+        return false;
+      }
+
+      return true;
+    })
+    .map(action => ({
+      ...action,
+      section: intl.formatMessage(action.section),
+      name: intl.formatMessage(action.name),
+    }));
 };
