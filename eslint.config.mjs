@@ -11,7 +11,7 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 import importPlugin from "eslint-plugin-import";
 import formatjs from "eslint-plugin-formatjs";
 import globals from "globals";
-import localRules from "./lint/rules/index.js";
+import localRules from "./lint/rules/index.mjs";
 
 export default tseslint.config(
   globalIgnores(["node_modules/",
