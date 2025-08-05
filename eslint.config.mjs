@@ -79,7 +79,7 @@ export default tseslint.config(
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.es2021,
+        ...globals.es2015,
       },
     },
     plugins: {
