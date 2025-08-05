@@ -1,53 +1,60 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import globals from "globals";
-import typescript from "@typescript-eslint/eslint-plugin";
-import typescriptParser from "@typescript-eslint/parser";
-import reactHooks from "eslint-plugin-react-hooks";
+// @ts-check
+
+import { globalIgnores } from "eslint/config";
+import eslint from "@eslint/js";
+import tseslint from "typescript-eslint";
+import prettierConfig from "eslint-config-prettier";
 import react from "eslint-plugin-react";
-import importPlugin from "eslint-plugin-import";
-import formatjs from "eslint-plugin-formatjs";
+import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import localRules from "./lint/rules/named-styles.js";
+import importPlugin from "eslint-plugin-import";
+import formatjs from "eslint-plugin-formatjs";
+import globals from "globals";
+import localRules from "./lint/rules/index.js";
 
-export default defineConfig([
-  globalIgnores(["node_modules/", "build/", "dist/", "dev-dist/", "coverage/", "**/*.generated.ts"]),
+export default tseslint.config(
+  globalIgnores(["node_modules/",
+    "build/",
+    "dist/",
+    "dev-dist/",
+    "coverage/",
+    "**/types/**/*",
+    "type-policies.ts",
+    "playwright/auth.js",
+    "**/*.generated.ts",
+  ]),
 
-  // Base configuration for all files
+  eslint.configs.recommended,
+  tseslint.configs.recommended, // Note: we can migrate to rules using TypeScript types
+  react.configs.flat.recommended,
+  reactHooks.configs['recommended-latest'],
+  reactRefresh.configs.vite,
+
   {
-    files: ["{src,playwright}/**/*.{js,jsx,ts,tsx}"],
-    plugins: {
-      "simple-import-sort": simpleImportSort,
-    },
-    rules: {
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error",
+    settings: {
+      react: {
+        version: "detect",
+      },
     },
   },
 
-  // TypeScript configuration
+
+  // Disable global rules:
   {
-    files: ["{src,playwright}/**/*.{ts,tsx}"],
-    languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        project: "./tsconfig.json",
-      },
-    },
-    plugins: {
-      "@typescript-eslint": typescript,
-    },
     rules: {
-      ...typescript.configs.recommended.rules,
-      // Decided to turn off:
+      // Previously decided to turn-off, check if we can revisit them and enable:
       "@typescript-eslint/prefer-nullish-coalescing": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-misused-promises": "off",
       "@typescript-eslint/consistent-type-imports": "off",
       "@typescript-eslint/no-confusing-void-expression": "off",
+      "react/prop-types": "off",
+      "react-hooks/exhaustive-deps": "warn",
+      // Allow constant exports is thanks to Vite (see recommended config)
+      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+
       // Migration in progress:
       // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -55,46 +62,36 @@ export default defineConfig([
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
+      // Disabled after migration to ESLint 9, we need to migrate code to enable these rules:
       "@typescript-eslint/no-empty-object-type": "off",
-      "@typescript-eslint/no-unused-expressions": "off",
-    },
+      "no-constant-binary-expression": "off",
+      "no-case-declarations": "off",
+      "prefer-const": "off",
+    }
   },
 
-  // React configuration
+
+  // Configure custom plugins and rules for React files
   {
     files: ["src/**/*.{js,jsx,ts,tsx}"],
-    ...react.configs.flat.recommended,
     languageOptions: {
-      ...react.configs.flat.recommended.languageOptions,
       globals: {
         ...globals.browser,
         ...globals.es2021,
       },
     },
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
     plugins: {
-      ...react.configs.flat.recommended.plugins,
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-      import: importPlugin,
-      formatjs,
-      "local-rules": {
-        rules: {
-          "named-styles": localRules,
-        },
-      },
+      "simple-import-sort": simpleImportSort,
+      // Note: This plugin has it's own "recommended" config, but we didn't use if (pre ESLint 9)
+      "import": importPlugin,
+      "formatjs": formatjs,
+      "local-rules": { rules: localRules },
     },
     rules: {
-      ...react.configs.flat.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      "react/prop-types": "off",
-      "react-refresh/only-export-components": "warn",
-      "react-hooks/exhaustive-deps": "warn",
+      "import/no-default-export": "warn",
       "import/no-duplicates": "error",
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
       "lines-between-class-members": ["error", "always"],
       "padding-line-between-statements": [
         "error",
@@ -156,32 +153,31 @@ export default defineConfig([
       ],
       "formatjs/enforce-id": [
         "error",
-        {
-          idInterpolationPattern: "[sha512:contenthash:base64:6]",
-        },
+        { idInterpolationPattern: "[sha512:contenthash:base64:6]" },
       ],
       "local-rules/named-styles": "error",
+      "local-rules/no-deprecated-icons": "warn",
+      "no-console": ["error", { allow: ["warn", "error"] }],
       "no-restricted-imports": [
         "error",
         {
-          paths: ["lodash", "@material-ui/icons/Delete", "classnames"],
-        },
-      ],
-      "no-console": [
-        "error",
-        {
-          allow: ["warn", "error"],
+          paths: [
+            "lodash",
+            "@material-ui/icons/Delete",
+            "classnames",
+          ],
         },
       ],
     },
   },
 
-  // Playwright specific configuration
+
+  // Disable rules for specific dfiles
   {
-    files: ["playwright/**/*.ts"],
+    files: ["vite.config.js"],
     languageOptions: {
-      parserOptions: {
-        project: "./playwright/tsconfig.json",
+      globals: {
+        ...globals.node,
       },
     },
     rules: {
@@ -189,7 +185,19 @@ export default defineConfig([
     },
   },
 
-  // Test and story files configuration
+  {
+    files: ["playwright/**/*.ts"],
+    rules: {
+      "no-console": "off",
+    },
+  },
+
+  {
+    files: ["src/**/*.stories.@(ts|tsx)"],
+    rules: {
+      "import/no-default-export": "off",
+    },
+  },
   {
     files: ["src/**/*.test.*", "src/**/*.stories.*"],
     rules: {
@@ -199,7 +207,6 @@ export default defineConfig([
 
   // Additional rules (needs to be here, because other imports have "error", not "warn")
   {
-    files: ["src/**/*"],
     rules: {
       "no-restricted-imports": [
         "warn",
@@ -209,9 +216,20 @@ export default defineConfig([
               name: "react-sortable-hoc",
               message: "Use @dnd-kit instead of react-sortable-hoc.",
             },
+            {
+              name: "moment",
+              message: "Use react-intl formatDate instead of moment.",
+            },
+            {
+              name: "moment-timezone",
+              message: "Use react-intl formatDate instead of moment-timezone.",
+            },
           ],
         },
       ],
     },
   },
-]);
+
+  // Disable any rules that conflict with Prettier
+  prettierConfig,
+);
