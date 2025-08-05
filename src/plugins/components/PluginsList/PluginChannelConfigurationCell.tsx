@@ -11,7 +11,7 @@ interface PluginChannelConfigurationCellProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginChannelConfigurationCell: React.FC<PluginChannelConfigurationCellProps> = ({
+const PluginChannelConfigurationCell = (props: PluginChannelConfigurationCellProps) => ({
   plugin,
 }) => {
   const message = isPluginGlobal(plugin.globalConfiguration)

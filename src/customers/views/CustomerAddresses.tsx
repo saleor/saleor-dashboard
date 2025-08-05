@@ -30,7 +30,7 @@ interface CustomerAddressesProps {
   params: CustomerAddressesUrlQueryParams;
 }
 
-const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => {
+const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

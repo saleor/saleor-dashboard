@@ -29,7 +29,7 @@ interface NoteMessageProps {
   message: string | null;
 }
 
-const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
+const NoteMessage = ({ message }: NoteMessageProps) => (
   <>
     {message?.split("\n").map(string => {
       if (string === "") {
@@ -69,7 +69,7 @@ const TimelineAvatar = ({
   return null;
 };
 
-export const TimelineNote: React.FC<TimelineNoteProps> = ({
+export const TimelineNote = (props: TimelineNoteProps) => ({
   date,
   user,
   message,

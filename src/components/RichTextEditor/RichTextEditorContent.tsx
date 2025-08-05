@@ -15,7 +15,7 @@ export interface RichTextEditorContentProps extends Omit<EditorJsProps, "default
 }
 
 const ReactEditorJS = createReactEditorJS();
-const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({
+const RichTextEditorContent = (props: RichTextEditorContentProps) => ({
   id: defaultId,
   className,
   value,

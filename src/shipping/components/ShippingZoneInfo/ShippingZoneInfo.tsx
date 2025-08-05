@@ -49,7 +49,7 @@ const useStyles = makeStyles(
   { name: "ShippingZoneCreatePage" },
 );
 const MAX_DESCRIPTION_LENGTH = 300;
-const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
+const ShippingZoneInfo = (props: ShippingZoneInfoProps) => ({
   data,
   disabled,
   errors,

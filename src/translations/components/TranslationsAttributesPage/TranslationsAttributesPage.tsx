@@ -34,7 +34,7 @@ export const fieldNames = {
   richTextValue: "attributeRichTextValue",
 };
 
-const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
+const TranslationsAttributesPage = (props: TranslationsAttributesPageProps) => ({
   translationId,
   activeField,
   disabled,

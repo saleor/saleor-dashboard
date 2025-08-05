@@ -31,7 +31,7 @@ export interface TranslationsPagesProps {
 type HandleSubmitData = string | any;
 type HandleSubmitAttributeValue = OutputData | string;
 
-const TranslationsPages: React.FC<TranslationsPagesProps> = ({ id, languageCode, params }) => {
+const TranslationsPages = ({ id, languageCode, params }: TranslationsPagesProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

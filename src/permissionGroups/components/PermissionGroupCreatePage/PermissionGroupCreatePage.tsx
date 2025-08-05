@@ -48,7 +48,7 @@ export interface PermissionGroupCreatePageProps {
   onSubmit: (data: PermissionGroupCreateFormData) => SubmitPromise;
 }
 
-export const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
+export const PermissionGroupCreatePage = (props: PermissionGroupCreatePageProps) => ({
   disabled,
   permissions,
   channels,

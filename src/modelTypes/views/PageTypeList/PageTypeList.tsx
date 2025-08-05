@@ -34,7 +34,7 @@ interface PageTypeListProps {
   params: PageTypeListUrlQueryParams;
 }
 
-export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
+export const PageTypeList = ({ params }: PageTypeListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const {

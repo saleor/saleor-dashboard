@@ -31,7 +31,7 @@ interface OrderTransactionsWrapper {
   onRefundAdd: () => void;
 }
 
-export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
+export const OrderTransactionsWrapper = (props: OrderTransactionsWrapper) => ({
   order,
   shop,
   onTransactionAction,

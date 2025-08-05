@@ -20,7 +20,7 @@ interface OrderUnfulfilledProductsCardProps {
   onShowMetadata: (id: string) => void;
 }
 
-const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = ({
+const OrderUnfulfilledProductsCard = (props: OrderUnfulfilledProductsCardProps) => ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
   onShowMetadata,

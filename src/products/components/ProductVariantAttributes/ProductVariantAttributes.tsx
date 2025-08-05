@@ -56,7 +56,7 @@ function getAttributeValueChoices(id: string, attributes: VariantAttributeInput[
   }));
 }
 
-const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
+const ProductVariantAttributes = (props: ProductVariantAttributesProps) => ({
   attributes,
   disabled,
   errors,

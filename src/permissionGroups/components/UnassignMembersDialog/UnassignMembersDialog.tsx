@@ -11,7 +11,7 @@ export interface UnassignMembersDialogProps {
   onClose: () => void;
 }
 
-const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
+const UnassignMembersDialog = (props: UnassignMembersDialogProps) => ({
   confirmButtonState,
   quantity,
   onClose,

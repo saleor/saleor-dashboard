@@ -27,7 +27,7 @@ export interface CustomAppInfoProps {
   onChange: FormChange;
 }
 
-const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
+const CustomAppInformation = (props: CustomAppInfoProps) => ({
   data,
   disabled,
   errors,

@@ -73,7 +73,7 @@ export interface AttributePropertiesProps {
   onChange: FormChange;
 }
 
-const AttributeProperties: React.FC<AttributePropertiesProps> = ({
+const AttributeProperties = (props: AttributePropertiesProps) => ({
   data,
   errors,
   disabled,

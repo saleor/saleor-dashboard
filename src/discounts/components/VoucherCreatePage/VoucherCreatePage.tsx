@@ -110,7 +110,7 @@ const CategoriesTab = Tab(VoucherCreatePageTab.categories);
 const CollectionsTab = Tab(VoucherCreatePageTab.collections);
 const ProductsTab = Tab(VoucherCreatePageTab.products);
 const VariantsTab = Tab(VoucherCreatePageTab.variants);
-const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
+const VoucherCreatePage = (props: VoucherCreatePageProps) => ({
   allChannelsCount,
   channelListings = [],
   disabled,

@@ -64,7 +64,7 @@ interface ProductListDatagridProps
   loading: boolean;
 }
 
-export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
+export const ProductListDatagrid = (props: ProductListDatagridProps) => ({
   products,
   onRowClick,
   disabled,

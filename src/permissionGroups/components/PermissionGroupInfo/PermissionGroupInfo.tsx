@@ -18,7 +18,7 @@ export interface PermissionGroupInfoProps {
   };
 }
 
-const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
+const PermissionGroupInfo = (props: PermissionGroupInfoProps) => ({
   disabled,
   onChange,
   data,

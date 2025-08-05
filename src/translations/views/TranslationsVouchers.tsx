@@ -26,7 +26,7 @@ export interface TranslationsVouchersProps {
   params: TranslationsVouchersQueryParams;
 }
 
-const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
+const TranslationsVouchers = (props: TranslationsVouchersProps) => ({
   id,
   languageCode,
   params,

@@ -19,7 +19,7 @@ interface SimpleRadioGroupFieldProps
 
 // SimpleRadioGroupField is a migration of RadioGroupField "@dashboard/components/RadioGroupField" using Macaw UI
 // While migrating to this component note that it doesn't have a label, hint or 'no choices' message.
-export const SimpleRadioGroupField: React.FC<SimpleRadioGroupFieldProps> = ({
+export const SimpleRadioGroupField = (props: SimpleRadioGroupFieldProps) => ({
   name,
   value,
   error,

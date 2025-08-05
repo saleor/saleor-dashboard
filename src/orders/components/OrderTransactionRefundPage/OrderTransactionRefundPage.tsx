@@ -73,7 +73,7 @@ export interface OrderTransactionRefundPageFormData {
   transactionId: string;
 }
 
-const OrderTransactionRefundPage: React.FC<OrderTransactionRefundPageProps> = ({
+const OrderTransactionRefundPage = (props: OrderTransactionRefundPageProps) => ({
   errors,
   order,
   draftRefund,

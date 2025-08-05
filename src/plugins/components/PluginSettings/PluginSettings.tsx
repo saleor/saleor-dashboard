@@ -20,7 +20,7 @@ interface PluginSettingsProps {
   fields: ConfigurationItemFragment[];
 }
 
-const PluginSettings: React.FC<PluginSettingsProps> = ({
+const PluginSettings = (props: PluginSettingsProps) => ({
   data,
   disabled,
   errors,

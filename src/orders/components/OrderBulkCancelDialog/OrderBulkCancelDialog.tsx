@@ -11,7 +11,7 @@ export interface OrderBulkCancelDialogProps {
   onConfirm: () => void;
 }
 
-const OrderBulkCancelDialog: React.FC<OrderBulkCancelDialogProps> = ({
+const OrderBulkCancelDialog = (props: OrderBulkCancelDialogProps) => ({
   confirmButtonState,
   numberOfOrders,
   open,

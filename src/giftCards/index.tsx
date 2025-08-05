@@ -15,13 +15,13 @@ import GiftCardUpdateComponent from "./GiftCardUpdate";
 import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
 import { giftCardPath, giftCardSettingsUrl, giftCardsListPath } from "./urls";
 
-const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+const GiftCardUpdatePage = ({ { id: string } }: RouteComponentProps<{ id: string }>) => ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: GiftCardUpdatePageUrlQueryParams = qs;
 
   return <GiftCardUpdateComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
-const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
+const GiftCardList = ({ any }: RouteComponentProps<any>) => () => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: GiftCardListUrlQueryParams = asSortParams(
     qs,

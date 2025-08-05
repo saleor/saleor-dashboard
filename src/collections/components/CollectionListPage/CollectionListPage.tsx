@@ -47,7 +47,7 @@ export interface CollectionListPageProps
   onTabDelete: (id: number) => void;
 }
 
-const CollectionListPage: React.FC<CollectionListPageProps> = ({
+const CollectionListPage = (props: CollectionListPageProps) => ({
   currentTab,
   disabled,
   initialSearch,

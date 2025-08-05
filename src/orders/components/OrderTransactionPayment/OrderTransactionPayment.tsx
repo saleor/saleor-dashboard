@@ -24,7 +24,7 @@ interface OrderTransactionPaymentProps {
   onVoid: () => void;
 }
 
-const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
+const OrderTransactionPayment = (props: OrderTransactionPaymentProps) => ({
   payment,
   allPaymentMethods,
   onCapture,

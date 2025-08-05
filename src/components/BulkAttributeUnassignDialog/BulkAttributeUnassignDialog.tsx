@@ -15,7 +15,7 @@ export interface BulkAttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = ({
+const BulkAttributeUnassignDialog = (props: BulkAttributeUnassignDialogProps) => ({
   title,
   attributeQuantity,
   confirmButtonState,

@@ -25,7 +25,7 @@ export interface CustomAppListPageProps {
   onRemove: (id: string) => void;
 }
 
-const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
+const CustomAppListPage = (props: CustomAppListPageProps) => ({
   appsList,
   onRemove,
   getCustomAppHref,

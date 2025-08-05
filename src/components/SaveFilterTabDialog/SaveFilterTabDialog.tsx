@@ -24,7 +24,7 @@ export interface SaveFilterTabDialogProps {
   onSubmit: (data: SaveFilterTabDialogFormData) => void;
 }
 
-const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
+const SaveFilterTabDialog = (props: SaveFilterTabDialogProps) => ({
   confirmButtonState,
   onClose,
   onSubmit,

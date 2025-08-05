@@ -18,7 +18,7 @@ interface DateTimeFieldProps {
   name: string;
 }
 
-export const DateTimeField: React.FC<DateTimeFieldProps> = ({
+export const DateTimeField = (props: DateTimeFieldProps) => ({
   disabled,
   error,
   name,

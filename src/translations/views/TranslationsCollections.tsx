@@ -26,7 +26,7 @@ export interface TranslationsCollectionsProps {
   params: TranslationsCollectionsQueryParams;
 }
 
-const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
+const TranslationsCollections = (props: TranslationsCollectionsProps) => ({
   id,
   languageCode,
   params,

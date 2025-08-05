@@ -13,7 +13,7 @@ export type FilterRangeFieldProps = FilterFieldBaseProps<
   currencySymbol: string;
 };
 
-const FilterRangeField: React.FC<FilterRangeFieldProps> = ({
+const FilterRangeField = (props: FilterRangeFieldProps) => ({
   currencySymbol,
   filter,
   onFilterPropertyChange,

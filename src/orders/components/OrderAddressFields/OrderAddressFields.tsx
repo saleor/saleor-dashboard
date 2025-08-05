@@ -32,7 +32,7 @@ interface OrderAddressFieldsProps {
   orderBillingAddress: AddressFragment;
 }
 
-const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
+const OrderAddressFields = (props: OrderAddressFieldsProps) => ({
   action,
   isDraft,
   customerAddressesLoading,

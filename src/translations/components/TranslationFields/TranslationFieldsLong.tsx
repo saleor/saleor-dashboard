@@ -17,7 +17,7 @@ interface TranslationFieldsLongProps {
   onSubmit: (data: string) => SubmitPromise;
 }
 
-const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
+const TranslationFieldsLong = (props: TranslationFieldsLongProps) => ({
   disabled,
   edit,
   initial,

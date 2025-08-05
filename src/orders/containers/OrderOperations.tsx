@@ -170,7 +170,7 @@ interface OrderOperationsProps {
   onManualTransactionAdded: (data: CreateManualTransactionCaptureMutation) => void;
 }
 
-const OrderOperations: React.FC<OrderOperationsProps> = ({
+const OrderOperations = (props: OrderOperationsProps) => ({
   children,
   onDraftUpdate,
   onNoteAdd,

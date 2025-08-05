@@ -61,7 +61,7 @@ export interface ChannelFormProps {
   onAutomaticallyCompleteCheckoutsChange: () => void;
 }
 
-export const ChannelForm: React.FC<ChannelFormProps> = ({
+export const ChannelForm = (props: ChannelFormProps) => ({
   currencyCodes,
   data,
   disabled,

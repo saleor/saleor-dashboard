@@ -21,7 +21,7 @@ import ProductTypeCreateComponent from "./views/ProductTypeCreate";
 import ProductTypeListComponent from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
-const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const ProductTypeList = ({ ( }: {} => {
   const qs = parseQs(location.search, {
     ignoreQueryPrefix: true,
     // As a product types list still keeps ids to remove in query params,
@@ -42,7 +42,7 @@ interface ProductTypeCreateRouteParams {
   id: string;
 }
 
-const ProductTypeCreate: React.FC<RouteComponentProps<ProductTypeCreateRouteParams>> = ({
+const ProductTypeCreate = ({ ProductTypeCreateRouteParams }: RouteComponentProps<ProductTypeCreateRouteParams>) => ({
   location,
 }) => {
   const qs = parseQs(location.search.substr(1));
@@ -55,7 +55,7 @@ interface ProductTypeUpdateRouteParams {
   id: string;
 }
 
-const ProductTypeUpdate: React.FC<RouteComponentProps<ProductTypeUpdateRouteParams>> = ({
+const ProductTypeUpdate = ({ ProductTypeUpdateRouteParams }: RouteComponentProps<ProductTypeUpdateRouteParams>) => ({
   match,
 }) => {
   const qs = parseQs(location.search.substr(1));

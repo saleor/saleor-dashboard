@@ -109,7 +109,7 @@ function useCategoryUpdateForm(
   };
 }
 
-const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({
+const CategoryUpdateForm = (props: CategoryUpdateFormProps) => ({
   children,
   category,
   onSubmit,

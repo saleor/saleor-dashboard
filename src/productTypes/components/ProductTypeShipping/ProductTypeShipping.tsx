@@ -14,7 +14,7 @@ interface ProductTypeShippingProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
+const ProductTypeShipping = (props: ProductTypeShippingProps) => ({
   data,
   weightUnit,
   disabled,

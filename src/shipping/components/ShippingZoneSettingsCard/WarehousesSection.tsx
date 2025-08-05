@@ -37,7 +37,7 @@ interface WarehousesSectionProps extends FetchMoreProps, SearchProps {
   selectedWarehouses: Option[];
 }
 
-const WarehousesSection: React.FC<WarehousesSectionProps> = ({
+const WarehousesSection = (props: WarehousesSectionProps) => ({
   onAdd,
   onSearchChange,
   onChange,

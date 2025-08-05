@@ -31,7 +31,7 @@ const useStyles = makeStyles(
     name: "OverflowTooltip",
   },
 );
-const OverflowTooltip: React.FC<OverflowTooltipProps> = ({
+const OverflowTooltip = (props: OverflowTooltipProps) => ({
   checkHorizontal = true,
   checkVertical = true,
   title,

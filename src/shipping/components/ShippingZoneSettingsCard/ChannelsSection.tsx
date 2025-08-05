@@ -33,7 +33,7 @@ interface ChannelsSectionProps {
   allChannels?: ChannelFragment[];
 }
 
-const ChannelsSection: React.FC<ChannelsSectionProps> = ({
+const ChannelsSection = (props: ChannelsSectionProps) => ({
   onChange,
   allChannels = [],
   selectedChannels,

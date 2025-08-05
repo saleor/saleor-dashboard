@@ -55,7 +55,7 @@ interface GiftCardCreateDialogFormProps {
 
 const defaultInitialCustomer = { email: "", name: "" };
 
-const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
+const GiftCardCreateDialogForm = (props: GiftCardCreateDialogFormProps) => ({
   onSubmit,
   opts,
   onClose,

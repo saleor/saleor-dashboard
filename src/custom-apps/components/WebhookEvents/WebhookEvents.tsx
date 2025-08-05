@@ -36,7 +36,7 @@ interface WebhookEventsProps {
   onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
-const WebhookEvents: React.FC<WebhookEventsProps> = ({
+const WebhookEvents = (props: WebhookEventsProps) => ({
   data,
   setQuery,
   onSyncEventChange,

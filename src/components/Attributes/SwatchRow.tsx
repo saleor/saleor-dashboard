@@ -20,7 +20,7 @@ type SwatchRowProps = Pick<
   | "fetchMoreAttributeValues"
 >;
 
-export const SwatchRow: React.FC<SwatchRowProps> = ({
+export const SwatchRow = (props: SwatchRowProps) => ({
   attributeValues,
   fetchAttributeValues,
   fetchMoreAttributeValues,

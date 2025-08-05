@@ -23,7 +23,7 @@ interface WebhookInfoProps {
   setValue: (data: Partial<WebhookFormData>) => void;
 }
 
-const WebhookInfo: React.FC<WebhookInfoProps> = ({
+const WebhookInfo = (props: WebhookInfoProps) => ({
   data,
   disabled,
   errors,

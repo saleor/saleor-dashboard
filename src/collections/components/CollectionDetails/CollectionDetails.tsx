@@ -21,7 +21,7 @@ export interface CollectionDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CollectionDetails: React.FC<CollectionDetailsProps> = ({
+const CollectionDetails = (props: CollectionDetailsProps) => ({
   disabled,
   data,
   onChange,

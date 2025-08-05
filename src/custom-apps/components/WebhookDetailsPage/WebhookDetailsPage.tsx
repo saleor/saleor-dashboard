@@ -55,7 +55,7 @@ export interface WebhookDetailsPageProps {
   availableEvents: IntrospectionNode[];
 }
 
-const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
+const WebhookDetailsPage = (props: WebhookDetailsPageProps) => ({
   appId,
   disabled,
   errors,

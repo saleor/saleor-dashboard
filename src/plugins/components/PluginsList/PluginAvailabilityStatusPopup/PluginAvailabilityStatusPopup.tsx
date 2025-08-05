@@ -26,7 +26,7 @@ interface PluginAvailabilityStatusPopupProps {
   anchor: React.RefObject<HTMLTableCellElement>;
 }
 
-const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({
+const PluginAvailabilityStatusPopup = (props: PluginAvailabilityStatusPopupProps) => ({
   plugin,
   isOpen,
   anchor,

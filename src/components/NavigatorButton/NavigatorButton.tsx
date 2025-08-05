@@ -65,7 +65,7 @@ export interface NavigatorButtonProps extends IconButtonProps {
   isMac: boolean;
 }
 
-const NavigatorButton: React.FC<NavigatorButtonProps> = ({ className, isMac, ...props }) => {
+const NavigatorButton = ({ className, isMac, ...props }: NavigatorButtonProps) => {
   const classes = useStyles({});
   const helperTimer = React.useRef(null);
   const [helperVisibility, setHelperVisibility] = React.useState(false);

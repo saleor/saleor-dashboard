@@ -30,7 +30,7 @@ interface DryRunProps {
   syncEvents: WebhookEventTypeSyncEnum[];
 }
 
-const DryRun: React.FC<DryRunProps> = ({
+const DryRun = (props: DryRunProps) => ({
   setResult,
   showDialog,
   setShowDialog,

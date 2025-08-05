@@ -119,7 +119,7 @@ export interface ProductUpdatePageProps {
   onSeoClick?: () => any;
 }
 
-export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
+export const ProductUpdatePage = (props: ProductUpdatePageProps) => ({
   productId,
   disabled,
   categories: categoryChoiceList,

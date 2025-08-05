@@ -7,7 +7,7 @@ import React from "react";
 import { TranslationsEntityListProps } from "./types";
 import { mapTranslationsToEntities } from "./utils";
 
-const TranslationsShippingMethodList: React.FC<TranslationsEntityListProps> = ({
+const TranslationsShippingMethodList = (props: TranslationsEntityListProps) => ({
   params,
   variables,
 }) => {

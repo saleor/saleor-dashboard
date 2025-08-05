@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 
 type FilterSingleSelectFieldProps = FilterFieldBaseProps<string>;
 
-export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = ({
+export const FilterSingleSelectField = (props: FilterSingleSelectFieldProps) => ({
   filter,
   onFilterPropertyChange,
 }) => {

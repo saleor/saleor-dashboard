@@ -14,7 +14,7 @@ interface QuantityInputProps extends InputProps {
   };
 }
 
-export const QuantityInput: React.FC<QuantityInputProps> = ({
+export const QuantityInput = (props: QuantityInputProps) => ({
   disabled,
   className,
   value,

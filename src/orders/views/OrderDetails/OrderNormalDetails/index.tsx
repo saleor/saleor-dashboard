@@ -110,7 +110,7 @@ interface ApprovalState {
   notifyCustomer: boolean;
 }
 
-export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
+export const OrderNormalDetails = (props: OrderNormalDetailsProps) => ({
   id,
   params,
   data,

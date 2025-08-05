@@ -10,7 +10,7 @@ interface DeleteButtonProps {
   testId?: string;
 }
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({
+const DeleteButton = (props: DeleteButtonProps) => ({
   onClick,
   label,
   testId,

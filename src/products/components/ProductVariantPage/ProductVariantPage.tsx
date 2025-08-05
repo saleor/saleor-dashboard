@@ -135,7 +135,7 @@ interface ProductVariantPageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
-const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
+const ProductVariantPage = (props: ProductVariantPageProps) => ({
   productId,
   channels,
   channelErrors,

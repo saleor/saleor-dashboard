@@ -18,7 +18,7 @@ export interface MetadataCardProps {
   error?: string | undefined;
 }
 
-export const MetadataCard: React.FC<MetadataCardProps> = ({
+export const MetadataCard = (props: MetadataCardProps) => ({
   data,
   isPrivate,
   onChange,

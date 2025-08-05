@@ -43,7 +43,7 @@ const initialForm: WarehouseCreatePageFormData = {
   streetAddress1: "",
   streetAddress2: "",
 };
-const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
+const WarehouseCreatePage = (props: WarehouseCreatePageProps) => ({
   countries,
   disabled,
   errors,

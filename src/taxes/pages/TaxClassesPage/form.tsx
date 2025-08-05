@@ -107,7 +107,7 @@ function useTaxClassesForm(
   };
 }
 
-const TaxClassesForm: React.FC<TaxClassesFormProps> = ({
+const TaxClassesForm = (props: TaxClassesFormProps) => ({
   children,
   taxClass,
   onTaxClassCreate,

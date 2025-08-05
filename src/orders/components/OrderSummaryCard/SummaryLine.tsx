@@ -19,7 +19,7 @@ interface SummaryLineProps {
   className?: string;
 }
 
-const SummaryLine: React.FC<SummaryLineProps> = ({
+const SummaryLine = (props: SummaryLineProps) => ({
   text,
   subText,
   negative,

@@ -19,7 +19,7 @@ interface VariantChannelsDialogProps {
   onConfirm: (selectedIds: string[]) => void;
 }
 
-export const VariantChannelsDialog: React.FC<VariantChannelsDialogProps> = ({
+export const VariantChannelsDialog = (props: VariantChannelsDialogProps) => ({
   channelListings,
   selectedChannelListings,
   open,

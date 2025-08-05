@@ -25,7 +25,7 @@ export interface RequirePermissionsProps {
   oneOfPermissions?: PermissionEnum[];
 }
 
-const RequirePermissions: React.FC<RequirePermissionsProps> = ({
+const RequirePermissions = (props: RequirePermissionsProps) => ({
   children,
   requiredPermissions,
   oneOfPermissions,

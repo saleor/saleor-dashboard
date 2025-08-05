@@ -23,7 +23,7 @@ interface GiftCardTagInputProps {
   loading?: boolean;
 }
 
-const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
+const GiftCardTagInput = (props: GiftCardTagInputProps) => ({
   onChange,
   name,
   values,

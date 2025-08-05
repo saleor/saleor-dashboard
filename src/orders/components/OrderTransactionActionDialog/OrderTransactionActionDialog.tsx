@@ -18,7 +18,7 @@ export interface OrderTransactionActionDialogProps {
   action: TransactionActionEnum;
 }
 
-export const OrderTransactionActionDialog: React.FC<OrderTransactionActionDialogProps> = ({
+export const OrderTransactionActionDialog = (props: OrderTransactionActionDialogProps) => ({
   confirmButtonState,
   open,
   onClose,

@@ -68,7 +68,7 @@ export interface PermissonGroupDetailsPageProps
   onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
 
-export const PermissionGroupDetailsPage: React.FC<PermissonGroupDetailsPageProps> = ({
+export const PermissionGroupDetailsPage = (props: PermissonGroupDetailsPageProps) => ({
   disabled,
   errors,
   members,

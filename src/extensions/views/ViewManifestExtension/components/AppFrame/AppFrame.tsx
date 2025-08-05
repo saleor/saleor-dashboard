@@ -26,7 +26,7 @@ interface Props {
 
 const getOrigin = (url: string) => new URL(url).origin;
 
-export const AppFrame: React.FC<Props> = ({
+export const AppFrame = (props: Props) => ({
   src,
   appToken,
   appId,

@@ -91,7 +91,7 @@ function useCategoryCreateForm(
   };
 }
 
-const CategoryCreateForm: React.FC<CategoryCreateFormProps> = ({
+const CategoryCreateForm = (props: CategoryCreateFormProps) => ({
   children,
   onSubmit,
   disabled,

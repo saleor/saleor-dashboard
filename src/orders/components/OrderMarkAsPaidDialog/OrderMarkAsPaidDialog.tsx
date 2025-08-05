@@ -18,7 +18,7 @@ export interface OrderMarkAsPaidDialogProps {
   handleTransactionReference: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
+const OrderMarkAsPaidDialog = (props: OrderMarkAsPaidDialogProps) => ({
   confirmButtonState,
   errors: apiErrors,
   handleTransactionReference,

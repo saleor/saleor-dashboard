@@ -31,7 +31,7 @@ interface OrderDiscountProviderProps {
   order?: OrderDetailsFragment;
 }
 
-export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
+export const OrderDiscountProvider = (props: OrderDiscountProviderProps) => ({
   children,
   order,
 }) => {

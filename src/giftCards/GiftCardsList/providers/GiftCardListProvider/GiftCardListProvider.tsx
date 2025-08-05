@@ -73,7 +73,7 @@ export const useGiftCardList = () => {
   return context;
 };
 
-export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
+export const GiftCardsListProvider = (props: GiftCardsListProviderProps) => ({
   children,
   params,
 }) => {

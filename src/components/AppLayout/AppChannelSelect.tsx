@@ -10,7 +10,7 @@ export interface AppChannelSelectProps extends ChannelProps {
   onChannelSelect: (id: string) => void;
 }
 
-const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
+const AppChannelSelect = (props: AppChannelSelectProps) => ({
   channels,
   onChannelSelect,
   selectedChannelId,

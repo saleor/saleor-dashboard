@@ -16,7 +16,7 @@ interface OrderDetailsRefundTableProps {
   onRefundAdd: () => void;
 }
 
-export const OrderDetailsRefundTable: React.FC<OrderDetailsRefundTableProps> = ({
+export const OrderDetailsRefundTable = (props: OrderDetailsRefundTableProps) => ({
   orderId,
   order,
   onRefundAdd,

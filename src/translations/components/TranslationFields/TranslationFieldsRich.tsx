@@ -22,7 +22,7 @@ interface TranslationFieldsRichProps {
   onSubmit: (data: OutputData) => SubmitPromise;
 }
 
-const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
+const TranslationFieldsRich = (props: TranslationFieldsRichProps) => ({
   disabled,
   edit,
   initial,

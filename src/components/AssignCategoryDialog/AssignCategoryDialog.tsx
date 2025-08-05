@@ -16,7 +16,7 @@ interface AssignCategoryDialogProps
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({
+const AssignCategoryDialog = (props: AssignCategoryDialogProps) => ({
   categories,
   labels,
   ...rest

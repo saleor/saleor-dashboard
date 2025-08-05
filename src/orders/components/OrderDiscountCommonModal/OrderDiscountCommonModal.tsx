@@ -80,7 +80,7 @@ export interface OrderDiscountCommonModalProps {
   removeStatus: ConfirmButtonTransitionState;
 }
 
-const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
+const OrderDiscountCommonModal = (props: OrderDiscountCommonModalProps) => ({
   maxPrice = { amount: 0, currency: "" },
   onConfirm,
   modalType,

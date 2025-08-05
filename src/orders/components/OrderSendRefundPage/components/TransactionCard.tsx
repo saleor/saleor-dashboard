@@ -43,7 +43,7 @@ const useStyles = makeStyles(
   { name: "TransactionCard" },
 );
 
-export const TransactionCard: React.FC<TransactionCardProps> = ({
+export const TransactionCard = (props: TransactionCardProps) => ({
   transaction,
   orderId,
   totalRemainingGrant,

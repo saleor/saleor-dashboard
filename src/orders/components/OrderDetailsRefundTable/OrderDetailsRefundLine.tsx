@@ -23,7 +23,7 @@ interface OrderDetailsRefundLineProps {
   orderId: string;
 }
 
-export const OrderDetailsRefundLine: React.FC<OrderDetailsRefundLineProps> = ({
+export const OrderDetailsRefundLine = (props: OrderDetailsRefundLineProps) => ({
   refund,
   orderId,
 }) => {

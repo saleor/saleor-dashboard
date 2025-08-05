@@ -52,7 +52,7 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 };
 
-const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
+const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => ({
   entityType,
   pages,
   products,

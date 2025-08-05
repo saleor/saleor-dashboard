@@ -37,7 +37,7 @@ interface RowNumberSelectProps {
   onChange: (value: number) => any;
 }
 
-const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
+const RowNumberSelect = (props: RowNumberSelectProps) => ({
   className,
   choices,
   rowNumber,

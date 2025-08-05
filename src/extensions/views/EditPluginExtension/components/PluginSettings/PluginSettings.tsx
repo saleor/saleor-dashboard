@@ -19,7 +19,7 @@ interface PluginSettingsProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const PluginSettings: React.FC<PluginSettingsProps> = ({
+export const PluginSettings = (props: PluginSettingsProps) => ({
   data,
   disabled,
   errors,

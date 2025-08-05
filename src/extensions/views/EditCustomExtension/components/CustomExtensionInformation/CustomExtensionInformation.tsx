@@ -17,7 +17,7 @@ export interface CustomExtensionInfoProps {
   onChange: FormChange;
 }
 
-const CustomExtensionInformation: React.FC<CustomExtensionInfoProps> = ({
+const CustomExtensionInformation = (props: CustomExtensionInfoProps) => ({
   data,
   disabled,
   errors,

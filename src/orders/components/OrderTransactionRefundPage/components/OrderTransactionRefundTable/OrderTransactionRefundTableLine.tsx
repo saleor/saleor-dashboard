@@ -24,7 +24,7 @@ interface OrderTransactionRefundTableLineProps {
   onChange: (data: RefundQuantityChange, index: number) => void;
 }
 
-export const OrderTransactionRefundTableLine: React.FC<OrderTransactionRefundTableLineProps> = ({
+export const OrderTransactionRefundTableLine = (props: OrderTransactionRefundTableLineProps) => ({
   control,
   field,
   index,

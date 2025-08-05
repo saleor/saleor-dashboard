@@ -25,7 +25,7 @@ export interface WebhooksListProps {
   hasManagedAppsPermission: boolean;
 }
 
-export const WebhooksList: React.FC<WebhooksListProps> = ({
+export const WebhooksList = (props: WebhooksListProps) => ({
   webhooks,
   createHref,
   onRemove,

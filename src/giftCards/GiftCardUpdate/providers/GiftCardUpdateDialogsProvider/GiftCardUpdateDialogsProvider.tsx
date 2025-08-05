@@ -25,7 +25,7 @@ export interface GiftCardUpdateDialogsConsumerProps {
 
 export const GiftCardUpdateDialogsContext = createContext<GiftCardUpdateDialogsConsumerProps>(null);
 
-const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps> = ({
+const GiftCardUpdateDialogsProvider = (props: GiftCardUpdateDialogsProviderProps) => ({
   children,
   params,
   id,

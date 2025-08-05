@@ -27,7 +27,7 @@ export interface TranslationsPagesPageProps extends TranslationsEntitiesPageProp
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
+const TranslationsPagesPage = (props: TranslationsPagesPageProps) => ({
   translationId,
   activeField,
   disabled,

@@ -25,7 +25,7 @@ export const fieldNames = {
   name: "name",
 };
 
-const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
+const TranslationsVouchersPage = (props: TranslationsVouchersPageProps) => ({
   translationId,
   activeField,
   disabled,

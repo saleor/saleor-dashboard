@@ -17,7 +17,7 @@ interface SiteCheckoutSettingsCardProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
+const SiteCheckoutSettingsCard = (props: SiteCheckoutSettingsCardProps) => ({
   data,
   disabled,
   errors,

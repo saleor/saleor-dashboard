@@ -13,7 +13,7 @@ type AttributeListItemProps = Omit<AttributeRowProps, "error"> & {
   onAttributeSelectBlur: () => void;
 };
 
-export const AttributeListItem: React.FC<AttributeListItemProps> = ({
+export const AttributeListItem = (props: AttributeListItemProps) => ({
   errors,
   attribute,
   onAttributeSelectBlur,

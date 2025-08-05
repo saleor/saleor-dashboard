@@ -16,7 +16,7 @@ export interface ShippingWeightUnitFormProps {
   onSubmit: (unit: WeightUnitsEnum | null) => SubmitPromise;
 }
 
-const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
+const ShippingWeightUnitForm = (props: ShippingWeightUnitFormProps) => ({
   defaultWeightUnit,
   disabled,
   onSubmit,

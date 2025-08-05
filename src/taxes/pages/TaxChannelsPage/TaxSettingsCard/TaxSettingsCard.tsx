@@ -29,7 +29,7 @@ export interface TaxSettingsCardProps {
   strategyChoicesLoading: boolean;
 }
 
-export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
+export const TaxSettingsCard = (props: TaxSettingsCardProps) => ({
   values,
   strategyChoices,
   onChange,

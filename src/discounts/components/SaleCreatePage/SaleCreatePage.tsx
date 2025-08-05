@@ -49,7 +49,7 @@ export interface SaleCreatePageProps {
   onSubmit: (data: FormData) => SubmitPromise<any[]>;
 }
 
-const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
+const SaleCreatePage = (props: SaleCreatePageProps) => ({
   allChannelsCount,
   channelListings = [],
   disabled,

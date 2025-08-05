@@ -128,7 +128,7 @@ function useCollectionCreateForm(
   };
 }
 
-const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
+const CollectionCreateForm = (props: CollectionCreateFormProps) => ({
   currentChannels,
   setChannels,
   children,

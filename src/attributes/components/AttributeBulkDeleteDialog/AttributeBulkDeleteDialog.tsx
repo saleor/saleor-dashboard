@@ -11,7 +11,7 @@ export interface AttributeBulkDeleteDialogProps {
   onClose: () => void;
 }
 
-const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
+const AttributeBulkDeleteDialog = (props: AttributeBulkDeleteDialogProps) => ({
   confirmButtonState,
   quantity,
   onClose,

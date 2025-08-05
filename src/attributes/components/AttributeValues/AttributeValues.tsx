@@ -70,7 +70,7 @@ const getSwatchCellStyle = (value?: AttributeValueFragment | undefined) => {
     ? { backgroundImage: `url(${value.file.url})` }
     : { backgroundColor: value.value ?? undefined };
 };
-const AttributeValues: React.FC<AttributeValuesProps> = ({
+const AttributeValues = (props: AttributeValuesProps) => ({
   disabled,
   onValueAdd,
   onValueDelete,

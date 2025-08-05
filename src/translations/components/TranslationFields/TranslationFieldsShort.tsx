@@ -17,7 +17,7 @@ interface TranslationFieldsShortProps {
   onSubmit: (data: string) => SubmitPromise<any[]>;
 }
 
-const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
+const TranslationFieldsShort = (props: TranslationFieldsShortProps) => ({
   disabled,
   edit,
   initial,

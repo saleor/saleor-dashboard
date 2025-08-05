@@ -12,7 +12,7 @@ interface CreateVariantTitleProps {
   isEmpty: boolean;
 }
 
-export const CreateVariantTitle: React.FC<CreateVariantTitleProps> = ({
+export const CreateVariantTitle = (props: CreateVariantTitleProps) => ({
   onManageClick,
   disabled,
   availabilityCount,

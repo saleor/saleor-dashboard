@@ -80,7 +80,7 @@ interface OrderDraftDetailsProps {
   closeModal: any;
 }
 
-export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
+export const OrderDraftDetails = (props: OrderDraftDetailsProps) => ({
   id,
   params,
   loading,

@@ -29,7 +29,7 @@ export interface OrderDraftListPageProps
   onSelectOrderDraftIds: (ids: number[], clearSelection: () => void) => void;
 }
 
-const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
+const OrderDraftListPage = (props: OrderDraftListPageProps) => ({
   selectedFilterPreset,
   disabled,
   filterOpts,

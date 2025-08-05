@@ -43,7 +43,7 @@ export interface WarehouseDetailsPageProps {
   onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
 
-const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
+const WarehouseDetailsPage = (props: WarehouseDetailsPageProps) => ({
   countries,
   disabled,
   errors,

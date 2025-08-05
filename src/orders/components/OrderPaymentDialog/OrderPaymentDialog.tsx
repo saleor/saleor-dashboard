@@ -26,7 +26,7 @@ export interface OrderPaymentDialogProps {
   onSubmit: (data: FormData) => void;
 }
 
-const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
+const OrderPaymentDialog = (props: OrderPaymentDialogProps) => ({
   confirmButtonState,
   errors,
   open,

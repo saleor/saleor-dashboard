@@ -22,7 +22,7 @@ interface GiftCardCreateMoneyInputProps {
   set: (data: Partial<GiftCardCreateCommonFormData>) => void;
 }
 
-export const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
+export const GiftCardCreateMoneyInput = (props: GiftCardCreateMoneyInputProps) => ({
   errors,
   data: { balanceAmount, balanceCurrency },
   change,

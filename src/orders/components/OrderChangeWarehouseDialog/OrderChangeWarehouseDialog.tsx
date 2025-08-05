@@ -33,7 +33,7 @@ export interface OrderChangeWarehouseDialogProps {
   onClose: () => any;
 }
 
-export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProps> = ({
+export const OrderChangeWarehouseDialog = (props: OrderChangeWarehouseDialogProps) => ({
   open,
   line,
   currentWarehouseId,

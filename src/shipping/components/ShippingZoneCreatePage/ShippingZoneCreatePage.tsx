@@ -48,7 +48,7 @@ export interface ShippingZoneCreatePageProps {
   onSubmit: (data: ShippingZoneCreateFormData) => SubmitPromise;
 }
 
-const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
+const ShippingZoneCreatePage = (props: ShippingZoneCreatePageProps) => ({
   countries,
   restWorldCountries,
   disabled,

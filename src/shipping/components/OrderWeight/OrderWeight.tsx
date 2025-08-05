@@ -23,7 +23,7 @@ export interface OrderWeightProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const OrderWeight: React.FC<OrderWeightProps> = ({
+export const OrderWeight = (props: OrderWeightProps) => ({
   orderValueRestricted,
   disabled,
   errors,

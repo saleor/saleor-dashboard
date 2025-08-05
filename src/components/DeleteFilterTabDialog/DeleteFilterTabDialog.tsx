@@ -13,7 +13,7 @@ export interface DeleteFilterTabDialogProps {
   onSubmit: () => void;
 }
 
-const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
+const DeleteFilterTabDialog = (props: DeleteFilterTabDialogProps) => ({
   confirmButtonState,
   onClose,
   onSubmit,

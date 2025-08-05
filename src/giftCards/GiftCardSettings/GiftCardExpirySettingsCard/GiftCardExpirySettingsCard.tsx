@@ -25,7 +25,7 @@ const useStyles = makeStyles(
   }),
   { name: "GiftCardExpirySettingsCard" },
 );
-const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
+const GiftCardExpirySettingsCard = (props: GiftCardExpirySettingsCardProps) => ({
   data,
   disabled,
   errors,

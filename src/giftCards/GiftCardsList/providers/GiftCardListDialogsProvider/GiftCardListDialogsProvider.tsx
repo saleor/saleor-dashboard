@@ -41,7 +41,7 @@ export const useGiftCardListDialogs = () => {
   return context;
 };
 
-const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = ({
+const GiftCardListDialogsProvider = (props: GiftCardListDialogsProviderProps) => ({
   children,
   params,
 }) => {

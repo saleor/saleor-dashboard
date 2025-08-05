@@ -42,7 +42,7 @@ export interface VoucherListPageProps
   onSelectVouchersIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const VoucherListPage: React.FC<VoucherListPageProps> = ({
+const VoucherListPage = (props: VoucherListPageProps) => ({
   filterOpts,
   initialSearch,
   onFilterChange,

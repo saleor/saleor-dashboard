@@ -38,7 +38,7 @@ interface NumericUnitsProps
   disabled: boolean;
 }
 
-export const NumericUnits: React.FC<NumericUnitsProps> = ({
+export const NumericUnits = (props: NumericUnitsProps) => ({
   data,
   disabled,
   errors,

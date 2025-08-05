@@ -27,7 +27,7 @@ export interface AttributeListPageProps
   onSelectAttributesIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const AttributeListPage: React.FC<AttributeListPageProps> = ({
+const AttributeListPage = (props: AttributeListPageProps) => ({
   filterOpts,
   initialSearch,
   onFilterChange,

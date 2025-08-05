@@ -31,7 +31,7 @@ export interface ChannelsListPageProps {
 
 const numberOfColumns = 2;
 
-export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
+export const ChannelsListPage = (props: ChannelsListPageProps) => ({
   channelsList,
   limits,
   onRemove,

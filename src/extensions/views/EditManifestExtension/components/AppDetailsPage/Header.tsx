@@ -11,7 +11,7 @@ interface HeaderProps {
   onAppDeleteOpen: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const Header = (props: HeaderProps) => ({
   data,
   onAppActivateOpen,
   onAppDeactivateOpen,

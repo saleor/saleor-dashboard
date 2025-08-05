@@ -42,7 +42,7 @@ export type ColorPickerProps<T = any> = Pick<
   "setError" | "errors" | "clearErrors" | "data"
 > & { onColorChange: (hex: string) => void };
 
-export const ColorPicker: React.FC<ColorPickerProps> = ({
+export const ColorPicker = (props: ColorPickerProps) => ({
   clearErrors,
   setError,
   errors,

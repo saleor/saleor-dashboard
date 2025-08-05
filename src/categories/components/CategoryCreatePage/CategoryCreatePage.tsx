@@ -22,7 +22,7 @@ export interface CategoryCreatePageProps {
   onSubmit: (data: CategoryCreateData) => any;
 }
 
-export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
+export const CategoryCreatePage = (props: CategoryCreatePageProps) => ({
   disabled,
   onSubmit,
   errors,

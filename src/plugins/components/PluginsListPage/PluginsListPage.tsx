@@ -26,7 +26,7 @@ export interface PluginsListPageProps
   plugins: PluginBaseFragment[];
 }
 
-const PluginsListPage: React.FC<PluginsListPageProps> = ({
+const PluginsListPage = (props: PluginsListPageProps) => ({
   currentTab,
   initialSearch,
   filterOpts,

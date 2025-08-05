@@ -26,7 +26,7 @@ export interface AttributeValueEditDialogProps {
   inputType?: AttributeInputTypeEnum;
 }
 
-const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
+const AttributeValueEditDialog = (props: AttributeValueEditDialogProps) => ({
   attributeValue,
   confirmButtonState,
   disabled,

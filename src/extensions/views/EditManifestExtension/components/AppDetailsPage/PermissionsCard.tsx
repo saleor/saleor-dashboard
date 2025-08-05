@@ -18,7 +18,7 @@ type PermissionsCardProps = {
   appId: string; // todo wrap with App Context
 } & BoxProps;
 
-export const PermissionsCard: React.FC<PermissionsCardProps> = ({
+export const PermissionsCard = (props: PermissionsCardProps) => ({
   permissions,
   loading,
   appId,

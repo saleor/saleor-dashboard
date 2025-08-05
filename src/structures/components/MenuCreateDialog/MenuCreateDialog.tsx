@@ -27,7 +27,7 @@ export interface MenuCreateDialogProps {
 const initialForm: MenuCreateDialogFormData = {
   name: "",
 };
-const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
+const MenuCreateDialog = (props: MenuCreateDialogProps) => ({
   confirmButtonState,
   disabled,
   errors,

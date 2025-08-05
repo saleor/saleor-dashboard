@@ -31,7 +31,7 @@ export interface ExportDialogSettingsProps {
 }
 
 const formFields: Array<keyof ExportSettingsInput> = ["fileType", "scope"];
-const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
+const ExportDialogSettings = (props: ExportDialogSettingsProps) => ({
   data,
   errors,
   onChange,

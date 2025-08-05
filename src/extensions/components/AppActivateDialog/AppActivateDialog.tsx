@@ -16,7 +16,7 @@ export interface AppActivateDialogProps {
   onConfirm: () => void;
 }
 
-const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
+const AppActivateDialog = (props: AppActivateDialogProps) => ({
   confirmButtonState,
   open,
   name,

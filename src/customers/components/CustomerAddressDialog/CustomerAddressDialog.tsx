@@ -32,7 +32,7 @@ export interface CustomerAddressDialogProps {
   onConfirm: (data: AddressInput) => void;
 }
 
-const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
+const CustomerAddressDialog = (props: CustomerAddressDialogProps) => ({
   address,
   confirmButtonState,
   countries,

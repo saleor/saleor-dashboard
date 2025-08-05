@@ -21,7 +21,7 @@ interface CategoryDetailsFormProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
+export const CategoryDetailsForm = (props: CategoryDetailsFormProps) => ({
   disabled,
   data,
   onChange,

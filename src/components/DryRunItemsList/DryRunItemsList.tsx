@@ -27,7 +27,7 @@ export interface DryRunItemsListProps {
   object: string;
 }
 
-const DryRunItemsList: React.FC<DryRunItemsListProps> = ({
+const DryRunItemsList = (props: DryRunItemsListProps) => ({
   object,
   objectId,
   setObjectId,

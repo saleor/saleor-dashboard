@@ -80,7 +80,7 @@ function warehouseToChoice(warehouse: Record<"id" | "name", string>): Option {
   };
 }
 
-const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
+const ShippingZoneDetailsPage = (props: ShippingZoneDetailsPageProps) => ({
   disabled,
   errors,
   hasMore,

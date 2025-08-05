@@ -42,7 +42,7 @@ export interface PluginsDetailsPageProps {
   setSelectedChannelId: (channelId: string) => void;
 }
 
-export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
+export const PluginsDetailsPage = (props: PluginsDetailsPageProps) => ({
   disabled,
   errors,
   plugin,

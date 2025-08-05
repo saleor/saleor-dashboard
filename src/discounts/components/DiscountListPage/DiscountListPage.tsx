@@ -38,7 +38,7 @@ export interface DiscountListPageProps
   promotions: PromotionFragment[];
 }
 
-const DiscountListPage: React.FC<DiscountListPageProps> = ({
+const DiscountListPage = (props: DiscountListPageProps) => ({
   initialSearch,
   onSearchChange,
   onFilterPresetChange,

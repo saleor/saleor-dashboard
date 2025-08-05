@@ -25,7 +25,7 @@ export const fieldNames = {
   name: "name",
 };
 
-const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
+const TranslationsSalesPage = (props: TranslationsSalesPageProps) => ({
   translationId,
   activeField,
   disabled,

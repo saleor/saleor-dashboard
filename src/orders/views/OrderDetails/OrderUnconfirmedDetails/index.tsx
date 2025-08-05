@@ -99,7 +99,7 @@ interface OrderUnconfirmedDetailsProps {
   closeModal: any;
 }
 
-export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = ({
+export const OrderUnconfirmedDetails = (props: OrderUnconfirmedDetailsProps) => ({
   id,
   params,
   data,

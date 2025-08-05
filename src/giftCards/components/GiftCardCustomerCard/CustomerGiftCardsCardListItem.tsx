@@ -20,7 +20,7 @@ interface CustomerGiftCardsCardListItemProps {
   giftCard: ExtendedGiftCard<CustomerGiftCardFragment>;
 }
 
-const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps> = ({
+const CustomerGiftCardsCardListItem = (props: CustomerGiftCardsCardListItemProps) => ({
   giftCard,
 }) => {
   const intl = useIntl();

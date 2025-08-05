@@ -29,7 +29,7 @@ const initialForm: StaffPasswordResetDialogFormData = {
   newPassword: "",
   oldPassword: "",
 };
-const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
+const StaffPasswordResetDialog = (props: StaffPasswordResetDialogProps) => ({
   confirmButtonState,
   errors,
   open,

@@ -31,7 +31,7 @@ export interface ShippingZoneSettingsCardProps {
   loading: boolean;
 }
 
-export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> = ({
+export const ShippingZoneSettingsCard = (props: ShippingZoneSettingsCardProps) => ({
   formData,
   hasMoreWarehouses,
   loading,

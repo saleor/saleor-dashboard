@@ -29,7 +29,7 @@ interface MatchParamsWebhookDetails {
   id?: string;
 }
 
-const CustomAppList: React.FC<RouteComponentProps> = () => {
+const CustomAppList = (props: RouteComponentProps) => () => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppListUrlQueryParams = qs;
 
@@ -41,7 +41,7 @@ interface CustomAppDetailsProps extends RouteComponentProps<{ id?: string }> {
   onTokenClose: () => void;
 }
 
-const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({ match, token, onTokenClose }) => {
+const CustomAppDetails = ({ match, token, onTokenClose }: CustomAppDetailsProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppDetailsUrlQueryParams = qs;
   const id = match.params.id;
@@ -59,7 +59,7 @@ const CustomAppDetails: React.FC<CustomAppDetailsProps> = ({ match, token, onTok
     />
   );
 };
-const CustomAppWebhookCreate: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
+const CustomAppWebhookCreate = ({ MatchParams }: RouteComponentProps<MatchParams>) => ({ match }) => {
   const appId = match.params.appId;
 
   if (!appId) {
@@ -68,7 +68,7 @@ const CustomAppWebhookCreate: React.FC<RouteComponentProps<MatchParams>> = ({ ma
 
   return <CustomAppWebhookCreateView appId={decodeURIComponent(appId)} />;
 };
-const CustomAppWebhookDetails: React.FC<RouteComponentProps<MatchParamsWebhookDetails>> = ({
+const CustomAppWebhookDetails = ({ MatchParamsWebhookDetails }: RouteComponentProps<MatchParamsWebhookDetails>) => ({
   match,
 }) => {
   const id = match.params.id;

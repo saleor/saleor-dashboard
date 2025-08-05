@@ -45,7 +45,7 @@ const initialForm: ShippingZoneAddWarehouseDialogSubmitData = {
   streetAddress2: "",
 };
 
-const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogProps> = ({
+const ShippingZoneAddWarehouseDialog = (props: ShippingZoneAddWarehouseDialogProps) => ({
   confirmButtonState,
   countries,
   disabled,

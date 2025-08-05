@@ -34,7 +34,7 @@ export interface PaginationProps
 
 const choices = [10, 20, 30, 50, 100];
 
-export const TablePagination: React.FC<PaginationProps> = ({
+export const TablePagination = (props: PaginationProps) => ({
   component,
   colSpan,
   settings,

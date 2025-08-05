@@ -321,7 +321,7 @@ function useProductVariantCreateForm(
   };
 }
 
-const ProductVariantCreateForm: React.FC<ProductVariantCreateFormProps> = ({
+const ProductVariantCreateForm = (props: ProductVariantCreateFormProps) => ({
   children,
   product,
   onSubmit,

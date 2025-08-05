@@ -23,7 +23,7 @@ interface ProductDetailsFormProps {
   onChange: (event: any) => any;
 }
 
-export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
+export const ProductDetailsForm = (props: ProductDetailsFormProps) => ({
   data,
   onChange,
   errors,

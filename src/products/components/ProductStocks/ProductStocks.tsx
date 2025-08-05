@@ -48,7 +48,7 @@ export interface ProductStocksProps {
   isCreate: boolean;
 }
 
-export const ProductStocks: React.FC<ProductStocksProps> = ({
+export const ProductStocks = (props: ProductStocksProps) => ({
   data,
   disabled,
   hasVariants,

@@ -61,7 +61,7 @@ function useOrderSettingsForm(
   };
 }
 
-const OrderSettingsForm: React.FC<OrderSettingsFormProps> = ({
+const OrderSettingsForm = (props: OrderSettingsFormProps) => ({
   children,
   orderSettings,
   shop,

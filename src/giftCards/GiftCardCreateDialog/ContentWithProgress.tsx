@@ -21,7 +21,7 @@ export const useStyles = makeStyles(
   { name: "ContentWithProgress" },
 );
 
-const ContentWithProgress: React.FC<ContentWithProgressProps> = ({
+const ContentWithProgress = (props: ContentWithProgressProps) => ({
   containerClassName,
   children,
 }) => {

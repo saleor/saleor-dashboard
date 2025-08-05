@@ -16,7 +16,7 @@ type OrderManualTransactionDialogProps = {
   dialogProps: DialogProps;
 } & OrderManualTransactionFormProps;
 
-export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialogProps> = ({
+export const OrderManualTransactionDialog = (props: OrderManualTransactionDialogProps) => ({
   dialogProps,
   ...props
 }) => {

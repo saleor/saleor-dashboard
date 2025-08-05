@@ -9,7 +9,7 @@ import React from "react";
 import { TranslationsEntityListProps } from "./types";
 import { sumCompleted } from "./utils";
 
-const TranslationsCollectionList: React.FC<TranslationsEntityListProps> = ({
+const TranslationsCollectionList = (props: TranslationsEntityListProps) => ({
   params,
   variables,
 }) => {

@@ -15,7 +15,7 @@ interface ChannelsListItemProps {
   publishedAt: string;
 }
 
-export const ChannelsListItem: React.FC<ChannelsListItemProps> = ({
+export const ChannelsListItem = (props: ChannelsListItemProps) => ({
   id,
   name,
   isPublished,

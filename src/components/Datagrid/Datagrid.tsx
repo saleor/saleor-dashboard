@@ -102,7 +102,7 @@ export interface DatagridProps {
   navigatorOpts?: NavigatorOpts;
 }
 
-export const Datagrid: React.FC<DatagridProps> = ({
+export const Datagrid = (props: DatagridProps) => ({
   availableColumns,
   emptyText,
   getCellContent,

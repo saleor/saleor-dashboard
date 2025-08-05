@@ -15,7 +15,7 @@ export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
   onSubmit: (range: MinMax) => void;
 }
 
-const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
+const ShippingZonePostalCodeRangeDialog = (props: ShippingZonePostalCodeRangeDialogProps) => ({
   confirmButtonState,
   open,
   onClose,

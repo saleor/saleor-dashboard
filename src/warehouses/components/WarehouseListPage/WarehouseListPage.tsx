@@ -31,7 +31,7 @@ export interface WarehouseListPageProps
   hasPresetsChanged: () => boolean;
 }
 
-export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
+export const WarehouseListPage = (props: WarehouseListPageProps) => ({
   warehouses,
   currentTab,
   disabled,

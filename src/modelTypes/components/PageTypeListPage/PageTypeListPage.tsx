@@ -40,7 +40,7 @@ export interface PageTypeListPageProps
   selectedPageTypes: string[];
 }
 
-const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
+const PageTypeListPage = (props: PageTypeListPageProps) => ({
   currentTab,
   initialSearch,
   onAll,

@@ -21,7 +21,7 @@ export interface WebhookHeadersTableBodyProps {
   headers: Header[];
 }
 
-const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({ onChange, headers }) => {
+const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const updateWebhookItem = (target: EventTarget & HTMLTextAreaElement) => {

@@ -41,7 +41,7 @@ interface matchParamsProductVariant {
   productId?: string;
 }
 
-const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
+const ProductList = ({ any }: RouteComponentProps<any>) => ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: ProductListUrlQueryParams = asSortParams(
     {
@@ -63,7 +63,7 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     </ConditionalProductFilterProvider>
   );
 };
-const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const ProductUpdate = ({ any }: RouteComponentProps<any>) => ({ match }) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: ProductUrlQueryParams = qs;
 
@@ -77,13 +77,13 @@ const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
     />
   );
 };
-const ProductCreate: React.FC<RouteComponentProps<any>> = () => {
+const ProductCreate = ({ any }: RouteComponentProps<any>) => () => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductCreateUrlQueryParams = qs;
 
   return <ProductCreateComponent params={params} />;
 };
-const ProductVariant: React.FC<RouteComponentProps<matchParamsProductVariant>> = ({ match }) => {
+const ProductVariant = ({ matchParamsProductVariant }: RouteComponentProps<matchParamsProductVariant>) => ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductVariantEditUrlQueryParams = qs;
 
@@ -95,7 +95,7 @@ const ProductVariant: React.FC<RouteComponentProps<matchParamsProductVariant>> =
   );
 };
 
-const ProductImage: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
+const ProductImage = ({ any }: RouteComponentProps<any>) => ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductImageUrlQueryParams = qs;
 
@@ -107,7 +107,7 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({ location, match }) =
     />
   );
 };
-const ProductVariantCreate: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
+const ProductVariantCreate = ({ MatchParams }: RouteComponentProps<MatchParams>) => ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductVariantAddUrlQueryParams = qs;
 

@@ -30,7 +30,7 @@ interface OrderDraftDetailsProps {
   onShowMetadata: (id: string) => void;
 }
 
-const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
+const OrderDraftDetails = (props: OrderDraftDetailsProps) => ({
   order,
   channelUsabilityData,
   errors,

@@ -49,7 +49,7 @@ function useOrderCustomerChangeForm(
   };
 }
 
-const OrderCustomerChangeForm: React.FC<OrderCustomerChangeFormProps> = ({
+const OrderCustomerChangeForm = (props: OrderCustomerChangeFormProps) => ({
   children,
   initial,
   onSubmit,

@@ -71,7 +71,7 @@ export interface ProductTypeDetailsPageProps {
   onFetchMoreTaxClasses: FetchMoreProps;
 }
 
-const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
+const ProductTypeDetailsPage = (props: ProductTypeDetailsPageProps) => ({
   defaultWeightUnit,
   disabled,
   errors,

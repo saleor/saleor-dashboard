@@ -45,7 +45,7 @@ interface ProductVariantsProps {
   onRowClick: (id: string) => void;
 }
 
-export const ProductVariants: React.FC<ProductVariantsProps> = ({
+export const ProductVariants = (props: ProductVariantsProps) => ({
   channels,
   errors,
   variants,

@@ -26,7 +26,7 @@ const firefoxHandler = (event, onChange, checked) => {
   event.preventDefault();
   onChange(event, checked);
 };
-const Checkbox: React.FC<CheckboxProps> = ({ helperText, error, ...props }) => {
+const Checkbox = ({ helperText, error, ...props }: CheckboxProps) => {
   const { disableClickPropagation, ...rest } = props;
   const classes = useStyles();
 

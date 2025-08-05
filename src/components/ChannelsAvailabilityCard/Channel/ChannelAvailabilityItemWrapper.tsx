@@ -12,7 +12,7 @@ export interface ChannelContentWrapperProps {
   messages: Messages;
 }
 
-export const ChannelAvailabilityItemWrapper: React.FC<ChannelContentWrapperProps> = ({
+export const ChannelAvailabilityItemWrapper = (props: ChannelContentWrapperProps) => ({
   data: { name },
   messages,
   children,

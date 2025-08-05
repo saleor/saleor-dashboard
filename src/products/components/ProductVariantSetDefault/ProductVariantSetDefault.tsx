@@ -6,7 +6,7 @@ interface ProductVariantSetDefaultProps {
   onSetDefaultVariant: () => void;
 }
 
-const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
+const ProductVariantSetDefault = (props: ProductVariantSetDefaultProps) => ({
   onSetDefaultVariant,
 }) => {
   const intl = useIntl();

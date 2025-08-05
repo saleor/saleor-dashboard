@@ -71,7 +71,7 @@ export interface ShippingZoneRatesPageProps
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
+export const ShippingZoneRatesPage = (props: ShippingZoneRatesPageProps) => ({
   allChannelsCount,
   shippingChannels,
   channelErrors,

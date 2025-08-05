@@ -51,7 +51,7 @@ interface OrderListProps {
   onTokenClose: () => void;
 }
 
-export const EditCustomExtension: React.FC<OrderListProps> = ({
+export const EditCustomExtension = (props: OrderListProps) => ({
   id,
   params,
   token,

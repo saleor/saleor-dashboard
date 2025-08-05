@@ -28,7 +28,7 @@ export interface ProductTypeListPageProps
   hasPresetsChanged: () => boolean;
 }
 
-const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
+const ProductTypeListPage = (props: ProductTypeListPageProps) => ({
   currentTab,
   filterOpts,
   initialSearch,

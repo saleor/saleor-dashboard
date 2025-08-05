@@ -11,7 +11,7 @@ interface OrderTransactionReasonProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
 }
 
-export const OrderTransactionReason: React.FC<OrderTransactionReasonProps> = ({
+export const OrderTransactionReason = (props: OrderTransactionReasonProps) => ({
   control,
 }: OrderTransactionReasonProps) => {
   const { field } = useController({ name: "reason", control });

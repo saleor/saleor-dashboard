@@ -99,7 +99,7 @@ function handleStaffMemberAssign(
 
 const scrollableTargetId = "assignMemberScrollableDialog";
 
-const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
+const AssignMembersDialog = (props: AssignMembersDialogProps) => ({
   confirmButtonState,
   disabled,
   loading,

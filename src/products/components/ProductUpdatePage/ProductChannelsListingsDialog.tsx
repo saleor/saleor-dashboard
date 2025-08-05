@@ -19,7 +19,7 @@ export interface ProductChannelsListingsDialogProps extends DialogProps {
   onConfirm: ProductChannelsListingDialogSubmit;
 }
 
-const ProductChannelsListingsDialog: React.FC<ProductChannelsListingsDialogProps> = ({
+const ProductChannelsListingsDialog = (props: ProductChannelsListingsDialogProps) => ({
   channels,
   data,
   open,

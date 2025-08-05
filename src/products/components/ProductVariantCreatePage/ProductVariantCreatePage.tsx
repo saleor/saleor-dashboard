@@ -111,7 +111,7 @@ interface ProductVariantCreatePageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
-const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
+const ProductVariantCreatePage = (props: ProductVariantCreatePageProps) => ({
   productId,
   defaultVariantId,
   disabled,

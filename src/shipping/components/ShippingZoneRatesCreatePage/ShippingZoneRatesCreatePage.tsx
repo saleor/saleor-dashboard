@@ -57,7 +57,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePageProps> = ({
+export const ShippingZoneRatesCreatePage = (props: ShippingZoneRatesCreatePageProps) => ({
   allChannelsCount,
   shippingChannels,
   channelErrors,

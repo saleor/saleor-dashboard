@@ -11,7 +11,7 @@ export interface WebhookDeleteDialogProps {
   onConfirm: () => void;
 }
 
-const WebhookDeleteDialog: React.FC<WebhookDeleteDialogProps> = ({
+const WebhookDeleteDialog = (props: WebhookDeleteDialogProps) => ({
   confirmButtonState,
   open,
   name,

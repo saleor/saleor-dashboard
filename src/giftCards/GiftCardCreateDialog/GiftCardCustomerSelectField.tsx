@@ -17,7 +17,7 @@ export interface GiftCardCustomerSelectFieldProps {
   disabled?: boolean;
 }
 
-const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = ({
+const GiftCardCustomerSelectField = (props: GiftCardCustomerSelectFieldProps) => ({
   selectedCustomer,
   setSelectedCustomer,
   disabled = false,

@@ -40,7 +40,7 @@ export interface MenuDetailsPageProps {
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
-const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
+const MenuDetailsPage = (props: MenuDetailsPageProps) => ({
   disabled,
   errors,
   menu,

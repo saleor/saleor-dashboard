@@ -82,7 +82,7 @@ export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   onSubmit: (data: ExportProductsInput) => void;
 }
 
-const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
+const ProductExportDialog = (props: ProductExportDialogProps) => ({
   attributes,
   channels,
   confirmButtonState,

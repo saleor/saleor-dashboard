@@ -21,7 +21,7 @@ interface TaxCountryExceptionListItemProps {
   strategyChoicesLoading: boolean;
 }
 
-export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
+export const TaxCountryExceptionListItem = (props: TaxCountryExceptionListItemProps) => ({
   country,
   onDelete,
   onChange,

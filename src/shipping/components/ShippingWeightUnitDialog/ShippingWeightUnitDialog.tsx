@@ -14,7 +14,7 @@ interface ShippingWeightUnitDialogProps {
   disabled: boolean;
 }
 
-export const ShippingWeightUnitDialog: React.FC<ShippingWeightUnitDialogProps> = ({
+export const ShippingWeightUnitDialog = (props: ShippingWeightUnitDialogProps) => ({
   open,
   onSubmit,
   onClose,

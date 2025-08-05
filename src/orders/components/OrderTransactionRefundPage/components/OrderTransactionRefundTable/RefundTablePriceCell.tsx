@@ -12,7 +12,7 @@ interface RefundTablePriceCellProps {
   maxQtyToRefund: number;
 }
 
-export const RefundTablePriceCell: React.FC<RefundTablePriceCellProps> = ({
+export const RefundTablePriceCell = (props: RefundTablePriceCellProps) => ({
   line,
   maxQtyToRefund,
 }) => {

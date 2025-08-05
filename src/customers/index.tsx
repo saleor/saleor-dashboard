@@ -23,7 +23,7 @@ import CustomerCreateView from "./views/CustomerCreate";
 import CustomerDetailsViewComponent from "./views/CustomerDetails";
 import CustomerListViewComponent from "./views/CustomerList";
 
-const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const CustomerListView = ({ ( }: {} => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: CustomerListUrlQueryParams = asSortParams(qs, CustomerListUrlSortField);
 
@@ -38,7 +38,7 @@ interface CustomerDetailsRouteParams {
   id: string;
 }
 
-const CustomerDetailsView: React.FC<RouteComponentProps<CustomerDetailsRouteParams>> = ({
+const CustomerDetailsView = ({ CustomerDetailsRouteParams }: RouteComponentProps<CustomerDetailsRouteParams>) => ({
   location,
   match,
 }) => {
@@ -52,7 +52,7 @@ interface CustomerAddressesRouteParams {
   id: string;
 }
 
-const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRouteParams>> = ({
+const CustomerAddressesView = ({ CustomerAddressesRouteParams }: RouteComponentProps<CustomerAddressesRouteParams>) => ({
   match,
 }) => {
   const qs = parseQs(location.search.substr(1));
@@ -63,7 +63,7 @@ const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRoute
   );
 };
 
-export const CustomerSection: React.FC<{}> = () => {
+export const CustomerSection: ({ {} }) => () => {
   const intl = useIntl();
 
   return (

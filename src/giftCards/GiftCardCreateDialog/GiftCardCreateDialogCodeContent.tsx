@@ -13,7 +13,7 @@ interface GiftCardCreateDialogCodeContentProps {
   onClose: () => void;
 }
 
-const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentProps> = ({
+const GiftCardCreateDialogCodeContent = (props: GiftCardCreateDialogCodeContentProps) => ({
   cardCode,
   onClose,
 }) => {

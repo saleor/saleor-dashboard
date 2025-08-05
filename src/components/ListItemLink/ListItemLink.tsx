@@ -20,7 +20,7 @@ const useStyles = makeStyles(
   { name: "ListItemLink" },
 );
 
-export const ListItemLink: React.FC<ListItemLinkProps> = ({
+export const ListItemLink = (props: ListItemLinkProps) => ({
   href,
   children,
   linkClassName,

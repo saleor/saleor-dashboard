@@ -54,7 +54,7 @@ export interface PageListPageProps
   onPageCreate: () => void;
 }
 
-const PageListPage: React.FC<PageListPageProps> = ({
+const PageListPage = (props: PageListPageProps) => ({
   selectedFilterPreset,
   filterOpts,
   initialSearch,

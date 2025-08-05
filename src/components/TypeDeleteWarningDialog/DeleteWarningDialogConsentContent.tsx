@@ -8,7 +8,7 @@ interface DeleteWarningDialogConsentContentProps {
   onConsentChange: (value: boolean) => void;
 }
 
-const DeleteWarningDialogConsentContent: React.FC<DeleteWarningDialogConsentContentProps> = ({
+const DeleteWarningDialogConsentContent = (props: DeleteWarningDialogConsentContentProps) => ({
   description,
   consentLabel,
   isConsentChecked,

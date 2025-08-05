@@ -62,7 +62,7 @@ const messages = defineMessages({
   },
 });
 
-export const Attributes: React.FC<AttributesProps> = ({
+export const Attributes = (props: AttributesProps) => ({
   attributes,
   attributeValues,
   errors,

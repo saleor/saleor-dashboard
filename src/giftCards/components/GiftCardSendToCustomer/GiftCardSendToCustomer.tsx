@@ -19,7 +19,7 @@ interface GiftCardSendToCustomerProps {
   disabled?: boolean;
 }
 
-const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
+const GiftCardSendToCustomer = (props: GiftCardSendToCustomerProps) => ({
   change,
   sendToCustomerSelected,
   selectedChannelSlug,

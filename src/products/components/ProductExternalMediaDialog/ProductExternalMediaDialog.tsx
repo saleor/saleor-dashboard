@@ -25,7 +25,7 @@ const messages = defineMessages({
     description: "modal button",
   },
 });
-const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
+const ProductExternalMediaDialog = (props: ProductExternalMediaDialogProps) => ({
   open,
   onClose,
   onSubmit,

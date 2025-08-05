@@ -17,7 +17,7 @@ interface PluginInfoProps {
   disabled: boolean;
 }
 
-export const PluginInfo: React.FC<PluginInfoProps> = ({
+export const PluginInfo = (props: PluginInfoProps) => ({
   data,
   description,
   errors,

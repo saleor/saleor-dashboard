@@ -299,7 +299,7 @@ export function useProductUpdateForm(
   };
 }
 
-const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
+const ProductUpdateForm = (props: ProductUpdateFormProps) => ({
   children,
   product,
   onSubmit,

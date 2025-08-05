@@ -35,7 +35,7 @@ export interface SaleListPageProps
   onSelectSaleIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const SaleListPage: React.FC<SaleListPageProps> = ({
+const SaleListPage = (props: SaleListPageProps) => ({
   filterOpts,
   initialSearch,
   onFilterChange,

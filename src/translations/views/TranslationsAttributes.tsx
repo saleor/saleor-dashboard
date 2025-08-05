@@ -33,7 +33,7 @@ export interface TranslationsAttributesProps {
   params: TranslationsAttributesQueryParams;
 }
 
-const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
+const TranslationsAttributes = (props: TranslationsAttributesProps) => ({
   id,
   languageCode,
   params,

@@ -30,7 +30,7 @@ export interface PricingCardProps {
 
 const numberOfColumns = 2;
 
-export const PricingCard: React.FC<PricingCardProps> = ({
+export const PricingCard = (props: PricingCardProps) => ({
   channels,
   disabled,
   errors,

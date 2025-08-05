@@ -67,7 +67,7 @@ const handleProductAssign = (
 
 const scrollableTargetId = "shippingMethodProductsAddScrollableDialog";
 
-const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = ({
+const ShippingMethodProductsAddDialog = (props: ShippingMethodProductsAddDialogProps) => ({
   confirmButtonState,
   open,
   loading,

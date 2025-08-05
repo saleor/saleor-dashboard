@@ -49,7 +49,7 @@ interface ProductVariantCreateProps {
   params: ProductVariantAddUrlQueryParams;
 }
 
-export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId, params }) => {
+export const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

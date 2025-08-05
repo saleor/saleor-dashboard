@@ -15,7 +15,7 @@ interface HeaderOptionsProps {
   onAppDeleteOpen: () => void;
 }
 
-const AppHeaderOptions: React.FC<HeaderOptionsProps> = ({
+const AppHeaderOptions = (props: HeaderOptionsProps) => ({
   isActive,
   onAppActivateOpen,
   onAppDeactivateOpen,

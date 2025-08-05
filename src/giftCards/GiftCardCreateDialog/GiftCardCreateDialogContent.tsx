@@ -18,7 +18,7 @@ interface GiftCardCreateDialogContentProps extends Pick<DialogProps, "onClose"> 
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = ({
+const GiftCardCreateDialogContent = (props: GiftCardCreateDialogContentProps) => ({
   onClose,
   refetchQueries,
   initialCustomer,

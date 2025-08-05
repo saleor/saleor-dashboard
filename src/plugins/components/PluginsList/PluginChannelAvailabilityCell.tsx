@@ -10,7 +10,7 @@ interface PluginChannelAvailabilityCellProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginChannelAvailabilityCell: React.FC<PluginChannelAvailabilityCellProps> = ({
+const PluginChannelAvailabilityCell = (props: PluginChannelAvailabilityCellProps) => ({
   plugin,
 }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);

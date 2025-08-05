@@ -45,7 +45,7 @@ interface GiftCardBulkCreateDialogFormProps {
   onClose: () => void;
 }
 
-const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> = ({
+const GiftCardBulkCreateDialogForm = (props: GiftCardBulkCreateDialogFormProps) => ({
   onSubmit,
   opts,
   onClose,

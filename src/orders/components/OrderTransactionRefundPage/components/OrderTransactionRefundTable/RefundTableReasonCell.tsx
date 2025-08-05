@@ -13,7 +13,7 @@ interface RefundTableReasonCellProps {
   field: FieldArrayWithId<OrderTransactionRefundPageFormData, "linesToRefund", "id">;
 }
 
-export const RefundTableReasonCell: React.FC<RefundTableReasonCellProps> = ({
+export const RefundTableReasonCell = (props: RefundTableReasonCellProps) => ({
   index,
   field,
   onEditReasonModal,

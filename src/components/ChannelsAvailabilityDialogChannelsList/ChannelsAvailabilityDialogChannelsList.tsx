@@ -28,7 +28,7 @@ export interface ChannelsAvailabilityContentProps {
   onChange: (option: Channel) => void;
 }
 
-const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
+const ChannelsAvailabilityContent = (props: ChannelsAvailabilityContentProps) => ({
   isChannelSelected,
   channels,
   onChange,

@@ -25,7 +25,7 @@ export interface TranslationsCategoriesPageProps extends TranslationsEntitiesPag
   data: CategoryTranslationFragment;
 }
 
-const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
+const TranslationsCategoriesPage = (props: TranslationsCategoriesPageProps) => ({
   translationId,
   activeField,
   disabled,

@@ -48,7 +48,7 @@ function disableSortingStrategy() {
   return null;
 }
 
-const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
+const SortableChipsField = (props: SortableChipsFieldProps) => ({
   loading,
   disabled,
   values,

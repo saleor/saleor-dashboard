@@ -12,7 +12,7 @@ interface GiftCardDeleteDialogProps extends DialogProps {
   refetchQueries?: string[];
 }
 
-const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
+const GiftCardDeleteDialog = (props: GiftCardDeleteDialogProps) => ({
   open,
   onClose,
   refetchQueries = [],

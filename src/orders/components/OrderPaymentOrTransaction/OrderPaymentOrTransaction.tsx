@@ -19,7 +19,7 @@ export interface OrderPaymentOrTransactionProps {
   onRefundAdd: () => void;
 }
 
-export const OrderPaymentOrTransaction: React.FC<OrderPaymentOrTransactionProps> = ({
+export const OrderPaymentOrTransaction = (props: OrderPaymentOrTransactionProps) => ({
   order,
   shop,
   onTransactionAction,

@@ -20,7 +20,7 @@ interface TaxCountriesMenuProps {
   onCountryAdd: () => void;
 }
 
-export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
+export const TaxCountriesMenu = (props: TaxCountriesMenuProps) => ({
   configurations,
   selectedCountryId,
   onCountryDelete,

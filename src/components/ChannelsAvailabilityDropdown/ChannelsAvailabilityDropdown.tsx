@@ -13,7 +13,7 @@ export interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;
 }
 
-export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
+export const ChannelsAvailabilityDropdown = (props: ChannelsAvailabilityDropdownProps) => ({
   channels,
 }) => {
   const intl = useIntl();

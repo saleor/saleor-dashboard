@@ -29,7 +29,7 @@ export interface OrderSendRefundPageProps {
   addManualRefundError: string | undefined;
 }
 
-const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
+const OrderSendRefundPage = (props: OrderSendRefundPageProps) => ({
   order,
   loading,
   onAddManualRefund,

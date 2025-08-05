@@ -1,7 +1,7 @@
 import useLocale from "@dashboard/hooks/useLocale";
 import React from "react";
 
-export const EventTime: React.FC<{ date: string }> = ({ date }) => {
+export const EventTime: ({ { date: string } }) => ({ date }) => {
   const { locale } = useLocale();
   const intl = new Intl.DateTimeFormat(locale, {
     timeZoneName: "short",

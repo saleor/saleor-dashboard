@@ -435,7 +435,7 @@ function useProductCreateForm(
   };
 }
 
-const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
+const ProductCreateForm = (props: ProductCreateFormProps) => ({
   children,
   initial,
   onSubmit,

@@ -11,7 +11,7 @@ export interface WarehouseDeleteDialogProps {
   name: string;
 }
 
-const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
+const WarehouseDeleteDialog = (props: WarehouseDeleteDialogProps) => ({
   name,
   confirmButtonState,
   onClose,

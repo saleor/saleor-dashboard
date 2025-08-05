@@ -9,7 +9,7 @@ interface AlreadyRefundedHelperProps {
   qtyToRefund: number;
 }
 
-export const AlreadyRefundedHelper: React.FC<AlreadyRefundedHelperProps> = ({
+export const AlreadyRefundedHelper = (props: AlreadyRefundedHelperProps) => ({
   maxQtyToRefund,
   qtyToRefund,
 }) => {

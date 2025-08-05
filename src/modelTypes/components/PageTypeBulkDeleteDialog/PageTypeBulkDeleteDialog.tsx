@@ -12,7 +12,7 @@ export interface PageTypeBulkDeleteDialogProps {
   onConfirm: () => void;
 }
 
-const PageTypeBulkDeleteDialog: React.FC<PageTypeBulkDeleteDialogProps> = ({
+const PageTypeBulkDeleteDialog = (props: PageTypeBulkDeleteDialogProps) => ({
   confirmButtonState,
   open,
   quantity,

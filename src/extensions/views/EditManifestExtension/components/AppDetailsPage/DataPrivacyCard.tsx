@@ -10,7 +10,7 @@ type DataPrivacyCardProps = {
   loading: boolean;
 } & BoxProps;
 
-export const DataPrivacyCard: React.FC<DataPrivacyCardProps> = ({
+export const DataPrivacyCard = (props: DataPrivacyCardProps) => ({
   dataPrivacyUrl,
   loading,
   ...boxProps

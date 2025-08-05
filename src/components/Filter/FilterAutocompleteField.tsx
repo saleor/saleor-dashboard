@@ -47,7 +47,7 @@ const useStyles = makeStyles(
   }),
   { name: "FilterAutocompleteField" },
 );
-const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
+const FilterAutocompleteField = (props: FilterAutocompleteFieldProps) => ({
   displayValues,
   filter,
   setDisplayValues,

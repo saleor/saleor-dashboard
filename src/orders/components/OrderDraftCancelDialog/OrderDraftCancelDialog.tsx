@@ -17,7 +17,7 @@ export interface OrderDraftCancelDialogProps {
   orderNumber: string;
 }
 
-const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
+const OrderDraftCancelDialog = (props: OrderDraftCancelDialogProps) => ({
   confirmButtonState,
   errors: apiErrors,
   onClose,

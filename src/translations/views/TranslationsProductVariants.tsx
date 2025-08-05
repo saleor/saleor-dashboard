@@ -31,7 +31,7 @@ export interface TranslationsProductVariantsProps {
   params: TranslationsProductVariantsQueryParams;
 }
 
-const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = ({
+const TranslationsProductVariants = (props: TranslationsProductVariantsProps) => ({
   id,
   productId,
   languageCode,

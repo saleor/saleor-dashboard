@@ -14,7 +14,7 @@ export interface ControlledCheckboxProps {
   onChange: (event: any) => any;
 }
 
-export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
+export const ControlledCheckbox = (props: ControlledCheckboxProps) => ({
   checked,
   disabled,
   name,

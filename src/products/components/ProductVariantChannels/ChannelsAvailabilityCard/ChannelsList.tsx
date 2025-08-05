@@ -5,7 +5,7 @@ interface ChannelListProps {
   summary: string;
 }
 
-export const ChannelsList: React.FC<ChannelListProps> = ({ summary, children }) => (
+export const ChannelsList = ({ summary, children }: ChannelListProps) => (
   <Accordion>
     <Accordion.Item value="channelListItem">
       <Accordion.Trigger

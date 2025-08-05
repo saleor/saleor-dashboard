@@ -44,7 +44,7 @@ function mapPluginStatusToChipColor(status: string): "success1" | "critical1" | 
   }
 }
 
-export const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({
+export const PluginDetailsChannelsCardContent = (props: PluginDetailsChannelsCardProps) => ({
   plugin,
   selectedChannelId,
   setSelectedChannelId,

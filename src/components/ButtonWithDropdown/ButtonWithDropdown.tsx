@@ -20,7 +20,7 @@ interface ButtonWithDropdownProps extends ButtonProps {
   disabled?: boolean;
 }
 
-export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
+export const ButtonWithDropdown = (props: ButtonWithDropdownProps) => ({
   onClick,
   options,
   children,

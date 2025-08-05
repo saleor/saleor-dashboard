@@ -13,7 +13,7 @@ export interface AttributeValueDeleteDialogProps {
   onClose: () => void;
 }
 
-const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
+const AttributeValueDeleteDialog = (props: AttributeValueDeleteDialogProps) => ({
   attributeName,
   name,
   confirmButtonState,

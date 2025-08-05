@@ -17,7 +17,7 @@ export interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   onSend: () => void;
 }
 
-const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = ({
+const OrderInvoiceEmailSendDialog = (props: OrderInvoiceEmailSendDialogProps) => ({
   confirmButtonState,
   errors,
   open,

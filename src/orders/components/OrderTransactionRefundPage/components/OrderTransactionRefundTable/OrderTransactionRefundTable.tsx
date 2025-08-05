@@ -24,7 +24,7 @@ export interface OrderRefundTransactionDatagridError {
   lineId: string;
 }
 
-export const OrderTransactionRefundTable: React.FC<OrderTransactionRefundTableProps> = ({
+export const OrderTransactionRefundTable = (props: OrderTransactionRefundTableProps) => ({
   order,
   draftRefund,
   control,

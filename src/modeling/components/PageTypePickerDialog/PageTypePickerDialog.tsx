@@ -21,7 +21,7 @@ export interface PageTypePickerDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
+const PageTypePickerDialog = (props: PageTypePickerDialogProps) => ({
   confirmButtonState,
   open,
   pageTypes,

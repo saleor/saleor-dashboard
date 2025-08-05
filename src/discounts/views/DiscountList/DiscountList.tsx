@@ -35,7 +35,7 @@ interface DiscountListProps {
   params: DiscountListUrlQueryParams;
 }
 
-export const DiscountList: React.FC<DiscountListProps> = ({ params }) => {
+export const DiscountList = ({ params }: DiscountListProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { updateListSettings, settings } = useListSettings(ListViews.DISCOUNTS_LIST);

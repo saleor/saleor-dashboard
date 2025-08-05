@@ -11,7 +11,7 @@ export interface FilterCardProps {
   handleClear: () => any;
 }
 
-const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {
+const FilterCard = ({ children, handleClear }: FilterCardProps) => {
   const intl = useIntl();
 
   return (

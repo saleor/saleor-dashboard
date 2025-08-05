@@ -18,7 +18,7 @@ export interface OrderTransactionProps {
   disabled?: boolean;
 }
 
-const OrderTransaction: React.FC<OrderTransactionProps> = ({
+const OrderTransaction = (props: OrderTransactionProps) => ({
   transaction,
   fakeEvents,
   onTransactionAction,

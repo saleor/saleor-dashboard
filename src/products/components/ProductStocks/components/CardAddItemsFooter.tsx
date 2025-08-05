@@ -29,7 +29,7 @@ interface CardAddItemsFooterProps {
   ref?: MutableRefObject<HTMLDivElement>;
 }
 
-const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
+const CardAddItemsFooter = (props: CardAddItemsFooterProps) => ({
   title,
   onAdd,
   testIds,

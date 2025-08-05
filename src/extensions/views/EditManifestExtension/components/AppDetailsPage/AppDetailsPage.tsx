@@ -18,7 +18,7 @@ export interface AppDetailsPageProps {
   onAppDeleteOpen: () => void;
 }
 
-export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
+export const AppDetailsPage = (props: AppDetailsPageProps) => ({
   data,
   loading,
   onAppActivateOpen,

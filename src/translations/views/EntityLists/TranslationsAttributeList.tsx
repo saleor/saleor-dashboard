@@ -8,7 +8,7 @@ import React from "react";
 
 import { TranslationsEntityListProps } from "./types";
 
-const TranslationsAttributeList: React.FC<TranslationsEntityListProps> = ({
+const TranslationsAttributeList = (props: TranslationsEntityListProps) => ({
   params,
   variables,
 }) => {

@@ -17,7 +17,7 @@ interface RefundTableInputCellProps {
   handleMaxRefund: () => void;
 }
 
-export const RefundTableInputCell: React.FC<RefundTableInputCellProps> = ({
+export const RefundTableInputCell = (props: RefundTableInputCellProps) => ({
   index,
   control,
   qtyToRefund,

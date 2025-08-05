@@ -20,7 +20,7 @@ interface TaxClassesMenuProps {
   onCreateNew: () => void;
 }
 
-export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
+export const TaxClassesMenu = (props: TaxClassesMenuProps) => ({
   taxClasses,
   selectedTaxClassId,
   onTaxClassDelete,

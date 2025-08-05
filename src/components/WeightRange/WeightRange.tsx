@@ -8,7 +8,7 @@ export interface WeightRangeProps {
   to?: Weight;
 }
 
-const WeightRange: React.FC<WeightRangeProps> = ({ from, to }) =>
+const WeightRange = (props: WeightRangeProps) => ({ from, to }) =>
   from && to ? (
     <FormattedMessage
       id="5x6yT9"

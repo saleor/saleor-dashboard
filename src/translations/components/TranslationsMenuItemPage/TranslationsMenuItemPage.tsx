@@ -24,7 +24,7 @@ export interface TranslationsMenuItemPageProps extends TranslationsEntitiesPageP
   data: MenuItemTranslationFragment | null;
 }
 
-const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
+const TranslationsMenuItemPage = (props: TranslationsMenuItemPageProps) => ({
   translationId,
   activeField,
   disabled,

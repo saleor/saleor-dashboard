@@ -19,7 +19,7 @@ const messages = defineMessages({
 
 type AssignmentListFooterProps = AssignmentListProps;
 
-const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
+const AssignmentListFooter = (props: AssignmentListFooterProps) => ({
   items,
   itemsChoices,
   itemsName,

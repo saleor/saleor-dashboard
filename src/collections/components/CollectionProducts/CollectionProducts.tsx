@@ -45,7 +45,7 @@ export interface CollectionProductsProps {
   disabled: boolean;
 }
 
-const CollectionProducts: React.FC<CollectionProductsProps> = ({
+const CollectionProducts = (props: CollectionProductsProps) => ({
   collection,
   params,
   currentChannels,

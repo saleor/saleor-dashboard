@@ -20,7 +20,7 @@ export interface ChannelsAvailabilityContentProps {
   toggleAll?: (items: Channel[], selected: number) => void;
 }
 
-export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
+export const ChannelsAvailabilityContent = (props: ChannelsAvailabilityContentProps) => ({
   isSelected,
   channels,
   contentType = "",

@@ -20,7 +20,7 @@ export interface ChannelContentProps {
   onChange: (id: string, data: ChannelOpts) => void;
 }
 
-export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
+export const ChannelAvailabilityItemContent = (props: ChannelContentProps) => ({
   data,
   disabled,
   errors,

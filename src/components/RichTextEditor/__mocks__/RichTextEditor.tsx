@@ -5,7 +5,7 @@ import { RichTextEditorProps } from "../RichTextEditor";
 
 export const HOLDER = "TEST_HOLDER";
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({
+const RichTextEditor = (props: RichTextEditorProps) => ({
   disabled,
   error,
   label,

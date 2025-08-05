@@ -50,7 +50,7 @@ const useStyles = makeStyles(
     name: "ShippingZonePostalCodes",
   },
 );
-const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
+const ShippingZonePostalCodes = (props: ShippingZonePostalCodesProps) => ({
   disabled,
   initialExpanded = true,
   postalCodes,

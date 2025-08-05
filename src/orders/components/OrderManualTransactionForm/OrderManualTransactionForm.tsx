@@ -18,7 +18,7 @@ export interface OrderManualTransactionFormProps {
   initialData?: Partial<OrderManualTransactionSubmitVariables>;
 }
 
-export const OrderManualTransactionForm: React.FC<OrderManualTransactionFormProps> = ({
+export const OrderManualTransactionForm = (props: OrderManualTransactionFormProps) => ({
   children,
   ...props
 }) => {

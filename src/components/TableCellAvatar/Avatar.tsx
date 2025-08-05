@@ -16,7 +16,7 @@ export interface AvatarProps {
   className?: string;
 }
 
-const Avatar: React.FC<AvatarProps> = ({
+const Avatar = (props: AvatarProps) => ({
   children,
   alignRight,
   initials,

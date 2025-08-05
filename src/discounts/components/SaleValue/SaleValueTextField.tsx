@@ -15,7 +15,7 @@ interface SaleValueTextFieldProps {
   onChange: SaleValueInputOnChangeType;
 }
 
-const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
+const SaleValueTextField = (props: SaleValueTextFieldProps) => ({
   dataType,
   helperText,
   disabled,

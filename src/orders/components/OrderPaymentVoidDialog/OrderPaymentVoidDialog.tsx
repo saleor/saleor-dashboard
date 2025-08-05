@@ -18,7 +18,7 @@ export interface OrderPaymentVoidDialogProps {
   onConfirm?: () => any;
 }
 
-const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
+const OrderPaymentVoidDialog = (props: OrderPaymentVoidDialogProps) => ({
   confirmButtonState,
   errors,
   open,

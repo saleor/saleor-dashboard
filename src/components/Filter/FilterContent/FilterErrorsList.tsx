@@ -41,7 +41,7 @@ interface FilterErrorsListProps<T extends string = string> {
   errorMessages?: FilterErrorMessages<T>;
 }
 
-const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
+const FilterErrorsList = (props: FilterErrorsListProps) => ({
   filter: { dependencies },
   errors = [],
   errorMessages,

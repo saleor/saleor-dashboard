@@ -17,7 +17,7 @@ export interface ProductListTilesProps extends ListProps<ProductListColumns> {
   onTileClick: (id: string) => void;
 }
 
-export const ProductListTiles: React.FC<ProductListTilesProps> = ({
+export const ProductListTiles = (props: ProductListTilesProps) => ({
   products,
   onTileClick,
   settings,

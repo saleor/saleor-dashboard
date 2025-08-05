@@ -29,7 +29,7 @@ export interface StaffListPageProps
   onAdd: () => void;
 }
 
-const StaffListPage: React.FC<StaffListPageProps> = ({
+const StaffListPage = (props: StaffListPageProps) => ({
   filterOpts,
   initialSearch,
   limits,

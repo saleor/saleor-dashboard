@@ -7,7 +7,7 @@ export interface StatusDotProps {
   status: DotStatus;
 }
 
-export const StatusDot: React.FC<StatusDotProps> = ({ status }) => {
+export const StatusDot = ({ status }: StatusDotProps) => {
   const { themeValues } = useTheme();
   const color = getDotColor(status, themeValues);
 

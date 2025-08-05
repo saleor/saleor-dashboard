@@ -69,7 +69,7 @@ export interface FilterContentProps<K extends string = string> {
   errorMessages?: FilterErrorMessages<K>;
 }
 
-const FilterContent: React.FC<FilterContentProps> = ({
+const FilterContent = (props: FilterContentProps) => ({
   currencySymbol,
   errors,
   errorMessages,

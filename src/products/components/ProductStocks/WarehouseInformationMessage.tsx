@@ -12,7 +12,7 @@ interface WarehouseInformationMessageProps {
   onWarehouseConfigure: () => void;
 }
 
-export const WarehouseInformationMessage: React.FC<WarehouseInformationMessageProps> = ({
+export const WarehouseInformationMessage = (props: WarehouseInformationMessageProps) => ({
   isCreate,
   hasVariants,
   hasWarehouses,

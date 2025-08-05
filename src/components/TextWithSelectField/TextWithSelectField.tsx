@@ -21,7 +21,7 @@ export interface TextWithSelectFieldProps {
   selectFieldProps: CommonFieldProps & { value: string };
 }
 
-const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
+const TextWithSelectField = (props: TextWithSelectFieldProps) => ({
   change,
   choices,
   loading,

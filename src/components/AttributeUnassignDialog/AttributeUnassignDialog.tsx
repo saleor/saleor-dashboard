@@ -15,7 +15,7 @@ export interface AttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
+const AttributeUnassignDialog = (props: AttributeUnassignDialogProps) => ({
   title,
   attributeName,
   confirmButtonState,

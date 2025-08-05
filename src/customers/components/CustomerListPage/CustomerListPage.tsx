@@ -35,7 +35,7 @@ export interface CustomerListPageProps
   onCustomersDelete: () => void;
 }
 
-const CustomerListPage: React.FC<CustomerListPageProps> = ({
+const CustomerListPage = (props: CustomerListPageProps) => ({
   selectedFilterPreset,
   filterOpts,
   initialSearch,

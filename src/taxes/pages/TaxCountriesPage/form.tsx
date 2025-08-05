@@ -87,7 +87,7 @@ function useTaxCountriesForm(
   return { data: formset.data, handlers: { handleRateChange }, submit };
 }
 
-const TaxCountriesForm: React.FC<TaxCountriesFormProps> = ({
+const TaxCountriesForm = (props: TaxCountriesFormProps) => ({
   children,
   country,
   onSubmit,

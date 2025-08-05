@@ -26,7 +26,7 @@ export interface OrderFulfillmentTrackingDialogProps {
   onConfirm: (data: FormData) => any;
 }
 
-const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogProps> = ({
+const OrderFulfillmentTrackingDialog = (props: OrderFulfillmentTrackingDialogProps) => ({
   confirmButtonState,
   errors: apiErrors,
   open,

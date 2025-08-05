@@ -49,7 +49,7 @@ const TransactionTitle = ({
   );
 };
 
-export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
+export const OrderTransactionCardTitle = (props: CardTitleProps) => ({
   transaction,
   onTransactionAction,
   showActions = true,

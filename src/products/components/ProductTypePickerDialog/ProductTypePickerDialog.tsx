@@ -21,7 +21,7 @@ export interface ProductTypePickerDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
+const ProductTypePickerDialog = (props: ProductTypePickerDialogProps) => ({
   confirmButtonState,
   open,
   productTypes,

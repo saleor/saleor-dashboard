@@ -20,7 +20,7 @@ export interface PluginSecretFieldDialogProps extends DialogProps {
   onConfirm: (data: PluginSecretFieldDialogFormData) => void;
 }
 
-export const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
+export const PluginSecretFieldDialog = (props: PluginSecretFieldDialogProps) => ({
   confirmButtonState,
   field,
   onClose,

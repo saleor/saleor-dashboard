@@ -7,7 +7,7 @@ interface AppWebhooksAttemptDetailsProps {
   attempt: EventDeliveryAttemptFragment;
 }
 
-export const AppWebhooksAttemptDetails: React.FC<AppWebhooksAttemptDetailsProps> = ({
+export const AppWebhooksAttemptDetails = (props: AppWebhooksAttemptDetailsProps) => ({
   attempt,
 }) => {
   const { createdAt, status, responseStatusCode, response, id } = attempt;
