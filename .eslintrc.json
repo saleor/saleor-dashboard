@@ -53,6 +53,14 @@
               {
                 "name": "react-sortable-hoc",
                 "message": "Use @dnd-kit instead of react-sortable-hoc."
+              },
+              {
+                "name": "moment",
+                "message": "Use react-intl formatDate instead of moment."
+              },
+              {
+                "name": "moment-timezone",
+                "message": "Use react-intl formatDate instead of moment-timezone."
               }
             ]
           }
@@ -145,6 +153,7 @@
       }
     ],
     "local-rules/named-styles": "error",
+    "local-rules/no-deprecated-icons": "warn",
     "no-restricted-imports": [
       "error",
       {

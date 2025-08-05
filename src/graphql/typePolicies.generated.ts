@@ -2674,10 +2674,12 @@ export type MetadataItemFieldPolicy = {
 	key?: FieldPolicy<any> | FieldReadFunction<any>,
 	value?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MoneyKeySpecifier = ('amount' | 'currency' | MoneyKeySpecifier)[];
+export type MoneyKeySpecifier = ('amount' | 'currency' | 'fractionDigits' | 'fractionalAmount' | MoneyKeySpecifier)[];
 export type MoneyFieldPolicy = {
 	amount?: FieldPolicy<any> | FieldReadFunction<any>,
-	currency?: FieldPolicy<any> | FieldReadFunction<any>
+	currency?: FieldPolicy<any> | FieldReadFunction<any>,
+	fractionDigits?: FieldPolicy<any> | FieldReadFunction<any>,
+	fractionalAmount?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type MoneyRangeKeySpecifier = ('start' | 'stop' | MoneyRangeKeySpecifier)[];
 export type MoneyRangeFieldPolicy = {
