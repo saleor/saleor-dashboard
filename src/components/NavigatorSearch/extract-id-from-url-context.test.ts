@@ -133,7 +133,7 @@ describe("extractIdFromUrlContext", () => {
 
   it("should extract ID from page path", () => {
     // Arrange
-    mockLocation("/pages/page456");
+    mockLocation("/models/page456");
 
     // Act
     const result = extractIdFromUrlContext();
@@ -144,7 +144,7 @@ describe("extractIdFromUrlContext", () => {
 
   it("should extract ID from menu path", () => {
     // Arrange
-    mockLocation("/menus/menu789");
+    mockLocation("/structures/menu789");
 
     // Act
     const result = extractIdFromUrlContext();

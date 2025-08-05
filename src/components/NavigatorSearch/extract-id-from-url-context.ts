@@ -33,12 +33,13 @@ const locationsWithIdInContext = [
  * Takes locations with singular items, like Product Details or Order Details. Scan URLs and extract it's ID
  */
 export const extractIdFromUrlContext = (): string | null => {
+  const pathname = window.location.pathname.split("?")[0].split("#")[0];
   const matchedPaths = locationsWithIdInContext
     .map(lookup =>
-      matchPath(window.location.pathname, {
+      matchPath(pathname, {
         path: lookup,
         exact: false,
-        strict: false,
+        strict: true,
       }),
     )
     .filter(Boolean);
