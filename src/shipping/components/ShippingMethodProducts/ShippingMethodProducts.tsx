@@ -140,7 +140,11 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                   </TableCellAvatar>
                   <TableCell className={classes.colAction}>
                     <IconButton variant="secondary" onClick={() => onProductUnassign([product.id])}>
-                      <DeleteIcon color="primary" />
+                      <DeleteIcon
+                        color="primary"
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

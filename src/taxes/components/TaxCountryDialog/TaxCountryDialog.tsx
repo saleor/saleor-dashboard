@@ -60,7 +60,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               </InputAdornment>
             ),
           }}

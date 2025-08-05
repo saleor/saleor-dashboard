@@ -1,10 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { isSelected } from "../lists";
 
 export interface DisplayColumnProps<TColumn extends string = string> {
   displayColumns: TColumn[];
   column: TColumn;
+  children: ReactNode;
 }
 
 const DisplayColumn: React.FC<DisplayColumnProps> = ({ displayColumns, children, column }) => {

@@ -90,7 +90,9 @@ const LoginPage: React.FC<LoginCardProps> = props => {
             disabled={disabled}
             endAdornment={
               <Button
-                icon={<EyeIcon />}
+                icon={
+                  <EyeIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                }
                 onMouseDown={() => setShowPassword(true)}
                 onMouseUp={() => setShowPassword(false)}
                 variant="tertiary"

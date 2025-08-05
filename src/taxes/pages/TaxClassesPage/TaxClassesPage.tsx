@@ -175,7 +175,10 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                 InputProps={{
                                   startAdornment: (
                                     <InputAdornment position="start">
-                                      <SearchIcon />
+                                      <SearchIcon
+                                        onPointerEnterCapture={undefined}
+                                        onPointerLeaveCapture={undefined}
+                                      />
                                     </InputAdornment>
                                   ),
                                 }}

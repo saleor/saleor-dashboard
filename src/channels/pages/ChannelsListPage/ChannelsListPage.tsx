@@ -122,7 +122,12 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                         <Button
                           variant="secondary"
                           data-test-id="delete-channel"
-                          icon={<DeleteIcon />}
+                          icon={
+                            <DeleteIcon
+                              onPointerEnterCapture={undefined}
+                              onPointerLeaveCapture={undefined}
+                            />
+                          }
                           onClick={
                             channel ? stopPropagation(() => onRemove(channel.id)) : undefined
                           }

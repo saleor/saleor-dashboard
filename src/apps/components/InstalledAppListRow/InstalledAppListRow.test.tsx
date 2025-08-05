@@ -15,7 +15,7 @@ jest.mock("@dashboard/featureFlags");
 
 const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
-    <Router>
+    <Router initialEntries={["/"]}>
       <AppListContext.Provider value={context}>
         <InstalledAppListRow {...data} />
       </AppListContext.Provider>

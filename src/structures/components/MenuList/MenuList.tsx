@@ -146,7 +146,10 @@ const MenuList: React.FC<MenuListProps> = props => {
                       disabled={disabled}
                       onClick={() => onDelete(menu.id)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>
