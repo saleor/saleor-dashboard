@@ -1,5 +1,5 @@
 import { DashboardModal } from "@dashboard/components/Modal";
-import useClipboard from "@dashboard/hooks/useClipboard";
+import { useClipboard } from "@dashboard/hooks/useClipboard";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Text } from "@saleor/macaw-ui-next";
