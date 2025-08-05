@@ -43,6 +43,8 @@ export default tseslint.config(
   // Disable global rules:
   {
     rules: {
+      "sort-imports": "off", // imports are handled by simple-import-sort/sort
+
       // Previously decided to turn-off, check if we can revisit them and enable:
       "@typescript-eslint/prefer-nullish-coalescing": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
@@ -57,8 +59,8 @@ export default tseslint.config(
 
       // Migration in progress:
       // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
-      "@typescript-eslint/no-non-null-assertion": "off",
-      "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+      "@typescript-eslint/no-non-null-assertion": "warn",
+      "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
