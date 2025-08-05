@@ -85,7 +85,7 @@ The codebase follows a feature-based architecture with shared components:
 1. Ensure you have a running Saleor backend instance
 2. Configure environment variables as described in `docs/configuration.md`
 3. Run `pnpm run generate` to generate GraphQL types
-4. Install dependencies with `npm i`
+4. Install dependencies with `pnpm install`
 
 ### Adding New Features
 1. Create feature directory under appropriate domain (e.g., `/src/products/`)
