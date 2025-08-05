@@ -6,18 +6,19 @@ interface BasicAttributeRowProps {
   description?: string | React.ReactNode;
   id?: string;
   clickableLabel?: boolean;
+  children?: React.ReactNode;
 }
 
 const capitalize = (str: BasicAttributeRowProps["label"]) =>
   typeof str === "string" ? str.charAt(0).toUpperCase() + str.slice(1) : str;
 
-export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
+export const BasicAttributeRow = ({
   label,
   description,
   children,
   id,
   clickableLabel = false,
-}) => (
+}: BasicAttributeRowProps) => (
   <Box
     as="li"
     justifyContent="space-between"
