@@ -1,6 +1,13 @@
 import { Box, BoxProps } from "@saleor/macaw-ui-next";
 import React from "react";
 
+/**
+ * @deprecated This icon uses Macaw-UI Next which is deprecated. Please use Lucide React icons instead.
+ * @see https://lucide.dev/ for available icons
+ * @example
+ * import { XCircle } from "lucide-react";
+ * // Use <XCircle /> instead
+ */
 export const ErrorCircle = ({
   height = "12px",
   width = "12px",
