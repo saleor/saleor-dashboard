@@ -89,6 +89,8 @@ jobs:
         env:
           VERSION: "${{inputs.VERSION}}"
         with:
+          # TODO: This needs to be removed entirely once we refactor this workflow
+          # to not require this step
           result-encoding: string
           script: |
             return "Playwright-tests"
