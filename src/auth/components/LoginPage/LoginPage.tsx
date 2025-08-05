@@ -24,7 +24,7 @@ export interface LoginCardProps {
   onSubmit: (event: LoginFormData) => SubmitPromise;
 }
 
-const LoginPage: React.FC<LoginCardProps> = props => {
+const LoginPage = (props: LoginCardProps) => {
   const {
     errors,
     disabled,

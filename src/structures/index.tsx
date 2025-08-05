@@ -19,7 +19,7 @@ const MenuDetails: React.FC<RouteComponentProps<{ id: string }>> = ({ location, 
 
   return <MenuDetailsComponent id={decodeURIComponent(match.params.id)} params={qs} />;
 };
-const NavigationRouter: React.FC = () => (
+const NavigationRouter = () => (
   <Switch>
     <Route exact component={MenuList} path={structuresListPath} />
     <Route component={MenuDetails} path={menuPath(":id")} />

@@ -90,7 +90,7 @@ export interface VisibilityCardProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
+export const VisibilityCard = (props: VisibilityCardProps) => {
   const {
     children,
     data: {

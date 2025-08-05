@@ -22,7 +22,7 @@ export interface WarehousesProps {
   warehousesChoices: RelayToFlat<SearchWarehousesQuery["search"]>;
 }
 
-const Warehouses: React.FC<WarehousesProps> = props => {
+const Warehouses = (props: WarehousesProps) => {
   const {
     addWarehouse,
     removeWarehouse,

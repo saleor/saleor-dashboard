@@ -53,7 +53,7 @@ const useStyles = makeStyles(
   { name: "ImageUpload" },
 );
 
-export const ImageUpload: React.FC<ImageUploadProps> = props => {
+export const ImageUpload = (props: ImageUploadProps) => {
   const {
     children,
     className,

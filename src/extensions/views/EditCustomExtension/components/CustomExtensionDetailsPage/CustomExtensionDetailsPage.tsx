@@ -54,7 +54,7 @@ export interface CustomExtensionDetailsPageProps {
   onAppDeleteOpen: () => void;
 }
 
-const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = props => {
+const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProps) => {
   const {
     disabled,
     errors,

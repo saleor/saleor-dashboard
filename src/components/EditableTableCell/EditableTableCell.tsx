@@ -47,7 +47,7 @@ interface EditableTableCellProps {
   onConfirm: (value: string) => any;
 }
 
-export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
+export const EditableTableCell = (props: EditableTableCellProps) => {
   const {
     className,
     defaultValue,

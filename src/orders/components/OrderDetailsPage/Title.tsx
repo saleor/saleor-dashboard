@@ -24,7 +24,7 @@ const useStyles = makeStyles(
   }),
   { name: "OrderDetailsTitle" },
 );
-const Title: React.FC<TitleProps> = props => {
+const Title = (props: TitleProps) => {
   const intl = useIntl();
   const classes = useStyles(props);
   const { order } = props;

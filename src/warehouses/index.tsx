@@ -32,7 +32,7 @@ const WarehouseDetails: React.FC<RouteComponentProps<{ id: string }>> = ({ locat
   return <WarehouseDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const WarehouseSection: React.FC = () => {
+export const WarehouseSection = () => {
   const intl = useIntl();
 
   return (

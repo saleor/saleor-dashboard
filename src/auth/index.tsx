@@ -35,7 +35,7 @@ export const UserContext = React.createContext<Context>({
   refetchUser: undefined,
 });
 
-const AuthRouter: React.FC = () => (
+const AuthRouter = () => (
   <Layout>
     <Switch>
       <Route path={passwordResetSuccessPath} component={ResetPasswordSuccess} />

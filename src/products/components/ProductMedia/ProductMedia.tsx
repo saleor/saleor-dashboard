@@ -66,7 +66,7 @@ interface ProductMediaProps {
 }
 
 /** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
-const ProductMedia: React.FC<ProductMediaProps> = props => {
+const ProductMedia = (props: ProductMediaProps) => {
   const {
     media,
     getImageEditUrl,

@@ -101,7 +101,7 @@ const useStyles = makeStyles(
   { name: "TranslationFields" },
 );
 const numberOfColumns = 2;
-const TranslationFields: React.FC<TranslationFieldsProps> = props => {
+const TranslationFields = (props: TranslationFieldsProps) => {
   const {
     activeField,
     disabled,

@@ -72,7 +72,7 @@ const useStyles = makeStyles(
     name: "Layout",
   },
 );
-const Layout: React.FC<{ children: ReactNode }> = props => {
+const Layout = (props: { children: ReactNode }) => {
   const { children } = props;
   const { errors } = useUser();
   const classes = useStyles(props);

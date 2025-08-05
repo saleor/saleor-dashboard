@@ -72,7 +72,7 @@ const useStyles = makeStyles(
 /**
  * @deprecated use [`TopNav.Menu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/AppLayout/TopNav/Menu.tsx) instead
  */
-const CardMenu: React.FC<CardMenuProps> = props => {
+const CardMenu = (props: CardMenuProps) => {
   const {
     className,
     disabled,

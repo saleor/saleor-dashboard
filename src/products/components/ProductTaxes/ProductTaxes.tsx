@@ -18,7 +18,7 @@ interface ProductTaxesProps {
   onFetchMore: FetchMoreProps;
 }
 
-const ProductTaxes: React.FC<ProductTaxesProps> = props => {
+const ProductTaxes = (props: ProductTaxesProps) => {
   const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const intl = useIntl();
 

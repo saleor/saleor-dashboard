@@ -57,7 +57,7 @@ const defaultSearchState: OrderCustomerSearchAddressState = {
   open: false,
   type: undefined,
 };
-const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
+const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialogProps) => {
   const {
     open: defaultOpen,
     variant,

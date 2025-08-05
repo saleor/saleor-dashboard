@@ -23,7 +23,7 @@ import { giftCardSettingsPageMessages as messages } from "./messages";
 import { GiftCardSettingsFormData } from "./types";
 import { getGiftCardSettingsInputData } from "./utils";
 
-const GiftCardSettingsPage: React.FC = () => {
+const GiftCardSettingsPage = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { data, loading } = useGiftCardSettingsQuery();

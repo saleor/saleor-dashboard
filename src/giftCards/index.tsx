@@ -35,7 +35,7 @@ const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
     </ConditionalGiftCardsFilterProver>
   );
 };
-const Component: React.FC = () => {
+const Component = () => {
   const intl = useIntl();
 
   return (

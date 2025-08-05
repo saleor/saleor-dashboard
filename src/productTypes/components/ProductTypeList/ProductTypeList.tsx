@@ -50,7 +50,7 @@ interface ProductTypeListProps
 }
 
 const numberOfColumns = 4;
-const ProductTypeList: React.FC<ProductTypeListProps> = props => {
+const ProductTypeList = (props: ProductTypeListProps) => {
   const { disabled, productTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
     props;
   const classes = useStyles(props);

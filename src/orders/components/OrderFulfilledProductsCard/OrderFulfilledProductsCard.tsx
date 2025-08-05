@@ -38,7 +38,7 @@ const fulfillmentLineToLine = ({
   // 'orderLine.quantity' has the total number of items in the order
   quantity,
 });
-const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
+const OrderFulfilledProductsCard = (props: OrderFulfilledProductsCardProps) => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,

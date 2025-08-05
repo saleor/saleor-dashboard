@@ -67,7 +67,7 @@ const RateUpdate: React.FC<
   );
 };
 
-export const ShippingRouter: React.FC = () => {
+export const ShippingRouter = () => {
   const intl = useIntl();
 
   return (

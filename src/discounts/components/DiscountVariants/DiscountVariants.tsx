@@ -28,7 +28,7 @@ export interface SaleVariantsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 5;
-const DiscountVariants: React.FC<SaleVariantsProps> = props => {
+const DiscountVariants = (props: SaleVariantsProps) => {
   const {
     variants: discountVariants,
     disabled,

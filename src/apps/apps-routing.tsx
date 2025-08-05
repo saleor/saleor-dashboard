@@ -33,7 +33,7 @@ const AppViewRoute: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) 
   <AppView id={decodeURIComponent(match.params.id)} />
 );
 /** @deprecated use /extensions view */
-const AppInstallRoute: React.FC<RouteComponentProps> = props => {
+const AppInstallRoute = (props: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppInstallUrlQueryParams = qs;
 

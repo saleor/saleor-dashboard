@@ -64,7 +64,7 @@ const ProductTypeUpdate: React.FC<RouteComponentProps<ProductTypeUpdateRoutePara
   return <ProductTypeUpdateComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const ProductTypeRouter: React.FC = () => {
+export const ProductTypeRouter = () => {
   const intl = useIntl();
 
   return (

@@ -48,7 +48,7 @@ const useStyles = makeStyles(
   { name: "MenuList" },
 );
 const numberOfColumns = 4;
-const MenuList: React.FC<MenuListProps> = props => {
+const MenuList = (props: MenuListProps) => {
   const {
     settings,
     disabled,

@@ -44,7 +44,7 @@ const AttributeDetails: React.FC<RouteComponentProps<{ id: string }>> = ({ locat
   return <AttributeDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const AttributeSection: React.FC = () => {
+export const AttributeSection = () => {
   const intl = useIntl();
 
   return (

@@ -13,7 +13,7 @@ interface NavigatorSearchSectionProps {
   offset: number;
 }
 
-const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
+const NavigatorSearchSection = (props: NavigatorSearchSectionProps) => {
   const { getItemProps, highlightedIndex, label, items, offset } = props;
 
   return (

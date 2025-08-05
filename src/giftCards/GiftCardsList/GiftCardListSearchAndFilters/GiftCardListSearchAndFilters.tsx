@@ -28,7 +28,7 @@ import {
   giftCardListSearchAndFiltersMessages as messages,
 } from "./messages";
 
-const GiftCardListSearchAndFilters: React.FC = () => {
+const GiftCardListSearchAndFilters = () => {
   const intl = useIntl();
   const [selectedChannel] = useLocalStorage("channel", "");
   const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");

@@ -41,7 +41,7 @@ export interface PageTypeDetailsPageProps {
   onSubmit: (data: PageTypeForm) => void;
 }
 
-const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
+const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   const {
     disabled,
     errors,

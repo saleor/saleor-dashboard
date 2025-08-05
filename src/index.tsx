@@ -110,7 +110,7 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App: React.FC = () => (
+const App = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <Router>
@@ -153,7 +153,7 @@ const App: React.FC = () => (
     </ApolloProvider>
   </SaleorProvider>
 );
-const Routes: React.FC = () => {
+const Routes = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();

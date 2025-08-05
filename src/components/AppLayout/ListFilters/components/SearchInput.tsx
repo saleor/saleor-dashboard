@@ -12,7 +12,7 @@ export interface SearchInputProps extends SearchPageProps {
   size?: MacawSearchInputProps["size"];
 }
 
-const SearchInput: React.FC<SearchInputProps> = props => {
+const SearchInput = (props: SearchInputProps) => {
   const { initialSearch, onSearchChange, placeholder, size = "small" } = props;
   const [search, setSearch] = React.useState(initialSearch);
 

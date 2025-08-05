@@ -212,7 +212,7 @@ const TranslationsMenuItem: React.FC<TranslationsEntityRouteProps> = ({ location
     />
   );
 };
-const TranslationsRouter: React.FC = () => {
+const TranslationsRouter = () => {
   const intl = useIntl();
 
   return (

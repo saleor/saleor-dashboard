@@ -48,7 +48,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   state?: LinkState;
 }
 
-const Link: React.FC<LinkProps> = props => {
+const Link = (props: LinkProps) => {
   const {
     className,
     children,
