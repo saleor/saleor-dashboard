@@ -64,22 +64,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
+          cache: 'pnpm'
 
       - name: Install deps
         run: pnpm install --frozen-lockfile
@@ -261,10 +253,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

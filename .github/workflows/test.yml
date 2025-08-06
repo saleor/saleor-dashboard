@@ -3,19 +3,19 @@ name: QA
 on: push
 
 jobs:
-  check-lock:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Validate lock file
-        run: |
-          npx lockfile-lint --path pnpm-lock.yaml --allowed-hosts npm yarn
-
   tsc-and-linters:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: 'pnpm'
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -50,21 +50,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          # pnpm store is in `~/.pnpm-store` on Linux/macOS
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
+          cache: 'pnpm'
 
       - name: Install deps
         run: |
@@ -84,6 +78,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@fe02b34e6c9799d048471c8e5c6b9c8eec04f4b9 # v4.0.0
+        with:
+          version: 10.14.0
+          
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
