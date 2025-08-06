@@ -4,10 +4,16 @@ import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Divider } from "@saleor/macaw-ui-next";
 import React from "react";
 
+import { OrderApps } from "./order-apps";
 import { OrderCustomer } from "./order-customer/order-customer";
 import { OrderHeader } from "./order-header";
+import { OrderInvoices } from "./order-invoices";
+import { OrderModel } from "./order-model";
+import { OrderCustomerNote } from "./order-notes";
 
 export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => {
+  const orderModel = new OrderModel(order);
+
   return (
     <>
       <DetailPageLayout backgroundColor="default2" padding={4}>
@@ -40,6 +46,20 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
             billingAddress={order.billingAddress}
           />
           <Divider />
+          {orderModel.shouldShowInvoiceList() && (
+            <>
+              <OrderInvoices invoices={order.invoices} />
+              <Divider />
+            </>
+          )}
+          {orderModel.shouldShowCustomerNote() && (
+            <>
+              <OrderCustomerNote note={order.customerNote} />
+              <Divider />
+            </>
+          )}
+          <Divider />
+          <OrderApps />
         </DetailPageLayout.RightSidebar>
       </DetailPageLayout>
     </>

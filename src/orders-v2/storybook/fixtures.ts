@@ -1,4 +1,5 @@
 import {
+  JobStatusEnum,
   MarkAsPaidStrategyEnum,
   OrderChargeStatusEnum,
   OrderDetailsFragment,
@@ -14,7 +15,8 @@ export const fulfilledOrderFixture = {
   created: "2023-10-01T12:00:00Z",
   isShippingRequired: true,
   canFinalize: false,
-  customerNote: "",
+  customerNote:
+    "This is a customer note. Lorem ipsum dolor sit amet. Consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   isPaid: true,
   paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
   shippingMethodName: "Standard Shipping",
@@ -188,7 +190,24 @@ export const fulfilledOrderFixture = {
     email: "customer@example.com",
   },
   shippingMethods: [],
-  invoices: [],
+  invoices: [
+    {
+      __typename: "Invoice",
+      id: "invoice-id-1",
+      number: "INV-0001",
+      status: JobStatusEnum.SUCCESS,
+      createdAt: "2023-10-01T12:00:00Z",
+      url: "https://example.com/invoice/1",
+    },
+    {
+      __typename: "Invoice",
+      id: "invoice-id-2",
+      number: "INV-0002",
+      status: JobStatusEnum.SUCCESS,
+      createdAt: "2023-10-02T12:00:00Z",
+      url: "https://example.com/invoice/2",
+    },
+  ],
   channel: {
     __typename: "Channel",
     id: "channel-id",
