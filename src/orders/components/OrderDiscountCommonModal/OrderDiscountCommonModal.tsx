@@ -80,7 +80,7 @@ export interface OrderDiscountCommonModalProps {
   removeStatus: ConfirmButtonTransitionState;
 }
 
-const OrderDiscountCommonModal = (props: OrderDiscountCommonModalProps) => ({
+const OrderDiscountCommonModal = ({
   maxPrice = { amount: 0, currency: "" },
   onConfirm,
   modalType,
@@ -89,7 +89,7 @@ const OrderDiscountCommonModal = (props: OrderDiscountCommonModalProps) => ({
   existingDiscount,
   confirmStatus,
   removeStatus,
-}) => {
+}: OrderDiscountCommonModalProps) => {
   const { currency, amount: maxAmount } = maxPrice;
   const getInitialDiscountValue = (calculationMode: DiscountValueTypeEnum) => {
     if (!existingDiscount?.value) {

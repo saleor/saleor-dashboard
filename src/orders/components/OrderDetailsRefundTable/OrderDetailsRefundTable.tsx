@@ -16,11 +16,11 @@ interface OrderDetailsRefundTableProps {
   onRefundAdd: () => void;
 }
 
-export const OrderDetailsRefundTable = (props: OrderDetailsRefundTableProps) => ({
+export const OrderDetailsRefundTable = ({
   orderId,
   order,
   onRefundAdd,
-}) => {
+}: OrderDetailsRefundTableProps) => {
   const intl = useIntl();
   const mergedRefunds = mergeRefunds(
     order.grantedRefunds ?? [],
