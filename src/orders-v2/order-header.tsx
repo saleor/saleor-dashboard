@@ -71,9 +71,7 @@ export const OrderHeader = ({ status, orderNumber, created, channel, ...props }:
                 },
                 {
                   channelNameLink: (
-                    <UnderlineLink href={channelUrl(channel.id)} size={2}>
-                      {channel.name}
-                    </UnderlineLink>
+                    <UnderlineLink to={channelUrl(channel.id)}>{channel.name}</UnderlineLink>
                   ),
                 },
               )}

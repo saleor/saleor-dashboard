@@ -26,10 +26,10 @@ export const OrderCustomerHeader = ({ userId, ...props }: Props) => {
       </Text>
       <Box display="flex" gap={4}>
         {/* TODO: add link to order list with filter by customer id */}
-        <UnderlineLink href={orderListUrl()} size={2}>
+        <UnderlineLink to={orderListUrl()}>
           {intl.formatMessage({ id: "4ABral", defaultMessage: "View orders" })}
         </UnderlineLink>
-        <UnderlineLink href={customerUrl(userId)} size={2}>
+        <UnderlineLink to={customerUrl(userId)}>
           {intl.formatMessage({ id: "yGGPTl", defaultMessage: "View profile" })}
         </UnderlineLink>
       </Box>
