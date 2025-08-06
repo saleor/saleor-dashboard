@@ -19,7 +19,7 @@ interface SummaryLineProps {
   className?: string;
 }
 
-const SummaryLine = (props: SummaryLineProps) => ({
+const SummaryLine = ({
   text,
   subText,
   negative,
@@ -28,7 +28,7 @@ const SummaryLine = (props: SummaryLineProps) => ({
   money,
   hideEmpty = false,
   className,
-}) => {
+}: SummaryLineProps) => {
   const classes = useSummaryLineStyles();
   const intl = useIntl();
 

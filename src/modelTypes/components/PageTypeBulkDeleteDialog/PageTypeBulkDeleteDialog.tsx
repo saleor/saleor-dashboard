@@ -12,14 +12,14 @@ export interface PageTypeBulkDeleteDialogProps {
   onConfirm: () => void;
 }
 
-const PageTypeBulkDeleteDialog = (props: PageTypeBulkDeleteDialogProps) => ({
+const PageTypeBulkDeleteDialog = ({
   confirmButtonState,
   open,
   quantity,
   hasPages,
   onClose,
   onConfirm,
-}) => {
+}: PageTypeBulkDeleteDialogProps) => {
   const intl = useIntl();
 
   return (

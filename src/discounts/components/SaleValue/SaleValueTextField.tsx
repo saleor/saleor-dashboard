@@ -15,14 +15,14 @@ interface SaleValueTextFieldProps {
   onChange: SaleValueInputOnChangeType;
 }
 
-const SaleValueTextField = (props: SaleValueTextFieldProps) => ({
+const SaleValueTextField = ({
   dataType,
   helperText,
   disabled,
   error,
   listing,
   onChange,
-}) => {
+}: SaleValueTextFieldProps) => {
   const intl = useIntl();
   const { id, percentageValue, fixedValue } = listing;
   const getTextFieldValue = (dataType: SaleType) =>

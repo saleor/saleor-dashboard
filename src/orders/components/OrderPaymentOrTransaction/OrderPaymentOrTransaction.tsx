@@ -19,7 +19,7 @@ export interface OrderPaymentOrTransactionProps {
   onRefundAdd: () => void;
 }
 
-export const OrderPaymentOrTransaction = (props: OrderPaymentOrTransactionProps) => ({
+export const OrderPaymentOrTransaction = ({
   order,
   shop,
   onTransactionAction,
@@ -29,7 +29,7 @@ export const OrderPaymentOrTransaction = (props: OrderPaymentOrTransactionProps)
   onMarkAsPaid,
   onAddManualTransaction,
   onRefundAdd,
-}) => {
+}: OrderPaymentOrTransactionProps) => {
   if (orderShouldUseTransactions(order)) {
     return (
       <OrderTransactionsWrapper

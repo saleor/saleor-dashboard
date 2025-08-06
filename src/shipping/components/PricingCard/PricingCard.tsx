@@ -30,12 +30,7 @@ export interface PricingCardProps {
 
 const numberOfColumns = 2;
 
-export const PricingCard = (props: PricingCardProps) => ({
-  channels,
-  disabled,
-  errors,
-  onChange,
-}) => {
+export const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price"], errors);
