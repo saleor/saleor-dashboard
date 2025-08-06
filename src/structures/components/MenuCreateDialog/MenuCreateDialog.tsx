@@ -27,14 +27,14 @@ export interface MenuCreateDialogProps {
 const initialForm: MenuCreateDialogFormData = {
   name: "",
 };
-const MenuCreateDialog = (props: MenuCreateDialogProps) => ({
+const MenuCreateDialog = ({
   confirmButtonState,
   disabled,
   errors,
   onClose,
   onConfirm,
   open,
-}) => {
+}: MenuCreateDialogProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

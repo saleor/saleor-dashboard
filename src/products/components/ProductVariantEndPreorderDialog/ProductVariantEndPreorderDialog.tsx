@@ -13,13 +13,13 @@ export interface ProductVariantEndPreorderDialogProps {
   variantGlobalSoldUnits?: number;
 }
 
-const ProductVariantEndPreorderDialog = (props: ProductVariantEndPreorderDialogProps) => ({
+const ProductVariantEndPreorderDialog = ({
   confirmButtonState,
   open,
   onClose,
   onConfirm,
   variantGlobalSoldUnits,
-}) => {
+}: ProductVariantEndPreorderDialogProps) => {
   const intl = useIntl();
 
   return (

@@ -23,14 +23,14 @@ export interface OrderWeightProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const OrderWeight = (props: OrderWeightProps) => ({
+export const OrderWeight = ({
   orderValueRestricted,
   disabled,
   errors,
   maxValue = "",
   minValue = "",
   onChange,
-}) => {
+}: OrderWeightProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const shop = useShop();

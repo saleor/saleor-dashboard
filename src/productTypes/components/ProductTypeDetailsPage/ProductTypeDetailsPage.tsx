@@ -71,7 +71,7 @@ export interface ProductTypeDetailsPageProps {
   onFetchMoreTaxClasses: FetchMoreProps;
 }
 
-const ProductTypeDetailsPage = (props: ProductTypeDetailsPageProps) => ({
+const ProductTypeDetailsPage = ({
   defaultWeightUnit,
   disabled,
   errors,
@@ -90,7 +90,7 @@ const ProductTypeDetailsPage = (props: ProductTypeDetailsPageProps) => ({
   setSelectedVariantAttributes,
   selectedVariantAttributes,
   onFetchMoreTaxClasses,
-}) => {
+}: ProductTypeDetailsPageProps) => {
   const navigate = useNavigator();
   const productTypeListBackLink = useBackLinkWithState({
     path: productTypeListPath,

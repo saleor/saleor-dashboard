@@ -14,13 +14,13 @@ interface ShippingWeightUnitDialogProps {
   disabled: boolean;
 }
 
-export const ShippingWeightUnitDialog = (props: ShippingWeightUnitDialogProps) => ({
+export const ShippingWeightUnitDialog = ({
   open,
   onSubmit,
   onClose,
   defaultWeightUnit,
   disabled,
-}) => {
+}: ShippingWeightUnitDialogProps) => {
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="sm">

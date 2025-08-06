@@ -53,7 +53,7 @@ const formInitialData: ProductTypeForm = {
   taxClassId: "",
   weight: 0,
 };
-const ProductTypeCreatePage = (props: ProductTypeCreatePageProps) => ({
+const ProductTypeCreatePage = ({
   defaultWeightUnit,
   disabled,
   errors,

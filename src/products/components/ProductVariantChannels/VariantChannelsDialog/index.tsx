@@ -19,13 +19,13 @@ interface VariantChannelsDialogProps {
   onConfirm: (selectedIds: string[]) => void;
 }
 
-export const VariantChannelsDialog = (props: VariantChannelsDialogProps) => ({
+export const VariantChannelsDialog = ({
   channelListings,
   selectedChannelListings,
   open,
   onClose,
   onConfirm,
-}) => {
+}: VariantChannelsDialogProps) => {
   const selectedOrDefaults = selectedChannelListings ?? channelListings;
   const allChannelsIds = channelListings.map(c => c.channel.id);
   const allChannels = channelListings.map(c => c.channel);

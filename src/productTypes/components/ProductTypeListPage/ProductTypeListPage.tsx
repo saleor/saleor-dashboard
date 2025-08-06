@@ -28,7 +28,7 @@ export interface ProductTypeListPageProps
   hasPresetsChanged: () => boolean;
 }
 
-const ProductTypeListPage = (props: ProductTypeListPageProps) => ({
+const ProductTypeListPage = ({
   currentTab,
   filterOpts,
   initialSearch,
@@ -43,7 +43,7 @@ const ProductTypeListPage = (props: ProductTypeListPageProps) => ({
   hasPresetsChanged,
   disabled,
   ...listProps
-}) => {
+}: ProductTypeListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);

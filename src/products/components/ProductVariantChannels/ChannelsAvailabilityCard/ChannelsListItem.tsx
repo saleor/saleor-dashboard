@@ -15,12 +15,7 @@ interface ChannelsListItemProps {
   publishedAt: string;
 }
 
-export const ChannelsListItem = (props: ChannelsListItemProps) => ({
-  id,
-  name,
-  isPublished,
-  publishedAt,
-}) => {
+export const ChannelsListItem = ({ id, name, isPublished, publishedAt }: ChannelsListItemProps) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const getItemSubtitle = () => {
