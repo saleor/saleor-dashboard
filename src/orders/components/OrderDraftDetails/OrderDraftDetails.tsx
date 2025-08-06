@@ -30,7 +30,7 @@ interface OrderDraftDetailsProps {
   onShowMetadata: (id: string) => void;
 }
 
-const OrderDraftDetails = (props: OrderDraftDetailsProps) => ({
+const OrderDraftDetails = ({
   order,
   channelUsabilityData,
   errors,
@@ -40,7 +40,7 @@ const OrderDraftDetails = (props: OrderDraftDetailsProps) => ({
   onOrderLineRemove,
   onShippingMethodEdit,
   onShowMetadata,
-}) => {
+}: OrderDraftDetailsProps) => {
   const intl = useIntl();
   const isChannelActive = order?.channel.isActive;
   const areProductsInChannel = !!channelUsabilityData?.products.totalCount;

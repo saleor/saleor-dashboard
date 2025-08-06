@@ -54,7 +54,7 @@ export interface PageListPageProps
   onPageCreate: () => void;
 }
 
-const PageListPage = (props: PageListPageProps) => ({
+const PageListPage = ({
   selectedFilterPreset,
   filterOpts,
   initialSearch,
@@ -73,7 +73,7 @@ const PageListPage = (props: PageListPageProps) => ({
   onPagesUnpublish,
   onPageCreate,
   ...listProps
-}) => {
+}: PageListPageProps) => {
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();

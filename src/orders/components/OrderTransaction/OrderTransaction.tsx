@@ -18,14 +18,14 @@ export interface OrderTransactionProps {
   disabled?: boolean;
 }
 
-const OrderTransaction = (props: OrderTransactionProps) => ({
+const OrderTransaction = ({
   transaction,
   fakeEvents,
   onTransactionAction,
   showActions,
   cardFooter,
   disabled = false,
-}) => {
+}: OrderTransactionProps) => {
   const events = getTransactionEvents(transaction, fakeEvents);
 
   return (
