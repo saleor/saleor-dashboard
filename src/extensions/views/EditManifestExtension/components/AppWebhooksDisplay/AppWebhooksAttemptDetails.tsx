@@ -7,9 +7,7 @@ interface AppWebhooksAttemptDetailsProps {
   attempt: EventDeliveryAttemptFragment;
 }
 
-export const AppWebhooksAttemptDetails = (props: AppWebhooksAttemptDetailsProps) => ({
-  attempt,
-}) => {
+export const AppWebhooksAttemptDetails = ({ attempt }: AppWebhooksAttemptDetailsProps) => {
   const { createdAt, status, responseStatusCode, response, id } = attempt;
 
   return (

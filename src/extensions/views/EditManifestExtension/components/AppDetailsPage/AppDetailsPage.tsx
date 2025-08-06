@@ -18,13 +18,13 @@ export interface AppDetailsPageProps {
   onAppDeleteOpen: () => void;
 }
 
-export const AppDetailsPage = (props: AppDetailsPageProps) => ({
+export const AppDetailsPage = ({
   data,
   loading,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
-}) => {
+}: AppDetailsPageProps) => {
   if (!data) {
     return null;
   }

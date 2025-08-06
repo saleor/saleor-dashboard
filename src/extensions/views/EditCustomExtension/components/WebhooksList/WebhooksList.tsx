@@ -25,12 +25,12 @@ export interface WebhooksListProps {
   hasManagedAppsPermission: boolean;
 }
 
-export const WebhooksList = (props: WebhooksListProps) => ({
+export const WebhooksList = ({
   webhooks,
   createHref,
   onRemove,
   hasManagedAppsPermission,
-}) => {
+}: WebhooksListProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
