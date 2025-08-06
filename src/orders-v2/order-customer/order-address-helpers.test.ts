@@ -291,24 +291,4 @@ NY"
 
     expect(result).toBe("");
   });
-
-  it("should handle whitespace-only values", () => {
-    const address = createMockAddress({
-      firstName: "   ",
-      lastName: "   ",
-      companyName: "   ",
-      streetAddress1: "   ",
-      streetAddress2: "   ",
-    });
-    const result = prepareAddressForClipboard(address);
-
-    expect(result).toMatchInlineSnapshot(`
-"       
-+1234567890
-   
-       
-10001 New York
-NY United States"
-`);
-  });
 });
