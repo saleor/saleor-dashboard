@@ -20,12 +20,12 @@ interface TaxCountryDialogProps {
   onClose: () => void;
 }
 
-export const TaxCountryDialog = (props: TaxCountryDialogProps) => ({
+export const TaxCountryDialog = ({
   open,
   countries,
   onConfirm,
   onClose,
-}) => {
+}: TaxCountryDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const [selectedCountry, setSelectedCountry] = React.useState<CountryFragment>();

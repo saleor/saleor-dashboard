@@ -34,7 +34,7 @@ export const fieldNames = {
   richTextValue: "attributeRichTextValue",
 };
 
-const TranslationsAttributesPage = (props: TranslationsAttributesPageProps) => ({
+const TranslationsAttributesPage = ({
   translationId,
   activeField,
   disabled,
@@ -47,7 +47,7 @@ const TranslationsAttributesPage = (props: TranslationsAttributesPageProps) => (
   onSubmit,
   settings,
   onUpdateListSettings,
-}) => {
+}: TranslationsAttributesPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const withChoices = data?.attribute?.withChoices;

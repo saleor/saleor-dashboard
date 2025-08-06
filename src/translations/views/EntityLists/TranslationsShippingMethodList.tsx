@@ -7,10 +7,7 @@ import React from "react";
 import { TranslationsEntityListProps } from "./types";
 import { mapTranslationsToEntities } from "./utils";
 
-const TranslationsShippingMethodList = (props: TranslationsEntityListProps) => ({
-  params,
-  variables,
-}) => {
+const TranslationsShippingMethodList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useShippingMethodTranslationsQuery({
     displayLoader: true,
     variables,

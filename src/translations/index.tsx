@@ -107,10 +107,7 @@ type TranslationsProductVariantProps = RouteComponentProps<{
   languageCode: string;
 }>;
 
-const TranslationsProductVariants = (props: TranslationsProductVariantProps) => ({
-  location,
-  match,
-}) => {
+const TranslationsProductVariants = ({ location, match }: TranslationsProductVariantProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsProductVariantsQueryParams = {
     activeField: qs.activeField as string,
@@ -181,10 +178,7 @@ const TranslationsAttributes = ({ location, match }: TranslationsEntityRouteProp
     />
   );
 };
-const TranslationsShippingMethod = (props: TranslationsEntityRouteProps) => ({
-  location,
-  match,
-}) => {
+const TranslationsShippingMethod = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsShippingMethodQueryParams = {
     activeField: qs.activeField as string,

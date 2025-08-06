@@ -8,10 +8,7 @@ import React from "react";
 
 import { TranslationsEntityListProps } from "./types";
 
-const TranslationsAttributeList = (props: TranslationsEntityListProps) => ({
-  params,
-  variables,
-}) => {
+const TranslationsAttributeList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useAttributeTranslationsQuery({
     displayLoader: true,
     variables,

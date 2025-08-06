@@ -25,7 +25,7 @@ export interface TranslationsCollectionsPageProps extends TranslationsEntitiesPa
   data: CollectionTranslationFragment;
 }
 
-const TranslationsCollectionsPage = (props: TranslationsCollectionsPageProps) => ({
+const TranslationsCollectionsPage = ({
   translationId,
   activeField,
   disabled,
@@ -36,7 +36,7 @@ const TranslationsCollectionsPage = (props: TranslationsCollectionsPageProps) =>
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsCollectionsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

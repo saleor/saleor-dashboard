@@ -26,11 +26,7 @@ export interface TranslationsCollectionsProps {
   params: TranslationsCollectionsQueryParams;
 }
 
-const TranslationsCollections = (props: TranslationsCollectionsProps) => ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsCollections = ({ id, languageCode, params }: TranslationsCollectionsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

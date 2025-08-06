@@ -9,10 +9,7 @@ import React from "react";
 import { TranslationsEntityListProps } from "./types";
 import { sumCompleted } from "./utils";
 
-const TranslationsCollectionList = (props: TranslationsEntityListProps) => ({
-  params,
-  variables,
-}) => {
+const TranslationsCollectionList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useCollectionTranslationsQuery({
     displayLoader: true,
     variables,

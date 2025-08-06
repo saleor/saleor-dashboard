@@ -27,11 +27,7 @@ export interface TranslationsMenuItemProps {
   params: TranslationsMenuItemQueryParams;
 }
 
-const TranslationsMenuItem = (props: TranslationsMenuItemProps) => ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsMenuItem = ({ id, languageCode, params }: TranslationsMenuItemProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

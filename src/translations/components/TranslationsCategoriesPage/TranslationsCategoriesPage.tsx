@@ -25,7 +25,7 @@ export interface TranslationsCategoriesPageProps extends TranslationsEntitiesPag
   data: CategoryTranslationFragment;
 }
 
-const TranslationsCategoriesPage = (props: TranslationsCategoriesPageProps) => ({
+const TranslationsCategoriesPage = ({
   translationId,
   activeField,
   disabled,
@@ -36,7 +36,7 @@ const TranslationsCategoriesPage = (props: TranslationsCategoriesPageProps) => (
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsCategoriesPageProps) => {
   const intl = useIntl();
 
   const navigate = useNavigator();

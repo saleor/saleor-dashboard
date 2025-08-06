@@ -14,12 +14,12 @@ export interface ProductContextSwitcherProps extends CutProps {
   onItemChange(id: string, type: "variant" | "main"): void;
 }
 
-export const ProductContextSwitcher = (props: ProductContextSwitcherProps) => ({
+export const ProductContextSwitcher = ({
   productId,
   selectedId,
   onItemChange,
   ...rest
-}) => {
+}: ProductContextSwitcherProps) => {
   const intl = useIntl();
   const { data } = useProductVariantListQuery({
     variables: { id: productId },

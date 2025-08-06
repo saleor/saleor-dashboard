@@ -22,7 +22,7 @@ interface TranslationFieldsRichProps {
   onSubmit: (data: OutputData) => SubmitPromise;
 }
 
-const TranslationFieldsRich = (props: TranslationFieldsRichProps) => ({
+const TranslationFieldsRich = ({
   disabled,
   edit,
   initial,
@@ -30,7 +30,7 @@ const TranslationFieldsRich = (props: TranslationFieldsRichProps) => ({
   resetKey,
   onDiscard,
   onSubmit,
-}) => {
+}: TranslationFieldsRichProps) => {
   const intl = useIntl();
   const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } =
     useRichTextSubmit(initial, onSubmit, disabled);

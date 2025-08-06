@@ -9,9 +9,7 @@ export interface TranslationsLanguageListPageProps {
   languages: LanguageFragment[];
 }
 
-const TranslationsLanguageListPage = (props: TranslationsLanguageListPageProps) => ({
-  languages,
-}) => {
+const TranslationsLanguageListPage = ({ languages }: TranslationsLanguageListPageProps) => {
   const intl = useIntl();
 
   return (

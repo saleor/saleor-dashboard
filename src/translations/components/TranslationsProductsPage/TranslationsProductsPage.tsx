@@ -31,7 +31,7 @@ export interface TranslationsProductsPageProps extends TranslationsEntitiesPageP
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsProductsPage = (props: TranslationsProductsPageProps) => ({
+const TranslationsProductsPage = ({
   translationId,
   productId,
   activeField,
@@ -44,7 +44,7 @@ const TranslationsProductsPage = (props: TranslationsProductsPageProps) => ({
   onEdit,
   onSubmit,
   onAttributeValueSubmit,
-}) => {
+}: TranslationsProductsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

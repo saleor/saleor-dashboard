@@ -17,14 +17,14 @@ interface TranslationFieldsShortProps {
   onSubmit: (data: string) => SubmitPromise<any[]>;
 }
 
-const TranslationFieldsShort = (props: TranslationFieldsShortProps) => ({
+const TranslationFieldsShort = ({
   disabled,
   edit,
   initial,
   saveButtonState,
   onDiscard,
   onSubmit,
-}) => {
+}: TranslationFieldsShortProps) => {
   const intl = useIntl();
 
   return edit ? (
