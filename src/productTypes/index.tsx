@@ -21,7 +21,7 @@ import ProductTypeCreateComponent from "./views/ProductTypeCreate";
 import ProductTypeListComponent from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
-const ProductTypeList = ({ ( }: {} => {
+const ProductTypeList = () => {
   const qs = parseQs(location.search, {
     ignoreQueryPrefix: true,
     // As a product types list still keeps ids to remove in query params,
@@ -42,9 +42,7 @@ interface ProductTypeCreateRouteParams {
   id: string;
 }
 
-const ProductTypeCreate = ({ ProductTypeCreateRouteParams }: RouteComponentProps<ProductTypeCreateRouteParams>) => ({
-  location,
-}) => {
+const ProductTypeCreate = ({ location }: RouteComponentProps<ProductTypeCreateRouteParams>) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductTypeAddUrlQueryParams = qs;
 
@@ -55,9 +53,7 @@ interface ProductTypeUpdateRouteParams {
   id: string;
 }
 
-const ProductTypeUpdate = ({ ProductTypeUpdateRouteParams }: RouteComponentProps<ProductTypeUpdateRouteParams>) => ({
-  match,
-}) => {
+const ProductTypeUpdate = ({ match }: RouteComponentProps<ProductTypeUpdateRouteParams>) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductTypeUrlQueryParams = qs;
 

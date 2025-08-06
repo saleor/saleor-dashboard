@@ -25,7 +25,7 @@ const WarehouseList = ({ location }: RouteComponentProps) => {
 
   return <WarehouseListComponent params={params} />;
 };
-const WarehouseDetails = ({ { id: string } }: RouteComponentProps<{ id: string }>) => ({ location, match }) => {
+const WarehouseDetails = ({ match, location }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: WarehouseUrlQueryParams = qs;
 

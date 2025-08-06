@@ -1,15 +1,11 @@
 import { Route } from "@dashboard/components/Router";
-import { parse as parseQs } from "qs";
 import React from "react";
-import { RouteComponentProps } from "react-router-dom";
 
-import { siteSettingsPath, SiteSettingsUrlQueryParams } from "./urls";
+import { siteSettingsPath } from "./urls";
 import SiteSettingsComponent from "./views/";
 
-const SiteSettings = ({ ( }: {} => {
-  const params: SiteSettingsUrlQueryParams = parseQs(location.search.slice(1));
-
-  return <SiteSettingsComponent params={params} />;
+const SiteSettings = () => {
+  return <SiteSettingsComponent />;
 };
 
 export const SiteSettingsSection = () => <Route path={siteSettingsPath} component={SiteSettings} />;

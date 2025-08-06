@@ -8,13 +8,13 @@ import { MenuListUrlQueryParams, MenuListUrlSortField, menuPath, structuresListP
 import MenuDetailsComponent from "./views/MenuDetails";
 import MenuListComponent from "./views/MenuList";
 
-const MenuList = ({ ( }: {} => {
+const MenuList = () => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: MenuListUrlQueryParams = asSortParams(qs, MenuListUrlSortField);
 
   return <MenuListComponent params={params} />;
 };
-const MenuDetails = ({ string }: } => {
+const MenuDetails = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
 
   return <MenuDetailsComponent id={decodeURIComponent(match.params.id)} params={qs} />;
