@@ -651,6 +651,9 @@
   "1Znp5B": {
     "string": "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used"
   },
+  "1gzck6": {
+    "string": "{firstName} {lastName}"
+  },
   "1lk/oS": {
     "context": "button",
     "string": "Add postal code range"
@@ -1009,6 +1012,9 @@
   },
   "49vo8t": {
     "string": "Quick search"
+  },
+  "4ABral": {
+    "string": "View orders"
   },
   "4C7I61": {
     "context": "sale Details delete button",
@@ -4079,6 +4085,9 @@
     "context": "customer details, header",
     "string": "{fullName} Details"
   },
+  "MpkCXQ": {
+    "string": "{type, select, shipping {Shipping Address} billing {Billing Address} other {}}"
+  },
   "MwfSVA": {
     "context": "input helper text",
     "string": "Customers can not add quantities to a single cart above the limit when value is provided."
@@ -4720,6 +4729,9 @@
   "QOm7+P": {
     "string": "Create new order"
   },
+  "QQT/md": {
+    "string": "{streetAddress1} {streetAddress2}"
+  },
   "QSnh4Y": {
     "context": "add button label",
     "string": "Add"
@@ -5322,6 +5334,9 @@
   "U9CIo7": {
     "context": "button",
     "string": "Save variant"
+  },
+  "U9rdJc": {
+    "string": "{countryArea} {country}"
   },
   "UBuKZ9": {
     "context": "searchbar placeholder",
@@ -7757,6 +7772,9 @@
     "context": "page header",
     "string": "Primary Address"
   },
+  "jLAXqy": {
+    "string": "{postalCode} {city}"
+  },
   "jMzyU8": {
     "context": "tax classes card header",
     "string": "Tax classes"
@@ -9878,6 +9896,9 @@
   "wDYozn": {
     "string": "App doesn't have any permissions granted."
   },
+  "wEQDC6": {
+    "string": "Edit"
+  },
   "wFVOKJ": {
     "string": "Go to warehouses"
   },
@@ -10152,6 +10173,9 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },
+  "yGGPTl": {
+    "string": "View profile"
+  },
   "yH56V+": {
     "string": "Ooops!..."
   },
@@ -10410,6 +10434,9 @@
   "zgqPGF": {
     "context": "attribute list",
     "string": "Attribute {name}"
+  },
+  "zgrORK": {
+    "string": "Customer details"
   },
   "zhnwl6": {
     "context": "save preset name",

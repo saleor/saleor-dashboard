@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-function useClipboard(): [boolean, (text: string) => void] {
+export function useClipboard(): [boolean, (text: string) => void] {
   const [copied, setCopyStatus] = useState(false);
   const timeout = useRef<null | number>(null);
   const clear = () => {
@@ -25,5 +25,3 @@ function useClipboard(): [boolean, (text: string) => void] {
 
   return [copied, copy];
 }
-
-export default useClipboard;
