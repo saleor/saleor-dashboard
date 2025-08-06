@@ -18,7 +18,7 @@ import ChannelCreateComponent from "./views/ChannelCreate";
 import ChannelDetailsComponent from "./views/ChannelDetails";
 import ChannelsListComponent from "./views/ChannelsList";
 
-const ChannelDetails = ({ any }: RouteComponentProps<any>) => ({ match }) => {
+const ChannelDetails = ({ match }: RouteComponentProps<any>) => {
   const params = parseQs(location.search.substr(1));
 
   return <ChannelDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
@@ -30,7 +30,7 @@ const ChannelsList = ({ location }: RouteComponentProps) => {
   return <ChannelsListComponent params={params} />;
 };
 
-export const ChannelsSection: ({ {} }) => () => {
+export const ChannelsSection = () => {
   const intl = useIntl();
 
   return (

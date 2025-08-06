@@ -37,7 +37,7 @@ import VoucherCreateViewComponent from "./views/VoucherCreate";
 import VoucherDetailsViewComponent from "./views/VoucherDetails";
 import VoucherListViewComponent from "./views/VoucherList";
 
-const SaleListView = ({ ( }: {} => {
+const SaleListView = () => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: SaleListUrlQueryParams = asSortParams(qs, SaleListUrlSortField);
   const { enabled } = useFlag("discounts_rules");
@@ -54,7 +54,7 @@ const SaleListView = ({ ( }: {} => {
 
   return <SaleListViewComponent params={params} />;
 };
-const SaleDetailsView = ({ string }: } => {
+const SaleDetailsView = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params = qs;
   const { enabled } = useFlag("discounts_rules");
@@ -76,7 +76,7 @@ const SaleCreateView = ({ location }: RouteComponentProps) => {
 
   return <SaleCreateViewComponent params={params} />;
 };
-const VoucherListView = ({ ( }: {} => {
+const VoucherListView = () => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: VoucherListUrlQueryParams = asSortParams(
     qs,
@@ -90,7 +90,7 @@ const VoucherListView = ({ ( }: {} => {
     </ConditionalVoucherFilterProvider>
   );
 };
-const VoucherDetailsView = ({ string }: } => {
+const VoucherDetailsView = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: VoucherUrlQueryParams = qs;
 
@@ -103,7 +103,7 @@ const VoucherCreateView = ({ location }: RouteComponentProps) => {
   return <VoucherCreateViewComponent params={params} />;
 };
 
-export const DiscountSection: ({ {} }) => () => {
+export const DiscountSection = () => {
   const intl = useIntl();
 
   return (
