@@ -81,7 +81,7 @@ export interface OrderDiscountCommonModalProps {
 }
 
 const OrderDiscountCommonModal = ({
-  maxPrice = { amount: 0, currency: "" },
+  maxPrice = { amount: 0, currency: "", __typename: "Money" },
   onConfirm,
   modalType,
   onClose,

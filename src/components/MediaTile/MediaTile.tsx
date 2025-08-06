@@ -125,7 +125,7 @@ const MediaTile = (props: MediaTileProps) => {
                 className={classes.controlButton}
                 onClick={onEdit}
               >
-                <EditIcon />
+                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               </IconButton>
             )}
             {onDelete && (
@@ -135,7 +135,7 @@ const MediaTile = (props: MediaTileProps) => {
                 className={classes.controlButton}
                 onClick={onDelete}
               >
-                <DeleteIcon />
+                <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               </IconButton>
             )}
           </div>

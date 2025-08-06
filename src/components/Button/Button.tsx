@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const _Button = React.forwardRef<HTMLButtonElement, any>(({ href, ...props }, ref) => {
   if (href && !isExternalURL(href)) {
+    // @ts-expect-error legacy macaw types
     return <MacawButton {...props} to={href} component={Link} ref={ref} />;
   }
 

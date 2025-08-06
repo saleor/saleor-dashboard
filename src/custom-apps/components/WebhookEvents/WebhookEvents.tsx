@@ -85,9 +85,11 @@ const WebhookEvents = ({
           </PageTabs>
 
           <Text fontSize={2} style={{ padding: "1rem 0" }}>
+            {/* @ts-expect-error legacy types */}
             <PageTabPanel show={tab === "sync"}>
               <FormattedMessage {...messages.synchronousDescription} />
             </PageTabPanel>
+            {/* @ts-expect-error legacy types */}
             <PageTabPanel show={tab === "async"}>
               <FormattedMessage {...messages.asynchronousDescription} />
             </PageTabPanel>
@@ -96,6 +98,7 @@ const WebhookEvents = ({
         <Hr />
         <Grid variant="uniform">
           <div className={classes.objectsWrapper}>
+            {/* @ts-expect-error legacy types */}
             <PageTabPanel show={true}>
               <List gridTemplate={["1fr 50px"]}>
                 <ListHeader>

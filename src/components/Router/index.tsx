@@ -14,5 +14,6 @@ export const history = createBrowserHistory({
 export const Route = Sentry.withSentryRouting(BaseRoute);
 
 export const Router = (props: RouterProps) => {
+  /* @ts-expect-error - old router */
   return <BaseRouter history={history}>{props.children}</BaseRouter>;
 };

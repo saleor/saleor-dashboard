@@ -135,7 +135,11 @@ const DiscountVariants = (props: SaleVariantsProps) => {
                           onVariantUnassign(variant.id);
                         }}
                       >
-                        <DeleteIcon color="primary" />
+                        <DeleteIcon
+                          color="primary"
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

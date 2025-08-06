@@ -3,7 +3,7 @@ import React from "react";
 
 const DeleteIconButton = ({ onClick }: IconButtonProps) => (
   <IconButton variant="secondary" onClick={onClick} data-test-id="button-delete-items">
-    <DeleteIcon />
+    <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
   </IconButton>
 );
 

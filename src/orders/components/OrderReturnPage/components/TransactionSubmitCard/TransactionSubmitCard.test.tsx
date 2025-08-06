@@ -9,6 +9,7 @@ import { TransactionSubmitCard } from "./TransactionSubmitCard";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // @ts-expect-error - legacy types
     <LegacyThemeProvider>
       <ThemeProvider>{children}</ThemeProvider>
     </LegacyThemeProvider>

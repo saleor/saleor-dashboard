@@ -184,12 +184,12 @@ function useOrderCustomerAddressesEditForm(
   };
 }
 
-const OrderCustomerAddressesEditForm = (props: OrderCustomerAddressesEditFormProps) => ({
+const OrderCustomerAddressesEditForm = ({
   children,
   initial,
   onSubmit,
   ...rest
-}) => {
+}: OrderCustomerAddressesEditFormProps) => {
   const props = useOrderCustomerAddressesEditForm(initial || {}, onSubmit, rest);
 
   return (

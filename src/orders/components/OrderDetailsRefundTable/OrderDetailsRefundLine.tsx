@@ -23,10 +23,7 @@ interface OrderDetailsRefundLineProps {
   orderId: string;
 }
 
-export const OrderDetailsRefundLine = (props: OrderDetailsRefundLineProps) => ({
-  refund,
-  orderId,
-}) => {
+export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLineProps) => {
   const isEditable = isRefundEditable(refund);
   const intl = useIntl();
   const { isOverflowing, elementRef } = useOverflowDetection<HTMLTableCellElement>();

@@ -11,7 +11,7 @@ const DeletableItem = ({ onDelete, id }: DeletableItemProps) => {
 
   return (
     <IconButton variant="secondary" onClick={handleDelete}>
-      <DeleteIcon />
+      <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
     </IconButton>
   );
 };

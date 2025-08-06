@@ -59,6 +59,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         variantsWithProductDataMock,
       ]}
     >
+      {/* @ts-expect-error legacy types */}
       <LegacyThemeProvider>
         <ThemeProvider>{children}</ThemeProvider>
       </LegacyThemeProvider>

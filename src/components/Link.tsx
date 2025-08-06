@@ -109,6 +109,7 @@ const Link = (props: LinkProps) => {
           {children}
         </RouterLink>
       ) : (
+        // @ts-expect-error - wrong types
         <Text as="a" href={disabled ? undefined : href} display="block" {...commonLinkProps}>
           {children}
         </Text>

@@ -111,9 +111,11 @@ const handleLegacyTheming = () => {
 handleLegacyTheming();
 
 const App = () => (
+  // @ts-expect-error legacy types
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <Router>
+        {/* @ts-expect-error legacy types */}
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
             <DateProvider>

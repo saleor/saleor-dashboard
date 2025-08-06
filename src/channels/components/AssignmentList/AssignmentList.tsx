@@ -52,6 +52,7 @@ const AssignmentList = (props: AssignmentListProps) => {
             <Skeleton className={classes.skeleton} />
           ) : (
             <>
+              {/* @ts-expect-error legacy types */}
               <SortableContainer
                 axis="xy"
                 lockAxis="xy"
@@ -64,6 +65,7 @@ const AssignmentList = (props: AssignmentListProps) => {
                     <Item
                       key={itemIndex}
                       index={itemIndex}
+                      // @ts-expect-error legacy types
                       item={item}
                       onDelete={removeItem}
                       sortable={!!reorderItem}

@@ -113,10 +113,10 @@ export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderP
   );
 };
 
-export const OrderLineDiscountConsumer = (props: OrderLineDiscountConsumerProps) => ({
+export const OrderLineDiscountConsumer = ({
   children,
   orderLineId,
-}) => (
+}: OrderLineDiscountConsumerProps) => (
   <OrderLineDiscountContext.Consumer>
     {(getValues: GetOrderLineDiscountContextConsumerProps) => children(getValues(orderLineId))}
   </OrderLineDiscountContext.Consumer>

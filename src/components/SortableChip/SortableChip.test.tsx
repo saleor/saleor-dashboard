@@ -6,6 +6,7 @@ import { SortableChip } from "./SortableChip";
 
 describe("SortableChip", () => {
   const renderWithRouter = (ui: React.ReactElement) => {
+    // @ts-expect-error - legacy types
     return render(<MemoryRouter>{ui}</MemoryRouter>);
   };
 

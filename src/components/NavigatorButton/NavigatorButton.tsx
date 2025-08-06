@@ -92,7 +92,7 @@ const NavigatorButton = ({ className, isMac, ...props }: NavigatorButtonProps) =
         {...props}
         ref={anchor}
       >
-        <NavigatorIcon />
+        <NavigatorIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
       </LayoutButton>
       <Popper open={helperVisibility} anchorEl={anchor.current} transition placement="bottom-start">
         {({ TransitionProps, placement }) => (

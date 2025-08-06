@@ -29,7 +29,7 @@ interface MatchParamsWebhookDetails {
   id?: string;
 }
 
-const CustomAppList = (props: RouteComponentProps) => () => {
+const CustomAppList = () => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomAppListUrlQueryParams = qs;
 
@@ -59,7 +59,7 @@ const CustomAppDetails = ({ match, token, onTokenClose }: CustomAppDetailsProps)
     />
   );
 };
-const CustomAppWebhookCreate = ({ MatchParams }: RouteComponentProps<MatchParams>) => ({ match }) => {
+const CustomAppWebhookCreate = ({ match }: RouteComponentProps<MatchParams>) => {
   const appId = match.params.appId;
 
   if (!appId) {
@@ -68,9 +68,7 @@ const CustomAppWebhookCreate = ({ MatchParams }: RouteComponentProps<MatchParams
 
   return <CustomAppWebhookCreateView appId={decodeURIComponent(appId)} />;
 };
-const CustomAppWebhookDetails = ({ MatchParamsWebhookDetails }: RouteComponentProps<MatchParamsWebhookDetails>) => ({
-  match,
-}) => {
+const CustomAppWebhookDetails = ({ match }: RouteComponentProps<MatchParamsWebhookDetails>) => {
   const id = match.params.id;
 
   if (!id) {

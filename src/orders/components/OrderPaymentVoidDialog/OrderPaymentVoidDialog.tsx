@@ -18,13 +18,13 @@ export interface OrderPaymentVoidDialogProps {
   onConfirm?: () => any;
 }
 
-const OrderPaymentVoidDialog = (props: OrderPaymentVoidDialogProps) => ({
+const OrderPaymentVoidDialog = ({
   confirmButtonState,
   errors,
   open,
   onConfirm,
   onClose,
-}) => {
+}: OrderPaymentVoidDialogProps) => {
   const intl = useIntl();
 
   return (

@@ -115,7 +115,10 @@ export const OrderChangeWarehouseDialog = ({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon />
+                      <SearchIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </InputAdornment>
                   ),
                 }}

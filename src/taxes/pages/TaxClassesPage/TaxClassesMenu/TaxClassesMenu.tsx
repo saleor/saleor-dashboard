@@ -20,12 +20,12 @@ interface TaxClassesMenuProps {
   onCreateNew: () => void;
 }
 
-export const TaxClassesMenu = (props: TaxClassesMenuProps) => ({
+export const TaxClassesMenu = ({
   taxClasses,
   selectedTaxClassId,
   onTaxClassDelete,
   onCreateNew,
-}) => {
+}: TaxClassesMenuProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const isCreatingNew = selectedTaxClassId === "new";

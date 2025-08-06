@@ -11,13 +11,13 @@ export interface UnassignMembersDialogProps {
   onClose: () => void;
 }
 
-const UnassignMembersDialog = (props: UnassignMembersDialogProps) => ({
+const UnassignMembersDialog = ({
   confirmButtonState,
   quantity,
   onClose,
   onConfirm,
   open,
-}) => {
+}: UnassignMembersDialogProps) => {
   const intl = useIntl();
 
   return (

@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 interface DateTimeFieldProps {
   onChange: (value: string) => void;
-  error?: string | React.ReactNode;
+  error?: string | React.ReactNode | undefined;
   setError?: () => void;
   futureDatesOnly?: boolean;
   value: string;

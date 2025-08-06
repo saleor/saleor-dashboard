@@ -21,6 +21,7 @@ const mockGiftCards = [
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // @ts-expect-error - legacy provider
     <BrowserRouter>
       <ThemeWrapper>
         <IntlProvider

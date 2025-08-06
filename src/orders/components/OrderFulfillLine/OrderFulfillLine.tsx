@@ -154,7 +154,7 @@ export const OrderFulfillLine = (props: OrderFulfillLineProps) => {
               <Text className={classes.warehouseButtonContentText}>
                 {lineFormWarehouse?.name ?? intl.formatMessage(messages.selectWarehouse)}
               </Text>
-              <ChevronIcon />
+              <ChevronIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
             </div>
           </IconButton>
         )}

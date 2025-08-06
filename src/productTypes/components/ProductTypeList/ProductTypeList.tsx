@@ -61,7 +61,7 @@ const ProductTypeList = ({
   toggleAll,
   toolbar,
 }: ProductTypeListProps) => {
-  const classes = useStyles(props);
+  const classes = useStyles();
   const location = useLocation();
 
   return (

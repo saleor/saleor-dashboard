@@ -35,6 +35,7 @@ const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
     },
     {
       wrapper: ({ children }) => (
+        // @ts-expect-error legacy types
         <MemoryRouter initialEntries={[{ pathname: "/" }]}>
           <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
         </MemoryRouter>

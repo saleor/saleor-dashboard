@@ -36,6 +36,7 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
+      {/* @ts-expect-error - legacy types */}
       <Helmet>
         <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
         <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
