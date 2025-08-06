@@ -25,11 +25,7 @@ export interface CustomAppListPageProps {
   onRemove: (id: string) => void;
 }
 
-const CustomAppListPage = (props: CustomAppListPageProps) => ({
-  appsList,
-  onRemove,
-  getCustomAppHref,
-}) => {
+const CustomAppListPage = ({ appsList, onRemove, getCustomAppHref }: CustomAppListPageProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
