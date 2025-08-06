@@ -37,12 +37,7 @@ interface RowNumberSelectProps {
   onChange: (value: number) => any;
 }
 
-const RowNumberSelect = (props: RowNumberSelectProps) => ({
-  className,
-  choices,
-  rowNumber,
-  onChange,
-}) => {
+const RowNumberSelect = ({ className, choices, rowNumber, onChange }: RowNumberSelectProps) => {
   const classes = useStyles({});
 
   return (

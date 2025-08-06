@@ -16,7 +16,7 @@ export interface AvatarProps {
   className?: string;
 }
 
-const Avatar = (props: AvatarProps) => ({
+const Avatar = ({
   children,
   alignRight,
   initials,
@@ -24,7 +24,7 @@ const Avatar = (props: AvatarProps) => ({
   avatarProps,
   badge,
   className,
-}) => {
+}: AvatarProps) => {
   const classes = useAvatarStyles();
 
   return (

@@ -83,7 +83,7 @@ export interface ChannelsAvailabilityContentProps {
   hasAllSelected: boolean;
 }
 
-export const ChannelsAvailabilityContentWrapper = (props: ChannelsAvailabilityContentProps) => ({
+export const ChannelsAvailabilityContentWrapper = ({
   contentType = "",
   toggleAll,
   toggleAllLabel,
@@ -92,7 +92,7 @@ export const ChannelsAvailabilityContentWrapper = (props: ChannelsAvailabilityCo
   query,
   onQueryChange,
   hasAllSelected,
-}) => {
+}: ChannelsAvailabilityContentProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({

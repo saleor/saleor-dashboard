@@ -10,12 +10,7 @@ interface DeleteButtonProps {
   testId?: string;
 }
 
-const DeleteButton = (props: DeleteButtonProps) => ({
-  onClick,
-  label,
-  testId,
-  disabled = false,
-}) => {
+const DeleteButton = ({ onClick, label, testId, disabled = false }: DeleteButtonProps) => {
   const intl = useIntl();
 
   return (

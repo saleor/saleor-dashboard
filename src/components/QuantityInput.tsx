@@ -14,7 +14,7 @@ interface QuantityInputProps extends InputProps {
   };
 }
 
-export const QuantityInput = (props: QuantityInputProps) => ({
+export const QuantityInput = ({
   disabled,
   className,
   value,
@@ -23,7 +23,7 @@ export const QuantityInput = (props: QuantityInputProps) => ({
   isError,
   labels,
   ...props
-}) => (
+}: QuantityInputProps) => (
   <Input
     {...props}
     disabled={disabled}

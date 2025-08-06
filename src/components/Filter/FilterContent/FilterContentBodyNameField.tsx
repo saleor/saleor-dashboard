@@ -22,10 +22,10 @@ export interface FilterContentBodyNameFieldProps<K extends string = string> {
   onFilterPropertyChange: FilterDispatchFunction<K>;
 }
 
-const FilterContentBodyNameField = (props: FilterContentBodyNameFieldProps) => ({
+const FilterContentBodyNameField = ({
   filter,
   onFilterPropertyChange,
-}) => {
+}: FilterContentBodyNameFieldProps) => {
   const classes = useStyles({});
 
   return (

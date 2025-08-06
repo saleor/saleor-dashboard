@@ -12,11 +12,11 @@ export type FilterTextFieldProps = FilterFieldBaseProps<
   currencySymbol: string | null;
 };
 
-const FilterTextField = (props: FilterTextFieldProps) => ({
+const FilterTextField = ({
   currencySymbol,
   filter,
   onFilterPropertyChange,
-}) => {
+}: FilterTextFieldProps) => {
   const classes = useStyles();
 
   return (

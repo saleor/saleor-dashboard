@@ -13,11 +13,11 @@ export type FilterRangeFieldProps = FilterFieldBaseProps<
   currencySymbol: string;
 };
 
-const FilterRangeField = (props: FilterRangeFieldProps) => ({
+const FilterRangeField = ({
   currencySymbol,
   filter,
   onFilterPropertyChange,
-}) => {
+}: FilterRangeFieldProps) => {
   const classes = useStyles();
 
   return (

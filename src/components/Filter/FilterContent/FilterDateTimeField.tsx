@@ -15,10 +15,10 @@ import {
 
 type FilterDateTimeFieldProps = FilterFieldBaseProps<string, FieldType.dateTime | FieldType.date>;
 
-export const FilterDateTimeField = (props: FilterDateTimeFieldProps) => ({
+export const FilterDateTimeField = ({
   filter,
   onFilterPropertyChange,
-}) => {
+}: FilterDateTimeFieldProps) => {
   const classes = useCommonStyles({});
   const isDateTime = filter.type === FieldType.dateTime;
   const isMultiple = filter.multiple;

@@ -11,9 +11,7 @@ interface PluginChannelConfigurationCellProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginChannelConfigurationCell = (props: PluginChannelConfigurationCellProps) => ({
-  plugin,
-}) => {
+const PluginChannelConfigurationCell = ({ plugin }: PluginChannelConfigurationCellProps) => {
   const message = isPluginGlobal(plugin.globalConfiguration)
     ? messages.globalLabel
     : messages.channelLabel;

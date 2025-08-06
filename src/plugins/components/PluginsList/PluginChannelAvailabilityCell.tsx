@@ -10,9 +10,7 @@ interface PluginChannelAvailabilityCellProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginChannelAvailabilityCell = (props: PluginChannelAvailabilityCellProps) => ({
-  plugin,
-}) => {
+const PluginChannelAvailabilityCell = ({ plugin }: PluginChannelAvailabilityCellProps) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const popupAnchor = useRef<HTMLTableCellElement>(null);
   const handleMouseOver = () => setIsPopupOpen(true);

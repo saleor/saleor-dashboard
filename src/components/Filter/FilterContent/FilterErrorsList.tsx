@@ -41,11 +41,11 @@ interface FilterErrorsListProps<T extends string = string> {
   errorMessages?: FilterErrorMessages<T>;
 }
 
-const FilterErrorsList = (props: FilterErrorsListProps) => ({
+const FilterErrorsList = ({
   filter: { dependencies },
   errors = [],
   errorMessages,
-}) => {
+}: FilterErrorsListProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const getErrorMessage = (code: string) => {

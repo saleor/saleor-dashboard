@@ -69,7 +69,7 @@ const TimelineAvatar = ({
   return null;
 };
 
-export const TimelineNote = (props: TimelineNoteProps) => ({
+export const TimelineNote = ({
   date,
   user,
   message,
@@ -79,7 +79,7 @@ export const TimelineNote = (props: TimelineNoteProps) => ({
   relatedId,
   onNoteUpdate,
   onNoteUpdateLoading,
-}) => {
+}: TimelineNoteProps) => {
   const userDisplayName = getUserName(user, true) ?? app?.name;
   const [showEdit, setShowEdit] = useState(false);
 
