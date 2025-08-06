@@ -1476,6 +1476,9 @@
     "context": "product field",
     "string": "Product Images"
   },
+  "7+Domh": {
+    "string": "Notes"
+  },
   "7+GBlj": {
     "string": "Error code {errorCode} {fieldError}"
   },
@@ -4546,6 +4549,9 @@
     "context": "order status",
     "string": "Partially fulfilled"
   },
+  "Pc+tM3": {
+    "string": "Generate"
+  },
   "PcPMjC": {
     "context": "order history message",
     "string": "Fulfillment awaits approval"
@@ -7338,9 +7344,15 @@
     "context": "dialog title",
     "string": "Edit Address"
   },
+  "gQtMz8": {
+    "string": "Generated {date}"
+  },
   "gRa/TS": {
     "context": "shipping zone",
     "string": "Name"
+  },
+  "gRiKLf": {
+    "string": "Apps"
   },
   "gSQ0Ge": {
     "string": "Variant {name} has been set as default."
