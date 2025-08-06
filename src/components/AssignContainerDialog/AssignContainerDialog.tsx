@@ -1,4 +1,4 @@
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -10,7 +10,6 @@ import React from "react";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
-import { ConfirmButton } from "../ConfirmButton";
 import { useStyles } from "./styles";
 
 export interface AssignContainerDialogFormData {

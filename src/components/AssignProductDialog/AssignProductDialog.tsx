@@ -113,7 +113,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
 
     setProductsDict(prev => ({
       ...prev,
-      [productId]: !prev[productId] ?? true,
+      [productId]: prev[productId] ? false : true,
     }));
   };
   const handleClose = () => {

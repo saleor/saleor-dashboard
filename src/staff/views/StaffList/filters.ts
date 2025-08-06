@@ -15,7 +15,7 @@ export const STAFF_FILTERS_KEY = "staffFilters";
 export function getFilterOpts(params: StaffListUrlFilters): StaffListFilterOpts {
   return {
     status: {
-      active: params?.status !== undefined ?? false,
+      active: params?.status !== undefined,
       value: params?.status ? findValueInEnum(params.status, StaffMemberStatus) : null,
     },
   };

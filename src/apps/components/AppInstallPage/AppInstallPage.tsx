@@ -120,7 +120,9 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
 
                   {!!data?.permissions?.length && (
                     <ul className={classes.permissionsContainer}>
-                      {data?.permissions?.map(perm => <li key={perm.code}>{perm.name}</li>)}
+                      {data?.permissions?.map(perm => (
+                        <li key={perm.code}>{perm.name}</li>
+                      ))}
                     </ul>
                   )}
                   <Hr className={classes.installSpacer} />

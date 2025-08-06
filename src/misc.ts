@@ -8,7 +8,14 @@ import {
   OrderStatusFilter,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
-import { Node, SlugNode } from "@dashboard/types";
+import {
+  MutationResultAdditionalProps,
+  Node,
+  PartialMutationProviderOutput,
+  SlugNode,
+  StatusType,
+  UserError,
+} from "@dashboard/types";
 import { ThemeType } from "@saleor/macaw-ui";
 import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
 import Fuse from "fuse.js";
@@ -28,12 +35,6 @@ import {
   orderStatusMessages,
   paymentStatusMessages,
 } from "./intl";
-import {
-  MutationResultAdditionalProps,
-  PartialMutationProviderOutput,
-  StatusType,
-  UserError,
-} from "./types";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
   { [K in Keys]-?: Required<Pick<T, K>> }[Keys];

@@ -24,7 +24,7 @@ export function getSingleChoices(values: AttributeValueFragment[]): Option[] {
 export const getRichTextData = (attribute: AttributeInput): OutputData => {
   const data = attribute.data.selectedValues?.[0]?.richText;
 
-  return data ? JSON.parse(data) : {};
+  return data ? JSON.parse(data) : { blocks: [] };
 };
 
 export function getFileChoice(attribute: AttributeInput): FileChoiceType {
