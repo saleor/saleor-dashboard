@@ -23,13 +23,7 @@ interface WebhookInfoProps {
   setValue: (data: Partial<WebhookFormData>) => void;
 }
 
-const WebhookInfo = (props: WebhookInfoProps) => ({
-  data,
-  disabled,
-  errors,
-  onChange,
-  setValue,
-}) => {
+const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: WebhookInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);

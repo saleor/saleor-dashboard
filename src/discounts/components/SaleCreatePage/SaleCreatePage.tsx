@@ -49,7 +49,7 @@ export interface SaleCreatePageProps {
   onSubmit: (data: FormData) => SubmitPromise<any[]>;
 }
 
-const SaleCreatePage = (props: SaleCreatePageProps) => ({
+const SaleCreatePage = ({
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -59,7 +59,7 @@ const SaleCreatePage = (props: SaleCreatePageProps) => ({
   openChannelsModal,
   saveButtonBarState,
   onBack,
-}) => {
+}: SaleCreatePageProps) => {
   const intl = useIntl();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: FormData = {
