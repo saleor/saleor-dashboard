@@ -21,7 +21,6 @@ const triggerChange = jest.fn();
 
 describe("useRichText", () => {
   it("properly informs RichTextEditor when data is ready to mount", () => {
-    // eslint-disable-next-line prefer-const
     let initial: string | undefined;
     let loading = true;
     const { result, rerender } = renderHook(() => useRichText({ initial, loading, triggerChange }));
@@ -35,7 +34,6 @@ describe("useRichText", () => {
     expect(result.current.isDirty).toBe(false);
   });
   it("returns undefined when JSON cannot be parsed", () => {
-    // eslint-disable-next-line prefer-const
     let initial: string | undefined;
     let loading = true;
     const { result, rerender } = renderHook(() => useRichText({ initial, loading, triggerChange }));
@@ -57,6 +55,7 @@ describe("useRichText", () => {
       destroy: jest.fn(),
       clear: jest.fn(),
       render: jest.fn(),
+      dangerouslyLowLevelInstance: {},
     };
     expect(await result.current.getValue()).toStrictEqual(fixtures.short);
     expect(saveFn).toHaveBeenCalled();

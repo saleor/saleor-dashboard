@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-/* eslint-disable @typescript-eslint/no-empty-function */
+
 import { OrderDetailsQuery } from "@dashboard/graphql";
 import {
   OrderDiscountContext,

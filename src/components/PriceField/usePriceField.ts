@@ -13,12 +13,12 @@ export function usePriceField(currency: string | undefined, onChange: FormChange
     const splitCharacter = findPriceSeparator(value);
     const [integerPart, decimalPart] = value.split(splitCharacter);
 
-    if (maxDecimalLength === 0 && decimalPart) {
+    if ((maxDecimalLength ?? 0) === 0 && decimalPart) {
       // This shouldn't happen - decimal character should be ignored
       value = integerPart;
     }
 
-    if (decimalPart?.length > maxDecimalLength) {
+    if (decimalPart?.length && maxDecimalLength && decimalPart.length > maxDecimalLength) {
       const shortenedDecimalPart = decimalPart.slice(0, maxDecimalLength);
 
       value = `${integerPart}${splitCharacter}${shortenedDecimalPart}`;
@@ -38,11 +38,14 @@ export function usePriceField(currency: string | undefined, onChange: FormChange
     }
 
     // ignore separator input when currency doesn't support decimal values
-    if (maxDecimalLength === 0 && SEPARATOR_CHARACTERS.some(separator => e.key === separator)) {
+    if (
+      (maxDecimalLength ?? 0) === 0 &&
+      SEPARATOR_CHARACTERS.some(separator => e.key === separator)
+    ) {
       e.preventDefault();
     }
   };
-  const step = 1 / Math.pow(10, maxDecimalLength);
+  const step = 1 / Math.pow(10, maxDecimalLength ?? 2);
 
   return {
     onChange: handleChange,

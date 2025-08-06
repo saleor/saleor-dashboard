@@ -37,7 +37,10 @@ export interface LinkState {
   from?: string;
 }
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+// Note: we need to skip the `dangerouslySetInnerHTML` prop from the `React.AnchorHTMLAttributes`
+// in order to match react-router-dom Link props
+interface LinkProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "dangerouslySetInnerHTML"> {
   href?: string;
   color?: "primary" | "secondary";
   inline?: boolean;
@@ -85,7 +88,7 @@ const Link: React.FC<LinkProps> = props => {
       onClick(event);
     },
     target,
-    rel: rel ?? (opensNewTab && isExternalURL(href)) ? "noopener noreferer" : "",
+    rel: (rel ?? (opensNewTab && isExternalURL(href))) ? "noopener noreferer" : "",
     ...linkProps,
   };
   const urlObject = new URL(href, window.location.origin);
