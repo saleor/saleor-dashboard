@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import OverflowTooltip from "@dashboard/components/OverflowTooltip";
-import useClipboard from "@dashboard/hooks/useClipboard";
+import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { commonMessages } from "@dashboard/intl";
 import { CheckIcon, CopyIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
