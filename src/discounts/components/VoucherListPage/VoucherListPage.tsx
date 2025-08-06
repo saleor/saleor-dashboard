@@ -42,7 +42,7 @@ export interface VoucherListPageProps
   onSelectVouchersIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const VoucherListPage = (props: VoucherListPageProps) => ({
+const VoucherListPage = ({
   filterOpts,
   initialSearch,
   onFilterChange,
@@ -59,7 +59,7 @@ const VoucherListPage = (props: VoucherListPageProps) => ({
   selectedVouchersIds,
   currencySymbol,
   ...listProps
-}) => {
+}: VoucherListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { enabled: isVoucherFiltersEnabled } = useFlag("new_filters");

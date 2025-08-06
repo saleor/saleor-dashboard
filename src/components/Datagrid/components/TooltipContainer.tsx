@@ -12,11 +12,7 @@ interface TooltipContainerProps {
   };
 }
 
-export const TooltipContainer = (props: TooltipContainerProps) => ({
-  title,
-  bounds,
-  clearTooltip,
-}) => {
+export const TooltipContainer = ({ title, bounds, clearTooltip }: TooltipContainerProps) => {
   if (!bounds || !title) {
     return null;
   }

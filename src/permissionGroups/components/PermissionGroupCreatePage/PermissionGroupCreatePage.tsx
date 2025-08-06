@@ -48,7 +48,7 @@ export interface PermissionGroupCreatePageProps {
   onSubmit: (data: PermissionGroupCreateFormData) => SubmitPromise;
 }
 
-export const PermissionGroupCreatePage = (props: PermissionGroupCreatePageProps) => ({
+export const PermissionGroupCreatePage = ({
   disabled,
   permissions,
   channels,
@@ -56,7 +56,7 @@ export const PermissionGroupCreatePage = (props: PermissionGroupCreatePageProps)
   saveButtonBarState,
   hasRestrictedChannels,
   errors,
-}) => {
+}: PermissionGroupCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const formErrors = getFormErrors(["addPermissions"], errors || []);

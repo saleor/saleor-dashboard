@@ -19,13 +19,13 @@ export interface ProductChannelsListingsDialogProps extends DialogProps {
   onConfirm: ProductChannelsListingDialogSubmit;
 }
 
-const ProductChannelsListingsDialog = (props: ProductChannelsListingsDialogProps) => ({
+const ProductChannelsListingsDialog = ({
   channels,
   data,
   open,
   onClose,
   onConfirm,
-}) => {
+}: ProductChannelsListingsDialogProps) => {
   const intl = useIntl();
   const [selected, setSelected] = useStateFromProps(
     data.channels.updateChannels?.map(listing => listing.channelId) ?? [],

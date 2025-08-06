@@ -57,7 +57,7 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesCreatePage = (props: ShippingZoneRatesCreatePageProps) => ({
+export const ShippingZoneRatesCreatePage = ({
   allChannelsCount,
   shippingChannels,
   channelErrors,
@@ -77,7 +77,7 @@ export const ShippingZoneRatesCreatePage = (props: ShippingZoneRatesCreatePagePr
   formId,
   taxClasses,
   fetchMoreTaxClasses,
-}) => {
+}: ShippingZoneRatesCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;

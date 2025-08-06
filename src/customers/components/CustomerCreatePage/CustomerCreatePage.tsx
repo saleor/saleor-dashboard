@@ -58,7 +58,7 @@ export interface CustomerCreatePageProps {
   onSubmit: (data: CustomerCreatePageSubmitData) => SubmitPromise;
 }
 
-const CustomerCreatePage = (props: CustomerCreatePageProps) => ({
+const CustomerCreatePage = ({
   countries,
   disabled,
   errors: apiErrors,

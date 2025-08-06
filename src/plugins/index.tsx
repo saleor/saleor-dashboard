@@ -20,13 +20,13 @@ import {
 import PluginsListComponent from "./views/PluginList";
 import PluginsDetailsComponent from "./views/PluginsDetails";
 
-const PluginList = ({ any }: RouteComponentProps<any>) => ({ location }) => {
+const PluginList = ({ location }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PluginListUrlQueryParams = asSortParams(qs, PluginListUrlSortField);
 
   return <PluginsListComponent params={params} />;
 };
-const PageDetails = ({ any }: RouteComponentProps<any>) => ({ match }) => {
+const PageDetails = ({ match }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1));
   const params: PluginUrlQueryParams = qs;
 

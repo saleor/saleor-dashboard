@@ -45,7 +45,7 @@ interface ProductVariantsProps {
   onRowClick: (id: string) => void;
 }
 
-export const ProductVariants = (props: ProductVariantsProps) => ({
+export const ProductVariants = ({
   channels,
   errors,
   variants,
@@ -55,7 +55,7 @@ export const ProductVariants = (props: ProductVariantsProps) => ({
   onAttributeValuesSearch,
   onChange,
   onRowClick,
-}) => {
+}: ProductVariantsProps) => {
   const intl = useIntl();
 
   // https://github.com/saleor/saleor-dashboard/issues/4165

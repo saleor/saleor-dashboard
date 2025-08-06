@@ -299,14 +299,14 @@ export function useProductUpdateForm(
   };
 }
 
-const ProductUpdateForm = (props: ProductUpdateFormProps) => ({
+const ProductUpdateForm = ({
   children,
   product,
   onSubmit,
   refetch,
   disabled,
   ...rest
-}) => {
+}: ProductUpdateFormProps) => {
   const { datagrid, richText, ...props } = useProductUpdateForm(
     product,
     onSubmit,

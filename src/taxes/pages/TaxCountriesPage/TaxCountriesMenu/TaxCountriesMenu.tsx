@@ -20,12 +20,12 @@ interface TaxCountriesMenuProps {
   onCountryAdd: () => void;
 }
 
-export const TaxCountriesMenu = (props: TaxCountriesMenuProps) => ({
+export const TaxCountriesMenu = ({
   configurations,
   selectedCountryId,
   onCountryDelete,
   onCountryAdd,
-}) => {
+}: TaxCountriesMenuProps) => {
   const classes = useStyles();
   const intl = useIntl();
 

@@ -52,7 +52,7 @@ export interface CustomerDetailsPageProps {
   onDelete: () => void;
 }
 
-const CustomerDetailsPage = (props: CustomerDetailsPageProps) => ({
+const CustomerDetailsPage = ({
   customerId,
   customer,
   disabled,

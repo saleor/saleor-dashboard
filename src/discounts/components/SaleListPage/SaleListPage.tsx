@@ -35,7 +35,7 @@ export interface SaleListPageProps
   onSelectSaleIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const SaleListPage = (props: SaleListPageProps) => ({
+const SaleListPage = ({
   filterOpts,
   initialSearch,
   onFilterChange,
@@ -52,7 +52,7 @@ const SaleListPage = (props: SaleListPageProps) => ({
   selectedFilterPreset,
   currencySymbol,
   ...listProps
-}) => {
+}: SaleListPageProps) => {
   const intl = useIntl();
   const location = useLocation();
   const navigation = useNavigator();

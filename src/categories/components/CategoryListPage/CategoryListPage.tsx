@@ -37,7 +37,7 @@ export interface CategoryTableProps
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
 }
 
-export const CategoryListPage = (props: CategoryTableProps) => ({
+export const CategoryListPage = ({
   categories,
   currentTab,
   disabled,
@@ -53,7 +53,7 @@ export const CategoryListPage = (props: CategoryTableProps) => ({
   onCategoriesDelete,
   selectedCategoriesIds,
   ...listProps
-}) => {
+}: CategoryTableProps) => {
   const navigate = useNavigator();
 
   const intl = useIntl();

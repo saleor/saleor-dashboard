@@ -62,7 +62,7 @@ const messages = defineMessages({
   },
 });
 
-export const Attributes = (props: AttributesProps) => ({
+export const Attributes = ({
   attributes,
   attributeValues,
   errors,
@@ -70,7 +70,7 @@ export const Attributes = (props: AttributesProps) => ({
   onAttributeSelectBlur,
   richTextGetters,
   ...props
-}) => {
+}: AttributesProps) => {
   const intl = useIntl();
 
   return (

@@ -35,7 +35,7 @@ export interface CustomerListPageProps
   onCustomersDelete: () => void;
 }
 
-const CustomerListPage = (props: CustomerListPageProps) => ({
+const CustomerListPage = ({
   selectedFilterPreset,
   filterOpts,
   initialSearch,
@@ -51,7 +51,7 @@ const CustomerListPage = (props: CustomerListPageProps) => ({
   hasPresetsChanged,
   onCustomersDelete,
   ...customerListProps
-}) => {
+}: CustomerListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const userPermissions = useUserPermissions();

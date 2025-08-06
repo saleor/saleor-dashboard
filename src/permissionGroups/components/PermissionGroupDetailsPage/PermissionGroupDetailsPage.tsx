@@ -68,7 +68,7 @@ export interface PermissonGroupDetailsPageProps
   onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
 
-export const PermissionGroupDetailsPage = (props: PermissonGroupDetailsPageProps) => ({
+export const PermissionGroupDetailsPage = ({
   disabled,
   errors,
   members,
@@ -81,7 +81,7 @@ export const PermissionGroupDetailsPage = (props: PermissonGroupDetailsPageProps
   channels,
   isUserAbleToEditChannels,
   ...listProps
-}) => {
+}: PermissonGroupDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const user = useUser();

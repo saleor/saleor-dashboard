@@ -135,7 +135,7 @@ interface ProductVariantPageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
-const ProductVariantPage = (props: ProductVariantPageProps) => ({
+const ProductVariantPage = ({
   productId,
   channels,
   channelErrors,
@@ -171,7 +171,7 @@ const ProductVariantPage = (props: ProductVariantPageProps) => ({
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
-}) => {
+}: ProductVariantPageProps) => {
   const intl = useIntl();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);

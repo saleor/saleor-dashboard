@@ -28,7 +28,7 @@ export interface ShippingZonesListPageProps
   onWeightUnitChange: () => void;
 }
 
-const ShippingZonesListPage = (props: ShippingZonesListPageProps) => ({
+const ShippingZonesListPage = ({
   defaultWeightUnit,
   disabled,
   onSubmit,
@@ -38,7 +38,7 @@ const ShippingZonesListPage = (props: ShippingZonesListPageProps) => ({
   onSearchChange,
   onWeightUnitChange,
   ...listProps
-}) => {
+}: ShippingZonesListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

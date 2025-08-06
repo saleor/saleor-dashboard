@@ -38,7 +38,7 @@ export interface DiscountListPageProps
   promotions: PromotionFragment[];
 }
 
-const DiscountListPage = (props: DiscountListPageProps) => ({
+const DiscountListPage = ({
   initialSearch,
   onSearchChange,
   onFilterPresetChange,
@@ -51,7 +51,7 @@ const DiscountListPage = (props: DiscountListPageProps) => ({
   selectedFilterPreset,
 
   ...listProps
-}) => {
+}: DiscountListPageProps) => {
   const intl = useIntl();
   const navigation = useNavigator();
   const location = useLocation();
