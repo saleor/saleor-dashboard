@@ -1,21 +1,32 @@
 import { customerUrl } from "@dashboard/customers/urls";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { orderListUrl } from "@dashboard/orders/urls";
+import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { UnderlineLink } from "../underline-link";
 
-export const OrderCustomerHeader = ({ userId }: { userId: string }) => {
+interface Props extends BoxProps {
+  userId: string;
+}
+
+export const OrderCustomerHeader = ({ userId, ...props }: Props) => {
   const intl = useIntl();
 
   return (
-    <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      flexWrap="wrap"
+      {...props}
+    >
       <Text size={5} fontWeight="medium">
         {intl.formatMessage({ id: "zgrORK", defaultMessage: "Customer details" })}
       </Text>
       <Box display="flex" gap={4}>
         {/* TODO: add link to order list with filter by customer id */}
-        <UnderlineLink href="/" size={2}>
+        <UnderlineLink href={orderListUrl()} size={2}>
           {intl.formatMessage({ id: "4ABral", defaultMessage: "View orders" })}
         </UnderlineLink>
         <UnderlineLink href={customerUrl(userId)} size={2}>

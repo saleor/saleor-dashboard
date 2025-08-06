@@ -1,6 +1,8 @@
 /** @type {import('jest').Config} */
 const config = {
   resetMocks: false,
+  // Disable prettier for formatting snapshots - current jest version is using prettier 2.x which is incompatible with our 3.x version. When migrating to vitest - don't forget to remove this line.
+  prettierPath: null,
   globals: {
     FLAGS_SERVICE_ENABLED: false,
     FLAGS: {},

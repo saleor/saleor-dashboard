@@ -1,14 +1,18 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import { ClipboardCopyIcon } from "../clipboard-copy-icon";
 
-export const OrderCustomerEmail = ({ userEmail }: { userEmail: string }) => {
+interface Props extends BoxProps {
+  userEmail: string;
+}
+
+export const OrderCustomerEmail = ({ userEmail, ...props }: Props) => {
   const [copied, copy] = useClipboard();
 
   return (
-    <Box display="flex" alignItems="center" gap={3}>
+    <Box display="flex" alignItems="center" gap={3} {...props}>
       <Text>{userEmail}</Text>
       <Button
         variant="tertiary"

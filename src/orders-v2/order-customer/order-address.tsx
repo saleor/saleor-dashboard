@@ -1,34 +1,23 @@
 import { AddressFragment } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { ClipboardCopyIcon } from "../clipboard-copy-icon";
+import { prepareAddressForClipboard } from "./order-address-helpers";
 
-const prepareAddressForClipboard = (address: AddressFragment) => {
-  return `
-    ${address.firstName} ${address.lastName}
-    ${address.phone}
-    ${address.companyName}
-    ${address.streetAddress1} ${address.streetAddress2}
-    ${address.postalCode} ${address.city}
-    ${address.countryArea} ${address.country.country}
-  `.trim();
-};
-
-export const OrderAddress = ({
-  address,
-  type,
-}: {
+interface Props extends BoxProps {
   address: AddressFragment;
   type: "shipping" | "billing";
-}) => {
+}
+
+export const OrderAddress = ({ address, type, ...props }: Props) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
 
   return (
-    <Box>
+    <Box {...props}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text color="default2">
           {intl.formatMessage(
@@ -40,7 +29,10 @@ export const OrderAddress = ({
             { type },
           )}
         </Text>
-        <Button variant="secondary">
+        <Button
+          variant="secondary"
+          onClick={() => alert("Edit functionality not implemented yet.")}
+        >
           {intl.formatMessage({
             defaultMessage: "Edit",
             id: "wEQDC6",

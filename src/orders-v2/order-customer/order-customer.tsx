@@ -26,10 +26,8 @@ export const OrderCustomer = ({
         {userId && <OrderCustomerHeader userId={userId} />}
         {userEmail && <OrderCustomerEmail userEmail={userEmail} />}
       </Box>
-      <Box gap={5} display="grid">
-        {shippingAddress && <OrderAddress type="shipping" address={shippingAddress} />}
-        {billingAddress && <OrderAddress type="billing" address={billingAddress} />}
-      </Box>
+      {shippingAddress && <OrderAddress type="shipping" address={shippingAddress} />}
+      {billingAddress && <OrderAddress type="billing" address={billingAddress} />}
     </Box>
   );
 };
