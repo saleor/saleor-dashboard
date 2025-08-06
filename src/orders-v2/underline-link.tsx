@@ -1,17 +1,27 @@
 import { Text, TextProps } from "@saleor/macaw-ui-next";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 
-interface Props extends TextProps {
-  href: string;
-  children: React.ReactNode;
+interface UnderlineLinkProps extends LinkProps {
+  textProps?: Omit<TextProps, "children">;
 }
 
-// TODO: move to MacawUI
-export const UnderlineLink = ({ href, children, ...props }: Props) => (
-  <Link to={href}>
-    <Text as="span" textDecoration="underline" {...props} data-macaw-ui-candidate>
-      {children}
-    </Text>
+export const UnderlineLink = ({ children, textProps, ...props }: UnderlineLinkProps) => (
+  <Link {...props}>
+    <UnderlineText {...textProps}>{children}</UnderlineText>
   </Link>
+);
+
+// TODO: move to MacawUI
+export const UnderlineText = ({ children, ...props }: TextProps) => (
+  <Text
+    as="span"
+    textDecoration="underline"
+    fontWeight="medium"
+    size={2}
+    data-macaw-ui-candidate
+    {...props}
+  >
+    {children}
+  </Text>
 );

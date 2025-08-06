@@ -64,7 +64,7 @@ export const DiscountList = ({ params }: DiscountListProps) => {
     variables: queryVariables,
   });
   const promotions: PromotionFragment[] = mapEdgesToItems(data?.promotions) ?? [];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [_, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: discountListUrl,
     getFilterQueryParam: () => 0,

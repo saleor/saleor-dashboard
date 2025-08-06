@@ -13,7 +13,7 @@ import {
   StockSettingsInput,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
-import useClipboard from "@dashboard/hooks/useClipboard";
+import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";

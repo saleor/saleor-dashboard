@@ -1,5 +1,5 @@
 name: 'Get Environment Variables'
-description: 'Retrieves environment variables for Cypress tests'
+description: 'Retrieves environment variables for end-to-end tests'
 
 inputs:
   version:
@@ -38,7 +38,7 @@ runs:
         REPO_TOKEN: ${{ inputs.repo_token }}
         TOKEN: ${{ inputs.token }}
       run: |
-        node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
+        node .github/workflows/testsHelpers/getEnvironmentVariables.js \
           --version ${{ inputs.version }} \
           --token "$TOKEN" \
           --repo_token "$REPO_TOKEN" \

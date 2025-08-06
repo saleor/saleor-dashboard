@@ -1,5 +1,6 @@
 import {
   getFilterOpts,
+  getFilterQueryParam,
   getFilterVariables,
   storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
@@ -32,7 +33,6 @@ import { useIntl } from "react-intl";
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import { attributeListUrl, AttributeListUrlDialog, AttributeListUrlQueryParams } from "../../urls";
-import { getFilterQueryParam } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface AttributeListProps {

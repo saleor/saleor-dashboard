@@ -56,9 +56,7 @@ In order to use this hook, you need to provide two/three things:
 Firstly, in the view file, we need to provide settings object which holds seleted columns IDs. We should use `useListSettings` hook for that.
 
 ```tsx
-const { updateListSettings, settings } = useListSettings(
-  ListViews.PRODUCT_LIST,
-);
+const { updateListSettings, settings } = useListSettings(ListViews.PRODUCT_LIST);
 
 // Translates columnIDs to api IDs
 const filteredColumnIds = settings.columns
@@ -207,9 +205,7 @@ Here is the adapter for the dynamic columns inside the category:
 
 ```tsx
 export const parseAttributesColumns = (
-  attributes: RelayToFlat<
-    SearchAvailableInGridAttributesQuery["availableInGrid"]
-  >,
+  attributes: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,
 ) =>

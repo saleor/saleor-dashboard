@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import useClipboard from "@dashboard/hooks/useClipboard";
+import { useClipboard } from "@dashboard/hooks/useClipboard";
 import CloseIcon from "@material-ui/icons/Close";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";

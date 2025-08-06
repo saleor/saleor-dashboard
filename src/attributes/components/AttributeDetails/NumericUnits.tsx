@@ -180,7 +180,7 @@ export const NumericUnits = ({
                 }))
               }
               value={unit as string}
-              options={(type && system ? unitChoices?.[system]?.[type] ?? [] : []) as Option[]}
+              options={(type && system ? (unitChoices?.[system]?.[type] ?? []) : []) as Option[]}
             />
           </Box>
         </Box>

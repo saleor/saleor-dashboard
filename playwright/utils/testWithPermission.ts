@@ -10,9 +10,9 @@ interface PermissionOptions {
 export const test = base.extend<PermissionOptions>({
   permissionName: ["admin", { option: true }],
 
-  storageState: async ({ permissionName }, use) => {
+  storageState: async ({ permissionName }, loadStorage) => {
     const storageStatePath = await getStorageState(permissionName);
 
-    await use(storageStatePath);
+    await loadStorage(storageStatePath);
   },
 });

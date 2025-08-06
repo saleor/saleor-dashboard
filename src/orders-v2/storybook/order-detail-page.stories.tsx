@@ -1,3 +1,4 @@
+import { OrderStatus } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import React from "react";
 
@@ -24,5 +25,14 @@ type Story = StoryObj<typeof meta>;
 export const Fulfilled: Story = {
   args: {
     order: fulfilledOrderFixture,
+  },
+};
+
+export const Unconfirmed: Story = {
+  args: {
+    order: {
+      ...fulfilledOrderFixture,
+      status: OrderStatus.UNCONFIRMED,
+    },
   },
 };
