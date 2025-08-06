@@ -89,15 +89,11 @@ jobs:
         env:
           VERSION: "${{inputs.VERSION}}"
         with:
+          # TODO: This needs to be removed entirely once we refactor this workflow
+          # to not require this step
           result-encoding: string
           script: |
-            const { VERSION } = process.env
-            const versionWithoutDot = VERSION.replaceAll(/\./g, "")
-            if(versionWithoutDot >= 319){
-              return "Playwright-tests"
-            }else{
-              return "Cypress-tests"
-            }
+            return "Playwright-tests"
 
       - name: Create check if release PR exists
         id: create-check
@@ -159,59 +155,6 @@ jobs:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
-  run-cy-tests:
-    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
-    needs: add-check-and-prepare-instance
-    runs-on: ubuntu-22.04
-    timeout-minutes: 30
-    container:
-      image: cypress/browsers:node18.12.0-chrome106-ff106
-      options: --user 1001
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1, 2, 3, 4, 5, 6]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
-
-      - name: Set tag for tests
-        id: set-tag-for-tests
-        uses: actions/github-script@v6
-        env:
-          is_old_version: ${{ needs.add-check-and-prepare-instance.outputs.IS_OLD_VERSION }}
-        with:
-          result-encoding: string
-          script: |
-            const { is_old_version } = process.env
-            if(is_old_version == "true"){
-              return "@oldRelease"
-            }else{
-              return "@stable"
-            }
-
-      - name: Cypress run
-        id: cypress-run
-        uses: ./.github/actions/e2e
-        continue-on-error: true
-        with:
-          apiUrl: ${{ needs.add-check-and-prepare-instance.outputs.API_URL }}
-          appMountUri: ${{ secrets.APP_MOUNT_URI }}
-          baseUrl: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
-          userName: ${{ secrets.CYPRESS_USER_NAME }}
-          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
-          stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
-          stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          cypressGrepTags: ${{steps.set-tag-for-tests.outputs.result}}
-          split: ${{ strategy.job-total }}
-          splitIndex: ${{ strategy.job-index }}
-          commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
-          install: false
-          browser: "electron"
 
   run-pw-tests:
     runs-on: ubuntu-22.04
@@ -252,7 +195,7 @@ jobs:
   tests-complete:
     if: |
       !cancelled() && always()
-    needs: ["add-check-and-prepare-instance", "run-cy-tests", "run-pw-tests"]
+    needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     outputs:
@@ -274,10 +217,6 @@ jobs:
         uses: ./.github/actions/merge-pw-reports
         with:
           PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
-
-      - name: Merge cypress reports
-        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
-        uses: ./.github/actions/combineReportsFromE2E
 
       - name: Load secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
