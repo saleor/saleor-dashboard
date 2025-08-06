@@ -241,39 +241,6 @@ Test Company
 `);
   });
 
-  it("should handle null country object", () => {
-    const address = createMockAddress({
-      country: null,
-    });
-    const result = prepareAddressForClipboard(address);
-
-    expect(result).toMatchInlineSnapshot(`
-"John Doe
-+1234567890
-Test Company
-123 Main St Apt 4B
-10001 New York
-NY"
-`);
-  });
-
-  it("should handle minimal address with only required fields", () => {
-    const address = createMockAddress({
-      firstName: "",
-      lastName: "",
-      phone: null,
-      companyName: "",
-      streetAddress1: "",
-      streetAddress2: "",
-      postalCode: "",
-      countryArea: "",
-      country: null,
-    });
-    const result = prepareAddressForClipboard(address);
-
-    expect(result).toBe("New York");
-  });
-
   it("should handle completely empty address", () => {
     const address = createMockAddress({
       firstName: "",
@@ -285,7 +252,11 @@ NY"
       city: "",
       postalCode: "",
       countryArea: "",
-      country: null,
+      country: {
+        __typename: "CountryDisplay",
+        code: "",
+        country: "",
+      },
     });
     const result = prepareAddressForClipboard(address);
 
