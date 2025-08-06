@@ -63,9 +63,6 @@
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7"
   },
-  "overrides": {
-    "resolve": "1.20.0"
-  },
   "dependencies": {
     "@apollo/client": "3.4.17",
     "@dnd-kit/core": "^6.3.1",
@@ -212,7 +209,6 @@
     "vite": "^6.2.2",
     "vite-plugin-html": "^3.2.2"
   },
-  "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed",
   "optionalDependencies": {
     "@swc/core-darwin-arm64": "1.3.40",
     "@swc/core-darwin-x64": "1.3.40",
@@ -250,5 +246,6 @@
   "engines": {
     "node": "^18 || ^20",
     "npm": ">=7"
-  }
+  },
+  "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed"
 }
