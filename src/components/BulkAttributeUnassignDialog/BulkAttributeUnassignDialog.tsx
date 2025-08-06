@@ -15,7 +15,7 @@ export interface BulkAttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const BulkAttributeUnassignDialog = (props: BulkAttributeUnassignDialogProps) => ({
+const BulkAttributeUnassignDialog = ({
   title,
   attributeQuantity,
   confirmButtonState,
@@ -23,7 +23,7 @@ const BulkAttributeUnassignDialog = (props: BulkAttributeUnassignDialogProps) =>
   itemTypeName,
   onClose,
   onConfirm,
-}) => {
+}: BulkAttributeUnassignDialogProps) => {
   const intl = useIntl();
 
   return (

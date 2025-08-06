@@ -15,7 +15,7 @@ export interface AttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const AttributeUnassignDialog = (props: AttributeUnassignDialogProps) => ({
+const AttributeUnassignDialog = ({
   title,
   attributeName,
   confirmButtonState,
@@ -23,7 +23,7 @@ const AttributeUnassignDialog = (props: AttributeUnassignDialogProps) => ({
   itemTypeName,
   onClose,
   onConfirm,
-}) => {
+}: AttributeUnassignDialogProps) => {
   const intl = useIntl();
 
   return (

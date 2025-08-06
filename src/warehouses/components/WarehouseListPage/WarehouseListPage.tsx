@@ -31,7 +31,7 @@ export interface WarehouseListPageProps
   hasPresetsChanged: () => boolean;
 }
 
-export const WarehouseListPage = (props: WarehouseListPageProps) => ({
+export const WarehouseListPage = ({
   warehouses,
   currentTab,
   disabled,
@@ -49,7 +49,7 @@ export const WarehouseListPage = (props: WarehouseListPageProps) => ({
   hasPresetsChanged,
   onUpdateListSettings,
   ...listProps
-}) => {
+}: WarehouseListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
