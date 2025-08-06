@@ -11,13 +11,13 @@ export interface AttributeBulkDeleteDialogProps {
   onClose: () => void;
 }
 
-const AttributeBulkDeleteDialog = (props: AttributeBulkDeleteDialogProps) => ({
+const AttributeBulkDeleteDialog = ({
   confirmButtonState,
   quantity,
   onClose,
   onConfirm,
   open,
-}) => {
+}: AttributeBulkDeleteDialogProps) => {
   const intl = useIntl();
 
   return (

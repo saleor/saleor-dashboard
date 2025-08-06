@@ -27,7 +27,7 @@ export interface AttributeListPageProps
   onSelectAttributesIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const AttributeListPage = (props: AttributeListPageProps) => ({
+const AttributeListPage = ({
   filterOpts,
   initialSearch,
   onFilterChange,
@@ -44,7 +44,7 @@ const AttributeListPage = (props: AttributeListPageProps) => ({
   selectedAttributesIds,
   currencySymbol,
   ...listProps
-}) => {
+}: AttributeListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);

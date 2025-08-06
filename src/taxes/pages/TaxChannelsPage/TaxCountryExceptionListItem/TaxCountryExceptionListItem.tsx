@@ -21,14 +21,14 @@ interface TaxCountryExceptionListItemProps {
   strategyChoicesLoading: boolean;
 }
 
-export const TaxCountryExceptionListItem = (props: TaxCountryExceptionListItemProps) => ({
+export const TaxCountryExceptionListItem = ({
   country,
   onDelete,
   onChange,
   strategyChoices,
   divider = true,
   strategyChoicesLoading,
-}) => {
+}: TaxCountryExceptionListItemProps) => {
   const classes = useStyles();
 
   return (

@@ -38,14 +38,14 @@ interface NumericUnitsProps
   disabled: boolean;
 }
 
-export const NumericUnits = (props: NumericUnitsProps) => ({
+export const NumericUnits = ({
   data,
   disabled,
   errors,
   set,
   setError,
   clearErrors,
-}) => {
+}: NumericUnitsProps) => {
   const { formatMessage } = useIntl();
   const classes = useStyles();
   const [unitData, setUnitData] = useState<UnitData>({

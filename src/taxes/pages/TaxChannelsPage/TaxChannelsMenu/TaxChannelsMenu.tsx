@@ -17,10 +17,10 @@ interface TaxChannelsMenuProps {
   selectedConfigurationId: string;
 }
 
-export const TaxChannelsMenu = (props: TaxChannelsMenuProps) => ({
+export const TaxChannelsMenu = ({
   configurations,
   selectedConfigurationId,
-}) => {
+}: TaxChannelsMenuProps) => {
   const classes = useStyles();
 
   return (

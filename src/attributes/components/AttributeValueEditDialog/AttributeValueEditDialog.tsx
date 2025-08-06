@@ -26,7 +26,7 @@ export interface AttributeValueEditDialogProps {
   inputType?: AttributeInputTypeEnum;
 }
 
-const AttributeValueEditDialog = (props: AttributeValueEditDialogProps) => ({
+const AttributeValueEditDialog = ({
   attributeValue,
   confirmButtonState,
   disabled,
@@ -35,7 +35,7 @@ const AttributeValueEditDialog = (props: AttributeValueEditDialogProps) => ({
   onSubmit,
   open,
   inputType,
-}) => {
+}: AttributeValueEditDialogProps) => {
   const intl = useIntl();
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
   const attributeValueFields = getAttributeValueFields(attributeValue, isSwatch);
