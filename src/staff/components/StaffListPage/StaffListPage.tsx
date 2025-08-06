@@ -29,7 +29,7 @@ export interface StaffListPageProps
   onAdd: () => void;
 }
 
-const StaffListPage = (props: StaffListPageProps) => ({
+const StaffListPage = ({
   filterOpts,
   initialSearch,
   limits,
@@ -46,7 +46,7 @@ const StaffListPage = (props: StaffListPageProps) => ({
   onFilterPresetUpdate,
   onFilterPresetsAll,
   ...listProps
-}) => {
+}: StaffListPageProps) => {
   const subtitle = useContextualLink("staff_members");
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);

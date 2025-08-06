@@ -57,7 +57,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   onImageUpload: (file: File) => any;
 }
 
-const StaffDetailsPage = (props: StaffDetailsPageProps) => ({
+const StaffDetailsPage = ({
   availablePermissionGroups,
   canEditAvatar,
   canEditPreferences,

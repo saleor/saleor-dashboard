@@ -18,10 +18,10 @@ export interface OrderManualTransactionFormProps {
   initialData?: Partial<OrderManualTransactionSubmitVariables>;
 }
 
-export const OrderManualTransactionForm = (props: OrderManualTransactionFormProps) => ({
+export const OrderManualTransactionForm = ({
   children,
   ...props
-}) => {
+}: OrderManualTransactionFormProps & { children: React.ReactNode }) => {
   const { submitState, initialData } = props;
   const hookData = useManualRefund({ submitState, initialData });
 
