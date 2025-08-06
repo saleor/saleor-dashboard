@@ -22,8 +22,7 @@ const useStyles = makeStyles(
     name: "SearchInput",
   },
 );
-const SearchInput = (props: SearchInputProps) => {
-  const { initialSearch, onSearchChange, placeholder } = props;
+const SearchInput = ({ initialSearch, onSearchChange, placeholder }: SearchInputProps) => {
   const classes = useStyles(props);
   const [search, setSearch] = React.useState(initialSearch);
 

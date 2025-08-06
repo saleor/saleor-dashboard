@@ -50,9 +50,17 @@ interface ProductTypeListProps
 }
 
 const numberOfColumns = 4;
-const ProductTypeList = (props: ProductTypeListProps) => {
-  const { disabled, productTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
-    props;
+const ProductTypeList = ({
+  disabled,
+  productTypes,
+  onSort,
+  isChecked,
+  selected,
+  sort,
+  toggle,
+  toggleAll,
+  toolbar,
+}: ProductTypeListProps) => {
   const classes = useStyles(props);
   const location = useLocation();
 

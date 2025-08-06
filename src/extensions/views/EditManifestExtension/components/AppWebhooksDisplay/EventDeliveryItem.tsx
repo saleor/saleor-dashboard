@@ -18,14 +18,14 @@ interface EventDeliveryItemProps {
 
 const MAX_ATTEMPTS = 6;
 
-export const EventDeliveryItem = (props: EventDeliveryItemProps) => ({
+export const EventDeliveryItem = ({
   createdAt,
   status,
   attemptsCount,
   attempts,
   hasMore,
   deliveryId,
-}) => {
+}: EventDeliveryItemProps) => {
   const intl = useIntl();
 
   return (

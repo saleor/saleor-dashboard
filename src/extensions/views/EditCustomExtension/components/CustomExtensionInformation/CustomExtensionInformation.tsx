@@ -17,12 +17,12 @@ export interface CustomExtensionInfoProps {
   onChange: FormChange;
 }
 
-const CustomExtensionInformation = (props: CustomExtensionInfoProps) => ({
+const CustomExtensionInformation = ({
   data,
   disabled,
   errors,
   onChange,
-}) => {
+}: CustomExtensionInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

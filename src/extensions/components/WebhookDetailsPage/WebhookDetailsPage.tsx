@@ -54,7 +54,7 @@ export interface WebhookDetailsPageProps {
   availableEvents: IntrospectionNode[];
 }
 
-const WebhookDetailsPage = (props: WebhookDetailsPageProps) => ({
+const WebhookDetailsPage = ({
   appId,
   disabled,
   errors,
@@ -62,7 +62,7 @@ const WebhookDetailsPage = (props: WebhookDetailsPageProps) => ({
   saveButtonBarState,
   onSubmit,
   availableEvents,
-}) => {
+}: WebhookDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
