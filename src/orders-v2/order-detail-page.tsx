@@ -58,7 +58,6 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
               <Divider />
             </>
           )}
-          <Divider />
           <OrderApps />
         </DetailPageLayout.RightSidebar>
       </DetailPageLayout>
