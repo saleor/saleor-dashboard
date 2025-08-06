@@ -24,7 +24,7 @@ export interface OrderRefundTransactionDatagridError {
   lineId: string;
 }
 
-export const OrderTransactionRefundTable = (props: OrderTransactionRefundTableProps) => ({
+export const OrderTransactionRefundTable = ({
   order,
   draftRefund,
   control,
@@ -33,7 +33,7 @@ export const OrderTransactionRefundTable = (props: OrderTransactionRefundTablePr
   linesToRefund,
   refundFields,
   refundFieldsUpdate,
-}) => {
+}: OrderTransactionRefundTableProps) => {
   return (
     <GridTable height="100%" paddingX={6}>
       <GridTable.Colgroup>

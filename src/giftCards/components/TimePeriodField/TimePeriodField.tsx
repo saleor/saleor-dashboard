@@ -16,7 +16,7 @@ interface TimePeriodFieldProps {
   isError?: boolean;
 }
 
-const TimePeriodField = (props: TimePeriodFieldProps) => ({
+const TimePeriodField = ({
   change,
   periodAmount,
   periodType,
@@ -24,7 +24,7 @@ const TimePeriodField = (props: TimePeriodFieldProps) => ({
   typeFieldName,
   helperText,
   isError,
-}) => {
+}: TimePeriodFieldProps) => {
   const intl = useIntl();
   const options = [
     {

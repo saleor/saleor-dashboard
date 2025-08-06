@@ -19,14 +19,14 @@ export interface GiftCardSettingsExpirySelectProps {
   errors?: Record<"expiryPeriod", GiftCardSettingsErrorFragment>;
 }
 
-const GiftCardSettingsExpirySelect = (props: GiftCardSettingsExpirySelectProps) => ({
+const GiftCardSettingsExpirySelect = ({
   errors,
   change,
   disabled,
   expiryPeriodActive,
   expiryPeriodType,
   expiryPeriodAmount,
-}) => {
+}: GiftCardSettingsExpirySelectProps) => {
   const intl = useIntl();
 
   return (

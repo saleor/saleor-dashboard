@@ -128,13 +128,13 @@ function useCollectionCreateForm(
   };
 }
 
-const CollectionCreateForm = (props: CollectionCreateFormProps) => ({
+const CollectionCreateForm = ({
   currentChannels,
   setChannels,
   children,
   onSubmit,
   disabled,
-}) => {
+}: CollectionCreateFormProps) => {
   const { richText, ...props } = useCollectionCreateForm(
     currentChannels,
     setChannels,

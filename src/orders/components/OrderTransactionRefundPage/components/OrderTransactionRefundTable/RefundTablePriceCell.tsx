@@ -12,10 +12,7 @@ interface RefundTablePriceCellProps {
   maxQtyToRefund: number;
 }
 
-export const RefundTablePriceCell = (props: RefundTablePriceCellProps) => ({
-  line,
-  maxQtyToRefund,
-}) => {
+export const RefundTablePriceCell = ({ line, maxQtyToRefund }: RefundTablePriceCellProps) => {
   const locale = useLocale();
 
   return (

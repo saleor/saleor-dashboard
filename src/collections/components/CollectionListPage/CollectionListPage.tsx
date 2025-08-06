@@ -47,7 +47,7 @@ export interface CollectionListPageProps
   onTabDelete: (id: number) => void;
 }
 
-const CollectionListPage = (props: CollectionListPageProps) => ({
+const CollectionListPage = ({
   currentTab,
   disabled,
   initialSearch,
@@ -67,7 +67,7 @@ const CollectionListPage = (props: CollectionListPageProps) => ({
   selectedCollectionIds,
   onCollectionsDelete,
   ...listProps
-}) => {
+}: CollectionListPageProps) => {
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();

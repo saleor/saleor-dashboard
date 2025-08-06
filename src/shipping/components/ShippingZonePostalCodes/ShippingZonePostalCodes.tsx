@@ -50,14 +50,14 @@ const useStyles = makeStyles(
     name: "ShippingZonePostalCodes",
   },
 );
-const ShippingZonePostalCodes = (props: ShippingZonePostalCodesProps) => ({
+const ShippingZonePostalCodes = ({
   disabled,
   initialExpanded = true,
   postalCodes,
   onPostalCodeDelete,
   onPostalCodeInclusionChange,
   onPostalCodeRangeAdd,
-}) => {
+}: ShippingZonePostalCodesProps) => {
   const [expanded, setExpanded] = React.useState(initialExpanded);
   const [inclusionType, setInclusionType] = React.useState(null);
   const intl = useIntl();

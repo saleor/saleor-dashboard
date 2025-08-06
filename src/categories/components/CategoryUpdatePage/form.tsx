@@ -109,12 +109,12 @@ function useCategoryUpdateForm(
   };
 }
 
-const CategoryUpdateForm = (props: CategoryUpdateFormProps) => ({
+const CategoryUpdateForm = ({
   children,
   category,
   onSubmit,
   disabled,
-}) => {
+}: CategoryUpdateFormProps) => {
   const { richText, ...props } = useCategoryUpdateForm(category!, onSubmit, disabled);
 
   return (

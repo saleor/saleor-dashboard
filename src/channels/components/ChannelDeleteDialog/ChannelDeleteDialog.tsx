@@ -56,7 +56,7 @@ export interface ChannelDeleteDialogProps {
   onConfirm: (targetChannelId: string) => void;
 }
 
-const ChannelDeleteDialog = (props: ChannelDeleteDialogProps) => ({
+const ChannelDeleteDialog = ({
   channelsChoices = [],
   channelSlug,
   hasOrders,
@@ -66,7 +66,7 @@ const ChannelDeleteDialog = (props: ChannelDeleteDialogProps) => ({
   currency,
   onClose,
   onConfirm,
-}) => {
+}: ChannelDeleteDialogProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const [choice, setChoice] = useStateFromProps(

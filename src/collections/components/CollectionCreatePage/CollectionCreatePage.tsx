@@ -35,7 +35,7 @@ export interface CollectionCreatePageProps {
   openChannelsModal: () => void;
 }
 
-const CollectionCreatePage = (props: CollectionCreatePageProps) => ({
+const CollectionCreatePage = ({
   channelsCount,
   channelsErrors,
   currentChannels = [],

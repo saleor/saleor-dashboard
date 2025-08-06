@@ -61,7 +61,7 @@ export interface ChannelFormProps {
   onAutomaticallyCompleteCheckoutsChange: () => void;
 }
 
-export const ChannelForm = (props: ChannelFormProps) => ({
+export const ChannelForm = ({
   currencyCodes,
   data,
   disabled,
@@ -75,7 +75,7 @@ export const ChannelForm = (props: ChannelFormProps) => ({
   onMarkAsPaidStrategyChange,
   onTransactionFlowStrategyChange,
   onAutomaticallyCompleteCheckoutsChange,
-}) => {
+}: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(

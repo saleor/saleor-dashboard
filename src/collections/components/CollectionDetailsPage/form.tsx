@@ -129,14 +129,14 @@ function useCollectionUpdateForm(
   };
 }
 
-const CollectionUpdateForm = (props: CollectionUpdateFormProps) => ({
+const CollectionUpdateForm = ({
   collection,
   currentChannels,
   setChannels,
   children,
   onSubmit,
   disabled,
-}) => {
+}: CollectionUpdateFormProps) => {
   const { richText, ...props } = useCollectionUpdateForm(
     collection,
     currentChannels,

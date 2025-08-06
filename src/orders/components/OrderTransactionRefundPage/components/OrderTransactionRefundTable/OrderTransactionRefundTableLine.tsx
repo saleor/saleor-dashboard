@@ -24,7 +24,7 @@ interface OrderTransactionRefundTableLineProps {
   onChange: (data: RefundQuantityChange, index: number) => void;
 }
 
-export const OrderTransactionRefundTableLine = (props: OrderTransactionRefundTableLineProps) => ({
+export const OrderTransactionRefundTableLine = ({
   control,
   field,
   index,
@@ -36,7 +36,7 @@ export const OrderTransactionRefundTableLine = (props: OrderTransactionRefundTab
   onEditReasonModal,
   refundFieldsUpdate,
   onChange,
-}) => {
+}: OrderTransactionRefundTableLineProps) => {
   const handleInputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(
       {

@@ -30,11 +30,11 @@ interface ChannelAllocationStrategyProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-const ChannelAllocationStrategy = (props: ChannelAllocationStrategyProps) => ({
+const ChannelAllocationStrategy = ({
   data,
   disabled,
   onChange,
-}) => {
+}: ChannelAllocationStrategyProps) => {
   const classes = useStyles();
 
   return (

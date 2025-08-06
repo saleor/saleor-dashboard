@@ -21,7 +21,7 @@ interface OrderTransactionSummaryProps {
   currency: string | undefined;
 }
 
-export const OrderTransactionSummary = (props: OrderTransactionSummaryProps) => ({
+export const OrderTransactionSummary = ({
   amountError,
   control,
   selectedProductsValue,
