@@ -19,7 +19,6 @@ on:
       # JS/TS Ecosystem
       - "**/package.json"
       - "**/pnpm-lock.yaml"
-      - "**/package-lock.json"
 
 jobs:
   default:

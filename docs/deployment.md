@@ -9,11 +9,11 @@
 To build your `saleor-dashboard` instance, please run:
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 If you want to preview your build, you can do it with:
 
 ```bash
-npm run preview
+pnpm run preview
 ```

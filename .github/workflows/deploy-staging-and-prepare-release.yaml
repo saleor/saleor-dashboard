@@ -24,14 +24,14 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Publishing version
         uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
         id: changesets
         with:
           title: "Prepare release ${{ github.ref_name }}"
           commit: "Release ${{ github.ref_name }}"
-          publish: "npm run release"
+          publish: "pnpm run release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -111,11 +111,11 @@ jobs:
       - name: Package
         timeout-minutes: 15
         run: |
-          npm ci
+          pnpm install --frozen-lockfile
 
       - name: Build
         run: |
-          npm run build
+          pnpm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4

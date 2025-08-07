@@ -52,11 +52,11 @@ jobs:
       - name: Package
         timeout-minutes: 15
         run: |
-          npm ci
+          pnpm install --frozen-lockfile
 
       - name: Build
         run: |
-          npm run build
+          pnpm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
