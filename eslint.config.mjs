@@ -159,7 +159,7 @@ export default tseslint.config(
       "no-restricted-imports": [
         "error",
         {
-          paths: ["lodash", "@material-ui/icons/Delete", "classnames"],
+          paths: ["lodash", "classnames"],
         },
       ],
     },
