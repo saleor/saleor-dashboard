@@ -24,8 +24,7 @@ import { WhereOnlyQueryVarsBuilder } from "./types";
 export type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart>
-{
+  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart> {
   public canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
@@ -101,11 +100,11 @@ export class AttributeQueryVarsBuilder
     value: ConditionValue,
   ): AttributeInput {
     if (isItemOption(value)) {
-      return { 
-        ...baseAttribute, 
-        value: { 
-          reference: this.buildReferenceFilter([value.value]) 
-        } 
+      return {
+        ...baseAttribute,
+        value: {
+          reference: this.buildReferenceFilter([value.value])
+        }
       };
     }
 
@@ -114,12 +113,12 @@ export class AttributeQueryVarsBuilder
         return baseAttribute;
       }
 
-      const globalIds = value.map(item => item.value);
+      const referencedObjectIds = value.map(item => item.value);
 
       return {
         ...baseAttribute,
-        value: { 
-          reference: this.buildReferenceFilter(globalIds) 
+        value: {
+          reference: this.buildReferenceFilter(referencedObjectIds)
         }
       };
     }
@@ -128,13 +127,10 @@ export class AttributeQueryVarsBuilder
   }
 
   private buildReferenceFilter(
-    identifiers: string[],
+    referencedObjectIds: string[],
   ) {
-    const filterValue = { containsAny: identifiers };
+    const filterValue = { containsAny: referencedObjectIds };
 
-    // For reference attributes, we always use referencedIds with global IDs
-    // This is the most reliable approach since the AttributeValue stores
-    // the actual database IDs of referenced objects
     return { referencedIds: filterValue };
   }
 
