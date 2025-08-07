@@ -10,7 +10,7 @@ import { extractMutationErrors, maybe } from "../../misc";
 import CustomerCreatePage, { CustomerCreatePageSubmitData } from "../components/CustomerCreatePage";
 import { customerUrl } from "../urls";
 
-export const CustomerCreate: React.FC = () => {
+export const CustomerCreate = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

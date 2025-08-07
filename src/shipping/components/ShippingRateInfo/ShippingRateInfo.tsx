@@ -66,7 +66,7 @@ export interface ShippingRateInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
+const ShippingRateInfo = (props: ShippingRateInfoProps) => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
   const classes = useStyles(props);

@@ -122,7 +122,7 @@ export interface GiftCardTimelineEventProps {
   event: GiftCardEventType;
 }
 
-const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({ date, event }) => {
+const GiftCardTimelineEvent = ({ date, event }: GiftCardTimelineEventProps) => {
   const intl = useIntl();
   const { enabled: areExtensionsEnabled } = useFlag("extensions");
 

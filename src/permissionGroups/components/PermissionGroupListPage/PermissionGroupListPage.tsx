@@ -19,7 +19,7 @@ export interface PermissionGroupListPageProps
   permissionGroups: PermissionGroupFragment[];
 }
 
-const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = listProps => {
+const PermissionGroupListPage = (listProps: PermissionGroupListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

@@ -25,7 +25,7 @@ export interface TranslationsCategoriesPageProps extends TranslationsEntitiesPag
   data: CategoryTranslationFragment;
 }
 
-const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
+const TranslationsCategoriesPage = ({
   translationId,
   activeField,
   disabled,
@@ -36,7 +36,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsCategoriesPageProps) => {
   const intl = useIntl();
 
   const navigate = useNavigator();

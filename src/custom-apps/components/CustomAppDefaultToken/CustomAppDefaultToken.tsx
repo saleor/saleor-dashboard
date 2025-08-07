@@ -12,7 +12,7 @@ export interface CustomAppDefaultTokenProps {
   onTokenClose: () => void;
 }
 
-const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
+const CustomAppDefaultToken = (props: CustomAppDefaultTokenProps) => {
   const { token, onTokenClose } = props;
   const [copied, copy] = useClipboard();
 

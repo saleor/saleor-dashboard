@@ -435,13 +435,13 @@ function useProductCreateForm(
   };
 }
 
-const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
+const ProductCreateForm = ({
   children,
   initial,
   onSubmit,
   loading,
   ...rest
-}) => {
+}: ProductCreateFormProps) => {
   const { richText, ...props } = useProductCreateForm(initial || {}, onSubmit, loading, rest);
 
   return (

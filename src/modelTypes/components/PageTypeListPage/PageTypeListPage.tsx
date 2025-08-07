@@ -40,7 +40,7 @@ export interface PageTypeListPageProps
   selectedPageTypes: string[];
 }
 
-const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
+const PageTypeListPage = ({
   currentTab,
   initialSearch,
   onAll,
@@ -53,7 +53,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   tabs,
   selectedPageTypes,
   ...listProps
-}) => {
+}: PageTypeListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);

@@ -25,7 +25,7 @@ export const fieldNames = {
   name: "name",
 };
 
-const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
+const TranslationsVouchersPage = ({
   translationId,
   activeField,
   disabled,
@@ -36,7 +36,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsVouchersPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

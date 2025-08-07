@@ -19,7 +19,7 @@ export interface EditCustomExtensionWebhookProps {
   id: string;
 }
 
-export const EditCustomExtensionWebhook: React.FC<EditCustomExtensionWebhookProps> = ({ id }) => {
+export const EditCustomExtensionWebhook = ({ id }: EditCustomExtensionWebhookProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const availableEvents = useAvailableEvents();

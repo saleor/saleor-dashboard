@@ -37,7 +37,7 @@ interface ShippingZonesListProps {
   params: ShippingZonesListUrlQueryParams;
 }
 
-export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) => {
+export const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

@@ -19,12 +19,7 @@ interface PluginSettingsProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const PluginSettings: React.FC<PluginSettingsProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+export const PluginSettings = ({ data, disabled, errors, onChange }: PluginSettingsProps) => {
   const intl = useIntl();
 
   const { textConfigFields, booleanConfigFields } = useSortedConfiguration(data.configuration);

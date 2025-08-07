@@ -5,7 +5,7 @@ import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({ open, onClose }) => {
+const OrderCannotCancelOrderDialog = ({ open, onClose }: DialogProps) => {
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm">

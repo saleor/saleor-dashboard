@@ -41,7 +41,7 @@ interface ProductTypeListProps {
   params: ProductTypeListUrlQueryParams;
 }
 
-export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
+export const ProductTypeList = ({ params }: ProductTypeListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();

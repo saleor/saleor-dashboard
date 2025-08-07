@@ -33,8 +33,10 @@ mockResizeObserver();
 const getWrapper = (mocks: MockedResponse[] = []) => {
   const WrapperComponent = ({ children }: { children: ReactNode }) => {
     return (
+      // @ts-expect-error - old router
       <BrowserRouter>
         <MockedProvider mocks={mocks}>
+          {/* @ts-expect-error - LegacyThemeProvider is not typed properly */}
           <LegacyThemeProvider>
             <ThemeProvider>{children}</ThemeProvider>
           </LegacyThemeProvider>

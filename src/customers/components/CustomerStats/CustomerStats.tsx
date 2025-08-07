@@ -10,7 +10,7 @@ export interface CustomerStatsProps {
   customer: CustomerDetailsQuery["user"];
 }
 
-const CustomerStats: React.FC<CustomerStatsProps> = props => {
+const CustomerStats = (props: CustomerStatsProps) => {
   const { customer } = props;
   const intl = useIntl();
 

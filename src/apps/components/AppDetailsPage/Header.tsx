@@ -2,7 +2,7 @@ import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { AppQuery } from "@dashboard/graphql";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 import HeaderOptions from "./HeaderOptions";
 
@@ -13,12 +13,12 @@ interface HeaderProps {
   onAppDeleteOpen: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const Header = ({
   data,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
-}) => {
+}: PropsWithChildren<HeaderProps>) => {
   const { enabled: isExtensionsEnabled } = useFlag("extensions");
   const getBackButtonUrl = () => {
     /**

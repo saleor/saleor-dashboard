@@ -40,7 +40,7 @@ export interface MenuDetailsPageProps {
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
-const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
+const MenuDetailsPage = ({
   disabled,
   errors,
   menu,
@@ -51,7 +51,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onItemEdit,
   onSubmit,
   onTranslate,
-}) => {
+}: MenuDetailsPageProps) => {
   const navigate = useNavigator();
 
   const initialForm: MenuDetailsFormData = {

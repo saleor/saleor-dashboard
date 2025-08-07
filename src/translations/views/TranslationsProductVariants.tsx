@@ -31,12 +31,12 @@ export interface TranslationsProductVariantsProps {
   params: TranslationsProductVariantsQueryParams;
 }
 
-const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = ({
+const TranslationsProductVariants = ({
   id,
   productId,
   languageCode,
   params,
-}) => {
+}: TranslationsProductVariantsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

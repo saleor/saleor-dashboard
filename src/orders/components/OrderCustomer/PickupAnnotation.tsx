@@ -10,7 +10,7 @@ interface PickupAnnotationProps {
   order?: OrderDetailsFragment;
 }
 
-export const PickupAnnotation: React.FC<PickupAnnotationProps> = ({ order }) => {
+export const PickupAnnotation = ({ order }: PickupAnnotationProps) => {
   if (order?.deliveryMethod?.__typename === "Warehouse") {
     return (
       <>

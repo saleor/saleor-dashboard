@@ -6,7 +6,7 @@ interface AlertCardProps {
   children?: React.ReactNode | React.ReactNode[];
 }
 
-const AlertCard: React.FC<AlertCardProps> = ({ children }) => (
+const AlertCard = ({ children }: AlertCardProps) => (
   <DashboardCard backgroundColor="critical1" padding={4}>
     {children}
   </DashboardCard>

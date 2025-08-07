@@ -7,7 +7,7 @@ interface AppListCardLinksProps {
   links: AppLink[];
 }
 
-const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
+const AppListCardLinks = ({ links }: AppListCardLinksProps) => {
   if (!links.length) {
     return null;
   }

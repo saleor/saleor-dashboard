@@ -14,7 +14,7 @@ export interface ErrorPageProps {
   onRefresh: () => void;
 }
 
-const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
+const ErrorPage = ({ onBack, onRefresh }: ErrorPageProps) => {
   const navigate = useNavigator();
   const [appState, dispatchAppState] = useAppState();
   const handleOnBack = () => {

@@ -11,7 +11,7 @@ interface TableCellAvatarProps extends TableCellProps, Omit<AvatarProps, "childr
   avatarClassName?: string;
 }
 
-const TableCellAvatar: React.FC<TableCellAvatarProps> = props => {
+const TableCellAvatar = (props: TableCellAvatarProps) => {
   const { className, avatarClassName, ...rest } = props;
   const classes = useStyles(props);
 

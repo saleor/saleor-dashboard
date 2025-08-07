@@ -7,7 +7,7 @@ interface BackButtonProps extends ButtonProps {
   children?: ReactNode;
 }
 
-const BackButton: React.FC<BackButtonProps> = ({ children, ...props }) => (
+const BackButton = ({ children, ...props }: BackButtonProps) => (
   <Button data-test-id="back" variant="secondary" {...props}>
     {children ?? <FormattedMessage {...buttonMessages.back} />}
   </Button>

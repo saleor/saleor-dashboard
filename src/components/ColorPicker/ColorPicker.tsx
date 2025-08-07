@@ -42,13 +42,13 @@ export type ColorPickerProps<T = any> = Pick<
   "setError" | "errors" | "clearErrors" | "data"
 > & { onColorChange: (hex: string) => void };
 
-export const ColorPicker: React.FC<ColorPickerProps> = ({
+export const ColorPicker = ({
   clearErrors,
   setError,
   errors,
   onColorChange,
   data,
-}) => {
+}: ColorPickerProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const [hex, setHex] = useState<string>(data.value ? data.value.replace("#", "") : "000000");

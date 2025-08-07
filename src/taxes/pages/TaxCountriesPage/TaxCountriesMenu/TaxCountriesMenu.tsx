@@ -20,12 +20,12 @@ interface TaxCountriesMenuProps {
   onCountryAdd: () => void;
 }
 
-export const TaxCountriesMenu: React.FC<TaxCountriesMenuProps> = ({
+export const TaxCountriesMenu = ({
   configurations,
   selectedCountryId,
   onCountryDelete,
   onCountryAdd,
-}) => {
+}: TaxCountriesMenuProps) => {
   const classes = useStyles();
   const intl = useIntl();
 

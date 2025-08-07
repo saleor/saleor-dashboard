@@ -26,7 +26,7 @@ export interface WebhooksListProps {
   createHref?: string;
 }
 
-const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
+const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
@@ -105,7 +105,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
                         color="primary"
                         onClick={webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

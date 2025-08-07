@@ -41,7 +41,7 @@ interface AttributeDetailsProps {
   params: AttributeUrlQueryParams;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
+const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

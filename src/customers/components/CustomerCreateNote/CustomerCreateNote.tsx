@@ -18,12 +18,7 @@ export interface CustomerCreateNoteProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CustomerCreateNote: React.FC<CustomerCreateNoteProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const CustomerCreateNote = ({ data, disabled, errors, onChange }: CustomerCreateNoteProps) => {
   const intl = useIntl();
 
   const formErrors = getFormErrors(["note"], errors);

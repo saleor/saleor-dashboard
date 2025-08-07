@@ -25,7 +25,7 @@ export interface PageOrganizeContentProps {
   fetchMorePageTypes?: FetchMoreProps;
 }
 
-const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
+const PageOrganizeContent = (props: PageOrganizeContentProps) => {
   const {
     canChangeType,
     data,

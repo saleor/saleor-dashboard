@@ -20,7 +20,7 @@ export interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPage
   onChange: FormChange;
 }
 
-const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props => {
+const AccountPermissionGroups = (props: AccountPermissionGroupsProps) => {
   const {
     availablePermissionGroups,
     disabled,

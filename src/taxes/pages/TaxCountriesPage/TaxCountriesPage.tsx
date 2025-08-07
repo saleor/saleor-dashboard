@@ -48,7 +48,7 @@ export interface TaxCountriesPageProps {
   disabled: boolean;
 }
 
-export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
+export const TaxCountriesPage = (props: TaxCountriesPageProps) => {
   const {
     countryTaxesData,
     selectedCountryId,
@@ -134,7 +134,10 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
-                                  <SearchIcon />
+                                  <SearchIcon
+                                    onPointerEnterCapture={undefined}
+                                    onPointerLeaveCapture={undefined}
+                                  />
                                 </InputAdornment>
                               ),
                             }}

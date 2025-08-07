@@ -8,6 +8,7 @@ type GridTableColgroupProps = GridTableProps<ColgroupHTMLAttributes<HTMLElement>
 
 export const GridTableColgroup = React.forwardRef<GridTableColgroupElement, GridTableColgroupProps>(
   ({ children, ...props }, forwardedRef) => (
+    // @ts-expect-error - wrong types
     <Box as="colgroup" ref={forwardedRef} {...props}>
       {children}
     </Box>

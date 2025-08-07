@@ -53,7 +53,7 @@ interface OrderRefundProps {
   orderId: string;
 }
 
-const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
+const OrderRefund = ({ orderId }: OrderRefundProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

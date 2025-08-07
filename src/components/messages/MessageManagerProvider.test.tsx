@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import React, { useContext } from "react";
+import React, { PropsWithChildren, useContext } from "react";
 
 import { MessageContext } from ".";
 import MessageManagerProvider from "./MessageManagerProvider";
@@ -13,7 +13,7 @@ describe("MessageManagerProvider", () => {
   test("should provide MessageContext to children", () => {
     // Arrange
     const { result } = renderHook(() => useContext(MessageContext), {
-      wrapper: ({ children }) => <MessageManagerProvider>{children}</MessageManagerProvider>,
+      wrapper: ({ children }: PropsWithChildren) => <MessageManagerProvider>{children}</MessageManagerProvider>,
     });
 
     // Assert: context exists

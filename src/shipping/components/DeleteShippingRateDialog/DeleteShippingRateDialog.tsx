@@ -12,13 +12,13 @@ export interface DeleteShippingRateDialogProps {
   handleConfirm: () => void;
 }
 
-export const DeleteShippingRateDialog: React.FC<DeleteShippingRateDialogProps> = ({
+export const DeleteShippingRateDialog = ({
   confirmButtonState,
   onClose,
   handleConfirm,
   name,
   open,
-}) => {
+}: DeleteShippingRateDialogProps) => {
   const intl = useIntl();
 
   return (

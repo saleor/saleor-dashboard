@@ -21,7 +21,7 @@ const messages = defineMessages({
     description: "order send refund, manual transaction refund was created",
   },
 });
-const OrderSendRefund: React.FC<OrderSendRefund> = ({ orderId }) => {
+const OrderSendRefund = ({ orderId }: OrderSendRefund) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { data, loading } = useOrderDetailsQuery({

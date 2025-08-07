@@ -17,7 +17,7 @@ interface PageTypeDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
+const PageTypeDetails = (props: PageTypeDetailsProps) => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);

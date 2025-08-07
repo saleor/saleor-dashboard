@@ -28,7 +28,7 @@ export interface ProductTypeListPageProps
   hasPresetsChanged: () => boolean;
 }
 
-const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
+const ProductTypeListPage = ({
   currentTab,
   filterOpts,
   initialSearch,
@@ -43,7 +43,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   hasPresetsChanged,
   disabled,
   ...listProps
-}) => {
+}: ProductTypeListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);

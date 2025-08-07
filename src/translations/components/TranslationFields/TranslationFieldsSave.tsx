@@ -25,7 +25,7 @@ const useStyles = makeStyles(
     name: "TranslationFieldsSave",
   },
 );
-const TranslationFieldsSave: React.FC<TranslationFieldsSaveProps> = props => {
+const TranslationFieldsSave = (props: TranslationFieldsSaveProps) => {
   const { saveButtonState, onDiscard, onSave } = props;
   const classes = useStyles(props);
 

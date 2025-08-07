@@ -20,12 +20,12 @@ interface TaxCountryDialogProps {
   onClose: () => void;
 }
 
-export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
+export const TaxCountryDialog = ({
   open,
   countries,
   onConfirm,
   onClose,
-}) => {
+}: TaxCountryDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const [selectedCountry, setSelectedCountry] = React.useState<CountryFragment>();
@@ -60,7 +60,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               </InputAdornment>
             ),
           }}

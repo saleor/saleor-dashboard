@@ -4,8 +4,9 @@ import { Button as MacawButton, ButtonTypeMap } from "@saleor/macaw-ui";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const _Button: React.FC<any> = React.forwardRef(({ href, ...props }, ref) => {
+const _Button = React.forwardRef<HTMLButtonElement, any>(({ href, ...props }, ref) => {
   if (href && !isExternalURL(href)) {
+    // @ts-expect-error legacy macaw types
     return <MacawButton {...props} to={href} component={Link} ref={ref} />;
   }
 

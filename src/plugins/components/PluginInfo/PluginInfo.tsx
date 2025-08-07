@@ -19,7 +19,7 @@ interface PluginInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const PluginInfo: React.FC<PluginInfoProps> = ({ data, description, errors, name, onChange }) => {
+const PluginInfo = ({ data, description, errors, name, onChange }: PluginInfoProps) => {
   const intl = useIntl();
   const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
 

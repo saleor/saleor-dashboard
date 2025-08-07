@@ -15,7 +15,7 @@ export interface AttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
+const AttributeUnassignDialog = ({
   title,
   attributeName,
   confirmButtonState,
@@ -23,7 +23,7 @@ const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
   itemTypeName,
   onClose,
   onConfirm,
-}) => {
+}: AttributeUnassignDialogProps) => {
   const intl = useIntl();
 
   return (

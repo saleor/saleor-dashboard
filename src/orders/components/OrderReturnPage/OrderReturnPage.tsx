@@ -40,7 +40,7 @@ export interface OrderReturnPageProps {
   submitStatus: ConfirmButtonTransitionState;
 }
 
-const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
+const OrderRefundPage = (props: OrderReturnPageProps) => {
   const {
     order,
     loading,

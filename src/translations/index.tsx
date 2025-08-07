@@ -47,7 +47,7 @@ type TranslationsEntitiesRouteProps = RouteComponentProps<{
   languageCode: string;
 }>;
 
-const TranslationsEntities: React.FC<TranslationsEntitiesRouteProps> = ({ location, match }) => {
+const TranslationsEntities = ({ location, match }: TranslationsEntitiesRouteProps) => {
   const qs = parseQs(location.search.substr(1));
 
   return <TranslationsEntitiesComponent language={match.params.languageCode} params={qs} />;
@@ -58,7 +58,7 @@ type TranslationsEntityRouteProps = RouteComponentProps<{
   languageCode: string;
 }>;
 
-const TranslationsCategories: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+const TranslationsCategories = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsCategoriesQueryParams = {
     activeField: qs.activeField as string,
@@ -72,7 +72,7 @@ const TranslationsCategories: React.FC<TranslationsEntityRouteProps> = ({ locati
     />
   );
 };
-const TranslationsCollections: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+const TranslationsCollections = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsCollectionsQueryParams = {
     activeField: qs.activeField as string,
@@ -86,7 +86,7 @@ const TranslationsCollections: React.FC<TranslationsEntityRouteProps> = ({ locat
     />
   );
 };
-const TranslationsProducts: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+const TranslationsProducts = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsProductsQueryParams = {
     activeField: qs.activeField as string,
@@ -107,10 +107,7 @@ type TranslationsProductVariantProps = RouteComponentProps<{
   languageCode: string;
 }>;
 
-const TranslationsProductVariants: React.FC<TranslationsProductVariantProps> = ({
-  location,
-  match,
-}) => {
+const TranslationsProductVariants = ({ location, match }: TranslationsProductVariantProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsProductVariantsQueryParams = {
     activeField: qs.activeField as string,
@@ -125,7 +122,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantProps> = (
     />
   );
 };
-const TranslationsSales: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+const TranslationsSales = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsSalesQueryParams = {
     activeField: qs.activeField as string,
@@ -139,7 +136,7 @@ const TranslationsSales: React.FC<TranslationsEntityRouteProps> = ({ location, m
     />
   );
 };
-const TranslationsVouchers: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+const TranslationsVouchers = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsVouchersQueryParams = {
     activeField: qs.activeField as string,
@@ -153,7 +150,7 @@ const TranslationsVouchers: React.FC<TranslationsEntityRouteProps> = ({ location
     />
   );
 };
-const TranslationsPages: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+const TranslationsPages = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsPagesQueryParams = {
     activeField: qs.activeField as string,
@@ -167,7 +164,7 @@ const TranslationsPages: React.FC<TranslationsEntityRouteProps> = ({ location, m
     />
   );
 };
-const TranslationsAttributes: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+const TranslationsAttributes = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsAttributesQueryParams = {
     activeField: qs.activeField as string,
@@ -181,10 +178,7 @@ const TranslationsAttributes: React.FC<TranslationsEntityRouteProps> = ({ locati
     />
   );
 };
-const TranslationsShippingMethod: React.FC<TranslationsEntityRouteProps> = ({
-  location,
-  match,
-}) => {
+const TranslationsShippingMethod = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsShippingMethodQueryParams = {
     activeField: qs.activeField as string,
@@ -198,7 +192,7 @@ const TranslationsShippingMethod: React.FC<TranslationsEntityRouteProps> = ({
     />
   );
 };
-const TranslationsMenuItem: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+const TranslationsMenuItem = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsShippingMethodQueryParams = {
     activeField: qs.activeField as string,
@@ -212,7 +206,7 @@ const TranslationsMenuItem: React.FC<TranslationsEntityRouteProps> = ({ location
     />
   );
 };
-const TranslationsRouter: React.FC = () => {
+const TranslationsRouter = () => {
   const intl = useIntl();
 
   return (

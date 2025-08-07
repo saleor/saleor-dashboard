@@ -24,7 +24,7 @@ interface TranslationsEntitiesProps {
   params: LanguageEntitiesUrlQueryParams;
 }
 
-const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, params }) => {
+const TranslationsEntities = ({ language, params }: TranslationsEntitiesProps) => {
   const navigate = useNavigator();
   const shop = useShop();
 

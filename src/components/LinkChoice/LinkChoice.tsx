@@ -18,7 +18,7 @@ export interface LinkChoiceProps {
   onChange: FormChange;
 }
 
-const LinkChoice: React.FC<LinkChoiceProps> = ({ className, choices, name, value, onChange }) => {
+const LinkChoice = ({ className, choices, name, value, onChange }: LinkChoiceProps) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchor = React.useRef<HTMLInputElement>(null);

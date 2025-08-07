@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -27,7 +27,7 @@ const useStyles = makeStyles(
   { name: "SummaryList" },
 );
 
-export const SummaryList: React.FC<{ className?: string }> = ({ children, className }) => {
+export const SummaryList = ({ children, className }: PropsWithChildren<{ className?: string }>) => {
   const classes = useStyles();
 
   return <ul className={clsx(classes.list, className)}>{children}</ul>;

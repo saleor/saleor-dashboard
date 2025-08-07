@@ -49,11 +49,11 @@ const TransactionTitle = ({
   );
 };
 
-export const OrderTransactionCardTitle: React.FC<CardTitleProps> = ({
+export const OrderTransactionCardTitle = ({
   transaction,
   onTransactionAction,
   showActions = true,
-}) => {
+}: CardTitleProps) => {
   const intl = useIntl();
 
   const {

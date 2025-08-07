@@ -46,7 +46,7 @@ function handleContainerAssign(
 }
 
 const scrollableTargetId = "assignContainerScrollableDialog";
-const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
+const AssignContainerDialog = (props: AssignContainerDialogProps) => {
   const {
     confirmButtonState,
     containers,

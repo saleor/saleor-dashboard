@@ -19,14 +19,14 @@ interface GiftCardSendToCustomerProps {
   disabled?: boolean;
 }
 
-const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
+const GiftCardSendToCustomer = ({
   change,
   sendToCustomerSelected,
   selectedChannelSlug,
   selectedCustomer,
   setSelectedCustomer,
   disabled = false,
-}) => {
+}: GiftCardSendToCustomerProps) => {
   const { channel, availableChannels } = useAppChannel(false);
   const channelsChoices = mapSlugNodeToChoice(availableChannels);
 

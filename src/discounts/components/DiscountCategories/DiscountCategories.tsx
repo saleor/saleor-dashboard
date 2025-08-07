@@ -26,7 +26,7 @@ export interface DiscountCategoriesProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 4;
-const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
+const DiscountCategories = (props: DiscountCategoriesProps) => {
   const {
     categories,
     disabled,
@@ -122,7 +122,10 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                           onCategoryUnassign(category.id);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

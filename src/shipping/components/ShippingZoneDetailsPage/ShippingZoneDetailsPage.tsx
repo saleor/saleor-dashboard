@@ -80,7 +80,7 @@ function warehouseToChoice(warehouse: Record<"id" | "name", string>): Option {
   };
 }
 
-const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
+const ShippingZoneDetailsPage = ({
   disabled,
   errors,
   hasMore,
@@ -102,7 +102,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   shippingZone,
   warehouses,
   allChannels,
-}) => {
+}: ShippingZoneDetailsPageProps) => {
   const intl = useIntl();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);

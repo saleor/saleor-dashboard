@@ -28,7 +28,7 @@ export interface ShippingZonesListPageProps
   onWeightUnitChange: () => void;
 }
 
-const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
+const ShippingZonesListPage = ({
   defaultWeightUnit,
   disabled,
   onSubmit,
@@ -38,7 +38,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
   onSearchChange,
   onWeightUnitChange,
   ...listProps
-}) => {
+}: ShippingZonesListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

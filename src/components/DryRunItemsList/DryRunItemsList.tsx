@@ -27,11 +27,7 @@ export interface DryRunItemsListProps {
   object: string;
 }
 
-const DryRunItemsList: React.FC<DryRunItemsListProps> = ({
-  object,
-  objectId,
-  setObjectId,
-}: DryRunItemsListProps) => {
+const DryRunItemsList = ({ object, objectId, setObjectId }: DryRunItemsListProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const { checkbox } = useListWidths();
