@@ -102,7 +102,7 @@ export const ProductVariants = ({
   }, [columnSettings]);
 
   const handleColumnChange = React.useCallback(
-    picked => {
+    (picked: string[]) => {
       setColumnSettings(picked);
     },
     [setColumnSettings],

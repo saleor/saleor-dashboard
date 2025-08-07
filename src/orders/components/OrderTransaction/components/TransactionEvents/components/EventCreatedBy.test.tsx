@@ -19,7 +19,6 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the app if app is passed", () => {
     render(
-      // @ts-expect-error - legacy provider
       <MemoryRouter>
         <EventCreatedBy createdBy={appAvatar} />
       </MemoryRouter>,
@@ -36,7 +35,6 @@ describe("EventCreatedBy", () => {
   });
   it("displays a link to the user settings if user is passed", () => {
     render(
-      // @ts-expect-error - legacy provider
       <MemoryRouter>
         <EventCreatedBy createdBy={staffMemberAvatar} />
       </MemoryRouter>,

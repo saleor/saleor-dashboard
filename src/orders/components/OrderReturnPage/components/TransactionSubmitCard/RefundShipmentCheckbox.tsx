@@ -1,6 +1,7 @@
 import { FormChange } from "@dashboard/hooks/useForm";
 import { IMoney } from "@dashboard/utils/intl";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
+import { CheckedState } from "@saleor/macaw-ui-next/dist/components/Checkbox/Checkbox";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -22,7 +23,7 @@ const RefundShipmentCheckbox = ({
   onChange,
 }: RefundShipmentCheckboxProps) => {
   const handleRefundShipmentCosts = React.useCallback(
-    checked => {
+    (checked: CheckedState) => {
       onChange({
         target: {
           name: "refundShipmentCosts",

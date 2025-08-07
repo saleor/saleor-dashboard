@@ -16,7 +16,6 @@ describe("EventItem", () => {
     const onHover = jest.fn();
 
     render(
-      // @ts-expect-error - legacy provider
       <MemoryRouter>
         <Wrapper>
           <EventItem

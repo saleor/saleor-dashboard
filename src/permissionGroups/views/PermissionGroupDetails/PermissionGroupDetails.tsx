@@ -212,6 +212,7 @@ export const PermissionGroupDetails = ({ id, params }: PermissionGroupDetailsPro
         open={params.action === "assign"}
         onClose={closeModal}
         onSubmit={formData => {
+          // @ts-expect-error - todo fix types
           setMembersList([...(membersList ?? []), ...formData] as Members);
           closeModal();
         }}

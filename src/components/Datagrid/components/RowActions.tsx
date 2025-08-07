@@ -38,6 +38,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
           disabled={disabled}
           autoFocusItem={false}
           showMenuIcon={true}
+          // @ts-expect-error - todo fix icons
           Icon={MoreHorizontalIcon}
           IconButtonProps={{
             className: classes.ghostIcon,

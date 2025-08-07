@@ -99,7 +99,6 @@ const categoriesWithAncestors = getChoicesWithAncestors([
 ]);
 
 const Wrapper = ({ children }: PropsWithChildren<{}>) => (
-  // @ts-expect-error - macaw and router has legacy types
   <Router>
     {/*@ts-expect-error - legacy types */}
     <ThemeProvider>{children}</ThemeProvider>

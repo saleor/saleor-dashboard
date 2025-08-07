@@ -15,7 +15,6 @@ jest.mock("@dashboard/featureFlags");
 
 const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
-    {/* @ts-expect-error legacy types */}
     <Router initialEntries={["/"]}>
       <AppListContext.Provider value={context}>
         <InstalledAppListRow {...data} />
