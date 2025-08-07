@@ -1,6 +1,13 @@
 import { createSvgIcon, SvgIconProps } from "@material-ui/core";
 import React from "react";
 
+/**
+ * @deprecated This icon uses Material-UI which is deprecated. Please use Lucide React icons instead.
+ * @see https://lucide.dev/ for available icons
+ * @example
+ * import { Users } from "lucide-react";
+ * // Use <Users /> instead
+ */
 const StaffMembersIcon = createSvgIcon(
   <path
     fillRule="evenodd"

@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import useClipboard from "@dashboard/hooks/useClipboard";
+import { useClipboard } from "@dashboard/hooks/useClipboard";
 import CloseIcon from "@material-ui/icons/Close";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -12,7 +12,7 @@ export interface CustomAppDefaultTokenProps {
   onTokenClose: () => void;
 }
 
-const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
+const CustomAppDefaultToken = (props: CustomAppDefaultTokenProps) => {
   const { token, onTokenClose } = props;
   const [copied, copy] = useClipboard();
 

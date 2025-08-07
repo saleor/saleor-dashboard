@@ -22,18 +22,17 @@ export interface WarehousesProps {
   warehousesChoices: RelayToFlat<SearchWarehousesQuery["search"]>;
 }
 
-const Warehouses: React.FC<WarehousesProps> = props => {
-  const {
-    addWarehouse,
-    removeWarehouse,
-    searchWarehouses,
-    reorderWarehouses,
-    loading,
-    totalCount,
-    fetchMoreWarehouses,
-    warehouses,
-    warehousesChoices,
-  } = props;
+const Warehouses = ({
+  addWarehouse,
+  removeWarehouse,
+  searchWarehouses,
+  reorderWarehouses,
+  loading,
+  totalCount,
+  fetchMoreWarehouses,
+  warehouses,
+  warehousesChoices,
+}: WarehousesProps) => {
   const intl = useIntl();
 
   return (

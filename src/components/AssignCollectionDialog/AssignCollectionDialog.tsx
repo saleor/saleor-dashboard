@@ -16,11 +16,7 @@ interface AssignCollectionDialogProps
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
-  collections,
-  labels,
-  ...rest
-}) => {
+const AssignCollectionDialog = ({ collections, labels, ...rest }: AssignCollectionDialogProps) => {
   const intl = useIntl();
 
   return (

@@ -13,9 +13,7 @@ export interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;
 }
 
-export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
-  channels,
-}) => {
+export const ChannelsAvailabilityDropdown = ({ channels }: ChannelsAvailabilityDropdownProps) => {
   const intl = useIntl();
   const [isPopupOpen, setPopupOpen] = React.useState(false);
   const anchor = React.useRef<HTMLDivElement>(null);

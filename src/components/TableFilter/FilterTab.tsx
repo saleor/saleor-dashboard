@@ -35,7 +35,7 @@ interface FilterTabProps {
   value?: number;
 }
 
-export const FilterTab: React.FC<FilterTabProps> = props => {
+export const FilterTab = (props: FilterTabProps) => {
   const { onClick, label, selected, value } = props;
   const classes = useStyles(props);
 

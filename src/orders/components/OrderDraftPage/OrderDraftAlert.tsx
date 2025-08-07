@@ -44,7 +44,7 @@ export type OrderDraftAlertProps = Omit<AlertProps, "variant" | "close"> & {
   channelUsabilityData?: ChannelUsabilityDataQuery;
 };
 
-const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
+const OrderDraftAlert = (props: OrderDraftAlertProps) => {
   const { order, channelUsabilityData, ...alertProps } = props;
   const classes = useAlertStyles();
   const intl = useIntl();

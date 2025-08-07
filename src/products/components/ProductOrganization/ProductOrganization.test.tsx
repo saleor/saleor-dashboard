@@ -98,8 +98,9 @@ const categoriesWithAncestors = getChoicesWithAncestors([
   },
 ]);
 
-const Wrapper: React.FC<PropsWithChildren<{}>> = ({ children }) => (
+const Wrapper = ({ children }: PropsWithChildren<{}>) => (
   <Router>
+    {/*@ts-expect-error - legacy types */}
     <ThemeProvider>{children}</ThemeProvider>
   </Router>
 );

@@ -24,7 +24,7 @@ export interface TranslationsShippingMethodPageProps extends TranslationsEntitie
   data: ShippingMethodTranslationFragment;
 }
 
-const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPageProps> = ({
+const TranslationsShippingMethodPage = ({
   translationId,
   activeField,
   disabled,
@@ -35,7 +35,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsShippingMethodPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

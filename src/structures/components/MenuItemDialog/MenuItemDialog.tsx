@@ -37,7 +37,7 @@ const defaultInitial: MenuItemDialogFormData = {
   linkValue: "",
 };
 
-const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
+const MenuItemDialog = ({
   confirmButtonState,
   disabled,
   errors: apiErrors,
@@ -46,7 +46,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   onClose,
   onSubmit,
   open,
-}) => {
+}: MenuItemDialogProps) => {
   const intl = useIntl();
 
   const { handleSubmit, control, watch, formState, setValue, reset, clearErrors } =

@@ -12,7 +12,7 @@ import { warehouseUrl } from "@dashboard/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-const WarehouseCreate: React.FC = () => {
+const WarehouseCreate = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();

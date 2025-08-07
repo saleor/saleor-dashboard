@@ -18,13 +18,13 @@ export interface OrderTransactionActionDialogProps {
   action: TransactionActionEnum;
 }
 
-export const OrderTransactionActionDialog: React.FC<OrderTransactionActionDialogProps> = ({
+export const OrderTransactionActionDialog = ({
   confirmButtonState,
   open,
   onClose,
   onSubmit,
   action,
-}) => {
+}: OrderTransactionActionDialogProps) => {
   const intl = useIntl();
   const actionIntl = action ? intl.formatMessage(mapActionToMessage[action]) : "";
   const actionType = actionIntl.toLowerCase();

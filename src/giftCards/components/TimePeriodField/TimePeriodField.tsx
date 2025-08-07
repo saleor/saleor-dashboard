@@ -16,7 +16,7 @@ interface TimePeriodFieldProps {
   isError?: boolean;
 }
 
-const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
+const TimePeriodField = ({
   change,
   periodAmount,
   periodType,
@@ -24,7 +24,7 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
   typeFieldName,
   helperText,
   isError,
-}) => {
+}: TimePeriodFieldProps) => {
   const intl = useIntl();
   const options = [
     {

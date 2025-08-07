@@ -20,7 +20,7 @@ interface OrderTransactionGiftCardProps {
   giftCard: OrderGiftCardFragment;
 }
 
-const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({ order, giftCard }) => {
+const OrderTransactionGiftCard = ({ order, giftCard }: OrderTransactionGiftCardProps) => {
   const intl = useIntl();
 
   if (!giftCard || !order) {

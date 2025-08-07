@@ -19,7 +19,7 @@ export interface CustomerAddressChoiceCardProps {
   onEditClick?: () => void;
 }
 
-const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = props => {
+const CustomerAddressChoiceCard = (props: CustomerAddressChoiceCardProps) => {
   const { address, selected, editable, onSelect, onEditClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -36,7 +36,11 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
         <AddressFormatter address={address} />
         {editable && (
           <div onClick={onEditClick}>
-            <EditIcon className={classes.editIcon} />
+            <EditIcon
+              className={classes.editIcon}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            />
           </div>
         )}
         {selected && (

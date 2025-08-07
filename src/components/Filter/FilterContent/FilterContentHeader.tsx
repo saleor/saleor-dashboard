@@ -32,7 +32,7 @@ interface FilterContentHeaderProps {
   onClear: () => void;
 }
 
-const FilterContentHeader: React.FC<FilterContentHeaderProps> = ({ onClear }) => {
+const FilterContentHeader = ({ onClear }: FilterContentHeaderProps) => {
   const classes = useStyles({});
 
   return (

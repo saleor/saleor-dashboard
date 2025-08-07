@@ -31,12 +31,12 @@ interface WebhookSubscriptionQueryProps {
 const fetcher = createGraphiQLFetcher({
   url: process.env.API_URL,
 });
-const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
+const WebhookSubscriptionQuery = ({
   errors,
   query,
   setQuery,
   data,
-}) => {
+}: WebhookSubscriptionQueryProps) => {
   const intl = useIntl();
   const explorerPlugin = useExplorerPlugin({
     query,

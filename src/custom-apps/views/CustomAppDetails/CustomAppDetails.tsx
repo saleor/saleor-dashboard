@@ -7,7 +7,11 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import TokenCreateDialog from "@dashboard/custom-apps/components/TokenCreateDialog";
 import TokenDeleteDialog from "@dashboard/custom-apps/components/TokenDeleteDialog";
 import WebhookDeleteDialog from "@dashboard/custom-apps/components/WebhookDeleteDialog";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import {
+  CustomAppDetailsUrlDialog,
+  CustomAppDetailsUrlQueryParams,
+  CustomAppUrls,
+} from "@dashboard/custom-apps/urls";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,
@@ -34,7 +38,6 @@ import { useIntl } from "react-intl";
 import CustomAppDetailsPage, {
   CustomAppDetailsPageFormData,
 } from "../../components/CustomAppDetailsPage";
-import { CustomAppDetailsUrlDialog, CustomAppDetailsUrlQueryParams } from "../../urls";
 
 interface OrderListProps {
   id: string;
@@ -43,7 +46,7 @@ interface OrderListProps {
   onTokenClose: () => void;
 }
 
-export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, onTokenClose }) => {
+export const CustomAppDetails = ({ id, params, token, onTokenClose }: OrderListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -33,7 +33,7 @@ interface OrderReturnRefundLinesCardProps {
   onSetMaxQuantity: () => any;
 }
 
-export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
+export const ItemsCard = ({
   lines,
   onSetMaxQuantity,
   onChangeQuantity,
@@ -42,7 +42,7 @@ export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   itemsQuantities,
   fulfilmentId,
   order,
-}) => {
+}: OrderReturnRefundLinesCardProps) => {
   const classes = useItemCardStyles({});
   const intl = useIntl();
   const handleChangeQuantity = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>

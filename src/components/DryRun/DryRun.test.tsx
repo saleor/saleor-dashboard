@@ -29,6 +29,7 @@ describe("DryRun", () => {
     // Act
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
+        {/* @ts-expect-error legacy types */}
         <ThemeProvider>
           <DryRun {...props} />
         </ThemeProvider>

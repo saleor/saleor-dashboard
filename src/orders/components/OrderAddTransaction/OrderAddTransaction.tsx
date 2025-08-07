@@ -10,7 +10,7 @@ interface OrderAddTransactionProps {
   onAddTransaction: () => void;
 }
 
-const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({ order, onAddTransaction }) => {
+const OrderAddTransaction = ({ order, onAddTransaction }: OrderAddTransactionProps) => {
   if (!order) {
     return (
       <Box display="flex" justifyContent="flex-end" marginTop={2} marginBottom={2} paddingRight={4}>

@@ -23,12 +23,12 @@ interface ProductDetailsFormProps {
   onChange: (event: any) => any;
 }
 
-export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
+export const ProductDetailsForm = ({
   data,
   onChange,
   errors,
   disabled,
-}) => {
+}: ProductDetailsFormProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
   const { editorRef, defaultValue, isReadyForMount, handleChange } = useRichTextContext();

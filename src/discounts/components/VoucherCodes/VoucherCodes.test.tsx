@@ -30,7 +30,9 @@ jest.mock("@dashboard/components/Datagrid/persistance/usePersistance", () => ({
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // @ts-expect-error - old router
     <BrowserRouter>
+      {/* @ts-expect-error - old router*/}
       <LegacyThemeProvider>
         <ThemeProvider>{children}</ThemeProvider>
       </LegacyThemeProvider>

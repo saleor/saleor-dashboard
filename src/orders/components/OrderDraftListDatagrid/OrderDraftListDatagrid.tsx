@@ -44,7 +44,7 @@ export const OrderDraftListDatagrid = ({
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
   const handleColumnChange = useCallback(
-    picked => {
+    (picked: string[]) => {
       if (onUpdateListSettings) {
         onUpdateListSettings("columns", picked.filter(Boolean));
       }

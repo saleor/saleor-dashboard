@@ -52,7 +52,7 @@ interface ProductTypeAttributesProps extends ListActions {
 }
 
 const numberOfColumns = 5;
-const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
+const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
   const {
     attributes,
 

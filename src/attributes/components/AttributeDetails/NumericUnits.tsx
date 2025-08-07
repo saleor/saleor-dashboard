@@ -38,14 +38,14 @@ interface NumericUnitsProps
   disabled: boolean;
 }
 
-export const NumericUnits: React.FC<NumericUnitsProps> = ({
+export const NumericUnits = ({
   data,
   disabled,
   errors,
   set,
   setError,
   clearErrors,
-}) => {
+}: NumericUnitsProps) => {
   const { formatMessage } = useIntl();
   const classes = useStyles();
   const [unitData, setUnitData] = useState<UnitData>({
@@ -180,7 +180,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
                 }))
               }
               value={unit as string}
-              options={(type && system ? unitChoices?.[system]?.[type] ?? [] : []) as Option[]}
+              options={(type && system ? (unitChoices?.[system]?.[type] ?? []) : []) as Option[]}
             />
           </Box>
         </Box>

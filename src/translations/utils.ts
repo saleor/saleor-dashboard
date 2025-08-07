@@ -4,7 +4,12 @@ import {
   AttributeValueTranslatableFragment,
   AttributeValueTranslationInput,
 } from "@dashboard/graphql";
-import { TranslationField, TranslationFieldType } from "@dashboard/translations/types";
+import {
+  PageTranslationInputFieldName,
+  TranslationField,
+  TranslationFieldType,
+  TranslationInputFieldName,
+} from "@dashboard/translations/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { OutputData } from "@editorjs/editorjs";
@@ -12,7 +17,6 @@ import { IntlShape } from "react-intl";
 
 import { fieldNames } from "./components/TranslationsAttributesPage";
 import { transtionsAttributesPageFieldsMessages as messages } from "./components/TranslationsAttributesPage/messages";
-import { PageTranslationInputFieldName, TranslationInputFieldName } from "./types";
 
 export const getParsedTranslationInputData = ({
   fieldName,

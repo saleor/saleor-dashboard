@@ -9,7 +9,7 @@ export interface WeightProps {
   weight: Weight;
 }
 
-const Weight: React.FC<WeightProps> = ({ weight }) => (
+const Weight = ({ weight }: WeightProps) => (
   <FormattedMessage
     id="NtFVFS"
     defaultMessage="{value} {unit}"
@@ -18,5 +18,7 @@ const Weight: React.FC<WeightProps> = ({ weight }) => (
   />
 );
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 Weight.displayName = "Weight";
 export default Weight;

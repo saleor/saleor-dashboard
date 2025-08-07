@@ -1,6 +1,6 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 import { AppLogo } from "./AppLogo";
 
@@ -8,7 +8,7 @@ interface AppListCardDescriptionProps {
   app: AppstoreApi.SaleorApp;
 }
 
-const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({ app }) => (
+const AppListCardDescription = ({ app }: PropsWithChildren<AppListCardDescriptionProps>) => (
   <Box>
     <Box display="flex" flexDirection="row" alignItems="center" marginBottom={5} gap={3}>
       <AppLogo backgroundColor={app.logo.color}>

@@ -91,7 +91,6 @@ function useAppstoreApps(appstoreUrl?: string): State {
     return () => {
       cancelRequest.current = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appstoreUrl]);
 
   return state;

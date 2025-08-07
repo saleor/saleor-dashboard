@@ -107,12 +107,12 @@ const shouldShowAmount = (event: TransactionEventFragment | TransactionFakeEvent
   return true;
 };
 
-export const EventItem: React.FC<EventItemProps> = ({
+export const EventItem = ({
   event,
   onHover,
   hoveredPspReference,
   hasCreatedBy,
-}) => {
+}: EventItemProps) => {
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
   const isHovered = event.pspReference && event.pspReference === hoveredPspReference;

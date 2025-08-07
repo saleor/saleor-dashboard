@@ -61,13 +61,13 @@ function useOrderSettingsForm(
   };
 }
 
-const OrderSettingsForm: React.FC<OrderSettingsFormProps> = ({
+const OrderSettingsForm = ({
   children,
   orderSettings,
   shop,
   onSubmit,
   disabled,
-}) => {
+}: OrderSettingsFormProps) => {
   const props = useOrderSettingsForm(orderSettings, shop, onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

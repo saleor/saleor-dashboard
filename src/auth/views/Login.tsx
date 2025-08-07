@@ -15,7 +15,7 @@ interface LoginViewProps {
   params: LoginUrlQueryParams;
 }
 
-const LoginView: React.FC<LoginViewProps> = ({ params }) => {
+const LoginView = ({ params }: LoginViewProps) => {
   const navigate = useNavigator();
   const { location } = useRouter();
   const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } =

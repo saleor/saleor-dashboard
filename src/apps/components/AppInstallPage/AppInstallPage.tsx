@@ -11,7 +11,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { useTheme } from "@dashboard/theme";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -24,12 +24,12 @@ export interface AppInstallPageProps {
   onSubmit: () => SubmitPromise<NonNullable<AppInstallMutation["appInstall"]>["errors"]>;
 }
 
-export const AppInstallPage: React.FC<AppInstallPageProps> = ({
+export const AppInstallPage = ({
   data,
   loading,
   navigateToAppsList,
   onSubmit,
-}) => {
+}: PropsWithChildren<AppInstallPageProps>) => {
   const intl = useIntl();
   const classes = useStyles();
   const { theme } = useTheme();
@@ -120,7 +120,9 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
 
                   {!!data?.permissions?.length && (
                     <ul className={classes.permissionsContainer}>
-                      {data?.permissions?.map(perm => <li key={perm.code}>{perm.name}</li>)}
+                      {data?.permissions?.map(perm => (
+                        <li key={perm.code}>{perm.name}</li>
+                      ))}
                     </ul>
                   )}
                   <Hr className={classes.installSpacer} />

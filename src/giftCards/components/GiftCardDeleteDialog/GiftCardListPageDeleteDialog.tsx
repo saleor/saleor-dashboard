@@ -12,11 +12,11 @@ interface GiftCardDeleteDialogProps extends DialogProps {
   refetchQueries?: string[];
 }
 
-const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
+const GiftCardDeleteDialog = ({
   open,
   onClose,
   refetchQueries = [],
-}) => {
+}: GiftCardDeleteDialogProps) => {
   const listProps = useGiftCardList();
   const { giftCards, loading, selectedRowIds, clearRowSelection } = listProps;
   const singleDeletion = selectedRowIds.length === SINGLE;

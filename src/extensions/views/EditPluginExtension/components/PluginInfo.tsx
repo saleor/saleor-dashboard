@@ -17,14 +17,14 @@ interface PluginInfoProps {
   disabled: boolean;
 }
 
-export const PluginInfo: React.FC<PluginInfoProps> = ({
+export const PluginInfo = ({
   data,
   description,
   errors,
   name,
   onChange,
   disabled,
-}) => {
+}: PluginInfoProps) => {
   const intl = useIntl();
   const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
 

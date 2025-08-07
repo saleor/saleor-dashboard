@@ -39,7 +39,7 @@ const useStyles = makeStyles(
   },
   { name: "TranslationsEntitiesList" },
 );
-const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
+const TranslationsEntitiesList = (props: TranslationsEntitiesListProps) => {
   const { disabled, entities, getRowHref } = props;
   const classes = useStyles(props);
   const intl = useIntl();

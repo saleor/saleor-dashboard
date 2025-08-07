@@ -107,6 +107,6 @@ export const dropdownCellRenderer: CustomRenderer<DropdownCell> = {
   }),
   onPaste: (value, data) => ({
     ...data,
-    value: { value, label: value } ?? null,
+    value: value ? { value, label: value } : null,
   }),
 };

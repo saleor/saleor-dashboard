@@ -63,7 +63,7 @@ interface SaleDetailsProps {
   params: SaleUrlQueryParams;
 }
 
-export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
+export const SaleDetails = ({ id, params }: SaleDetailsProps) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const navigate = useNavigator();

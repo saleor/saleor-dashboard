@@ -22,7 +22,7 @@ const initialForm: NewPasswordPageFormData = {
   confirmPassword: "",
   password: "",
 };
-const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
+const NewPasswordPage = (props: NewPasswordPageProps) => {
   const { loading, errors, onSubmit } = props;
   const intl = useIntl();
 

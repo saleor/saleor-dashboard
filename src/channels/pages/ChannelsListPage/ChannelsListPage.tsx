@@ -31,11 +31,7 @@ export interface ChannelsListPageProps {
 
 const numberOfColumns = 2;
 
-export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
-  channelsList,
-  limits,
-  onRemove,
-}) => {
+export const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPageProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const limitReached = isLimitReached(limits, "channels");
@@ -122,7 +118,12 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                         <Button
                           variant="secondary"
                           data-test-id="delete-channel"
-                          icon={<DeleteIcon />}
+                          icon={
+                            <DeleteIcon
+                              onPointerEnterCapture={undefined}
+                              onPointerLeaveCapture={undefined}
+                            />
+                          }
                           onClick={
                             channel ? stopPropagation(() => onRemove(channel.id)) : undefined
                           }

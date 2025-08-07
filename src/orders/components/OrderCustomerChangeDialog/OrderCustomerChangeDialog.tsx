@@ -16,7 +16,7 @@ export interface OrderCustomerChangeDialogProps {
   onClose: () => any;
 }
 
-const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = props => {
+const OrderCustomerChangeDialog = (props: OrderCustomerChangeDialogProps) => {
   const { open, onClose, onConfirm } = props;
   const classes = useStyles(props);
   const intl = useIntl();

@@ -16,7 +16,7 @@ interface ProductVariantImageSelectDialogProps {
   onConfirm: (selectedIds: string[]) => void;
 }
 
-const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogProps> = props => {
+const ProductVariantMediaSelectDialog = (props: ProductVariantImageSelectDialogProps) => {
   const { media, open, selectedMedia: initialMedia, onClose, onConfirm } = props;
   const [selectedMedia, setSelectedMedia] = useState(initialMedia);
 

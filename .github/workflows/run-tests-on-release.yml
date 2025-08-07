@@ -57,7 +57,6 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
-      FRAMEWORK: ${{ steps.check-framework.outputs.result }}
       IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
@@ -76,21 +75,6 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      - id: check-framework
-        uses: actions/github-script@v7
-        env:
-          VERSION: "${{inputs.VERSION}}"
-        with:
-          result-encoding: string
-          script: |
-            const { VERSION } = process.env
-            const versionWithoutDot = VERSION.replaceAll(/\./g, "")
-            if(versionWithoutDot >= 319){
-              return "Playwright-tests"
-            }else{
-              return "Cypress-tests"
-            }
-
       - name: Create check if release PR exists
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
@@ -100,7 +84,7 @@ jobs:
           STATUS: "in_progress"
           TITLE: "Automation tests run"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-      
+
       - name: Load secrets for initialize-cloud
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         id: load-secrets-init
@@ -151,65 +135,10 @@ jobs:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
-  run-cy-tests:
-    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
-    needs: add-check-and-prepare-instance
-    runs-on: ubuntu-22.04
-    timeout-minutes: 30
-    container:
-      image: cypress/browsers:node18.12.0-chrome106-ff106
-      options: --user 1001
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1, 2, 3, 4, 5, 6]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
-
-      - name: Set tag for tests
-        id: set-tag-for-tests
-        uses: actions/github-script@v6
-        env:
-          is_old_version: ${{ needs.add-check-and-prepare-instance.outputs.IS_OLD_VERSION }}
-        with:
-          result-encoding: string
-          script: |
-            const { is_old_version } = process.env
-            if(is_old_version == "true"){
-              return "@oldRelease"
-            }else{
-              return "@stable"
-            }
-
-      - name: Cypress run
-        id: cypress-run
-        uses: ./.github/actions/e2e
-        continue-on-error: true
-        with:
-          apiUrl: ${{ needs.add-check-and-prepare-instance.outputs.API_URL }}
-          appMountUri: ${{ secrets.APP_MOUNT_URI }}
-          baseUrl: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
-          userName: ${{ secrets.CYPRESS_USER_NAME }}
-          secondUserName: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
-          userPassword: ${{ secrets.CYPRESS_USER_PASSWORD }}
-          permissionsUserPassword: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-          mailpitUrl: ${{ secrets.CYPRESS_MAILPITURL }}
-          stripeSecretKey: ${{ secrets.STRIPE_SECRET_KEY }}
-          stripePublicKey: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          cypressGrepTags: ${{steps.set-tag-for-tests.outputs.result}}
-          split: ${{ strategy.job-total }}
-          splitIndex: ${{ strategy.job-index }}
-          commitInfoMessage: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
-          install: false
-          browser: "electron"
-
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
     timeout-minutes: 30
-    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Playwright-tests'
     strategy:
       fail-fast: false
       matrix:
@@ -244,7 +173,7 @@ jobs:
   tests-complete:
     if: |
       !cancelled() && always()
-    needs: ["add-check-and-prepare-instance", "run-cy-tests", "run-pw-tests"]
+    needs: ["add-check-and-prepare-instance", "run-pw-tests"]
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     outputs:
@@ -266,14 +195,9 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Merge playwright reports
-        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Playwright-tests'
         uses: ./.github/actions/merge-pw-reports
         with:
           PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
-
-      - name: Merge cypress reports
-        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
-        uses: ./.github/actions/combineReportsFromE2E
 
       - name: Load secrets
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
@@ -284,7 +208,7 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
-          
+
       - name: Create flaky report
         uses: ./.github/actions/flaky-tests-report
         with:
@@ -314,9 +238,7 @@ jobs:
     needs: [tests-complete, add-check-and-prepare-instance]
     if: |
       always() &&
-      (needs.tests-complete != 'success' && cancelled()) &&
-      needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == 'Playwright-tests'
-
+      (needs.tests-complete != 'success' && cancelled())
     steps:
       - uses: actions/checkout@v4
 

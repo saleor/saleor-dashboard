@@ -15,14 +15,14 @@ export interface PermissionDeleteDialogProps {
   open: boolean;
 }
 
-const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
+const PermissionGroupDeleteDialog = ({
   confirmButtonState,
   error,
   name,
   onClose,
   onConfirm,
   open,
-}) => {
+}: PermissionDeleteDialogProps) => {
   const intl = useIntl();
 
   let errorMessage;

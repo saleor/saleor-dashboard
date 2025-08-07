@@ -13,7 +13,7 @@ interface PaymentsSummaryProps {
   order: OrderDetailsFragment;
 }
 
-export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
+export const PaymentsSummary = ({ order }: PaymentsSummaryProps) => {
   const classes = useStyles();
   const shouldDisplay = getShouldDisplayAmounts(order);
 

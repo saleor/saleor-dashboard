@@ -50,7 +50,7 @@ export const useOrderLineDiscountContext = () => {
   return context;
 };
 
-export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({ children, order }) => {
+export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { isDialogOpen, openDialog, closeDialog } = useDiscountDialog();
@@ -113,10 +113,10 @@ export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({ chi
   );
 };
 
-export const OrderLineDiscountConsumer: React.FC<OrderLineDiscountConsumerProps> = ({
+export const OrderLineDiscountConsumer = ({
   children,
   orderLineId,
-}) => (
+}: OrderLineDiscountConsumerProps) => (
   <OrderLineDiscountContext.Consumer>
     {(getValues: GetOrderLineDiscountContextConsumerProps) => children(getValues(orderLineId))}
   </OrderLineDiscountContext.Consumer>

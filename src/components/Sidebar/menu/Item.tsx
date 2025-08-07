@@ -9,7 +9,7 @@ interface Props {
   menuItem: SidebarMenuItem;
 }
 
-export const MenuItem: React.FC<Props> = props => {
+export const MenuItem = (props: Props) => {
   const { menuItem } = props;
 
   switch (menuItem.type) {
