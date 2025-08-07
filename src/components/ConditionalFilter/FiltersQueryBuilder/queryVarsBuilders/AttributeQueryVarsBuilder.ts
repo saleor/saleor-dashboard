@@ -101,7 +101,12 @@ export class AttributeQueryVarsBuilder
     value: ConditionValue,
   ): AttributeInput {
     if (isItemOption(value)) {
-      return { ...baseAttribute, valueNames: [value.label] };
+      return { 
+        ...baseAttribute, 
+        value: { 
+          reference: this.buildReferenceFilter([value.value]) 
+        } 
+      };
     }
 
     if (isItemOptionArray(value)) {
@@ -109,13 +114,28 @@ export class AttributeQueryVarsBuilder
         return baseAttribute;
       }
 
+      const globalIds = value.map(item => item.value);
+
       return {
         ...baseAttribute,
-        valueNames: value.map(item => item.label),
+        value: { 
+          reference: this.buildReferenceFilter(globalIds) 
+        }
       };
     }
 
     return baseAttribute;
+  }
+
+  private buildReferenceFilter(
+    identifiers: string[],
+  ) {
+    const filterValue = { containsAny: identifiers };
+
+    // For reference attributes, we always use referencedIds with global IDs
+    // This is the most reliable approach since the AttributeValue stores
+    // the actual database IDs of referenced objects
+    return { referencedIds: filterValue };
   }
 
   private buildConditionAttribute(

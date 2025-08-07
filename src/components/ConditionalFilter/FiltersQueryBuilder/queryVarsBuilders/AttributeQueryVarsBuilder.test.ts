@@ -189,7 +189,18 @@ describe("AttributeQueryVarsBuilder", () => {
       const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
-      expect(result).toEqual({ attributes: [{ slug: attributeSlug, valueNames: [pageLabel] }] });
+      expect(result).toEqual({ 
+        attributes: [{ 
+          slug: attributeSlug, 
+          value: { 
+            reference: { 
+              referencedIds: { 
+                containsAny: ["page-1"] 
+              } 
+            } 
+          } 
+        }] 
+      });
     });
 
     it("should correctly build query for DROPDOWN/MULTISELECT attributes", () => {
