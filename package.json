@@ -169,7 +169,6 @@
     "@types/qs": "^6.9.12",
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
-    "@types/react-dropzone": "^4.2.2",
     "@types/react-gtm-module": "^2.0.3",
     "@types/react-helmet": "^5.0.8",
     "@types/react-router-dom": "^4.3.4",
