@@ -1,9 +1,9 @@
-import { OrderStatus } from "@dashboard/graphql";
+import { JobStatusEnum } from "@dashboard/graphql/types.generated";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import React from "react";
 
+import { OrderFixture } from "../fixtures/order-fixture";
 import { OrderDetailsPage } from "../order-detail-page";
-import { fulfilledOrderFixture } from "./fixtures";
 import { StorybookAppLayout } from "./storybook-app-layout";
 
 const meta = {
@@ -24,15 +24,55 @@ type Story = StoryObj<typeof meta>;
 
 export const Fulfilled: Story = {
   args: {
-    order: fulfilledOrderFixture,
+    order: OrderFixture.fulfilled().build(),
+  },
+};
+
+const invoices = [
+  {
+    __typename: "Invoice" as const,
+    id: "invoice-id-1",
+    number: "INV-0001",
+    status: JobStatusEnum.SUCCESS,
+    createdAt: "2023-10-01T12:00:00Z",
+    url: "https://example.com/invoice/1",
+  },
+  {
+    __typename: "Invoice" as const,
+    id: "invoice-id-2",
+    number: "INV-0002",
+    status: JobStatusEnum.SUCCESS,
+    createdAt: "2023-10-01T12:00:00Z",
+    url: "https://example.com/invoice/2",
+  },
+];
+
+export const FulfilledWithInvoices: Story = {
+  args: {
+    order: OrderFixture.fulfilled().withInvoices(invoices).build(),
+  },
+};
+
+export const FulfilledWithCustomerNote: Story = {
+  args: {
+    order: OrderFixture.fulfilled().withCustomerNote("This is a customer note.").build(),
   },
 };
 
 export const Unconfirmed: Story = {
   args: {
-    order: {
-      ...fulfilledOrderFixture,
-      status: OrderStatus.UNCONFIRMED,
-    },
+    order: OrderFixture.unconfirmed().build(),
+  },
+};
+
+export const UnconfirmedWithInvoices: Story = {
+  args: {
+    order: OrderFixture.unconfirmed().withInvoices(invoices).build(),
+  },
+};
+
+export const UnconfirmedWithCustomerNote: Story = {
+  args: {
+    order: OrderFixture.unconfirmed().withCustomerNote("This is a customer note.").build(),
   },
 };
