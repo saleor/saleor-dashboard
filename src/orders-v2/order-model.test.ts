@@ -1,7 +1,7 @@
 import { OrderStatus } from "@dashboard/graphql";
 
+import { OrderFixture } from "./fixtures/order-fixture";
 import { OrderModel } from "./order-model";
-import { fulfilledOrderFixture } from "./storybook/fixtures";
 
 describe("OrderModel", () => {
   describe("shouldShowInvoiceList", () => {
@@ -17,7 +17,7 @@ describe("OrderModel", () => {
       [OrderStatus.EXPIRED, true],
     ])("should return %s when order status is %s", (status, expected) => {
       const order = {
-        ...fulfilledOrderFixture,
+        ...OrderFixture.fulfilled().build(),
         status,
       };
       const orderModel = new OrderModel(order);
@@ -31,7 +31,7 @@ describe("OrderModel", () => {
   describe("shouldShowCustomerNote", () => {
     it("should return false when customerNote is empty string", () => {
       const order = {
-        ...fulfilledOrderFixture,
+        ...OrderFixture.fulfilled().build(),
         customerNote: "",
       };
       const orderModel = new OrderModel(order);
@@ -43,7 +43,7 @@ describe("OrderModel", () => {
 
     it("should return true when customerNote has content", () => {
       const order = {
-        ...fulfilledOrderFixture,
+        ...OrderFixture.fulfilled().build(),
         customerNote: "Please handle with care",
       };
       const orderModel = new OrderModel(order);
