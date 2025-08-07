@@ -35,7 +35,7 @@ export interface CardMenuProps {
   disabled?: boolean;
   menuItems: CardMenuItem[];
   outlined?: boolean;
-  Icon?: React.ElementType<{}>;
+  Icon?: React.ElementType<any>;
   IconButtonProps?: IconButtonProps;
   autoFocusItem?: boolean;
   showMenuIcon?: boolean;
