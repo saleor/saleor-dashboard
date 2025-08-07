@@ -6,7 +6,7 @@ import { CommandContent } from "./CommandContent";
 import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
 
 // TODO: probably can be fully handled by https://github.com/pacocoursey/cmdk
-const NavigatorSearch: React.FC = () => {
+const NavigatorSearch = () => {
   const { isNavigatorVisible, setNavigatorVisibility } = useNavigatorSearchContext();
 
   useHotkeys(

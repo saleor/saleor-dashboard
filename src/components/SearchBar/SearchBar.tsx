@@ -30,7 +30,7 @@ const useStyles = makeStyles(
     name: "SearchBar",
   },
 );
-const SearchBar: React.FC<SearchBarProps> = props => {
+const SearchBar = (props: SearchBarProps) => {
   const {
     allTabLabel,
     currentTab,

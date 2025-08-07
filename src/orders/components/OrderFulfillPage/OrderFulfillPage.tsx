@@ -68,7 +68,7 @@ const initialFormData: OrderFulfillFormData = {
   sendInfo: true,
   allowStockToBeExceeded: false,
 };
-const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
+const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   const {
     params,
     loading,

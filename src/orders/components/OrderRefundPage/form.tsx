@@ -185,13 +185,13 @@ function useOrderRefundForm(
   };
 }
 
-const OrderRefundForm: React.FC<OrderRefundFormProps> = ({
+const OrderRefundForm = ({
   children,
   order,
   defaultType,
   onSubmit,
   disabled,
-}) => {
+}: OrderRefundFormProps) => {
   const props = useOrderRefundForm(order, defaultType, onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

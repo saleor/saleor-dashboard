@@ -14,7 +14,7 @@ import ShippingZoneCreatePage, {
 } from "../components/ShippingZoneCreatePage";
 import { shippingZoneUrl } from "../urls";
 
-const ShippingZoneCreate: React.FC<{}> = () => {
+const ShippingZoneCreate = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

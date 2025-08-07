@@ -24,7 +24,7 @@ import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -34,7 +34,7 @@ interface Props {
   showAvailableApps?: boolean;
 }
 
-export const AppListView: React.FC<Props> = ({ params, showAvailableApps = true }) => {
+export const AppListView = ({ params, showAvailableApps = true }: PropsWithChildren<Props>) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -20,9 +20,9 @@ export interface Pill {
   label: MessageDescriptor;
 }
 
-export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({
+export const ChannelsAvailabilityMenuContent = ({
   pills,
-}) => {
+}: ChannelsAvailabilityMenuContentProps) => {
   const intl = useIntl();
   const classes = useStyles({});
 

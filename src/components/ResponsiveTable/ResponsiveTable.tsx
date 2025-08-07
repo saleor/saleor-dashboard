@@ -28,7 +28,7 @@ interface ResponsiveTableProps {
   key?: string;
 }
 
-const ResponsiveTable: React.FC<ResponsiveTableProps> = props => {
+const ResponsiveTable = (props: ResponsiveTableProps) => {
   const { children, className, onMouseLeave } = props;
   const classes = useStyles(props);
 

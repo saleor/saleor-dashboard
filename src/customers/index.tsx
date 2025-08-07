@@ -23,7 +23,7 @@ import CustomerCreateView from "./views/CustomerCreate";
 import CustomerDetailsViewComponent from "./views/CustomerDetails";
 import CustomerListViewComponent from "./views/CustomerList";
 
-const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const CustomerListView = () => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: CustomerListUrlQueryParams = asSortParams(qs, CustomerListUrlSortField);
 
@@ -38,10 +38,10 @@ interface CustomerDetailsRouteParams {
   id: string;
 }
 
-const CustomerDetailsView: React.FC<RouteComponentProps<CustomerDetailsRouteParams>> = ({
+const CustomerDetailsView = ({
   location,
   match,
-}) => {
+}: RouteComponentProps<CustomerDetailsRouteParams>) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerUrlQueryParams = qs;
 
@@ -52,9 +52,7 @@ interface CustomerAddressesRouteParams {
   id: string;
 }
 
-const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRouteParams>> = ({
-  match,
-}) => {
+const CustomerAddressesView = ({ match }: RouteComponentProps<CustomerAddressesRouteParams>) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerAddressesUrlQueryParams = qs;
 
@@ -63,7 +61,7 @@ const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRoute
   );
 };
 
-export const CustomerSection: React.FC<{}> = () => {
+export const CustomerSection = () => {
   const intl = useIntl();
 
   return (

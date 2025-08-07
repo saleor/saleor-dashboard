@@ -27,7 +27,7 @@ export interface MenuListPageProps
   selectedMenuIds: string[];
 }
 
-const MenuListPage: React.FC<MenuListPageProps> = ({ selectedMenuIds, ...listProps }) => {
+const MenuListPage = ({ selectedMenuIds, ...listProps }: MenuListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

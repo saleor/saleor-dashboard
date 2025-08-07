@@ -23,8 +23,13 @@ export interface OrderSettingsPageProps {
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
 }
 
-const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
-  const { orderSettings, shop, disabled, saveButtonBarState, onSubmit } = props;
+const OrderSettingsPage = ({
+  orderSettings,
+  shop,
+  disabled,
+  saveButtonBarState,
+  onSubmit,
+}: OrderSettingsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

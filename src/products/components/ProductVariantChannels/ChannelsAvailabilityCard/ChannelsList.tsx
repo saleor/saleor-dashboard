@@ -1,11 +1,11 @@
 import { Accordion, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 interface ChannelListProps {
   summary: string;
 }
 
-export const ChannelsList: React.FC<ChannelListProps> = ({ summary, children }) => (
+export const ChannelsList = ({ summary, children }: PropsWithChildren<ChannelListProps>) => (
   <Accordion>
     <Accordion.Item value="channelListItem">
       <Accordion.Trigger

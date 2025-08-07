@@ -29,7 +29,7 @@ interface OrderListDatagridProps extends ListProps, SortPage<OrderListUrlSortFie
   hasRowHover?: boolean;
 }
 
-export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
+export const OrderListDatagrid = ({
   orders,
   disabled,
   settings,
@@ -39,7 +39,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   onRowClick,
   hasRowHover,
   rowAnchor,
-}) => {
+}: OrderListDatagridProps) => {
   const location = useLocation();
   const intl = useIntl();
   const datagrid = useDatagridChangeState();

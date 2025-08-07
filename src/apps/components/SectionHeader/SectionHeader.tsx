@@ -7,7 +7,7 @@ interface SectionHeaderProps {
   title: ReactNode;
 }
 
-export const SectionHeader: React.FC<SectionHeaderProps> = ({ title }) => {
+export const SectionHeader = ({ title }: SectionHeaderProps) => {
   const classes = useStyles();
 
   return (

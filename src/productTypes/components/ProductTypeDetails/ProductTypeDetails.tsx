@@ -34,7 +34,7 @@ const kindOptions = [
     type: ProductTypeKindEnum.GIFT_CARD,
   },
 ];
-const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
+const ProductTypeDetails = (props: ProductTypeDetailsProps) => {
   const { data, disabled, errors, onChange, onKindChange } = props;
   const intl = useIntl();
 

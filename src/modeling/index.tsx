@@ -21,7 +21,7 @@ import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList";
 
-const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const PageList = () => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PageListUrlQueryParams = asSortParams(
     qs,
@@ -35,13 +35,13 @@ const PageList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     </ConditionalPageFilterProvider>
   );
 };
-const PageCreate: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const PageCreate = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageCreateUrlQueryParams = qs;
 
   return <PageCreateComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
-const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const PageDetails = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageUrlQueryParams = qs;
 

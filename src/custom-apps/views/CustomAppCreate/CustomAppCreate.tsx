@@ -19,7 +19,7 @@ interface CustomAppCreateProps {
   setToken: (token: string) => void;
 }
 
-export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({ setToken }) => {
+export const CustomAppCreate = ({ setToken }: CustomAppCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

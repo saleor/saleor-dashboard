@@ -31,7 +31,7 @@ export interface AppListPageProps extends AppListPageSections, ListProps {
   showAvailableApps: boolean;
 }
 
-export const AppListPage: React.FC<AppListPageProps> = props => {
+export const AppListPage = (props: AppListPageProps) => {
   const {
     appsInstallations,
     installedApps,

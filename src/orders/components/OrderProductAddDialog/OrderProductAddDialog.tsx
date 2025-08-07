@@ -38,7 +38,7 @@ export interface OrderProductAddDialogProps extends FetchMoreProps {
 }
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
-const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
+const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
   const {
     confirmButtonState,
     errors: apiErrors,

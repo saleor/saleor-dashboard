@@ -10,11 +10,11 @@ type FilterNumericFieldProps = FilterFieldBaseProps<string, FieldType.number | F
   currencySymbol: string | undefined;
 };
 
-export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
+export const FilterNumericField = ({
   filter,
   onFilterPropertyChange,
   currencySymbol,
-}) => {
+}: FilterNumericFieldProps) => {
   const classes = useCommonStyles({});
   const isMultiple = filter.multiple;
   const handleChange = (value: string[]) =>

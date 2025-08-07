@@ -68,7 +68,7 @@ interface PermissionGroupProps extends ListActions, SortPage<MembersListUrlSortF
   onAssign: () => void;
 }
 
-const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
+const PermissionGroupMemberList = (props: PermissionGroupProps) => {
   const {
     disabled,
     users,

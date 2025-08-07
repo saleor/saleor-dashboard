@@ -15,7 +15,7 @@ import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
@@ -110,10 +110,12 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App: React.FC = () => (
+const App = () => (
+  // @ts-expect-error legacy types
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <Router>
+        {/* @ts-expect-error legacy types */}
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
             <DateProvider>
@@ -153,7 +155,7 @@ const App: React.FC = () => (
     </ApolloProvider>
   </SaleorProvider>
 );
-const Routes: React.FC = () => {
+const Routes = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();
@@ -337,4 +339,6 @@ const Routes: React.FC = () => {
   );
 };
 
-render(<App />, document.querySelector("#dashboard-app"));
+const root = createRoot(document.querySelector("#dashboard-app")!);
+
+root.render(<App />);

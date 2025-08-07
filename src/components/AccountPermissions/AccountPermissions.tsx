@@ -24,7 +24,7 @@ interface AccountPermissionsProps {
   onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
 }
 
-const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
+const AccountPermissions = (props: AccountPermissionsProps) => {
   const {
     data,
     disabled,

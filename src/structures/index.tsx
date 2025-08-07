@@ -8,18 +8,18 @@ import { MenuListUrlQueryParams, MenuListUrlSortField, menuPath, structuresListP
 import MenuDetailsComponent from "./views/MenuDetails";
 import MenuListComponent from "./views/MenuList";
 
-const MenuList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const MenuList = () => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: MenuListUrlQueryParams = asSortParams(qs, MenuListUrlSortField);
 
   return <MenuListComponent params={params} />;
 };
-const MenuDetails: React.FC<RouteComponentProps<{ id: string }>> = ({ location, match }) => {
+const MenuDetails = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
 
   return <MenuDetailsComponent id={decodeURIComponent(match.params.id)} params={qs} />;
 };
-const NavigationRouter: React.FC = () => (
+const NavigationRouter = () => (
   <Switch>
     <Route exact component={MenuList} path={structuresListPath} />
     <Route component={MenuDetails} path={menuPath(":id")} />

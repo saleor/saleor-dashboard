@@ -17,7 +17,7 @@ interface CardSpacerProps {
   children?: React.ReactNode;
 }
 
-export const CardSpacer: React.FC<CardSpacerProps> = props => {
+export const CardSpacer = (props: CardSpacerProps) => {
   const { children } = props;
   const classes = useStyles(props);
 

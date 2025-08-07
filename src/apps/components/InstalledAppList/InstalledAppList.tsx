@@ -19,7 +19,7 @@ interface InstalledAppListProps extends ListProps {
   appInstallationList?: AppInstallation[];
 }
 
-const InstalledAppList: React.FC<InstalledAppListProps> = ({ appList, appInstallationList }) => {
+const InstalledAppList = ({ appList, appInstallationList }: InstalledAppListProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();

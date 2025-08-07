@@ -28,7 +28,7 @@ export interface SaleVariantsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 5;
-const DiscountVariants: React.FC<SaleVariantsProps> = props => {
+const DiscountVariants = (props: SaleVariantsProps) => {
   const {
     variants: discountVariants,
     disabled,
@@ -135,7 +135,11 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                           onVariantUnassign(variant.id);
                         }}
                       >
-                        <DeleteIcon color="primary" />
+                        <DeleteIcon
+                          color="primary"
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

@@ -17,7 +17,7 @@ interface RefundTableInputCellProps {
   handleMaxRefund: () => void;
 }
 
-export const RefundTableInputCell: React.FC<RefundTableInputCellProps> = ({
+export const RefundTableInputCell = ({
   index,
   control,
   qtyToRefund,
@@ -25,7 +25,7 @@ export const RefundTableInputCell: React.FC<RefundTableInputCellProps> = ({
   handleInputOnBlur,
   handleInputOnChange,
   handleMaxRefund,
-}) => {
+}: RefundTableInputCellProps) => {
   return (
     <GridTable.Cell>
       <Box backgroundColor="default1" display="flex" gap={2}>

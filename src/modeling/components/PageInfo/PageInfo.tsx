@@ -30,7 +30,7 @@ const useStyles = makeStyles(
   },
   { name: "PageInfo" },
 );
-const PageInfo: React.FC<PageInfoProps> = props => {
+const PageInfo = (props: PageInfoProps) => {
   const { data, disabled, errors, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

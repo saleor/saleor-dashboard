@@ -530,6 +530,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           </div>
         </div>
       </div>
+      {/* @ts-expect-error legacy types */}
       <Dialog isOpen={showDialog === "short-keys"} onDismiss={() => setShowDialog(null)}>
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Short Keys</div>
@@ -626,6 +627,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           </div>
         </div>
       </Dialog>
+      {/* @ts-expect-error legacy types */}
       <Dialog
         isOpen={showDialog === "settings"}
         onDismiss={() => {

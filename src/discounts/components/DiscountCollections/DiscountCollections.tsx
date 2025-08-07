@@ -26,7 +26,7 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 4;
-const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
+const DiscountCollections = (props: DiscountCollectionsProps) => {
   const {
     collections,
     disabled,
@@ -124,7 +124,10 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                           onCollectionUnassign(collection.id);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

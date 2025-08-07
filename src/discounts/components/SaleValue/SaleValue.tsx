@@ -24,7 +24,7 @@ export interface SaleValueProps {
 }
 
 const numberOfColumns = 2;
-const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange }) => {
+const SaleValue = ({ data, disabled, errors, onChange }: SaleValueProps) => {
   const { type } = data;
   const intl = useIntl();
   const classes = useStyles({});

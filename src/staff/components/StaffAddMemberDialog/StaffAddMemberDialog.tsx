@@ -41,7 +41,7 @@ interface StaffAddMemberDialogProps extends SearchPageProps {
   onConfirm: (data: AddMemberFormData) => SubmitPromise;
 }
 
-const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
+const StaffAddMemberDialog = (props: StaffAddMemberDialogProps) => {
   const { confirmButtonState, errors, onClose, onConfirm, open } = props;
   const dialogErrors = useModalDialogErrors(errors, open);
   const intl = useIntl();

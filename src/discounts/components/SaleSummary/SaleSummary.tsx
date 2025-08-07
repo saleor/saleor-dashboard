@@ -19,7 +19,7 @@ export interface SaleSummaryProps extends ChannelProps {
   sale: SaleDetailsFragment;
 }
 
-const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) => {
+const SaleSummary = ({ selectedChannelId, sale }: SaleSummaryProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const channel = sale?.channelListings?.find(listing => listing.channel.id === selectedChannelId);

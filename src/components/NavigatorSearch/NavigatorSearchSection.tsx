@@ -13,9 +13,13 @@ interface NavigatorSearchSectionProps {
   offset: number;
 }
 
-const NavigatorSearchSection: React.FC<NavigatorSearchSectionProps> = props => {
-  const { getItemProps, highlightedIndex, label, items, offset } = props;
-
+const NavigatorSearchSection = ({
+  getItemProps,
+  highlightedIndex,
+  label,
+  items,
+  offset,
+}: NavigatorSearchSectionProps) => {
   return (
     <Box marginY={2} overflowY="hidden" __maxHeight="inherit">
       <Text paddingLeft={4} textTransform="uppercase" fontWeight="medium" fontSize={4}>

@@ -22,7 +22,7 @@ export interface CustomAppTokensProps {
 
 const numberOfColumns = 3;
 
-const CustomExtensionTokens: React.FC<CustomAppTokensProps> = props => {
+const CustomExtensionTokens = (props: CustomAppTokensProps) => {
   const { tokens, onCreate, onDelete, hasManagedAppsPermission, isLoading } = props;
   const classes = useStyles(props);
   const intl = useIntl();

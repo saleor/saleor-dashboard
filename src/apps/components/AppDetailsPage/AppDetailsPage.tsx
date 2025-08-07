@@ -18,13 +18,13 @@ export interface AppDetailsPageProps {
   onAppDeleteOpen: () => void;
 }
 
-export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
+export const AppDetailsPage = ({
   data,
   loading,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
-}) => {
+}: AppDetailsPageProps) => {
   if (!data) {
     return null;
   }
