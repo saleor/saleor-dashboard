@@ -4613,6 +4613,9 @@
   "PuQb0P": {
     "string": "Reward"
   },
+  "Pvi8WI": {
+    "string": "Order lines"
+  },
   "PvrceS": {
     "context": "Refund draft status",
     "string": "Draft"
@@ -4693,6 +4696,9 @@
   "QCwBUI": {
     "context": "button",
     "string": "Delete Search"
+  },
+  "QDxJib": {
+    "string": "Fulfill"
   },
   "QFBjlV": {
     "context": "error message",

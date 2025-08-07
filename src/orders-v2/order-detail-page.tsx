@@ -8,6 +8,7 @@ import { OrderApps } from "./order-apps";
 import { OrderCustomer } from "./order-customer/order-customer";
 import { OrderHeader } from "./order-header";
 import { OrderInvoices } from "./order-invoices";
+import { OrderLines } from "./order-lines";
 import { OrderModel } from "./order-model";
 import { OrderCustomerNote } from "./order-notes";
 
@@ -31,7 +32,7 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
           borderBottomLeftRadius={5}
           gridColumn={"9"}
         >
-          Content
+          <OrderLines lines={order.lines} />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar
           borderTopRightRadius={5}

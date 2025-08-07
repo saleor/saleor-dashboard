@@ -50,7 +50,100 @@ export const fulfilledOrderFixture = {
   discounts: [],
   events: [],
   fulfillments: [],
-  lines: [],
+  lines: [
+    {
+      __typename: "OrderLine",
+      isShippingRequired: true,
+      productName: "Test Product",
+      unitDiscountValue: 0,
+      productSku: "TEST-PRODUCT-SKU",
+      quantityFulfilled: 2,
+      quantityToFulfill: 0,
+      unitDiscountReason: null,
+      unitDiscountType: null,
+      allocations: [],
+      unitDiscount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
+      thumbnail: {
+        __typename: "Image",
+        url: "https://example.com/image.jpg",
+      },
+      unitPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+      },
+      undiscountedUnitPrice: {
+        __typename: "TaxedMoney",
+        currency: "USD",
+        gross: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "variant-id-1",
+        name: "Test Variant",
+        quantityAvailable: 100,
+        preorder: {
+          __typename: "PreorderData",
+          endDate: null,
+        },
+        stocks: [
+          {
+            __typename: "Stock",
+            id: "stock-id-1",
+            quantity: 100,
+            warehouse: {
+              __typename: "Warehouse",
+              id: "warehouse-id-1",
+              name: "Main Warehouse",
+            },
+            quantityAllocated: 0,
+          },
+        ],
+        product: {
+          __typename: "Product",
+          id: "product-id-1",
+          isAvailableForPurchase: true,
+        },
+      },
+      isGift: false,
+      id: "line-id-1",
+      quantity: 2,
+      totalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+      },
+    },
+  ],
   shippingAddress: {
     phone: "mocked-phone-number",
     cityArea: "",
