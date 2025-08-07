@@ -13,7 +13,7 @@ interface ExitFormDialogProps {
 }
 
 /** @deprecated Use react-hook-form instead */
-const ExitFormDialog: React.FC<ExitFormDialogProps> = ({ onLeave, onClose, isOpen }) => {
+const ExitFormDialog = ({ onLeave, onClose, isOpen }: ExitFormDialogProps) => {
   const intl = useIntl();
 
   return (

@@ -40,11 +40,11 @@ interface GiftCardCreateExpirySelectProps {
   >;
 }
 
-const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
+const GiftCardCreateExpirySelect = ({
   errors,
   change,
   data: { expirySelected, expiryPeriodType, expiryPeriodAmount, expiryType, expiryDate },
-}) => {
+}: GiftCardCreateExpirySelectProps) => {
   const intl = useIntl();
   const translatedOptions = options.map(({ label, value }) => ({
     value,

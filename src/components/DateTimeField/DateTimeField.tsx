@@ -18,13 +18,7 @@ interface DateTimeFieldProps {
   name: string;
 }
 
-export const DateTimeField: React.FC<DateTimeFieldProps> = ({
-  disabled,
-  error,
-  name,
-  onChange,
-  value,
-}) => {
+export const DateTimeField = ({ disabled, error, name, onChange, value }: DateTimeFieldProps) => {
   const intl = useIntl();
   const parsedValue = value ? splitDateTime(value) : { date: "", time: "" };
 

@@ -9,7 +9,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import React, { useEffect } from "react";
+import React, { PropsWithChildren, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -19,7 +19,7 @@ interface Props extends RouteComponentProps {
   params: AppInstallUrlQueryParams;
 }
 
-export const AppInstallView: React.FC<Props> = ({ params }) => {
+export const AppInstallView = ({ params }: PropsWithChildren<Props>) => {
   const [, setActiveInstallations] = useLocalStorage<Array<Record<"id" | "name", string>>>(
     "activeInstallations",
     [],

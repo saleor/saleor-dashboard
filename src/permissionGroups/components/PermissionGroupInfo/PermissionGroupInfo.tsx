@@ -18,12 +18,7 @@ export interface PermissionGroupInfoProps {
   };
 }
 
-const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
-  disabled,
-  onChange,
-  data,
-  errors,
-}) => {
+const PermissionGroupInfo = ({ disabled, onChange, data, errors }: PermissionGroupInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

@@ -6,12 +6,12 @@ interface DeletableItemProps {
   id: string;
 }
 
-const DeletableItem: React.FC<DeletableItemProps> = ({ onDelete, id }) => {
+const DeletableItem = ({ onDelete, id }: DeletableItemProps) => {
   const handleDelete = () => onDelete(id);
 
   return (
     <IconButton variant="secondary" onClick={handleDelete}>
-      <DeleteIcon />
+      <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
     </IconButton>
   );
 };

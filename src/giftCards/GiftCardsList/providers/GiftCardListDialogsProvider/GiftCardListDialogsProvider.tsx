@@ -41,10 +41,7 @@ export const useGiftCardListDialogs = () => {
   return context;
 };
 
-const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = ({
-  children,
-  params,
-}) => {
+const GiftCardListDialogsProvider = ({ children, params }: GiftCardListDialogsProviderProps) => {
   const navigate = useNavigator();
   const id = params?.id;
   const { CREATE, DELETE, EXPORT, BULK_CREATE } = GiftCardListActionParamsEnum;

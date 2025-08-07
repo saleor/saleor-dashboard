@@ -98,7 +98,7 @@ interface ProductCreatePageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
 }
 
-export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
+export const ProductCreatePage = ({
   allChannelsCount,
   channelsErrors,
   currentChannels,

@@ -36,8 +36,13 @@ const tokenPaperStyles = {
 
 const createHeadersString = (token: string) => `{\n  "authorization": "Bearer ${token}"\n}`;
 
-const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
-  const { confirmButtonState, open, token, onClose, onCreate } = props;
+const TokenCreateDialog = ({
+  confirmButtonState,
+  open,
+  token,
+  onClose,
+  onCreate,
+}: TokenCreateDialogProps) => {
   const [step, setStep] = React.useState<TokenCreateStep>("form");
   const intl = useIntl();
   const headers = createHeadersString(token ?? "");

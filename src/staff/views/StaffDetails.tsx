@@ -10,7 +10,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import StaffDetailsPage, {
@@ -26,7 +26,7 @@ interface OrderListProps {
   params: StaffMemberDetailsUrlQueryParams;
 }
 
-export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
+export const StaffDetails = ({ id, params }: PropsWithChildren<OrderListProps>) => {
   const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();

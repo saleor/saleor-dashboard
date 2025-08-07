@@ -18,9 +18,14 @@ export interface TimelineEventHeaderProps {
   children?: ReactNode;
 }
 
-export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => {
-  const { title, date, titleElements, secondaryTitle, hasPlainDate, children } = props;
-
+export const TimelineEventHeader = ({
+  title,
+  date,
+  titleElements,
+  secondaryTitle,
+  hasPlainDate,
+  children,
+}: TimelineEventHeaderProps) => {
   const elements = titleElements?.filter(Boolean) ?? [];
 
   return (

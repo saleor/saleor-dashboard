@@ -48,7 +48,7 @@ const useStyles = makeStyles(
   { name: "MenuList" },
 );
 const numberOfColumns = 4;
-const MenuList: React.FC<MenuListProps> = props => {
+const MenuList = (props: MenuListProps) => {
   const {
     settings,
     disabled,
@@ -146,7 +146,10 @@ const MenuList: React.FC<MenuListProps> = props => {
                       disabled={disabled}
                       onClick={() => onDelete(menu.id)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

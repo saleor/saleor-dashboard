@@ -22,10 +22,7 @@ interface OrderTransactionTilesProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
 }
 
-export const OrderTransactionTiles: React.FC<OrderTransactionTilesProps> = ({
-  transactions,
-  control,
-}: OrderTransactionTilesProps) => {
+export const OrderTransactionTiles = ({ transactions, control }: OrderTransactionTilesProps) => {
   const { field } = useController({ name: "transactionId", control });
 
   if (!transactions) {

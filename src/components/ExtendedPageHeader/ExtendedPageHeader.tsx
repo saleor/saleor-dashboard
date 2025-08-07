@@ -63,7 +63,7 @@ interface ExtendedPageHeaderProps {
   testId?: string;
 }
 
-const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
+const ExtendedPageHeader = (props: ExtendedPageHeaderProps) => {
   const { children, className, childrenWrapperClassName, inline, underline, title, testId } = props;
   const classes = useStyles(props);
 

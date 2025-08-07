@@ -40,7 +40,7 @@ interface PageTypeDetailsProps {
   params: PageTypeUrlQueryParams;
 }
 
-export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) => {
+export const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const attributeListActions = useBulkActions();

@@ -25,7 +25,7 @@ interface PhoneFieldProps {
   onChange: (event: ChangeEvent) => any;
 }
 
-const PhoneField: React.FC<PhoneFieldProps> = props => {
+const PhoneField = (props: PhoneFieldProps) => {
   const { name, number: phoneNumber, prefix, prefixes, label, onChange } = props;
   const classes = useStyles(props);
   const nameWithPrefix = name + "_prefix";

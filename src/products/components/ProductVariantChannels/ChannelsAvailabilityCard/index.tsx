@@ -27,9 +27,12 @@ interface ProductDetailsChannelsAvailabilityCardProps {
   disabled: boolean;
 }
 
-export const VariantDetailsChannelsAvailabilityCard: React.FC<
-  VariantDetailsChannelsAvailabilityCardProps
-> = ({ variant, listings, onManageClick, disabled }) => (
+export const VariantDetailsChannelsAvailabilityCard = ({
+  variant,
+  listings,
+  onManageClick,
+  disabled,
+}: VariantDetailsChannelsAvailabilityCardProps) => (
   <AvailabilityCard
     allAvailableListings={listings}
     productChannelListings={variant?.product.channelListings}
@@ -43,9 +46,12 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<
   </AvailabilityCard>
 );
 
-export const ProductDetailsChannelsAvailabilityCard: React.FC<
-  ProductDetailsChannelsAvailabilityCardProps
-> = ({ product, listings, onManageClick, disabled }) => (
+export const ProductDetailsChannelsAvailabilityCard = ({
+  product,
+  listings,
+  onManageClick,
+  disabled,
+}: ProductDetailsChannelsAvailabilityCardProps) => (
   <AvailabilityCard
     allAvailableListings={listings}
     productChannelListings={product?.channelListings}

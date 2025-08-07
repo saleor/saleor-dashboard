@@ -45,7 +45,7 @@ function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLogi
   };
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ children, onSubmit }) => {
+const LoginForm = ({ children, onSubmit }: LoginFormProps) => {
   const props = useLoginForm(onSubmit);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -71,7 +71,7 @@ export interface RateUpdateProps {
   params: ShippingRateUrlQueryParams;
 }
 
-export const RateUpdate: React.FC<RateUpdateProps> = ({ id, rateId, params }) => {
+export const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

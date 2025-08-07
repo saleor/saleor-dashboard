@@ -16,13 +16,13 @@ export interface AppActivateDialogProps {
   onConfirm: () => void;
 }
 
-const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
+const AppActivateDialog = ({
   confirmButtonState,
   open,
   name,
   onClose,
   onConfirm,
-}) => {
+}: AppActivateDialogProps) => {
   const intl = useIntl();
   const isNameMissing = name === null || name === "";
   const getMainText = () => {

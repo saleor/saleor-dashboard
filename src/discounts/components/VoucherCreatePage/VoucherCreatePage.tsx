@@ -110,7 +110,7 @@ const CategoriesTab = Tab(VoucherCreatePageTab.categories);
 const CollectionsTab = Tab(VoucherCreatePageTab.collections);
 const ProductsTab = Tab(VoucherCreatePageTab.products);
 const VariantsTab = Tab(VoucherCreatePageTab.variants);
-const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
+const VoucherCreatePage = ({
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -132,7 +132,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   variantsSearch,
   countries,
   resetSelected,
-}) => {
+}: VoucherCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();

@@ -18,7 +18,7 @@ export interface PriceFieldProps extends InputProps {
   onChange: (event: any) => any;
 }
 
-export const PriceField: React.FC<PriceFieldProps> = props => {
+export const PriceField = (props: PriceFieldProps) => {
   const {
     className,
     disabled,

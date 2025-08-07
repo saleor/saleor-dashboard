@@ -51,7 +51,7 @@ interface LinkProps
   state?: LinkState;
 }
 
-const Link: React.FC<LinkProps> = props => {
+const Link = (props: LinkProps) => {
   const {
     className,
     children,
@@ -112,6 +112,7 @@ const Link: React.FC<LinkProps> = props => {
           {children}
         </RouterLink>
       ) : (
+        // @ts-expect-error - wrong types
         <Text as="a" href={disabled ? undefined : href} display="block" {...commonLinkProps}>
           {children}
         </Text>

@@ -40,7 +40,7 @@ interface RadioSwitchFieldProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
+export const RadioSwitchField = (props: RadioSwitchFieldProps) => {
   const {
     classes: overrideClasses,
     className,

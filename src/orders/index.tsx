@@ -50,7 +50,7 @@ interface MatchParams {
   id?: string;
 }
 
-const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
+const OrderList = ({ location }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderListUrlQueryParams = asSortParams(
     qs,
@@ -65,7 +65,7 @@ const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     </ConditionalOrderFilterProvider>
   );
 };
-const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
+const OrderDraftList = ({ location }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderDraftListUrlQueryParams = asSortParams(
     qs,
@@ -80,49 +80,53 @@ const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     </ConditionalDraftOrderFilterProvider>
   );
 };
-const OrderDetails: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
+const OrderDetails = ({ location, match }: RouteComponentProps<MatchParams>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderUrlQueryParams = qs;
-  const id = match.params.id;
+  const id = match.params.id!;
 
   return <OrderDetailsComponent id={decodeURIComponent(id)} params={params} />;
 };
-const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
+const OrderFulfill = ({ location, match }: RouteComponentProps<MatchParams>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderFulfillUrlQueryParams = qs;
 
-  return <OrderFulfillComponent orderId={decodeURIComponent(match.params.id)} params={params} />;
+  return <OrderFulfillComponent orderId={decodeURIComponent(match.params.id!)} params={params} />;
 };
-const OrderPaymentRefund: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => (
+const OrderPaymentRefund = ({ match }: RouteComponentProps<MatchParams>) => (
   <OrderRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
-const OrderSendRefund: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => (
+const OrderSendRefund = ({ match }: RouteComponentProps<MatchParams>) => (
   <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
-const OrderReturn: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => (
+const OrderReturn = ({ match }: RouteComponentProps<MatchParams>) => (
   <OrderReturnComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
-const OrderGrantRefund: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => (
+const OrderGrantRefund = ({ match }: RouteComponentProps<MatchParams>) => (
   <OrderGrantRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
-const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({ match }) => (
+const OrderGrantRefundEdit = ({
+  match,
+}: RouteComponentProps<{ orderId: string; refundId: string }>) => (
   <OrderGrantRefundEditComponent
     orderId={decodeURIComponent(match.params.orderId)}
     grantRefundId={decodeURIComponent(match.params.refundId)}
   />
 );
 
-const OrderTransactionRefund: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => (
+const OrderTransactionRefund = ({ match }: RouteComponentProps<MatchParams>) => (
   <OrderTransactionRefundCreateComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
 
-const OrderTransactionRefundEdit: React.FC<RouteComponentProps<any>> = ({ match }) => (
+const OrderTransactionRefundEdit = ({
+  match,
+}: RouteComponentProps<{ orderId: string; refundId: string }>) => (
   <OrderTransactionRefundEditComponent
     orderId={decodeURIComponent(match.params.orderId)}
     refundId={decodeURIComponent(match.params.refundId)}
   />
 );
-const OrderManualTransactionRefund: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
+const OrderManualTransactionRefund = ({ match }: RouteComponentProps<MatchParams>) => {
   return (
     <OrderManualTransactionRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
   );

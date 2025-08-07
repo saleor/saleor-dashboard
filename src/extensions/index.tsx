@@ -109,9 +109,7 @@ const AddCustomExtensionWebhookView = ({ match }: RouteComponentProps<{ appId?: 
   return <AddCustomExtensionWebhook appId={decodeURIComponent(appId)} />;
 };
 
-const EditCustomExtensionWebhookView: React.FC<RouteComponentProps<{ id?: string }>> = ({
-  match,
-}) => {
+const EditCustomExtensionWebhookView = ({ match }: RouteComponentProps<{ id?: string }>) => {
   const id = match.params.id;
 
   if (!id) {

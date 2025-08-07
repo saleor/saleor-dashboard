@@ -6,10 +6,11 @@ interface AppDialogProps {
   title?: string;
   onClose: () => void;
   open: boolean;
+  children?: React.ReactNode;
 }
 
 /** @deprecated Use component from extensions/ */
-export const AppDialog: React.FC<AppDialogProps> = ({ children, title, onClose, ...props }) => {
+export const AppDialog = ({ children, title, onClose, ...props }: AppDialogProps) => {
   return (
     <DashboardModal aria-labelledby="extension app dialog" {...props} onChange={onClose}>
       <DashboardModal.Content size="lg">

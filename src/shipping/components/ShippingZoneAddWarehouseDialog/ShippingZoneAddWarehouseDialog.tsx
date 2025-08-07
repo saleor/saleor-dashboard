@@ -45,7 +45,7 @@ const initialForm: ShippingZoneAddWarehouseDialogSubmitData = {
   streetAddress2: "",
 };
 
-const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogProps> = ({
+const ShippingZoneAddWarehouseDialog = ({
   confirmButtonState,
   countries,
   disabled,
@@ -53,7 +53,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   open,
   onClose,
   onSubmit,
-}) => {
+}: ShippingZoneAddWarehouseDialogProps) => {
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps("");
   const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
   const errors = useModalDialogErrors([...apiErrors, ...validationErrors], open);

@@ -23,7 +23,7 @@ export interface MenuItemsProps {
   onUndo: () => void;
 }
 
-const MenuItems: React.FC<MenuItemsProps> = props => {
+const MenuItems = (props: MenuItemsProps) => {
   const { canUndo, items, onChange, onItemAdd, onItemClick, onItemEdit, onUndo, onTranslate } =
     props;
   const intl = useIntl();

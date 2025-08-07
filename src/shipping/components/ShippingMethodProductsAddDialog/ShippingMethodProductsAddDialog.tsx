@@ -67,7 +67,7 @@ const handleProductAssign = (
 
 const scrollableTargetId = "shippingMethodProductsAddScrollableDialog";
 
-const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = ({
+const ShippingMethodProductsAddDialog = ({
   confirmButtonState,
   open,
   loading,
@@ -78,7 +78,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   onClose,
   onSubmit,
   availableChannels,
-}) => {
+}: ShippingMethodProductsAddDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);

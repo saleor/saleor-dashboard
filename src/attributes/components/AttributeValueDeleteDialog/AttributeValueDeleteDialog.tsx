@@ -13,7 +13,7 @@ export interface AttributeValueDeleteDialogProps {
   onClose: () => void;
 }
 
-const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
+const AttributeValueDeleteDialog = ({
   attributeName,
   name,
   confirmButtonState,
@@ -21,7 +21,7 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
   onClose,
   onConfirm,
   open,
-}) => {
+}: AttributeValueDeleteDialogProps) => {
   const intl = useIntl();
 
   return (

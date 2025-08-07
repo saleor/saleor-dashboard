@@ -18,11 +18,11 @@ interface GiftCardCreateDialogContentProps extends Pick<DialogProps, "onClose"> 
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = ({
+const GiftCardCreateDialogContent = ({
   onClose,
   refetchQueries,
   initialCustomer,
-}) => {
+}: GiftCardCreateDialogContentProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const [cardCode, setCardCode] = useState(null);

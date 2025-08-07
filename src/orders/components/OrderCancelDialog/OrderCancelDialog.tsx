@@ -19,7 +19,7 @@ export interface OrderCancelDialogProps {
   onSubmit: () => void;
 }
 
-export const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
+export const OrderCancelDialog = (props: OrderCancelDialogProps) => {
   const {
     confirmButtonState,
     errors: apiErrors,

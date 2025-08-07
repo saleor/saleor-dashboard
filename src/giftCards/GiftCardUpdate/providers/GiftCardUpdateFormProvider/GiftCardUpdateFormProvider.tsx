@@ -59,7 +59,7 @@ const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[])
     removeTags: removed,
   };
 };
-const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({ children }) => {
+const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { canSeeCreatedBy } = useGiftCardPermissions();

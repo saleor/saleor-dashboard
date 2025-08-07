@@ -48,7 +48,7 @@ export interface ProductStocksProps {
   isCreate: boolean;
 }
 
-export const ProductStocks: React.FC<ProductStocksProps> = ({
+export const ProductStocks = ({
   data,
   disabled,
   hasVariants,
@@ -64,7 +64,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
   onWarehouseConfigure,
   fetchMoreWarehouses,
   isCreate,
-}) => {
+}: ProductStocksProps) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
   const formErrors = getFormErrors(["sku"], errors);

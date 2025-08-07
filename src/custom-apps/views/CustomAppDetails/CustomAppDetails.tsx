@@ -46,7 +46,7 @@ interface OrderListProps {
   onTokenClose: () => void;
 }
 
-export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, onTokenClose }) => {
+export const CustomAppDetails = ({ id, params, token, onTokenClose }: OrderListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

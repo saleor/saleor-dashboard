@@ -9,11 +9,7 @@ export interface ChannelStatusProps {
   updateChannelStatus: () => void;
 }
 
-export const ChannelStatus: React.FC<ChannelStatusProps> = ({
-  disabled,
-  isActive,
-  updateChannelStatus,
-}) => {
+export const ChannelStatus = ({ disabled, isActive, updateChannelStatus }: ChannelStatusProps) => {
   const intl = useIntl();
 
   return (

@@ -221,7 +221,7 @@ export function createConfigurationMenu(
 
 export const configurationMenuUrl = "/configuration/";
 
-export const ConfigurationSection: React.FC = () => {
+export const ConfigurationSection = () => {
   const shop = useShop();
   const versions = {
     dashboardVersion,

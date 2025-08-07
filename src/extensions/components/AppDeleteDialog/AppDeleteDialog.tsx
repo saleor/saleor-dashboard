@@ -16,14 +16,14 @@ export interface AppDeleteDialogProps {
   type: "CUSTOM" | "EXTERNAL";
 }
 
-const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
+const AppDeleteDialog = ({
   confirmButtonState,
   open,
   name,
   onClose,
   onConfirm,
   type,
-}) => {
+}: AppDeleteDialogProps) => {
   const intl = useIntl();
   const isNameMissing = name === null || name === "";
   const isExternal = type === "EXTERNAL";

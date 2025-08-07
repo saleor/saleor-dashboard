@@ -5,7 +5,7 @@ import React from "react";
 
 export type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;
 
-const LimitReachedAlert: React.FC<LimitReachedAlertProps> = props => (
+const LimitReachedAlert = (props: LimitReachedAlertProps) => (
   // TODO: migrate to new macaw-ui alert
   <Alert
     variant="warning"

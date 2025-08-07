@@ -9,7 +9,7 @@ import React from "react";
 import { TranslationsEntityListProps } from "./types";
 import { sumCompleted } from "./utils";
 
-const TranslationsVoucherList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
+const TranslationsVoucherList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useVoucherTranslationsQuery({
     displayLoader: true,
     variables,

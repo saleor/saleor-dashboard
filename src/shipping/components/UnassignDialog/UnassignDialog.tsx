@@ -11,13 +11,13 @@ export interface UnassignDialogProps {
   onConfirm: () => void;
 }
 
-export const UnassignDialog: React.FC<UnassignDialogProps> = ({
+export const UnassignDialog = ({
   closeModal,
   confirmButtonState,
   idsLength,
   onConfirm,
   open,
-}) => {
+}: UnassignDialogProps) => {
   const intl = useIntl();
 
   return (

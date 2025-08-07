@@ -21,7 +21,7 @@ interface CategoryCreateViewProps {
   parentId?: string;
 }
 
-export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId }) => {
+export const CategoryCreateView = ({ parentId }: CategoryCreateViewProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

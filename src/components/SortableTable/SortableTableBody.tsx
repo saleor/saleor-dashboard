@@ -31,7 +31,7 @@ const useStyles = makeStyles(
 );
 
 /** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
-const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, "ref">> = props => {
+const SortableTableBody = (props: Omit<TableBodyProps & SortableTableBodyProps, "ref">) => {
   const classes = useStyles({});
 
   return (
