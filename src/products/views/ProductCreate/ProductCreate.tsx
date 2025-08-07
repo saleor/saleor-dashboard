@@ -56,7 +56,7 @@ interface ProductCreateProps {
   params: ProductCreateUrlQueryParams;
 }
 
-export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
+export const ProductCreateView = ({ params }: ProductCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

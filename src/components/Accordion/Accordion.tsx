@@ -7,17 +7,18 @@ export interface AccordionProps {
   quickPeek?: React.ReactNode;
   title: string;
   dataTestId?: string;
+  children?: React.ReactNode;
 }
 
 const AccordionItemId = "accordionItemId";
-const Accordion: React.FC<AccordionProps> = ({
+const Accordion = ({
   children,
   initialExpand,
   quickPeek,
   title,
   className,
   dataTestId = "expand-icon",
-}) => {
+}: AccordionProps) => {
   const [openedAccordionId, setOpenedAccordionId] = useState<undefined | string>(
     initialExpand ? AccordionItemId : undefined,
   );

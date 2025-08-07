@@ -30,13 +30,7 @@ interface DryRunProps {
   syncEvents: WebhookEventTypeSyncEnum[];
 }
 
-const DryRun: React.FC<DryRunProps> = ({
-  setResult,
-  showDialog,
-  setShowDialog,
-  query,
-  syncEvents,
-}: DryRunProps) => {
+const DryRun = ({ setResult, showDialog, setShowDialog, query, syncEvents }: DryRunProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const [objectId, setObjectId] = useState<string | null>(null);

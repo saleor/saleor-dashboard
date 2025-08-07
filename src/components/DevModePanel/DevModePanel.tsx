@@ -13,7 +13,7 @@ import { useDevModeContext } from "./hooks";
 import { messages } from "./messages";
 import { getFetcher } from "./utils";
 
-export const DevModePanel: React.FC = () => {
+export const DevModePanel = () => {
   const intl = useIntl();
   const subtitle = useContextualLink("dev_panel");
   const { rootStyle } = useDashboardTheme();

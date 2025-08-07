@@ -56,12 +56,12 @@ function getAttributeValueChoices(id: string, attributes: VariantAttributeInput[
   }));
 }
 
-const ProductVariantAttributes: React.FC<ProductVariantAttributesProps> = ({
+const ProductVariantAttributes = ({
   attributes,
   disabled,
   errors,
   onChange,
-}) => {
+}: ProductVariantAttributesProps) => {
   const intl = useIntl();
 
   return (

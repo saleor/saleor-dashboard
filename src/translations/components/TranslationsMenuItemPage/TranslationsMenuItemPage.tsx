@@ -24,7 +24,7 @@ export interface TranslationsMenuItemPageProps extends TranslationsEntitiesPageP
   data: MenuItemTranslationFragment | null;
 }
 
-const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
+const TranslationsMenuItemPage = ({
   translationId,
   activeField,
   disabled,
@@ -35,7 +35,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsMenuItemPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

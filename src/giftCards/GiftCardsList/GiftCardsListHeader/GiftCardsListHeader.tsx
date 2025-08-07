@@ -19,7 +19,7 @@ import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
 import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 
-const GiftCardsListHeader: React.FC = () => {
+const GiftCardsListHeader = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const subtitle = useContextualLink("gift_cards");

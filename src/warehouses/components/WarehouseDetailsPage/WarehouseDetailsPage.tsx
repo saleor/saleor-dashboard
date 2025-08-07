@@ -43,7 +43,7 @@ export interface WarehouseDetailsPageProps {
   onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
 
-const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
+const WarehouseDetailsPage = ({
   countries,
   disabled,
   errors,
@@ -51,7 +51,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   warehouse,
   onDelete,
   onSubmit,
-}) => {
+}: WarehouseDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [displayCountry, setDisplayCountry] = useStateFromProps(

@@ -8,7 +8,7 @@ import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCa
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardActivateToggle from "./hooks/useGiftCardActivateToggle";
 
-const GiftCardEnableDisableSection: React.FC = () => {
+const GiftCardEnableDisableSection = () => {
   const intl = useIntl();
   const {
     giftCard: { id, isActive, isExpired },

@@ -8,7 +8,7 @@ import {
   PluginDetailsChannelsCardProps,
 } from "./PluginDetailsChannelsCardContent";
 
-export const PluginDetailsChannelsCard: React.FC<PluginDetailsChannelsCardProps> = props => {
+export const PluginDetailsChannelsCard = (props: PluginDetailsChannelsCardProps) => {
   const intl = useIntl();
 
   return (

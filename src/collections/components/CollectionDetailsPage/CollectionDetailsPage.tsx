@@ -53,7 +53,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ChannelProps 
   params: CollectionUrlQueryParams;
 }
 
-const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
+const CollectionDetailsPage = ({
   channelsCount,
   channelsErrors,
   collection,

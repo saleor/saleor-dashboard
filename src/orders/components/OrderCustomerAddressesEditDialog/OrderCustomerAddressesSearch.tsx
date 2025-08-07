@@ -28,7 +28,7 @@ export interface OrderCustomerAddressesSearchProps {
   exitSearch: () => any;
 }
 
-const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
+const OrderCustomerAddressesSearch = (props: OrderCustomerAddressesSearchProps) => {
   const {
     type,
     cloneAddress,
@@ -79,7 +79,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
             </InputAdornment>
           ),
         }}

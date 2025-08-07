@@ -27,12 +27,7 @@ export interface CustomAppInfoProps {
   onChange: FormChange;
 }
 
-const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const CustomAppInformation = ({ data, disabled, errors, onChange }: CustomAppInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name"], errors);

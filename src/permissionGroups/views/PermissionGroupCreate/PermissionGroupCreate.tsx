@@ -20,7 +20,7 @@ import {
   getUserAccessibleChannelsOptions,
 } from "../../utils";
 
-export const PermissionGroupCreate: React.FC = () => {
+export const PermissionGroupCreate = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

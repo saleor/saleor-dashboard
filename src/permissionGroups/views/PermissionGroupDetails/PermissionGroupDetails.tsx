@@ -53,7 +53,7 @@ interface PermissionGroupDetailsProps {
 
 type Members = NonNullable<NonNullable<PermissionGroupDetailsQuery["permissionGroup"]>["users"]>;
 
-export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({ id, params }) => {
+export const PermissionGroupDetails = ({ id, params }: PermissionGroupDetailsProps) => {
   const navigate = useNavigator();
   const shop = useShop();
   const notify = useNotifier();

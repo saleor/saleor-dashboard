@@ -14,7 +14,7 @@ interface AppProps {
   id: string;
 }
 
-export const AppView: React.FC<AppProps> = ({ id }) => {
+export const AppView = ({ id }: AppProps) => {
   const location = useLocation();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { data, refetch } = useAppQuery({

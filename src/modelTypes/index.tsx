@@ -19,7 +19,7 @@ import PageTypeCreate from "./views/PageTypeCreate";
 import PageTypeDetailsComponent from "./views/PageTypeDetails";
 import PageTypeListComponent from "./views/PageTypeList";
 
-const PageTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const PageTypeList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PageTypeListUrlQueryParams = asSortParams(qs, PageTypeListUrlSortField);
 
@@ -37,7 +37,7 @@ const PageTypeDetails: React.FC<RouteComponentProps<PageTypeDetailsRouteParams>>
   return <PageTypeDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const PageTypeRouter: React.FC = () => {
+export const PageTypeRouter = () => {
   const intl = useIntl();
 
   return (

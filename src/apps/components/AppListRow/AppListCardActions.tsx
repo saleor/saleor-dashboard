@@ -1,7 +1,7 @@
 import { appInstallationStatusMessages } from "@dashboard/apps/messages";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AppListCardInstallButton } from "./AppListCardInstallButton";
@@ -18,7 +18,7 @@ interface AppListCardActionsProps {
   removeInstallHandler?: () => void;
 }
 
-const AppListCardActions: React.FC<AppListCardActionsProps> = ({
+const AppListCardActions = ({
   releaseDate,
   installationPending = false,
   appInstallation,
@@ -26,7 +26,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
   githubForkHandler,
   retryInstallHandler,
   removeInstallHandler,
-}) => {
+}: PropsWithChildren<AppListCardActionsProps>) => {
   if (
     !installHandler &&
     !githubForkHandler &&

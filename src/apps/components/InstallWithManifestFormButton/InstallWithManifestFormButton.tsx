@@ -12,9 +12,9 @@ interface InstallWithManifestFormButtonProps {
   onSubmitted: (manifestUrl: string) => void;
 }
 
-export const InstallWithManifestFormButton: React.FC<InstallWithManifestFormButtonProps> = ({
+export const InstallWithManifestFormButton = ({
   onSubmitted,
-}) => {
+}: InstallWithManifestFormButtonProps) => {
   const styles = useStyles();
   const intl = useIntl();
   const [inputOpened, setInputOpened] = useState(false);

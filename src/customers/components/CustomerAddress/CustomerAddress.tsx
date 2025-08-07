@@ -72,7 +72,7 @@ const useStyles = makeStyles(
   },
   { name: "CustomerAddress" },
 );
-const CustomerAddress: React.FC<CustomerAddressProps> = props => {
+const CustomerAddress = (props: CustomerAddressProps) => {
   const {
     address,
     disabled,

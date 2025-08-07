@@ -11,7 +11,7 @@ interface WebhookStatusProps {
   setValue: (data: Partial<WebhookFormData>) => void;
 }
 
-const WebhookStatus: React.FC<WebhookStatusProps> = ({ data, disabled, setValue }) => {
+const WebhookStatus = ({ data, disabled, setValue }: WebhookStatusProps) => {
   const intl = useIntl();
 
   return (

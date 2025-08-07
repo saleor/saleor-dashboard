@@ -80,7 +80,7 @@ interface OrderDraftDetailsProps {
   closeModal: any;
 }
 
-export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
+export const OrderDraftDetails = ({
   id,
   params,
   loading,
@@ -96,7 +96,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   orderDraftFinalize,
   openModal,
   closeModal,
-}) => {
+}: OrderDraftDetailsProps) => {
   const order = data.order;
   const navigate = useNavigator();
   const { data: channelUsabilityData } = useChannelUsabilityDataQuery({

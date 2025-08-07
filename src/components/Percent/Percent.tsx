@@ -7,7 +7,7 @@ interface PercentProps {
   amount: number;
 }
 
-const Percent: React.FC<PercentProps> = ({ amount }) => (
+const Percent = ({ amount }: PercentProps) => (
   <LocaleConsumer>{({ locale }) => formatPercantage(amount, locale)}</LocaleConsumer>
 );
 

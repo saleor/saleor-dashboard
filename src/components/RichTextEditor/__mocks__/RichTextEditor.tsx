@@ -5,13 +5,7 @@ import { RichTextEditorProps } from "../RichTextEditor";
 
 export const HOLDER = "TEST_HOLDER";
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({
-  disabled,
-  error,
-  label,
-  name,
-  helperText,
-}) => (
+const RichTextEditor = ({ disabled, error, label, name, helperText }: RichTextEditorProps) => (
   <FormControl
     data-test-id={"rich-text-editor-" + name}
     disabled={disabled}

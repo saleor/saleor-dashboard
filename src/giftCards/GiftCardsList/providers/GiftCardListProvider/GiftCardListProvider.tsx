@@ -73,10 +73,7 @@ export const useGiftCardList = () => {
   return context;
 };
 
-export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
-  children,
-  params,
-}) => {
+export const GiftCardsListProvider = ({ children, params }: GiftCardsListProviderProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");

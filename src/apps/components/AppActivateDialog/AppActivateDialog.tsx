@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { useIntl } from "react-intl";
 
 import msgs from "./messages";
@@ -18,13 +18,13 @@ export interface AppActivateDialogProps {
 }
 
 /** @deprecated use component from extensions/ */
-const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
+const AppActivateDialog = ({
   confirmButtonState,
   open,
   name,
   onClose,
   onConfirm,
-}) => {
+}: PropsWithChildren<AppActivateDialogProps>) => {
   const intl = useIntl();
   const isNameMissing = name === null || name === "";
   const getMainText = () => {

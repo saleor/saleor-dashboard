@@ -9,9 +9,10 @@ type GiftCardCreateRequiresActivationSectionProps = Pick<CheckboxProps, "checked
   onChange: FormChange;
 };
 
-const GiftCardCreateRequiresActivationSection: React.FC<
-  GiftCardCreateRequiresActivationSectionProps
-> = ({ checked, onChange }) => (
+const GiftCardCreateRequiresActivationSection = ({
+  checked,
+  onChange,
+}: GiftCardCreateRequiresActivationSectionProps) => (
   <Checkbox
     data-test-id="requires-activation-section"
     name="requiresActivation"

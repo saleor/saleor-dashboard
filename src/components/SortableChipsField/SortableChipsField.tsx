@@ -48,7 +48,7 @@ function disableSortingStrategy() {
   return null;
 }
 
-const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
+const SortableChipsField = ({
   loading,
   disabled,
   values,
@@ -57,7 +57,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
   onValueDelete,
   onValueReorder,
   onAdd,
-}) => {
+}: SortableChipsFieldProps) => {
   const { activeId, handleDragStart, handleDragEnd } = useActiveDragId();
   const { handleDragOver } = useSortableDragOver({
     items: values,

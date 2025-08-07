@@ -3,9 +3,10 @@ import React from "react";
 
 interface AppLogoProps {
   backgroundColor: string;
+  children?: React.ReactNode;
 }
 
-export const AppLogo: React.FC<AppLogoProps> = ({ backgroundColor, children }) => (
+export const AppLogo = ({ backgroundColor, children }: AppLogoProps) => (
   <Box
     width={10}
     height={10}

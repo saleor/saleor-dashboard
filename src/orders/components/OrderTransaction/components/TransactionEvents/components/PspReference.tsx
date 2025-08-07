@@ -54,7 +54,7 @@ export interface PspReferenceProps {
   url?: string;
 }
 
-export const PspReference: React.FC<PspReferenceProps> = ({ reference, url }) => {
+export const PspReference = ({ reference, url }: PspReferenceProps) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const classes = useStyles();
@@ -76,7 +76,11 @@ export const PspReference: React.FC<PspReferenceProps> = ({ reference, url }) =>
             copy(reference);
           }}
         >
-          {copied ? <CheckIcon /> : <CopyIcon />}
+          {copied ? (
+            <CheckIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+          ) : (
+            <CopyIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+          )}
         </IconButton>
       )}
     </div>

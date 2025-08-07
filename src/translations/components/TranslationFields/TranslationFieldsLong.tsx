@@ -17,14 +17,14 @@ interface TranslationFieldsLongProps {
   onSubmit: (data: string) => SubmitPromise;
 }
 
-const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
+const TranslationFieldsLong = ({
   disabled,
   edit,
   initial,
   saveButtonState,
   onDiscard,
   onSubmit,
-}) => {
+}: TranslationFieldsLongProps) => {
   const intl = useIntl();
 
   return edit ? (

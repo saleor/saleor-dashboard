@@ -26,11 +26,7 @@ export interface TranslationsCollectionsProps {
   params: TranslationsCollectionsQueryParams;
 }
 
-const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsCollections = ({ id, languageCode, params }: TranslationsCollectionsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

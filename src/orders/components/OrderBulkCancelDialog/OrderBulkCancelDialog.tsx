@@ -11,13 +11,13 @@ export interface OrderBulkCancelDialogProps {
   onConfirm: () => void;
 }
 
-const OrderBulkCancelDialog: React.FC<OrderBulkCancelDialogProps> = ({
+const OrderBulkCancelDialog = ({
   confirmButtonState,
   numberOfOrders,
   open,
   onClose,
   onConfirm,
-}) => {
+}: OrderBulkCancelDialogProps) => {
   const intl = useIntl();
 
   return (

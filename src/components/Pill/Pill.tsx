@@ -30,6 +30,9 @@ export const Pill = React.forwardRef<HTMLDivElement, PillProps>(
 
     return (
       <MacawuiPill
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
         {...props}
         ref={ref}
         className={clsx(classes.pill, props.className)}

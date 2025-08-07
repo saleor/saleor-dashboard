@@ -17,11 +17,11 @@ export interface GiftCardCustomerSelectFieldProps {
   disabled?: boolean;
 }
 
-const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = ({
+const GiftCardCustomerSelectField = ({
   selectedCustomer,
   setSelectedCustomer,
   disabled = false,
-}) => {
+}: GiftCardCustomerSelectFieldProps) => {
   const intl = useIntl();
   const { loadMore, search, result } = useCustomerSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,

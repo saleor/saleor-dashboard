@@ -21,7 +21,7 @@ export interface ShippingZonesProps {
   shippingZonesChoices: RelayToFlat<SearchShippingZonesQuery["search"]>;
 }
 
-const ShippingZones: React.FC<ShippingZonesProps> = props => {
+const ShippingZones = (props: ShippingZonesProps) => {
   const {
     addShippingZone,
     removeShippingZone,

@@ -31,7 +31,7 @@ export interface ShippingZoneSettingsCardProps {
   loading: boolean;
 }
 
-export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> = ({
+export const ShippingZoneSettingsCard = ({
   formData,
   hasMoreWarehouses,
   loading,
@@ -42,7 +42,7 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
   onWarehouseChange,
   allChannels,
   onChannelChange,
-}) => {
+}: ShippingZoneSettingsCardProps) => {
   const intl = useIntl();
 
   return (

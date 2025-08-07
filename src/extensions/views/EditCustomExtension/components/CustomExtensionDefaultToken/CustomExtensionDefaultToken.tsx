@@ -12,7 +12,7 @@ export interface CustomExtensionDefaultTokenProps {
   onTokenClose: () => void;
 }
 
-const CustomExtensionDefaultToken: React.FC<CustomExtensionDefaultTokenProps> = props => {
+const CustomExtensionDefaultToken = (props: CustomExtensionDefaultTokenProps) => {
   const { token, onTokenClose } = props;
   const { copyToClipboard, copyState } = useClipboardCopy();
 

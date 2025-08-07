@@ -45,12 +45,12 @@ export interface CollectionProductsProps {
   disabled: boolean;
 }
 
-const CollectionProducts: React.FC<CollectionProductsProps> = ({
+const CollectionProducts = ({
   collection,
   params,
   currentChannels,
   disabled,
-}) => {
+}: CollectionProductsProps) => {
   const navigate = useNavigator();
   const [openModal, closeModal] = createDialogActionHandlers<
     CollectionUrlDialog,

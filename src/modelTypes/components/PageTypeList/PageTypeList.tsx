@@ -35,7 +35,7 @@ interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeLis
   pageTypes: PageTypeFragment[];
 }
 
-const PageTypeList: React.FC<PageTypeListProps> = props => {
+const PageTypeList = (props: PageTypeListProps) => {
   const { disabled, pageTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
     props;
   const location = useLocation();

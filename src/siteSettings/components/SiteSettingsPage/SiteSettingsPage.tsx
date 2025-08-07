@@ -67,7 +67,7 @@ export function areAddressInputFieldsModified(data: SiteSettingsPageAddressFormD
     .some(field => field !== "");
 }
 
-const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
+const SiteSettingsPage = (props: SiteSettingsPageProps) => {
   const { disabled, errors, saveButtonBarState, shop, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();

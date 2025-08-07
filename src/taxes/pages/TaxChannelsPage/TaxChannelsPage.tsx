@@ -62,7 +62,7 @@ export interface TaxConfigurationFormData {
   removeCountriesConfiguration: CountryCode[];
 }
 
-export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
+export const TaxChannelsPage = (props: TaxChannelsPageProps) => {
   const {
     taxConfigurations,
     selectedConfigurationId,

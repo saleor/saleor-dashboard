@@ -8,7 +8,7 @@ interface RefundTableProductCellProps {
   line: OrderDetailsGrantRefundFragment["lines"][number];
 }
 
-export const RefundTableProductCell: React.FC<RefundTableProductCellProps> = ({ line }) => {
+export const RefundTableProductCell = ({ line }: RefundTableProductCellProps) => {
   const { elementRef: productElementRef, isOverflowing: isProductOverflowing } =
     useOverflowDetection<HTMLDivElement>();
   const { elementRef: variantElementRef, isOverflowing: isVariantOverflowing } =

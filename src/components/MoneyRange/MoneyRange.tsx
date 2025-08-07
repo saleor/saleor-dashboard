@@ -10,7 +10,7 @@ export interface MoneyRangeProps {
   to?: IMoney;
 }
 
-export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
+export const MoneyRange = ({ from, to }: MoneyRangeProps) => {
   const intl = useIntl();
 
   return <LocaleConsumer>{({ locale }) => getMoneyRange(locale, intl, from, to)}</LocaleConsumer>;
