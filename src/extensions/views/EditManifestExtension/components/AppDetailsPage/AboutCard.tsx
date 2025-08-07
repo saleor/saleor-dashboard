@@ -9,7 +9,7 @@ type AboutCardProps = {
   loading: boolean;
 } & BoxProps;
 
-export const AboutCard: React.FC<AboutCardProps> = ({ aboutApp, loading, ...boxProps }) => {
+export const AboutCard = ({ aboutApp, loading, ...boxProps }: AboutCardProps) => {
   const intl = useIntl();
   const renderContent = () => {
     if (loading) {

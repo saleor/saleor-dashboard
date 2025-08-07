@@ -25,12 +25,12 @@ const useStyles = makeStyles(
   }),
   { name: "GiftCardExpirySettingsCard" },
 );
-const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
+const GiftCardExpirySettingsCard = ({
   data,
   disabled,
   errors,
   onChange,
-}) => {
+}: GiftCardExpirySettingsCardProps) => {
   const intl = useIntl();
   const classes = useStyles({});
 

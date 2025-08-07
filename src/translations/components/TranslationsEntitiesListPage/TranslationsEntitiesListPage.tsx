@@ -40,7 +40,7 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "shippingMethods",
   "menuItems",
 ];
-const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
+const TranslationsEntitiesListPage = (props: TranslationsEntitiesListPageProps) => {
   const { filters, language, children } = props;
   const intl = useIntl();
   const queryTab = tabs.indexOf(filters.current);

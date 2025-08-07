@@ -9,7 +9,7 @@ A good and easy example would be `src/components/Datagrid/Datagrid.stories.tsx` 
 The most important thing is to provide React Context (avoid prop-drilling through multiple intermediate components) in form component definition:
 
 ```jsx
-const Form: React.FC = ({ children }) => {
+const Form = ({ children }) => {
   // This one is not needed by datagrid component and is put here just because
   // we assumed it's a form component
   const formProps = useForm({});

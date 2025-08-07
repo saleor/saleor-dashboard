@@ -7,7 +7,7 @@ interface AddressFormatterProps {
   address?: AddressType;
 }
 
-const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
+const AddressFormatter = ({ address }: AddressFormatterProps) => {
   if (!address) {
     return <Skeleton />;
   }

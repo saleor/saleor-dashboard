@@ -25,7 +25,7 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       const resetFilters = result.current[1];
 
       // Act
@@ -223,7 +223,7 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       const handleSearchChange = result.current[2];
 
       // Act
@@ -257,7 +257,7 @@ describe("useFilterHandlers", () => {
           keepActiveTab: false,
         }),
       );
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       const handleSearchChange = result.current[2];
 
       // Act

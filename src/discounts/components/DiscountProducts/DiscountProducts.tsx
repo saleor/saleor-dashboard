@@ -28,7 +28,7 @@ export interface SaleProductsProps extends ListProps, ListActions {
 }
 
 const numberOfColumns = 5;
-const DiscountProducts: React.FC<SaleProductsProps> = props => {
+const DiscountProducts = (props: SaleProductsProps) => {
   const {
     products,
     disabled,
@@ -141,7 +141,10 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                           onProductUnassign(product.id);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

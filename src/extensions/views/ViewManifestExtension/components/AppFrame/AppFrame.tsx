@@ -26,7 +26,7 @@ interface Props {
 
 const getOrigin = (url: string) => new URL(url).origin;
 
-export const AppFrame: React.FC<Props> = ({
+export const AppFrame = ({
   src,
   appToken,
   appId,
@@ -36,7 +36,7 @@ export const AppFrame: React.FC<Props> = ({
   refetch,
   dashboardVersion,
   coreVersion = "",
-}) => {
+}: Props) => {
   const frameRef = React.useRef<HTMLIFrameElement | null>(null);
   const classes = useStyles();
   const appOrigin = getOrigin(src);

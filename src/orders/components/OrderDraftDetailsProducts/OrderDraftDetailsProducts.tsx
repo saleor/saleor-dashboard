@@ -27,14 +27,14 @@ interface OrderDraftDetailsProductsProps {
   onShowMetadata: (id: string) => void;
 }
 
-const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
+const OrderDraftDetailsProducts = ({
   order,
   errors,
   loading,
   onOrderLineChange,
   onOrderLineRemove,
   onShowMetadata,
-}) => {
+}: OrderDraftDetailsProductsProps) => {
   const classes = useStyles();
   const lines = order?.lines ?? [];
   const formErrors = errors.filter(error => error.field === "lines");

@@ -8,7 +8,7 @@ interface UserAvatarProps {
   style?: React.CSSProperties;
 }
 
-export const UserAvatar: React.FC<UserAvatarProps> = ({ url, initials, ...rest }) =>
+export const UserAvatar = ({ url, initials, ...rest }: UserAvatarProps) =>
   url ? (
     <Avatar.User scheme="accent1" src={url} {...rest} />
   ) : (

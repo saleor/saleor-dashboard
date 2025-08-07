@@ -170,7 +170,7 @@ interface OrderOperationsProps {
   onManualTransactionAdded: (data: CreateManualTransactionCaptureMutation) => void;
 }
 
-const OrderOperations: React.FC<OrderOperationsProps> = ({
+const OrderOperations = ({
   children,
   onDraftUpdate,
   onNoteAdd,
@@ -193,7 +193,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   onInvoiceSend,
   onTransactionActionSend,
   onManualTransactionAdded,
-}) => {
+}: OrderOperationsProps) => {
   const orderVoid = useOrderVoidMutation({
     onCompleted: onOrderVoid,
   });

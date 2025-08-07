@@ -45,12 +45,12 @@ interface GiftCardBulkCreateDialogFormProps {
   onClose: () => void;
 }
 
-const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> = ({
+const GiftCardBulkCreateDialogForm = ({
   onSubmit,
   opts,
   onClose,
   formErrors = {},
-}) => {
+}: GiftCardBulkCreateDialogFormProps) => {
   const intl = useIntl();
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const getInitialExpirySettingsData = (): Partial<GiftCardBulkCreateFormData> => {

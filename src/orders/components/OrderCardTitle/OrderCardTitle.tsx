@@ -48,13 +48,13 @@ const selectStatus = (status: CardTitleStatus) => {
       return StatusType.ERROR;
   }
 };
-const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
+const OrderCardTitle = ({
   status,
   warehouseName,
   withStatus = false,
   toolbar,
   className,
-}) => {
+}: OrderCardTitleProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const messageForStatus = getOrderTitleMessage(status);

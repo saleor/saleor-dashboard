@@ -83,7 +83,7 @@ const messages = defineMessages({
   },
 });
 
-export const PaymentSubmitCardValues: React.FC<PaymentSubmitCardValuesProps> = props => {
+export const PaymentSubmitCardValues = (props: PaymentSubmitCardValuesProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const orderedKeys: Array<keyof PaymentSubmitCardValuesProps> = [

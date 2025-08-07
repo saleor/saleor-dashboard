@@ -4,11 +4,11 @@ import React from "react";
 
 import { useManualTransactionContext } from "../context";
 
-export const PspReferenceField: React.FC<Omit<TextFieldProps, "onChange" | "value">> = ({
+export const PspReferenceField = ({
   disabled,
   variant = "outlined",
   ...props
-}) => {
+}: Omit<TextFieldProps, "onChange" | "value">) => {
   const { submitState, pspReference, handleChangePspReference } = useManualTransactionContext();
 
   return (

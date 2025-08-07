@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import {
@@ -34,8 +33,10 @@ mockResizeObserver();
 const getWrapper = (mocks: MockedResponse[] = []) => {
   const WrapperComponent = ({ children }: { children: ReactNode }) => {
     return (
+      // @ts-expect-error - old router
       <BrowserRouter>
         <MockedProvider mocks={mocks}>
+          {/* @ts-expect-error - LegacyThemeProvider is not typed properly */}
           <LegacyThemeProvider>
             <ThemeProvider>{children}</ThemeProvider>
           </LegacyThemeProvider>

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import React, { useRef } from "react";
+import React, { ReactNode, useRef } from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
 export enum Locale {
@@ -127,7 +127,7 @@ export const LocaleContext = React.createContext<LocaleContextType>({
 });
 
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
-const LocaleProvider: React.FC = ({ children }) => {
+const LocaleProvider = ({ children }: { children: ReactNode }) => {
   const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
   const [messages, setMessages] = React.useState(undefined);
   const loaded = useRef(false);

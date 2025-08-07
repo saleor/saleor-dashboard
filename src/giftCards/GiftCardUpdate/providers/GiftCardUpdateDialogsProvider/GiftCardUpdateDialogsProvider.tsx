@@ -25,11 +25,11 @@ export interface GiftCardUpdateDialogsConsumerProps {
 
 export const GiftCardUpdateDialogsContext = createContext<GiftCardUpdateDialogsConsumerProps>(null);
 
-const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps> = ({
+const GiftCardUpdateDialogsProvider = ({
   children,
   params,
   id,
-}) => {
+}: GiftCardUpdateDialogsProviderProps) => {
   const navigate = useNavigator();
   const { loading: loadingGiftCard } = useGiftCardDetails();
   const { SET_BALANCE, DELETE, RESEND_CODE } = GiftCardUpdatePageActionParamsEnum;

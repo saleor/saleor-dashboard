@@ -29,7 +29,7 @@ export interface OrderDraftListPageProps
   onSelectOrderDraftIds: (ids: number[], clearSelection: () => void) => void;
 }
 
-const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
+const OrderDraftListPage = ({
   selectedFilterPreset,
   disabled,
   filterOpts,
@@ -50,7 +50,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   currencySymbol,
   selectedOrderDraftIds,
   ...listProps
-}) => {
+}: OrderDraftListPageProps) => {
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterStructure = createFilterStructure(intl, filterOpts);

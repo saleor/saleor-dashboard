@@ -11,7 +11,7 @@ interface TileHeaderProps {
   isDisabled?: boolean;
 }
 
-export const TileHeader: React.FC<TileHeaderProps> = ({ transaction, isDisabled = false }) => {
+export const TileHeader = ({ transaction, isDisabled = false }: TileHeaderProps) => {
   return (
     <RadioGroup.Item
       position="relative"

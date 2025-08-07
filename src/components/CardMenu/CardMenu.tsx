@@ -35,7 +35,7 @@ export interface CardMenuProps {
   disabled?: boolean;
   menuItems: CardMenuItem[];
   outlined?: boolean;
-  Icon?: React.ElementType<{}>;
+  Icon?: React.ElementType<any>;
   IconButtonProps?: IconButtonProps;
   autoFocusItem?: boolean;
   showMenuIcon?: boolean;
@@ -72,7 +72,7 @@ const useStyles = makeStyles(
 /**
  * @deprecated use [`TopNav.Menu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/AppLayout/TopNav/Menu.tsx) instead
  */
-const CardMenu: React.FC<CardMenuProps> = props => {
+const CardMenu = (props: CardMenuProps) => {
   const {
     className,
     disabled,
@@ -146,7 +146,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
         state={open ? "active" : "default"}
         {...IconButtonProps}
       >
-        <Icon />
+        <Icon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
       </IconButton>
       <Popper
         placement="bottom-end"

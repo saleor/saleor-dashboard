@@ -14,13 +14,8 @@ import SiteSettingsPage, {
   areAddressInputFieldsModified,
   SiteSettingsPageFormData,
 } from "../components/SiteSettingsPage";
-import { SiteSettingsUrlQueryParams } from "../urls";
 
-export interface SiteSettingsProps {
-  params: SiteSettingsUrlQueryParams;
-}
-
-export const SiteSettings: React.FC<SiteSettingsProps> = () => {
+export const SiteSettings = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const siteSettings = useSiteSettingsQuery({

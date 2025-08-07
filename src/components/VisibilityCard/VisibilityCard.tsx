@@ -90,7 +90,7 @@ export interface VisibilityCardProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
+export const VisibilityCard = (props: VisibilityCardProps) => {
   const {
     children,
     data: {
@@ -212,6 +212,8 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                     },
                   })
                 }
+                //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore todo
                 error={getFieldError(errors, "isPublishedAt")}
                 fullWidth
               />

@@ -20,4 +20,4 @@ export const getSelectedTaxStrategy = (
 ) =>
   isStrategyFlatRates(currentTaxConfiguration?.taxCalculationStrategy)
     ? TaxCalculationStrategy.FLAT_RATES
-    : currentTaxConfiguration?.taxAppId ?? "legacy-flow";
+    : (currentTaxConfiguration?.taxAppId ?? "legacy-flow");

@@ -26,7 +26,7 @@ const useStyles = makeStyles(
   },
   { name: "ShippingMethodTaxes" },
 );
-const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
+const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
   const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const classes = useStyles(props);
   const intl = useIntl();

@@ -71,7 +71,7 @@ export interface ProductTypeDetailsPageProps {
   onFetchMoreTaxClasses: FetchMoreProps;
 }
 
-const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
+const ProductTypeDetailsPage = ({
   defaultWeightUnit,
   disabled,
   errors,
@@ -90,7 +90,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   setSelectedVariantAttributes,
   selectedVariantAttributes,
   onFetchMoreTaxClasses,
-}) => {
+}: ProductTypeDetailsPageProps) => {
   const navigate = useNavigator();
   const productTypeListBackLink = useBackLinkWithState({
     path: productTypeListPath,

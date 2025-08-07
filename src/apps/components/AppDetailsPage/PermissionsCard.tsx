@@ -4,7 +4,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -18,12 +18,12 @@ type PermissionsCardProps = {
   appId: string; // todo wrap with App Context
 } & BoxProps;
 
-export const PermissionsCard: React.FC<PermissionsCardProps> = ({
+export const PermissionsCard = ({
   permissions,
   loading,
   appId,
   ...boxProps
-}) => {
+}: PropsWithChildren<PermissionsCardProps>) => {
   const [editPermissionDialogOpen, setEditPermissionDialogOpen] = useState(false);
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();

@@ -87,7 +87,7 @@ function handleContainerAssign(
 }
 
 const numberOfColumns = 6;
-const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> = props => {
+const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) => {
   const {
     assignedVariantAttributes,
     disabled,
@@ -265,7 +265,10 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                           onClick={() => onAttributeUnassign(attribute.id)}
                           variant="secondary"
                         >
-                          <DeleteIcon />
+                          <DeleteIcon
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

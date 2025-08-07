@@ -99,7 +99,7 @@ export type MediaTileProps = MediaTileBaseProps &
       }
   );
 
-const MediaTile: React.FC<MediaTileProps> = props => {
+const MediaTile = (props: MediaTileProps) => {
   const { loading, onDelete, onEdit, editHref, media, disableOverlay = false } = props;
   const classes = useStyles(props);
   const parsedMediaOembedData = media?.oembedData ? JSON.parse(media.oembedData) : null;
@@ -125,7 +125,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
                 className={classes.controlButton}
                 onClick={onEdit}
               >
-                <EditIcon />
+                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               </IconButton>
             )}
             {onDelete && (
@@ -135,7 +135,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
                 className={classes.controlButton}
                 onClick={onDelete}
               >
-                <DeleteIcon />
+                <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               </IconButton>
             )}
           </div>

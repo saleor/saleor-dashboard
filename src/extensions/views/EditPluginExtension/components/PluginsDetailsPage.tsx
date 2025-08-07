@@ -42,7 +42,7 @@ export interface PluginsDetailsPageProps {
   setSelectedChannelId: (channelId: string) => void;
 }
 
-export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
+export const PluginsDetailsPage = ({
   disabled,
   errors,
   plugin,
@@ -52,7 +52,7 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   onSubmit,
   selectedConfig,
   setSelectedChannelId,
-}) => {
+}: PluginsDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const initialFormData: PluginDetailsPageFormData = {

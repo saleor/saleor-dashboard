@@ -10,11 +10,7 @@ type DataPrivacyCardProps = {
   loading: boolean;
 } & BoxProps;
 
-export const DataPrivacyCard: React.FC<DataPrivacyCardProps> = ({
-  dataPrivacyUrl,
-  loading,
-  ...boxProps
-}) => {
+export const DataPrivacyCard = ({ dataPrivacyUrl, loading, ...boxProps }: DataPrivacyCardProps) => {
   const intl = useIntl();
 
   if (!dataPrivacyUrl && !loading) {

@@ -47,7 +47,7 @@ function areValuesEqual(a: AttributeValueEditDialogFormData, b: AttributeValueEd
   return a.name === b.name;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
+const AttributeDetails = ({ params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

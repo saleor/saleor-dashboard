@@ -7,11 +7,11 @@ interface DetailPageLayoutContentProps extends BoxProps {
   hideScrollbar?: boolean;
 }
 
-export const Content: React.FC<DetailPageLayoutContentProps> = ({
+export const Content = ({
   children,
   hideScrollbar = true,
   ...rest
-}) => {
+}: DetailPageLayoutContentProps) => {
   return (
     <Box
       height="100%"

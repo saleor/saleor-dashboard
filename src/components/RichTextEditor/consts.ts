@@ -21,6 +21,8 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     inlineToolbar,
   },
   list: {
+    // TODO: Update @editorjs/list to see if it fixes type mismatch
+    // @ts-expect-error Type mismatch between editorjs libraries (@editorjs/list and @editorjs/editorjs)
     class: List,
     inlineToolbar,
   },
@@ -29,9 +31,10 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     inlineToolbar,
   },
   paragraph: {
+    // @ts-expect-error Type mismatch between editorjs libraries (@editorjs/list and @editorjs/editorjs)
     class: Paragraph,
     inlineToolbar,
-  } as unknown as ToolConstructable,
+  },
   strikethrough: createGenericInlineTool({
     sanitize: {
       s: {},

@@ -17,14 +17,14 @@ interface TranslationFieldsShortProps {
   onSubmit: (data: string) => SubmitPromise<any[]>;
 }
 
-const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
+const TranslationFieldsShort = ({
   disabled,
   edit,
   initial,
   saveButtonState,
   onDiscard,
   onSubmit,
-}) => {
+}: TranslationFieldsShortProps) => {
   const intl = useIntl();
 
   return edit ? (

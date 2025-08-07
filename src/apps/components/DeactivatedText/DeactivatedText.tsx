@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export const DeactivatedText: React.FC<{}> = () => {
+export const DeactivatedText = () => {
   const classes = useStyles({});
 
   return (

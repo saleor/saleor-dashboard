@@ -35,7 +35,7 @@ export interface CollectionCreatePageProps {
   openChannelsModal: () => void;
 }
 
-const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
+const CollectionCreatePage = ({
   channelsCount,
   channelsErrors,
   currentChannels = [],

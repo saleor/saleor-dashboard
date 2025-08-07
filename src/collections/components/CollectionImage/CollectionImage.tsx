@@ -57,7 +57,7 @@ export interface CollectionImageProps {
   onImageUpload: (file: File) => void;
 }
 
-export const CollectionImage: React.FC<CollectionImageProps> = props => {
+export const CollectionImage = (props: CollectionImageProps) => {
   const { data, onImageUpload, image, onChange, onImageDelete } = props;
   const anchor = React.useRef<HTMLInputElement | null>(null);
   const classes = useStyles(props);

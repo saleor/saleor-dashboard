@@ -12,13 +12,13 @@ interface DetailPageLayoutProps extends BoxProps {
 const contentWithSidebarHeight = `calc(100vh - ${savebarHeight} - ${borderHeight} * 2)`;
 const contentWithoutSidebarHeight = `calc(100vh - ${borderHeight}`;
 
-export const RootLayout: React.FC<DetailPageLayoutProps> = ({
+export const RootLayout = ({
   children,
   gridTemplateColumns = 12,
   withSavebar = true,
   testId,
   ...props
-}) => {
+}: DetailPageLayoutProps) => {
   const gridTemplateColumnsValue = useMemo((): Sprinkles["gridTemplateColumns"] => {
     if (gridTemplateColumns instanceof Object) {
       return {

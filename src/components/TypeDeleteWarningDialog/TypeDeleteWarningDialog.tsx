@@ -116,9 +116,8 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
                 onClick={onDelete}
                 disabled={hasAssignedItems ? !isConsentChecked : false}
                 testId="confirm-delete"
-              >
-                {intl.formatMessage(buttonMessages.delete)}
-              </DeleteButton>
+                label={intl.formatMessage(buttonMessages.delete)}
+              />
             </DashboardModal.Actions>
           </>
         )}

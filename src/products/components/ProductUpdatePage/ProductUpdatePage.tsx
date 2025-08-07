@@ -119,7 +119,7 @@ export interface ProductUpdatePageProps {
   onSeoClick?: () => any;
 }
 
-export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
+export const ProductUpdatePage = ({
   productId,
   disabled,
   categories: categoryChoiceList,
@@ -167,7 +167,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   refetch,
   onCloseDialog,
   onAttributeSelectBlur,
-}) => {
+}: ProductUpdatePageProps) => {
   const intl = useIntl();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);

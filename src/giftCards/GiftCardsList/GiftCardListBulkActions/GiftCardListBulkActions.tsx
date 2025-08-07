@@ -13,7 +13,7 @@ import { bulkEnableDisableSectionMessages as messages } from "../messages";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "../queries";
 
-export const GiftCardListBulkActions: React.FC = () => {
+export const GiftCardListBulkActions = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const { selectedRowIds, clearRowSelection, giftCards } = useGiftCardList();

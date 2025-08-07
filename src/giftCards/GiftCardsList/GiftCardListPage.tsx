@@ -4,7 +4,7 @@ import GiftCardListSearchAndFilters from "./GiftCardListSearchAndFilters";
 import { GiftCardsListDatagrid } from "./GiftCardsListDatagrid";
 import GiftCardsListHeader from "./GiftCardsListHeader";
 
-const GiftCardsListPage: React.FC = () => (
+const GiftCardsListPage = () => (
   <>
     <GiftCardsListHeader />
     <GiftCardListSearchAndFilters />

@@ -21,7 +21,7 @@ export interface ProductTypePickerDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
+const ProductTypePickerDialog = ({
   confirmButtonState,
   open,
   productTypes,
@@ -29,7 +29,7 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
   fetchMoreProductTypes,
   onClose,
   onConfirm,
-}) => {
+}: ProductTypePickerDialogProps) => {
   const intl = useIntl();
   const [choice, setChoice] = useStateFromProps("");
   const productTypeDisplayValue = productTypes.find(

@@ -31,7 +31,7 @@ interface CollectionCreateProps {
   params: CollectionCreateUrlQueryParams;
 }
 
-export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) => {
+export const CollectionCreate = ({ params }: CollectionCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

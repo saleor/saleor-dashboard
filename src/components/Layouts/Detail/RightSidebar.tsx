@@ -5,10 +5,7 @@ interface DetailPageLayoutRightSidebarProps extends BoxProps {
   children: React.ReactNode;
 }
 
-export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({
-  children,
-  ...props
-}) => (
+export const RightSidebar = ({ children, ...props }: DetailPageLayoutRightSidebarProps) => (
   <Box
     borderLeftStyle="solid"
     borderColor="default1"

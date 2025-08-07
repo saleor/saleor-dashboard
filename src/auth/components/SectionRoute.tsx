@@ -16,11 +16,11 @@ interface SectionRouteProps extends RouteProps {
 
 const matchAll = (match: MatchPermissionType) => match === "all";
 
-export const SectionRoute: React.FC<SectionRouteProps> = ({
+export const SectionRoute = ({
   permissions,
   matchPermission = "all",
   ...props
-}) => {
+}: SectionRouteProps) => {
   const { user } = useUser();
 
   // Prevents race condition

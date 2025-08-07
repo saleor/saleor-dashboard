@@ -30,7 +30,7 @@ const numberOfColumns = 2;
 
 const COMMON_CELL_STYLES = { verticalAlign: "baseline" };
 
-export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
+export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
   const {
     disabled = false,
     errors = [],

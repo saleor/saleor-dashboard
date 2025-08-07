@@ -80,7 +80,7 @@ const useStyles = makeStyles(
   { name: "CustomerAddressListPage" },
 );
 
-const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props => {
+const CustomerAddressListPage = (props: CustomerAddressListPageProps) => {
   const { customer, disabled, onAdd, onEdit, onRemove, onSetAsDefault } = props;
   const classes = useStyles(props);
 

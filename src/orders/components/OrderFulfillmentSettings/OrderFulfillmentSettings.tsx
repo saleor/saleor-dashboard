@@ -13,11 +13,7 @@ export interface OrderFulfillmentSettingsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
-  data,
-  disabled,
-  onChange,
-}) => {
+const OrderFulfillmentSettings = ({ data, disabled, onChange }: OrderFulfillmentSettingsProps) => {
   const intl = useIntl();
 
   return (

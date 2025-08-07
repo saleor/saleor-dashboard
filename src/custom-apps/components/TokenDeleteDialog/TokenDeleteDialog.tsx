@@ -11,13 +11,13 @@ export interface TokenDeleteDialogProps {
   name: string;
 }
 
-const TokenDeleteDialog: React.FC<TokenDeleteDialogProps> = ({
+const TokenDeleteDialog = ({
   name,
   confirmButtonState,
   onClose,
   onConfirm,
   open,
-}) => {
+}: TokenDeleteDialogProps) => {
   const intl = useIntl();
 
   return (

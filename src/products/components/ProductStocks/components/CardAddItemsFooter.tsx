@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import AddIcon from "@material-ui/icons/Add";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import React, { MutableRefObject } from "react";
+import React, { MutableRefObject, PropsWithChildren } from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -29,13 +29,13 @@ interface CardAddItemsFooterProps {
   ref?: MutableRefObject<HTMLDivElement>;
 }
 
-const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
+const CardAddItemsFooter = ({
   title,
   onAdd,
   testIds,
   ref,
   children,
-}) => {
+}: PropsWithChildren<CardAddItemsFooterProps>) => {
   const classes = useStyles({});
 
   return (

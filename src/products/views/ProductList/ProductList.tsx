@@ -68,7 +68,7 @@ interface ProductListProps {
   params: ProductListUrlQueryParams;
 }
 
-export const ProductList: React.FC<ProductListProps> = ({ params }) => {
+export const ProductList = ({ params }: ProductListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();

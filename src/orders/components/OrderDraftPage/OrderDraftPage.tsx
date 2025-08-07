@@ -61,7 +61,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
 
 const draftOrderListUrl = orderDraftListUrl();
 
-const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
+const OrderDraftPage = (props: OrderDraftPageProps) => {
   const {
     loading,
     fetchUsers,

@@ -2,7 +2,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export const FlatTaxRateLabel: React.FC = () => {
+export const FlatTaxRateLabel = () => {
   const intl = useIntl();
 
   return (

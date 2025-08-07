@@ -13,7 +13,7 @@ interface EventCreatedByProps {
   createdBy: StaffMemberAvatarFragment | AppAvatarFragment | null;
 }
 
-export const EventCreatedBy: React.FC<EventCreatedByProps> = ({ createdBy }) => {
+export const EventCreatedBy = ({ createdBy }: EventCreatedByProps) => {
   const { enabled: areExtensionsEnabled } = useFlag("extensions");
 
   if (!createdBy) {
