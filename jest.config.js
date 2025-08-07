@@ -34,8 +34,25 @@ const config = {
     "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
     "^react$": "<rootDir>/node_modules/react",
     "^react-dom$": "<rootDir>/node_modules/react-dom",
-    collectCoverageFrom: ["<rootDir>/src/**/*.{ts,tsx}"],
   },
+  collectCoverageFrom: [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.test.tsx",
+    "!src/**/__mocks__/*",
+    "!src/**/@types/*",
+    "!src/**/*.d.ts",
+    "!src/**/*.stories.tsx",
+    "!src/**/stories/*",
+    "!src/**/*.graphql",
+    "!src/**/fixtures.ts"
+  ],
+  coverageReporters: [
+    "json",
+    "lcov",
+    "text",
+    "clover",
+    "cobertura"
+  ],
 };
 
 module.exports = config;
