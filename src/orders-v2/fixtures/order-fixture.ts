@@ -1,5 +1,3 @@
-import merge from "lodash/merge";
-
 import {
   AddressFragment,
   InvoiceFragment,
@@ -9,6 +7,7 @@ import {
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
+import merge from "lodash/merge";
 
 /**
  * Builder for creating `OrderDetailsFragment` fixtures
@@ -212,7 +211,7 @@ export class OrderFixture {
    */
   static fulfilled(): OrderFixture {
     const fulfilledOrder: OrderDetailsFragment = merge(OrderFixture.baseOrder, {
-      id: "unfulfilled-order-id",
+      id: "fulfilled-order-id",
       status: OrderStatus.FULFILLED,
       billingAddress: OrderFixture.address,
       shippingAddress: OrderFixture.address,
@@ -255,6 +254,7 @@ export class OrderFixture {
       ...this.order,
       customerNote: note,
     };
+
     return this;
   }
 
@@ -281,6 +281,7 @@ export class OrderFixture {
       ...this.order,
       channel,
     };
+
     return this;
   }
 
