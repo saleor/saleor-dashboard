@@ -2,11 +2,9 @@ import {
   AttributeFilterInput,
   CollectionFilterInput,
   CustomerFilterInput,
-  DateRangeInput,
-  DateTimeRangeInput,
   GiftCardFilterInput,
   OrderDraftFilterInput,
-  OrderFilterInput,
+  OrderWhereInput,
   PageFilterInput,
   ProductTypeFilterInput,
   ProductWhereInput,
@@ -19,11 +17,14 @@ import { FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders";
+import { OrderInvoiceDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderInvoiceDateQueryVarsBuilder";
+import { OrderStatusEnumQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderStatusEnumQueryVarsBuilder";
+import { PriceFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceFilterQueryVarsBuilder";
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
 type CollectionQueryVars = CollectionFilterInput & { channel?: string };
-export type OrderQueryVars = ProductQueryVars & { created?: DateTimeRangeInput | DateRangeInput };
+export type OrderQueryVars = OrderWhereInput;
 
 export const createProductQueryVariables = (filterContainer: FilterContainer): ProductQueryVars => {
   const { topLevel, filters } = new FiltersQueryBuilder<ProductQueryVars, "channel">({
@@ -44,10 +45,16 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
   return filters;
 };
 
-export const createOrderQueryVariables = (value: FilterContainer): OrderFilterInput => {
-  const { filters } = new FiltersQueryBuilder<OrderFilterInput>({
-    apiType: QueryApiType.FILTER,
+export const createOrderQueryVariables = (value: FilterContainer, intl: any): OrderWhereInput => {
+  const { filters } = new FiltersQueryBuilder<OrderWhereInput>({
+    apiType: QueryApiType.WHERE,
     filterContainer: value,
+    filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
+      new OrderStatusEnumQueryVarsBuilder(intl),
+      new PriceFilterQueryVarsBuilder(),
+      new OrderInvoiceDateQueryVarsBuilder(),
+      ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+    ]),
   }).build();
 
   return filters;
