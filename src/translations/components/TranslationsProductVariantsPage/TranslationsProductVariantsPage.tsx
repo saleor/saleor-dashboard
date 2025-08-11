@@ -87,11 +87,6 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             onLanguageChange={lang => navigate(productVariantUrl(lang, productId, translationId))}
           />
         </Box>
-        <LanguageSwitchWithCaching
-          currentLanguage={LanguageCodeEnum[languageCode]}
-          languages={languages}
-          onLanguageChange={lang => navigate(productVariantUrl(lang, productId, translationId))}
-        />
       </TopNav>
       <TranslationFields
         activeField={activeField}
