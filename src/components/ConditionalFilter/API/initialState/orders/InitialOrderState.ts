@@ -2,35 +2,46 @@ import { ItemOption } from "@dashboard/components/ConditionalFilter/FilterElemen
 import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 
 export interface InitialOrderState {
-  paymentStatus: ItemOption[];
   status: ItemOption[];
   authorizeStatus: ItemOption[];
   chargeStatus: ItemOption[];
   channels: ItemOption[];
   isClickAndCollect: ItemOption[];
-  isPreorder: ItemOption[];
-  giftCardBought: ItemOption[];
-  giftCardUsed: ItemOption[];
-  created: string | string[];
+  isGiftCardBought: ItemOption[];
+  isGiftCardUsed: ItemOption[];
+  hasInvoices: ItemOption[];
+  hasFulfillments: ItemOption[];
+  createdAt: string | string[];
   updatedAt: string | string[];
+  invoicesCreatedAt: string | string[];
+  totalGross: string | string[];
+  totalNet: string | string[];
+  user: ItemOption[];
+  channelId: ItemOption[];
   ids: ItemOption[];
 }
 
-const isDateField = (name: string) => ["created", "updatedAt"].includes(name);
+const isDateField = (name: string) => ["createdAt", "updatedAt", "invoicesCreatedAt"].includes(name);
+const isPriceField = (name: string) => ["totalGross", "totalNet"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
   constructor(
-    public paymentStatus: ItemOption[] = [],
     public status: ItemOption[] = [],
     public authorizeStatus: ItemOption[] = [],
     public chargeStatus: ItemOption[] = [],
     public channels: ItemOption[] = [],
     public isClickAndCollect: ItemOption[] = [],
-    public isPreorder: ItemOption[] = [],
-    public giftCardBought: ItemOption[] = [],
-    public giftCardUsed: ItemOption[] = [],
-    public created: string | string[] = [],
+    public isGiftCardBought: ItemOption[] = [],
+    public isGiftCardUsed: ItemOption[] = [],
+    public hasInvoices: ItemOption[] = [],
+    public hasFulfillments: ItemOption[] = [],
+    public createdAt: string | string[] = [],
     public updatedAt: string | string[] = [],
+    public invoicesCreatedAt: string | string[] = [],
+    public totalGross: string | string[] = [],
+    public totalNet: string | string[] = [],
+    public user: ItemOption[] = [],
+    public channelId: ItemOption[] = [],
     public ids: ItemOption[] = [],
   ) {}
 
@@ -39,7 +50,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
   }
 
   public filterByUrlToken(token: UrlToken) {
-    if (isDateField(token.name)) {
+    if (isDateField(token.name) || isPriceField(token.name)) {
       return token.value;
     }
 
@@ -54,8 +65,6 @@ export class InitialOrderStateResponse implements InitialOrderState {
 
   private getEntryByName(name: string): ItemOption[] {
     switch (name) {
-      case "paymentStatus":
-        return this.paymentStatus;
       case "status":
         return this.status;
       case "authorizeStatus":
@@ -64,14 +73,20 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.chargeStatus;
       case "channels":
         return this.channels;
+      case "channelId":
+        return this.channelId;
       case "isClickAndCollect":
         return this.isClickAndCollect;
-      case "isPreorder":
-        return this.isPreorder;
-      case "giftCardBought":
-        return this.giftCardBought;
-      case "giftCardUsed":
-        return this.giftCardUsed;
+      case "isGiftCardBought":
+        return this.isGiftCardBought;
+      case "isGiftCardUsed":
+        return this.isGiftCardUsed;
+      case "hasInvoices":
+        return this.hasInvoices;
+      case "hasFulfillments":
+        return this.hasFulfillments;
+      case "user":
+        return this.user;
       case "ids":
         return this.ids;
       default:

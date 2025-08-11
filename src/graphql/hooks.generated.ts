@@ -13120,13 +13120,13 @@ export type CreateManualTransactionRefundMutationHookResult = ReturnType<typeof 
 export type CreateManualTransactionRefundMutationResult = Apollo.MutationResult<Types.CreateManualTransactionRefundMutation>;
 export type CreateManualTransactionRefundMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>;
 export const OrderListDocument = gql`
-    query OrderList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderFilterInput, $sort: OrderSortingInput) {
+    query OrderList($first: Int, $after: String, $last: Int, $before: String, $where: OrderWhereInput, $sort: OrderSortingInput) {
   orders(
     before: $before
     after: $after
     first: $first
     last: $last
-    filter: $filter
+    where: $where
     sortBy: $sort
   ) {
     edges {
@@ -13182,7 +13182,7 @@ export const OrderListDocument = gql`
  *      after: // value for 'after'
  *      last: // value for 'last'
  *      before: // value for 'before'
- *      filter: // value for 'filter'
+ *      where: // value for 'where'
  *      sort: // value for 'sort'
  *   },
  * });

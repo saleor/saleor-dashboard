@@ -113,7 +113,7 @@ export const OrderList = ({ params }: OrderListProps) => {
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: filterVariables,
+      where: filterVariables,
       sort: getSortQueryVariables(params),
     }),
     [params, settings.rowNumber, valueProvider.value],

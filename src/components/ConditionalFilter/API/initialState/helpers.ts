@@ -196,13 +196,16 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
   data.reduce<InitialOrderState>(
     (acc, query) => {
       if (isChannelsQuery(query)) {
+        const channelOptions = (query.data?.channels ?? []).map(({ id, name, slug }) => ({
+          label: name,
+          value: id,
+          slug,
+        }));
+
         return {
           ...acc,
-          channels: (query.data?.channels ?? []).map(({ id, name, slug }) => ({
-            label: name,
-            value: id,
-            slug,
-          })),
+          channels: channelOptions,
+          channelId: channelOptions,
         };
       }
 
@@ -210,17 +213,22 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
     },
     {
       channels: [],
-      paymentStatus: [],
       status: [],
       authorizeStatus: [],
       chargeStatus: [],
       isClickAndCollect: createBooleanOptions(),
-      isPreorder: createBooleanOptions(),
-      giftCardBought: createBooleanOptions(),
-      giftCardUsed: createBooleanOptions(),
-      ids: [],
-      created: "",
+      isGiftCardBought: createBooleanOptions(),
+      isGiftCardUsed: createBooleanOptions(),
+      hasInvoices: createBooleanOptions(),
+      hasFulfillments: createBooleanOptions(),
+      createdAt: "",
       updatedAt: "",
+      invoicesCreatedAt: "",
+      totalGross: "",
+      totalNet: "",
+      user: [],
+      channelId: [],
+      ids: [],
     },
   );
 

@@ -3,22 +3,22 @@ import { UrlEntry, UrlToken } from "@dashboard/components/ConditionalFilter/Valu
 import { InitialOrderStateResponse } from "./InitialOrderState";
 
 describe("ConditionalFilter / API / Orders / InitialOrderState", () => {
-  it("should filter by payment status", () => {
+  it("should filter by charge status", () => {
     // Arrange
     const initialOrderState = InitialOrderStateResponse.empty();
 
-    initialOrderState.paymentStatus = [
+    initialOrderState.chargeStatus = [
       {
-        label: "Paid",
+        label: "Fully Charged",
         value: "FULLY_CHARGED",
         slug: "FULLY_CHARGED",
       },
     ];
 
-    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.paymentStatus", "FULLY_CHARGED"));
+    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.chargeStatus", "FULLY_CHARGED"));
     const expectedOutput = [
       {
-        label: "Paid",
+        label: "Fully Charged",
         value: "FULLY_CHARGED",
         slug: "FULLY_CHARGED",
       },

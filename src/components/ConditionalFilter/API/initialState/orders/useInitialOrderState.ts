@@ -89,17 +89,22 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
 
     setData(
       new InitialOrderStateResponse(
-        initialState.paymentStatus,
         initialState.status,
         initialState.authorizeStatus,
         initialState.chargeStatus,
         initialState.channels,
-        initialState.isPreorder,
         initialState.isClickAndCollect,
-        initialState.giftCardBought,
-        initialState.giftCardUsed,
-        initialState.created,
+        initialState.isGiftCardBought,
+        initialState.isGiftCardUsed,
+        initialState.hasInvoices,
+        initialState.hasFulfillments,
+        initialState.createdAt,
         initialState.updatedAt,
+        initialState.invoicesCreatedAt,
+        initialState.totalGross,
+        initialState.totalNet,
+        initialState.user,
+        initialState.channels, // channelId (reuse channels for now)
         initialState.ids,
       ),
     );
