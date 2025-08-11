@@ -7,6 +7,9 @@ interface NavigatorSearchInputProps {
   value: string;
 }
 
+/**
+ * @deprecated
+ */
 const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) => {
   const [inputValue, setInputValue] = useState(value);
   const onSearchDebounced = useDebounce(onSearch);

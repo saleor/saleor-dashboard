@@ -11,6 +11,9 @@ import { ResourcesTable } from "./ResourcesTable";
 import { useKeyboardNavigation } from "./useKeyboardNavigation";
 import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
 
+/**
+ * @deprecated
+ */
 export const CommandContent = () => {
   const { setNavigatorVisibility } = useNavigatorSearchContext();
 
