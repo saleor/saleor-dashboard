@@ -2,7 +2,7 @@ import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
-import { RegisterCommandMenu } from "@dashboard/apps/context";
+import { RegisterCommandMenu } from "@dashboard/command-menu/command-menu-model";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
 import { extensionsSection } from "@dashboard/extensions/urls";
