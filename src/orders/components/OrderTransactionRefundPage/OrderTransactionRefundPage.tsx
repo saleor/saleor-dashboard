@@ -15,7 +15,7 @@ import React from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
+import { RefundWithLinesOrderTransactionReason } from "./components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { OrderTransactionReasonModal } from "./components/OrderTransactionReasonModal/OrderTransactionReasonModal";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import {
@@ -245,7 +245,7 @@ const OrderTransactionRefundPage = ({
               shippingCost={order?.shippingPrice.gross}
               currency={order?.total.gross.currency}
             />
-            <OrderTransactionReason control={control} />
+            <RefundWithLinesOrderTransactionReason control={control} />
           </Box>
         </DetailPageLayout.RightSidebar>
         <Savebar>

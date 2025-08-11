@@ -5320,10 +5320,9 @@ export type RefreshTokenFieldPolicy = {
 	token?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type RefundSettingsKeySpecifier = ('allowCustomRefundReasons' | 'modelType' | RefundSettingsKeySpecifier)[];
+export type RefundSettingsKeySpecifier = ('reasonReferenceType' | RefundSettingsKeySpecifier)[];
 export type RefundSettingsFieldPolicy = {
-	allowCustomRefundReasons?: FieldPolicy<any> | FieldReadFunction<any>,
-	modelType?: FieldPolicy<any> | FieldReadFunction<any>
+	reasonReferenceType?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type RefundSettingsErrorKeySpecifier = ('code' | 'field' | 'message' | RefundSettingsErrorKeySpecifier)[];
 export type RefundSettingsErrorFieldPolicy = {

@@ -4,9 +4,9 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { TransactionItemFragment } from "@dashboard/graphql";
 import { ManualRefundForm } from "@dashboard/orders/components/OrderManualTransactionRefundPage/components/OrderManualTransactionRefundForm/manualRefundValidationSchema";
 import {
-  OrderTransactionReason,
   OrderTransactionReasonUi,
-} from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/OrderTransactionReason";
+  RefundWithLinesOrderTransactionReason,
+} from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";

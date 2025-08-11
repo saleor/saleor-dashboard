@@ -6564,17 +6564,11 @@ export enum RefundSettingsErrorCode {
 
 export type RefundSettingsUpdateInput = {
   /**
-   * Allow to set a custom reason for a refund. When set to false, only referenced models will be accepted
-   *
-   * Added in Saleor 3.22.
-   */
-  allowCustomRefundReasons?: InputMaybe<Scalars['Boolean']>;
-  /**
    * The ID of a model type, that will be used to reference refund reasons. All models with of this type will be accepted as refund reasons.
    *
    * Added in Saleor 3.22.
    */
-  refundReasonModelType?: InputMaybe<Scalars['ID']>;
+  refundReasonReferenceType?: InputMaybe<Scalars['ID']>;
 };
 
 export type ReorderInput = {
@@ -11311,6 +11305,11 @@ export type DevModeRunQueryVariables = Exact<{
 
 export type DevModeRunQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, paymentStatus: PaymentChargeStatusEnum, userEmail: string | null, isPaid: boolean } }> } | null };
 
+export type RefundSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RefundSettingsQuery = { __typename: 'Query', refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
+
 export type PermissionGroupDeleteMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -12126,6 +12125,13 @@ export type ShopSettingsUpdateMutationVariables = Exact<{
 
 
 export type ShopSettingsUpdateMutation = { __typename: 'Mutation', shopSettingsUpdate: { __typename: 'ShopSettingsUpdate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, enableAccountConfirmationByEmail: boolean | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } } | null } | null, shopAddressUpdate: { __typename: 'ShopAddressUpdate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null } | null };
+
+export type RefundSettingsUpdateMutationVariables = Exact<{
+  refundSettingsInput: RefundSettingsUpdateInput;
+}>;
+
+
+export type RefundSettingsUpdateMutation = { __typename: 'Mutation', refundSettingsUpdate: { __typename: 'RefundSettingsUpdate', errors: Array<{ __typename: 'RefundSettingsError', code: RefundSettingsErrorCode, message: string | null }>, refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', name: string, id: string } | null } | null } | null };
 
 export type SiteSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
