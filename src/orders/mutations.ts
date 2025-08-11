@@ -501,8 +501,14 @@ export const orderTransactionRequestActionMutation = gql`
     $action: TransactionActionEnum!
     $transactionId: ID!
     $amount: PositiveDecimal
+    $reason: String
   ) {
-    transactionRequestAction(actionType: $action, id: $transactionId, amount: $amount) {
+    transactionRequestAction(
+      actionType: $action
+      id: $transactionId
+      amount: $amount
+      reason: $reason
+    ) {
       errors {
         ...TransactionRequestActionError
       }

@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Text, Textarea } from "@saleor/macaw-ui-next";
+import { Text, Textarea, TextareaProps } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Control, useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -11,8 +11,7 @@ interface OrderTransactionReasonProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
 }
 
-export const OrderTransactionReason = ({ control }: OrderTransactionReasonProps) => {
-  const { field } = useController({ name: "reason", control });
+export const OrderTransactionReasonUi = (props: { textAreaProps?: TextareaProps }) => {
   const intl = useIntl();
 
   return (
@@ -27,10 +26,24 @@ export const OrderTransactionReason = ({ control }: OrderTransactionReasonProps)
           size="medium"
           rows={4}
           maxRows={8}
-          value={field.value}
-          onChange={field.onChange}
+          {...props.textAreaProps}
         />
       </DashboardCard.Content>
     </DashboardCard>
+  );
+};
+
+// granted refund
+// todo refactor with composition
+export const OrderTransactionReason = ({ control }: OrderTransactionReasonProps) => {
+  const { field } = useController({ name: "reason", control });
+
+  return (
+    <OrderTransactionReasonUi
+      textAreaProps={{
+        value: field.value,
+        onChange: field.onChange,
+      }}
+    />
   );
 };

@@ -84,6 +84,7 @@ const mapEventGroupsToDatagridRefunds = (
       amount: latestEvent.amount,
       createdAt: latestEvent.createdAt,
       user: determineCreatorDisplay(latestEventWithAuthor.createdBy),
+      // todo maybe this should show response from app if available?
       reason: intl.formatMessage(refundGridMessages.manualRefund),
     };
   });

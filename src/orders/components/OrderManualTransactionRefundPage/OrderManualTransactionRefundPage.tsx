@@ -2,9 +2,15 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { TransactionItemFragment } from "@dashboard/graphql";
+import { ManualRefundForm } from "@dashboard/orders/components/OrderManualTransactionRefundPage/components/OrderManualTransactionRefundForm/manualRefundValidationSchema";
+import {
+  OrderTransactionReason,
+  OrderTransactionReasonUi,
+} from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/OrderTransactionReason";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
+import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { OrderManualTransactionRefundAmount } from "./components/OrderManualTransactionRefundAmount";
@@ -19,6 +25,20 @@ interface OrderManualTransactionRefundProps {
   loading: boolean;
   currency: string;
 }
+
+const Reason = () => {
+  const { control } = useFormContext<ManualRefundForm>();
+  const { field } = useController({ name: "reason", control });
+
+  return (
+    <OrderTransactionReasonUi
+      textAreaProps={{
+        value: field.value,
+        onChange: field.onChange,
+      }}
+    />
+  );
+};
 
 export const OrderManualTransactionRefundPage = ({
   orderId,
@@ -35,6 +55,7 @@ export const OrderManualTransactionRefundPage = ({
       initialValues={{
         amount: 0,
         transationId: transactions?.[0]?.id ?? "",
+        reason: "",
       }}
       transactions={transactions}
     >
@@ -53,28 +74,34 @@ export const OrderManualTransactionRefundPage = ({
           </DashboardCard>
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar>
-          <Box __maxWidth={400} height="100%">
+          <Box
+            __maxWidth={400}
+            height="100%"
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+          >
             <DashboardCard height="100%">
               <DashboardCard.Header>
                 <DashboardCard.Title>
                   <FormattedMessage {...messages.refundAmount} />
                 </DashboardCard.Title>
               </DashboardCard.Header>
-              <DashboardCard.Content
-                display="flex"
-                flexDirection="column"
-                justifyContent="space-between"
-                height="100%"
-              >
+              <DashboardCard.Content>
                 <Box>
                   <Text as="p" paddingBottom={3}>
                     <FormattedMessage {...messages.amountDescription} />
                   </Text>
                   <OrderManualTransactionRefundAmount currency={currency} />
                 </Box>
-                <OrderManualTransactionRefundWarning />
               </DashboardCard.Content>
             </DashboardCard>
+            <Box marginTop="auto" marginBottom={3}>
+              <Reason />
+            </Box>
+            <DashboardCard.Content>
+              <OrderManualTransactionRefundWarning />
+            </DashboardCard.Content>
           </Box>
         </DetailPageLayout.RightSidebar>
       </DetailPageLayout>
