@@ -2,6 +2,7 @@ import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
+import { RegisterCommandMenu } from "@dashboard/apps/context";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
 import { extensionsSection } from "@dashboard/extensions/urls";
@@ -133,6 +134,7 @@ const App = () => (
                                     <SavebarRefProvider>
                                       <FeatureFlagsProviderWithUser>
                                         <OnboardingProvider>
+                                          <RegisterCommandMenu />
                                           <Routes />
                                         </OnboardingProvider>
                                       </FeatureFlagsProviderWithUser>
