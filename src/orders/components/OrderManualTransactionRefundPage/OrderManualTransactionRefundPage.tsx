@@ -24,6 +24,7 @@ interface OrderManualTransactionRefundProps {
   transactions: TransactionItemFragment[];
   loading: boolean;
   currency: string;
+  modelForRefundReasonRef: { id: string; name: string } | null;
 }
 
 const Reason = () => {
@@ -45,6 +46,7 @@ export const OrderManualTransactionRefundPage = ({
   transactions,
   currency,
   loading,
+  modelForRefundReasonRef,
 }: OrderManualTransactionRefundProps) => {
   const hasTransactionsToRefund = transactions.length > 0;
 
@@ -99,6 +101,7 @@ export const OrderManualTransactionRefundPage = ({
             <Box marginTop="auto" marginBottom={3}>
               <Reason />
             </Box>
+            {modelForRefundReasonRef && <Box>todo page picker</Box>}
             <DashboardCard.Content>
               <OrderManualTransactionRefundWarning />
             </DashboardCard.Content>
