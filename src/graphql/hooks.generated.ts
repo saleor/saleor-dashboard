@@ -11417,6 +11417,46 @@ export function usePageCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHo
 export type PageCountQueryHookResult = ReturnType<typeof usePageCountQuery>;
 export type PageCountLazyQueryHookResult = ReturnType<typeof usePageCountLazyQuery>;
 export type PageCountQueryResult = Apollo.QueryResult<Types.PageCountQuery, Types.PageCountQueryVariables>;
+export const ModelsOfTypeDocument = gql`
+    query ModelsOfType($pageTypeId: ID!) {
+  pages(first: 100, where: {pageType: {eq: $pageTypeId}}) {
+    edges {
+      node {
+        id
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useModelsOfTypeQuery__
+ *
+ * To run a query within a React component, call `useModelsOfTypeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useModelsOfTypeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useModelsOfTypeQuery({
+ *   variables: {
+ *      pageTypeId: // value for 'pageTypeId'
+ *   },
+ * });
+ */
+export function useModelsOfTypeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>(ModelsOfTypeDocument, options);
+      }
+export function useModelsOfTypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>(ModelsOfTypeDocument, options);
+        }
+export type ModelsOfTypeQueryHookResult = ReturnType<typeof useModelsOfTypeQuery>;
+export type ModelsOfTypeLazyQueryHookResult = ReturnType<typeof useModelsOfTypeLazyQuery>;
+export type ModelsOfTypeQueryResult = Apollo.QueryResult<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {
@@ -18248,6 +18288,47 @@ export function useRefundSettingsUpdateMutation(baseOptions?: ApolloReactHooks.M
 export type RefundSettingsUpdateMutationHookResult = ReturnType<typeof useRefundSettingsUpdateMutation>;
 export type RefundSettingsUpdateMutationResult = Apollo.MutationResult<Types.RefundSettingsUpdateMutation>;
 export type RefundSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>;
+export const RefundReasonReferenceClearDocument = gql`
+    mutation RefundReasonReferenceClear {
+  refundReasonReferenceClear {
+    refundSettings {
+      reasonReferenceType {
+        id
+        name
+      }
+    }
+    errors {
+      code
+      message
+    }
+  }
+}
+    `;
+export type RefundReasonReferenceClearMutationFn = Apollo.MutationFunction<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>;
+
+/**
+ * __useRefundReasonReferenceClearMutation__
+ *
+ * To run a mutation, you first call `useRefundReasonReferenceClearMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefundReasonReferenceClearMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refundReasonReferenceClearMutation, { data, loading, error }] = useRefundReasonReferenceClearMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRefundReasonReferenceClearMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>(RefundReasonReferenceClearDocument, options);
+      }
+export type RefundReasonReferenceClearMutationHookResult = ReturnType<typeof useRefundReasonReferenceClearMutation>;
+export type RefundReasonReferenceClearMutationResult = Apollo.MutationResult<Types.RefundReasonReferenceClearMutation>;
+export type RefundReasonReferenceClearMutationOptions = Apollo.BaseMutationOptions<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>;
 export const SiteSettingsDocument = gql`
     query SiteSettings {
   shop {

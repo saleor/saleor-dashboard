@@ -10861,6 +10861,13 @@ export type PageCountQueryVariables = Exact<{
 
 export type PageCountQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', totalCount: number | null } | null };
 
+export type ModelsOfTypeQueryVariables = Exact<{
+  pageTypeId: Scalars['ID'];
+}>;
+
+
+export type ModelsOfTypeQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string } }> } | null };
+
 export type OrderCancelMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -12131,7 +12138,12 @@ export type RefundSettingsUpdateMutationVariables = Exact<{
 }>;
 
 
-export type RefundSettingsUpdateMutation = { __typename: 'Mutation', refundSettingsUpdate: { __typename: 'RefundSettingsUpdate', errors: Array<{ __typename: 'RefundSettingsError', code: RefundSettingsErrorCode, message: string | null }>, refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', name: string, id: string } | null } | null } | null };
+export type RefundSettingsUpdateMutation = { __typename: 'Mutation', refundSettingsUpdate: { __typename: 'RefundSettingsUpdate', errors: Array<{ __typename: 'RefundSettingsError', code: RefundSettingsErrorCode, message: string | null }>, refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', name: string, id: string } | null } } | null };
+
+export type RefundReasonReferenceClearMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RefundReasonReferenceClearMutation = { __typename: 'Mutation', refundReasonReferenceClear: { __typename: 'RefundReasonReferenceTypeClear', refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null }, errors: Array<{ __typename: 'RefundSettingsError', code: RefundSettingsErrorCode, message: string | null }> } | null };
 
 export type SiteSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 

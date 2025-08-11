@@ -1,15 +1,15 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { TransactionItemFragment } from "@dashboard/graphql";
+import { TransactionItemFragment, useModelsOfTypeQuery } from "@dashboard/graphql";
 import { ManualRefundForm } from "@dashboard/orders/components/OrderManualTransactionRefundPage/components/OrderManualTransactionRefundForm/manualRefundValidationSchema";
 import {
   OrderTransactionReasonUi,
   RefundWithLinesOrderTransactionReason,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { orderUrl } from "@dashboard/orders/urls";
-import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
+import React, { useEffect, useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -37,6 +37,38 @@ const Reason = () => {
         value: field.value,
         onChange: field.onChange,
       }}
+    />
+  );
+};
+
+const ModelsPicker = (props: { referenceModelTypeId: string; onChange(modelID: string): void }) => {
+  const [value, setValue] = useState("");
+
+  // todo cache
+  const { data, loading } = useModelsOfTypeQuery({
+    variables: {
+      pageTypeId: props.referenceModelTypeId,
+    },
+  });
+
+  useEffect(() => {
+    props.onChange(value);
+  }, [value]);
+
+  if (loading) {
+    return <Skeleton />;
+  }
+
+  return (
+    <Select
+      value={value}
+      onChange={v => setValue(v)}
+      options={
+        data?.pages?.edges.map(model => ({
+          value: model.node.id,
+          label: model.node.title,
+        })) ?? []
+      }
     />
   );
 };
@@ -101,7 +133,23 @@ export const OrderManualTransactionRefundPage = ({
             <Box marginTop="auto" marginBottom={3}>
               <Reason />
             </Box>
-            {modelForRefundReasonRef && <Box>todo page picker</Box>}
+            {modelForRefundReasonRef && (
+              <Box marginBottom={3}>
+                <DashboardCard>
+                  <DashboardCard.Header>
+                    <DashboardCard.Title>Refund reason type</DashboardCard.Title>
+                  </DashboardCard.Header>
+                  <DashboardCard.Content>
+                    <ModelsPicker
+                      referenceModelTypeId={modelForRefundReasonRef.id}
+                      onChange={() => {
+                        // todo update form
+                      }}
+                    />
+                  </DashboardCard.Content>
+                </DashboardCard>
+              </Box>
+            )}
             <DashboardCard.Content>
               <OrderManualTransactionRefundWarning />
             </DashboardCard.Content>

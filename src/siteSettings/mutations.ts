@@ -41,3 +41,20 @@ export const refundSettingsUpdate = gql`
 `;
 
 // todo clear reason mutation
+
+export const refundReasonReferenceClear = gql`
+  mutation RefundReasonReferenceClear {
+    refundReasonReferenceClear {
+      refundSettings {
+        reasonReferenceType {
+          id
+          name
+        }
+      }
+      errors {
+        code
+        message
+      }
+    }
+  }
+`;
