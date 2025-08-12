@@ -15,7 +15,7 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { defineMessage, FormattedMessage, useIntl } from "react-intl";
+import { defineMessage, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
   return (
@@ -42,20 +42,14 @@ const ActionLinkItem = ({ href, children }: { href: string; children: React.Reac
 };
 
 interface TriggerDescriptor {
-  section: {
-    id: string;
-    defaultMessage: string;
-  };
-  name: {
-    id: string;
-    defaultMessage: string;
-  };
+  section: MessageDescriptor;
+  name: MessageDescriptor;
   Component: React.ComponentType<{
     onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
   }>;
 }
 
-const allMessages = {
+const allMessages: Record<string, MessageDescriptor> = {
   inviteUser: defineMessage({
     defaultMessage: "Invite user/staff member",
     id: "tZ/9Sl",
