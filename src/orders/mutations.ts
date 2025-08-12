@@ -502,12 +502,14 @@ export const orderTransactionRequestActionMutation = gql`
     $transactionId: ID!
     $amount: PositiveDecimal
     $reason: String
+    $reasonReferenceId: ID
   ) {
     transactionRequestAction(
       actionType: $action
       id: $transactionId
       amount: $amount
       reason: $reason
+      reasonReference: $reasonReferenceId
     ) {
       errors {
         ...TransactionRequestActionError
@@ -521,6 +523,7 @@ export const orderGrantRefundAddMutation = gql`
     $orderId: ID!
     $amount: Decimal
     $reason: String
+    $reasonReferenceId: ID
     $lines: [OrderGrantRefundCreateLineInput!]
     $grantRefundForShipping: Boolean
     $transactionId: ID!
@@ -533,6 +536,7 @@ export const orderGrantRefundAddMutation = gql`
         lines: $lines
         grantRefundForShipping: $grantRefundForShipping
         transactionId: $transactionId
+        reasonReference: $reasonReferenceId
       }
     ) {
       errors {

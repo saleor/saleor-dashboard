@@ -9,7 +9,7 @@ import {
 } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -24,7 +24,7 @@ interface OrderManualTransactionRefundProps {
   transactions: TransactionItemFragment[];
   loading: boolean;
   currency: string;
-  modelForRefundReasonRef: { id: string; name: string } | null;
+  modelForRefundReasonRefId: string | null;
 }
 
 const Reason = () => {
@@ -41,8 +41,10 @@ const Reason = () => {
   );
 };
 
-const ModelsPicker = (props: { referenceModelTypeId: string; onChange(modelID: string): void }) => {
-  const [value, setValue] = useState("");
+// todo extract to shared component with granted refund
+const ModelsPicker = (props: { referenceModelTypeId: string }) => {
+  const { control } = useFormContext<ManualRefundForm>();
+  const { field } = useController({ name: "reasonReferenceId", control });
 
   // todo cache
   const { data, loading } = useModelsOfTypeQuery({
@@ -51,26 +53,19 @@ const ModelsPicker = (props: { referenceModelTypeId: string; onChange(modelID: s
     },
   });
 
-  useEffect(() => {
-    props.onChange(value);
-  }, [value]);
-
   if (loading) {
     return <Skeleton />;
   }
 
-  return (
-    <Select
-      value={value}
-      onChange={v => setValue(v)}
-      options={
-        data?.pages?.edges.map(model => ({
-          value: model.node.id,
-          label: model.node.title,
-        })) ?? []
-      }
-    />
-  );
+  const options =
+    data?.pages?.edges.map(model => ({
+      value: model.node.id,
+      label: model.node.title,
+    })) ?? [];
+
+  const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
+
+  return <Select {...field} options={optionsWithEmpty} />;
 };
 
 export const OrderManualTransactionRefundPage = ({
@@ -78,7 +73,7 @@ export const OrderManualTransactionRefundPage = ({
   transactions,
   currency,
   loading,
-  modelForRefundReasonRef,
+  modelForRefundReasonRefId,
 }: OrderManualTransactionRefundProps) => {
   const hasTransactionsToRefund = transactions.length > 0;
 
@@ -90,6 +85,7 @@ export const OrderManualTransactionRefundPage = ({
         amount: 0,
         transationId: transactions?.[0]?.id ?? "",
         reason: "",
+        reasonReferenceId: "",
       }}
       transactions={transactions}
     >
@@ -133,19 +129,14 @@ export const OrderManualTransactionRefundPage = ({
             <Box marginTop="auto" marginBottom={3}>
               <Reason />
             </Box>
-            {modelForRefundReasonRef && (
+            {modelForRefundReasonRefId && (
               <Box marginBottom={3}>
                 <DashboardCard>
                   <DashboardCard.Header>
                     <DashboardCard.Title>Refund reason type</DashboardCard.Title>
                   </DashboardCard.Header>
                   <DashboardCard.Content>
-                    <ModelsPicker
-                      referenceModelTypeId={modelForRefundReasonRef.id}
-                      onChange={() => {
-                        // todo update form
-                      }}
-                    />
+                    <ModelsPicker referenceModelTypeId={modelForRefundReasonRefId} />
                   </DashboardCard.Content>
                 </DashboardCard>
               </Box>

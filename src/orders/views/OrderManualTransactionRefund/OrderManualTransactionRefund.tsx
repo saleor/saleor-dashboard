@@ -23,7 +23,7 @@ const OrderManualTransactionRefund = ({ orderId }: OrderManualTransactionRefundP
       transactions={data?.order?.transactions ?? []}
       loading={loading || refundSettingsLoading}
       currency={data?.order?.total?.gross?.currency ?? ""}
-      modelForRefundReasonRef={requiredModelForRefundReason ?? null}
+      modelForRefundReasonRefId={requiredModelForRefundReason?.id ?? null}
     />
   );
 };

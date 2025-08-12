@@ -1,6 +1,7 @@
 import {
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
+  useRefundSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -35,6 +36,9 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
       id: orderId,
     },
   });
+
+  const { data: refundSettings } = useRefundSettingsQuery();
+  const requiredModelForRefundReason = refundSettings?.refundSettings.reasonReferenceType;
 
   const [createRefund, createRefundOpts] = useOrderGrantRefundAddMutation({
     onCompleted: submitData =>
@@ -87,6 +91,7 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
       order={data?.order}
       onSaveDraft={handleCreateRefund}
       onSaveDraftState={createRefundOpts.status}
+      modelForRefundReasonRefId={requiredModelForRefundReason?.id ?? null}
     />
   );
 };

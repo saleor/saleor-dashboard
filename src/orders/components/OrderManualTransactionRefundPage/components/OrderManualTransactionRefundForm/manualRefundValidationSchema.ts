@@ -14,6 +14,7 @@ export const getValidationSchema = (intl: IntlShape, transactions: TransactionIt
         message: intl.formatMessage(validationMessages.amountRequired),
       }),
       reason: z.string(),
+      reasonReferenceId: z.string(),
     })
     .refine(
       data => {

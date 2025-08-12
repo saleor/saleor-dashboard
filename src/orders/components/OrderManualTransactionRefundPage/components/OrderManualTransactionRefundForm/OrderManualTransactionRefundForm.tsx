@@ -68,6 +68,7 @@ export const OrderManualTransactionRefundForm = ({
         transactionId: data.transationId,
         amount: data.amount,
         reason: data.reason,
+        reasonReferenceId: data.reasonReferenceId,
       },
     });
   };
