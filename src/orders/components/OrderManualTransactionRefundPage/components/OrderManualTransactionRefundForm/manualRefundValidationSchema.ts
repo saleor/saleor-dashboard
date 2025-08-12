@@ -13,6 +13,8 @@ export const getValidationSchema = (intl: IntlShape, transactions: TransactionIt
       amount: z.coerce.number().positive({
         message: intl.formatMessage(validationMessages.amountRequired),
       }),
+      reason: z.string(),
+      reasonReferenceId: z.string(),
     })
     .refine(
       data => {

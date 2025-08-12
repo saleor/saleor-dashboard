@@ -1,6 +1,7 @@
 import {
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
+  useRefundSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -36,6 +37,9 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
     },
   });
 
+  const { data: refundSettings } = useRefundSettingsQuery();
+  const requiredModelForRefundReason = refundSettings?.refundSettings.reasonReferenceType;
+
   const [createRefund, createRefundOpts] = useOrderGrantRefundAddMutation({
     onCompleted: submitData =>
       handleRefundCreateComplete({
@@ -54,7 +58,8 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
       return;
     }
 
-    const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
+    const { amount, reason, linesToRefund, includeShipping, transactionId, reasonReference } =
+      submitData;
 
     if (
       checkAmountExceedsChargedAmount({
@@ -76,6 +81,8 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
         lines: prepareRefundAddLines({ linesToRefund, data }),
         grantRefundForShipping: includeShipping,
         transactionId,
+        // due to select api, object is passed, todo fix this in macaw
+        reasonReferenceId: reasonReference.length ? reasonReference : undefined,
       },
     });
   };
@@ -87,6 +94,7 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
       order={data?.order}
       onSaveDraft={handleCreateRefund}
       onSaveDraftState={createRefundOpts.status}
+      modelForRefundReasonRefId={requiredModelForRefundReason?.id ?? null}
     />
   );
 };

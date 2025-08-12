@@ -5,17 +5,21 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
-import { OrderDetailsGrantRefundFragment, PermissionEnum } from "@dashboard/graphql";
+import {
+  OrderDetailsGrantRefundFragment,
+  PermissionEnum,
+  useModelsOfTypeQuery,
+} from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { Control, SubmitHandler, useController, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
+import { RefundWithLinesOrderTransactionReason } from "./components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { OrderTransactionReasonModal } from "./components/OrderTransactionReasonModal/OrderTransactionReasonModal";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import {
@@ -58,6 +62,7 @@ export interface OrderTransactionRefundPageProps {
   onTransferFunds?: () => void;
   onSaveDraftState: ConfirmButtonTransitionState;
   onTransferFundsState?: ConfirmButtonTransitionState;
+  modelForRefundReasonRefId: string | null;
 }
 
 export interface LineToRefund {
@@ -71,7 +76,38 @@ export interface OrderTransactionRefundPageFormData {
   includeShipping: boolean;
   reason: string;
   transactionId: string;
+  reasonReference: string;
 }
+
+// todo extract to shared component with manual refund
+const ModelsPicker = (props: {
+  referenceModelTypeId: string;
+  control: Control<OrderTransactionRefundPageFormData>;
+}) => {
+  const { field } = useController({ name: "reasonReference", control: props.control });
+
+  // todo cache
+  const { data, loading } = useModelsOfTypeQuery({
+    variables: {
+      pageTypeId: props.referenceModelTypeId,
+    },
+  });
+
+  if (loading) {
+    return <Skeleton />;
+  }
+
+  const options =
+    data?.pages?.edges.map(model => ({
+      value: model.node.id,
+      label: model.node.title,
+    })) ?? [];
+
+  const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
+
+  // todo discuss Select api to be compatbile with form field and native html
+  return <Select options={optionsWithEmpty} {...field} />;
+};
 
 const OrderTransactionRefundPage = ({
   errors,
@@ -82,6 +118,7 @@ const OrderTransactionRefundPage = ({
   onTransferFunds,
   onSaveDraftState,
   onTransferFundsState,
+  modelForRefundReasonRefId,
 }: OrderTransactionRefundPageProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
@@ -230,13 +267,7 @@ const OrderTransactionRefundPage = ({
           <OrderTransactionTiles transactions={order?.transactions} control={control} />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar>
-          <Box
-            __width="400px"
-            display="flex"
-            flexDirection="column"
-            height="100%"
-            justifyContent="space-between"
-          >
+          <Box __width="400px" display="flex" flexDirection="column" height="100%">
             <OrderTransactionSummary
               amountError={amountError || formErrors.amount}
               control={control}
@@ -244,8 +275,26 @@ const OrderTransactionRefundPage = ({
               canRefundShipping={canRefundShipping(order, draftRefund)}
               shippingCost={order?.shippingPrice.gross}
               currency={order?.total.gross.currency}
+              marginBottom={12}
             />
-            <OrderTransactionReason control={control} />
+            {modelForRefundReasonRefId && (
+              <Box marginBottom={12}>
+                <DashboardCard>
+                  <DashboardCard.Header>
+                    <DashboardCard.Title>Refund reason type</DashboardCard.Title>
+                  </DashboardCard.Header>
+                  <DashboardCard.Content>
+                    <ModelsPicker
+                      referenceModelTypeId={modelForRefundReasonRefId}
+                      control={control}
+                    />
+                  </DashboardCard.Content>
+                </DashboardCard>
+              </Box>
+            )}
+            <Box>
+              <RefundWithLinesOrderTransactionReason control={control} />
+            </Box>
           </Box>
         </DetailPageLayout.RightSidebar>
         <Savebar>

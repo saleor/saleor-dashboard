@@ -6,6 +6,7 @@ import { CardSubtitle as Subtitle } from "./Subtitle";
 import { Title } from "./Title";
 import { Toolbar } from "./Toolbar";
 
+// Todo this "pattern" doesnt properly infer props for root component
 export const DashboardCard = Object.assign(Root, {
   Title,
   Content,
