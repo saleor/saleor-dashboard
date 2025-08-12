@@ -267,13 +267,7 @@ const OrderTransactionRefundPage = ({
           <OrderTransactionTiles transactions={order?.transactions} control={control} />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar>
-          <Box
-            __width="400px"
-            display="flex"
-            flexDirection="column"
-            height="100%"
-            justifyContent="space-between"
-          >
+          <Box __width="400px" display="flex" flexDirection="column" height="100%">
             <OrderTransactionSummary
               amountError={amountError || formErrors.amount}
               control={control}
@@ -281,12 +275,13 @@ const OrderTransactionRefundPage = ({
               canRefundShipping={canRefundShipping(order, draftRefund)}
               shippingCost={order?.shippingPrice.gross}
               currency={order?.total.gross.currency}
+              marginBottom={12}
             />
             {modelForRefundReasonRefId && (
-              <Box marginTop="auto">
+              <Box marginBottom={12}>
                 <DashboardCard>
                   <DashboardCard.Header>
-                    <Text fontWeight="medium">Refund reason type</Text>
+                    <DashboardCard.Title>Refund reason type</DashboardCard.Title>
                   </DashboardCard.Header>
                   <DashboardCard.Content>
                     <ModelsPicker
