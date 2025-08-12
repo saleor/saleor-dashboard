@@ -62,6 +62,7 @@ const ModelsPicker = (props: { referenceModelTypeId: string }) => {
 
   const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
 
+  // how the hell this is working? todo
   return <Select {...field} options={optionsWithEmpty} />;
 };
 

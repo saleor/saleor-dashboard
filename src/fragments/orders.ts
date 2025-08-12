@@ -702,6 +702,9 @@ export const orderDetailsGrantedRefund = gql`
   fragment OrderDetailsGrantedRefund on OrderGrantedRefund {
     id
     reason
+    reasonReference {
+      id
+    }
     amount {
       ...Money
     }

@@ -16,7 +16,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { Control, SubmitHandler, useController, useFieldArray, useForm } from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RefundWithLinesOrderTransactionReason } from "./components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
@@ -76,16 +76,15 @@ export interface OrderTransactionRefundPageFormData {
   includeShipping: boolean;
   reason: string;
   transactionId: string;
-  reasonReference: { value: string; label: string };
+  reasonReference: string;
 }
 
 // todo extract to shared component with manual refund
 const ModelsPicker = (props: {
   referenceModelTypeId: string;
-  control: Control<OrderTransactionRefundPageFormData>;
+  value: string;
+  onChange(value: string): void;
 }) => {
-  const { field } = useController({ name: "reasonReference", control: props.control });
-
   // todo cache
   const { data, loading } = useModelsOfTypeQuery({
     variables: {
@@ -105,8 +104,12 @@ const ModelsPicker = (props: {
 
   const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
 
-  // todo this select api is problematic, because it doesnt implement native html onChange, so form is setting invalid object value
-  return <Select {...field} options={optionsWithEmpty} />;
+  console.log(props.value);
+
+  // todo discuss Select api to be compatbile with form field and native html
+  return (
+    <Select onChange={v => props.onChange(v)} value={props.value} options={optionsWithEmpty} />
+  );
 };
 
 const OrderTransactionRefundPage = ({
@@ -286,7 +289,8 @@ const OrderTransactionRefundPage = ({
                   <DashboardCard.Content>
                     <ModelsPicker
                       referenceModelTypeId={modelForRefundReasonRefId}
-                      control={control}
+                      value={getValues().reasonReference}
+                      onChange={value => setValue("reasonReference", value)}
                     />
                   </DashboardCard.Content>
                 </DashboardCard>

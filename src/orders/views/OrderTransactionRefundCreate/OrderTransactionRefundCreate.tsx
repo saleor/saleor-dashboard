@@ -82,7 +82,7 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
         grantRefundForShipping: includeShipping,
         transactionId,
         // due to select api, object is passed, todo fix this in macaw
-        reasonReferenceId: reasonReference.value.length ? reasonReference.value : undefined,
+        reasonReferenceId: reasonReference.length ? reasonReference : undefined,
       },
     });
   };
