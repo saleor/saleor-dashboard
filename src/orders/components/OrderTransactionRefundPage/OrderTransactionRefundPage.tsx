@@ -76,7 +76,7 @@ export interface OrderTransactionRefundPageFormData {
   includeShipping: boolean;
   reason: string;
   transactionId: string;
-  reasonReferenceId: string;
+  reasonReference: { value: string; label: string };
 }
 
 // todo extract to shared component with manual refund
@@ -84,7 +84,7 @@ const ModelsPicker = (props: {
   referenceModelTypeId: string;
   control: Control<OrderTransactionRefundPageFormData>;
 }) => {
-  const { field } = useController({ name: "reasonReferenceId", control: props.control });
+  const { field } = useController({ name: "reasonReference", control: props.control });
 
   // todo cache
   const { data, loading } = useModelsOfTypeQuery({
@@ -105,6 +105,7 @@ const ModelsPicker = (props: {
 
   const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
 
+  // todo this select api is problematic, because it doesnt implement native html onChange, so form is setting invalid object value
   return <Select {...field} options={optionsWithEmpty} />;
 };
 
