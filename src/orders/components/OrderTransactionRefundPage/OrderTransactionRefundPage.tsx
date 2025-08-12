@@ -16,7 +16,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { Control, SubmitHandler, useController, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RefundWithLinesOrderTransactionReason } from "./components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
@@ -82,9 +82,10 @@ export interface OrderTransactionRefundPageFormData {
 // todo extract to shared component with manual refund
 const ModelsPicker = (props: {
   referenceModelTypeId: string;
-  value: string;
-  onChange(value: string): void;
+  control: Control<OrderTransactionRefundPageFormData>;
 }) => {
+  const { field } = useController({ name: "reasonReference", control: props.control });
+
   // todo cache
   const { data, loading } = useModelsOfTypeQuery({
     variables: {
@@ -104,12 +105,8 @@ const ModelsPicker = (props: {
 
   const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
 
-  console.log(props.value);
-
   // todo discuss Select api to be compatbile with form field and native html
-  return (
-    <Select onChange={v => props.onChange(v)} value={props.value} options={optionsWithEmpty} />
-  );
+  return <Select options={optionsWithEmpty} {...field} />;
 };
 
 const OrderTransactionRefundPage = ({
@@ -152,8 +149,6 @@ const OrderTransactionRefundPage = ({
     name: "linesToRefund",
     control,
   });
-
-  console.log({ isDirty });
 
   const permissions = useUserPermissions();
   const canHandlePayments = hasPermissions(permissions ?? [], [PermissionEnum.HANDLE_PAYMENTS]);
@@ -291,8 +286,7 @@ const OrderTransactionRefundPage = ({
                   <DashboardCard.Content>
                     <ModelsPicker
                       referenceModelTypeId={modelForRefundReasonRefId}
-                      value={getValues().reasonReference}
-                      onChange={value => setValue("reasonReference", value)}
+                      control={control}
                     />
                   </DashboardCard.Content>
                 </DashboardCard>
