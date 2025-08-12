@@ -3,10 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { TransactionItemFragment, useModelsOfTypeQuery } from "@dashboard/graphql";
 import { ManualRefundForm } from "@dashboard/orders/components/OrderManualTransactionRefundPage/components/OrderManualTransactionRefundForm/manualRefundValidationSchema";
-import {
-  OrderTransactionReasonUi,
-  RefundWithLinesOrderTransactionReason,
-} from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
+import { OrderTransactionReasonUi } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -104,14 +101,8 @@ export const OrderManualTransactionRefundPage = ({
           </DashboardCard>
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar>
-          <Box
-            __maxWidth={400}
-            height="100%"
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-between"
-          >
-            <DashboardCard height="100%">
+          <Box __maxWidth={400} height="100%" display="flex" flexDirection="column">
+            <DashboardCard marginBottom={12}>
               <DashboardCard.Header>
                 <DashboardCard.Title>
                   <FormattedMessage {...messages.refundAmount} />
@@ -126,11 +117,9 @@ export const OrderManualTransactionRefundPage = ({
                 </Box>
               </DashboardCard.Content>
             </DashboardCard>
-            <Box marginTop="auto" marginBottom={3}>
-              <Reason />
-            </Box>
+
             {modelForRefundReasonRefId && (
-              <Box marginBottom={3}>
+              <Box marginBottom={12}>
                 <DashboardCard>
                   <DashboardCard.Header>
                     <DashboardCard.Title>Refund reason type</DashboardCard.Title>
@@ -141,6 +130,9 @@ export const OrderManualTransactionRefundPage = ({
                 </DashboardCard>
               </Box>
             )}
+            <Box marginBottom={"auto"}>
+              <Reason />
+            </Box>
             <DashboardCard.Content>
               <OrderManualTransactionRefundWarning />
             </DashboardCard.Content>

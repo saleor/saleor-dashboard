@@ -13,6 +13,7 @@ interface OrderTransactionReasonProps {
 
 /**
  * todo extract somewhere. It's used both in refund with lines (granted refund) and manual refund.
+ *
  */
 export const OrderTransactionReasonUi = (props: { textAreaProps?: TextareaProps }) => {
   const intl = useIntl();
@@ -20,15 +21,15 @@ export const OrderTransactionReasonUi = (props: { textAreaProps?: TextareaProps 
   return (
     <DashboardCard>
       <DashboardCard.Content display="flex" flexDirection="column" gap={3}>
-        <Text fontWeight="medium" marginTop={6}>
+        <DashboardCard.Title>
           <FormattedMessage {...transactionRefundReasonMessages.reasonForRefund} />
-        </Text>
+        </DashboardCard.Title>
         <Textarea
           data-test-id="refund-reason-input"
           placeholder={intl.formatMessage(transactionRefundReasonMessages.optionalPlaceholder)}
           size="medium"
-          rows={4}
-          maxRows={8}
+          rows={8}
+          maxRows={24}
           {...props.textAreaProps}
         />
       </DashboardCard.Content>
@@ -42,6 +43,8 @@ export const RefundWithLinesOrderTransactionReason = ({ control }: OrderTransact
   return (
     <OrderTransactionReasonUi
       textAreaProps={{
+        // @ts-expect-error - todo fix in macaw
+        resize: "vertical",
         value: field.value,
         onChange: field.onChange,
       }}
