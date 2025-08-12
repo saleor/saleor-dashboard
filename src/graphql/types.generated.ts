@@ -4497,6 +4497,8 @@ export type OrderGrantRefundUpdateInput = {
   grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
+  /** ID of Model to reference in reason. */
+  reasonReference?: InputMaybe<Scalars['ID']>;
   /** Lines to remove from granted refund. */
   removeLines?: InputMaybe<Array<Scalars['ID']>>;
   /**
@@ -11157,6 +11159,7 @@ export type OrderGrantRefundEditMutationVariables = Exact<{
   removeLines?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
   grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
   transactionId?: InputMaybe<Scalars['ID']>;
+  reasonReferenceId?: InputMaybe<Scalars['ID']>;
 }>;
 
 

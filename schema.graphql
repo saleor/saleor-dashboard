@@ -25405,6 +25405,9 @@ input OrderGrantRefundUpdateInput {
   """Reason of the granted refund."""
   reason: String
 
+  """ID of Model to reference in reason."""
+  reasonReference: ID
+
   """Lines to assign to granted refund."""
   addLines: [OrderGrantRefundUpdateLineAddInput!]
 

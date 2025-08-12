@@ -153,6 +153,8 @@ const OrderTransactionRefundPage = ({
     control,
   });
 
+  console.log({ isDirty });
+
   const permissions = useUserPermissions();
   const canHandlePayments = hasPermissions(permissions ?? [], [PermissionEnum.HANDLE_PAYMENTS]);
 

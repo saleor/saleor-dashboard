@@ -116,6 +116,7 @@ const OrderTransactionRefund = ({ orderId, refundId }: OrderTransactionRefundPro
         removeLines: toRemove,
         grantRefundForShipping: includeShipping,
         transactionId,
+        reasonReferenceId: submitData.reasonReference,
       },
     });
   };
