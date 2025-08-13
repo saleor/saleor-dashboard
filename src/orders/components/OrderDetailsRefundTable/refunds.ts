@@ -76,6 +76,10 @@ const mapEventGroupsToDatagridRefunds = (
     );
     const latestEvent = sortedEvents[0];
     const latestEventWithAuthor = findLatestEventWithUserAuthor(sortedEvents) || latestEvent;
+    const reasonFromRequest = eventGroup.find(e => e.type === "REFUND_REQUEST");
+
+    const reason =
+      reasonFromRequest?.message ?? intl.formatMessage(refundGridMessages.manualRefund);
 
     return {
       id: latestEvent.id,
@@ -84,8 +88,7 @@ const mapEventGroupsToDatagridRefunds = (
       amount: latestEvent.amount,
       createdAt: latestEvent.createdAt,
       user: determineCreatorDisplay(latestEventWithAuthor.createdBy),
-      // todo maybe this should show response from app if available?
-      reason: intl.formatMessage(refundGridMessages.manualRefund),
+      reason,
     };
   });
 };
