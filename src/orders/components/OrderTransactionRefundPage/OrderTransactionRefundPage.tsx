@@ -281,7 +281,7 @@ const OrderTransactionRefundPage = ({
               <Box marginBottom={12}>
                 <DashboardCard>
                   <DashboardCard.Header>
-                    <DashboardCard.Title>Refund reason type</DashboardCard.Title>
+                    <DashboardCard.Title>Refund reason</DashboardCard.Title>
                   </DashboardCard.Header>
                   <DashboardCard.Content>
                     <ModelsPicker

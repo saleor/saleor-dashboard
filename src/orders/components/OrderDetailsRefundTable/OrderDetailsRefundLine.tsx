@@ -50,9 +50,16 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
             overflow="hidden"
             textOverflow="ellipsis"
           >
-            <Text ellipsis size={2}>
-              {refund.reason}
-            </Text>
+            <Box>
+              {refund.reasonTypeName && (
+                <Text size={2} display="block" marginBottom={2}>
+                  {refund.reasonTypeName}
+                </Text>
+              )}
+              <Text ellipsis size={2} color="default2">
+                {refund.reason}
+              </Text>
+            </Box>
           </GridTable.Cell>
         </Tooltip.Trigger>
         <Tooltip.Content>

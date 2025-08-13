@@ -19,6 +19,7 @@ export interface DatagridRefund {
     currency: string;
   };
   reason: string | null;
+  reasonTypeName?: string | null;
   createdAt: string;
   user: {
     email: string;
@@ -76,10 +77,9 @@ const mapEventGroupsToDatagridRefunds = (
     );
     const latestEvent = sortedEvents[0];
     const latestEventWithAuthor = findLatestEventWithUserAuthor(sortedEvents) || latestEvent;
-    const reasonFromRequest = eventGroup.find(e => e.type === "REFUND_REQUEST");
+    const REQUESTtypeEvent = eventGroup.find(e => e.type === "REFUND_REQUEST");
 
-    const reason =
-      reasonFromRequest?.message ?? intl.formatMessage(refundGridMessages.manualRefund);
+    const reason = REQUESTtypeEvent?.message ?? intl.formatMessage(refundGridMessages.manualRefund);
 
     return {
       id: latestEvent.id,
@@ -89,6 +89,7 @@ const mapEventGroupsToDatagridRefunds = (
       createdAt: latestEvent.createdAt,
       user: determineCreatorDisplay(latestEventWithAuthor.createdBy),
       reason,
+      reasonTypeName: REQUESTtypeEvent?.reasonReference?.title ?? null,
     };
   });
 };
@@ -143,4 +144,9 @@ export const mergeRefunds = (
 
 const prepareGrantedRefunds = (
   grantedRefunds: OrderDetailsFragment["grantedRefunds"],
-): DatagridRefund[] => grantedRefunds.map(refund => ({ ...refund, type: "standard" }));
+): DatagridRefund[] =>
+  grantedRefunds.map(refund => ({
+    ...refund,
+    type: "standard",
+    reasonTypeName: refund.reasonReference?.title ?? null,
+  }));

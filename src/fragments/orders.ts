@@ -526,6 +526,10 @@ export const transactionBaseEvent = gql`
     type
     message
     createdAt
+    reasonReference {
+      id
+      title
+    }
   }
 `;
 
@@ -662,6 +666,10 @@ export const fragmentOrderGrantedRefunds = gql`
       id
     }
     reason
+    reasonReference {
+      id
+      title
+    }
     user {
       ...UserBaseAvatar
     }
@@ -704,6 +712,7 @@ export const orderDetailsGrantedRefund = gql`
     reason
     reasonReference {
       id
+      title
     }
     amount {
       ...Money

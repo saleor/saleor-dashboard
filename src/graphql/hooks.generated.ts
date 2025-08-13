@@ -1632,6 +1632,10 @@ export const TransactionBaseEventFragmentDoc = gql`
   type
   message
   createdAt
+  reasonReference {
+    id
+    title
+  }
 }
     ${MoneyFragmentDoc}`;
 export const TransactionBaseItemFragmentDoc = gql`
@@ -1801,6 +1805,10 @@ export const OrderGrantedRefundFragmentDoc = gql`
     id
   }
   reason
+  reasonReference {
+    id
+    title
+  }
   user {
     ...UserBaseAvatar
   }
@@ -2340,6 +2348,7 @@ export const OrderDetailsGrantedRefundFragmentDoc = gql`
   reason
   reasonReference {
     id
+    title
   }
   amount {
     ...Money
