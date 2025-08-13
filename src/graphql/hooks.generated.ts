@@ -16288,6 +16288,45 @@ export function useRefundsSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type RefundsSettingsQueryHookResult = ReturnType<typeof useRefundsSettingsQuery>;
 export type RefundsSettingsLazyQueryHookResult = ReturnType<typeof useRefundsSettingsLazyQuery>;
 export type RefundsSettingsQueryResult = Apollo.QueryResult<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>;
+export const ModelTypesDocument = gql`
+    query ModelTypes {
+  pageTypes(first: 100, sortBy: {field: NAME, direction: ASC}) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useModelTypesQuery__
+ *
+ * To run a query within a React component, call `useModelTypesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useModelTypesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useModelTypesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useModelTypesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>(ModelTypesDocument, options);
+      }
+export function useModelTypesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>(ModelTypesDocument, options);
+        }
+export type ModelTypesQueryHookResult = ReturnType<typeof useModelTypesQuery>;
+export type ModelTypesLazyQueryHookResult = ReturnType<typeof useModelTypesLazyQuery>;
+export type ModelTypesQueryResult = Apollo.QueryResult<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>;
 export const GlobalSearchDocument = gql`
     query GlobalSearch($query: String!, $includeOrders: Boolean!, $includeCategories: Boolean!, $includeCollections: Boolean!, $includeProducts: Boolean!, $includeVariants: Boolean!, $includeModels: Boolean!, $includeModelTypes: Boolean!) {
   orders(first: 10, filter: {search: $query}) @include(if: $includeOrders) {

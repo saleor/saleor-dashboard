@@ -11785,6 +11785,11 @@ export type RefundsSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type RefundsSettingsQuery = { __typename: 'Query', refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
 
+export type ModelTypesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ModelTypesQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string } }> } | null };
+
 export type GlobalSearchQueryVariables = Exact<{
   query: Scalars['String'];
   includeOrders: Scalars['Boolean'];
