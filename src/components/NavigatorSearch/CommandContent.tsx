@@ -17,7 +17,14 @@ export const CommandContent = () => {
   const [query, setQuery] = useState("");
   const { scope, collectLinks, collectTableRows, resetFocus } = useKeyboardNavigation({ query });
 
-  const handleClick = () => {
+  const handleAction = (cb: Function) => {
+    cb();
+
+    setNavigatorVisibility(false);
+    resetFocus();
+  };
+
+  const handleResource = () => {
     setNavigatorVisibility(false);
     resetFocus();
   };
@@ -48,7 +55,7 @@ export const CommandContent = () => {
         paddingTop={2}
         paddingBottom={2}
       >
-        <Actions query={query} onActionClick={handleClick} onActionsLoaded={handleActionsLoaded} />
+        <Actions query={query} onAction={handleAction} onActionsLoaded={handleActionsLoaded} />
         <Box marginTop={3}>
           <Text fontWeight="medium" size={2} color="default2" paddingX={6} display="block">
             <FormattedMessage id="49vo8t" defaultMessage="Quick search" />
@@ -89,7 +96,7 @@ export const CommandContent = () => {
           </Link>
           <ResourcesTable
             query={query}
-            onResourceClick={handleClick}
+            onResourceClick={handleResource}
             onResourcesLoaded={handleResourcesLoaded}
           />
         </Box>

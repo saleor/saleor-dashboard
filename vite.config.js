@@ -210,6 +210,7 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         "@assets": path.resolve(__dirname, "./assets"),
         "@locale": path.resolve(__dirname, "./locale"),
+        // todo convert to @
         "@dashboard": path.resolve(__dirname, "./src"),
         src: path.resolve(__dirname, "./src"),
         /*
