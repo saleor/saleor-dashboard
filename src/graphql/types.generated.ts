@@ -4452,7 +4452,11 @@ export type OrderGrantRefundCreateInput = {
   lines?: InputMaybe<Array<OrderGrantRefundCreateLineInput>>;
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
-  /** ID of Model to reference in reason. */
+  /**
+   * ID of Model to reference in reason.
+   *
+   * Added in Saleor 3.22.
+   */
   reasonReference?: InputMaybe<Scalars['ID']>;
   /**
    * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from Saleor 3.21.
@@ -4497,7 +4501,11 @@ export type OrderGrantRefundUpdateInput = {
   grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
-  /** ID of Model to reference in reason. */
+  /**
+   * ID of Model to reference in reason.
+   *
+   * Added in Saleor 3.22.
+   */
   reasonReference?: InputMaybe<Scalars['ID']>;
   /** Lines to remove from granted refund. */
   removeLines?: InputMaybe<Array<Scalars['ID']>>;
@@ -7469,7 +7477,8 @@ export enum TransactionRequestActionErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK = 'MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK',
-  NOT_FOUND = 'NOT_FOUND'
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
 }
 
 export enum TransactionRequestRefundForGrantedRefundErrorCode {
@@ -11770,6 +11779,11 @@ export type GridWarehousesQueryVariables = Exact<{
 
 
 export type GridWarehousesQuery = { __typename: 'Query', availableWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
+
+export type RefundsSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RefundsSettingsQuery = { __typename: 'Query', refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
 
 export type GlobalSearchQueryVariables = Exact<{
   query: Scalars['String'];
