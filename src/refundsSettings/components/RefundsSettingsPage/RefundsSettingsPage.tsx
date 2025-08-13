@@ -15,7 +15,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { pageTypeAddUrl, pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Combobox, Skeleton,Text } from "@saleor/macaw-ui-next";
+import { Box, Combobox, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -49,7 +49,7 @@ export const RefundsSettingsPage = () => {
   const modelTypesOptionsWithEmptyValue = [
     {
       value: "",
-      label: "Select model",
+      label: "None",
     },
   ].concat(modelTypesOptions ?? []);
 

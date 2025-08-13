@@ -39,6 +39,7 @@ const Reason = () => {
 };
 
 // todo extract to shared component with granted refund
+// todo add disabled state
 const ModelsPicker = (props: { referenceModelTypeId: string }) => {
   const { control } = useFormContext<ManualRefundForm>();
   const { field } = useController({ name: "reasonReferenceId", control });

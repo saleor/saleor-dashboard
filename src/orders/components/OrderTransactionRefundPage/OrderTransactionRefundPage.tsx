@@ -79,11 +79,14 @@ export interface OrderTransactionRefundPageFormData {
   reasonReference: string;
 }
 
-// todo extract to shared component with manual refund
-const ModelsPicker = (props: {
+type ModelPickerProps = {
   referenceModelTypeId: string;
   control: Control<OrderTransactionRefundPageFormData>;
-}) => {
+  disabled: boolean;
+};
+
+// todo extract to shared component with manual refund
+const ModelsPicker = (props: ModelPickerProps) => {
   const { field } = useController({ name: "reasonReference", control: props.control });
 
   // todo cache
@@ -91,6 +94,7 @@ const ModelsPicker = (props: {
     variables: {
       pageTypeId: props.referenceModelTypeId,
     },
+    skip: props.disabled,
   });
 
   if (loading) {
@@ -106,7 +110,7 @@ const ModelsPicker = (props: {
   const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
 
   // todo discuss Select api to be compatbile with form field and native html
-  return <Select options={optionsWithEmpty} {...field} />;
+  return <Select disabled={props.disabled} options={optionsWithEmpty} {...field} />;
 };
 
 const OrderTransactionRefundPage = ({
@@ -277,21 +281,21 @@ const OrderTransactionRefundPage = ({
               currency={order?.total.gross.currency}
               marginBottom={12}
             />
-            {modelForRefundReasonRefId && (
-              <Box marginBottom={12}>
-                <DashboardCard>
-                  <DashboardCard.Header>
-                    <DashboardCard.Title>Refund reason</DashboardCard.Title>
-                  </DashboardCard.Header>
-                  <DashboardCard.Content>
-                    <ModelsPicker
-                      referenceModelTypeId={modelForRefundReasonRefId}
-                      control={control}
-                    />
-                  </DashboardCard.Content>
-                </DashboardCard>
-              </Box>
-            )}
+            <Box marginBottom={12}>
+              <DashboardCard>
+                <DashboardCard.Header>
+                  <DashboardCard.Title>Refund reason</DashboardCard.Title>
+                </DashboardCard.Header>
+                <DashboardCard.Content>
+                  <ModelsPicker
+                    disabled={!modelForRefundReasonRefId}
+                    referenceModelTypeId={modelForRefundReasonRefId ?? ""}
+                    control={control}
+                  />
+                  <Text color="default2">TODO Link to settings or to docs</Text>
+                </DashboardCard.Content>
+              </DashboardCard>
+            </Box>
             <Box>
               <RefundWithLinesOrderTransactionReason control={control} />
             </Box>
