@@ -15,7 +15,7 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import React from "react";
-import { defineMessage, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
   return (
@@ -49,64 +49,64 @@ interface TriggerDescriptor {
   }>;
 }
 
-const allMessages: Record<string, MessageDescriptor> = {
-  inviteUser: defineMessage({
+const allMessages = defineMessages({
+  inviteUser: {
     defaultMessage: "Invite user/staff member",
     id: "tZ/9Sl",
-  }),
-  gotoUsers: defineMessage({
+  },
+  gotoUsers: {
     defaultMessage: "Go to users/staff members",
     id: "3xv4ez",
-  }),
-  createCustomer: defineMessage({
+  },
+  createCustomer: {
     defaultMessage: "Create customer",
     id: "ninItd",
-  }),
-  gotoCustomers: defineMessage({
+  },
+  gotoCustomers: {
     defaultMessage: "Go to customers",
     id: "o7ePJQ",
-  }),
-  discountsSection: defineMessage({
+  },
+  discountsSection: {
     defaultMessage: "Discounts",
     id: "n+Gwbu",
-  }),
-  createPromotion: defineMessage({
+  },
+  createPromotion: {
     defaultMessage: "Create promotion",
     id: "jNoqH0",
-  }),
-  gotoPromotions: defineMessage({
+  },
+  gotoPromotions: {
     defaultMessage: "Go to promotions",
     id: "Dd0Dwl",
-  }),
-  createVoucher: defineMessage({
+  },
+  createVoucher: {
     defaultMessage: "Create voucher",
     id: "YIT1XP",
-  }),
-  gotoVouchers: defineMessage({
+  },
+  gotoVouchers: {
     defaultMessage: "Go to vouchers",
     id: "nQQVdc",
-  }),
-  extensionsSection: defineMessage({
+  },
+  extensionsSection: {
     defaultMessage: "Extensions",
     id: "nb2FlN",
-  }),
-  gotoInstalledExtensions: defineMessage({
+  },
+  gotoInstalledExtensions: {
     defaultMessage: "Go to installed extensions",
     id: "ivTlck",
-  }),
-  gotoExploreExtensions: defineMessage({
+  },
+  gotoExploreExtensions: {
     defaultMessage: "Go to explore extensions",
     id: "h84DkG",
-  }),
-  createWebhook: defineMessage({
+  },
+  createWebhook: {
     defaultMessage: "Create webhook/extension manually",
     id: "NGWTE4",
-  }),
-  installExtensionFromManifest: defineMessage({
+  },
+  installExtensionFromManifest: {
     defaultMessage: "Install extension from manifest",
     id: "mvVmbJ",
-  }),
-};
+  },
+});
 
 const allActions: TriggerDescriptor[] = [
   {
