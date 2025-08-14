@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.7
+
+### Patch Changes
+
+- fb923e9: Fixed duplicated Language Switcher in Product Variants Translate Page
+
 ## 3.21.6
 
 ### Patch Changes
