@@ -16,10 +16,15 @@ import {
 import { FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
-import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders";
-import { OrderInvoiceDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderInvoiceDateQueryVarsBuilder";
-import { OrderStatusEnumQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderStatusEnumQueryVarsBuilder";
+import { OrderCustomerIdQueryVarsBuilder, SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders";
+import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
+import { EnumQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/EnumQueryVarsBuilder";
+import { IntFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/IntFilterQueryVarsBuilder";
+import { MetadataAdvancedFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/MetadataAdvancedFilterQueryVarsBuilder";
+import { OrderChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderChannelQueryVarsBuilder";
+import { OrderIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderIdQueryVarsBuilder";
 import { PriceFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceFilterQueryVarsBuilder";
+import { StringFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/StringFilterQueryVarsBuilder";
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
@@ -45,15 +50,22 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
   return filters;
 };
 
-export const createOrderQueryVariables = (value: FilterContainer, intl: any): OrderWhereInput => {
+// TODO: We should probably map fields based on query + field name, not using simple `canHandle` strategy
+// E.g. Orders query uses DateTimeRangeInput for createdAt, updatedAt, but Product query uses DateTimeFilterInput for updatedAt
+// Fields have the same name for both queries, but different input types
+export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInput => {
   const { filters } = new FiltersQueryBuilder<OrderWhereInput>({
     apiType: QueryApiType.WHERE,
     filterContainer: value,
     filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
-      new OrderStatusEnumQueryVarsBuilder(intl),
-      new PriceFilterQueryVarsBuilder(),
-      new OrderInvoiceDateQueryVarsBuilder(),
-      ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+      new OrderChannelQueryVarsBuilder(), // Map channels -> channelId
+      new OrderCustomerIdQueryVarsBuilder(), // Map customer -> user
+      new OrderIdQueryVarsBuilder(), // Handle ids as plain arrays
+      new IntFilterQueryVarsBuilder(), // Handle int fields like linesCount, number
+      new PriceFilterQueryVarsBuilder(), // Handle price/amount fields
+      new DateTimeRangeQueryVarsBuilder(),
+      new MetadataAdvancedFilterQueryVarsBuilder(), // Orders query uses MetadataFilter, not MetadataInput
+      ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(), // Includes DefaultQueryVarsBuilder for remaining fields
     ]),
   }).build();
 

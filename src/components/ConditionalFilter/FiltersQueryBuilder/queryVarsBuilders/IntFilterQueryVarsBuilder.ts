@@ -1,0 +1,42 @@
+import { IntFilterInput } from "@dashboard/graphql";
+
+import { Handler, NoopValuesHandler } from "../../API/Handler";
+import { FilterElement } from "../../FilterElement";
+import { QueryVarsBuilderUtils } from "../utils";
+import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
+
+const SUPPORTED_INT_FILTERS = new Set([
+  "linesCount",
+  "number",
+] as const);
+
+type SupportedIntKeys =
+  typeof SUPPORTED_INT_FILTERS extends Set<infer T> ? T : never;
+
+export type IntFilterQueryPart = {
+  linesCount?: IntFilterInput;
+  number?: IntFilterInput;
+};
+
+/** Handle fields that use IntFilterInput (not IntRangeInput) */
+export class IntFilterQueryVarsBuilder
+  extends BaseMappableQueryVarsBuilder<IntFilterQueryPart> {
+  canHandle(element: FilterElement): boolean {
+    return SUPPORTED_INT_FILTERS.has(element.value.value as SupportedIntKeys);
+  }
+
+  createOptionFetcher(): Handler {
+    return new NoopValuesHandler([]);
+  }
+
+  protected getQueryFieldName(element: FilterElement): string {
+    return element.value.value || element.value.label || "unknown";
+  }
+
+  protected getConditionValue(element: FilterElement): IntFilterInput {
+    // These inputs require providing a number, not a string
+    const parsedValue = QueryVarsBuilderUtils.getIntegerValueFromElement(element);
+
+    return QueryVarsBuilderUtils.handleRangeCondition(parsedValue, element.condition.selected.conditionValue.label) as IntFilterInput;
+  }
+}
