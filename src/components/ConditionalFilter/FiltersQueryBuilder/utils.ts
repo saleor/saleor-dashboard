@@ -4,6 +4,7 @@ import {
   ConditionValue,
   isItemOption,
   isItemOptionArray,
+  ItemOption,
 } from "../FilterElement/ConditionValue";
 import { StaticQueryPart } from "./types";
 
@@ -67,9 +68,15 @@ function getIntegerValueFromElement(element: FilterElement): number | number[] |
 
 
   if (Array.isArray(selectedValue) && selectedValue.length > 0) {
-    const parsed = selectedValue.map(x => parseInt(x, 10)).find(x => !isNaN(x));
+    const parsed = selectedValue.map((x: string | ItemOption) => {
+      if (isItemOption(x)) {
+        return parseInt(x.value, 10);
+      }
 
-    return parsed !== undefined ? parsed : null;
+      return parseInt(x, 10);
+    }).filter(x => !Number.isNaN(x));
+
+    return parsed.length > 0 ? parsed : null;
   }
 
   if (typeof selectedValue === "number") {
@@ -86,12 +93,12 @@ function getFloatValueFromElement(element: FilterElement): number | number[] | n
   const { value: selectedValue } = element.condition.selected;
 
   if (Array.isArray(selectedValue) && selectedValue.length > 0) {
-    const parsed = selectedValue.map((x) => {
+    const parsed = selectedValue.map((x: string | ItemOption) => {
       if (isItemOption(x)) {
         return parseFloat(x.value);
       }
 
-      return parseFloat(x as string);
+      return parseFloat(x);
     }).filter(x => !Number.isNaN(x));
 
     return parsed.length > 0 ? parsed : null;
