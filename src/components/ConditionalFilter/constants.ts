@@ -87,11 +87,6 @@ export const STATIC_CONDITIONS = {
       value: "input-2",
     },
   ],
-  created: [
-    { type: "datetime", label: "lower", value: "input-1" },
-    { type: "datetime", label: "greater", value: "input-2" },
-    { type: "datetime.range", label: "between", value: "input-3" },
-  ],
   createdAt: [
     { type: "datetime", label: "lower", value: "input-1" },
     { type: "datetime", label: "greater", value: "input-2" },
@@ -344,12 +339,6 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Fulfillment Status",
     type: "status",
     slug: "status",
-  },
-  {
-    value: "created",
-    label: "Creation date",
-    type: "created",
-    slug: "created",
   },
   {
     value: "createdAt",
