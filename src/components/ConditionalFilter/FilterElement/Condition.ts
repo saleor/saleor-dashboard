@@ -11,7 +11,7 @@ export class Condition {
     public options: ConditionOptions,
     public selected: ConditionSelected,
     public loading: boolean,
-  ) {}
+  ) { }
 
   public enableLoading() {
     this.loading = true;
@@ -56,6 +56,10 @@ export class Condition {
       const isDate = ["created", "updatedAt", "startDate", "endDate", "started"].includes(
         token.name,
       );
+      // TODO: This doesn't make sense:
+      // it's a hack to rehydrate state in input from URL
+      // it's NOT used for building query (this works correctly regardless of this)
+      // for some reason for some fields if we don't do this, value in input is not set when user re-opens filters
       const value = isMultiSelect || isDate || isBulkSelect ? valueItems : valueItems[0];
 
       if (!selectedOption) {
