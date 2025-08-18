@@ -19,16 +19,20 @@ const PRODUCT_STATICS = [
 ];
 
 const ORDER_STATICS = [
-  "paymentStatus",
   "status",
   "authorizeStatus",
   "chargeStatus",
-  "giftCardBought",
-  "giftCardUsed",
-  "isPreorder",
+  "isGiftCardBought",
+  "isGiftCardUsed",
   "isClickAndCollect",
+  "hasInvoices",
+  "hasFulfillments",
   "channels",
   "ids",
+  "number",
+  "userEmail",
+  "voucherCode",
+  "linesCount",
 ];
 
 const VOUCHER_STATICS = ["channel", "discountType", "voucherStatus"];

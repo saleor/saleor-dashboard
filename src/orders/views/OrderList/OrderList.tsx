@@ -3,6 +3,7 @@ import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -34,7 +35,8 @@ import {
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
-import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { handleWhereApiErrors } from "../../utils/whereApiErrorHandler";
+import { getFilterQueryParam, storageUtils } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface OrderListProps {
@@ -108,7 +110,7 @@ export const OrderList = ({ params }: OrderListProps) => {
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const filterVariables = getFilterVariables(params, valueProvider.value);
+  const filterVariables = createOrderQueryVariables(valueProvider.value);
 
   const queryVariables = React.useMemo(
     () => ({

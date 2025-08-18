@@ -12,7 +12,7 @@ export enum OrderFilterKeys {
   totalNet = "totalNet",
   hasInvoices = "hasInvoices",
   hasFulfillments = "hasFulfillments",
-  invoicesCreatedAt = "invoices.createdAt",
+  invoicesCreatedAt = "invoicesCreatedAt",
   metadata = "metadata",
 }
 

@@ -6,8 +6,7 @@ import {
   _GetLegacyChannelOperandsQueryVariables,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
-  OrderStatusFilter,
-  PaymentChargeStatusEnum,
+  OrderStatus,
 } from "@dashboard/graphql";
 import { useState } from "react";
 import { useIntl } from "react-intl";
@@ -23,6 +22,14 @@ const mapIDsToOptions = (ids: string[]) =>
     label: id,
     value: id,
     slug: id,
+  }));
+
+const mapTextToOptions = (values: string[], type: string) =>
+  values.map(value => ({
+    type,
+    label: value,
+    value,
+    slug: value,
   }));
 
 export interface InitialOrderAPIState {
@@ -42,10 +49,13 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
   const fetchQueries = async ({
     channels,
     chargeStatus,
-    paymentStatus,
     status,
     authorizeStatus,
     ids,
+    number,
+    userEmail,
+    voucherCode,
+    linesCount,
   }: OrderFetchingParams) => {
     if (channels.length > 0) {
       queriesToRun.push(
@@ -55,36 +65,46 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
       );
     }
 
-    const paymentStatusInit = new EnumValuesHandler(
-      PaymentChargeStatusEnum,
-      "paymentStatus",
+    const chargeStatusInit = new EnumValuesHandler(
+      OrderChargeStatusEnum,
+      "chargeStatus",
       intl,
-      paymentStatus,
+      chargeStatus,
     );
 
-    const statusInit = new EnumValuesHandler(OrderStatusFilter, "status", intl, status);
+    const statusInit = new EnumValuesHandler(OrderStatus, "status", intl, status);
     const authorizeStatusInit = new EnumValuesHandler(
       OrderAuthorizeStatusEnum,
       "authorizeStatus",
       intl,
       authorizeStatus,
     );
-    const chargeStatusInit = new EnumValuesHandler(
-      OrderChargeStatusEnum,
-      "authorizeStatus",
-      intl,
-      chargeStatus,
-    );
 
     const data = await Promise.all(queriesToRun);
 
+    const baseState = createInitialOrderState(data);
     const initialState = {
-      ...createInitialOrderState(data),
-      paymentStatus: await paymentStatusInit.fetch(),
+      channels: baseState.channels,
+      isClickAndCollect: baseState.isClickAndCollect,
+      isGiftCardBought: baseState.isGiftCardBought,
+      isGiftCardUsed: baseState.isGiftCardUsed,
+      hasInvoices: baseState.hasInvoices,
+      hasFulfillments: baseState.hasFulfillments,
+      createdAt: baseState.createdAt,
+      updatedAt: baseState.updatedAt,
+      invoicesCreatedAt: baseState.invoicesCreatedAt,
+      totalGross: baseState.totalGross,
+      totalNet: baseState.totalNet,
+      user: baseState.user,
+      channelId: baseState.channelId,
+      chargeStatus: await chargeStatusInit.fetch(),
       status: await statusInit.fetch(),
       authorizeStatus: await authorizeStatusInit.fetch(),
-      chargeStatus: await chargeStatusInit.fetch(),
       ids: mapIDsToOptions(ids),
+      number: mapTextToOptions(number, "number"),
+      userEmail: mapTextToOptions(userEmail, "userEmail"),
+      voucherCode: mapTextToOptions(voucherCode, "voucherCode"),
+      linesCount: mapTextToOptions(linesCount, "linesCount"),
     };
 
     setData(
@@ -106,6 +126,10 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
         initialState.user,
         initialState.channels, // channelId (reuse channels for now)
         initialState.ids,
+        initialState.number,
+        initialState.userEmail,
+        initialState.voucherCode,
+        initialState.linesCount,
       ),
     );
     setLoading(false);

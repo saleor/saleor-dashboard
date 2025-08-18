@@ -61,20 +61,8 @@ export const STATIC_CONDITIONS = {
   ],
   isClickAndCollect: [{ type: "select", label: "is", value: "input-1" }],
   isPreorder: [{ type: "select", label: "is", value: "input-1" }],
-  giftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
-  giftCardBought: [{ type: "select", label: "is", value: "input-1" }],
-  paymentStatus: [
-    {
-      type: "combobox",
-      label: "is",
-      value: "input-1",
-    },
-    {
-      type: "multiselect",
-      label: "in",
-      value: "input-2",
-    },
-  ],
+  isGiftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
+  isGiftCardBought: [{ type: "select", label: "is", value: "input-1" }],
   status: [
     {
       type: "combobox",
@@ -100,9 +88,14 @@ export const STATIC_CONDITIONS = {
     },
   ],
   created: [
-    { type: "date", label: "lower", value: "input-1" },
-    { type: "date", label: "greater", value: "input-2" },
-    { type: "date.range", label: "between", value: "input-3" },
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
+  ],
+  createdAt: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
   ],
   dateJoined: [
     { type: "date", label: "lower", value: "input-1" },
@@ -170,6 +163,25 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  totalGross: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-2" },
+    { type: "number", label: "greater", value: "input-3" },
+    { type: "number.range", label: "between", value: "input-4" },
+  ],
+  totalNet: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-2" },
+    { type: "number", label: "greater", value: "input-3" },
+    { type: "number.range", label: "between", value: "input-4" },
+  ],
+  hasInvoices: [{ type: "select", label: "is", value: "input-1" }],
+  hasFulfillments: [{ type: "select", label: "is", value: "input-1" }],
+  invoicesCreatedAt: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
+  ],
   pageTypes: [
     {
       type: "multiselect",
@@ -217,6 +229,24 @@ export const STATIC_CONDITIONS = {
   ],
   staffMemberStatus: [{ type: "select", label: "is", value: "input-1" }],
   attribute: [{ type: "multiselect", label: "in", value: "input-2" }],
+  number: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-3" },
+    { type: "number", label: "greater", value: "input-4" },
+    { type: "number.range", label: "between", value: "input-5" },
+  ],
+  userEmail: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  voucherCode: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  linesCount: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-3" },
+    { type: "number", label: "greater", value: "input-4" },
+    { type: "number.range", label: "between", value: "input-5" },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -310,12 +340,6 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
   { value: "channels", label: "Channels", type: "channels", slug: "channels" },
   {
-    value: "paymentStatus",
-    label: "Payment status",
-    type: "paymentStatus",
-    slug: "paymentStatus",
-  },
-  {
     value: "status",
     label: "Fulfillment Status",
     type: "status",
@@ -326,6 +350,12 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Creation date",
     type: "created",
     slug: "created",
+  },
+  {
+    value: "createdAt",
+    label: "Creation date",
+    type: "createdAt",
+    slug: "createdAt",
   },
   {
     value: "authorizeStatus",
@@ -352,22 +382,46 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     slug: "isClickAndCollect",
   },
   {
-    value: "isPreorder",
-    label: "Preorder",
-    type: "isPreorder",
-    slug: "isPreorder",
-  },
-  {
-    value: "giftCardBought",
+    value: "isGiftCardBought",
     label: "Gift card bought",
-    type: "giftCardBought",
-    slug: "giftCardBought",
+    type: "isGiftCardBought",
+    slug: "isGiftCardBought",
   },
   {
-    value: "giftCardUsed",
+    value: "isGiftCardUsed",
     label: "Gift card used",
-    type: "giftCardUsed",
-    slug: "giftCardUsed",
+    type: "isGiftCardUsed",
+    slug: "isGiftCardUsed",
+  },
+  {
+    value: "totalGross",
+    label: "Total Gross Amount",
+    type: "totalGross",
+    slug: "totalGross",
+  },
+  {
+    value: "totalNet",
+    label: "Total Net Amount",
+    type: "totalNet",
+    slug: "totalNet",
+  },
+  {
+    value: "hasInvoices",
+    label: "Has Invoices",
+    type: "hasInvoices",
+    slug: "hasInvoices",
+  },
+  {
+    value: "hasFulfillments",
+    label: "Has Fulfillments",
+    type: "hasFulfillments",
+    slug: "hasFulfillments",
+  },
+  {
+    value: "invoicesCreatedAt",
+    label: "Invoice Date",
+    type: "invoicesCreatedAt",
+    slug: "invoicesCreatedAt",
   },
   {
     value: "customer",
@@ -380,6 +434,30 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Metadata",
     type: "metadata",
     slug: "metadata",
+  },
+  {
+    value: "number",
+    label: "Order Number",
+    type: "number",
+    slug: "number",
+  },
+  {
+    value: "userEmail",
+    label: "Customer Email",
+    type: "userEmail",
+    slug: "userEmail",
+  },
+  {
+    value: "voucherCode",
+    label: "Voucher Code",
+    type: "voucherCode",
+    slug: "voucherCode",
+  },
+  {
+    value: "linesCount",
+    label: "Number of Lines",
+    type: "linesCount",
+    slug: "linesCount",
   },
 ];
 
@@ -454,10 +532,10 @@ export const STATIC_DRAFT_ORDER_OPTIONS: LeftOperand[] = [
     slug: "customer",
   },
   {
-    value: "created",
+    value: "createdAt",
     label: "Creation date",
-    type: "created",
-    slug: "created",
+    type: "createdAt",
+    slug: "createdAt",
   },
 ];
 

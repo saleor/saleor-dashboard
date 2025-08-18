@@ -19,10 +19,15 @@ export interface InitialOrderState {
   user: ItemOption[];
   channelId: ItemOption[];
   ids: ItemOption[];
+  number: ItemOption[];
+  userEmail: ItemOption[];
+  voucherCode: ItemOption[];
+  linesCount: ItemOption[];
 }
 
 const isDateField = (name: string) => ["createdAt", "updatedAt", "invoicesCreatedAt"].includes(name);
 const isPriceField = (name: string) => ["totalGross", "totalNet"].includes(name);
+const isNumericField = (name: string) => ["number", "linesCount"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
   constructor(
@@ -43,6 +48,10 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public user: ItemOption[] = [],
     public channelId: ItemOption[] = [],
     public ids: ItemOption[] = [],
+    public number: ItemOption[] = [],
+    public userEmail: ItemOption[] = [],
+    public voucherCode: ItemOption[] = [],
+    public linesCount: ItemOption[] = [],
   ) {}
 
   public static empty() {
@@ -50,7 +59,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
   }
 
   public filterByUrlToken(token: UrlToken) {
-    if (isDateField(token.name) || isPriceField(token.name)) {
+    if (isDateField(token.name) || isPriceField(token.name) || isNumericField(token.name)) {
       return token.value;
     }
 
@@ -89,6 +98,14 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.user;
       case "ids":
         return this.ids;
+      case "number":
+        return this.number;
+      case "userEmail":
+        return this.userEmail;
+      case "voucherCode":
+        return this.voucherCode;
+      case "linesCount":
+        return this.linesCount;
       default:
         return [];
     }

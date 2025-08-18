@@ -1,9 +1,9 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import {
+  AttributeInputTypeEnum,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
-  OrderStatusFilter,
-  PaymentChargeStatusEnum,
+  OrderStatus,
 } from "@dashboard/graphql";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -49,12 +49,9 @@ const createAPIHandler = (
     ]);
   }
 
-  if (rowType === "paymentStatus") {
-    return new EnumValuesHandler(PaymentChargeStatusEnum, rowType, intl);
-  }
 
   if (rowType === "status") {
-    return new EnumValuesHandler(OrderStatusFilter, rowType, intl);
+    return new EnumValuesHandler(OrderStatus, rowType, intl);
   }
 
   if (rowType === "authorizeStatus") {
@@ -85,6 +82,30 @@ const createAPIHandler = (
   }
 
   if (rowType === "metadata") {
+    return new NoopValuesHandler([]);
+  }
+
+  // Boolean fields
+  if (rowType === "isClickAndCollect" || rowType === "isGiftCardBought" || rowType === "isGiftCardUsed" || 
+      rowType === "hasInvoices" || rowType === "hasFulfillments") {
+    return new BooleanValuesHandler([
+      { label: "Yes", value: "true", type: AttributeInputTypeEnum.BOOLEAN, slug: "true" },
+      { label: "No", value: "false", type: AttributeInputTypeEnum.BOOLEAN, slug: "false" },
+    ]);
+  }
+
+  // Price/Amount fields  
+  if (rowType === "totalGross" || rowType === "totalNet") {
+    return new NoopValuesHandler([]);
+  }
+
+  // Date/datetime fields
+  if (rowType === "invoicesCreatedAt") {
+    return new NoopValuesHandler([]);
+  }
+
+  // Text input fields
+  if (rowType === "number" || rowType === "userEmail" || rowType === "voucherCode" || rowType === "linesCount") {
     return new NoopValuesHandler([]);
   }
 

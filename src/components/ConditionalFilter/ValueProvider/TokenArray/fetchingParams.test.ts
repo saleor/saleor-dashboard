@@ -40,7 +40,6 @@ describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
 
     // Assert
     expect(fetchingParams).toEqual({
-      paymentStatus: [],
       status: [],
       authorizeStatus: [],
       chargeStatus: [],

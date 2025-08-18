@@ -229,6 +229,10 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
       user: [],
       channelId: [],
       ids: [],
+      number: [],
+      userEmail: [],
+      voucherCode: [],
+      linesCount: [],
     },
   );
 

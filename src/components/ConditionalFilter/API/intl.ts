@@ -6,12 +6,11 @@ import {
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
   OrderStatusFilter,
-  PaymentChargeStatusEnum,
   ProductTypeEnum,
   StaffMemberStatus,
   VoucherDiscountType,
 } from "@dashboard/graphql";
-import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
+import { transformOrderStatus } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
 import {
@@ -25,11 +24,6 @@ import {
   voucherStatusMessages,
 } from "./messages";
 
-const getPaymentStatusLabel = (status: PaymentChargeStatusEnum, intl: IntlShape) => {
-  const { localized } = transformPaymentStatus(status, intl);
-
-  return localized;
-};
 
 const getOrderStatusLabel = (status: OrderStatusFilter, intl: IntlShape) => {
   const { localized } = transformOrderStatus(status, intl);
@@ -135,8 +129,6 @@ const getAttributeTypeLabel = (type: AttributeTypeEnum, intl: IntlShape) => {
 
 export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, intl: IntlShape) => {
   switch (rowType) {
-    case "paymentStatus":
-      return getPaymentStatusLabel(value as PaymentChargeStatusEnum, intl);
     case "status":
       return getOrderStatusLabel(value as OrderStatusFilter, intl);
     case "authorizeStatus":
