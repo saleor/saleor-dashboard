@@ -963,6 +963,9 @@
     "context": "attributes, section header",
     "string": "Attributes"
   },
+  "3xv4ez": {
+    "string": "Go to users/staff members"
+  },
   "3y4r+z": {
     "context": "channel settings",
     "string": "Channel Settings"
@@ -2557,6 +2560,9 @@
   },
   "DbNXK5": {
     "string": "Saleor could not connect to the provided manifest URL. ({errorCode})"
+  },
+  "Dd0Dwl": {
+    "string": "Go to promotions"
   },
   "Dgp38J": {
     "context": "checkbox label",
@@ -4155,6 +4161,9 @@
   "NEJo1I": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {voucherCode}?"
+  },
+  "NGWTE4": {
+    "string": "Create webhook/extension manually"
   },
   "NJbzcP": {
     "context": "dialog header",
@@ -6088,6 +6097,9 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
+  "YIT1XP": {
+    "string": "Create voucher"
+  },
   "YKyNm9": {
     "context": "label",
     "string": "Gift Card"
@@ -7466,6 +7478,9 @@
     "context": "voucher",
     "string": "Times used"
   },
+  "h84DkG": {
+    "string": "Go to explore extensions"
+  },
   "hAoqp6": {
     "string": "Failed to save permissions. Refresh the page and try again."
   },
@@ -7720,6 +7735,9 @@
   "ivJ1qt": {
     "string": "Manage your permission groups and their permissions"
   },
+  "ivTlck": {
+    "string": "Go to installed extensions"
+  },
   "ivmwpV": {
     "context": "tab name",
     "string": "All product types"
@@ -7790,6 +7808,9 @@
   "jMzyU8": {
     "context": "tax classes card header",
     "string": "Tax classes"
+  },
+  "jNoqH0": {
+    "string": "Create promotion"
   },
   "jTifz+": {
     "string": "Successfully created attribute"
@@ -8372,6 +8393,9 @@
   "mt3SU9": {
     "string": "Webhook errors detected"
   },
+  "mvVmbJ": {
+    "string": "Install extension from manifest"
+  },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
   },
@@ -8485,6 +8509,9 @@
     "context": "error message",
     "string": "Not enough items to fulfill"
   },
+  "nQQVdc": {
+    "string": "Go to vouchers"
+  },
   "nRiOg+": {
     "string": "Sorry, the page was not found"
   },
@@ -8511,6 +8538,9 @@
     "context": "returned event title",
     "string": "Products were returned by"
   },
+  "nb2FlN": {
+    "string": "Extensions"
+  },
   "nf3XSt": {
     "context": "attribute internal name",
     "string": "Slug"
@@ -8526,6 +8556,9 @@
   "ngSJ7N": {
     "context": "alert title",
     "string": "Your subscription query requires the following permissions:"
+  },
+  "ninItd": {
+    "string": "Create customer"
   },
   "nioOBQ": {
     "context": "delete custom app",
@@ -8591,6 +8624,9 @@
   },
   "o68j+t": {
     "string": "Search staff members..."
+  },
+  "o7ePJQ": {
+    "string": "Go to customers"
   },
   "o8S0Ac": {
     "context": "usage limit uses left caption",
@@ -9409,6 +9445,9 @@
   "tXIgmR": {
     "context": "balance curreny missing error message",
     "string": "Balance currency is missing"
+  },
+  "tZ/9Sl": {
+    "string": "Invite user/staff member"
   },
   "tZnV8L": {
     "context": "Header row stock label",
