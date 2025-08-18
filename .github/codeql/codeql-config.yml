@@ -1,0 +1,34 @@
+name: "CodeQL Config"
+
+# Paths to exclude from CodeQL analysis
+paths-ignore:
+  - "node_modules/**"
+  - "build/**"
+  - "dist/**"
+  - "coverage/**"
+  - "*.min.js"
+  - "*.bundle.js"
+  - "test-results/**"
+  - "playwright-report/**"
+  - "playwright-run/**" 
+  - "locale/**"
+  - "assets/**"
+  - "nginx/**"
+  - "scripts/**"
+  - "docs/**"
+  - "*.config.js"
+  - "*.config.ts"
+  - "jest.config.js"
+  - "playwright.config.ts"
+  - "vite.config.js"
+  - "codegen.ts"
+  - "**/*.d.ts"
+  - "**/*.test.ts"
+  - "**/*.test.tsx" 
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+  - "testUtils/**"
+  - "playwright/**"
+
+# Query suites to run
+query-suite: security-extended
