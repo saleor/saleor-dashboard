@@ -116,9 +116,10 @@ export const OrderList = ({ params }: OrderListProps) => {
     () => ({
       ...paginationState,
       where: filterVariables,
+      search: params.query,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber, valueProvider.value],
+    [filterVariables, paginationState, params],
   );
   const { data } = useOrderListQuery({
     displayLoader: true,

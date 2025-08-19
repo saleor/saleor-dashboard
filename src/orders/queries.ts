@@ -7,6 +7,7 @@ export const orderListQuery = gql`
     $last: Int
     $before: String
     $where: OrderWhereInput
+    $search: String
     $sort: OrderSortingInput
   ) {
     orders(
@@ -15,6 +16,7 @@ export const orderListQuery = gql`
       first: $first
       last: $last
       where: $where
+      search: $search
       sortBy: $sort
     ) {
       edges {

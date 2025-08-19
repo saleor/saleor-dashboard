@@ -67,8 +67,6 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
     case OrderFilterKeys.isGiftCardUsed:
       return getSingleValueQueryParam(filter, OrderListUrlFiltersEnum.giftCardUsed);
 
-    // totalGross and totalNet are now handled by the conditional filter system
-
     case OrderFilterKeys.hasInvoices:
       return getSingleValueQueryParam(filter, OrderListUrlFiltersEnum.hasInvoices);
 
@@ -92,6 +90,7 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
       );
   }
 }
+
 
 export const storageUtils = createFilterTabUtils<string>(ORDER_FILTERS_KEY);
 
