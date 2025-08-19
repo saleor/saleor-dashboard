@@ -126,15 +126,19 @@ export class AttributeQueryVarsBuilder
     const processedValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element);
 
     if (typeof processedValue === "object" && processedValue && "range" in processedValue) {
-      return this.buildRangeCondition(baseAttribute, processedValue.range, type);
+      const range = processedValue.range as { gte?: string; lte?: string };
+
+      return this.buildRangeCondition(baseAttribute, range, type);
     }
 
     if (typeof processedValue === "object" && processedValue && "eq" in processedValue) {
-      return { ...baseAttribute, values: [processedValue.eq] };
+      return { ...baseAttribute, values: [String(processedValue.eq)] };
     }
 
     if (typeof processedValue === "object" && processedValue && "oneOf" in processedValue) {
-      return { ...baseAttribute, values: processedValue.oneOf };
+      const values = (processedValue.oneOf as unknown[]).map(v => String(v));
+
+      return { ...baseAttribute, values };
     }
 
     return baseAttribute;
