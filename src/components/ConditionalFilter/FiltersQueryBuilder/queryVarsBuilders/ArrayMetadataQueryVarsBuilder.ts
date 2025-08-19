@@ -3,10 +3,12 @@ import { FilterElement } from "../../FilterElement";
 import { isTuple } from "../../FilterElement/ConditionValue";
 import { WhereOnlyQueryVarsBuilder } from "./types";
 
+type MetadataInput = { metadata?: { key: string; value?: { eq?: string; oneOf?: string[] } } };
+
 export type ArrayMetadataFilterQueryPart = {
-  lines?: Array<{ metadata?: { key: string; value?: { eq?: string; oneOf?: string[] } } }>;
-  transactions?: Array<{ metadata?: { key: string; value?: { eq?: string; oneOf?: string[] } } }>;
-  fulfillments?: Array<{ metadata?: { key: string; value?: { eq?: string; oneOf?: string[] } } }>;
+  lines?: Array<MetadataInput>;
+  transactions?: Array<MetadataInput>;
+  fulfillments?: Array<MetadataInput>;
 };
 
 /** Builds query for metadata fields nested in array structures (lines, transactions, fulfillments)
