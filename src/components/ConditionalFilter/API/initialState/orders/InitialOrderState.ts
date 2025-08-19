@@ -5,7 +5,6 @@ export interface InitialOrderState {
   status: ItemOption[];
   authorizeStatus: ItemOption[];
   chargeStatus: ItemOption[];
-  channels: ItemOption[];
   isClickAndCollect: ItemOption[];
   isGiftCardBought: ItemOption[];
   isGiftCardUsed: ItemOption[];
@@ -34,7 +33,6 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public status: ItemOption[] = [],
     public authorizeStatus: ItemOption[] = [],
     public chargeStatus: ItemOption[] = [],
-    public channels: ItemOption[] = [],
     public isClickAndCollect: ItemOption[] = [],
     public isGiftCardBought: ItemOption[] = [],
     public isGiftCardUsed: ItemOption[] = [],
@@ -52,7 +50,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public userEmail: ItemOption[] = [],
     public voucherCode: ItemOption[] = [],
     public linesCount: ItemOption[] = [],
-  ) {}
+  ) { }
 
   public static empty() {
     return new InitialOrderStateResponse();
@@ -80,8 +78,6 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.authorizeStatus;
       case "chargeStatus":
         return this.chargeStatus;
-      case "channels":
-        return this.channels;
       case "channelId":
         return this.channelId;
       case "isClickAndCollect":

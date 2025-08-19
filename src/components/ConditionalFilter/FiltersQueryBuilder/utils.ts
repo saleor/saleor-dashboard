@@ -12,9 +12,9 @@ export type ProcessedConditionValue =
   | string
   | boolean
   | string[]
-  | { range: { gte?: string; lte?: string } }
-  | { eq: string }
-  | { oneOf: string[] };
+  | { range: { gte?: unknown; lte?: unknown } }
+  | { eq: unknown }
+  | { oneOf: unknown[] };
 
 /**
  * Helper function to extract boolean value from different value types.

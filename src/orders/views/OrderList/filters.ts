@@ -1,4 +1,4 @@
-import { OrderAuthorizeStatusEnum, OrderChargeStatusEnum, OrderStatus, OrderWhereInput } from "@dashboard/graphql";
+import { OrderAuthorizeStatusEnum, OrderChargeStatusEnum, OrderStatus } from "@dashboard/graphql";
 import {
   OrderFilterKeys,
 } from "@dashboard/orders/components/OrderListPage/filters";

@@ -142,8 +142,8 @@ export const createInitialProductStateFromData = (
                 node.inputType === "BOOLEAN"
                   ? convertItemOptionsToAttributeChoices(createBooleanOptions())
                   : convertItemOptionsToAttributeChoices(
-                      createOptionsFromAPI(node.choices?.edges ?? []),
-                    );
+                    createOptionsFromAPI(node.choices?.edges ?? []),
+                  );
 
               return {
                 ...accAttr,
@@ -204,7 +204,6 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
 
         return {
           ...acc,
-          channels: channelOptions,
           channelId: channelOptions,
         };
       }
@@ -212,7 +211,6 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
       return acc;
     },
     {
-      channels: [],
       status: [],
       authorizeStatus: [],
       chargeStatus: [],

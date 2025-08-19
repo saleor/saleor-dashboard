@@ -104,7 +104,7 @@ describe("Filtering URL params", () => {
 
     initialOrderState.chargeStatus = [{ label: "Full", slug: "FULL", value: "FULL" }];
     initialOrderState.isClickAndCollect = [{ label: "No", slug: "false", value: "false" }];
-    initialOrderState.channels = [{ label: "PLN Channel", slug: "channel-pln", value: "channel-pln" }];
+    initialOrderState.channelId = [{ label: "PLN Channel", slug: "channel-pln", value: "channel-pln" }];
     initialOrderState.hasFulfillments = [{ label: "Yes", slug: "true", value: "true" }];
 
     // Act

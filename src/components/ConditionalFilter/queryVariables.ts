@@ -16,15 +16,14 @@ import {
 import { FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
-import { OrderCustomerIdQueryVarsBuilder, SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders";
 import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
-import { EnumQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/EnumQueryVarsBuilder";
 import { IntFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/IntFilterQueryVarsBuilder";
 import { MetadataAdvancedFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/MetadataAdvancedFilterQueryVarsBuilder";
 import { OrderChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderChannelQueryVarsBuilder";
+import { OrderCustomerIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderCustomerIdQueryVarsBuilder"
 import { OrderIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderIdQueryVarsBuilder";
 import { PriceFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceFilterQueryVarsBuilder";
-import { StringFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/StringFilterQueryVarsBuilder";
+import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder"
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
@@ -63,7 +62,7 @@ export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInp
       new OrderIdQueryVarsBuilder(), // Handle ids as plain arrays
       new IntFilterQueryVarsBuilder(), // Handle int fields like linesCount, number
       new PriceFilterQueryVarsBuilder(), // Handle price/amount fields
-      new DateTimeRangeQueryVarsBuilder(),
+      new DateTimeRangeQueryVarsBuilder(), // Orders use DateTimeRangeInput, not DateTimeFilterInput
       new MetadataAdvancedFilterQueryVarsBuilder(), // Orders query uses MetadataFilter, not MetadataInput
       ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(), // Includes DefaultQueryVarsBuilder for remaining fields
     ]),

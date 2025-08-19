@@ -84,7 +84,6 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
 
     const baseState = createInitialOrderState(data);
     const initialState = {
-      channels: baseState.channels,
       isClickAndCollect: baseState.isClickAndCollect,
       isGiftCardBought: baseState.isGiftCardBought,
       isGiftCardUsed: baseState.isGiftCardUsed,
@@ -112,7 +111,6 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
         initialState.status,
         initialState.authorizeStatus,
         initialState.chargeStatus,
-        initialState.channels,
         initialState.isClickAndCollect,
         initialState.isGiftCardBought,
         initialState.isGiftCardUsed,
@@ -124,7 +122,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
         initialState.totalGross,
         initialState.totalNet,
         initialState.user,
-        initialState.channels, // channelId (reuse channels for now)
+        initialState.channelId,
         initialState.ids,
         initialState.number,
         initialState.userEmail,
@@ -140,4 +138,4 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     loading,
     fetchQueries,
   };
-};
+}
