@@ -119,7 +119,7 @@ export const OrderList = ({ params }: OrderListProps) => {
       search: params.query,
       sort: getSortQueryVariables(params),
     }),
-    [filterVariables, paginationState, params],
+    [params, settings.rowNumber, valueProvider.value],
   );
   const { data } = useOrderListQuery({
     displayLoader: true,
