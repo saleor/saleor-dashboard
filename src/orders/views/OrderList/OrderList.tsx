@@ -122,6 +122,7 @@ export const OrderList = ({ params }: OrderListProps) => {
   );
   const { data } = useOrderListQuery({
     displayLoader: true,
+    skip: valueProvider.loading,
     variables: queryVariables,
   });
   const paginationValues = usePaginator({
