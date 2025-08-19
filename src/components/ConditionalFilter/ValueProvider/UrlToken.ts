@@ -28,7 +28,6 @@ const ORDER_STATICS = [
   "hasInvoices",
   "hasFulfillments",
   "channels",
-  "customer",
   "ids",
   "number",
   "userEmail",
