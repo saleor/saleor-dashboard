@@ -71,10 +71,12 @@ describe("Filtering URL params", () => {
     );
 
     // Assert
-    expect(filterVariables.metadata).toEqual([
-      { key: "key1", value: "value1" },
-      { key: "key2", value: "value2" },
-    ]);
+    // Note: WHERE API can only handle one metadata filter at a time (unlike legacy FILTER API)
+    // When multiple metadata filters with different keys are provided, only the last one is kept
+    expect(filterVariables.metadata).toEqual({
+      key: "key2",
+      value: { eq: "value2" },
+    });
   });
 
   it("should filter by totalGross with multi-digit numbers", () => {
