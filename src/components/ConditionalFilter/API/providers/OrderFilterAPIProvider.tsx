@@ -1,9 +1,12 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import {
   AttributeInputTypeEnum,
+  CountryCode,
+  FulfillmentStatus,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
   OrderStatus,
+  PaymentMethodTypeEnum,
 } from "@dashboard/graphql";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -62,6 +65,10 @@ const createAPIHandler = (
     return new EnumValuesHandler(OrderChargeStatusEnum, rowType, intl);
   }
 
+  if (rowType === "fulfillmentStatus") {
+    return new EnumValuesHandler(FulfillmentStatus, rowType, intl);
+  }
+
   if (rowType === "channels") {
     return new LegacyChannelHandler(client, inputValue);
   }
@@ -86,8 +93,8 @@ const createAPIHandler = (
   }
 
   // Boolean fields
-  if (rowType === "isClickAndCollect" || rowType === "isGiftCardBought" || rowType === "isGiftCardUsed" || 
-      rowType === "hasInvoices" || rowType === "hasFulfillments") {
+  if (rowType === "isClickAndCollect" || rowType === "isGiftCardBought" || rowType === "isGiftCardUsed" ||
+    rowType === "hasInvoices" || rowType === "hasFulfillments") {
     return new BooleanValuesHandler([
       { label: "Yes", value: "true", type: AttributeInputTypeEnum.BOOLEAN, slug: "true" },
       { label: "No", value: "false", type: AttributeInputTypeEnum.BOOLEAN, slug: "false" },
@@ -105,8 +112,25 @@ const createAPIHandler = (
   }
 
   // Text input fields
-  if (rowType === "number" || rowType === "userEmail" || rowType === "voucherCode" || rowType === "linesCount") {
+  if (rowType === "number" || rowType === "userEmail" || rowType === "voucherCode" || rowType === "linesCount" || rowType === "checkoutId" || rowType === "billingPhoneNumber" ||
+    rowType === "shippingPhoneNumber" || rowType === "transactionsCardBrand") {
     return new NoopValuesHandler([]);
+  }
+
+  // Metadata fields
+  if (rowType === "linesMetadata" || rowType === "transactionsMetadata" ||
+    rowType === "fulfillmentsMetadata") {
+    return new NoopValuesHandler([]);
+  }
+
+  // Payment type enum field
+  if (rowType === "transactionsPaymentType") {
+    return new EnumValuesHandler(PaymentMethodTypeEnum, rowType, intl);
+  }
+
+  // Country enum fields
+  if (rowType === "billingCountry" || rowType === "shippingCountry") {
+    return new EnumValuesHandler(CountryCode, rowType, intl);
   }
 
   throw new Error(`Unknown filter element: "${rowType}"`);

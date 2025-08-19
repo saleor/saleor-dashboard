@@ -4,9 +4,12 @@ import {
   _GetLegacyChannelOperandsDocument,
   _GetLegacyChannelOperandsQuery,
   _GetLegacyChannelOperandsQueryVariables,
+  CountryCode,
+  FulfillmentStatus,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
   OrderStatus,
+  PaymentMethodTypeEnum,
 } from "@dashboard/graphql";
 import { useState } from "react";
 import { useIntl } from "react-intl";
@@ -50,12 +53,24 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     channels,
     chargeStatus,
     status,
+    fulfillmentStatus,
     authorizeStatus,
     ids,
+    metadata,
     number,
     userEmail,
     voucherCode,
     linesCount,
+    checkoutId,
+    linesMetadata,
+    transactionsMetadata,
+    transactionsPaymentType,
+    transactionsCardBrand,
+    fulfillmentsMetadata,
+    billingPhoneNumber,
+    billingCountry,
+    shippingPhoneNumber,
+    shippingCountry,
   }: OrderFetchingParams) => {
     if (channels.length > 0) {
       queriesToRun.push(
@@ -73,11 +88,33 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     );
 
     const statusInit = new EnumValuesHandler(OrderStatus, "status", intl, status);
+    const fulfillmentStatusInit = new EnumValuesHandler(FulfillmentStatus, "fulfillmentStatus", intl, fulfillmentStatus);
     const authorizeStatusInit = new EnumValuesHandler(
       OrderAuthorizeStatusEnum,
       "authorizeStatus",
       intl,
       authorizeStatus,
+    );
+
+    const transactionsPaymentTypeInit = new EnumValuesHandler(
+      PaymentMethodTypeEnum,
+      "transactionsPaymentType",
+      intl,
+      transactionsPaymentType,
+    );
+
+    const billingCountryInit = new EnumValuesHandler(
+      CountryCode,
+      "billingCountry",
+      intl,
+      billingCountry,
+    );
+
+    const shippingCountryInit = new EnumValuesHandler(
+      CountryCode,
+      "shippingCountry",
+      intl,
+      shippingCountry,
     );
 
     const data = await Promise.all(queriesToRun);
@@ -98,17 +135,30 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
       channelId: baseState.channelId,
       chargeStatus: await chargeStatusInit.fetch(),
       status: await statusInit.fetch(),
+      fulfillmentStatus: await fulfillmentStatusInit.fetch(),
       authorizeStatus: await authorizeStatusInit.fetch(),
       ids: mapIDsToOptions(ids),
+      metadata: metadata,
       number: mapTextToOptions(number, "number"),
       userEmail: mapTextToOptions(userEmail, "userEmail"),
       voucherCode: mapTextToOptions(voucherCode, "voucherCode"),
       linesCount: mapTextToOptions(linesCount, "linesCount"),
+      checkoutId: mapTextToOptions(checkoutId, "checkoutId"),
+      linesMetadata: linesMetadata,
+      transactionsMetadata: transactionsMetadata,
+      transactionsPaymentType: await transactionsPaymentTypeInit.fetch(),
+      transactionsCardBrand: mapTextToOptions(transactionsCardBrand, "transactionsCardBrand"),
+      fulfillmentsMetadata: fulfillmentsMetadata,
+      billingPhoneNumber: mapTextToOptions(billingPhoneNumber, "billingPhoneNumber"),
+      billingCountry: await billingCountryInit.fetch(),
+      shippingPhoneNumber: mapTextToOptions(shippingPhoneNumber, "shippingPhoneNumber"),
+      shippingCountry: await shippingCountryInit.fetch(),
     };
 
     setData(
       new InitialOrderStateResponse(
         initialState.status,
+        initialState.fulfillmentStatus,
         initialState.authorizeStatus,
         initialState.chargeStatus,
         initialState.isClickAndCollect,
@@ -124,10 +174,21 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
         initialState.user,
         initialState.channelId,
         initialState.ids,
+        initialState.metadata,
         initialState.number,
         initialState.userEmail,
         initialState.voucherCode,
         initialState.linesCount,
+        initialState.checkoutId,
+        initialState.linesMetadata,
+        initialState.transactionsMetadata,
+        initialState.transactionsPaymentType,
+        initialState.transactionsCardBrand,
+        initialState.fulfillmentsMetadata,
+        initialState.billingPhoneNumber,
+        initialState.billingCountry,
+        initialState.shippingPhoneNumber,
+        initialState.shippingCountry,
       ),
     );
     setLoading(false);

@@ -12,15 +12,27 @@ export interface FetchingParams {
 
 export interface OrderFetchingParams {
   status: string[];
+  fulfillmentStatus: string[];
   authorizeStatus: string[];
   chargeStatus: string[];
   channels: string[];
   customer: string[];
   ids: string[];
+  metadata: string[];
   number: string[];
   userEmail: string[];
   voucherCode: string[];
   linesCount: string[];
+  checkoutId: string[];
+  linesMetadata: string[];
+  transactionsMetadata: string[];
+  transactionsPaymentType: string[];
+  transactionsCardBrand: string[];
+  fulfillmentsMetadata: string[];
+  billingPhoneNumber: string[];
+  billingCountry: string[];
+  shippingPhoneNumber: string[];
+  shippingCountry: string[];
 }
 
 export interface VoucherFetchingParams {
@@ -80,15 +92,27 @@ export const emptyFetchingParams: FetchingParams = {
 
 export const emptyOrderFetchingParams: OrderFetchingParams = {
   status: [],
+  fulfillmentStatus: [],
   authorizeStatus: [],
   chargeStatus: [],
   channels: [],
   customer: [],
   ids: [],
+  metadata: [],
   number: [],
   userEmail: [],
   voucherCode: [],
   linesCount: [],
+  checkoutId: [],
+  linesMetadata: [],
+  transactionsMetadata: [],
+  transactionsPaymentType: [],
+  transactionsCardBrand: [],
+  fulfillmentsMetadata: [],
+  billingPhoneNumber: [],
+  billingCountry: [],
+  shippingPhoneNumber: [],
+  shippingCountry: [],
 };
 
 export const emptyVoucherFetchingParams: VoucherFetchingParams = {

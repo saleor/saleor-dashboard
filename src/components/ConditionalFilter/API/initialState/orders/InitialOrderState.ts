@@ -3,6 +3,7 @@ import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/
 
 export interface InitialOrderState {
   status: ItemOption[];
+  fulfillmentStatus: ItemOption[];
   authorizeStatus: ItemOption[];
   chargeStatus: ItemOption[];
   isClickAndCollect: ItemOption[];
@@ -18,19 +19,32 @@ export interface InitialOrderState {
   user: ItemOption[];
   channelId: ItemOption[];
   ids: ItemOption[];
+  metadata: string | string[];
   number: ItemOption[];
   userEmail: ItemOption[];
   voucherCode: ItemOption[];
   linesCount: ItemOption[];
+  checkoutId: ItemOption[];
+  linesMetadata: string | string[];
+  transactionsMetadata: string | string[];
+  transactionsPaymentType: ItemOption[];
+  transactionsCardBrand: ItemOption[];
+  fulfillmentsMetadata: string | string[];
+  billingPhoneNumber: ItemOption[];
+  billingCountry: ItemOption[];
+  shippingPhoneNumber: ItemOption[];
+  shippingCountry: ItemOption[];
 }
 
 const isDateField = (name: string) => ["createdAt", "updatedAt", "invoicesCreatedAt"].includes(name);
 const isPriceField = (name: string) => ["totalGross", "totalNet"].includes(name);
 const isNumericField = (name: string) => ["number", "linesCount"].includes(name);
+const isMetadataField = (name: string) => ["metadata", "linesMetadata", "transactionsMetadata", "fulfillmentsMetadata"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
   constructor(
     public status: ItemOption[] = [],
+    public fulfillmentStatus: ItemOption[] = [],
     public authorizeStatus: ItemOption[] = [],
     public chargeStatus: ItemOption[] = [],
     public isClickAndCollect: ItemOption[] = [],
@@ -46,10 +60,21 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public user: ItemOption[] = [],
     public channelId: ItemOption[] = [],
     public ids: ItemOption[] = [],
+    public metadata: string | string[] = [],
     public number: ItemOption[] = [],
     public userEmail: ItemOption[] = [],
     public voucherCode: ItemOption[] = [],
     public linesCount: ItemOption[] = [],
+    public checkoutId: ItemOption[] = [],
+    public linesMetadata: string | string[] = [],
+    public transactionsMetadata: string | string[] = [],
+    public transactionsPaymentType: ItemOption[] = [],
+    public transactionsCardBrand: ItemOption[] = [],
+    public fulfillmentsMetadata: string | string[] = [],
+    public billingPhoneNumber: ItemOption[] = [],
+    public billingCountry: ItemOption[] = [],
+    public shippingPhoneNumber: ItemOption[] = [],
+    public shippingCountry: ItemOption[] = [],
   ) { }
 
   public static empty() {
@@ -57,7 +82,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
   }
 
   public filterByUrlToken(token: UrlToken) {
-    if (isDateField(token.name) || isPriceField(token.name) || isNumericField(token.name)) {
+    if (isDateField(token.name) || isPriceField(token.name) || isNumericField(token.name) || isMetadataField(token.name)) {
       return token.value;
     }
 
@@ -74,6 +99,8 @@ export class InitialOrderStateResponse implements InitialOrderState {
     switch (name) {
       case "status":
         return this.status;
+      case "fulfillmentStatus":
+        return this.fulfillmentStatus;
       case "authorizeStatus":
         return this.authorizeStatus;
       case "chargeStatus":
@@ -100,6 +127,8 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.user;
       case "ids":
         return this.ids;
+      case "metadata":
+        return [];  // Metadata handled specially
       case "number":
         return this.number;
       case "userEmail":
@@ -108,6 +137,26 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.voucherCode;
       case "linesCount":
         return this.linesCount;
+      case "checkoutId":
+        return this.checkoutId;
+      case "linesMetadata":
+        return [];  // Metadata handled specially
+      case "transactionsMetadata":
+        return [];  // Metadata handled specially
+      case "transactionsPaymentType":
+        return this.transactionsPaymentType;
+      case "transactionsCardBrand":
+        return this.transactionsCardBrand;
+      case "fulfillmentsMetadata":
+        return [];  // Metadata handled specially
+      case "billingPhoneNumber":
+        return this.billingPhoneNumber;
+      case "billingCountry":
+        return this.billingCountry;
+      case "shippingPhoneNumber":
+        return this.shippingPhoneNumber;
+      case "shippingCountry":
+        return this.shippingCountry;
       default:
         return [];
     }

@@ -75,6 +75,18 @@ export const STATIC_CONDITIONS = {
       value: "input-2",
     },
   ],
+  fulfillmentStatus: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
   voucherStatus: [
     {
       type: "combobox",
@@ -242,6 +254,40 @@ export const STATIC_CONDITIONS = {
     { type: "number", label: "greater", value: "input-4" },
     { type: "number.range", label: "between", value: "input-5" },
   ],
+  checkoutId: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  linesMetadata: [
+    { type: "text.double", label: "is", value: "input-1" },
+  ],
+  transactionsMetadata: [
+    { type: "text.double", label: "is", value: "input-1" },
+  ],
+  transactionsPaymentType: [
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
+  transactionsCardBrand: [
+    { type: "text", label: "is", value: "input-1" },
+    { type: "text", label: "contains", value: "input-2" },
+  ],
+  fulfillmentsMetadata: [
+    { type: "text.double", label: "is", value: "input-1" },
+  ],
+  billingPhoneNumber: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  billingCountry: [
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
+  shippingPhoneNumber: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  shippingCountry: [
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -255,6 +301,13 @@ export const CONSTRAINTS = {
     removable: false,
     disabled: ["left", "condition"],
   },
+};
+
+export const OCCURRENCE_LIMITS = {
+  billingPhoneNumber: { maxOccurrences: 1 },
+  billingCountry: { maxOccurrences: 1 },
+  shippingPhoneNumber: { maxOccurrences: 1 },
+  shippingCountry: { maxOccurrences: 1 },
 };
 
 export const STATIC_PRODUCT_OPTIONS: LeftOperand[] = [
@@ -336,9 +389,15 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   { value: "channels", label: "Channels", type: "channels", slug: "channels" },
   {
     value: "status",
-    label: "Fulfillment Status",
+    label: "Order Status",
     type: "status",
     slug: "status",
+  },
+  {
+    value: "fulfillmentStatus",
+    label: "Fulfillment Status",
+    type: "fulfillmentStatus",
+    slug: "fulfillmentStatus",
   },
   {
     value: "createdAt",
@@ -447,6 +506,66 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Number of Lines",
     type: "linesCount",
     slug: "linesCount",
+  },
+  {
+    value: "checkoutId",
+    label: "Checkout ID",
+    type: "checkoutId",
+    slug: "checkoutId",
+  },
+  {
+    value: "linesMetadata",
+    label: "Lines Metadata",
+    type: "linesMetadata",
+    slug: "linesMetadata",
+  },
+  {
+    value: "transactionsMetadata",
+    label: "Transactions Metadata",
+    type: "transactionsMetadata",
+    slug: "transactionsMetadata",
+  },
+  {
+    value: "transactionsPaymentType",
+    label: "Payment Type",
+    type: "transactionsPaymentType",
+    slug: "transactionsPaymentType",
+  },
+  {
+    value: "transactionsCardBrand",
+    label: "Card Brand",
+    type: "transactionsCardBrand",
+    slug: "transactionsCardBrand",
+  },
+  {
+    value: "fulfillmentsMetadata",
+    label: "Fulfillments Metadata",
+    type: "fulfillmentsMetadata",
+    slug: "fulfillmentsMetadata",
+  },
+  {
+    value: "billingPhoneNumber",
+    label: "Billing Phone",
+    type: "billingPhoneNumber",
+    slug: "billingPhoneNumber",
+  },
+  {
+    value: "billingCountry",
+    label: "Billing Country",
+    type: "billingCountry",
+    slug: "billingCountry",
+  },
+  {
+    value: "shippingPhoneNumber",
+    label: "Shipping Phone",
+    type: "shippingPhoneNumber",
+    slug: "shippingPhoneNumber",
+  },
+  {
+    value: "shippingCountry",
+    label: "Shipping Country",
+    type: "shippingCountry",
+    slug: "shippingCountry",
   },
 ];
 

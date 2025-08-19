@@ -3,9 +3,11 @@ import {
   AttributeTypeEnum,
   CollectionPublished,
   DiscountStatusEnum,
+  FulfillmentStatus,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
   OrderStatusFilter,
+  PaymentMethodTypeEnum,
   ProductTypeEnum,
   StaffMemberStatus,
   VoucherDiscountType,
@@ -19,6 +21,8 @@ import {
   chargeStatusMessages,
   collectionFilterMessages,
   discountTypeMessages,
+  fulfillmentStatusMessages,
+  paymentMethodTypeMessages,
   productTypeMessages,
   staffMembersStatusMessages,
   voucherStatusMessages,
@@ -127,6 +131,38 @@ const getAttributeTypeLabel = (type: AttributeTypeEnum, intl: IntlShape) => {
   }
 };
 
+const getPaymentMethodTypeLabel = (type: PaymentMethodTypeEnum, intl: IntlShape) => {
+  switch (type) {
+    case PaymentMethodTypeEnum.CARD:
+      return intl.formatMessage(paymentMethodTypeMessages.card);
+    case PaymentMethodTypeEnum.OTHER:
+      return intl.formatMessage(paymentMethodTypeMessages.other);
+    default:
+      return type;
+  }
+};
+
+const getFulfillmentStatusLabel = (status: FulfillmentStatus, intl: IntlShape) => {
+  switch (status) {
+    case FulfillmentStatus.CANCELED:
+      return intl.formatMessage(fulfillmentStatusMessages.canceled);
+    case FulfillmentStatus.FULFILLED:
+      return intl.formatMessage(fulfillmentStatusMessages.fulfilled);
+    case FulfillmentStatus.REFUNDED:
+      return intl.formatMessage(fulfillmentStatusMessages.refunded);
+    case FulfillmentStatus.REFUNDED_AND_RETURNED:
+      return intl.formatMessage(fulfillmentStatusMessages.refundedAndReturned);
+    case FulfillmentStatus.REPLACED:
+      return intl.formatMessage(fulfillmentStatusMessages.replaced);
+    case FulfillmentStatus.RETURNED:
+      return intl.formatMessage(fulfillmentStatusMessages.returned);
+    case FulfillmentStatus.WAITING_FOR_APPROVAL:
+      return intl.formatMessage(fulfillmentStatusMessages.waitingForApproval);
+    default:
+      return status;
+  }
+};
+
 export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, intl: IntlShape) => {
   switch (rowType) {
     case "status":
@@ -147,6 +183,10 @@ export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, i
       return getStaffMemberStatusLabel(value as StaffMemberStatus, intl);
     case "attributeType":
       return getAttributeTypeLabel(value as AttributeTypeEnum, intl);
+    case "transactionsPaymentType":
+      return getPaymentMethodTypeLabel(value as PaymentMethodTypeEnum, intl);
+    case "fulfillmentStatus":
+      return getFulfillmentStatusLabel(value as FulfillmentStatus, intl);
     default:
       return value;
   }
