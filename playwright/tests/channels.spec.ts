@@ -39,7 +39,6 @@ test("TC: SALEOR_208 Create channel with all settings #e2e #channels", async () 
   await channelPage.selectCountry("Afghanistan");
   // Checking before save because checkboxes used to not work properly
   await expect(channelPage.transactionFlowCheckbox).toBeChecked();
-  await channelPage.clickAllowUnpaidOrdersCheckbox();
   await expect(channelPage.allowUnpaidOrdersCheckbox).toBeChecked();
   await channelPage.clickAuthorizeInsteadOfChargingCheckbox();
   await expect(channelPage.authorizeInsteadOfChargingCheckbox).toBeChecked();
