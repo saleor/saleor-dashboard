@@ -12,7 +12,7 @@ export type OrderChannelFilterQueryPart = {
 export class OrderChannelQueryVarsBuilder
   extends BaseMappableQueryVarsBuilder<OrderChannelFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
-    return element.value.value === "channels";
+    return element.value.type === "channels";
   }
 
   createOptionFetcher(

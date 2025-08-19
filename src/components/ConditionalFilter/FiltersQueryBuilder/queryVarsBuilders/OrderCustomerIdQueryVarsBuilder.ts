@@ -10,7 +10,7 @@ export type OrderCustomerFilterQueryPart = {
 export class OrderCustomerIdQueryVarsBuilder
   extends BaseMappableQueryVarsBuilder<OrderCustomerFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
-    return element.value.value === "customer";
+    return element.value.type === "customer";
   }
 
   public createOptionFetcher(): Handler {

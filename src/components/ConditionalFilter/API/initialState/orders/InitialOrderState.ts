@@ -78,6 +78,9 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.authorizeStatus;
       case "chargeStatus":
         return this.chargeStatus;
+      case "channels":
+        // Map "channels" from URL to channelId field in filters
+        return this.channelId;
       case "channelId":
         return this.channelId;
       case "isClickAndCollect":
@@ -90,6 +93,9 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.hasInvoices;
       case "hasFulfillments":
         return this.hasFulfillments;
+      case "customer":
+        // Map "customer" from URL to user field in filters
+        return this.user;
       case "user":
         return this.user;
       case "ids":
