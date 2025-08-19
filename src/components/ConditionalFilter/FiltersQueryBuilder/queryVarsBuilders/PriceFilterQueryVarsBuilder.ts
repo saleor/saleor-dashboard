@@ -41,12 +41,13 @@ export class PriceFilterQueryVarsBuilder
     return element.value.value;
   }
 
-  protected getConditionValue(element: FilterElement): PriceFilterInput {
+  protected getConditionValue(element: FilterElement): PriceFilterInput | null {
     const amountParsed = QueryVarsBuilderUtils.getFloatValueFromElement(element);
-    const decimalInput = QueryVarsBuilderUtils.handleRangeCondition(amountParsed, element.condition.selected.conditionValue.label) as DecimalFilterInput;
+    const conditionLabel = element.condition.selected.conditionValue?.label || "";
+    const decimalInput = QueryVarsBuilderUtils.handleRangeCondition(amountParsed, conditionLabel) as DecimalFilterInput;
 
     if (decimalInput === null) {
-      return null;
+      return null
     }
 
     // For now, we don't extract currency from the filter element

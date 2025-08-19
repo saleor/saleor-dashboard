@@ -36,7 +36,8 @@ export class IntFilterQueryVarsBuilder
   protected getConditionValue(element: FilterElement): IntFilterInput {
     // These inputs require providing a number, not a string
     const parsedValue = QueryVarsBuilderUtils.getIntegerValueFromElement(element);
+    const conditionLabel = element.condition.selected.conditionValue?.label || "";
 
-    return QueryVarsBuilderUtils.handleRangeCondition(parsedValue, element.condition.selected.conditionValue.label) as IntFilterInput;
+    return QueryVarsBuilderUtils.handleRangeCondition(parsedValue, conditionLabel) as IntFilterInput;
   }
 }

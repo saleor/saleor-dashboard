@@ -38,6 +38,11 @@ export class DateTimeRangeQueryVarsBuilder extends BaseMappableQueryVarsBuilder<
 
   protected getConditionValue(element: FilterElement): DateTimeRangeQueryVars[keyof DateTimeRangeQueryVars] | undefined {
     const { value: selectedValue, conditionValue } = element.condition.selected;
+    
+    if (!conditionValue) {
+      return undefined;
+    }
+    
     const { label } = conditionValue;
 
     return QueryVarsDateUtils.buildDateFilter(selectedValue, label);

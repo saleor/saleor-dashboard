@@ -35,7 +35,6 @@ import {
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
-import { handleWhereApiErrors } from "../../utils/whereApiErrorHandler";
 import { getFilterQueryParam, storageUtils } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
