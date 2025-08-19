@@ -16,7 +16,7 @@ export type DateTimeFilterQueryPart = {
  * 
  * Used by ProductWhereInput.updatedAt, PromotionWhereInput.startDate/endDate
  */
-class DateTimeFilterQueryVarsBuilder extends BaseMappableQueryVarsBuilder<DateTimeFilterQueryPart> {
+export class DateTimeFilterQueryVarsBuilder extends BaseMappableQueryVarsBuilder<DateTimeFilterQueryPart> {
   // Fields that use `DateTimeFilterInput` input, not `DateTimeRangeInput`
   private static readonly ALLOWED_FIELDS = [
     "updatedAt",   // ProductWhereInput.updatedAt

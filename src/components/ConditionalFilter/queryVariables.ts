@@ -16,7 +16,11 @@ import {
 import { FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
+import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
+import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayMetadataQueryVarsBuilder";
+import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
 import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
+import { FulfillmentStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentStatusQueryVarsBuilder";
 import { IntFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/IntFilterQueryVarsBuilder";
 import { MetadataAdvancedFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/MetadataAdvancedFilterQueryVarsBuilder";
 import { OrderChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderChannelQueryVarsBuilder";
@@ -60,6 +64,10 @@ export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInp
       new OrderChannelQueryVarsBuilder(), // Map channels -> channelId
       new OrderCustomerIdQueryVarsBuilder(), // Map customer -> user
       new OrderIdQueryVarsBuilder(), // Handle ids as plain arrays
+      new AddressFieldQueryVarsBuilder(), // Handle address fields (billing/shipping phone/country)
+      new ArrayNestedFieldQueryVarsBuilder(), // Handle nested fields in transactions (payment type/card brand)
+      new ArrayMetadataQueryVarsBuilder(), // Handle metadata in arrays (lines, transactions, fulfillments)
+      new FulfillmentStatusQueryVarsBuilder(), // Handle fulfillment status nested in arrays
       new IntFilterQueryVarsBuilder(), // Handle int fields like linesCount, number
       new PriceFilterQueryVarsBuilder(), // Handle price/amount fields
       new DateTimeRangeQueryVarsBuilder(), // Orders use DateTimeRangeInput, not DateTimeFilterInput

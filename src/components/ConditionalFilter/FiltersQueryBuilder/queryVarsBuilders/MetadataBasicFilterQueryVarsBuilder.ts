@@ -3,7 +3,8 @@ import { FilterElement } from "../../FilterElement";
 import { isTuple } from "../../FilterElement/ConditionValue";
 import { BothApiQueryVarsBuilder } from "./types";
 
-/** Builds query for MetadataFilter fields */
+/** Builds query for MetadataFilter fields
+ * for MetadataFilterInput use MetadataAdvancedFilterQueryVarsBuilder */
 export class MetadataBasicFilterQueryVarsBuilder
   implements BothApiQueryVarsBuilder<{ metadata?: Array<{ key: string; value: string }> }> {
   canHandle(element: FilterElement): boolean {
@@ -32,6 +33,8 @@ export class MetadataBasicFilterQueryVarsBuilder
     }
 
     // Fallback: use the label as key and value as value
+    // Note: This fallback is preserved for backward compatibility with existing filters
+    // but for metadata fields, selectedValue should typically be a tuple
     const metadataKey = element.value.label;
     const metadataValue = String(selectedValue);
 
