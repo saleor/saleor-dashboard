@@ -51,6 +51,21 @@ export class Condition {
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
       const responseValue = response.filterByUrlToken(token);
 
+      // Check if this is a metadata field that uses text.double (tuple input)
+      const isMetadataField = selectedOption?.type === "text.double";
+      
+      if (isMetadataField) {
+        // For metadata fields, preserve the tuple structure from URL
+        // responseValue should be [key, value] array for text.double fields
+        const value = responseValue;
+        
+        return new Condition(
+          staticOptions,
+          ConditionSelected.fromConditionItemAndValue(selectedOption, value),
+          false,
+        );
+      }
+
       // Handle other fields as ItemOption arrays
       const valueItems = responseValue as ItemOption[];
       const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
