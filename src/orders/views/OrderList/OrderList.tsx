@@ -118,6 +118,9 @@ export const OrderList = ({ params }: OrderListProps) => {
       search: params.query,
       sort: getSortQueryVariables(params),
     }),
+    // This is intentional - if we change deps array, we will make query
+    // on each character change in filters, NOT when user clicks "SAVE"
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [params, settings.rowNumber, valueProvider.value],
   );
   const { data } = useOrderListQuery({
