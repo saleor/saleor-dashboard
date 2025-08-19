@@ -45,6 +45,9 @@ export class PriceFilterQueryVarsBuilder
     const amountParsed = QueryVarsBuilderUtils.getFloatValueFromElement(element);
     const decimalInput = QueryVarsBuilderUtils.handleRangeCondition(amountParsed, element.condition.selected.conditionValue.label) as DecimalFilterInput;
 
+    if (decimalInput === null) {
+      return null;
+    }
 
     // For now, we don't extract currency from the filter element
     // This could be extended if currency filtering is needed
