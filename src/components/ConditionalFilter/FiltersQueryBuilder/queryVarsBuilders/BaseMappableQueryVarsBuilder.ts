@@ -9,8 +9,7 @@ import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
  * to different query variables
  * For example: attributeType -> type */
 export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = FilterQuery>
-  implements BothApiQueryVarsBuilder<T>
-{
+  implements BothApiQueryVarsBuilder<T> {
   public abstract canHandle(element: FilterElement): boolean;
 
   public abstract createOptionFetcher(
@@ -21,7 +20,7 @@ export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = Filte
 
   protected abstract getQueryFieldName(element: FilterElement): string;
 
-  protected getConditionValue(element: FilterElement): T[keyof T] {
+  protected getConditionValue(element: FilterElement): T[keyof T] | null {
     return QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element) as T[keyof T];
   }
 
