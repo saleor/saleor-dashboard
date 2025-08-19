@@ -9,7 +9,7 @@ export interface ItemOption {
 export type ConditionValue = ItemOption | ItemOption[] | string | string[] | [string, string];
 
 export const isItemOption = (x: unknown): x is ItemOption =>
-  typeof x === "object" && "value" in x;
+  typeof x === "object" && x !== null && "value" in x;
 
 export const isItemOptionArray = (x: unknown): x is ItemOption[] =>
   Array.isArray(x) && (x as ItemOption[]).every(isItemOption);

@@ -88,6 +88,9 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
         filter as FilterElementKeyValue<OrderFilterKeys.metadata>,
         OrderListFitersWithKeyValueValues.metadata,
       );
+
+    default:
+      return {};
   }
 }
 
