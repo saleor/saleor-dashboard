@@ -17,15 +17,20 @@ export const OrderLines = ({ lines }: Props) => {
       <Box padding={6} display="grid">
         <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Text size={5} fontWeight="medium">
-            {intl.formatMessage({ id: 'Pvi8WI', defaultMessage: "Order lines" })}
+            {intl.formatMessage({ id: "Pvi8WI", defaultMessage: "Order lines" })}
           </Text>
           <Button onClick={() => alert("Fulfill order lines")}>
             <Package size={14} />
-            {intl.formatMessage({ id: 'QDxJib', defaultMessage: "Fulfill" })}
+            {intl.formatMessage({ id: "QDxJib", defaultMessage: "Fulfill" })}
           </Button>
         </Box>
       </Box>
-      <OrderDetailsDatagrid lines={lines} loading={false} onShowMetadata={undefined} />
+      <OrderDetailsDatagrid
+        lines={lines}
+        loading={false}
+        onShowMetadata={undefined}
+        enableVerticalBorder={false}
+      />
     </>
   );
 };
