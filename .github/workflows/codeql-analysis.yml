@@ -2,29 +2,29 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: [ main, protected, "3.21" ]
+    branches: [main, protected, "3.21"]
   pull_request:
-    branches: [ main, protected, "3.21" ]
+    branches: [main, protected, "3.21"]
 
 jobs:
   analyze:
     name: Analyze JavaScript/TypeScript
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 60
     permissions:
       security-events: write
       actions: read
       contents: read
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: javascript-typescript
-        config-file: ./.github/codeql/codeql-config.yml
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          config-file: ./.github/codeql/codeql-config.yml
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
