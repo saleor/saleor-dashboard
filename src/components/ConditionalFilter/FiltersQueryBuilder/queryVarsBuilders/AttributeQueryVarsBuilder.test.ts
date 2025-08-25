@@ -176,7 +176,7 @@ describe("AttributeQueryVarsBuilder", () => {
       );
       const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, {
         label: pageLabel,
-        value: "page-1",
+        value: "UGFnZTox", // Global ID (base64 encoded "Page:1")
         slug: "page-1",
       });
       const condition = new Condition(
@@ -189,7 +189,18 @@ describe("AttributeQueryVarsBuilder", () => {
       const result = def.updateWhereQueryVariables({}, element);
 
       // Assert
-      expect(result).toEqual({ attributes: [{ slug: attributeSlug, valueNames: [pageLabel] }] });
+      expect(result).toEqual({
+        attributes: [{
+          slug: attributeSlug,
+          value: {
+            reference: {
+              referencedIds: {
+                containsAny: ["UGFnZTox"]
+              }
+            }
+          }
+        }]
+      });
     });
 
     it("should correctly build query for DROPDOWN/MULTISELECT attributes", () => {

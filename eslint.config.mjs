@@ -14,7 +14,8 @@ import globals from "globals";
 import localRules from "./lint/rules/index.mjs";
 
 export default tseslint.config(
-  globalIgnores(["node_modules/",
+  globalIgnores([
+    "node_modules/",
     "build/",
     "dist/",
     "dev-dist/",
@@ -28,7 +29,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.recommended, // Note: we can migrate to rules using TypeScript types
   react.configs.flat.recommended,
-  reactHooks.configs['recommended-latest'],
+  reactHooks.configs["recommended-latest"],
   reactRefresh.configs.vite,
 
   {
@@ -38,7 +39,6 @@ export default tseslint.config(
       },
     },
   },
-
 
   // Disable global rules:
   {
@@ -69,9 +69,8 @@ export default tseslint.config(
       "no-constant-binary-expression": "off",
       "no-case-declarations": "off",
       "prefer-const": "off",
-    }
+    },
   },
-
 
   // Configure custom plugins and rules for React files
   {
@@ -85,8 +84,8 @@ export default tseslint.config(
     plugins: {
       "simple-import-sort": simpleImportSort,
       // Note: This plugin has it's own "recommended" config, but we didn't use if (pre ESLint 9)
-      "import": importPlugin,
-      "formatjs": formatjs,
+      import: importPlugin,
+      formatjs: formatjs,
       "local-rules": { rules: localRules },
     },
     rules: {
@@ -153,26 +152,18 @@ export default tseslint.config(
           next: "return",
         },
       ],
-      "formatjs/enforce-id": [
-        "error",
-        { idInterpolationPattern: "[sha512:contenthash:base64:6]" },
-      ],
+      "formatjs/enforce-id": ["error", { idInterpolationPattern: "[sha512:contenthash:base64:6]" }],
       "local-rules/named-styles": "error",
       "local-rules/no-deprecated-icons": "warn",
       "no-console": ["error", { allow: ["warn", "error"] }],
       "no-restricted-imports": [
         "error",
         {
-          paths: [
-            "lodash",
-            "@material-ui/icons/Delete",
-            "classnames",
-          ],
+          paths: ["lodash", "classnames"],
         },
       ],
     },
   },
-
 
   // Disable rules for specific dfiles
   {
@@ -213,7 +204,17 @@ export default tseslint.config(
       "no-restricted-imports": [
         "warn",
         {
+          patterns: [
+            {
+              group: ["@material-ui/*"],
+              message: "Material-UI is deprecated. Use @saleor/macaw-ui-next",
+            },
+          ],
           paths: [
+            {
+              name: "@saleor/macaw-ui",
+              message: "Legacy Macaw UI is deprecated. Use @saleor/macaw-ui-next",
+            },
             {
               name: "react-sortable-hoc",
               message: "Use @dnd-kit instead of react-sortable-hoc.",
