@@ -1,0 +1,12 @@
+name: "CodeQL Config"
+
+paths:
+  - "src/**"
+  - "scripts/**"
+
+paths-ignore:
+  - "src/**/*.test.ts"
+  - "src/**/*.test.tsx"
+
+# Query suites to run
+query-suite: security-extended
