@@ -6,6 +6,7 @@ import React from "react";
 
 import { OrderApps } from "./order-apps";
 import { OrderCustomer } from "./order-customer/order-customer";
+import { OrderFulfillments } from "./order-fulfillments";
 import { OrderHeader } from "./order-header";
 import { OrderInvoices } from "./order-invoices";
 import { OrderLines } from "./order-lines";
@@ -18,7 +19,17 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
   return (
     <>
       <DetailPageLayout backgroundColor="default2" padding={4}>
-        <TopNavWrapper __height="100%" gridColumn="9">
+        <TopNavWrapper
+          __height="100%"
+          gridColumn="9"
+          borderColor="default1"
+          borderTopWidth={1}
+          borderLeftWidth={1}
+          borderRightWidth={0}
+          borderTopLeftRadius={5}
+          borderBottomWidth={0}
+          borderStyle="solid"
+        >
           <OrderHeader
             orderNumber={order.number}
             status={order.status}
@@ -31,14 +42,24 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
           backgroundColor="default1"
           borderBottomLeftRadius={5}
           gridColumn={"9"}
+          borderColor="default1"
+          borderStyle="solid"
+          borderWidth={1}
+          borderRightWidth={0}
         >
           <OrderLines lines={order.lines} />
+          {orderModel.shouldShowFulfillments() && (
+            <OrderFulfillments fulfillments={order.fulfillments} />
+          )}
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar
           borderTopRightRadius={5}
           borderBottomRightRadius={5}
           backgroundColor="default1"
           gridColumn={"9"}
+          borderColor="default1"
+          borderStyle="solid"
+          borderWidth={1}
         >
           <OrderCustomer
             userEmail={order.userEmail}

@@ -14,4 +14,8 @@ export class OrderModel {
   shouldShowCustomerNote(): boolean {
     return !!this.order.customerNote;
   }
+
+  shouldShowFulfillments(): boolean {
+    return this.order.fulfillments.length > 0;
+  }
 }

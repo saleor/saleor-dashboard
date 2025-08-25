@@ -1,5 +1,7 @@
 import {
   AddressFragment,
+  DiscountValueTypeEnum,
+  FulfillmentStatus,
   InvoiceFragment,
   MarkAsPaidStrategyEnum,
   OrderChargeStatusEnum,
@@ -293,7 +295,212 @@ export class OrderFixture {
         },
       },
     },
-  ];
+  ] satisfies OrderDetailsFragment["lines"];
+
+  private static fulfillments = [
+    {
+      __typename: "Fulfillment",
+      id: "fulfillment-id-1",
+      status: FulfillmentStatus.FULFILLED,
+      fulfillmentOrder: 1,
+      trackingNumber: "",
+      lines: [
+        {
+          __typename: "FulfillmentLine",
+          id: "",
+          quantity: 0,
+          orderLine: {
+            __typename: "OrderLine",
+            id: "",
+            isShippingRequired: false,
+            productName: "",
+            productSku: "",
+            isGift: false,
+            quantity: 0,
+            quantityFulfilled: 0,
+            quantityToFulfill: 0,
+            unitDiscountValue: undefined,
+            unitDiscountReason: "",
+            unitDiscountType: DiscountValueTypeEnum.FIXED,
+            allocations: [],
+            variant: {
+              __typename: "ProductVariant",
+              id: "",
+              name: "",
+              quantityAvailable: 0,
+              preorder: {
+                __typename: "PreorderData",
+                endDate: undefined,
+              },
+              stocks: [],
+              product: {
+                __typename: "Product",
+                id: "",
+                isAvailableForPurchase: false,
+              },
+            },
+            totalPrice: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+              gross: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+            },
+            unitDiscount: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
+              currency: "",
+              gross: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+              net: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+            },
+            unitPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+              net: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+            },
+            thumbnail: {
+              __typename: "Image",
+              url: "",
+            },
+          },
+        },
+      ],
+      warehouse: {
+        __typename: "Warehouse",
+        id: "warehouse-id-1",
+        name: "Americas",
+      },
+      metadata: [],
+      privateMetadata: [],
+    },
+    {
+      __typename: "Fulfillment",
+      id: "fulfillment-id-2",
+      status: FulfillmentStatus.REFUNDED,
+      fulfillmentOrder: 2,
+      trackingNumber: "",
+      lines: [
+        {
+          __typename: "FulfillmentLine",
+          id: "",
+          quantity: 0,
+          orderLine: {
+            __typename: "OrderLine",
+            id: "",
+            isShippingRequired: false,
+            productName: "",
+            productSku: "",
+            isGift: false,
+            quantity: 0,
+            quantityFulfilled: 0,
+            quantityToFulfill: 0,
+            unitDiscountValue: undefined,
+            unitDiscountReason: "",
+            unitDiscountType: DiscountValueTypeEnum.FIXED,
+            allocations: [],
+            variant: {
+              __typename: "ProductVariant",
+              id: "",
+              name: "",
+              quantityAvailable: 0,
+              preorder: {
+                __typename: "PreorderData",
+                endDate: undefined,
+              },
+              stocks: [],
+              product: {
+                __typename: "Product",
+                id: "",
+                isAvailableForPurchase: false,
+              },
+            },
+            totalPrice: {
+              __typename: "TaxedMoney",
+              net: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+              gross: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+            },
+            unitDiscount: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+            undiscountedUnitPrice: {
+              __typename: "TaxedMoney",
+              currency: "",
+              gross: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+              net: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+            },
+            unitPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+              net: {
+                __typename: "Money",
+                amount: 0,
+                currency: "",
+              },
+            },
+            thumbnail: {
+              __typename: "Image",
+              url: "",
+            },
+          },
+        },
+      ],
+      warehouse: {
+        __typename: "Warehouse",
+        id: "warehouse-id-1",
+        name: "Americas",
+      },
+      metadata: [],
+      privateMetadata: [],
+    },
+  ] satisfies OrderDetailsFragment["fulfillments"];
 
   private order: OrderDetailsFragment;
 
@@ -312,6 +519,7 @@ export class OrderFixture {
       shippingAddress: OrderFixture.address,
       channel: OrderFixture.channel,
       lines: OrderFixture.lines,
+      fulfillments: OrderFixture.fulfillments,
     });
 
     return new OrderFixture(fulfilledOrder);
