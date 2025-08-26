@@ -67,7 +67,7 @@ export const OrderValue = ({
   discounts,
 }: {
   orderSubtotal: OrderDetailsFragment["subtotal"];
-  shippingMethodName: string;
+  shippingMethodName: OrderDetailsFragment["shippingMethodName"];
   shippingPrice: OrderDetailsFragment["shippingPrice"];
   orderTotal: OrderDetailsFragment["total"];
   discounts: OrderDetailsFragment["discounts"];
