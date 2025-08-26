@@ -1,7 +1,63 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Text, TextProps } from "@saleor/macaw-ui-next";
+import React, { ReactNode } from "react";
 import { useIntl } from "react-intl";
+
+type Props = Omit<TextProps, "children"> & { amount: number };
+
+const OrderValueAmount = ({ amount, ...props }: Props) => {
+  const intl = useIntl();
+
+  return (
+    <Text fontFamily="Geist Mono" fontWeight="medium" {...props}>
+      {intl.formatNumber(amount, {
+        minimumFractionDigits: 2,
+      })}
+    </Text>
+  );
+};
+
+const OrderValueListItem = ({ children, amount }: { children: ReactNode; amount: number }) => {
+  return (
+    <Box as="li" display="grid" __gridTemplateColumns="1fr auto" gap={2}>
+      <Text fontWeight="medium" size={4}>
+        {children}
+      </Text>
+      <OrderValueAmount amount={amount} />
+    </Box>
+  );
+};
+
+const OrderValueTotal = ({ orderTotal }: { orderTotal: OrderDetailsFragment["total"] }) => {
+  const intl = useIntl();
+
+  return (
+    <Box display="grid" placeItems="end">
+      <Box
+        borderStyle="solid"
+        borderColor="default2"
+        borderBottomWidth={0}
+        borderLeftWidth={0}
+        borderRightWidth={0}
+      >
+        {intl.formatMessage(
+          {
+            defaultMessage: "{currency} {totalAmount}",
+            id: "V21v8h",
+          },
+          {
+            currency: (
+              <Text fontFamily="Geist Mono" fontWeight="medium" color="default2">
+                {orderTotal.gross.currency}
+              </Text>
+            ),
+            totalAmount: <OrderValueAmount amount={orderTotal.gross.amount} fontWeight="bold" />,
+          },
+        )}
+      </Box>
+    </Box>
+  );
+};
 
 export const OrderValue = ({
   orderSubtotal,
@@ -36,49 +92,34 @@ export const OrderValue = ({
       </Box>
 
       <Box as="ul" display="grid" gap={1}>
-        <Box as="li" display="grid" __gridTemplateColumns="1fr auto" gap={2}>
-          <Text fontWeight="medium" size={4}>
-            {intl.formatMessage({
-              defaultMessage: "Subtotal",
-              id: "L8seEc",
-            })}
-          </Text>
-          <Text fontFamily="Geist Mono" fontWeight="medium">
-            {intl.formatNumber(orderSubtotal.gross.amount, {
-              minimumFractionDigits: 2,
-            })}
-          </Text>
-        </Box>
-        <Box as="li" display="grid" __gridTemplateColumns="1fr auto" gap={2}>
-          <Text fontWeight="medium" size={4}>
-            {intl.formatMessage(
-              {
-                defaultMessage: "Shipping {carrierName}",
-                id: "mpkBZc",
-              },
-              {
-                carrierName: (
-                  <Text color="default2" size={4} fontWeight="medium">
-                    ({shippingMethodName})
-                  </Text>
-                ),
-              },
-            )}
-          </Text>
-
-          <Text fontFamily="Geist Mono" fontWeight="medium">
-            {intl.formatNumber(shippingPrice.gross.amount, {
-              minimumFractionDigits: 2,
-            })}
-          </Text>
-        </Box>
-        <Box as="li" display="grid" __gridTemplateColumns="1fr auto" gap={2}>
-          <Text fontWeight="medium" size={4}>
+        <OrderValueListItem amount={orderSubtotal.gross.amount}>
+          {intl.formatMessage({
+            defaultMessage: "Subtotal",
+            id: "L8seEc",
+          })}
+        </OrderValueListItem>
+        <OrderValueListItem amount={shippingPrice.gross.amount}>
+          {intl.formatMessage(
+            {
+              defaultMessage: "Shipping {carrierName}",
+              id: "mpkBZc",
+            },
+            {
+              carrierName: (
+                <Text color="default2" fontWeight="medium">
+                  ({shippingMethodName})
+                </Text>
+              ),
+            },
+          )}
+        </OrderValueListItem>
+        <OrderValueListItem amount={orderTotal.tax.amount}>
+          <>
             {intl.formatMessage({
               defaultMessage: "Taxes ",
               id: "HTiAMm",
             })}
-            <Text size={4} fontWeight="medium" color="default2">
+            <Text fontWeight="medium" color="default2">
               {intl.formatMessage(
                 {
                   defaultMessage: "{taxAmount, plural, =0 {(not applicable)} other {} }",
@@ -87,50 +128,33 @@ export const OrderValue = ({
                 { taxAmount: orderTotal.tax.amount },
               )}
             </Text>
-          </Text>
-          <Text fontFamily="Geist Mono" fontWeight="medium">
-            {intl.formatNumber(orderTotal.tax.amount, {
-              minimumFractionDigits: 2,
-            })}
-          </Text>
-        </Box>
+          </>
+        </OrderValueListItem>
+
         {discounts.map(discount => (
-          <Box
+          <OrderValueListItem
             key={`order-value-discount-${discount.id}`}
-            as="li"
-            display="grid"
-            __gridTemplateColumns="1fr auto"
-            gap={2}
+            amount={discount.amount.amount}
           >
-            <Text fontWeight="medium" size={4}>
-              Discount (Voucher: Tests)
-            </Text>
-            <Text style={{ fontFamily: "Geist Mono" }} fontWeight="medium">
-              5.00
-            </Text>
-          </Box>
+            {intl.formatMessage(
+              {
+                defaultMessage: "Discount {discountName}",
+                id: "vs0xiH",
+              },
+              {
+                discountName: (
+                  <Text fontWeight="medium" color="default2">
+                    ({discount.name})
+                  </Text>
+                ),
+              },
+            )}
+          </OrderValueListItem>
         ))}
 
         {/* TODO: add giftcards support */}
 
-        <Box display="grid" placeItems="end">
-          <Box>
-            <Text style={{ fontFamily: "Geist Mono" }} fontWeight="medium" color="default2">
-              USD
-            </Text>
-            <Text
-              style={{ fontFamily: "Geist Mono" }}
-              fontWeight="bold"
-              borderStyle="solid"
-              borderColor="default2"
-              borderBottomWidth={0}
-              borderLeftWidth={0}
-              borderRightWidth={0}
-            >
-              125.10
-            </Text>
-          </Box>
-        </Box>
+        <OrderValueTotal orderTotal={orderTotal} />
       </Box>
     </Box>
   );
