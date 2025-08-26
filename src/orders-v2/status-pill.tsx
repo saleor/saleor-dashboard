@@ -29,6 +29,7 @@ export const StatusPill = ({
       borderStyle="solid"
       data-test-id="status-info"
       data-macaw-ui-candidate
+      whiteSpace="nowrap"
       {...getFillColorsBasedOnStatus(status)}
     >
       <Text color="default1" fontWeight="medium" size={2}>
