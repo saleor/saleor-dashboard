@@ -12,12 +12,12 @@ type Props = PropsWithBox<{
   orderModel: OrderModel;
 }>;
 
-export const OrderLines = ({ lines, orderModel }: Props) => {
+export const OrderLines = ({ lines, orderModel, ...props }: Props) => {
   const intl = useIntl();
 
   return (
     <>
-      <Box padding={6} display="grid">
+      <Box padding={6} display="grid" {...props}>
         <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <Text size={6} fontWeight="medium">
             {intl.formatMessage({ id: "Pvi8WI", defaultMessage: "Order lines" })}

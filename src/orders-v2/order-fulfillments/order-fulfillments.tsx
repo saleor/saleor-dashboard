@@ -1,7 +1,7 @@
 import { FulfillmentFragment } from "@dashboard/graphql";
 import { OrderDetailsDatagrid } from "@dashboard/orders/components/OrderDetailsDatagrid";
 import { warehouseUrl } from "@dashboard/warehouses/urls";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { CodeXml } from "lucide-react";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -12,17 +12,16 @@ import { OrderFulfillmentTrackingNumberButton } from "./order-fulfillment-change
 import { OrderFulfillmentStatusIcon } from "./order-fulfillment-status-icon";
 import { OrderFulfillmentTrackingNumber } from "./order-fulfillment-tracking-number";
 
-export const OrderFulfillments = ({
-  fulfillments,
-  orderModel,
-}: {
+type Props = PropsWithBox<{
   fulfillments: FulfillmentFragment[];
   orderModel: OrderModel;
-}) => {
+}>;
+
+export const OrderFulfillments = ({ fulfillments, orderModel, ...props }: Props) => {
   const intl = useIntl();
 
   return (
-    <Box>
+    <Box {...props}>
       <Box paddingX={6} paddingY={5}>
         <Text color="default2" size={3}>
           {intl.formatMessage(
