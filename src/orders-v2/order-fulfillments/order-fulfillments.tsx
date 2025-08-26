@@ -49,28 +49,30 @@ export const OrderFulfillments = ({
           <Box padding={6} display="flex" justifyContent="space-between" backgroundColor="default2">
             <Box>
               <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-                <Text color="default2" size={2}>
-                  {intl.formatMessage(
-                    {
-                      defaultMessage: "From {warehouseName}: {fulfillmentCreationDate}",
-                      id: "yg0ELD",
-                    },
-                    {
-                      warehouseName: (
-                        <UnderlineLink to={warehouseUrl(fulfillment.warehouse.id)}>
-                          {fulfillment.warehouse.name}
-                        </UnderlineLink>
-                      ),
-                      fulfillmentCreationDate: intl.formatDate(fulfillment.created, {
-                        day: "numeric",
-                        month: "short",
-                        year: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      }),
-                    },
-                  )}
-                </Text>
+                {fulfillment.warehouse?.id && fulfillment.warehouse?.name && (
+                  <Text color="default2" size={2}>
+                    {intl.formatMessage(
+                      {
+                        defaultMessage: "From {warehouseName}: {fulfillmentCreationDate}",
+                        id: "yg0ELD",
+                      },
+                      {
+                        warehouseName: (
+                          <UnderlineLink to={warehouseUrl(fulfillment.warehouse.id)}>
+                            {fulfillment.warehouse.name}
+                          </UnderlineLink>
+                        ),
+                        fulfillmentCreationDate: intl.formatDate(fulfillment.created, {
+                          day: "numeric",
+                          month: "short",
+                          year: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }),
+                      },
+                    )}
+                  </Text>
+                )}
                 {fulfillment.trackingNumber && (
                   <OrderFulfillmentTrackingNumber trackingNumber={fulfillment.trackingNumber} />
                 )}
@@ -99,9 +101,13 @@ export const OrderFulfillments = ({
           </Box>
 
           <OrderDetailsDatagrid
-            lines={fulfillment.lines.map(line => line.orderLine)}
+            lines={
+              fulfillment.lines?.map(line => line.orderLine).filter(line => line !== null) ?? []
+            }
             loading={false}
-            onShowMetadata={undefined}
+            onShowMetadata={() => {
+              alert("Metadata show");
+            }}
             enableVerticalBorder={false}
           />
         </Box>

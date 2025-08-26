@@ -33,7 +33,9 @@ export const OrderLines = ({ lines, orderModel }: Props) => {
       <OrderDetailsDatagrid
         lines={lines}
         loading={false}
-        onShowMetadata={undefined}
+        onShowMetadata={() => {
+          alert("Metadata show");
+        }}
         enableVerticalBorder={false}
       />
     </>
