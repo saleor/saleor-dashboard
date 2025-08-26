@@ -16,7 +16,7 @@ import {
   extractOrderGiftCardUsedAmount,
   extractRefundedAmount,
   getDiscountAmount,
-  obtainUsedGifrcards,
+  obtainUsedGiftCards,
 } from "./utils";
 
 interface OrderPaymentProps {
@@ -37,7 +37,7 @@ const OrderPayment = (props: OrderPaymentProps) => {
   const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
   const refundedAmount = extractRefundedAmount(order);
   const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
-  const usedGiftcards = obtainUsedGifrcards(order);
+  const usedGiftcards = obtainUsedGiftCards(order);
 
   const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (

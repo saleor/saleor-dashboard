@@ -12,10 +12,21 @@ interface ShouldDisplayResult {
   cancelledPending: boolean;
 }
 
-export const getShouldDisplayAmounts = (
-  order: OrderDetailsFragment | undefined,
-): ShouldDisplayResult => {
-  if (!order) {
+export interface OrderTotalAmounts {
+  totalAuthorized: OrderDetailsFragment["totalAuthorized"];
+  totalCaptured: OrderDetailsFragment["totalCaptured"];
+  totalRefunded: OrderDetailsFragment["totalRefunded"];
+  totalBalance: OrderDetailsFragment["totalBalance"];
+  total: OrderDetailsFragment["total"];
+  totalAuthorizePending: OrderDetailsFragment["totalAuthorizePending"];
+  totalCharged: OrderDetailsFragment["totalCharged"];
+  totalChargePending: OrderDetailsFragment["totalChargePending"];
+  totalCanceled: OrderDetailsFragment["totalCanceled"];
+  totalCancelPending: OrderDetailsFragment["totalCancelPending"];
+}
+
+export const getShouldDisplayAmounts = (orderAmounts?: OrderTotalAmounts): ShouldDisplayResult => {
+  if (!orderAmounts) {
     return {
       state: PaymentState.NO_DATA,
       authorized: false,
@@ -27,13 +38,13 @@ export const getShouldDisplayAmounts = (
     };
   }
 
-  const authorized = order.totalAuthorized?.amount ?? 0;
-  const authorizePending = order.totalAuthorizePending?.amount ?? 0;
-  const charged = order.totalCharged?.amount ?? 0;
-  const chargePending = order.totalChargePending?.amount ?? 0;
-  const cancelled = order.totalCanceled?.amount ?? 0;
-  const cancelPending = order.totalCancelPending?.amount ?? 0;
-  const total = order.total.gross?.amount ?? 0;
+  const authorized = orderAmounts.totalAuthorized?.amount ?? 0;
+  const authorizePending = orderAmounts.totalAuthorizePending?.amount ?? 0;
+  const charged = orderAmounts.totalCharged?.amount ?? 0;
+  const chargePending = orderAmounts.totalChargePending?.amount ?? 0;
+  const cancelled = orderAmounts.totalCanceled?.amount ?? 0;
+  const cancelPending = orderAmounts.totalCancelPending?.amount ?? 0;
+  const total = orderAmounts.total.gross?.amount ?? 0;
   const anyPending = authorizePending > 0 || chargePending > 0 || cancelPending > 0;
 
   if (anyPending) {
