@@ -3,7 +3,7 @@ import React from "react";
 
 export const StorybookAppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Box display="grid" __gridTemplateColumns="auto 1fr" style={{ fontFamily: "Geist" }}>
+    <Box display="grid" __gridTemplateColumns="auto 1fr" fontFamily="Geist">
       <Box
         __width={"260px"}
         height="100vh"

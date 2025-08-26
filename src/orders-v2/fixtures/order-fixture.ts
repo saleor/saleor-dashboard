@@ -29,7 +29,7 @@ export class OrderFixture {
     customerNote: "",
     isPaid: true,
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-    shippingMethodName: "Standard Shipping",
+    shippingMethodName: "DB Schenker",
     collectionPointName: null,
     actions: [],
     userEmail: "customer@example.com",
@@ -56,7 +56,7 @@ export class OrderFixture {
       __typename: "TaxedMoney",
       gross: {
         __typename: "Money",
-        amount: 100,
+        amount: 100.33,
         currency: "USD",
       },
       net: {
