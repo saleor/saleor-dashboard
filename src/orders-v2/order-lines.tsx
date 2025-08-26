@@ -5,24 +5,29 @@ import { Package } from "lucide-react";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { OrderModel } from "./order-model";
+
 type Props = PropsWithBox<{
   lines: OrderLineFragment[];
+  orderModel: OrderModel;
 }>;
 
-export const OrderLines = ({ lines }: Props) => {
+export const OrderLines = ({ lines, orderModel }: Props) => {
   const intl = useIntl();
 
   return (
     <>
       <Box padding={6} display="grid">
         <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
-          <Text size={5} fontWeight="medium">
+          <Text size={6} fontWeight="medium">
             {intl.formatMessage({ id: "Pvi8WI", defaultMessage: "Order lines" })}
           </Text>
-          <Button onClick={() => alert("Fulfill order lines")}>
-            <Package size={14} />
-            {intl.formatMessage({ id: "QDxJib", defaultMessage: "Fulfill" })}
-          </Button>
+          {orderModel.shouldShowFulfillButton() && (
+            <Button onClick={() => alert("Fulfill order lines")}>
+              <Package size={14} />
+              {intl.formatMessage({ id: "QDxJib", defaultMessage: "Fulfill" })}
+            </Button>
+          )}
         </Box>
       </Box>
       <OrderDetailsDatagrid

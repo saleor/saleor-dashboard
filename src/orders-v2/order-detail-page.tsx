@@ -6,7 +6,7 @@ import React from "react";
 
 import { OrderApps } from "./order-apps";
 import { OrderCustomer } from "./order-customer/order-customer";
-import { OrderFulfillments } from "./order-fulfillments";
+import { OrderFulfillments } from "./order-fulfillments/order-fulfillments";
 import { OrderHeader } from "./order-header";
 import { OrderInvoices } from "./order-invoices";
 import { OrderLines } from "./order-lines";
@@ -47,9 +47,9 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
           borderWidth={1}
           borderRightWidth={0}
         >
-          <OrderLines lines={order.lines} />
+          <OrderLines lines={order.lines} orderModel={orderModel} />
           {orderModel.shouldShowFulfillments() && (
-            <OrderFulfillments fulfillments={order.fulfillments} />
+            <OrderFulfillments fulfillments={order.fulfillments} orderModel={orderModel} />
           )}
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar
