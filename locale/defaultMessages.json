@@ -3,6 +3,9 @@
     "context": "Transaction event status - requested",
     "string": "Requested"
   },
+  "+/ncVS": {
+    "string": "Add Tracking"
+  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -3241,6 +3244,9 @@
     "context": "cta button label",
     "string": "Get in touch"
   },
+  "HRZD/o": {
+    "string": "Change Tracking"
+  },
   "HSmg1/": {
     "context": "gift cards section name",
     "string": "Gift Cards"
@@ -4817,6 +4823,9 @@
     "context": "label for radio button",
     "string": "Product prices are entered without tax"
   },
+  "QpetOV": {
+    "string": "Channel: {channelNameLink}"
+  },
   "Qph0GE": {
     "context": "dialog content",
     "string": "Add a new address:"
@@ -4903,6 +4912,9 @@
   "Rd0s80": {
     "context": "no cards found title message",
     "string": "No gift cards found"
+  },
+  "Re3mG5": {
+    "string": "{fulfillmentStatus, select, CANCELED {Canceled} FULFILLED {Fulfilled} REFUNDED {Refunded} REFUNDED_AND_RETURNED {Refunded and Returned} REPLACED {Replaced} RETURNED {Returned} WAITING_FOR_APPROVAL {Waiting for Approval} other {Other}}"
   },
   "RfPJ1E": {
     "context": "issue card button label",
@@ -5636,9 +5648,6 @@
   "VvhNCi": {
     "context": "command menu shortcut",
     "string": "Command menu"
-  },
-  "VxBOta": {
-    "string": "Channel {channelNameLink}"
   },
   "VyC+Bm": {
     "context": "radio button label",
@@ -8378,6 +8387,9 @@
   "mt3SU9": {
     "string": "Webhook errors detected"
   },
+  "mxLMrd": {
+    "string": "{count, plural, one {# fulfillment group} other {# fulfillment groups}}"
+  },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
   },
@@ -9719,6 +9731,9 @@
     "context": "card title, app install page, about privacy",
     "string": "Info"
   },
+  "vMo6/3": {
+    "string": "Tracking: {trackingNumber}"
+  },
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
@@ -10263,6 +10278,9 @@
   },
   "yfhLcv": {
     "string": "We are working on replacing plugins with apps. Read more about"
+  },
+  "yg0ELD": {
+    "string": "From {warehouseName}: {fulfillmentCreationDate}"
   },
   "ygxco/": {
     "context": "tooltip, submit form",
