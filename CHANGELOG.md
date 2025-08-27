@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.21.7
+
+### Patch Changes
+
+- fb923e9: Fixed duplicated Language Switcher in Product Variants Translate Page
+- 69c3d41: Enhancement: Added new Command Menu actions:
+  - Vouchers: Go to / Create
+  - Promotions: Go to / Create
+  - Customers: Go to / Create
+  - Users & Staff: Go to / Invite
+  - Extensions: Install from manifest, Go to installed, Explore marketplace
+  - Webhooks: Create manually
+
 ## 3.21.6
 
 ### Patch Changes
