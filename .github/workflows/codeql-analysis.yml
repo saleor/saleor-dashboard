@@ -2,20 +2,33 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: [main, "3.21"]
+    branches:
+      - main
+      # Matches release branches
+      - "[0-9]+.[0-9]+"
   pull_request:
-    branches: [main, "3.21"]
+    branches:
+      - main
+      # Matches release branches
+      - "[0-9]+.[0-9]+"
 
 jobs:
   analyze:
-    name: Analyze JavaScript/TypeScript
-    runs-on: ubuntu-latest
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-22.04
     timeout-minutes: 60
     permissions:
       security-events: write
+      packages: read
       actions: read
       contents: read
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+          - language: javascript-typescript
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,8 +36,10 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: javascript-typescript
+          languages: ${{ matrix.language }}
           config-file: ./.github/codeql/codeql-config.yml
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
