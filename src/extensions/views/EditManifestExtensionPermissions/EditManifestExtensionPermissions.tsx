@@ -161,7 +161,7 @@ export const EditManifestExtensionPermissions = ({ id: appId }: { id: string }) 
           <SmallText as="p">
             <Link
               target="__blank"
-              href="https://docs.saleor.io/docs/3.x/developer/permissions#app-permissions"
+              href="https://docs.saleor.io/developer/permissions#app-permissions"
             >
               {formatMessage(appPermissionsRequestViewMessages.permissionsDocsLink)}
             </Link>

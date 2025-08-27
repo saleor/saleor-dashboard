@@ -110,7 +110,7 @@ const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: WebhookInfo
                     <Link
                       target="_blank"
                       rel="noopener noreferrer"
-                      href="https://docs.saleor.io/docs/3.x/developer/extending/apps/synchronous-webhooks/key-concepts#payload-signature"
+                      href="https://docs.saleor.io/developer/extending/webhooks/payload-signature"
                     >
                       <FormattedMessage {...messages.learnMore} />
                     </Link>

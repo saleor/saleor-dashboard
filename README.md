@@ -20,7 +20,7 @@
 <div align="center">
   <a href="https://saleor.io/">🏠 Website</a>
   <span> • </span>
-  <a href="https://docs.saleor.io/docs/3.x/">📚 Docs</a>
+  <a href="https://docs.saleor.io/">📚 Docs</a>
   <span> • </span>
   <a href="https://saleor.io/blog/">📰 Blog</a>
   <span> • </span>
@@ -71,7 +71,7 @@ npm run dev
 ```
 
 > Note:
-> If you see CORS errors, check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
+> If you see CORS errors, check [CORS configuration](https://docs.saleor.io/setup/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
 
 ## Docs
 
