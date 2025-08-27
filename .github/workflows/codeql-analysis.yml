@@ -2,14 +2,20 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: [main, "3.21"]
+    branches:
+      - main
+      # Matches release branches
+      - "[0-9]+.[0-9]+"
   pull_request:
-    branches: [main, "3.21"]
+    branches:
+      - main
+      # Matches release branches
+      - "[0-9]+.[0-9]+"
 
 jobs:
   analyze:
     name: Analyze JavaScript/TypeScript
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 60
     permissions:
       security-events: write
