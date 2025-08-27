@@ -3,6 +3,7 @@ name: "CodeQL Config"
 paths:
   - "src/**"
   - "scripts/**"
+  - ".github/**"
 
 paths-ignore:
   - "src/**/*.test.ts"
