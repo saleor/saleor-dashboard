@@ -72,7 +72,7 @@ interface OrderReturnProps {
 
 const getOrderRefundPageFormData = (): OrderReturnData => ({
   amount: undefined,
-  amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
+  amountCalculationMode: OrderRefundAmountCalculationMode.MANUAL,
   refundShipmentCosts: false,
   autoGrantRefund: false,
   autoSendRefund: false,

@@ -55,7 +55,7 @@ interface OrderRefundFormProps {
 function getOrderRefundPageFormData(defaultType: OrderRefundType): OrderRefundData {
   return {
     amount: undefined,
-    amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
+    amountCalculationMode: OrderRefundAmountCalculationMode.NONE,
     refundShipmentCosts: false,
     type: defaultType,
   };
