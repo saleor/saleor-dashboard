@@ -34,7 +34,7 @@ export class AddressFieldQueryVarsBuilder
     element: FilterElement
   ): AddressFilterQueryPart {
     const type = element.value.type;
-    const conditionValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element);
+    const conditionValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element) as { eq?: string; oneOf?: string[] } | null;
 
     if (!conditionValue) {
       return query as AddressFilterQueryPart;
@@ -45,22 +45,22 @@ export class AddressFieldQueryVarsBuilder
     if (type === "billingPhoneNumber") {
       newQuery.billingAddress = {
         ...newQuery.billingAddress,
-        phoneNumber: conditionValue as { eq?: string; oneOf?: string[] },
+        phoneNumber: conditionValue
       };
     } else if (type === "billingCountry") {
       newQuery.billingAddress = {
         ...newQuery.billingAddress,
-        country: conditionValue as { eq?: string; oneOf?: string[] },
+        country: conditionValue
       };
     } else if (type === "shippingPhoneNumber") {
       newQuery.shippingAddress = {
         ...newQuery.shippingAddress,
-        phoneNumber: conditionValue as { eq?: string; oneOf?: string[] },
+        phoneNumber: conditionValue
       };
     } else if (type === "shippingCountry") {
       newQuery.shippingAddress = {
         ...newQuery.shippingAddress,
-        country: conditionValue as { eq?: string; oneOf?: string[] },
+        country: conditionValue
       };
     }
 
