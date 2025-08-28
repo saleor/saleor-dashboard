@@ -51,15 +51,25 @@ const IframePost = ({
     }
 
     if (iframeRef.current && loadingRef.current) {
+      const iframe = iframeRef.current;
+      const loading = loadingRef.current;
+      
       const onload = () => {
-        loadingRef.current!.style.display = "none";
-        iframeRef.current!.style.visibility = "visible";
+        if (loading) {
+          loading.style.display = "none";
+        }
+
+        if (iframe) {
+          iframe.style.visibility = "visible";
+        }
       };
 
-      iframeRef.current.addEventListener("load", onload);
+      iframe.addEventListener("load", onload);
 
       return () => {
-        iframeRef.current!.removeEventListener("load", onload);
+        if (iframe) {
+          iframe.removeEventListener("load", onload);
+        }
       };
     }
   }, []);
