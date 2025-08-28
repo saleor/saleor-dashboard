@@ -1334,6 +1334,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       fulfillmentOrder: 2,
       id: "RnVsZmlsbG1lbnQ6MjQ=",
       metadata: [],
+      created: "2019-09-17T13:22:24.376193+00:00",
       privateMetadata: [],
       lines: [
         {
@@ -1467,6 +1468,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       id: "RnVsZmlsbG1lbnQ6OQ==",
       metadata: [],
       privateMetadata: [],
+      created: "2019-09-17T13:22:24.376193+00:00",
       lines: [
         {
           __typename: "FulfillmentLine",

@@ -59,6 +59,16 @@ export const FulfilledWithCustomerNote: Story = {
   },
 };
 
+export const FulfilledWithMultipleFulfillments: Story = {
+  args: {
+    order: OrderFixture.fulfilled()
+      .withRefundedFulfillment()
+      .withReplacedFulfillment()
+      .withReturnedFulfillment()
+      .build(),
+  },
+};
+
 export const Unconfirmed: Story = {
   args: {
     order: OrderFixture.unconfirmed().build(),
@@ -74,5 +84,11 @@ export const UnconfirmedWithInvoices: Story = {
 export const UnconfirmedWithCustomerNote: Story = {
   args: {
     order: OrderFixture.unconfirmed().withCustomerNote("This is a customer note.").build(),
+  },
+};
+
+export const Unfulfilled: Story = {
+  args: {
+    order: OrderFixture.unfulfilled().build(),
   },
 };
