@@ -18,7 +18,11 @@ export type IntFilterQueryPart = {
   number?: IntFilterInput;
 };
 
-/** Handle fields that use IntFilterInput (not IntRangeInput) */
+/** Handle fields that use IntFilterInput type
+ * E.g. `{linesCount: {range: {gte: 1, lte: 5}}}`
+ *
+ * For IntRangeInput, use DefaultQueryVarsBuilder
+ * E.g. `{field: {gte: 1, lte: 5}}` */
 export class IntFilterQueryVarsBuilder
   extends BaseMappableQueryVarsBuilder<IntFilterQueryPart> {
   canHandle(element: FilterElement): boolean {

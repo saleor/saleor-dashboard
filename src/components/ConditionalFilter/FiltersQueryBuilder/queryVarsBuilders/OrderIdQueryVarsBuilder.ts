@@ -7,6 +7,7 @@ export type OrderIdFilterQueryPart = {
   ids?: string[];
 };
 
+/** Maps IDs for OrderWhereInput to a simple array, instead of `{oneOf: []}` object */
 export class OrderIdQueryVarsBuilder
   extends BaseMappableQueryVarsBuilder<OrderIdFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
@@ -25,6 +26,7 @@ export class OrderIdQueryVarsBuilder
     const { value: selectedValue } = element.condition.selected;
 
     // For IDs, we need to return plain array, not {oneOf: [...]} structure
+    // See OrderWhereInput.ids type in Saleor Schema
     if (isItemOptionArray(selectedValue)) {
       return selectedValue.map(x => x.originalSlug || x.value);
     }
