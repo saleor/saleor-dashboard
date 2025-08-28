@@ -1,6 +1,5 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import {
-  AttributeInputTypeEnum,
   CountryCode,
   FulfillmentStatus,
   OrderAuthorizeStatusEnum,
@@ -24,7 +23,7 @@ import {
 import { getFilterElement } from "../utils";
 
 const isStaticBoolean = (rowType: RowType) => {
-  return ["isClickAndCollect", "isPreorder", "giftCardUsed", "giftCardBought"].includes(rowType);
+  return ["isClickAndCollect", "isGiftCardBought", "isGiftCardUsed", "hasInvoices", "isPreorder", "giftCardUsed", "hasFulfillments"].includes(rowType);
 };
 
 const createAPIHandler = (
@@ -88,19 +87,6 @@ const createAPIHandler = (
     return new NoopValuesHandler([]);
   }
 
-  if (rowType === "metadata") {
-    return new NoopValuesHandler([]);
-  }
-
-  // Boolean fields
-  if (rowType === "isClickAndCollect" || rowType === "isGiftCardBought" || rowType === "isGiftCardUsed" ||
-    rowType === "hasInvoices" || rowType === "hasFulfillments") {
-    return new BooleanValuesHandler([
-      { label: "Yes", value: "true", type: AttributeInputTypeEnum.BOOLEAN, slug: "true" },
-      { label: "No", value: "false", type: AttributeInputTypeEnum.BOOLEAN, slug: "false" },
-    ]);
-  }
-
   // Price/Amount fields  
   if (rowType === "totalGross" || rowType === "totalNet") {
     return new NoopValuesHandler([]);
@@ -119,7 +105,7 @@ const createAPIHandler = (
 
   // Metadata fields
   if (rowType === "linesMetadata" || rowType === "transactionsMetadata" ||
-    rowType === "fulfillmentsMetadata") {
+    rowType === "fulfillmentsMetadata" || rowType === "metadata") {
     return new NoopValuesHandler([]);
   }
 
