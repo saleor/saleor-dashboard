@@ -41,11 +41,27 @@ describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
     // Assert
     expect(fetchingParams).toEqual({
       status: [],
+      fulfillmentStatus: [],
       authorizeStatus: [],
       chargeStatus: [],
       channels: [],
       customer: [],
       ids: [],
+      metadata: [],
+      number: [],
+      userEmail: [],
+      voucherCode: [],
+      linesCount: [],
+      checkoutId: [],
+      linesMetadata: [],
+      transactionsMetadata: [],
+      transactionsPaymentType: [],
+      transactionsCardBrand: [],
+      fulfillmentsMetadata: [],
+      billingPhoneNumber: [],
+      billingCountry: [],
+      shippingPhoneNumber: [],
+      shippingCountry: [],
     });
   });
 
