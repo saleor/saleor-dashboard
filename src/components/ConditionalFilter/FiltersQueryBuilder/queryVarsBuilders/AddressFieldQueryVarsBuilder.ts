@@ -24,12 +24,12 @@ export class AddressFieldQueryVarsBuilder
       type === "shippingPhoneNumber" || type === "shippingCountry";
   }
 
-  public createOptionFetcher(
+  createOptionFetcher(
   ): Handler {
     return new NoopValuesHandler([]);
   }
 
-  public updateWhereQueryVariables(
+  updateWhereQueryVariables(
     query: Readonly<AddressFilterQueryPart>,
     element: FilterElement
   ): AddressFilterQueryPart {

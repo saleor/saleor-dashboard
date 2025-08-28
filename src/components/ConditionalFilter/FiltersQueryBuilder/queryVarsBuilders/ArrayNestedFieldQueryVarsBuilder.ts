@@ -30,12 +30,12 @@ export class ArrayNestedFieldQueryVarsBuilder
       type === "transactionsCardBrand";
   }
 
-  public createOptionFetcher(
+  createOptionFetcher(
   ): Handler {
     return new NoopValuesHandler([]);
   }
 
-  public updateWhereQueryVariables(
+  updateWhereQueryVariables(
     query: Readonly<ArrayNestedFilterQueryPart>,
     element: FilterElement
   ): ArrayNestedFilterQueryPart {

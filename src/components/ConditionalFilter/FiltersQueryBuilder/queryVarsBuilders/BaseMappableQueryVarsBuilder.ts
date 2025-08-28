@@ -10,9 +10,9 @@ import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
  * For example: attributeType -> type */
 export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = FilterQuery>
   implements BothApiQueryVarsBuilder<T> {
-  public abstract canHandle(element: FilterElement): boolean;
+  abstract canHandle(element: FilterElement): boolean;
 
-  public abstract createOptionFetcher(
+  abstract createOptionFetcher(
     client: ApolloClient<unknown>,
     inputValue: string,
     element: FilterElement,
@@ -24,14 +24,14 @@ export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = Filte
     return QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element) as T[keyof T];
   }
 
-  public updateWhereQueryVariables(query: Readonly<T>, element: FilterElement): T {
+  updateWhereQueryVariables(query: Readonly<T>, element: FilterElement): T {
     const fieldName = this.getQueryFieldName(element);
     const processedValue = this.getConditionValue(element);
 
     return { ...query, [fieldName]: processedValue };
   }
 
-  public updateFilterQueryVariables(query: Readonly<T>, element: FilterElement): T {
+  updateFilterQueryVariables(query: Readonly<T>, element: FilterElement): T {
     const whereQuery = this.updateWhereQueryVariables(query, element);
     const fieldName = this.getQueryFieldName(element);
     const whereQueryPart = whereQuery[fieldName];

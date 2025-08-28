@@ -24,13 +24,12 @@ import { WhereOnlyQueryVarsBuilder } from "./types";
 export type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart>
-{
-  public canHandle(element: FilterElement): boolean {
+  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart> {
+  canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
 
-  public createOptionFetcher(
+  createOptionFetcher(
     client: ApolloClient<unknown>,
     inputValue: string,
     element: FilterElement,
@@ -49,7 +48,7 @@ export class AttributeQueryVarsBuilder
     }
   }
 
-  public updateWhereQueryVariables(
+  updateWhereQueryVariables(
     query: Readonly<{ attributes?: AttributeInput[] }>,
     element: FilterElement,
   ): { attributes?: AttributeInput[] } {

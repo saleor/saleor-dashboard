@@ -13,7 +13,7 @@ export class OrderCustomerIdQueryVarsBuilder
     return element.value.type === "customer";
   }
 
-  public createOptionFetcher(): Handler {
+  createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 

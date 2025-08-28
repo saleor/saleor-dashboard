@@ -20,12 +20,12 @@ export class FulfillmentStatusQueryVarsBuilder
     return element.value.type === "fulfillmentStatus";
   }
 
-  public createOptionFetcher(
+  createOptionFetcher(
   ): Handler {
     return new NoopValuesHandler([]);
   }
 
-  public updateWhereQueryVariables(
+  updateWhereQueryVariables(
     query: Readonly<FulfillmentStatusFilterQueryPart>,
     element: FilterElement
   ): FulfillmentStatusFilterQueryPart {

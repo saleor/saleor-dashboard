@@ -22,13 +22,13 @@ export class DateTimeRangeQueryVarsBuilder extends BaseMappableQueryVarsBuilder<
     "dateJoined",
   ];
 
-  public canHandle(element: FilterElement): boolean {
+  canHandle(element: FilterElement): boolean {
     const fieldName = element.value.value || element.value.label || "";
 
     return DateTimeRangeQueryVarsBuilder.DATE_FIELD_NAMES.includes(fieldName);
   }
 
-  public createOptionFetcher(): Handler {
+  createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 
@@ -38,11 +38,11 @@ export class DateTimeRangeQueryVarsBuilder extends BaseMappableQueryVarsBuilder<
 
   protected getConditionValue(element: FilterElement): DateTimeRangeQueryVars[keyof DateTimeRangeQueryVars] | undefined {
     const { value: selectedValue, conditionValue } = element.condition.selected;
-    
+
     if (!conditionValue) {
       return undefined;
     }
-    
+
     const { label } = conditionValue;
 
     return QueryVarsDateUtils.buildDateFilter(selectedValue, label);

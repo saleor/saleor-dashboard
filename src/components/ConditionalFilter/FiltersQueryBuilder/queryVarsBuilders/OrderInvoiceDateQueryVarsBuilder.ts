@@ -10,27 +10,27 @@ export type OrderInvoiceDateQueryVars = {
 export class OrderInvoiceDateQueryVarsBuilder extends BaseMappableQueryVarsBuilder<OrderInvoiceDateQueryVars> {
   private static readonly FIELD_NAME = "invoicesCreatedAt";
 
-  public canHandle(element: FilterElement): boolean {
+  canHandle(element: FilterElement): boolean {
     const fieldName = element.value.value || element.value.label || "";
 
     return fieldName === OrderInvoiceDateQueryVarsBuilder.FIELD_NAME;
   }
 
-  public createOptionFetcher(): Handler {
+  createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 
   protected getQueryFieldName(): string {
     return "invoices";
   }
-  
+
   protected getConditionValue(element: FilterElement): OrderInvoiceDateQueryVars[keyof OrderInvoiceDateQueryVars] | undefined {
     const { value: selectedValue, conditionValue } = element.condition.selected;
-    
+
     if (!conditionValue) {
       return undefined;
     }
-    
+
     const { label } = conditionValue;
     const filter = QueryVarsDateUtils.buildDateFilter(selectedValue, label);
 
