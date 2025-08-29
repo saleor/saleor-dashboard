@@ -302,7 +302,7 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         const query = { status: { eq: "ACTIVE" } };
 
         // Act
-        const result = builder.updateWhereQueryVariables(query as unknown, element);
+        const result = builder.updateWhereQueryVariables(query as any, element);
 
         // Assert
         expect(result).toEqual({
