@@ -201,6 +201,11 @@ export const transformOrderStatus = (
         localized: intl.formatMessage(orderStatusMessages.readyToFulfill),
         status: StatusType.INFO,
       };
+    case OrderStatus.EXPIRED:
+      return {
+        localized: intl.formatMessage(orderStatusMessages.expired),
+        status: StatusType.ERROR,
+      };
   }
 
   return {

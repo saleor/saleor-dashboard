@@ -4,7 +4,7 @@ import {
   ConditionValue,
   isItemOption,
   isItemOptionArray,
-  isTuple,
+  ItemOption,
 } from "../FilterElement/ConditionValue";
 import { StaticQueryPart } from "./types";
 
@@ -12,9 +12,9 @@ export type ProcessedConditionValue =
   | string
   | boolean
   | string[]
-  | { range: { gte?: string; lte?: string } }
-  | { eq: string }
-  | { oneOf: string[] };
+  | { range: { gte?: unknown; lte?: unknown } }
+  | { eq: unknown }
+  | { oneOf: unknown[] };
 
 /**
  * Helper function to extract boolean value from different value types.
@@ -33,9 +33,10 @@ function extractBooleanValue(value: ConditionValue): boolean {
 
 /**
  * Extracts the actual value from ItemOption or returns the value as-is.
+ * Uses originalSlug if available, falls back to value.
  */
-function extractValueFromOption(value: ConditionValue): string {
-  return isItemOption(value) ? value.value : (value as string);
+function extractValueFromOption(value: unknown): string {
+  return isItemOption(value) ? (value.originalSlug || value.value) : (value as string);
 }
 
 /**
@@ -63,6 +64,184 @@ export function getBooleanValueFromElement(element: FilterElement): boolean {
   return extractBooleanValue(selectedValue);
 }
 
+function getIntegerValueFromElement(element: FilterElement): number | number[] | null {
+  const { value: selectedValue } = element.condition.selected;
+
+
+  if (Array.isArray(selectedValue) && selectedValue.length > 0) {
+    const parsed = selectedValue.map((x: string | ItemOption) => {
+      if (isItemOption(x)) {
+        return parseInt(x.value, 10);
+      }
+
+      return parseInt(x, 10);
+    }).filter(x => !Number.isNaN(x));
+
+    return parsed.length > 0 ? parsed : null;
+  }
+
+  if (typeof selectedValue === "number") {
+    return selectedValue;
+  }
+
+  const rawValue = extractValueFromOption(selectedValue);
+  const parsed = parseInt(rawValue, 10);
+
+  return isNaN(parsed) ? null : parsed;
+}
+
+function getFloatValueFromElement(element: FilterElement): number | number[] | null {
+  const { value: selectedValue } = element.condition.selected;
+
+  if (Array.isArray(selectedValue) && selectedValue.length > 0) {
+    const parsed = selectedValue.map((x: string | ItemOption) => {
+      if (isItemOption(x)) {
+        return parseFloat(x.value);
+      }
+
+      return parseFloat(x);
+    }).filter(x => !Number.isNaN(x));
+
+    return parsed.length > 0 ? parsed : null;
+  }
+
+  if (typeof selectedValue === "number") {
+    return selectedValue;
+  }
+
+  const rawValue = extractValueFromOption(selectedValue);
+  const parsed = parseFloat(rawValue);
+
+  return isNaN(parsed) ? null : parsed;
+}
+
+function isAnyTuple(value: unknown): value is [unknown, unknown] {
+  return Array.isArray(value) && value.length === 2;
+}
+
+
+/**
+ * Handle range conditions for input types
+ * and builds the inner range object with gte/lte properties
+ */
+function buildRangeObject(
+  selectedValue: unknown,
+  label: string,
+): { gte?: unknown; lte?: unknown } | null {
+  if (label === "lower") {
+    const value = extractValueFromOption(selectedValue);
+
+    return { lte: value };
+  }
+
+  if (label === "greater") {
+    const value = extractValueFromOption(selectedValue);
+
+    return { gte: value };
+  }
+
+  if (isAnyTuple(selectedValue) && label === "between") {
+    const [gte, lte] = selectedValue;
+
+    return { gte, lte };
+  }
+
+  return null;
+}
+
+/**
+ * Handle range conditions for input types:
+ * - IntFilterInput
+ * - DateTimeFilterInput (not DateTimeRangeInput) (this should probably be separate queryVarBuilder)
+ * - DecimalFilterInput
+ */
+function handleRangeCondition(
+  selectedValue: unknown,
+  label: string,
+): ProcessedConditionValue | null {
+  if (selectedValue === null || selectedValue === undefined || selectedValue === "") {
+    return null
+  }
+
+  if (label === "is") {
+    if (Array.isArray(selectedValue) && selectedValue.length > 0) {
+      return {
+        oneOf: selectedValue.map(extractValueFromOption),
+      };
+    }
+
+    return {
+      eq: extractValueFromOption(selectedValue),
+    };
+  }
+
+  const range = buildRangeObject(selectedValue, label);
+
+  if (range) {
+    return { range };
+  }
+
+  return null;
+}
+
+function handleBooleanCondition(selectedValue: ConditionValue): ProcessedConditionValue | null {
+  if (isItemOption(selectedValue) && ["true", "false"].includes(selectedValue.value)) {
+    return extractBooleanValue(selectedValue);
+  }
+
+  if (typeof selectedValue === "string" && ["true", "false"].includes(selectedValue)) {
+    return extractBooleanValue(selectedValue);
+  }
+
+  return null;
+}
+
+function handleSingleOption(selectedValue: unknown): ProcessedConditionValue | null {
+  if (isItemOption(selectedValue)) {
+    const eq = selectedValue.originalSlug || selectedValue.value;
+
+    return { eq };
+  }
+
+  return null;
+}
+
+function handleMultipleOption(selectedValue: ConditionValue): ProcessedConditionValue | null {
+  if (isItemOptionArray(selectedValue)) {
+    const oneOf = extractValuesFromOptionArray(selectedValue);
+
+    return { oneOf };
+  }
+
+  return null;
+}
+
+/**
+ * Handle string values
+ */
+function handleStringCondition(selectedValue: ConditionValue): ProcessedConditionValue | null {
+  if (typeof selectedValue === "string") {
+    const eq = selectedValue;
+
+    return { eq };
+  }
+
+  return null;
+}
+
+/**
+ * Handle string arrays
+ */
+function handleArrayCondition(selectedValue: ConditionValue): ProcessedConditionValue | null {
+  if (Array.isArray(selectedValue) && typeof selectedValue[0] === "string") {
+    const oneOf = selectedValue as string[];
+
+    return { oneOf };
+  }
+
+  return null;
+}
+
 /**
  * Processes condition values for different condition types.
  */
@@ -77,66 +256,25 @@ export const extractConditionValueFromFilterElement = (
 
   const { label } = conditionValue;
 
-  // Handle range conditions
-  if (label === "lower") {
-    const value = extractValueFromOption(selectedValue);
-    const range = { lte: value };
+  const handlers = [
+    () => handleBooleanCondition(selectedValue),
+    () => handleRangeCondition(selectedValue, label),
+    () => handleSingleOption(selectedValue),
+    () => handleMultipleOption(selectedValue),
+    () => handleStringCondition(selectedValue),
+    () => handleArrayCondition(selectedValue),
+  ];
 
-    return { range };
+  for (const handler of handlers) {
+    const result = handler();
+
+    if (result !== null) {
+      return result;
+    }
   }
 
-  if (label === "greater") {
-    const value = extractValueFromOption(selectedValue);
-    const range = { gte: value };
-
-    return { range };
-  }
-
-  if (isTuple(selectedValue) && label === "between") {
-    const [gte, lte] = selectedValue;
-    const range = { gte, lte };
-
-    return { range };
-  }
-
-  // Handle boolean values
-  if (isItemOption(selectedValue) && ["true", "false"].includes(selectedValue.value)) {
-    return extractBooleanValue(selectedValue);
-  }
-
-  if (typeof selectedValue === "string" && ["true", "false"].includes(selectedValue)) {
-    return extractBooleanValue(selectedValue);
-  }
-
-  // Handle single option values
-  if (isItemOption(selectedValue)) {
-    const eq = selectedValue.originalSlug || selectedValue.value;
-
-    return { eq };
-  }
-
-  // Handle multiple option values
-  if (isItemOptionArray(selectedValue)) {
-    const oneOf = extractValuesFromOptionArray(selectedValue);
-
-    return { oneOf };
-  }
-
-  // Handle string values
-  if (typeof selectedValue === "string") {
-    const eq = selectedValue;
-
-    return { eq };
-  }
-
-  // Handle string arrays
-  if (Array.isArray(selectedValue) && typeof selectedValue[0] === "string") {
-    const oneOf = selectedValue;
-
-    return { oneOf };
-  }
-
-  return selectedValue;
+  // Fallback case - return as-is with proper type casting
+  return selectedValue as ProcessedConditionValue;
 };
 
 const mapStaticQueryPartToLegacyVariables = (queryPart: StaticQueryPart | AttributeInput) => {
@@ -163,4 +301,15 @@ export const QueryVarsBuilderUtils = {
   getBooleanValueFromElement,
   extractConditionValueFromFilterElement,
   mapStaticQueryPartToLegacyVariables,
+  getIntegerValueFromElement,
+  getFloatValueFromElement,
+  extractValueFromOption,
+  buildRangeObject,
+  handleRangeCondition,
+  handleBooleanCondition,
+  handleSingleOption,
+  handleMultipleOption,
+  handleStringCondition,
+  handleArrayCondition,
 };
+

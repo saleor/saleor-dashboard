@@ -1,17 +1,16 @@
+
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
-export type ProductTypeFilterQueryPart = {
-  productType?: string;
+export type OrderCustomerFilterQueryPart = {
+  user?: { eq: string };
 };
 
-/** `typeOfProduct` needs to be renamed to `productType` in query */
-export class ProductTypeQueryVarsBuilder extends BaseMappableQueryVarsBuilder<ProductTypeFilterQueryPart> {
-  protected readonly queryField = "productType";
-
+export class OrderCustomerIdQueryVarsBuilder
+  extends BaseMappableQueryVarsBuilder<OrderCustomerFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
-    return element.value.value === "typeOfProduct";
+    return element.value.type === "customer";
   }
 
   createOptionFetcher(): Handler {
@@ -19,6 +18,6 @@ export class ProductTypeQueryVarsBuilder extends BaseMappableQueryVarsBuilder<Pr
   }
 
   protected getQueryFieldName(): string {
-    return this.queryField;
+    return "user"
   }
 }

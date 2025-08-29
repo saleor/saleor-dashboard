@@ -8,11 +8,11 @@ import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 export class AttributeTypeQueryVarsBuilder extends BaseMappableQueryVarsBuilder<{ type?: string }> {
   protected readonly queryField = "type";
 
-  public canHandle(element: FilterElement): boolean {
+  canHandle(element: FilterElement): boolean {
     return element.value.value === "attributeType";
   }
 
-  public createOptionFetcher(): Handler {
+  createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 

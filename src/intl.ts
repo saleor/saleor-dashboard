@@ -711,6 +711,11 @@ export const orderStatusMessages = defineMessages({
     defaultMessage: "Unfulfilled",
     description: "order status",
   },
+  expired: {
+    id: 'z45PdE',
+    defaultMessage: "Expired",
+    description: "order status",
+  },
 });
 
 export const paymentStatusMessages = defineMessages({
