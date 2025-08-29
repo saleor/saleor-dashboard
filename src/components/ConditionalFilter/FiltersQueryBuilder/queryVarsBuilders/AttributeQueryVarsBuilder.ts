@@ -100,7 +100,12 @@ export class AttributeQueryVarsBuilder
     value: ConditionValue,
   ): AttributeInput {
     if (isItemOption(value)) {
-      return { ...baseAttribute, valueNames: [value.label] };
+      return {
+        ...baseAttribute,
+        value: {
+          reference: this.buildReferenceFilter([value.value])
+        }
+      };
     }
 
     if (isItemOptionArray(value)) {
@@ -108,13 +113,25 @@ export class AttributeQueryVarsBuilder
         return baseAttribute;
       }
 
+      const referencedObjectIds = value.map(item => item.value);
+
       return {
         ...baseAttribute,
-        valueNames: value.map(item => item.label),
+        value: {
+          reference: this.buildReferenceFilter(referencedObjectIds)
+        }
       };
     }
 
     return baseAttribute;
+  }
+
+  private buildReferenceFilter(
+    referencedObjectIds: string[],
+  ) {
+    const filterValue = { containsAny: referencedObjectIds };
+
+    return { referencedIds: filterValue };
   }
 
   private buildConditionAttribute(

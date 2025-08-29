@@ -584,12 +584,6 @@ export type AttributeInput = {
   /** Filter by value of the attribute. Only one value input field is allowed. If provided more than one, the error will be raised. Cannot be combined with deprecated fields of `AttributeInput`. */
   value?: InputMaybe<AssignedAttributeValueInput>;
   /**
-   * Names corresponding to the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values.
-   *
-   * Added in Saleor 3.22.
-   */
-  valueNames?: InputMaybe<Array<Scalars['String']>>;
-  /**
    * Slugs identifying the attributeValues associated with the Attribute. When specified, it filters the results to include only records with one of the matching values. Requires `slug` to be provided.
    * @deprecated Use `value` instead.
    */
@@ -2484,6 +2478,8 @@ export type FulfillmentFilterInput = {
   metadata?: InputMaybe<MetadataFilterInput>;
   /** Filter by fulfillment status. */
   status?: InputMaybe<FulfillmentStatusEnumFilterInput>;
+  /** Filter by fulfillment warehouse. */
+  warehouse?: InputMaybe<FulfillmentWarehouseFilterInput>;
 };
 
 export enum FulfillmentStatus {
@@ -2509,6 +2505,16 @@ export type FulfillmentUpdateTrackingInput = {
   notifyCustomer?: InputMaybe<Scalars['Boolean']>;
   /** Fulfillment tracking number. */
   trackingNumber?: InputMaybe<Scalars['String']>;
+};
+
+/** Filter input for fulfillment warehouses. */
+export type FulfillmentWarehouseFilterInput = {
+  /** Filter fulfillments by warehouse external reference. */
+  externalReference?: InputMaybe<StringFilterInput>;
+  /** Filter fulfillments by warehouse ID. */
+  id?: InputMaybe<GlobalIdFilterInput>;
+  /** Filter fulfillments by warehouse slug. */
+  slug?: InputMaybe<StringFilterInput>;
 };
 
 export type GiftCardAddNoteInput = {
