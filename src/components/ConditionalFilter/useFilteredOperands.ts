@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { FilterContainer } from "./FilterElement";
-import OccurrenceLimiter from "./FilterElement/OccurrenceLimiter";
+import { OccurrenceLimiter } from "./FilterElement/OccurrenceLimiter";
 import { LeftOperand } from "./LeftOperandsProvider";
 
 export const useFilteredOperands = (
