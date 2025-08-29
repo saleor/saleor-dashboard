@@ -35,6 +35,7 @@ export const product: (
         slug: "Borders",
         valueRequired: false,
         unit: null,
+        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -112,6 +113,7 @@ export const product: (
         slug: "Legacy",
         valueRequired: true,
         unit: null,
+        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
