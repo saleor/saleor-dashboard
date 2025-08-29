@@ -68,20 +68,6 @@ export const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
-    loadMore: loadMorePages,
-    search: searchPages,
-    result: searchPagesOpts,
-  } = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreProducts,
-    search: searchProducts,
-    result: searchProductsOpts,
-  } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts,
@@ -203,6 +189,55 @@ export const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     submitOpts.errors,
     createProductMediaOpts.data?.productMediaCreate.errors,
   );
+  const refAttr = params.action === "assign-attribute-value" && params.id
+    ? product?.attributes?.find(a => a.attribute.id === params.id)?.attribute
+    : undefined;
+  const allowedProductTypeIds: string[] = React.useMemo(() => {
+    if (refAttr?.referenceTypes?.[0]?.__typename === "ProductType") {
+      return refAttr.referenceTypes.map((t: any) => t?.id).filter(Boolean);
+    }
+
+    return [];
+  }, [refAttr]);
+  const allowedPageTypeIds: string[] = React.useMemo(() => {
+    if (refAttr?.referenceTypes?.[0]?.__typename === "PageType") {
+      return refAttr.referenceTypes.map((t: any) => t?.id).filter(Boolean);
+    }
+
+    return [];
+  }, [refAttr]);
+  const productSearchVariables = React.useMemo(
+    () => ({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      ...(allowedProductTypeIds.length
+        ? { where: { productType: { oneOf: allowedProductTypeIds } } }
+        : {}),
+    }),
+    [allowedProductTypeIds],
+  );
+  const pageSearchVariables = React.useMemo(
+    () => ({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      ...(allowedPageTypeIds.length
+        ? { where: { pageType: { oneOf: allowedPageTypeIds } } }
+        : {}),
+    }),
+    [allowedPageTypeIds],
+  );
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts,
+  } = useProductSearch({
+    variables: productSearchVariables,
+  });
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts,
+  } = usePageSearch({
+    variables: pageSearchVariables,
+  });
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];

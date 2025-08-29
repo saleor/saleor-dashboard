@@ -365,6 +365,10 @@
       "PromotionRuleDeletedEvent",
       "PromotionRuleUpdatedEvent"
     ],
+    "ReferenceType": [
+      "PageType",
+      "ProductType"
+    ],
     "TaxSourceLine": [
       "CheckoutLine",
       "OrderLine"
