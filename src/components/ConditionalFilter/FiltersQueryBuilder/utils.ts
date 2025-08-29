@@ -33,9 +33,10 @@ function extractBooleanValue(value: ConditionValue): boolean {
 
 /**
  * Extracts the actual value from ItemOption or returns the value as-is.
+ * Uses originalSlug if available, falls back to value.
  */
 function extractValueFromOption(value: unknown): string {
-  return isItemOption(value) ? value.value : (value as string);
+  return isItemOption(value) ? (value.originalSlug || value.value) : (value as string);
 }
 
 /**
@@ -256,8 +257,8 @@ export const extractConditionValueFromFilterElement = (
   const { label } = conditionValue;
 
   const handlers = [
-    () => handleRangeCondition(selectedValue, label),
     () => handleBooleanCondition(selectedValue),
+    () => handleRangeCondition(selectedValue, label),
     () => handleSingleOption(selectedValue),
     () => handleMultipleOption(selectedValue),
     () => handleStringCondition(selectedValue),
