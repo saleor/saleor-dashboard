@@ -1,7 +1,6 @@
-import { ApolloClient } from "@apollo/client";
 import { DecimalFilterInput, PriceFilterInput } from "@dashboard/graphql";
 
-import { CurrencyHandler, Handler, NoopValuesHandler } from "../../API/Handler";
+import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
@@ -26,14 +25,7 @@ export class PriceFilterQueryVarsBuilder
   }
 
   createOptionFetcher(
-    client: ApolloClient<unknown>,
-    inputValue: string,
-    element: FilterElement,
   ): Handler {
-    if (element.value.value === "currency") {
-      return new CurrencyHandler(client, inputValue);
-    }
-
     return new NoopValuesHandler([]);
   }
 
