@@ -96,6 +96,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -160,6 +161,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -262,6 +264,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -307,6 +310,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -390,6 +394,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -454,6 +459,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -537,6 +543,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -601,6 +608,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -741,6 +749,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -805,6 +814,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -869,6 +879,7 @@ export const attributes: Array<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     unit: null,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
@@ -933,6 +944,7 @@ export const attributes: Array<
     unit: null,
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
+    referenceTypes: [],
     choices: {
       __typename: "AttributeValueCountableConnection" as const,
       pageInfo: {
