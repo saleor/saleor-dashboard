@@ -12,8 +12,8 @@ interface ProductStocksAssignWarehousesProps {
   onWarehouseSelect: (warehouseId: string, warehouseName: string) => void;
   loading: boolean;
   searchWarehouses: (query: string) => void;
-  visible: boolean;
-  disabled?: boolean;
+  showAssignButton: boolean;
+  disabled: boolean;
 }
 
 export const ProductStocksAssignWarehouses = ({
@@ -23,7 +23,7 @@ export const ProductStocksAssignWarehouses = ({
   warehousesToAssign,
   loading,
   searchWarehouses,
-  visible,
+  showAssignButton,
   disabled = false,
 }: ProductStocksAssignWarehousesProps) => {
   const [warehouses, setWarehouses] = React.useState<Option[]>([]);
@@ -31,8 +31,8 @@ export const ProductStocksAssignWarehouses = ({
   const [open, setOpen] = React.useState(false);
 
   return (
-    <Box>
-      {visible && (
+    <>
+      {showAssignButton ? (
         <Button
           onClick={() => setOpen(true)}
           disabled={disabled || loading}
@@ -46,6 +46,8 @@ export const ProductStocksAssignWarehouses = ({
             id: "mFC5Rq",
           })}
         </Button>
+      ) : (
+        <Box marginTop={5} height={8} />
       )}
       <ActionDialog
         confirmButtonState="default"
@@ -88,6 +90,6 @@ export const ProductStocksAssignWarehouses = ({
           }}
         />
       </ActionDialog>
-    </Box>
+    </>
   );
 };

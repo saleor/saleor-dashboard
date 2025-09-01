@@ -224,7 +224,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           )}
 
         <ProductStocksAssignWarehouses
-          visible={canAssignWarehouses}
+          showAssignButton={canAssignWarehouses}
           disabled={!hasAssignableWarehouses}
           warehousesToAssign={warehousesToAssign}
           hasMoreWarehouses={hasMoreWarehouses}
