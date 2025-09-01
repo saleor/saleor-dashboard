@@ -129,6 +129,7 @@ interface ProductVariantPageProps {
   onWarehouseConfigure: () => any;
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
+  searchWarehouses: (query: string) => void;
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
@@ -165,6 +166,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
+  searchWarehouses,
 }) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -371,7 +373,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage
                       }
                       data={data}
-                      disabled={loading}
+                      loading={loading}
                       hasVariants={true}
                       errors={errors}
                       stocks={data.stocks}
@@ -381,6 +383,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}
                       isCreate={false}
+                      searchWarehouses={searchWarehouses}
                     />
                     <CardSpacer />
                     <Metadata data={data} onChange={handlers.changeMetadata} />

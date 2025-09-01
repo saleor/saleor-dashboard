@@ -33,7 +33,7 @@ export interface ProductStockFormData {
 export interface ProductStocksProps {
   productVariantChannelListings?: ChannelData[];
   data: ProductStockFormData;
-  disabled: boolean;
+  loading: boolean;
   errors: ProductErrorFragment[];
   hasVariants: boolean;
   stocks: ProductStockInput[];
@@ -46,11 +46,12 @@ export interface ProductStocksProps {
   fetchMoreWarehouses: () => void;
   hasMoreWarehouses: boolean;
   isCreate: boolean;
+  searchWarehouses: (query: string) => void;
 }
 
 export const ProductStocks: React.FC<ProductStocksProps> = ({
   data,
-  disabled,
+  loading,
   hasVariants,
   errors,
   stocks,
@@ -64,6 +65,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
   onWarehouseConfigure,
   fetchMoreWarehouses,
   isCreate,
+  searchWarehouses,
 }) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
@@ -73,6 +75,14 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
 
   const warehousesToAssign =
     warehouses?.filter(warehouse => !stocksIds.includes(warehouse.id)) || [];
+
+  const canAssignWarehouses = useMemo(() => {
+    return productVariantChannelListings?.length > 0 && warehouses?.length > 0;
+  }, [productVariantChannelListings, warehouses]);
+
+  const hasAssignableWarehouses = useMemo(() => {
+    return warehousesToAssign.length > 0 || hasMoreWarehouses;
+  }, [warehousesToAssign.length, hasMoreWarehouses]);
 
   const handleWarehouseStockAdd = (warehouseId: string, warehouseName: string) => {
     onWarehouseStockAdd(warehouseId, warehouseName);
@@ -96,7 +106,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
       <DashboardCard.Content>
         <Box __width="50%">
           <Input
-            disabled={disabled}
+            disabled={loading}
             error={!!formErrors.sku}
             label={intl.formatMessage(messages.sku)}
             name="sku"
@@ -113,7 +123,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             <Checkbox
               checked={data.trackInventory}
               name="trackInventory"
-              disabled={disabled}
+              disabled={loading}
               onCheckedChange={value =>
                 onFormDataChange({ target: { name: "trackInventory", value } })
               }
@@ -189,7 +199,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                       <TableCell>
                         <Input
                           data-test-id="stock-input"
-                          disabled={disabled}
+                          disabled={loading}
                           onChange={handleQuantityChange}
                           value={stock.value}
                           size="small"
@@ -213,16 +223,16 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             </Table>
           )}
 
-        {productVariantChannelListings?.length > 0 &&
-          warehouses?.length > 0 &&
-          (warehousesToAssign.length > 0 || hasMoreWarehouses) && (
-            <ProductStocksAssignWarehouses
-              warehousesToAssign={warehousesToAssign}
-              hasMoreWarehouses={hasMoreWarehouses}
-              loadMoreWarehouses={fetchMoreWarehouses}
-              onWarehouseSelect={handleWarehouseStockAdd}
-            />
-          )}
+        <ProductStocksAssignWarehouses
+          visible={canAssignWarehouses}
+          disabled={!hasAssignableWarehouses}
+          warehousesToAssign={warehousesToAssign}
+          hasMoreWarehouses={hasMoreWarehouses}
+          loadMoreWarehouses={fetchMoreWarehouses}
+          onWarehouseSelect={handleWarehouseStockAdd}
+          loading={loading}
+          searchWarehouses={searchWarehouses}
+        />
       </DashboardCard.Content>
     </DashboardCard>
   );

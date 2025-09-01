@@ -94,6 +94,7 @@ interface ProductCreatePageProps {
   onSubmit?: (data: ProductCreateData) => any;
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
+  searchWarehouses: (query: string) => void;
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
@@ -138,6 +139,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
+  searchWarehouses,
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -268,11 +270,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
                     fetchMoreWarehouses={fetchMoreWarehouses}
                     hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
-                    disabled={loading}
                     hasVariants={false}
                     onFormDataChange={change}
                     errors={errors}
                     stocks={data.stocks}
+                    loading={loading}
+                    searchWarehouses={searchWarehouses}
                     onChange={handlers.changeStock}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
