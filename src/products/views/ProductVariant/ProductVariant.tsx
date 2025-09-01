@@ -130,7 +130,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
     search: searchWarehouses,
   } = useWarehouseSearch({
     variables: {
-      first: 1,
+      first: 50,
       channnelsId: [],
       query: "",
     },
