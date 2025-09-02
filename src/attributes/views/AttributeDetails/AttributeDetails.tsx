@@ -1,4 +1,6 @@
+import { AssignReferenceTypesDialog } from "@dashboard/attributes/components/AssignReferenceTypesDialog";
 import { attributeValueFragmentToFormData } from "@dashboard/attributes/utils/data";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useAttributeDeleteMutation,
   useAttributeDetailsQuery,
@@ -16,11 +18,13 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
+import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews, ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { move } from "@dashboard/utils/lists";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import omit from "lodash/omit";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -200,7 +204,51 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
-  const [_isAssignRefTypesOpen, setAssignRefTypesOpen] = React.useState(false);
+
+  const [isAssignRefTypesOpen, setAssignRefTypesOpen] = React.useState(false);
+  const [selectedReferenceProductTypes, setSelectedReferenceProductTypes] = React.useState<
+    Array<{ label: string; value: string }>
+  >([]);
+  const {
+    loadMore: loadMoreDialogProductTypes,
+    search: searchDialogProductTypes,
+    result: searchDialogProductTypesOpts,
+  } = useProductTypeSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const referenceTypesItem = React.useMemo(
+    () =>
+      (mapEdgesToItems(searchDialogProductTypesOpts?.data?.search) || []).map(n => ({
+        id: n.id,
+        name: n.name,
+      })),
+    [searchDialogProductTypesOpts?.data?.search],
+  );
+  const fetchMoreDialogProductTypes = {
+    hasMore: Boolean(searchDialogProductTypesOpts?.data?.search?.pageInfo?.hasNextPage),
+    loading: Boolean(searchDialogProductTypesOpts?.loading),
+    onFetchMore: loadMoreDialogProductTypes,
+  };
+
+    React.useEffect(() => {
+    if (isAssignRefTypesOpen) {
+      // initial fetch
+      searchDialogProductTypes("");
+    }
+  }, [isAssignRefTypesOpen, searchDialogProductTypes]);
+
+  const handleRemoveReferenceType = (id: string) =>
+    setSelectedReferenceProductTypes(prev => prev.filter(o => o.value !== id));
+
+  const handleReorderReferenceTypes = (oldIndex: number, newIndex: number) =>
+    setSelectedReferenceProductTypes(prev => {
+      const next = [...prev];
+      const [moved] = next.splice(oldIndex, 1);
+
+      next.splice(newIndex, 0, moved);
+
+      return next;
+    });
 
   return (
     <AttributePage
@@ -229,7 +277,9 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
       onAssignReferenceTypesClick={() => setAssignRefTypesOpen(true)}
-      selectedReferenceProductTypes={[]}
+      selectedReferenceProductTypes={selectedReferenceProductTypes}
+      onRemoveReferenceType={handleRemoveReferenceType}
+      onReorderReferenceTypes={handleReorderReferenceTypes}
     >
       {attributeFormData => (
         <>
@@ -314,6 +364,25 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
                 },
               })
             }
+          />
+          <AssignReferenceTypesDialog
+            open={isAssignRefTypesOpen}
+            onClose={() => setAssignRefTypesOpen(false)}
+            loading={Boolean(searchDialogProductTypesOpts?.loading)}
+            items={referenceTypesItem}
+            hasMore={fetchMoreDialogProductTypes.hasMore}
+            onFetchMore={fetchMoreDialogProductTypes.onFetchMore}
+            onFetch={searchDialogProductTypes}
+            onSubmit={selected => {
+              setSelectedReferenceProductTypes(prev => {
+                const map = new Map(prev.map(o => [o.value, o]));
+
+                selected.forEach(s => map.set(s.id, { value: s.id, label: s.name }));
+
+                return Array.from(map.values());
+              });
+              setAssignRefTypesOpen(false);
+            }}
           />
         </>
       )}

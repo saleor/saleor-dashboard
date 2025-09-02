@@ -63,6 +63,8 @@ export interface AttributePageProps {
   children: (data: AttributePageFormData) => React.ReactNode;
   onAssignReferenceTypesClick?: () => void;
   selectedReferenceProductTypes?: Array<{ label: string; value: string }>;
+  onRemoveReferenceType?: (id: string) => void;
+  onReorderReferenceTypes?: (oldIndex: number, newIndex: number) => void;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -100,6 +102,8 @@ const AttributePage = ({
   children,
   onAssignReferenceTypesClick,
   selectedReferenceProductTypes,
+  onRemoveReferenceType,
+  onReorderReferenceTypes,
 }: AttributePageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -207,6 +211,8 @@ const AttributePage = ({
                   selectedTypes={selectedReferenceProductTypes}
                   disabled={disabled}
                   onAssignClick={onAssignReferenceTypesClick ?? (() => {})}
+                  onRemoveType={onRemoveReferenceType}
+                  onReorderTypes={onReorderReferenceTypes}
                 />
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
                   <>
