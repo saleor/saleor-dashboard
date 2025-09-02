@@ -37,6 +37,7 @@ import slugify from "slugify";
 import AttributeDetails from "../AttributeDetails";
 import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
+import AttributeReferenceTypesSection from "../AttributeReferenceTypesSection";
 import AttributeValues from "../AttributeValues";
 
 export interface AttributePageProps {
@@ -60,6 +61,8 @@ export interface AttributePageProps {
   onNextPage: () => void;
   onPreviousPage: () => void;
   children: (data: AttributePageFormData) => React.ReactNode;
+  onAssignReferenceTypesClick?: () => void;
+  selectedReferenceProductTypes?: Array<{ label: string; value: string }>;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -95,6 +98,8 @@ const AttributePage = ({
   onNextPage,
   onPreviousPage,
   children,
+  onAssignReferenceTypesClick,
+  selectedReferenceProductTypes,
 }: AttributePageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -194,6 +199,12 @@ const AttributePage = ({
                   errors={errors}
                   setError={setError}
                   clearErrors={clearErrors}
+                />
+                <AttributeReferenceTypesSection
+                  inputType={attribute?.inputType}
+                  selectedTypes={selectedReferenceProductTypes}
+                  disabled={disabled}
+                  onAssignClick={onAssignReferenceTypesClick ?? (() => {})}
                 />
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
                   <>

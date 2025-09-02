@@ -200,6 +200,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
+  const [isAssignRefTypesOpen, setAssignRefTypesOpen] = React.useState(false);
 
   return (
     <AttributePage
@@ -227,6 +228,8 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       pageInfo={pageInfo ?? { hasNextPage: false, hasPreviousPage: false }}
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
+      onAssignReferenceTypesClick={() => setAssignRefTypesOpen(true)}
+      selectedReferenceProductTypes={[]}
     >
       {attributeFormData => (
         <>
