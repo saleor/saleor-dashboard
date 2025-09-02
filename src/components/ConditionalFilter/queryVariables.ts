@@ -60,6 +60,7 @@ export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInp
   const { filters } = new FiltersQueryBuilder<OrderWhereInput>({
     apiType: QueryApiType.WHERE,
     filterContainer: value,
+    useAndWrapper: true, // Wrap all root-level fields into `AND` to avoid mixing operators
     filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
       new OrderChannelQueryVarsBuilder(), // Map channels -> channelId
       new OrderCustomerIdQueryVarsBuilder(), // Map customer -> user

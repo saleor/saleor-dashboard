@@ -57,7 +57,7 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
     it("creates AND array with metadata entry for first tuple", () => {
       // Arrange
       const element = createElement(["color", "red"]);
-      
+
       // Act
       const result = builder.updateWhereQueryVariables({}, element);
 
@@ -233,26 +233,6 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
         AND: [
           { someOtherField: "value" },
           { metadata: { key: "color", value: { eq: "red" } } },
-        ],
-      });
-    });
-
-    it("preserves existing top-level metadata alongside AND entries", () => {
-      // Arrange
-      const originalQuery = {
-        metadata: { key: "status", value: { eq: "active" } },
-      } as const;
-
-      const element = createElement(["color", "black"]);
-
-      // Act
-      const result = builder.updateWhereQueryVariables(originalQuery, element);
-
-      // Assert
-      expect(result).toEqual({
-        metadata: { key: "status", value: { eq: "active" } },
-        AND: [
-          { metadata: { key: "color", value: { eq: "black" } } },
         ],
       });
     });

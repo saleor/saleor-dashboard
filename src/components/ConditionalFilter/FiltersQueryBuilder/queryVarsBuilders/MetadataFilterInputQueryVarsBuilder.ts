@@ -18,7 +18,8 @@ type QueryWithAnd = {
  * Each metadata filter creates a separate entry in the AND array to properly
  * support multiple filters with AND logic between them.
  *
- * E.g. {AND: [{metadata: {key: "color", value: {eq: "red"}}}, {metadata: {key: "size", value: {eq: "M"}}}]}
+ * @example {AND: [{metadata: {key: "color", value: {eq: "red"}}}, {metadata: {key: "size", value: {eq: "M"}}}]}
+ * @important When using this builder, make sure to enable `useAndWrapper` option in FiltersQueryBuilder
  * */
 export class MetadataFilterInputQueryVarsBuilder
   implements WhereOnlyQueryVarsBuilder<QueryWithAnd> {
