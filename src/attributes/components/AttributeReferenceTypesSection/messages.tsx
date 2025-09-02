@@ -17,4 +17,9 @@ export const messages = defineMessages({
     defaultMessage: "No product types assigned",
     description: "empty state for reference types",
   },
+  noPageTypesAssigned: {
+    id: "ew5ALm",
+    defaultMessage: "No page types assigned",
+    description: "empty state for page types",
+  },
 });
