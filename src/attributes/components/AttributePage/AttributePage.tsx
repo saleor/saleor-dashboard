@@ -200,15 +200,16 @@ const AttributePage = ({
                   setError={setError}
                   clearErrors={clearErrors}
                 />
+                  <CardSpacer />
                 <AttributeReferenceTypesSection
                   inputType={attribute?.inputType}
+                  entityType={attribute?.entityType}
                   selectedTypes={selectedReferenceProductTypes}
                   disabled={disabled}
                   onAssignClick={onAssignReferenceTypesClick ?? (() => {})}
                 />
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
                   <>
-                    <CardSpacer />
                     <AttributeValues
                       inputType={data.inputType}
                       disabled={disabled}
@@ -225,7 +226,6 @@ const AttributePage = ({
                     />
                   </>
                 )}
-                <CardSpacer />
                 <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
