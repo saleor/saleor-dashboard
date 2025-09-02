@@ -3,7 +3,7 @@ import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
-import { MetadataBasicFilterQueryVarsBuilder } from "./MetadataBasicFilterQueryVarsBuilder";
+import { MetadataFilterQueryVarsBuilder } from "./MetadataFilterQueryVarsBuilder";
 
 describe("MetadataBasicFilterQueryVarsBuilder", () => {
   describe("canHandle", () => {
@@ -12,7 +12,7 @@ describe("MetadataBasicFilterQueryVarsBuilder", () => {
       const value = new ExpressionValue("metadata", "Metadata", "metadata");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new MetadataBasicFilterQueryVarsBuilder();
+      const def = new MetadataFilterQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -24,7 +24,7 @@ describe("MetadataBasicFilterQueryVarsBuilder", () => {
       const value = new ExpressionValue("other", "Other", "other");
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
-      const def = new MetadataBasicFilterQueryVarsBuilder();
+      const def = new MetadataFilterQueryVarsBuilder();
       // Act
       const result = def.canHandle(element);
 
@@ -36,7 +36,7 @@ describe("MetadataBasicFilterQueryVarsBuilder", () => {
   describe("createOptionFetcher", () => {
     it("should return a NoopValuesHandler", () => {
       // Arrange
-      const def = new MetadataBasicFilterQueryVarsBuilder();
+      const def = new MetadataFilterQueryVarsBuilder();
       // Act
       const handler = def.createOptionFetcher();
 
@@ -46,7 +46,7 @@ describe("MetadataBasicFilterQueryVarsBuilder", () => {
   });
 
   describe("updateWhereQueryVariables", () => {
-    const def = new MetadataBasicFilterQueryVarsBuilder();
+    const def = new MetadataFilterQueryVarsBuilder();
     const value = new ExpressionValue("metadata", "Meta Label", "metadata");
     const options = ConditionOptions.fromName("metadata");
     const conditionItem: ConditionItem = { type: "text.double", label: "is", value: "input-1" };
@@ -102,7 +102,7 @@ describe("MetadataBasicFilterQueryVarsBuilder", () => {
   });
 
   describe("updateFilterQueryVariables", () => {
-    const def = new MetadataBasicFilterQueryVarsBuilder();
+    const def = new MetadataFilterQueryVarsBuilder();
     const value = new ExpressionValue("metadata", "Meta Label", "metadata");
     const options = ConditionOptions.fromName("metadata");
     const conditionItem: ConditionItem = { type: "text.double", label: "is", value: "input-1" };
