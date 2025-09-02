@@ -76,14 +76,6 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
   const warehousesToAssign =
     warehouses?.filter(warehouse => !stocksIds.includes(warehouse.id)) || [];
 
-  const canAssignWarehouses = useMemo(() => {
-    return productVariantChannelListings?.length > 0 && warehouses?.length > 0;
-  }, [productVariantChannelListings, warehouses]);
-
-  const hasAssignableWarehouses = useMemo(() => {
-    return warehousesToAssign.length > 0 || hasMoreWarehouses;
-  }, [warehousesToAssign.length, hasMoreWarehouses]);
-
   const handleWarehouseStockAdd = (warehouseId: string, warehouseName: string) => {
     onWarehouseStockAdd(warehouseId, warehouseName);
     setLastStockRowFocus(true);
@@ -224,8 +216,6 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           )}
 
         <ProductStocksAssignWarehouses
-          showAssignButton={canAssignWarehouses}
-          disabled={!hasAssignableWarehouses}
           warehousesToAssign={warehousesToAssign}
           hasMoreWarehouses={hasMoreWarehouses}
           loadMoreWarehouses={fetchMoreWarehouses}

@@ -2694,9 +2694,6 @@
     "context": "info card title",
     "string": "Card information"
   },
-  "Ejexo6": {
-    "string": "Select warehouses"
-  },
   "EoTI4r": {
     "context": "authorize status none",
     "string": "None"
@@ -4102,6 +4099,9 @@
   "MzXBdd": {
     "context": "Refund failure status",
     "string": "Failure"
+  },
+  "N2IrpM": {
+    "string": "Confirm"
   },
   "N2SbNc": {
     "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
