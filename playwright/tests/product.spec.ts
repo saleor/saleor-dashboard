@@ -47,8 +47,7 @@ test("TC: SALEOR_26 Create basic info variant - via edit variant page #e2e #prod
   const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;
 
   await productPage.gotoExistingProductPage(PRODUCTS.productWithOneVariant.id);
-  await productPage.clickFirstEditVariantButton();
-  await variantsPage.clickAddVariantButton();
+  await productPage.clickFirstAddVariantButton();
   await variantsPage.typeVariantName(variantName);
   await variantsPage.clickMageChannelsButton();
   await variantsPage.channelSelectDialog.clickAllChannelsCheckbox();
@@ -69,8 +68,7 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page #e2e #produ
   const variantName = `TC: SALEOR_27 - variant name - ${new Date().toISOString()}`;
 
   await productPage.gotoExistingProductPage(PRODUCTS.productWithOneVariant.id);
-  await productPage.clickFirstEditVariantButton();
-  await variantsPage.clickAddVariantButton();
+  await productPage.clickFirstAddVariantButton();
   await variantsPage.typeVariantName(variantName);
   await variantsPage.clickMageChannelsButton();
   await variantsPage.channelSelectDialog.clickAllChannelsCheckbox();
