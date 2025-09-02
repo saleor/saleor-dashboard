@@ -20,32 +20,48 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
 
   describe("canHandle", () => {
     it("handles metadata", () => {
+      // Arrange
       const element = createElement(["key", "value"]);
 
-      expect(builder.canHandle(element)).toBe(true);
+      // Act
+      const result = builder.canHandle(element);
+
+      // Assert
+      expect(result).toBe(true);
     });
 
     it("does not handle other fields", () => {
+      // Arrange
       const value = new ExpressionValue("status", "status", "status");
       const element = new FilterElement(value, Condition.createEmpty(), false);
 
-      expect(builder.canHandle(element)).toBe(false);
+      // Act
+      const result = builder.canHandle(element);
+
+      // Assert
+      expect(result).toBe(false);
     });
   });
 
   describe("createOptionFetcher", () => {
     it("returns NoopValuesHandler", () => {
+      // Act
       const fetcher = builder.createOptionFetcher();
 
+      // Assert
       expect(fetcher).toBeInstanceOf(NoopValuesHandler);
     });
   });
 
   describe("updateWhereQueryVariables", () => {
     it("creates AND array with metadata entry for first tuple", () => {
+      // Arrange
       const element = createElement(["color", "red"]);
+      
+      // Act
       const result = builder.updateWhereQueryVariables({}, element);
 
+      // Assert
       expect(result).toEqual({
         AND: [
           {
@@ -59,13 +75,16 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
     });
 
     it("adds multiple metadata entries with same key as separate AND items", () => {
+      // Arrange
       const first = createElement(["color", "red"]);
       const second = createElement(["color", "blue"]);
 
+      // Act
       let query = builder.updateWhereQueryVariables({}, first);
 
       query = builder.updateWhereQueryVariables(query, second);
 
+      // Assert
       expect(query).toEqual({
         AND: [
           {
@@ -85,13 +104,16 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
     });
 
     it("adds metadata entries with different keys as separate AND items", () => {
+      // Arrange
       const first = createElement(["color", "red"]);
       const second = createElement(["size", "xl"]);
 
+      // Act
       let query = builder.updateWhereQueryVariables({}, first);
 
       query = builder.updateWhereQueryVariables(query, second);
 
+      // Assert
       expect(query).toEqual({
         AND: [
           {
@@ -111,6 +133,7 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
     });
 
     it("preserves existing AND array items from other builders", () => {
+      // Arrange
       const existingQuery = {
         AND: [
           {
@@ -120,8 +143,11 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
       };
 
       const element = createElement(["color", "black"]);
+
+      // Act
       const result = builder.updateWhereQueryVariables(existingQuery, element);
 
+      // Assert
       expect(result).toEqual({
         AND: [
           {
@@ -138,17 +164,21 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
     });
 
     it("returns unchanged query for non-tuple input", () => {
+      // Arrange
       const value = new ExpressionValue("metadata", "metadata", "metadata");
       const selected = ConditionSelected.empty();
       const condition = new Condition(ConditionOptions.fromName("metadata" as any), selected, false);
       const element = new FilterElement(value, condition, false);
 
+      // Act
       const result = builder.updateWhereQueryVariables({}, element);
 
+      // Assert
       expect(result).toEqual({});
     });
 
     it("returns unchanged query for empty tuple []", () => {
+      // Arrange
       const type = "metadata";
       const value = new ExpressionValue(type, type, type);
       const conditionItem: ConditionItem = { type: "tuple", label: "key-value", value: "input-tuple" };
@@ -157,12 +187,16 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
       const element = new FilterElement(value, condition, false);
 
       const query = { AND: [] as Array<any> } as const;
+
+      // Act
       const result = builder.updateWhereQueryVariables(query, element);
 
+      // Assert
       expect(result).toBe(query);
     });
 
     it("returns unchanged query for single-element tuple [key]", () => {
+      // Arrange
       const type = "metadata";
       const value = new ExpressionValue(type, type, type);
       const conditionItem: ConditionItem = { type: "tuple", label: "key-value", value: "input-tuple" };
@@ -171,20 +205,25 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
       const element = new FilterElement(value, condition, false);
 
       const query = {} as const;
+
+      // Act
       const result = builder.updateWhereQueryVariables(query, element);
 
+      // Assert
       expect(result).toBe(query);
     });
 
     it("does not mutate original query or existing AND array (immutability)", () => {
+      // Arrange
       const existingAnd = [{ someOtherField: "value" }] as Array<any>;
       const originalQuery: any = { AND: existingAnd };
 
       const element = createElement(["color", "red"]);
 
+      // Act
       const result = builder.updateWhereQueryVariables(originalQuery, element);
 
-      // New object and new AND array instance
+      // Assert - New object and new AND array instance
       expect(result).not.toBe(originalQuery);
       expect(result.AND).not.toBe(existingAnd);
       // Original query remains unchanged
@@ -199,13 +238,17 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
     });
 
     it("preserves existing top-level metadata alongside AND entries", () => {
+      // Arrange
       const originalQuery = {
         metadata: { key: "status", value: { eq: "active" } },
       } as const;
 
       const element = createElement(["color", "black"]);
+
+      // Act
       const result = builder.updateWhereQueryVariables(originalQuery, element);
 
+      // Assert
       expect(result).toEqual({
         metadata: { key: "status", value: { eq: "active" } },
         AND: [
