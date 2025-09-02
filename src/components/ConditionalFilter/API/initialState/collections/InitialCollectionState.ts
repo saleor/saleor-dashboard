@@ -19,6 +19,12 @@ export class InitialCollectionStateResponse implements InitialCollectionState {
   }
 
   public filterByUrlToken(token: UrlToken) {
+    // Special handling for metadata fields - preserve tuple structure
+    // Metadata fields use text.double and should return the raw tuple value
+    if (token.name === "metadata") {
+      return token.value;
+    }
+
     const entry = this.getEntryByName(token.name);
 
     if (!token.isLoadable()) {
