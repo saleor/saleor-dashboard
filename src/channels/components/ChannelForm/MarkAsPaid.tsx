@@ -34,7 +34,7 @@ export const MarkAsPaid = ({ hasError, isChecked, onCheckedChange, disabled }: M
           values={{
             link: (
               <Link
-                href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                href="https://docs.saleor.io/developer/payments/payment-apps"
                 target="_blank"
                 rel="noopener noreferer"
               >
