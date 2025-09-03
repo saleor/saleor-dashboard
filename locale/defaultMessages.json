@@ -8408,11 +8408,11 @@
   "mt3SU9": {
     "string": "Webhook errors detected"
   },
-  "mxLMrd": {
-    "string": "{count, plural, one {# fulfillment group} other {# fulfillment groups}}"
-  },
   "mvVmbJ": {
     "string": "Install extension from manifest"
+  },
+  "mxLMrd": {
+    "string": "{count, plural, one {# fulfillment group} other {# fulfillment groups}}"
   },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
