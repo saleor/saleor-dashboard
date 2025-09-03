@@ -81,7 +81,6 @@ describe("Filtering URL params", () => {
     // Assert
     expect(filterVariables.AND).toBeDefined();
 
-    const andItems = filterVariables.AND;
     const metadataFilters = filterVariables.AND.filter(item => 'metadata' in item);
 
     expect(metadataFilters[0]?.metadata).toEqual({
