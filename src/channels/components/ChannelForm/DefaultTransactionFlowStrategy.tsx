@@ -42,7 +42,7 @@ export const DefaultTransactionFlowStrategy = ({
           values={{
             link: (
               <Link
-                href="https://docs.saleor.io/docs/3.x/api-reference/payments/enums/transaction-flow-strategy-enum"
+                href="https://docs.saleor.io/api-reference/payments/enums/transaction-flow-strategy-enum"
                 target="_blank"
                 rel="noopener noreferer"
               >
