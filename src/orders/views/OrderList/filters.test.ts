@@ -1,6 +1,7 @@
 import { InitialOrderStateResponse } from "@dashboard/components/ConditionalFilter/API/initialState/orders/InitialOrderState";
 import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { TokenArray } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray";
+import { OrderWhereInput } from "@dashboard/graphql";
 import { getExistingKeys } from "@test/filters";
 
 
@@ -57,9 +58,10 @@ describe("Filtering URL params", () => {
     expect(filterVariables.AND).toBeDefined();
     expect(filterVariables.AND).toHaveLength(3);
 
-    const userFilter = filterVariables.AND.find(item => 'user' in item);
-    const statusFilter = filterVariables.AND.find(item => 'status' in item);
-    const clickCollectFilter = filterVariables.AND.find(item => 'isClickAndCollect' in item);
+    const andItems = filterVariables.AND as OrderWhereInput[];
+    const userFilter = andItems.find(item => 'user' in item);
+    const statusFilter = andItems.find(item => 'status' in item);
+    const clickCollectFilter = andItems.find(item => 'isClickAndCollect' in item);
 
     expect(userFilter?.user).toEqual({ eq: "test" });
     expect(statusFilter?.status).toEqual({ oneOf: ["FULFILLED", "CANCELED"] });
@@ -81,7 +83,8 @@ describe("Filtering URL params", () => {
     // Assert
     expect(filterVariables.AND).toBeDefined();
 
-    const metadataFilters = filterVariables.AND.filter(item => 'metadata' in item);
+    const andItems = filterVariables.AND as OrderWhereInput[];
+    const metadataFilters = andItems.filter(item => 'metadata' in item);
 
     expect(metadataFilters[0]?.metadata).toEqual({
       key: "key1",
