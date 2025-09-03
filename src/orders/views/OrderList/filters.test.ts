@@ -52,10 +52,18 @@ describe("Filtering URL params", () => {
     );
 
     // Assert
-    expect(getExistingKeys(filterVariables)).toHaveLength(3);
-    expect(filterVariables.user).toEqual({ eq: "test" });
-    expect(filterVariables.status).toEqual({ oneOf: ["FULFILLED", "CANCELED"] });
-    expect(filterVariables.isClickAndCollect).toBe(false);
+    // All filters are wrapped in `AND`
+    expect(getExistingKeys(filterVariables)).toHaveLength(1);
+    expect(filterVariables.AND).toBeDefined();
+    expect(filterVariables.AND).toHaveLength(3);
+
+    const userFilter = filterVariables.AND.find(item => 'user' in item);
+    const statusFilter = filterVariables.AND.find(item => 'status' in item);
+    const clickCollectFilter = filterVariables.AND.find(item => 'isClickAndCollect' in item);
+
+    expect(userFilter?.user).toEqual({ eq: "test" });
+    expect(statusFilter?.status).toEqual({ oneOf: ["FULFILLED", "CANCELED"] });
+    expect(clickCollectFilter?.isClickAndCollect).toBe(false);
   });
 
   it("should filter by the metadata", () => {
@@ -71,9 +79,16 @@ describe("Filtering URL params", () => {
     );
 
     // Assert
-    // Note: WHERE API can only handle one metadata filter at a time (unlike legacy FILTER API)
-    // When multiple metadata filters with different keys are provided, only the last one is kept
-    expect(filterVariables.metadata).toEqual({
+    expect(filterVariables.AND).toBeDefined();
+
+    const andItems = filterVariables.AND;
+    const metadataFilters = filterVariables.AND.filter(item => 'metadata' in item);
+
+    expect(metadataFilters[0]?.metadata).toEqual({
+      key: "key1",
+      value: { eq: "value1" },
+    });
+    expect(metadataFilters[1]?.metadata).toEqual({
       key: "key2",
       value: { eq: "value2" },
     });
@@ -82,7 +97,7 @@ describe("Filtering URL params", () => {
   it("should filter by totalGross with multi-digit numbers", () => {
     // Arrange
     const params = new URLSearchParams(
-      "0%5Bs4.totalGross%5D=2222&1=AND&2%5Bs2.totalNet%5D%5B0%5D=321",
+      "0%5Bs4.totalGross%5D=2222&1=AND&2%5Bs0.totalNet%5D%5B0%5D=321",
     );
     const tokenizedUrl = new TokenArray(params.toString());
 
@@ -92,8 +107,14 @@ describe("Filtering URL params", () => {
     );
 
     // Assert
-    expect(filterVariables.totalGross).toEqual({ amount: { range: { lte: 2222 } } });
-    expect(filterVariables.totalNet).toEqual({ amount: { oneOf: [321] } });
+    expect(filterVariables.AND).toBeDefined();
+
+    const andItems = filterVariables.AND as Array<Record<string, any>>;
+    const totalGrossFilter = andItems.find(item => 'totalGross' in item);
+    const totalNetFilter = andItems.find(item => 'totalNet' in item);
+
+    expect(totalGrossFilter?.totalGross).toEqual({ amount: { range: { lte: 2222 } } });
+    expect(totalNetFilter?.totalNet).toEqual({ amount: { oneOf: [321] } });
   });
 
   it("should handle user-provided URL example correctly", () => {
@@ -115,11 +136,20 @@ describe("Filtering URL params", () => {
     );
 
     // Assert
-    expect(filterVariables.chargeStatus).toEqual({ eq: "FULL" });
-    expect(filterVariables.isClickAndCollect).toBe(false);
-    expect(filterVariables.channelId).toEqual({ oneOf: ["channel-pln"] }); // channels field maps to channelId
-    expect(filterVariables.hasFulfillments).toBe(true);
-    expect(filterVariables.totalGross).toEqual({ amount: { range: { lte: 2222 } } });
+    expect(filterVariables.AND).toBeDefined();
+
+    const andItems = filterVariables.AND as Array<Record<string, any>>;
+    const chargeStatusFilter = andItems.find(item => 'chargeStatus' in item);
+    const clickCollectFilter = andItems.find(item => 'isClickAndCollect' in item);
+    const channelFilter = andItems.find(item => 'channelId' in item);
+    const fulfillmentsFilter = andItems.find(item => 'hasFulfillments' in item);
+    const totalGrossFilter = andItems.find(item => 'totalGross' in item);
+
+    expect(chargeStatusFilter?.chargeStatus).toEqual({ eq: "FULL" });
+    expect(clickCollectFilter?.isClickAndCollect).toBe(false);
+    expect(channelFilter?.channelId).toEqual({ oneOf: ["channel-pln"] }); // channels field maps to channelId
+    expect(fulfillmentsFilter?.hasFulfillments).toBe(true);
+    expect(totalGrossFilter?.totalGross).toEqual({ amount: { range: { lte: 2222 } } });
   });
 
   it("should handle boolean filter persistence correctly", () => {
@@ -165,7 +195,13 @@ describe("Filtering URL params", () => {
     }
 
     // Also check the final query variables
-    expect(filterVariables.hasFulfillments).toBe(true);
-    expect(filterVariables.hasInvoices).toBe(false);
+    expect(filterVariables.AND).toBeDefined();
+
+    const andItems = filterVariables.AND as Array<Record<string, any>>;
+    const fulfillmentsItem = andItems.find(item => 'hasFulfillments' in item);
+    const invoicesItem = andItems.find(item => 'hasInvoices' in item);
+
+    expect(fulfillmentsItem?.hasFulfillments).toBe(true);
+    expect(invoicesItem?.hasInvoices).toBe(false);
   });
 });
