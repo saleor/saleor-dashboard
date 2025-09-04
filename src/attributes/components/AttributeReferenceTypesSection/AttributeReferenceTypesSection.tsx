@@ -1,8 +1,8 @@
 import { ENTITY_TYPES_WITH_TYPES_RESTRICTION,REFERENCE_ATTRIBUTE_TYPES } from "@dashboard/attributes/utils/data";
 import { DashboardCard } from "@dashboard/components/Card";
-import SortableChipsField from "@dashboard/components/SortableChipsField";
+import {SortableChip} from "@dashboard/components/SortableChip";
 import { AttributeEntityTypeEnum,AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Chip, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -53,21 +53,21 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
               />
             </Box>
             {selectedTypes.length > 0 ? (
-              <SortableChipsField
-                disabled={disabled}
-                values={selectedTypes}
-                onValueDelete={onRemoveType ?? (() => {})}
-                onValueReorder={
-                  onReorderTypes
-                    ? ({ oldIndex, newIndex }) => onReorderTypes(oldIndex, newIndex)
-                    : () => {}
-                }
-              />
+              <Box display="flex" gap={1} flexWrap="wrap">
+                {selectedTypes.map((type, index) => (
+                  <SortableChip
+                    key={type.value}
+                    label={type.label}
+                    onClose={() => onRemoveType?.(type.value)}
+                    disabled={disabled}
+                  />
+                ))}
+              </Box>
             ) : (
               <Text color="default2">
-                {entityType === AttributeEntityTypeEnum.PAGE
-                  ? intl.formatMessage(messages.noPageTypesAssigned)
-                  : intl.formatMessage(messages.noProductTypesAssigned)}
+              {entityType === AttributeEntityTypeEnum.PAGE
+                ? intl.formatMessage(messages.noPageTypesAssigned)
+                : intl.formatMessage(messages.noProductTypesAssigned)}
               </Text>
             )}
           </Box>
