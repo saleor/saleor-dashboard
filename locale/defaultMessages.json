@@ -282,6 +282,9 @@
     "context": "unassign category from sale and save, button",
     "string": "Unassign and save"
   },
+  "/VnDMl": {
+    "string": "Other"
+  },
   "/WXs6H": {
     "context": "collection name",
     "string": "Name"
@@ -2180,6 +2183,9 @@
   "BVDaKx": {
     "string": "Subtotal discount"
   },
+  "BWjfHd": {
+    "string": "Replaced"
+  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -3145,6 +3151,9 @@
     "context": "shipping method description",
     "string": "Description"
   },
+  "Gs86nL": {
+    "string": "Refunded"
+  },
   "GsBRWL": {
     "string": "Languages"
   },
@@ -3541,6 +3550,9 @@
   "J4NBVR": {
     "context": "link",
     "string": "View Orders"
+  },
+  "J7ejFT": {
+    "string": "Refunded and Returned"
   },
   "J7mFhU": {
     "context": "currency code select",
@@ -4506,6 +4518,9 @@
   "PFnobO": {
     "string": "greater"
   },
+  "PFtMy9": {
+    "string": "Canceled"
+  },
   "PH4R7g": {
     "context": "modal header, read-only product variant metadata",
     "string": "Product variant metadata"
@@ -4921,9 +4936,6 @@
   "Rd0s80": {
     "context": "no cards found title message",
     "string": "No gift cards found"
-  },
-  "Re3mG5": {
-    "string": "{fulfillmentStatus, select, CANCELED {Canceled} FULFILLED {Fulfilled} REFUNDED {Refunded} REFUNDED_AND_RETURNED {Refunded and Returned} REPLACED {Replaced} RETURNED {Returned} WAITING_FOR_APPROVAL {Waiting for Approval} other {Other}}"
   },
   "RfPJ1E": {
     "context": "issue card button label",
@@ -6956,6 +6968,9 @@
     "context": "vat included in order price",
     "string": "VAT included"
   },
+  "dJa3Dt": {
+    "string": "Waiting for Approval"
+  },
   "dLIeRH": {
     "context": "charge status none",
     "string": "None"
@@ -7841,6 +7856,9 @@
   "jXf/9p": {
     "context": "product availability",
     "string": "Hide in product listings"
+  },
+  "jY+f2f": {
+    "string": "Fulfilled"
   },
   "jY80Gs": {
     "context": "search gift card placeholder",
@@ -10046,6 +10064,9 @@
   "wlr0Si": {
     "context": "button",
     "string": "Create Webhook"
+  },
+  "wm96Jx": {
+    "string": "Returned"
   },
   "wmdHhD": {
     "context": "button",
