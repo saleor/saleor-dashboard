@@ -348,26 +348,23 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
               })
             }
           />
-          <AssignReferenceTypesDialog
-            open={isAssignRefTypesOpen}
-            confirmButtonState={"default"}
-            onClose={() => setAssignRefTypesOpen(false)}
-            loading={Boolean(fetchMoreProductTypes?.loading)}
-            referenceTypes={productTypes}
-            hasMore={fetchMoreProductTypes?.hasMore}
-            onFetchMore={fetchMoreProductTypes?.onFetchMore}
-            onFetch={searchProductTypes}
-            onSubmit={selected => {
-              setSelectedReferenceProductTypes(prev => {
-                const map = new Map(prev.map(o => [o.value, o]));
-
-                selected.forEach(s => map.set(s.id, { value: s.id, label: s.name }));
-
-                return Array.from(map.values());
-              });
-              setAssignRefTypesOpen(false);
-            }}
-          />
+        <AssignReferenceTypesDialog
+          key={selectedReferenceProductTypes.map(o => o.value).sort().join("|")}
+          open={isAssignRefTypesOpen}
+          onClose={() => setAssignRefTypesOpen(false)}
+          confirmButtonState={"default"}
+          loading={Boolean(fetchMoreProductTypes?.loading)}
+          referenceTypes={(productTypes ?? []).map(pt => ({ id: pt.id, name: pt.name }))}
+          hasMore={fetchMoreProductTypes?.hasMore}
+          onFetchMore={fetchMoreProductTypes?.onFetchMore}
+          onFetch={searchProductTypes}
+          onSubmit={selected => {
+            setSelectedReferenceProductTypes(
+              selected.map(s => ({ value: s.id, label: s.name })),
+            );
+            setAssignRefTypesOpen(false);
+          }}
+        />
         </>
       )}
     </AttributePage>
