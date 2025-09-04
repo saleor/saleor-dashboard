@@ -3,8 +3,7 @@ import TextWithSelectField from "@dashboard/components/TextWithSelectField";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
-import * as React from "react";
-import { useEffect } from "react";
+import { useCallback , useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -32,7 +31,7 @@ export const GiftCardCreateMoneyInput = ({
   const [savedCurrency, setCurrency] = useLocalStorage("giftCardCreateCurrency", undefined);
   const { loadingChannelCurrencies, channelCurrencies } = useChannelCurrenciesWithCache();
 
-  const getInitialCurrency = React.useCallback(() => {
+  const getInitialCurrency = useCallback(() => {
     if (
       savedCurrency &&
       !!channelCurrencies?.find((currency: string) => currency === savedCurrency)

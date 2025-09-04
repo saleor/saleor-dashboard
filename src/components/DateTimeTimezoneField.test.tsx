@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { fireEvent, render } from "@testing-library/react";
-import * as React from "react";
 import { IntlProvider } from "react-intl";
 
 import { DateTimeTimezoneField } from "./DateTimeTimezoneField";
