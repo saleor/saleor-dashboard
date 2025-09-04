@@ -11,16 +11,18 @@ type ReferenceTypes = { id: string; name: string }[];
 
 interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
+  selectedReferenceTypesIds: string[];
   referenceTypes: ReferenceTypes | null;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-const AssignReferenceTypesDialog = ({ referenceTypes, labels, ...rest }: AssignCollectionDialogProps) => {
+const AssignReferenceTypesDialog = ({ referenceTypes, labels, selectedReferenceTypesIds, ...rest }: AssignCollectionDialogProps) => {
   const intl = useIntl();
+  const filteredReferenceTypes = referenceTypes?.filter(type => !selectedReferenceTypesIds.includes(type.id));
 
   return (
     <AssignContainerDialog
-      containers={referenceTypes}
+      containers={filteredReferenceTypes}
       labels={{
         title: intl.formatMessage(messages.titleProductTypes),
         label: intl.formatMessage(messages.searchLabel),

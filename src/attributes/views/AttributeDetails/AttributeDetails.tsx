@@ -223,15 +223,18 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   const handleRemoveReferenceType = (id: string) =>
     setSelectedReferenceProductTypes(prev => prev.filter(o => o.value !== id));
 
-  const handleReorderReferenceTypes = (oldIndex: number, newIndex: number) =>
+  const handleSubmitReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
     setSelectedReferenceProductTypes(prev => {
-      const next = [...prev];
-      const [moved] = next.splice(oldIndex, 1);
+      const prevIds = new Set(prev.map(p => p.value));
+      const additions = selected
+        .filter((s: { id: string; name: string }) => !prevIds.has(s.id))
+        .map((s: { id: string; name: string }) => ({ value: s.id, label: s.name }));
 
-      next.splice(newIndex, 0, moved);
-
-      return next;
+      return [...prev, ...additions];
     });
+    setAssignRefTypesOpen(false);
+  };
+
 
   return (
     <AttributePage
@@ -262,7 +265,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       onAssignReferenceTypesClick={() => setAssignRefTypesOpen(true)}
       selectedReferenceProductTypes={selectedReferenceProductTypes}
       onRemoveReferenceType={handleRemoveReferenceType}
-      onReorderReferenceTypes={handleReorderReferenceTypes}
     >
       {attributeFormData => (
         <>
@@ -354,16 +356,12 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
           onClose={() => setAssignRefTypesOpen(false)}
           confirmButtonState={"default"}
           loading={Boolean(fetchMoreProductTypes?.loading)}
+          selectedReferenceTypesIds={selectedReferenceProductTypes.map(o => o.value)}
           referenceTypes={(productTypes ?? []).map(pt => ({ id: pt.id, name: pt.name }))}
           hasMore={fetchMoreProductTypes?.hasMore}
           onFetchMore={fetchMoreProductTypes?.onFetchMore}
           onFetch={searchProductTypes}
-          onSubmit={selected => {
-            setSelectedReferenceProductTypes(
-              selected.map(s => ({ value: s.id, label: s.name })),
-            );
-            setAssignRefTypesOpen(false);
-          }}
+          onSubmit={handleSubmitReferenceTypes}
         />
         </>
       )}

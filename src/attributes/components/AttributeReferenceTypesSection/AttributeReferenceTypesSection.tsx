@@ -33,7 +33,7 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
     const intl = useIntl();
     
     if (!canShow(inputType, entityType)) return null;
-
+  
     return (
       <DashboardCard paddingTop={6}>
         <DashboardCard.Content>
@@ -50,7 +50,7 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
               />
             </Box>
             {selectedTypes.length > 0 ? (
-                <Box display="flex" gap={1} flexWrap="wrap">
+                <Box display="flex" gap={2} flexWrap="wrap">
                 {selectedTypes.map(type => (
                   <ChipField
                   key={type.value}
