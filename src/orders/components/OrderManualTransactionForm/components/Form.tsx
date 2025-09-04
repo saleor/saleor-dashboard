@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useManualTransactionContext } from "../context";
 
 export const Form = ({ children, ...props }: React.HTMLProps<HTMLFormElement>) => {

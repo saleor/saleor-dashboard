@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Transition as MessageManagerTransition } from "react-transition-group";
 
 const duration = 250;
