@@ -1,8 +1,8 @@
 import { ENTITY_TYPES_WITH_TYPES_RESTRICTION,REFERENCE_ATTRIBUTE_TYPES } from "@dashboard/attributes/utils/data";
 import { DashboardCard } from "@dashboard/components/Card";
-import {SortableChip} from "@dashboard/components/SortableChip";
+import ChipField from "@dashboard/components/ChipField";
 import { AttributeEntityTypeEnum,AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Button, Chip, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -16,9 +16,7 @@ interface AttributeReferenceTypesSectionProps {
     selectedTypes: Option[];
     disabled?: boolean;
     onAssignClick: () => void;
-    // optional: when you implement removal/reorder
     onRemoveType?: (id: string) => void;
-    onReorderTypes?: (oldIndex: number, newIndex: number) => void;
 }
 
 const canShow = (inputType?: AttributeInputTypeEnum, entityType?: AttributeEntityTypeEnum) =>
@@ -31,7 +29,6 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
     disabled,
     onAssignClick,
     onRemoveType,
-    onReorderTypes,
 }) => {
     const intl = useIntl();
     
@@ -53,16 +50,15 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
               />
             </Box>
             {selectedTypes.length > 0 ? (
-              <Box display="flex" gap={1} flexWrap="wrap">
-                {selectedTypes.map((type, index) => (
-                  <SortableChip
-                    key={type.value}
-                    label={type.label}
-                    onClose={() => onRemoveType?.(type.value)}
-                    disabled={disabled}
+                <Box display="flex" gap={1} flexWrap="wrap">
+                {selectedTypes.map(type => (
+                  <ChipField
+                  key={type.value}
+                  label={type.label}
+                  onClose={() => onRemoveType?.(type.value)}
                   />
                 ))}
-              </Box>
+                </Box>
             ) : (
               <Text color="default2">
               {entityType === AttributeEntityTypeEnum.PAGE
