@@ -12,6 +12,7 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -210,32 +211,14 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     Array<{ label: string; value: string }>
   >([]);
   const {
-    loadMore: loadMoreDialogProductTypes,
-    search: searchDialogProductTypes,
-    result: searchDialogProductTypesOpts,
+    loadMore: loadMoreProductTypes,
+    search: searchProductTypes,
+    result: searchProductTypesOpts,
   } = useProductTypeSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const referenceTypesItem = React.useMemo(
-    () =>
-      (mapEdgesToItems(searchDialogProductTypesOpts?.data?.search) || []).map(n => ({
-        id: n.id,
-        name: n.name,
-      })),
-    [searchDialogProductTypesOpts?.data?.search],
-  );
-  const fetchMoreDialogProductTypes = {
-    hasMore: Boolean(searchDialogProductTypesOpts?.data?.search?.pageInfo?.hasNextPage),
-    loading: Boolean(searchDialogProductTypesOpts?.loading),
-    onFetchMore: loadMoreDialogProductTypes,
-  };
-
-    React.useEffect(() => {
-    if (isAssignRefTypesOpen) {
-      // initial fetch
-      searchDialogProductTypes("");
-    }
-  }, [isAssignRefTypesOpen, searchDialogProductTypes]);
+  const productTypes = mapEdgesToItems(searchProductTypesOpts.data?.search);
+  const fetchMoreProductTypes = getSearchFetchMoreProps(searchProductTypesOpts, loadMoreProductTypes);
 
   const handleRemoveReferenceType = (id: string) =>
     setSelectedReferenceProductTypes(prev => prev.filter(o => o.value !== id));
@@ -367,12 +350,13 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
           />
           <AssignReferenceTypesDialog
             open={isAssignRefTypesOpen}
+            confirmButtonState={"default"}
             onClose={() => setAssignRefTypesOpen(false)}
-            loading={Boolean(searchDialogProductTypesOpts?.loading)}
-            items={referenceTypesItem}
-            hasMore={fetchMoreDialogProductTypes.hasMore}
-            onFetchMore={fetchMoreDialogProductTypes.onFetchMore}
-            onFetch={searchDialogProductTypes}
+            loading={Boolean(fetchMoreProductTypes?.loading)}
+            referenceTypes={productTypes}
+            hasMore={fetchMoreProductTypes?.hasMore}
+            onFetchMore={fetchMoreProductTypes?.onFetchMore}
+            onFetch={searchProductTypes}
             onSubmit={selected => {
               setSelectedReferenceProductTypes(prev => {
                 const map = new Map(prev.map(o => [o.value, o]));
