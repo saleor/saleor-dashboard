@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.21.7
+
+### Patch Changes
+
+- 57b1f9a: Improve order refund UI for orders that uses Payments API. After this change `Automatic Refund` will be avaiable when `Refund products` option is selected. Miscellaneous refund will require providing `Manual Amount` as this is what Saleor API requires.
+- fb923e9: Fixed duplicated Language Switcher in Product Variants Translate Page
+- bcfd2cb: Hide voucher usage limit and usage count on voucher details page when voucher doesn't have limit set.
+- 69c3d41: Enhancement: Added new Command Menu actions:
+  - Vouchers: Go to / Create
+  - Promotions: Go to / Create
+  - Customers: Go to / Create
+  - Users & Staff: Go to / Invite
+  - Extensions: Install from manifest, Go to installed, Explore marketplace
+  - Webhooks: Create manually
+
 ## 3.21.6
 
 ### Patch Changes
