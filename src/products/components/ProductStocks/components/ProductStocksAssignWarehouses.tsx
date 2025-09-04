@@ -9,7 +9,7 @@ import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import { Button, Option, sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 interface ProductStocksAssignWarehousesProps {
@@ -29,9 +29,9 @@ export const ProductStocksAssignWarehouses = ({
   loading,
   searchWarehouses,
 }: ProductStocksAssignWarehousesProps) => {
-  const [warehouses, setWarehouses] = React.useState<Option[]>([]);
+  const [warehouses, setWarehouses] = useState<Option[]>([]);
   const intl = useIntl();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [query, onQueryChange, queryReset] = useSearchQuery(searchWarehouses);
 
   const handleClose = () => {
@@ -102,9 +102,6 @@ export const ProductStocksAssignWarehouses = ({
                         className={sprinkles({
                           paddingLeft: 0,
                         })}
-                        // style={{
-                        //   paddingLeft: 0,
-                        // }}
                       >
                         {warehouse.name}
                       </TableCell>
@@ -130,7 +127,6 @@ export const ProductStocksAssignWarehouses = ({
                 }),
               }}
               onClick={() => {
-                // TODO: change that
                 warehouses.forEach(warehouse => {
                   onWarehouseSelect(warehouse.value, warehouse.label);
                 });
