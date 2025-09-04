@@ -23,7 +23,12 @@ export const OrderLines = ({ lines, orderModel, ...props }: Props) => {
             {intl.formatMessage({ id: "Pvi8WI", defaultMessage: "Order lines" })}
           </Text>
           {orderModel.shouldShowFulfillButton() && (
-            <Button onClick={() => alert("Fulfill order lines")}>
+            <Button
+              onClick={() => {
+                // TODO: implement fulfill order lines functionality
+                alert("Fulfill order lines");
+              }}
+            >
               <Package size={14} />
               {intl.formatMessage({ id: "QDxJib", defaultMessage: "Fulfill" })}
             </Button>
@@ -34,6 +39,7 @@ export const OrderLines = ({ lines, orderModel, ...props }: Props) => {
         lines={lines}
         loading={false}
         onShowMetadata={() => {
+          // TODO: implement show metadata functionality
           alert("Metadata show");
         }}
         enableVerticalBorder={false}

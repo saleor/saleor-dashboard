@@ -4,7 +4,7 @@ import { warehouseUrl } from "@dashboard/warehouses/urls";
 import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { CodeXml } from "lucide-react";
 import React from "react";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import { OrderModel } from "../order-model";
 import { UnderlineLink } from "../underline-link";
@@ -16,6 +16,51 @@ type Props = PropsWithBox<{
   fulfillments: FulfillmentFragment[];
   orderModel: OrderModel;
 }>;
+
+const getFulfillmentStatusLabel = (status: string, intl: IntlShape): string => {
+  switch (status) {
+    case "CANCELED":
+      return intl.formatMessage({
+        defaultMessage: "Canceled",
+        id: "PFtMy9",
+      });
+    case "FULFILLED":
+      return intl.formatMessage({
+        defaultMessage: "Fulfilled",
+        id: "jY+f2f",
+      });
+    case "REFUNDED":
+      return intl.formatMessage({
+        defaultMessage: "Refunded",
+        id: "Gs86nL",
+      });
+    case "REFUNDED_AND_RETURNED":
+      return intl.formatMessage({
+        defaultMessage: "Refunded and Returned",
+        id: "J7ejFT",
+      });
+    case "REPLACED":
+      return intl.formatMessage({
+        defaultMessage: "Replaced",
+        id: "BWjfHd",
+      });
+    case "RETURNED":
+      return intl.formatMessage({
+        defaultMessage: "Returned",
+        id: "wm96Jx",
+      });
+    case "WAITING_FOR_APPROVAL":
+      return intl.formatMessage({
+        defaultMessage: "Waiting for Approval",
+        id: "dJa3Dt",
+      });
+    default:
+      return intl.formatMessage({
+        defaultMessage: "Other",
+        id: "/VnDMl",
+      });
+  }
+};
 
 export const OrderFulfillments = ({ fulfillments, orderModel, ...props }: Props) => {
   const intl = useIntl();
@@ -78,14 +123,7 @@ export const OrderFulfillments = ({ fulfillments, orderModel, ...props }: Props)
               </Box>
               <Box display="flex" alignItems="center" gap={2}>
                 <Text size={6} fontWeight="medium">
-                  {intl.formatMessage(
-                    {
-                      defaultMessage:
-                        "{fulfillmentStatus, select, CANCELED {Canceled} FULFILLED {Fulfilled} REFUNDED {Refunded} REFUNDED_AND_RETURNED {Refunded and Returned} REPLACED {Replaced} RETURNED {Returned} WAITING_FOR_APPROVAL {Waiting for Approval} other {Other}}",
-                      id: "Re3mG5",
-                    },
-                    { fulfillmentStatus: fulfillment.status },
-                  )}
+                  {getFulfillmentStatusLabel(fulfillment.status, intl)}
                 </Text>
                 <OrderFulfillmentStatusIcon status={fulfillment.status} />
               </Box>
