@@ -3,6 +3,7 @@ import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -34,7 +35,7 @@ import {
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
-import { getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterQueryParam, storageUtils } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface OrderListProps {
@@ -108,18 +109,23 @@ export const OrderList = ({ params }: OrderListProps) => {
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const filterVariables = getFilterVariables(params, valueProvider.value);
+  const filterVariables = createOrderQueryVariables(valueProvider.value);
 
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: filterVariables,
+      where: filterVariables,
+      search: params.query,
       sort: getSortQueryVariables(params),
     }),
+    // This is intentional - if we change deps array, we will make query
+    // on each character change in filters, NOT when user clicks "SAVE"
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [params, settings.rowNumber, valueProvider.value],
   );
   const { data } = useOrderListQuery({
     displayLoader: true,
+    skip: valueProvider.loading,
     variables: queryVariables,
   });
   const paginationValues = usePaginator({

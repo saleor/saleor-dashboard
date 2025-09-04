@@ -1,9 +1,11 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import {
+  CountryCode,
+  FulfillmentStatus,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
-  OrderStatusFilter,
-  PaymentChargeStatusEnum,
+  OrderStatus,
+  PaymentMethodTypeEnum,
 } from "@dashboard/graphql";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -21,7 +23,7 @@ import {
 import { getFilterElement } from "../utils";
 
 const isStaticBoolean = (rowType: RowType) => {
-  return ["isClickAndCollect", "isPreorder", "giftCardUsed", "giftCardBought"].includes(rowType);
+  return ["isClickAndCollect", "isGiftCardBought", "isGiftCardUsed", "hasInvoices", "isPreorder", "giftCardUsed", "hasFulfillments"].includes(rowType);
 };
 
 const createAPIHandler = (
@@ -49,12 +51,9 @@ const createAPIHandler = (
     ]);
   }
 
-  if (rowType === "paymentStatus") {
-    return new EnumValuesHandler(PaymentChargeStatusEnum, rowType, intl);
-  }
 
   if (rowType === "status") {
-    return new EnumValuesHandler(OrderStatusFilter, rowType, intl);
+    return new EnumValuesHandler(OrderStatus, rowType, intl);
   }
 
   if (rowType === "authorizeStatus") {
@@ -63,6 +62,10 @@ const createAPIHandler = (
 
   if (rowType === "chargeStatus") {
     return new EnumValuesHandler(OrderChargeStatusEnum, rowType, intl);
+  }
+
+  if (rowType === "fulfillmentStatus") {
+    return new EnumValuesHandler(FulfillmentStatus, rowType, intl);
   }
 
   if (rowType === "channels") {
@@ -84,8 +87,36 @@ const createAPIHandler = (
     return new NoopValuesHandler([]);
   }
 
-  if (rowType === "metadata") {
+  // Price/Amount fields  
+  if (rowType === "totalGross" || rowType === "totalNet") {
     return new NoopValuesHandler([]);
+  }
+
+  // Date/datetime fields
+  if (rowType === "invoicesCreatedAt") {
+    return new NoopValuesHandler([]);
+  }
+
+  // Text input fields
+  if (rowType === "number" || rowType === "userEmail" || rowType === "voucherCode" || rowType === "linesCount" || rowType === "checkoutId" || rowType === "billingPhoneNumber" ||
+    rowType === "shippingPhoneNumber" || rowType === "transactionsCardBrand") {
+    return new NoopValuesHandler([]);
+  }
+
+  // Metadata fields
+  if (rowType === "linesMetadata" || rowType === "transactionsMetadata" ||
+    rowType === "fulfillmentsMetadata" || rowType === "metadata") {
+    return new NoopValuesHandler([]);
+  }
+
+  // Payment type enum field
+  if (rowType === "transactionsPaymentType") {
+    return new EnumValuesHandler(PaymentMethodTypeEnum, rowType, intl);
+  }
+
+  // Country enum fields
+  if (rowType === "billingCountry" || rowType === "shippingCountry") {
+    return new EnumValuesHandler(CountryCode, rowType, intl);
   }
 
   throw new Error(`Unknown filter element: "${rowType}"`);
