@@ -12,6 +12,7 @@ import { OrderInvoices } from "./order-invoices";
 import { OrderLines } from "./order-lines";
 import { OrderModel } from "./order-model";
 import { OrderCustomerNote } from "./order-notes";
+import { OrderSummary } from "./order-summary/order-summary";
 
 export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => {
   const orderModel = new OrderModel(order);
@@ -51,6 +52,28 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
           {orderModel.shouldShowFulfillments() && (
             <OrderFulfillments fulfillments={order.fulfillments} orderModel={orderModel} />
           )}
+          <OrderSummary
+            orderSubtotal={order.subtotal}
+            shippingMethodName={order.shippingMethodName}
+            shippingPrice={order.shippingPrice}
+            discounts={order.discounts}
+            paymentStatus={order.paymentStatus}
+            orderTotalAmounts={{
+              totalAuthorized: order.totalAuthorized,
+              totalCaptured: order.totalCaptured,
+              totalRefunded: order.totalRefunded,
+              totalBalance: order.totalBalance,
+              total: order.total,
+              totalAuthorizePending: order.totalAuthorizePending,
+              totalCharged: order.totalCharged,
+              totalChargePending: order.totalChargePending,
+              totalCanceled: order.totalCanceled,
+              totalCancelPending: order.totalCancelPending,
+            }}
+            orderActions={order.actions}
+            orderId={order.id}
+            giftCards={order.giftCards}
+          />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar
           borderTopRightRadius={5}

@@ -7,7 +7,7 @@ import {
 import { IMoney } from "@dashboard/utils/intl";
 import compact from "lodash/compact";
 
-export const obtainUsedGifrcards = (order?: OrderDetailsFragment) => {
+export const obtainUsedGiftCards = (order?: { giftCards: OrderDetailsFragment["giftCards"] }) => {
   if (!order) return null;
 
   const { giftCards } = order;
@@ -19,9 +19,10 @@ export const obtainUsedGifrcards = (order?: OrderDetailsFragment) => {
   return null;
 };
 
-export const extractOrderGiftCardUsedAmount = (
-  order?: OrderDetailsFragment,
-): number | undefined => {
+export const extractOrderGiftCardUsedAmount = (order?: {
+  id: string;
+  giftCards: OrderDetailsFragment["giftCards"];
+}): number | undefined => {
   if (!order) {
     return undefined;
   }

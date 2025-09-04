@@ -787,6 +787,9 @@
     "context": "dialog header",
     "string": "Add postal codes"
   },
+  "2ZC9wL": {
+    "string": "{taxAmount, plural, =0 {(not applicable)} other {} }"
+  },
   "2atspc": {
     "string": "Drafts"
   },
@@ -968,6 +971,9 @@
   "3ukd9/": {
     "context": "attributes, section header",
     "string": "Attributes"
+  },
+  "3wsVWF": {
+    "string": "Cancelled"
   },
   "3xv4ez": {
     "string": "Go to users/staff members"
@@ -1315,6 +1321,9 @@
   "5i/InH": {
     "context": "open new window button",
     "string": "Open this order in GraphiQL"
+  },
+  "5kODlC": {
+    "string": "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}"
   },
   "5kvaFR": {
     "context": "product field",
@@ -1861,6 +1870,9 @@
     "context": "order line discount added title",
     "string": "{productName} discount was added by"
   },
+  "9TENcY": {
+    "string": "All payments from registered transactions."
+  },
   "9TbDQD": {
     "context": "order number label",
     "string": "Order number"
@@ -2062,6 +2074,9 @@
     "context": "sale status",
     "string": "Active"
   },
+  "AoCDZi": {
+    "string": "All line as ordered by the client."
+  },
   "AqHafs": {
     "context": "provided email input placeholder",
     "string": "Provided email address"
@@ -2086,6 +2101,9 @@
   "Av74Fa": {
     "context": "section description",
     "string": "You can set basic checkout rules that will be applied globally to all your channels"
+  },
+  "Aw2OKG": {
+    "string": "Charged pending"
   },
   "AyQkmp": {
     "string": "Sorting by this column is not available"
@@ -2394,6 +2412,9 @@
   "ChAjJu": {
     "context": "character limit",
     "string": "{numberOfCharacters} of {maxCharacters} characters"
+  },
+  "ChDAaD": {
+    "string": "Partially charged"
   },
   "ChGI4V": {
     "context": "error message",
@@ -3266,6 +3287,9 @@
     "context": "gift cards section name",
     "string": "Gift Cards"
   },
+  "HTiAMm": {
+    "string": "Taxes"
+  },
   "HVFq//": {
     "context": "button",
     "string": "Copy token"
@@ -3630,6 +3654,9 @@
     "context": "window title",
     "string": "Create Webhook"
   },
+  "JZKsZF": {
+    "string": "Fully paid"
+  },
   "Ja7gHc": {
     "context": "button",
     "string": "Edit"
@@ -3870,6 +3897,9 @@
   },
   "L87bp7": {
     "string": "Order payment successfully voided"
+  },
+  "L8seEc": {
+    "string": "Subtotal"
   },
   "LA13a5": {
     "context": "channel select label",
@@ -4165,6 +4195,9 @@
     "context": "dialog header",
     "string": "Unassign attribute from model type"
   },
+  "NAepnj": {
+    "string": "Authorized"
+  },
   "NBP8uu": {
     "context": "page header",
     "string": "New Product"
@@ -4216,6 +4249,9 @@
   },
   "NQgbYA": {
     "string": "Account Settings"
+  },
+  "NT+3fY": {
+    "string": "Refused"
   },
   "NUBTlN": {
     "string": "Extension doesn't provide a privacy policy."
@@ -4985,6 +5021,9 @@
   "RrCui3": {
     "string": "Summary"
   },
+  "RsLoDB": {
+    "string": "Mark as Paid"
+  },
   "Rsknyh": {
     "context": "order does not require shipping",
     "string": "does not apply"
@@ -5048,6 +5087,9 @@
   "S90DJO": {
     "context": "Button with  app settings label",
     "string": "App settings"
+  },
+  "SB//YQ": {
+    "string": "Order summary"
   },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
@@ -5550,6 +5592,9 @@
   "V1aPhG": {
     "string": "Navigation has changed"
   },
+  "V21v8h": {
+    "string": "{currency} {totalAmount}"
+  },
   "V22724": {
     "string": "Installed"
   },
@@ -5629,6 +5674,9 @@
   },
   "VZsE96": {
     "string": "Collection Name"
+  },
+  "VcQV4Z": {
+    "string": "Fully refunded"
   },
   "VceXrc": {
     "context": "initial balance filter label",
@@ -6033,6 +6081,9 @@
   "Xu4ech": {
     "context": "deactivate app",
     "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app."
+  },
+  "XvZCaw": {
+    "string": "Partially refunded"
   },
   "XvbjyW": {
     "context": "add new structure",
@@ -7199,6 +7250,9 @@
   },
   "fKrRhF": {
     "string": "General information"
+  },
+  "fL08MU": {
+    "string": "Order value"
   },
   "fLCV/w": {
     "string": "Add new value"
@@ -8416,6 +8470,9 @@
   "mmcHeH": {
     "string": "Discount Value"
   },
+  "mpkBZc": {
+    "string": "Shipping {carrierName}"
+  },
   "mr9jbO": {
     "string": "Preferred Language"
   },
@@ -8456,6 +8513,9 @@
   "n5vskv": {
     "context": "customer's address book, header",
     "string": "{fullName}'s Address Book"
+  },
+  "n74igO": {
+    "string": "Not charged"
   },
   "n7Fg8i": {
     "string": "Successfully created sale"
@@ -8536,6 +8596,9 @@
   "nMojhT": {
     "context": "Clear filters button text",
     "string": "Reset"
+  },
+  "nMwGMj": {
+    "string": "Captured"
   },
   "nNeWAx": {
     "context": "dialog header",
@@ -8649,6 +8712,9 @@
   },
   "o/4OCR": {
     "string": "Shipping has already been refunded"
+  },
+  "o0AP7/": {
+    "string": "Cancelled pending"
   },
   "o5KXAN": {
     "context": "delete webhook",
@@ -8955,6 +9021,9 @@
   "q5Lfp4": {
     "context": "tooltip",
     "string": "Order contains products that have \"Track inventory\" enabled."
+  },
+  "q7bXR4": {
+    "string": "Payments summary"
   },
   "q7v0W7": {
     "context": "save draft button",
@@ -9482,6 +9551,9 @@
     "context": "balance curreny missing error message",
     "string": "Balance currency is missing"
   },
+  "tXOS3M": {
+    "string": "Authorized pending"
+  },
   "tZ/9Sl": {
     "string": "Invite user/staff member"
   },
@@ -9916,6 +9988,9 @@
   "vqu+23": {
     "context": "success notifier message",
     "string": "Saved draft"
+  },
+  "vs0xiH": {
+    "string": "Discount {discountName}"
   },
   "vuKrlW": {
     "string": "Stock"

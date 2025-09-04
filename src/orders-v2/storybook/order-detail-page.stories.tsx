@@ -69,6 +69,12 @@ export const FulfilledWithMultipleFulfillments: Story = {
   },
 };
 
+export const FulfilledWithGiftCards: Story = {
+  args: {
+    order: OrderFixture.fulfilled().withGiftCards().build(),
+  },
+};
+
 export const Unconfirmed: Story = {
   args: {
     order: OrderFixture.unconfirmed().build(),
