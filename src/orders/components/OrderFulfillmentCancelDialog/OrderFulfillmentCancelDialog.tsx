@@ -76,14 +76,15 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
 
               <Text>
                 <FormattedMessage
-                  id="Ws1ZRp"
-                  defaultMessage="Are you sure you want to cancel fulfillment?{additionalMessage}"
-                  values={{
-                    additionalMessage: !waitingForApproval
-                      ? " Canceling a fulfillment will restock products at a selected warehouse."
-                      : "",
-                  }}
+                  id="+cGU63"
+                  defaultMessage="Are you sure you want to cancel fulfillment?"
                 />
+                {!waitingForApproval && (
+                  <FormattedMessage
+                    id="QV5QKO"
+                    defaultMessage=" Canceling a fulfillment will restock products at a selected warehouse."
+                  />
+                )}
               </Text>
 
               {!waitingForApproval && (

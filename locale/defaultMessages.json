@@ -5781,6 +5781,9 @@
     "context": "error message",
     "string": "Login went wrong. Please try again."
   },
+  "Ws1ZRp": {
+    "string": "Are you sure you want to cancel fulfillment?"
+  },
   "Ww69SE": {
     "context": "search input placeholder",
     "string": "Search tax classes"
@@ -9886,6 +9889,9 @@
   "w7jT4W": {
     "string": "No channels selected"
   },
+  "w7m7gD": {
+    "string": "Canceling a fulfillment will restock products at a selected warehouse."
+  },
   "w9xgN9": {
     "context": "see error log label in notification",
     "string": "See error log"
@@ -10099,9 +10105,6 @@
   "xZhxBJ": {
     "context": "dialog header",
     "string": "Assign Products"
-  },
-  "xco5tZ": {
-    "string": "Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
   },
   "xfGZsi": {
     "context": "configuration section name",
