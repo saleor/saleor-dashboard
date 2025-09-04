@@ -15,7 +15,18 @@ const config = {
   ],
   testEnvironment: "jest-environment-jsdom",
   transform: {
-    "^.+\\.(jsx?|tsx?)$": "@swc/jest",
+    "^.+\\.(jsx?|tsx?)$": [
+      "@swc/jest",
+      {
+        jsc: {
+          transform: {
+            react: {
+              runtime: "automatic"
+            }
+          }
+        }
+      }
+    ],
     "^.+\\.(png|svg|jpe?g)$": "jest-file",
   },
   testRegex: ".*\\.test\\.tsx?$",
