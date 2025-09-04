@@ -4,7 +4,6 @@ import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
 import { Button, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";

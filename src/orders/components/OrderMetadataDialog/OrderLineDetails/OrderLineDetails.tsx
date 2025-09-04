@@ -1,7 +1,6 @@
 import { OrderLineMetadataDetailsFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderLineSubheaderData } from "./OrderLineSubheaderData";

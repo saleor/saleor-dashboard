@@ -23,7 +23,7 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React, { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useContext, useMemo,useState } from "react";
 
 import { getFilterQueryParam, getFilterVariables, storageUtils } from "../../filters";
 import {
@@ -104,7 +104,7 @@ export const GiftCardsListProvider = ({ children, params }: GiftCardsListProvide
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const handleSort = createSortHandler(navigate, giftCardListUrl, params);
-  const queryVariables = React.useMemo<GiftCardListQueryVariables>(
+  const queryVariables = useMemo<GiftCardListQueryVariables>(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -113,7 +113,7 @@ export const GiftCardsListProvider = ({ children, params }: GiftCardsListProvide
     [params, paginationState],
   );
 
-  const newQueryVariables = React.useMemo<GiftCardListQueryVariables>(
+  const newQueryVariables = useMemo<GiftCardListQueryVariables>(
     () => ({
       ...paginationState,
       filter: {

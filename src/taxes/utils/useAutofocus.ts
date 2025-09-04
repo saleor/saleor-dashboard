@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect,useRef } from "react";
 
 /**
  * Autofocuses DOM element when it's mounted.
@@ -7,9 +7,9 @@ import React from "react";
  * @returns React ref to attach to focusable DOM element.
  */
 export function useAutofocus(condition = true, deps: React.DependencyList) {
-  const ref = React.useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current && condition) {
       ref.current.focus();
     }

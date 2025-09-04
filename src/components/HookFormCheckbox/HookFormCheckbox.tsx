@@ -1,6 +1,6 @@
 import { fixedForwardRef, useCombinedRefs } from "@dashboard/utils/ref";
 import { Checkbox, CheckboxProps } from "@saleor/macaw-ui-next";
-import React, { ForwardedRef } from "react";
+import { ForwardedRef } from "react";
 import { Control, FieldPath, FieldValues, RegisterOptions, useController } from "react-hook-form";
 
 export type HookFormCheckboxProps<

@@ -12,7 +12,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 export type AppWidgetsProps = {

@@ -5,7 +5,7 @@ import {
   SearchInput as MacawSearchInput,
   SearchInputProps as MacawSearchInputProps,
 } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useEffect,useState } from "react";
 
 export interface SearchInputProps extends SearchPageProps {
   placeholder: string;
@@ -14,9 +14,9 @@ export interface SearchInputProps extends SearchPageProps {
 
 const SearchInput = (props: SearchInputProps) => {
   const { initialSearch, onSearchChange, placeholder, size = "small" } = props;
-  const [search, setSearch] = React.useState(initialSearch);
+  const [search, setSearch] = useState(initialSearch);
 
-  React.useEffect(() => setSearch(initialSearch), [initialSearch]);
+  useEffect(() => setSearch(initialSearch), [initialSearch]);
 
   return (
     <Debounce debounceFn={onSearchChange} time={500}>

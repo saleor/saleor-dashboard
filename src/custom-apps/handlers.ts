@@ -15,7 +15,7 @@ import {
   visit,
 } from "graphql";
 import isEmpty from "lodash/isEmpty";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import { WebhookFormData } from "./components/WebhookDetailsPage";
 import { filterSelectedAsyncEvents, IntrospectionNode } from "./utils";

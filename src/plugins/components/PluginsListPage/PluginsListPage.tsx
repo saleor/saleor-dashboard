@@ -11,7 +11,6 @@ import { getStatusColor } from "@dashboard/misc";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@dashboard/types";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PluginsList from "../PluginsList/PluginsList";

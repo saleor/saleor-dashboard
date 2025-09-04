@@ -14,7 +14,6 @@ import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
-import React from "react";
 import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
@@ -112,7 +111,7 @@ handleLegacyTheming();
 
 const App = () => (
   // @ts-expect-error legacy types
-  <SaleorProvider client={saleorClient}>
+  (<SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <Router>
         {/* @ts-expect-error legacy types */}
@@ -153,7 +152,7 @@ const App = () => (
         </LegacyThemeProvider>
       </Router>
     </ApolloProvider>
-  </SaleorProvider>
+  </SaleorProvider>)
 );
 const Routes = () => {
   const intl = useIntl();

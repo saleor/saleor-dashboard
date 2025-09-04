@@ -1,6 +1,5 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { ClipboardCopyIcon } from "../clipboard-copy-icon";
 

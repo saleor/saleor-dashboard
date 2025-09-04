@@ -11,7 +11,7 @@ import {
 import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
 import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { createPortal } from "react-dom";
 
 import { Draggable } from "../Draggable/Draggable";

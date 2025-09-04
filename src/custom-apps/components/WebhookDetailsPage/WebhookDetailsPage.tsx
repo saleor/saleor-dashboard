@@ -24,7 +24,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box } from "@saleor/macaw-ui-next";
 import { parse, print } from "graphql";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import PermissionAlert from "../PermissionAlert";
@@ -84,7 +84,7 @@ const WebhookDetailsPage = ({
     setQuery(prettified);
   }, [prettified]);
 
-  const [localErrors, setLocalErrors] = React.useState<WebhookErrorFragment[]>([]);
+  const [localErrors, setLocalErrors] = useState<WebhookErrorFragment[]>([]);
   const handleSubmit = (data: WebhookFormData) => {
     if (!webhook && query.length === 0) {
       setLocalErrors([

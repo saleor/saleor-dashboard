@@ -55,7 +55,7 @@ import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;

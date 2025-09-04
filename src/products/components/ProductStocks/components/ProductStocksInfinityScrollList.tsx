@@ -1,6 +1,5 @@
 import { useInfinityScroll } from "@dashboard/hooks/useInfinityScroll";
 import { List } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface ProductStocksInfinityScrollListProps {
   children: React.ReactNode;

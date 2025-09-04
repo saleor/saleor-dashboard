@@ -8,7 +8,7 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import useStateFromProps from "./../useStateFromProps";
 import { FormData } from "./types";

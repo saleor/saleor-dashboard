@@ -1,5 +1,3 @@
-import React from "react";
-
 const Arrow = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="18"

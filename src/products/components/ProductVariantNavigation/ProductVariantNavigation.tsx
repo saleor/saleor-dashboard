@@ -7,7 +7,7 @@ import { ReorderAction } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
@@ -44,7 +44,6 @@ const ProductVariantNavigation = (props: ProductVariantNavigationProps) => {
       <DashboardCard.Header>
         <DashboardCard.Title>{intl.formatMessage(sectionNames.variants)}</DashboardCard.Title>
       </DashboardCard.Header>
-
       <DashboardCard.Content paddingX={0}>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <Box data-test-id="variants-list">
@@ -60,7 +59,7 @@ const ProductVariantNavigation = (props: ProductVariantNavigationProps) => {
                 const thumbnail = variant.media?.filter(mediaObj => mediaObj.type === "IMAGE")[0];
 
                 return (
-                  <React.Fragment key={variant.id}>
+                  <Fragment key={variant.id}>
                     <VariantItem
                       variant={variant}
                       thumbnail={thumbnail}
@@ -70,7 +69,7 @@ const ProductVariantNavigation = (props: ProductVariantNavigationProps) => {
                       draggable={!isSaving}
                     />
                     <Divider height={0} />
-                  </React.Fragment>
+                  </Fragment>
                 );
               })}
             </SortableContext>

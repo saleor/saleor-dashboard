@@ -1,6 +1,6 @@
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { useEffect,useState } from "react";
 
 import { SearchPageProps } from "../../types";
 import Debounce from "../Debounce";
@@ -24,9 +24,9 @@ const useStyles = makeStyles(
 );
 const SearchInput = ({ initialSearch, onSearchChange, placeholder }: SearchInputProps) => {
   const classes = useStyles();
-  const [search, setSearch] = React.useState(initialSearch);
+  const [search, setSearch] = useState(initialSearch);
 
-  React.useEffect(() => setSearch(initialSearch), [initialSearch]);
+  useEffect(() => setSearch(initialSearch), [initialSearch]);
 
   return (
     <Debounce debounceFn={onSearchChange} time={500}>

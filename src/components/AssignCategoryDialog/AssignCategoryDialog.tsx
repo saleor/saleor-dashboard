@@ -1,5 +1,3 @@
-// @ts-strict-ignore
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";

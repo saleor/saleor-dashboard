@@ -8,7 +8,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
 import { TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { createRef } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -40,7 +40,7 @@ const StaffProperties = (props: StaffPropertiesProps) => {
     onImageUpload,
   } = props;
   const intl = useIntl();
-  const imgInputAnchor = React.createRef<HTMLInputElement>();
+  const imgInputAnchor = createRef<HTMLInputElement>();
   const clickImgInput = () => imgInputAnchor.current.click();
   const formErrors = getFormErrors(["id", "firstName", "lastName", "email"], errors || []);
   const hasAvatar = !!staffMember?.avatar?.url;

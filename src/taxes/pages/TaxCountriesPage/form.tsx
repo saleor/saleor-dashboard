@@ -9,7 +9,7 @@ import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import React from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 export interface TaxCountriesPageFormData {
@@ -81,7 +81,7 @@ function useTaxCountriesForm(
     formId,
   });
 
-  React.useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
+  useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
   setIsSubmitDisabled(disabled);
 
   return { data: formset.data, handlers: { handleRateChange }, submit };

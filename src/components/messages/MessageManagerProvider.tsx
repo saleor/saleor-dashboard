@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 import { MessageContext } from ".";
 import { MessageDisplay } from "./MessageDisplay";

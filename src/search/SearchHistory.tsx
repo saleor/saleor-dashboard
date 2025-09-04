@@ -1,5 +1,4 @@
 import { Box, CloseIcon, SearchIcon, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 export const SearchHistory = ({

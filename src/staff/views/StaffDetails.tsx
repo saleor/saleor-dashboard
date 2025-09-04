@@ -10,7 +10,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import StaffDetailsPage, {

@@ -1,6 +1,5 @@
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { FormattedMessageProps } from "react-intl";
 
 import { AppInstallButton } from "./AppInstallButton";

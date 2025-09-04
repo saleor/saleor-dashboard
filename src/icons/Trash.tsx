@@ -1,6 +1,5 @@
 import { createSvgIcon } from "@material-ui/core/utils";
 import { useTheme } from "@saleor/macaw-ui";
-import React from "react";
 
 /**
  * @deprecated This icon uses Material-UI and Macaw-UI which are deprecated. Please use Lucide React icons instead.

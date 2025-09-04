@@ -1,7 +1,6 @@
 import { InvoiceFragment } from "@dashboard/graphql";
 import { Box, Button, PropsWithBox, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Send } from "lucide-react";
-import React from "react";
 import { useIntl } from "react-intl";
 
 type Props = PropsWithBox<{

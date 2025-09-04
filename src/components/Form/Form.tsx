@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import useForm, { SubmitPromise, UseFormResult } from "@dashboard/hooks/useForm";
-import React from "react";
 
 import { FormId } from "./types";
 

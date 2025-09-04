@@ -1,6 +1,5 @@
 import Link from "@dashboard/components/Link";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";

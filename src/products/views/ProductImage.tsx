@@ -9,7 +9,6 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductMediaPage from "../components/ProductMediaPage";

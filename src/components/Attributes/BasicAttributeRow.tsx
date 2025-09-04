@@ -1,5 +1,4 @@
 import { Box, InfoIcon, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface BasicAttributeRowProps {
   label: string | React.ReactNode;

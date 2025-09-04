@@ -2,7 +2,6 @@ import { formatMoneyAmount } from "@dashboard/components/Money";
 import useLocale from "@dashboard/hooks/useLocale";
 import { IMoney } from "@dashboard/utils/intl";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface MoneyDisplayProps {
   label: string;

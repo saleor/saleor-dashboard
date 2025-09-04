@@ -1,5 +1,5 @@
 import { Box, BoxProps, Button, CloseIcon, GripIcon, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { forwardRef,ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
@@ -28,7 +28,7 @@ export type SortableChipProps = {
 
 /** Chip which can be used within a list of sortable elements, should be used with
  * Draggable component which returns correct handlers from @dnd-kit */
-export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
+export const SortableChip = forwardRef<HTMLDivElement, SortableChipProps>(
   (
     { label, onClose, loading, url, isDragged, isDraggedOverlay, className, style, ...props },
     ref,

@@ -4,7 +4,7 @@ import { useId } from "@reach/auto-id";
 import { EditorCore, Props as ReactEditorJSProps } from "@react-editor-js/core";
 import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { useCallback,useRef, useState } from "react";
 
 import { tools } from "./consts";
 import { useHasRendered, useUpdateOnRerender } from "./hooks";
@@ -41,11 +41,11 @@ const RichTextEditor = ({
 }: RichTextEditorProps) => {
   const classes = useStyles({});
   const id = useId(defaultId);
-  const ref = React.useRef<EditorCore | null>(null);
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [hasValue, setHasValue] = React.useState(false);
+  const ref = useRef<EditorCore | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
   const isTyped = Boolean(hasValue || isFocused);
-  const handleInitialize = React.useCallback((editor: EditorCore) => {
+  const handleInitialize = useCallback((editor: EditorCore) => {
     if (onInitialize) {
       onInitialize(editor);
     }

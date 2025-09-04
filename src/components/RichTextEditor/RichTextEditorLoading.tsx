@@ -1,6 +1,3 @@
-// @ts-strict-ignore
-import React from "react";
-
 import RichTextEditor, { RichTextEditorProps } from "./RichTextEditor";
 
 interface RichTextEditorLoadingProps

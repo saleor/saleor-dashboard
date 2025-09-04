@@ -1,5 +1,4 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
-import React from "react";
 
 export const Header = ({ children, className, ...rest }: PropsWithBox<{}>) => (
   <Box

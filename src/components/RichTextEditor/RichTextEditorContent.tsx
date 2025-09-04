@@ -1,7 +1,6 @@
 import { LogLevels } from "@editorjs/editorjs";
 import { useId } from "@reach/auto-id";
 import clsx from "clsx";
-import React from "react";
 import { createReactEditorJS } from "react-editor-js";
 
 import { tools } from "./consts";

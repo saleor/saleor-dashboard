@@ -10,7 +10,7 @@ import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderFulfillmentCancelDialogFormData {
@@ -45,7 +45,7 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
   const { confirmButtonState, errors, open, warehouses, onConfirm, onClose } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const [displayValue, setDisplayValue] = React.useState("");
+  const [displayValue, setDisplayValue] = useState("");
   const choices = warehouses?.map(warehouse => ({
     label: warehouse.name,
     value: warehouse.id,

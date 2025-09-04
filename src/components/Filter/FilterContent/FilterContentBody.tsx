@@ -7,7 +7,6 @@ import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option, Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 
 import FilterAutocompleteField, {
   FilterAutocompleteDisplayValues,

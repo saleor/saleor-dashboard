@@ -1,6 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
-import React from "react";
 import { Control, Controller } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

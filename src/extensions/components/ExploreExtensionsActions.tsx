@@ -4,7 +4,6 @@ import { buttonLabels } from "@dashboard/extensions/messages";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { MISSING_APPS_TYPEFORM_URL } from "@dashboard/links";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ExtensionsUrls } from "../urls";

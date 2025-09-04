@@ -9,7 +9,7 @@ import {
 import { useId } from "@reach/auto-id";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderTransaction from "../../OrderTransaction";
@@ -52,7 +52,7 @@ export const TransactionCard = ({
   const intl = useIntl();
   const id = useId();
 
-  const [value, setValue] = React.useState<number | undefined>();
+  const [value, setValue] = useState<number | undefined>();
 
   const { data, error, loading, status, sendRefund } = useOrderSendRefund({
     transactionId: transaction.id,

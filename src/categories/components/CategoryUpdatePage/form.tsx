@@ -9,7 +9,7 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 export interface CategoryUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
@@ -83,15 +83,15 @@ function useCategoryUpdateForm(
   } as CategoryUpdateData;
   // Need to make it function to always have description.current up to date
   const getData = async (): Promise<CategoryUpdateData> =>
-    ({
+    (({
       ...formData,
       description: await richText.getValue(),
-    }) as CategoryUpdateData;
+    }) as CategoryUpdateData);
   const getSubmitData = async (): Promise<CategoryUpdateData> =>
-    ({
+    (({
       ...(await getData()),
       ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
-    }) as CategoryUpdateData;
+    }) as CategoryUpdateData);
   const submit = async () => handleFormSubmit(await getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);

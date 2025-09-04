@@ -11,7 +11,7 @@ import {
   Popper,
 } from "@material-ui/core";
 import { ArrowDropDown as ArrowDropDownIcon } from "@material-ui/icons";
-import React from "react";
+import { useRef,useState } from "react";
 
 import { useStyles } from "./styles";
 
@@ -38,8 +38,8 @@ export const ButtonWithSelect = ({
   onClick,
   ...props
 }: ButtonWithSelectProps) => {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
   const classes = useStyles();
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,

@@ -1,6 +1,6 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 
 const FOCUSABLE_ELEMENTS = ["input", "textarea", "select", '[contenteditable="true"]'].join(", ");

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useDataLineStyles } from "../styles";
 
 interface DataLineProps {
