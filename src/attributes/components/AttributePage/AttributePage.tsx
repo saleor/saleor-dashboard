@@ -62,7 +62,7 @@ export interface AttributePageProps {
   onPreviousPage: () => void;
   children: (data: AttributePageFormData) => React.ReactNode;
   onAssignReferenceTypesClick?: () => void;
-  selectedReferenceProductTypes?: Array<{ label: string; value: string }>;
+  selectedReferenceTypes?: Array<{ label: string; value: string }>;
   onRemoveReferenceType?: (id: string) => void;
 }
 
@@ -100,7 +100,7 @@ const AttributePage = ({
   onPreviousPage,
   children,
   onAssignReferenceTypesClick,
-  selectedReferenceProductTypes,
+  selectedReferenceTypes,
   onRemoveReferenceType,
 }: AttributePageProps) => {
   const intl = useIntl();
@@ -206,7 +206,7 @@ const AttributePage = ({
                 <AttributeReferenceTypesSection
                   inputType={attribute?.inputType}
                   entityType={attribute?.entityType}
-                  selectedTypes={selectedReferenceProductTypes}
+                  selectedTypes={selectedReferenceTypes}
                   disabled={disabled}
                   onAssignClick={onAssignReferenceTypesClick ?? (() => {})}
                   onRemoveType={onRemoveReferenceType}
