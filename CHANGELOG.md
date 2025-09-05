@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.21.8
+
+### Patch Changes
+
+- 2b64706: Improved stock section when editing product variant. After this change `Assign Warehouse` button will open modal with warehouse select instead of opening dropdown with the list.
+- c3c1b01: Improved order fulfillment cancel dialog: in case the fulfillment is in waiting for approval state, providing a warehouse will be no longer required.
+
 ## 3.21.7
 
 ### Patch Changes
