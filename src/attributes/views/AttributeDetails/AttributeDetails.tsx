@@ -1,4 +1,4 @@
-import { AssignReferenceTypesDialog } from "@dashboard/attributes/components/AssignReferenceTypesDialog";
+import AssignReferenceTypesDialog from "@dashboard/attributes/components/AssignReferenceTypesDialog";
 import { attributeValueFragmentToFormData } from "@dashboard/attributes/utils/data";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -19,7 +19,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
-import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import useReferenceTypeSearch from "@dashboard/searches/useReferenceTypeSearch";
 import { ListViews, ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";

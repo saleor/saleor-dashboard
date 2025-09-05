@@ -1,4 +1,4 @@
-import { Box, BoxProps, Button, CloseIcon, GripIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, CloseIcon, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
@@ -23,7 +23,7 @@ export type ChipFieldProps = {
 
 export const ChipField = React.forwardRef<HTMLDivElement, ChipFieldProps>(
   (
-    { label, onClose, loading, url, isDragged, isDraggedOverlay, className, style, ...props },
+    { label, onClose, loading, url, className, style, ...props },
     ref,
   ) => {
     const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,19 +42,19 @@ export const ChipField = React.forwardRef<HTMLDivElement, ChipFieldProps>(
         className={className}
         borderWidth={1}
         borderStyle="solid"
-        borderColor={isDraggedOverlay ? "transparent" : "default1"}
+        borderColor={"default1"}
         borderRadius={4}
         paddingY={1}
         paddingX={1.5}
         paddingRight={1}
-        backgroundColor={isDraggedOverlay ? "default3" : "default1"}
-        opacity={isDraggedOverlay ? "0.2" : "1"}
+        backgroundColor={"default1"}
+        opacity={"1"}
         {...props}
       >
         <Box
           display="flex"
           alignItems="center"
-          style={{ visibility: isDraggedOverlay ? "hidden" : "visible" }}
+          style={{ visibility: "visible" }}
           paddingLeft={2}
         >
           <ChipLabel label={label} url={url}/>
