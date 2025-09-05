@@ -11,6 +11,7 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductUpdateMutationVariables,
+  ProductVariantAttributesFragment,
   ProductVariantBulkUpdateInput,
   VariantAttributeFragment,
 } from "@dashboard/graphql";
@@ -265,7 +266,10 @@ export enum ReferenceWhereKey {
   PageType = "pageType",
 }
 
-export const getAllowedReferenceTypeIds = (refAttr: any, type: ReferenceType): string[] => {
+type AttributeWithReferenceTypes =
+  NonNullable<ProductVariantAttributesFragment["attributes"][number]["attribute"]>;
+
+export const getAllowedReferenceTypeIds = (refAttr: AttributeWithReferenceTypes | undefined, type: ReferenceType): string[] => {
   if (refAttr?.referenceTypes?.[0]?.__typename === type) {
     return (refAttr.referenceTypes ?? []).map((t: any) => t?.id).filter(Boolean);
   }
@@ -281,7 +285,7 @@ export const buildReferenceSearchVariables = (
   ...(allowedIds?.length ? { where: { [whereKey]: { oneOf: allowedIds } } } : {}),
 });
 
-export const useReferenceProductSearch = (refAttr: any) => {
+export const useReferenceProductSearch = (refAttr: AttributeWithReferenceTypes | undefined) => {
   const ids = React.useMemo(
     () => getAllowedReferenceTypeIds(refAttr, ReferenceType.ProductType),
     [refAttr],
@@ -294,7 +298,7 @@ export const useReferenceProductSearch = (refAttr: any) => {
   return useProductSearch({ variables });
 };
 
-export const useReferencePageSearch = (refAttr: any) => {
+export const useReferencePageSearch = (refAttr: AttributeWithReferenceTypes | undefined) => {
   const ids = React.useMemo(
     () => getAllowedReferenceTypeIds(refAttr, ReferenceType.PageType),
     [refAttr],
