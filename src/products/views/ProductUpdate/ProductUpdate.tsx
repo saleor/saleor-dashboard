@@ -21,8 +21,6 @@ import { commonMessages, errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
@@ -42,6 +40,7 @@ import {
 } from "../../urls";
 import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
+import { useReferencePageSearch, useReferenceProductSearch} from "./handlers/utils";
 import { productUpdatePageMessages as messages } from "./messages";
 
 interface ProductUpdateProps {
@@ -65,20 +64,6 @@ export const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     search: searchCollections,
     result: searchCollectionsOpts,
   } = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMorePages,
-    search: searchPages,
-    result: searchPagesOpts,
-  } = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreProducts,
-    search: searchProducts,
-    result: searchProductsOpts,
-  } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
@@ -203,6 +188,21 @@ export const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     submitOpts.errors,
     createProductMediaOpts.data?.productMediaCreate.errors,
   );
+  const refAttr = params.action === "assign-attribute-value" && params.id
+    ? product?.attributes?.find(a => a.attribute.id === params.id)?.attribute
+    : undefined;
+
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts,
+  } = useReferenceProductSearch(refAttr);
+
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts,
+  } = useReferencePageSearch(refAttr);
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
