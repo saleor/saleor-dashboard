@@ -3846,6 +3846,10 @@
     "context": "order refund amount",
     "string": "Authorized Amount"
   },
+  "L/ZbnW": {
+    "context": "fulfillment status waiting for approval",
+    "string": "Waiting for Approval"
+  },
   "L/sNGY": {
     "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
   },
@@ -5390,6 +5394,10 @@
   "UE9zNR": {
     "string": "Recent Searches"
   },
+  "UGm9nx": {
+    "context": "payment method type card",
+    "string": "Card"
+  },
   "UIM5bq": {
     "context": "charge status full",
     "string": "Full"
@@ -6924,6 +6932,10 @@
     "context": "attribute",
     "string": "Visible on Product Page in Storefront"
   },
+  "cwjmte": {
+    "context": "fulfillment status refunded",
+    "string": "Refunded"
+  },
   "cwoN25": {
     "context": "config type section title",
     "string": "Configuration Type"
@@ -7125,6 +7137,10 @@
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
     "string": "Captured"
+  },
+  "epB7b7": {
+    "context": "fulfillment status replaced",
+    "string": "Replaced"
   },
   "erC44f": {
     "context": "filters error messages dependencies missing",
@@ -7335,6 +7351,10 @@
   },
   "g0GAdN": {
     "string": "Delete attributes"
+  },
+  "g1bk+A": {
+    "context": "payment method type other",
+    "string": "Other"
   },
   "g3qjSf": {
     "context": "button",
@@ -7874,6 +7894,10 @@
     "context": "product price",
     "string": "Select channel"
   },
+  "jiXbx5": {
+    "context": "fulfillment status canceled",
+    "string": "Canceled"
+  },
   "jj3Cb8": {
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
@@ -8238,6 +8262,10 @@
   "lQRnYK": {
     "context": "selectt all options",
     "string": "Select All"
+  },
+  "lSOmbK": {
+    "context": "fulfillment status fulfilled",
+    "string": "Fulfilled"
   },
   "lSd5Zo": {
     "context": "app permissions label",
@@ -10415,6 +10443,10 @@
   "z3w/oL": {
     "string": "You must provide amount value"
   },
+  "z45PdE": {
+    "context": "order status",
+    "string": "Expired"
+  },
   "z4qMx5": {
     "string": "Open in a new tab"
   },
@@ -10490,12 +10522,20 @@
   "zT1CvH": {
     "string": "Learn more about {extendingSaleor}"
   },
+  "zUHPnm": {
+    "context": "fulfillment status returned",
+    "string": "Returned"
+  },
   "zWM89r": {
     "context": "numeric attribute units of",
     "string": "Units of"
   },
   "zWgbGg": {
     "string": "Today"
+  },
+  "zY1K7Q": {
+    "context": "fulfillment status refunded and returned",
+    "string": "Refunded and Returned"
   },
   "zZCCqz": {
     "context": "button",

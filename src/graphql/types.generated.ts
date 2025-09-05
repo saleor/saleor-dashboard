@@ -11118,7 +11118,8 @@ export type OrderListQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   last?: InputMaybe<Scalars['Int']>;
   before?: InputMaybe<Scalars['String']>;
-  filter?: InputMaybe<OrderFilterInput>;
+  where?: InputMaybe<OrderWhereInput>;
+  search?: InputMaybe<Scalars['String']>;
   sort?: InputMaybe<OrderSortingInput>;
 }>;
 

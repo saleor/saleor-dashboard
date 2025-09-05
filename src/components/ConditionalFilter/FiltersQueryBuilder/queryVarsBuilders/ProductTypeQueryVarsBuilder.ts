@@ -10,11 +10,11 @@ export type ProductTypeFilterQueryPart = {
 export class ProductTypeQueryVarsBuilder extends BaseMappableQueryVarsBuilder<ProductTypeFilterQueryPart> {
   protected readonly queryField = "productType";
 
-  public canHandle(element: FilterElement): boolean {
+  canHandle(element: FilterElement): boolean {
     return element.value.value === "typeOfProduct";
   }
 
-  public createOptionFetcher(): Handler {
+  createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 

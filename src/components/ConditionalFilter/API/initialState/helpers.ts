@@ -142,8 +142,8 @@ export const createInitialProductStateFromData = (
                 node.inputType === "BOOLEAN"
                   ? convertItemOptionsToAttributeChoices(createBooleanOptions())
                   : convertItemOptionsToAttributeChoices(
-                      createOptionsFromAPI(node.choices?.edges ?? []),
-                    );
+                    createOptionsFromAPI(node.choices?.edges ?? []),
+                  );
 
               return {
                 ...accAttr,
@@ -196,31 +196,53 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
   data.reduce<InitialOrderState>(
     (acc, query) => {
       if (isChannelsQuery(query)) {
+        const channelOptions = (query.data?.channels ?? []).map(({ id, name, slug }) => ({
+          label: name,
+          value: id,
+          slug,
+        }));
+
         return {
           ...acc,
-          channels: (query.data?.channels ?? []).map(({ id, name, slug }) => ({
-            label: name,
-            value: id,
-            slug,
-          })),
+          channelId: channelOptions,
         };
       }
 
       return acc;
     },
     {
-      channels: [],
-      paymentStatus: [],
       status: [],
+      fulfillmentStatus: [],
       authorizeStatus: [],
       chargeStatus: [],
       isClickAndCollect: createBooleanOptions(),
-      isPreorder: createBooleanOptions(),
-      giftCardBought: createBooleanOptions(),
-      giftCardUsed: createBooleanOptions(),
-      ids: [],
-      created: "",
+      isGiftCardBought: createBooleanOptions(),
+      isGiftCardUsed: createBooleanOptions(),
+      hasInvoices: createBooleanOptions(),
+      hasFulfillments: createBooleanOptions(),
+      createdAt: "",
       updatedAt: "",
+      invoicesCreatedAt: "",
+      totalGross: "",
+      totalNet: "",
+      user: [],
+      channelId: [],
+      ids: [],
+      metadata: "",
+      number: [],
+      userEmail: [],
+      voucherCode: [],
+      linesCount: [],
+      checkoutId: [],
+      linesMetadata: "",
+      transactionsMetadata: "",
+      transactionsPaymentType: [],
+      transactionsCardBrand: [],
+      fulfillmentsMetadata: "",
+      billingPhoneNumber: [],
+      billingCountry: [],
+      shippingPhoneNumber: [],
+      shippingCountry: [],
     },
   );
 

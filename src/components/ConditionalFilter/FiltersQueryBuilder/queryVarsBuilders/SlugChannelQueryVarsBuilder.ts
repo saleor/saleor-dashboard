@@ -10,11 +10,11 @@ import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 export class SlugChannelQueryVarsBuilder extends BaseMappableQueryVarsBuilder {
   protected readonly queryField = "channel";
 
-  public canHandle(element: FilterElement): boolean {
+  canHandle(element: FilterElement): boolean {
     return element.value.value === "channel";
   }
 
-  public createOptionFetcher(client: ApolloClient<unknown>, inputValue: string): Handler {
+  createOptionFetcher(client: ApolloClient<unknown>, inputValue: string): Handler {
     return new ChannelHandler(client, inputValue);
   }
 

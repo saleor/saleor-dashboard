@@ -61,9 +61,9 @@ export const STATIC_CONDITIONS = {
   ],
   isClickAndCollect: [{ type: "select", label: "is", value: "input-1" }],
   isPreorder: [{ type: "select", label: "is", value: "input-1" }],
-  giftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
-  giftCardBought: [{ type: "select", label: "is", value: "input-1" }],
-  paymentStatus: [
+  isGiftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
+  isGiftCardBought: [{ type: "select", label: "is", value: "input-1" }],
+  status: [
     {
       type: "combobox",
       label: "is",
@@ -75,7 +75,7 @@ export const STATIC_CONDITIONS = {
       value: "input-2",
     },
   ],
-  status: [
+  fulfillmentStatus: [
     {
       type: "combobox",
       label: "is",
@@ -99,10 +99,10 @@ export const STATIC_CONDITIONS = {
       value: "input-2",
     },
   ],
-  created: [
-    { type: "date", label: "lower", value: "input-1" },
-    { type: "date", label: "greater", value: "input-2" },
-    { type: "date.range", label: "between", value: "input-3" },
+  createdAt: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
   ],
   dateJoined: [
     { type: "date", label: "lower", value: "input-1" },
@@ -170,6 +170,25 @@ export const STATIC_CONDITIONS = {
       value: "input-1",
     },
   ],
+  totalGross: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-2" },
+    { type: "number", label: "greater", value: "input-3" },
+    { type: "number.range", label: "between", value: "input-4" },
+  ],
+  totalNet: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-2" },
+    { type: "number", label: "greater", value: "input-3" },
+    { type: "number.range", label: "between", value: "input-4" },
+  ],
+  hasInvoices: [{ type: "select", label: "is", value: "input-1" }],
+  hasFulfillments: [{ type: "select", label: "is", value: "input-1" }],
+  invoicesCreatedAt: [
+    { type: "datetime", label: "lower", value: "input-1" },
+    { type: "datetime", label: "greater", value: "input-2" },
+    { type: "datetime.range", label: "between", value: "input-3" },
+  ],
   pageTypes: [
     {
       type: "multiselect",
@@ -217,6 +236,58 @@ export const STATIC_CONDITIONS = {
   ],
   staffMemberStatus: [{ type: "select", label: "is", value: "input-1" }],
   attribute: [{ type: "multiselect", label: "in", value: "input-2" }],
+  number: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-3" },
+    { type: "number", label: "greater", value: "input-4" },
+    { type: "number.range", label: "between", value: "input-5" },
+  ],
+  userEmail: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  voucherCode: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  linesCount: [
+    { type: "number", label: "is", value: "input-1" },
+    { type: "number", label: "lower", value: "input-3" },
+    { type: "number", label: "greater", value: "input-4" },
+    { type: "number.range", label: "between", value: "input-5" },
+  ],
+  checkoutId: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  linesMetadata: [
+    { type: "text.double", label: "is", value: "input-1" },
+  ],
+  transactionsMetadata: [
+    { type: "text.double", label: "is", value: "input-1" },
+  ],
+  transactionsPaymentType: [
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
+  transactionsCardBrand: [
+    { type: "text", label: "is", value: "input-1" },
+    { type: "text", label: "contains", value: "input-2" },
+  ],
+  fulfillmentsMetadata: [
+    { type: "text.double", label: "is", value: "input-1" },
+  ],
+  billingPhoneNumber: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  billingCountry: [
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
+  shippingPhoneNumber: [
+    { type: "text", label: "is", value: "input-1" },
+  ],
+  shippingCountry: [
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -230,6 +301,13 @@ export const CONSTRAINTS = {
     removable: false,
     disabled: ["left", "condition"],
   },
+};
+
+export const OCCURRENCE_LIMITS = {
+  billingPhoneNumber: { maxOccurrences: 1 },
+  billingCountry: { maxOccurrences: 1 },
+  shippingPhoneNumber: { maxOccurrences: 1 },
+  shippingCountry: { maxOccurrences: 1 },
 };
 
 export const STATIC_PRODUCT_OPTIONS: LeftOperand[] = [
@@ -310,22 +388,22 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
   { value: "channels", label: "Channels", type: "channels", slug: "channels" },
   {
-    value: "paymentStatus",
-    label: "Payment status",
-    type: "paymentStatus",
-    slug: "paymentStatus",
-  },
-  {
     value: "status",
-    label: "Fulfillment Status",
+    label: "Order Status",
     type: "status",
     slug: "status",
   },
   {
-    value: "created",
+    value: "fulfillmentStatus",
+    label: "Fulfillment Status",
+    type: "fulfillmentStatus",
+    slug: "fulfillmentStatus",
+  },
+  {
+    value: "createdAt",
     label: "Creation date",
-    type: "created",
-    slug: "created",
+    type: "createdAt",
+    slug: "createdAt",
   },
   {
     value: "authorizeStatus",
@@ -352,22 +430,46 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     slug: "isClickAndCollect",
   },
   {
-    value: "isPreorder",
-    label: "Preorder",
-    type: "isPreorder",
-    slug: "isPreorder",
-  },
-  {
-    value: "giftCardBought",
+    value: "isGiftCardBought",
     label: "Gift card bought",
-    type: "giftCardBought",
-    slug: "giftCardBought",
+    type: "isGiftCardBought",
+    slug: "isGiftCardBought",
   },
   {
-    value: "giftCardUsed",
+    value: "isGiftCardUsed",
     label: "Gift card used",
-    type: "giftCardUsed",
-    slug: "giftCardUsed",
+    type: "isGiftCardUsed",
+    slug: "isGiftCardUsed",
+  },
+  {
+    value: "totalGross",
+    label: "Total Gross Amount",
+    type: "totalGross",
+    slug: "totalGross",
+  },
+  {
+    value: "totalNet",
+    label: "Total Net Amount",
+    type: "totalNet",
+    slug: "totalNet",
+  },
+  {
+    value: "hasInvoices",
+    label: "Has Invoices",
+    type: "hasInvoices",
+    slug: "hasInvoices",
+  },
+  {
+    value: "hasFulfillments",
+    label: "Has Fulfillments",
+    type: "hasFulfillments",
+    slug: "hasFulfillments",
+  },
+  {
+    value: "invoicesCreatedAt",
+    label: "Invoice Date",
+    type: "invoicesCreatedAt",
+    slug: "invoicesCreatedAt",
   },
   {
     value: "customer",
@@ -380,6 +482,90 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Metadata",
     type: "metadata",
     slug: "metadata",
+  },
+  {
+    value: "number",
+    label: "Order Number",
+    type: "number",
+    slug: "number",
+  },
+  {
+    value: "userEmail",
+    label: "Customer Email",
+    type: "userEmail",
+    slug: "userEmail",
+  },
+  {
+    value: "voucherCode",
+    label: "Voucher Code",
+    type: "voucherCode",
+    slug: "voucherCode",
+  },
+  {
+    value: "linesCount",
+    label: "Number of Lines",
+    type: "linesCount",
+    slug: "linesCount",
+  },
+  {
+    value: "checkoutId",
+    label: "Checkout ID",
+    type: "checkoutId",
+    slug: "checkoutId",
+  },
+  {
+    value: "linesMetadata",
+    label: "Lines Metadata",
+    type: "linesMetadata",
+    slug: "linesMetadata",
+  },
+  {
+    value: "transactionsMetadata",
+    label: "Transactions Metadata",
+    type: "transactionsMetadata",
+    slug: "transactionsMetadata",
+  },
+  {
+    value: "transactionsPaymentType",
+    label: "Payment Type",
+    type: "transactionsPaymentType",
+    slug: "transactionsPaymentType",
+  },
+  {
+    value: "transactionsCardBrand",
+    label: "Card Brand",
+    type: "transactionsCardBrand",
+    slug: "transactionsCardBrand",
+  },
+  {
+    value: "fulfillmentsMetadata",
+    label: "Fulfillments Metadata",
+    type: "fulfillmentsMetadata",
+    slug: "fulfillmentsMetadata",
+  },
+  {
+    value: "billingPhoneNumber",
+    label: "Billing Phone",
+    type: "billingPhoneNumber",
+    slug: "billingPhoneNumber",
+  },
+  {
+    value: "billingCountry",
+    label: "Billing Country",
+    type: "billingCountry",
+    slug: "billingCountry",
+  },
+  {
+    value: "shippingPhoneNumber",
+    label: "Shipping Phone",
+    type: "shippingPhoneNumber",
+    slug: "shippingPhoneNumber",
+  },
+  {
+    value: "shippingCountry",
+    label: "Shipping Country",
+    type: "shippingCountry",
+    slug: "shippingCountry",
   },
 ];
 
@@ -454,10 +640,10 @@ export const STATIC_DRAFT_ORDER_OPTIONS: LeftOperand[] = [
     slug: "customer",
   },
   {
-    value: "created",
+    value: "createdAt",
     label: "Creation date",
-    type: "created",
-    slug: "created",
+    type: "createdAt",
+    slug: "createdAt",
   },
 ];
 

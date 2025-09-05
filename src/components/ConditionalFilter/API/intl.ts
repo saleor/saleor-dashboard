@@ -3,15 +3,16 @@ import {
   AttributeTypeEnum,
   CollectionPublished,
   DiscountStatusEnum,
+  FulfillmentStatus,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
   OrderStatusFilter,
-  PaymentChargeStatusEnum,
+  PaymentMethodTypeEnum,
   ProductTypeEnum,
   StaffMemberStatus,
   VoucherDiscountType,
 } from "@dashboard/graphql";
-import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
+import { transformOrderStatus } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
 import {
@@ -20,16 +21,13 @@ import {
   chargeStatusMessages,
   collectionFilterMessages,
   discountTypeMessages,
+  fulfillmentStatusMessages,
+  paymentMethodTypeMessages,
   productTypeMessages,
   staffMembersStatusMessages,
   voucherStatusMessages,
 } from "./messages";
 
-const getPaymentStatusLabel = (status: PaymentChargeStatusEnum, intl: IntlShape) => {
-  const { localized } = transformPaymentStatus(status, intl);
-
-  return localized;
-};
 
 const getOrderStatusLabel = (status: OrderStatusFilter, intl: IntlShape) => {
   const { localized } = transformOrderStatus(status, intl);
@@ -133,10 +131,40 @@ const getAttributeTypeLabel = (type: AttributeTypeEnum, intl: IntlShape) => {
   }
 };
 
+const getPaymentMethodTypeLabel = (type: PaymentMethodTypeEnum, intl: IntlShape) => {
+  switch (type) {
+    case PaymentMethodTypeEnum.CARD:
+      return intl.formatMessage(paymentMethodTypeMessages.card);
+    case PaymentMethodTypeEnum.OTHER:
+      return intl.formatMessage(paymentMethodTypeMessages.other);
+    default:
+      return type;
+  }
+};
+
+const getFulfillmentStatusLabel = (status: FulfillmentStatus, intl: IntlShape) => {
+  switch (status) {
+    case FulfillmentStatus.CANCELED:
+      return intl.formatMessage(fulfillmentStatusMessages.canceled);
+    case FulfillmentStatus.FULFILLED:
+      return intl.formatMessage(fulfillmentStatusMessages.fulfilled);
+    case FulfillmentStatus.REFUNDED:
+      return intl.formatMessage(fulfillmentStatusMessages.refunded);
+    case FulfillmentStatus.REFUNDED_AND_RETURNED:
+      return intl.formatMessage(fulfillmentStatusMessages.refundedAndReturned);
+    case FulfillmentStatus.REPLACED:
+      return intl.formatMessage(fulfillmentStatusMessages.replaced);
+    case FulfillmentStatus.RETURNED:
+      return intl.formatMessage(fulfillmentStatusMessages.returned);
+    case FulfillmentStatus.WAITING_FOR_APPROVAL:
+      return intl.formatMessage(fulfillmentStatusMessages.waitingForApproval);
+    default:
+      return status;
+  }
+};
+
 export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, intl: IntlShape) => {
   switch (rowType) {
-    case "paymentStatus":
-      return getPaymentStatusLabel(value as PaymentChargeStatusEnum, intl);
     case "status":
       return getOrderStatusLabel(value as OrderStatusFilter, intl);
     case "authorizeStatus":
@@ -155,6 +183,10 @@ export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, i
       return getStaffMemberStatusLabel(value as StaffMemberStatus, intl);
     case "attributeType":
       return getAttributeTypeLabel(value as AttributeTypeEnum, intl);
+    case "transactionsPaymentType":
+      return getPaymentMethodTypeLabel(value as PaymentMethodTypeEnum, intl);
+    case "fulfillmentStatus":
+      return getFulfillmentStatusLabel(value as FulfillmentStatus, intl);
     default:
       return value;
   }
