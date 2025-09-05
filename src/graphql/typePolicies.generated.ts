@@ -497,6 +497,125 @@ export type AssignNavigationFieldPolicy = {
 	menu?: FieldPolicy<any> | FieldReadFunction<any>,
 	menuErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type AssignedAttributeKeySpecifier = ('attribute' | AssignedAttributeKeySpecifier)[];
+export type AssignedAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedBooleanAttributeKeySpecifier = ('attribute' | 'value' | AssignedBooleanAttributeKeySpecifier)[];
+export type AssignedBooleanAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedChoiceAttributeValueKeySpecifier = ('name' | 'slug' | 'translation' | AssignedChoiceAttributeValueKeySpecifier)[];
+export type AssignedChoiceAttributeValueFieldPolicy = {
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
+	translation?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedDateAttributeKeySpecifier = ('attribute' | 'value' | AssignedDateAttributeKeySpecifier)[];
+export type AssignedDateAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedDateTimeAttributeKeySpecifier = ('attribute' | 'value' | AssignedDateTimeAttributeKeySpecifier)[];
+export type AssignedDateTimeAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedFileAttributeKeySpecifier = ('attribute' | 'value' | AssignedFileAttributeKeySpecifier)[];
+export type AssignedFileAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedMultiCategoryReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedMultiCategoryReferenceAttributeKeySpecifier)[];
+export type AssignedMultiCategoryReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedMultiChoiceAttributeKeySpecifier = ('attribute' | 'value' | AssignedMultiChoiceAttributeKeySpecifier)[];
+export type AssignedMultiChoiceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedMultiCollectionReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedMultiCollectionReferenceAttributeKeySpecifier)[];
+export type AssignedMultiCollectionReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedMultiPageReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedMultiPageReferenceAttributeKeySpecifier)[];
+export type AssignedMultiPageReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedMultiProductReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedMultiProductReferenceAttributeKeySpecifier)[];
+export type AssignedMultiProductReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedMultiProductVariantReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedMultiProductVariantReferenceAttributeKeySpecifier)[];
+export type AssignedMultiProductVariantReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedNumericAttributeKeySpecifier = ('attribute' | 'value' | AssignedNumericAttributeKeySpecifier)[];
+export type AssignedNumericAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedPlainTextAttributeKeySpecifier = ('attribute' | 'translation' | 'value' | AssignedPlainTextAttributeKeySpecifier)[];
+export type AssignedPlainTextAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	translation?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedSingleCategoryReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedSingleCategoryReferenceAttributeKeySpecifier)[];
+export type AssignedSingleCategoryReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedSingleChoiceAttributeKeySpecifier = ('attribute' | 'value' | AssignedSingleChoiceAttributeKeySpecifier)[];
+export type AssignedSingleChoiceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedSingleCollectionReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedSingleCollectionReferenceAttributeKeySpecifier)[];
+export type AssignedSingleCollectionReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedSinglePageReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedSinglePageReferenceAttributeKeySpecifier)[];
+export type AssignedSinglePageReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedSingleProductReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedSingleProductReferenceAttributeKeySpecifier)[];
+export type AssignedSingleProductReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedSingleProductVariantReferenceAttributeKeySpecifier = ('attribute' | 'value' | AssignedSingleProductVariantReferenceAttributeKeySpecifier)[];
+export type AssignedSingleProductVariantReferenceAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedSwatchAttributeKeySpecifier = ('attribute' | 'value' | AssignedSwatchAttributeKeySpecifier)[];
+export type AssignedSwatchAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedSwatchAttributeValueKeySpecifier = ('file' | 'hexColor' | 'name' | 'slug' | AssignedSwatchAttributeValueKeySpecifier)[];
+export type AssignedSwatchAttributeValueFieldPolicy = {
+	file?: FieldPolicy<any> | FieldReadFunction<any>,
+	hexColor?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	slug?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AssignedTextAttributeKeySpecifier = ('attribute' | 'translation' | 'value' | AssignedTextAttributeKeySpecifier)[];
+export type AssignedTextAttributeFieldPolicy = {
+	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	translation?: FieldPolicy<any> | FieldReadFunction<any>,
+	value?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type AssignedVariantAttributeKeySpecifier = ('attribute' | 'variantSelection' | AssignedVariantAttributeKeySpecifier)[];
 export type AssignedVariantAttributeFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2073,10 +2192,6 @@ export type GatewayConfigLineFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	value?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type GenericPaymentMethodDetailsKeySpecifier = ('name' | GenericPaymentMethodDetailsKeySpecifier)[];
-export type GenericPaymentMethodDetailsFieldPolicy = {
-	name?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type GiftCardKeySpecifier = ('app' | 'boughtInChannel' | 'code' | 'created' | 'createdBy' | 'createdByEmail' | 'currentBalance' | 'displayCode' | 'endDate' | 'events' | 'expiryDate' | 'id' | 'initialBalance' | 'isActive' | 'last4CodeChars' | 'lastUsedOn' | 'metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'product' | 'startDate' | 'tags' | 'usedBy' | 'usedByEmail' | 'user' | GiftCardKeySpecifier)[];
 export type GiftCardFieldPolicy = {
 	app?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3628,8 +3743,10 @@ export type OtherPaymentMethodDetailsKeySpecifier = ('name' | OtherPaymentMethod
 export type OtherPaymentMethodDetailsFieldPolicy = {
 	name?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PageKeySpecifier = ('attribute' | 'attributes' | 'content' | 'contentJson' | 'created' | 'id' | 'isPublished' | 'metadata' | 'metafield' | 'metafields' | 'pageType' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'publicationDate' | 'publishedAt' | 'seoDescription' | 'seoTitle' | 'slug' | 'title' | 'translation' | PageKeySpecifier)[];
+export type PageKeySpecifier = ('assignedAttribute' | 'assignedAttributes' | 'attribute' | 'attributes' | 'content' | 'contentJson' | 'created' | 'id' | 'isPublished' | 'metadata' | 'metafield' | 'metafields' | 'pageType' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'publicationDate' | 'publishedAt' | 'seoDescription' | 'seoTitle' | 'slug' | 'title' | 'translation' | PageKeySpecifier)[];
 export type PageFieldPolicy = {
+	assignedAttribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	assignedAttributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	content?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4033,6 +4150,10 @@ export type PaymentListGatewaysFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PaymentMethodDetailsKeySpecifier = ('name' | PaymentMethodDetailsKeySpecifier)[];
+export type PaymentMethodDetailsFieldPolicy = {
+	name?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type PaymentMethodInitializeTokenizationKeySpecifier = ('data' | 'errors' | 'id' | 'result' | PaymentMethodInitializeTokenizationKeySpecifier)[];
 export type PaymentMethodInitializeTokenizationFieldPolicy = {
 	data?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4241,8 +4362,10 @@ export type PreorderThresholdFieldPolicy = {
 	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
 	soldUnits?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductKeySpecifier = ('attribute' | 'attributes' | 'availableForPurchase' | 'availableForPurchaseAt' | 'category' | 'channel' | 'channelListings' | 'chargeTaxes' | 'collections' | 'created' | 'defaultVariant' | 'description' | 'descriptionJson' | 'externalReference' | 'id' | 'imageById' | 'images' | 'isAvailable' | 'isAvailableForPurchase' | 'media' | 'mediaById' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'pricing' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productType' | 'productVariants' | 'rating' | 'seoDescription' | 'seoTitle' | 'slug' | 'taxClass' | 'taxType' | 'thumbnail' | 'translation' | 'updatedAt' | 'variant' | 'variants' | 'weight' | ProductKeySpecifier)[];
+export type ProductKeySpecifier = ('assignedAttribute' | 'assignedAttributes' | 'attribute' | 'attributes' | 'availableForPurchase' | 'availableForPurchaseAt' | 'category' | 'channel' | 'channelListings' | 'chargeTaxes' | 'collections' | 'created' | 'defaultVariant' | 'description' | 'descriptionJson' | 'externalReference' | 'id' | 'imageById' | 'images' | 'isAvailable' | 'isAvailableForPurchase' | 'media' | 'mediaById' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'pricing' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productType' | 'productVariants' | 'rating' | 'seoDescription' | 'seoTitle' | 'slug' | 'taxClass' | 'taxType' | 'thumbnail' | 'translation' | 'updatedAt' | 'variant' | 'variants' | 'weight' | ProductKeySpecifier)[];
 export type ProductFieldPolicy = {
+	assignedAttribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	assignedAttributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	availableForPurchase?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4658,8 +4781,10 @@ export type ProductUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductVariantKeySpecifier = ('attributes' | 'channel' | 'channelListings' | 'created' | 'digitalContent' | 'externalReference' | 'id' | 'images' | 'margin' | 'media' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'preorder' | 'pricing' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'product' | 'quantityAvailable' | 'quantityLimitPerCustomer' | 'quantityOrdered' | 'revenue' | 'sku' | 'stocks' | 'trackInventory' | 'translation' | 'updatedAt' | 'weight' | ProductVariantKeySpecifier)[];
+export type ProductVariantKeySpecifier = ('assignedAttribute' | 'assignedAttributes' | 'attributes' | 'channel' | 'channelListings' | 'created' | 'digitalContent' | 'externalReference' | 'id' | 'images' | 'margin' | 'media' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'preorder' | 'pricing' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'product' | 'quantityAvailable' | 'quantityLimitPerCustomer' | 'quantityOrdered' | 'revenue' | 'sku' | 'stocks' | 'trackInventory' | 'translation' | 'updatedAt' | 'weight' | ProductVariantKeySpecifier)[];
 export type ProductVariantFieldPolicy = {
+	assignedAttribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	assignedAttributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	channel?: FieldPolicy<any> | FieldReadFunction<any>,
 	channelListings?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -7274,6 +7399,98 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | AssignNavigationKeySpecifier | (() => undefined | AssignNavigationKeySpecifier),
 		fields?: AssignNavigationFieldPolicy,
 	},
+	AssignedAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedAttributeKeySpecifier | (() => undefined | AssignedAttributeKeySpecifier),
+		fields?: AssignedAttributeFieldPolicy,
+	},
+	AssignedBooleanAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedBooleanAttributeKeySpecifier | (() => undefined | AssignedBooleanAttributeKeySpecifier),
+		fields?: AssignedBooleanAttributeFieldPolicy,
+	},
+	AssignedChoiceAttributeValue?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedChoiceAttributeValueKeySpecifier | (() => undefined | AssignedChoiceAttributeValueKeySpecifier),
+		fields?: AssignedChoiceAttributeValueFieldPolicy,
+	},
+	AssignedDateAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedDateAttributeKeySpecifier | (() => undefined | AssignedDateAttributeKeySpecifier),
+		fields?: AssignedDateAttributeFieldPolicy,
+	},
+	AssignedDateTimeAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedDateTimeAttributeKeySpecifier | (() => undefined | AssignedDateTimeAttributeKeySpecifier),
+		fields?: AssignedDateTimeAttributeFieldPolicy,
+	},
+	AssignedFileAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedFileAttributeKeySpecifier | (() => undefined | AssignedFileAttributeKeySpecifier),
+		fields?: AssignedFileAttributeFieldPolicy,
+	},
+	AssignedMultiCategoryReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedMultiCategoryReferenceAttributeKeySpecifier | (() => undefined | AssignedMultiCategoryReferenceAttributeKeySpecifier),
+		fields?: AssignedMultiCategoryReferenceAttributeFieldPolicy,
+	},
+	AssignedMultiChoiceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedMultiChoiceAttributeKeySpecifier | (() => undefined | AssignedMultiChoiceAttributeKeySpecifier),
+		fields?: AssignedMultiChoiceAttributeFieldPolicy,
+	},
+	AssignedMultiCollectionReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedMultiCollectionReferenceAttributeKeySpecifier | (() => undefined | AssignedMultiCollectionReferenceAttributeKeySpecifier),
+		fields?: AssignedMultiCollectionReferenceAttributeFieldPolicy,
+	},
+	AssignedMultiPageReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedMultiPageReferenceAttributeKeySpecifier | (() => undefined | AssignedMultiPageReferenceAttributeKeySpecifier),
+		fields?: AssignedMultiPageReferenceAttributeFieldPolicy,
+	},
+	AssignedMultiProductReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedMultiProductReferenceAttributeKeySpecifier | (() => undefined | AssignedMultiProductReferenceAttributeKeySpecifier),
+		fields?: AssignedMultiProductReferenceAttributeFieldPolicy,
+	},
+	AssignedMultiProductVariantReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedMultiProductVariantReferenceAttributeKeySpecifier | (() => undefined | AssignedMultiProductVariantReferenceAttributeKeySpecifier),
+		fields?: AssignedMultiProductVariantReferenceAttributeFieldPolicy,
+	},
+	AssignedNumericAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedNumericAttributeKeySpecifier | (() => undefined | AssignedNumericAttributeKeySpecifier),
+		fields?: AssignedNumericAttributeFieldPolicy,
+	},
+	AssignedPlainTextAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedPlainTextAttributeKeySpecifier | (() => undefined | AssignedPlainTextAttributeKeySpecifier),
+		fields?: AssignedPlainTextAttributeFieldPolicy,
+	},
+	AssignedSingleCategoryReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedSingleCategoryReferenceAttributeKeySpecifier | (() => undefined | AssignedSingleCategoryReferenceAttributeKeySpecifier),
+		fields?: AssignedSingleCategoryReferenceAttributeFieldPolicy,
+	},
+	AssignedSingleChoiceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedSingleChoiceAttributeKeySpecifier | (() => undefined | AssignedSingleChoiceAttributeKeySpecifier),
+		fields?: AssignedSingleChoiceAttributeFieldPolicy,
+	},
+	AssignedSingleCollectionReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedSingleCollectionReferenceAttributeKeySpecifier | (() => undefined | AssignedSingleCollectionReferenceAttributeKeySpecifier),
+		fields?: AssignedSingleCollectionReferenceAttributeFieldPolicy,
+	},
+	AssignedSinglePageReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedSinglePageReferenceAttributeKeySpecifier | (() => undefined | AssignedSinglePageReferenceAttributeKeySpecifier),
+		fields?: AssignedSinglePageReferenceAttributeFieldPolicy,
+	},
+	AssignedSingleProductReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedSingleProductReferenceAttributeKeySpecifier | (() => undefined | AssignedSingleProductReferenceAttributeKeySpecifier),
+		fields?: AssignedSingleProductReferenceAttributeFieldPolicy,
+	},
+	AssignedSingleProductVariantReferenceAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedSingleProductVariantReferenceAttributeKeySpecifier | (() => undefined | AssignedSingleProductVariantReferenceAttributeKeySpecifier),
+		fields?: AssignedSingleProductVariantReferenceAttributeFieldPolicy,
+	},
+	AssignedSwatchAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedSwatchAttributeKeySpecifier | (() => undefined | AssignedSwatchAttributeKeySpecifier),
+		fields?: AssignedSwatchAttributeFieldPolicy,
+	},
+	AssignedSwatchAttributeValue?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedSwatchAttributeValueKeySpecifier | (() => undefined | AssignedSwatchAttributeValueKeySpecifier),
+		fields?: AssignedSwatchAttributeValueFieldPolicy,
+	},
+	AssignedTextAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AssignedTextAttributeKeySpecifier | (() => undefined | AssignedTextAttributeKeySpecifier),
+		fields?: AssignedTextAttributeFieldPolicy,
+	},
 	AssignedVariantAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AssignedVariantAttributeKeySpecifier | (() => undefined | AssignedVariantAttributeKeySpecifier),
 		fields?: AssignedVariantAttributeFieldPolicy,
@@ -8102,10 +8319,6 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | GatewayConfigLineKeySpecifier | (() => undefined | GatewayConfigLineKeySpecifier),
 		fields?: GatewayConfigLineFieldPolicy,
 	},
-	GenericPaymentMethodDetails?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | GenericPaymentMethodDetailsKeySpecifier | (() => undefined | GenericPaymentMethodDetailsKeySpecifier),
-		fields?: GenericPaymentMethodDetailsFieldPolicy,
-	},
 	GiftCard?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | GiftCardKeySpecifier | (() => undefined | GiftCardKeySpecifier),
 		fields?: GiftCardFieldPolicy,
@@ -8913,6 +9126,10 @@ export type StrictTypedTypePolicies = {
 	PaymentListGateways?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentListGatewaysKeySpecifier | (() => undefined | PaymentListGatewaysKeySpecifier),
 		fields?: PaymentListGatewaysFieldPolicy,
+	},
+	PaymentMethodDetails?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PaymentMethodDetailsKeySpecifier | (() => undefined | PaymentMethodDetailsKeySpecifier),
+		fields?: PaymentMethodDetailsFieldPolicy,
 	},
 	PaymentMethodInitializeTokenization?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PaymentMethodInitializeTokenizationKeySpecifier | (() => undefined | PaymentMethodInitializeTokenizationKeySpecifier),
