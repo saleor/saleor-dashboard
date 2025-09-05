@@ -20,6 +20,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
+import useReferenceTypeSearch from "@dashboard/searches/useReferenceTypeSearch";
 import { ListViews, ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -207,24 +208,31 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   );
 
   const [isAssignRefTypesOpen, setAssignRefTypesOpen] = React.useState(false);
-  const [selectedReferenceProductTypes, setSelectedReferenceProductTypes] = React.useState<
+  const [selectedReferenceTypes, setSelectedReferenceTypes] = React.useState<
     Array<{ label: string; value: string }>
   >([]);
+
   const {
-    loadMore: loadMoreProductTypes,
-    search: searchProductTypes,
-    result: searchProductTypesOpts,
-  } = useProductTypeSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const productTypes = mapEdgesToItems(searchProductTypesOpts.data?.search);
-  const fetchMoreProductTypes = getSearchFetchMoreProps(searchProductTypesOpts, loadMoreProductTypes);
+    loadMore: loadMoreReferenceTypes,
+    search: searchReferenceTypes,
+    result: searchReferenceTypesOpts,
+  } = useReferenceTypeSearch(
+    data?.attribute?.entityType,
+    {variables: DEFAULT_INITIAL_SEARCH_DATA},
+  );
+const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
+  searchReferenceTypesOpts.data?.search,
+);
+const fetchMoreReferenceTypes = getSearchFetchMoreProps(
+  searchReferenceTypesOpts,
+  loadMoreReferenceTypes,
+);
 
   const handleRemoveReferenceType = (id: string) =>
-    setSelectedReferenceProductTypes(prev => prev.filter(o => o.value !== id));
+    setSelectedReferenceTypes(prev => prev.filter(o => o.value !== id));
 
   const handleSubmitReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
-    setSelectedReferenceProductTypes(prev => {
+    setSelectedReferenceTypes(prev => {
       const prevIds = new Set(prev.map(p => p.value));
       const additions = selected
         .filter((s: { id: string; name: string }) => !prevIds.has(s.id))
@@ -263,7 +271,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
       onAssignReferenceTypesClick={() => setAssignRefTypesOpen(true)}
-      selectedReferenceProductTypes={selectedReferenceProductTypes}
+      selectedReferenceTypes={selectedReferenceTypes}
       onRemoveReferenceType={handleRemoveReferenceType}
     >
       {attributeFormData => (
@@ -351,16 +359,16 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
             }
           />
         <AssignReferenceTypesDialog
-          key={selectedReferenceProductTypes.map(o => o.value).sort().join("|")}
+          key={selectedReferenceTypes.map(o => o.value).sort().join("|")}
           open={isAssignRefTypesOpen}
           onClose={() => setAssignRefTypesOpen(false)}
           confirmButtonState={"default"}
-          loading={Boolean(fetchMoreProductTypes?.loading)}
-          selectedReferenceTypesIds={selectedReferenceProductTypes.map(o => o.value)}
-          referenceTypes={(productTypes ?? []).map(pt => ({ id: pt.id, name: pt.name }))}
-          hasMore={fetchMoreProductTypes?.hasMore}
-          onFetchMore={fetchMoreProductTypes?.onFetchMore}
-          onFetch={searchProductTypes}
+          loading={Boolean(fetchMoreReferenceTypes?.loading)}
+          selectedReferenceTypesIds={selectedReferenceTypes.map(o => o.value)}
+          referenceTypes={(referenceTypes ?? []).map(pt => ({ id: pt.id, name: pt.name }))}
+          hasMore={fetchMoreReferenceTypes?.hasMore}
+          onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
+          onFetch={searchReferenceTypes}
           onSubmit={handleSubmitReferenceTypes}
         />
         </>
