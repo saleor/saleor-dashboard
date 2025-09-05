@@ -301,4 +301,28 @@ export const dynamicOperandsQueries = gql`
       }
     }
   }
+
+  query _GetWarehouseChoices($first: Int!, $query: String!) {
+    warehouses(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
+  query _SearchWarehouseOperands($first: Int!, $warehouseSlugs: [String!]) {
+    warehouses(first: $first, filter: { slugs: $warehouseSlugs }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
 `;

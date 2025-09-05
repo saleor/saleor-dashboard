@@ -1,9 +1,13 @@
 import { useApolloClient } from "@apollo/client";
+import { ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import { OrderFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
   _GetLegacyChannelOperandsDocument,
   _GetLegacyChannelOperandsQuery,
   _GetLegacyChannelOperandsQueryVariables,
+  _SearchWarehouseOperandsDocument,
+  _SearchWarehouseOperandsQuery,
+  _SearchWarehouseOperandsQueryVariables,
   CountryCode,
   FulfillmentStatus,
   OrderAuthorizeStatusEnum,
@@ -14,7 +18,7 @@ import {
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { EnumValuesHandler } from "../../Handler";
+import { createOptionsFromAPI, EnumValuesHandler } from "../../Handler";
 import { createInitialOrderState } from "../helpers";
 import { InitialOrderAPIResponse } from "../types";
 import { InitialOrderStateResponse } from "./InitialOrderState";
@@ -71,6 +75,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     billingCountry,
     shippingPhoneNumber,
     shippingCountry,
+    fulfillmentWarehouse,
   }: OrderFetchingParams) => {
     if (channels.length > 0) {
       queriesToRun.push(
@@ -78,6 +83,22 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
           query: _GetLegacyChannelOperandsDocument,
         }),
       );
+    }
+
+
+    if (fulfillmentWarehouse.length > 0) {
+      queriesToRun.push(
+        client.query<
+          _SearchWarehouseOperandsQuery,
+          _SearchWarehouseOperandsQueryVariables
+        >({
+          query: _SearchWarehouseOperandsDocument,
+          variables: {
+            first: fulfillmentWarehouse.length,
+            warehouseSlugs: fulfillmentWarehouse,
+          },
+        })
+      )
     }
 
     const chargeStatusInit = new EnumValuesHandler(
@@ -153,6 +174,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
       billingCountry: await billingCountryInit.fetch(),
       shippingPhoneNumber: mapTextToOptions(shippingPhoneNumber, "shippingPhoneNumber"),
       shippingCountry: await shippingCountryInit.fetch(),
+      fulfillmentWarehouse: baseState.fulfillmentWarehouse,
     };
 
     setData(
@@ -189,6 +211,7 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
         initialState.billingCountry,
         initialState.shippingPhoneNumber,
         initialState.shippingCountry,
+        initialState.fulfillmentWarehouse,
       ),
     );
     setLoading(false);

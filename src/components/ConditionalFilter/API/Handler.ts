@@ -37,6 +37,9 @@ import {
   _GetProductVariantChoicesDocument,
   _GetProductVariantChoicesQuery,
   _GetProductVariantChoicesQueryVariables,
+  _GetWarehouseChoicesDocument,
+  _GetWarehouseChoicesQuery,
+  _GetWarehouseChoicesQueryVariables,
   ChannelCurrenciesDocument,
   ChannelCurrenciesQuery,
   ChannelCurrenciesQueryVariables,
@@ -320,6 +323,28 @@ export class GiftCardTagsHandler implements Handler {
         slug: node.name,
       })) ?? []
     );
+  };
+}
+
+export class WarehouseHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetWarehouseChoicesQuery,
+      _GetWarehouseChoicesQueryVariables
+    >({
+      query: _GetWarehouseChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return createOptionsFromAPI(data.warehouses?.edges ?? []);
   };
 }
 

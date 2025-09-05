@@ -33,6 +33,7 @@ export interface OrderFetchingParams {
   billingCountry: string[];
   shippingPhoneNumber: string[];
   shippingCountry: string[];
+  fulfillmentWarehouse: string[];
 }
 
 export interface VoucherFetchingParams {
@@ -113,6 +114,7 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
   billingCountry: [],
   shippingPhoneNumber: [],
   shippingCountry: [],
+  fulfillmentWarehouse: [],
 };
 
 export const emptyVoucherFetchingParams: VoucherFetchingParams = {

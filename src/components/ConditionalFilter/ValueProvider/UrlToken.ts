@@ -45,6 +45,7 @@ const ORDER_STATICS = [
   "billingCountry",
   "shippingPhoneNumber",
   "shippingCountry",
+  "fulfillmentWarehouse",
 ];
 
 const VOUCHER_STATICS = ["channel", "discountType", "voucherStatus"];
