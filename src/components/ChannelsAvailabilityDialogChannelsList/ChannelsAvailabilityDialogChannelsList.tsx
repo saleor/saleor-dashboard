@@ -3,7 +3,6 @@ import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 export const useStyles = makeStyles(
   theme => ({

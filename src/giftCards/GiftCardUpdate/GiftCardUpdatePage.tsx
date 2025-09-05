@@ -8,7 +8,6 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import useGiftCardDetails from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Divider } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { giftCardsListPath } from "../urls";
 import GiftCardHistory from "./GiftCardHistory/GiftCardHistory";

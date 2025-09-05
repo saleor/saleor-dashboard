@@ -4,7 +4,7 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableCell, TableHead } from "@material-ui/core";
 import { Button, ChervonDownIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";

@@ -15,7 +15,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { Box, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { AddExtensionDropdown } from "./components/AddExtensionDropdown";

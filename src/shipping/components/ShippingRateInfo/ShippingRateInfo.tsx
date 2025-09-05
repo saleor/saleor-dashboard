@@ -11,7 +11,6 @@ import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({

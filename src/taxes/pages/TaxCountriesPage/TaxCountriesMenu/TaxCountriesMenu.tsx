@@ -8,7 +8,7 @@ import { Card, CardContent, Divider } from "@material-ui/core";
 import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
 import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -54,7 +54,7 @@ export const TaxCountriesMenu = ({
           </ListHeader>
           <Divider />
           {configurations?.map((config, configIndex) => (
-            <React.Fragment key={config.country.code}>
+            <Fragment key={config.country.code}>
               <ListItemLink
                 data-test-id="countries-list-rows"
                 className={clsx(classes.clickable, classes.tableRow, {
@@ -78,7 +78,7 @@ export const TaxCountriesMenu = ({
                 </ListItemCell>
               </ListItemLink>
               {!isLastElement(configurations, configIndex) && <Divider />}
-            </React.Fragment>
+            </Fragment>
           )) ?? <Skeleton />}
         </List>
       )}

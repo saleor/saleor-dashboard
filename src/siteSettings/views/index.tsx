@@ -6,7 +6,6 @@ import {
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, findInEnum } from "../../misc";

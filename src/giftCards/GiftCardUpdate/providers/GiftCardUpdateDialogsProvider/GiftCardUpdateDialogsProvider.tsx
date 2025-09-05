@@ -3,7 +3,7 @@ import GiftCardUpdatePageDeleteDialog from "@dashboard/giftCards/components/Gift
 import { giftCardsListPath, giftCardUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React, { createContext } from "react";
+import { createContext } from "react";
 
 import GiftCardResendCodeDialog from "../../GiftCardResendCodeDialog";
 import GiftCardUpdateBalanceDialog from "../../GiftCardUpdateBalanceDialog";

@@ -1,4 +1,4 @@
-import React from "react";
+import { cloneElement,isValidElement } from "react";
 
 export interface TableButtonWrapper {
   children: React.ReactElement<{
@@ -35,8 +35,8 @@ export const TableButtonWrapper = <T extends HTMLElement>({ children }: TableBut
     }
   };
 
-  if (React.isValidElement(children)) {
-    return React.cloneElement(children, { ...children.props, onClick });
+  if (isValidElement(children)) {
+    return cloneElement(children, { ...children.props, onClick });
   }
 
   return children;

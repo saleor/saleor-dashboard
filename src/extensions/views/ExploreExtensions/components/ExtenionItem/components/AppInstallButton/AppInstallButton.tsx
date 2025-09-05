@@ -8,7 +8,6 @@ import { useFlag } from "@dashboard/featureFlags";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {

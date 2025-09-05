@@ -1,6 +1,5 @@
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { WebhookFormData } from "../WebhookDetailsPage";

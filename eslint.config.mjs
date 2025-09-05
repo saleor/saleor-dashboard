@@ -29,6 +29,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.recommended, // Note: we can migrate to rules using TypeScript types
   react.configs.flat.recommended,
+  react.configs.flat["jsx-runtime"],
   reactHooks.configs["recommended-latest"],
   reactRefresh.configs.vite,
 
@@ -159,7 +160,15 @@ export default tseslint.config(
       "no-restricted-imports": [
         "error",
         {
-          paths: ["lodash", "classnames"],
+          paths: [
+            "lodash",
+            "classnames",
+            {
+              name: "react",
+              importNames: ["default", "React"],
+              message: "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
+            }
+          ],
         },
       ],
     },
@@ -226,7 +235,7 @@ export default tseslint.config(
             {
               name: "moment-timezone",
               message: "Use react-intl formatDate instead of moment-timezone.",
-            },
+            }
           ],
         },
       ],

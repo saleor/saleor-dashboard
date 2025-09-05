@@ -5,7 +5,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import reduce from "lodash/reduce";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const useStyles = makeStyles(

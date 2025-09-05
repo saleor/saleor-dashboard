@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import React from "react";
 
 import { ListSettings } from "../../types";
 import { TablePagination } from "./TablePagination";

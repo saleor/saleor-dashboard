@@ -1,14 +1,14 @@
-import React from "react";
+import { createContext, useContext, useRef } from "react";
 
 interface SavebarRefContext {
   anchor: React.RefObject<HTMLDivElement | null>;
   setAnchor: (element: HTMLDivElement | null) => void;
 }
 
-export const SavebarRefContext = React.createContext<SavebarRefContext | null>(null);
+export const SavebarRefContext = createContext<SavebarRefContext | null>(null);
 
 export const useSavebarRef = () => {
-  const context = React.useContext(SavebarRefContext);
+  const context = useContext(SavebarRefContext);
 
   if (!context) {
     throw new Error("You are trying to use SavebarRefContext outside of its provider");
@@ -18,7 +18,7 @@ export const useSavebarRef = () => {
 };
 
 export const SavebarRefProvider = ({ children }: { children: React.ReactNode }) => {
-  const anchor = React.useRef<HTMLDivElement | null>(null);
+  const anchor = useRef<HTMLDivElement | null>(null);
 
   const setAnchor = (element: HTMLDivElement | null) => {
     anchor.current = element;

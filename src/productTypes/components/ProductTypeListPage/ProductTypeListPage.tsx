@@ -11,7 +11,7 @@ import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPageProps, ListActions, PageListProps, SortPage } from "../../../types";

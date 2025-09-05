@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import useShop from "@dashboard/hooks/useShop";
-import React from "react";
 
 import { maybe } from "../../misc";
 import TranslationsLanguageListPage from "../components/TranslationsLanguageListPage";

@@ -3,7 +3,6 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { ChannelFragment } from "@dashboard/graphql";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 export interface OrderChannelSectionCardProps {

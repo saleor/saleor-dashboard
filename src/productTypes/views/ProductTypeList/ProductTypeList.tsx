@@ -23,7 +23,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { Button, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
@@ -60,7 +60,7 @@ export const ProductTypeList = ({ params }: ProductTypeListProps) => {
   usePaginationReset(productTypeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -68,7 +68,7 @@ export const ProductTypeList = ({ params }: ProductTypeListProps) => {
     }),
     [params, settings.rowNumber],
   );
-  const newQueryVariables = React.useMemo(
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

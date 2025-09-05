@@ -8,7 +8,6 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 import clsx from "clsx";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { SimpleRadioGroupField } from "../SimpleRadioGroupField";

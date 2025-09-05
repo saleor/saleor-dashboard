@@ -11,7 +11,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CustomAppInformation from "../CustomAppInformation";

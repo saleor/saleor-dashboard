@@ -4,7 +4,6 @@ import { OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { StatusPill } from "./status-pill";

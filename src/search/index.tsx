@@ -2,7 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { useGlobalSearchQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { WindowTitle } from "../components/WindowTitle";

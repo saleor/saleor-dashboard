@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import React, { PropsWithChildren, useContext } from "react";
+import { PropsWithChildren, useContext } from "react";
 
 import { MessageContext } from ".";
 import MessageManagerProvider from "./MessageManagerProvider";

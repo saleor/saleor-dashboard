@@ -5,7 +5,6 @@ import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";

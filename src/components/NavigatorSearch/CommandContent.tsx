@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import { globalSearchUrl } from "@dashboard/search/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { getShortcutLeadingKey } from "../Sidebar/shortcuts/utils";

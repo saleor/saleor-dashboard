@@ -2,7 +2,7 @@
 import { FileFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import { createRef, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 export interface FileChoiceType {
@@ -29,14 +29,14 @@ const FileUploadField = (props: FileUploadFieldProps) => {
   const { loading, disabled, file, error, helperText, onFileUpload, onFileDelete, inputProps } =
     props;
   const intl = useIntl();
-  const fileInputAnchor = React.createRef<HTMLInputElement>();
+  const fileInputAnchor = createRef<HTMLInputElement>();
   const clickFileInput = () => fileInputAnchor.current.click();
   const handleFileDelete = () => {
     fileInputAnchor.current.value = "";
     onFileDelete();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!file.value) {
       fileInputAnchor.current.value = "";
     }

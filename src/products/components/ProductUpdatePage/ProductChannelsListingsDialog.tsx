@@ -4,7 +4,6 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { DialogProps } from "@dashboard/types";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import { toggle } from "@dashboard/utils/lists";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { ProductUpdateData } from "./types";

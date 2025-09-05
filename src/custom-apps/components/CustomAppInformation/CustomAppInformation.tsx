@@ -6,7 +6,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(

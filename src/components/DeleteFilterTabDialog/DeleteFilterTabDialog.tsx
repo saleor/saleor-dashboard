@@ -1,6 +1,5 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "../ActionDialog";

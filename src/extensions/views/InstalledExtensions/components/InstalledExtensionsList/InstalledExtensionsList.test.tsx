@@ -1,6 +1,5 @@
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { fireEvent, render, screen } from "@testing-library/react";
-import React from "react";
 import { FormattedMessageProps } from "react-intl";
 
 import { InstalledExtensionsList } from "./InstalledExtensionsList";

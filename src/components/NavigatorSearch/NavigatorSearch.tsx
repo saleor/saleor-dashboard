@@ -1,4 +1,3 @@
-import React from "react";
 import { HotkeysProvider, useHotkeys } from "react-hotkeys-hook";
 
 import { DashboardModal } from "../Modal";

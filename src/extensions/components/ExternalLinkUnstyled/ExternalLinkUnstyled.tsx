@@ -1,6 +1,6 @@
 import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import { TextProps } from "@saleor/macaw-ui-next";
-import React, { HTMLAttributes } from "react";
+import { HTMLAttributes } from "react";
 
 export const ExternalLinkUnstyled = (
   props: TextProps & Omit<HTMLAttributes<HTMLAnchorElement>, "children">,

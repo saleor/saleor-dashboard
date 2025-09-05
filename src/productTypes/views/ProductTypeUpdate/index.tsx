@@ -32,7 +32,7 @@ import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMor
 import { ReorderEvent } from "@dashboard/types";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductTypeDetailsPage, { ProductTypeForm } from "../../components/ProductTypeDetailsPage";
@@ -56,7 +56,7 @@ export const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       id,
     },
   });
-  const [errors, setErrors] = React.useState({
+  const [errors, setErrors] = useState({
     addAttributeErrors: [],
     editAttributeErrors: [],
     formErrors: [],
@@ -98,7 +98,7 @@ export const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     });
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-  const [selectedVariantAttributes, setSelectedVariantAttributes] = React.useState<string[]>([]);
+  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<string[]>([]);
   const handleProductTypeUpdate = async (formData: ProductTypeForm) => {
     const operations = formData.variantAttributes.map(variantAttribute => ({
       id: variantAttribute.value,

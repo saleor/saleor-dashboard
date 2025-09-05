@@ -5,7 +5,7 @@ import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { codes } from "keycode";
-import React from "react";
+import { useRef,useState } from "react";
 
 import Link from "../Link";
 import { useStyles } from "./styles";
@@ -20,10 +20,10 @@ export interface LinkChoiceProps {
 
 const LinkChoice = ({ className, choices, name, value, onChange }: LinkChoiceProps) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchor = React.useRef<HTMLInputElement>(null);
+  const [open, setOpen] = useState(false);
+  const anchor = useRef<HTMLInputElement>(null);
   const current = choices.find(c => c.value === value);
-  const [highlightedIndex, setHighlightedIndex] = React.useState(0);
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
   const handleChange = (value: string) => {
     setOpen(false);
     onChange({

@@ -4,7 +4,6 @@ import { getGiftCardSettingsErrorMessage } from "@dashboard/giftCards/GiftCardSe
 import { GiftCardSettingsErrorFragment, TimePeriodTypeEnum } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TimePeriodField from "../TimePeriodField/TimePeriodField";

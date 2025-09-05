@@ -13,7 +13,6 @@ import {
 } from "@dashboard/products/components/ProductExportDialog/types";
 import { DialogProps } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";

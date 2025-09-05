@@ -6,7 +6,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { DialogProps, FetchMoreProps, Node } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
-import React from "react";
+import { useState } from "react";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
@@ -61,7 +61,7 @@ const AssignContainerDialog = (props: AssignContainerDialogProps) => {
   } = props;
   const classes = useStyles(props);
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedContainers, setSelectedContainers] = React.useState<Container[]>([]);
+  const [selectedContainers, setSelectedContainers] = useState<Container[]>([]);
   const handleSubmit = () => onSubmit(selectedContainers);
   const handleClose = () => {
     queryReset();

@@ -1,6 +1,5 @@
 import { Pill } from "@dashboard/components/Pill";
 import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
-import React from "react";
 
 interface OrderTransactionRefundStatusPillProps {
   status: OrderGrantedRefundStatusEnum;

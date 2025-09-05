@@ -20,7 +20,7 @@ import { CircularProgress } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
-import React, {
+import {
   MutableRefObject,
   ReactElement,
   ReactNode,

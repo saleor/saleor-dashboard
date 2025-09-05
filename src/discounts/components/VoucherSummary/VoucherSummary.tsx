@@ -9,7 +9,6 @@ import { DiscountValueTypeEnum, VoucherDetailsFragment } from "@dashboard/graphq
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { translateVoucherTypes } from "../../translations";

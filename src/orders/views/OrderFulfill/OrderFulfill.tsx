@@ -19,7 +19,6 @@ import {
   orderUrl,
 } from "@dashboard/orders/urls";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
 import { useIntl } from "react-intl";
 
 export interface OrderFulfillProps {

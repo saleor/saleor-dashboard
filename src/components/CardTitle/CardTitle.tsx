@@ -1,5 +1,4 @@
 import { CardHeader } from "@material-ui/core";
-import React from "react";
 
 interface CardTitleProps {
   children?: React.ReactNode;

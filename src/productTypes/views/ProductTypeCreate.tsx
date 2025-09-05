@@ -11,7 +11,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors } from "../../misc";

@@ -6,7 +6,6 @@ import { CustomerDetailsFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 

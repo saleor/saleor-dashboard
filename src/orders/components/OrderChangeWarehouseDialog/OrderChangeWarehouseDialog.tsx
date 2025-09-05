@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core";
 import { Button, isScrolledToBottom, SearchIcon, useElementScroll } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useEffect,useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { changeWarehouseDialogMessages as messages } from "./messages";
@@ -44,10 +44,10 @@ export const OrderChangeWarehouseDialog = ({
   const intl = useIntl();
   const { anchor, position, setAnchor } = useElementScroll();
   const bottomShadow = !isScrolledToBottom(anchor, position, 20);
-  const [query, setQuery] = React.useState<string>("");
-  const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string | null>(null);
+  const [query, setQuery] = useState<string>("");
+  const [selectedWarehouseId, setSelectedWarehouseId] = useState<string | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentWarehouseId) {
       setSelectedWarehouseId(currentWarehouseId);
     }
@@ -75,7 +75,7 @@ export const OrderChangeWarehouseDialog = ({
     onClose();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!bottomShadow) {
       loadMore();
     }

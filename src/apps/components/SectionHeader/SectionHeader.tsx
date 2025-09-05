@@ -1,5 +1,5 @@
 import { Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { useStyles } from "./styles";
 

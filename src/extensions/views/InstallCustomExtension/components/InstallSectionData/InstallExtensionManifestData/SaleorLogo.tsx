@@ -2,7 +2,6 @@ import saleorLogoDarkMode from "@assets/images/sidebar-deafult-logo-darkMode.png
 import saleorLogoLightMode from "@assets/images/sidebar-default-logo.png";
 import { useTheme } from "@dashboard/theme";
 import { DefaultTheme } from "@saleor/macaw-ui-next";
-import React from "react";
 
 const getSaleorLogoUrl = (theme: DefaultTheme) => {
   switch (theme) {

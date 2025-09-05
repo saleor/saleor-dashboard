@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Text, Textarea } from "@saleor/macaw-ui-next";
-import React from "react";
 import { Control, useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 

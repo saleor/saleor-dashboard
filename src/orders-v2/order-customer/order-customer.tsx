@@ -1,6 +1,5 @@
 import { AddressFragment } from "@dashboard/graphql";
 import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { OrderAddress } from "./order-address";
 import { OrderCustomerEmail } from "./order-customer-email";

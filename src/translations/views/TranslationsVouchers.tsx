@@ -9,7 +9,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";

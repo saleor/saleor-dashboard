@@ -2,7 +2,6 @@
 import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
 import useGiftCardDetails from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { DialogProps } from "@dashboard/types";
-import React from "react";
 
 import GiftCardDeleteDialogContent from "./GiftCardDeleteDialogContent";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";

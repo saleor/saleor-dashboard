@@ -3,7 +3,6 @@ import Form from "@dashboard/components/Form";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";

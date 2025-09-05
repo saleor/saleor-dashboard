@@ -1,5 +1,5 @@
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const defaultProps = {
   __height: "40px",

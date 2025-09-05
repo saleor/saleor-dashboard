@@ -10,7 +10,7 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Checkbox, Input, Text, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
@@ -66,7 +66,7 @@ export const ProductStocks = ({
   isCreate,
 }: ProductStocksProps) => {
   const intl = useIntl();
-  const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
+  const [lastStockRowFocus, setLastStockRowFocus] = useState(false);
   const formErrors = getFormErrors(["sku"], errors);
 
   const stocksIds = useMemo(() => stocks.map(stock => stock.id), [stocks]);

@@ -12,7 +12,7 @@ import { DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
 import { Box, Checkbox, Input, Spinner, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { getGiftCardErrorMessage } from "../messages";

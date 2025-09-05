@@ -3,7 +3,7 @@ import { FlagList } from "@dashboard/featureFlags";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { useTheme } from "@saleor/macaw-ui";
 import isEqualWith from "lodash/isEqualWith";
-import React, { forwardRef, memo, useEffect, useRef } from "react";
+import { forwardRef, memo, useEffect, useRef } from "react";
 
 interface AppIFrameProps {
   appId: string;

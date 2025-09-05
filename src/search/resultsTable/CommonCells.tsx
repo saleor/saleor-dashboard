@@ -2,7 +2,7 @@ import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedDate } from "react-intl";
 
 export const Row = ({
@@ -35,8 +35,8 @@ export const Row = ({
 };
 
 export const Thumbnail = ({ url, name }: { url?: string; name: string }) => {
-  const [imageError, setImageError] = React.useState(false);
-  const [imageLoaded, setImageLoaded] = React.useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleImageLoad = () => {
     setImageLoaded(true);

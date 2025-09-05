@@ -1,5 +1,4 @@
 import { Rule } from "@dashboard/discounts/models";
-import React from "react";
 
 import { mapConditionToOption, splitConditions } from "../../utils";
 import { RuleSummaryChips } from "../RuleSummaryChips";

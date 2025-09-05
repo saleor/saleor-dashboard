@@ -2,7 +2,6 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import { buttonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import BackButton from "../BackButton";

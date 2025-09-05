@@ -2,7 +2,6 @@ import { TopNavWrapper } from "@dashboard/components/AppLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Divider } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { OrderApps } from "./order-apps";
 import { OrderCustomer } from "./order-customer/order-customer";

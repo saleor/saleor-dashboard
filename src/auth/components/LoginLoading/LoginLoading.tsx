@@ -1,6 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 
 const useStyles = makeStyles(
   {

@@ -26,7 +26,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import React from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
@@ -58,7 +58,7 @@ export const StaffList = ({ params }: StaffListProps) => {
   usePaginationReset(staffListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -66,7 +66,7 @@ export const StaffList = ({ params }: StaffListProps) => {
     }),
     [params, settings.rowNumber],
   );
-  const newQueryVariables = React.useMemo(
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

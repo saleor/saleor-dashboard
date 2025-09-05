@@ -2,7 +2,6 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
 import { Box, GenericAppIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 export const LoadingSkeleton = () => {

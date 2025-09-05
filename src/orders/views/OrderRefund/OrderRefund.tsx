@@ -14,7 +14,6 @@ import {
   OrderRefundType,
 } from "@dashboard/orders/components/OrderRefundPage/form";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 const getAutomaticallyCalculatedProductsRefundInput = (formData: OrderRefundSubmitData) => ({

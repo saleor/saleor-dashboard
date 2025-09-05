@@ -27,7 +27,6 @@ import { ReorderEvent } from "@dashboard/types";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";

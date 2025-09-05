@@ -37,7 +37,6 @@ import {
   transactionRequestMessages as transactionMessages,
 } from "@dashboard/utils/errors/transaction";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { orderUrl, OrderUrlQueryParams } from "../../urls";

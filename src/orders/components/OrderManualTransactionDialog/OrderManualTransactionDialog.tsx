@@ -3,7 +3,6 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { commonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {

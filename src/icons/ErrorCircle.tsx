@@ -1,5 +1,4 @@
 import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import React from "react";
 
 /**
  * @deprecated This icon uses Macaw-UI Next which is deprecated. Please use Lucide React icons instead.

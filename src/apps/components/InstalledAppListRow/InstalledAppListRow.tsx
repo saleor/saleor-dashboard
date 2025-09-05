@@ -6,7 +6,7 @@ import Link from "@dashboard/components/Link";
 import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { useFlag } from "@dashboard/featureFlags";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 

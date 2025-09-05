@@ -2,7 +2,6 @@
 import { Pill } from "@dashboard/components/Pill";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { pluginAvailabilityStatusMessages as messages, pluginStatusMessages } from "./messages";

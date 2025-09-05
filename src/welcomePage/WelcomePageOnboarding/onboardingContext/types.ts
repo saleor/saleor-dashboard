@@ -1,5 +1,3 @@
-import React from "react";
-
 export type OnboardingStepsIDs =
   | "get-started"
   | "create-product"

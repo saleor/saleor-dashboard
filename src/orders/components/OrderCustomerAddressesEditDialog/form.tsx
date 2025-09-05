@@ -10,7 +10,7 @@ import useForm, {
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Option } from "@saleor/macaw-ui-next";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export enum AddressInputOptionEnum {
   CUSTOMER_ADDRESS = "customerAddress",

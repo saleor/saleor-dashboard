@@ -2,7 +2,7 @@ import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { singleRefundableTransaction } from "./fixtures";
 import { TransactionSubmitCard } from "./TransactionSubmitCard";

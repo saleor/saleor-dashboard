@@ -1,5 +1,4 @@
 import useShop from "@dashboard/hooks/useShop";
-import React from "react";
 import { Helmet } from "react-helmet";
 
 interface WindowTitleProps {

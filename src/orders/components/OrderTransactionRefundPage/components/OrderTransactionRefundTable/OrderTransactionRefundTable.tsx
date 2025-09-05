@@ -1,6 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
-import React from "react";
 import { Control, FieldArrayWithId, UseFieldArrayUpdate } from "react-hook-form";
 
 import { LineToRefund, OrderTransactionRefundPageFormData } from "../../OrderTransactionRefundPage";

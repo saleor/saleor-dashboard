@@ -5,7 +5,7 @@ import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashbo
 import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { getById } from "@dashboard/misc";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import { useFulfillmentFormset } from "./useFulfillmentFormset";
@@ -92,7 +92,7 @@ function useOrderReturnForm(
   } = useForm(getOrderRefundPageFormData(), undefined, {
     confirmLeave: true,
   });
-  const [isAmountDirty, setAmountDirty] = React.useState(false);
+  const [isAmountDirty, setAmountDirty] = useState(false);
   const { setExitDialogSubmitRef } = useExitFormDialog({
     formId,
   });

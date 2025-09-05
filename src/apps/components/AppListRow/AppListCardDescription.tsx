@@ -1,6 +1,6 @@
 import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 import { AppLogo } from "./AppLogo";
 

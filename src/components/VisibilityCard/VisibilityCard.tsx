@@ -10,7 +10,7 @@ import { getFieldError } from "@dashboard/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";

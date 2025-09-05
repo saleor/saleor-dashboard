@@ -23,7 +23,6 @@ import { staffListPath } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import StaffPassword from "../StaffPassword/StaffPassword";

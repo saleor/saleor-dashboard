@@ -10,7 +10,6 @@ import { ListProps, SortPage } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { pluginsMiscMessages } from "./messages";

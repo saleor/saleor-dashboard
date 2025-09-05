@@ -4,7 +4,6 @@ import Link from "@dashboard/components/Link";
 import { infoMessages } from "@dashboard/extensions/messages";
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { InfoLabelsContainer } from "../InfoLabels/InfoLabelsContainer";

@@ -6,7 +6,6 @@ import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/Rich
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { OutputData } from "@editorjs/editorjs";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";

@@ -1,5 +1,3 @@
-import React from "react";
-
 import GiftCardListSearchAndFilters from "./GiftCardListSearchAndFilters";
 import { GiftCardsListDatagrid } from "./GiftCardsListDatagrid";
 import GiftCardsListHeader from "./GiftCardsListHeader";

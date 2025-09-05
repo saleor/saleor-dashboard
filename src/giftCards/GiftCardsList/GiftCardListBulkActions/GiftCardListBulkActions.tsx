@@ -6,7 +6,6 @@ import {
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getByIds } from "@dashboard/orders/components/OrderReturnPage/utils";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as messages } from "../messages";

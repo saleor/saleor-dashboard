@@ -2,7 +2,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
@@ -30,7 +30,7 @@ const SaveFilterTabDialog = ({
   open,
 }: SaveFilterTabDialogProps) => {
   const intl = useIntl();
-  const [errors, setErrors] = React.useState(false);
+  const [errors, setErrors] = useState(false);
   const handleErrors = (data: SaveFilterTabDialogFormData) => {
     if (data.name.trim().length) {
       onSubmit(data);

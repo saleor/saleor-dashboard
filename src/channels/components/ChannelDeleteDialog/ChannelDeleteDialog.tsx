@@ -4,7 +4,6 @@ import { Select } from "@dashboard/components/Select";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { useStyles } from "../styles";

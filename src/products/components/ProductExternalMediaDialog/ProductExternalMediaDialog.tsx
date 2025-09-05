@@ -4,7 +4,6 @@ import { ProductFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 interface ProductExternalMediaDialogProps {

@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Accordion, Box, Button, ChervonDownIcon, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { WelcomePageOnboardingAccordion } from "./components/WelcomePageOnboardingAccordion";

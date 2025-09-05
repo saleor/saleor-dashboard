@@ -19,7 +19,7 @@ import { PluginIcon } from "@dashboard/icons/PluginIcon";
 import { WebhookIcon } from "@dashboard/icons/WebhookIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, GenericAppIcon, Skeleton } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
 import { FailedWebhookInfo } from "../components/InfoLabels/FailedWebhookInfo";

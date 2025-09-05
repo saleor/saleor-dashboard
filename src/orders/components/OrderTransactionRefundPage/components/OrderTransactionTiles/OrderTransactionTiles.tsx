@@ -9,7 +9,6 @@ import {
 import { EventType } from "@dashboard/orders/components/OrderTransaction/components/TransactionEvents/components/EventType";
 import { mapTransactionEvent } from "@dashboard/orders/components/OrderTransaction/utils";
 import { Box, RadioGroup, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { Control, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

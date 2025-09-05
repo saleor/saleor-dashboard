@@ -1,7 +1,6 @@
 import EventTime from "@dashboard/components/EventTime";
 import { EventDeliveryAttemptFragment, EventDeliveryStatusEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { AppWebhooksAttemptDetails } from "./AppWebhooksAttemptDetails";

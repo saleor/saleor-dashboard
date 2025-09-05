@@ -3,7 +3,6 @@ import { Select } from "@dashboard/components/Select";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 
 const useStyles = makeStyles(
   theme => ({

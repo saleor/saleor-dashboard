@@ -2,7 +2,6 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import {
   Control,
   UseFormGetValues,

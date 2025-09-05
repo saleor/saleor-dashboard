@@ -7,7 +7,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../misc";
@@ -74,7 +74,7 @@ const useStyles = makeStyles(
 const CountryList = (props: CountryListProps) => {
   const { countries, disabled, emptyText, title, onCountryAssign, onCountryUnassign } = props;
   const classes = useStyles(props);
-  const [isCollapsed, setCollapseStatus] = React.useState(true);
+  const [isCollapsed, setCollapseStatus] = useState(true);
   const toggleCollapse = () => setCollapseStatus(!isCollapsed);
 
   function sortCountries(countries: CountryFragment[]): CountryFragment[] {

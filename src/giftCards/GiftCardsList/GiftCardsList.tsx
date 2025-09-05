@@ -1,5 +1,3 @@
-import React from "react";
-
 import GiftCardListPage from "./GiftCardListPage";
 import GiftCardListDialogsProvider from "./providers/GiftCardListDialogsProvider";
 import { GiftCardsListProvider } from "./providers/GiftCardListProvider";

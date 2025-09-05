@@ -1,6 +1,5 @@
 import { appDetails } from "@dashboard/extensions/fixtures";
 import { render } from "@testing-library/react";
-import React from "react";
 
 import { AppDetailsPage } from "./AppDetailsPage";
 

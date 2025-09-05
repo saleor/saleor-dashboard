@@ -3,7 +3,6 @@ import { ChannelFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Divider } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";

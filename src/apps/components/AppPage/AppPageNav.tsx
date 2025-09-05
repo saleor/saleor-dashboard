@@ -5,7 +5,7 @@ import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./message";

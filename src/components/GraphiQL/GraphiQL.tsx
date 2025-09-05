@@ -21,7 +21,7 @@ import {
   WriteableEditorProps,
 } from "@graphiql/react";
 import clsx from "clsx";
-import React, { ComponentType, PropsWithChildren, ReactNode, useState } from "react";
+import { Children,ComponentType, PropsWithChildren, ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 
 import DryRun from "../DryRun";
@@ -160,7 +160,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   useGraphiQLThemeSwitcher();
 
   const PluginContent = pluginContext?.visiblePlugin?.content;
-  const children = React.Children.toArray(props.children);
+  const children = Children.toArray(props.children);
   const toolbar = children.find(child => isChildComponentType(child, GraphiQL.Toolbar)) || (
     <>
       <ToolbarButton

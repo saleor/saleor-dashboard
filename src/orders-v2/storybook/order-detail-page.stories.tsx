@@ -1,6 +1,5 @@
 import { JobStatusEnum } from "@dashboard/graphql/types.generated";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
 
 import { OrderFixture } from "../fixtures/order-fixture";
 import { OrderDetailsPage } from "../order-detail-page";

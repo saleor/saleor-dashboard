@@ -1,5 +1,4 @@
 import { Button, ButtonProps, vars } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface ButtonLinkProps extends ButtonProps {
   children: React.ReactNode;

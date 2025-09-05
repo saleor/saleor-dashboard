@@ -11,7 +11,6 @@ import {
   OrderDiscountContextConsumerProps,
 } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";

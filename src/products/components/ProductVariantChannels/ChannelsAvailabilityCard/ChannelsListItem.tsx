@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { Divider } from "@dashboard/components/Divider";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment } from "react";
 import { useIntl } from "react-intl";
 
 import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./../messages";
@@ -29,7 +29,7 @@ export const ChannelsListItem = ({ id, name, isPublished, publishedAt }: Channel
   };
 
   return (
-    <React.Fragment key={id}>
+    <Fragment key={id}>
       <Divider />
       <DashboardCard.Content paddingY={6}>
         <Text
@@ -45,6 +45,6 @@ export const ChannelsListItem = ({ id, name, isPublished, publishedAt }: Channel
           {getItemSubtitle()}
         </Text>
       </DashboardCard.Content>
-    </React.Fragment>
+    </Fragment>
   );
 };

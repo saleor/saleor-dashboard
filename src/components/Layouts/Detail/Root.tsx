@@ -1,6 +1,6 @@
 import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
 import { Box, BoxProps, Sprinkles } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 interface DetailPageLayoutProps extends BoxProps {
   children: React.ReactNode;

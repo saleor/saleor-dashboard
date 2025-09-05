@@ -8,7 +8,6 @@ import star from "@assets/images/star-icon.svg";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { useTheme } from "@dashboard/theme";
 import { Button, CloseIcon, HelpIcon, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, IntlShape } from "react-intl";
 

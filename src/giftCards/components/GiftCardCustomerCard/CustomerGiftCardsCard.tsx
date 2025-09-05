@@ -12,7 +12,6 @@ import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
-import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

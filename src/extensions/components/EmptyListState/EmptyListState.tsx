@@ -1,5 +1,4 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface EmptyListStateProps {
   title: string;

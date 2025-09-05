@@ -20,7 +20,7 @@ import { orderListUrlWithCustomer } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { customerUrl } from "../../../customers/urls";
@@ -71,7 +71,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
   const user = maybe(() => order.user);
   const userEmail = maybe(() => order.userEmail);
   const [userDisplayName, setUserDisplayName] = useStateFromProps(maybe(() => user.email, ""));
-  const [isInEditMode, setEditModeStatus] = React.useState(false);
+  const [isInEditMode, setEditModeStatus] = useState(false);
   const toggleEditMode = () => setEditModeStatus(!isInEditMode);
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);

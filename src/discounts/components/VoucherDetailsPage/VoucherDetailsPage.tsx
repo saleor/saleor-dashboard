@@ -42,7 +42,7 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Box, Divider, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
@@ -188,7 +188,7 @@ const VoucherDetailsPage = ({
   const navigate = useNavigator();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
-  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+  const [localErrors, setLocalErrors] = useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const channel = voucher?.channelListings?.find(
     listing => listing.channel.id === selectedChannelId,

@@ -1,6 +1,5 @@
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Checkbox, CheckboxProps, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { giftCardCreateMessages as messages } from "./messages";

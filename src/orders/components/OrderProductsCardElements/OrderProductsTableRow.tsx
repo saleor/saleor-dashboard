@@ -8,7 +8,6 @@ import { maybe } from "@dashboard/misc";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 
 const useStyles = makeStyles(
   theme => ({

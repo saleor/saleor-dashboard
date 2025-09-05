@@ -2,7 +2,6 @@ import { useNavigatorSearchQuery } from "@dashboard/graphql";
 import { ListSkeleton } from "@dashboard/search/resultsTable/ListSkeleton";
 import { prepareResults } from "@dashboard/search/resultsTable/prepareResults";
 import { ResultsTable } from "@dashboard/search/resultsTable/ResultsTable";
-import React from "react";
 
 export const ResourcesTable = ({
   query,

@@ -2,7 +2,7 @@ import { appsMessages } from "@dashboard/apps/messages";
 import { CopyIcon } from "@saleor/macaw-ui";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useStyles } from "./styles";

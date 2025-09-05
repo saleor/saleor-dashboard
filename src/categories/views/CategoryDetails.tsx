@@ -30,7 +30,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { Box } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";

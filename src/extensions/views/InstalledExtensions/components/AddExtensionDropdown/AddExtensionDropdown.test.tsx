@@ -2,7 +2,6 @@ import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsP
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 
 import { AddExtensionDropdown } from "./AddExtensionDropdown";
 

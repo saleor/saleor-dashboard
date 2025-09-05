@@ -7,7 +7,6 @@ import {
   List,
   Text,
 } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface ButtonWithDropdownProps extends ButtonProps {
   onClick?: () => void;

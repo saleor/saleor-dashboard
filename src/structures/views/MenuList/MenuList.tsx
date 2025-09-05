@@ -22,7 +22,7 @@ import { ListViews } from "@dashboard/types";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React from "react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import MenuCreateDialog from "../../components/MenuCreateDialog";
@@ -54,7 +54,7 @@ const MenuList = ({ params }: MenuListProps) => {
       { replace: true },
     );
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       sort: getSortQueryVariables(params),

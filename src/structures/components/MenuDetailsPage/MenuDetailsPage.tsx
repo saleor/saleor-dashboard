@@ -11,7 +11,7 @@ import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { menuListUrl } from "@dashboard/structures/urls";
-import React from "react";
+import { useState } from "react";
 
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
@@ -57,7 +57,7 @@ const MenuDetailsPage = ({
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
   };
-  const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>([]);
+  const [treeOperations, setTreeOperations] = useState<TreeOperation[]>([]);
   const removeSimulatedMoves = (operations: TreeOperation[]) =>
     operations.filter(operation => !operation.simulatedMove);
   const handleSubmit = async (data: MenuDetailsFormData) => {

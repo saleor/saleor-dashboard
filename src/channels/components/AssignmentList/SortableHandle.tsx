@@ -1,6 +1,5 @@
 import { DragIcon, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 
 const useStyles = makeStyles(

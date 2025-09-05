@@ -29,7 +29,7 @@ import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder, parseLogMessage } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {

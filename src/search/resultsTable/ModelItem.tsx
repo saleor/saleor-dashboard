@@ -2,7 +2,6 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { GlobalSearchQuery } from "@dashboard/graphql";
 import { pageUrl } from "@dashboard/modeling/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { DisplayDate, LinkCell, Row, TypeCell } from "./CommonCells";

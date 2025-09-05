@@ -1,5 +1,4 @@
 import { messages } from "@dashboard/extensions/messages";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { EmptyListState } from "./EmptyListState";

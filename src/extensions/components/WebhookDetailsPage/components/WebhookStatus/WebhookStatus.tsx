@@ -1,5 +1,4 @@
 import { Toggle } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { WebhookFormData } from "../../WebhookDetailsPage";

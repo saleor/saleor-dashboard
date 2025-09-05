@@ -6,7 +6,6 @@ import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsP
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ListProps } from "@dashboard/types";
 import { Box, List, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import InstalledAppListRow from "../InstalledAppListRow";

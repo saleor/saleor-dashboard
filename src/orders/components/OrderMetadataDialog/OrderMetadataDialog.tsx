@@ -7,7 +7,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

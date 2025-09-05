@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { TableRowProps } from "@material-ui/core";
-import React from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import TableRowLink, { TableRowLinkProps } from "../TableRowLink";

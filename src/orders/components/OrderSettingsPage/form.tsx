@@ -1,7 +1,6 @@
 import { OrderSettingsFragment, ShopOrderSettingsFragment } from "@dashboard/graphql";
 import useForm, { CommonUseFormResult, SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import React from "react";
 
 export interface OrderSettingsFormData {
   automaticallyConfirmAllNewOrders: boolean;

@@ -8,7 +8,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { CUSTOM_EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { z } from "zod";

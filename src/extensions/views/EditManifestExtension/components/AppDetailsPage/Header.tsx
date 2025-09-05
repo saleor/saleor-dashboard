@@ -2,7 +2,6 @@ import AppHeaderOptions from "@dashboard/extensions/components/AppHeaderOptions"
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppPageNav } from "@dashboard/extensions/views/ViewManifestExtension/components/AppPage/AppPageNav";
 import { AppQuery } from "@dashboard/graphql";
-import React from "react";
 
 interface HeaderProps {
   data: AppQuery["app"];
