@@ -117,6 +117,9 @@
   "+bhokL": {
     "string": "Search discounts..."
   },
+  "+cGU63": {
+    "string": "Are you sure you want to cancel fulfillment?"
+  },
   "+djx5u": {
     "string": "You can't give this extension permissions you don't have."
   },
@@ -4734,6 +4737,9 @@
   },
   "QUyUJy": {
     "string": "Main Product"
+  },
+  "QV5QKO": {
+    "string": "Canceling a fulfillment will restock products at a selected warehouse."
   },
   "QVNg8A": {
     "context": "product field",
@@ -10105,9 +10111,6 @@
   "xZhxBJ": {
     "context": "dialog header",
     "string": "Assign Products"
-  },
-  "xco5tZ": {
-    "string": "Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
   },
   "xfGZsi": {
     "context": "configuration section name",
