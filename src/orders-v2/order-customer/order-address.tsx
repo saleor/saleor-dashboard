@@ -31,7 +31,10 @@ export const OrderAddress = ({ address, type, ...props }: Props) => {
         </Text>
         <Button
           variant="secondary"
-          onClick={() => alert("Edit functionality not implemented yet.")}
+          onClick={() => {
+            // TODO: implement edit address functionality
+            alert("Edit functionality not implemented yet.");
+          }}
         >
           {intl.formatMessage({
             defaultMessage: "Edit",

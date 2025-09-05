@@ -3,6 +3,9 @@
     "context": "Transaction event status - requested",
     "string": "Requested"
   },
+  "+/ncVS": {
+    "string": "Add Tracking"
+  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -278,6 +281,9 @@
   "/V7UOC": {
     "context": "unassign category from sale and save, button",
     "string": "Unassign and save"
+  },
+  "/VnDMl": {
+    "string": "Other"
   },
   "/WXs6H": {
     "context": "collection name",
@@ -2177,6 +2183,9 @@
   "BVDaKx": {
     "string": "Subtotal discount"
   },
+  "BWjfHd": {
+    "string": "Replaced"
+  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -3142,6 +3151,9 @@
     "context": "shipping method description",
     "string": "Description"
   },
+  "Gs86nL": {
+    "string": "Refunded"
+  },
   "GsBRWL": {
     "string": "Languages"
   },
@@ -3246,6 +3258,9 @@
   "HRXLYk": {
     "context": "cta button label",
     "string": "Get in touch"
+  },
+  "HRZD/o": {
+    "string": "Change Tracking"
   },
   "HSmg1/": {
     "context": "gift cards section name",
@@ -3535,6 +3550,9 @@
   "J4NBVR": {
     "context": "link",
     "string": "View Orders"
+  },
+  "J7ejFT": {
+    "string": "Refunded and Returned"
   },
   "J7mFhU": {
     "context": "currency code select",
@@ -4504,6 +4522,9 @@
   "PFnobO": {
     "string": "greater"
   },
+  "PFtMy9": {
+    "string": "Canceled"
+  },
   "PH4R7g": {
     "context": "modal header, read-only product variant metadata",
     "string": "Product variant metadata"
@@ -4626,6 +4647,9 @@
   "PuQb0P": {
     "string": "Reward"
   },
+  "Pvi8WI": {
+    "string": "Order lines"
+  },
   "PvrceS": {
     "context": "Refund draft status",
     "string": "Draft"
@@ -4706,6 +4730,9 @@
   "QCwBUI": {
     "context": "button",
     "string": "Delete Search"
+  },
+  "QDxJib": {
+    "string": "Fulfill"
   },
   "QFBjlV": {
     "context": "error message",
@@ -4823,6 +4850,9 @@
   "QpBqa9": {
     "context": "label for radio button",
     "string": "Product prices are entered without tax"
+  },
+  "QpetOV": {
+    "string": "Channel: {channelNameLink}"
   },
   "Qph0GE": {
     "context": "dialog content",
@@ -5647,9 +5677,6 @@
   "VvhNCi": {
     "context": "command menu shortcut",
     "string": "Command menu"
-  },
-  "VxBOta": {
-    "string": "Channel {channelNameLink}"
   },
   "VyC+Bm": {
     "context": "radio button label",
@@ -6953,6 +6980,9 @@
     "context": "vat included in order price",
     "string": "VAT included"
   },
+  "dJa3Dt": {
+    "string": "Waiting for Approval"
+  },
   "dLIeRH": {
     "context": "charge status none",
     "string": "None"
@@ -7847,6 +7877,9 @@
     "context": "product availability",
     "string": "Hide in product listings"
   },
+  "jY+f2f": {
+    "string": "Fulfilled"
+  },
   "jY80Gs": {
     "context": "search gift card placeholder",
     "string": "Search by code, e.g {exampleGiftCardCode}"
@@ -8423,6 +8456,9 @@
   },
   "mvVmbJ": {
     "string": "Install extension from manifest"
+  },
+  "mxLMrd": {
+    "string": "{count, plural, one {# fulfillment group} other {# fulfillment groups}}"
   },
   "mxtAFx": {
     "string": "Are you sure you want to delete draft #{orderNumber}?"
@@ -9780,6 +9816,9 @@
     "context": "card title, app install page, about privacy",
     "string": "Info"
   },
+  "vMo6/3": {
+    "string": "Tracking: {trackingNumber}"
+  },
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
@@ -10054,6 +10093,9 @@
     "context": "button",
     "string": "Create Webhook"
   },
+  "wm96Jx": {
+    "string": "Returned"
+  },
   "wmdHhD": {
     "context": "button",
     "string": "Create Warehouse"
@@ -10324,6 +10366,9 @@
   },
   "yfhLcv": {
     "string": "We are working on replacing plugins with apps. Read more about"
+  },
+  "yg0ELD": {
+    "string": "From {warehouseName}: {fulfillmentCreationDate}"
   },
   "ygxco/": {
     "context": "tooltip, submit form",
