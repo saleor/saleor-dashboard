@@ -394,6 +394,7 @@ export const OrderNormalDetails = ({
         errors={orderFulfillmentCancel.opts.data?.orderFulfillmentCancel.errors || []}
         open={params.action === "cancel-fulfillment"}
         warehouses={warehouses || []}
+        fulfillmentStatus={order?.fulfillments.find(getById(params.id))?.status}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,
