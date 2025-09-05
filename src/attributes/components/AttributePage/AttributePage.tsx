@@ -37,6 +37,7 @@ import slugify from "slugify";
 import AttributeDetails from "../AttributeDetails";
 import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
+import AttributeReferenceTypesSection from "../AttributeReferenceTypesSection";
 import AttributeValues from "../AttributeValues";
 
 export interface AttributePageProps {
@@ -60,6 +61,9 @@ export interface AttributePageProps {
   onNextPage: () => void;
   onPreviousPage: () => void;
   children: (data: AttributePageFormData) => React.ReactNode;
+  onAssignReferenceTypesClick?: () => void;
+  selectedReferenceTypes?: Array<{ label: string; value: string }>;
+  onRemoveReferenceType?: (id: string) => void;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -95,6 +99,9 @@ const AttributePage = ({
   onNextPage,
   onPreviousPage,
   children,
+  onAssignReferenceTypesClick,
+  selectedReferenceTypes,
+  onRemoveReferenceType,
 }: AttributePageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -195,9 +202,17 @@ const AttributePage = ({
                   setError={setError}
                   clearErrors={clearErrors}
                 />
+                  <CardSpacer />
+                <AttributeReferenceTypesSection
+                  inputType={attribute?.inputType}
+                  entityType={attribute?.entityType}
+                  selectedTypes={selectedReferenceTypes}
+                  disabled={disabled}
+                  onAssignClick={onAssignReferenceTypesClick ?? (() => {})}
+                  onRemoveType={onRemoveReferenceType}
+                />
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
                   <>
-                    <CardSpacer />
                     <AttributeValues
                       inputType={data.inputType}
                       disabled={disabled}
@@ -214,7 +229,6 @@ const AttributePage = ({
                     />
                   </>
                 )}
-                <CardSpacer />
                 <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
