@@ -25,7 +25,6 @@ import { move, toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 import uniqBy from "lodash/uniqBy";
 
-import { attribute } from "../fixtures";
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 export function createAttributeChangeHandler(

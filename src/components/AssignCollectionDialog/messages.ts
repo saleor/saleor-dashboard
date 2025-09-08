@@ -21,4 +21,9 @@ export const messages = defineMessages({
     defaultMessage: "Assign and save",
     description: "assign collections to sale and save",
   },
+  noCollectionsFound: {
+    id: "68Wuv1",
+    defaultMessage: "No collections found",
+    description: "search results",
+  },
 });
