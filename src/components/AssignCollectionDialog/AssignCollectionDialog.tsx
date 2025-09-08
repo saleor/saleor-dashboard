@@ -22,6 +22,7 @@ const AssignCollectionDialog = ({ collections, labels, ...rest }: AssignCollecti
   return (
     <AssignContainerDialog
       containers={collections}
+      
       labels={{
         title: intl.formatMessage(messages.assignCollectionDialogHeader),
         label: intl.formatMessage(messages.assignCollectionDialogLabel),
