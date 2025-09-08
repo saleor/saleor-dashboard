@@ -55,7 +55,11 @@ export const ProductVariant = ({ productId, params }: ProductVariantCreateProps)
   const shop = useShop();
   const intl = useIntl();
 
-  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
+  const {
+    loadMore: fetchMoreWarehouses,
+    search: searchWarehouses,
+    result: searchWarehousesResult,
+  } = useWarehouseSearch({
     variables: {
       first: 100,
       channnelsId: [],
@@ -248,6 +252,7 @@ export const ProductVariant = ({ productId, params }: ProductVariantCreateProps)
         productId={productId}
         defaultVariantId={data?.product.defaultVariant?.id}
         disabled={disableForm}
+        searchWarehouses={searchWarehouses}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({
           id: "T6dXGG",
