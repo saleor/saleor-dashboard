@@ -54,7 +54,7 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
-import ProductVariantPage from "../../components/ProductVariantPage";
+import { ProductVariantPage } from "../../components/ProductVariantPage";
 import { ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import {
   productUrl,

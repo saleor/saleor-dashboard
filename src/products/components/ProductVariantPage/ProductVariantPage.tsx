@@ -136,7 +136,7 @@ interface ProductVariantPageProps {
   searchWarehouses: (query: string) => void;
 }
 
-const ProductVariantPage = ({
+export const ProductVariantPage = ({
   productId,
   channels,
   channelErrors,
