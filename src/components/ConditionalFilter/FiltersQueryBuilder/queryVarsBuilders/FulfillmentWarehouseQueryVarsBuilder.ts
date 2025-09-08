@@ -38,7 +38,7 @@ export class FulfillmentWarehouseQueryVarsBuilder
   ): FulfillmentWarehouseFilterQueryPart {
     const conditionValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element) as { eq?: string; oneOf?: string[] };
 
-    if (!conditionValue) {
+    if (!conditionValue || !(conditionValue?.oneOf || conditionValue?.eq)) {
       return query as FulfillmentWarehouseFilterQueryPart;
     }
 
