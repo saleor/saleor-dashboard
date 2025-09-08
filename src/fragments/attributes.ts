@@ -49,6 +49,16 @@ export const attributeDetailsFragment = gql`
     unit
     storefrontSearchPosition
     valueRequired
+    referenceTypes {
+      ...on ProductType {
+        id
+        name
+      }
+      ...on PageType {
+        id
+        name
+      }
+    }
   }
 `;
 
