@@ -29,7 +29,10 @@ export const OrderInvoices = ({ invoices }: Props) => {
           {invoices.map(invoice => (
             <Box
               key={invoice.id}
-              onClick={() => alert("Invoice sent clicked")}
+              onClick={() => {
+                // TODO: implement send invoice functionality
+                alert("Invoice sent clicked");
+              }}
               display="grid"
               __gridTemplateColumns="1fr auto auto"
               placeItems="center"
