@@ -1,5 +1,4 @@
 import { useApolloClient } from "@apollo/client";
-import { ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import { OrderFetchingParams } from "@dashboard/components/ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import {
   _GetLegacyChannelOperandsDocument,
@@ -18,7 +17,7 @@ import {
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { createOptionsFromAPI, EnumValuesHandler } from "../../Handler";
+import { EnumValuesHandler } from "../../Handler";
 import { createInitialOrderState } from "../helpers";
 import { InitialOrderAPIResponse } from "../types";
 import { InitialOrderStateResponse } from "./InitialOrderState";
