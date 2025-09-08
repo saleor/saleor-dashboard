@@ -88,8 +88,6 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
       ? formErrors.isPublished
       : null;
 
-  console.log("ProductOrganization rendered", selectedProductCategory);
-
   return (
     <DashboardCard>
       <DashboardCard.Header>
