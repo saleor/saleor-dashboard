@@ -41,6 +41,7 @@ import { Box, Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { FetchMoreProps, RelayToFlat } from "../../../types";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import { ProductShipping } from "../ProductShipping";
@@ -150,7 +151,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const [selectedCategory, setSelectedCategory] = useStateFromProps(initial?.category || "");
   const [selectedCollections, setSelectedCollections] = useStateFromProps<Option[]>([]);
   const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(initial?.taxClassId ?? "");
-  const categories = getChoices(categoryChoiceList);
+  const categories = getChoicesWithAncestors(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
   const productTypes = getChoices(productTypeChoiceList);
   const taxClassChoices =
