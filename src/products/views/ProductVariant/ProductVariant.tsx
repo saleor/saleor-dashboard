@@ -50,11 +50,11 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
-import ProductVariantPage from "../../components/ProductVariantPage";
+import { ProductVariantPage } from "../../components/ProductVariantPage";
 import { ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import {
   productUrl,
@@ -129,12 +129,14 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
 
-  const channnelsId = useMemo(() => channels.map(channel => channel.id), [channels]);
-
-  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
+  const {
+    loadMore: fetchMoreWarehouses,
+    result: searchWarehousesResult,
+    search: searchWarehouses,
+  } = useWarehouseSearch({
     variables: {
       first: 100,
-      channnelsId,
+      channnelsId: [],
       query: "",
     },
     skip: !channels.length,
@@ -300,6 +302,7 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onSubmit={handleSubmit}
         fetchMoreWarehouses={fetchMoreWarehouses}
         searchWarehousesResult={searchWarehousesResult}
+        searchWarehouses={searchWarehouses}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
