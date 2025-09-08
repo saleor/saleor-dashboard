@@ -133,9 +133,10 @@ interface ProductVariantPageProps {
   onWarehouseConfigure: () => any;
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
+  searchWarehouses: (query: string) => void;
 }
 
-const ProductVariantPage = ({
+export const ProductVariantPage = ({
   productId,
   channels,
   channelErrors,
@@ -171,6 +172,7 @@ const ProductVariantPage = ({
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
+  searchWarehouses,
 }: ProductVariantPageProps) => {
   const intl = useIntl();
   const { user } = useUser();
@@ -376,7 +378,7 @@ const ProductVariantPage = ({
                         searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage
                       }
                       data={data}
-                      disabled={loading}
+                      loading={loading}
                       hasVariants={true}
                       errors={errors}
                       stocks={data.stocks}
@@ -386,6 +388,7 @@ const ProductVariantPage = ({
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}
                       isCreate={false}
+                      searchWarehouses={searchWarehouses}
                     />
                     <CardSpacer />
                     <Metadata data={data} onChange={handlers.changeMetadata} />
@@ -461,4 +464,3 @@ const ProductVariantPage = ({
 };
 
 ProductVariantPage.displayName = "ProductVariantPage";
-export default ProductVariantPage;
