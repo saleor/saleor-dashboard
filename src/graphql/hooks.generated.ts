@@ -2004,6 +2004,7 @@ export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
   ...Metadata
   id
+  created
   lines {
     id
     quantity
