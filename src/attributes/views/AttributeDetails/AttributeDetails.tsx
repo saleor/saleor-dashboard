@@ -1,6 +1,4 @@
-import AssignReferenceTypesDialog from "@dashboard/attributes/components/AssignReferenceTypesDialog";
 import { attributeValueFragmentToFormData } from "@dashboard/attributes/utils/data";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useAttributeDeleteMutation,
   useAttributeDetailsQuery,
@@ -12,20 +10,17 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
-import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
-import useReferenceTypeSearch from "@dashboard/searches/useReferenceTypeSearch";
 import { ListViews, ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { move } from "@dashboard/utils/lists";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import omit from "lodash/omit";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -206,42 +201,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     variables => updatePrivateMetadata({ variables }),
   );
 
-  const [isAssignRefTypesOpen, setAssignRefTypesOpen] = React.useState(false);
-  const [selectedReferenceTypes, setSelectedReferenceTypes] = React.useState<
-    Array<{ label: string; value: string }>
-  >([]);
-
-  const {
-    loadMore: loadMoreReferenceTypes,
-    search: searchReferenceTypes,
-    result: searchReferenceTypesOpts,
-  } = useReferenceTypeSearch(
-    data?.attribute?.entityType,
-    {variables: DEFAULT_INITIAL_SEARCH_DATA},
-  );
-const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
-  searchReferenceTypesOpts.data?.search,
-);
-const fetchMoreReferenceTypes = getSearchFetchMoreProps(
-  searchReferenceTypesOpts,
-  loadMoreReferenceTypes,
-);
-
-  const handleRemoveReferenceType = (id: string) =>
-    setSelectedReferenceTypes(prev => prev.filter(o => o.value !== id));
-
-  const handleSubmitReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
-    setSelectedReferenceTypes(prev => {
-      const prevIds = new Set(prev.map(p => p.value));
-      const additions = selected
-        .filter((s: { id: string; name: string }) => !prevIds.has(s.id))
-        .map((s: { id: string; name: string }) => ({ value: s.id, label: s.name }));
-
-      return [...prev, ...additions];
-    });
-    setAssignRefTypesOpen(false);
-  };
-
 
   return (
     <AttributePage
@@ -269,9 +228,6 @@ const fetchMoreReferenceTypes = getSearchFetchMoreProps(
       pageInfo={pageInfo ?? { hasNextPage: false, hasPreviousPage: false }}
       onNextPage={loadNextPage}
       onPreviousPage={loadPreviousPage}
-      onAssignReferenceTypesClick={() => setAssignRefTypesOpen(true)}
-      selectedReferenceTypes={selectedReferenceTypes}
-      onRemoveReferenceType={handleRemoveReferenceType}
     >
       {attributeFormData => (
         <>
@@ -357,19 +313,6 @@ const fetchMoreReferenceTypes = getSearchFetchMoreProps(
               })
             }
           />
-        <AssignReferenceTypesDialog
-          key={selectedReferenceTypes.map(o => o.value).sort().join("|")}
-          open={isAssignRefTypesOpen}
-          onClose={() => setAssignRefTypesOpen(false)}
-          confirmButtonState={"default"}
-          loading={Boolean(fetchMoreReferenceTypes?.loading)}
-          selectedReferenceTypesIds={selectedReferenceTypes.map(o => o.value)}
-          referenceTypes={(referenceTypes ?? []).map(pt => ({ id: pt.id, name: pt.name }))}
-          hasMore={fetchMoreReferenceTypes?.hasMore}
-          onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
-          onFetch={searchReferenceTypes}
-          onSubmit={handleSubmitReferenceTypes}
-        />
         </>
       )}
     </AttributePage>
