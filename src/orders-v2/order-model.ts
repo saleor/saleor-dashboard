@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { FulfillmentFragment, OrderDetailsFragment } from "@dashboard/graphql";
 
 export class OrderModel {
   private order: OrderDetailsFragment;
@@ -13,5 +13,17 @@ export class OrderModel {
 
   shouldShowCustomerNote(): boolean {
     return !!this.order.customerNote;
+  }
+
+  shouldShowFulfillments(): boolean {
+    return this.order.fulfillments.length > 0;
+  }
+
+  shouldShowFulfillButton(): boolean {
+    return this.order.status === "UNFULFILLED";
+  }
+
+  shouldShowFulfillmentTrackingNumberButton(fulfillment: FulfillmentFragment): boolean {
+    return fulfillment.status === "FULFILLED";
   }
 }

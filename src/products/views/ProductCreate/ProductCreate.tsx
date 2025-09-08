@@ -46,7 +46,7 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import React, { useMemo } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { PRODUCT_CREATE_FORM_ID } from "./consts";
@@ -152,12 +152,14 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
     },
   );
 
-  const channnelsId = useMemo(() => currentChannels.map(channel => channel.id), [currentChannels]);
-
-  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
+  const {
+    loadMore: fetchMoreWarehouses,
+    search: searchWarehouses,
+    result: searchWarehousesResult,
+  } = useWarehouseSearch({
     variables: {
-      first: 100,
-      channnelsId,
+      first: 50,
+      channnelsId: [],
       query: "",
     },
     skip: !currentChannels.length,
@@ -350,6 +352,7 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
         onAttributeSelectBlur={searchAttributeReset}
         fetchMoreWarehouses={fetchMoreWarehouses}
         searchWarehousesResult={searchWarehousesResult}
+        searchWarehouses={searchWarehouses}
       />
     </>
   );

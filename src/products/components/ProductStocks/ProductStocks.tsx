@@ -33,7 +33,7 @@ export interface ProductStockFormData {
 export interface ProductStocksProps {
   productVariantChannelListings?: ChannelData[];
   data: ProductStockFormData;
-  disabled: boolean;
+  loading: boolean;
   errors: ProductErrorFragment[];
   hasVariants: boolean;
   stocks: ProductStockInput[];
@@ -46,11 +46,12 @@ export interface ProductStocksProps {
   fetchMoreWarehouses: () => void;
   hasMoreWarehouses: boolean;
   isCreate: boolean;
+  searchWarehouses: (query: string) => void;
 }
 
 export const ProductStocks = ({
   data,
-  disabled,
+  loading,
   hasVariants,
   errors,
   stocks,
@@ -64,6 +65,7 @@ export const ProductStocks = ({
   onWarehouseConfigure,
   fetchMoreWarehouses,
   isCreate,
+  searchWarehouses,
 }: ProductStocksProps) => {
   const intl = useIntl();
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
@@ -96,7 +98,7 @@ export const ProductStocks = ({
       <DashboardCard.Content>
         <Box __width="50%">
           <Input
-            disabled={disabled}
+            disabled={loading}
             error={!!formErrors.sku}
             label={intl.formatMessage(messages.sku)}
             name="sku"
@@ -113,7 +115,7 @@ export const ProductStocks = ({
             <Checkbox
               checked={data.trackInventory}
               name="trackInventory"
-              disabled={disabled}
+              disabled={loading}
               onCheckedChange={value =>
                 onFormDataChange({ target: { name: "trackInventory", value } })
               }
@@ -189,7 +191,7 @@ export const ProductStocks = ({
                       <TableCell>
                         <Input
                           data-test-id="stock-input"
-                          disabled={disabled}
+                          disabled={loading}
                           onChange={handleQuantityChange}
                           value={stock.value}
                           size="small"
@@ -213,16 +215,14 @@ export const ProductStocks = ({
             </Table>
           )}
 
-        {productVariantChannelListings?.length > 0 &&
-          warehouses?.length > 0 &&
-          (warehousesToAssign.length > 0 || hasMoreWarehouses) && (
-            <ProductStocksAssignWarehouses
-              warehousesToAssign={warehousesToAssign}
-              hasMoreWarehouses={hasMoreWarehouses}
-              loadMoreWarehouses={fetchMoreWarehouses}
-              onWarehouseSelect={handleWarehouseStockAdd}
-            />
-          )}
+        <ProductStocksAssignWarehouses
+          warehousesToAssign={warehousesToAssign}
+          hasMoreWarehouses={hasMoreWarehouses}
+          loadMoreWarehouses={fetchMoreWarehouses}
+          onWarehouseSelect={handleWarehouseStockAdd}
+          loading={loading}
+          searchWarehouses={searchWarehouses}
+        />
       </DashboardCard.Content>
     </DashboardCard>
   );

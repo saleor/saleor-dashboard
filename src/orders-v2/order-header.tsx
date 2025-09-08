@@ -66,8 +66,8 @@ export const OrderHeader = ({ status, orderNumber, created, channel, ...props }:
             <Text size={2}>
               {intl.formatMessage(
                 {
-                  defaultMessage: "Channel {channelNameLink}",
-                  id: "VxBOta",
+                  defaultMessage: "Channel: {channelNameLink}",
+                  id: "QpetOV",
                 },
                 {
                   channelNameLink: (
