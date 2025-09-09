@@ -233,7 +233,7 @@ describe("OrderList Filters", () => {
     });
 
     // TODO: Fix OrderInvoiceDateQueryVarsBuilder
-    it.todo("should filter by invoice creation date", () => {
+    it.todo("should filter by invoice creation date", /* () => {
       // Arrange
       const params = new URLSearchParams("0%5Bs3.invoicesCreatedAt%5D%5B0%5D=2024-03-01&0%5Bs3.invoicesCreatedAt%5D%5B1%5D=2024-03-31");
       const tokenizedUrl = new TokenArray(params.toString());
@@ -248,7 +248,7 @@ describe("OrderList Filters", () => {
       const invoicesFilter = andItems.find(item => 'invoices' in item);
 
       expect(invoicesFilter).toEqual([{ createdAt: { gte: "2024-03-01", lte: "2024-03-31" } }])
-    });
+    } */);
   });
 
   describe("price filters", () => {
@@ -613,7 +613,7 @@ describe("OrderList Filters", () => {
   describe("edge-cases", () => {
     it("should map channels field from URL to channelId in GraphQL", () => {
       // Arrange
-      const params = new URLSearchParams("0%5Bs0.channels%5D=default-channel");
+      const params = new URLSearchParams("0%5Bs2.channels%5D%5B0%5D=default-channel");
       const tokenizedUrl = new TokenArray(params.toString());
       const initialOrderState = InitialOrderStateResponse.empty();
 
@@ -630,7 +630,7 @@ describe("OrderList Filters", () => {
       const andItems = filterVariables.AND as OrderWhereInput[];
       const channelFilter = andItems.find(item => 'channelId' in item);
 
-      expect(channelFilter?.channelId).toEqual({ eq: "CH123" });
+      expect(channelFilter?.channelId).toEqual({ oneOf: ["CH123"] });
     });
 
     it("should handle address filters for billing and shipping", () => {
