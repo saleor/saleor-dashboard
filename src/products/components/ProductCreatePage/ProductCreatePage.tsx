@@ -36,6 +36,7 @@ import { ProductOrganization } from "@dashboard/products/components/ProductOrgan
 import { ProductVariantPrice } from "@dashboard/products/components/ProductVariantPrice";
 import { ProductCreateUrlQueryParams, productListUrl } from "@dashboard/products/urls";
 import { getChoices } from "@dashboard/products/utils/data";
+import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Option } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -150,7 +151,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const [selectedCategory, setSelectedCategory] = useStateFromProps(initial?.category || "");
   const [selectedCollections, setSelectedCollections] = useStateFromProps<Option[]>([]);
   const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(initial?.taxClassId ?? "");
-  const categories = getChoices(categoryChoiceList);
+  const categories = getChoicesWithAncestors(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
   const productTypes = getChoices(productTypeChoiceList);
   const taxClassChoices =
