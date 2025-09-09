@@ -4138,6 +4138,9 @@
     "context": "Refund failure status",
     "string": "Failure"
   },
+  "N2IrpM": {
+    "string": "Confirm"
+  },
   "N2SbNc": {
     "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
   },
@@ -8381,6 +8384,9 @@
   "mE+fru": {
     "context": "tag filter label",
     "string": "Tags"
+  },
+  "mFC5Rq": {
+    "string": "Assign Warehouses"
   },
   "mGiA6q": {
     "context": "modal button upload",
