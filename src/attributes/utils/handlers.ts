@@ -99,6 +99,8 @@ export function createFetchReferencesHandler(
   assignReferencesAttributeId: string,
   fetchReferencePages?: (data: string) => void,
   fetchReferenceProducts?: (data: string) => void,
+  fetchReferenceCategories?: (data: string) => void,
+  fetchReferenceCollections?: (data: string) => void,
 ) {
   return (value: string) => {
     const attribute = attributes?.find(attribute => attribute.id === assignReferencesAttributeId);
@@ -109,6 +111,16 @@ export function createFetchReferencesHandler(
 
     if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE && fetchReferencePages) {
       fetchReferencePages(value);
+    } else if (
+      attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION &&
+      fetchReferenceCollections
+    ) {
+      fetchReferenceCollections(value);
+    } else if (
+      attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY &&
+      fetchReferenceCategories
+    ) {
+      fetchReferenceCategories(value);
     } else if (
       attribute.data?.entityType &&
       [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
@@ -126,6 +138,8 @@ export function createFetchMoreReferencesHandler(
   assignReferencesAttributeId: string,
   fetchMoreReferencePages?: FetchMoreProps,
   fetchMoreReferenceProducts?: FetchMoreProps,
+  fetchMoreReferenceCategories?: FetchMoreProps,
+  fetchMoreReferenceCollections?: FetchMoreProps,
 ) {
   const attribute = attributes?.find(attribute => attribute.id === assignReferencesAttributeId);
 
@@ -135,6 +149,10 @@ export function createFetchMoreReferencesHandler(
 
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return fetchMoreReferencePages;
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION) {
+    return fetchMoreReferenceCollections;
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY) {
+    return fetchMoreReferenceCategories;
   } else if (
     attribute.data?.entityType &&
     [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(

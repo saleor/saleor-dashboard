@@ -88,8 +88,12 @@ interface ProductCreatePageProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchReferenceCollections?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchMoreReferenceCategories?: FetchMoreProps;
+  fetchMoreReferenceCollections?: FetchMoreProps;
   onAttributeSelectBlur: () => void;
   onCloseDialog: (currentParams?: ProductCreateUrlQueryParams) => void;
   onSelectProductType: (productTypeId: string) => void;
@@ -136,6 +140,10 @@ export const ProductCreatePage = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
+  fetchReferenceCategories,
+  fetchMoreReferenceCategories,
+  fetchReferenceCollections,
+  fetchMoreReferenceCollections,
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onCloseDialog,
@@ -207,6 +215,10 @@ export const ProductCreatePage = ({
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+      fetchReferenceCategories={fetchReferenceCategories}
+      fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+      fetchReferenceCollections={fetchReferenceCollections}
+      fetchMoreReferenceCollections={fetchMoreReferenceCollections}
       assignReferencesAttributeId={assignReferencesAttributeId}
       loading={loading}
     >
