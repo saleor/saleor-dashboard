@@ -2764,6 +2764,16 @@ export const ProductVariantAttributesFragmentDoc = gql`
       entityType
       valueRequired
       unit
+      referenceTypes {
+        ... on ProductType {
+          __typename
+          ...ProductType
+        }
+        ... on PageType {
+          __typename
+          ...PageType
+        }
+      }
       choices(
         first: $firstValues
         after: $afterValues
@@ -2791,7 +2801,9 @@ export const ProductVariantAttributesFragmentDoc = gql`
     }
   }
 }
-    ${AttributeValueListFragmentDoc}
+    ${ProductTypeFragmentDoc}
+${PageTypeFragmentDoc}
+${AttributeValueListFragmentDoc}
 ${AttributeValueDetailsFragmentDoc}
 ${VariantAttributeFragmentDoc}`;
 export const ProductMediaFragmentDoc = gql`
@@ -17024,8 +17036,8 @@ export type SearchOrderVariantQueryHookResult = ReturnType<typeof useSearchOrder
 export type SearchOrderVariantLazyQueryHookResult = ReturnType<typeof useSearchOrderVariantLazyQuery>;
 export type SearchOrderVariantQueryResult = Apollo.QueryResult<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>;
 export const SearchPagesDocument = gql`
-    query SearchPages($after: String, $first: Int!, $query: String!) {
-  search: pages(after: $after, first: $first, filter: {search: $query}) {
+    query SearchPages($after: String, $first: Int!, $query: String!, $where: PageWhereInput) {
+  search: pages(after: $after, first: $first, search: $query, where: $where) {
     edges {
       node {
         id
@@ -17054,6 +17066,7 @@ export const SearchPagesDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      where: // value for 'where'
  *   },
  * });
  */
@@ -17160,12 +17173,13 @@ export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchP
 export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
 export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>;
 export const SearchProductsDocument = gql`
-    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String) {
+    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput) {
   search: products(
     after: $after
     first: $first
-    filter: {search: $query}
+    search: $query
     channel: $channel
+    where: $where
   ) {
     edges {
       node {
@@ -17196,6 +17210,7 @@ ${PageInfoFragmentDoc}`;
  *      first: // value for 'first'
  *      query: // value for 'query'
  *      channel: // value for 'channel'
+ *      where: // value for 'where'
  *   },
  * });
  */

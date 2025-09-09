@@ -621,7 +621,7 @@ export type AssignedVariantAttributeFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	variantSelection?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AttributeKeySpecifier = ('availableInGrid' | 'choices' | 'entityType' | 'externalReference' | 'filterableInDashboard' | 'filterableInStorefront' | 'id' | 'inputType' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productTypes' | 'productVariantTypes' | 'slug' | 'storefrontSearchPosition' | 'translation' | 'type' | 'unit' | 'valueRequired' | 'visibleInStorefront' | 'withChoices' | AttributeKeySpecifier)[];
+export type AttributeKeySpecifier = ('availableInGrid' | 'choices' | 'entityType' | 'externalReference' | 'filterableInDashboard' | 'filterableInStorefront' | 'id' | 'inputType' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productTypes' | 'productVariantTypes' | 'referenceTypes' | 'slug' | 'storefrontSearchPosition' | 'translation' | 'type' | 'unit' | 'valueRequired' | 'visibleInStorefront' | 'withChoices' | AttributeKeySpecifier)[];
 export type AttributeFieldPolicy = {
 	availableInGrid?: FieldPolicy<any> | FieldReadFunction<any>,
 	choices?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -640,6 +640,7 @@ export type AttributeFieldPolicy = {
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
 	productTypes?: FieldPolicy<any> | FieldReadFunction<any>,
 	productVariantTypes?: FieldPolicy<any> | FieldReadFunction<any>,
+	referenceTypes?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	storefrontSearchPosition?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>,

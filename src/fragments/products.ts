@@ -142,6 +142,16 @@ export const productVariantAttributesFragment = gql`
         entityType
         valueRequired
         unit
+        referenceTypes{
+          ... on ProductType {
+            __typename
+            ...ProductType
+          }
+          ... on PageType {
+            __typename
+            ...PageType
+          }
+        }
         choices(
           first: $firstValues
           after: $afterValues
