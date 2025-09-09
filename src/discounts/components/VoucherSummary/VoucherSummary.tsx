@@ -96,19 +96,27 @@ const VoucherSummary = ({ selectedChannelId, voucher }: VoucherSummaryProps) => 
         </Text>
         <FormSpacer />
 
-        <Text size={2} fontWeight="light">
-          <FormattedMessage
-            id="HLqWXA"
-            defaultMessage="Usage Limit"
-            description="voucher value requirement"
-          />
-        </Text>
-        <Text display="block">{voucher?.usageLimit ? voucher.usageLimit : "-"}</Text>
-        <FormSpacer />
-        <Text size={2} fontWeight="light">
-          <FormattedMessage id="h65vZI" defaultMessage="Used" description="times voucher used" />
-        </Text>
-        <Text display="block">{voucher?.used ?? <Skeleton />}</Text>
+        {voucher?.usageLimit && (
+          <>
+            <Text size={2} fontWeight="light">
+              <FormattedMessage
+                id="HLqWXA"
+                defaultMessage="Usage Limit"
+                description="voucher value requirement"
+              />
+            </Text>
+            <Text display="block">{voucher?.usageLimit ? voucher.usageLimit : "-"}</Text>
+            <FormSpacer />
+            <Text size={2} fontWeight="light">
+              <FormattedMessage
+                id="h65vZI"
+                defaultMessage="Used"
+                description="times voucher used"
+              />
+            </Text>
+            <Text display="block">{voucher?.used ?? <Skeleton />}</Text>
+          </>
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );
