@@ -4488,6 +4488,10 @@
     "context": "link",
     "string": "Activate"
   },
+  "P6+RQ1": {
+    "context": "no products placeholder",
+    "string": "No products found"
+  },
   "P79U4b": {
     "context": "attribute's slug short code label",
     "string": "Attribute Code"
