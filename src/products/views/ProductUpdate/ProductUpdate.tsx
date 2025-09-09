@@ -270,6 +270,10 @@ export const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchReferenceCategories={searchCategories}
+        fetchMoreReferenceCategories={fetchMoreCategories}
+        fetchReferenceCollections={searchCollections}
+        fetchMoreReferenceCollections={fetchMoreCollections}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}

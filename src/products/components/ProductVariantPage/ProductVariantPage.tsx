@@ -117,9 +117,13 @@ interface ProductVariantPageProps {
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchMoreReferenceCategories?: FetchMoreProps;
+  fetchMoreReferenceCollections?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchReferenceCollections?: (data: string) => void;
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
@@ -164,9 +168,13 @@ export const ProductVariantPage = ({
   onAssignReferencesClick,
   fetchReferencePages,
   fetchReferenceProducts,
+  fetchReferenceCategories,
+  fetchReferenceCollections,
   fetchAttributeValues,
   fetchMoreReferencePages,
   fetchMoreReferenceProducts,
+  fetchMoreReferenceCategories,
+  fetchMoreReferenceCollections,
   fetchMoreAttributeValues,
   onCloseDialog,
   onAttributeSelectBlur,
@@ -238,6 +246,10 @@ export const ProductVariantPage = ({
           fetchMoreReferencePages={fetchMoreReferencePages}
           fetchReferenceProducts={fetchReferenceProducts}
           fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+          fetchReferenceCategories={fetchReferenceCategories}
+          fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+          fetchReferenceCollections={fetchReferenceCollections}
+          fetchMoreReferenceCollections={fetchMoreReferenceCollections}
           assignReferencesAttributeId={assignReferencesAttributeId}
           loading={loading}
         >

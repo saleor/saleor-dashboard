@@ -21,4 +21,9 @@ export const messages = defineMessages({
     defaultMessage: "Assign and save",
     description: "assign categories to sale and save",
   },
+  noCategoriesFound: {
+    id: "UHhqmr",
+    defaultMessage: "No categories found",
+    description: "search results",
+  },
 });
