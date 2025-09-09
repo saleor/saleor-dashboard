@@ -97,12 +97,16 @@ export interface ProductUpdatePageProps {
   assignReferencesAttributeId?: string;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchMoreReferenceCategories?: FetchMoreProps;
+  fetchMoreReferenceCollections?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
   isSimpleProduct: boolean;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchReferenceCollections?: (data: string) => void;
   fetchAttributeValues: (query: string, attributeId: string) => void;
   refetch: () => Promise<any>;
   onAttributeValuesSearch: (id: string, query: string) => Promise<Option[]>;
@@ -162,6 +166,10 @@ export const ProductUpdatePage = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
+  fetchReferenceCategories,
+  fetchMoreReferenceCategories,
+  fetchReferenceCollections,
+  fetchMoreReferenceCollections,
   fetchAttributeValues,
   fetchMoreAttributeValues,
   refetch,
@@ -262,6 +270,10 @@ export const ProductUpdatePage = ({
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}
       fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+      fetchReferenceCategories={fetchReferenceCategories}
+      fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+      fetchReferenceCollections={fetchReferenceCollections}
+      fetchMoreReferenceCollections={fetchMoreReferenceCollections}
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
       refetch={refetch}
