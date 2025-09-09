@@ -7,6 +7,7 @@ export type OrderInvoiceDateQueryVars = {
   invoices?: Array<{ createdAt?: { gte?: string; lte?: string } }>;
 };
 
+/** Returns invoice date filter query, it's a array with single property `createdAt` */
 export class OrderInvoiceDateQueryVarsBuilder extends BaseMappableQueryVarsBuilder<OrderInvoiceDateQueryVars> {
   private static readonly FIELD_NAME = "invoicesCreatedAt";
 
