@@ -213,18 +213,6 @@ jobs:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           SLACK_WEBHOOK_URL: "op://Continuous Integration/CTRF_SLACK_REPORT/password"
 
-      - name: Create flaky report
-        uses: ./.github/actions/flaky-tests-report
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          ctrf_slack_report_webhook: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
-
-      - name: Push flaky report
-        uses: ./.github/actions/push-flaky-test-report
-        with:
-          VAULT_URL: ${{ secrets.VAULT_URL }}
-          VAULT_JWT: ${{ secrets.VAULT_JWT }}
-
       - id: update-check
         if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
         uses: ./.github/actions/checks/update-pull-request-check
