@@ -58,6 +58,7 @@ describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
       transactionsPaymentType: [],
       transactionsCardBrand: [],
       fulfillmentsMetadata: [],
+      fulfillmentWarehouse: [],
       billingPhoneNumber: [],
       billingCountry: [],
       shippingPhoneNumber: [],

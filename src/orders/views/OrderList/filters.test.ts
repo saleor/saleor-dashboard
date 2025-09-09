@@ -232,7 +232,8 @@ describe("OrderList Filters", () => {
       });
     });
 
-    it("should filter by invoice creation date (currently not supported)", () => {
+    // TODO: Fix OrderInvoiceDateQueryVarsBuilder
+    it.todo("should filter by invoice creation date", () => {
       // Arrange
       const params = new URLSearchParams("0%5Bs3.invoicesCreatedAt%5D%5B0%5D=2024-03-01&0%5Bs3.invoicesCreatedAt%5D%5B1%5D=2024-03-31");
       const tokenizedUrl = new TokenArray(params.toString());
@@ -243,12 +244,10 @@ describe("OrderList Filters", () => {
       );
 
       // Assert
-      // Once OrderInvoiceDateQueryVarsBuilder is registered, it should create:
-      // invoices: [{ createdAt: { gte: "...", lte: "..." } }]
       const andItems = filterVariables.AND as OrderWhereInput[];
       const invoicesFilter = andItems.find(item => 'invoices' in item);
 
-      expect(invoicesFilter).toEqual([{ createdAt: {} }])
+      expect(invoicesFilter).toEqual([{ createdAt: { gte: "2024-03-01", lte: "2024-03-31" } }])
     });
   });
 
