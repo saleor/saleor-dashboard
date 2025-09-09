@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.21.9
+
+### Patch Changes
+
+- a2d0602: Voucher detail page: fixed how we calculate minimal requirements state. After this change we won't take selected channel into consideration for checking if requirement is `minimal order value` - instead we will use channel listing `minSpent` amount. Thanks to that UI should now properly display requirement.
+- 8a5e677: Unify Category organization options for product create and update. After this change all comboboxes will use the same `parent / children` pattern of displaying options
+
 ## 3.21.8
 
 ### Patch Changes
