@@ -53,7 +53,7 @@ jobs:
           else
             echo "MODE=release" >> $GITHUB_OUTPUT
           fi
-     
+
       - name: Load secrets for initialize-cloud
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0
         id: load-secrets-init
@@ -148,15 +148,3 @@ jobs:
         uses: ./.github/actions/merge-pw-reports
         with:
           PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
-
-      - name: Create flaky report
-        uses: ./.github/actions/flaky-tests-report
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          ctrf_slack_report_webhook: ${{ steps.load-secrets.outputs.SLACK_WEBHOOK_URL }}
-
-      - name: Push flaky report
-        uses: ./.github/actions/push-flaky-test-report
-        with:
-          VAULT_URL: ${{ secrets.VAULT_URL }}
-          VAULT_JWT: ${{ secrets.VAULT_JWT }}
