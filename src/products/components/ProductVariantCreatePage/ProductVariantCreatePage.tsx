@@ -109,6 +109,7 @@ interface ProductVariantCreatePageProps {
   onAttributeSelectBlur: () => void;
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
+  searchWarehouses: (query: string) => void;
 }
 
 const ProductVariantCreatePage = ({
@@ -140,6 +141,7 @@ const ProductVariantCreatePage = ({
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
+  searchWarehouses,
 }: ProductVariantCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -290,11 +292,12 @@ const ProductVariantCreatePage = ({
                     warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
                     fetchMoreWarehouses={fetchMoreWarehouses}
                     hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
-                    disabled={disabled}
                     hasVariants={true}
                     onFormDataChange={change}
                     errors={errors}
                     stocks={data.stocks}
+                    loading={!product}
+                    searchWarehouses={searchWarehouses}
                     onChange={handlers.changeStock}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
