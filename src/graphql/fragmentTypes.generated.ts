@@ -10,10 +10,27 @@
       "AppExtensionOptionsNewTab",
       "AppExtensionOptionsWidget"
     ],
-    "AttributeValueReferencedObject": [
-      "Page",
-      "Product",
-      "ProductVariant"
+    "AssignedAttribute": [
+      "AssignedBooleanAttribute",
+      "AssignedDateAttribute",
+      "AssignedDateTimeAttribute",
+      "AssignedFileAttribute",
+      "AssignedMultiCategoryReferenceAttribute",
+      "AssignedMultiChoiceAttribute",
+      "AssignedMultiCollectionReferenceAttribute",
+      "AssignedMultiPageReferenceAttribute",
+      "AssignedMultiProductReferenceAttribute",
+      "AssignedMultiProductVariantReferenceAttribute",
+      "AssignedNumericAttribute",
+      "AssignedPlainTextAttribute",
+      "AssignedSingleCategoryReferenceAttribute",
+      "AssignedSingleChoiceAttribute",
+      "AssignedSingleCollectionReferenceAttribute",
+      "AssignedSinglePageReferenceAttribute",
+      "AssignedSingleProductReferenceAttribute",
+      "AssignedSingleProductVariantReferenceAttribute",
+      "AssignedSwatchAttribute",
+      "AssignedTextAttribute"
     ],
     "CheckoutLineProblem": [
       "CheckoutLineProblemInsufficientStock",
@@ -188,10 +205,6 @@
       "WarehouseDeleted",
       "WarehouseMetadataUpdated",
       "WarehouseUpdated"
-    ],
-    "GenericPaymentMethodDetails": [
-      "CardPaymentMethodDetails",
-      "OtherPaymentMethodDetails"
     ],
     "IssuingPrincipal": [
       "App",

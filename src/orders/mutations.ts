@@ -508,8 +508,8 @@ export const orderTransactionRequestActionMutation = gql`
       actionType: $action
       id: $transactionId
       amount: $amount
-      reason: $reason
-      reasonReference: $reasonReferenceId
+      refundReason: $reason
+      refundReasonReference: $reasonReferenceId
     ) {
       errors {
         ...TransactionRequestActionError

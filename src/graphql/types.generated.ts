@@ -61,6 +61,12 @@ export type Scalars = {
    * Should be used in places where value must be nonnegative (0 or greater).
    */
   PositiveDecimal: any;
+  /**
+   * Positive Integer scalar implementation.
+   *
+   * Should be used in places where value must be positive (greater than 0).
+   */
+  PositiveInt: any;
   UUID: any;
   /** Variables of this type must be set to null in mutations. They will be replaced with a filename from a following multipart part containing a binary file. See: https://github.com/jaydenseric/graphql-multipart-request-spec. */
   Upload: any;
@@ -4453,7 +4459,7 @@ export type OrderGrantRefundCreateInput = {
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
   /**
-   * ID of Model to reference in reason.
+   * ID of a `Page` (Model) to reference in reason.
    *
    * Added in Saleor 3.22.
    */
@@ -4502,7 +4508,7 @@ export type OrderGrantRefundUpdateInput = {
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
   /**
-   * ID of Model to reference in reason.
+   * ID of a `Page` (Model) to reference in reason.
    *
    * Added in Saleor 3.22.
    */
@@ -5087,6 +5093,7 @@ export enum PaymentErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   CHECKOUT_COMPLETION_IN_PROGRESS = 'CHECKOUT_COMPLETION_IN_PROGRESS',
   CHECKOUT_EMAIL_NOT_SET = 'CHECKOUT_EMAIL_NOT_SET',
+  CHECKOUT_HAS_TRANSACTION = 'CHECKOUT_HAS_TRANSACTION',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_SHIPPING_METHOD = 'INVALID_SHIPPING_METHOD',
@@ -6578,7 +6585,7 @@ export type RefundSettingsUpdateInput = {
    *
    * Added in Saleor 3.22.
    */
-  refundReasonReferenceType?: InputMaybe<Scalars['ID']>;
+  refundReasonReferenceType: Scalars['ID'];
 };
 
 export type ReorderInput = {
@@ -7355,7 +7362,7 @@ export type TransactionCreateInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** PSP Reference of the transaction.  */
+  /** PSP Reference of the transaction. */
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
@@ -7535,7 +7542,7 @@ export type TransactionUpdateInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** PSP Reference of the transaction.  */
+  /** PSP Reference of the transaction. */
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
