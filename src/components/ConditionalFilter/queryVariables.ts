@@ -16,7 +16,6 @@ import {
 import { FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
-import { OrderInvoiceDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders";
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
 import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayMetadataQueryVarsBuilder";
 import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
@@ -67,7 +66,6 @@ export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInp
       new OrderChannelQueryVarsBuilder(), // Map channels -> channelId
       new OrderCustomerIdQueryVarsBuilder(), // Map customer -> user
       new OrderIdQueryVarsBuilder(), // Handle ids as plain arrays
-      new OrderInvoiceDateQueryVarsBuilder(), // Handle invoice dates in array as an object
       new AddressFieldQueryVarsBuilder(), // Handle address fields (billing/shipping phone/country)
       new ArrayNestedFieldQueryVarsBuilder(), // Handle nested fields in transactions (payment type/card brand)
       new ArrayMetadataQueryVarsBuilder(), // Handle metadata in arrays (lines, transactions, fulfillments)
