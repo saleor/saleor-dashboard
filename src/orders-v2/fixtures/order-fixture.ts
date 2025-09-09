@@ -1,5 +1,8 @@
 import {
   AddressFragment,
+  DiscountValueTypeEnum,
+  FulfillmentFragment,
+  FulfillmentStatus,
   InvoiceFragment,
   MarkAsPaidStrategyEnum,
   OrderChargeStatusEnum,
@@ -7,6 +10,7 @@ import {
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
+import cloneDeep from "lodash/cloneDeep";
 import merge from "lodash/merge";
 
 /**
@@ -200,41 +204,263 @@ export class OrderFixture {
     },
   } satisfies OrderDetailsFragment["channel"];
 
+  private static lines = [
+    {
+      __typename: "OrderLine",
+      isShippingRequired: true,
+      productName: "Test Product",
+      unitDiscountValue: 0,
+      productSku: "TEST-PRODUCT-SKU",
+      quantityFulfilled: 2,
+      quantityToFulfill: 0,
+      unitDiscountReason: null,
+      unitDiscountType: null,
+      allocations: [],
+      unitDiscount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
+      thumbnail: {
+        __typename: "Image",
+        url: "https://example.com/image.jpg",
+      },
+      unitPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+      },
+      undiscountedUnitPrice: {
+        __typename: "TaxedMoney",
+        currency: "USD",
+        gross: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "variant-id-1",
+        name: "Test Variant",
+        quantityAvailable: 100,
+        preorder: {
+          __typename: "PreorderData",
+          endDate: null,
+        },
+        stocks: [
+          {
+            __typename: "Stock",
+            id: "stock-id-1",
+            quantity: 100,
+            warehouse: {
+              __typename: "Warehouse",
+              id: "warehouse-id-1",
+              name: "Main Warehouse",
+            },
+            quantityAllocated: 0,
+          },
+        ],
+        product: {
+          __typename: "Product",
+          id: "product-id-1",
+          isAvailableForPurchase: true,
+        },
+      },
+      isGift: false,
+      id: "line-id-1",
+      quantity: 2,
+      totalPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+        net: {
+          __typename: "Money",
+          amount: 50,
+          currency: "USD",
+        },
+      },
+    },
+  ] satisfies OrderDetailsFragment["lines"];
+
+  private static baseFulfillment = {
+    __typename: "Fulfillment",
+    id: "fulfillment-id-1",
+    status: FulfillmentStatus.FULFILLED,
+    fulfillmentOrder: 1,
+    trackingNumber: "1234",
+    created: "2023-10-01T12:00:00Z",
+    lines: [
+      {
+        __typename: "FulfillmentLine",
+        id: "",
+        quantity: 0,
+        orderLine: {
+          __typename: "OrderLine",
+          id: "",
+          isShippingRequired: false,
+          productName: "",
+          productSku: "",
+          isGift: false,
+          quantity: 0,
+          quantityFulfilled: 0,
+          quantityToFulfill: 0,
+          unitDiscountValue: undefined,
+          unitDiscountReason: "",
+          unitDiscountType: DiscountValueTypeEnum.FIXED,
+          allocations: [],
+          variant: {
+            __typename: "ProductVariant",
+            id: "",
+            name: "",
+            quantityAvailable: 0,
+            preorder: {
+              __typename: "PreorderData",
+              endDate: undefined,
+            },
+            stocks: [],
+            product: {
+              __typename: "Product",
+              id: "",
+              isAvailableForPurchase: false,
+            },
+          },
+          totalPrice: {
+            __typename: "TaxedMoney",
+            net: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+            gross: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+          },
+          unitDiscount: {
+            __typename: "Money",
+            amount: 0,
+            currency: "",
+          },
+          undiscountedUnitPrice: {
+            __typename: "TaxedMoney",
+            currency: "",
+            gross: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+            net: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+          },
+          unitPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+            net: {
+              __typename: "Money",
+              amount: 0,
+              currency: "",
+            },
+          },
+          thumbnail: {
+            __typename: "Image",
+            url: "",
+          },
+        },
+      },
+    ],
+    warehouse: {
+      __typename: "Warehouse",
+      id: "warehouse-id-1",
+      name: "Americas",
+    },
+    metadata: [],
+    privateMetadata: [],
+  } satisfies FulfillmentFragment;
+
   private order: OrderDetailsFragment;
 
   private constructor(initialOrder: OrderDetailsFragment) {
     this.order = { ...initialOrder };
   }
 
-  /**
-   * Creates a fulfilled order fixture
-   */
   static fulfilled(): OrderFixture {
-    const fulfilledOrder: OrderDetailsFragment = merge(OrderFixture.baseOrder, {
+    const fulfilledOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
       id: "fulfilled-order-id",
       status: OrderStatus.FULFILLED,
       billingAddress: OrderFixture.address,
       shippingAddress: OrderFixture.address,
       channel: OrderFixture.channel,
+      lines: OrderFixture.lines,
+      fulfillments: [OrderFixture.baseFulfillment],
     });
 
     return new OrderFixture(fulfilledOrder);
   }
 
-  /**
-   * Creates an unconfirmed order fixture
-   */
   static unconfirmed(): OrderFixture {
-    const unconfirmedOrder: OrderDetailsFragment = merge(OrderFixture.baseOrder, {
+    const unconfirmedOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
       id: "unconfirmed-order-id",
       status: OrderStatus.UNCONFIRMED,
+      isPaid: false,
+      paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+      chargeStatus: OrderChargeStatusEnum.NONE,
       fulfillments: [],
       billingAddress: OrderFixture.address,
       shippingAddress: OrderFixture.address,
       channel: OrderFixture.channel,
+      lines: OrderFixture.lines,
+      totalCaptured: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
+      totalCharged: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
     });
 
     return new OrderFixture(unconfirmedOrder);
+  }
+
+  static unfulfilled(): OrderFixture {
+    const unfulfilledOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
+      id: "unfulfilled-order-id",
+      status: OrderStatus.UNFULFILLED,
+      billingAddress: OrderFixture.address,
+      shippingAddress: OrderFixture.address,
+      channel: OrderFixture.channel,
+      lines: OrderFixture.lines,
+      fulfillments: [],
+    });
+
+    return new OrderFixture(unfulfilledOrder);
   }
 
   /**
@@ -280,6 +506,48 @@ export class OrderFixture {
     this.order = {
       ...this.order,
       channel,
+    };
+
+    return this;
+  }
+
+  withReturnedFulfillment(): OrderFixture {
+    const returnedFulfillment: FulfillmentFragment = {
+      ...OrderFixture.baseFulfillment,
+      status: FulfillmentStatus.RETURNED,
+    };
+
+    this.order = {
+      ...this.order,
+      fulfillments: [...this.order.fulfillments, returnedFulfillment],
+    };
+
+    return this;
+  }
+
+  withReplacedFulfillment(): OrderFixture {
+    const replacedFulfillment: FulfillmentFragment = {
+      ...OrderFixture.baseFulfillment,
+      status: FulfillmentStatus.REPLACED,
+    };
+
+    this.order = {
+      ...this.order,
+      fulfillments: [...this.order.fulfillments, replacedFulfillment],
+    };
+
+    return this;
+  }
+
+  withRefundedFulfillment(): OrderFixture {
+    const refundedFulfillment: FulfillmentFragment = {
+      ...OrderFixture.baseFulfillment,
+      status: FulfillmentStatus.REFUNDED,
+    };
+
+    this.order = {
+      ...this.order,
+      fulfillments: [...this.order.fulfillments, refundedFulfillment],
     };
 
     return this;

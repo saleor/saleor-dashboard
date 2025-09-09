@@ -1,10 +1,16 @@
+// TODO: Remove barell file
 export * from "./AttributeQueryVarsBuilder";
 export * from "./AttributeTypeQueryVarsBuilder";
 export * from "./BaseMappableQueryVarsBuilder";
 export * from "./CollectionPublishedQueryVarsBuilder";
 export * from "./CustomerNumberOfOrdersQueryVarsBuilder";
 export * from "./DefaultQueryVarsBuilder";
-export * from "./MetadataQueryVarsBuilder";
+export * from "./IntFilterQueryVarsBuilder";
+export * from "./MetadataFilterInputQueryVarsBuilder";
+export * from "./MetadataFilterQueryVarsBuilder";
+export * from "./OrderChannelQueryVarsBuilder";
+export * from "./OrderCustomerIdQueryVarsBuilder";
+export * from "./OrderInvoiceDateQueryVarsBuilder";
 export * from "./ProductTypeQueryVarsBuilder";
 export * from "./SlugChannelQueryVarsBuilder";
 export * from "./StaffMemberStatusQueryVarsBuilder";

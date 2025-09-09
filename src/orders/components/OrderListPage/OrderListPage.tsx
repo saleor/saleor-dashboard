@@ -7,6 +7,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -21,7 +22,6 @@ import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
 import { OrderListUrlQueryParams, OrderListUrlSortField, orderUrl } from "@dashboard/orders/urls";
-import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
 import {
   PageListProps,
   RelayToFlat,
@@ -39,9 +39,9 @@ import { OrderListDatagrid } from "../OrderListDatagrid";
 
 export interface OrderListPageProps
   extends PageListProps,
-    SearchPageProps,
-    Omit<TabPageProps, "onTabDelete">,
-    SortPage<OrderListUrlSortField> {
+  SearchPageProps,
+  Omit<TabPageProps, "onTabDelete">,
+  SortPage<OrderListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderListQuery["orders"]>;
   hasPresetsChanged: boolean;
@@ -88,7 +88,7 @@ const OrderListPage = ({
 
     const variables = JSON.stringify(
       {
-        filter: getFilterVariables(params, valueProvider.value),
+        filter: createOrderQueryVariables(valueProvider.value),
         // TODO add sorting: Issue #3409
         // strange error when uncommenting this line
         // sortBy: getSortQueryVariables(params)

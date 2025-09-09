@@ -50,11 +50,11 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
-import ProductVariantPage from "../../components/ProductVariantPage";
+import { ProductVariantPage } from "../../components/ProductVariantPage";
 import { ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import {
   productUrl,
@@ -129,12 +129,14 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const variant = data?.productVariant;
   const channels = createVariantChannels(variant);
 
-  const channnelsId = useMemo(() => channels.map(channel => channel.id), [channels]);
-
-  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
+  const {
+    loadMore: fetchMoreWarehouses,
+    result: searchWarehousesResult,
+    search: searchWarehouses,
+  } = useWarehouseSearch({
     variables: {
       first: 100,
-      channnelsId,
+      channnelsId: [],
       query: "",
     },
     skip: !channels.length,
@@ -246,10 +248,18 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const { result: searchCategoriesOpts } = useCategorySearch({
+  const {
+    loadMore: loadMoreCategories,
+    search: searchCategories,
+    result: searchCategoriesOpts,
+  } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
-  const { result: searchCollectionsOpts } = useCollectionSearch({
+  const {
+    loadMore: loadMoreCollections,
+    search: searchCollections,
+    result: searchCollectionsOpts,
+  } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
@@ -267,6 +277,16 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts,
+  };
+  const fetchMoreReferenceCategories = {
+    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchCategoriesOpts.loading,
+    onFetchMore: loadMoreCategories,
+  };
+  const fetchMoreReferenceCollections = {
+    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchCollectionsOpts.loading,
+    onFetchMore: loadMoreCollections,
   };
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
@@ -300,6 +320,7 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onSubmit={handleSubmit}
         fetchMoreWarehouses={fetchMoreWarehouses}
         searchWarehousesResult={searchWarehousesResult}
+        searchWarehouses={searchWarehouses}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
@@ -314,6 +335,10 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchReferenceCategories={searchCategories}
+        fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+        fetchReferenceCollections={searchCollections}
+        fetchMoreReferenceCollections={fetchMoreReferenceCollections}
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantEditUrl(variantId))}

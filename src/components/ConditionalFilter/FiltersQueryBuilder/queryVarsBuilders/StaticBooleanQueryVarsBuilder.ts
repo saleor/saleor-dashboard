@@ -13,6 +13,11 @@ const SUPPORTED_STATIC_BOOLEAN_FILTERS = new Set([
   "isVisibleInListing",
   "giftCard",
   "isActive",
+  "isClickAndCollect",
+  "isGiftCardUsed",
+  "isGiftCardBought",
+  "hasInvoices",
+  "hasFulfillments",
 ] as const);
 
 type SupportedStaticBooleanKeys =

@@ -42,6 +42,11 @@ const pagesMessages = defineMessages({
     defaultMessage: "Search by model name, etc...",
     description: "placeholder",
   },
+  noPagesFound: {
+    id: "BOYzu+",
+    defaultMessage: "No models found",
+    description: "search results",
+  },
 });
 
 type AssignAttributeValueDialogProps = AssignProductDialogProps & {
@@ -78,6 +83,7 @@ const AssignAttributeValueDialog = ({
               name: page.title,
             })) ?? []
           }
+          emptyMessage={intl.formatMessage(pagesMessages.noPagesFound)}
           labels={{
             confirmBtn: intl.formatMessage(pagesMessages.confirmBtn),
             label: intl.formatMessage(pagesMessages.searchLabel),

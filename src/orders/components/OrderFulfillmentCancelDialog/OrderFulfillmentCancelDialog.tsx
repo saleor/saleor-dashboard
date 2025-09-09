@@ -4,7 +4,7 @@ import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
+import { FulfillmentStatus, OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -37,12 +37,13 @@ export interface OrderFulfillmentCancelDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   warehouses: WarehouseFragment[];
+  fulfillmentStatus: string;
   onClose: () => any;
   onConfirm: (data: OrderFulfillmentCancelDialogFormData) => any;
 }
 
 const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) => {
-  const { confirmButtonState, errors, open, warehouses, onConfirm, onClose } = props;
+  const { confirmButtonState, errors, open, warehouses, fulfillmentStatus, onConfirm, onClose } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const [displayValue, setDisplayValue] = React.useState("");
@@ -50,6 +51,7 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
     label: warehouse.name,
     value: warehouse.id,
   }));
+  const waitingForApproval = fulfillmentStatus === FulfillmentStatus.WAITING_FOR_APPROVAL;
 
   return (
     <DashboardModal onChange={onClose} open={open}>
@@ -73,31 +75,39 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
 
               <Text>
                 <FormattedMessage
-                  id="xco5tZ"
-                  defaultMessage="Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
+                  id="+cGU63"
+                  defaultMessage="Are you sure you want to cancel fulfillment?"
                 />
+                {!waitingForApproval && (
+                  <FormattedMessage
+                    id="QV5QKO"
+                    defaultMessage=" Canceling a fulfillment will restock products at a selected warehouse."
+                  />
+                )}
               </Text>
 
-              <div
-                className={classes.selectCcontainer}
-                data-test-id="cancel-fulfillment-select-field"
-              >
-                <Combobox
-                  label={intl.formatMessage({
-                    id: "aHc89n",
-                    defaultMessage: "Select Warehouse",
-                    description: "select warehouse to restock items",
-                  })}
-                  options={choices}
-                  fetchOptions={() => undefined}
-                  name="warehouseId"
-                  value={{
-                    label: displayValue,
-                    value: formData.warehouseId,
-                  }}
-                  onChange={handleChange}
-                />
-              </div>
+              {!waitingForApproval && (
+                <div
+                  className={classes.selectCcontainer}
+                  data-test-id="cancel-fulfillment-select-field"
+                >
+                  <Combobox
+                    label={intl.formatMessage({
+                      id: "aHc89n",
+                      defaultMessage: "Select Warehouse",
+                      description: "select warehouse to restock items",
+                    })}
+                    options={choices}
+                    fetchOptions={() => undefined}
+                    name="warehouseId"
+                    value={{
+                      label: displayValue,
+                      value: formData.warehouseId,
+                    }}
+                    onChange={handleChange}
+                  />
+                </div>
+              )}
 
               {errors.length > 0 &&
                 errors.map((err, index) => (
@@ -110,7 +120,7 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
                 <BackButton onClick={onClose} />
                 <ConfirmButton
                   data-test-id="submit"
-                  disabled={formData.warehouseId === null}
+                  disabled={!waitingForApproval && formData.warehouseId === null}
                   transitionState={confirmButtonState}
                   onClick={submit}
                 >
