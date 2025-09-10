@@ -25,6 +25,12 @@ jobs:
           node-version-file: ".nvmrc"
       - name: Install Dependencies
         run: npm ci
+      - name: Set GitHub Token
+        run: |
+          GITHUB_TOKEN=$( \
+            curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
+          )
+          echo "GITHUB_TOKEN=$GITHUB_TOKEN" >> $GITHUB_ENV
       - name: Publishing version
         uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
         id: changesets
@@ -33,7 +39,7 @@ jobs:
           commit: "Release ${{ github.ref_name }}"
           publish: "npm run release"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
   build:
     needs: prepare-release
@@ -77,7 +83,7 @@ jobs:
           set -x
           environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
           echo "ENVIRONMENT=${environment}" >> "$GITHUB_ENV"
-      
+
       - name: Set custom version
         env:
           VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
@@ -145,7 +151,7 @@ jobs:
           CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
           CHECK_NAME: "Deploy_staging"
           STATUS: "completed"
-          CONCLUSION: "${{ steps.deploy.outcome }}" 
+          CONCLUSION: "${{ steps.deploy.outcome }}"
           TITLE: "Deploy staging"
           SUMMARY: "Deploy finished with status ${{ steps.deploy.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

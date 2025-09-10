@@ -117,9 +117,13 @@ interface ProductVariantPageProps {
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchMoreReferenceCategories?: FetchMoreProps;
+  fetchMoreReferenceCollections?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchReferenceCollections?: (data: string) => void;
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
@@ -133,9 +137,10 @@ interface ProductVariantPageProps {
   onWarehouseConfigure: () => any;
   fetchMoreWarehouses: () => void;
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
+  searchWarehouses: (query: string) => void;
 }
 
-const ProductVariantPage = ({
+export const ProductVariantPage = ({
   productId,
   channels,
   channelErrors,
@@ -163,14 +168,19 @@ const ProductVariantPage = ({
   onAssignReferencesClick,
   fetchReferencePages,
   fetchReferenceProducts,
+  fetchReferenceCategories,
+  fetchReferenceCollections,
   fetchAttributeValues,
   fetchMoreReferencePages,
   fetchMoreReferenceProducts,
+  fetchMoreReferenceCategories,
+  fetchMoreReferenceCollections,
   fetchMoreAttributeValues,
   onCloseDialog,
   onAttributeSelectBlur,
   fetchMoreWarehouses,
   searchWarehousesResult,
+  searchWarehouses,
 }: ProductVariantPageProps) => {
   const intl = useIntl();
   const { user } = useUser();
@@ -236,6 +246,10 @@ const ProductVariantPage = ({
           fetchMoreReferencePages={fetchMoreReferencePages}
           fetchReferenceProducts={fetchReferenceProducts}
           fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+          fetchReferenceCategories={fetchReferenceCategories}
+          fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+          fetchReferenceCollections={fetchReferenceCollections}
+          fetchMoreReferenceCollections={fetchMoreReferenceCollections}
           assignReferencesAttributeId={assignReferencesAttributeId}
           loading={loading}
         >
@@ -376,7 +390,7 @@ const ProductVariantPage = ({
                         searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage
                       }
                       data={data}
-                      disabled={loading}
+                      loading={loading}
                       hasVariants={true}
                       errors={errors}
                       stocks={data.stocks}
@@ -386,6 +400,7 @@ const ProductVariantPage = ({
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}
                       isCreate={false}
+                      searchWarehouses={searchWarehouses}
                     />
                     <CardSpacer />
                     <Metadata data={data} onChange={handlers.changeMetadata} />
@@ -461,4 +476,3 @@ const ProductVariantPage = ({
 };
 
 ProductVariantPage.displayName = "ProductVariantPage";
-export default ProductVariantPage;
