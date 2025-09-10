@@ -220,7 +220,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           onWarehouseSelect={handleWarehouseStockAdd}
           loading={loading}
           searchWarehouses={searchWarehouses}
-          hideAssignWarehousesButton={isCreate}
+          showAssignWarehousesButton={!isCreate}
         />
       </DashboardCard.Content>
     </DashboardCard>

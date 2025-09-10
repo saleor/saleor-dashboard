@@ -19,7 +19,7 @@ interface ProductStocksAssignWarehousesProps {
   onWarehouseSelect: (warehouseId: string, warehouseName: string) => void;
   loading: boolean;
   searchWarehouses: (query: string) => void;
-  hideAssignWarehousesButton: boolean;
+  showAssignWarehousesButton: boolean;
 }
 
 export const ProductStocksAssignWarehouses = ({
@@ -29,7 +29,7 @@ export const ProductStocksAssignWarehouses = ({
   warehousesToAssign,
   loading,
   searchWarehouses,
-  hideAssignWarehousesButton,
+  showAssignWarehousesButton,
 }: ProductStocksAssignWarehousesProps) => {
   const [warehouses, setWarehouses] = useState<Option[]>([]);
   const intl = useIntl();
@@ -44,7 +44,7 @@ export const ProductStocksAssignWarehouses = ({
 
   return (
     <>
-      {hideAssignWarehousesButton ? null : (
+      {showAssignWarehousesButton && (
         <Button
           onClick={() => setOpen(true)}
           disabled={loading}
