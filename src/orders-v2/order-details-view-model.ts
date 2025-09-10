@@ -6,18 +6,19 @@ import {
   OrderDetailsFragment,
   OrderStatus,
 } from "@dashboard/graphql";
-import { PaymentState } from "@dashboard/orders/components/OrderPaymentSummaryCard/components/PaymentsSummary/types";
-import { OrderTotalAmounts } from "@dashboard/orders/components/OrderPaymentSummaryCard/components/PaymentsSummary/utils";
 import compact from "lodash/compact";
 
-interface ShouldDisplayResult {
-  state: PaymentState;
-  authorized: boolean;
-  charged: boolean;
-  cancelled: boolean;
-  authorizedPending: boolean;
-  chargedPending: boolean;
-  cancelledPending: boolean;
+export interface OrderTotalAmounts {
+  total: OrderDetailsFragment["total"];
+  totalAuthorized: OrderDetailsFragment["totalAuthorized"];
+  totalAuthorizePending: OrderDetailsFragment["totalAuthorizePending"];
+  totalBalance: OrderDetailsFragment["totalBalance"];
+  totalCanceled: OrderDetailsFragment["totalCanceled"];
+  totalCancelPending: OrderDetailsFragment["totalCancelPending"];
+  totalCaptured: OrderDetailsFragment["totalCaptured"];
+  totalCharged: OrderDetailsFragment["totalCharged"];
+  totalChargePending: OrderDetailsFragment["totalChargePending"];
+  totalRefunded: OrderDetailsFragment["totalRefunded"];
 }
 
 export class OrderDetailsViewModel {
@@ -87,10 +88,16 @@ export class OrderDetailsViewModel {
     return null;
   }
 
-  static getShouldDisplayAmounts(orderAmounts: OrderTotalAmounts | null): ShouldDisplayResult {
+  static getShouldDisplayAmounts(orderAmounts: OrderTotalAmounts | null): {
+    authorized: boolean;
+    charged: boolean;
+    cancelled: boolean;
+    authorizedPending: boolean;
+    chargedPending: boolean;
+    cancelledPending: boolean;
+  } {
     if (!orderAmounts) {
       return {
-        state: PaymentState.NO_DATA,
         authorized: false,
         charged: false,
         cancelled: false,
@@ -111,7 +118,6 @@ export class OrderDetailsViewModel {
 
     if (anyPending) {
       return {
-        state: PaymentState.IS_PENDING,
         authorized: !!authorized || !!authorizePending,
         charged: true,
         cancelled: true,
@@ -123,7 +129,6 @@ export class OrderDetailsViewModel {
 
     if (authorized && charged) {
       return {
-        state: PaymentState.AMOUNTS_MISMATCH,
         authorized: true,
         charged: true,
         cancelled: !!cancelled,
@@ -135,7 +140,6 @@ export class OrderDetailsViewModel {
 
     if (charged !== 0 && charged !== total) {
       return {
-        state: PaymentState.PARTIAL_CAPTURE,
         authorized: false,
         charged: true,
         cancelled: !!cancelled,
@@ -147,7 +151,6 @@ export class OrderDetailsViewModel {
 
     if (authorized !== 0) {
       return {
-        state: PaymentState.PARTIAL_AUTHORIZED,
         authorized: true,
         charged: false,
         cancelled: !!cancelled,
@@ -159,7 +162,6 @@ export class OrderDetailsViewModel {
 
     if (cancelled) {
       return {
-        state: PaymentState.AMOUNTS_MISMATCH,
         authorized: false,
         charged: false,
         cancelled: true,
@@ -170,7 +172,6 @@ export class OrderDetailsViewModel {
     }
 
     return {
-      state: PaymentState.FULLY_SETTLED,
       charged: false,
       authorized: false,
       cancelled: false,

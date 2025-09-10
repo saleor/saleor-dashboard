@@ -7,11 +7,11 @@ import { Button, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
 import { RefundsSummary } from "./components";
 import { OrderPaymentStatusPill } from "./components/OrderPaymentStatusPill";
 import { PaymentsSummary } from "./components/PaymentsSummary";
-import { getShouldDisplayAmounts } from "./components/PaymentsSummary/utils";
 import { orderPaymentActionButtonMessages, orderPaymentMessages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -31,7 +31,7 @@ const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementProps) =
   const canAnyRefund = canGrantRefund || canSendRefund;
   const hasGiftCards = giftCardAmount > 0;
   const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
-  const shouldDisplay = getShouldDisplayAmounts(order);
+  const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(order);
 
   const showHasNoPayment =
     !canAnyRefund && !shouldDisplay.charged && !shouldDisplay.authorized && !hasGiftCards;
