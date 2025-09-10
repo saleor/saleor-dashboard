@@ -14,9 +14,9 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { pageListUrl } from "@dashboard/modeling/urls";
+import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
 import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
-import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -303,17 +303,23 @@ const OrderTransactionRefundPage = ({
                   <Box marginTop={2}>
                     {canManageSettings && modelForRefundReasonRefId && (
                       <Link href={pageListUrl()}>
-                        <Text color="inherit">Manage available refunds reasons</Text>
+                        <Text color="inherit">
+                          {intl.formatMessage(refundReasonSelectHelperMessages.manageReasons)}
+                        </Text>
                       </Link>
                     )}
                     {canManageSettings && !modelForRefundReasonRefId && (
                       <Link href={refundsSettingsPath}>
-                        <Text color="inherit">Enable refund reasons in settings</Text>
+                        <Text color="inherit">
+                          {intl.formatMessage(
+                            refundReasonSelectHelperMessages.enableReasonsInSettings,
+                          )}
+                        </Text>
                       </Link>
                     )}
                     {!canManageSettings && (
                       <Text color="default2">
-                        Use refund settings to configure available reasons (permissions required)
+                        {intl.formatMessage(refundReasonSelectHelperMessages.noPermissionsHint)}
                       </Text>
                     )}
                   </Box>

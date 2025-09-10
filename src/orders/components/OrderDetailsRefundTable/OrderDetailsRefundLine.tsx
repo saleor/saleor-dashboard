@@ -52,8 +52,9 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
           >
             <Box>
               {refund.reasonTypeName && (
-                <Text size={2} display="block" marginBottom={2}>
+                <Text size={2} fontWeight="medium">
                   {refund.reasonTypeName}
+                  {": "}
                 </Text>
               )}
               <Text ellipsis size={2} color="default2">

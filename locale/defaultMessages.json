@@ -1081,6 +1081,9 @@
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
   },
+  "4Rj36Y": {
+    "string": "Create new Model Type"
+  },
   "4T/RzC": {
     "string": "Make sure to save token, you won’t be able to see it again."
   },
@@ -1431,6 +1434,9 @@
   },
   "6Y1YDn": {
     "string": "Updated extension permissions"
+  },
+  "6ZubLQ": {
+    "string": "Manage available refunds reasons"
   },
   "6aBkJm": {
     "context": "section header",
@@ -1788,10 +1794,6 @@
   "98WMlR": {
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
-  },
-  "991li9": {
-    "context": "input label",
-    "string": "Reason for refund"
   },
   "9B2mOB": {
     "context": "tile view pagination label",
@@ -4872,6 +4874,9 @@
     "context": "label for radio button",
     "string": "Product prices are entered without tax"
   },
+  "QpYazu": {
+    "string": "Refund reasons"
+  },
   "QpetOV": {
     "string": "Channel: {channelNameLink}"
   },
@@ -5648,6 +5653,9 @@
   "VS0YOp": {
     "context": "Request extension",
     "string": "Request Extension"
+  },
+  "VSLrmT": {
+    "string": "Current refund reasons from"
   },
   "VSj89H": {
     "context": "fulfill button label",
@@ -7088,6 +7096,9 @@
     "context": "Transaction title",
     "string": "Gift card (**** {code})"
   },
+  "e71euF": {
+    "string": "Refunds Model Type"
+  },
   "e7Nyu7": {
     "context": "section header",
     "string": "Customer History"
@@ -8274,6 +8285,9 @@
     "context": "collection",
     "string": "Published"
   },
+  "lLKEMH": {
+    "string": "Use refund settings to configure available reasons (permissions required)"
+  },
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
@@ -8409,6 +8423,10 @@
   },
   "mFC5Rq": {
     "string": "Assign Warehouses"
+  },
+  "mFr9YY": {
+    "context": "configuration section name for refund settings",
+    "string": "Refunds Settings"
   },
   "mGiA6q": {
     "context": "modal button upload",
@@ -8926,6 +8944,9 @@
   "pdJlXC": {
     "string": "See all global search results"
   },
+  "pepgIN": {
+    "string": "Choose the Model Type whose extended Models will serve as refund reasons."
+  },
   "pgTwKM": {
     "context": "section header",
     "string": "Model attributes"
@@ -9231,6 +9252,9 @@
     "context": "status label active",
     "string": "Active"
   },
+  "rUnw7n": {
+    "string": "Configure refunds behavior"
+  },
   "rVIlBs": {
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
@@ -9319,6 +9343,10 @@
   "s2y5eG": {
     "context": "Status label",
     "string": "Status"
+  },
+  "s3jmO9": {
+    "context": "input label",
+    "string": "Reason notes"
   },
   "s3xi3B": {
     "context": "extension form app name field label",
@@ -9473,6 +9501,9 @@
   "t1UYU6": {
     "context": "install app privacy",
     "string": "Uninstalling the app will remove all your customer’s personal data stored by {name}."
+  },
+  "t1scMK": {
+    "string": "Refunds settings"
   },
   "t3aiWF": {
     "context": "section header",
@@ -9647,6 +9678,9 @@
   "uD93er": {
     "context": "dialog header",
     "string": "Changed Customer"
+  },
+  "uGqPKY": {
+    "string": "Select a Model Type. All Models extending the type will be available as refund reasons when issuing a refund."
   },
   "uIPD1i": {
     "context": "app has been removed",
@@ -10507,6 +10541,9 @@
   "zHx85l": {
     "context": "value input helper text",
     "string": "Cannot be higher than 100%"
+  },
+  "zIPK5M": {
+    "string": "Enable refund reasons in settings"
   },
   "zJpP1T": {
     "context": "create new structure, header",

@@ -113,6 +113,8 @@ export const manualRefundsExtractor = (
   const manualRefundEvents =
     refundEvents?.filter(event => !idsOfEventsAssociatedToGrantedRefunds.has(event.id)) ?? [];
 
+  // TODO: There is a bug, because multiple refunds for the same reference will be merged together and only last one will be visible.
+  // Grouping should be improved
   const eventsByPspReference = groupEventsByPspReference(manualRefundEvents);
   const datagridRefunds = mapEventGroupsToDatagridRefunds(eventsByPspReference, intl);
 
