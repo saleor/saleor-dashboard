@@ -1,11 +1,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
+import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { OrderUsedGiftCards } from "../OrderUsedGiftCards";
 import { orderSummaryMessages } from "./messages";
 import SummaryLine from "./SummaryLine";

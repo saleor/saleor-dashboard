@@ -1,9 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import SummaryLine from "../../../OrderSummaryCard/SummaryLine";
 import { SummaryList } from "../../../OrderSummaryCard/SummaryList";
 import { orderPaymentMessages } from "../../messages";

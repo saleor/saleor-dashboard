@@ -3,11 +3,11 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
+import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { Button, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
 import { RefundsSummary } from "./components";
 import { OrderPaymentStatusPill } from "./components/OrderPaymentStatusPill";

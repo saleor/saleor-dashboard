@@ -3,12 +3,12 @@ import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
+import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { Button, Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { OrderPaymentStatusPill } from "../OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
 import { OrderUsedGiftCards } from "../OrderUsedGiftCards";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
