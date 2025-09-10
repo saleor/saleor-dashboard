@@ -2,6 +2,7 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import Link from "@dashboard/components/Link";
 import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -12,7 +13,10 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { pageListUrl } from "@dashboard/modeling/urls";
 import { orderUrl } from "@dashboard/orders/urls";
+import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
@@ -159,6 +163,7 @@ const OrderTransactionRefundPage = ({
 
   const permissions = useUserPermissions();
   const canHandlePayments = hasPermissions(permissions ?? [], [PermissionEnum.HANDLE_PAYMENTS]);
+  const canManageSettings = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SETTINGS]);
 
   const handleTransferFunds = (data: OrderTransactionRefundPageFormData) => {
     if (!data.amount) {
@@ -295,7 +300,23 @@ const OrderTransactionRefundPage = ({
                     referenceModelTypeId={modelForRefundReasonRefId ?? ""}
                     control={control}
                   />
-                  <Text color="default2">TODO Link to settings or to docs</Text>
+                  <Box marginTop={2}>
+                    {canManageSettings && modelForRefundReasonRefId && (
+                      <Link href={pageListUrl()}>
+                        <Text color="inherit">Manage available refunds reasons</Text>
+                      </Link>
+                    )}
+                    {canManageSettings && !modelForRefundReasonRefId && (
+                      <Link href={refundsSettingsPath}>
+                        <Text color="inherit">Enable refund reasons in settings</Text>
+                      </Link>
+                    )}
+                    {!canManageSettings && (
+                      <Text color="default2">
+                        Use refund settings to configure available reasons (permissions required)
+                      </Text>
+                    )}
+                  </Box>
                 </DashboardCard.Content>
               </DashboardCard>
             </Box>
