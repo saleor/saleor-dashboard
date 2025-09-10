@@ -256,9 +256,12 @@ describe("manualRefundsExtractor", () => {
               type: "REFUND_REQUEST",
               amount: 100,
               createdAt: "2022-08-22T10:40:22.226875+00:00",
+              reasonTypeName: null,
               createdBy: {
                 __typename: "User",
                 email: "john.doe@example.com",
+                firstName: undefined,
+                lastName: undefined,
               },
               pspReference: "psp1",
             },

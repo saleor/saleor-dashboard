@@ -94,6 +94,7 @@ describe("OrderManualTransactionRefundPage", () => {
         currency="USD"
         loading={false}
         orderId="1"
+        modelForRefundReasonRefId={null}
         transactions={transactions}
       />,
       { wrapper: getWrapper(mocks) },
@@ -125,6 +126,7 @@ describe("OrderManualTransactionRefundPage", () => {
     render(
       <OrderManualTransactionRefundPage
         currency="USD"
+        modelForRefundReasonRefId={null}
         loading={false}
         orderId="1"
         transactions={transactions}
@@ -148,6 +150,7 @@ describe("OrderManualTransactionRefundPage", () => {
       <OrderManualTransactionRefundPage
         currency="USD"
         loading={true}
+        modelForRefundReasonRefId={null}
         orderId="1"
         transactions={[]}
       />,
