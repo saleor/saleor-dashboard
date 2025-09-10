@@ -232,8 +232,7 @@ describe("OrderList Filters", () => {
       });
     });
 
-    // TODO: Fix OrderInvoiceDateQueryVarsBuilder
-    it.todo("should filter by invoice creation date", /* () => {
+    it("should filter by invoice creation date (between)", () => {
       // Arrange
       const params = new URLSearchParams("0%5Bs3.invoicesCreatedAt%5D%5B0%5D=2024-03-01&0%5Bs3.invoicesCreatedAt%5D%5B1%5D=2024-03-31");
       const tokenizedUrl = new TokenArray(params.toString());
@@ -247,8 +246,55 @@ describe("OrderList Filters", () => {
       const andItems = filterVariables.AND as OrderWhereInput[];
       const invoicesFilter = andItems.find(item => 'invoices' in item);
 
-      expect(invoicesFilter).toEqual([{ createdAt: { gte: "2024-03-01", lte: "2024-03-31" } }])
-    } */);
+      expect(invoicesFilter?.invoices).toEqual([{ 
+        createdAt: { 
+          gte: "2024-03-01T00:00:00.000Z", 
+          lte: "2024-03-31T00:00:00.000Z" 
+        } 
+      }]);
+    });
+
+    it("should filter by invoice creation date (greater than)", () => {
+      // Arrange
+      const params = new URLSearchParams("0%5Bs5.invoicesCreatedAt%5D=2024-06-01");
+      const tokenizedUrl = new TokenArray(params.toString());
+
+      // Act
+      const filterVariables = createOrderQueryVariables(
+        tokenizedUrl.asFilterValuesFromResponse(InitialOrderStateResponse.empty()),
+      );
+
+      // Assert
+      const andItems = filterVariables.AND as OrderWhereInput[];
+      const invoicesFilter = andItems.find(item => 'invoices' in item);
+
+      expect(invoicesFilter?.invoices).toEqual([{ 
+        createdAt: { 
+          gte: "2024-06-01T00:00:00.000Z" 
+        } 
+      }]);
+    });
+
+    it("should filter by invoice creation date (less than)", () => {
+      // Arrange
+      const params = new URLSearchParams("0%5Bs4.invoicesCreatedAt%5D=2024-12-31");
+      const tokenizedUrl = new TokenArray(params.toString());
+
+      // Act
+      const filterVariables = createOrderQueryVariables(
+        tokenizedUrl.asFilterValuesFromResponse(InitialOrderStateResponse.empty()),
+      );
+
+      // Assert
+      const andItems = filterVariables.AND as OrderWhereInput[];
+      const invoicesFilter = andItems.find(item => 'invoices' in item);
+
+      expect(invoicesFilter?.invoices).toEqual([{ 
+        createdAt: { 
+          lte: "2024-12-31T00:00:00.000Z" 
+        } 
+      }]);
+    });
   });
 
   describe("price filters", () => {
