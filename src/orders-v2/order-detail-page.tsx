@@ -68,9 +68,13 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
               totalCanceled: order.totalCanceled,
               totalCancelPending: order.totalCancelPending,
             }}
-            orderActions={order.actions}
             orderId={order.id}
-            giftCards={order.giftCards}
+            canBeMarkedAsPaid={OrderDetailsViewModel.canOrderBeMarkedAsPaid(order.actions)}
+            giftCardsAmount={OrderDetailsViewModel.getGiftCardsAmountUsed({
+              id: order.id,
+              giftCards: order.giftCards,
+            })}
+            usedGiftCards={OrderDetailsViewModel.getUsedGiftCards(order.giftCards)}
           />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar

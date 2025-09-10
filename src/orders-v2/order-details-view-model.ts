@@ -46,7 +46,7 @@ export class OrderDetailsViewModel {
     return orderActions.includes(OrderAction.MARK_AS_PAID);
   }
 
-  static getGiftCardAmountUsed(args: {
+  static getGiftCardsAmountUsed(args: {
     id: string;
     giftCards: OrderDetailsFragment["giftCards"];
   }): number | null {

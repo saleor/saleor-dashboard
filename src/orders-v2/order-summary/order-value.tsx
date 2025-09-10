@@ -3,7 +3,6 @@ import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { OrderDetailsViewModel } from "../order-details-view-model";
 import { OrderSummaryListAmount } from "./order-summary-list-amount";
 import { OrderSummaryListItem } from "./order-summary-list-item";
 
@@ -14,7 +13,8 @@ type Props = PropsWithBox<{
   orderTotal: OrderDetailsFragment["total"];
   discounts: OrderDetailsFragment["discounts"];
   orderId: string;
-  giftCards: OrderDetailsFragment["giftCards"];
+  giftCardsAmount: number;
+  usedGiftCards: OrderDetailsFragment["giftCards"];
 }>;
 
 export const OrderValue = ({
@@ -24,12 +24,11 @@ export const OrderValue = ({
   orderTotal,
   discounts,
   orderId,
-  giftCards,
+  giftCardsAmount,
+  usedGiftCards,
   ...props
 }: Props) => {
   const intl = useIntl();
-  const giftCardAmount = OrderDetailsViewModel.getGiftCardAmountUsed({ id: orderId, giftCards });
-  const usedGiftCards = OrderDetailsViewModel.getUsedGiftCards(giftCards);
 
   return (
     <Box backgroundColor="default2" padding={5} borderRadius={4} {...props}>
@@ -107,8 +106,8 @@ export const OrderValue = ({
           </OrderSummaryListItem>
         ))}
 
-        {giftCardAmount && giftCardAmount > 0 && usedGiftCards && (
-          <OrderSummaryListItem amount={-giftCardAmount}>
+        {giftCardsAmount && giftCardsAmount > 0 && usedGiftCards && (
+          <OrderSummaryListItem amount={-giftCardsAmount}>
             {intl.formatMessage(
               {
                 defaultMessage:

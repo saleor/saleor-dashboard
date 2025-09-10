@@ -1,10 +1,10 @@
-import { OrderAction, OrderDetailsFragment, PaymentChargeStatusEnum } from "@dashboard/graphql";
+import { OrderDetailsFragment, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon } from "lucide-react";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { OrderDetailsViewModel, OrderTotalAmounts } from "../order-details-view-model";
+import { OrderTotalAmounts } from "../order-details-view-model";
 import { OrderValue } from "./order-value";
 import { PaymentsSummary } from "./payments-summary";
 
@@ -15,9 +15,10 @@ type Props = PropsWithBox<{
   discounts: OrderDetailsFragment["discounts"];
   paymentStatus: PaymentChargeStatusEnum;
   orderTotalAmounts: OrderTotalAmounts;
-  orderActions: OrderAction[];
   orderId: string;
-  giftCards: OrderDetailsFragment["giftCards"];
+  canBeMarkedAsPaid: boolean;
+  giftCardsAmount: number;
+  usedGiftCards: OrderDetailsFragment["giftCards"];
 }>;
 
 export const OrderSummary = ({
@@ -27,15 +28,16 @@ export const OrderSummary = ({
   discounts,
   paymentStatus,
   orderTotalAmounts,
-  orderActions,
   orderId,
-  giftCards,
+  canBeMarkedAsPaid,
+  giftCardsAmount,
+  usedGiftCards,
+  ...props
 }: Props) => {
-  const canMarkAsPaid = OrderDetailsViewModel.canOrderBeMarkedAsPaid(orderActions);
   const intl = useIntl();
 
   return (
-    <Box padding={6} display="grid" gap={6}>
+    <Box padding={6} display="grid" gap={6} {...props}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text size={6} fontWeight="medium">
           {intl.formatMessage({
@@ -44,7 +46,7 @@ export const OrderSummary = ({
           })}
         </Text>
 
-        {canMarkAsPaid && (
+        {canBeMarkedAsPaid && (
           <Button variant="secondary">
             <CheckIcon size={16} />
             {intl.formatMessage({
@@ -63,7 +65,8 @@ export const OrderSummary = ({
           orderTotal={orderTotalAmounts.total}
           discounts={discounts}
           orderId={orderId}
-          giftCards={giftCards}
+          giftCardsAmount={giftCardsAmount}
+          usedGiftCards={usedGiftCards}
         />
         <PaymentsSummary orderAmounts={orderTotalAmounts} paymentStatus={paymentStatus} />
       </Box>

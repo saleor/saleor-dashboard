@@ -210,7 +210,7 @@ describe("OrderModel", () => {
       };
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
 
       // Assert
       expect(result).toBe(null);
@@ -241,7 +241,7 @@ describe("OrderModel", () => {
       };
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
 
       // Assert
       expect(result).toBe(null);
@@ -272,7 +272,7 @@ describe("OrderModel", () => {
       };
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
 
       // Assert
       expect(result).toBe(null);
@@ -311,7 +311,7 @@ describe("OrderModel", () => {
       };
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
 
       // Assert
       expect(result).toBe(usedAmount);
@@ -371,7 +371,7 @@ describe("OrderModel", () => {
       };
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
 
       // Assert
       expect(result).toBe(100); // 50 + 50 = 100
@@ -425,7 +425,7 @@ describe("OrderModel", () => {
       };
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
 
       // Assert
       expect(result).toBe(50); // Only the event for this specific order
@@ -456,7 +456,7 @@ describe("OrderModel", () => {
       };
 
       // Act & Assert
-      expect(() => OrderDetailsViewModel.getGiftCardAmountUsed(args)).toThrow(
+      expect(() => OrderDetailsViewModel.getGiftCardsAmountUsed(args)).toThrow(
         "[extractOrderGiftCardUsedAmount] Missing balance",
       );
     });
@@ -487,7 +487,7 @@ describe("OrderModel", () => {
       };
 
       // Act & Assert
-      expect(() => OrderDetailsViewModel.getGiftCardAmountUsed(args)).toThrow(
+      expect(() => OrderDetailsViewModel.getGiftCardsAmountUsed(args)).toThrow(
         "[extractOrderGiftCardUsedAmount] Missing balance",
       );
     });
@@ -525,7 +525,7 @@ describe("OrderModel", () => {
       };
 
       // Act & Assert
-      expect(() => OrderDetailsViewModel.getGiftCardAmountUsed(args)).toThrow(
+      expect(() => OrderDetailsViewModel.getGiftCardsAmountUsed(args)).toThrow(
         "[extractOrderGiftCardUsedAmount] Missing balance",
       );
     });
@@ -562,7 +562,7 @@ describe("OrderModel", () => {
       };
 
       // Act
-      const result = OrderDetailsViewModel.getGiftCardAmountUsed(args);
+      const result = OrderDetailsViewModel.getGiftCardsAmountUsed(args);
 
       // Assert
       expect(result).toBe(0);

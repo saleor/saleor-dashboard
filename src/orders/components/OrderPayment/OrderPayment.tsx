@@ -32,7 +32,7 @@ const OrderPayment = (props: OrderPaymentProps) => {
   const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
   const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
   const refundedAmount = extractRefundedAmount(order);
-  const usedGiftCardAmount = OrderDetailsViewModel.getGiftCardAmountUsed(order);
+  const usedGiftCardAmount = OrderDetailsViewModel.getGiftCardsAmountUsed(order);
   const usedGiftcards = OrderDetailsViewModel.getUsedGiftCards(order.giftCards);
 
   const getDeliveryMethodName = (order: OrderDetailsFragment) => {
