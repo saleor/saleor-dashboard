@@ -38,13 +38,16 @@ const Reason = () => {
   );
 };
 
-// todo extract to shared component with granted refund
-// todo add disabled state
+/**
+ * This component can be written to be reused with Granted Refund, however, since we rewrite the Order page, it is not worth the effort now.
+ * If edited before that time, remember to update both of them
+ *
+ * todo: disabled in case of no permissions
+ */
 const ModelsPicker = (props: { referenceModelTypeId: string }) => {
   const { control } = useFormContext<ManualRefundForm>();
   const { field } = useController({ name: "reasonReferenceId", control });
 
-  // todo cache
   const { data, loading } = useModelsOfTypeQuery({
     variables: {
       pageTypeId: props.referenceModelTypeId,
@@ -63,7 +66,6 @@ const ModelsPicker = (props: { referenceModelTypeId: string }) => {
 
   const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
 
-  // how the hell this is working? todo
   return <Select {...field} options={optionsWithEmpty} />;
 };
 

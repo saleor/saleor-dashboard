@@ -85,11 +85,15 @@ type ModelPickerProps = {
   disabled: boolean;
 };
 
-// todo extract to shared component with manual refund
+/**
+ * This component can be written to be reused with Manual Refund, however, since we rewrite the Order page, it is not worth the effort now.
+ * If edited before that time, remember to update both of them
+ *
+ * todo: disabled in case of no permissions
+ */
 const ModelsPicker = (props: ModelPickerProps) => {
   const { field } = useController({ name: "reasonReference", control: props.control });
 
-  // todo cache
   const { data, loading } = useModelsOfTypeQuery({
     variables: {
       pageTypeId: props.referenceModelTypeId,
@@ -109,7 +113,6 @@ const ModelsPicker = (props: ModelPickerProps) => {
 
   const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
 
-  // todo discuss Select api to be compatbile with form field and native html
   return <Select disabled={props.disabled} options={optionsWithEmpty} {...field} />;
 };
 

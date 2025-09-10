@@ -11,10 +11,6 @@ interface OrderTransactionReasonProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
 }
 
-/**
- * todo extract somewhere. It's used both in refund with lines (granted refund) and manual refund.
- *
- */
 export const OrderTransactionReasonUi = (props: { textAreaProps?: TextareaProps }) => {
   const intl = useIntl();
 

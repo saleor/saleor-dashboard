@@ -37,7 +37,6 @@ const getRefundEditDefaultValues = (
     includeShipping: draftRefund.shippingCostsIncluded,
     amount: draftRefund.amount.amount,
     reason: draftRefund.reason ?? "",
-    // todo we need to change how Select behaves, otherwise we need to know label upfront. we should store only value
     reasonReference: draftRefund.reasonReference?.id ?? "",
   };
 };
