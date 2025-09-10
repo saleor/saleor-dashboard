@@ -288,6 +288,10 @@ export const STATIC_CONDITIONS = {
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
   ],
+  fulfillmentWarehouse: [
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
 };
 
 export const CONSTRAINTS = {
@@ -566,6 +570,12 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
     label: "Shipping Country",
     type: "shippingCountry",
     slug: "shippingCountry",
+  },
+  {
+    value: "fulfillmentWarehouse",
+    label: "Fulfillment Warehouse",
+    type: "fulfillmentWarehouse",
+    slug: "fulfillmentWarehouse",
   },
 ];
 

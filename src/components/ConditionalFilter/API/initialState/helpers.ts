@@ -9,6 +9,7 @@ import {
   _SearchPageTypesOperandsQuery,
   _SearchProductOperandsQuery,
   _SearchProductTypesOperandsQuery,
+  _SearchWarehouseOperandsQuery,
   ChannelCurrenciesQuery,
 } from "@dashboard/graphql";
 
@@ -94,6 +95,8 @@ const isProductQuery = (
 const isCurrencyQuery = (
   query: InitialGiftCardsAPIResponse,
 ): query is ApolloQueryResult<ChannelCurrenciesQuery> => "shop" in query.data;
+
+const isWarehouseQuery = (query: InitialOrderAPIResponse): query is ApolloQueryResult<_SearchWarehouseOperandsQuery> => "warehouses" in query.data
 
 export const createInitialProductStateFromData = (
   data: InitialProductAPIResponse[],
@@ -208,6 +211,13 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
         };
       }
 
+      if (isWarehouseQuery(query)) {
+        return {
+          ...acc,
+          fulfillmentWarehouse: createOptionsFromAPI(query.data?.warehouses?.edges ?? []),
+        };
+      }
+
       return acc;
     },
     {
@@ -243,6 +253,7 @@ export const createInitialOrderState = (data: InitialOrderAPIResponse[]) =>
       billingCountry: [],
       shippingPhoneNumber: [],
       shippingCountry: [],
+      fulfillmentWarehouse: [],
     },
   );
 

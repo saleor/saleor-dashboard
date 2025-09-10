@@ -21,6 +21,7 @@ import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBu
 import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
 import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
 import { FulfillmentStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentStatusQueryVarsBuilder";
+import { FulfillmentWarehouseQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentWarehouseQueryVarsBuilder";
 import { IntFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/IntFilterQueryVarsBuilder";
 import { MetadataFilterInputQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/MetadataFilterInputQueryVarsBuilder";
 import { OrderChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderChannelQueryVarsBuilder";
@@ -69,6 +70,7 @@ export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInp
       new ArrayNestedFieldQueryVarsBuilder(), // Handle nested fields in transactions (payment type/card brand)
       new ArrayMetadataQueryVarsBuilder(), // Handle metadata in arrays (lines, transactions, fulfillments)
       new FulfillmentStatusQueryVarsBuilder(), // Handle fulfillment status nested in arrays
+      new FulfillmentWarehouseQueryVarsBuilder(), // Handle fulfillment warehouse nested in arrays
       new IntFilterQueryVarsBuilder(), // Orders query use IntFilterInput, not IntRangeInput
       new PriceFilterQueryVarsBuilder(), // Handle price/amount fields
       new DateTimeRangeQueryVarsBuilder(), // Orders query use DateTimeRangeInput, not DateTimeFilterInput

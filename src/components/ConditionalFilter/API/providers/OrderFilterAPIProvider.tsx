@@ -19,6 +19,7 @@ import {
   LegacyChannelHandler,
   NoopValuesHandler,
   TextInputValuesHandler,
+  WarehouseHandler,
 } from "../Handler";
 import { getFilterElement } from "../utils";
 
@@ -72,6 +73,10 @@ const createAPIHandler = (
     return new LegacyChannelHandler(client, inputValue);
   }
 
+  if (rowType === "fulfillmentWarehouse") {
+    return new WarehouseHandler(client, inputValue);
+  }
+
   if (rowType === "customer") {
     return new TextInputValuesHandler([
       {
@@ -118,6 +123,7 @@ const createAPIHandler = (
   if (rowType === "billingCountry" || rowType === "shippingCountry") {
     return new EnumValuesHandler(CountryCode, rowType, intl);
   }
+
 
   throw new Error(`Unknown filter element: "${rowType}"`);
 };
