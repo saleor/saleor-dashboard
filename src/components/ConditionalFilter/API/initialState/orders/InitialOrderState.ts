@@ -34,6 +34,7 @@ export interface InitialOrderState {
   billingCountry: ItemOption[];
   shippingPhoneNumber: ItemOption[];
   shippingCountry: ItemOption[];
+  fulfillmentWarehouse: ItemOption[];
 }
 
 const isDateField = (name: string) => ["createdAt", "updatedAt", "invoicesCreatedAt"].includes(name);
@@ -75,6 +76,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public billingCountry: ItemOption[] = [],
     public shippingPhoneNumber: ItemOption[] = [],
     public shippingCountry: ItemOption[] = [],
+    public fulfillmentWarehouse: ItemOption[] = [],
   ) { }
 
   public static empty() {
@@ -157,6 +159,8 @@ export class InitialOrderStateResponse implements InitialOrderState {
         return this.shippingPhoneNumber;
       case "shippingCountry":
         return this.shippingCountry;
+      case "fulfillmentWarehouse":
+        return this.fulfillmentWarehouse;
       default:
         return [];
     }

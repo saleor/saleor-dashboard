@@ -9405,6 +9405,22 @@ export type _SearchProductVariantOperandsQueryVariables = Exact<{
 
 export type _SearchProductVariantOperandsQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, name: string, slug: string, originalSlug: string, product: { __typename: 'Product', name: string } } }> } | null };
 
+export type _GetWarehouseChoicesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetWarehouseChoicesQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string, slug: string } }> } | null };
+
+export type _SearchWarehouseOperandsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  warehouseSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+
+export type _SearchWarehouseOperandsQuery = { __typename: 'Query', warehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string, slug: string } }> } | null };
+
 export type TriggerWebhookDryRunMutationVariables = Exact<{
   objectId: Scalars['ID'];
   query: Scalars['String'];
