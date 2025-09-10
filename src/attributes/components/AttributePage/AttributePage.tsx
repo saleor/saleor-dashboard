@@ -27,13 +27,15 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useReferenceTypeSearch from "@dashboard/searches/useReferenceTypeSearch";
+import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
+import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -80,7 +82,7 @@ export interface AttributePageFormData extends MetadataFormData {
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null | undefined;
   visibleInStorefront: boolean;
-  referenceTypes: Array<string>; // later only value
+  referenceTypes: Option[];
 }
 
 const AttributePage = ({
@@ -141,7 +143,7 @@ const AttributePage = ({
         valueRequired: !!attribute.valueRequired,
         visibleInStorefront: attribute.visibleInStorefront,
         unit: attribute?.unit ?? null,
-        referenceTypes: attribute?.referenceTypes.map(ref => ref.id) || [],
+        referenceTypes: attribute?.referenceTypes.map(ref => ({ value: ref.id, label: ref.name })) || [],
       };
   const handleSubmit = (data: AttributePageFormData) => {
     const type = attribute === null ? data.type : undefined;
@@ -157,46 +159,53 @@ const AttributePage = ({
     path: attributeListPath,
   });
   const [isAssignRefTypesOpen, setAssignRefTypesOpen] = React.useState(false);
-  // useReferenceTypeSearch - cannot be hook, as it depends on 
-  const {
-    loadMore: loadMoreReferenceTypes,
-    search: searchReferenceTypes,
-    result: searchReferenceTypesOpts,
-  } = useReferenceTypeSearch(
-    attribute?.entityType,
-    {variables: DEFAULT_INITIAL_SEARCH_DATA},
-  );
-  const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
-    searchReferenceTypesOpts.data?.search,
-  );
-  const fetchMoreReferenceTypes = getSearchFetchMoreProps(
-    searchReferenceTypesOpts,
-    loadMoreReferenceTypes,
-  );
+  const productRefSearch = useProductTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
+  const pageRefSearch = usePageTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
       {({ change, set, data, isSaveDisabled, submit, errors, setError, clearErrors }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
-        const setReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
-          const existingIds = new Set(data.referenceTypes);
-          const newReferenceTypes = selected
-            .filter(ref => !existingIds.has(ref.id))
-            .map(ref => ref.id);
+        const activeRefSearch =
+          data.entityType === AttributeEntityTypeEnum.PAGE ? pageRefSearch : productRefSearch;
 
-          set({ referenceTypes: [...data.referenceTypes, ...newReferenceTypes] });
+        const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
+          activeRefSearch.result.data?.search,
+        );
+        const fetchMoreReferenceTypes = getSearchFetchMoreProps(
+          activeRefSearch.result,
+          activeRefSearch.loadMore,
+        );
+
+        // Clear reference types in case entityType changes, as it may affect available options
+        const handleChange = (eventOrName: any, value?: any) => {
+          const fieldName =
+            typeof eventOrName === "string" ? eventOrName : eventOrName?.target?.name;
+
+          if (attribute === null && fieldName === "entityType") {
+            set({ referenceTypes: [] });
+          }
+
+          change(eventOrName, value);
+        };
+        const setReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
+          const toAdd = selected.map(
+            ref => ({ value: ref.id, label: ref.name })
+          ).filter(
+            newRef => !data.referenceTypes.some(existingRef => existingRef.value === newRef.value),
+          );
+          const mergedReferenceTypes = [
+            ...data.referenceTypes,
+            ...toAdd,
+          ];
+
+          set({ referenceTypes: mergedReferenceTypes });
           setAssignRefTypesOpen(false);
         };
         const handleRemoveReferenceType = (id: string) => {
-          set({ referenceTypes: data.referenceTypes.filter(ref => ref !== id) });
+            set({ referenceTypes: data.referenceTypes.filter(ref => ref.value !== id) });
         };
-        const getSelectedReferenceTypes = () => {
-          return data.referenceTypes.map(id => {
-            const reference = referenceTypes?.find(ref => ref.id === id);
 
-            return { label: reference?.name || id, value: id };
-          });
-        };
 
         return (
           <>
@@ -233,7 +242,7 @@ const AttributePage = ({
                   data={data}
                   disabled={disabled}
                   apiErrors={apiErrors}
-                  onChange={change}
+                  onChange={handleChange}
                   set={set}
                   errors={errors}
                   setError={setError}
@@ -243,7 +252,7 @@ const AttributePage = ({
                 <AttributeReferenceTypesSection
                   inputType={data.inputType}
                   entityType={data.entityType}
-                  selectedTypes={getSelectedReferenceTypes()}
+                  selectedTypes={data.referenceTypes}
                   disabled={disabled}
                   onAssignClick={() => setAssignRefTypesOpen(true)}
                   onRemoveType={handleRemoveReferenceType}
@@ -302,11 +311,11 @@ const AttributePage = ({
               onClose={() => setAssignRefTypesOpen(false)}
               confirmButtonState={"default"}
               loading={Boolean(fetchMoreReferenceTypes?.loading)}
-              selectedReferenceTypesIds={data.referenceTypes.map(o => o.value)}
-              referenceTypes={(referenceTypes ?? []).map(pt => ({ id: pt.id, name: pt.name }))}
+              selectedReferenceTypesIds={data.referenceTypes.map(ref => ref.value)}
+              referenceTypes={referenceTypes}
               hasMore={fetchMoreReferenceTypes?.hasMore}
               onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
-              onFetch={searchReferenceTypes}
+              onFetch={activeRefSearch.search}
               onSubmit={setReferenceTypes}
             />
             {children(data)}

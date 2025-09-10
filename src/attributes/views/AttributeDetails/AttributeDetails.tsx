@@ -190,6 +190,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
           input: {
             ...omit(data, ["entityType", "inputType", "metadata", "privateMetadata"]),
             storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
+            referenceTypes: data.referenceTypes.map(ref => ref.value),
           },
         },
       }),
