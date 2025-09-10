@@ -1,13 +1,10 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import {
-  extractOrderGiftCardUsedAmount,
-  obtainUsedGiftCards,
-} from "@dashboard/orders/components/OrderPayment/utils";
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { OrderSumaryListAmount } from "./order-summary-list-amount";
+import { OrderDetailsViewModel } from "../order-details-view-model";
+import { OrderSummaryListAmount } from "./order-summary-list-amount";
 import { OrderSummaryListItem } from "./order-summary-list-item";
 
 type Props = PropsWithBox<{
@@ -31,8 +28,8 @@ export const OrderValue = ({
   ...props
 }: Props) => {
   const intl = useIntl();
-  const giftCardAmount = extractOrderGiftCardUsedAmount({ id: orderId, giftCards });
-  const usedGiftCards = obtainUsedGiftCards({ giftCards });
+  const giftCardAmount = OrderDetailsViewModel.getGiftCardAmountUsed({ id: orderId, giftCards });
+  const usedGiftCards = OrderDetailsViewModel.getUsedGiftCards(giftCards);
 
   return (
     <Box backgroundColor="default2" padding={5} borderRadius={4} {...props}>
@@ -150,7 +147,7 @@ export const OrderValue = ({
                   </Text>
                 ),
                 totalAmount: (
-                  <OrderSumaryListAmount amount={orderTotal.gross.amount} fontWeight="bold" />
+                  <OrderSummaryListAmount amount={orderTotal.gross.amount} fontWeight="bold" />
                 ),
               },
             )}

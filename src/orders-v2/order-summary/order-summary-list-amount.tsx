@@ -2,15 +2,19 @@ import { Text, TextProps } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-type Props = Omit<TextProps, "children"> & { amount: number };
+type Props = Omit<TextProps, "children"> & {
+  amount: number;
+  showSign?: boolean;
+};
 
-export const OrderSumaryListAmount = ({ amount, ...props }: Props) => {
+export const OrderSummaryListAmount = ({ amount, showSign = false, ...props }: Props) => {
   const intl = useIntl();
 
   return (
     <Text fontFamily="Geist Mono" fontWeight="medium" {...props}>
       {intl.formatNumber(amount, {
         minimumFractionDigits: 2,
+        signDisplay: showSign ? "exceptZero" : "auto",
       })}
     </Text>
   );

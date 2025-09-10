@@ -6,7 +6,7 @@ import { CodeXml } from "lucide-react";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-import { OrderModel } from "../order-model";
+import { OrderDetailsViewModel } from "../order-details-view-model";
 import { UnderlineLink } from "../underline-link";
 import { OrderFulfillmentTrackingNumberButton } from "./order-fulfillment-change-tracking-number";
 import { OrderFulfillmentStatusIcon } from "./order-fulfillment-status-icon";
@@ -14,7 +14,6 @@ import { OrderFulfillmentTrackingNumber } from "./order-fulfillment-tracking-num
 
 type Props = PropsWithBox<{
   fulfillments: FulfillmentFragment[];
-  orderModel: OrderModel;
 }>;
 
 const getFulfillmentStatusLabel = (status: string, intl: IntlShape): string => {
@@ -62,7 +61,7 @@ const getFulfillmentStatusLabel = (status: string, intl: IntlShape): string => {
   }
 };
 
-export const OrderFulfillments = ({ fulfillments, orderModel, ...props }: Props) => {
+export const OrderFulfillments = ({ fulfillments, ...props }: Props) => {
   const intl = useIntl();
 
   return (
@@ -131,9 +130,9 @@ export const OrderFulfillments = ({ fulfillments, orderModel, ...props }: Props)
             <Box display="flex" alignItems="center" gap={2}>
               <Button icon={<CodeXml size={17} />} variant="secondary" />
 
-              {orderModel.shouldShowFulfillmentTrackingNumberButton(fulfillment) && (
-                <OrderFulfillmentTrackingNumberButton fulfillment={fulfillment} />
-              )}
+              {OrderDetailsViewModel.shouldShowFulfillmentTrackingNumberButton(
+                fulfillment.status,
+              ) && <OrderFulfillmentTrackingNumberButton fulfillment={fulfillment} />}
             </Box>
           </Box>
 

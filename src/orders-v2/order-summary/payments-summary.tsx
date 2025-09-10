@@ -1,10 +1,10 @@
 import { OrderDetailsFragment, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { PillStatusType } from "@dashboard/misc";
-import { getShouldDisplayAmounts } from "@dashboard/orders/components/OrderPaymentSummaryCard/components/PaymentsSummary/utils";
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import React, { ReactNode } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
+import { OrderDetailsViewModel } from "../order-details-view-model";
 import { StatusPill } from "../status-pill";
 import { assertUnreachableWithoutThrow } from "../utils/assert-unreachable";
 import { OrderSummaryListItem } from "./order-summary-list-item";
@@ -118,7 +118,8 @@ export const PaymentsSummary = ({ orderAmounts, paymentStatus, ...props }: Props
   const intl = useIntl();
 
   const { status, label } = getPaymentStatusPillData(paymentStatus, intl);
-  const shouldDisplay = getShouldDisplayAmounts(orderAmounts);
+
+  const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(orderAmounts);
 
   return (
     <Box
@@ -167,7 +168,7 @@ export const PaymentsSummary = ({ orderAmounts, paymentStatus, ...props }: Props
             })}
           </OrderSummaryListItem>
         )}
-        <OrderSummaryListItem amount={orderAmounts.totalCaptured.amount}>
+        <OrderSummaryListItem amount={orderAmounts.totalCaptured.amount} showSign>
           {intl.formatMessage({
             defaultMessage: "Captured",
             id: "nMwGMj",
@@ -195,7 +196,7 @@ export const PaymentsSummary = ({ orderAmounts, paymentStatus, ...props }: Props
             })}
           </OrderSummaryListItem>
         )}
-        <OrderSummaryListItem amount={orderAmounts.totalRefunded.amount}>
+        <OrderSummaryListItem amount={-orderAmounts.totalRefunded.amount} showSign>
           {intl.formatMessage({
             defaultMessage: "Refunded",
             id: "Gs86nL",

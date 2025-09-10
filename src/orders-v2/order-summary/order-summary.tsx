@@ -5,6 +5,7 @@ import { CheckIcon } from "lucide-react";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { OrderDetailsViewModel } from "../order-details-view-model";
 import { OrderValue } from "./order-value";
 import { PaymentsSummary } from "./payments-summary";
 
@@ -31,7 +32,7 @@ export const OrderSummary = ({
   orderId,
   giftCards,
 }: Props) => {
-  const canMarkAsPaid = orderActions.includes(OrderAction.MARK_AS_PAID);
+  const canMarkAsPaid = OrderDetailsViewModel.canOrderBeMarkedAsPaid(orderActions);
   const intl = useIntl();
 
   return (

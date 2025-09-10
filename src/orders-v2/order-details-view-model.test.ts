@@ -1,7 +1,6 @@
 import { OrderStatus } from "@dashboard/graphql";
 
-import { OrderFixture } from "./fixtures/order-fixture";
-import { OrderModel } from "./order-model";
+import { OrderDetailsViewModel } from "./order-details-view-model";
 
 describe("OrderModel", () => {
   describe("shouldShowInvoiceList", () => {
@@ -16,13 +15,7 @@ describe("OrderModel", () => {
       [OrderStatus.PARTIALLY_RETURNED, true],
       [OrderStatus.EXPIRED, true],
     ])("should return %s when order status is %s", (status, expected) => {
-      const order = {
-        ...OrderFixture.fulfilled().build(),
-        status,
-      };
-      const orderModel = new OrderModel(order);
-
-      const result = orderModel.shouldShowInvoiceList();
+      const result = OrderDetailsViewModel.shouldShowInvoiceList(status);
 
       expect(result).toBe(expected);
     });
@@ -30,25 +23,17 @@ describe("OrderModel", () => {
 
   describe("shouldShowCustomerNote", () => {
     it("should return false when customerNote is empty string", () => {
-      const order = {
-        ...OrderFixture.fulfilled().build(),
-        customerNote: "",
-      };
-      const orderModel = new OrderModel(order);
+      const customerNote = "";
 
-      const result = orderModel.shouldShowCustomerNote();
+      const result = OrderDetailsViewModel.shouldShowCustomerNote(customerNote);
 
       expect(result).toBe(false);
     });
 
     it("should return true when customerNote has content", () => {
-      const order = {
-        ...OrderFixture.fulfilled().build(),
-        customerNote: "Please handle with care",
-      };
-      const orderModel = new OrderModel(order);
+      const customerNote = "Please handle with care";
 
-      const result = orderModel.shouldShowCustomerNote();
+      const result = OrderDetailsViewModel.shouldShowCustomerNote(customerNote);
 
       expect(result).toBe(true);
     });
