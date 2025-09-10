@@ -17,8 +17,8 @@ type Props = PropsWithBox<{
   orderTotalAmounts: OrderTotalAmounts;
   orderId: string;
   canBeMarkedAsPaid: boolean;
-  giftCardsAmount: number;
-  usedGiftCards: OrderDetailsFragment["giftCards"];
+  giftCardsAmount: number | null;
+  usedGiftCards: OrderDetailsFragment["giftCards"] | null;
 }>;
 
 export const OrderSummary = ({

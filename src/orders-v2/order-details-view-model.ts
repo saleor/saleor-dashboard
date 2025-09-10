@@ -50,6 +50,10 @@ export class OrderDetailsViewModel {
     id: string;
     giftCards: OrderDetailsFragment["giftCards"];
   }): number | null {
+    if (!args.giftCards) {
+      return null;
+    }
+
     const usedInOrderEvents = compact(
       args.giftCards.map(({ events }) =>
         events.find(
@@ -81,7 +85,7 @@ export class OrderDetailsViewModel {
   }
 
   static getUsedGiftCards(giftCards: OrderDetailsFragment["giftCards"]) {
-    if (giftCards.length > 0) {
+    if (giftCards && giftCards.length > 0) {
       return giftCards;
     }
 

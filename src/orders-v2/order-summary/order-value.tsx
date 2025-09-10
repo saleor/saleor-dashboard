@@ -13,8 +13,8 @@ type Props = PropsWithBox<{
   orderTotal: OrderDetailsFragment["total"];
   discounts: OrderDetailsFragment["discounts"];
   orderId: string;
-  giftCardsAmount: number;
-  usedGiftCards: OrderDetailsFragment["giftCards"];
+  giftCardsAmount: number | null;
+  usedGiftCards: OrderDetailsFragment["giftCards"] | null;
 }>;
 
 export const OrderValue = ({
