@@ -193,7 +193,7 @@ export function createConfigurationMenu(
         },
         {
           description: intl.formatMessage({
-            id: 'rUnw7n',
+            id: "rUnw7n",
             defaultMessage: "Configure refunds behavior",
           }),
           icon: <PaymentOutlined />,

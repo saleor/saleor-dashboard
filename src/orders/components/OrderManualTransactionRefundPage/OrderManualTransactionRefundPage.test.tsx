@@ -65,6 +65,8 @@ describe("OrderManualTransactionRefundPage", () => {
             action: "REFUND",
             transactionId: "2",
             amount: 5,
+            reason: "",
+            reasonReferenceId: undefined,
           },
         },
         result: { data: { transactionRequestAction: { errors: [] } } },
@@ -72,6 +74,9 @@ describe("OrderManualTransactionRefundPage", () => {
       {
         request: {
           query: ModelsOfTypeDocument,
+          variables: {
+            pageTypeId: "",
+          },
         },
         result: { data: { pages: { edges: [] } } },
       },
