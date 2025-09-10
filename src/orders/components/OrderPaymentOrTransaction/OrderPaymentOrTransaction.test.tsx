@@ -14,6 +14,7 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn((x: any) => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
+  defineMessage: (message: any) => message,
   FormattedMessage: jest.fn(({ defaultMessage }) => defaultMessage),
 }));
 jest.mock("@saleor/macaw-ui", () => ({

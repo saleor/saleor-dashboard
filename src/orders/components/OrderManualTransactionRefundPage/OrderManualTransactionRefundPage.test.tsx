@@ -1,6 +1,7 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import {
+  ModelsOfTypeDocument,
   OrderTransactionRequestActionDocument,
   TransactionActionEnum,
   TransactionItemFragment,
@@ -22,6 +23,7 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
+  defineMessage: (message: any) => message,
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
 jest.mock("@dashboard/hooks/useNotifier", () => ({
@@ -67,7 +69,14 @@ describe("OrderManualTransactionRefundPage", () => {
         },
         result: { data: { transactionRequestAction: { errors: [] } } },
       },
+      {
+        request: {
+          query: ModelsOfTypeDocument,
+        },
+        result: { data: { pages: { edges: [] } } },
+      },
     ];
+
     const transactions = [
       {
         id: "1",

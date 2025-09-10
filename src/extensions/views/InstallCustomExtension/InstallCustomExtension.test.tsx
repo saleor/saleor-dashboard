@@ -20,6 +20,7 @@ jest.mock("react-intl", () => ({
     return defaultMessage || "";
   }),
   defineMessages: (messages: Record<string, any>) => messages,
+  defineMessage: (message: any) => message,
 }));
 
 jest.mock("react-router-dom", () => ({

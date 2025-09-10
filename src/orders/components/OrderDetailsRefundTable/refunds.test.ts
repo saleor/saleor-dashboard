@@ -32,12 +32,15 @@ describe("manualRefundsExtractor", () => {
           events: [
             {
               id: "1",
+
               type: "REFUND_SUCCESS",
               amount: 100,
               createdAt: "2022-08-22T10:40:22.226875+00:00",
               createdBy: {
                 __typename: "User",
                 email: "john.doe@example.com",
+                firstName: "John",
+                lastName: "Doe",
               },
               pspReference: "psp1",
             },
@@ -55,11 +58,14 @@ describe("manualRefundsExtractor", () => {
       {
         id: "1",
         type: "manual",
+        reasonTypeName: null,
         status: "SUCCESS",
         amount: 100,
         createdAt: "2022-08-22T10:40:22.226875+00:00",
         user: {
           email: "john.doe@example.com",
+          firstName: "John",
+          lastName: "Doe",
         },
         reason: "Manual refund",
       },
@@ -119,6 +125,8 @@ describe("manualRefundsExtractor", () => {
               createdBy: {
                 __typename: "User",
                 email: "john.doe@example.com",
+                firstName: "John",
+                lastName: "Doe",
               },
               pspReference: "psp1",
             },
@@ -129,6 +137,8 @@ describe("manualRefundsExtractor", () => {
               createdAt: "2022-08-23T10:40:22.226875+00:00",
               createdBy: {
                 __typename: "User",
+                firstName: "Jane",
+                lastName: "Doe",
                 email: "jane.doe@example.com",
               },
               pspReference: "psp1",
@@ -149,9 +159,12 @@ describe("manualRefundsExtractor", () => {
         type: "manual",
         status: "SUCCESS",
         amount: 100,
+        reasonTypeName: null,
         createdAt: "2022-08-23T10:40:22.226875+00:00",
         user: {
           email: "jane.doe@example.com",
+          firstName: "Jane",
+          lastName: "Doe",
         },
         reason: "Manual refund",
       },
@@ -173,6 +186,8 @@ describe("manualRefundsExtractor", () => {
               createdBy: {
                 __typename: "User",
                 email: "john.doe@example.com",
+                firstName: "John",
+                lastName: "Doe",
               },
               pspReference: "psp1",
             },
@@ -184,6 +199,8 @@ describe("manualRefundsExtractor", () => {
               createdBy: {
                 __typename: "User",
                 email: "jane.doe@example.com",
+                firstName: "Jane",
+                lastName: "Doe",
               },
               pspReference: "psp1",
             },
@@ -195,6 +212,8 @@ describe("manualRefundsExtractor", () => {
               createdBy: {
                 __typename: "User",
                 email: "john.doe@example.com",
+                firstName: "John",
+                lastName: "Doe",
               },
               pspReference: "psp2",
             },
@@ -206,6 +225,8 @@ describe("manualRefundsExtractor", () => {
               createdBy: {
                 __typename: "User",
                 email: "jane.doe@example.com",
+                firstName: "Jane",
+                lastName: "Doe",
               },
               pspReference: "psp2",
             },
@@ -224,21 +245,27 @@ describe("manualRefundsExtractor", () => {
         id: "2",
         type: "manual",
         status: "SUCCESS",
+        reasonTypeName: null,
         amount: 50,
         createdAt: "2022-08-23T10:40:22.226875+00:00",
         user: {
           email: "jane.doe@example.com",
+          firstName: "Jane",
+          lastName: "Doe",
         },
         reason: "Manual refund",
       },
       {
         id: "4",
         type: "manual",
+        reasonTypeName: null,
         status: "PENDING",
         amount: 100,
         createdAt: "2022-08-23T12:40:22.226875+00:00",
         user: {
           email: "jane.doe@example.com",
+          firstName: "Jane",
+          lastName: "Doe",
         },
         reason: "Manual refund",
       },
@@ -260,8 +287,8 @@ describe("manualRefundsExtractor", () => {
               createdBy: {
                 __typename: "User",
                 email: "john.doe@example.com",
-                firstName: undefined,
-                lastName: undefined,
+                firstName: "John",
+                lastName: "Doe",
               },
               pspReference: "psp1",
             },
@@ -289,9 +316,12 @@ describe("manualRefundsExtractor", () => {
         type: "manual",
         status: "FAILURE",
         amount: 100,
+        reasonTypeName: null,
         createdAt: "2022-08-23T10:40:22.226875+00:00",
         user: {
           email: "john.doe@example.com",
+          firstName: "John",
+          lastName: "Doe",
         },
         reason: "Manual refund",
       },

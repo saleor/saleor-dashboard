@@ -34,6 +34,7 @@ jest.mock("react-intl", () => ({
   }),
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
   defineMessages: (messages: Record<string, any>) => messages,
+  defineMessage: (message: any) => message,
 }));
 
 jest.mock("@dashboard/utils/handlers/dialogActionHandlers", () => ({
