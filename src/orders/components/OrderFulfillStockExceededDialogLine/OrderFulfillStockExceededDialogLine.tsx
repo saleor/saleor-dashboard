@@ -10,7 +10,6 @@ import {
 } from "@dashboard/orders/utils/data";
 import { TableCell } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 

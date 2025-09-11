@@ -1,7 +1,7 @@
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { useFlag } from "@dashboard/featureFlags";
 import { Button } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import { WelcomePageCheckGraphQLButton } from "../components/WelcomePageCheckGraphQLButton";

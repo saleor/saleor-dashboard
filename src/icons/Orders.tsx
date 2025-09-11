@@ -1,12 +1,3 @@
-import React from "react";
-
-/**
- * @deprecated This icon uses Macaw-UI patterns which are deprecated. Please use Lucide React icons instead.
- * @see https://lucide.dev/ for available icons
- * @example
- * import { ShoppingCart } from "lucide-react";
- * // Use <ShoppingCart /> instead
- */
 export const OrdersIcon = () => (
   <svg
     width="20"

@@ -16,7 +16,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AppActivateDialog from "../../components/AppActivateDialog";

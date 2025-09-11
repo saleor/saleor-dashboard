@@ -1,6 +1,6 @@
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { DashboardCard } from "../Card";
 

@@ -24,7 +24,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import React, { useEffect } from "react";
+import { useEffect,useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
@@ -111,7 +111,7 @@ export const OrderList = ({ params }: OrderListProps) => {
   const paginationState = createPaginationState(settings.rowNumber, params);
   const filterVariables = createOrderQueryVariables(valueProvider.value);
 
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       where: filterVariables,

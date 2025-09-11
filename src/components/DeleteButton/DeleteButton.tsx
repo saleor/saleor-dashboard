@@ -1,6 +1,6 @@
 import { buttonMessages } from "@dashboard/intl";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface DeleteButtonProps {

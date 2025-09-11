@@ -3,7 +3,6 @@ import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Checkbox, List, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { AppPermissionsDialogMessages } from "./messages";

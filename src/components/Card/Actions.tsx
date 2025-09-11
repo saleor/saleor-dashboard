@@ -1,5 +1,4 @@
 import { Box, PropsWithBox } from "@saleor/macaw-ui-next";
-import React from "react";
 
 export const Actions = ({ children, className, style, ...rest }: PropsWithBox<{}>) => (
   <Box

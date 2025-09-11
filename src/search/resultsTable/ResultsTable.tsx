@@ -1,6 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { CategoryItem } from "./CategoryItem";
 import { CollectionItem } from "./CollectionItem";

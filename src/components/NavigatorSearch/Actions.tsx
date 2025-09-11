@@ -1,6 +1,7 @@
 import { fuzzySearch } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import * as React from "react";
 
 import { useActionTriggers } from "./useActionTriggers";
 

@@ -3,7 +3,6 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import OrderCardTitle from "../OrderCardTitle";

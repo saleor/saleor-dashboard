@@ -7,7 +7,7 @@ import {
   PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
 import { Box, Button, ChevronLeftIcon, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { ListSettings } from "../../types";

@@ -5,7 +5,7 @@ import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { EventItem } from "./components";
@@ -41,7 +41,7 @@ const isFakeEventsList = (
 export const TransactionEvents = ({ events }: OrderTransactionEventsProps) => {
   const classes = useStyles();
   const [hoveredPspReference, setHoveredPspReference] = useState(null);
-  const hasCreatedBy = React.useMemo(() => {
+  const hasCreatedBy = useMemo(() => {
     if (isFakeEventsList(events)) {
       return false;
     }

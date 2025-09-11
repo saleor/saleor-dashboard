@@ -7,7 +7,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { EyeIcon } from "@saleor/macaw-ui";
 import { Box, Button, Divider, Input, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -138,7 +138,7 @@ const LoginPage = (props: LoginCardProps) => {
             </>
           )}
           {externalAuthentications.map(externalAuthentication => (
-            <React.Fragment key={externalAuthentication.id}>
+            <Fragment key={externalAuthentication.id}>
               <FormSpacer />
               <ButtonWithLoader
                 width="100%"
@@ -155,7 +155,7 @@ const LoginPage = (props: LoginCardProps) => {
               >
                 {externalAuthentication.name}
               </ButtonWithLoader>
-            </React.Fragment>
+            </Fragment>
           ))}
         </Box>
       )}

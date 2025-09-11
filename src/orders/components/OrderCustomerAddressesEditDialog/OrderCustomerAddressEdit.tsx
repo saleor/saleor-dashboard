@@ -9,7 +9,7 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { getById } from "@dashboard/misc";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { Box, Option, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { AddressInputOptionEnum } from "./form";

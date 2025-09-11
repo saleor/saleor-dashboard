@@ -5,7 +5,6 @@ import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { CardActions } from "@material-ui/core";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { actionButtonsMessages } from "./messages";

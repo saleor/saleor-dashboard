@@ -2,7 +2,7 @@ import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedDate } from "react-intl";
 
 export const Row = ({

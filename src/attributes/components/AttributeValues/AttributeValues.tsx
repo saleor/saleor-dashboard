@@ -13,7 +13,6 @@ import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashb
 import { TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeValuesProps

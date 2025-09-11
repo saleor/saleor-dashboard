@@ -28,7 +28,6 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Box, Divider } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelProps, PageListProps } from "../../../types";

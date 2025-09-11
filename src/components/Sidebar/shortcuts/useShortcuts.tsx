@@ -3,7 +3,8 @@ import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch
 import { Graphql } from "@dashboard/icons/Graphql";
 import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { shortcutsMessages } from "./messages";

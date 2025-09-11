@@ -7,7 +7,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { OrderRefundData } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
+import { Fragment } from "react";
 import { useIntl } from "react-intl";
 
 import OrderRefund from "../OrderRefund";
@@ -84,7 +84,7 @@ const OrderRefundPage = (props: OrderRefundPageProps) => {
                     </>
                   )}
                   {renderCollection(fulfilledFulfillemnts, fulfillment => (
-                    <React.Fragment key={fulfillment?.id}>
+                    <Fragment key={fulfillment?.id}>
                       <CardSpacer />
                       <OrderRefundFulfilledProducts
                         fulfillment={fulfillment}
@@ -98,7 +98,7 @@ const OrderRefundPage = (props: OrderRefundPageProps) => {
                           handlers.setMaximalRefundedFulfilledProductQuantities(fulfillment?.id)
                         }
                       />
-                    </React.Fragment>
+                    </Fragment>
                   ))}
                 </>
               )}

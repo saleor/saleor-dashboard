@@ -1,7 +1,6 @@
 import { useTheme } from "@dashboard/theme";
 import { DefaultTheme } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 
 import { SaleorLogo } from "./SaleorLogo";
 

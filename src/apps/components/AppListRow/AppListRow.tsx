@@ -3,7 +3,7 @@ import { useAppListContext } from "@dashboard/apps/context";
 import { getAppDetails, resolveInstallationOfAppstoreApp } from "@dashboard/apps/utils";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import AppListCardActions from "./AppListCardActions";
@@ -26,7 +26,7 @@ const AppListRow = ({
 }: AppListRowProps) => {
   const intl = useIntl();
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
-  const appDetails = React.useCallback(
+  const appDetails = useCallback(
     (app: AppstoreApi.SaleorApp) =>
       getAppDetails({
         intl,

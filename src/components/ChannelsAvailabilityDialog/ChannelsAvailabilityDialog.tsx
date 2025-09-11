@@ -2,7 +2,6 @@
 import { Channel } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import React from "react";
 
 import ChannelsAvailabilityDialogChannelsList from "../ChannelsAvailabilityDialogChannelsList";
 import ChannelsAvailabilityDialogWrapper from "../ChannelsAvailabilityDialogWrapper";
