@@ -82,6 +82,10 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
       value: AttributeInputTypeEnum.REFERENCE,
     },
     {
+      label: intl.formatMessage(inputTypeMessages.singleReference),
+      value: AttributeInputTypeEnum.SINGLE_REFERENCE,
+    },
+    {
       label: intl.formatMessage(inputTypeMessages.plainText),
       value: AttributeInputTypeEnum.PLAIN_TEXT,
     },
@@ -189,7 +193,8 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
               options={inputTypeChoices}
             />
           </Box>
-          {data.inputType === AttributeInputTypeEnum.REFERENCE && (
+          {(data.inputType === AttributeInputTypeEnum.REFERENCE ||
+            data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) && (
             <Box width="100%">
               <Select
                 aria-disabled={disabled || !canChangeType}

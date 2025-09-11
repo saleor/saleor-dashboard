@@ -152,6 +152,8 @@ export function getSelectedAttributeValues(
   switch (attribute.attribute.inputType) {
     case AttributeInputTypeEnum.REFERENCE:
       return attribute.values.map(value => value.reference);
+    case AttributeInputTypeEnum.SINGLE_REFERENCE:
+      return [attribute.values[0]?.reference];
 
     case AttributeInputTypeEnum.PLAIN_TEXT:
       return [attribute.values[0]?.plainText];
@@ -506,7 +508,10 @@ export const getAttributesDisplayData = (
   referenceCategories: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>,
 ) =>
   attributes.map(attribute => {
-    if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
+    if (
+      attribute.data.inputType === AttributeInputTypeEnum.REFERENCE ||
+      attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE
+    ) {
       return getReferenceAttributeDisplayData(
         attribute,
         referencePages,
