@@ -75,4 +75,3 @@ export const ChipField = React.forwardRef<HTMLDivElement, ChipFieldProps>(
   },
 );
 ChipField.displayName = "ChipField";
-export default ChipField;

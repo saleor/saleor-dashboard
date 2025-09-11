@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import ChipField from "@dashboard/components/ChipField";
+import { ChipField } from "@dashboard/components/ChipField/ChipField";
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
