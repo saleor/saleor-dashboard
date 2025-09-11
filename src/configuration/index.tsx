@@ -4,7 +4,7 @@ import { useUser } from "@dashboard/auth";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { APP_VERSION as dashboardVersion } from "@dashboard/config";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { PermissionEnum } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
@@ -209,7 +209,7 @@ export function createConfigurationMenu(
           }),
           icon: <Miscellaneous />,
           title: intl.formatMessage(sectionNames.webhooksAndEvents),
-          url: CustomAppUrls.resolveAppListUrl(),
+          url: ExtensionsUrls.resolveInstalledExtensionsUrl(),
           testId: "configuration-menu-webhooks-and-events",
           hidden: hideOldExtensions,
         },

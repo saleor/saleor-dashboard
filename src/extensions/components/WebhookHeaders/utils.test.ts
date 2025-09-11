@@ -1,7 +1,7 @@
 import {
   mapHeaders,
   stringifyHeaders,
-} from "@dashboard/custom-apps/components/WebhookHeaders/utils";
+} from "@dashboard/extensions/components/WebhookHeaders/utils";
 
 export const customHeaders = '{"x-auth-token":"ABC","authorization":"XYZ"}';
 

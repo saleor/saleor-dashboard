@@ -1,5 +1,5 @@
 import plusIcon from "@assets/images/plus-icon.svg";
-import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
+import { AppAvatar } from "@dashboard/extensions/components/AppAvatar";
 import { Box } from "@saleor/macaw-ui-next";
 
 import { SaleorLogo } from "./SaleorLogo";
@@ -28,10 +28,12 @@ export const IconsSection = ({ appLogo }: { appLogo: string | undefined }) => {
       <AppAvatar
         size={12}
         borderRadius={5}
+        name="Extension"
         logo={
           appLogo
             ? {
-                source: appLogo,
+                light: { source: appLogo },
+                dark: { source: appLogo },
               }
             : undefined
         }

@@ -1,9 +1,9 @@
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { CustomAppDetailsUrlQueryParams } from "@dashboard/custom-apps/urls";
 import {   AppDetailsUrlQueryParams,
 AppPaths ,
+  CustomExtensionDetailsUrlQueryParams,
   ExtensionInstallQueryParams,
   ExtensionsPaths,
 } from "@dashboard/extensions/urls";
@@ -53,7 +53,7 @@ const EditCustomExtensionView = ({
   onTokenClose,
 }: RouteComponentProps<{ id?: string }> & { token: string; onTokenClose: () => void }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: CustomAppDetailsUrlQueryParams = qs;
+  const params: CustomExtensionDetailsUrlQueryParams = qs;
   const id = match.params.id;
 
   if (!id) {
