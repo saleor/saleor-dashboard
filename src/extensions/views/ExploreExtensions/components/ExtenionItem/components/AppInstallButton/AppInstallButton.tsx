@@ -2,8 +2,7 @@ import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
 import Link from "@dashboard/components/Link";
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { messages } from "@dashboard/extensions/messages";
-import { AppUrls , ExtensionsUrls } from "@dashboard/extensions/urls";
-import { useFlag } from "@dashboard/featureFlags";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
 import { Button } from "@saleor/macaw-ui-next";
@@ -12,7 +11,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
 
   if (!hasManagedAppsPermission) {
     return (
@@ -29,11 +27,7 @@ export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {
   if (IS_CLOUD_INSTANCE) {
     return (
       <Link
-        href={
-          isExtensionsDevEnabled
-            ? ExtensionsUrls.resolveInstallCustomExtensionUrl(manifestUrl)
-            : AppUrls.resolveAppInstallUrl(manifestUrl)
-        }
+        href={ExtensionsUrls.resolveInstallCustomExtensionUrl(manifestUrl)}
       >
         <Button variant="secondary" data-test-id="app-install-button">
           <FormattedMessage {...buttonMessages.install} />

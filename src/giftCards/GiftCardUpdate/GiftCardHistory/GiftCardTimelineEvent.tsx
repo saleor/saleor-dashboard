@@ -98,7 +98,7 @@ const getEventMessage = (
               !!user && (
                 <Link
                   href={
-                    event.user ? customerPath(event.user.id) : AppPaths.resolveAppPath(event.app.id)
+                    event.user ? customerPath(event.user.id) : ExtensionsUrls.resolveViewManifestExtensionUrl(event.app.id)
                   }
                 >{`${content} ${user}`}</Link>
               ),

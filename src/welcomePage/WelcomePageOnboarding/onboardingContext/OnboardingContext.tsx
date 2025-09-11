@@ -1,10 +1,9 @@
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/utils";
-import { createContext, useContext, useEffect, useMemo, useRef,useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 import { useNewUserCheck } from "../hooks/useNewUserCheck";
 import {
@@ -25,7 +24,6 @@ const OnboardingContext = createContext<OnboardingContextType | null>(null);
 
 export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   const analytics = useAnalytics();
-  const { enabled: isExtensionsFlagEnabled } = useFlag("extensions");
   const [onboardingState, setOnboardingState] = useState<OnboardingState>({
     onboardingExpanded: true,
     stepsCompleted: [],
@@ -36,19 +34,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
 
   const storageService = useOnboardingStorage();
 
-  const visibleSteps = useMemo(() => {
-    return initialOnboardingSteps.filter(step => {
-      if (step.id === "view-extensions") {
-        return isExtensionsFlagEnabled;
-      }
-
-      if (step.id === "view-webhooks") {
-        return !isExtensionsFlagEnabled;
-      }
-
-      return true;
-    });
-  }, [isExtensionsFlagEnabled]);
+  const visibleSteps = initialOnboardingSteps;
 
   useEffect(() => {
     if (loaded.current || isUserLoading) return;
@@ -71,20 +57,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
     }
   }, [onboardingState]);
 
-  // Calculate the valid completed steps based on feature flag
-  const validCompletedSteps = onboardingState.stepsCompleted.filter(step => {
-    if (step === "view-extensions") {
-      return isExtensionsFlagEnabled;
-    }
-
-    if (step === "view-webhooks") {
-      return !isExtensionsFlagEnabled;
-    }
-
-    return true;
-  });
-
-  const validCompletedStepsCount = validCompletedSteps.length;
+  const validCompletedStepsCount = onboardingState.stepsCompleted.length;
 
   // For old users, onboarding is always completed, for new one we need to calculate it
   const isOnboardingCompleted = isNewUser ? validCompletedStepsCount >= TOTAL_STEPS_COUNT : true;

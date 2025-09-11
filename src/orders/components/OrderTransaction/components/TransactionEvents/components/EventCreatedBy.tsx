@@ -1,6 +1,5 @@
 import { UserAvatar } from "@dashboard/components/UserAvatar";
-import { AppUrls , ExtensionsUrls } from "@dashboard/extensions/urls";
-import { useFlag } from "@dashboard/featureFlags";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppAvatarFragment, StaffMemberAvatarFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
@@ -12,7 +11,6 @@ interface EventCreatedByProps {
 }
 
 export const EventCreatedBy = ({ createdBy }: EventCreatedByProps) => {
-  const { enabled: areExtensionsEnabled } = useFlag("extensions");
 
   if (!createdBy) {
     return null;
@@ -20,13 +18,7 @@ export const EventCreatedBy = ({ createdBy }: EventCreatedByProps) => {
 
   if (createdBy.__typename === "App") {
     return (
-      <Link
-        to={
-          areExtensionsEnabled
-            ? ExtensionsUrls.resolveViewManifestExtensionUrl(createdBy.id)
-            : AppUrls.resolveAppUrl(createdBy.id)
-        }
-      >
+      <Link to={ExtensionsUrls.resolveViewManifestExtensionUrl(createdBy.id)}>
         {createdBy.name}
       </Link>
     );
