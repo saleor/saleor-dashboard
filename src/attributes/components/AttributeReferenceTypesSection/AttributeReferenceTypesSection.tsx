@@ -11,8 +11,8 @@ import { messages } from "./messages";
 type Option = { label: string; value: string };
 
 interface AttributeReferenceTypesSectionProps {
-    inputType?: AttributeInputTypeEnum | null;
-    entityType?: AttributeEntityTypeEnum | null;
+    inputType?: AttributeInputTypeEnum | undefined;
+    entityType?: AttributeEntityTypeEnum | undefined;
     selectedTypes: Option[];
     disabled?: boolean;
     onAssignClick: () => void;
@@ -20,7 +20,7 @@ interface AttributeReferenceTypesSectionProps {
 }
 
 const canShow = (inputType?: AttributeInputTypeEnum, entityType?: AttributeEntityTypeEnum) =>
-    inputType ? (REFERENCE_ATTRIBUTE_TYPES.includes(inputType) && ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(entityType)) : false;
+    inputType && entityType ? (REFERENCE_ATTRIBUTE_TYPES.includes(inputType) && ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(entityType)) : false;
 
 export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSectionProps> = ({
     inputType,

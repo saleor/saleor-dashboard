@@ -7,19 +7,19 @@ import { useIntl } from "react-intl";
 import { messages } from "./messages";
 
 
-type ReferenceTypes = { id: string; name: string }[];
+export type ReferenceTypes = { id: string; name: string }[];
 
 interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
   selectedReferenceTypesIds: string[];
-  referenceTypes: ReferenceTypes | null;
+  referenceTypes: ReferenceTypes;
   title: string;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
 const AssignReferenceTypesDialog = ({ selectedReferenceTypesIds, referenceTypes, title, labels, ...rest }: AssignCollectionDialogProps) => {
   const intl = useIntl();
-  const filteredReferenceTypes = referenceTypes?.filter(type => !selectedReferenceTypesIds.includes(type.id));
+  const filteredReferenceTypes = referenceTypes.filter(type => !selectedReferenceTypesIds.includes(type.id));
 
   return (
     <AssignContainerDialog

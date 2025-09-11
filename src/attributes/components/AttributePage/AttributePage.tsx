@@ -1,4 +1,4 @@
-import AssignReferenceTypesDialog from "@dashboard/attributes/components/AssignReferenceTypesDialog";
+import AssignReferenceTypesDialog, {ReferenceTypes} from "@dashboard/attributes/components/AssignReferenceTypesDialog";
 import { AttributeAddUrlQueryParams, attributeListPath, AttributeUrlQueryParams } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
@@ -23,6 +23,7 @@ import {
   MeasurementUnitsEnum,
   PermissionEnum,
 } from "@dashboard/graphql";
+import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -36,7 +37,6 @@ import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Option } from "@saleor/macaw-ui-next";
-import { title } from "process";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -151,7 +151,7 @@ const AttributePage = ({
         valueRequired: !!attribute.valueRequired,
         visibleInStorefront: attribute.visibleInStorefront,
         unit: attribute?.unit ?? null,
-        referenceTypes: attribute?.referenceTypes.map(ref => ({ value: ref.id, label: ref.name })) || [],
+        referenceTypes: attribute?.referenceTypes?.map(ref => ({ value: ref.id, label: ref.name })) || [],
       };
   const handleSubmit = (data: AttributePageFormData) => {
     const type = attribute === null ? data.type : undefined;
@@ -179,8 +179,9 @@ const AttributePage = ({
         const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
           activeRefSearch.result.data?.search,
         );
+    
         const fetchMoreReferenceTypes = getSearchFetchMoreProps(
-          activeRefSearch.result,
+          activeRefSearch.result as CommonSearchOpts,
           activeRefSearch.loadMore,
         );
 
@@ -258,7 +259,7 @@ const AttributePage = ({
                   <CardSpacer />
                 <AttributeReferenceTypesSection
                   inputType={data.inputType}
-                  entityType={data.entityType}
+                  entityType={data.entityType ?? undefined}
                   selectedTypes={data.referenceTypes}
                   disabled={disabled}
                   onAssignClick={() => onOpenReferenceTypes()}
@@ -317,7 +318,7 @@ const AttributePage = ({
               confirmButtonState={"default"}
               loading={Boolean(fetchMoreReferenceTypes?.loading)}
               selectedReferenceTypesIds={data.referenceTypes.map(ref => ref.value)}
-              referenceTypes={referenceTypes}
+              referenceTypes={(referenceTypes ?? []) as ReferenceTypes}
               hasMore={fetchMoreReferenceTypes?.hasMore}
               onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
               onFetch={activeRefSearch.search}
