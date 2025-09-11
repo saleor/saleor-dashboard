@@ -5,7 +5,6 @@ on:
     branches: [main]
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review, labeled]
-    branches: [main]
 
 jobs:
   check-lock:
@@ -49,7 +48,7 @@ jobs:
         run: |
           npm run lint
           git diff --exit-code ./src
-      
+
       - name: Knip for unused files, dependencies and exports
         run: npm run knip
 
