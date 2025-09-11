@@ -1,5 +1,5 @@
 import AssignReferenceTypesDialog from "@dashboard/attributes/components/AssignReferenceTypesDialog";
-import { attributeListPath } from "@dashboard/attributes/urls";
+import { AttributeAddUrlQueryParams, attributeListPath, AttributeUrlQueryParams } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
@@ -52,12 +52,15 @@ export interface AttributePageProps {
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   values?: NonNullable<AttributeDetailsQuery["attribute"]>["choices"] | undefined;
+  params: AttributeAddUrlQueryParams | AttributeUrlQueryParams;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
+  onOpenReferenceTypes: () => void;
+  onCloseAssignReferenceTypes: () => void;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
   pageInfo: {
@@ -91,12 +94,15 @@ const AttributePage = ({
   errors: apiErrors,
   saveButtonBarState,
   values,
+  params,
   onDelete,
   onSubmit,
   onValueAdd,
   onValueDelete,
   onValueReorder,
   onValueUpdate,
+  onOpenReferenceTypes,
+  onCloseAssignReferenceTypes,
   settings,
   onUpdateListSettings,
   pageInfo,
@@ -158,7 +164,6 @@ const AttributePage = ({
   const attributePageBackLink = useBackLinkWithState({
     path: attributeListPath,
   });
-  const [isAssignRefTypesOpen, setAssignRefTypesOpen] = React.useState(false);
   const productRefSearch = useProductTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
   const pageRefSearch = usePageTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
@@ -200,7 +205,7 @@ const AttributePage = ({
           ];
 
           set({ referenceTypes: mergedReferenceTypes });
-          setAssignRefTypesOpen(false);
+          onCloseAssignReferenceTypes();
         };
         const handleRemoveReferenceType = (id: string) => {
             set({ referenceTypes: data.referenceTypes.filter(ref => ref.value !== id) });
@@ -254,7 +259,7 @@ const AttributePage = ({
                   entityType={data.entityType}
                   selectedTypes={data.referenceTypes}
                   disabled={disabled}
-                  onAssignClick={() => setAssignRefTypesOpen(true)}
+                  onAssignClick={() => onOpenReferenceTypes()}
                   onRemoveType={handleRemoveReferenceType}
                 />
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
@@ -305,10 +310,8 @@ const AttributePage = ({
             </DetailPageLayout>
             <AssignReferenceTypesDialog
               key={data.referenceTypes.map(o => o.value).sort().join("|")}
-              // docelowo sterowane URLem
-              open={isAssignRefTypesOpen}
-              // tak samo jak wyzej
-              onClose={() => setAssignRefTypesOpen(false)}
+              open={params.action === "assign-reference-types"}
+              onClose={onCloseAssignReferenceTypes}
               confirmButtonState={"default"}
               loading={Boolean(fetchMoreReferenceTypes?.loading)}
               selectedReferenceTypesIds={data.referenceTypes.map(ref => ref.value)}

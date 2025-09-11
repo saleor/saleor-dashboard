@@ -208,6 +208,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       attribute={data?.attribute}
       disabled={loading}
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
+      params={params}
       onDelete={() => openModal("remove")}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
@@ -222,6 +223,8 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
           id,
         })
       }
+      onOpenReferenceTypes={() => openModal("assign-reference-types")}
+      onCloseAssignReferenceTypes={closeModal}
       saveButtonBarState={attributeUpdateOpts.status}
       values={data?.attribute?.choices}
       settings={settings}
