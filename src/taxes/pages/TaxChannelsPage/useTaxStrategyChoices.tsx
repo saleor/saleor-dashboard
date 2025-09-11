@@ -1,5 +1,4 @@
-import { AppUrls } from "@dashboard/apps/urls";
-import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { AppUrls , ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";

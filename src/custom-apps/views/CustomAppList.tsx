@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
-import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import AppDeleteDialog from "@dashboard/extensions/components/AppDeleteDialog";
+import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import {
   AppSortField,
   AppTypeEnum,

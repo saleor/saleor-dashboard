@@ -5,6 +5,14 @@ import { IntlShape } from "react-intl";
 
 import { appManifestErrorMessages, localAppErrorMessages } from "./messages";
 
+export const isUrlAbsolute = (url: string): boolean => {
+  try {
+    return Boolean(new URL(url));
+  } catch {
+    return false;
+  }
+};
+
 export const getAppErrorMessageDescriptor = (code: AppErrorCode) => {
   switch (code) {
     case AppErrorCode.INVALID_MANIFEST_FORMAT:

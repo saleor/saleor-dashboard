@@ -1,7 +1,4 @@
 // @ts-strict-ignore
-import AppActivateDialog from "@dashboard/apps/components/AppActivateDialog";
-import AppDeactivateDialog from "@dashboard/apps/components/AppDeactivateDialog";
-import { appMessages } from "@dashboard/apps/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import TokenCreateDialog from "@dashboard/custom-apps/components/TokenCreateDialog";
@@ -12,6 +9,9 @@ import {
   CustomAppDetailsUrlQueryParams,
   CustomAppUrls,
 } from "@dashboard/custom-apps/urls";
+import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
+import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
+import { appMessages } from "@dashboard/extensions/messages";
 import {
   AppTokenCreateMutation,
   AppTokenDeleteMutation,

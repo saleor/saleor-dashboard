@@ -20,8 +20,6 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { Switch } from "react-router-dom";
 
-import { AppsSectionRoot } from "./apps";
-import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth from "./auth";
@@ -52,8 +50,6 @@ import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import CustomAppsSection from "./custom-apps";
-import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import { ExtensionsSection } from "./extensions";
@@ -298,11 +294,6 @@ const Routes = () => {
                 />
                 <SectionRoute
                   permissions={[]}
-                  path={AppSections.appsSection}
-                  component={AppsSectionRoot}
-                />
-                <SectionRoute
-                  permissions={[]}
                   path={extensionsSection}
                   component={ExtensionsSection}
                 />
@@ -323,7 +314,6 @@ const Routes = () => {
                   path="/configuration"
                   component={ConfigurationSection}
                 />
-                <SectionRoute path={CustomAppSections.appsSection} component={CustomAppsSection} />
                 <Route component={NotFound} />
               </Switch>
             </ErrorBoundary>

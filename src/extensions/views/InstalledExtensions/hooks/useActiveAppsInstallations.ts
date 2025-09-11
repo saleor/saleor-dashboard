@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
+import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import {
   AppInstallationFragment,
   AppsInstallationsQuery,

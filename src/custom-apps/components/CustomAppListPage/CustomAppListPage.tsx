@@ -1,4 +1,3 @@
-import DeactivatedText from "@dashboard/apps/components/DeactivatedText";
 import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -6,6 +5,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import DeactivatedText from "@dashboard/extensions/components/DeactivatedText";
 import { AppListItemFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -77,7 +77,7 @@ const CustomAppListPage = ({ appsList, onRemove, getCustomAppHref }: CustomAppLi
                       </span>
                       {!app.isActive && (
                         <div className={classes.statusWrapper}>
-                          <DeactivatedText />
+                          <DeactivatedText>Deactivated</DeactivatedText>
                         </div>
                       )}
                     </TableCell>

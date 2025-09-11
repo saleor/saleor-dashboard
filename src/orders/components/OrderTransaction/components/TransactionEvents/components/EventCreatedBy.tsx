@@ -1,6 +1,5 @@
-import { AppUrls } from "@dashboard/apps/urls";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
-import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { AppUrls , ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { AppAvatarFragment, StaffMemberAvatarFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
