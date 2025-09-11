@@ -1,7 +1,6 @@
 import { messages } from "@dashboard/extensions/messages";
 import { PLUGINS_DOCS_URL } from "@dashboard/links";
 import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 export const PluginWarning = ({ color }: { color: BoxProps["color"] }) => {

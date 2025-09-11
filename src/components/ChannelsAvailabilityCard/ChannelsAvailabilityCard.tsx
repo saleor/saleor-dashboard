@@ -4,7 +4,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { RequireOnlyOne } from "@dashboard/misc";
 import { Box, Divider, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment } from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelAvailabilityItemContent, ChannelAvailabilityItemWrapper } from "./Channel";
@@ -76,12 +76,12 @@ const ChannelsAvailability = (props: ChannelsAvailabilityCardProps) => {
           })
         : channelsList
           ? channelsList.map(data => (
-              <React.Fragment key={data.id}>
+              <Fragment key={data.id}>
                 <Box>
                   <Text>{data.name}</Text>
                 </Box>
                 <Divider />
-              </React.Fragment>
+              </Fragment>
             ))
           : null}
     </ChannelsAvailabilityCardWrapper>

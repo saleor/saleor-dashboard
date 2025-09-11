@@ -1,6 +1,5 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { OrderSummaryListAmount } from "./order-summary-list-amount";

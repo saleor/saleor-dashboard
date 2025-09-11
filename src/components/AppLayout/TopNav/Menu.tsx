@@ -1,5 +1,4 @@
 import { Box, Button, ConfigurationIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface TopNavMenuItem {
   label: string;

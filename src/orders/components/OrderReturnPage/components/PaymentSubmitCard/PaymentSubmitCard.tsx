@@ -10,7 +10,7 @@ import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { defineMessages, FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import {

@@ -1,6 +1,6 @@
 import { List } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 
 const useStyles = makeStyles(
   () => ({

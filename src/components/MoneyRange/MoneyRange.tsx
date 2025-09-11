@@ -1,5 +1,4 @@
 import { IMoney } from "@dashboard/utils/intl";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { LocaleConsumer } from "../Locale";

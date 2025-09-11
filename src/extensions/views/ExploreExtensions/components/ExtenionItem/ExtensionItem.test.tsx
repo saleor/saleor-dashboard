@@ -1,6 +1,6 @@
 import { ExtensionData } from "@dashboard/extensions/types";
 import { render, screen } from "@testing-library/react";
-import React from "react";
+import * as React from "react";
 import { FormattedMessageProps } from "react-intl";
 
 import { ExtensionItem } from "./ExtenionItem";

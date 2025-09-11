@@ -1,6 +1,5 @@
 import { ReorderEvent } from "@dashboard/types";
 import { Accordion, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignmentListFooter from "./AssignmentListFooter";

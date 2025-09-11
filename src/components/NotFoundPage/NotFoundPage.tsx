@@ -2,7 +2,6 @@ import notFoundImage from "@assets/images/not-found-404.svg";
 import { Button } from "@dashboard/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 

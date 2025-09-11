@@ -1,5 +1,5 @@
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { OrderSummaryListAmount } from "./order-summary-list-amount";
 

@@ -11,7 +11,7 @@ import { maybe } from "@dashboard/misc";
 import { DialogProps, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef,useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Container } from "../AssignContainerDialog";
@@ -62,7 +62,7 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [productsDict, setProductsDict] = React.useState(selectedIds || {});
+  const [productsDict, setProductsDict] = useState(selectedIds || {});
 
   // Keep selected product data to send them back when submitting
   const productsData = useRef<Products>([]);

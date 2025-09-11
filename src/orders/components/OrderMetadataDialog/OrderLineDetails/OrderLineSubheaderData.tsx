@@ -1,5 +1,5 @@
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 const ListValue = ({ children, last }: { children: ReactNode; last?: boolean }) => {

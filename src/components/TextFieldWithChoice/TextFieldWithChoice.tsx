@@ -12,7 +12,7 @@ import { TextFieldProps } from "@material-ui/core/TextField";
 import DropdownIcon from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 import MenuToggle from "../MenuToggle";
 

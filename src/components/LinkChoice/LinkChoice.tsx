@@ -5,7 +5,7 @@ import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { codes } from "keycode";
-import React from "react";
+import * as React from "react";
 
 import Link from "../Link";
 import { useStyles } from "./styles";

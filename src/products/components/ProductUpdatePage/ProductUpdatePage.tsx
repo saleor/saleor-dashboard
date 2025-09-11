@@ -56,7 +56,7 @@ import { productUrl as createTranslateProductUrl } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Divider, Option } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useMemo,useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
@@ -181,7 +181,7 @@ export const ProductUpdatePage = ({
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
-  const [channelPickerOpen, setChannelPickerOpen] = React.useState(false);
+  const [channelPickerOpen, setChannelPickerOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useStateFromProps(product?.category?.name || "");
   const [mediaUrlModalStatus, setMediaUrlModalStatus] = useStateFromProps(
     isMediaUrlModalVisible || false,
@@ -221,14 +221,14 @@ export const ProductUpdatePage = ({
   const { PRODUCT_DETAILS_MORE_ACTIONS, PRODUCT_DETAILS_WIDGETS } = useExtensions(
     extensionMountPoints.PRODUCT_DETAILS,
   );
-  const productErrors = React.useMemo(
+  const productErrors = useMemo(
     () =>
       errors.filter(
         error => error.__typename === "ProductError",
       ) as ProductErrorWithAttributesFragment[],
     [errors],
   );
-  const productOrganizationErrors = React.useMemo(
+  const productOrganizationErrors = useMemo(
     () =>
       [...errors, ...channelsErrors].filter(err =>
         ["ProductChannelListingError", "ProductError"].includes(err.__typename),

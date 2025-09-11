@@ -4,7 +4,6 @@ import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/
 import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { Box, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { headerTitles, messages } from "../../messages";

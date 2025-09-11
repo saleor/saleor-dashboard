@@ -3,7 +3,6 @@ import { useCondtionValues } from "@dashboard/discounts/components/DiscountRules
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Condition, Rule } from "@dashboard/discounts/models";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 

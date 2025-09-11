@@ -3,7 +3,6 @@ import {
   ExtendedGiftCard,
   GiftCardBase,
 } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "../../GiftCardUpdate/GiftCardUpdatePageHeader/messages";

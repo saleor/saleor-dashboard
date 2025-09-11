@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 
 import { useOverflow } from "./useOverflow";
 

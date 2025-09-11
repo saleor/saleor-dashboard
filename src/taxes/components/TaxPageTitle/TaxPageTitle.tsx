@@ -2,7 +2,6 @@ import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import { sectionNames } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(

@@ -12,7 +12,6 @@ import { productUrl } from "@dashboard/products/urls";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, vars } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ProductMediaNavigation from "../ProductMediaNavigation";

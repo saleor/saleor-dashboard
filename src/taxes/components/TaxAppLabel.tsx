@@ -1,7 +1,6 @@
 import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface TaxAppLabelProps {

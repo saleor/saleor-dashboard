@@ -12,7 +12,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import {

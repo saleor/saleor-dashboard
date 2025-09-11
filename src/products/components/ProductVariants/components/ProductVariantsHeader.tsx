@@ -2,7 +2,6 @@ import { Header as DatagridHeader } from "@dashboard/components/Datagrid/compone
 import { DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagrid";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { productVariantAddUrl } from "@dashboard/products/urls";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "../messages";

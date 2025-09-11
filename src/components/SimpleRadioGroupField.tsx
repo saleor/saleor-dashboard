@@ -1,6 +1,6 @@
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { RadioGroup, RadioGroupRootProps, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 export type SimpleRadioGroupFieldChoice = {
   label: string | React.ReactNode;
