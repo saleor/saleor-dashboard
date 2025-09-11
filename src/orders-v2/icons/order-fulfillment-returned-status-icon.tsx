@@ -1,5 +1,3 @@
-import React from "react";
-
 /**
  *  Based on `lucide-react/Banknote` icon
  */
