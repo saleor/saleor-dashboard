@@ -65,7 +65,6 @@ import PageTypesSection from "./modelTypes";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PermissionGroupSection from "./permissionGroups";
-import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
 import SearchSection from "./search";
@@ -235,11 +234,6 @@ const Routes = () => {
                   path={modelTypesPath}
                   component={PageTypesSection}
                   matchPermission="any"
-                />
-                <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PLUGINS]}
-                  path="/plugins"
-                  component={PluginsSection}
                 />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_ORDERS]}

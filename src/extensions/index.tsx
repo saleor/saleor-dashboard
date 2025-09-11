@@ -5,6 +5,7 @@ import {   AppDetailsUrlQueryParams,
   CustomExtensionDetailsUrlQueryParams,
   ExtensionInstallQueryParams,
   ExtensionsPaths,
+  PluginUrlQueryParams,
 } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
@@ -12,7 +13,6 @@ import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtens
 import { PermissionEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
-import { PluginUrlQueryParams } from "@dashboard/plugins/urls";
 import { parse as parseQs } from "qs";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
