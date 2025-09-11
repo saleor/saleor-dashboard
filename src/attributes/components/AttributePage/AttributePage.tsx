@@ -36,6 +36,7 @@ import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Option } from "@saleor/macaw-ui-next";
+import { title } from "process";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -45,6 +46,7 @@ import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import AttributeReferenceTypesSection from "../AttributeReferenceTypesSection";
 import AttributeValues from "../AttributeValues";
+import { messages } from "./messages";
 
 export interface AttributePageProps {
   attribute?: AttributeDetailsFragment | null | undefined;
@@ -320,6 +322,10 @@ const AttributePage = ({
               onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
               onFetch={activeRefSearch.search}
               onSubmit={setReferenceTypes}
+              title={data.entityType === AttributeEntityTypeEnum.PAGE
+                  ? intl.formatMessage(messages.titleModelTypes)
+                  : intl.formatMessage(messages.titleProductTypes)
+              }
             />
             {children(data)}
           </>

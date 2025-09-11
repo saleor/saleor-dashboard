@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   referenceTypesTitle: {
-    id: "9wqOQf",
-    defaultMessage: "Reference types",
+    id: "UvZuf7",
+    defaultMessage: "Reference Types",
     description: "section title for reference types selector",
   },
   referenceTypesHelper: {
@@ -17,9 +17,9 @@ export const messages = defineMessages({
     defaultMessage: "No product types assigned",
     description: "empty state for reference types",
   },
-  noPageTypesAssigned: {
-    id: "ew5ALm",
-    defaultMessage: "No page types assigned",
-    description: "empty state for page types",
+  noModelTypesAssigned: {
+    id: "4DkQt1",
+    defaultMessage: "No model types assigned",
+    description: "empty state for model types",
   },
 });

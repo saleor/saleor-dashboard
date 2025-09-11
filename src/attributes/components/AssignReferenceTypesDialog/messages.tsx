@@ -1,10 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  titleProductTypes: {
-    id: "RqOHCc",
-    defaultMessage: "Assign product types",
-  },
   searchLabel: {
     id: "xmcVZ0",
     defaultMessage: "Search",

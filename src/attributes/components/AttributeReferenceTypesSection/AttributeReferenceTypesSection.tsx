@@ -62,7 +62,7 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
             ) : (
               <Text color="default2">
               {entityType === AttributeEntityTypeEnum.PAGE
-                ? intl.formatMessage(messages.noPageTypesAssigned)
+                ? intl.formatMessage(messages.noModelTypesAssigned)
                 : intl.formatMessage(messages.noProductTypesAssigned)}
               </Text>
             )}
