@@ -1,6 +1,6 @@
-import AssignReferenceTypesDialog, {ReferenceTypes} from "@dashboard/attributes/components/AssignReferenceTypesDialog";
+import {AssignReferenceTypesDialog, ReferenceTypes} from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
 import { AttributeAddUrlQueryParams, attributeListPath, AttributeUrlQueryParams } from "@dashboard/attributes/urls";
-import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
+import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES, ENTITY_TYPES_WITH_TYPES_RESTRICTION, REFERENCE_ATTRIBUTE_TYPES } from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -213,7 +213,7 @@ const AttributePage = ({
         const handleRemoveReferenceType = (id: string) => {
             set({ referenceTypes: data.referenceTypes.filter(ref => ref.value !== id) });
         };
-
+        const showReferenceTypes = data.entityType ? (REFERENCE_ATTRIBUTE_TYPES.includes(data.inputType) && ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(data.entityType)) : false;
 
         return (
           <>
@@ -257,14 +257,14 @@ const AttributePage = ({
                   clearErrors={clearErrors}
                 />
                   <CardSpacer />
-                <AttributeReferenceTypesSection
-                  inputType={data.inputType}
+                {showReferenceTypes &&  (<AttributeReferenceTypesSection
                   entityType={data.entityType ?? undefined}
                   selectedTypes={data.referenceTypes}
                   disabled={disabled}
                   onAssignClick={() => onOpenReferenceTypes()}
                   onRemoveType={handleRemoveReferenceType}
                 />
+                )}
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
                   <>
                     <AttributeValues

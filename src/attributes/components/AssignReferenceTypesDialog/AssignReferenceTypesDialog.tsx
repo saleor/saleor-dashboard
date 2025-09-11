@@ -17,7 +17,7 @@ interface AssignCollectionDialogProps
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-const AssignReferenceTypesDialog = ({ selectedReferenceTypesIds, referenceTypes, title, labels, ...rest }: AssignCollectionDialogProps) => {
+export const AssignReferenceTypesDialog = ({ selectedReferenceTypesIds, referenceTypes, title, labels, ...rest }: AssignCollectionDialogProps) => {
   const intl = useIntl();
   const filteredReferenceTypes = referenceTypes.filter(type => !selectedReferenceTypesIds.includes(type.id));
 
@@ -35,6 +35,3 @@ const AssignReferenceTypesDialog = ({ selectedReferenceTypesIds, referenceTypes,
     />
   );
 };
-
-AssignReferenceTypesDialog.displayName = "AssignReferenceTypesDialog";
-export default AssignReferenceTypesDialog;

@@ -11,7 +11,6 @@ import { messages } from "./messages";
 type Option = { label: string; value: string };
 
 interface AttributeReferenceTypesSectionProps {
-    inputType?: AttributeInputTypeEnum | undefined;
     entityType?: AttributeEntityTypeEnum | undefined;
     selectedTypes: Option[];
     disabled?: boolean;
@@ -19,11 +18,7 @@ interface AttributeReferenceTypesSectionProps {
     onRemoveType?: (id: string) => void;
 }
 
-const canShow = (inputType?: AttributeInputTypeEnum, entityType?: AttributeEntityTypeEnum) =>
-    inputType && entityType ? (REFERENCE_ATTRIBUTE_TYPES.includes(inputType) && ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(entityType)) : false;
-
 export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSectionProps> = ({
-    inputType,
     entityType,
     selectedTypes,
     disabled,
@@ -32,8 +27,6 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
 }) => {
     const intl = useIntl();
     
-    if (!canShow(inputType, entityType)) return null;
-  
     return (
       <DashboardCard paddingTop={6}>
         <DashboardCard.Content>
