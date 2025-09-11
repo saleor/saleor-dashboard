@@ -45,12 +45,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
   );
   const intl = useIntl();
 
-  const { enabled: isExtensionsEnabled } = useFlag("extensions");
-  const navigate = useNavigator();
-
-  const goToExtensions = () => {
-    navigate(ExtensionsUrls.resolveInstalledExtensionsUrl());
-  };
 
   return (
     <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
