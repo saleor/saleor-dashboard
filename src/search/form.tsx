@@ -1,7 +1,7 @@
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Switch, SwitchItemProps } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useHasPermission } from "./useHasPermission";

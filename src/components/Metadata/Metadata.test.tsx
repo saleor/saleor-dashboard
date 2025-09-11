@@ -1,7 +1,6 @@
 import useForm from "@dashboard/hooks/useForm";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 
 import { props } from "./fixtures";
 import { Metadata } from "./Metadata";

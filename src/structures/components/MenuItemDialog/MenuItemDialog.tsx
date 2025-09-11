@@ -11,7 +11,7 @@ import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -66,7 +66,7 @@ const MenuItemDialog = ({
   });
 
   // Refresh initial display value if changed
-  React.useEffect(() => {
+  useEffect(() => {
     // Form should be reset only when dialog is opened
     // otherwise it will reset form on every render and when input is empty
     reset(initial);

@@ -24,7 +24,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { SALE_CREATE_FORM_ID } from "./consts";

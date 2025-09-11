@@ -16,7 +16,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { TaxConfigurationFormData } from "../TaxChannelsPage";

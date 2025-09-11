@@ -1,6 +1,5 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { Banknote, PackageIcon, ReplaceIcon } from "lucide-react";
-import React from "react";
 
 export const OrderFulfillmentStatusIcon = ({ status }: { status: FulfillmentStatus }) => {
   switch (status) {

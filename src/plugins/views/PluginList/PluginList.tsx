@@ -19,7 +19,7 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React from "react";
+import { useMemo } from "react";
 
 import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
 import { pluginListUrl, PluginListUrlDialog, PluginListUrlQueryParams } from "../../urls";
@@ -46,7 +46,7 @@ export const PluginsList = ({ params }: PluginsListProps) => {
   usePaginationReset(pluginListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),

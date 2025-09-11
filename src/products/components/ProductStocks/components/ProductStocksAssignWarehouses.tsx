@@ -9,7 +9,7 @@ import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import { Button, Option, sprinkles } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 interface ProductStocksAssignWarehousesProps {

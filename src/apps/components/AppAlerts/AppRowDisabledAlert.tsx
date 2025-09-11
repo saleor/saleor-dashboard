@@ -3,7 +3,6 @@ import Link from "@dashboard/components/Link";
 import { AppListItemFragment } from "@dashboard/graphql";
 import { DisabledIcon } from "@dashboard/icons/Disabled";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface AppRowDisabledAlertProps {

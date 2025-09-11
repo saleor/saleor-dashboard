@@ -3,7 +3,6 @@ import { OrderDetailsDatagrid } from "@dashboard/orders/components/OrderDetailsD
 import { warehouseUrl } from "@dashboard/warehouses/urls";
 import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { CodeXml } from "lucide-react";
-import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { OrderDetailsViewModel } from "../order-details-view-model";

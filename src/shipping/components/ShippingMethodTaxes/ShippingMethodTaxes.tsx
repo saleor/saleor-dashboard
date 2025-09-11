@@ -6,7 +6,6 @@ import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface ShippingMethodTaxesProps {

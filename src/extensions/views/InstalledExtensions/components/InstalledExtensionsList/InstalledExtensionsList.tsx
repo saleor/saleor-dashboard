@@ -6,7 +6,7 @@ import { messages } from "@dashboard/extensions/messages";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface InstalledExtensionsListProps {

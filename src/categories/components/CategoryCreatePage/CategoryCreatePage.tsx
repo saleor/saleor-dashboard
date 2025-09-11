@@ -8,7 +8,6 @@ import { SeoForm } from "@dashboard/components/SeoForm";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";

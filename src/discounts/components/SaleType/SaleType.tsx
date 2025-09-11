@@ -3,7 +3,6 @@ import RadioGroupField, { RadioGroupFieldChoice } from "@dashboard/components/Ra
 import { SaleType as SaleTypeEnum } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";

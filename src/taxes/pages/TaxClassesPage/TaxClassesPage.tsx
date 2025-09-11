@@ -31,7 +31,7 @@ import {
   SearchIcon,
 } from "@saleor/macaw-ui";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";
@@ -200,7 +200,7 @@ export const TaxClassesPage = (props: TaxClassesPageProps) => {
                               </ListHeader>
                               <Divider />
                               {paginatedRates?.map((countryRate, countryRateIndex) => (
-                                <React.Fragment key={countryRate.id}>
+                                <Fragment key={countryRate.id}>
                                   <ListItem
                                     hover={false}
                                     className={classes.noDivider}
@@ -217,7 +217,7 @@ export const TaxClassesPage = (props: TaxClassesPageProps) => {
                                     </ListItemCell>
                                   </ListItem>
                                   {!isLastElement(filteredRates, countryRateIndex) && <Divider />}
-                                </React.Fragment>
+                                </Fragment>
                               )) ?? (
                                 <>
                                   <Skeleton />

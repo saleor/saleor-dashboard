@@ -1,6 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 
 export const ListSkeleton = () => {
   return (

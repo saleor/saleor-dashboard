@@ -1,7 +1,6 @@
 import { FulfillmentFragment } from "@dashboard/graphql";
 import { Button } from "@saleor/macaw-ui-next";
 import { Truck } from "lucide-react";
-import React from "react";
 import { useIntl } from "react-intl";
 
 export const OrderFulfillmentTrackingNumberButton = ({

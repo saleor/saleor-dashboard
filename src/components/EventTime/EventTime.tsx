@@ -1,5 +1,4 @@
 import useLocale from "@dashboard/hooks/useLocale";
-import React from "react";
 
 const EventTime = ({ date, showSeconds }: { date: string; showSeconds?: boolean }) => {
   const { locale } = useLocale();

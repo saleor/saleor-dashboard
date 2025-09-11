@@ -1,6 +1,6 @@
 import { TableCell } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 import { stopPropagation } from "../../misc";
 

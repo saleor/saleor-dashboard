@@ -3,7 +3,6 @@ import { OrderDetailsFragment } from "@dashboard/graphql";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface TransactionSelectorProps {

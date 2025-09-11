@@ -1,5 +1,5 @@
 import { Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 import TableCellHeader, { TableCellHeaderProps } from "../TableCellHeader";
 

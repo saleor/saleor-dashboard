@@ -1,12 +1,3 @@
-import React from "react";
-
-/**
- * @deprecated This icon uses Macaw-UI patterns which are deprecated. Please use Lucide React icons instead.
- * @see https://lucide.dev/ for available icons
- * @example
- * import { Settings } from "lucide-react";
- * // Use <Settings /> instead
- */
 export const ConfigurationIcon = () => (
   <svg
     width="20"

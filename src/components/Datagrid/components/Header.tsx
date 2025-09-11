@@ -6,7 +6,8 @@ import {
   PlusIcon,
   Text,
 } from "@saleor/macaw-ui-next";
-import React, { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from "react";
+import * as React from "react";
 
 interface ButtonFullScreenProps {
   isOpen: boolean;

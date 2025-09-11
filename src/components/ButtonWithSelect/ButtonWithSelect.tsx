@@ -11,7 +11,7 @@ import {
   Popper,
 } from "@material-ui/core";
 import { ArrowDropDown as ArrowDropDownIcon } from "@material-ui/icons";
-import React from "react";
+import * as React from "react";
 
 import { useStyles } from "./styles";
 

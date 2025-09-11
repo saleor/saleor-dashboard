@@ -1,7 +1,6 @@
 import { Pill } from "@dashboard/components/Pill";
 import { OrderChargeStatusEnum, OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 type Order = Pick<OrderDetailsFragment, "paymentStatus" | "chargeStatus">;

@@ -2,7 +2,7 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
 import { DynamicCombobox, DynamicComboboxProps, Option } from "@saleor/macaw-ui-next";
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useCombbobxCustomOption } from "../hooks/useCombbobxCustomOption";

@@ -1,7 +1,6 @@
 import { OrderDetailsFragment, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon } from "lucide-react";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { OrderTotalAmounts } from "../order-details-view-model";

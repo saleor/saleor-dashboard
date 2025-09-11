@@ -1,5 +1,4 @@
 import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import React from "react";
 
 const borderProps: BoxProps = {
   borderWidth: 1,

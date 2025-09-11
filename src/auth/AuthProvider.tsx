@@ -1,6 +1,6 @@
 import { useApolloClient } from "@apollo/client";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { useIntl } from "react-intl";
 
 import { UserContext } from "./";

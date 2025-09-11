@@ -1,6 +1,6 @@
 import { PillStatusType } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 const getFillColorsBasedOnStatus = (status: PillStatusType) => {
   switch (status) {

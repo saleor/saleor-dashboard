@@ -1,4 +1,5 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import * as React from "react";
 import useRouter from "use-react-router";
 
 import appStateReducer, { AppStateReducerAction } from "./reducer";

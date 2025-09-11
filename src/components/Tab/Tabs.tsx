@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 export interface TabsProps {
   children: (props: { changeTab: (index: number) => void; currentTab: number }) => React.ReactNode;

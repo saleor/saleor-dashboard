@@ -3,7 +3,6 @@ import { products } from "@dashboard/products/fixtures";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 
 import { ProductTile } from "./ProductTile";
 

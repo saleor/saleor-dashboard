@@ -1,6 +1,5 @@
 import { Sprinkles, sprinkles } from "@saleor/macaw-ui-next";
 import { Check, Copy } from "lucide-react";
-import React from "react";
 
 interface ClipboardCopyIconProps extends Sprinkles {
   hasBeenClicked: boolean;

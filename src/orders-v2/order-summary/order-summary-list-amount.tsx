@@ -1,5 +1,4 @@
 import { Text, TextProps } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 type Props = Omit<TextProps, "children"> & {
