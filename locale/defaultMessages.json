@@ -2366,6 +2366,10 @@
     "context": "section header",
     "string": "Preferences"
   },
+  "COWJSG": {
+    "context": "helper explaining the effect of assigning reference types",
+    "string": "Assigning reference types narrows the list of items this attribute can reference."
+  },
   "CPPACf": {
     "string": "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})"
   },

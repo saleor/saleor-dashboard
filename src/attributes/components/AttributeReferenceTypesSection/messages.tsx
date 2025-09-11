@@ -22,4 +22,10 @@ export const messages = defineMessages({
     defaultMessage: "No model types assigned",
     description: "empty state for model types",
   },
+  referenceTypesHelp: {
+    id: "COWJSG",
+    defaultMessage:
+      "Assigning reference types narrows the list of items this attribute can reference.",
+    description: "helper explaining the effect of assigning reference types",
+  },
 });

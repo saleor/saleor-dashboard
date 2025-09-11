@@ -1,7 +1,6 @@
-import { ENTITY_TYPES_WITH_TYPES_RESTRICTION,REFERENCE_ATTRIBUTE_TYPES } from "@dashboard/attributes/utils/data";
 import { DashboardCard } from "@dashboard/components/Card";
 import ChipField from "@dashboard/components/ChipField";
-import { AttributeEntityTypeEnum,AttributeInputTypeEnum } from "@dashboard/graphql";
+import { AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -42,6 +41,9 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
                 disabled={disabled}
               />
             </Box>
+            <Text size={2} color="default2" paddingBottom={2}>
+              {intl.formatMessage(messages.referenceTypesHelp)}
+            </Text>
             {selectedTypes.length > 0 ? (
                 <Box display="flex" gap={2} flexWrap="wrap">
                 {selectedTypes.map(type => (
@@ -64,5 +66,3 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
       </DashboardCard>
     );
 };
-
-export default AttributeReferenceTypesSection;

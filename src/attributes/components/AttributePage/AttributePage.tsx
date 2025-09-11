@@ -44,7 +44,7 @@ import slugify from "slugify";
 import AttributeDetails from "../AttributeDetails";
 import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
-import AttributeReferenceTypesSection from "../AttributeReferenceTypesSection";
+import {AttributeReferenceTypesSection} from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import AttributeValues from "../AttributeValues";
 import { messages } from "./messages";
 
@@ -213,7 +213,10 @@ const AttributePage = ({
         const handleRemoveReferenceType = (id: string) => {
             set({ referenceTypes: data.referenceTypes.filter(ref => ref.value !== id) });
         };
-        const showReferenceTypes = data.entityType ? (REFERENCE_ATTRIBUTE_TYPES.includes(data.inputType) && ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(data.entityType)) : false;
+        const showReferenceTypes = data.entityType 
+          ? REFERENCE_ATTRIBUTE_TYPES.includes(data.inputType) &&
+            ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(data.entityType) 
+          : false;
 
         return (
           <>
@@ -257,13 +260,14 @@ const AttributePage = ({
                   clearErrors={clearErrors}
                 />
                   <CardSpacer />
-                {showReferenceTypes &&  (<AttributeReferenceTypesSection
+                {showReferenceTypes && (
+                  <AttributeReferenceTypesSection
                   entityType={data.entityType ?? undefined}
                   selectedTypes={data.referenceTypes}
                   disabled={disabled}
-                  onAssignClick={() => onOpenReferenceTypes()}
+                  onAssignClick={onOpenReferenceTypes}
                   onRemoveType={handleRemoveReferenceType}
-                />
+                  />
                 )}
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
                   <>
