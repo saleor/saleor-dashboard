@@ -108,8 +108,6 @@ export function AssignSingleSelectionDialog<T extends Node>({
           scrollableTarget={scrollableTargetId}
         >
           <Box
-            borderRadius={4}
-            boxShadow="defaultOverlay"
             backgroundColor="default1"
             __maxHeight={400}
             overflowY="auto"
@@ -144,9 +142,10 @@ export function AssignSingleSelectionDialog<T extends Node>({
                       borderColor="default1"
                       cursor="pointer"
                       backgroundColor={{
-                        default: isSelected ? "accent1" : "transparent",
-                        hover: isSelected ? "accent1Hovered" : "default1Hovered",
+                        default: isSelected ? "default2" : "transparent",
+                        hover: "default2",
                       }}
+                      style={{ transition: "background-color 0.2s ease" }}
                     >
                       <RadioGroup.Item
                         id={item.id}

@@ -124,8 +124,6 @@ export function AssignMultipleSelectionDialog<T extends Node>({
           scrollableTarget={scrollableTargetId}
         >
           <Box
-            borderRadius={4}
-            boxShadow="defaultOverlay"
             backgroundColor="default1"
             __maxHeight={400}
             overflowY="auto"
@@ -154,9 +152,10 @@ export function AssignMultipleSelectionDialog<T extends Node>({
                     cursor="pointer"
                     onClick={() => handleItemToggle(item, isSelected)}
                     backgroundColor={{
-                      default: isSelected ? "accent1" : "transparent",
-                      hover: isSelected ? "accent1Hovered" : "default1Hovered",
+                      default: isSelected ? "default2" : "transparent",
+                      hover: "default2",
                     }}
+                    style={{ transition: "background-color 0.2s ease" }}
                   >
                     <Checkbox
                       checked={isSelected}

@@ -12,16 +12,20 @@ jest.mock("@dashboard/components/InfiniteScroll", () => ({
   ),
 }));
 
-// Mock useSearchQuery hook
-const mockUseSearchQuery = jest.fn(() => [
-  "", // query
-  jest.fn(), // onQueryChange
-  jest.fn(), // queryReset
-]);
+// Mock useSearchQuery hook  
+const mockOnQueryChange = jest.fn();
+const mockQueryReset = jest.fn();
 
 jest.mock("@dashboard/hooks/useSearchQuery", () => ({
   __esModule: true,
-  default: () => mockUseSearchQuery(),
+  default: (onFetch: (query: string) => void) => [
+    "", 
+    (event: { target: { value: string } }) => {
+      onFetch(event.target.value);
+      mockOnQueryChange(event);
+    }, 
+    mockQueryReset
+  ],
 }));
 
 const renderWithIntl = (component: React.ReactElement) => {
@@ -60,6 +64,8 @@ const defaultProps = {
 describe("AssignSingleSelectionDialog", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockOnQueryChange.mockClear();
+    mockQueryReset.mockClear();
   });
 
   it("should render dialog with items", () => {
@@ -88,9 +94,10 @@ describe("AssignSingleSelectionDialog", () => {
 
     const searchInput = screen.getByLabelText("Search");
 
-    await user.type(searchInput, "test");
+    await user.type(searchInput, "x");
 
-    expect(defaultProps.onFetch).toHaveBeenCalledWith("test");
+    expect(defaultProps.onFetch).toHaveBeenCalledWith("x");
+    expect(defaultProps.onFetch).toHaveBeenCalledTimes(1);
   });
 
   it("should allow selecting an item", async () => {
@@ -98,11 +105,15 @@ describe("AssignSingleSelectionDialog", () => {
 
     renderWithIntl(<AssignSingleSelectionDialog {...defaultProps} />);
 
-    const firstItem = screen.getByRole("radio", { name: "1" });
+    // Click on the first dialog row (multiple items have the same test id)
+    const dialogRows = screen.getAllByTestId("dialog-row");
 
-    await user.click(firstItem);
+    await user.click(dialogRows[0]);
 
-    expect(firstItem).toBeChecked();
+    // Check if the radio button with role "radio" and value "1" is selected
+    const radioButton = document.querySelector('[role="radio"][value="1"]');
+
+    expect(radioButton).toHaveAttribute('aria-checked', 'true');
   });
 
   it("should submit selected item", async () => {
@@ -111,9 +122,9 @@ describe("AssignSingleSelectionDialog", () => {
     renderWithIntl(<AssignSingleSelectionDialog {...defaultProps} />);
 
     // Select first item
-    const firstItem = screen.getByRole("radio", { name: "1" });
+    const dialogRows = screen.getAllByTestId("dialog-row");
 
-    await user.click(firstItem);
+    await user.click(dialogRows[0]);
 
     // Click confirm button
     const confirmButton = screen.getByRole("button", { name: "Confirm" });
@@ -138,7 +149,10 @@ describe("AssignSingleSelectionDialog", () => {
   it("should show loading spinner when loading", () => {
     renderWithIntl(<AssignSingleSelectionDialog {...defaultProps} loading />);
 
-    expect(screen.getByRole("status")).toBeInTheDocument();
+    // The spinner should be rendered somewhere in the component
+    const spinner = document.querySelector('[data-macaw-ui-component="Spinner"]');
+
+    expect(spinner).toBeInTheDocument();
   });
 
   it("should show empty message when no items", () => {
@@ -162,9 +176,9 @@ describe("AssignSingleSelectionDialog", () => {
   it("should preselect item based on selectedId prop", () => {
     renderWithIntl(<AssignSingleSelectionDialog {...defaultProps} selectedId="2" />);
 
-    const secondItem = screen.getByRole("radio", { name: "2" });
+    const radioButton = document.querySelector('[role="radio"][value="2"]');
 
-    expect(secondItem).toBeChecked();
+    expect(radioButton).toHaveAttribute('aria-checked', 'true');
   });
 
   it("should call onClose when closing dialog", async () => {
