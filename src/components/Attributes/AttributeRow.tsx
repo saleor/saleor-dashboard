@@ -16,9 +16,10 @@ import {
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
+import { SingleReferenceChip } from "@dashboard/components/SingleReferenceChip";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, Button as MacawButton, EditIcon, Input, PlusIcon, Select, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -46,6 +47,50 @@ const AttributeRow = ({
   const intl = useIntl();
 
   switch (attribute.data.inputType) {
+    case AttributeInputTypeEnum.SINGLE_REFERENCE: {
+      const selected = getReferenceDisplayValue(attribute)[0];
+
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <Box display="flex" flexWrap="wrap" gap={2} alignItems="center">
+            {selected ? (
+              <>
+                <SingleReferenceChip
+                  label={selected.label}
+                  url={selected.url}
+                  loading={loading}
+                  onClear={() => onReferencesRemove(attribute.id, [])}
+                />
+                <MacawButton
+                  variant="secondary"
+                  onClick={() => onReferencesAddClick(attribute)}
+                  disabled={disabled || loading}
+                  icon={<EditIcon />}
+                  marginLeft="auto"
+                  data-test-id="single-ref-edit"
+                />
+              </>
+            ) : (
+              <MacawButton
+                variant="secondary"
+                onClick={() => onReferencesAddClick(attribute)}
+                disabled={disabled || loading}
+                icon={<PlusIcon />}
+                marginLeft="auto"
+                data-test-id="single-ref-add"
+              />
+            )}
+          </Box>
+          {error && (
+            <Box marginTop={2}>
+              <Text size={2} color="critical1">
+                {getErrorMessage(error, intl)}
+              </Text>
+            </Box>
+          )}
+        </BasicAttributeRow>
+      );
+    }
     case AttributeInputTypeEnum.REFERENCE:
       return (
         <BasicAttributeRow label={attribute.label}>
@@ -95,9 +140,9 @@ const AttributeRow = ({
             value={
               attribute.value[0]
                 ? {
-                    value: attribute.value[0],
-                    label: getSingleDisplayValue(attribute, attributeValues),
-                  }
+                  value: attribute.value[0],
+                  label: getSingleDisplayValue(attribute, attributeValues),
+                }
                 : null
             }
             error={!!error}
@@ -152,8 +197,8 @@ const AttributeRow = ({
             helperText={
               isTooLong
                 ? intl.formatMessage(inputTypeMessages.plainTextTruncated, {
-                    length: MAX_LENGTH,
-                  })
+                  length: MAX_LENGTH,
+                })
                 : getErrorMessage(error, intl)
             }
           />
