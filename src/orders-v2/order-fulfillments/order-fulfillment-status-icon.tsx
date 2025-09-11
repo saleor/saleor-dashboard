@@ -1,8 +1,7 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { EraserIcon, PackageIcon, ReplaceIcon, SignatureIcon } from "lucide-react";
-import React from "react";
 
-import { OrderFulfillmentRefundedStatusIcon } from "../icons/order-fulfillmen-refunded-status-icon";
+import { OrderFulfillmentRefundedStatusIcon } from "../icons/order-fulfillment-refunded-status-icon";
 import { OrderFulfillmentReturnedStatusIcon } from "../icons/order-fulfillment-returned-status-icon";
 
 export const OrderFulfillmentStatusIcon = ({ status }: { status: FulfillmentStatus }) => {

@@ -3,7 +3,6 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDetailsHeaderIcon } from "./icons/order-details-header";

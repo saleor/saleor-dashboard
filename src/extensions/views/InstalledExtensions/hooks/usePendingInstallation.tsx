@@ -3,7 +3,7 @@ import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { fuzzySearch } from "@dashboard/misc";
 import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FailedInstallationActions } from "../components/FailedInstallationActions";
 import { FailedInstallationInfo } from "../components/InfoLabels/FailedInstallationInfo";

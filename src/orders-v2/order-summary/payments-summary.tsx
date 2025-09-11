@@ -1,7 +1,7 @@
 import { OrderDetailsFragment, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { PillStatusType } from "@dashboard/misc";
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { OrderDetailsViewModel } from "../order-details-view-model";

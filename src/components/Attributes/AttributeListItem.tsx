@@ -3,7 +3,6 @@ import {
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
-import React from "react";
 
 import AttributeRow from "./AttributeRow";
 import { AttributeRowProps } from "./types";

@@ -1,5 +1,5 @@
 import { Accordion, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 interface ChannelListProps {
   summary: string;

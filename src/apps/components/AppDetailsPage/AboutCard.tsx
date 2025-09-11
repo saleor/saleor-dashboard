@@ -1,5 +1,5 @@
 import { Box, BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { useIntl } from "react-intl";
 
 import messages from "./messages";

@@ -3,7 +3,6 @@ import { FilterFieldBaseProps, FilterType } from "@dashboard/components/Filter";
 import { getIsFilterMultipleChoices } from "@dashboard/components/Filter/FilterContent/utils";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
-import React from "react";
 import { useIntl } from "react-intl";
 
 type FilterSingleSelectFieldProps = FilterFieldBaseProps<string>;

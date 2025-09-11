@@ -10,7 +10,8 @@ import { getById, renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { Checkbox, Skeleton } from "@saleor/macaw-ui-next";
-import React, { CSSProperties } from "react";
+import { CSSProperties } from "react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import OrderCardTitle from "../../OrderCardTitle";

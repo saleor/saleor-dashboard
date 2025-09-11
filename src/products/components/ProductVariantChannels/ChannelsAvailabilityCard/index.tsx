@@ -3,7 +3,6 @@ import {
   IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import React from "react";
 
 import { Product, Variant } from "./../types";
 import { AvailabilityCard } from "./AvailabilityCard";

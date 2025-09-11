@@ -6,7 +6,6 @@ import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import Label from "../Label";

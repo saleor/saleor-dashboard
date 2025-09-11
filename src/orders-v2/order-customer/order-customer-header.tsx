@@ -1,7 +1,6 @@
 import { customerUrl } from "@dashboard/customers/urls";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { UnderlineLink } from "../underline-link";

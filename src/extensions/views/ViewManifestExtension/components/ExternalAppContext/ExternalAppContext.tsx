@@ -1,12 +1,12 @@
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import React from "react";
+import { useContext } from "react";
 
 import { AppData, ExternalAppContext } from "./context";
 
 export const useExternalApp = () => {
-  const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
+  const { open, setOpen, setAppData } = useContext(ExternalAppContext);
   const navigate = useNavigator();
   const openApp = (appData: AppData) => {
     switch (appData.target) {

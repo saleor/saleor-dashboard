@@ -9,7 +9,7 @@ import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 export interface TaxCountriesPageFormData {

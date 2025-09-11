@@ -1,6 +1,6 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { Button, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ClipboardCopyIcon } from "../clipboard-copy-icon";

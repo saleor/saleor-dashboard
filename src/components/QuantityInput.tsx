@@ -1,5 +1,5 @@
 import { Input, InputProps, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 interface QuantityInputProps extends InputProps {

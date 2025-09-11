@@ -1,6 +1,5 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Box, Button, EditIcon, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface RuleActionsProps {
   onEdit: () => void;

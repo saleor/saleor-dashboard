@@ -5,7 +5,6 @@ import { Rule } from "@dashboard/discounts/models";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 

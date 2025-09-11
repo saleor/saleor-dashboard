@@ -1,7 +1,6 @@
 import { useAppsInstallationsQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { renderHook } from "@testing-library/react-hooks";
-import React from "react";
 
 import { usePendingInstallation } from "./usePendingInstallation";
 

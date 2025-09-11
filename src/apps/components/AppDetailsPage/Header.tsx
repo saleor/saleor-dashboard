@@ -2,7 +2,7 @@ import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
 import { useFlag } from "@dashboard/featureFlags";
 import { AppQuery } from "@dashboard/graphql";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 import HeaderOptions from "./HeaderOptions";
 

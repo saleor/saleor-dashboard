@@ -11,7 +11,6 @@ import { extractMutationErrors } from "@dashboard/misc";
 import OrderGrantRefundPage from "@dashboard/orders/components/OrderGrantRefundPage";
 import { OrderGrantRefundFormData } from "@dashboard/orders/components/OrderGrantRefundPage/form";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { squashLines } from "../OrderReturn/useRefundWithinReturn";

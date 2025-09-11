@@ -36,7 +36,6 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapCountriesToCountriesCodes, mapEdgesToItems } from "@dashboard/utils/maps";
 import { diff } from "fast-array-diff";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";

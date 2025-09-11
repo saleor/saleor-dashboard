@@ -1,7 +1,7 @@
 import { DraggableAttributes } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import React from "react";
+import * as React from "react";
 
 export type DraggableRenderProps = {
   ref: (node: HTMLElement | null) => void;
