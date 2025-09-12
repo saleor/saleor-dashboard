@@ -6,6 +6,8 @@ import {
   NormalizedCacheObject,
   Reference,
 } from "@apollo/client";
+import { ExternalRefreshMutation, RefreshTokenMutation } from "@dashboard/graphql";
+import { TypedTypePolicies } from "@dashboard/graphql/typePolicies.generated";
 import fetch from "cross-fetch";
 import jwtDecode from "jwt-decode";
 
@@ -13,8 +15,8 @@ import { JWTToken } from "../core";
 import { auth, AuthSDK } from "../core/auth";
 import { storage } from "../core/storage";
 import { isInternalToken } from "../helpers";
-import { TypedTypePolicies } from "./apollo-helpers";
-import { ExternalRefreshMutation, RefreshTokenMutation } from "./types";
+
+
 
 let client: ApolloClient<NormalizedCacheObject>;
 let authClient: AuthSDK;
