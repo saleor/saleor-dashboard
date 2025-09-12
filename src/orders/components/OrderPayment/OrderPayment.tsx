@@ -31,8 +31,10 @@ const OrderPayment = (props: OrderPaymentProps) => {
   const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
   const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
   const refundedAmount = extractRefundedAmount(order);
-  const usedGiftCardAmount = OrderDetailsViewModel.getGiftCardsAmountUsed(order);
-  const usedGiftcards = OrderDetailsViewModel.getUsedGiftCards(order.giftCards);
+  const usedGiftCardAmount = order ? OrderDetailsViewModel.getGiftCardsAmountUsed(order) : null;
+  const usedGiftCards = order?.giftCards
+    ? OrderDetailsViewModel.getUsedGiftCards(order.giftCards)
+    : null;
 
   const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (
@@ -185,9 +187,9 @@ const OrderPayment = (props: OrderPaymentProps) => {
       <Divider />
       <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>
-          {!!usedGiftCardAmount && usedGiftcards && (
+          {!!usedGiftCardAmount && usedGiftCards && (
             <div>
-              <OrderUsedGiftCards giftCards={usedGiftcards} />
+              <OrderUsedGiftCards giftCards={usedGiftCards} />
               <div className={classes.leftmostRightAlignedElement}>
                 <Money
                   money={{
