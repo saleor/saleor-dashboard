@@ -3,9 +3,9 @@ import { TopNav } from "@dashboard/components/AppLayout";
 import { OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
-import { Package } from "lucide-react";
 import { useIntl } from "react-intl";
 
+import { OrderDetailsHeaderIcon } from "./icons/order-details-header";
 import { StatusPill } from "./status-pill";
 import { UnderlineLink } from "./underline-link";
 
@@ -35,7 +35,7 @@ export const OrderHeader = ({ status, orderNumber, created, channel, ...props }:
   return (
     <Box display="flex" width="100%" {...props}>
       <Box display="flex" alignItems="center" width="100%" gap={3}>
-        <Button icon={<Package />} variant="secondary" alignSelf="start" />
+        <Button icon={<OrderDetailsHeaderIcon />} variant="secondary" alignSelf="start" />
         <Box display="flex" flexDirection="column" gap={1}>
           <Box display="flex" alignItems="center" gap={3}>
             <Text size={6} fontWeight="bold">
