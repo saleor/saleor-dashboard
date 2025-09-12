@@ -36,28 +36,36 @@ export const attributeFragment = gql`
     filterableInStorefront
     unit
     inputType
+    ...Metadata
   }
 `;
 
 export const attributeDetailsFragment = gql`
   fragment AttributeDetails on Attribute {
     ...Attribute
-    ...Metadata
     availableInGrid
-    inputType
     entityType
-    unit
     storefrontSearchPosition
     valueRequired
     referenceTypes {
       ... on ProductType {
+        __typename
         id
         name
       }
       ... on PageType {
+        __typename
         id
         name
       }
+    }
+    choices(
+      first: $firstValues
+      after: $afterValues
+      last: $lastValues
+      before: $beforeValues
+    ) {
+      ...AttributeValueList
     }
   }
 `;
