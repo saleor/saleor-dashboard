@@ -2,7 +2,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { AttributeDetailsFragment } from "@dashboard/graphql";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
-import React from "react";
+import { useMemo } from "react";
 
 export enum ReferenceType {
   ProductType = "ProductType",
@@ -36,11 +36,11 @@ export const buildReferenceSearchVariables = (
 });
 
 export const useReferenceProductSearch = (refAttr: AttributeWithReferenceTypes | undefined) => {
-  const ids = React.useMemo(
+  const ids = useMemo(
     () => getAllowedReferenceTypeIds(refAttr, ReferenceType.ProductType),
     [refAttr],
   );
-  const variables = React.useMemo(
+  const variables = useMemo(
     () => buildReferenceSearchVariables(ids, ReferenceWhereKey.ProductType),
     [ids],
   );
@@ -49,11 +49,11 @@ export const useReferenceProductSearch = (refAttr: AttributeWithReferenceTypes |
 };
 
 export const useReferencePageSearch = (refAttr: AttributeWithReferenceTypes | undefined) => {
-  const ids = React.useMemo(
+  const ids = useMemo(
     () => getAllowedReferenceTypeIds(refAttr, ReferenceType.PageType),
     [refAttr],
   );
-  const variables = React.useMemo(
+  const variables = useMemo(
     () => buildReferenceSearchVariables(ids, ReferenceWhereKey.PageType),
     [ids],
   );
