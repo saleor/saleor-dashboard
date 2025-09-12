@@ -2,7 +2,7 @@
 import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
-  mergeAttributeValues,
+  handleContainerReferenceAssignment,
 } from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
@@ -204,17 +204,11 @@ export const ProductVariantPage = ({
     data: ProductVariantUpdateData,
     handlers: ProductVariantUpdateHandlers,
   ) => {
-    handlers.selectAttributeReference(
+    handleContainerReferenceAssignment(
       assignReferencesAttributeId,
-      mergeAttributeValues(
-        assignReferencesAttributeId,
-        attributeValues.map(({ id }) => id),
-        data.attributes,
-      ),
-    );
-    handlers.selectAttributeReferenceMetadata(
-      assignReferencesAttributeId,
-      attributeValues.map(({ name, id }) => ({ value: id, label: name })),
+      attributeValues,
+      data.attributes,
+      handlers,
     );
     onCloseDialog();
   };

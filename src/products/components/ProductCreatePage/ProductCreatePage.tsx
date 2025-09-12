@@ -2,7 +2,7 @@
 import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
-  mergeAttributeValues,
+  handleContainerReferenceAssignment,
 } from "@dashboard/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@dashboard/channels/utils";
@@ -177,17 +177,11 @@ export const ProductCreatePage = ({
     data: ProductCreateData,
     handlers: ProductCreateHandlers,
   ) => {
-    handlers.selectAttributeReference(
+    handleContainerReferenceAssignment(
       assignReferencesAttributeId,
-      mergeAttributeValues(
-        assignReferencesAttributeId,
-        attributeValues.map(({ id }) => id),
-        data.attributes,
-      ),
-    );
-    handlers.selectAttributeReferenceMetadata(
-      assignReferencesAttributeId,
-      attributeValues.map(({ id, name }) => ({ value: id, label: name })),
+      attributeValues,
+      data.attributes,
+      handlers,
     );
     closeDialog();
   };

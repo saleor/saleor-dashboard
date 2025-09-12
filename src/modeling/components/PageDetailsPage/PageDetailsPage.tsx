@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import {
   getReferenceAttributeEntityTypeFromAttribute,
-  mergeAttributeValues,
+  handleContainerReferenceAssignment,
 } from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
@@ -20,7 +20,6 @@ import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints
 import { getExtensionsItemForPageDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
-  AttributeInputTypeEnum,
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
   PermissionEnum,
@@ -130,39 +129,12 @@ const PageDetailsPage = ({
     data: PageData,
     handlers: PageUpdateHandlers,
   ) => {
-    const attribute = data.attributes.find(({ id }) => id === assignReferencesAttributeId);
-    const isSingle = attribute?.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
-    
-    if (isSingle) {
-      // For single reference, set the value directly (not merge)
-      const selectedId = attributeValues.length > 0 ? attributeValues[0].id : '';
-
-      handlers.selectAttributeReference(
-        assignReferencesAttributeId,
-        selectedId ? [selectedId] : [],
-      );
-      handlers.selectAttributeReferenceMetadata(
-        assignReferencesAttributeId,
-        attributeValues.length > 0 
-          ? [{ value: attributeValues[0].id, label: attributeValues[0].name }]
-          : [],
-      );
-    } else {
-      // For multiple reference, use existing merge logic
-      handlers.selectAttributeReference(
-        assignReferencesAttributeId,
-        mergeAttributeValues(
-          assignReferencesAttributeId,
-          attributeValues.map(({ id }) => id),
-          data.attributes,
-        ),
-      );
-      handlers.selectAttributeReferenceMetadata(
-        assignReferencesAttributeId,
-        attributeValues.map(({ id, name }) => ({ value: id, label: name })),
-      );
-    }
-
+    handleContainerReferenceAssignment(
+      assignReferencesAttributeId,
+      attributeValues,
+      data.attributes,
+      handlers,
+    );
     onCloseDialog();
   };
   const handleSelectPageType = (pageTypeId: string) =>

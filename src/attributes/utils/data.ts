@@ -20,7 +20,8 @@ import {
   UploadErrorFragment,
 } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import { RelayToFlat } from "@dashboard/types";
+import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
+import { Container, RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@dashboard/utils/maps";
 import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
@@ -257,6 +258,95 @@ export const mergeAttributes = (...attributeLists: AttributeInput[][]): Attribut
     return [...prev.filter(attr => !newAttributeIds.has(attr.id)), ...attributes];
   }, []);
 
+
+/**
+ * Handles reference attribute assignment for Container-based data
+ * Used by ProductCreatePage, ProductVariantPage, and PageDetailsPage
+ */
+export function handleContainerReferenceAssignment(
+  assignReferencesAttributeId: string,
+  attributeValues: Container[],
+  attributes: AttributeInput[],
+  handlers: {
+    selectAttributeReference: (id: string, values: string[]) => void;
+    selectAttributeReferenceMetadata: (id: string, metadata: Array<{ value: string; label: string }>) => void;
+  },
+): void {
+  const attribute = attributes.find(({ id }) => id === assignReferencesAttributeId);
+  const isSingle = attribute?.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
+  if (isSingle) {
+    const firstValue = attributeValues[0];
+    const selectedId = firstValue?.id ?? '';
+    const selectedLabel = firstValue?.name ?? '';
+
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      selectedId ? [selectedId] : [],
+    );
+    handlers.selectAttributeReferenceMetadata(
+      assignReferencesAttributeId,
+      firstValue ? [{ value: selectedId, label: selectedLabel }] : [],
+    );
+  } else {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues.map(({ id }) => id),
+        attributes as FormsetData<AttributeInputData, string[]>,
+      ),
+    );
+    handlers.selectAttributeReferenceMetadata(
+      assignReferencesAttributeId,
+      attributeValues.map(({ id, name }) => ({ value: id, label: name })),
+    );
+  }
+}
+
+/**
+ * Handles reference attribute assignment for AttributeValuesMetadata-based data
+ */
+export function handleMetadataReferenceAssignment(
+  assignReferencesAttributeId: string,
+  attributeValues: AttributeValuesMetadata[],
+  attributes: AttributeInput[],
+  handlers: {
+    selectAttributeReference: (id: string, values: string[]) => void;
+    selectAttributeReferenceMetadata: (id: string, metadata: AttributeValuesMetadata[]) => void;
+  },
+): void {
+  const attribute = attributes.find(({ id }) => id === assignReferencesAttributeId);
+  const isSingle = attribute?.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
+  if (isSingle) {
+    const firstValue = attributeValues[0];
+    const selectedValue = firstValue?.value ?? '';
+
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      selectedValue ? [selectedValue] : [],
+    );
+    handlers.selectAttributeReferenceMetadata(
+      assignReferencesAttributeId,
+      firstValue ? [firstValue] : [],
+    );
+  } else {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues.map(({ value }) => value),
+        attributes as FormsetData<AttributeInputData, string[]>,
+      ),
+    );
+    handlers.selectAttributeReferenceMetadata(
+      assignReferencesAttributeId,
+      attributeValues,
+    );
+  }
+}
+
 export function getRichTextAttributesFromMap(
   attributes: AttributeInput[],
   values: GetRichTextValues,
@@ -355,19 +445,19 @@ export const getPageReferenceAttributeDisplayData = (
     references:
       referencePages?.length > 0 && attribute.value?.length > 0
         ? mapPagesToChoices(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchPagesQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referencePages.find(reference => reference.id === value);
+          attribute.value.reduce<RelayToFlat<NonNullable<SearchPagesQuery["search"]>>>(
+            (acc, value) => {
+              const reference = referencePages.find(reference => reference.id === value);
 
-                if (reference) {
-                  acc.push(reference);
-                }
+              if (reference) {
+                acc.push(reference);
+              }
 
-                return acc;
-              },
-              [],
-            ),
-          )
+              return acc;
+            },
+            [],
+          ),
+        )
         : [],
   },
 });
@@ -382,19 +472,19 @@ export const getProductReferenceAttributeDisplayData = (
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchProductsQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceProducts.find(reference => reference.id === value);
+          attribute.value.reduce<RelayToFlat<NonNullable<SearchProductsQuery["search"]>>>(
+            (acc, value) => {
+              const reference = referenceProducts.find(reference => reference.id === value);
 
-                if (reference) {
-                  acc.push(reference);
-                }
+              if (reference) {
+                acc.push(reference);
+              }
 
-                return acc;
-              },
-              [],
-            ),
-          )
+              return acc;
+            },
+            [],
+          ),
+        )
         : [],
   },
 });
@@ -409,18 +499,18 @@ export const getProductVariantReferenceAttributeDisplayData = (
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.reduce<Array<Node & Record<"name", string>>>((acc, value) => {
-              const reference = mapReferenceProductsToVariants(referenceProducts).find(
-                reference => reference.id === value,
-              );
+          attribute.value.reduce<Array<Node & Record<"name", string>>>((acc, value) => {
+            const reference = mapReferenceProductsToVariants(referenceProducts).find(
+              reference => reference.id === value,
+            );
 
-              if (reference) {
-                acc.push(reference);
-              }
+            if (reference) {
+              acc.push(reference);
+            }
 
-              return acc;
-            }, []),
-          )
+            return acc;
+          }, []),
+        )
         : [],
   },
 });
@@ -435,19 +525,19 @@ export const getCollectionReferenceAttributeDisplayData = (
     references:
       referenceCollections?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceCollections.find(reference => reference.id === value);
+          attribute.value.reduce<RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>>(
+            (acc, value) => {
+              const reference = referenceCollections.find(reference => reference.id === value);
 
-                if (reference) {
-                  acc.push(reference);
-                }
+              if (reference) {
+                acc.push(reference);
+              }
 
-                return acc;
-              },
-              [],
-            ),
-          )
+              return acc;
+            },
+            [],
+          ),
+        )
         : [],
   },
 });
@@ -462,19 +552,19 @@ export const getCategoryReferenceAttributeDisplayData = (
     references:
       referenceCategories?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceCategories.find(reference => reference.id === value);
+          attribute.value.reduce<RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>>(
+            (acc, value) => {
+              const reference = referenceCategories.find(reference => reference.id === value);
 
-                if (reference) {
-                  acc.push(reference);
-                }
+              if (reference) {
+                acc.push(reference);
+              }
 
-                return acc;
-              },
-              [],
-            ),
-          )
+              return acc;
+            },
+            [],
+          ),
+        )
         : [],
   },
 });
