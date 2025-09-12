@@ -1,5 +1,5 @@
-import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { useGetAvailableAppPermissions } from "@dashboard/extensions/hooks/useGetAvailableAppPermissions";
 import { getCustomAppErrorMessage } from "@dashboard/extensions/utils";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -85,7 +85,7 @@ export const AppPermissionsDialog = ({
             onClose={onClose}
             onChange={updateSelected}
             onSubmit={onConfirmSelection}
-            allPermissions={availablePermissions}
+            allPermissions={availablePermissions.map(code => ({ code, name: code }))}
             selected={selectedPermissions}
           />
         );

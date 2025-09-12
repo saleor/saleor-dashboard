@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { getWebhookTypes } from "@dashboard/custom-apps/components/WebhookEvents/utils";
+import { getWebhookTypes } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/utils";
 import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 import { InlineFragmentNode, ObjectFieldNode, parse, visit } from "graphql";
 

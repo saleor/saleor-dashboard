@@ -1,4 +1,4 @@
-import { AppDetailsUrlMountQueryParams } from "@dashboard/apps/urls";
+import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import { createContext } from "react";
 

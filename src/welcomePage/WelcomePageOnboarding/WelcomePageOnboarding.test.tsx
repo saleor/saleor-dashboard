@@ -1,5 +1,4 @@
 import { useUser } from "@dashboard/auth";
-import { useFlag } from "@dashboard/featureFlags";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -16,11 +15,6 @@ jest.mock("@dashboard/components/Router/useRouteChange", () => ({
   }),
 }));
 jest.mock("@dashboard/auth");
-jest.mock("@dashboard/featureFlags", () => ({
-  useFlag: jest.fn().mockReturnValue({
-    enabled: false,
-  }),
-}));
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
@@ -50,7 +44,6 @@ const allMarkAsDoneStepsIds = [
   "create-product",
   "explore-orders",
   "graphql-playground",
-  "view-webhooks",
   "invite-staff",
 ];
 
@@ -127,41 +120,56 @@ describe("WelcomePageOnboarding", () => {
     expect(screen.queryByText("Mark all as done")).toBeNull();
   });
 
-  it("should show 'Onboarding completed' after marking each steps as done", async () => {
-    // Arrange
-    (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
-    (useOnboardingStorage as jest.Mock).mockReturnValue({
-      getOnboardingState: jest.fn(() => onboardingInitState),
-      saveOnboardingState: jest.fn(),
-    });
-
-    const user = userEvent.setup();
-
-    // Act
-    render(
-      <Wrapper>
-        <WelcomePageOnboarding />
-      </Wrapper>,
-    );
-
-    // 'get-started' has only 'Next step' button
-    const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
-
-    user.click(getStartedNextStepBtn);
-
-    for (const stepId of allMarkAsDoneStepsIds) {
-      await waitFor(() => {
-        expect(screen.getByTestId(stepId + "-mark-as-done")).toBeInTheDocument();
+  it(
+    "should show 'Onboarding completed' after marking each steps as done",
+    async () => {
+      // Arrange
+      (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
+      (useOnboardingStorage as jest.Mock).mockReturnValue({
+        getOnboardingState: jest.fn(() => onboardingInitState),
+        saveOnboardingState: jest.fn(),
       });
 
-      const markAsDone = screen.getByTestId(stepId + "-mark-as-done");
+      const user = userEvent.setup({ delay: null });
 
-      markAsDone.click();
+      // Act
+      render(
+        <Wrapper>
+          <WelcomePageOnboarding />
+        </Wrapper>,
+      );
+
+      // First expand the get-started accordion
+      const getStartedAccordion = screen.getByTestId("accordion-step-trigger-get-started");
+
+      await user.click(getStartedAccordion);
+      jest.runAllTimers();
+
+      // 'get-started' has only 'Next step' button
+      const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
+
+      await user.click(getStartedNextStepBtn);
+      jest.runAllTimers();
+
+      for (const stepId of allMarkAsDoneStepsIds) {
+        // Click on the accordion trigger to expand the step
+        const accordionTrigger = screen.getByTestId(`accordion-step-trigger-${stepId}`);
+
+        await user.click(accordionTrigger);
+
+        // Run timers to handle any animations
+        jest.runAllTimers();
+
+        // Wait for the specific mark-as-done button to appear
+        const markAsDone = await screen.findByTestId(stepId + "-mark-as-done", {}, { timeout: 2000 });
+
+        await user.click(markAsDone);
+      }
+
+      // Assert
+      expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
     }
-
-    // Assert
-    expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
-  });
+  );
 
   it("should show 'Onboarding completed' when all steps were completed", () => {
     // Arrange
@@ -249,17 +257,13 @@ describe("WelcomePageOnboarding", () => {
     });
   });
 
-  it("should show 'Discover extension capabilities' step when extensions flag is enabled", () => {
+  it("should show 'Discover extension capabilities' step", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
     (useOnboardingStorage as jest.Mock).mockReturnValue({
       getOnboardingState: jest.fn(() => onboardingInitState),
       saveOnboardingState: jest.fn(),
     });
-    // Override useFlag mock for this specific test
-    (useFlag as jest.Mock).mockImplementation((flag: string) => ({
-      enabled: flag === "extensions",
-    }));
 
     // Act
     render(
@@ -275,12 +279,7 @@ describe("WelcomePageOnboarding", () => {
     screen.getByTestId("accordion-step-trigger-view-extensions").click();
 
     // Assert
-    // Check for 'view-extensions' step
     expect(screen.getByText("Discover extension capabilities")).toBeInTheDocument();
     expect(screen.getByTestId("view-extensions-mark-as-done")).toBeInTheDocument();
-
-    // Check that 'view-webhooks' step is NOT present
-    expect(screen.queryByText("View webhooks functionalities")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("view-webhooks-mark-as-done")).not.toBeInTheDocument();
   });
 });

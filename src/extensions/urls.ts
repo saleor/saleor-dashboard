@@ -1,4 +1,3 @@
-import { AppPaths } from "@dashboard/apps/urls";
 import { getApiUrl } from "@dashboard/config";
 import { FlagList } from "@dashboard/featureFlags";
 import { Dialog, SingleAction } from "@dashboard/types";
@@ -34,6 +33,21 @@ export const ExtensionsPaths = {
 
   // Plugins
   resolveEditPluginExtension: (id: string) => urlJoin(extensionsPluginSection, id),
+};
+
+// Legacy AppPaths export for compatibility
+export const AppPaths = {
+  appListPath: ExtensionsPaths.installedExtensions,
+  resolveAppPath: (id: string) => ExtensionsPaths.resolveViewManifestExtension(id),
+  resolveAppDeepPath: (id: string, subPath: string) => ExtensionsPaths.resolveAppDeepPath(id, subPath),
+  resolveAppRequestPermissionsPath: (id: string) => ExtensionsPaths.resolveAppRequestPermissionsPath(id),
+};
+
+// Legacy AppUrls export for compatibility
+export const AppUrls = {
+  resolveAppInstallUrl: (manifestUrl?: string) => ExtensionsUrls.resolveInstallCustomExtensionUrl(manifestUrl),
+  resolveAppUrl: (appId: string) => ExtensionsPaths.resolveViewManifestExtension(appId),
+  resolveAppDetailsUrl: (appId: string) => ExtensionsPaths.resolveEditManifestExtension(appId),
 };
 
 export const MANIFEST_ATTR = "manifestUrl";
@@ -89,6 +103,15 @@ export type CustomExtensionDetailsUrlDialog =
 export type CustomExtensionDetailsUrlQueryParams = Dialog<CustomExtensionDetailsUrlDialog> &
   SingleAction;
 
+// Legacy CustomApp types for compatibility
+export type CustomAppDetailsUrlDialog =
+  | "create-token"
+  | "remove-webhook"
+  | "remove-token"
+  | "app-activate"
+  | "app-deactivate";
+export type CustomAppDetailsUrlQueryParams = Dialog<CustomAppDetailsUrlDialog> & SingleAction;
+
 export const ExtensionsUrls = {
   resolveInstalledExtensionsUrl: (params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.installedExtensions + "?" + stringifyQs(params),
@@ -132,13 +155,7 @@ export const ExtensionsUrls = {
       encodeURIComponent(appId),
     ).replace("?", "");
 
-    // Handle legacy app navigation made to /apps/XYZ/app
-    const legacyAppCompletePath = AppPaths.resolveAppPath(appId);
-
-    return (
-      (to.startsWith(appCompletePath) || to.startsWith(legacyAppCompletePath)) &&
-      (from.startsWith(appCompletePath) || from.startsWith(legacyAppCompletePath))
-    );
+    return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
   },
 
   resolveAppDeepPathFromDashboardUrl: (dashboardUrl: string, appId: string) => {

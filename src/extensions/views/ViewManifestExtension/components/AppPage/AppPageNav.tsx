@@ -1,6 +1,6 @@
-import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
-import { AppLogo } from "@dashboard/apps/types";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
+import { AppAvatar } from "@dashboard/extensions/components/AppAvatar";
+import { AppLogo } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -49,7 +49,12 @@ export const AppPageNav = ({
     (): Logo =>
       appLogoUrl
         ? {
-            source: appLogoUrl,
+            light: {
+              source: appLogoUrl,
+            },
+            dark: {
+              source: appLogoUrl,
+            },
           }
         : undefined,
     [appLogoUrl],
@@ -61,7 +66,7 @@ export const AppPageNav = ({
         <Box display="flex" gap={2} alignItems="center">
           {goBackUrl && <TopNavLink to={goBackUrl} variant="secondary" />}
           <Box display="flex" gap={4} alignItems="center">
-            <AppAvatar size={8} logo={logo} />
+            <AppAvatar size={8} logo={logo} name={name || "Extension"} />
             <Box display="flex" flexDirection="column">
               <Text size={5} fontWeight="bold">
                 {name}
