@@ -7,6 +7,7 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { getStatusColor } from "@dashboard/misc";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@dashboard/types";
@@ -61,10 +62,7 @@ const PluginsListPage = ({
             </Text>
             <Text>
               {intl.formatMessage(pluginsListPageMessages.appStoreWarning)}{" "}
-              <ExternalLinkNext
-                target="_blank"
-                href="https://docs.saleor.io/developer/app-store/overview"
-              >
+              <ExternalLinkNext target="_blank" href={EXTENSIONS_DOCS_URL}>
                 Saleor App Store.
               </ExternalLinkNext>
             </Text>
