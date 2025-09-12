@@ -1,18 +1,17 @@
-import { OrderLineFragment } from "@dashboard/graphql";
+import { OrderLineFragment, OrderStatus } from "@dashboard/graphql";
 import { OrderDetailsDatagrid } from "@dashboard/orders/components/OrderDetailsDatagrid";
 import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
-import React from "react";
 import { useIntl } from "react-intl";
 
-import { OrderModel } from "./order-model";
+import { OrderDetailsViewModel } from "./order-details-view-model";
 
 type Props = PropsWithBox<{
   lines: OrderLineFragment[];
-  orderModel: OrderModel;
+  status: OrderStatus;
 }>;
 
-export const OrderLines = ({ lines, orderModel, ...props }: Props) => {
+export const OrderLines = ({ lines, status, ...props }: Props) => {
   const intl = useIntl();
 
   return (
@@ -22,7 +21,7 @@ export const OrderLines = ({ lines, orderModel, ...props }: Props) => {
           <Text size={6} fontWeight="medium">
             {intl.formatMessage({ id: "Pvi8WI", defaultMessage: "Order lines" })}
           </Text>
-          {orderModel.shouldShowFulfillButton() && (
+          {OrderDetailsViewModel.shouldShowFulfillButton(status) && (
             <Button
               onClick={() => {
                 // TODO: implement fulfill order lines functionality

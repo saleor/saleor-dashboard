@@ -6,7 +6,8 @@ import GiftCardExportDialogContent from "@dashboard/giftCards/GiftCardExportDial
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React, { createContext, useContext } from "react";
+import { createContext, useContext } from "react";
+import * as React from "react";
 
 import { GIFT_CARD_LIST_QUERY } from "../../queries";
 import { GiftCardListActionParamsEnum, GiftCardListUrlQueryParams } from "../../types";

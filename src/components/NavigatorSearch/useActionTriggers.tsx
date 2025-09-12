@@ -14,7 +14,7 @@ import { shippingZoneAddUrl, shippingZonesListUrl } from "@dashboard/shipping/ur
 import { staffListUrl } from "@dashboard/staff/urls";
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {

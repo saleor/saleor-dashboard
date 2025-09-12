@@ -24,7 +24,8 @@ import { WhereOnlyQueryVarsBuilder } from "./types";
 export type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart> {
+  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart>
+{
   canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
   }
@@ -106,8 +107,8 @@ export class AttributeQueryVarsBuilder
       return {
         ...baseAttribute,
         value: {
-          reference: this.buildReferenceFilter([value.value])
-        }
+          reference: this.buildReferenceFilter([value.value]),
+        },
       };
     }
 
@@ -121,17 +122,15 @@ export class AttributeQueryVarsBuilder
       return {
         ...baseAttribute,
         value: {
-          reference: this.buildReferenceFilter(referencedObjectIds)
-        }
+          reference: this.buildReferenceFilter(referencedObjectIds),
+        },
       };
     }
 
     return baseAttribute;
   }
 
-  private buildReferenceFilter(
-    referencedObjectIds: string[],
-  ) {
+  private buildReferenceFilter(referencedObjectIds: string[]) {
     const filterValue = { containsAny: referencedObjectIds };
 
     return { referencedIds: filterValue };

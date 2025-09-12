@@ -30,7 +30,7 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 

@@ -5,7 +5,7 @@ import favicon32 from "@assets/favicons/favicon-32x32.png";
 import safariPinnedTab from "@assets/favicons/safari-pinned-tab.svg";
 import { useUser } from "@dashboard/auth";
 import { ShopInfoQuery, useShopInfoQuery } from "@dashboard/graphql";
-import React, { ReactNode, useEffect } from "react";
+import { createContext, ReactNode, useEffect } from "react";
 import Helmet from "react-helmet";
 
 import { useAnalytics } from "../ProductAnalytics/useAnalytics";
@@ -13,7 +13,7 @@ import { extractEmailDomain } from "../ProductAnalytics/utils";
 
 type ShopContext = ShopInfoQuery["shop"];
 
-export const ShopContext = React.createContext<ShopContext>(undefined);
+export const ShopContext = createContext<ShopContext>(undefined);
 
 export const ShopProvider = ({ children }: { children: ReactNode }) => {
   const { authenticated, user } = useUser();

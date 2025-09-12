@@ -19,7 +19,6 @@ import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Button as MacawButton, EditIcon, Input, PlusIcon, Select, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { ChipField } from "../ChipField/ChipField";

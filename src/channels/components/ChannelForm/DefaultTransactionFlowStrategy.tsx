@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import { FormChange } from "@dashboard/hooks/useForm";
+import { TRANSACTION_FLOW_STRATEGY_DOCS_URL } from "@dashboard/links";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
@@ -42,7 +42,7 @@ export const DefaultTransactionFlowStrategy = ({
           values={{
             link: (
               <Link
-                href="https://docs.saleor.io/api-reference/payments/enums/transaction-flow-strategy-enum"
+                href={TRANSACTION_FLOW_STRATEGY_DOCS_URL}
                 target="_blank"
                 rel="noopener noreferer"
               >

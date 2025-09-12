@@ -3,7 +3,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { createPaginationState } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
+import { useMemo } from "react";
 
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
@@ -107,7 +107,7 @@ const TranslationsEntities = ({ language, params }: TranslationsEntitiesProps) =
     shop.languages.find(languageFromList => languageFromList.code === language),
   );
   const paginationState = createPaginationState(PAGINATE_BY, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       language: language as any,

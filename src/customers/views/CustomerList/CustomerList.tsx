@@ -24,7 +24,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerListPage from "../../components/CustomerListPage";
@@ -70,7 +70,7 @@ export const CustomerList = ({ params }: CustomerListProps) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -78,7 +78,7 @@ export const CustomerList = ({ params }: CustomerListProps) => {
     }),
     [params, settings.rowNumber],
   );
-  const newQueryVariables = React.useMemo(
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

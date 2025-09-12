@@ -1,12 +1,3 @@
-import React from "react";
-
-/**
- * @deprecated This icon uses Macaw-UI patterns which are deprecated. Please use Lucide React icons instead.
- * @see https://lucide.dev/ for available icons
- * @example
- * import { Store } from "lucide-react";
- * // Use <Store /> instead
- */
 export const MarketplaceIcon = () => (
   <svg
     width="20"

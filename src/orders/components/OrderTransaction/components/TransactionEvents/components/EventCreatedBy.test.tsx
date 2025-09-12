@@ -3,7 +3,6 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";
 import { staffMemberDetailsPath } from "@dashboard/staff/urls";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { MemoryRouter } from "react-router";
 
 import { EventCreatedBy } from "./EventCreatedBy";

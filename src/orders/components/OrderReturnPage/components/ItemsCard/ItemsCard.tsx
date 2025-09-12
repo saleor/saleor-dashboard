@@ -10,7 +10,7 @@ import OrderCardTitle from "@dashboard/orders/components/OrderCardTitle";
 import { Checkbox, TableBody, TableCell, TableHead, TextField } from "@material-ui/core";
 import { ResponsiveTable } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FormsetQuantityData, FormsetReplacementData } from "../../form";

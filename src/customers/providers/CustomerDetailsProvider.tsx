@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { CustomerDetailsQuery, useCustomerDetailsQuery } from "@dashboard/graphql";
-import React, { createContext } from "react";
+import { createContext } from "react";
+import * as React from "react";
 
 export interface CustomerDetailsProviderProps {
   id: string;

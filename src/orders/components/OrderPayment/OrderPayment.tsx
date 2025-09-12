@@ -3,21 +3,16 @@ import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
+import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { Button, Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderPaymentStatusPill } from "../OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
 import { OrderUsedGiftCards } from "../OrderUsedGiftCards";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import { useStyles } from "./styles";
-import {
-  extractOrderGiftCardUsedAmount,
-  extractRefundedAmount,
-  getDiscountAmount,
-  obtainUsedGifrcards,
-} from "./utils";
+import { extractRefundedAmount, getDiscountAmount } from "./utils";
 
 interface OrderPaymentProps {
   order: OrderDetailsFragment;
@@ -36,8 +31,10 @@ const OrderPayment = (props: OrderPaymentProps) => {
   const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
   const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
   const refundedAmount = extractRefundedAmount(order);
-  const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
-  const usedGiftcards = obtainUsedGifrcards(order);
+  const usedGiftCardAmount = order ? OrderDetailsViewModel.getGiftCardsAmountUsed(order) : null;
+  const usedGiftCards = order?.giftCards
+    ? OrderDetailsViewModel.getUsedGiftCards(order.giftCards)
+    : null;
 
   const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (
@@ -190,9 +187,9 @@ const OrderPayment = (props: OrderPaymentProps) => {
       <Divider />
       <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>
-          {!!usedGiftCardAmount && usedGiftcards && (
+          {!!usedGiftCardAmount && usedGiftCards && (
             <div>
-              <OrderUsedGiftCards giftCards={usedGiftcards} />
+              <OrderUsedGiftCards giftCards={usedGiftCards} />
               <div className={classes.leftmostRightAlignedElement}>
                 <Money
                   money={{

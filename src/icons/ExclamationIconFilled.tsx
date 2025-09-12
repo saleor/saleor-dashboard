@@ -1,5 +1,3 @@
-import React from "react";
-
 export const ExclamationIconFilled = ({
   width = 17,
   height = 17,

@@ -2,7 +2,6 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { DashboardModal } from "@dashboard/components/Modal";
 import { SearchProductsQuery } from "@dashboard/graphql";
 import { Container, DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AssignContainerDialogProps, } from "../AssignContainerDialog";

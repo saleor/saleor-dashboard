@@ -1,12 +1,3 @@
-import React from "react";
-
-/**
- * @deprecated This icon uses Macaw-UI patterns which are deprecated. Please use Lucide React icons instead.
- * @see https://lucide.dev/ for available icons
- * @example
- * import { Users } from "lucide-react";
- * // Use <Users /> instead
- */
 export const CustomersIcon = () => (
   <svg
     width="20"

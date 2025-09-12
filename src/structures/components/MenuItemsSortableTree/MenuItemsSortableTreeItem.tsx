@@ -5,7 +5,6 @@ import { RecursiveMenuItem } from "@dashboard/structures/types";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { Box, Button, EditIcon, GripIcon, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { getItemId, getItemType } from "./utils";

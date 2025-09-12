@@ -25,10 +25,11 @@ import { FulfillmentWarehouseQueryVarsBuilder } from "./FiltersQueryBuilder/quer
 import { IntFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/IntFilterQueryVarsBuilder";
 import { MetadataFilterInputQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/MetadataFilterInputQueryVarsBuilder";
 import { OrderChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderChannelQueryVarsBuilder";
-import { OrderCustomerIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderCustomerIdQueryVarsBuilder"
+import { OrderCustomerIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderCustomerIdQueryVarsBuilder";
 import { OrderIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderIdQueryVarsBuilder";
+import { OrderInvoiceDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderInvoiceDateQueryVarsBuilder";
 import { PriceFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceFilterQueryVarsBuilder";
-import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder"
+import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder";
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
@@ -66,6 +67,7 @@ export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInp
       new OrderChannelQueryVarsBuilder(), // Map channels -> channelId
       new OrderCustomerIdQueryVarsBuilder(), // Map customer -> user
       new OrderIdQueryVarsBuilder(), // Handle ids as plain arrays
+      new OrderInvoiceDateQueryVarsBuilder(), // Handle invoice date filtering
       new AddressFieldQueryVarsBuilder(), // Handle address fields (billing/shipping phone/country)
       new ArrayNestedFieldQueryVarsBuilder(), // Handle nested fields in transactions (payment type/card brand)
       new ArrayMetadataQueryVarsBuilder(), // Handle metadata in arrays (lines, transactions, fulfillments)

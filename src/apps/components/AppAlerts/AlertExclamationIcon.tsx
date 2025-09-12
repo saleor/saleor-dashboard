@@ -2,7 +2,7 @@ import { WARNING_ICON_COLOR, WARNING_ICON_COLOR_LIGHTER } from "@dashboard/color
 import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { ExclamationIconFilled } from "@dashboard/icons/ExclamationIconFilled";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export const AlertExclamationIcon = ({
   width = 17,

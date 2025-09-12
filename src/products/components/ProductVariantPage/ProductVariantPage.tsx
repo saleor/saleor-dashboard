@@ -43,7 +43,7 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Container , FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ProductShipping } from "../ProductShipping";
@@ -187,9 +187,9 @@ export const ProductVariantPage = ({
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
-  const [isModalOpened, setModalStatus] = React.useState(false);
+  const [isModalOpened, setModalStatus] = useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
-  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] = React.useState(false);
+  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] = useState(false);
   const productMedia = [...(variant?.product?.media ?? [])]?.sort((prev, next) =>
     prev.sortOrder > next.sortOrder ? 1 : -1,
   );

@@ -10,7 +10,7 @@ import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { PageData } from "../PageDetailsPage/form";

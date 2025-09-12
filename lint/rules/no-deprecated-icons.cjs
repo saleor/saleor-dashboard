@@ -52,8 +52,10 @@ module.exports = {
       category: "Best Practices",
     },
     messages: {
-      noMacawUiIcons: "Avoid importing icons ({{icons}}) from @saleor/macaw-ui-next. Use lucide-react instead.",
-      noMaterialUiIcons: "Avoid importing icons ({{icons}}) from @material-ui/icons. Use lucide-react instead."
+      noMacawUiIcons:
+        "Avoid importing icons ({{icons}}) from @saleor/macaw-ui-next. Use lucide-react instead.",
+      noMaterialUiIcons:
+        "Avoid importing icons ({{icons}}) from @material-ui/icons. Use lucide-react instead.",
     },
     schema: [],
   },

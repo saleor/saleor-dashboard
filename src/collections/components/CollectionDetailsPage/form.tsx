@@ -13,7 +13,8 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import * as React from "react";
 
 export interface CollectionUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;

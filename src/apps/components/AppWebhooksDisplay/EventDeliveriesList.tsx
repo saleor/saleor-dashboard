@@ -1,5 +1,4 @@
 import { AppWebhookDeliveriesQuery } from "@dashboard/graphql";
-import React from "react";
 
 import { EventDeliveryItem } from "./EventDeliveryItem";
 

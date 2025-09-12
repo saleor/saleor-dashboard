@@ -9,7 +9,7 @@ import OrderTransaction, {
 } from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
-import React from "react";
+import { useMemo } from "react";
 
 import {
   findMethodName,
@@ -37,10 +37,7 @@ const OrderTransactionPayment = ({
   const authorized = payment?.availableCaptureAmount?.amount ?? 0;
   const refunded = total - captured - authorized;
 
-  const fakeEvents = React.useMemo(
-    () => mapPaymentToTransactionEvents(payment),
-    [payment.transactions],
-  );
+  const fakeEvents = useMemo(() => mapPaymentToTransactionEvents(payment), [payment.transactions]);
   const transactionFromPayment: FakeTransaction = {
     id: payment.id,
     name: findMethodName(payment.gateway, allPaymentMethods),

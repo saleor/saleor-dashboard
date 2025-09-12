@@ -3,7 +3,7 @@ import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
-import React, { useCallback } from "react";
+import { useCallback, useRef } from "react";
 
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
@@ -37,7 +37,7 @@ export const AppFrame = ({
   dashboardVersion,
   coreVersion = "",
 }: Props) => {
-  const frameRef = React.useRef<HTMLIFrameElement | null>(null);
+  const frameRef = useRef<HTMLIFrameElement | null>(null);
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();

@@ -86,13 +86,13 @@ export class FiltersQueryBuilder<
   private wrapInAndArray(query: FilterQuery): FilterQuery {
     const andItems: Array<Record<string, unknown>> = [];
 
-    if ('AND' in query && Array.isArray(query.AND)) {
+    if ("AND" in query && Array.isArray(query.AND)) {
       andItems.push(...query.AND);
     }
 
     // Convert all non-AND/OR root fields to AND array items
     for (const [key, value] of Object.entries(query)) {
-      if (key !== 'AND' && key !== 'OR') {
+      if (key !== "AND" && key !== "OR") {
         andItems.push({ [key]: value });
       }
     }

@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { LanguageFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { languageListUrl, TranslatableEntities } from "../../urls";

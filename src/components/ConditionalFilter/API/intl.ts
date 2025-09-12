@@ -28,7 +28,6 @@ import {
   voucherStatusMessages,
 } from "./messages";
 
-
 const getOrderStatusLabel = (status: OrderStatusFilter, intl: IntlShape) => {
   const { localized } = transformOrderStatus(status, intl);
 

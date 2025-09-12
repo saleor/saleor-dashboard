@@ -15,7 +15,6 @@ import { commonMessages } from "@dashboard/intl";
 import { ListViews, Pagination } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getMutationState, maybe } from "../../misc";

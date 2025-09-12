@@ -242,27 +242,17 @@ export const STATIC_CONDITIONS = {
     { type: "number", label: "greater", value: "input-4" },
     { type: "number.range", label: "between", value: "input-5" },
   ],
-  userEmail: [
-    { type: "text", label: "is", value: "input-1" },
-  ],
-  voucherCode: [
-    { type: "text", label: "is", value: "input-1" },
-  ],
+  userEmail: [{ type: "text", label: "is", value: "input-1" }],
+  voucherCode: [{ type: "text", label: "is", value: "input-1" }],
   linesCount: [
     { type: "number", label: "is", value: "input-1" },
     { type: "number", label: "lower", value: "input-3" },
     { type: "number", label: "greater", value: "input-4" },
     { type: "number.range", label: "between", value: "input-5" },
   ],
-  checkoutId: [
-    { type: "text", label: "is", value: "input-1" },
-  ],
-  linesMetadata: [
-    { type: "text.double", label: "is", value: "input-1" },
-  ],
-  transactionsMetadata: [
-    { type: "text.double", label: "is", value: "input-1" },
-  ],
+  checkoutId: [{ type: "text", label: "is", value: "input-1" }],
+  linesMetadata: [{ type: "text.double", label: "is", value: "input-1" }],
+  transactionsMetadata: [{ type: "text.double", label: "is", value: "input-1" }],
   transactionsPaymentType: [
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
@@ -271,19 +261,13 @@ export const STATIC_CONDITIONS = {
     { type: "text", label: "is", value: "input-1" },
     { type: "text", label: "contains", value: "input-2" },
   ],
-  fulfillmentsMetadata: [
-    { type: "text.double", label: "is", value: "input-1" },
-  ],
-  billingPhoneNumber: [
-    { type: "text", label: "is", value: "input-1" },
-  ],
+  fulfillmentsMetadata: [{ type: "text.double", label: "is", value: "input-1" }],
+  billingPhoneNumber: [{ type: "text", label: "is", value: "input-1" }],
   billingCountry: [
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
   ],
-  shippingPhoneNumber: [
-    { type: "text", label: "is", value: "input-1" },
-  ],
+  shippingPhoneNumber: [{ type: "text", label: "is", value: "input-1" }],
   shippingCountry: [
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },

@@ -7,7 +7,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CustomAppCreatePage, {

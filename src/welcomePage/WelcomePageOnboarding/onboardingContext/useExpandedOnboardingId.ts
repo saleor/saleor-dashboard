@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { OnboardingState, OnboardingStep, OnboardingStepsIDs } from "./types";
 import {
@@ -12,8 +12,8 @@ export const useExpandedOnboardingId = (
   loaded: boolean,
   visibleSteps: OnboardingStep[],
 ) => {
-  const hasBeenCalled = React.useRef(false);
-  const [expandedStepId, setExpandedStepId] = React.useState<OnboardingStepsIDs | "">("");
+  const hasBeenCalled = useRef(false);
+  const [expandedStepId, setExpandedStepId] = useState<OnboardingStepsIDs | "">("");
 
   useEffect(() => {
     if (hasBeenCalled.current) {

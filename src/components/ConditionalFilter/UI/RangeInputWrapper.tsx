@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 export const RangeInputWrapper = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -6,21 +6,20 @@ import github from "@assets/images/github-logo.svg";
 import externalLink from "@assets/images/rounded-external-link-icon.svg";
 import star from "@assets/images/star-icon.svg";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { useTheme } from "@dashboard/theme";
-import { Button, CloseIcon, HelpIcon, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
-import SVG from "react-inlinesvg";
-import { FormattedMessage, IntlShape } from "react-intl";
-
 import {
-  APPS_DOCS_URL,
-  CHECKOUT_DOCS_URL,
+  APPS_OVERVIEW_DOCS_URL,
+  CHECKOUT_OVERVIEW_DOCS_URL,
   COMMUNITY_LIVE_UPDATE_URL,
   DASHBOARD_DOCS_URL,
   SALEOR_DISCORD_URL,
   SALEOR_GITHUB_URL,
   TECHNICAL_HELP_CTA_URL,
-} from "./links";
+} from "@dashboard/links";
+import { useTheme } from "@dashboard/theme";
+import { Button, CloseIcon, HelpIcon, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
+import SVG from "react-inlinesvg";
+import { FormattedMessage, IntlShape } from "react-intl";
+
 import { WelcomePageInfoTile, WelcomePageInfoTileProps } from "./WelcomePageInfoTile";
 
 const noShrink = sprinkles({ flexShrink: "0" });
@@ -190,7 +189,7 @@ export const getTilesData = ({
       <Button
         as="a"
         target="_blank"
-        href={APPS_DOCS_URL}
+        href={APPS_OVERVIEW_DOCS_URL}
         variant="secondary"
         alignSelf="start"
         onClick={() => onTileButtonClick("saleor-app-store")}
@@ -224,7 +223,7 @@ export const getTilesData = ({
       <Button
         as="a"
         target="_blank"
-        href={CHECKOUT_DOCS_URL}
+        href={CHECKOUT_OVERVIEW_DOCS_URL}
         variant="secondary"
         alignSelf="start"
         onClick={() => onTileButtonClick("learn-checkout")}

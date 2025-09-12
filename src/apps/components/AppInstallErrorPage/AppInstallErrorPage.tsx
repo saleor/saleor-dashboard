@@ -1,6 +1,6 @@
 import errorImg from "@assets/images/app-install-error.svg";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 

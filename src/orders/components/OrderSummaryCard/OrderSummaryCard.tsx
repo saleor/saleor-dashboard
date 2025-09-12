@@ -1,11 +1,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
+import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { obtainUsedGifrcards } from "../OrderPayment/utils";
 import { OrderUsedGiftCards } from "../OrderUsedGiftCards";
 import { orderSummaryMessages } from "./messages";
 import SummaryLine from "./SummaryLine";
@@ -35,7 +34,7 @@ const OrderSummaryCard = ({ order }: OrderPaymentProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
-  const usedGiftcards = obtainUsedGifrcards(order);
+  const usedGiftcards = OrderDetailsViewModel.getUsedGiftCards(order.giftCards);
 
   return (
     <DashboardCard data-test-id="OrderSummaryCard">

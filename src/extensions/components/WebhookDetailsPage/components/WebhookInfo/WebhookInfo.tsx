@@ -4,10 +4,11 @@ import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
 import { WebhookErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
+import { WEBHOOK_PAYLOAD_SIGNATURE_DOCS_URL } from "@dashboard/links";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
 import { Box, Chip, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../../WebhookDetailsPage";
@@ -110,7 +111,7 @@ const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: WebhookInfo
                     <Link
                       target="_blank"
                       rel="noopener noreferrer"
-                      href="https://docs.saleor.io/developer/extending/webhooks/payload-signature"
+                      href={WEBHOOK_PAYLOAD_SIGNATURE_DOCS_URL}
                     >
                       <FormattedMessage {...messages.learnMore} />
                     </Link>

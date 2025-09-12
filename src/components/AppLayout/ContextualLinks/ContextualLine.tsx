@@ -1,5 +1,5 @@
 import { Box, Paragraph, TextProps } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 const Root = ({ children, ...rest }: TextProps) => (
   <Paragraph

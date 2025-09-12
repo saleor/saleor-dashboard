@@ -1,7 +1,6 @@
 import { JobStatusEnum } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
 
 import { OrderInvoices } from "../order-invoices";
 

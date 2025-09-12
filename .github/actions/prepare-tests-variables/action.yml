@@ -83,4 +83,3 @@ runs:
         echo "::notice title=BACKUP_NAMESPACE::${BACKUP_NAMESPACE}"
         echo "::notice title=SNAPSHOT::backup_id=${BACKUP_ID}, version=${BACKUP_VER}, name=${BACKUP_NAME}"
         echo "::notice title=SALEOR_CLOUD_SERVICE::${SALEOR_CLOUD_SERVICE}"
-

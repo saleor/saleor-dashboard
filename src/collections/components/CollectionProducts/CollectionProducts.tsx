@@ -29,7 +29,6 @@ import { Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListViews } from "../../../types";
