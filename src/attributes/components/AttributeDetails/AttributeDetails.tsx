@@ -7,7 +7,7 @@ import {
   AttributeErrorFragment,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
-import { UseFormResult } from "@dashboard/hooks/useForm";
+import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
@@ -57,7 +57,7 @@ export interface AttributeDetailsProps
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];
-  onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
+  onChange: FormChange;
 }
 
 const AttributeDetails = (props: AttributeDetailsProps) => {
@@ -211,9 +211,7 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
           name={"valueRequired" as keyof AttributePageFormData}
           checked={data.valueRequired}
           onCheckedChange={checked =>
-            onChange({
-              target: { name: "valueRequired", value: checked },
-            } as React.ChangeEvent<HTMLInputElement>)
+            onChange({ target: { name: "valueRequired", value: checked } })
           }
           disabled={disabled}
           marginY={2}

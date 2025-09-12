@@ -40,7 +40,12 @@ export const attributeListPath = attributeSection;
 export const attributeListUrl = (params?: AttributeListUrlQueryParams) =>
   attributeListPath + "?" + stringifyQs(params);
 
-export type AttributeAddUrlDialog = "add-value" | "edit-value" | "remove-value" | "remove-values" | "assign-reference-types";
+export type AttributeAddUrlDialog =
+  | "add-value"
+  | "edit-value"
+  | "remove-value"
+  | "remove-values"
+  | "assign-reference-types";
 export type AttributeAddUrlQueryParams = Dialog<AttributeAddUrlDialog> & SingleAction;
 export const attributeAddPath = urlJoin(attributeSection, "add");
 export const attributeAddUrl = (params?: AttributeAddUrlQueryParams) =>

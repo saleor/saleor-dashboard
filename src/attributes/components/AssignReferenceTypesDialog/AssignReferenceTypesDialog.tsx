@@ -6,7 +6,6 @@ import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-
 export type ReferenceTypes = { id: string; name: string }[];
 
 interface AssignCollectionDialogProps
@@ -17,9 +16,17 @@ interface AssignCollectionDialogProps
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-export const AssignReferenceTypesDialog = ({ selectedReferenceTypesIds, referenceTypes, title, labels, ...rest }: AssignCollectionDialogProps) => {
+export const AssignReferenceTypesDialog = ({
+  selectedReferenceTypesIds,
+  referenceTypes,
+  title,
+  labels,
+  ...rest
+}: AssignCollectionDialogProps) => {
   const intl = useIntl();
-  const filteredReferenceTypes = referenceTypes.filter(type => !selectedReferenceTypesIds.includes(type.id));
+  const filteredReferenceTypes = referenceTypes.filter(
+    type => !selectedReferenceTypesIds.includes(type.id),
+  );
 
   return (
     <AssignContainerDialog

@@ -26,7 +26,8 @@ import {
   attributeAddUrl,
   AttributeAddUrlDialog,
   AttributeAddUrlQueryParams,
-  attributeUrl} from "../../urls";
+  attributeUrl,
+} from "../../urls";
 import { AttributeValueEditDialogFormData, getAttributeData } from "../../utils/data";
 
 type ParamId = number | undefined;

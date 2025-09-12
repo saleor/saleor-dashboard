@@ -59,7 +59,7 @@ export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
   AttributeEntityTypeEnum.PRODUCT,
   AttributeEntityTypeEnum.PRODUCT_VARIANT,
   AttributeEntityTypeEnum.PAGE,
-]
+];
 
 export function filterable(attribute: Pick<AttributeFragment, "inputType">): boolean {
   return ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(attribute.inputType!);

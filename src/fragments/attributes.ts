@@ -50,11 +50,11 @@ export const attributeDetailsFragment = gql`
     storefrontSearchPosition
     valueRequired
     referenceTypes {
-      ...on ProductType {
+      ... on ProductType {
         id
         name
       }
-      ...on PageType {
+      ... on PageType {
         id
         name
       }

@@ -1,6 +1,17 @@
-import { AssignReferenceTypesDialog, ReferenceTypes } from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
-import { AttributeAddUrlQueryParams, attributeListPath, AttributeUrlQueryParams } from "@dashboard/attributes/urls";
-import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES, ENTITY_TYPES_WITH_TYPES_RESTRICTION, REFERENCE_ATTRIBUTE_TYPES } from "@dashboard/attributes/utils/data";
+import {
+  AssignReferenceTypesDialog,
+  ReferenceTypes,
+} from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
+import {
+  AttributeAddUrlQueryParams,
+  attributeListPath,
+  AttributeUrlQueryParams,
+} from "@dashboard/attributes/urls";
+import {
+  ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES,
+  ENTITY_TYPES_WITH_TYPES_RESTRICTION,
+  REFERENCE_ATTRIBUTE_TYPES,
+} from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -26,7 +37,7 @@ import {
 import { CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { ChangeEvent,SubmitPromise  } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
@@ -44,7 +55,7 @@ import slugify from "slugify";
 import AttributeDetails from "../AttributeDetails";
 import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
-import {AttributeReferenceTypesSection} from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
+import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import AttributeValues from "../AttributeValues";
 import { messages } from "./messages";
 
@@ -151,7 +162,8 @@ const AttributePage = ({
         valueRequired: !!attribute.valueRequired,
         visibleInStorefront: attribute.visibleInStorefront,
         unit: attribute?.unit ?? null,
-        referenceTypes: attribute?.referenceTypes?.map(ref => ({ value: ref.id, label: ref.name })) || [],
+        referenceTypes:
+          attribute?.referenceTypes?.map(ref => ({ value: ref.id, label: ref.name })) || [],
       };
   const handleSubmit = (data: AttributePageFormData) => {
     const type = attribute === null ? data.type : undefined;
@@ -179,14 +191,14 @@ const AttributePage = ({
         const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
           activeRefSearch.result.data?.search,
         );
-    
+
         const fetchMoreReferenceTypes = getSearchFetchMoreProps(
           activeRefSearch.result as CommonSearchOpts,
           activeRefSearch.loadMore,
         );
 
         // Clear reference types in case entityType changes, as it may affect available options
-        const handleChange = event => {
+        const handleChange = (event: ChangeEvent) => {
           const fieldName = event.target?.name;
 
           if (attribute === null && fieldName === "entityType") {
@@ -196,25 +208,23 @@ const AttributePage = ({
           change(event);
         };
         const setReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
-          const toAdd = selected.map(
-            ref => ({ value: ref.id, label: ref.name })
-          ).filter(
-            newRef => !data.referenceTypes.some(existingRef => existingRef.value === newRef.value),
-          );
-          const mergedReferenceTypes = [
-            ...data.referenceTypes,
-            ...toAdd,
-          ];
+          const toAdd = selected
+            .map(ref => ({ value: ref.id, label: ref.name }))
+            .filter(
+              newRef =>
+                !data.referenceTypes.some(existingRef => existingRef.value === newRef.value),
+            );
+          const mergedReferenceTypes = [...data.referenceTypes, ...toAdd];
 
           set({ referenceTypes: mergedReferenceTypes });
           onCloseAssignReferenceTypes();
         };
         const handleRemoveReferenceType = (id: string) => {
-            set({ referenceTypes: data.referenceTypes.filter(ref => ref.value !== id) });
+          set({ referenceTypes: data.referenceTypes.filter(ref => ref.value !== id) });
         };
-        const showReferenceTypes = data.entityType 
+        const showReferenceTypes = data.entityType
           ? REFERENCE_ATTRIBUTE_TYPES.includes(data.inputType) &&
-            ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(data.entityType) 
+            ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(data.entityType)
           : false;
 
         return (
@@ -258,14 +268,14 @@ const AttributePage = ({
                   setError={setError}
                   clearErrors={clearErrors}
                 />
-                  <CardSpacer />
+                <CardSpacer />
                 {showReferenceTypes && (
                   <AttributeReferenceTypesSection
-                  entityType={data.entityType ?? undefined}
-                  selectedTypes={data.referenceTypes}
-                  disabled={disabled}
-                  onAssignClick={onOpenReferenceTypes}
-                  onRemoveType={handleRemoveReferenceType}
+                    entityType={data.entityType ?? undefined}
+                    selectedTypes={data.referenceTypes}
+                    disabled={disabled}
+                    onAssignClick={onOpenReferenceTypes}
+                    onRemoveType={handleRemoveReferenceType}
                   />
                 )}
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
@@ -324,7 +334,8 @@ const AttributePage = ({
               onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
               onFetch={activeRefSearch.search}
               onSubmit={setReferenceTypes}
-              title={data.entityType === AttributeEntityTypeEnum.PAGE
+              title={
+                data.entityType === AttributeEntityTypeEnum.PAGE
                   ? intl.formatMessage(messages.titleModelTypes)
                   : intl.formatMessage(messages.titleProductTypes)
               }

@@ -186,13 +186,11 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
                     </TableRowLink>
                   );
                 })}
-                {!loading && (products?.length ?? 0) === 0 && (
-                  <Text>
-                    <Text>
-                      {intl.formatMessage(messages.noProductsFound)}
-                    </Text>
-                  </Text>
-                )}
+              {!loading && (products?.length ?? 0) === 0 && (
+                <Text>
+                  <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
+                </Text>
+              )}
             </TableBody>
           </ResponsiveTable>
         </InfiniteScroll>

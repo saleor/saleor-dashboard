@@ -202,7 +202,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     variables => updatePrivateMetadata({ variables }),
   );
 
-
   return (
     <AttributePage
       attribute={data?.attribute}
