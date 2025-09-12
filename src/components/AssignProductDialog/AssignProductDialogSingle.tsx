@@ -56,10 +56,10 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedProductId, setSelectedProductId] = React.useState<string>(selectedId ?? '');
+  const [selectedProductId, setSelectedProductId] = React.useState<string>(selectedId ?? "");
 
   useEffect(() => {
-    setSelectedProductId(selectedId ?? '');
+    setSelectedProductId(selectedId ?? "");
   }, [selectedId]);
 
   const handleClose = () => {
@@ -76,11 +76,13 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
       const selectedProduct = products.find(product => product.id === selectedProductId);
 
       if (selectedProduct) {
-        onSubmit([{
-          ...selectedProduct,
-          id: selectedProduct.id,
-          name: selectedProduct.name,
-        }]);
+        onSubmit([
+          {
+            ...selectedProduct,
+            id: selectedProduct.id,
+            name: selectedProduct.name,
+          },
+        ]);
 
         return;
       }
@@ -90,7 +92,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
   };
 
   const handleChange = (productId: string) => {
-    setSelectedProductId(productId === selectedProductId ? '' : productId);
+    setSelectedProductId(productId === selectedProductId ? "" : productId);
   };
 
   return (
@@ -130,7 +132,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
                   <TableRowLink
                     key={product.id}
                     data-test-id="assign-product-table-row"
-                    onClick={() => !isProductAvailable ? null : handleChange(product.id)}
+                    onClick={() => (!isProductAvailable ? null : handleChange(product.id))}
                   >
                     <TableCell padding="checkbox" className={classes.checkboxCell}>
                       <Radio
@@ -161,9 +163,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
               })}
             {!loading && (products?.length ?? 0) === 0 && (
               <Text>
-                <Text>
-                  {intl.formatMessage(messages.noProductsFound)}
-                </Text>
+                <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
               </Text>
             )}
           </TableBody>

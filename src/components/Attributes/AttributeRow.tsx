@@ -106,9 +106,9 @@ const AttributeRow = ({
             value={
               attribute.value[0]
                 ? {
-                  value: attribute.value[0],
-                  label: getSingleDisplayValue(attribute, attributeValues),
-                }
+                    value: attribute.value[0],
+                    label: getSingleDisplayValue(attribute, attributeValues),
+                  }
                 : null
             }
             error={!!error}
@@ -163,8 +163,8 @@ const AttributeRow = ({
             helperText={
               isTooLong
                 ? intl.formatMessage(inputTypeMessages.plainTextTruncated, {
-                  length: MAX_LENGTH,
-                })
+                    length: MAX_LENGTH,
+                  })
                 : getErrorMessage(error, intl)
             }
           />

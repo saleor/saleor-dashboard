@@ -47,10 +47,10 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
   } = props;
   const classes = useStyles(props);
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedContainerId, setSelectedContainerId] = React.useState<string>(selectedId ?? '');
+  const [selectedContainerId, setSelectedContainerId] = React.useState<string>(selectedId ?? "");
 
   React.useEffect(() => {
-    setSelectedContainerId(selectedId ?? '');
+    setSelectedContainerId(selectedId ?? "");
   }, [selectedId]);
 
   const handleClose = () => {
@@ -72,9 +72,8 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
     }
   };
 
-
   const handleContainerSelect = (containerId: string) => {
-    setSelectedContainerId(containerId === selectedContainerId ? '' : containerId);
+    setSelectedContainerId(containerId === selectedContainerId ? "" : containerId);
   };
 
   return (
@@ -104,9 +103,7 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
           <TableBody>
             {!loading && (containers?.length ?? 0) === 0 && (
               <Text>
-                <Text>
-                  {emptyMessage ?? "No objects found"}
-                </Text>
+                <Text>{emptyMessage ?? "No objects found"}</Text>
               </Text>
             )}
             {containers?.map(container => {

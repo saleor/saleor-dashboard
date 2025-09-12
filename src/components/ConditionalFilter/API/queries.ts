@@ -9,14 +9,14 @@ export const initialDynamicLeftOperands = gql`
         type: { eq: PRODUCT_TYPE }
         inputType: {
           oneOf: [
-            DROPDOWN,
-            MULTISELECT,
-            BOOLEAN,
-            NUMERIC,
-            DATE,
-            DATE_TIME,
-            SWATCH,
-            REFERENCE,
+            DROPDOWN
+            MULTISELECT
+            BOOLEAN
+            NUMERIC
+            DATE
+            DATE_TIME
+            SWATCH
+            REFERENCE
             SINGLE_REFERENCE
           ]
         }

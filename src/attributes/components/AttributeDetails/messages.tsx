@@ -81,7 +81,7 @@ export const inputTypeMessages = defineMessages({
     description: "references attribute type",
   },
   singleReference: {
-    id: 'OZc365',
+    id: "OZc365",
     defaultMessage: "Single Reference",
     description: "single reference attribute type",
   },

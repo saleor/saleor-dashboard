@@ -37,7 +37,7 @@ import { modelingSection } from "@dashboard/modeling/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { Container , FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { Container, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";

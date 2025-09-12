@@ -74,8 +74,8 @@ const AssignAttributeValueDialog = ({
   const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
 
   const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
-  const selectedId = isSingle && attribute.value?.length > 0 ? attribute.value[0] : '';
-  const selectionMode = isSingle ? 'single' : 'multiple';
+  const selectedId = isSingle && attribute.value?.length > 0 ? attribute.value[0] : "";
+  const selectionMode = isSingle ? "single" : "multiple";
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
@@ -102,38 +102,38 @@ const AssignAttributeValueDialog = ({
       );
     case AttributeEntityTypeEnum.PRODUCT:
       return (
-        <AssignProductDialog 
-          products={filteredProducts ?? []} 
+        <AssignProductDialog
+          products={filteredProducts ?? []}
           selectionMode={selectionMode}
           selectedId={isSingle ? selectedId : undefined}
-          {...rest} 
+          {...rest}
         />
       );
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
       return (
-        <AssignVariantDialog 
-          products={filteredProducts} 
+        <AssignVariantDialog
+          products={filteredProducts}
           selectionMode={selectionMode}
           selectedId={isSingle ? selectedId : undefined}
-          {...rest} 
+          {...rest}
         />
       );
     case AttributeEntityTypeEnum.COLLECTION:
       return (
-        <AssignCollectionDialog 
-          collections={filteredCollections} 
+        <AssignCollectionDialog
+          collections={filteredCollections}
           selectionMode={selectionMode}
           selectedId={isSingle ? selectedId : undefined}
-          {...rest} 
+          {...rest}
         />
       );
     case AttributeEntityTypeEnum.CATEGORY:
       return (
-        <AssignCategoryDialog 
-          categories={filteredCategories} 
+        <AssignCategoryDialog
+          categories={filteredCategories}
           selectionMode={selectionMode}
           selectedId={isSingle ? selectedId : undefined}
-          {...rest} 
+          {...rest}
         />
       );
   }

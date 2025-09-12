@@ -63,8 +63,8 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
   const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
-      product.variants.map(variant => isVariantSelected(variant, variants)),
-    )
+        product.variants.map(variant => isVariantSelected(variant, variants)),
+      )
     : [];
   const productsWithAllVariantsSelected = productChoices
     ? productChoices.map(product => hasAllVariantsSelected(product.variants, variants))
@@ -210,4 +210,3 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
     </>
   );
 };
-

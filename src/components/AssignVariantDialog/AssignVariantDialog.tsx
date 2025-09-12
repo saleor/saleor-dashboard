@@ -4,7 +4,7 @@ import { SearchProductsQuery } from "@dashboard/graphql";
 import { Container, DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { FormattedMessage } from "react-intl";
 
-import { AssignContainerDialogProps, } from "../AssignContainerDialog";
+import { AssignContainerDialogProps } from "../AssignContainerDialog";
 import { AssignVariantDialogMulti } from "./AssignVariantDialogMulti";
 import { AssignVariantDialogSingle } from "./AssignVariantDialogSingle";
 import { messages } from "./messages";
@@ -20,15 +20,12 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   onFetch: (value: string) => void;
   onSubmit: (data: Container[]) => void;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
-  selectionMode?: 'single' | 'multiple';
+  selectionMode?: "single" | "multiple";
   selectedId?: string;
 }
 
 const AssignVariantDialog = (props: AssignVariantDialogProps) => {
-  const {
-    selectionMode = 'multiple',
-    ...restProps
-  } = props;
+  const { selectionMode = "multiple", ...restProps } = props;
 
   const { open, onClose } = props;
 
@@ -43,14 +40,10 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
           <FormattedMessage {...messages.assignVariantDialogHeader} />
         </DashboardModal.Header>
 
-        {selectionMode === 'single' ? (
-          <AssignVariantDialogSingle
-            {...restProps}
-          />
+        {selectionMode === "single" ? (
+          <AssignVariantDialogSingle {...restProps} />
         ) : (
-          <AssignVariantDialogMulti
-            {...restProps}
-          />
+          <AssignVariantDialogMulti {...restProps} />
         )}
       </DashboardModal.Content>
     </DashboardModal>

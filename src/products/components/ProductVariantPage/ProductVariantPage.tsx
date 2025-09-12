@@ -40,7 +40,7 @@ import { getSelectedMedia } from "@dashboard/products/utils/data";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productVariantUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { Container , FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import { Container, FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
 import { useState } from "react";

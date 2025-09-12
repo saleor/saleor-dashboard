@@ -103,9 +103,7 @@ export const AssignContainerDialogMulti = (props: AssignContainerDialogMultiProp
           <TableBody>
             {!loading && (containers?.length ?? 0) === 0 && (
               <Text>
-                <Text>
-                  {emptyMessage ?? "No objects found"}
-                </Text>
+                <Text>{emptyMessage ?? "No objects found"}</Text>
               </Text>
             )}
             {containers?.map(container => {

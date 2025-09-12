@@ -121,7 +121,6 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
     onClose: handleClose,
   });
 
-
   return (
     <>
       <TextField
@@ -184,9 +183,7 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
               })}
             {!loading && (products?.length ?? 0) === 0 && (
               <Text>
-                <Text>
-                  {intl.formatMessage(messages.noProductsFound)}
-                </Text>
+                <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
               </Text>
             )}
           </TableBody>

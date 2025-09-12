@@ -26,20 +26,14 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   labels?: {
     confirmBtn?: string;
   };
-  selectionMode?: 'single' | 'multiple';
+  selectionMode?: "single" | "multiple";
   selectedId?: string;
 }
 
 const AssignProductDialog = (props: AssignProductDialogProps) => {
-  const {
-    selectionMode = 'multiple',
-    ...restProps
-  } = props;
+  const { selectionMode = "multiple", ...restProps } = props;
 
-  const {
-    open,
-    onClose,
-  } = props;
+  const { open, onClose } = props;
 
   const handleClose = () => {
     onClose();
@@ -51,14 +45,10 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
         <DashboardModal.Header>
           <FormattedMessage {...messages.assignVariantDialogHeader} />
         </DashboardModal.Header>
-        {selectionMode === 'single' ? (
-          <AssignProductDialogSingle
-            {...restProps}
-          />
+        {selectionMode === "single" ? (
+          <AssignProductDialogSingle {...restProps} />
         ) : (
-          <AssignProductDialogMulti
-            {...restProps}
-          />
+          <AssignProductDialogMulti {...restProps} />
         )}
       </DashboardModal.Content>
     </DashboardModal>

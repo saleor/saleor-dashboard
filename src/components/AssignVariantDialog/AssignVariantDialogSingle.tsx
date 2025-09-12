@@ -15,7 +15,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AssignContainerDialogProps, } from "../AssignContainerDialog";
+import { AssignContainerDialogProps } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -52,10 +52,10 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedVariantId, setSelectedVariantId] = useState<string>(selectedId ?? '');
+  const [selectedVariantId, setSelectedVariantId] = useState<string>(selectedId ?? "");
 
   useEffect(() => {
-    setSelectedVariantId(selectedId ?? '');
+    setSelectedVariantId(selectedId ?? "");
   }, [selectedId]);
 
   const handleClose = () => {
@@ -67,8 +67,15 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
     onClose: handleClose,
   });
 
-  const productChoices = useMemo(() => products?.filter(product => product && product.variants && product.variants.length > 0) || [], [products]);
-  const productVariantChoices = useMemo(() => productChoices.flatMap(product => product.variants || []), [productChoices]);
+  const productChoices = useMemo(
+    () =>
+      products?.filter(product => product && product.variants && product.variants.length > 0) || [],
+    [products],
+  );
+  const productVariantChoices = useMemo(
+    () => productChoices.flatMap(product => product.variants || []),
+    [productChoices],
+  );
 
   const handleSubmit = () => {
     if (selectedVariantId) {
@@ -77,27 +84,27 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
       if (variant) {
         const variantWithLabel: VariantWithProductLabel = {
           ...variant,
-          productName: variant.product.name
+          productName: variant.product.name,
         };
 
-        onSubmit([{
-          name: getCompositeLabel(variantWithLabel),
-          id: variant.id,
-          ...variantWithLabel,
-        }]);
+        onSubmit([
+          {
+            name: getCompositeLabel(variantWithLabel),
+            id: variant.id,
+            ...variantWithLabel,
+          },
+        ]);
 
         return;
       }
-
     }
 
     onSubmit([]);
   };
 
   const handleVariantSelect = (variantId: string) => {
-    setSelectedVariantId(variantId === selectedVariantId ? '' : variantId);
+    setSelectedVariantId(variantId === selectedVariantId ? "" : variantId);
   };
-
 
   return (
     <>
@@ -116,7 +123,10 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
 
       <InfiniteScroll
         id={scrollableTargetId}
-        dataLength={productChoices.reduce((acc, product) => acc + (product.variants?.length || 0), 0)}
+        dataLength={productChoices.reduce(
+          (acc, product) => acc + (product.variants?.length || 0),
+          0,
+        )}
         next={onFetchMore}
         hasMore={hasMore}
         scrollThreshold="100px"
@@ -126,7 +136,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
           <TableBody>
             {renderCollection(
               productChoices,
-              (product) => (
+              product => (
                 <React.Fragment key={product ? product.id : "skeleton"}>
                   {/* Product header row (non-selectable) */}
                   <TableRowLink>
@@ -142,45 +152,47 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                     </TableCell>
                   </TableRowLink>
                   {/* Variant rows (selectable) */}
-                  {(product?.variants || []).filter(v => v !== null).map((variant) => {
-                    const isSelected = selectedVariantId === variant.id;
+                  {(product?.variants || [])
+                    .filter(v => v !== null)
+                    .map(variant => {
+                      const isSelected = selectedVariantId === variant.id;
 
-                    return (
-                      <TableRowLink
-                        key={variant.id}
-                        data-test-id="assign-variant-table-row"
-                        onClick={() => handleVariantSelect(variant.id)}
-                      >
-                        <TableCell />
-                        <TableCell className={classes.colVariantCheckbox}>
-                          <Radio
-                            className={classes.variantCheckbox}
-                            checked={isSelected}
-                            disabled={loading}
-                            onChange={() => handleVariantSelect(variant.id)}
-                            value={variant.id}
-                            name="variant-selection"
-                          />
-                        </TableCell>
-                        <TableCell className={classes.colName}>
-                          <div>{variant.name}</div>
-                          <div className={classes.grayText}>
-                            <FormattedMessage
-                              {...messages.assignVariantDialogSKU}
-                              values={{
-                                sku: variant.sku,
-                              }}
+                      return (
+                        <TableRowLink
+                          key={variant.id}
+                          data-test-id="assign-variant-table-row"
+                          onClick={() => handleVariantSelect(variant.id)}
+                        >
+                          <TableCell />
+                          <TableCell className={classes.colVariantCheckbox}>
+                            <Radio
+                              className={classes.variantCheckbox}
+                              checked={isSelected}
+                              disabled={loading}
+                              onChange={() => handleVariantSelect(variant.id)}
+                              value={variant.id}
+                              name="variant-selection"
                             />
-                          </div>
-                        </TableCell>
-                        <TableCell className={classes.textRight}>
-                          {variant?.channelListings?.[0]?.price && (
-                            <Money money={variant.channelListings[0].price} />
-                          )}
-                        </TableCell>
-                      </TableRowLink>
-                    );
-                  })}
+                          </TableCell>
+                          <TableCell className={classes.colName}>
+                            <div>{variant.name}</div>
+                            <div className={classes.grayText}>
+                              <FormattedMessage
+                                {...messages.assignVariantDialogSKU}
+                                values={{
+                                  sku: variant.sku,
+                                }}
+                              />
+                            </div>
+                          </TableCell>
+                          <TableCell className={classes.textRight}>
+                            {variant?.channelListings?.[0]?.price && (
+                              <Money money={variant.channelListings[0].price} />
+                            )}
+                          </TableCell>
+                        </TableRowLink>
+                      );
+                    })}
                 </React.Fragment>
               ),
               () => (
@@ -209,4 +221,3 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
     </>
   );
 };
-
