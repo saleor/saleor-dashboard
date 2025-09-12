@@ -21,6 +21,7 @@ import { commonMessages, errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import { useReferencePageSearch, useReferenceProductSearch} from "@dashboard/searches/useReferenceSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
@@ -40,7 +41,6 @@ import {
 } from "../../urls";
 import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
-import { useReferencePageSearch, useReferenceProductSearch} from "./handlers/utils";
 import { productUpdatePageMessages as messages } from "./messages";
 
 interface ProductUpdateProps {
