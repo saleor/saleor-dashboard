@@ -2,8 +2,8 @@ import { DashboardCard } from "@dashboard/components/Card";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
-import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
 import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
+import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
 import { Button, Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -31,8 +31,10 @@ const OrderPayment = (props: OrderPaymentProps) => {
   const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
   const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
   const refundedAmount = extractRefundedAmount(order);
-  const usedGiftCardAmount = OrderDetailsViewModel.getGiftCardsAmountUsed(order);
-  const usedGiftcards = OrderDetailsViewModel.getUsedGiftCards(order.giftCards);
+  const usedGiftCardAmount = order ? OrderDetailsViewModel.getGiftCardsAmountUsed(order) : null;
+  const usedGiftCards = order?.giftCards
+    ? OrderDetailsViewModel.getUsedGiftCards(order.giftCards)
+    : null;
 
   const getDeliveryMethodName = (order: OrderDetailsFragment) => {
     if (
@@ -185,9 +187,9 @@ const OrderPayment = (props: OrderPaymentProps) => {
       <Divider />
       <DashboardCard.Content className={classes.payments}>
         <div className={classes.root}>
-          {!!usedGiftCardAmount && usedGiftcards && (
+          {!!usedGiftCardAmount && usedGiftCards && (
             <div>
-              <OrderUsedGiftCards giftCards={usedGiftcards} />
+              <OrderUsedGiftCards giftCards={usedGiftCards} />
               <div className={classes.leftmostRightAlignedElement}>
                 <Money
                   money={{
