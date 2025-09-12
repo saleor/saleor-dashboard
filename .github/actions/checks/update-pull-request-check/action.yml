@@ -13,7 +13,7 @@ inputs:
   CONCLUSION:
     description: "Conclusion of check, required if status completed"
     required: false
-  TITLE: 
+  TITLE:
     description: "Title of check"
     required: true
   SUMMARY:
@@ -38,7 +38,7 @@ runs:
         SUMMARY: ${{ inputs.SUMMARY }}
         DETAILS_URL: ${{ inputs.DETAILS_URL }}
       run: |
-      
+
         payload=$(\
         jq --null-input \
         --arg name "$NAME" \

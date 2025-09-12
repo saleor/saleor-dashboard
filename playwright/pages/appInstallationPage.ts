@@ -9,7 +9,6 @@ export class AppInstallationPage {
     readonly installAppButton = page.getByTestId("install-app-button"),
     readonly appManifestUrlInput = page.getByPlaceholder("https://example.com/api/manifest"),
     readonly installAppFromManifestButton = page.getByTestId("button-bar-confirm"),
-
   ) {
     this.page = page;
   }
