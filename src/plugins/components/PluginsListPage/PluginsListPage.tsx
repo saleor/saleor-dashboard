@@ -62,10 +62,7 @@ const PluginsListPage = ({
             </Text>
             <Text>
               {intl.formatMessage(pluginsListPageMessages.appStoreWarning)}{" "}
-              <ExternalLinkNext
-                target="_blank"
-                href={EXTENSIONS_DOCS_URL}
-              >
+              <ExternalLinkNext target="_blank" href={EXTENSIONS_DOCS_URL}>
                 Saleor App Store.
               </ExternalLinkNext>
             </Text>

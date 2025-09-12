@@ -162,10 +162,7 @@ export const AppPermissionRequestView = () => {
             {formatMessage(appPermissionsRequestViewMessages.approveScenarioHelperBody)}
           </SmallText>
           <SmallText as="p">
-            <Link
-              target="__blank"
-              href={APP_PERMISSIONS_DOCS_URL}
-            >
+            <Link target="__blank" href={APP_PERMISSIONS_DOCS_URL}>
               {formatMessage(appPermissionsRequestViewMessages.permissionsDocsLink)}
             </Link>
           </SmallText>
