@@ -2,27 +2,41 @@ import { ApolloClient } from "@apollo/client";
 
 import { LegacyChannelHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { ConditionItem, ConditionOptions, StaticElementName } from "../../FilterElement/ConditionOptions";
+import {
+  ConditionItem,
+  ConditionOptions,
+  StaticElementName,
+} from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ConditionValue } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { OrderChannelQueryVarsBuilder } from "./OrderChannelQueryVarsBuilder";
 
 describe("OrderChannelQueryVarsBuilder", () => {
-  const builder = new OrderChannelQueryVarsBuilder()
+  const builder = new OrderChannelQueryVarsBuilder();
   const client = {} as ApolloClient<unknown>;
 
-
   // Helper for channel filters with specific condition labels
-  function createChannelFilterElement(fieldName: string, selectedValue: unknown, conditionLabel?: string): FilterElement {
+  function createChannelFilterElement(
+    fieldName: string,
+    selectedValue: unknown,
+    conditionLabel?: string,
+  ): FilterElement {
     const value = new ExpressionValue(fieldName, fieldName, fieldName);
     const conditionType = Array.isArray(selectedValue) ? "multiselect" : "select";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel || fieldName, value: `input-${conditionType}` };
-    const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue as ConditionValue);
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel || fieldName,
+      value: `input-${conditionType}`,
+    };
+    const selected = ConditionSelected.fromConditionItemAndValue(
+      conditionItem,
+      selectedValue as ConditionValue,
+    );
     const condition = new Condition(
       ConditionOptions.fromName(fieldName as StaticElementName),
       selected,
-      false
+      false,
     );
 
     return new FilterElement(value, condition, false);
@@ -111,7 +125,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { eq: "channel-usd" }
+          channelId: { eq: "channel-usd" },
         });
       });
     });
@@ -127,7 +141,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { eq: "channel-usd" }
+          channelId: { eq: "channel-usd" },
         });
       });
 
@@ -136,7 +150,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
         const channelOption = {
           label: "USD Channel",
           value: "channel-usd-id",
-          slug: "channel-usd"
+          slug: "channel-usd",
         };
         const element = createChannelFilterElement("channels", channelOption, "is");
         const query = {};
@@ -146,7 +160,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { eq: "channel-usd-id" }
+          channelId: { eq: "channel-usd-id" },
         });
       });
     });
@@ -157,7 +171,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
         const channelOptions = [
           { label: "USD Channel", value: "channel-usd", slug: "channel-usd" },
           { label: "EUR Channel", value: "channel-eur", slug: "channel-eur" },
-          { label: "GBP Channel", value: "channel-gbp", slug: "channel-gbp" }
+          { label: "GBP Channel", value: "channel-gbp", slug: "channel-gbp" },
         ];
         const element = createChannelFilterElement("channels", channelOptions, "is");
         const query = {};
@@ -167,7 +181,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { oneOf: ["channel-usd", "channel-eur", "channel-gbp"] }
+          channelId: { oneOf: ["channel-usd", "channel-eur", "channel-gbp"] },
         });
       });
 
@@ -182,7 +196,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { oneOf: ["channel-usd", "channel-eur"] }
+          channelId: { oneOf: ["channel-usd", "channel-eur"] },
         });
       });
     });
@@ -193,7 +207,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
         const element = createChannelFilterElement("channels", "channel-eur", "is");
         const query = {
           status: { oneOf: ["PENDING", "CONFIRMED"] },
-          createdAt: { gte: "2023-01-01T00:00:00.000Z" }
+          createdAt: { gte: "2023-01-01T00:00:00.000Z" },
         };
 
         // Act
@@ -203,7 +217,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
         expect(result).toEqual({
           status: { oneOf: ["PENDING", "CONFIRMED"] },
           createdAt: { gte: "2023-01-01T00:00:00.000Z" },
-          channelId: { eq: "channel-eur" }
+          channelId: { eq: "channel-eur" },
         });
       });
 
@@ -211,7 +225,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
         // Arrange
         const element = createChannelFilterElement("channels", "channel-new", "is");
         const query = {
-          channelId: { eq: "channel-old" }
+          channelId: { eq: "channel-old" },
         };
 
         // Act
@@ -219,7 +233,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { eq: "channel-new" }
+          channelId: { eq: "channel-new" },
         });
       });
     });
@@ -235,7 +249,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { eq: "" }
+          channelId: { eq: "" },
         });
       });
 
@@ -249,7 +263,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: null
+          channelId: null,
         });
       });
 
@@ -263,7 +277,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { eq: [] }
+          channelId: { eq: [] },
         });
       });
 
@@ -277,7 +291,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { oneOf: ["channel-single"] }
+          channelId: { oneOf: ["channel-single"] },
         });
       });
 
@@ -291,7 +305,7 @@ describe("OrderChannelQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          channelId: { eq: "channel-€UR_test-123" }
+          channelId: { eq: "channel-€UR_test-123" },
         });
       });
     });

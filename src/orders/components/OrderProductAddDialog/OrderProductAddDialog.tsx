@@ -18,7 +18,7 @@ import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { Fragment,useState } from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";

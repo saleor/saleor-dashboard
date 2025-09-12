@@ -1,6 +1,10 @@
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { AnyFilterElementName, ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
+import {
+  AnyFilterElementName,
+  ConditionItem,
+  ConditionOptions,
+} from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { ArrayNestedFieldQueryVarsBuilder } from "./ArrayNestedFieldQueryVarsBuilder";
@@ -8,10 +12,18 @@ import { ArrayNestedFieldQueryVarsBuilder } from "./ArrayNestedFieldQueryVarsBui
 describe("ArrayNestedFieldQueryVarsBuilder", () => {
   const builder = new ArrayNestedFieldQueryVarsBuilder();
 
-  function createElement(type: AnyFilterElementName, selectedValue: any, conditionLabel: string = "is"): FilterElement {
+  function createElement(
+    type: AnyFilterElementName,
+    selectedValue: any,
+    conditionLabel: string = "is",
+  ): FilterElement {
     const value = new ExpressionValue(type, type, type);
     const conditionType = Array.isArray(selectedValue) ? "multiselect" : "select";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
     const condition = new Condition(ConditionOptions.fromName(type), selected, false);
 
@@ -123,9 +135,17 @@ describe("ArrayNestedFieldQueryVarsBuilder", () => {
 
     it("skips when no condition value resolvable", () => {
       // Arrange
-      const value = new ExpressionValue("transactionsPaymentType", "transactionsPaymentType", "transactionsPaymentType");
+      const value = new ExpressionValue(
+        "transactionsPaymentType",
+        "transactionsPaymentType",
+        "transactionsPaymentType",
+      );
       const emptySelected = ConditionSelected.empty();
-      const condition = new Condition(ConditionOptions.fromName("transactionsPaymentType"), emptySelected, false);
+      const condition = new Condition(
+        ConditionOptions.fromName("transactionsPaymentType"),
+        emptySelected,
+        false,
+      );
       const element = new FilterElement(value, condition, false);
 
       // Act

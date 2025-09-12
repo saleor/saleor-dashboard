@@ -24,7 +24,15 @@ import {
 import { getFilterElement } from "../utils";
 
 const isStaticBoolean = (rowType: RowType) => {
-  return ["isClickAndCollect", "isGiftCardBought", "isGiftCardUsed", "hasInvoices", "isPreorder", "giftCardUsed", "hasFulfillments"].includes(rowType);
+  return [
+    "isClickAndCollect",
+    "isGiftCardBought",
+    "isGiftCardUsed",
+    "hasInvoices",
+    "isPreorder",
+    "giftCardUsed",
+    "hasFulfillments",
+  ].includes(rowType);
 };
 
 const createAPIHandler = (
@@ -51,7 +59,6 @@ const createAPIHandler = (
       },
     ]);
   }
-
 
   if (rowType === "status") {
     return new EnumValuesHandler(OrderStatus, rowType, intl);
@@ -92,7 +99,7 @@ const createAPIHandler = (
     return new NoopValuesHandler([]);
   }
 
-  // Price/Amount fields  
+  // Price/Amount fields
   if (rowType === "totalGross" || rowType === "totalNet") {
     return new NoopValuesHandler([]);
   }
@@ -103,14 +110,26 @@ const createAPIHandler = (
   }
 
   // Text input fields
-  if (rowType === "number" || rowType === "userEmail" || rowType === "voucherCode" || rowType === "linesCount" || rowType === "checkoutId" || rowType === "billingPhoneNumber" ||
-    rowType === "shippingPhoneNumber" || rowType === "transactionsCardBrand") {
+  if (
+    rowType === "number" ||
+    rowType === "userEmail" ||
+    rowType === "voucherCode" ||
+    rowType === "linesCount" ||
+    rowType === "checkoutId" ||
+    rowType === "billingPhoneNumber" ||
+    rowType === "shippingPhoneNumber" ||
+    rowType === "transactionsCardBrand"
+  ) {
     return new NoopValuesHandler([]);
   }
 
   // Metadata fields
-  if (rowType === "linesMetadata" || rowType === "transactionsMetadata" ||
-    rowType === "fulfillmentsMetadata" || rowType === "metadata") {
+  if (
+    rowType === "linesMetadata" ||
+    rowType === "transactionsMetadata" ||
+    rowType === "fulfillmentsMetadata" ||
+    rowType === "metadata"
+  ) {
     return new NoopValuesHandler([]);
   }
 
@@ -123,7 +142,6 @@ const createAPIHandler = (
   if (rowType === "billingCountry" || rowType === "shippingCountry") {
     return new EnumValuesHandler(CountryCode, rowType, intl);
   }
-
 
   throw new Error(`Unknown filter element: "${rowType}"`);
 };

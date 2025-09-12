@@ -1,5 +1,3 @@
- 
-
 const { request } = require("@playwright/test");
 const dotenv = require("dotenv");
 const process = require("process");
@@ -9,7 +7,7 @@ const fs = require("fs");
 
 dotenv.config();
 
-const algorithm = 'aes-256-ctr';
+const algorithm = "aes-256-ctr";
 
 const PERMISSIONS = [
   "admin",
@@ -27,7 +25,7 @@ const PERMISSIONS = [
   "staff",
   "shipping",
   "translations",
-]
+];
 
 const ACCOUNT_EMAILS = {
   channel: "channel.manager@example.com",
@@ -61,15 +59,14 @@ const createQuery = (email, password) => {
         }
       }
     }
-  `
+  `;
 
-  const variables = { email, password }
+  const variables = { email, password };
 
-  return { query, variables }
+  return { query, variables };
 };
 
-
-const getEmailForPermission = (permission) => {
+const getEmailForPermission = permission => {
   if (permission === "admin") {
     return process.env.E2E_USER_NAME;
   }
@@ -77,7 +74,7 @@ const getEmailForPermission = (permission) => {
   return ACCOUNT_EMAILS[permission];
 };
 
-const getPasswordForPermission = (permission) => {
+const getPasswordForPermission = permission => {
   if (permission === "admin") {
     return process.env.E2E_USER_PASSWORD;
   }
@@ -85,7 +82,7 @@ const getPasswordForPermission = (permission) => {
   return process.env.E2E_PERMISSIONS_USERS_PASSWORD;
 };
 
-const getAuthForPermission = async (permissionName) => {
+const getAuthForPermission = async permissionName => {
   const apiRequestContext = await request.newContext({
     baseURL: process.env.BASE_URL,
   });
@@ -96,21 +93,19 @@ const getAuthForPermission = async (permissionName) => {
   const response = await apiRequestContext.post(process.env.API_URL || "", {
     data: createQuery(email, password),
   });
-  const resposnseObj = await response.json()
-  const { errors } = resposnseObj.data.tokenCreate
+  const resposnseObj = await response.json();
+  const { errors } = resposnseObj.data.tokenCreate;
 
   if (errors && errors.length > 0) {
-    const errorMessages = errors
-      .map(e => e.message)
-      .join(", ");
+    const errorMessages = errors.map(e => e.message).join(", ");
 
     throw new Error(`Login failed for permission ${permissionName}: ${errorMessages}`);
   }
 
   const loginJsonInfo = await apiRequestContext.storageState();
 
-  return loginJsonInfo
-}
+  return loginJsonInfo;
+};
 
 const encrypt = (password, text) => {
   const key = Buffer.concat([Buffer.from(password), Buffer.alloc(32)], 32);
@@ -118,38 +113,35 @@ const encrypt = (password, text) => {
   const cipher = crypto.createCipheriv(algorithm, key, iv);
   let encrypted = cipher.update(text);
   encrypted = Buffer.concat([encrypted, cipher.final()]);
-  return iv.toString('hex') + encrypted.toString('hex');
-}
+  return iv.toString("hex") + encrypted.toString("hex");
+};
 
 const decrypt = (password, text) => {
   const key = Buffer.concat([Buffer.from(password), Buffer.alloc(32)], 32);
-  const iv = Buffer.from(text.substring(0, 32), 'hex');
-  const encryptedText = Buffer.from(text.substring(32), 'hex');
+  const iv = Buffer.from(text.substring(0, 32), "hex");
+  const encryptedText = Buffer.from(text.substring(32), "hex");
   const decipher = crypto.createDecipheriv(algorithm, key, iv);
   let decrypted = decipher.update(encryptedText);
   decrypted = Buffer.concat([decrypted, decipher.final()]);
   return decrypted.toString();
-}
+};
 
 (async () => {
-  const command = process.argv[2]
+  const command = process.argv[2];
 
   if (command == "login") {
-    let authString = ''
+    let authString = "";
 
     for (const permissionName of PERMISSIONS) {
+      const auth = await getAuthForPermission(permissionName);
 
-      const auth = await getAuthForPermission(permissionName)
-
-
-      authString = `${authString}${JSON.stringify(auth)}|`
+      authString = `${authString}${JSON.stringify(auth)}|`;
     }
 
-    const encodedString = encrypt(process.env.E2E_ENCODE_PASS, authString)
+    const encodedString = encrypt(process.env.E2E_ENCODE_PASS, authString);
 
-    process.stdout.write(encodedString)
+    process.stdout.write(encodedString);
   }
-
 
   if (command == "restore") {
     const tempDir = path.join(__dirname, "../playwright/.auth");
@@ -158,12 +150,10 @@ const decrypt = (password, text) => {
       fs.mkdirSync(tempDir, { recursive: true });
     }
 
+    const encodedInput = process.argv[3];
+    console.log("Restoring...", encodedInput.length);
 
-    const encodedInput = process.argv[3]
-    console.log("Restoring...", encodedInput.length)
-
-
-    const decodedString = decrypt(process.env.E2E_ENCODE_PASS, encodedInput)
+    const decodedString = decrypt(process.env.E2E_ENCODE_PASS, encodedInput);
     decodedString
       .split("|")
       .filter(Boolean)
@@ -179,13 +169,13 @@ const decrypt = (password, text) => {
           ],
         });
 
-        return obj
+        return obj;
       })
       .map(JSON.stringify)
       .map((str, index) => ({ name: PERMISSIONS[index], str }))
       .forEach(token => {
-        const storageStatePath = path.join(tempDir, `${token.name}.json`); 
+        const storageStatePath = path.join(tempDir, `${token.name}.json`);
         fs.writeFileSync(storageStatePath, token.str);
-      })
+      });
   }
-})()
+})();
