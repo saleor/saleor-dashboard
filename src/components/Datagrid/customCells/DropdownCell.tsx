@@ -8,7 +8,7 @@ import {
 } from "@glideapps/glide-data-grid";
 import { Option } from "@saleor/macaw-ui-next";
 import pick from "lodash/pick";
-import { useCallback,useState } from "react";
+import { useCallback, useState } from "react";
 
 export type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;
 export interface DropdownCellProps {

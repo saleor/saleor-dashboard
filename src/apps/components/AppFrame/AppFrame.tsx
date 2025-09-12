@@ -5,7 +5,7 @@ import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
-import { PropsWithChildren, useCallback,useRef } from "react";
+import { PropsWithChildren, useCallback, useRef } from "react";
 
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";

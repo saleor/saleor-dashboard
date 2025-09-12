@@ -90,7 +90,12 @@ export class InitialProductStateResponse implements InitialProductState {
 
     // Special handling for metadata fields - preserve tuple structure
     // Metadata fields use text.double and should return the raw tuple value
-    const isMetadataField = ["metadata", "linesMetadata", "transactionsMetadata", "fulfillmentsMetadata"].includes(token.name);
+    const isMetadataField = [
+      "metadata",
+      "linesMetadata",
+      "transactionsMetadata",
+      "fulfillmentsMetadata",
+    ].includes(token.name);
 
     if (isMetadataField) {
       return token.value;

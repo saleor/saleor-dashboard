@@ -11,7 +11,7 @@ body:
       description: Describe overall goal, provide context, explain what goal it represents
       placeholder: |
         Example: Users needs to have variant edition functionality. This is essential for managing eCommerce and needs lots of configuration for each variant.
-        We must consider its attributes, quantities, correlated channels and more. 
+        We must consider its attributes, quantities, correlated channels and more.
     validations:
       required: true
   - type: textarea
@@ -27,4 +27,3 @@ body:
         ...
     validations:
       required: false
-

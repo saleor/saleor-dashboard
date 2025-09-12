@@ -43,7 +43,8 @@ export interface OrderFulfillmentCancelDialogProps {
 }
 
 const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) => {
-  const { confirmButtonState, errors, open, warehouses, fulfillmentStatus, onConfirm, onClose } = props;
+  const { confirmButtonState, errors, open, warehouses, fulfillmentStatus, onConfirm, onClose } =
+    props;
   const classes = useStyles(props);
   const intl = useIntl();
   const [displayValue, setDisplayValue] = useState("");

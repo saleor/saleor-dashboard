@@ -76,7 +76,7 @@ export const PermissionGroupCreate = () => {
           ...p,
           disabled: !userPermissions.includes(p.code),
           lastSource: false,
-        } as PermissionData),
+        }) as PermissionData,
     ) || [];
 
   return (

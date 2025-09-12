@@ -1,6 +1,10 @@
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { ConditionItem, ConditionOptions, StaticElementName } from "../../FilterElement/ConditionOptions";
+import {
+  ConditionItem,
+  ConditionOptions,
+  StaticElementName,
+} from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ConditionValue, ItemOption } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
@@ -10,15 +14,20 @@ describe("AddressFieldQueryVarsBuilder", () => {
   const builder = new AddressFieldQueryVarsBuilder();
 
   // Helper function to create address FilterElement
-  function createAddressElement(fieldName: StaticElementName, value: ConditionValue, conditionType: string = "select", conditionLabel: string = "is"): FilterElement {
+  function createAddressElement(
+    fieldName: StaticElementName,
+    value: ConditionValue,
+    conditionType: string = "select",
+    conditionLabel: string = "is",
+  ): FilterElement {
     const expressionValue = new ExpressionValue(fieldName, fieldName, fieldName);
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, value);
-    const condition = new Condition(
-      ConditionOptions.fromName(fieldName),
-      selected,
-      false
-    );
+    const condition = new Condition(ConditionOptions.fromName(fieldName), selected, false);
 
     return new FilterElement(expressionValue, condition, false);
   }
@@ -103,8 +112,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           billingAddress: {
-            phoneNumber: { eq: "555-1234" }
-          }
+            phoneNumber: { eq: "555-1234" },
+          },
         });
       });
 
@@ -112,9 +121,14 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Arrange
         const phoneOptions: ItemOption[] = [
           { label: "Office", value: "555-1111", slug: "555-1111" },
-          { label: "Mobile", value: "555-2222", slug: "555-2222" }
+          { label: "Mobile", value: "555-2222", slug: "555-2222" },
         ];
-        const element = createAddressElement("billingPhoneNumber", phoneOptions, "multiselect", "in");
+        const element = createAddressElement(
+          "billingPhoneNumber",
+          phoneOptions,
+          "multiselect",
+          "in",
+        );
         const query = {};
 
         // Act
@@ -123,8 +137,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           billingAddress: {
-            phoneNumber: { oneOf: ["555-1111", "555-2222"] }
-          }
+            phoneNumber: { oneOf: ["555-1111", "555-2222"] },
+          },
         });
       });
 
@@ -133,8 +147,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         const element = createAddressElement("billingPhoneNumber", "555-1234");
         const query = {
           billingAddress: {
-            country: { eq: "US" }
-          }
+            country: { eq: "US" },
+          },
         };
 
         // Act
@@ -144,8 +158,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         expect(result).toEqual({
           billingAddress: {
             country: { eq: "US" },
-            phoneNumber: { eq: "555-1234" }
-          }
+            phoneNumber: { eq: "555-1234" },
+          },
         });
       });
     });
@@ -162,8 +176,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           billingAddress: {
-            country: { eq: "US" }
-          }
+            country: { eq: "US" },
+          },
         });
       });
 
@@ -171,7 +185,7 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Arrange
         const countryOptions: ItemOption[] = [
           { label: "United States", value: "US", slug: "US" },
-          { label: "Canada", value: "CA", slug: "CA" }
+          { label: "Canada", value: "CA", slug: "CA" },
         ];
         const element = createAddressElement("billingCountry", countryOptions, "multiselect", "in");
         const query = {};
@@ -182,8 +196,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           billingAddress: {
-            country: { oneOf: ["US", "CA"] }
-          }
+            country: { oneOf: ["US", "CA"] },
+          },
         });
       });
 
@@ -192,8 +206,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         const element = createAddressElement("billingCountry", "CA");
         const query = {
           billingAddress: {
-            phoneNumber: { eq: "555-1234" }
-          }
+            phoneNumber: { eq: "555-1234" },
+          },
         };
 
         // Act
@@ -203,8 +217,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         expect(result).toEqual({
           billingAddress: {
             phoneNumber: { eq: "555-1234" },
-            country: { eq: "CA" }
-          }
+            country: { eq: "CA" },
+          },
         });
       });
     });
@@ -221,8 +235,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           shippingAddress: {
-            phoneNumber: { eq: "777-8888" }
-          }
+            phoneNumber: { eq: "777-8888" },
+          },
         });
       });
 
@@ -230,9 +244,14 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Arrange
         const phoneOptions: ItemOption[] = [
           { label: "Primary", value: "777-1111", slug: "777-1111" },
-          { label: "Secondary", value: "777-2222", slug: "777-2222" }
+          { label: "Secondary", value: "777-2222", slug: "777-2222" },
         ];
-        const element = createAddressElement("shippingPhoneNumber", phoneOptions, "multiselect", "in");
+        const element = createAddressElement(
+          "shippingPhoneNumber",
+          phoneOptions,
+          "multiselect",
+          "in",
+        );
         const query = {};
 
         // Act
@@ -241,8 +260,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           shippingAddress: {
-            phoneNumber: { oneOf: ["777-1111", "777-2222"] }
-          }
+            phoneNumber: { oneOf: ["777-1111", "777-2222"] },
+          },
         });
       });
 
@@ -251,8 +270,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         const element = createAddressElement("shippingPhoneNumber", "777-8888");
         const query = {
           shippingAddress: {
-            country: { eq: "GB" }
-          }
+            country: { eq: "GB" },
+          },
         };
 
         // Act
@@ -262,8 +281,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         expect(result).toEqual({
           shippingAddress: {
             country: { eq: "GB" },
-            phoneNumber: { eq: "777-8888" }
-          }
+            phoneNumber: { eq: "777-8888" },
+          },
         });
       });
     });
@@ -280,8 +299,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           shippingAddress: {
-            country: { eq: "GB" }
-          }
+            country: { eq: "GB" },
+          },
         });
       });
 
@@ -289,9 +308,14 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Arrange
         const countryOptions: ItemOption[] = [
           { label: "United Kingdom", value: "GB", slug: "GB" },
-          { label: "Germany", value: "DE", slug: "DE" }
+          { label: "Germany", value: "DE", slug: "DE" },
         ];
-        const element = createAddressElement("shippingCountry", countryOptions, "multiselect", "in");
+        const element = createAddressElement(
+          "shippingCountry",
+          countryOptions,
+          "multiselect",
+          "in",
+        );
         const query = {};
 
         // Act
@@ -300,8 +324,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           shippingAddress: {
-            country: { oneOf: ["GB", "DE"] }
-          }
+            country: { oneOf: ["GB", "DE"] },
+          },
         });
       });
 
@@ -310,8 +334,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         const element = createAddressElement("shippingCountry", "DE");
         const query = {
           shippingAddress: {
-            phoneNumber: { eq: "777-8888" }
-          }
+            phoneNumber: { eq: "777-8888" },
+          },
         };
 
         // Act
@@ -321,8 +345,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         expect(result).toEqual({
           shippingAddress: {
             phoneNumber: { eq: "777-8888" },
-            country: { eq: "DE" }
-          }
+            country: { eq: "DE" },
+          },
         });
       });
     });
@@ -341,11 +365,11 @@ describe("AddressFieldQueryVarsBuilder", () => {
         // Assert
         expect(query).toEqual({
           billingAddress: {
-            country: { eq: "US" }
+            country: { eq: "US" },
           },
           shippingAddress: {
-            country: { eq: "CA" }
-          }
+            country: { eq: "CA" },
+          },
         });
       });
 
@@ -363,8 +387,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
         expect(query).toEqual({
           billingAddress: {
             phoneNumber: { eq: "555-1234" },
-            country: { eq: "US" }
-          }
+            country: { eq: "US" },
+          },
         });
       });
 
@@ -373,7 +397,7 @@ describe("AddressFieldQueryVarsBuilder", () => {
         const element = createAddressElement("billingPhoneNumber", "555-1234");
         const query = {
           status: { eq: "CONFIRMED" },
-          totalGross: { amount: { gte: 100 } }
+          totalGross: { amount: { gte: 100 } },
         };
 
         // Act
@@ -384,8 +408,8 @@ describe("AddressFieldQueryVarsBuilder", () => {
           status: { eq: "CONFIRMED" },
           totalGross: { amount: { gte: 100 } },
           billingAddress: {
-            phoneNumber: { eq: "555-1234" }
-          }
+            phoneNumber: { eq: "555-1234" },
+          },
         });
       });
     });

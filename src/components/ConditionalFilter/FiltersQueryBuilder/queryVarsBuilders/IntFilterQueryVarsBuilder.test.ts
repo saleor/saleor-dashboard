@@ -1,7 +1,10 @@
-
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { ConditionItem, ConditionOptions, StaticElementName } from "../../FilterElement/ConditionOptions";
+import {
+  ConditionItem,
+  ConditionOptions,
+  StaticElementName,
+} from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ConditionValue } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
@@ -13,38 +16,40 @@ describe("IntFilterQueryVarsBuilder", () => {
   function createIntElement(fieldName: StaticElementName, selectedValue: unknown): FilterElement {
     const value = new ExpressionValue(fieldName, fieldName, fieldName);
     const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };
-    const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue as ConditionValue);
-    const condition = new Condition(
-      ConditionOptions.fromName(fieldName),
-      selected,
-      false
+    const selected = ConditionSelected.fromConditionItemAndValue(
+      conditionItem,
+      selectedValue as ConditionValue,
     );
+    const condition = new Condition(ConditionOptions.fromName(fieldName), selected, false);
 
     return new FilterElement(value, condition, false);
   }
 
-  function createIntFilterElement(fieldName: StaticElementName, selectedValue: unknown, conditionLabel?: string): FilterElement {
+  function createIntFilterElement(
+    fieldName: StaticElementName,
+    selectedValue: unknown,
+    conditionLabel?: string,
+  ): FilterElement {
     const value = new ExpressionValue(fieldName, fieldName, fieldName);
 
     if (!conditionLabel) {
       const selected = ConditionSelected.empty();
-      const condition = new Condition(
-        ConditionOptions.fromName(fieldName),
-        selected,
-        false
-      );
+      const condition = new Condition(ConditionOptions.fromName(fieldName), selected, false);
 
       return new FilterElement(value, condition, false);
     }
 
     const conditionType = conditionLabel === "between" ? "number.range" : "number";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
-    const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue as ConditionValue);
-    const condition = new Condition(
-      ConditionOptions.fromName(fieldName),
-      selected,
-      false
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
+    const selected = ConditionSelected.fromConditionItemAndValue(
+      conditionItem,
+      selectedValue as ConditionValue,
     );
+    const condition = new Condition(ConditionOptions.fromName(fieldName), selected, false);
 
     return new FilterElement(value, condition, false);
   }
@@ -117,7 +122,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { eq: 3 }
+          linesCount: { eq: 3 },
         });
       });
 
@@ -131,7 +136,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { range: { lte: 10 } }
+          linesCount: { range: { lte: 10 } },
         });
       });
 
@@ -145,7 +150,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { range: { gte: 5 } }
+          linesCount: { range: { gte: 5 } },
         });
       });
 
@@ -159,7 +164,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { range: { gte: 2, lte: 8 } }
+          linesCount: { range: { gte: 2, lte: 8 } },
         });
       });
 
@@ -173,7 +178,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { oneOf: [1, 3, 5] }
+          linesCount: { oneOf: [1, 3, 5] },
         });
       });
 
@@ -182,7 +187,7 @@ describe("IntFilterQueryVarsBuilder", () => {
         const countOption = {
           label: "Five items",
           value: "5",
-          slug: "5"
+          slug: "5",
         };
         const element = createIntFilterElement("linesCount", countOption, "is");
         const query = {};
@@ -192,7 +197,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { eq: 5 }
+          linesCount: { eq: 5 },
         });
       });
 
@@ -201,7 +206,7 @@ describe("IntFilterQueryVarsBuilder", () => {
         const countOptions = [
           { label: "One", value: "1", slug: "1" },
           { label: "Two", value: "2", slug: "2" },
-          { label: "Three", value: "3", slug: "3" }
+          { label: "Three", value: "3", slug: "3" },
         ];
         const element = createIntFilterElement("linesCount", countOptions, "is");
         const query = {};
@@ -211,7 +216,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { oneOf: [1, 2, 3] }
+          linesCount: { oneOf: [1, 2, 3] },
         });
       });
 
@@ -225,7 +230,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { range: { lte: 7 } }
+          linesCount: { range: { lte: 7 } },
         });
       });
     });
@@ -241,7 +246,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: null
+          linesCount: null,
         });
       });
 
@@ -255,7 +260,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: null
+          linesCount: null,
         });
       });
 
@@ -269,7 +274,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { eq: 5 }
+          linesCount: { eq: 5 },
         });
       });
 
@@ -283,7 +288,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          number: { range: { gte: -123 } }
+          number: { range: { gte: -123 } },
         });
       });
 
@@ -297,7 +302,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { range: { gte: 0 } }
+          linesCount: { range: { gte: 0 } },
         });
       });
 
@@ -311,7 +316,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { oneOf: [1, 3] }
+          linesCount: { oneOf: [1, 3] },
         });
       });
 
@@ -325,7 +330,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: null
+          linesCount: null,
         });
       });
     });
@@ -336,7 +341,7 @@ describe("IntFilterQueryVarsBuilder", () => {
         const element = createIntFilterElement("linesCount", "5", "is");
         const originalQuery = {
           status: { eq: "CONFIRMED" },
-          number: { range: { gte: 1000 } }
+          number: { range: { gte: 1000 } },
         };
         const querySnapshot = JSON.parse(JSON.stringify(originalQuery));
 
@@ -352,7 +357,7 @@ describe("IntFilterQueryVarsBuilder", () => {
         const element = createIntFilterElement("linesCount", "3", "lower");
         const query = {
           status: { oneOf: ["PENDING", "CONFIRMED"] },
-          totalGross: { amount: { gte: 50 } }
+          totalGross: { amount: { gte: 50 } },
         };
 
         // Act
@@ -362,7 +367,7 @@ describe("IntFilterQueryVarsBuilder", () => {
         expect(result).toEqual({
           status: { oneOf: ["PENDING", "CONFIRMED"] },
           totalGross: { amount: { gte: 50 } },
-          linesCount: { range: { lte: 3 } }
+          linesCount: { range: { lte: 3 } },
         });
       });
 
@@ -370,7 +375,7 @@ describe("IntFilterQueryVarsBuilder", () => {
         // Arrange
         const element = createIntFilterElement("linesCount", "10", "greater");
         const query = {
-          linesCount: { eq: 5 }
+          linesCount: { eq: 5 },
         };
 
         // Act
@@ -378,7 +383,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { range: { gte: 10 } }
+          linesCount: { range: { gte: 10 } },
         });
       });
     });
@@ -394,7 +399,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          number: { eq: 999999999 }
+          number: { eq: 999999999 },
         });
       });
 
@@ -408,7 +413,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          number: { eq: 0 } // parseInt("0x123", 10) returns 0
+          number: { eq: 0 }, // parseInt("0x123", 10) returns 0
         });
       });
 
@@ -422,7 +427,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { eq: 5 }
+          linesCount: { eq: 5 },
         });
       });
 
@@ -436,7 +441,7 @@ describe("IntFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          linesCount: { oneOf: [7] }
+          linesCount: { oneOf: [7] },
         });
       });
     });
