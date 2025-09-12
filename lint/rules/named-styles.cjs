@@ -9,28 +9,21 @@ module.exports = {
           fix: fixer =>
             fixer.insertTextAfter(
               codePath.arguments[0],
-              `,{ name: "${context
-                .getFilename()
-                .split("/")
-                .slice(-1)[0]
-                .replace(/\..+/, "")}" }`
+              `,{ name: "${context.getFilename().split("/").slice(-1)[0].replace(/\..+/, "")}" }`,
             ),
           loc: codePath.callee.loc,
-          messageId:
-            codePath.callee.name === "makeStyles"
-              ? "expectedNameHook"
-              : "expectedNameHoc",
-          node
+          messageId: codePath.callee.name === "makeStyles" ? "expectedNameHook" : "expectedNameHoc",
+          node,
         });
       }
-    }
+    },
   }),
   meta: {
     fixable: "code",
     messages: {
       expectedNameHoc: 'withStyles hook should have "name" property.',
-      expectedNameHook: 'makeStyles hook should have "name" property.'
+      expectedNameHook: 'makeStyles hook should have "name" property.',
     },
-    type: "problem"
-  }
+    type: "problem",
+  },
 };

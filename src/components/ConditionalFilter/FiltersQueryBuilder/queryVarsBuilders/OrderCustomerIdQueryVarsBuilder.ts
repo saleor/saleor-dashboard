@@ -1,4 +1,3 @@
-
 import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
@@ -7,8 +6,7 @@ export type OrderCustomerFilterQueryPart = {
   user?: { eq: string };
 };
 
-export class OrderCustomerIdQueryVarsBuilder
-  extends BaseMappableQueryVarsBuilder<OrderCustomerFilterQueryPart> {
+export class OrderCustomerIdQueryVarsBuilder extends BaseMappableQueryVarsBuilder<OrderCustomerFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     return element.value.type === "customer";
   }
@@ -18,6 +16,6 @@ export class OrderCustomerIdQueryVarsBuilder
   }
 
   protected getQueryFieldName(): string {
-    return "user"
+    return "user";
   }
 }

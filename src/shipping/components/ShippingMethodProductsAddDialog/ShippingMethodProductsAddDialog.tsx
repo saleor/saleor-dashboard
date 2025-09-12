@@ -16,7 +16,7 @@ import { FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import { Fragment,useState } from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Product, Products } from "./types";

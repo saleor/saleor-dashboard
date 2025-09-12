@@ -8,7 +8,7 @@ module.exports = {
       from: {},
       to: {
         path: "@saleor/macaw-ui",
-        pathNot: "@saleor/macaw-ui-next"
+        pathNot: "@saleor/macaw-ui-next",
       },
     },
     {
@@ -37,8 +37,7 @@ module.exports = {
     reporterOptions: {
       dot: {
         collapsePattern: "node_modules/[^/]+",
-        collapsePattern:
-          "^(packages|src|lib|app|bin|test(s?)|spec(s?))/[^/]+|node_modules/[^/]+",
+        collapsePattern: "^(packages|src|lib|app|bin|test(s?)|spec(s?))/[^/]+|node_modules/[^/]+",
       },
       text: {
         highlightFocused: true,

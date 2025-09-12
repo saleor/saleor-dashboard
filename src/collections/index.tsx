@@ -35,7 +35,10 @@ interface CollectionDetailsRouteProps {
   id: string;
 }
 
-const CollectionDetails = ({ location, match }: RouteComponentProps<CollectionDetailsRouteProps>) => {
+const CollectionDetails = ({
+  location,
+  match,
+}: RouteComponentProps<CollectionDetailsRouteProps>) => {
   const qs = parseQs(location.search.substr(1));
   const params: CollectionUrlQueryParams = qs;
 

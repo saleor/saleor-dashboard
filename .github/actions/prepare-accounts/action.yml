@@ -25,7 +25,6 @@ outputs:
     description: "Encrypted accounts"
     value: ${{ steps.accounts.outputs.ACCOUNTS }}
 
-
 runs:
   using: "composite"
   steps:
@@ -38,7 +37,7 @@ runs:
       id: accounts
       env:
         BASE_URL: ${{ inputs.BASE_URL }}
-        API_URL:  ${{ inputs.API_URL }}
+        API_URL: ${{ inputs.API_URL }}
         E2E_USER_NAME: ${{ inputs.E2E_USER_NAME }}
         E2E_USER_PASSWORD: ${{ inputs.E2E_USER_PASSWORD }}
         E2E_ENCODE_PASS: ${{ inputs.E2E_ENCODE_PASS }}

@@ -13,30 +13,29 @@ export type FulfillmentWarehouseFilterQueryPart = {
   }>;
 };
 
-/** 
+/**
  * Builds query for warehouse filtering on order fulfillments
  * Maps fulfillmentWarehouse field to the nested structure:
  * fulfillments: [{ warehouse: { id: { eq: "warehouseId" } } }]
  */
 export class FulfillmentWarehouseQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<FulfillmentWarehouseFilterQueryPart> {
-
+  implements WhereOnlyQueryVarsBuilder<FulfillmentWarehouseFilterQueryPart>
+{
   canHandle(element: FilterElement): boolean {
     return element.value.type === "fulfillmentWarehouse";
   }
 
-  createOptionFetcher(
-    client: ApolloClient<unknown>,
-    inputValue: string,
-  ): Handler {
+  createOptionFetcher(client: ApolloClient<unknown>, inputValue: string): Handler {
     return new WarehouseHandler(client, inputValue);
   }
 
   updateWhereQueryVariables(
     query: Readonly<FulfillmentWarehouseFilterQueryPart>,
-    element: FilterElement
+    element: FilterElement,
   ): FulfillmentWarehouseFilterQueryPart {
-    const conditionValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element) as { eq?: string; oneOf?: string[] };
+    const conditionValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(
+      element,
+    ) as { eq?: string; oneOf?: string[] };
 
     if (!conditionValue || !(conditionValue?.oneOf || conditionValue?.eq)) {
       return query as FulfillmentWarehouseFilterQueryPart;
