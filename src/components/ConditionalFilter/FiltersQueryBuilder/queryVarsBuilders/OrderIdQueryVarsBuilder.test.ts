@@ -9,11 +9,18 @@ import { OrderIdQueryVarsBuilder } from "./OrderIdQueryVarsBuilder";
 describe("OrderIdQueryVarsBuilder", () => {
   const builder = new OrderIdQueryVarsBuilder();
 
-  function createElement(selectedValue: ConditionValue, conditionLabel: string = "is"): FilterElement {
+  function createElement(
+    selectedValue: ConditionValue,
+    conditionLabel: string = "is",
+  ): FilterElement {
     const type = "ids";
     const value = new ExpressionValue(type, type, type);
     const conditionType = Array.isArray(selectedValue) ? "multiselect" : "select";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
     const condition = new Condition(ConditionOptions.fromName(type), selected, false);
 
@@ -85,7 +92,7 @@ describe("OrderIdQueryVarsBuilder", () => {
         { label: "#2", value: "v2", slug: "s2", originalSlug: "ord_2" },
       ];
       const element = createElement(options);
-      
+
       // Act
       const result = builder.updateWhereQueryVariables({}, element);
 
@@ -100,7 +107,7 @@ describe("OrderIdQueryVarsBuilder", () => {
         { label: "#2", value: "ord_2", slug: "s2" },
       ];
       const element = createElement(options);
-      
+
       // Act
       const result = builder.updateWhereQueryVariables({}, element);
 

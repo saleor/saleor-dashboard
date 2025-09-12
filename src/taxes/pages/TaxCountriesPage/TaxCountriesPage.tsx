@@ -29,7 +29,7 @@ import {
   SearchIcon,
 } from "@saleor/macaw-ui";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import { Fragment,useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TaxInput from "../../components/TaxInput";

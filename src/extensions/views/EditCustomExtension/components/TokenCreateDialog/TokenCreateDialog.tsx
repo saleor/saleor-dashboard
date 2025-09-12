@@ -6,7 +6,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Mono } from "./Mono";

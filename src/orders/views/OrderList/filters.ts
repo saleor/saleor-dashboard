@@ -1,7 +1,5 @@
 import { OrderAuthorizeStatusEnum, OrderChargeStatusEnum, OrderStatus } from "@dashboard/graphql";
-import {
-  OrderFilterKeys,
-} from "@dashboard/orders/components/OrderListPage/filters";
+import { OrderFilterKeys } from "@dashboard/orders/components/OrderListPage/filters";
 
 import {
   FilterElement,
@@ -74,7 +72,11 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
       return getSingleValueQueryParam(filter, OrderListUrlFiltersEnum.hasFulfillments);
 
     case OrderFilterKeys.invoicesCreatedAt:
-      return getMinMaxQueryParam(filter, OrderListUrlFiltersEnum.invoicesCreatedFrom, OrderListUrlFiltersEnum.invoicesCreatedTo);
+      return getMinMaxQueryParam(
+        filter,
+        OrderListUrlFiltersEnum.invoicesCreatedFrom,
+        OrderListUrlFiltersEnum.invoicesCreatedTo,
+      );
 
     case OrderFilterKeys.authorizeStatus:
       return getMultipleEnumValueQueryParam(
@@ -93,7 +95,6 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
       return {};
   }
 }
-
 
 export const storageUtils = createFilterTabUtils<string>(ORDER_FILTERS_KEY);
 

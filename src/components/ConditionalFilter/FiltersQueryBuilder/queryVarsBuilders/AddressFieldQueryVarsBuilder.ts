@@ -15,26 +15,31 @@ export type AddressFilterQueryPart = {
 };
 
 export class AddressFieldQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<AddressFilterQueryPart> {
-
+  implements WhereOnlyQueryVarsBuilder<AddressFilterQueryPart>
+{
   canHandle(element: FilterElement): boolean {
     const type = element.value.type;
 
-    return type === "billingPhoneNumber" || type === "billingCountry" ||
-      type === "shippingPhoneNumber" || type === "shippingCountry";
+    return (
+      type === "billingPhoneNumber" ||
+      type === "billingCountry" ||
+      type === "shippingPhoneNumber" ||
+      type === "shippingCountry"
+    );
   }
 
-  createOptionFetcher(
-  ): Handler {
+  createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 
   updateWhereQueryVariables(
     query: Readonly<AddressFilterQueryPart>,
-    element: FilterElement
+    element: FilterElement,
   ): AddressFilterQueryPart {
     const type = element.value.type;
-    const conditionValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element) as { eq?: string; oneOf?: string[] } | null;
+    const conditionValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(
+      element,
+    ) as { eq?: string; oneOf?: string[] } | null;
 
     if (!conditionValue) {
       return query as AddressFilterQueryPart;
@@ -45,22 +50,22 @@ export class AddressFieldQueryVarsBuilder
     if (type === "billingPhoneNumber") {
       newQuery.billingAddress = {
         ...newQuery.billingAddress,
-        phoneNumber: conditionValue
+        phoneNumber: conditionValue,
       };
     } else if (type === "billingCountry") {
       newQuery.billingAddress = {
         ...newQuery.billingAddress,
-        country: conditionValue
+        country: conditionValue,
       };
     } else if (type === "shippingPhoneNumber") {
       newQuery.shippingAddress = {
         ...newQuery.shippingAddress,
-        phoneNumber: conditionValue
+        phoneNumber: conditionValue,
       };
     } else if (type === "shippingCountry") {
       newQuery.shippingAddress = {
         ...newQuery.shippingAddress,
-        country: conditionValue
+        country: conditionValue,
       };
     }
 
