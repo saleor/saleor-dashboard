@@ -1,4 +1,5 @@
 import Link from "@dashboard/components/Link";
+import { PAYMENT_APPS_DOCS_URL, PAYMENT_PLUGINS_DOCS_URL } from "@dashboard/links";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
@@ -33,7 +34,7 @@ export const MarkAsPaid = ({ hasError, isChecked, onCheckedChange, disabled }: M
           values={{
             link: (
               <Link
-                href="https://docs.saleor.io/developer/payments/payment-apps"
+                href={PAYMENT_APPS_DOCS_URL}
                 target="_blank"
                 rel="noopener noreferer"
               >
@@ -50,7 +51,7 @@ export const MarkAsPaid = ({ hasError, isChecked, onCheckedChange, disabled }: M
           values={{
             link: (
               <Link
-                href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                href={PAYMENT_PLUGINS_DOCS_URL}
                 target="_blank"
                 rel="noopener noreferer"
               >

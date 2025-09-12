@@ -3,6 +3,7 @@ import { getPermissionsDiff } from "@dashboard/apps/getPermissionsDiff";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import Link from "@dashboard/components/Link";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
+import { APP_PERMISSIONS_DOCS_URL } from "@dashboard/links";
 import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui-next";
 import { useEffect,useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -163,7 +164,7 @@ export const AppPermissionRequestView = () => {
           <SmallText as="p">
             <Link
               target="__blank"
-              href="https://docs.saleor.io/developer/permissions#app-permissions"
+              href={APP_PERMISSIONS_DOCS_URL}
             >
               {formatMessage(appPermissionsRequestViewMessages.permissionsDocsLink)}
             </Link>
