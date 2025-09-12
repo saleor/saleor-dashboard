@@ -53,7 +53,7 @@ const IframePost = ({
     if (iframeRef.current && loadingRef.current) {
       const iframe = iframeRef.current;
       const loading = loadingRef.current;
-      
+
       const onload = () => {
         if (loading) {
           loading.style.display = "none";

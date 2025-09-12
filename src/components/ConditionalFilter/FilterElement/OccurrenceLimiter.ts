@@ -9,7 +9,7 @@ export class OccurrenceLimiter {
   constructor(
     public fieldName: string,
     public maxOccurrences: number,
-  ) { }
+  ) {}
 
   public static fromSlug(slug: string): OccurrenceLimiter | null {
     const limit = OCCURRENCE_LIMITS[slug as keyof typeof OCCURRENCE_LIMITS];
@@ -33,7 +33,7 @@ export class OccurrenceLimiter {
 
   public static filterAvailableOperands(
     operands: LeftOperand[],
-    container: FilterContainer
+    container: FilterContainer,
   ): LeftOperand[] {
     return operands.filter(operand => {
       const limiter = OccurrenceLimiter.fromSlug(operand.value);
