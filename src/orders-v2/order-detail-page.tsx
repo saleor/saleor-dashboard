@@ -11,7 +11,7 @@ import { OrderHeader } from "./order-header";
 import { OrderInvoices } from "./order-invoices";
 import { OrderLines } from "./order-lines";
 import { OrderCustomerNote } from "./order-notes";
-import { OrderRefunds } from "./order-refunds";
+import { OrderRefunds } from "./order-refunds/order-refunds";
 import { OrderSummary } from "./order-summary/order-summary";
 
 export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => {

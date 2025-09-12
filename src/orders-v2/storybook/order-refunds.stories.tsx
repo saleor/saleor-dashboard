@@ -2,7 +2,7 @@ import { TransactionEventTypeEnum } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { OrderFixture } from "../fixtures/order-fixture";
-import { OrderRefunds } from "../order-refunds";
+import { OrderRefunds } from "../order-refunds/order-refunds";
 
 const meta = {
   title: "Order Detail Page / Content / Refunds",
