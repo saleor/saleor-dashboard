@@ -23,7 +23,7 @@ export interface Container extends Node {
   name: string;
 }
 export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps {
-  confirmButtonState: ConfirmButtonTransitionState;
+  confirmButtonState?: ConfirmButtonTransitionState;
   containers: Container[];
   loading: boolean;
   labels: Labels;
@@ -50,7 +50,7 @@ function handleContainerAssign(
 const scrollableTargetId = "assignContainerScrollableDialog";
 const AssignContainerDialog = (props: AssignContainerDialogProps) => {
   const {
-    confirmButtonState,
+    confirmButtonState = "default",
     containers,
     hasMore,
     loading,
@@ -101,9 +101,7 @@ const AssignContainerDialog = (props: AssignContainerDialogProps) => {
             <TableBody>
               {!loading && (containers?.length ?? 0) === 0 && (
                 <Text>
-                  <Text>
-                    {emptyMessage ?? "No objects found"}
-                  </Text>
+                  <Text>{emptyMessage ?? "No objects found"}</Text>
                 </Text>
               )}
               {containers?.map(container => {

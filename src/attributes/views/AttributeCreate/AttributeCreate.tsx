@@ -154,6 +154,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
       attribute={null}
       disabled={attributeCreateOpts.loading}
       errors={attributeCreateOpts?.data?.attributeCreate?.errors || []}
+      params={params}
       onDelete={() => undefined}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
@@ -168,6 +169,8 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
           id,
         })
       }
+      onOpenReferenceTypes={() => openModal("assign-reference-types")}
+      onCloseAssignReferenceTypes={closeModal}
       saveButtonBarState={attributeCreateOpts.status}
       values={{
         __typename: "AttributeValueCountableConnection" as const,

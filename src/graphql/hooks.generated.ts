@@ -234,6 +234,16 @@ export const AttributeDetailsFragmentDoc = gql`
   unit
   storefrontSearchPosition
   valueRequired
+  referenceTypes {
+    ... on ProductType {
+      id
+      name
+    }
+    ... on PageType {
+      id
+      name
+    }
+  }
 }
     ${AttributeFragmentDoc}
 ${MetadataFragmentDoc}`;

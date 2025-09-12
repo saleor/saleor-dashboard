@@ -50,6 +50,17 @@ export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.SWATCH,
 ];
 
+export const REFERENCE_ATTRIBUTE_TYPES = [
+  AttributeInputTypeEnum.REFERENCE,
+  AttributeInputTypeEnum.SINGLE_REFERENCE,
+];
+
+export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
+  AttributeEntityTypeEnum.PRODUCT,
+  AttributeEntityTypeEnum.PRODUCT_VARIANT,
+  AttributeEntityTypeEnum.PAGE,
+];
+
 export function filterable(attribute: Pick<AttributeFragment, "inputType">): boolean {
   return ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(attribute.inputType!);
 }
@@ -127,6 +138,7 @@ function getFileOrReferenceAttributeData(
     availableInGrid: undefined,
     filterableInDashboard: undefined,
     filterableInStorefront: undefined,
+    referenceTypes: data.referenceTypes.map(ref => ref.value),
   };
 }
 
