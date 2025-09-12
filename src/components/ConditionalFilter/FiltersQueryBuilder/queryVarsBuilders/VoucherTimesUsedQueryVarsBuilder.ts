@@ -10,7 +10,8 @@ type VoucherTimesUsedQuery = Pick<VoucherFilterInput, "timesUsed">;
 
 export class VoucherTimesUsedQueryVarsBuilder
   extends BaseMappableQueryVarsBuilder<VoucherTimesUsedQuery>
-  implements FilterOnlyQueryVarsBuilder<VoucherTimesUsedQuery> {
+  implements FilterOnlyQueryVarsBuilder<VoucherTimesUsedQuery>
+{
   protected readonly queryField = "timesUsed" as const;
 
   canHandle(element: FilterElement): boolean {

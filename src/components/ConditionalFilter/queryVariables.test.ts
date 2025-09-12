@@ -121,16 +121,18 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
       ),
     ];
     const expectedOutput = {
-      attributes: [{
-        slug: "ref-attr",
-        value: {
-          reference: {
-            referencedIds: {
-              containsAny: ["UGFnZTox"] // Global ID, not label
-            }
-          }
-        }
-      }],
+      attributes: [
+        {
+          slug: "ref-attr",
+          value: {
+            reference: {
+              referencedIds: {
+                containsAny: ["UGFnZTox"], // Global ID, not label
+              },
+            },
+          },
+        },
+      ],
     };
 
     // Act
@@ -172,16 +174,18 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
       ),
     ];
     const expectedOutput = {
-      attributes: [{
-        slug: "ref-attr",
-        value: {
-          reference: {
-            referencedIds: {
-              containsAny: ["UGFnZTox", "UGFnZToyMg=="] // Global IDs, not labels
-            }
-          }
-        }
-      }],
+      attributes: [
+        {
+          slug: "ref-attr",
+          value: {
+            reference: {
+              referencedIds: {
+                containsAny: ["UGFnZTox", "UGFnZToyMg=="], // Global IDs, not labels
+              },
+            },
+          },
+        },
+      ],
     };
 
     // Act

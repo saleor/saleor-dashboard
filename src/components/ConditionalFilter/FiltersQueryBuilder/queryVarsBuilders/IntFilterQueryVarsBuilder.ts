@@ -5,13 +5,9 @@ import { FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
-const SUPPORTED_INT_FILTERS = new Set([
-  "linesCount",
-  "number",
-] as const);
+const SUPPORTED_INT_FILTERS = new Set(["linesCount", "number"] as const);
 
-type SupportedIntKeys =
-  typeof SUPPORTED_INT_FILTERS extends Set<infer T> ? T : never;
+type SupportedIntKeys = typeof SUPPORTED_INT_FILTERS extends Set<infer T> ? T : never;
 
 export type IntFilterQueryPart = {
   linesCount?: IntFilterInput;
@@ -23,8 +19,7 @@ export type IntFilterQueryPart = {
  *
  * For IntRangeInput, use DefaultQueryVarsBuilder
  * E.g. `{field: {gte: 1, lte: 5}}` */
-export class IntFilterQueryVarsBuilder
-  extends BaseMappableQueryVarsBuilder<IntFilterQueryPart> {
+export class IntFilterQueryVarsBuilder extends BaseMappableQueryVarsBuilder<IntFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     return SUPPORTED_INT_FILTERS.has(element.value.value as SupportedIntKeys);
   }
@@ -42,6 +37,9 @@ export class IntFilterQueryVarsBuilder
     const parsedValue = QueryVarsBuilderUtils.getIntegerValueFromElement(element);
     const conditionLabel = element.condition.selected.conditionValue?.label || "";
 
-    return QueryVarsBuilderUtils.handleRangeCondition(parsedValue, conditionLabel) as IntFilterInput;
+    return QueryVarsBuilderUtils.handleRangeCondition(
+      parsedValue,
+      conditionLabel,
+    ) as IntFilterInput;
   }
 }

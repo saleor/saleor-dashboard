@@ -24,7 +24,7 @@ import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { PropsWithChildren,useMemo } from "react";
+import { PropsWithChildren, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";

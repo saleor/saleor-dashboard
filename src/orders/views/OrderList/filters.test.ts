@@ -50,7 +50,7 @@ describe("OrderList Filters", () => {
       expect(filterVariables.AND).toBeDefined();
 
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const statusFilter = andItems.find(item => 'status' in item);
+      const statusFilter = andItems.find(item => "status" in item);
 
       expect(statusFilter?.status).toEqual({ eq: "FULFILLED" });
     });
@@ -78,7 +78,7 @@ describe("OrderList Filters", () => {
       expect(filterVariables.AND).toBeDefined();
 
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const statusFilter = andItems.find(item => 'status' in item);
+      const statusFilter = andItems.find(item => "status" in item);
 
       expect(statusFilter?.status).toEqual({ oneOf: ["FULFILLED", "PARTIALLY_FULFILLED"] });
     });
@@ -91,9 +91,7 @@ describe("OrderList Filters", () => {
       const tokenizedUrl = new TokenArray(params.toString());
       const initialOrderState = InitialOrderStateResponse.empty();
 
-      initialOrderState.authorizeStatus = [
-        { label: "Full", slug: "FULL", value: "FULL" },
-      ];
+      initialOrderState.authorizeStatus = [{ label: "Full", slug: "FULL", value: "FULL" }];
       initialOrderState.chargeStatus = [
         { label: "Fully Charged", slug: "FULLY_CHARGED", value: "FULLY_CHARGED" },
       ];
@@ -107,8 +105,8 @@ describe("OrderList Filters", () => {
       expect(filterVariables.AND).toBeDefined();
 
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const authorizeFilter = andItems.find(item => 'authorizeStatus' in item);
-      const chargeFilter = andItems.find(item => 'chargeStatus' in item);
+      const authorizeFilter = andItems.find(item => "authorizeStatus" in item);
+      const chargeFilter = andItems.find(item => "chargeStatus" in item);
 
       expect(authorizeFilter?.authorizeStatus).toEqual({ eq: "FULL" });
       expect(chargeFilter?.chargeStatus).toEqual({ eq: "FULLY_CHARGED" });
@@ -147,9 +145,9 @@ describe("OrderList Filters", () => {
 
       const andItems = filterVariables.AND as OrderWhereInput[];
 
-      const clickCollectFilter = andItems.find(item => 'isClickAndCollect' in item);
-      const invoicesFilter = andItems.find(item => 'hasInvoices' in item);
-      const fulfillmentsFilter = andItems.find(item => 'hasFulfillments' in item);
+      const clickCollectFilter = andItems.find(item => "isClickAndCollect" in item);
+      const invoicesFilter = andItems.find(item => "hasInvoices" in item);
+      const fulfillmentsFilter = andItems.find(item => "hasFulfillments" in item);
 
       expect(clickCollectFilter?.isClickAndCollect).toBe(true);
       expect(invoicesFilter?.hasInvoices).toBe(false);
@@ -180,8 +178,8 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const giftCardUsedFilter = andItems.find(item => 'isGiftCardUsed' in item);
-      const giftCardBoughtFilter = andItems.find(item => 'isGiftCardBought' in item);
+      const giftCardUsedFilter = andItems.find(item => "isGiftCardUsed" in item);
+      const giftCardBoughtFilter = andItems.find(item => "isGiftCardBought" in item);
 
       expect(giftCardUsedFilter?.isGiftCardUsed).toBe(true);
       expect(giftCardBoughtFilter?.isGiftCardBought).toBe(false);
@@ -205,7 +203,7 @@ describe("OrderList Filters", () => {
       expect(filterVariables.AND).toBeDefined();
 
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const dateFilter = andItems.find(item => 'createdAt' in item);
+      const dateFilter = andItems.find(item => "createdAt" in item);
 
       expect(dateFilter?.createdAt).toEqual({
         gte: "2024-01-01T00:00:00.000Z",
@@ -225,7 +223,7 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const dateFilter = andItems.find(item => 'updatedAt' in item);
+      const dateFilter = andItems.find(item => "updatedAt" in item);
 
       expect(dateFilter?.updatedAt).toEqual({
         gte: "2024-06-01T00:00:00.000Z",
@@ -234,7 +232,9 @@ describe("OrderList Filters", () => {
 
     it("should filter by invoice creation date (between)", () => {
       // Arrange
-      const params = new URLSearchParams("0%5Bs3.invoicesCreatedAt%5D%5B0%5D=2024-03-01&0%5Bs3.invoicesCreatedAt%5D%5B1%5D=2024-03-31");
+      const params = new URLSearchParams(
+        "0%5Bs3.invoicesCreatedAt%5D%5B0%5D=2024-03-01&0%5Bs3.invoicesCreatedAt%5D%5B1%5D=2024-03-31",
+      );
       const tokenizedUrl = new TokenArray(params.toString());
 
       // Act
@@ -244,14 +244,16 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const invoicesFilter = andItems.find(item => 'invoices' in item);
+      const invoicesFilter = andItems.find(item => "invoices" in item);
 
-      expect(invoicesFilter?.invoices).toEqual([{ 
-        createdAt: { 
-          gte: "2024-03-01T00:00:00.000Z", 
-          lte: "2024-03-31T00:00:00.000Z" 
-        } 
-      }]);
+      expect(invoicesFilter?.invoices).toEqual([
+        {
+          createdAt: {
+            gte: "2024-03-01T00:00:00.000Z",
+            lte: "2024-03-31T00:00:00.000Z",
+          },
+        },
+      ]);
     });
 
     it("should filter by invoice creation date (greater than)", () => {
@@ -266,13 +268,15 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const invoicesFilter = andItems.find(item => 'invoices' in item);
+      const invoicesFilter = andItems.find(item => "invoices" in item);
 
-      expect(invoicesFilter?.invoices).toEqual([{ 
-        createdAt: { 
-          gte: "2024-06-01T00:00:00.000Z" 
-        } 
-      }]);
+      expect(invoicesFilter?.invoices).toEqual([
+        {
+          createdAt: {
+            gte: "2024-06-01T00:00:00.000Z",
+          },
+        },
+      ]);
     });
 
     it("should filter by invoice creation date (less than)", () => {
@@ -287,13 +291,15 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const invoicesFilter = andItems.find(item => 'invoices' in item);
+      const invoicesFilter = andItems.find(item => "invoices" in item);
 
-      expect(invoicesFilter?.invoices).toEqual([{ 
-        createdAt: { 
-          lte: "2024-12-31T00:00:00.000Z" 
-        } 
-      }]);
+      expect(invoicesFilter?.invoices).toEqual([
+        {
+          createdAt: {
+            lte: "2024-12-31T00:00:00.000Z",
+          },
+        },
+      ]);
     });
   });
 
@@ -310,10 +316,10 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const priceFilter = andItems.find(item => 'totalGross' in item);
+      const priceFilter = andItems.find(item => "totalGross" in item);
 
       expect(priceFilter?.totalGross).toEqual({
-        amount: { oneOf: [100] }
+        amount: { oneOf: [100] },
       });
     });
 
@@ -331,10 +337,10 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const priceFilter = andItems.find(item => 'totalNet' in item);
+      const priceFilter = andItems.find(item => "totalNet" in item);
 
       expect(priceFilter?.totalNet).toEqual({
-        amount: { range: { gte: 50, lte: 500 } }
+        amount: { range: { gte: 50, lte: 500 } },
       });
     });
 
@@ -350,10 +356,10 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const priceFilter = andItems.find(item => 'totalGross' in item);
+      const priceFilter = andItems.find(item => "totalGross" in item);
 
       expect(priceFilter?.totalGross).toEqual({
-        amount: { range: { lte: 1000 } }
+        amount: { range: { lte: 1000 } },
       });
     });
   });
@@ -375,11 +381,11 @@ describe("OrderList Filters", () => {
       expect(filterVariables.AND).toBeDefined();
 
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const metadataFilter = andItems.find(item => 'metadata' in item);
+      const metadataFilter = andItems.find(item => "metadata" in item);
 
       expect(metadataFilter?.metadata).toEqual({
         key: "campaign",
-        value: { eq: "summer2024" }
+        value: { eq: "summer2024" },
       });
     });
 
@@ -397,16 +403,16 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const metadataFilters = andItems.filter(item => 'metadata' in item);
+      const metadataFilters = andItems.filter(item => "metadata" in item);
 
       expect(metadataFilters).toHaveLength(2);
       expect(metadataFilters[0]?.metadata).toEqual({
         key: "source",
-        value: { eq: "mobile" }
+        value: { eq: "mobile" },
       });
       expect(metadataFilters[1]?.metadata).toEqual({
         key: "priority",
-        value: { eq: "high" }
+        value: { eq: "high" },
       });
     });
 
@@ -424,14 +430,16 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const linesFilter = andItems.find(item => 'lines' in item);
+      const linesFilter = andItems.find(item => "lines" in item);
 
-      expect(linesFilter?.lines).toEqual([{
-        metadata: {
-          key: "customization",
-          value: { eq: "engraved" }
-        }
-      }]);
+      expect(linesFilter?.lines).toEqual([
+        {
+          metadata: {
+            key: "customization",
+            value: { eq: "engraved" },
+          },
+        },
+      ]);
     });
   });
 
@@ -454,11 +462,13 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const fulfillmentsFilter = andItems.find(item => 'fulfillments' in item);
+      const fulfillmentsFilter = andItems.find(item => "fulfillments" in item);
 
-      expect(fulfillmentsFilter?.fulfillments).toEqual([{
-        warehouse: { id: { eq: "WH123" } }
-      }]);
+      expect(fulfillmentsFilter?.fulfillments).toEqual([
+        {
+          warehouse: { id: { eq: "WH123" } },
+        },
+      ]);
     });
 
     it("should filter by fulfillment warehouse (multiple selection)", () => {
@@ -482,11 +492,13 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const fulfillmentsFilter = andItems.find(item => 'fulfillments' in item);
+      const fulfillmentsFilter = andItems.find(item => "fulfillments" in item);
 
-      expect(fulfillmentsFilter?.fulfillments).toEqual([{
-        warehouse: { id: { oneOf: ["WH123", "WH456"] } }
-      }]);
+      expect(fulfillmentsFilter?.fulfillments).toEqual([
+        {
+          warehouse: { id: { oneOf: ["WH123", "WH456"] } },
+        },
+      ]);
     });
 
     it("should combine multiple fulfillment filters", () => {
@@ -511,14 +523,14 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const fulfillmentsFilter = andItems.find(item => 'fulfillments' in item);
+      const fulfillmentsFilter = andItems.find(item => "fulfillments" in item);
 
       expect(fulfillmentsFilter?.fulfillments).toHaveLength(2);
       expect(fulfillmentsFilter?.fulfillments).toContainEqual({
-        warehouse: { id: { eq: "WH123" } }
+        warehouse: { id: { eq: "WH123" } },
       });
       expect(fulfillmentsFilter?.fulfillments).toContainEqual({
-        status: { eq: "FULFILLED" }
+        status: { eq: "FULFILLED" },
       });
     });
 
@@ -528,9 +540,7 @@ describe("OrderList Filters", () => {
       const tokenizedUrl = new TokenArray(params.toString());
       const initialOrderState = InitialOrderStateResponse.empty();
 
-      initialOrderState.transactionsPaymentType = [
-        { label: "Card", slug: "CARD", value: "CARD" },
-      ];
+      initialOrderState.transactionsPaymentType = [{ label: "Card", slug: "CARD", value: "CARD" }];
 
       // Act
       const filterVariables = createOrderQueryVariables(
@@ -539,13 +549,15 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const transactionsFilter = andItems.find(item => 'transactions' in item);
+      const transactionsFilter = andItems.find(item => "transactions" in item);
 
-      expect(transactionsFilter?.transactions).toEqual([{
-        paymentMethodDetails: {
-          type: { eq: "CARD" }
-        }
-      }]);
+      expect(transactionsFilter?.transactions).toEqual([
+        {
+          paymentMethodDetails: {
+            type: { eq: "CARD" },
+          },
+        },
+      ]);
     });
   });
 
@@ -562,7 +574,7 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const userFilter = andItems.find(item => 'user' in item);
+      const userFilter = andItems.find(item => "user" in item);
 
       expect(userFilter?.user).toEqual({ eq: "john.doe@example.com" });
     });
@@ -574,7 +586,7 @@ describe("OrderList Filters", () => {
       const initialOrderState = InitialOrderStateResponse.empty();
 
       initialOrderState.userEmail = [
-        { label: "customer@shop.com", slug: "customer@shop.com", value: "customer@shop.com" }
+        { label: "customer@shop.com", slug: "customer@shop.com", value: "customer@shop.com" },
       ];
 
       // Act
@@ -584,7 +596,7 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const emailFilter = andItems.find(item => 'userEmail' in item);
+      const emailFilter = andItems.find(item => "userEmail" in item);
 
       // Single selection with arrays uses eq
       expect(emailFilter?.userEmail).toEqual({ eq: "customer@shop.com" });
@@ -602,7 +614,7 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const numberFilter = andItems.find(item => 'number' in item);
+      const numberFilter = andItems.find(item => "number" in item);
 
       expect(numberFilter?.number).toEqual({ oneOf: [12345] });
     });
@@ -613,9 +625,7 @@ describe("OrderList Filters", () => {
       const tokenizedUrl = new TokenArray(params.toString());
       const initialOrderState = InitialOrderStateResponse.empty();
 
-      initialOrderState.voucherCode = [
-        { label: "SUMMER20", slug: "SUMMER20", value: "SUMMER20" }
-      ];
+      initialOrderState.voucherCode = [{ label: "SUMMER20", slug: "SUMMER20", value: "SUMMER20" }];
 
       // Act
       const filterVariables = createOrderQueryVariables(
@@ -624,7 +634,7 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const voucherFilter = andItems.find(item => 'voucherCode' in item);
+      const voucherFilter = andItems.find(item => "voucherCode" in item);
 
       // Single selection with arrays uses eq
       expect(voucherFilter?.voucherCode).toEqual({ eq: "SUMMER20" });
@@ -650,7 +660,7 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const idsFilter = andItems.find(item => 'ids' in item);
+      const idsFilter = andItems.find(item => "ids" in item);
 
       expect(idsFilter?.ids).toEqual(["T3JkZXI6MQ==", "T3JkZXI6Mg=="]);
     });
@@ -674,7 +684,7 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const channelFilter = andItems.find(item => 'channelId' in item);
+      const channelFilter = andItems.find(item => "channelId" in item);
 
       expect(channelFilter?.channelId).toEqual({ oneOf: ["CH123"] });
     });
@@ -687,12 +697,8 @@ describe("OrderList Filters", () => {
       const tokenizedUrl = new TokenArray(params.toString());
       const initialOrderState = InitialOrderStateResponse.empty();
 
-      initialOrderState.billingCountry = [
-        { label: "United States", slug: "US", value: "US" },
-      ];
-      initialOrderState.shippingCountry = [
-        { label: "Canada", slug: "CA", value: "CA" },
-      ];
+      initialOrderState.billingCountry = [{ label: "United States", slug: "US", value: "US" }];
+      initialOrderState.shippingCountry = [{ label: "Canada", slug: "CA", value: "CA" }];
 
       // Act
       const filterVariables = createOrderQueryVariables(
@@ -701,14 +707,14 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const billingFilter = andItems.find(item => 'billingAddress' in item);
-      const shippingFilter = andItems.find(item => 'shippingAddress' in item);
+      const billingFilter = andItems.find(item => "billingAddress" in item);
+      const shippingFilter = andItems.find(item => "shippingAddress" in item);
 
       expect(billingFilter?.billingAddress).toEqual({
-        country: { eq: "US" }
+        country: { eq: "US" },
       });
       expect(shippingFilter?.shippingAddress).toEqual({
-        country: { eq: "CA" }
+        country: { eq: "CA" },
       });
     });
   });
@@ -722,12 +728,8 @@ describe("OrderList Filters", () => {
       const tokenizedUrl = new TokenArray(params.toString());
       const initialOrderState = InitialOrderStateResponse.empty();
 
-      initialOrderState.status = [
-        { label: "Fulfilled", slug: "FULFILLED", value: "FULFILLED" },
-      ];
-      initialOrderState.isClickAndCollect = [
-        { label: "No", slug: "false", value: "false" },
-      ];
+      initialOrderState.status = [{ label: "Fulfilled", slug: "FULFILLED", value: "FULFILLED" }];
+      initialOrderState.isClickAndCollect = [{ label: "No", slug: "false", value: "false" }];
 
       // Act
       const filterVariables = createOrderQueryVariables(
@@ -743,11 +745,11 @@ describe("OrderList Filters", () => {
       expect(andItems.length).toBeGreaterThanOrEqual(5);
 
       // Check each filter type is present
-      expect(andItems.find(item => 'status' in item)).toBeDefined();
-      expect(andItems.find(item => 'isClickAndCollect' in item)).toBeDefined();
-      expect(andItems.find(item => 'createdAt' in item)).toBeDefined();
-      expect(andItems.find(item => 'totalGross' in item)).toBeDefined();
-      expect(andItems.find(item => 'user' in item)).toBeDefined();
+      expect(andItems.find(item => "status" in item)).toBeDefined();
+      expect(andItems.find(item => "isClickAndCollect" in item)).toBeDefined();
+      expect(andItems.find(item => "createdAt" in item)).toBeDefined();
+      expect(andItems.find(item => "totalGross" in item)).toBeDefined();
+      expect(andItems.find(item => "user" in item)).toBeDefined();
     });
 
     it("should handle complex nested filters with arrays", () => {
@@ -773,7 +775,7 @@ describe("OrderList Filters", () => {
 
       // Assert
       const andItems = filterVariables.AND as OrderWhereInput[];
-      const fulfillmentsFilters = andItems.filter(item => 'fulfillments' in item);
+      const fulfillmentsFilters = andItems.filter(item => "fulfillments" in item);
 
       // All fulfillment-related filters should be combined
       expect(fulfillmentsFilters.length).toBeGreaterThanOrEqual(1);
@@ -783,20 +785,13 @@ describe("OrderList Filters", () => {
       expect(fulfillmentsFilter?.fulfillments).toBeDefined();
 
       // Check that warehouse, status, and metadata filters are all present
-      const hasWarehouseFilter = fulfillmentsFilter?.fulfillments?.some(
-        f => 'warehouse' in f
-      );
-      const hasStatusFilter = fulfillmentsFilter?.fulfillments?.some(
-        f => 'status' in f
-      );
-      const hasMetadataFilter = fulfillmentsFilter?.fulfillments?.some(
-        f => 'metadata' in f
-      );
+      const hasWarehouseFilter = fulfillmentsFilter?.fulfillments?.some(f => "warehouse" in f);
+      const hasStatusFilter = fulfillmentsFilter?.fulfillments?.some(f => "status" in f);
+      const hasMetadataFilter = fulfillmentsFilter?.fulfillments?.some(f => "metadata" in f);
 
       expect(hasWarehouseFilter).toBe(true);
       expect(hasStatusFilter).toBe(true);
       expect(hasMetadataFilter).toBe(true);
     });
   });
-
 });

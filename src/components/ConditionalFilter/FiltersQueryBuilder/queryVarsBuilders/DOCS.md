@@ -14,10 +14,10 @@ Follow these steps to add a new builder for a filter field.
 
 ### Step 1: Choose a Base Class
 
-| Base Class                      | When to Use                                         | Example Use Case      |
-| ------------------------------- | --------------------------------------------------- | --------------------- |
-| `BaseMappableQueryVarsBuilder`  | For simple field renaming (e.g., `channels` -> `channelId`). | Renaming a field name |
-| Implement `QueryVarsBuilder`    | For complex transformations requiring custom logic.   | `Metadata`, `Attribute` |
+| Base Class                     | When to Use                                                  | Example Use Case        |
+| ------------------------------ | ------------------------------------------------------------ | ----------------------- |
+| `BaseMappableQueryVarsBuilder` | For simple field renaming (e.g., `channels` -> `channelId`). | Renaming a field name   |
+| Implement `QueryVarsBuilder`   | For complex transformations requiring custom logic.          | `Metadata`, `Attribute` |
 
 ### Step 2: Implement the Builder
 
@@ -64,6 +64,7 @@ new FilterQueryVarsBuilderResolver([
 
 1.  **Registration Order**: Always register specific builders before generic ones. `DefaultQueryVarsBuilder` must be last.
 2.  **Immutability**: Builders must **not** mutate the incoming `query` object. Always return a new object with the modifications.
+
     ```typescript
     // GOOD: Return a new object
     updateWhereQueryVariables(query, element) {
@@ -79,5 +80,6 @@ new FilterQueryVarsBuilderResolver([
       return query;
     }
     ```
+
 3.  **Use Utilities**: Use `QueryVarsBuilderUtils` for safely extracting values from a `FilterElement` to handle different conditions and data types correctly.
 4.  **API Support**: If your builder needs to support both the legacy `FILTER` API and the modern `WHERE` API, ensure you implement both `updateFilterQueryVariables` and `updateFilterQueryVariables`.

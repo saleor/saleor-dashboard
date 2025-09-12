@@ -190,16 +190,18 @@ describe("AttributeQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({
-        attributes: [{
-          slug: attributeSlug,
-          value: {
-            reference: {
-              referencedIds: {
-                containsAny: ["UGFnZTox"]
-              }
-            }
-          }
-        }]
+        attributes: [
+          {
+            slug: attributeSlug,
+            value: {
+              reference: {
+                referencedIds: {
+                  containsAny: ["UGFnZTox"],
+                },
+              },
+            },
+          },
+        ],
       });
     });
 
