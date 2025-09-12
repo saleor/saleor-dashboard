@@ -2052,6 +2052,19 @@ enum WebhookEventTypeEnum @doc(category: "Webhooks") {
   A checkout is updated. It also triggers all updates related to the checkout.
   """
   CHECKOUT_UPDATED
+
+  """
+  A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+  
+  This event is emitted only for checkouts whose payments are processed through the Transaction API.
+  """
+  CHECKOUT_FULLY_AUTHORIZED
+
+  """
+  A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+  
+  This event is emitted only for checkouts whose payments are processed through the Transaction API.
+  """
   CHECKOUT_FULLY_PAID
 
   """A checkout metadata is updated."""
@@ -2614,6 +2627,19 @@ enum WebhookEventTypeAsyncEnum @doc(category: "Webhooks") {
   A checkout is updated. It also triggers all updates related to the checkout.
   """
   CHECKOUT_UPDATED
+
+  """
+  A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+  
+  This event is emitted only for checkouts whose payments are processed through the Transaction API.
+  """
+  CHECKOUT_FULLY_AUTHORIZED
+
+  """
+  A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+  
+  This event is emitted only for checkouts whose payments are processed through the Transaction API.
+  """
   CHECKOUT_FULLY_PAID
 
   """A checkout metadata is updated."""
@@ -3425,6 +3451,7 @@ enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
   PRODUCT_VARIANT_STOCK_UPDATED
   CHECKOUT_CREATED
   CHECKOUT_UPDATED
+  CHECKOUT_FULLY_AUTHORIZED
   CHECKOUT_FULLY_PAID
   CHECKOUT_METADATA_UPDATED
   NOTIFY_USER
@@ -5578,7 +5605,7 @@ type ProductCountableEdge @doc(category: "Products") {
 }
 
 """Represents an individual item for sale in the storefront."""
-type Product implements Node & ObjectWithMetadata @doc(category: "Products") {
+type Product implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(category: "Products") {
   """The ID of the product."""
   id: ID!
 
@@ -5611,6 +5638,26 @@ type Product implements Node & ObjectWithMetadata @doc(category: "Products") {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   """
   metafields(keys: [String!]): Metadata
+
+  """
+  Get a single attribute attached to product by attribute slug.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttribute(
+    """Slug of the attribute"""
+    slug: String!
+  ): AssignedAttribute
+
+  """
+  List of attributes assigned to this product.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttributes(
+    """Maximum number of attributes to return. Default is 100."""
+    limit: PositiveInt = 100
+  ): [AssignedAttribute!]!
 
   """SEO title of the product."""
   seoTitle: String
@@ -5699,34 +5746,14 @@ type Product implements Node & ObjectWithMetadata @doc(category: "Products") {
   """A type of tax. Assigned by enabled tax gateway"""
   taxType: TaxType @deprecated(reason: "Use `taxClass` field instead.")
 
-  """
-  Get a single attribute attached to product by attribute slug.
-  
-  Added in Saleor 3.22.
-  """
-  assignedAttribute(
-    """Slug of the attribute"""
-    slug: String!
-  ): AssignedAttribute
-
-  """
-  List of attributes assigned to this product.
-  
-  Added in Saleor 3.22.
-  """
-  assignedAttributes(
-    """Maximum number of attributes to return. Default is 100."""
-    limit: PositiveInt = 100
-  ): [AssignedAttribute!]!
-
   """Get a single attribute attached to product by attribute slug."""
   attribute(
     """Slug of the attribute"""
     slug: String!
-  ): SelectedAttribute
+  ): SelectedAttribute @deprecated(reason: "Use the `assignedAttribute` field instead.")
 
   """List of attributes assigned to this product."""
-  attributes: [SelectedAttribute!]!
+  attributes: [SelectedAttribute!]! @deprecated(reason: "Use the `assignedAttributes` field instead.")
 
   """
   List of availability in channels for the product.
@@ -5834,6 +5861,266 @@ type Product implements Node & ObjectWithMetadata @doc(category: "Products") {
   """External ID of this product."""
   externalReference: String
 }
+
+"""
+An object with attributes.
+
+Added in Saleor 3.22.
+"""
+interface ObjectWithAttributes @doc(category: "Attributes") {
+  """
+  Get a single attribute attached to the object by attribute slug.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttribute(
+    """Slug of the attribute"""
+    slug: String!
+  ): AssignedAttribute @doc(category: "Attributes")
+
+  """
+  List of attributes assigned to the object.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttributes(
+    """Maximum number of attributes to return. Default is 100."""
+    limit: PositiveInt = 100
+  ): [AssignedAttribute!]!
+}
+
+"""
+Represents an attribute assigned to an object.
+
+Added in Saleor 3.22.
+"""
+interface AssignedAttribute @doc(category: "Attributes") {
+  """Attribute assigned to an object."""
+  attribute: Attribute!
+}
+
+"""
+Custom attribute of a product. Attributes can be assigned to products and variants at the product type level.
+"""
+type Attribute implements Node & ObjectWithMetadata @doc(category: "Attributes") {
+  """The ID of the attribute."""
+  id: ID!
+
+  """List of private metadata items. Requires staff permissions to access."""
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """List of public metadata items. Can be accessed without permissions."""
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+  """
+  metafields(keys: [String!]): Metadata
+
+  """The input type to use for entering attribute values in the dashboard."""
+  inputType: AttributeInputTypeEnum
+
+  """The entity type which can be used as a reference."""
+  entityType: AttributeEntityTypeEnum
+
+  """
+  The reference types (product or page type) that are used to narrow down the choices of reference objects.
+  
+  Added in Saleor 3.22.
+  """
+  referenceTypes(
+    """
+    Maximum number of objects to return. Value must be greater than 0. Default is 100.
+    """
+    limit: PositiveInt = 100
+  ): [ReferenceType!]
+
+  """Name of an attribute displayed in the interface."""
+  name: String
+
+  """Internal representation of an attribute name."""
+  slug: String
+
+  """The attribute type."""
+  type: AttributeTypeEnum
+
+  """The unit of attribute values."""
+  unit: MeasurementUnitsEnum
+
+  """
+  A list of predefined attribute choices available for selection. Available only for attributes with predefined choices.
+  """
+  choices(
+    """Sort attribute choices."""
+    sortBy: AttributeChoicesSortingInput
+
+    """Filtering options for attribute choices."""
+    filter: AttributeValueFilterInput @deprecated(reason: "Use `where` filter instead.")
+
+    """
+    Where filtering options for attribute choices.
+    
+    Added in Saleor 3.22.
+    """
+    where: AttributeValueWhereInput
+
+    """
+    Search attribute choices.
+    
+    Added in Saleor 3.22.
+    """
+    search: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): AttributeValueCountableConnection
+
+  """
+  Whether the attribute requires values to be passed or not. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  valueRequired: Boolean!
+
+  """
+  Whether the attribute should be visible or not in storefront. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  visibleInStorefront: Boolean!
+
+  """
+  Whether the attribute can be filtered in storefront. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  filterableInStorefront: Boolean! @deprecated
+
+  """
+  Whether the attribute can be filtered in dashboard. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  filterableInDashboard: Boolean!
+
+  """
+  Whether the attribute can be displayed in the admin product list. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  availableInGrid: Boolean! @deprecated
+
+  """
+  The position of the attribute in the storefront navigation (0 by default). Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  """
+  storefrontSearchPosition: Int! @deprecated
+
+  """Returns translated attribute fields for the given language code."""
+  translation(
+    """A language code to return the translation for attribute."""
+    languageCode: LanguageCodeEnum!
+  ): AttributeTranslation
+
+  """Flag indicating that attribute has predefined choices."""
+  withChoices: Boolean!
+
+  """
+  A list of product types that use this attribute as a product attribute.
+  """
+  productTypes(
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): ProductTypeCountableConnection!
+
+  """
+  A list of product types that use this attribute as a product variant attribute.
+  """
+  productVariantTypes(
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): ProductTypeCountableConnection!
+
+  """External ID of this attribute."""
+  externalReference: String
+}
+
+enum AttributeInputTypeEnum @doc(category: "Attributes") {
+  DROPDOWN
+  MULTISELECT
+  FILE
+  REFERENCE
+  SINGLE_REFERENCE
+  NUMERIC
+  RICH_TEXT
+  PLAIN_TEXT
+  SWATCH
+  BOOLEAN
+  DATE
+  DATE_TIME
+}
+
+enum AttributeEntityTypeEnum @doc(category: "Attributes") {
+  PAGE
+  PRODUCT
+  PRODUCT_VARIANT
+  CATEGORY
+  COLLECTION
+}
+
+"""
+The reference types (product or page type) that are used to narrow down the choices of reference objects.
+ProductType applicable for reference attribute with `PRODUCT` or `PRODUCT_VARIANT` entity type.
+PageType applicable for reference attribute with `PAGE` entity type.
+"""
+union ReferenceType = ProductType | PageType
 
 """
 Represents a type of product. It defines what attributes are available to products of this type.
@@ -6047,313 +6334,23 @@ type TaxClassCountryRate @doc(category: "Taxes") {
   taxClass: TaxClass
 }
 
-"""
-Custom attribute of a product. Attributes can be assigned to products and variants at the product type level.
-"""
-type Attribute implements Node & ObjectWithMetadata @doc(category: "Attributes") {
-  """The ID of the attribute."""
-  id: ID!
-
-  """List of private metadata items. Requires staff permissions to access."""
-  privateMetadata: [MetadataItem!]!
-
-  """
-  A single key from private metadata. Requires staff permissions to access.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  """
-  privateMetafield(key: String!): String
-
-  """
-  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  """
-  privateMetafields(keys: [String!]): Metadata
-
-  """List of public metadata items. Can be accessed without permissions."""
-  metadata: [MetadataItem!]!
-
-  """
-  A single key from public metadata.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  """
-  metafield(key: String!): String
-
-  """
-  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
-  """
-  metafields(keys: [String!]): Metadata
-
-  """The input type to use for entering attribute values in the dashboard."""
-  inputType: AttributeInputTypeEnum
-
-  """The entity type which can be used as a reference."""
-  entityType: AttributeEntityTypeEnum
-
-  """
-  The reference types (product or page type) that are used to narrow down the choices of reference objects.
-  
-  Added in Saleor 3.22.
-  """
-  referenceTypes(
-    """
-    Maximum number of objects to return. The default value is also the maximum number of objects that can be fetched.
-    """
-    limit: Int = 100
-  ): [ReferenceType!]
-
-  """Name of an attribute displayed in the interface."""
-  name: String
-
-  """Internal representation of an attribute name."""
-  slug: String
-
-  """The attribute type."""
-  type: AttributeTypeEnum
-
-  """The unit of attribute values."""
-  unit: MeasurementUnitsEnum
-
-  """
-  A list of predefined attribute choices available for selection. Available only for attributes with predefined choices.
-  """
-  choices(
-    """Sort attribute choices."""
-    sortBy: AttributeChoicesSortingInput
-
-    """Filtering options for attribute choices."""
-    filter: AttributeValueFilterInput @deprecated(reason: "Use `where` filter instead.")
-
-    """
-    Where filtering options for attribute choices.
-    
-    Added in Saleor 3.22.
-    """
-    where: AttributeValueWhereInput
-
-    """
-    Search attribute choices.
-    
-    Added in Saleor 3.22.
-    """
-    search: String
-
-    """Return the elements in the list that come before the specified cursor."""
-    before: String
-
-    """Return the elements in the list that come after the specified cursor."""
-    after: String
-
-    """
-    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    first: Int
-
-    """
-    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    last: Int
-  ): AttributeValueCountableConnection
-
-  """
-  Whether the attribute requires values to be passed or not. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
-  """
-  valueRequired: Boolean!
-
-  """
-  Whether the attribute should be visible or not in storefront. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
-  """
-  visibleInStorefront: Boolean!
-
-  """
-  Whether the attribute can be filtered in storefront. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
-  """
-  filterableInStorefront: Boolean! @deprecated
-
-  """
-  Whether the attribute can be filtered in dashboard. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
-  """
-  filterableInDashboard: Boolean!
-
-  """
-  Whether the attribute can be displayed in the admin product list. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
-  """
-  availableInGrid: Boolean! @deprecated
-
-  """
-  The position of the attribute in the storefront navigation (0 by default). Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
-  """
-  storefrontSearchPosition: Int! @deprecated
-
-  """Returns translated attribute fields for the given language code."""
-  translation(
-    """A language code to return the translation for attribute."""
-    languageCode: LanguageCodeEnum!
-  ): AttributeTranslation
-
-  """Flag indicating that attribute has predefined choices."""
-  withChoices: Boolean!
-
-  """
-  A list of product types that use this attribute as a product attribute.
-  """
-  productTypes(
-    """Return the elements in the list that come before the specified cursor."""
-    before: String
-
-    """Return the elements in the list that come after the specified cursor."""
-    after: String
-
-    """
-    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    first: Int
-
-    """
-    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    last: Int
-  ): ProductTypeCountableConnection!
-
-  """
-  A list of product types that use this attribute as a product variant attribute.
-  """
-  productVariantTypes(
-    """Return the elements in the list that come before the specified cursor."""
-    before: String
-
-    """Return the elements in the list that come after the specified cursor."""
-    after: String
-
-    """
-    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    first: Int
-
-    """
-    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    last: Int
-  ): ProductTypeCountableConnection!
-
-  """External ID of this attribute."""
-  externalReference: String
-}
-
-enum AttributeInputTypeEnum @doc(category: "Attributes") {
-  DROPDOWN
-  MULTISELECT
-  FILE
-  REFERENCE
-  SINGLE_REFERENCE
-  NUMERIC
-  RICH_TEXT
-  PLAIN_TEXT
-  SWATCH
-  BOOLEAN
-  DATE
-  DATE_TIME
-}
-
-enum AttributeEntityTypeEnum @doc(category: "Attributes") {
-  PAGE
-  PRODUCT
-  PRODUCT_VARIANT
-  CATEGORY
-  COLLECTION
+enum VariantAttributeScope @doc(category: "Products") {
+  ALL
+  VARIANT_SELECTION
+  NOT_VARIANT_SELECTION
 }
 
 """
-The reference types (product or page type) that are used to narrow down the choices of reference objects.
-ProductType applicable for reference attribute with `PRODUCT` or `PRODUCT_VARIANT` entity type.
-PageType applicable for reference attribute with `PAGE` entity type.
+Represents assigned attribute to variant with variant selection attached.
 """
-union ReferenceType = ProductType | PageType
-
-"""
-Represents a type of page. It defines what attributes are available to pages of this type.
-"""
-type PageType implements Node & ObjectWithMetadata @doc(category: "Pages") {
-  """ID of the page type."""
-  id: ID!
-
-  """List of private metadata items. Requires staff permissions to access."""
-  privateMetadata: [MetadataItem!]!
+type AssignedVariantAttribute @doc(category: "Attributes") {
+  """Attribute assigned to variant."""
+  attribute: Attribute!
 
   """
-  A single key from private metadata. Requires staff permissions to access.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
+  Determines, whether assigned attribute is allowed for variant selection. Supported variant types for variant selection are: ['dropdown', 'boolean', 'swatch', 'numeric']
   """
-  privateMetafield(key: String!): String
-
-  """
-  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  """
-  privateMetafields(keys: [String!]): Metadata
-
-  """List of public metadata items. Can be accessed without permissions."""
-  metadata: [MetadataItem!]!
-
-  """
-  A single key from public metadata.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  """
-  metafield(key: String!): String
-
-  """
-  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
-  """
-  metafields(keys: [String!]): Metadata
-
-  """Name of the page type."""
-  name: String!
-
-  """Slug of the page type."""
-  slug: String!
-
-  """Page attributes of that page type."""
-  attributes: [Attribute!]
-
-  """
-  Attributes that can be assigned to the page type.
-  
-  Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
-  """
-  availableAttributes(
-    """Filtering options for attributes."""
-    filter: AttributeFilterInput @deprecated(reason: "Use `where` filter instead.")
-
-    """Where filtering options for attributes."""
-    where: AttributeWhereInput
-
-    """Search attributes."""
-    search: String
-
-    """Return the elements in the list that come before the specified cursor."""
-    before: String
-
-    """Return the elements in the list that come after the specified cursor."""
-    after: String
-
-    """
-    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    first: Int
-
-    """
-    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
-    """
-    last: Int
-  ): AttributeCountableConnection
-
-  """
-  Whether page type has pages assigned.
-  
-  Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
-  """
-  hasPages: Boolean
+  variantSelection: Boolean!
 }
 
 type AttributeCountableConnection @doc(category: "Attributes") {
@@ -6506,6 +6503,99 @@ enum MeasurementUnitsEnum {
   KG
   TONNE
 }
+
+"""
+Represents a type of page. It defines what attributes are available to pages of this type.
+"""
+type PageType implements Node & ObjectWithMetadata @doc(category: "Pages") {
+  """ID of the page type."""
+  id: ID!
+
+  """List of private metadata items. Requires staff permissions to access."""
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """List of public metadata items. Can be accessed without permissions."""
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+  """
+  metafields(keys: [String!]): Metadata
+
+  """Name of the page type."""
+  name: String!
+
+  """Slug of the page type."""
+  slug: String!
+
+  """Page attributes of that page type."""
+  attributes: [Attribute!]
+
+  """
+  Attributes that can be assigned to the page type.
+  
+  Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+  """
+  availableAttributes(
+    """Filtering options for attributes."""
+    filter: AttributeFilterInput @deprecated(reason: "Use `where` filter instead.")
+
+    """Where filtering options for attributes."""
+    where: AttributeWhereInput
+
+    """Search attributes."""
+    search: String
+
+    """Return the elements in the list that come before the specified cursor."""
+    before: String
+
+    """Return the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Retrieve the first n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    first: Int
+
+    """
+    Retrieve the last n elements from the list. Note that the system only allows fetching a maximum of 100 objects in a single query.
+    """
+    last: Int
+  ): AttributeCountableConnection
+
+  """
+  Whether page type has pages assigned.
+  
+  Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+  """
+  hasPages: Boolean
+}
+
+"""
+Positive Integer scalar implementation.
+
+Should be used in places where value must be positive (greater than 0).
+"""
+scalar PositiveInt
 
 type AttributeValueCountableConnection @doc(category: "Attributes") {
   """Pagination data for this connection."""
@@ -6744,25 +6834,6 @@ type ProductTypeCountableEdge @doc(category: "Products") {
 
   """A cursor for use in pagination."""
   cursor: String!
-}
-
-enum VariantAttributeScope @doc(category: "Products") {
-  ALL
-  VARIANT_SELECTION
-  NOT_VARIANT_SELECTION
-}
-
-"""
-Represents assigned attribute to variant with variant selection attached.
-"""
-type AssignedVariantAttribute @doc(category: "Attributes") {
-  """Attribute assigned to variant."""
-  attribute: Attribute!
-
-  """
-  Determines, whether assigned attribute is allowed for variant selection. Supported variant types for variant selection are: ['dropdown', 'boolean', 'swatch', 'numeric']
-  """
-  variantSelection: Boolean!
 }
 
 """
@@ -7434,7 +7505,7 @@ type CategoryTranslatableContent implements Node @doc(category: "Products") {
 }
 
 """Represents a version of a product such as different size or color."""
-type ProductVariant implements Node & ObjectWithMetadata @doc(category: "Products") {
+type ProductVariant implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(category: "Products") {
   """The ID of the product variant."""
   id: ID!
 
@@ -7467,6 +7538,26 @@ type ProductVariant implements Node & ObjectWithMetadata @doc(category: "Product
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   """
   metafields(keys: [String!]): Metadata
+
+  """
+  Get a single attribute attached to product by attribute slug.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttribute(
+    """Slug of the attribute"""
+    slug: String!
+  ): AssignedAttribute
+
+  """
+  List of attributes assigned to this variant.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttributes(
+    """Maximum number of attributes to return. Default is 100."""
+    limit: PositiveInt = 100
+  ): [AssignedAttribute!]!
 
   """The name of the product variant."""
   name: String!
@@ -7510,34 +7601,11 @@ type ProductVariant implements Node & ObjectWithMetadata @doc(category: "Product
     address: AddressInput
   ): VariantPricingInfo
 
-  """
-  Get a single attribute attached to product by attribute slug.
-  
-  Added in Saleor 3.22.
-  """
-  assignedAttribute(
-    """Slug of the attribute"""
-    slug: String!
-  ): AssignedAttribute
-
-  """
-  List of attributes assigned to this variant.
-  
-  Added in Saleor 3.22.
-  """
-  assignedAttributes(
-    """Define scope of returned attributes."""
-    variantSelection: VariantAttributeScope
-
-    """Maximum number of attributes to return. Default is 100."""
-    limit: PositiveInt = 100
-  ): [AssignedAttribute!]!
-
   """List of attributes assigned to this variant."""
   attributes(
     """Define scope of returned attributes."""
     variantSelection: VariantAttributeScope
-  ): [SelectedAttribute!]!
+  ): [SelectedAttribute!]! @deprecated(reason: "Use the `assignedAttributes` field instead.")
 
   """Gross margin percentage value."""
   margin: Int
@@ -7773,23 +7841,6 @@ input MetadataInput {
   """Value of a metadata item."""
   value: String!
 }
-
-"""
-Represents an attribute assigned to an object.
-
-Added in Saleor 3.22.
-"""
-interface AssignedAttribute @doc(category: "Attributes") {
-  """Attribute assigned to an object."""
-  attribute: Attribute!
-}
-
-"""
-Positive Integer scalar implementation.
-
-Should be used in places where value must be positive (greater than 0).
-"""
-scalar PositiveInt
 
 """Represents an assigned attribute to an object."""
 type SelectedAttribute @doc(category: "Attributes") {
@@ -8776,7 +8827,7 @@ type PageTranslation implements Node @doc(category: "Pages") {
 """
 A static page that can be manually added by a shop operator through the dashboard.
 """
-type Page implements Node & ObjectWithMetadata @doc(category: "Pages") {
+type Page implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(category: "Pages") {
   """ID of the page."""
   id: ID!
 
@@ -8809,6 +8860,26 @@ type Page implements Node & ObjectWithMetadata @doc(category: "Pages") {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   """
   metafields(keys: [String!]): Metadata
+
+  """
+  Get a single attribute attached to page by attribute slug.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttribute(
+    """Slug of the attribute"""
+    slug: String!
+  ): AssignedAttribute
+
+  """
+  List of attributes assigned to this page.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttributes(
+    """Maximum number of attributes to return. Default is 100."""
+    limit: PositiveInt = 100
+  ): [AssignedAttribute!]!
 
   """Title of the page for SEO."""
   seoTitle: String
@@ -8860,26 +8931,6 @@ type Page implements Node & ObjectWithMetadata @doc(category: "Pages") {
     """Slug of the attribute"""
     slug: String!
   ): SelectedAttribute @deprecated(reason: "Use `assignedAttribute` field instead.")
-
-  """
-  Get a single attribute attached to page by attribute slug.
-  
-  Added in Saleor 3.22.
-  """
-  assignedAttribute(
-    """Slug of the attribute"""
-    slug: String!
-  ): AssignedAttribute
-
-  """
-  List of attributes assigned to this page.
-  
-  Added in Saleor 3.22.
-  """
-  assignedAttributes(
-    """Maximum number of attributes to return. Default is 100."""
-    limit: PositiveInt = 100
-  ): [AssignedAttribute!]!
 
   """List of attributes assigned to this page."""
   attributes: [SelectedAttribute!]! @deprecated(reason: "Use `assignedAttributes` field instead.")
@@ -31054,6 +31105,20 @@ type Subscription @doc(category: "Miscellaneous") {
   ): CheckoutFullyPaid @doc(category: "Checkout")
 
   """
+  Event sent when checkout is fully authorized.
+  
+  Added in Saleor 3.21.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutFullyAuthorized(
+    """
+    List of channel slugs. The event will be sent only if the object belongs to one of the provided channels. If the channel slug list is empty, objects that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): CheckoutFullyAuthorized @doc(category: "Checkout")
+
+  """
   Event sent when checkout metadata is updated.
   
   Added in Saleor 3.21.
@@ -31393,9 +31458,33 @@ type CheckoutUpdated implements Event @doc(category: "Checkout") {
 }
 
 """
-Event sent when checkout is fully paid with transactions. The checkout is considered as fully paid when the checkout `charge_status` is `FULL` or `OVERCHARGED`. The event is not sent when the checkout authorization flow strategy is used.
+Event sent when a checkout was fully paid. A checkout is considered fully paid when its `chargeStatus` is `FULL` or `OVERCHARGED`. This event is not sent if payments are only authorized but not fully charged.
+
+It is triggered only for checkouts whose payments are processed through the Transaction API.
 """
 type CheckoutFullyPaid implements Event @doc(category: "Checkout") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The checkout the event relates to."""
+  checkout: Checkout
+}
+
+"""
+Event sent when a checkout was fully authorized. A checkout is considered fully authorized when its `authorizeStatus` is `FULL`.
+
+It is triggered only for checkouts whose payments are processed through the Transaction API.
+"""
+type CheckoutFullyAuthorized implements Event @doc(category: "Checkout") {
   """Time of the event."""
   issuedAt: DateTime
 
