@@ -16,13 +16,13 @@ import {
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
-import { SingleReferenceChip } from "@dashboard/components/SingleReferenceChip";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Button as MacawButton, EditIcon, Input, PlusIcon, Select, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { ChipField } from "../ChipField/ChipField";
 import { Combobox, Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
 import { AttributeRowProps } from "./types";
@@ -55,11 +55,11 @@ const AttributeRow = ({
           <Box display="flex" flexWrap="wrap" gap={2} alignItems="center">
             {selected ? (
               <>
-                <SingleReferenceChip
+                <ChipField
                   label={selected.label}
                   url={selected.url}
                   loading={loading}
-                  onClear={() => onReferencesRemove(attribute.id, [])}
+                  onClose={() => onReferencesRemove(attribute.id, [])}
                 />
                 <MacawButton
                   variant="secondary"

@@ -14,20 +14,23 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   return labelContent;
 };
 
-export type SingleReferenceChipProps = {
+export type ChipFieldProps = {
   label: ReactNode;
-  onClear?: () => void;
+  onClose?: () => void;
   loading?: boolean;
   url?: string;
 } & BoxProps;
 
-export const SingleReferenceChip = React.forwardRef<HTMLDivElement, SingleReferenceChipProps>(
-  ({ label, onClear, loading, url, className, style, ...props }, ref) => {
-    const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
+export const ChipField = React.forwardRef<HTMLDivElement, ChipFieldProps>(
+  (
+    { label, onClose, loading, url, className, style, ...props },
+    ref,
+  ) => {
+    const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
 
-      if (onClear) {
-        onClear();
+      if (onClose) {
+        onClose();
       }
     };
 
@@ -39,32 +42,36 @@ export const SingleReferenceChip = React.forwardRef<HTMLDivElement, SingleRefere
         className={className}
         borderWidth={1}
         borderStyle="solid"
-        borderColor="default1"
+        borderColor={"default1"}
         borderRadius={4}
         paddingY={1}
         paddingX={1.5}
         paddingRight={1}
-        backgroundColor="default1"
-        display="inline-flex"
-        alignItems="center"
+        backgroundColor={"default1"}
+        opacity={"1"}
         {...props}
       >
-        <ChipLabel label={label} url={url} />
-        {onClear && (
+        <Box
+          display="flex"
+          alignItems="center"
+          style={{ visibility: "visible" }}
+          paddingLeft={2}
+        >
+          <ChipLabel label={label} url={url}/>
           <Box marginLeft={1}>
             <Button
               variant="tertiary"
               size="small"
-              onClick={handleClear}
-              data-test-id="button-clear"
+              onClick={handleClose}
+              data-test-id="button-close"
               disabled={loading}
               type="button"
               icon={<CloseIcon size="small" />}
             />
           </Box>
-        )}
+        </Box>
       </Box>
     );
   },
 );
-SingleReferenceChip.displayName = "SingleReferenceChip";
+ChipField.displayName = "ChipField";
