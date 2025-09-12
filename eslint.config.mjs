@@ -160,7 +160,13 @@ export default tseslint.config(
       "no-restricted-imports": [
         "error",
         {
-          paths: ["lodash", "classnames"],
+          paths: ["lodash", "classnames",
+            {
+              name: "react",
+              importNames: ["default", "React"],
+              message: "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
+            }
+          ],
         },
       ],
     },
@@ -227,13 +233,7 @@ export default tseslint.config(
             {
               name: "moment-timezone",
               message: "Use react-intl formatDate instead of moment-timezone.",
-            },
-            {
-              name: "react",
-              importNames: ["default", "React"],
-              message:
-                "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
-            },
+            }
           ],
         },
       ],
