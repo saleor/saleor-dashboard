@@ -49,6 +49,10 @@ jobs:
           npm run lint
           git diff --exit-code ./src
 
+      - name: Check Prettier formatting
+        run: |
+          npm run format:check
+
       - name: Knip for unused files, dependencies and exports
         run: npm run knip
 
