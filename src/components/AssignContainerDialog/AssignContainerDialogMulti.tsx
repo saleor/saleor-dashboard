@@ -5,14 +5,13 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import { FetchMoreProps } from "@dashboard/types";
+import { Container, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
-import type { Container } from "./AssignContainerDialog";
 import { useStyles } from "./styles";
 
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;

@@ -9,13 +9,13 @@ import { SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe, renderCollection } from "@dashboard/misc";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { Container, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AssignContainerDialogProps, Container } from "../AssignContainerDialog";
+import { AssignContainerDialogProps, } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import { messages } from "./messages";
 import { useStyles } from "./styles";

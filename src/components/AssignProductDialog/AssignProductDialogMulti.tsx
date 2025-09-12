@@ -8,13 +8,12 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
-import { FetchMoreProps } from "@dashboard/types";
+import { Container, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React, { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Container } from "../AssignContainerDialog";
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";

@@ -109,15 +109,15 @@ export interface SearchPageProps extends SearchProps {
 }
 export interface FilterPageProps<TKeys extends string, TOpts extends {}>
   extends FilterProps<TKeys>,
-    SearchPageProps,
-    TabPageProps {
+  SearchPageProps,
+  TabPageProps {
   filterOpts: TOpts;
 }
 
 export interface FilterPagePropsWithPresets<TKeys extends string, TOpts extends {}>
   extends FilterProps<TKeys>,
-    SearchPageProps,
-    FilterPresetsProps {
+  SearchPageProps,
+  FilterPresetsProps {
   filterOpts: TOpts;
 }
 
@@ -158,6 +158,9 @@ export interface PartialMutationProviderOutput<TData extends {} = {}, TVariables
 
 export interface Node {
   id: string;
+}
+export interface Container extends Node {
+  name: string;
 }
 export interface SlugNode {
   slug: string;

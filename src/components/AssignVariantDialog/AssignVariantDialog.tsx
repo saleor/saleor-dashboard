@@ -1,11 +1,11 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { SearchProductsQuery } from "@dashboard/graphql";
-import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { Container, DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { AssignContainerDialogProps, Container } from "../AssignContainerDialog";
+import { AssignContainerDialogProps, } from "../AssignContainerDialog";
 import { AssignVariantDialogMulti } from "./AssignVariantDialogMulti";
 import { AssignVariantDialogSingle } from "./AssignVariantDialogSingle";
 import { messages } from "./messages";

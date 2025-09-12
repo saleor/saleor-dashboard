@@ -5,13 +5,12 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import { FetchMoreProps } from "@dashboard/types";
+import { Container, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import BackButton from "../BackButton";
-import type { Container } from "./AssignContainerDialog";
 import { useStyles } from "./styles";
 
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
@@ -67,7 +66,6 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
     if (selectedContainerId) {
       const selectedContainer = containers.find(c => c.id === selectedContainerId);
 
-      // TODO: Refactor selections for SINGLE_REFERENCE to use single element instead of array
       onSubmit(selectedContainer ? [selectedContainer] : []);
     } else {
       onSubmit([]);

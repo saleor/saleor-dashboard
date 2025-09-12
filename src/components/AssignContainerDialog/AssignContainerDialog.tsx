@@ -1,6 +1,6 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { DialogProps, FetchMoreProps, Node } from "@dashboard/types";
+import { Container, DialogProps, FetchMoreProps } from "@dashboard/types";
 import React from "react";
 
 import { AssignContainerDialogMulti } from "./AssignContainerDialogMulti";
@@ -12,9 +12,7 @@ export interface AssignContainerDialogFormData {
 }
 
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
-export interface Container extends Node {
-  name: string;
-}
+
 export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   containers: Container[];
