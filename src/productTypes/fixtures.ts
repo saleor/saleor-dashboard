@@ -22,6 +22,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "author",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -86,6 +87,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "box-size",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -190,6 +192,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "brand",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -234,6 +237,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "candy-box-size",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -318,6 +322,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "coffee-genre",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -382,6 +387,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "collar",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -466,6 +472,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "color",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -530,6 +537,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "cover",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -674,6 +682,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "flavor",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -738,6 +747,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "language",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -802,6 +812,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "publisher",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -866,6 +877,7 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       slug: "size",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {

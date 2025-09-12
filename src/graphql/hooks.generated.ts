@@ -15813,6 +15813,16 @@ export const ProductTypeDocument = gql`
       name
       valueRequired
       unit
+      referenceTypes {
+        ... on ProductType {
+          id
+          name
+        }
+        ... on PageType {
+          id
+          name
+        }
+      }
       choices(
         first: $firstValues
         after: $afterValues

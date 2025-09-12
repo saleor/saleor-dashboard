@@ -3,7 +3,6 @@ import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   FileUploadMutation,
   ProductChannelListingAddInput,
@@ -11,18 +10,14 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductUpdateMutationVariables,
-  ProductVariantAttributesFragment,
   ProductVariantBulkUpdateInput,
   VariantAttributeFragment,
 } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import pick from "lodash/pick";
 import uniq from "lodash/uniq";
-import React from "react";
 
 import { getAttributeData, getAttributeInput, getAttributeType } from "./data/attributes";
 import { getUpdateVariantChannelInputs, getVariantChannelsInputs } from "./data/channel";

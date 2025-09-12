@@ -1,5 +1,5 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { ProductVariantAttributesFragment } from "@dashboard/graphql";
+import { ProductTypeQuery, ProductVariantAttributesFragment } from "@dashboard/graphql";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import React from "react";
@@ -15,7 +15,8 @@ export enum ReferenceWhereKey {
 }
 
 type AttributeWithReferenceTypes =
-  NonNullable<ProductVariantAttributesFragment["attributes"][number]["attribute"]>;
+  | NonNullable<NonNullable<ProductVariantAttributesFragment["attributes"]>[number]["attribute"]>
+  | NonNullable<NonNullable<ProductTypeQuery["productType"]>["productAttributes"]>[number];
 
 export const getAllowedReferenceTypeIds = (
   refAttr: AttributeWithReferenceTypes | undefined,
