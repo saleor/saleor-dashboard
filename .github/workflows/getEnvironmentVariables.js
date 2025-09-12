@@ -10,7 +10,6 @@ program
   .option("--custom_version <custom_version>", "version of a project")
   .option("--repo_token <repo_token>", "github token")
   .action(async options => {
-
     const version = await getBranch(options.repo_token, options.custom_version);
     core.setOutput("version", version);
   })

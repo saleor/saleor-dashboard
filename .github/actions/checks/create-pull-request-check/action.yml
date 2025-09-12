@@ -10,10 +10,10 @@ inputs:
   STATUS:
     description: "Status of check"
     required: true
-  TITLE: 
+  TITLE:
     description: "Title of check"
     required: true
-  DETAILS_URL: 
+  DETAILS_URL:
     description: "Details url"
     required: true
 
