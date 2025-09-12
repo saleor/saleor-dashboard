@@ -6520,10 +6520,6 @@
   "aMwxYb": {
     "string": "Countries"
   },
-  "aOZXYd": {
-    "context": "helper explaining the effect of assigning reference types",
-    "string": "Assigning product types narrows the list of items this attribute can reference."
-  },
   "aOelhW": {
     "context": "tab name",
     "string": "All Plugins"
