@@ -39,9 +39,9 @@ import { OrderListDatagrid } from "../OrderListDatagrid";
 
 export interface OrderListPageProps
   extends PageListProps,
-  SearchPageProps,
-  Omit<TabPageProps, "onTabDelete">,
-  SortPage<OrderListUrlSortField> {
+    SearchPageProps,
+    Omit<TabPageProps, "onTabDelete">,
+    SortPage<OrderListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderListQuery["orders"]>;
   hasPresetsChanged: boolean;

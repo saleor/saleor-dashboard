@@ -84,20 +84,16 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
       );
     }
 
-
     if (fulfillmentWarehouse.length > 0) {
       queriesToRun.push(
-        client.query<
-          _SearchWarehouseOperandsQuery,
-          _SearchWarehouseOperandsQueryVariables
-        >({
+        client.query<_SearchWarehouseOperandsQuery, _SearchWarehouseOperandsQueryVariables>({
           query: _SearchWarehouseOperandsDocument,
           variables: {
             first: fulfillmentWarehouse.length,
             warehouseSlugs: fulfillmentWarehouse,
           },
-        })
-      )
+        }),
+      );
     }
 
     const chargeStatusInit = new EnumValuesHandler(
@@ -108,7 +104,12 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     );
 
     const statusInit = new EnumValuesHandler(OrderStatus, "status", intl, status);
-    const fulfillmentStatusInit = new EnumValuesHandler(FulfillmentStatus, "fulfillmentStatus", intl, fulfillmentStatus);
+    const fulfillmentStatusInit = new EnumValuesHandler(
+      FulfillmentStatus,
+      "fulfillmentStatus",
+      intl,
+      fulfillmentStatus,
+    );
     const authorizeStatusInit = new EnumValuesHandler(
       OrderAuthorizeStatusEnum,
       "authorizeStatus",
@@ -221,4 +222,4 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     loading,
     fetchQueries,
   };
-}
+};

@@ -15,11 +15,18 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
   const builder = new FulfillmentWarehouseQueryVarsBuilder();
   const client = {} as ApolloClient<unknown>;
 
-  function createElement(selectedValue: ConditionValue, conditionLabel: string = "is"): FilterElement {
+  function createElement(
+    selectedValue: ConditionValue,
+    conditionLabel: string = "is",
+  ): FilterElement {
     const type = "fulfillmentWarehouse";
     const value = new ExpressionValue(type, type, type);
     const conditionType = Array.isArray(selectedValue) ? "multiselect" : "combobox";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
     const condition = new Condition(ConditionOptions.fromName(type), selected, false);
 
@@ -82,7 +89,7 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
       const warehouseOption = {
         label: "Main Warehouse",
         value: "V1JIMTIzCg==",
-        slug: "main-warehouse"
+        slug: "main-warehouse",
       };
       const element = createElement(warehouseOption, "is");
 
@@ -91,9 +98,7 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({
-        fulfillments: [
-          { warehouse: { id: { eq: "V1JIMTIzCg==" } } },
-        ],
+        fulfillments: [{ warehouse: { id: { eq: "V1JIMTIzCg==" } } }],
       });
     });
 
@@ -102,7 +107,7 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
       const warehouseOptions = [
         { label: "Warehouse 1", value: "WRH1", slug: "warehouse-1" },
         { label: "Warehouse 2", value: "WRH2", slug: "warehouse-2" },
-        { label: "Warehouse 3", value: "WRH3", slug: "warehouse-3" }
+        { label: "Warehouse 3", value: "WRH3", slug: "warehouse-3" },
       ];
       const element = createElement(warehouseOptions, "in");
 
@@ -111,18 +116,14 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({
-        fulfillments: [
-          { warehouse: { id: { oneOf: ["WRH1", "WRH2", "WRH3"] } } },
-        ],
+        fulfillments: [{ warehouse: { id: { oneOf: ["WRH1", "WRH2", "WRH3"] } } }],
       });
     });
 
     it("adds single selected warehouse to existing fulfillments array", () => {
       // Arrange
       const existingQuery: FulfillmentWarehouseFilterQueryPart = {
-        fulfillments: [
-          { warehouse: { id: { eq: "OLD123" } } },
-        ],
+        fulfillments: [{ warehouse: { id: { eq: "OLD123" } } }],
       };
       const element = createElement("WRH123", "is");
 
@@ -140,9 +141,17 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
 
     it("skips update when there is no selected condition value", () => {
       // Arrange
-      const value = new ExpressionValue("fulfillmentWarehouse", "fulfillmentWarehouse", "fulfillmentWarehouse");
+      const value = new ExpressionValue(
+        "fulfillmentWarehouse",
+        "fulfillmentWarehouse",
+        "fulfillmentWarehouse",
+      );
       const selected = ConditionSelected.empty();
-      const condition = new Condition(ConditionOptions.fromName("fulfillmentWarehouse"), selected, false);
+      const condition = new Condition(
+        ConditionOptions.fromName("fulfillmentWarehouse"),
+        selected,
+        false,
+      );
       const element = new FilterElement(value, condition, false);
 
       // Act
@@ -183,9 +192,7 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({
-        fulfillments: [
-          { warehouse: { id: { oneOf: [] } } },
-        ],
+        fulfillments: [{ warehouse: { id: { oneOf: [] } } }],
       });
     });
 
@@ -194,7 +201,7 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
       const existingQuery = {
         status: { oneOf: ["PENDING", "CONFIRMED"] },
         createdAt: { gte: "2023-01-01T00:00:00.000Z" },
-        fulfillments: [{ status: { eq: "FULFILLED" } }]
+        fulfillments: [{ status: { eq: "FULFILLED" } }],
       };
       const element = createElement("WRH123", "is");
 
@@ -205,10 +212,7 @@ describe("FulfillmentWarehouseQueryVarsBuilder", () => {
       expect(result).toEqual({
         status: { oneOf: ["PENDING", "CONFIRMED"] },
         createdAt: { gte: "2023-01-01T00:00:00.000Z" },
-        fulfillments: [
-          { status: { eq: "FULFILLED" } },
-          { warehouse: { id: { eq: "WRH123" } } },
-        ],
+        fulfillments: [{ status: { eq: "FULFILLED" } }, { warehouse: { id: { eq: "WRH123" } } }],
       });
     });
   });

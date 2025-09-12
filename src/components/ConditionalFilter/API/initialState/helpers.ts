@@ -96,7 +96,9 @@ const isCurrencyQuery = (
   query: InitialGiftCardsAPIResponse,
 ): query is ApolloQueryResult<ChannelCurrenciesQuery> => "shop" in query.data;
 
-const isWarehouseQuery = (query: InitialOrderAPIResponse): query is ApolloQueryResult<_SearchWarehouseOperandsQuery> => "warehouses" in query.data
+const isWarehouseQuery = (
+  query: InitialOrderAPIResponse,
+): query is ApolloQueryResult<_SearchWarehouseOperandsQuery> => "warehouses" in query.data;
 
 export const createInitialProductStateFromData = (
   data: InitialProductAPIResponse[],
@@ -145,8 +147,8 @@ export const createInitialProductStateFromData = (
                 node.inputType === "BOOLEAN"
                   ? convertItemOptionsToAttributeChoices(createBooleanOptions())
                   : convertItemOptionsToAttributeChoices(
-                    createOptionsFromAPI(node.choices?.edges ?? []),
-                  );
+                      createOptionsFromAPI(node.choices?.edges ?? []),
+                    );
 
               return {
                 ...accAttr,

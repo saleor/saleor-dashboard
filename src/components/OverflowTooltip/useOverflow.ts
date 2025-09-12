@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { useLayoutEffect,useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 interface OverflowConfig {
   horizontal?: boolean;

@@ -5,7 +5,7 @@ import { AppDialog } from "@dashboard/extensions/views/ViewManifestExtension/com
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
-import { PropsWithChildren,useContext, useState } from "react";
+import { PropsWithChildren, useContext, useState } from "react";
 
 import { AppData, ExternalAppContext } from "./context";
 

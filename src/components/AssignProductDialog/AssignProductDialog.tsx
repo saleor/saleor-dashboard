@@ -11,7 +11,7 @@ import { maybe } from "@dashboard/misc";
 import { DialogProps, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import { useEffect, useRef,useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Container } from "../AssignContainerDialog";
@@ -186,13 +186,11 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
                     </TableRowLink>
                   );
                 })}
-                {!loading && (products?.length ?? 0) === 0 && (
-                  <Text>
-                    <Text>
-                      {intl.formatMessage(messages.noProductsFound)}
-                    </Text>
-                  </Text>
-                )}
+              {!loading && (products?.length ?? 0) === 0 && (
+                <Text>
+                  <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
+                </Text>
+              )}
             </TableBody>
           </ResponsiveTable>
         </InfiniteScroll>

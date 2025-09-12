@@ -9,11 +9,18 @@ import { FulfillmentStatusQueryVarsBuilder } from "./FulfillmentStatusQueryVarsB
 describe("FulfillmentStatusQueryVarsBuilder", () => {
   const builder = new FulfillmentStatusQueryVarsBuilder();
 
-  function createElement(selectedValue: ConditionValue, conditionLabel: string = "is"): FilterElement {
+  function createElement(
+    selectedValue: ConditionValue,
+    conditionLabel: string = "is",
+  ): FilterElement {
     const type = "fulfillmentStatus";
     const value = new ExpressionValue(type, type, type);
     const conditionType = Array.isArray(selectedValue) ? "multiselect" : "select";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
     const condition = new Condition(ConditionOptions.fromName(type), selected, false);
 
@@ -64,9 +71,7 @@ describe("FulfillmentStatusQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({
-        fulfillments: [
-          { status: { eq: "FULFILLED" } },
-        ],
+        fulfillments: [{ status: { eq: "FULFILLED" } }],
       });
     });
 
@@ -82,18 +87,23 @@ describe("FulfillmentStatusQueryVarsBuilder", () => {
 
       // Assert
       expect(query).toEqual({
-        fulfillments: [
-          { status: { eq: "RETURNED" } },
-          { status: { eq: "CANCELED" } },
-        ],
+        fulfillments: [{ status: { eq: "RETURNED" } }, { status: { eq: "CANCELED" } }],
       });
     });
 
     it("skips update when there is no selected condition value", () => {
       // Arrange
-      const value = new ExpressionValue("fulfillmentStatus", "fulfillmentStatus", "fulfillmentStatus");
+      const value = new ExpressionValue(
+        "fulfillmentStatus",
+        "fulfillmentStatus",
+        "fulfillmentStatus",
+      );
       const selected = ConditionSelected.empty();
-      const condition = new Condition(ConditionOptions.fromName("fulfillmentStatus"), selected, false);
+      const condition = new Condition(
+        ConditionOptions.fromName("fulfillmentStatus"),
+        selected,
+        false,
+      );
       const element = new FilterElement(value, condition, false);
 
       // Act

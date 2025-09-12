@@ -56,10 +56,7 @@ const addOneMinute = (isoString: string): string => {
   return date.toISOString();
 };
 
-const buildDateFilter = (
-  selectedValue: ConditionValue,
-  label: string,
-) => {
+const buildDateFilter = (selectedValue: ConditionValue, label: string) => {
   if (label === "lower") {
     const value = QueryVarsBuilderUtils.extractValueFromOption(selectedValue);
 
@@ -92,18 +89,14 @@ const buildDateFilter = (
    *   How to fix properly: remove "eq" option, allow choosing only ranges
    * " */
   if (typeof selectedValue === "string" || isItemOption(selectedValue)) {
-    const value = isItemOption(selectedValue)
-      ? selectedValue.value
-      : selectedValue;
+    const value = isItemOption(selectedValue) ? selectedValue.value : selectedValue;
     const gte = formatDateTime(value);
 
     if (!gte) {
       return undefined;
     }
 
-    const lte = hasTimeComponent(value)
-      ? addOneMinute(gte)
-      : getEndOfDay(gte);
+    const lte = hasTimeComponent(value) ? addOneMinute(gte) : getEndOfDay(gte);
 
     return { gte, lte };
   }
