@@ -1,5 +1,6 @@
 import {
   AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
   SearchPagesQuery,
@@ -73,6 +74,10 @@ const AssignAttributeValueDialog = ({
   const filteredCollections = filterCollectionsByAttributeValues(collections, attribute);
   const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
 
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+  const selectedId = isSingle && attribute.value?.length > 0 ? attribute.value[0] : '';
+  const selectionMode = isSingle ? 'single' : 'multiple';
+
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
       return (
@@ -91,17 +96,47 @@ const AssignAttributeValueDialog = ({
             title: intl.formatMessage(pagesMessages.header),
             ...labels,
           }}
+          selectionMode={selectionMode}
+          selectedId={isSingle ? selectedId : undefined}
           {...rest}
         />
       );
     case AttributeEntityTypeEnum.PRODUCT:
-      return <AssignProductDialog products={filteredProducts ?? []} {...rest} />;
+      return (
+        <AssignProductDialog 
+          products={filteredProducts ?? []} 
+          selectionMode={selectionMode}
+          selectedId={isSingle ? selectedId : undefined}
+          {...rest} 
+        />
+      );
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
-      return <AssignVariantDialog products={filteredProducts} {...rest} />;
+      return (
+        <AssignVariantDialog 
+          products={filteredProducts} 
+          selectionMode={selectionMode}
+          selectedId={isSingle ? selectedId : undefined}
+          {...rest} 
+        />
+      );
     case AttributeEntityTypeEnum.COLLECTION:
-      return <AssignCollectionDialog collections={filteredCollections} {...rest} />;
+      return (
+        <AssignCollectionDialog 
+          collections={filteredCollections} 
+          selectionMode={selectionMode}
+          selectedId={isSingle ? selectedId : undefined}
+          {...rest} 
+        />
+      );
     case AttributeEntityTypeEnum.CATEGORY:
-      return <AssignCategoryDialog categories={filteredCategories} {...rest} />;
+      return (
+        <AssignCategoryDialog 
+          categories={filteredCategories} 
+          selectionMode={selectionMode}
+          selectedId={isSingle ? selectedId : undefined}
+          {...rest} 
+        />
+      );
   }
 };
 
