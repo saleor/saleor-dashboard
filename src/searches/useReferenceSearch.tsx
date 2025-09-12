@@ -1,5 +1,5 @@
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { AttributeDetailsFragmentFragment } from "@dashboard/graphql";
+import { AttributeDetailsFragment } from "@dashboard/graphql";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import React from "react";
@@ -14,7 +14,7 @@ export enum ReferenceWhereKey {
   PageType = "pageType",
 }
 
-type AttributeWithReferenceTypes = NonNullable<AttributeDetailsFragmentFragment>;
+type AttributeWithReferenceTypes = NonNullable<AttributeDetailsFragment>;
 
 export const getAllowedReferenceTypeIds = (
   refAttr: AttributeWithReferenceTypes | undefined,
