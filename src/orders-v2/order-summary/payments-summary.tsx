@@ -90,7 +90,7 @@ const getPaymentStatusPillData = (
       };
     }
     default: {
-      assertUnreachable(
+      return assertUnreachable(
         status,
         new Error("getPaymentStatusPillData: Unsupported payment status", {
           cause: status,
