@@ -21,7 +21,7 @@ export interface OrderTotalAmounts {
   totalRefunded: OrderDetailsFragment["totalRefunded"];
 }
 
-export class OrderDetailsViewModel {
+export abstract class OrderDetailsViewModel {
   static shouldShowInvoiceList(orderStatus: OrderStatus): boolean {
     return orderStatus !== "UNCONFIRMED";
   }
