@@ -231,8 +231,9 @@ export default tseslint.config(
             {
               name: "react",
               importNames: ["default", "React"],
-              message: "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
-            }
+              message:
+                "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
+            },
           ],
         },
       ],
