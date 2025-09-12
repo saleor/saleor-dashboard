@@ -26,6 +26,7 @@
     "extract-messages": "npm run extract-json-messages",
     "fetch-local-schema": "node scripts/fetch-local-schema.js",
     "fetch-schema": "curl https://raw.githubusercontent.com/saleor/saleor/${npm_package_config_saleor_schemaVersion}/saleor/graphql/schema.graphql > schema.graphql",
+    "format:check": "prettier --check src/*",
     "format:code": "prettier --ignore-unknown --write src/*",
     "generate": "graphql-codegen",
     "heroku-postbuild": "npm run build",
