@@ -2179,6 +2179,10 @@
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
   },
+  "BHr3fj": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for this product. To add stock quantity to the product <a>configure a warehouse</a> or use existing one by clicking button below."
+  },
   "BJtUQI": {
     "context": "button",
     "string": "Add"
@@ -2501,10 +2505,6 @@
   "D5Wtf/": {
     "context": "table header column",
     "string": "Country name"
-  },
-  "D8nsBc": {
-    "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
   },
   "D95l71": {
     "context": "tab name",
@@ -4220,6 +4220,10 @@
     "context": "page header",
     "string": "New Product"
   },
+  "NCp87D": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for this variant. To add stock quantity to the variant <a>configure a warehouse</a> or use existing one by clicking button below."
+  },
   "ND5x+V": {
     "string": "We’re generating the invoice you requested. Please wait a couple of moments"
   },
@@ -4943,10 +4947,6 @@
   "RK6l3Z": {
     "context": "radio button label",
     "string": "Refund with manual amount"
-  },
-  "RLBLPQ": {
-    "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
   },
   "RLTaAR": {
     "context": "order history message",

@@ -6,9 +6,9 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { WarehouseFragment } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
+import { CircularProgress, TableBody, TableCell, TableRow, TextField } from "@material-ui/core";
 import { ConfirmButton } from "@saleor/macaw-ui";
-import { Button, Option, sprinkles } from "@saleor/macaw-ui-next";
+import { Button, Option, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -19,6 +19,7 @@ interface ProductStocksAssignWarehousesProps {
   onWarehouseSelect: (warehouseId: string, warehouseName: string) => void;
   loading: boolean;
   searchWarehouses: (query: string) => void;
+  showAssignWarehousesButton: boolean;
 }
 
 export const ProductStocksAssignWarehouses = ({
@@ -28,6 +29,7 @@ export const ProductStocksAssignWarehouses = ({
   warehousesToAssign,
   loading,
   searchWarehouses,
+  showAssignWarehousesButton,
 }: ProductStocksAssignWarehousesProps) => {
   const [warehouses, setWarehouses] = useState<Option[]>([]);
   const intl = useIntl();
@@ -42,19 +44,21 @@ export const ProductStocksAssignWarehouses = ({
 
   return (
     <>
-      <Button
-        onClick={() => setOpen(true)}
-        disabled={loading}
-        marginTop={5}
-        type="button"
-        variant="secondary"
-        data-test-id="assign-warehouse-button"
-      >
-        {intl.formatMessage({
-          defaultMessage: "Assign Warehouses",
-          id: "mFC5Rq",
-        })}
-      </Button>
+      {showAssignWarehousesButton && (
+        <Button
+          onClick={() => setOpen(true)}
+          disabled={loading}
+          marginTop={5}
+          type="button"
+          variant="secondary"
+          data-test-id="assign-warehouse-button"
+        >
+          {intl.formatMessage({
+            defaultMessage: "Assign Warehouses",
+            id: "mFC5Rq",
+          })}
+        </Button>
+      )}
       <DashboardModal onChange={handleClose} open={open}>
         <DashboardModal.Content size="sm">
           <DashboardModal.Header>
@@ -85,6 +89,13 @@ export const ProductStocksAssignWarehouses = ({
           >
             <ResponsiveTable key="table">
               <TableBody>
+                {warehousesToAssign.length === 0 && (
+                  <TableRow>
+                    <TableCell align="center">
+                      <Text>No warehouses available to add</Text>
+                    </TableCell>
+                  </TableRow>
+                )}
                 {warehousesToAssign.map(warehouse => {
                   return (
                     <TableRowLink key={warehouse.id}>
@@ -132,9 +143,7 @@ export const ProductStocksAssignWarehouses = ({
                 });
                 handleClose();
               }}
-            >
-              Confirm
-            </ConfirmButton>
+            />
           </DashboardModal.Actions>
         </DashboardModal.Content>
       </DashboardModal>
