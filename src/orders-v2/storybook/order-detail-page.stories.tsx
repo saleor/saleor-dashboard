@@ -64,6 +64,9 @@ export const FulfilledWithMultipleFulfillments: Story = {
       .withRefundedFulfillment()
       .withReplacedFulfillment()
       .withReturnedFulfillment()
+      .withWaitingForApprovalFulfillment()
+      .withCanceledFulfillment()
+      .withRefundedAndReturnedFulfillment()
       .build(),
   },
 };

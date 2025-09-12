@@ -631,6 +631,48 @@ export class OrderFixture {
     return this;
   }
 
+  withCanceledFulfillment(): OrderFixture {
+    const canceledFulfillment: FulfillmentFragment = {
+      ...OrderFixture.baseFulfillment,
+      status: FulfillmentStatus.CANCELED,
+    };
+
+    this.order = {
+      ...this.order,
+      fulfillments: [...this.order.fulfillments, canceledFulfillment],
+    };
+
+    return this;
+  }
+
+  withWaitingForApprovalFulfillment(): OrderFixture {
+    const waitingForApprovalFulfillment: FulfillmentFragment = {
+      ...OrderFixture.baseFulfillment,
+      status: FulfillmentStatus.WAITING_FOR_APPROVAL,
+    };
+
+    this.order = {
+      ...this.order,
+      fulfillments: [...this.order.fulfillments, waitingForApprovalFulfillment],
+    };
+
+    return this;
+  }
+
+  withRefundedAndReturnedFulfillment(): OrderFixture {
+    const refundedAndReturnedFulfillment: FulfillmentFragment = {
+      ...OrderFixture.baseFulfillment,
+      status: FulfillmentStatus.REFUNDED_AND_RETURNED,
+    };
+
+    this.order = {
+      ...this.order,
+      fulfillments: [...this.order.fulfillments, refundedAndReturnedFulfillment],
+    };
+
+    return this;
+  }
+
   withGiftCards(): OrderFixture {
     const giftCardsWithOrderId = OrderFixture.giftCards.map(giftCard => ({
       ...giftCard,

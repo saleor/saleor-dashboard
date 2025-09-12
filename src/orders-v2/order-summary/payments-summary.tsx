@@ -6,7 +6,7 @@ import { IntlShape, useIntl } from "react-intl";
 
 import { OrderDetailsViewModel } from "../order-details-view-model";
 import { StatusPill } from "../status-pill";
-import { assertUnreachableWithoutThrow } from "../utils/assert-unreachable";
+import { assertUnreachable } from "../utils/assert-unreachable";
 import { OrderSummaryListItem } from "./order-summary-list-item";
 
 const getPaymentStatusPillData = (
@@ -90,10 +90,12 @@ const getPaymentStatusPillData = (
       };
     }
     default: {
-      assertUnreachableWithoutThrow(status);
-      throw new Error("getPaymentStatusPillData: Unsupported payment status", {
-        cause: status,
-      });
+      return assertUnreachable(
+        status,
+        new Error("getPaymentStatusPillData: Unsupported payment status", {
+          cause: status,
+        }),
+      );
     }
   }
 };
