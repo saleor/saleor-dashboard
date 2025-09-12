@@ -82,7 +82,10 @@ export class AttributeQueryVarsBuilder
       return baseAttribute;
     }
 
-    if (inputType === AttributeInputTypeEnum.REFERENCE) {
+    if (
+      inputType === AttributeInputTypeEnum.REFERENCE ||
+      inputType === AttributeInputTypeEnum.SINGLE_REFERENCE
+    ) {
       return this.buildReferenceAttribute(baseAttribute, value);
     }
 

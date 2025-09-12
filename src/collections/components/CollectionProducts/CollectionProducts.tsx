@@ -9,7 +9,6 @@ import {
   getProductsFromSearchResults,
 } from "@dashboard/collections/utils";
 import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
-import { Container } from "@dashboard/components/AssignContainerDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
@@ -26,6 +25,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useProductSearch from "@dashboard/searches/useProductSearch";
+import { Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";

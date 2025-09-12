@@ -125,7 +125,7 @@ export const OrderValue = ({
           </OrderSummaryListItem>
         )}
 
-        <Box display="grid" placeItems="end">
+        <Box display="grid" placeItems="flex-end">
           <Box
             borderStyle="solid"
             borderColor="default2"
@@ -140,7 +140,7 @@ export const OrderValue = ({
               },
               {
                 currency: (
-                  <Text fontFamily="Geist Mono" fontWeight="medium" color="default2">
+                  <Text fontWeight="medium" color="default2">
                     {orderTotal.gross.currency}
                   </Text>
                 ),

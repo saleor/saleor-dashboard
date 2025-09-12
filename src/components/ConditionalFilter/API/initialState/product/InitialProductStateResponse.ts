@@ -60,7 +60,8 @@ export class InitialProductStateResponse implements InitialProductState {
   public filterByUrlToken(token: UrlToken) {
     if (token.isAttribute() && token.hasDynamicValues()) {
       const attribute = this.attribute[token.name];
-      const isReference = attribute?.inputType === "REFERENCE";
+      const isReference =
+        attribute?.inputType === "REFERENCE" || attribute?.inputType === "SINGLE_REFERENCE";
 
       if (isReference) {
         return attribute.choices.filter(({ slug }) => {

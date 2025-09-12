@@ -2,7 +2,7 @@
 import { AppWidgets } from "@dashboard/apps/components/AppWidgets/AppWidgets";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
-  mergeAttributeValues,
+  handleMetadataReferenceAssignment,
 } from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
@@ -207,15 +207,12 @@ export const ProductUpdatePage = ({
     data: ProductUpdateData,
     handlers: ProductUpdateHandlers,
   ) => {
-    handlers.selectAttributeReference(
+    handleMetadataReferenceAssignment(
       assignReferencesAttributeId,
-      mergeAttributeValues(
-        assignReferencesAttributeId,
-        attributeValues.map(({ value }) => value),
-        data.attributes,
-      ),
+      attributeValues,
+      data.attributes,
+      handlers,
     );
-    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, attributeValues);
     onCloseDialog();
   };
   const { PRODUCT_DETAILS_MORE_ACTIONS, PRODUCT_DETAILS_WIDGETS } = useExtensions(

@@ -10,7 +10,7 @@ export const OrderSummaryListAmount = ({ amount, showSign = false, ...props }: P
   const intl = useIntl();
 
   return (
-    <Text fontFamily="Geist Mono" fontWeight="medium" {...props}>
+    <Text fontWeight="medium" {...props}>
       {intl.formatNumber(amount, {
         minimumFractionDigits: 2,
         signDisplay: showSign ? "exceptZero" : "auto",

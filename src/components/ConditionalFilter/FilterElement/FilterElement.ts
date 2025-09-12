@@ -187,7 +187,10 @@ export class FilterElement {
 
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute && this.selectedAttribute) {
-      if (this.selectedAttribute.type === "REFERENCE") {
+      if (
+        this.selectedAttribute.type === "REFERENCE" ||
+        this.selectedAttribute.type === "SINGLE_REFERENCE"
+      ) {
         return UrlEntry.forReferenceAttribute(
           this.condition.selected,
           this.selectedAttribute.value,
