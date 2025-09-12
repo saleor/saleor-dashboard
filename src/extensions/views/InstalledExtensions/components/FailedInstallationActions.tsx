@@ -1,7 +1,6 @@
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { RetryIcon } from "@dashboard/icons/RetryIcon";
 import { Box, Button, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface FailedInstallationActionsProps {

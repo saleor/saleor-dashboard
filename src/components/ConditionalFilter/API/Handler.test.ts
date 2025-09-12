@@ -48,7 +48,9 @@ describe("WarehouseHandler", () => {
       },
     };
 
-    mockClient.query.mockResolvedValueOnce({ data: mockResponse } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
+    mockClient.query.mockResolvedValueOnce({
+      data: mockResponse,
+    } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
 
     // Act
     const result = await handler.fetch();
@@ -100,7 +102,9 @@ describe("WarehouseHandler", () => {
       },
     };
 
-    mockClient.query.mockResolvedValueOnce({ data: mockResponse } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
+    mockClient.query.mockResolvedValueOnce({
+      data: mockResponse,
+    } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
 
     // Act
     const result = await handler.fetch();
@@ -136,7 +140,9 @@ describe("WarehouseHandler", () => {
       },
     };
 
-    mockClient.query.mockResolvedValueOnce({ data: mockResponse } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
+    mockClient.query.mockResolvedValueOnce({
+      data: mockResponse,
+    } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
 
     // Act
     const result = await handler.fetch();
@@ -154,7 +160,9 @@ describe("WarehouseHandler", () => {
       warehouses: null,
     };
 
-    mockClient.query.mockResolvedValueOnce({ data: mockResponse } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
+    mockClient.query.mockResolvedValueOnce({
+      data: mockResponse,
+    } as ApolloQueryResult<_GetWarehouseChoicesQuery>);
 
     // Act
     const result = await handler.fetch();

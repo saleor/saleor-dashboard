@@ -6,7 +6,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { ArrowLeftIcon, Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ResetPasswordPageFormData {

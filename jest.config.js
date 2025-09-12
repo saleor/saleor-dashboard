@@ -20,9 +20,7 @@ const config = {
   },
   testRegex: ".*\\.test\\.tsx?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  transformIgnorePatterns: [
-    "/node_modules/(?!chroma-js/.*)"
-  ],
+  transformIgnorePatterns: ["/node_modules/(?!chroma-js/.*)"],
   moduleNameMapper: {
     "\\.(css)$": "identity-obj-proxy",
     "@assets(.*)$": "<rootDir>/assets/$1",

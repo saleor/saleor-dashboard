@@ -1,7 +1,7 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FieldError, FieldErrors, UseFormReturn } from "react-hook-form";
 
 import { MetadataCard, MetadataCardProps } from "../Metadata/MetadataCard";

@@ -7,7 +7,6 @@ import {
   Select,
   Text,
 } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const ROW_NUMBER_OPTIONS = [

@@ -10,42 +10,46 @@ describe("PriceFilterQueryVarsBuilder", () => {
 
   // Helper function to create price FilterElement
   function createPriceElement(fieldName: string, selectedValue: any): FilterElement {
-    const value = new ExpressionValue(fieldName, `${fieldName.charAt(0).toUpperCase()}${fieldName.slice(1)} Field`, fieldName);
+    const value = new ExpressionValue(
+      fieldName,
+      `${fieldName.charAt(0).toUpperCase()}${fieldName.slice(1)} Field`,
+      fieldName,
+    );
     const conditionItem: ConditionItem = { type: "select", label: "is", value: "input-1" };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
-    const condition = new Condition(
-      ConditionOptions.fromName(fieldName as any),
-      selected,
-      false
-    );
+    const condition = new Condition(ConditionOptions.fromName(fieldName as any), selected, false);
 
     return new FilterElement(value, condition, false);
   }
 
   // Helper for price filters with specific condition labels
-  function createPriceFilterElement(fieldName: string, selectedValue: any, conditionLabel?: string): FilterElement {
-    const value = new ExpressionValue(fieldName, `${fieldName.charAt(0).toUpperCase()}${fieldName.slice(1)} Field`, fieldName);
+  function createPriceFilterElement(
+    fieldName: string,
+    selectedValue: any,
+    conditionLabel?: string,
+  ): FilterElement {
+    const value = new ExpressionValue(
+      fieldName,
+      `${fieldName.charAt(0).toUpperCase()}${fieldName.slice(1)} Field`,
+      fieldName,
+    );
 
     if (!conditionLabel) {
       // Create empty condition
       const selected = ConditionSelected.empty();
-      const condition = new Condition(
-        ConditionOptions.fromName(fieldName as any),
-        selected,
-        false
-      );
+      const condition = new Condition(ConditionOptions.fromName(fieldName as any), selected, false);
 
       return new FilterElement(value, condition, false);
     }
 
     const conditionType = conditionLabel === "between" ? "number.range" : "number";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
-    const condition = new Condition(
-      ConditionOptions.fromName(fieldName as any),
-      selected,
-      false
-    );
+    const condition = new Condition(ConditionOptions.fromName(fieldName as any), selected, false);
 
     return new FilterElement(value, condition, false);
   }
@@ -119,8 +123,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalGross: {
-            amount: { eq: 123.45 }
-          }
+            amount: { eq: 123.45 },
+          },
         });
       });
 
@@ -135,8 +139,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalGross: {
-            amount: { range: { lte: 1000 } }
-          }
+            amount: { range: { lte: 1000 } },
+          },
         });
       });
 
@@ -151,8 +155,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalGross: {
-            amount: { range: { gte: 500.50 } }
-          }
+            amount: { range: { gte: 500.5 } },
+          },
         });
       });
 
@@ -167,8 +171,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalGross: {
-            amount: { range: { gte: 100, lte: 200 } }
-          }
+            amount: { range: { gte: 100, lte: 200 } },
+          },
         });
       });
 
@@ -183,7 +187,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         // Note: 'in' condition is not supported by the current implementation
         expect(result).toEqual({
-          totalGross: null
+          totalGross: null,
         });
       });
 
@@ -198,8 +202,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalGross: {
-            amount: { oneOf: [150, 250] }
-          }
+            amount: { oneOf: [150, 250] },
+          },
         });
       });
     });
@@ -216,8 +220,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalNet: {
-            amount: { eq: 75.25 }
-          }
+            amount: { eq: 75.25 },
+          },
         });
       });
 
@@ -232,8 +236,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalNet: {
-            amount: { range: { lte: 1000 } }
-          }
+            amount: { range: { lte: 1000 } },
+          },
         });
       });
     });
@@ -249,7 +253,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          totalGross: null
+          totalGross: null,
         });
       });
 
@@ -263,7 +267,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          totalGross: null
+          totalGross: null,
         });
       });
 
@@ -277,7 +281,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          totalGross: null
+          totalGross: null,
         });
       });
 
@@ -291,7 +295,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          totalGross: null
+          totalGross: null,
         });
       });
     });
@@ -302,7 +306,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
         const element = createPriceFilterElement("totalGross", "100", "is");
         const query = {
           totalNet: { amount: { eq: 50 } },
-          otherField: "preserved"
+          otherField: "preserved",
         };
 
         // Act
@@ -312,7 +316,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
         expect(result).toEqual({
           totalNet: { amount: { eq: 50 } },
           otherField: "preserved",
-          totalGross: { amount: { eq: 100 } }
+          totalGross: { amount: { eq: 100 } },
         });
       });
 
@@ -320,7 +324,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Arrange
         const element = createPriceFilterElement("totalGross", "200", "greater");
         const query = {
-          totalGross: { amount: { eq: 100 } }
+          totalGross: { amount: { eq: 100 } },
         };
 
         // Act
@@ -328,7 +332,7 @@ describe("PriceFilterQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          totalGross: { amount: { range: { gte: 200 } } }
+          totalGross: { amount: { range: { gte: 200 } } },
         });
       });
     });
@@ -345,8 +349,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalGross: {
-            amount: { eq: 99.99 }
-          }
+            amount: { eq: 99.99 },
+          },
         });
       });
 
@@ -361,8 +365,8 @@ describe("PriceFilterQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           totalGross: {
-            amount: { range: { gte: 0.01 } }
-          }
+            amount: { range: { gte: 0.01 } },
+          },
         });
       });
     });

@@ -1,10 +1,15 @@
 name: QA
 
-on: push
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled]
 
 jobs:
   check-lock:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event.pull_request.draft == false || contains(github.event.pull_request.labels.*.name, 'Run QA checks'))
     steps:
       - uses: actions/checkout@v2
 
@@ -14,6 +19,7 @@ jobs:
 
   tsc-and-linters:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event.pull_request.draft == false || contains(github.event.pull_request.labels.*.name, 'Run QA checks'))
     steps:
       - uses: actions/checkout@v2
 
@@ -42,12 +48,13 @@ jobs:
         run: |
           npm run lint
           git diff --exit-code ./src
-      
+
       - name: Knip for unused files, dependencies and exports
         run: npm run knip
 
   jest-tests:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event.pull_request.draft == false || contains(github.event.pull_request.labels.*.name, 'Run QA checks'))
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
@@ -82,6 +89,7 @@ jobs:
 
   translation-messages:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event.pull_request.draft == false || contains(github.event.pull_request.labels.*.name, 'Run QA checks'))
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node

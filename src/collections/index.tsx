@@ -3,7 +3,6 @@ import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
-import React from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -36,7 +35,10 @@ interface CollectionDetailsRouteProps {
   id: string;
 }
 
-const CollectionDetails = ({ location, match }: RouteComponentProps<CollectionDetailsRouteProps>) => {
+const CollectionDetails = ({
+  location,
+  match,
+}: RouteComponentProps<CollectionDetailsRouteProps>) => {
   const qs = parseQs(location.search.substr(1));
   const params: CollectionUrlQueryParams = qs;
 

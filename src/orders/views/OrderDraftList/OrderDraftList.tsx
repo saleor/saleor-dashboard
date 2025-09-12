@@ -28,7 +28,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderDraftListPage from "../../components/OrderDraftListPage";
@@ -117,7 +117,7 @@ export const OrderDraftList = ({ params }: OrderDraftListProps) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -126,7 +126,7 @@ export const OrderDraftList = ({ params }: OrderDraftListProps) => {
     [paginationState, params],
   );
 
-  const newFiltersQueryVariables = React.useMemo(
+  const newFiltersQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

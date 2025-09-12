@@ -717,7 +717,7 @@ export const orderStatusMessages = defineMessages({
     description: "order status",
   },
   expired: {
-    id: 'z45PdE',
+    id: "z45PdE",
     defaultMessage: "Expired",
     description: "order status",
   },

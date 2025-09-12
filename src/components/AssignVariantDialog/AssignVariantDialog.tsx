@@ -12,7 +12,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AssignContainerDialogProps, Container } from "../AssignContainerDialog";
@@ -59,7 +59,7 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [variants, setVariants] = React.useState<VariantWithProductLabel[]>([]);
+  const [variants, setVariants] = useState<VariantWithProductLabel[]>([]);
   const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
@@ -115,7 +115,7 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
               {renderCollection(
                 productChoices,
                 (product, productIndex) => (
-                  <React.Fragment key={product ? product.id : "skeleton"}>
+                  <Fragment key={product ? product.id : "skeleton"}>
                     <TableRowLink>
                       <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                         <Checkbox
@@ -179,7 +179,7 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
                         </TableCell>
                       </TableRowLink>
                     ))}
-                  </React.Fragment>
+                  </Fragment>
                 ),
                 () => (
                   <Text className={classes.noContentText}>

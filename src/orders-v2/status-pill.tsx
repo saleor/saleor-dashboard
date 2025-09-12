@@ -1,6 +1,6 @@
 import { PillStatusType } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 const getFillColorsBasedOnStatus = (status: PillStatusType) => {
   switch (status) {
@@ -29,6 +29,7 @@ export const StatusPill = ({
       borderStyle="solid"
       data-test-id="status-info"
       data-macaw-ui-candidate
+      whiteSpace="nowrap"
       {...getFillColorsBasedOnStatus(status)}
     >
       <Text color="default1" fontWeight="medium" size={2}>

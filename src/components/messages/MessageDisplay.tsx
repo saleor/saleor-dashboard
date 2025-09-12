@@ -1,7 +1,6 @@
 import { commonMessages } from "@dashboard/intl";
 import { Portal } from "@radix-ui/react-portal";
 import { ApiMessageData, Notification } from "@saleor/macaw-ui";
-import React from "react";
 import { useIntl } from "react-intl";
 import { TransitionGroup } from "react-transition-group";
 

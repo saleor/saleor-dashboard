@@ -1,5 +1,5 @@
 import { Avatar } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 interface UserAvatarProps {
   url?: string;

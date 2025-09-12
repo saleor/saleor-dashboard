@@ -1,12 +1,3 @@
-import React from "react";
-
-/**
- * @deprecated This icon uses Macaw-UI patterns which are deprecated. Please use Lucide React icons instead.
- * @see https://lucide.dev/ for available icons
- * @example
- * import { Cloud } from "lucide-react";
- * // Use <Cloud /> instead
- */
 export const Cloud = () => (
   <svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-macaw-ui-candidate>
     <g clipPath="url(#a)">

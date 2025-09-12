@@ -1,6 +1,6 @@
 import { AppWebhookDeliveriesQuery } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages as parentMessages } from "../../messages";

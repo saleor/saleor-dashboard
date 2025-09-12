@@ -1,6 +1,6 @@
 import { MeasurementUnitsEnum } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 
 import * as M from "./messages";

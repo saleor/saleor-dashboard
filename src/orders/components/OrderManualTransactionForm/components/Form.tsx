@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import React from "react";
+import * as React from "react";
 
 import { useManualTransactionContext } from "../context";
 

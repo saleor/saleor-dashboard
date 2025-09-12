@@ -4,7 +4,6 @@ import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { getArrayQueryParam } from "@dashboard/utils/urls";
 import { parse as parseQs } from "qs";
-import React from "react";
 import { useIntl } from "react-intl";
 import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 
@@ -95,7 +94,10 @@ const ProductVariant = ({ match }: RouteComponentProps<matchParamsProductVariant
   );
 };
 
-const ProductImage = ({ location, match }: RouteComponentProps<{ imageId: string; productId: string }>) => {
+const ProductImage = ({
+  location,
+  match,
+}: RouteComponentProps<{ imageId: string; productId: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductImageUrlQueryParams = qs;
 

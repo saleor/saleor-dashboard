@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { useIntl } from "react-intl";
 
 import msgs from "./messages";

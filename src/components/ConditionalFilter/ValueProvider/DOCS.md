@@ -11,31 +11,31 @@ This is primarily handled by the `useUrlValueProvider` hook.
 ## How It Works
 
 1.  **Serialization (State to URL)**:
-    *   When the user modifies a filter, the `FilterContainer` (the array representing the filter state) is updated.
-    *   Calling `provider.persist()` serializes the `FilterContainer` into a URL-friendly query string.
-    *   This string is then pushed to the browser's history, updating the URL.
+    - When the user modifies a filter, the `FilterContainer` (the array representing the filter state) is updated.
+    - Calling `provider.persist()` serializes the `FilterContainer` into a URL-friendly query string.
+    - This string is then pushed to the browser's history, updating the URL.
 
 2.  **Deserialization (URL to State)**:
-    *   On page load, `useUrlValueProvider` reads the query string from the URL.
-    *   It parses the string into a `TokenArray`, a structured representation of the filters.
-    *   This `TokenArray` is then transformed into a `FilterContainer`, which is used to build the UI state.
-    *   During this process, it also triggers the **Initial State** system to fetch any necessary data for rehydration (see `API/initialState/DOCS.md`).
+    - On page load, `useUrlValueProvider` reads the query string from the URL.
+    - It parses the string into a `TokenArray`, a structured representation of the filters.
+    - This `TokenArray` is then transformed into a `FilterContainer`, which is used to build the UI state.
+    - During this process, it also triggers the **Initial State** system to fetch any necessary data for rehydration (see `API/initialState/DOCS.md`).
 
 ## URL Structure
 
 Filters are encoded into the URL using a specific pattern. Here are some examples:
 
-*   **Simple single filter**: `?0[status][eq][]=FULFILLED`
-    *   A single filter at position `0` where `status` equals `FULFILLED`.
+- **Simple single filter**: `?0[status][eq][]=FULFILLED`
+  - A single filter at position `0` where `status` equals `FULFILLED`.
 
-*   **Multi-select**: `?0[channels][oneOf][]=channel-1&0[channels][oneOf][]=channel-2`
-    *   A single filter where `channels` is one of `channel-1` OR `channel-2`.
+- **Multi-select**: `?0[channels][oneOf][]=channel-1&0[channels][oneOf][]=channel-2`
+  - A single filter where `channels` is one of `channel-1` OR `channel-2`.
 
-*   **Range**: `?0[created][range][gte]=2024-01-01&0[created][range][lte]=2024-12-31`
-    *   A single filter for a date range.
+- **Range**: `?0[created][range][gte]=2024-01-01&0[created][range][lte]=2024-12-31`
+  - A single filter for a date range.
 
-*   **Multiple filters**: `?0[status][eq][]=FULFILLED&1[customer][eq][]=test@test.com`
-    *   Two separate filters joined by an `AND` condition.
+- **Multiple filters**: `?0[status][eq][]=FULFILLED&1[customer][eq][]=test@test.com`
+  - Two separate filters joined by an `AND` condition.
 
 ## How to Use
 

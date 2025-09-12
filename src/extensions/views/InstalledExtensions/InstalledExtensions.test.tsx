@@ -1,6 +1,5 @@
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import React from "react";
 
 import { useInstalledExtensionsFilter } from "./hooks/useInstalledExtensionsFilter";
 import { usePendingInstallation } from "./hooks/usePendingInstallation";

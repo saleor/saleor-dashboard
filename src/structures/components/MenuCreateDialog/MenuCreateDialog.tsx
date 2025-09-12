@@ -8,7 +8,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface MenuCreateDialogFormData {

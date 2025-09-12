@@ -4,7 +4,6 @@ import { SearchWarehousesQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignmentList from "../AssignmentList";

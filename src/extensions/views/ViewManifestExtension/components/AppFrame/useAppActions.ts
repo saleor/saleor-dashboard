@@ -1,5 +1,5 @@
 import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AppActionsHandler } from "./appActionsHandler";
 import { usePostToExtension } from "./usePostToExtension";
@@ -62,7 +62,7 @@ export const useAppActions = (
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handler = (event: MessageEvent<Actions>) => {
       if (event.origin === appOrigin) {
         const response = handleAction(event.data);

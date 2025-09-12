@@ -1,0 +1,17 @@
+{
+  // This file is needed as jest is using SWC to transform files and SWC needs to know how to handle TSX files without React import
+  "$schema": "https://swc.rs/schema.json",
+  "jsc": {
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    },
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true,
+      "decorators": false,
+      "dynamicImport": false
+    }
+  }
+}

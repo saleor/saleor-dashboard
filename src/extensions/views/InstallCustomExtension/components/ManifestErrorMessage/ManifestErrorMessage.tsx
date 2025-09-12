@@ -9,7 +9,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getSpecificManifestErrorDocLink } from "@dashboard/links";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { Box, BoxProps, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FieldError } from "react-hook-form";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 

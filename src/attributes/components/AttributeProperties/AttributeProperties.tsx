@@ -7,7 +7,6 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { Box, Checkbox, Input, Paragraph, Text, Toggle } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { AttributePageFormData } from "../AttributePage";
@@ -73,12 +72,7 @@ export interface AttributePropertiesProps {
   onChange: FormChange;
 }
 
-const AttributeProperties = ({
-  data,
-  errors,
-  disabled,
-  onChange,
-}: AttributePropertiesProps) => {
+const AttributeProperties = ({ data, errors, disabled, onChange }: AttributePropertiesProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
   const storefrontFacetedNavigationProperties =

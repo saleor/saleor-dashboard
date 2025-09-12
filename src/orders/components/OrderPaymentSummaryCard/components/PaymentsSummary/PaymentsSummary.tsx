@@ -1,13 +1,12 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import React from "react";
+import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
 import { FormattedMessage } from "react-intl";
 
 import SummaryLine from "../../../OrderSummaryCard/SummaryLine";
 import { SummaryList } from "../../../OrderSummaryCard/SummaryList";
 import { orderPaymentMessages } from "../../messages";
 import { useStyles } from "../../styles";
-import { getShouldDisplayAmounts } from "./utils";
 
 interface PaymentsSummaryProps {
   order: OrderDetailsFragment;
@@ -15,7 +14,7 @@ interface PaymentsSummaryProps {
 
 export const PaymentsSummary = ({ order }: PaymentsSummaryProps) => {
   const classes = useStyles();
-  const shouldDisplay = getShouldDisplayAmounts(order);
+  const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(order);
 
   return (
     <DashboardCard.Content>

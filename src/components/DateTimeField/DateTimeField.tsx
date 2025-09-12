@@ -7,7 +7,6 @@ import {
 import { commonMessages } from "@dashboard/intl";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
 import { Box, Input } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface DateTimeFieldProps {

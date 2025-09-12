@@ -12,7 +12,6 @@ import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
 import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 

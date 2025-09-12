@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import React, { ReactNode } from "react";
+import { Component, ReactNode } from "react";
 
 import { Provider } from "./DateContext";
 
@@ -7,7 +7,7 @@ interface DateProviderState {
   date: number;
 }
 
-export class DateProvider extends React.Component<{ children: ReactNode }, DateProviderState> {
+export class DateProvider extends Component<{ children: ReactNode }, DateProviderState> {
   static contextTypes = {};
 
   intervalId: number;

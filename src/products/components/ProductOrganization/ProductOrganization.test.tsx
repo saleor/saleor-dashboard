@@ -1,7 +1,7 @@
 import { getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
 import { ProductOrganization } from "./ProductOrganization";

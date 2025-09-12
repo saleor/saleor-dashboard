@@ -19,7 +19,7 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { Control, SubmitHandler, useController, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -134,7 +134,7 @@ const OrderTransactionRefundPage = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const [editedRefundLineIndex, setEditedRefundLineIndex] = React.useState<number | null>(null);
+  const [editedRefundLineIndex, setEditedRefundLineIndex] = useState<number | null>(null);
 
   const datagridErrors: OrderRefundTransactionDatagridError[] = errors
     .filter(err => err.field === "lines" || err.field === "addLines")

@@ -5,7 +5,7 @@ import { UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox, Option, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import * as M from "./messages";

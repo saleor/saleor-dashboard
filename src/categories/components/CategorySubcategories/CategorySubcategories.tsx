@@ -5,7 +5,6 @@ import { InternalLink } from "@dashboard/components/InternalLink";
 import { CategoryDetailsQuery } from "@dashboard/graphql";
 import { ListProps, ListViews, RelayToFlat } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";

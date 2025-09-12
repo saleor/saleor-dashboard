@@ -22,7 +22,8 @@ type QueryWithAnd = {
  * @important When using this builder, make sure to enable `useAndWrapper` option in FiltersQueryBuilder
  * */
 export class MetadataFilterInputQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<QueryWithAnd> {
+  implements WhereOnlyQueryVarsBuilder<QueryWithAnd>
+{
   canHandle(element: FilterElement): boolean {
     return element.value.value === "metadata";
   }
@@ -32,15 +33,12 @@ export class MetadataFilterInputQueryVarsBuilder
     return new NoopValuesHandler([]);
   }
 
-  updateWhereQueryVariables(
-    query: Readonly<QueryWithAnd>,
-    element: FilterElement,
-  ): QueryWithAnd {
+  updateWhereQueryVariables(query: Readonly<QueryWithAnd>, element: FilterElement): QueryWithAnd {
     const { value: selectedValue } = element.condition.selected;
 
     if (!isTuple(selectedValue)) {
       // Metadata input is malformed, return original query without filter
-      return query
+      return query;
     }
 
     const [key, value] = selectedValue;

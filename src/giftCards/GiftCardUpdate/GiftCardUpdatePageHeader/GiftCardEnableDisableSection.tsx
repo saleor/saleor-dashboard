@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { commonMessages } from "@dashboard/intl";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCardsList/messages";

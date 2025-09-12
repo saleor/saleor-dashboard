@@ -22,7 +22,6 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";

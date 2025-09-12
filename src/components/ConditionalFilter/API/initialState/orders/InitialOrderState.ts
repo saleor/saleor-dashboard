@@ -37,10 +37,12 @@ export interface InitialOrderState {
   fulfillmentWarehouse: ItemOption[];
 }
 
-const isDateField = (name: string) => ["createdAt", "updatedAt", "invoicesCreatedAt"].includes(name);
+const isDateField = (name: string) =>
+  ["createdAt", "updatedAt", "invoicesCreatedAt"].includes(name);
 const isPriceField = (name: string) => ["totalGross", "totalNet"].includes(name);
 const isNumericField = (name: string) => ["number", "linesCount"].includes(name);
-const isMetadataField = (name: string) => ["metadata", "linesMetadata", "transactionsMetadata", "fulfillmentsMetadata"].includes(name);
+const isMetadataField = (name: string) =>
+  ["metadata", "linesMetadata", "transactionsMetadata", "fulfillmentsMetadata"].includes(name);
 
 export class InitialOrderStateResponse implements InitialOrderState {
   constructor(
@@ -77,14 +79,19 @@ export class InitialOrderStateResponse implements InitialOrderState {
     public shippingPhoneNumber: ItemOption[] = [],
     public shippingCountry: ItemOption[] = [],
     public fulfillmentWarehouse: ItemOption[] = [],
-  ) { }
+  ) {}
 
   public static empty() {
     return new InitialOrderStateResponse();
   }
 
   public filterByUrlToken(token: UrlToken) {
-    if (isDateField(token.name) || isPriceField(token.name) || isNumericField(token.name) || isMetadataField(token.name)) {
+    if (
+      isDateField(token.name) ||
+      isPriceField(token.name) ||
+      isNumericField(token.name) ||
+      isMetadataField(token.name)
+    ) {
       return token.value;
     }
 
@@ -130,7 +137,7 @@ export class InitialOrderStateResponse implements InitialOrderState {
       case "ids":
         return this.ids;
       case "metadata":
-        return [];  // Metadata handled specially
+        return []; // Metadata handled specially
       case "number":
         return this.number;
       case "userEmail":
@@ -142,15 +149,15 @@ export class InitialOrderStateResponse implements InitialOrderState {
       case "checkoutId":
         return this.checkoutId;
       case "linesMetadata":
-        return [];  // Metadata handled specially
+        return []; // Metadata handled specially
       case "transactionsMetadata":
-        return [];  // Metadata handled specially
+        return []; // Metadata handled specially
       case "transactionsPaymentType":
         return this.transactionsPaymentType;
       case "transactionsCardBrand":
         return this.transactionsCardBrand;
       case "fulfillmentsMetadata":
-        return [];  // Metadata handled specially
+        return []; // Metadata handled specially
       case "billingPhoneNumber":
         return this.billingPhoneNumber;
       case "billingCountry":

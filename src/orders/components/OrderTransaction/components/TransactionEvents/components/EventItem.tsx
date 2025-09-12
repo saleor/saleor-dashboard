@@ -4,7 +4,6 @@ import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
 
 import { mapTransactionEvent } from "../../../utils";
 import { EventCreatedBy } from "./EventCreatedBy";
