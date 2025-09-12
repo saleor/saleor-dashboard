@@ -7961,6 +7961,17 @@ export enum WebhookEventTypeAsyncEnum {
   CHANNEL_UPDATED = 'CHANNEL_UPDATED',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  /**
+   * A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
+  /**
+   * A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   /** A checkout metadata is updated. */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
@@ -8259,6 +8270,17 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS',
+  /**
+   * A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
+  /**
+   * A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   /** A checkout metadata is updated. */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
@@ -8594,6 +8616,7 @@ export enum WebhookSampleEventTypeEnum {
   CHANNEL_STATUS_CHANGED = 'CHANNEL_STATUS_CHANGED',
   CHANNEL_UPDATED = 'CHANNEL_UPDATED',
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
@@ -10652,6 +10675,220 @@ export type CustomerGiftCardListQueryVariables = Exact<{
 
 
 export type CustomerGiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, last4CodeChars: string, expiryDate: any | null, isActive: boolean, currentBalance: { __typename: 'Money', amount: number, currency: string } } }> } | null };
+
+export type AccountErrorFragmentFragment = { __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null };
+
+export type AddressFragmentFragment = { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } };
+
+export type UserBaseFragmentFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null };
+
+export type UserDetailsFragmentFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null };
+
+export type LoginWithoutDetailsMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginWithoutDetailsMutation = { __typename: 'Mutation', tokenCreate: { __typename: 'CreateToken', refreshToken: string | null, token: string | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type LoginMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginMutation = { __typename: 'Mutation', tokenCreate: { __typename: 'CreateToken', token: string | null, refreshToken: string | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type RegisterMutationVariables = Exact<{
+  input: AccountRegisterInput;
+}>;
+
+
+export type RegisterMutation = { __typename: 'Mutation', accountRegister: { __typename: 'AccountRegister', requiresConfirmation: boolean | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type RefreshTokenMutationVariables = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+
+export type RefreshTokenMutation = { __typename: 'Mutation', tokenRefresh: { __typename: 'RefreshToken', token: string | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type RefreshTokenWithUserMutationVariables = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+
+export type RefreshTokenWithUserMutation = { __typename: 'Mutation', tokenRefresh: { __typename: 'RefreshToken', token: string | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type VerifyTokenMutationVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type VerifyTokenMutation = { __typename: 'Mutation', tokenVerify: { __typename: 'VerifyToken', isValid: boolean, payload: any | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type ExternalAuthenticationUrlMutationVariables = Exact<{
+  pluginId?: InputMaybe<Scalars['String']>;
+  input: Scalars['JSONString'];
+}>;
+
+
+export type ExternalAuthenticationUrlMutation = { __typename: 'Mutation', externalAuthenticationUrl: { __typename: 'ExternalAuthenticationUrl', authenticationData: any | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type ExternalObtainAccessTokensMutationVariables = Exact<{
+  pluginId?: InputMaybe<Scalars['String']>;
+  input: Scalars['JSONString'];
+}>;
+
+
+export type ExternalObtainAccessTokensMutation = { __typename: 'Mutation', externalObtainAccessTokens: { __typename: 'ExternalObtainAccessTokens', token: string | null, refreshToken: string | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type ExternalRefreshMutationVariables = Exact<{
+  pluginId?: InputMaybe<Scalars['String']>;
+  input: Scalars['JSONString'];
+}>;
+
+
+export type ExternalRefreshMutation = { __typename: 'Mutation', externalRefresh: { __typename: 'ExternalRefresh', token: string | null, refreshToken: string | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type ExternalRefreshWithUserMutationVariables = Exact<{
+  pluginId?: InputMaybe<Scalars['String']>;
+  input: Scalars['JSONString'];
+}>;
+
+
+export type ExternalRefreshWithUserMutation = { __typename: 'Mutation', externalRefresh: { __typename: 'ExternalRefresh', token: string | null, refreshToken: string | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type ExternalVerifyMutationVariables = Exact<{
+  pluginId?: InputMaybe<Scalars['String']>;
+  input: Scalars['JSONString'];
+}>;
+
+
+export type ExternalVerifyMutation = { __typename: 'Mutation', externalVerify: { __typename: 'ExternalVerify', isValid: boolean, verifyData: any | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }> } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type ExternalLogoutMutationVariables = Exact<{
+  pluginId?: InputMaybe<Scalars['String']>;
+  input: Scalars['JSONString'];
+}>;
+
+
+export type ExternalLogoutMutation = { __typename: 'Mutation', externalLogout: { __typename: 'ExternalLogout', logoutData: any | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type PasswordChangeMutationVariables = Exact<{
+  newPassword: Scalars['String'];
+  oldPassword: Scalars['String'];
+}>;
+
+
+export type PasswordChangeMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type Sdk_RequestPasswordResetMutationVariables = Exact<{
+  email: Scalars['String'];
+  redirectUrl: Scalars['String'];
+  channel: Scalars['String'];
+}>;
+
+
+export type Sdk_RequestPasswordResetMutation = { __typename: 'Mutation', requestPasswordReset: { __typename: 'RequestPasswordReset', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type SetPasswordMutationVariables = Exact<{
+  token: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type SetPasswordMutation = { __typename: 'Mutation', setPassword: { __typename: 'SetPassword', token: string | null, refreshToken: string | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type RequestEmailChangeMutationVariables = Exact<{
+  channel: Scalars['String'];
+  newEmail: Scalars['String'];
+  password: Scalars['String'];
+  redirectUrl: Scalars['String'];
+}>;
+
+
+export type RequestEmailChangeMutation = { __typename: 'Mutation', requestEmailChange: { __typename: 'RequestEmailChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type ConfirmEmailChangeMutationVariables = Exact<{
+  channel: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type ConfirmEmailChangeMutation = { __typename: 'Mutation', confirmEmailChange: { __typename: 'ConfirmEmailChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type AccountRequestDeletionMutationVariables = Exact<{
+  channel: Scalars['String'];
+  redirectUrl: Scalars['String'];
+}>;
+
+
+export type AccountRequestDeletionMutation = { __typename: 'Mutation', accountRequestDeletion: { __typename: 'AccountRequestDeletion', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type AccountDeleteMutationVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type AccountDeleteMutation = { __typename: 'Mutation', accountDelete: { __typename: 'AccountDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type AccountUpdateMutationVariables = Exact<{
+  input: AccountInput;
+}>;
+
+
+export type AccountUpdateMutation = { __typename: 'Mutation', accountUpdate: { __typename: 'AccountUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type SetAccountDefaultAddressMutationVariables = Exact<{
+  id: Scalars['ID'];
+  type: AddressTypeEnum;
+}>;
+
+
+export type SetAccountDefaultAddressMutation = { __typename: 'Mutation', accountSetDefaultAddress: { __typename: 'AccountSetDefaultAddress', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type DeleteAccountAddressMutationVariables = Exact<{
+  addressId: Scalars['ID'];
+}>;
+
+
+export type DeleteAccountAddressMutation = { __typename: 'Mutation', accountAddressDelete: { __typename: 'AccountAddressDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type CreateAccountAddressMutationVariables = Exact<{
+  input: AddressInput;
+}>;
+
+
+export type CreateAccountAddressMutation = { __typename: 'Mutation', accountAddressCreate: { __typename: 'AccountAddressCreate', address: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type UpdateAccountAddressMutationVariables = Exact<{
+  input: AddressInput;
+  id: Scalars['ID'];
+}>;
+
+
+export type UpdateAccountAddressMutation = { __typename: 'Mutation', accountAddressUpdate: { __typename: 'AccountAddressUpdate', address: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null } | null };
+
+export type AccountConfirmMutationVariables = Exact<{
+  email: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type AccountConfirmMutation = { __typename: 'Mutation', confirmAccount: { __typename: 'ConfirmAccount', user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, message: string | null }> } | null };
+
+export type UserWithoutDetailsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserWithoutDetailsQuery = { __typename: 'Query', authenticated: boolean, authenticating: boolean, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null };
+
+export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserQuery = { __typename: 'Query', authenticated: boolean, authenticating: boolean, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultShippingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, addresses: Array<{ __typename: 'Address', id: string, firstName: string, lastName: string, companyName: string, streetAddress1: string, streetAddress2: string, city: string, cityArea: string, postalCode: string, countryArea: string, phone: string | null, isDefaultBillingAddress: boolean | null, isDefaultShippingAddress: boolean | null, country: { __typename: 'CountryDisplay', code: string, country: string } }>, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null } | null };
 
 export type PageTypeUpdateMutationVariables = Exact<{
   id: Scalars['ID'];

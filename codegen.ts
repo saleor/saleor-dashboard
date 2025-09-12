@@ -1,8 +1,9 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "./schema.graphql",
+  schema: ["./schema.graphql", "./src/legacy-sdk/local-schema.graphql"],
   documents: [
+    "./src/legacy-sdk/**/*.ts",
     "./src/**/queries.ts",
     "./src/**/mutations.ts",
     "./src/**/fragments/*.ts",

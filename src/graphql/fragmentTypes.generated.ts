@@ -76,6 +76,7 @@
       "ChannelUpdated",
       "CheckoutCreated",
       "CheckoutFilterShippingMethods",
+      "CheckoutFullyAuthorized",
       "CheckoutFullyPaid",
       "CheckoutMetadataUpdated",
       "CheckoutUpdated",
@@ -314,6 +315,11 @@
       "VoucherTranslation",
       "Warehouse",
       "Webhook"
+    ],
+    "ObjectWithAttributes": [
+      "Page",
+      "Product",
+      "ProductVariant"
     ],
     "ObjectWithMetadata": [
       "Address",
