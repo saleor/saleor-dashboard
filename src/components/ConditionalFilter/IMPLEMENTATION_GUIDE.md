@@ -11,7 +11,9 @@ The ConditionalFilter system is complex with many interconnected parts. This gui
 ## Common Pitfalls
 
 ### 1. Multi-digit Parsing Bug
+
 **Problem**: UrlToken.getInfo() used `split("")` to parse condition indices, causing multi-digit indices to be truncated.
+
 ```javascript
 // ❌ Wrong - splits "10" into ["1", "0"]
 const type = identifier.split("")[0];
@@ -23,35 +25,43 @@ const control = parseInt(identifier.slice(1), 10);
 ```
 
 ### 2. String Truncation in Field Parsing
+
 **Problem**: `Condition.fromUrlToken` treated all values as arrays, truncating strings to first character.
 **Solution**: Add special handling for price, numeric, and date fields to preserve string values.
 
 ### 3. Field Name Mapping Issues
+
 **Problem**: Mapping `customer` → `user` for a specific view which used WHERE API broke other views using FILTER API.
 **Solution**: Make mapping context-specific - only apply for specific views (see `OrderIdQueryVarsBuilder.ts`)
 
 ### 4. Missing Field Registration
+
 **Problem**: Fields not added to STATICS arrays don't persist in URL.
 **Solution**: Always add new fields to appropriate `*_STATICS` array in `UrlToken.ts`.
 
 ### 5. Handler Missing Errors
+
 **Problem**: "Unknown filter element" errors when handlers not defined.
 **Solution**: Add handler for every new field in the list view `FilterAPIProvider`.
 
 ### 6. RangeInput UI Crashes
+
 **Problem**: Numeric fields returning integers crash `RangeInput` component expecting strings.
 **Solution**: Add numeric fields to `isNumericField` checks to preserve string format.
 
 ### 7. Inappropriate Constraint Options
+
 **Problem**: "in" option on single-value fields confuses users and breaks functionality.
 **Solution**: Remove multiselect options from text/number input fields.
 
 ### 8. Field Name Consistency Across Files
+
 **Problem**: Field names must be exactly the same across multiple files, but inconsistencies can cause persistence failures.
 **Example**: Gift card fields defined as `"isGiftCardBought"` in constants.ts but `"giftCardBought"` in UrlToken.ts.
 **Solution**: Ensure field names match exactly across all relevant files.
 
 ### 9. Enum API Mismatch Between FILTER and WHERE APIs
+
 **Problem**: Using legacy FILTER API enums for WHERE API causes GraphQL validation errors.
 **Example**: `OrderStatusFilter` includes "READY_TO_CAPTURE" and "READY_TO_FULFILL" but `OrderStatus` (for WHERE API) doesn't.
 **Solution**: Use the correct enum type for your API - `OrderStatus` for WHERE API, not `OrderStatusFilter`.
@@ -59,9 +69,11 @@ const control = parseInt(identifier.slice(1), 10);
 ## Complete Checklist for Adding New Filter Fields
 
 ### Step 1: Define the Field Structure
+
 **File**: `constants.ts`
 
 1. Add field to `STATIC_*_OPTIONS` array:
+
 ```typescript
 {
   value: "fieldName",
@@ -72,6 +84,7 @@ const control = parseInt(identifier.slice(1), 10);
 ```
 
 2. Define constraints in `STATIC_CONDITIONS`:
+
 ```typescript
 fieldName: [
   { type: "text", label: "is", value: "input-1" },
@@ -82,15 +95,18 @@ fieldName: [
 ```
 
 **Field Type Guidelines**:
+
 - Text fields: `text` type, "is", "contains" constraints
 - Integer fields: `number` type, "is", "lower", "greater", "between" constraints
 - Boolean fields: `select` type, "is" constraint only
 - Date fields: `datetime`/`date` type, "lower", "greater", "between" constraints
 
 ### Step 2: Register for URL Persistence
+
 **File**: `ValueProvider/UrlToken.ts`
 
 Add field name to appropriate STATICS array:
+
 ```typescript
 const ORDER_STATICS = [
   "status",
@@ -105,9 +121,11 @@ const ORDER_STATICS = [
 **⚠️ Important**: Field name must match EXACTLY with the name used in Step 1 (constants.ts). Any mismatch will cause persistence failures.
 
 ### Step 3: Add Data Handler
+
 **File**: `API/providers/*FilterAPIProvider.tsx` (e.g., `OrderFilterAPIProvider.tsx`)
 
 Add handler in `createAPIHandler` function:
+
 ```typescript
 // Text/Number input fields
 if (rowType === "yourNewField") {
@@ -129,9 +147,11 @@ if (rowType === "yourEnumField") {
 ```
 
 ### Step 4: Update Fetching Parameters
+
 **File**: `ValueProvider/TokenArray/fetchingParams.ts`
 
 1. Add to interface:
+
 ```typescript
 export interface OrderFetchingParams {
   status: string[];
@@ -141,6 +161,7 @@ export interface OrderFetchingParams {
 ```
 
 2. Add to empty params:
+
 ```typescript
 export const emptyOrderFetchingParams: OrderFetchingParams = {
   status: [],
@@ -150,9 +171,11 @@ export const emptyOrderFetchingParams: OrderFetchingParams = {
 ```
 
 ### Step 5: Handle Initial State
+
 **File**: `API/initialState/*/InitialState.ts` and `use*State.ts`
 
 1. Add to interface:
+
 ```typescript
 export interface InitialOrderState {
   status: ItemOption[];
@@ -162,6 +185,7 @@ export interface InitialOrderState {
 ```
 
 2. Update constructor:
+
 ```typescript
 constructor(
   public status: ItemOption[] = [],
@@ -171,6 +195,7 @@ constructor(
 ```
 
 3. Add to `getEntryByName`:
+
 ```typescript
 private getEntryByName(name: string): ItemOption[] {
   switch (name) {
@@ -186,6 +211,7 @@ private getEntryByName(name: string): ItemOption[] {
 ```
 
 4. Handle special field types in `filterByUrlToken`:
+
 ```typescript
 // For numeric fields, add to isNumericField check
 const isNumericField = (name: string) => ["number", "linesCount", "yourIntField"].includes(name);
@@ -199,6 +225,7 @@ public filterByUrlToken(token: UrlToken) {
 ```
 
 5. Update hook to handle new field:
+
 ```typescript
 const fetchQueries = async ({
   status,
@@ -206,7 +233,7 @@ const fetchQueries = async ({
   yourNewField,
 }: OrderFetchingParams) => {
   // ... existing code
-  
+
   const initialState = {
     // ... existing fields
     yourNewField: mapTextToOptions(yourNewField, "yourNewField"),
@@ -215,6 +242,7 @@ const fetchQueries = async ({
 ```
 
 6. Update helper with default values:
+
 ```typescript
 // In API/initialState/helpers.ts
 {
@@ -233,11 +261,14 @@ const fetchQueries = async ({
 - There are new fields that are also used in other views -> create new builder and add it as a default to `FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders` list
 
 **Create Custom Builder** (if needed):
+
 ```typescript
 // FiltersQueryBuilder/queryVarsBuilders/YourFieldQueryVarsBuilder.ts
 const SUPPORTED_FIELDS = new Set(["yourField"] as const);
 
-export class YourFieldQueryVarsBuilder extends BaseMappableQueryVarsBuilder<{yourField?: YourInputType}> {
+export class YourFieldQueryVarsBuilder extends BaseMappableQueryVarsBuilder<{
+  yourField?: YourInputType;
+}> {
   canHandle(element: FilterElement): boolean {
     return SUPPORTED_FIELDS.has(element.value.value as any);
   }
@@ -255,6 +286,7 @@ export class YourFieldQueryVarsBuilder extends BaseMappableQueryVarsBuilder<{you
 ```
 
 **Register Builder**:
+
 ```typescript
 // In queryVariables.ts, add to createOrderQueryVariables:
 filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
@@ -268,6 +300,7 @@ filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
 ### Step 7: Handle Special Field Types
 
 **For Numeric Fields** (integer inputs):
+
 ```typescript
 // In FilterElement/Condition.ts
 const isNumericField = ["number", "linesCount", "yourIntField"].includes(token.name);
@@ -278,6 +311,7 @@ if (isPriceField || isNumericField || isDate) {
 ```
 
 **For Special UI Treatment**:
+
 - Numeric fields need string preservation for RangeInput component
 - Price fields need decimal conversion in query builder
 - Date fields need proper formatting
@@ -287,33 +321,34 @@ if (isPriceField || isNumericField || isDate) {
 
 ```typescript
 // String fields (text input)
-userEmail: StringFilterInput // { eq?: string; oneOf?: string[] }
+userEmail: StringFilterInput; // { eq?: string; oneOf?: string[] }
 
-// Integer fields (number input)  
-linesCount: IntFilterInput // { eq?: number; range?: {gte?: number; lte?: number} }
+// Integer fields (number input)
+linesCount: IntFilterInput; // { eq?: number; range?: {gte?: number; lte?: number} }
 
 // Price fields (decimal input)
-totalGross: PriceFilterInput // { amount: DecimalFilterInput; currency?: string }
+totalGross: PriceFilterInput; // { amount: DecimalFilterInput; currency?: string }
 
 // Boolean fields (Yes/No select)
-hasFulfillments: boolean // true | false
+hasFulfillments: boolean; // true | false
 
 // Date fields (date picker)
-createdAt: DateTimeRangeInput // { gte?: string; lte?: string }
+createdAt: DateTimeRangeInput; // { gte?: string; lte?: string }
 
 // Enum fields (dropdown)
-status: OrderStatusEnumFilterInput // { eq?: OrderStatus; oneOf?: OrderStatus[] }
+status: OrderStatusEnumFilterInput; // { eq?: OrderStatus; oneOf?: OrderStatus[] }
 
 // ID arrays (multiselect)
-ids: [ID!] // ["id1", "id2", "id3"]
+ids: [ID!]; // ["id1", "id2", "id3"]
 
 // Metadata (key-value pairs)
-metadata: MetadataFilterInput // { key: string; value?: { eq?: string } }
+metadata: MetadataFilterInput; // { key: string; value?: { eq?: string } }
 ```
 
 ## API Migration Guide (FILTER → WHERE)
 
 ### Key Differences
+
 1. **Field Names**: WHERE API sometimes uses different field names
    - `customer` → `user` in OrderWhereInput
    - Check GraphQL schema for exact field names
@@ -330,7 +365,9 @@ metadata: MetadataFilterInput // { key: string; value?: { eq?: string } }
    - FILTER: `{metadata: [{key, value}]}` → WHERE: `{metadata: {key, value: {eq}}}`
 
 ### Migration Steps
+
 1. **Update Field Mapping**:
+
 ```typescript
 // In StaticQueryVarsBuilder.ts
 private mapFieldNameToGraphQLForWhereApi(fieldName: string): string {
@@ -361,7 +398,9 @@ Before considering a new filter field complete, verify:
 - [ ] **Test URLs** work as expected
 
 ### Example Test URLs
+
 Test these scenarios:
+
 ```
 # Single value
 /orders?0%5Bs0.yourField%5D=testValue
@@ -376,6 +415,7 @@ Test these scenarios:
 ## Files Typically Modified
 
 **Required for every new field:**
+
 1. `constants.ts` - Field definition and constraints
 2. `ValueProvider/UrlToken.ts` - STATICS array registration
 3. `API/providers/*FilterAPIProvider.tsx` - Handler implementation
@@ -383,29 +423,29 @@ Test these scenarios:
 5. `API/initialState/*` - Initial state interfaces and handling
 6. `queryVariables.ts` - Query builder registration
 
-**Optional (depending on field type):**
-7. `FiltersQueryBuilder/queryVarsBuilders/*` - Custom query builder
-8. `FilterElement/Condition.ts` - Special field type handling  
+**Optional (depending on field type):** 7. `FiltersQueryBuilder/queryVarsBuilders/*` - Custom query builder 8. `FilterElement/Condition.ts` - Special field type handling  
 9. `API/initialState/helpers.ts` - Default values
 
 ## Common Error Messages and Solutions
 
-| Error Message | Cause | Solution |
-|--------------|-------|----------|
-| "Unknown filter element: fieldName" | Missing handler in FilterAPIProvider | Add handler in `createAPIHandler` |
-| "Cannot read properties of undefined" | Field not in initial state | Add to InitialState interface and constructor |
-| RangeInput component crash | Integer values instead of strings | Add field to `isNumericField` check |
-| GraphQL validation error | Query builder output doesn't match schema | Check GraphQL schema, fix query builder |
-| Filter doesn't persist in URL | Field not registered for URL tracking | Add to STATICS array in UrlToken.ts |
-| Empty where object after first query | Missing query builder or handler | Verify query builder registration and handler |
-| TypeScript compilation errors | Missing interface updates | Update all related interfaces |
-| Boolean fields don't persist selection | Field name mismatch between files | Ensure exact name match in constants.ts, UrlToken.ts, and InitialState files |
-| GraphQL enum validation error | Using wrong enum for API type | Use OrderStatus for WHERE API, OrderStatusFilter for legacy FILTER API |
+| Error Message                          | Cause                                     | Solution                                                                     |
+| -------------------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------- |
+| "Unknown filter element: fieldName"    | Missing handler in FilterAPIProvider      | Add handler in `createAPIHandler`                                            |
+| "Cannot read properties of undefined"  | Field not in initial state                | Add to InitialState interface and constructor                                |
+| RangeInput component crash             | Integer values instead of strings         | Add field to `isNumericField` check                                          |
+| GraphQL validation error               | Query builder output doesn't match schema | Check GraphQL schema, fix query builder                                      |
+| Filter doesn't persist in URL          | Field not registered for URL tracking     | Add to STATICS array in UrlToken.ts                                          |
+| Empty where object after first query   | Missing query builder or handler          | Verify query builder registration and handler                                |
+| TypeScript compilation errors          | Missing interface updates                 | Update all related interfaces                                                |
+| Boolean fields don't persist selection | Field name mismatch between files         | Ensure exact name match in constants.ts, UrlToken.ts, and InitialState files |
+| GraphQL enum validation error          | Using wrong enum for API type             | Use OrderStatus for WHERE API, OrderStatusFilter for legacy FILTER API       |
 
 ## Advanced Patterns
 
 ### Context-Specific Field Mapping
+
 When field names differ between APIs:
+
 ```typescript
 private mapFieldNameToGraphQL(fieldName: string): string {
   // Only map for WHERE API context
@@ -420,9 +460,13 @@ private mapFieldNameToGraphQL(fieldName: string): string {
 ```
 
 ### Custom Query Builders
+
 Create when standard builders don't fit your GraphQL schema:
+
 ```typescript
-export class CustomFieldQueryVarsBuilder extends BaseMappableQueryVarsBuilder<{customField?: CustomInputType}> {
+export class CustomFieldQueryVarsBuilder extends BaseMappableQueryVarsBuilder<{
+  customField?: CustomInputType;
+}> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "customField";
   }
@@ -435,7 +479,9 @@ export class CustomFieldQueryVarsBuilder extends BaseMappableQueryVarsBuilder<{c
 ```
 
 ### Conditional Field Handling
+
 For fields that need different treatment based on context:
+
 ```typescript
 // In InitialState.filterByUrlToken
 public filterByUrlToken(token: UrlToken) {

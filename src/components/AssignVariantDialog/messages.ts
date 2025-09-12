@@ -31,8 +31,7 @@ export const messages = defineMessages({
   },
   noProductsInQuery: {
     id: "P6+RQ1",
-    defaultMessage:
-      "No products found",
+    defaultMessage: "No products found",
     description: "no products placeholder",
   },
 });

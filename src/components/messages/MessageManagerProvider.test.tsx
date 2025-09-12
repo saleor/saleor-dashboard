@@ -13,7 +13,9 @@ describe("MessageManagerProvider", () => {
   test("should provide MessageContext to children", () => {
     // Arrange
     const { result } = renderHook(() => useContext(MessageContext), {
-      wrapper: ({ children }: PropsWithChildren) => <MessageManagerProvider>{children}</MessageManagerProvider>,
+      wrapper: ({ children }: PropsWithChildren) => (
+        <MessageManagerProvider>{children}</MessageManagerProvider>
+      ),
     });
 
     // Assert: context exists

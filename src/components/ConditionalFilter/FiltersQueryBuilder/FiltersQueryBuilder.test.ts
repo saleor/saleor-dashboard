@@ -451,10 +451,7 @@ describe("FiltersQueryBuilder", () => {
 
       // Assert
       expect(result.filters).toEqual({
-        AND: [
-          { status: { eq: "test" } },
-          { channelId: { eq: "test" } },
-        ],
+        AND: [{ status: { eq: "test" } }, { channelId: { eq: "test" } }],
       });
     });
 
@@ -471,7 +468,7 @@ describe("FiltersQueryBuilder", () => {
       type QueryWithAnd = { AND?: Array<Record<string, unknown>> };
 
       const mockDefWithAnd: QueryVarsBuilder<QueryWithAnd> = {
-        canHandle: jest.fn((el) => el.value.value === "metadata"),
+        canHandle: jest.fn(el => el.value.value === "metadata"),
         createOptionFetcher: jest.fn(),
         updateWhereQueryVariables: jest.fn((query: QueryWithAnd) => ({
           ...query,
@@ -479,9 +476,9 @@ describe("FiltersQueryBuilder", () => {
         })),
       };
       const mockDefTopLevelKey: QueryVarsBuilder<QueryWithAnd> = {
-        canHandle: jest.fn((el) => el.value.value === "status"),
+        canHandle: jest.fn(el => el.value.value === "status"),
         createOptionFetcher: jest.fn(),
-        updateWhereQueryVariables: jest.fn((query) => ({
+        updateWhereQueryVariables: jest.fn(query => ({
           ...query,
           status: { eq: "PAID" },
         })),
@@ -491,7 +488,10 @@ describe("FiltersQueryBuilder", () => {
         Condition.createEmpty(),
         false,
       );
-      const resolver = new FilterQueryVarsBuilderResolver<QueryWithAnd>([mockDefWithAnd, mockDefTopLevelKey]);
+      const resolver = new FilterQueryVarsBuilderResolver<QueryWithAnd>([
+        mockDefWithAnd,
+        mockDefTopLevelKey,
+      ]);
       const builder = new FiltersQueryBuilder({
         apiType: QueryApiType.WHERE,
         filterContainer: [element1, element2],
@@ -504,10 +504,7 @@ describe("FiltersQueryBuilder", () => {
 
       // Assert
       expect(result.filters).toEqual({
-        AND: [
-          { metadata: { key: "color", value: { eq: "red" } } },
-          { status: { eq: "PAID" } },
-        ],
+        AND: [{ metadata: { key: "color", value: { eq: "red" } } }, { status: { eq: "PAID" } }],
       });
     });
 
@@ -538,10 +535,7 @@ describe("FiltersQueryBuilder", () => {
         createOptionFetcher: jest.fn(),
         updateWhereQueryVariables: jest.fn(() => ({
           status: { eq: "PAID" },
-          OR: [
-            { channelId: { eq: "123" } },
-            { channelId: { eq: "456" } },
-          ],
+          OR: [{ channelId: { eq: "123" } }, { channelId: { eq: "456" } }],
         })),
       };
       const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
@@ -557,13 +551,8 @@ describe("FiltersQueryBuilder", () => {
 
       // Assert
       expect(result.filters).toStrictEqual({
-        AND: [
-          { status: { eq: "PAID" } },
-        ],
-        OR: [
-          { channelId: { eq: "123" } },
-          { channelId: { eq: "456" } },
-        ],
+        AND: [{ status: { eq: "PAID" } }],
+        OR: [{ channelId: { eq: "123" } }, { channelId: { eq: "456" } }],
       });
     });
   });

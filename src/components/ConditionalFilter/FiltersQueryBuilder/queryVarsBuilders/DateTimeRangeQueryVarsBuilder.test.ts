@@ -1,4 +1,3 @@
-
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
 import { ConditionItem, ConditionOptions } from "../../FilterElement/ConditionOptions";
@@ -9,42 +8,54 @@ import { DateTimeRangeQueryVarsBuilder } from "./DateTimeRangeQueryVarsBuilder";
 describe("DateTimeRangeQueryVarsBuilder", () => {
   const builder = new DateTimeRangeQueryVarsBuilder();
 
-  function createDateElement(fieldName: string, selectedValue: any, conditionType: string = "select"): FilterElement {
-    const value = new ExpressionValue(fieldName, `${fieldName.charAt(0).toUpperCase()}${fieldName.slice(1)} Field`, fieldName);
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionType, value: `input-${conditionType}` };
-    const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
-    const condition = new Condition(
-      ConditionOptions.fromName(fieldName as any),
-      selected,
-      false
+  function createDateElement(
+    fieldName: string,
+    selectedValue: any,
+    conditionType: string = "select",
+  ): FilterElement {
+    const value = new ExpressionValue(
+      fieldName,
+      `${fieldName.charAt(0).toUpperCase()}${fieldName.slice(1)} Field`,
+      fieldName,
     );
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionType,
+      value: `input-${conditionType}`,
+    };
+    const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
+    const condition = new Condition(ConditionOptions.fromName(fieldName as any), selected, false);
 
     return new FilterElement(value, condition, false);
   }
 
-  function createDateFilterElement(fieldName: string, selectedValue: any, conditionLabel?: string): FilterElement {
-    const value = new ExpressionValue(fieldName, `${fieldName.charAt(0).toUpperCase()}${fieldName.slice(1)} Field`, fieldName);
+  function createDateFilterElement(
+    fieldName: string,
+    selectedValue: any,
+    conditionLabel?: string,
+  ): FilterElement {
+    const value = new ExpressionValue(
+      fieldName,
+      `${fieldName.charAt(0).toUpperCase()}${fieldName.slice(1)} Field`,
+      fieldName,
+    );
 
     if (!conditionLabel) {
       // Create empty condition
       const selected = ConditionSelected.empty();
-      const condition = new Condition(
-        ConditionOptions.fromName(fieldName as any),
-        selected,
-        false
-      );
+      const condition = new Condition(ConditionOptions.fromName(fieldName as any), selected, false);
 
       return new FilterElement(value, condition, false);
     }
 
     const conditionType = conditionLabel === "between" ? "date.range" : "date";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
-    const condition = new Condition(
-      ConditionOptions.fromName(fieldName as any),
-      selected,
-      false
-    );
+    const condition = new Condition(ConditionOptions.fromName(fieldName as any), selected, false);
 
     return new FilterElement(value, condition, false);
   }
@@ -131,8 +142,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           createdAt: {
-            lte: "2023-12-01T00:00:00.000Z"
-          }
+            lte: "2023-12-01T00:00:00.000Z",
+          },
         });
       });
 
@@ -147,14 +158,18 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           createdAt: {
-            gte: "2023-12-01T00:00:00.000Z"
-          }
+            gte: "2023-12-01T00:00:00.000Z",
+          },
         });
       });
 
       it("should handle 'between' condition with date range", () => {
         // Arrange
-        const element = createDateFilterElement("createdAt", ["2023-01-01", "2023-01-31"], "between");
+        const element = createDateFilterElement(
+          "createdAt",
+          ["2023-01-01", "2023-01-31"],
+          "between",
+        );
         const query = {};
 
         // Act
@@ -164,8 +179,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         expect(result).toEqual({
           createdAt: {
             gte: "2023-01-01T00:00:00.000Z",
-            lte: "2023-01-31T00:00:00.000Z"
-          }
+            lte: "2023-01-31T00:00:00.000Z",
+          },
         });
       });
 
@@ -181,8 +196,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         expect(result).toEqual({
           createdAt: {
             gte: "2023-06-15T00:00:00.000Z",
-            lte: "2023-06-15T23:59:59.999Z"
-          }
+            lte: "2023-06-15T23:59:59.999Z",
+          },
         });
       });
 
@@ -198,8 +213,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         expect(result).toEqual({
           createdAt: {
             gte: "2023-06-15T14:30:00.000Z",
-            lte: "2023-06-15T14:31:00.000Z"
-          }
+            lte: "2023-06-15T14:31:00.000Z",
+          },
         });
       });
 
@@ -214,8 +229,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           createdAt: {
-            gte: "2023-06-15T14:30:00.000Z"
-          }
+            gte: "2023-06-15T14:30:00.000Z",
+          },
         });
       });
 
@@ -224,7 +239,7 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         const dateOption = {
           label: "January 1st",
           value: "2023-01-01",
-          slug: "2023-01-01"
+          slug: "2023-01-01",
         };
         const element = createDateFilterElement("createdAt", dateOption, "lower");
         const query = {};
@@ -235,8 +250,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           createdAt: {
-            lte: "2023-01-01T00:00:00.000Z"
-          }
+            lte: "2023-01-01T00:00:00.000Z",
+          },
         });
       });
     });
@@ -244,7 +259,11 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
     describe("updatedAt field", () => {
       it("should handle updatedAt with datetime range", () => {
         // Arrange
-        const element = createDateFilterElement("updatedAt", ["2023-06-01T10:00", "2023-06-30T18:00"], "between");
+        const element = createDateFilterElement(
+          "updatedAt",
+          ["2023-06-01T10:00", "2023-06-30T18:00"],
+          "between",
+        );
         const query = {};
 
         // Act
@@ -254,8 +273,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         expect(result).toEqual({
           updatedAt: {
             gte: "2023-06-01T10:00:00.000Z",
-            lte: "2023-06-30T18:00:00.000Z"
-          }
+            lte: "2023-06-30T18:00:00.000Z",
+          },
         });
       });
 
@@ -263,7 +282,7 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Arrange
         const element = createDateFilterElement("updatedAt", "2023-07-01", "greater");
         const query = {
-          createdAt: { lte: "2023-01-01T00:00:00.000Z" }
+          createdAt: { lte: "2023-01-01T00:00:00.000Z" },
         };
 
         // Act
@@ -272,7 +291,7 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           createdAt: { lte: "2023-01-01T00:00:00.000Z" },
-          updatedAt: { gte: "2023-07-01T00:00:00.000Z" }
+          updatedAt: { gte: "2023-07-01T00:00:00.000Z" },
         });
       });
     });
@@ -289,8 +308,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           dateJoined: {
-            lte: "2023-05-15T00:00:00.000Z"
-          }
+            lte: "2023-05-15T00:00:00.000Z",
+          },
         });
       });
     });
@@ -307,7 +326,7 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           status: { eq: "ACTIVE" },
-          createdAt: undefined
+          createdAt: undefined,
         });
       });
 
@@ -321,7 +340,7 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          createdAt: undefined
+          createdAt: undefined,
         });
       });
 
@@ -335,7 +354,7 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          createdAt: undefined
+          createdAt: undefined,
         });
       });
 
@@ -349,13 +368,17 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
 
         // Assert
         expect(result).toEqual({
-          createdAt: undefined
+          createdAt: undefined,
         });
       });
 
       it("should skip between filter with invalid tuple", () => {
         // Arrange
-        const element = createDateFilterElement("createdAt", ["2023-01-01", "invalid-date"], "between");
+        const element = createDateFilterElement(
+          "createdAt",
+          ["2023-01-01", "invalid-date"],
+          "between",
+        );
         const query = {};
 
         // Act
@@ -365,8 +388,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         expect(result).toEqual({
           createdAt: {
             gte: "2023-01-01T00:00:00.000Z",
-            lte: ""  // Invalid dates result in empty string
-          }
+            lte: "", // Invalid dates result in empty string
+          },
         });
       });
     });
@@ -384,8 +407,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         expect(result).toEqual({
           createdAt: {
             gte: "2023-06-15T10:30:45.000Z",
-            lte: "2023-06-15T10:31:45.000Z"
-          }
+            lte: "2023-06-15T10:31:45.000Z",
+          },
         });
       });
 
@@ -401,14 +424,18 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         expect(result).toEqual({
           createdAt: {
             gte: "2023-06-15T00:00:00.000Z",
-            lte: "2023-06-15T23:59:59.999Z"
-          }
+            lte: "2023-06-15T23:59:59.999Z",
+          },
         });
       });
 
       it("should handle timezone-aware datetime", () => {
         // Arrange
-        const element = createDateFilterElement("createdAt", "2023-06-15T14:30:00+02:00", "greater");
+        const element = createDateFilterElement(
+          "createdAt",
+          "2023-06-15T14:30:00+02:00",
+          "greater",
+        );
         const query = {};
 
         // Act
@@ -417,8 +444,8 @@ describe("DateTimeRangeQueryVarsBuilder", () => {
         // Assert
         expect(result).toEqual({
           createdAt: {
-            gte: "2023-06-15T12:30:00.000Z"  // Converted to UTC
-          }
+            gte: "2023-06-15T12:30:00.000Z", // Converted to UTC
+          },
         });
       });
     });

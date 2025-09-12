@@ -6,10 +6,10 @@ import { LeftOperand } from "./LeftOperandsProvider";
 
 export const useFilteredOperands = (
   operands: LeftOperand[],
-  container: FilterContainer
+  container: FilterContainer,
 ): LeftOperand[] => {
   return useMemo(
     () => OccurrenceLimiter.filterAvailableOperands(operands, container),
-    [operands, container]
+    [operands, container],
   );
 };

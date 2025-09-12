@@ -11,7 +11,11 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
   function createElement(selectedValue: any): FilterElement {
     const type = "metadata";
     const value = new ExpressionValue(type, type, type);
-    const conditionItem: ConditionItem = { type: "tuple", label: "key-value", value: "input-tuple" };
+    const conditionItem: ConditionItem = {
+      type: "tuple",
+      label: "key-value",
+      value: "input-tuple",
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
     const condition = new Condition(ConditionOptions.fromName(type as any), selected, false);
 
@@ -167,7 +171,11 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
       // Arrange
       const value = new ExpressionValue("metadata", "metadata", "metadata");
       const selected = ConditionSelected.empty();
-      const condition = new Condition(ConditionOptions.fromName("metadata" as any), selected, false);
+      const condition = new Condition(
+        ConditionOptions.fromName("metadata" as any),
+        selected,
+        false,
+      );
       const element = new FilterElement(value, condition, false);
 
       // Act
@@ -181,7 +189,11 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
       // Arrange
       const type = "metadata";
       const value = new ExpressionValue(type, type, type);
-      const conditionItem: ConditionItem = { type: "tuple", label: "key-value", value: "input-tuple" };
+      const conditionItem: ConditionItem = {
+        type: "tuple",
+        label: "key-value",
+        value: "input-tuple",
+      };
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, []);
       const condition = new Condition(ConditionOptions.fromName(type as any), selected, false);
       const element = new FilterElement(value, condition, false);
@@ -199,7 +211,11 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
       // Arrange
       const type = "metadata";
       const value = new ExpressionValue(type, type, type);
-      const conditionItem: ConditionItem = { type: "tuple", label: "key-value", value: "input-tuple" };
+      const conditionItem: ConditionItem = {
+        type: "tuple",
+        label: "key-value",
+        value: "input-tuple",
+      };
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, ["only-key"]);
       const condition = new Condition(ConditionOptions.fromName(type as any), selected, false);
       const element = new FilterElement(value, condition, false);
@@ -230,10 +246,7 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
       expect(originalQuery).toEqual({ AND: [{ someOtherField: "value" }] });
       // New AND contains old item + new metadata item
       expect(result).toEqual({
-        AND: [
-          { someOtherField: "value" },
-          { metadata: { key: "color", value: { eq: "red" } } },
-        ],
+        AND: [{ someOtherField: "value" }, { metadata: { key: "color", value: { eq: "red" } } }],
       });
     });
   });
