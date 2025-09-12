@@ -13,7 +13,11 @@ describe("OrderInvoiceDateQueryVarsBuilder", () => {
     const type = "invoicesCreatedAt";
     const value = new ExpressionValue(type, "Invoice Date", type);
     const conditionType = conditionLabel === "between" ? "date.range" : "date";
-    const conditionItem: ConditionItem = { type: conditionType, label: conditionLabel, value: `input-${conditionType}` };
+    const conditionItem: ConditionItem = {
+      type: conditionType,
+      label: conditionLabel,
+      value: `input-${conditionType}`,
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, selectedValue);
     const condition = new Condition(ConditionOptions.fromName(type), selected, false);
 
@@ -83,7 +87,11 @@ describe("OrderInvoiceDateQueryVarsBuilder", () => {
       const result = builder.updateWhereQueryVariables({}, element);
 
       // Assert
-      expect(result).toEqual({ invoices: [{ createdAt: { gte: "2023-01-01T00:00:00.000Z", lte: "2023-01-31T00:00:00.000Z" } }] });
+      expect(result).toEqual({
+        invoices: [
+          { createdAt: { gte: "2023-01-01T00:00:00.000Z", lte: "2023-01-31T00:00:00.000Z" } },
+        ],
+      });
     });
 
     it("handles single date with 'is' by creating day range", () => {
@@ -99,7 +107,11 @@ describe("OrderInvoiceDateQueryVarsBuilder", () => {
       const result = builder.updateWhereQueryVariables({}, element);
 
       // Assert
-      expect(result).toEqual({ invoices: [{ createdAt: { gte: "2023-06-15T00:00:00.000Z", lte: "2023-06-15T23:59:59.999Z" } }] });
+      expect(result).toEqual({
+        invoices: [
+          { createdAt: { gte: "2023-06-15T00:00:00.000Z", lte: "2023-06-15T23:59:59.999Z" } },
+        ],
+      });
     });
   });
 });

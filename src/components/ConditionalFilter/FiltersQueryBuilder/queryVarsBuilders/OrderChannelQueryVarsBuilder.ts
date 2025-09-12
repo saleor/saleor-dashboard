@@ -9,20 +9,16 @@ export type OrderChannelFilterQueryPart = {
   channelId?: GlobalIdFilterInput;
 };
 
-export class OrderChannelQueryVarsBuilder
-  extends BaseMappableQueryVarsBuilder<OrderChannelFilterQueryPart> {
+export class OrderChannelQueryVarsBuilder extends BaseMappableQueryVarsBuilder<OrderChannelFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     return element.value.type === "channels";
   }
 
-  createOptionFetcher(
-    client: ApolloClient<unknown>,
-    inputValue: string,
-  ): Handler {
+  createOptionFetcher(client: ApolloClient<unknown>, inputValue: string): Handler {
     return new LegacyChannelHandler(client, inputValue);
   }
 
   protected getQueryFieldName(): string {
-    return "channelId"
+    return "channelId";
   }
 }

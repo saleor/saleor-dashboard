@@ -1,6 +1,10 @@
 import { NoopValuesHandler } from "../../API/Handler";
 import { Condition } from "../../FilterElement/Condition";
-import { ConditionItem, ConditionOptions, StaticElementName } from "../../FilterElement/ConditionOptions";
+import {
+  ConditionItem,
+  ConditionOptions,
+  StaticElementName,
+} from "../../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ConditionValue } from "../../FilterElement/ConditionValue";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
@@ -10,15 +14,18 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
   const builder = new ArrayMetadataQueryVarsBuilder();
 
   // Helper function to create metadata FilterElement
-  function createMetadataElement(type: StaticElementName, metadataValue: ConditionValue): FilterElement {
+  function createMetadataElement(
+    type: StaticElementName,
+    metadataValue: ConditionValue,
+  ): FilterElement {
     const value = new ExpressionValue(type, `${type} Metadata`, type);
-    const conditionItem: ConditionItem = { type: "tuple", label: "key-value", value: "input-tuple" };
+    const conditionItem: ConditionItem = {
+      type: "tuple",
+      label: "key-value",
+      value: "input-tuple",
+    };
     const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, metadataValue);
-    const condition = new Condition(
-      ConditionOptions.fromName(type),
-      selected,
-      false
-    );
+    const condition = new Condition(ConditionOptions.fromName(type), selected, false);
 
     return new FilterElement(value, condition, false);
   }
@@ -39,7 +46,11 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
 
     it("should return true for transactionsMetadata", () => {
       // Arrange
-      const value = new ExpressionValue("transactionsMetadata", "Transactions Metadata", "transactionsMetadata");
+      const value = new ExpressionValue(
+        "transactionsMetadata",
+        "Transactions Metadata",
+        "transactionsMetadata",
+      );
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
 
@@ -52,7 +63,11 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
 
     it("should return true for fulfillmentsMetadata", () => {
       // Arrange
-      const value = new ExpressionValue("fulfillmentsMetadata", "Fulfillments Metadata", "fulfillmentsMetadata");
+      const value = new ExpressionValue(
+        "fulfillmentsMetadata",
+        "Fulfillments Metadata",
+        "fulfillmentsMetadata",
+      );
       const condition = Condition.createEmpty();
       const element = new FilterElement(value, condition, false);
 
@@ -102,10 +117,10 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "key1",
-              value: { eq: "value1" }
-            }
-          }
-        ]
+              value: { eq: "value1" },
+            },
+          },
+        ],
       });
     });
 
@@ -117,10 +132,10 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "key1",
-              value: { eq: "value1" }
-            }
-          }
-        ]
+              value: { eq: "value1" },
+            },
+          },
+        ],
       };
 
       // Act
@@ -132,16 +147,16 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "key1",
-              value: { eq: "value1" }
-            }
+              value: { eq: "value1" },
+            },
           },
           {
             metadata: {
               key: "key2",
-              value: { eq: "value2" }
-            }
-          }
-        ]
+              value: { eq: "value2" },
+            },
+          },
+        ],
       });
     });
 
@@ -153,10 +168,10 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "key1",
-              value: { eq: "value1" }
-            }
-          }
-        ]
+              value: { eq: "value1" },
+            },
+          },
+        ],
       };
 
       // Act
@@ -168,10 +183,10 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "key1",
-              value: { oneOf: ["value1", "value2"] }
-            }
-          }
-        ]
+              value: { oneOf: ["value1", "value2"] },
+            },
+          },
+        ],
       });
     });
 
@@ -183,10 +198,10 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "key1",
-              value: { oneOf: ["value1", "value2"] }
-            }
-          }
-        ]
+              value: { oneOf: ["value1", "value2"] },
+            },
+          },
+        ],
       };
 
       // Act
@@ -198,18 +213,24 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "key1",
-              value: { oneOf: ["value1", "value2", "value3"] }
-            }
-          }
-        ]
+              value: { oneOf: ["value1", "value2", "value3"] },
+            },
+          },
+        ],
       });
     });
 
     it("should handle mixed metadata fields in single query", () => {
       // Arrange
       const linesElement = createMetadataElement("linesMetadata", ["product", "book"]);
-      const transactionsElement = createMetadataElement("transactionsMetadata", ["gateway", "stripe"]);
-      const fulfillmentsElement = createMetadataElement("fulfillmentsMetadata", ["warehouse", "west"]);
+      const transactionsElement = createMetadataElement("transactionsMetadata", [
+        "gateway",
+        "stripe",
+      ]);
+      const fulfillmentsElement = createMetadataElement("fulfillmentsMetadata", [
+        "warehouse",
+        "west",
+      ]);
 
       let query = {};
 
@@ -224,26 +245,26 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "product",
-              value: { eq: "book" }
-            }
-          }
+              value: { eq: "book" },
+            },
+          },
         ],
         transactions: [
           {
             metadata: {
               key: "gateway",
-              value: { eq: "stripe" }
-            }
-          }
+              value: { eq: "stripe" },
+            },
+          },
         ],
         fulfillments: [
           {
             metadata: {
               key: "warehouse",
-              value: { eq: "west" }
-            }
-          }
-        ]
+              value: { eq: "west" },
+            },
+          },
+        ],
       });
     });
 
@@ -256,10 +277,10 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "color",
-              value: { eq: "red" }
-            }
-          }
-        ]
+              value: { eq: "red" },
+            },
+          },
+        ],
       };
 
       // Act
@@ -272,16 +293,16 @@ describe("ArrayMetadataQueryVarsBuilder", () => {
           {
             metadata: {
               key: "color",
-              value: { eq: "red" }
-            }
+              value: { eq: "red" },
+            },
           },
           {
             metadata: {
               key: "size",
-              value: { eq: "large" }
-            }
-          }
-        ]
+              value: { eq: "large" },
+            },
+          },
+        ],
       });
     });
 

@@ -1,5 +1,5 @@
 name: Execute automation tests
-run-name: Run tests on ${{github.event.client_payload.custom_version }} ${{github.event.client_payload.project}} 
+run-name: Run tests on ${{github.event.client_payload.custom_version }} ${{github.event.client_payload.project}}
 
 on:
   repository_dispatch:
@@ -33,7 +33,7 @@ jobs:
         run: |
           node .github/workflows/getEnvironmentVariables.js \
             --custom_version "$CUSTOM_VERSION" \
-            --repo_token "$REPO_TOKEN" 
+            --repo_token "$REPO_TOKEN"
 
   run-tests-on-release:
     needs: get-environment-variables
@@ -58,4 +58,3 @@ jobs:
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
             )
           gh pr comment "$PR_NUMBER" --body "$PR_COMMENT" -R github.com/saleor/saleor-cloud-deployments
-  

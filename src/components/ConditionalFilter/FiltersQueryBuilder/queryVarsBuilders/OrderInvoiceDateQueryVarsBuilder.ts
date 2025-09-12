@@ -25,7 +25,9 @@ export class OrderInvoiceDateQueryVarsBuilder extends BaseMappableQueryVarsBuild
     return "invoices";
   }
 
-  protected getConditionValue(element: FilterElement): OrderInvoiceDateQueryVars[keyof OrderInvoiceDateQueryVars] | undefined {
+  protected getConditionValue(
+    element: FilterElement,
+  ): OrderInvoiceDateQueryVars[keyof OrderInvoiceDateQueryVars] | undefined {
     const { value: selectedValue, conditionValue } = element.condition.selected;
 
     if (!conditionValue) {

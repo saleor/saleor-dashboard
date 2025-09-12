@@ -2,7 +2,7 @@ name: Merge playwright reports
 description: Merge reports from all shards
 
 inputs:
-  PASSWORD_FOR_DECODING_ARTIFACT: 
+  PASSWORD_FOR_DECODING_ARTIFACT:
     description: "Password for decoding artifact"
     required: true
 
@@ -38,7 +38,7 @@ runs:
         name: html-report--attempt-${{ github.run_attempt }}
         path: secure-report.zip
         retention-days: 14
-    
+
     - name: Merge blob reports
       uses: actions/upload-artifact/merge@v4
       with:

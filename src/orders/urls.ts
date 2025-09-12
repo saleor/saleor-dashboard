@@ -6,7 +6,10 @@ import urlJoin from "url-join";
 import { Condition } from "../components/ConditionalFilter/FilterElement/Condition";
 import { ConditionOptions } from "../components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../components/ConditionalFilter/FilterElement/ConditionSelected";
-import { ExpressionValue, FilterElement } from "../components/ConditionalFilter/FilterElement/FilterElement";
+import {
+  ExpressionValue,
+  FilterElement,
+} from "../components/ConditionalFilter/FilterElement/FilterElement";
 import { prepareStructure } from "../components/ConditionalFilter/ValueProvider/utils";
 import {
   ActiveTab,
@@ -97,7 +100,7 @@ const createCustomerFilterElement = (userEmail: string): FilterElement => {
     userEmail,
     { type: "text", label: "is", value: "input-1" },
     [],
-    false
+    false,
   );
   const condition = new Condition(conditionOptions, conditionSelected, false);
 

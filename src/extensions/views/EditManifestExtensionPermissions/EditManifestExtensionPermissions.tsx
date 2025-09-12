@@ -4,7 +4,7 @@ import Link from "@dashboard/components/Link";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import { APP_PERMISSIONS_DOCS_URL } from "@dashboard/links";
 import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui-next";
-import { useEffect,useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 

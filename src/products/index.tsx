@@ -94,7 +94,10 @@ const ProductVariant = ({ match }: RouteComponentProps<matchParamsProductVariant
   );
 };
 
-const ProductImage = ({ location, match }: RouteComponentProps<{ imageId: string; productId: string }>) => {
+const ProductImage = ({
+  location,
+  match,
+}: RouteComponentProps<{ imageId: string; productId: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductImageUrlQueryParams = qs;
 

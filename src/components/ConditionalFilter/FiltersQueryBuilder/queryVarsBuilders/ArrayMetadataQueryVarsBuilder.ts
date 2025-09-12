@@ -23,14 +23,14 @@ export type ArrayMetadataFilterQueryPart = {
  * For input values: key - b; key - c
  * */
 export class ArrayMetadataQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<ArrayMetadataFilterQueryPart> {
-
+  implements WhereOnlyQueryVarsBuilder<ArrayMetadataFilterQueryPart>
+{
   canHandle(element: FilterElement): boolean {
     const type = element.value.type;
 
-    return type === "linesMetadata" ||
-      type === "transactionsMetadata" ||
-      type === "fulfillmentsMetadata";
+    return (
+      type === "linesMetadata" || type === "transactionsMetadata" || type === "fulfillmentsMetadata"
+    );
   }
 
   createOptionFetcher(): Handler {
@@ -51,7 +51,7 @@ export class ArrayMetadataQueryVarsBuilder
       [key, value] = selectedValue;
     } else {
       // Metadata is malformed, we cannot build query, abort
-      return query
+      return query;
     }
 
     const metadataFilter = { key, value: { eq: value } };
@@ -79,12 +79,10 @@ export class ArrayMetadataQueryVarsBuilder
 
   private mergeMetadataIntoArray(
     existingArray: Array<{ metadata?: { key: string; value?: { eq?: string; oneOf?: string[] } } }>,
-    newFilter: { key: string; value: { eq: string } }
+    newFilter: { key: string; value: { eq: string } },
   ): Array<{ metadata?: { key: string; value?: { eq?: string; oneOf?: string[] } } }> {
     // Find existing element with the same key
-    const existingIndex = existingArray.findIndex(
-      item => item.metadata?.key === newFilter.key
-    );
+    const existingIndex = existingArray.findIndex(item => item.metadata?.key === newFilter.key);
 
     if (existingIndex !== -1) {
       // Merge with existing element
@@ -108,7 +106,7 @@ export class ArrayMetadataQueryVarsBuilder
 
       updatedArray[existingIndex] = {
         ...existingElement,
-        metadata: { key: newFilter.key, value: mergedValue }
+        metadata: { key: newFilter.key, value: mergedValue },
       };
 
       return updatedArray;
