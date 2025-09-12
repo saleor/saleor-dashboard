@@ -9244,6 +9244,161 @@ export function useAppUpdatePermissionsMutation(baseOptions?: ApolloReactHooks.M
 export type AppUpdatePermissionsMutationHookResult = ReturnType<typeof useAppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationResult = Apollo.MutationResult<Types.AppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>;
+export const WebhookCreateDocument = gql`
+    mutation WebhookCreate($input: WebhookCreateInput!) {
+  webhookCreate(input: $input) {
+    errors {
+      ...WebhookError
+    }
+    webhook {
+      ...WebhookDetails
+    }
+  }
+}
+    ${WebhookErrorFragmentDoc}
+${WebhookDetailsFragmentDoc}`;
+export type WebhookCreateMutationFn = Apollo.MutationFunction<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>;
+
+/**
+ * __useWebhookCreateMutation__
+ *
+ * To run a mutation, you first call `useWebhookCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useWebhookCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [webhookCreateMutation, { data, loading, error }] = useWebhookCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useWebhookCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>(WebhookCreateDocument, options);
+      }
+export type WebhookCreateMutationHookResult = ReturnType<typeof useWebhookCreateMutation>;
+export type WebhookCreateMutationResult = Apollo.MutationResult<Types.WebhookCreateMutation>;
+export type WebhookCreateMutationOptions = Apollo.BaseMutationOptions<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>;
+export const WebhookUpdateDocument = gql`
+    mutation WebhookUpdate($id: ID!, $input: WebhookUpdateInput!) {
+  webhookUpdate(id: $id, input: $input) {
+    errors {
+      ...WebhookError
+    }
+    webhook {
+      ...WebhookDetails
+    }
+  }
+}
+    ${WebhookErrorFragmentDoc}
+${WebhookDetailsFragmentDoc}`;
+export type WebhookUpdateMutationFn = Apollo.MutationFunction<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>;
+
+/**
+ * __useWebhookUpdateMutation__
+ *
+ * To run a mutation, you first call `useWebhookUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useWebhookUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [webhookUpdateMutation, { data, loading, error }] = useWebhookUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useWebhookUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>(WebhookUpdateDocument, options);
+      }
+export type WebhookUpdateMutationHookResult = ReturnType<typeof useWebhookUpdateMutation>;
+export type WebhookUpdateMutationResult = Apollo.MutationResult<Types.WebhookUpdateMutation>;
+export type WebhookUpdateMutationOptions = Apollo.BaseMutationOptions<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>;
+export const WebhookDeleteDocument = gql`
+    mutation WebhookDelete($id: ID!) {
+  webhookDelete(id: $id) {
+    errors {
+      ...WebhookError
+    }
+  }
+}
+    ${WebhookErrorFragmentDoc}`;
+export type WebhookDeleteMutationFn = Apollo.MutationFunction<Types.WebhookDeleteMutation, Types.WebhookDeleteMutationVariables>;
+
+/**
+ * __useWebhookDeleteMutation__
+ *
+ * To run a mutation, you first call `useWebhookDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useWebhookDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [webhookDeleteMutation, { data, loading, error }] = useWebhookDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useWebhookDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WebhookDeleteMutation, Types.WebhookDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.WebhookDeleteMutation, Types.WebhookDeleteMutationVariables>(WebhookDeleteDocument, options);
+      }
+export type WebhookDeleteMutationHookResult = ReturnType<typeof useWebhookDeleteMutation>;
+export type WebhookDeleteMutationResult = Apollo.MutationResult<Types.WebhookDeleteMutation>;
+export type WebhookDeleteMutationOptions = Apollo.BaseMutationOptions<Types.WebhookDeleteMutation, Types.WebhookDeleteMutationVariables>;
+export const PluginUpdateDocument = gql`
+    mutation PluginUpdate($channelId: ID, $id: ID!, $input: PluginUpdateInput!) {
+  pluginUpdate(channelId: $channelId, id: $id, input: $input) {
+    errors {
+      ...PluginError
+    }
+    plugin {
+      ...PluginsDetails
+    }
+  }
+}
+    ${PluginErrorFragmentDoc}
+${PluginsDetailsFragmentDoc}`;
+export type PluginUpdateMutationFn = Apollo.MutationFunction<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>;
+
+/**
+ * __usePluginUpdateMutation__
+ *
+ * To run a mutation, you first call `usePluginUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePluginUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pluginUpdateMutation, { data, loading, error }] = usePluginUpdateMutation({
+ *   variables: {
+ *      channelId: // value for 'channelId'
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function usePluginUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>(PluginUpdateDocument, options);
+      }
+export type PluginUpdateMutationHookResult = ReturnType<typeof usePluginUpdateMutation>;
+export type PluginUpdateMutationResult = Apollo.MutationResult<Types.PluginUpdateMutation>;
+export type PluginUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>;
 export const AppsListDocument = gql`
     query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput, $canFetchAppEvents: Boolean!, $hasManagedAppsPermission: Boolean = true) {
   apps(
@@ -9744,6 +9899,76 @@ export function usePluginsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type PluginsQueryHookResult = ReturnType<typeof usePluginsQuery>;
 export type PluginsLazyQueryHookResult = ReturnType<typeof usePluginsLazyQuery>;
 export type PluginsQueryResult = Apollo.QueryResult<Types.PluginsQuery, Types.PluginsQueryVariables>;
+export const PluginDocument = gql`
+    query Plugin($id: ID!) {
+  plugin(id: $id) {
+    ...PluginsDetails
+  }
+}
+    ${PluginsDetailsFragmentDoc}`;
+
+/**
+ * __usePluginQuery__
+ *
+ * To run a query within a React component, call `usePluginQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePluginQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePluginQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePluginQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PluginQuery, Types.PluginQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PluginQuery, Types.PluginQueryVariables>(PluginDocument, options);
+      }
+export function usePluginLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PluginQuery, Types.PluginQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PluginQuery, Types.PluginQueryVariables>(PluginDocument, options);
+        }
+export type PluginQueryHookResult = ReturnType<typeof usePluginQuery>;
+export type PluginLazyQueryHookResult = ReturnType<typeof usePluginLazyQuery>;
+export type PluginQueryResult = Apollo.QueryResult<Types.PluginQuery, Types.PluginQueryVariables>;
+export const WebhookDetailsDocument = gql`
+    query WebhookDetails($id: ID!) {
+  webhook(id: $id) {
+    ...WebhookDetails
+  }
+}
+    ${WebhookDetailsFragmentDoc}`;
+
+/**
+ * __useWebhookDetailsQuery__
+ *
+ * To run a query within a React component, call `useWebhookDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWebhookDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWebhookDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useWebhookDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsDocument, options);
+      }
+export function useWebhookDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsDocument, options);
+        }
+export type WebhookDetailsQueryHookResult = ReturnType<typeof useWebhookDetailsQuery>;
+export type WebhookDetailsLazyQueryHookResult = ReturnType<typeof useWebhookDetailsLazyQuery>;
+export type WebhookDetailsQueryResult = Apollo.QueryResult<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {

@@ -249,3 +249,19 @@ export const pluginsList = gql`
     }
   }
 `;
+
+export const pluginDetails = gql`
+  query Plugin($id: ID!) {
+    plugin(id: $id) {
+      ...PluginsDetails
+    }
+  }
+`;
+
+export const webhookDetails = gql`
+  query WebhookDetails($id: ID!) {
+    webhook(id: $id) {
+      ...WebhookDetails
+    }
+  }
+`;
