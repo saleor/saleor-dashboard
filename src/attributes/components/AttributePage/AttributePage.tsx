@@ -1,4 +1,4 @@
-import {AssignReferenceTypesDialog, ReferenceTypes} from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
+import { AssignReferenceTypesDialog, ReferenceTypes } from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
 import { AttributeAddUrlQueryParams, attributeListPath, AttributeUrlQueryParams } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES, ENTITY_TYPES_WITH_TYPES_RESTRICTION, REFERENCE_ATTRIBUTE_TYPES } from "@dashboard/attributes/utils/data";
 import { useUser } from "@dashboard/auth";
@@ -186,15 +186,14 @@ const AttributePage = ({
         );
 
         // Clear reference types in case entityType changes, as it may affect available options
-        const handleChange = (eventOrName: any, value?: any) => {
-          const fieldName =
-            typeof eventOrName === "string" ? eventOrName : eventOrName?.target?.name;
+        const handleChange = event => {
+          const fieldName = event.target?.name;
 
           if (attribute === null && fieldName === "entityType") {
             set({ referenceTypes: [] });
           }
 
-          change(eventOrName, value);
+          change(event);
         };
         const setReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
           const toAdd = selected.map(
@@ -316,10 +315,8 @@ const AttributePage = ({
               </Savebar>
             </DetailPageLayout>
             <AssignReferenceTypesDialog
-              key={data.referenceTypes.map(o => o.value).sort().join("|")}
               open={params.action === "assign-reference-types"}
               onClose={onCloseAssignReferenceTypes}
-              confirmButtonState={"default"}
               loading={Boolean(fetchMoreReferenceTypes?.loading)}
               selectedReferenceTypesIds={data.referenceTypes.map(ref => ref.value)}
               referenceTypes={(referenceTypes ?? []) as ReferenceTypes}
