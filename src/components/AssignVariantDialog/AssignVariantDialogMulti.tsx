@@ -77,12 +77,16 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
         ...variant,
       })),
     );
+
   const handleClose = () => {
     queryReset();
     onClose();
   };
 
   useModalDialogOpen(open, {
+    onOpen: () => {
+      queryReset();
+    },
     onClose: handleClose,
   });
 

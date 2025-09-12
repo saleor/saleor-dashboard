@@ -114,6 +114,10 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
   };
 
   useModalDialogOpen(open, {
+    onOpen: () => {
+      queryReset();
+      setProductsDict(selectedIds || {});
+    },
     onClose: handleClose,
   });
 

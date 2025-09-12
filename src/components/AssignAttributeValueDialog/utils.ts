@@ -1,4 +1,5 @@
 import {
+  AttributeInputTypeEnum,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
   SearchPagesQuery,
@@ -17,7 +18,7 @@ export const filterProductsByAttributeValues = (
   products: ProductsToFilter,
   attribute: AttributeInput,
 ): ProductsToFilter => {
-  const isSingle = attribute.data.inputType === "SINGLE_REFERENCE";
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
 
   // For single reference, don't filter - show all items to view current selection
   if (isSingle) {
@@ -44,7 +45,7 @@ export const filterPagesByAttributeValues = (
   pages: PagesToFilter,
   attribute: AttributeInput,
 ): PagesToFilter => {
-  const isSingle = attribute.data.inputType === "SINGLE_REFERENCE";
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
 
   // For single reference, don't filter - show all items to view current selection
   if (isSingle) {
@@ -58,7 +59,7 @@ export const filterCollectionsByAttributeValues = (
   collections: CollectionsToFilter,
   attribute: AttributeInput,
 ): CollectionsToFilter => {
-  const isSingle = attribute.data.inputType === "SINGLE_REFERENCE";
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
 
   // For single reference, don't filter - show all items to view current selection
   if (isSingle) {
@@ -72,7 +73,7 @@ export const filterCategoriesByAttributeValues = (
   categories: CategoriesToFilter,
   attribute: AttributeInput,
 ): CategoriesToFilter => {
-  const isSingle = attribute.data.inputType === "SINGLE_REFERENCE";
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
 
   // For single reference, don't filter - show all items to view current selection
   if (isSingle) {

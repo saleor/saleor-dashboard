@@ -70,6 +70,9 @@ export const AssignContainerDialogMulti = (props: AssignContainerDialogMultiProp
   };
 
   useModalDialogOpen(open, {
+    onOpen: () => {
+      queryReset();
+    },
     onClose: handleClose,
   });
 
