@@ -3,6 +3,7 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
@@ -10,12 +11,8 @@ import { Text } from "@saleor/macaw-ui-next";
 import React from "react";
 
 import BackButton from "../BackButton";
+import type { Container } from "./AssignContainerDialog";
 import { useStyles } from "./styles";
-
-export interface Container {
-  id: string;
-  name: string;
-}
 
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
 
@@ -29,6 +26,7 @@ export interface AssignContainerDialogSingleProps extends FetchMoreProps {
   onClose: () => void;
   selectedId?: string;
   emptyMessage?: string;
+  open: boolean;
 }
 
 const scrollableTargetId = "assignContainerScrollableDialog";
@@ -46,6 +44,7 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
     onSubmit,
     selectedId,
     emptyMessage,
+    open,
   } = props;
   const classes = useStyles(props);
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
@@ -54,6 +53,15 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
   React.useEffect(() => {
     setSelectedContainerId(selectedId ?? '');
   }, [selectedId]);
+
+  const handleClose = () => {
+    queryReset();
+    onClose();
+  };
+
+  useModalDialogOpen(open, {
+    onClose: handleClose,
+  });
 
   const handleSubmit = () => {
     if (selectedContainerId) {
@@ -66,10 +74,6 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
     }
   };
 
-  const handleClose = () => {
-    queryReset();
-    onClose();
-  };
 
   const handleContainerSelect = (containerId: string) => {
     setSelectedContainerId(containerId === selectedContainerId ? '' : containerId);

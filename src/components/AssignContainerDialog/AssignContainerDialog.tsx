@@ -30,12 +30,10 @@ export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps 
 const AssignContainerDialog = (props: AssignContainerDialogProps) => {
   const {
     selectionMode = 'multiple',
-    open,
-    onClose,
     ...restProps
   } = props;
 
-  const { labels } = props;
+  const { labels, open, onClose } = props;
 
   return (
     <DashboardModal onChange={onClose} open={open}>
@@ -44,12 +42,10 @@ const AssignContainerDialog = (props: AssignContainerDialogProps) => {
         {selectionMode === 'single' ? (
           <AssignContainerDialogSingle
             {...restProps}
-            onClose={onClose}
           />
         ) : (
           <AssignContainerDialogMulti
             {...restProps}
-            onClose={onClose}
           />
         )}
       </DashboardModal.Content>

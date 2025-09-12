@@ -4,6 +4,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
 import { FetchMoreProps } from "@dashboard/types";
@@ -32,6 +33,7 @@ export interface AssignProductDialogSingleProps extends FetchMoreProps {
   labels?: {
     confirmBtn?: string;
   };
+  open: boolean;
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -50,6 +52,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
     onSubmit,
     selectedId,
     labels,
+    open,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -60,15 +63,24 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
     setSelectedProductId(selectedId ?? '');
   }, [selectedId]);
 
+  const handleClose = () => {
+    queryReset();
+    onClose();
+  };
+
+  useModalDialogOpen(open, {
+    onClose: handleClose,
+  });
+
   const handleSubmit = () => {
     if (selectedProductId) {
       const selectedProduct = products.find(product => product.id === selectedProductId);
 
       if (selectedProduct) {
         onSubmit([{
+          ...selectedProduct,
           id: selectedProduct.id,
           name: selectedProduct.name,
-          ...selectedProduct,
         }]);
 
         return;
@@ -80,11 +92,6 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
 
   const handleChange = (productId: string) => {
     setSelectedProductId(productId === selectedProductId ? '' : productId);
-  };
-
-  const handleClose = () => {
-    queryReset();
-    onClose();
   };
 
   return (
@@ -116,7 +123,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
               products.map(product => {
                 const isSelected = selectedProductId === product.id;
                 const isProductAvailable = isProductAvailableInVoucherChannels(
-                  product.channelListings,
+                  product.channelListings ?? [],
                   selectedChannels,
                 );
 
@@ -137,7 +144,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
                     </TableCell>
                     <TableCellAvatar
                       className={classes.avatar}
-                      thumbnail={maybe(() => product.thumbnail.url)}
+                      thumbnail={maybe(() => product.thumbnail?.url)}
                       style={{
                         opacity: !isProductAvailable ? 0.5 : 1,
                       }}

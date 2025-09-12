@@ -5,6 +5,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
 import { FetchMoreProps } from "@dashboard/types";
@@ -34,6 +35,7 @@ export interface AssignProductDialogMultiProps extends FetchMoreProps {
   labels?: {
     confirmBtn?: string;
   };
+  open: boolean;
 }
 
 const scrollableTargetId = "assignProductScrollableDialog";
@@ -52,6 +54,7 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
     onSubmit,
     selectedIds,
     labels,
+    open,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -110,6 +113,11 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
     queryReset();
     onClose();
   };
+
+  useModalDialogOpen(open, {
+    onClose: handleClose,
+  });
+
 
   return (
     <>

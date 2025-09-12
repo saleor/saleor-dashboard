@@ -28,10 +28,10 @@ export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
 const AssignVariantDialog = (props: AssignVariantDialogProps) => {
   const {
     selectionMode = 'multiple',
-    open,
-    onClose,
     ...restProps
   } = props;
+
+  const { open, onClose } = props;
 
   const handleClose = () => {
     onClose();
@@ -45,15 +45,12 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
         </DashboardModal.Header>
 
         {selectionMode === 'single' ? (
-
           <AssignVariantDialogSingle
             {...restProps}
-            onClose={onClose}
           />
         ) : (
           <AssignVariantDialogMulti
             {...restProps}
-            onClose={onClose}
           />
         )}
       </DashboardModal.Content>

@@ -7,6 +7,7 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SearchProductsQuery } from "@dashboard/graphql";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
@@ -37,6 +38,7 @@ export interface AssignVariantDialogMultiProps extends FetchMoreProps {
   onSubmit: (data: Container[]) => void;
   onClose: () => void;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
+  open: boolean;
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
@@ -52,6 +54,7 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
     onFetch,
     onFetchMore,
     onSubmit,
+    open,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -78,6 +81,10 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
     queryReset();
     onClose();
   };
+
+  useModalDialogOpen(open, {
+    onClose: handleClose,
+  });
 
   return (
     <>

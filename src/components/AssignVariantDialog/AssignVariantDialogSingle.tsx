@@ -6,12 +6,13 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SearchProductsQuery } from "@dashboard/graphql";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AssignContainerDialogProps, Container } from "../AssignContainerDialog";
@@ -29,6 +30,7 @@ export interface AssignVariantDialogSingleProps extends FetchMoreProps {
   onClose: () => void;
   selectedId?: string;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
+  open: boolean;
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
@@ -45,22 +47,32 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
     onFetchMore,
     onSubmit,
     selectedId,
+    open,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedVariantId, setSelectedVariantId] = React.useState<string>(selectedId ?? '');
+  const [selectedVariantId, setSelectedVariantId] = useState<string>(selectedId ?? '');
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSelectedVariantId(selectedId ?? '');
   }, [selectedId]);
 
-  const productChoices = useMemo(() => products?.filter(product => product?.variants?.length > 0) || [], [products]);
-  const productVariantChoices = useMemo(() => productChoices.flatMap(product => product.variants), [productChoices]);
+  const handleClose = () => {
+    queryReset();
+    onClose();
+  };
+
+  useModalDialogOpen(open, {
+    onClose: handleClose,
+  });
+
+  const productChoices = useMemo(() => products?.filter(product => product && product.variants && product.variants.length > 0) || [], [products]);
+  const productVariantChoices = useMemo(() => productChoices.flatMap(product => product.variants || []), [productChoices]);
 
   const handleSubmit = () => {
     if (selectedVariantId) {
-      const variant = productVariantChoices.find(v => v.id === selectedVariantId);
+      const variant = productVariantChoices.find(v => v && v.id === selectedVariantId);
 
       if (variant) {
         const variantWithLabel: VariantWithProductLabel = {
@@ -86,10 +98,6 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
     setSelectedVariantId(variantId === selectedVariantId ? '' : variantId);
   };
 
-  const handleClose = () => {
-    queryReset();
-    onClose();
-  };
 
   return (
     <>
@@ -108,7 +116,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
 
       <InfiniteScroll
         id={scrollableTargetId}
-        dataLength={productChoices.reduce((acc, product) => acc + product.variants.length, 0)}
+        dataLength={productChoices.reduce((acc, product) => acc + (product.variants?.length || 0), 0)}
         next={onFetchMore}
         hasMore={hasMore}
         scrollThreshold="100px"
@@ -127,14 +135,14 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                     </TableCell>
                     <TableCellAvatar
                       className={classes.avatar}
-                      thumbnail={maybe(() => product.thumbnail.url)}
+                      thumbnail={product ? maybe(() => product.thumbnail?.url) : undefined}
                     />
                     <TableCell className={classes.colName} colSpan={2}>
-                      {maybe(() => product.name)}
+                      {product ? maybe(() => product.name) : null}
                     </TableCell>
                   </TableRowLink>
                   {/* Variant rows (selectable) */}
-                  {maybe(() => product.variants, []).map((variant) => {
+                  {(product?.variants || []).filter(v => v !== null).map((variant) => {
                     const isSelected = selectedVariantId === variant.id;
 
                     return (
@@ -166,7 +174,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                           </div>
                         </TableCell>
                         <TableCell className={classes.textRight}>
-                          {variant?.channelListings[0]?.price && (
+                          {variant?.channelListings?.[0]?.price && (
                             <Money money={variant.channelListings[0].price} />
                           )}
                         </TableCell>

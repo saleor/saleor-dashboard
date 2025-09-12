@@ -3,6 +3,7 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
@@ -11,12 +12,8 @@ import React from "react";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
+import type { Container } from "./AssignContainerDialog";
 import { useStyles } from "./styles";
-
-export interface Container {
-  id: string;
-  name: string;
-}
 
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
 
@@ -29,6 +26,7 @@ export interface AssignContainerDialogMultiProps extends FetchMoreProps {
   onSubmit: (data: Container[]) => void;
   onClose: () => void;
   emptyMessage?: string;
+  open: boolean;
 }
 
 function handleContainerAssign(
@@ -60,15 +58,21 @@ export const AssignContainerDialogMulti = (props: AssignContainerDialogMultiProp
     onFetchMore,
     onSubmit,
     emptyMessage,
+    open,
   } = props;
   const classes = useStyles(props);
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [selectedContainers, setSelectedContainers] = React.useState<Container[]>([]);
   const handleSubmit = () => onSubmit(selectedContainers);
+
   const handleClose = () => {
     queryReset();
     onClose();
   };
+
+  useModalDialogOpen(open, {
+    onClose: handleClose,
+  });
 
   return (
     <>
