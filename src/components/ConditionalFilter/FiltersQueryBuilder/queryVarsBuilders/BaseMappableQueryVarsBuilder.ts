@@ -9,7 +9,8 @@ import { BothApiQueryVarsBuilder, FilterQuery } from "./types";
  * to different query variables
  * For example: attributeType -> type */
 export abstract class BaseMappableQueryVarsBuilder<T extends FilterQuery = FilterQuery>
-  implements BothApiQueryVarsBuilder<T> {
+  implements BothApiQueryVarsBuilder<T>
+{
   abstract canHandle(element: FilterElement): boolean;
 
   abstract createOptionFetcher(

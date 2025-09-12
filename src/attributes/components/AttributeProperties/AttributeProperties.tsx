@@ -72,12 +72,7 @@ export interface AttributePropertiesProps {
   onChange: FormChange;
 }
 
-const AttributeProperties = ({
-  data,
-  errors,
-  disabled,
-  onChange,
-}: AttributePropertiesProps) => {
+const AttributeProperties = ({ data, errors, disabled, onChange }: AttributePropertiesProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
   const storefrontFacetedNavigationProperties =
