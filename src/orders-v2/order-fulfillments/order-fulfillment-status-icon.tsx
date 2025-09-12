@@ -1,16 +1,30 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
-import { Banknote, PackageIcon, ReplaceIcon } from "lucide-react";
+import { EraserIcon, PackageIcon, ReplaceIcon, SignatureIcon } from "lucide-react";
+
+import { OrderFulfillmentRefundedStatusIcon } from "../icons/order-fulfillment-refunded-status-icon";
+import { OrderFulfillmentReturnedStatusIcon } from "../icons/order-fulfillment-returned-status-icon";
 
 export const OrderFulfillmentStatusIcon = ({ status }: { status: FulfillmentStatus }) => {
   switch (status) {
     case FulfillmentStatus.FULFILLED:
       return <PackageIcon color="oklch(78.7% 0.203 153deg)" size={17} />;
     case FulfillmentStatus.REFUNDED:
-      return <Banknote color="oklch(61.4% 0.21 258deg)" size={17} />;
+      return <OrderFulfillmentRefundedStatusIcon size={17} />;
     case FulfillmentStatus.RETURNED:
-      return <PackageIcon color="oklch(67.1% 0.176 256deg)" size={17} />;
+      return <OrderFulfillmentReturnedStatusIcon size={17} />;
     case FulfillmentStatus.REPLACED:
       return <ReplaceIcon size={17} />;
+    case FulfillmentStatus.CANCELED:
+      return <EraserIcon color="oklch(70.9% 0.183 23deg)" size={17} />;
+    case FulfillmentStatus.WAITING_FOR_APPROVAL:
+      return <SignatureIcon size={17} />;
+    case FulfillmentStatus.REFUNDED_AND_RETURNED:
+      return (
+        <>
+          <OrderFulfillmentRefundedStatusIcon size={17} />
+          <ReplaceIcon size={17} />
+        </>
+      );
     default:
       return null;
   }
