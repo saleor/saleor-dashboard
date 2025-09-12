@@ -1,4 +1,4 @@
-import { defineMessages } from "react-intl";
+import { defineMessage, defineMessages } from "react-intl";
 
 import { TransactionEventType } from "./types";
 
@@ -78,4 +78,19 @@ export const transactionEventTypeMap = defineMessages<Exclude<TransactionEventTy
     id: "of/+iV",
     description: "transaction event type, refund was reversed, funds are back to store account",
   },
+});
+
+export const refundReasonSelectHelperMessages = defineMessages({
+  manageReasons: defineMessage({
+    defaultMessage: "Manage available refunds reasons",
+    id: "6ZubLQ",
+  }),
+  enableReasonsInSettings: defineMessage({
+    defaultMessage: "Enable refund reasons in settings",
+    id: "zIPK5M",
+  }),
+  noPermissionsHint: defineMessage({
+    defaultMessage: "Use refund settings to configure available reasons (permissions required)",
+    id: "lLKEMH",
+  }),
 });

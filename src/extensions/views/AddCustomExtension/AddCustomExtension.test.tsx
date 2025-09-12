@@ -41,6 +41,7 @@ jest.mock("react-intl", () => ({
   }),
   FormattedMessage: ({ defaultMessage }: { id: string; defaultMessage: string }) => defaultMessage,
   defineMessages: (messages: Record<string, any>) => messages,
+  defineMessage: (message: any) => message,
 }));
 
 jest.mock("./hooks/usePermissions");

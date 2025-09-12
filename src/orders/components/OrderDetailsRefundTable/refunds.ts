@@ -19,6 +19,7 @@ export interface DatagridRefund {
     currency: string;
   };
   reason: string | null;
+  reasonTypeName?: string | null;
   createdAt: string;
   user: {
     email: string;
@@ -76,6 +77,9 @@ const mapEventGroupsToDatagridRefunds = (
     );
     const latestEvent = sortedEvents[0];
     const latestEventWithAuthor = findLatestEventWithUserAuthor(sortedEvents) || latestEvent;
+    const REQUESTtypeEvent = eventGroup.find(e => e.type === "REFUND_REQUEST");
+
+    const reason = REQUESTtypeEvent?.message ?? intl.formatMessage(refundGridMessages.manualRefund);
 
     return {
       id: latestEvent.id,
@@ -84,7 +88,8 @@ const mapEventGroupsToDatagridRefunds = (
       amount: latestEvent.amount,
       createdAt: latestEvent.createdAt,
       user: determineCreatorDisplay(latestEventWithAuthor.createdBy),
-      reason: intl.formatMessage(refundGridMessages.manualRefund),
+      reason,
+      reasonTypeName: REQUESTtypeEvent?.reasonReference?.title ?? null,
     };
   });
 };
@@ -108,6 +113,8 @@ export const manualRefundsExtractor = (
   const manualRefundEvents =
     refundEvents?.filter(event => !idsOfEventsAssociatedToGrantedRefunds.has(event.id)) ?? [];
 
+  // TODO: There is a bug, because multiple refunds for the same reference will be merged together and only last one will be visible.
+  // Grouping should be improved
   const eventsByPspReference = groupEventsByPspReference(manualRefundEvents);
   const datagridRefunds = mapEventGroupsToDatagridRefunds(eventsByPspReference, intl);
 
@@ -139,4 +146,9 @@ export const mergeRefunds = (
 
 const prepareGrantedRefunds = (
   grantedRefunds: OrderDetailsFragment["grantedRefunds"],
-): DatagridRefund[] => grantedRefunds.map(refund => ({ ...refund, type: "standard" }));
+): DatagridRefund[] =>
+  grantedRefunds.map(refund => ({
+    ...refund,
+    type: "standard",
+    reasonTypeName: refund.reasonReference?.title ?? null,
+  }));

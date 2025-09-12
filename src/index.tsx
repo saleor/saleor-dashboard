@@ -9,6 +9,8 @@ import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
+import { RefundsSettingsRoute } from "@dashboard/refundsSettings/route";
+import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
@@ -270,6 +272,11 @@ const Routes = () => {
                   permissions={[PermissionEnum.MANAGE_SETTINGS]}
                   path="/site-settings"
                   component={SiteSettingsSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                  path={refundsSettingsPath}
+                  component={RefundsSettingsRoute}
                 />
                 <SectionRoute path="/taxes" component={TaxesSection} />
                 <SectionRoute
