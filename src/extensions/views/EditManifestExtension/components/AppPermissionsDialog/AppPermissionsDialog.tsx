@@ -85,7 +85,7 @@ export const AppPermissionsDialog = ({
             onClose={onClose}
             onChange={updateSelected}
             onSubmit={onConfirmSelection}
-            allPermissions={availablePermissions.map(code => ({ code, name: code }))}
+            allPermissions={availablePermissions}
             selected={selectedPermissions}
           />
         );

@@ -1,11 +1,11 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { useGetAvailableAppPermissions } from "@dashboard/extensions/hooks/useGetAvailableAppPermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { useGetAvailableAppPermissions } from "../../hooks/useGetAvailableAppPermissions";
 import { AppPermissionsDialogMessages } from "./messages";
 
 const messages = AppPermissionsDialogMessages.confirmation;
