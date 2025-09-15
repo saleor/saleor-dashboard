@@ -1,5 +1,5 @@
 import { getAppMountUri } from "@dashboard/config";
-import { AppPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
+import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
@@ -52,8 +52,7 @@ const useHandleRedirectAction = (appId: string) => {
     debug("Handling deep app URL change");
 
     const getNewExactLocation = () => {
-      const legacyAppPath = `/apps/${appId}/app`;
-      const currentAppPath = AppPaths.resolveAppPath(appId);
+      const legacyAppPath = ExtensionsPaths.resolveLegacyAppPath(appId);
 
       if (action.payload.to.startsWith(legacyAppPath)) {
         /* Some apps might have used path in dashboard to /apps/XYZ/app/... as a way
@@ -64,13 +63,10 @@ const useHandleRedirectAction = (appId: string) => {
         const newPath = ExtensionsUrls.resolveAppDeepUrl(appId, subpath);
 
         return urlJoin(getAppMountUri(), newPath);
-      } else if (action.payload.to.startsWith(currentAppPath)) {
+      } else {
         /** Newer apps can use /extensions/app/XYZ/... to change it's own URL
          * however we should discourage such usage, app should just use window.location.href
          * or some custom router (e.g. Next.js Router) */
-        return urlJoin(getAppMountUri(), action.payload.to);
-      } else {
-        // Default case - just use the provided path
         return urlJoin(getAppMountUri(), action.payload.to);
       }
     };
@@ -141,7 +137,7 @@ const useHandleRedirectAction = (appId: string) => {
       );
 
       // Check if it's a legacy app path redirect
-      const legacyAppPath = `/apps/${appId}/app`;
+      const legacyAppPath = ExtensionsPaths.resolveLegacyAppPath(appId);
       const isLegacyAppPath = action.payload.to.startsWith(legacyAppPath);
 
       debug(`Is app deep URL change: %s`, onlyAppDeepChange);

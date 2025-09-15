@@ -33,24 +33,9 @@ export const ExtensionsPaths = {
 
   // Plugins
   resolveEditPluginExtension: (id: string) => urlJoin(extensionsPluginSection, id),
-};
 
-// Legacy AppPaths export for compatibility
-export const AppPaths = {
-  appListPath: ExtensionsPaths.installedExtensions,
-  resolveAppPath: (id: string) => ExtensionsPaths.resolveViewManifestExtension(id),
-  resolveAppDeepPath: (id: string, subPath: string) =>
-    ExtensionsPaths.resolveAppDeepPath(id, subPath),
-  resolveAppRequestPermissionsPath: (id: string) =>
-    ExtensionsPaths.resolveAppRequestPermissionsPath(id),
-};
-
-// Legacy AppUrls export for compatibility
-export const AppUrls = {
-  resolveAppInstallUrl: (manifestUrl?: string) =>
-    ExtensionsUrls.resolveInstallCustomExtensionUrl(manifestUrl),
-  resolveAppUrl: (appId: string) => ExtensionsPaths.resolveViewManifestExtension(appId),
-  resolveAppDetailsUrl: (appId: string) => ExtensionsPaths.resolveEditManifestExtension(appId),
+  // Legacy paths to handle old app urls
+  resolveLegacyAppPath: (id: string) => `/apps/${id}/app`,
 };
 
 export const MANIFEST_ATTR = "manifestUrl";
