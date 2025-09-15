@@ -42,8 +42,6 @@ import {
 import { handleAssignMedia } from "@dashboard/products/utils/handlers";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
 import { useReferencePageSearch, useReferenceProductSearch } from "@dashboard/searches/useReferenceSearch";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
@@ -361,4 +359,3 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     </>
   );
 };
-export default ProductVariant;
