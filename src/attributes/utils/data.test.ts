@@ -14,7 +14,7 @@ describe("attributes/utils/data", () => {
       jest.clearAllMocks();
     });
 
-    it("should replace value for SINGLE_REFERENCE type after selecting in modal", () => {
+    it("should replace value for SINGLE_REFERENCE attribute after selecting item in modal", () => {
       // Arrange
       const assignReferencesAttributeId = "attr-1";
       const attributeValues: Container[] = [
@@ -49,7 +49,7 @@ describe("attributes/utils/data", () => {
       ]);
     });
 
-    it("should append values for REFERENCE type after selecting in moadl", () => {
+    it("should append values for REFERENCE attribute after selecting item in modal", () => {
       // Arrange
       const assignReferencesAttributeId = "attr-1";
       const attributeValues: Container[] = [
@@ -133,7 +133,7 @@ describe("attributes/utils/data", () => {
       jest.clearAllMocks();
     });
 
-    it("should replace value for SINGLE_REFERENCE type after selecting in modal", () => {
+    it("should replace value for SINGLE_REFERENCE attribute after selecting item in modal", () => {
       // Arrange
       const assignReferencesAttributeId = "attr-1";
       const attributeValues = [
@@ -168,7 +168,7 @@ describe("attributes/utils/data", () => {
       ]);
     });
 
-    it("should append values for REFERENCE type after selecting in modal", () => {
+    it("should append values for REFERENCE attribute after selecting item in modal", () => {
       // Arrange
       const assignReferencesAttributeId = "attr-1";
       const attributeValues = [
