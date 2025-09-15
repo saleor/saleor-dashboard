@@ -1,27 +1,28 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
-import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
+import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { OrderFulfillmentRefundedStatusIcon } from "../icons/order-fulfillment-refunded-status-icon";
-import { OrderRefundsViewModel } from "./order-refunds-view-model";
+import { NewRefundButton } from "./components/new-refund-button";
+import { OrderRefundDisplay, OrderRefundState } from "./order-refunds-view-model";
 import { RefundListItem } from "./refund-list-item";
 
 type Props = PropsWithBox<{
-  onNewRefund?: () => void;
-  onEditRefund?: (refundId: string) => void;
-  order: OrderDetailsFragment;
+  onNewRefund: () => void;
+  onEditRefund: (refundId: string) => void;
+  orderRefundsDisplayList: OrderRefundDisplay[];
+  orderRefundState: OrderRefundState;
 }>;
 
-export const OrderRefunds = ({ onNewRefund, onEditRefund, order }: Props) => {
+export const OrderRefunds = ({
+  onNewRefund,
+  onEditRefund,
+  orderRefundsDisplayList,
+  orderRefundState,
+  ...props
+}: Props) => {
   const intl = useIntl();
 
-  const orderRefunds = OrderRefundsViewModel.prepareOrderRefundDisplayList(
-    order.transactions.flatMap(t => t.events),
-    order.grantedRefunds ?? [],
-  );
-
   return (
-    <Box padding={6} gap={4} display="grid">
+    <Box padding={6} gap={4} display="grid" {...props}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text size={6} fontWeight="medium">
           {intl.formatMessage({
@@ -29,20 +30,11 @@ export const OrderRefunds = ({ onNewRefund, onEditRefund, order }: Props) => {
             id: "pXQSzm",
           })}
         </Text>
-        <Button
-          variant="secondary"
-          icon={<OrderFulfillmentRefundedStatusIcon />}
-          onClick={onNewRefund}
-        >
-          {intl.formatMessage({
-            defaultMessage: "New Refund",
-            id: "DPsabz",
-          })}
-        </Button>
+        <NewRefundButton onNewRefund={onNewRefund} refundState={orderRefundState} />
       </Box>
 
       <Box as="ul" display="grid" gap={3}>
-        {orderRefunds.length === 0 && (
+        {orderRefundsDisplayList.length === 0 && (
           <Box as="li" display="flex" justifyContent="center" padding={6}>
             <Text size={3} color="default2">
               {intl.formatMessage({
@@ -52,7 +44,7 @@ export const OrderRefunds = ({ onNewRefund, onEditRefund, order }: Props) => {
             </Text>
           </Box>
         )}
-        {orderRefunds.map(refund => (
+        {orderRefundsDisplayList.map(refund => (
           <RefundListItem key={refund.id} refund={refund} onEditRefund={onEditRefund} />
         ))}
       </Box>

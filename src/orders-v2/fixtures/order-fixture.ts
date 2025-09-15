@@ -11,7 +11,6 @@ import {
   OrderGrantedRefundStatusEnum,
   OrderStatus,
   PaymentChargeStatusEnum,
-  TransactionActionEnum,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 import cloneDeep from "lodash/cloneDeep";
@@ -483,7 +482,56 @@ export class OrderFixture {
     },
   ] satisfies OrderDetailsFragment["giftCards"];
 
-  private static refundedEvent = {};
+  private static transaction = {
+    __typename: "TransactionItem" as const,
+    id: "transaction-id",
+    pspReference: "psp-ref",
+    externalUrl: "https://example.com/transaction",
+    createdAt: "2023-01-01T12:00:00Z",
+    name: "Transaction",
+    events: [],
+    actions: [],
+    authorizedAmount: {
+      __typename: "Money" as const,
+      amount: 100,
+      currency: "USD",
+    },
+    chargedAmount: {
+      __typename: "Money" as const,
+      amount: 100,
+      currency: "USD",
+    },
+    refundedAmount: {
+      __typename: "Money" as const,
+      amount: 0,
+      currency: "USD",
+    },
+    canceledAmount: {
+      __typename: "Money" as const,
+      amount: 0,
+      currency: "USD",
+    },
+    authorizePendingAmount: {
+      __typename: "Money" as const,
+      amount: 0,
+      currency: "USD",
+    },
+    chargePendingAmount: {
+      __typename: "Money" as const,
+      amount: 0,
+      currency: "USD",
+    },
+    refundPendingAmount: {
+      __typename: "Money" as const,
+      amount: 0,
+      currency: "USD",
+    },
+    cancelPendingAmount: {
+      __typename: "Money" as const,
+      amount: 0,
+      currency: "USD",
+    },
+  } satisfies OrderDetailsFragment["transactions"][number];
 
   private order: OrderDetailsFragment;
 
@@ -702,9 +750,8 @@ export class OrderFixture {
       ...this.order,
       transactions: [
         {
-          id: "transaction-id-1",
-          __typename: "TransactionItem",
-          actions: [TransactionActionEnum.REFUND],
+          ...OrderFixture.transaction,
+          pspReference: "manual-refund-psp-ref",
           events: [
             {
               id: "event-id-1",
@@ -749,50 +796,6 @@ export class OrderFixture {
               message: "Manual refund processed successfully.",
             },
           ],
-          pspReference: "manual-refund-psp-ref",
-          createdAt: "2025-09-12T08:25:56.962384+00:00",
-          externalUrl: "",
-          authorizedAmount: {
-            __typename: "Money",
-            amount: 0,
-            currency: "USD",
-          },
-          chargedAmount: {
-            __typename: "Money",
-            amount: 0,
-            currency: "USD",
-          },
-          canceledAmount: {
-            __typename: "Money",
-            amount: 0,
-            currency: "USD",
-          },
-          refundedAmount: {
-            __typename: "Money",
-            amount: 50,
-            currency: "USD",
-          },
-          authorizePendingAmount: {
-            __typename: "Money",
-            amount: 0,
-            currency: "USD",
-          },
-          chargePendingAmount: {
-            __typename: "Money",
-            amount: 0,
-            currency: "USD",
-          },
-          cancelPendingAmount: {
-            __typename: "Money",
-            amount: 0,
-            currency: "USD",
-          },
-          refundPendingAmount: {
-            __typename: "Money",
-            amount: 0,
-            currency: "USD",
-          },
-          name: "",
         },
       ],
     };
@@ -800,38 +803,44 @@ export class OrderFixture {
     return this;
   }
 
-  withGrantedRefund(
-    refundStatus: TransactionEventTypeEnum = TransactionEventTypeEnum.REFUND_SUCCESS,
-  ): OrderFixture {
+  withTransaction() {
+    this.order = {
+      ...this.order,
+      transactions: [OrderFixture.transaction],
+    };
+
+    return this;
+  }
+
+  withGrantedRefund(): OrderFixture {
     this.order = {
       ...this.order,
       grantedRefunds: [
         {
           __typename: "OrderGrantedRefund",
-          id: "order-granted-refund-id-1",
-          createdAt: "2025-09-12T09:00:00.000000+00:00",
-          shippingCostsIncluded: false,
+          id: "granted-refund-id-1",
           status: OrderGrantedRefundStatusEnum.SUCCESS,
-          reason:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.",
           amount: {
             __typename: "Money",
+            amount: 10,
             currency: "USD",
-            amount: 50,
           },
-          transactionEvents: [],
+          reason: "Customer requested a refund.",
+          createdAt: "2023-10-02T12:00:00Z",
           user: {
             __typename: "User",
+            email: "customer@example.com",
+            firstName: "Test",
+            lastName: "Testowy",
             id: "user-id",
-            firstName: "John",
-            lastName: "Doe",
-            email: "john.doe@example.com",
             avatar: {
               __typename: "Image",
-              url: "",
-              alt: "",
+              url: "https://example.com/avatar.jpg",
+              alt: "Customer avatar",
             },
           },
+          shippingCostsIncluded: false,
+          transactionEvents: [],
           app: {
             __typename: "App",
             id: "",

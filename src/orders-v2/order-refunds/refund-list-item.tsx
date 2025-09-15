@@ -1,18 +1,18 @@
 import { getUserInitials } from "@dashboard/misc";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { PencilIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import { OrderRefundDisplay } from "./order-refunds-view-model";
+import { OrderRefundDisplay, OrderRefundsViewModel } from "./order-refunds-view-model";
 import { StatusBadge } from "./status-badge";
 import { UserAvatar } from "./user-avatar";
 
-interface RefundListItemProps {
+type RefundListItemProps = PropsWithBox<{
   refund: OrderRefundDisplay;
-  onEditRefund?: (refundId: string) => void;
-}
+  onEditRefund: (refundId: string) => void;
+}>;
 
-export const RefundListItem = ({ refund, onEditRefund }: RefundListItemProps) => {
+export const RefundListItem = ({ refund, onEditRefund, ...props }: RefundListItemProps) => {
   const intl = useIntl();
 
   return (
@@ -23,9 +23,14 @@ export const RefundListItem = ({ refund, onEditRefund }: RefundListItemProps) =>
       alignItems="center"
       gap={7}
       as="li"
+      {...props}
     >
       <Box display="flex" alignItems="center" gap={3}>
-        <UserAvatar initials={getUserInitials(refund.user)} />
+        {refund.user ? (
+          <UserAvatar initials={getUserInitials(refund.user) || ""} />
+        ) : (
+          <Box width={8} height={8} />
+        )}
         <StatusBadge status={refund.status} />
       </Box>
       <Box display="grid" __gridTemplateColumns="auto 1fr" gap={3}>
@@ -47,7 +52,12 @@ export const RefundListItem = ({ refund, onEditRefund }: RefundListItemProps) =>
           overflow="hidden"
           textOverflow="ellipsis"
         >
-          {refund.type === "manual" ? "Manual refund" : refund.reason}
+          {refund.type === "manual"
+            ? intl.formatMessage({
+                defaultMessage: "Manual refund",
+                id: "FZTrzW",
+              })
+            : refund.reason}
         </Text>
       </Box>
 
@@ -66,7 +76,8 @@ export const RefundListItem = ({ refund, onEditRefund }: RefundListItemProps) =>
         <Button
           variant="secondary"
           icon={<PencilIcon size={16} />}
-          onClick={() => onEditRefund?.(refund.id)}
+          onClick={() => onEditRefund(refund.id)}
+          disabled={!OrderRefundsViewModel.canEditRefund(refund)}
         />
       </Box>
     </Box>

@@ -1,13 +1,15 @@
 import {
   AppAvatarFragment,
+  OrderDetailsFragment,
   OrderGrantedRefundFragment,
   OrderGrantedRefundStatusEnum,
   StaffMemberAvatarFragment,
+  TransactionActionEnum,
   TransactionEventFragment,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 
-export interface OrderRefundDisplay {
+export type OrderRefundDisplay = {
   id: string;
   type: "standard" | "manual";
   status: OrderGrantedRefundStatusEnum;
@@ -22,21 +24,41 @@ export interface OrderRefundDisplay {
     firstName: string;
     lastName: string;
   } | null;
-}
+};
 
-const SUPPORTED_REFUNDS = new Set([
-  TransactionEventTypeEnum.REFUND_SUCCESS,
-  TransactionEventTypeEnum.REFUND_FAILURE,
-  TransactionEventTypeEnum.REFUND_REQUEST,
-]);
-
-type EventsByPspReference = Record<string, TransactionEventFragment[]>;
+export type OrderRefundState =
+  | "noTransactionsToRefund"
+  | "allTransactionsNonRefundable"
+  | "refundable";
 
 export abstract class OrderRefundsViewModel {
+  static getRefundState(transactions: OrderDetailsFragment["transactions"]): OrderRefundState {
+    if (transactions.length === 0) {
+      return "noTransactionsToRefund";
+    }
+
+    if (
+      transactions.every(transaction => !transaction.actions.includes(TransactionActionEnum.REFUND))
+    ) {
+      return "allTransactionsNonRefundable";
+    }
+
+    return "refundable";
+  }
+
+  static canEditRefund(refund: OrderRefundDisplay): boolean {
+    const isSuccessful = refund.status === OrderGrantedRefundStatusEnum.SUCCESS;
+    const isPending = refund.status === OrderGrantedRefundStatusEnum.PENDING;
+    const isManual = refund.type === "manual";
+
+    // Can only edit refunds that are not successful, not pending, and not manual
+    return !isSuccessful && !isPending && !isManual;
+  }
+
   private static groupEventsByPspReference = (
     events: TransactionEventFragment[],
-  ): EventsByPspReference => {
-    return events?.reduce<EventsByPspReference>((acc, event) => {
+  ): Record<string, TransactionEventFragment[]> => {
+    return events?.reduce<Record<string, TransactionEventFragment[]>>((acc, event) => {
       if (!acc[event.pspReference]) {
         acc[event.pspReference] = [];
       }
@@ -69,7 +91,7 @@ export abstract class OrderRefundsViewModel {
   };
 
   private static determineCreatorDisplay = (
-    creator: AppAvatarFragment | StaffMemberAvatarFragment,
+    creator: AppAvatarFragment | StaffMemberAvatarFragment | null,
   ): OrderRefundDisplay["user"] => {
     if (creator?.__typename === "User") {
       return {
@@ -83,7 +105,7 @@ export abstract class OrderRefundsViewModel {
   };
 
   private static mapEventGroupsToOrderRefunds = (
-    eventsByPspReference: EventsByPspReference,
+    eventsByPspReference: Record<string, TransactionEventFragment[]>,
   ): OrderRefundDisplay[] => {
     return Object.values(eventsByPspReference).map(eventGroup => {
       const sortedEvents = eventGroup.sort(
@@ -99,7 +121,9 @@ export abstract class OrderRefundsViewModel {
         status: OrderRefundsViewModel.mapEventToRefundStatus(latestEvent),
         amount: latestEvent.amount,
         createdAt: latestEvent.createdAt,
-        user: OrderRefundsViewModel.determineCreatorDisplay(latestEventWithAuthor.createdBy),
+        user: OrderRefundsViewModel.determineCreatorDisplay(
+          latestEventWithAuthor?.createdBy || null,
+        ),
         reason: null,
       };
     });
@@ -109,8 +133,13 @@ export abstract class OrderRefundsViewModel {
     transactionsEvents: TransactionEventFragment[],
     grantedRefunds: OrderGrantedRefundFragment[],
   ): OrderRefundDisplay[] {
+    const supportedRefunds = new Set([
+      TransactionEventTypeEnum.REFUND_SUCCESS,
+      TransactionEventTypeEnum.REFUND_FAILURE,
+      TransactionEventTypeEnum.REFUND_REQUEST,
+    ]);
     const refundEvents = transactionsEvents.filter(
-      event => event.type && SUPPORTED_REFUNDS.has(event.type),
+      event => event.type && supportedRefunds.has(event.type),
     );
 
     const idsOfEventsAssociatedToGrantedRefunds = new Set(
