@@ -1,53 +1,44 @@
-import { AppLogo } from "@dashboard/extensions/types";
+import { Box, BoxProps, GenericAppIcon } from "@saleor/macaw-ui-next";
 
-export interface AppAvatarProps {
-  logo?: AppLogo;
-  name: string;
-  size?: number;
-  borderRadius?: number;
+interface AppLogo {
+  source?: string;
 }
 
-export const AppAvatar = ({ logo, name, size = 40, borderRadius = 50 }: AppAvatarProps) => {
-  const logoSource = logo?.light?.source;
+export type LegacyAppLogo = AppLogo | undefined;
+type Size = 4 | 6 | 8 | 12;
 
-  if (logoSource) {
-    return (
-      <img
-        src={logoSource}
-        alt={`${name} logo`}
-        style={{
-          width: size,
-          height: size,
-          borderRadius: typeof borderRadius === "number" ? `${borderRadius}%` : borderRadius,
-        }}
-      />
-    );
-  }
-
-  // Fallback to name initials
-  const initials = name
-    .split(" ")
-    .map(word => word[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-
-  return (
-    <div
-      style={{
-        width: size,
-        height: size,
-        borderRadius: typeof borderRadius === "number" ? `${borderRadius}%` : borderRadius,
-        backgroundColor: "#1f2937",
-        color: "white",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: size * 0.4,
-        fontWeight: "bold",
-      }}
+/** @deprecated Use ExtensionAvatar instead */
+export const AppAvatar = ({
+  logo,
+  size = 8,
+  ...props
+}: { logo?: LegacyAppLogo; size?: Size } & BoxProps) =>
+  logo ? (
+    <Box
+      width={size}
+      height={size}
+      display="flex"
+      placeItems="center"
+      borderRadius={2}
+      overflow="hidden"
+      {...props}
     >
-      {initials}
-    </div>
+      <Box as="img" src={logo.source} width="100%" />
+    </Box>
+  ) : (
+    <Box
+      backgroundColor="default2"
+      width={size}
+      height={size}
+      display="flex"
+      placeItems="center"
+      borderRadius={2}
+      borderWidth={1}
+      borderColor="default1"
+      borderStyle="solid"
+      overflow="hidden"
+      {...props}
+    >
+      <GenericAppIcon size="medium" color="default2" />
+    </Box>
   );
-};

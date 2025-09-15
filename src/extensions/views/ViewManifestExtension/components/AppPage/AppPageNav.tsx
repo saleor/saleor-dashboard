@@ -1,6 +1,5 @@
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
-import { AppAvatar } from "@dashboard/extensions/components/AppAvatar";
-import { AppLogo } from "@dashboard/extensions/types";
+import { AppAvatar, LegacyAppLogo } from "@dashboard/extensions/components/AppAvatar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -9,8 +8,6 @@ import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./message";
-
-type Logo = AppLogo | undefined;
 
 interface AppPageNavProps {
   name?: string | undefined | null;
@@ -46,17 +43,7 @@ export const AppPageNav = ({
     navigate(ExtensionsUrls.resolveEditManifestExtensionUrl(appId));
   };
   const logo = useMemo(
-    (): Logo =>
-      appLogoUrl
-        ? {
-            light: {
-              source: appLogoUrl,
-            },
-            dark: {
-              source: appLogoUrl,
-            },
-          }
-        : undefined,
+    (): LegacyAppLogo => (appLogoUrl ? { source: appLogoUrl } : undefined),
     [appLogoUrl],
   );
 
@@ -66,7 +53,7 @@ export const AppPageNav = ({
         <Box display="flex" gap={2} alignItems="center">
           {goBackUrl && <TopNavLink to={goBackUrl} variant="secondary" />}
           <Box display="flex" gap={4} alignItems="center">
-            <AppAvatar size={8} logo={logo} name={name || "Extension"} />
+            <AppAvatar size={8} logo={logo} />
             <Box display="flex" flexDirection="column">
               <Text size={5} fontWeight="bold">
                 {name}

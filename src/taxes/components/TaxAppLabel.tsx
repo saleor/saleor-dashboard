@@ -11,11 +11,11 @@ interface TaxAppLabelProps {
 }
 
 export const TaxAppLabel = ({ name, logoUrl, created }: TaxAppLabelProps) => {
-  const logo = logoUrl ? { light: { source: logoUrl }, dark: { source: logoUrl } } : undefined;
+  const logo = logoUrl ? { source: logoUrl } : undefined;
 
   return (
     <Box display="flex" alignItems="center" gap={1}>
-      <AppAvatar logo={logo} size={4} name={name || "Tax App"} />
+      <AppAvatar logo={logo} size={4} />
       {name && (
         <Text>
           <FormattedMessage

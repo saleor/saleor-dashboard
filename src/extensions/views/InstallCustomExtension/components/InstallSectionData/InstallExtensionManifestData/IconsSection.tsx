@@ -28,12 +28,10 @@ export const IconsSection = ({ appLogo }: { appLogo: string | undefined }) => {
       <AppAvatar
         size={12}
         borderRadius={5}
-        name="Extension"
         logo={
           appLogo
             ? {
-                light: { source: appLogo },
-                dark: { source: appLogo },
+                source: appLogo,
               }
             : undefined
         }
