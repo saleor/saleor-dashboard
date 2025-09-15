@@ -1,13 +1,11 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import {
-  getLatestFailedAttemptFromWebhooks,
-  LatestWebhookDeliveryWithMoment,
-} from "@dashboard/extensions/components/AppAlerts/utils";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
 import {
+  AppEventDeliveriesFragment,
   AppTypeEnum,
+  EventDeliveryStatusEnum,
   PermissionEnum,
   useEventDeliveryQuery,
   useInstalledAppsListQuery,
@@ -18,10 +16,70 @@ import { PluginIcon } from "@dashboard/icons/PluginIcon";
 import { WebhookIcon } from "@dashboard/icons/WebhookIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, GenericAppIcon, Skeleton } from "@saleor/macaw-ui-next";
+import moment from "moment-timezone";
 import { useMemo } from "react";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
 import { FailedWebhookInfo } from "../components/InfoLabels/FailedWebhookInfo";
+
+type Webhook = NonNullable<AppEventDeliveriesFragment["webhooks"]>[0];
+
+type LatestWebhookDelivery =
+  | NonNullable<Webhook["failedDelivers"]>["edges"][0]["node"]
+  | NonNullable<
+      NonNullable<Webhook["pendingDelivers"]>["edges"][0]["node"]["attempts"]
+    >["edges"][0]["node"];
+
+type LatestWebhookDeliveryWithMoment = LatestWebhookDelivery & { createdAt: moment.Moment };
+
+// TODO: Get rid of moment.js
+const toWebhookDeliveryWithMoment = (
+  delivery: LatestWebhookDelivery | null | undefined,
+): LatestWebhookDeliveryWithMoment | null =>
+  delivery
+    ? {
+        ...delivery,
+        createdAt: moment(delivery.createdAt),
+      }
+    : null;
+
+const getLatest = (
+  a: LatestWebhookDeliveryWithMoment | null,
+  b: LatestWebhookDeliveryWithMoment | null,
+) => {
+  if (a && b) {
+    return a.createdAt.isAfter(b.createdAt) ? a : b;
+  }
+
+  return a ?? b;
+};
+
+const getLatestFailedAttemptFromWebhook = (
+  webhook: Webhook,
+): LatestWebhookDeliveryWithMoment | null => {
+  // Edge case: Saleor failed to make a single delivery attempt
+  const failedEventDelivery = toWebhookDeliveryWithMoment(webhook.failedDelivers?.edges?.[0]?.node);
+  const fromFailedDeliveryAttempts = toWebhookDeliveryWithMoment(
+    webhook.failedDelivers?.edges?.[0]?.node?.attempts?.edges?.[0]?.node,
+  );
+
+  // handling the edge case and checking which one is newer
+  const fromFailedDelivers = getLatest(failedEventDelivery, fromFailedDeliveryAttempts);
+
+  const fromPendingDelivers = toWebhookDeliveryWithMoment(
+    webhook.pendingDelivers?.edges?.[0]?.node.attempts?.edges.find(
+      ({ node: { status } }) => status === EventDeliveryStatusEnum.FAILED,
+    )?.node,
+  );
+
+  return getLatest(fromFailedDelivers, fromPendingDelivers);
+};
+
+export const getLatestFailedAttemptFromWebhooks = (webhooks: Webhook[]) =>
+  webhooks
+    .map(getLatestFailedAttemptFromWebhook)
+    .filter(Boolean)
+    .sort((a, b) => b?.createdAt.diff(a?.createdAt))[0] ?? null;
 
 export const getExtensionInfo = ({
   loading,
