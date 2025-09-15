@@ -1,7 +1,7 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  ProductErrorCode
+  ProductErrorCode,
 } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -14,7 +14,7 @@ jest.mock("./utils", () => {
 
   return {
     ...actualUtils,
-    getErrorMessage: jest.fn((error) => error?.message || 'Error occurred'),
+    getErrorMessage: jest.fn(error => error?.message || "Error occurred"),
   };
 });
 
@@ -35,12 +35,12 @@ jest.mock("react-intl", () => ({
     formatDate: (date: Date) => date.toISOString(),
     locale: "en",
   }),
-  FormattedMessage: ({ defaultMessage, id }: { defaultMessage?: string; id: string }) =>
-    <>{defaultMessage || id}</>,
+  FormattedMessage: ({ defaultMessage, id }: { defaultMessage?: string; id: string }) => (
+    <>{defaultMessage || id}</>
+  ),
 }));
 
 describe("SingleReferenceField", () => {
-
   const defaultProps = {
     attribute: {
       id: "attr-1",
@@ -206,7 +206,7 @@ describe("SingleReferenceField", () => {
     // Also verify that getErrorMessage was called with the error
     expect(getErrorMessage).toHaveBeenCalledWith(
       propsWithError.error,
-      expect.objectContaining({ locale: "en" })
+      expect.objectContaining({ locale: "en" }),
     );
 
     // Add button should still be present
