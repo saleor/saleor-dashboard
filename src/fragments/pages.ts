@@ -12,16 +12,7 @@ export const pageFragment = gql`
 export const pageSelectedAttribute = gql`
   fragment PageSelectedAttribute on SelectedAttribute {
     attribute {
-      id
-      slug
-      name
-      inputType
-      entityType
-      valueRequired
-      unit
-      choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
-        ...AttributeValueList
-      }
+      ...AttributeDetails
     }
     values {
       ...AttributeValueDetails

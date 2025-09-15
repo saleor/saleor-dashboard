@@ -2458,30 +2458,44 @@ export const AttributeValueListFragmentDoc = gql`
 }
     ${PageInfoFragmentDoc}
 ${AttributeValueDetailsFragmentDoc}`;
+export const AttributeDetailsFragmentDoc = gql`
+    fragment AttributeDetails on Attribute {
+  ...Attribute
+  availableInGrid
+  entityType
+  storefrontSearchPosition
+  valueRequired
+  referenceTypes {
+    ... on ProductType {
+      id
+      name
+    }
+    ... on PageType {
+      id
+      name
+    }
+  }
+  choices(
+    first: $firstValues
+    after: $afterValues
+    last: $lastValues
+    before: $beforeValues
+  ) {
+    ...AttributeValueList
+  }
+}
+    ${AttributeFragmentDoc}
+${AttributeValueListFragmentDoc}`;
 export const PageSelectedAttributeFragmentDoc = gql`
     fragment PageSelectedAttribute on SelectedAttribute {
   attribute {
-    id
-    slug
-    name
-    inputType
-    entityType
-    valueRequired
-    unit
-    choices(
-      first: $firstValues
-      after: $afterValues
-      last: $lastValues
-      before: $beforeValues
-    ) {
-      ...AttributeValueList
-    }
+    ...AttributeDetails
   }
   values {
     ...AttributeValueDetails
   }
 }
-    ${AttributeValueListFragmentDoc}
+    ${AttributeDetailsFragmentDoc}
 ${AttributeValueDetailsFragmentDoc}`;
 export const PageAttributesFragmentDoc = gql`
     fragment PageAttributes on Page {
@@ -2721,34 +2735,6 @@ export const ProductWithChannelListingsFragmentDoc = gql`
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PriceRangeFragmentDoc}`;
-export const AttributeDetailsFragmentDoc = gql`
-    fragment AttributeDetails on Attribute {
-  ...Attribute
-  availableInGrid
-  entityType
-  storefrontSearchPosition
-  valueRequired
-  referenceTypes {
-    ... on ProductType {
-      id
-      name
-    }
-    ... on PageType {
-      id
-      name
-    }
-  }
-  choices(
-    first: $firstValues
-    after: $afterValues
-    last: $lastValues
-    before: $beforeValues
-  ) {
-    ...AttributeValueList
-  }
-}
-    ${AttributeFragmentDoc}
-${AttributeValueListFragmentDoc}`;
 export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
   id
@@ -11345,24 +11331,11 @@ export const PageTypeDocument = gql`
     id
     name
     attributes {
-      id
-      inputType
-      entityType
-      slug
-      name
-      valueRequired
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeValueList
-      }
+      ...AttributeDetails
     }
   }
 }
-    ${AttributeValueListFragmentDoc}`;
+    ${AttributeDetailsFragmentDoc}`;
 
 /**
  * __usePageTypeQuery__
