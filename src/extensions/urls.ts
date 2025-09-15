@@ -142,8 +142,16 @@ export const ExtensionsUrls = {
     const appCompletePath = ExtensionsUrls.resolveViewManifestExtensionUrl(
       encodeURIComponent(appId),
     ).replace("?", "");
+    // Note: we need to support old /apps path as well, in order for backwards compatibility
+    const legacyAppPath = ExtensionsPaths.resolveLegacyAppPath(encodeURIComponent(appId)).replace(
+      "?",
+      "",
+    );
 
-    return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
+    return (
+      (to.startsWith(appCompletePath) && from.startsWith(appCompletePath)) ||
+      (to.startsWith(legacyAppPath) && from.startsWith(legacyAppPath))
+    );
   },
 
   resolveAppDeepPathFromDashboardUrl: (dashboardUrl: string, appId: string) => {

@@ -136,15 +136,10 @@ const useHandleRedirectAction = (appId: string) => {
         action.payload.to,
       );
 
-      // Check if it's a legacy app path redirect
-      const legacyAppPath = ExtensionsPaths.resolveLegacyAppPath(appId);
-      const isLegacyAppPath = action.payload.to.startsWith(legacyAppPath);
-
       debug(`Is app deep URL change: %s`, onlyAppDeepChange);
-      debug(`Is legacy app path: %s`, isLegacyAppPath);
 
       try {
-        if (onlyAppDeepChange || isLegacyAppPath) {
+        if (onlyAppDeepChange) {
           return handleAppDeepChange(action);
         } else if (isLocalPath(action.payload.to)) {
           return handleLocalDashboardPathChange(action);
