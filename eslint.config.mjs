@@ -228,7 +228,7 @@ export default tseslint.config(
               importNames: ["default", "React", "*"],
               message: "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
             },
-                        {
+            {
               name: "lodash",
               message: "Do not import lodash directly, import only needed functions, e.g. 'import debounce from \"lodash/debounce\"'",
             },
@@ -236,7 +236,6 @@ export default tseslint.config(
               name: "classnames",
               message: "Do not import classnames, use clsx instead",
             },
-
           ],
         },
       ],

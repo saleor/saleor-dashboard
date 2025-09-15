@@ -1,30 +1,8 @@
-import {
-  OrderDetailsFragment,
-  OrderGrantedRefundStatusEnum,
-  TransactionActionEnum,
-} from "@dashboard/graphql";
-import { PillStatusType } from "@dashboard/misc";
+import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
+import { OrderRefundDisplay } from "@dashboard/orders-v2/order-refunds/order-refunds-view-model";
 import { IntlShape } from "react-intl";
 
 import { refundGridMessages, refundStatuses } from "./messages";
-import { DatagridRefund } from "./refunds";
-
-export const getGrantedRefundStatus = (status: OrderGrantedRefundStatusEnum): PillStatusType => {
-  switch (status) {
-    case OrderGrantedRefundStatusEnum.FAILURE:
-      return "error";
-    case OrderGrantedRefundStatusEnum.SUCCESS:
-      return "success";
-    case OrderGrantedRefundStatusEnum.PENDING:
-      return "info";
-    case OrderGrantedRefundStatusEnum.NONE:
-      return "warning";
-    default:
-      const _exhaustiveCheck: never = status;
-
-      return _exhaustiveCheck;
-  }
-};
 
 export const getGrantedRefundStatusMessage = (
   status: OrderGrantedRefundStatusEnum,
@@ -46,7 +24,7 @@ export const getGrantedRefundStatusMessage = (
   }
 };
 
-const isRefundManual = (refund?: DatagridRefund) => {
+const isRefundManual = (refund?: OrderRefundDisplay) => {
   if (!refund) {
     return false;
   }
@@ -54,7 +32,7 @@ const isRefundManual = (refund?: DatagridRefund) => {
   return refund.type === "manual";
 };
 
-const isRefundSuccessful = (refund?: DatagridRefund) => {
+const isRefundSuccessful = (refund?: OrderRefundDisplay) => {
   if (!refund) {
     return false;
   }
@@ -62,7 +40,7 @@ const isRefundSuccessful = (refund?: DatagridRefund) => {
   return refund.status === OrderGrantedRefundStatusEnum.SUCCESS;
 };
 
-const isRefundPending = (refund?: DatagridRefund) => {
+const isRefundPending = (refund?: OrderRefundDisplay) => {
   if (!refund) {
     return false;
   }
@@ -70,7 +48,7 @@ const isRefundPending = (refund?: DatagridRefund) => {
   return refund.status === OrderGrantedRefundStatusEnum.PENDING;
 };
 
-export const isRefundEditable = (refund?: DatagridRefund) => {
+export const isRefundEditable = (refund?: OrderRefundDisplay) => {
   if (!refund) {
     return false;
   }
@@ -78,7 +56,7 @@ export const isRefundEditable = (refund?: DatagridRefund) => {
   return !(isRefundSuccessful(refund) || isRefundPending(refund) || isRefundManual(refund));
 };
 
-export const getNotEditabledRefundMessage = (refund?: DatagridRefund) => {
+export const getNotEditableRefundMessage = (refund?: OrderRefundDisplay) => {
   if (isRefundManual(refund)) {
     return refundGridMessages.notEditableManual;
   }
@@ -88,37 +66,4 @@ export const getNotEditabledRefundMessage = (refund?: DatagridRefund) => {
   }
 
   return refundGridMessages.notEditablePending;
-};
-
-interface CanAddRefund {
-  canRefund: boolean;
-  reason?: string;
-}
-
-export const canAddRefund = ({
-  transactions,
-  intl,
-}: {
-  transactions: OrderDetailsFragment["transactions"];
-  intl: IntlShape;
-}): CanAddRefund => {
-  if (transactions.length === 0) {
-    return {
-      canRefund: false,
-      reason: intl.formatMessage(refundGridMessages.noTransactionsToRefund),
-    };
-  }
-
-  if (
-    transactions.every(transaction => !transaction.actions.includes(TransactionActionEnum.REFUND))
-  ) {
-    return {
-      canRefund: false,
-      reason: intl.formatMessage(refundGridMessages.allTransactionsNonRefundable),
-    };
-  }
-
-  return {
-    canRefund: true,
-  };
 };

@@ -2571,6 +2571,9 @@
     "context": "section header",
     "string": "Background Image (optional)"
   },
+  "DPsabz": {
+    "string": "New Refund"
+  },
   "DPz5y6": {
     "context": "dialog header",
     "string": "Assign Staff Members"
@@ -4057,6 +4060,9 @@
     "context": "WarehouseSettings pickup title",
     "string": "Pickup"
   },
+  "MIl9FZ": {
+    "string": "All transactions are non-refundable."
+  },
   "MIp3c7": {
     "context": "input adornment helper text",
     "string": "of {value}"
@@ -4455,6 +4461,9 @@
   "OTDo9I": {
     "context": "tab name",
     "string": "All staff members"
+  },
+  "OUFoJX": {
+    "string": "There are no transactions to refund."
   },
   "OUX4LB": {
     "context": "input label",
@@ -8982,6 +8991,9 @@
     "context": "card title",
     "string": "Default settings"
   },
+  "pXQSzm": {
+    "string": "Refunds"
+  },
   "paa4m0": {
     "string": "Successfully created product type"
   },
@@ -9211,6 +9223,9 @@
   },
   "qrWOxx": {
     "string": "No members found"
+  },
+  "qs0dIo": {
+    "string": "No refunds made for this order."
   },
   "qtF0Ft": {
     "context": "transaction event type, amount was authorized, but not captured",
