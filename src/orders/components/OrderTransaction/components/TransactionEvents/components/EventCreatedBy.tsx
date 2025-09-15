@@ -11,7 +11,6 @@ interface EventCreatedByProps {
 }
 
 export const EventCreatedBy = ({ createdBy }: EventCreatedByProps) => {
-
   if (!createdBy) {
     return null;
   }

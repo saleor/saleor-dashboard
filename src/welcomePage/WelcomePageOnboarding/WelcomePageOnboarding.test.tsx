@@ -120,56 +120,53 @@ describe("WelcomePageOnboarding", () => {
     expect(screen.queryByText("Mark all as done")).toBeNull();
   });
 
-  it(
-    "should show 'Onboarding completed' after marking each steps as done",
-    async () => {
-      // Arrange
-      (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
-      (useOnboardingStorage as jest.Mock).mockReturnValue({
-        getOnboardingState: jest.fn(() => onboardingInitState),
-        saveOnboardingState: jest.fn(),
-      });
+  it("should show 'Onboarding completed' after marking each steps as done", async () => {
+    // Arrange
+    (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
+    (useOnboardingStorage as jest.Mock).mockReturnValue({
+      getOnboardingState: jest.fn(() => onboardingInitState),
+      saveOnboardingState: jest.fn(),
+    });
 
-      const user = userEvent.setup({ delay: null });
+    const user = userEvent.setup({ delay: null });
 
-      // Act
-      render(
-        <Wrapper>
-          <WelcomePageOnboarding />
-        </Wrapper>,
-      );
+    // Act
+    render(
+      <Wrapper>
+        <WelcomePageOnboarding />
+      </Wrapper>,
+    );
 
-      // First expand the get-started accordion
-      const getStartedAccordion = screen.getByTestId("accordion-step-trigger-get-started");
+    // First expand the get-started accordion
+    const getStartedAccordion = screen.getByTestId("accordion-step-trigger-get-started");
 
-      await user.click(getStartedAccordion);
+    await user.click(getStartedAccordion);
+    jest.runAllTimers();
+
+    // 'get-started' has only 'Next step' button
+    const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
+
+    await user.click(getStartedNextStepBtn);
+    jest.runAllTimers();
+
+    for (const stepId of allMarkAsDoneStepsIds) {
+      // Click on the accordion trigger to expand the step
+      const accordionTrigger = screen.getByTestId(`accordion-step-trigger-${stepId}`);
+
+      await user.click(accordionTrigger);
+
+      // Run timers to handle any animations
       jest.runAllTimers();
 
-      // 'get-started' has only 'Next step' button
-      const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
+      // Wait for the specific mark-as-done button to appear
+      const markAsDone = await screen.findByTestId(stepId + "-mark-as-done", {}, { timeout: 2000 });
 
-      await user.click(getStartedNextStepBtn);
-      jest.runAllTimers();
-
-      for (const stepId of allMarkAsDoneStepsIds) {
-        // Click on the accordion trigger to expand the step
-        const accordionTrigger = screen.getByTestId(`accordion-step-trigger-${stepId}`);
-
-        await user.click(accordionTrigger);
-
-        // Run timers to handle any animations
-        jest.runAllTimers();
-
-        // Wait for the specific mark-as-done button to appear
-        const markAsDone = await screen.findByTestId(stepId + "-mark-as-done", {}, { timeout: 2000 });
-
-        await user.click(markAsDone);
-      }
-
-      // Assert
-      expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
+      await user.click(markAsDone);
     }
-  );
+
+    // Assert
+    expect(screen.getByText(onboardingCompleteMessage)).toBeInTheDocument();
+  });
 
   it("should show 'Onboarding completed' when all steps were completed", () => {
     // Arrange

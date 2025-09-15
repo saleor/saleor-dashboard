@@ -20,6 +20,8 @@ export const getAppDeactivatedMessage = () => "";
 
 export const getAppActivatedMessage = () => "";
 
-export const getLatestFailedAttemptFromWebhooks = (_webhooks?: any[]): LatestWebhookDeliveryWithMoment | null => {
+export const getLatestFailedAttemptFromWebhooks = (
+  _webhooks?: any[],
+): LatestWebhookDeliveryWithMoment | null => {
   return null;
 };

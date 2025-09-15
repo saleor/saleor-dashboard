@@ -40,10 +40,7 @@ const getUserOrAppUrl = (event: GiftCardEventType): string => {
 
   return null;
 };
-const getEventMessage = (
-  event: GiftCardEventType,
-  intl: IntlShape,
-) => {
+const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
   const user = getUserOrApp(event);
   const userUrl = getUserOrAppUrl(event);
 
@@ -98,7 +95,9 @@ const getEventMessage = (
               !!user && (
                 <Link
                   href={
-                    event.user ? customerPath(event.user.id) : ExtensionsUrls.resolveViewManifestExtensionUrl(event.app.id)
+                    event.user
+                      ? customerPath(event.user.id)
+                      : ExtensionsUrls.resolveViewManifestExtensionUrl(event.app.id)
                   }
                 >{`${content} ${user}`}</Link>
               ),
@@ -117,13 +116,7 @@ export interface GiftCardTimelineEventProps {
 const GiftCardTimelineEvent = ({ date, event }: GiftCardTimelineEventProps) => {
   const intl = useIntl();
 
-  return (
-    <TimelineEvent
-      date={date}
-      title={getEventMessage(event, intl)}
-      hasPlainDate={false}
-    />
-  );
+  return <TimelineEvent date={date} title={getEventMessage(event, intl)} hasPlainDate={false} />;
 };
 
 export default GiftCardTimelineEvent;

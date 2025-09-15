@@ -7,10 +7,7 @@ import { matchPath } from "react-router";
 
 import { SidebarMenuItem } from "./types";
 
-export const mapToExtensionsItems = (
-  extensions: Extension[],
-  header: SidebarMenuItem,
-) => {
+export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMenuItem) => {
   const items: SidebarMenuItem[] = extensions.map(({ label, id, app, url, permissions, open }) => ({
     id: `extension-${id}`,
     label,

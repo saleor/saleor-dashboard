@@ -12,7 +12,6 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
 
-
 const isPluginEnabled = (plugin: PluginBaseFragment | undefined) => {
   if (!plugin) {
     return false;

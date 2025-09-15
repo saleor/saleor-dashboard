@@ -31,9 +31,7 @@ import { IntlShape, useIntl } from "react-intl";
 import { ConfigurationPage } from "./ConfigurationPage";
 import { MenuSection } from "./types";
 
-export function createConfigurationMenu(
-  intl: IntlShape,
-): MenuSection[] {
+export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
     {
       label: intl.formatMessage({

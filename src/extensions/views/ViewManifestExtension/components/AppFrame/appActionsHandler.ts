@@ -1,5 +1,5 @@
 import { getAppMountUri } from "@dashboard/config";
-import { AppPaths , ExtensionsUrls } from "@dashboard/extensions/urls";
+import { AppPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {

@@ -163,20 +163,14 @@ const getStepsData = ({
       isCompleted: isStepCompleted("view-extensions"),
       actions: (
         <>
-          <WelcomePageWebhooksButton
-            onClick={() => trackOnboardingEvent("view-extensions")}
-          />
+          <WelcomePageWebhooksButton onClick={() => trackOnboardingEvent("view-extensions")} />
           {!isStepCompleted("view-extensions") && (
             <Button
               variant="secondary"
               onClick={() => onStepComplete("view-extensions")}
               data-test-id="view-extensions-mark-as-done"
             >
-              <FormattedMessage
-                defaultMessage="Mark as done"
-                id="C5gcqL"
-                description="btn label"
-              />
+              <FormattedMessage defaultMessage="Mark as done" id="C5gcqL" description="btn label" />
             </Button>
           )}
         </>

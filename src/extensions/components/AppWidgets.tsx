@@ -8,7 +8,7 @@ export interface AppWidgetsProps {
 }
 
 export const AppWidgets = ({ extensions }: AppWidgetsProps) => {
-  const widgetExtensions = extensions.filter((ext) => ext.target === "WIDGET");
+  const widgetExtensions = extensions.filter(ext => ext.target === "WIDGET");
 
   if (widgetExtensions.length === 0) {
     return null;
@@ -16,7 +16,7 @@ export const AppWidgets = ({ extensions }: AppWidgetsProps) => {
 
   return (
     <Fragment>
-      {widgetExtensions.map((extension) => (
+      {widgetExtensions.map(extension => (
         <div key={extension.id}>
           {/* Widget content would be rendered here */}
           {/* For now, this is a placeholder - the actual widget rendering

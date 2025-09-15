@@ -47,7 +47,11 @@ export const getExtensionInfo = ({
       <FailedWebhookInfo
         link={ExtensionsUrls.resolveEditManifestExtensionUrl(id)}
         // TODO: We should get rid of moment.js
-        date={typeof lastFailedAttempt.createdAt === 'string' ? lastFailedAttempt.createdAt : lastFailedAttempt.createdAt.toISOString()}
+        date={
+          typeof lastFailedAttempt.createdAt === "string"
+            ? lastFailedAttempt.createdAt
+            : lastFailedAttempt.createdAt.toISOString()
+        }
       />
     );
   }
@@ -179,8 +183,7 @@ export const useInstalledExtensions = () => {
 
   return {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
-    installedAppsLoading:
-      !data?.apps || (hasManagePluginsPermission && !plugins?.plugins),
+    installedAppsLoading: !data?.apps || (hasManagePluginsPermission && !plugins?.plugins),
     refetchInstalledApps: refetch,
   };
 };

@@ -5,11 +5,7 @@ interface DeactivatedTextProps {
 }
 
 export const DeactivatedText = ({ children }: DeactivatedTextProps) => {
-  return (
-    <Text fontStyle="italic">
-      {children}
-    </Text>
-  );
+  return <Text fontStyle="italic">{children}</Text>;
 };
 
 export default DeactivatedText;

@@ -1,7 +1,8 @@
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {   AppDetailsUrlQueryParams,
+import {
+  AppDetailsUrlQueryParams,
   CustomExtensionDetailsUrlQueryParams,
   ExtensionInstallQueryParams,
   ExtensionsPaths,

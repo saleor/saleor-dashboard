@@ -12,8 +12,8 @@ export const getPermissionsDiff = (
   const initialSet = new Set(initial);
   const currentSet = new Set(current);
 
-  const added = current.filter((permission) => !initialSet.has(permission));
-  const removed = initial.filter((permission) => !currentSet.has(permission));
+  const added = current.filter(permission => !initialSet.has(permission));
+  const removed = initial.filter(permission => !currentSet.has(permission));
 
   return { added, removed };
 };

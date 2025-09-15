@@ -40,7 +40,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
   );
   const intl = useIntl();
 
-
   return (
     <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
       <TopNav title={intl.formatMessage(sectionNames.configuration)}>

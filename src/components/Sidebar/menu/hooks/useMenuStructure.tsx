@@ -41,7 +41,6 @@ import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
-
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
@@ -140,10 +139,7 @@ export function useMenuStructure() {
           permissions: [PermissionEnum.MANAGE_GIFT_CARD],
           type: "item",
         },
-        ...mapToExtensionsItems(
-          extensions.NAVIGATION_CATALOG,
-          appExtensionsHeaderItem,
-        ),
+        ...mapToExtensionsItems(extensions.NAVIGATION_CATALOG, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<ProductsIcon />),
       url: productListUrl(),
@@ -168,10 +164,7 @@ export function useMenuStructure() {
           url: orderDraftListUrl(),
           type: "item",
         },
-        ...mapToExtensionsItems(
-          extensions.NAVIGATION_ORDERS,
-          appExtensionsHeaderItem,
-        ),
+        ...mapToExtensionsItems(extensions.NAVIGATION_ORDERS, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<OrdersIcon />),
       label: intl.formatMessage(sectionNames.fulfillment),
@@ -190,10 +183,7 @@ export function useMenuStructure() {
               url: customerListUrl(),
               type: "item",
             },
-            ...mapToExtensionsItems(
-              extensions.NAVIGATION_CUSTOMERS,
-              appExtensionsHeaderItem,
-            ),
+            ...mapToExtensionsItems(extensions.NAVIGATION_CUSTOMERS, appExtensionsHeaderItem),
           ]
         : undefined,
       icon: renderIcon(<CustomersIcon />),
@@ -217,10 +207,7 @@ export function useMenuStructure() {
           url: voucherListUrl(),
           type: "item",
         },
-        ...mapToExtensionsItems(
-          extensions.NAVIGATION_DISCOUNTS,
-          appExtensionsHeaderItem,
-        ),
+        ...mapToExtensionsItems(extensions.NAVIGATION_DISCOUNTS, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<DiscountsIcon />),
       label: intl.formatMessage(commonMessages.discounts),
@@ -255,10 +242,7 @@ export function useMenuStructure() {
           permissions: [PermissionEnum.MANAGE_MENUS],
           type: "item",
         },
-        ...mapToExtensionsItems(
-          extensions.NAVIGATION_PAGES,
-          appExtensionsHeaderItem,
-        ),
+        ...mapToExtensionsItems(extensions.NAVIGATION_PAGES, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<ModelingIcon />),
       label: intl.formatMessage(sectionNames.modeling),
@@ -269,12 +253,7 @@ export function useMenuStructure() {
     },
     {
       children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS)
-        ? [
-            ...mapToExtensionsItems(
-              extensions.NAVIGATION_TRANSLATIONS,
-              appExtensionsHeaderItem,
-            ),
-          ]
+        ? [...mapToExtensionsItems(extensions.NAVIGATION_TRANSLATIONS, appExtensionsHeaderItem)]
         : undefined,
       icon: renderIcon(<TranslationsIcon />),
       label: intl.formatMessage(sectionNames.translations),

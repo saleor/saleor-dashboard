@@ -26,9 +26,7 @@ export const AppInstallButton = ({ manifestUrl }: { manifestUrl: string }) => {
 
   if (IS_CLOUD_INSTANCE) {
     return (
-      <Link
-        href={ExtensionsUrls.resolveInstallCustomExtensionUrl(manifestUrl)}
-      >
+      <Link href={ExtensionsUrls.resolveInstallCustomExtensionUrl(manifestUrl)}>
         <Button variant="secondary" data-test-id="app-install-button">
           <FormattedMessage {...buttonMessages.install} />
         </Button>

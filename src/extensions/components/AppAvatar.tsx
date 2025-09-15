@@ -9,16 +9,16 @@ export interface AppAvatarProps {
 
 export const AppAvatar = ({ logo, name, size = 40, borderRadius = 50 }: AppAvatarProps) => {
   const logoSource = logo?.light?.source;
-  
+
   if (logoSource) {
     return (
       <img
         src={logoSource}
         alt={`${name} logo`}
-        style={{ 
-          width: size, 
-          height: size, 
-          borderRadius: typeof borderRadius === 'number' ? `${borderRadius}%` : borderRadius
+        style={{
+          width: size,
+          height: size,
+          borderRadius: typeof borderRadius === "number" ? `${borderRadius}%` : borderRadius,
         }}
       />
     );
@@ -27,7 +27,7 @@ export const AppAvatar = ({ logo, name, size = 40, borderRadius = 50 }: AppAvata
   // Fallback to name initials
   const initials = name
     .split(" ")
-    .map((word) => word[0])
+    .map(word => word[0])
     .join("")
     .toUpperCase()
     .slice(0, 2);
@@ -37,7 +37,7 @@ export const AppAvatar = ({ logo, name, size = 40, borderRadius = 50 }: AppAvata
       style={{
         width: size,
         height: size,
-        borderRadius: typeof borderRadius === 'number' ? `${borderRadius}%` : borderRadius,
+        borderRadius: typeof borderRadius === "number" ? `${borderRadius}%` : borderRadius,
         backgroundColor: "#1f2937",
         color: "white",
         display: "flex",
