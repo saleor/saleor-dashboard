@@ -3,7 +3,7 @@ import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { PencilIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import { OrderRefundDisplay } from "../order-refunds-view-model";
+import { OrderRefundDisplay } from "./order-refunds-view-model";
 import { StatusBadge } from "./status-badge";
 import { UserAvatar } from "./user-avatar";
 

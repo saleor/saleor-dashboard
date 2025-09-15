@@ -3,7 +3,7 @@ import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { OrderFulfillmentRefundedStatusIcon } from "../icons/order-fulfillment-refunded-status-icon";
-import { OrderRefundsViewModel } from "../order-refunds-view-model";
+import { OrderRefundsViewModel } from "./order-refunds-view-model";
 import { RefundListItem } from "./refund-list-item";
 
 type Props = PropsWithBox<{
