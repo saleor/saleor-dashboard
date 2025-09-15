@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Fulfilled: Story = {
   args: {
-    order: OrderFixture.fulfilled().build(),
+    order: OrderFixture.fulfilled().withManualRefund().build(),
   },
 };
 
