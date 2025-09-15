@@ -1,11 +1,14 @@
-import { LatestWebhookDeliveryWithMoment } from "@dashboard/extensions/components/AppAlerts/utils";
 import { EventDeliveryStatusEnum } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import moment from "moment-timezone";
 import * as React from "react";
 
-import { getExtensionInfo, useInstalledExtensions } from "./useInstalledExtensions";
+import {
+  getExtensionInfo,
+  LatestWebhookDeliveryWithMoment,
+  useInstalledExtensions,
+} from "./useInstalledExtensions";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({

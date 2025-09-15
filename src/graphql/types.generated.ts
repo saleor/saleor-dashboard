@@ -9867,20 +9867,6 @@ export type PluginUpdateMutationVariables = Exact<{
 
 export type PluginUpdateMutation = { __typename: 'Mutation', pluginUpdate: { __typename: 'PluginUpdate', errors: Array<{ __typename: 'PluginError', code: PluginErrorCode, field: string | null, message: string | null }>, plugin: { __typename: 'Plugin', id: string, name: string, description: string, globalConfiguration: { __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null }> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null } | null, channelConfigurations: Array<{ __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null }> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null }> } | null } | null };
 
-export type AppsListQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<AppSortingInput>;
-  filter?: InputMaybe<AppFilterInput>;
-  canFetchAppEvents: Scalars['Boolean'];
-  hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']>;
-}>;
-
-
-export type AppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } }> } | null };
-
 export type InstalledAppsQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
   after?: InputMaybe<Scalars['String']>;
@@ -9942,6 +9928,13 @@ export type AppWebhookDeliveriesQueryVariables = Exact<{
 
 export type AppWebhookDeliveriesQuery = { __typename: 'Query', app: { __typename: 'App', webhooks: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', name: string }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', name: string }>, eventDeliveries: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, status: EventDeliveryStatusEnum, eventType: WebhookEventTypeEnum, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, createdAt: any, status: EventDeliveryStatusEnum, response: string | null, responseStatusCode: number | null } }> } | null } }> } | null }> | null } | null };
 
+export type WebhookDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type WebhookDetailsQuery = { __typename: 'Query', webhook: { __typename: 'Webhook', secretKey: string | null, targetUrl: string, subscriptionQuery: string | null, customHeaders: any | null, id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } } | null };
+
 export type PluginsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
   after?: InputMaybe<Scalars['String']>;
@@ -9960,13 +9953,6 @@ export type PluginQueryVariables = Exact<{
 
 
 export type PluginQuery = { __typename: 'Query', plugin: { __typename: 'Plugin', id: string, name: string, description: string, globalConfiguration: { __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null }> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null } | null, channelConfigurations: Array<{ __typename: 'PluginConfiguration', active: boolean, configuration: Array<{ __typename: 'ConfigurationItem', name: string, value: string | null, type: ConfigurationTypeFieldEnum | null, helpText: string | null, label: string | null }> | null, channel: { __typename: 'Channel', id: string, name: string, slug: string } | null }> } | null };
-
-export type WebhookDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type WebhookDetailsQuery = { __typename: 'Query', webhook: { __typename: 'Webhook', secretKey: string | null, targetUrl: string, subscriptionQuery: string | null, customHeaders: any | null, id: string, name: string | null, isActive: boolean, syncEvents: Array<{ __typename: 'WebhookEventSync', eventType: WebhookEventTypeSyncEnum }>, asyncEvents: Array<{ __typename: 'WebhookEventAsync', eventType: WebhookEventTypeAsyncEnum }>, app: { __typename: 'App', id: string, name: string | null } } | null };
 
 export type FileUploadMutationVariables = Exact<{
   file: Scalars['Upload'];

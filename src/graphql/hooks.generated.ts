@@ -9399,66 +9399,6 @@ export function usePluginUpdateMutation(baseOptions?: ApolloReactHooks.MutationH
 export type PluginUpdateMutationHookResult = ReturnType<typeof usePluginUpdateMutation>;
 export type PluginUpdateMutationResult = Apollo.MutationResult<Types.PluginUpdateMutation>;
 export type PluginUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>;
-export const AppsListDocument = gql`
-    query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput, $canFetchAppEvents: Boolean!, $hasManagedAppsPermission: Boolean = true) {
-  apps(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sortBy: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      node {
-        ...App
-      }
-    }
-  }
-}
-    ${AppFragmentDoc}`;
-
-/**
- * __useAppsListQuery__
- *
- * To run a query within a React component, call `useAppsListQuery` and pass it any options that fit your needs.
- * When your component renders, `useAppsListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAppsListQuery({
- *   variables: {
- *      before: // value for 'before'
- *      after: // value for 'after'
- *      first: // value for 'first'
- *      last: // value for 'last'
- *      sort: // value for 'sort'
- *      filter: // value for 'filter'
- *      canFetchAppEvents: // value for 'canFetchAppEvents'
- *      hasManagedAppsPermission: // value for 'hasManagedAppsPermission'
- *   },
- * });
- */
-export function useAppsListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
-      }
-export function useAppsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
-        }
-export type AppsListQueryHookResult = ReturnType<typeof useAppsListQuery>;
-export type AppsListLazyQueryHookResult = ReturnType<typeof useAppsListLazyQuery>;
-export type AppsListQueryResult = Apollo.QueryResult<Types.AppsListQuery, Types.AppsListQueryVariables>;
 export const InstalledAppsDocument = gql`
     query InstalledApps($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput) {
   apps(
@@ -9842,6 +9782,41 @@ export function useAppWebhookDeliveriesLazyQuery(baseOptions?: ApolloReactHooks.
 export type AppWebhookDeliveriesQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesQuery>;
 export type AppWebhookDeliveriesLazyQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesLazyQuery>;
 export type AppWebhookDeliveriesQueryResult = Apollo.QueryResult<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>;
+export const WebhookDetailsDocument = gql`
+    query WebhookDetails($id: ID!) {
+  webhook(id: $id) {
+    ...WebhookDetails
+  }
+}
+    ${WebhookDetailsFragmentDoc}`;
+
+/**
+ * __useWebhookDetailsQuery__
+ *
+ * To run a query within a React component, call `useWebhookDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWebhookDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWebhookDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useWebhookDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsDocument, options);
+      }
+export function useWebhookDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsDocument, options);
+        }
+export type WebhookDetailsQueryHookResult = ReturnType<typeof useWebhookDetailsQuery>;
+export type WebhookDetailsLazyQueryHookResult = ReturnType<typeof useWebhookDetailsLazyQuery>;
+export type WebhookDetailsQueryResult = Apollo.QueryResult<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>;
 export const PluginsDocument = gql`
     query Plugins($first: Int, $after: String, $last: Int, $before: String, $filter: PluginFilterInput, $sort: PluginSortingInput) {
   plugins(
@@ -9934,41 +9909,6 @@ export function usePluginLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookO
 export type PluginQueryHookResult = ReturnType<typeof usePluginQuery>;
 export type PluginLazyQueryHookResult = ReturnType<typeof usePluginLazyQuery>;
 export type PluginQueryResult = Apollo.QueryResult<Types.PluginQuery, Types.PluginQueryVariables>;
-export const WebhookDetailsDocument = gql`
-    query WebhookDetails($id: ID!) {
-  webhook(id: $id) {
-    ...WebhookDetails
-  }
-}
-    ${WebhookDetailsFragmentDoc}`;
-
-/**
- * __useWebhookDetailsQuery__
- *
- * To run a query within a React component, call `useWebhookDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `useWebhookDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useWebhookDetailsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useWebhookDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsDocument, options);
-      }
-export function useWebhookDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsDocument, options);
-        }
-export type WebhookDetailsQueryHookResult = ReturnType<typeof useWebhookDetailsQuery>;
-export type WebhookDetailsLazyQueryHookResult = ReturnType<typeof useWebhookDetailsLazyQuery>;
-export type WebhookDetailsQueryResult = Apollo.QueryResult<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>;
 export const FileUploadDocument = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {
