@@ -52,15 +52,15 @@ export const messages = defineMessages({
     description: "variant stocks section subtitle",
   },
   configureWarehouseForVariant: {
-    id: "D8nsBc",
+    id: "NCp87D",
     defaultMessage:
-      "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>",
+      "There are no warehouses set up for this variant. To add stock quantity to the variant <a>configure a warehouse</a> or use existing one by clicking button below.",
     description: "no warehouses info",
   },
   configureWarehouseForProduct: {
-    id: "RLBLPQ",
+    id: "BHr3fj",
     defaultMessage:
-      "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>",
+      "There are no warehouses set up for this product. To add stock quantity to the product <a>configure a warehouse</a> or use existing one by clicking button below.",
     description: "no warehouses info",
   },
   assignWarehouse: {
