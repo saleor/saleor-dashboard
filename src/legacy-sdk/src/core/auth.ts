@@ -320,6 +320,7 @@ export const auth = ({ apolloClient: client, channel }: SaleorClientMethodsProps
       RequestPasswordResetMutationVariables
     >({
       mutation: REQUEST_PASSWORD_RESET,
+      // todo something is wrong with this mutation
       variables: { ...opts, channel },
     });
 
@@ -370,7 +371,7 @@ export const auth = ({ apolloClient: client, channel }: SaleorClientMethodsProps
         ...opts,
       },
       update: (_, { data }) => {
-        storage.setAuthPluginId(opts.pluginId);
+        storage.setAuthPluginId(opts.pluginId ?? null);
 
         if (
           data?.externalObtainAccessTokens?.token &&
