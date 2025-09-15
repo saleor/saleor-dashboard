@@ -31,7 +31,7 @@
     "generate": "graphql-codegen",
     "heroku-postbuild": "npm run build",
     "knip": "knip --reporter markdown",
-    "knip:fix": "knip --fix",
+    "knip:fix": "knip --fix --allow-remove-files",
     "lint": "cross-env NODE_OPTIONS=--max-old-space-size=8192 eslint \"{src,playwright}/**/*.@(tsx|ts|jsx|js)\" --fix",
     "lint:check-progress": "eslint-nibble \"src/**/*.@(tsx|ts|jsx|js)\"",
     "prepare": "is-ci || husky install",
