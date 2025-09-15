@@ -1,6 +1,5 @@
 import { PillStatusType } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
 
 const getFillColorsBasedOnStatus = (status: PillStatusType) => {
   switch (status) {
@@ -9,6 +8,17 @@ const getFillColorsBasedOnStatus = (status: PillStatusType) => {
         __backgroundColor: "oklch(94% 0.0898 164deg)",
         __borderColor: "oklch(79% 0.204 153deg)",
       };
+    case "error":
+      return {
+        __backgroundColor: "oklch(87.1% 0.078 354deg)",
+        __borderColor: "oklch(78.4% 0.142 356deg)",
+      };
+    case "warning": {
+      return {
+        __backgroundColor: "oklch(95.8% 0.0729 96.6deg)",
+        __borderColor: "oklch(87.3% 0.179 92.2deg)",
+      };
+    }
   }
 };
 
