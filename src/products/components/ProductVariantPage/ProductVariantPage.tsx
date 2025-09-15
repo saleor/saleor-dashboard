@@ -59,8 +59,9 @@ import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import { ProductVariantPrice } from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
-import ProductVariantUpdateForm, {
+import {
   ProductVariantUpdateData,
+  ProductVariantUpdateForm,
   ProductVariantUpdateHandlers,
   ProductVariantUpdateSubmitData,
 } from "./form";

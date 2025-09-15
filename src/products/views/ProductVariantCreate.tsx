@@ -22,8 +22,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
 import { useReferencePageSearch, useReferenceProductSearch } from "@dashboard/searches/useReferenceSearch";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
@@ -34,8 +32,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, weight } from "../../misc";
-import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
+import {ProductVariantCreatePage} from "../components/ProductVariantCreatePage/ProductVariantCreatePage";
 import {
   productListUrl,
   productVariantAddUrl,
