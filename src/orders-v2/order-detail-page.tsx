@@ -11,6 +11,8 @@ import { OrderHeader } from "./order-header";
 import { OrderInvoices } from "./order-invoices";
 import { OrderLines } from "./order-lines";
 import { OrderCustomerNote } from "./order-notes";
+import { OrderRefunds } from "./order-refunds/order-refunds";
+import { OrderRefundsViewModel } from "./order-refunds/order-refunds-view-model";
 import { OrderSummary } from "./order-summary/order-summary";
 
 export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => {
@@ -75,6 +77,16 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
             })}
             usedGiftCards={OrderDetailsViewModel.getUsedGiftCards(order.giftCards)}
           />
+          <Divider />
+          <OrderRefunds
+            onNewRefund={() => alert("New refund")}
+            onEditRefund={() => alert("Edit refund")}
+            orderRefundsDisplayList={OrderRefundsViewModel.prepareOrderRefundDisplayList(
+              order.transactions.flatMap(t => t.events),
+              order.grantedRefunds,
+            )}
+            orderRefundState={OrderRefundsViewModel.getRefundState(order.transactions)}
+          />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar
           borderTopRightRadius={5}
@@ -98,6 +110,7 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
               <Divider />
             </>
           )}
+
           {OrderDetailsViewModel.shouldShowCustomerNote(order.customerNote) && (
             <>
               <OrderCustomerNote note={order.customerNote} />
