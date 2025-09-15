@@ -69,7 +69,7 @@ interface ProductUpdateProps {
   params: ProductVariantEditUrlQueryParams;
 }
 
-export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
+const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const shop = useShop();
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -359,3 +359,5 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     </>
   );
 };
+
+export default ProductVariant;
