@@ -25,14 +25,14 @@ const createMockProduct = (id: string, name: string) =>
     channelListings: [],
     variants: [],
     collections: [],
-  }) as ProductsToFilter[0];
+  }) as NonNullable<ProductsToFilter>[number];
 
 const createMockPage = (id: string, title: string) =>
   ({
     __typename: "Page",
     id,
     title,
-  }) as PagesToFilter[0];
+  }) as NonNullable<PagesToFilter>[number];
 
 describe("AssignAttributeValueDialog/utils", () => {
   describe("filterProductsByAttributeValues", () => {
