@@ -9,4 +9,3 @@ ignore:
   - ".featureFlags/**"
   - "testUtils/**"
   - "assets/**"
-
