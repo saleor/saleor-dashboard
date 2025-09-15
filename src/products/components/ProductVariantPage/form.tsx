@@ -101,8 +101,8 @@ export interface UseProductVariantUpdateFormOpts {
   currentChannels: ChannelPriceAndPreorderData[];
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
-  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
-  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
+  referenceCategories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections: RelayToFlat<SearchCollectionsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -411,7 +411,7 @@ function useProductVariantUpdateForm(
   };
 }
 
-const ProductVariantUpdateForm = ({
+export const ProductVariantUpdateForm = ({
   children,
   variant,
   onSubmit,
@@ -424,4 +424,3 @@ const ProductVariantUpdateForm = ({
 };
 
 ProductVariantUpdateForm.displayName = "ProductVariantUpdateForm";
-export default ProductVariantUpdateForm;

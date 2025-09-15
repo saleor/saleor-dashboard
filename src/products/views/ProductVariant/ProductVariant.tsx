@@ -54,8 +54,8 @@ import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
-import { ProductVariantPage } from "../../components/ProductVariantPage";
 import { ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
+import { ProductVariantPage } from "../../components/ProductVariantPage/ProductVariantPage";
 import {
   productUrl,
   productVariantEditUrl,
@@ -70,7 +70,7 @@ interface ProductUpdateProps {
   params: ProductVariantEditUrlQueryParams;
 }
 
-export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
+const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const shop = useShop();
   const navigate = useNavigator();
   const notify = useNotifier();
@@ -360,4 +360,5 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     </>
   );
 };
+
 export default ProductVariant;

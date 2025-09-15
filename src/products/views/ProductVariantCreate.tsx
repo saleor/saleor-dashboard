@@ -32,8 +32,8 @@ import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, weight } from "../../misc";
-import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
+import { ProductVariantCreatePage } from "../components/ProductVariantCreatePage/ProductVariantCreatePage";
 import {
   productListUrl,
   productVariantAddUrl,
@@ -48,7 +48,7 @@ interface ProductVariantCreateProps {
   params: ProductVariantAddUrlQueryParams;
 }
 
-export const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
+const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -308,4 +308,5 @@ export const ProductVariant = ({ productId, params }: ProductVariantCreateProps)
     </>
   );
 };
+
 export default ProductVariant;
