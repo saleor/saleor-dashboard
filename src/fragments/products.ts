@@ -243,6 +243,16 @@ export const variantAttributeFragment = gql`
     entityType
     valueRequired
     unit
+    referenceTypes {
+      ... on ProductType {
+        id
+        name
+      }
+      ... on PageType {
+        id
+        name
+      }
+    }
     choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
       ...AttributeValueList
     }
