@@ -25,7 +25,8 @@
     "src/**/fragments/*.ts",
     "src/searches/*.ts",
     "src/**/fixtures.ts",
-    "codegen.ts"
+    "codegen.ts",
+    "scripts/**"
   ],
   "project": [
     "**/*.{js,ts,tsx,jsx}"
@@ -38,8 +39,7 @@
   },
   "ignore": [
     "playwright/**",
-    "**/*.js",
-    "src/welcomePage/WelcomePageTilesContainer/tileData.tsx"
+    "**/*.generated.ts"
   ],
   "ignoreDependencies": [
     "@graphql-codegen/typescript-apollo-client-helpers",
