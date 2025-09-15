@@ -193,7 +193,6 @@ export default tseslint.config(
     },
   },
 
-  // Additional rules (needs to be here, because other imports have "error", not "warn")
   {
     rules: {
       "no-restricted-imports": [
