@@ -18,8 +18,7 @@
   },
   "entry": [
     "src/index.tsx!",
-    "src/index.css!",
-    "src/index.html!",
+    "assets/**!",
     "src/**/queries.ts",
     "src/**/mutations.ts",
     "src/**/fragments/*.ts",
@@ -31,15 +30,20 @@
   "project": [
     "**/*.{js,ts,tsx,jsx}"
   ],
-  "jest": {
-    "entry": [
-      "**/*.test.{ts,tsx}",
-      "testUtils/**/*.{ts,tsx}"
-    ]
-  },
+  "jest": true,
+  "vite": true,
+  "eslint": true,
+  "playwright": true,
+  "lint-staged": true,
+  "graphql-codegen": true,
+  "dotenv": true,
+  "storybook": true,
+  "typescript": true,
+  "prettier": true,
   "ignore": [
     "playwright/**",
-    "**/*.generated.ts"
+    "**/*.generated.ts",
+    "apollo.config.js"
   ],
   "ignoreDependencies": [
     "@graphql-codegen/typescript-apollo-client-helpers",
