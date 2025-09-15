@@ -195,58 +195,6 @@ export const InstalledAppDetailsFragmentDoc = gql`
   }
 }
     `;
-export const AttributeFragmentDoc = gql`
-    fragment Attribute on Attribute {
-  id
-  name
-  slug
-  type
-  visibleInStorefront
-  filterableInDashboard
-  filterableInStorefront
-  unit
-  inputType
-}
-    `;
-export const MetadataItemFragmentDoc = gql`
-    fragment MetadataItem on MetadataItem {
-  key
-  value
-}
-    `;
-export const MetadataFragmentDoc = gql`
-    fragment Metadata on ObjectWithMetadata {
-  metadata {
-    ...MetadataItem
-  }
-  privateMetadata {
-    ...MetadataItem
-  }
-}
-    ${MetadataItemFragmentDoc}`;
-export const AttributeDetailsFragmentDoc = gql`
-    fragment AttributeDetails on Attribute {
-  ...Attribute
-  ...Metadata
-  availableInGrid
-  inputType
-  entityType
-  unit
-  storefrontSearchPosition
-  valueRequired
-  referenceTypes {
-    ... on ProductType {
-      id
-      name
-    }
-    ... on PageType {
-      id
-      name
-    }
-  }
-}
-    ${AttributeFragmentDoc}
-${MetadataFragmentDoc}`;
 export const AvailableAttributeFragmentDoc = gql`
     fragment AvailableAttribute on Attribute {
   id
@@ -321,6 +269,22 @@ export const CategoryFragmentDoc = gql`
   }
 }
     `;
+export const MetadataItemFragmentDoc = gql`
+    fragment MetadataItem on MetadataItem {
+  key
+  value
+}
+    `;
+export const MetadataFragmentDoc = gql`
+    fragment Metadata on ObjectWithMetadata {
+  metadata {
+    ...MetadataItem
+  }
+  privateMetadata {
+    ...MetadataItem
+  }
+}
+    ${MetadataItemFragmentDoc}`;
 export const CategoryDetailsFragmentDoc = gql`
     fragment CategoryDetails on Category {
   id
@@ -2419,6 +2383,20 @@ export const PageTypeFragmentDoc = gql`
   hasPages
 }
     `;
+export const AttributeFragmentDoc = gql`
+    fragment Attribute on Attribute {
+  id
+  name
+  slug
+  type
+  visibleInStorefront
+  filterableInDashboard
+  filterableInStorefront
+  unit
+  inputType
+  ...Metadata
+}
+    ${MetadataFragmentDoc}`;
 export const PageTypeDetailsFragmentDoc = gql`
     fragment PageTypeDetails on PageType {
   ...PageType
@@ -2743,6 +2721,36 @@ export const ProductWithChannelListingsFragmentDoc = gql`
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PriceRangeFragmentDoc}`;
+export const AttributeDetailsFragmentDoc = gql`
+    fragment AttributeDetails on Attribute {
+  ...Attribute
+  availableInGrid
+  entityType
+  storefrontSearchPosition
+  valueRequired
+  referenceTypes {
+    ... on ProductType {
+      __typename
+      id
+      name
+    }
+    ... on PageType {
+      __typename
+      id
+      name
+    }
+  }
+  choices(
+    first: $firstValues
+    after: $afterValues
+    last: $lastValues
+    before: $beforeValues
+  ) {
+    ...AttributeValueList
+  }
+}
+    ${AttributeFragmentDoc}
+${AttributeValueListFragmentDoc}`;
 export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
   id
@@ -2767,31 +2775,7 @@ export const ProductVariantAttributesFragmentDoc = gql`
   id
   attributes {
     attribute {
-      id
-      slug
-      name
-      inputType
-      entityType
-      valueRequired
-      unit
-      referenceTypes {
-        ... on ProductType {
-          __typename
-          ...ProductType
-        }
-        ... on PageType {
-          __typename
-          ...PageType
-        }
-      }
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeValueList
-      }
+      ...AttributeDetails
     }
     values {
       ...AttributeValueDetails
@@ -2811,9 +2795,7 @@ export const ProductVariantAttributesFragmentDoc = gql`
     }
   }
 }
-    ${ProductTypeFragmentDoc}
-${PageTypeFragmentDoc}
-${AttributeValueListFragmentDoc}
+    ${AttributeDetailsFragmentDoc}
 ${AttributeValueDetailsFragmentDoc}
 ${VariantAttributeFragmentDoc}`;
 export const ProductMediaFragmentDoc = gql`
@@ -4484,14 +4466,14 @@ export const AttributeUpdateDocument = gql`
     mutation AttributeUpdate($id: ID!, $input: AttributeUpdateInput!) {
   attributeUpdate(id: $id, input: $input) {
     attribute {
-      ...AttributeDetails
+      ...Attribute
     }
     errors {
       ...AttributeError
     }
   }
 }
-    ${AttributeDetailsFragmentDoc}
+    ${AttributeFragmentDoc}
 ${AttributeErrorFragmentDoc}`;
 export type AttributeUpdateMutationFn = Apollo.MutationFunction<Types.AttributeUpdateMutation, Types.AttributeUpdateMutationVariables>;
 
@@ -15890,21 +15872,7 @@ export const ProductTypeDocument = gql`
     name
     hasVariants
     productAttributes {
-      id
-      inputType
-      entityType
-      slug
-      name
-      valueRequired
-      unit
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeValueList
-      }
+      ...AttributeDetails
     }
     taxClass {
       id
@@ -15912,7 +15880,7 @@ export const ProductTypeDocument = gql`
     }
   }
 }
-    ${AttributeValueListFragmentDoc}`;
+    ${AttributeDetailsFragmentDoc}`;
 
 /**
  * __useProductTypeQuery__
