@@ -3,9 +3,9 @@ import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { PencilIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 
+import { UserAvatar } from "../user-avatar";
 import { OrderRefundDisplay, OrderRefundsViewModel } from "./order-refunds-view-model";
 import { StatusBadge } from "./status-badge";
-import { UserAvatar } from "./user-avatar";
 
 type RefundListItemProps = PropsWithBox<{
   refund: OrderRefundDisplay;

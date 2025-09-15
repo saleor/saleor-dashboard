@@ -1,7 +1,7 @@
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { NewRefundButton } from "./components/new-refund-button";
+import { NewRefundButton } from "./new-refund-button";
 import { OrderRefundDisplay, OrderRefundState } from "./order-refunds-view-model";
 import { RefundListItem } from "./refund-list-item";
 

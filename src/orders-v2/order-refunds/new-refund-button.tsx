@@ -1,16 +1,15 @@
 import { Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { OrderFulfillmentRefundedStatusIcon } from "../../icons/order-fulfillment-refunded-status-icon";
-
-type RefundState = "refundable" | "noTransactionsToRefund" | "allTransactionsNonRefundable";
+import { OrderFulfillmentRefundedStatusIcon } from "../icons/order-fulfillment-refunded-status-icon";
+import { OrderRefundState } from "./order-refunds-view-model";
 
 export const NewRefundButton = ({
   onNewRefund,
   refundState,
 }: {
   onNewRefund?: () => void;
-  refundState: RefundState;
+  refundState: OrderRefundState;
 }) => {
   const intl = useIntl();
 

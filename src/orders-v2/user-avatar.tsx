@@ -1,6 +1,10 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 
-export const UserAvatar = ({ initials }: { initials: string }) => (
+type Props = PropsWithBox<{
+  initials: string;
+}>;
+
+export const UserAvatar = ({ initials, ...props }: Props) => (
   <Box
     width={8}
     height={8}
@@ -10,6 +14,7 @@ export const UserAvatar = ({ initials }: { initials: string }) => (
     display="flex"
     alignItems="center"
     justifyContent="center"
+    {...props}
   >
     <Text size={2} fontWeight="medium" color="default1">
       {initials}
