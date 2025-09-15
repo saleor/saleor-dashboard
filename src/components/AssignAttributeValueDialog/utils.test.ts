@@ -1,31 +1,38 @@
 import { AttributeInput } from "@dashboard/components/Attributes";
 import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 
-import { filterPagesByAttributeValues, filterProductsByAttributeValues } from "./utils";
+import {
+  filterPagesByAttributeValues,
+  filterProductsByAttributeValues,
+  PagesToFilter,
+  ProductsToFilter,
+} from "./utils";
 
-const createMockProduct = (id: string, name: string) => ({
-  __typename: "Product" as const,
-  id,
-  name,
-  productType: {
-    __typename: "ProductType" as const,
-    id: "type-1",
-    name: "Product Type",
-  },
-  thumbnail: {
-    __typename: "Image" as const,
-    url: "https://example.com/image.jpg",
-  },
-  channelListings: [],
-  variants: [],
-  collections: [],
-});
+const createMockProduct = (id: string, name: string) =>
+  ({
+    __typename: "Product",
+    id,
+    name,
+    productType: {
+      __typename: "ProductType",
+      id: "type-1",
+      name: "Product Type",
+    },
+    thumbnail: {
+      __typename: "Image",
+      url: "https://example.com/image.jpg",
+    },
+    channelListings: [],
+    variants: [],
+    collections: [],
+  }) as ProductsToFilter[0];
 
-const createMockPage = (id: string, title: string) => ({
-  __typename: "Page" as const,
-  id,
-  title,
-});
+const createMockPage = (id: string, title: string) =>
+  ({
+    __typename: "Page",
+    id,
+    title,
+  }) as PagesToFilter[0];
 
 describe("AssignAttributeValueDialog/utils", () => {
   describe("filterProductsByAttributeValues", () => {
@@ -35,7 +42,7 @@ describe("AssignAttributeValueDialog/utils", () => {
       createMockProduct("prod-3", "Product 3"),
     ];
 
-    it("should not filter products for SINGLE_REFERENCE type", () => {
+    it("should not filter products list for SINGLE_REFERENCE type - in order to show current selection", () => {
       // Arrange
       const attribute: AttributeInput = {
         id: "attr-1",
@@ -57,7 +64,7 @@ describe("AssignAttributeValueDialog/utils", () => {
       expect(result).toHaveLength(3);
     });
 
-    it("should filter out selected values for REFERENCE type", () => {
+    it("should filter out selected products for REFERENCE type - in order to add only new items", () => {
       // Arrange
       const attribute: AttributeInput = {
         id: "attr-1",
@@ -101,12 +108,13 @@ describe("AssignAttributeValueDialog/utils", () => {
       expect(result).toHaveLength(3);
     });
 
-    it("should filter variants for PRODUCT_VARIANT entity type", () => {
+    it("should filter out selected variants in REFERENCE attribute with PRODUCT_VARIANT entity type", () => {
       // Arrange
       const productsWithVariants = [
         {
           ...createMockProduct("prod-1", "Product 1"),
           variants: [
+            // This variant is already selected
             {
               __typename: "ProductVariant" as const,
               id: "var-1",
@@ -115,6 +123,7 @@ describe("AssignAttributeValueDialog/utils", () => {
               product: createMockProduct("prod-1", "Product 1"),
               channelListings: [],
             },
+            // This variant is not selected
             {
               __typename: "ProductVariant" as const,
               id: "var-2",
@@ -128,6 +137,7 @@ describe("AssignAttributeValueDialog/utils", () => {
         {
           ...createMockProduct("prod-2", "Product 2"),
           variants: [
+            // This variant is already selected
             {
               __typename: "ProductVariant" as const,
               id: "var-3",
@@ -136,6 +146,7 @@ describe("AssignAttributeValueDialog/utils", () => {
               product: createMockProduct("prod-2", "Product 2"),
               channelListings: [],
             },
+            // This variant is not selected
             {
               __typename: "ProductVariant" as const,
               id: "var-4",
@@ -195,7 +206,7 @@ describe("AssignAttributeValueDialog/utils", () => {
       createMockPage("page-3", "Page 3"),
     ];
 
-    it("should not filter pages for SINGLE_REFERENCE type", () => {
+    it("should not filter selected pages for SINGLE_REFERENCE attributes - in order to show current selection", () => {
       // Arrange
       const attribute: AttributeInput = {
         id: "attr-1",
@@ -216,7 +227,7 @@ describe("AssignAttributeValueDialog/utils", () => {
       expect(result).toHaveLength(3);
     });
 
-    it("should filter out selected values for REFERENCE type", () => {
+    it("should filter out selected pages for REFERENCE attribute - in order to add only new items", () => {
       // Arrange
       const attribute: AttributeInput = {
         id: "attr-1",

@@ -9,10 +9,10 @@ import { RelayToFlat } from "@dashboard/types";
 
 import { AttributeInput } from "../Attributes";
 
-type ProductsToFilter = RelayToFlat<SearchProductsQuery["search"]>;
-type PagesToFilter = RelayToFlat<SearchPagesQuery["search"]>;
-type CollectionsToFilter = RelayToFlat<SearchCollectionsQuery["search"]>;
-type CategoriesToFilter = RelayToFlat<SearchCategoriesQuery["search"]>;
+export type ProductsToFilter = RelayToFlat<SearchProductsQuery["search"]>;
+export type PagesToFilter = RelayToFlat<SearchPagesQuery["search"]>;
+export type CollectionsToFilter = RelayToFlat<SearchCollectionsQuery["search"]>;
+export type CategoriesToFilter = RelayToFlat<SearchCategoriesQuery["search"]>;
 
 export const filterProductsByAttributeValues = (
   products: ProductsToFilter,
