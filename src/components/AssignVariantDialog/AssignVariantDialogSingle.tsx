@@ -12,7 +12,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { Container, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AssignContainerDialogProps } from "../AssignContainerDialog";
@@ -137,7 +137,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
             {renderCollection(
               productChoices,
               product => (
-                <React.Fragment key={product ? product.id : "skeleton"}>
+                <Fragment key={product ? product.id : "skeleton"}>
                   {/* Product header row (non-selectable) */}
                   <TableRowLink>
                     <TableCell padding="checkbox" className={classes.productCheckboxCell}>
@@ -193,7 +193,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                         </TableRowLink>
                       );
                     })}
-                </React.Fragment>
+                </Fragment>
               ),
               () => (
                 <Text className={classes.noContentText}>

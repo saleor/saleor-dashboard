@@ -10,7 +10,7 @@ import { maybe } from "@dashboard/misc";
 import { Container, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
@@ -56,7 +56,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedProductId, setSelectedProductId] = React.useState<string>(selectedId ?? "");
+  const [selectedProductId, setSelectedProductId] = useState<string>(selectedId ?? "");
 
   useEffect(() => {
     setSelectedProductId(selectedId ?? "");

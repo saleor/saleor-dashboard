@@ -1,5 +1,5 @@
 import { Box, BoxProps, Button, CloseIcon, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
@@ -21,7 +21,7 @@ export type ChipFieldProps = {
   url?: string;
 } & BoxProps;
 
-export const ChipField = React.forwardRef<HTMLDivElement, ChipFieldProps>(
+export const ChipField = forwardRef<HTMLDivElement, ChipFieldProps>(
   ({ label, onClose, loading, url, className, style, ...props }, ref) => {
     const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();

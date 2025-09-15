@@ -8,7 +8,7 @@ import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { Container, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useEffect, useState } from "react";
 
 import BackButton from "../BackButton";
 import { useStyles } from "./styles";
@@ -47,9 +47,9 @@ export const AssignContainerDialogSingle = (props: AssignContainerDialogSinglePr
   } = props;
   const classes = useStyles(props);
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedContainerId, setSelectedContainerId] = React.useState<string>(selectedId ?? "");
+  const [selectedContainerId, setSelectedContainerId] = useState<string>(selectedId ?? "");
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSelectedContainerId(selectedId ?? "");
   }, [selectedId]);
 

@@ -8,7 +8,7 @@ import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { Container, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
@@ -61,7 +61,7 @@ export const AssignContainerDialogMulti = (props: AssignContainerDialogMultiProp
   } = props;
   const classes = useStyles(props);
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
-  const [selectedContainers, setSelectedContainers] = React.useState<Container[]>([]);
+  const [selectedContainers, setSelectedContainers] = useState<Container[]>([]);
   const handleSubmit = () => onSubmit(selectedContainers);
 
   const handleClose = () => {
