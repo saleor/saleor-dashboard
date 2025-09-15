@@ -24,7 +24,7 @@ export const attributeUpdateMutation = gql`
   mutation AttributeUpdate($id: ID!, $input: AttributeUpdateInput!) {
     attributeUpdate(id: $id, input: $input) {
       attribute {
-        ...AttributeDetails
+        ...Attribute
       }
       errors {
         ...AttributeError
