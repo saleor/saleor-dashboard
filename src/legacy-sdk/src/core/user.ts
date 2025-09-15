@@ -1,16 +1,4 @@
 import {
-  CONFIRM_ACCOUNT,
-  CONFIRM_EMAIL_CHANGE,
-  CREATE_ACCOUNT_ADDRESS,
-  DELETE_ACCOUNT,
-  DELETE_ACCOUNT_ADDRESS,
-  REQUEST_DELETE_ACCOUNT,
-  REQUEST_EMAIL_CHANGE,
-  SET_ACCOUNT_DEFAULT_ADDRESS,
-  UPDATE_ACCOUNT,
-  UPDATE_ACCOUNT_ADDRESS,
-} from "../apollo/mutations";
-import {
   AccountConfirmMutation,
   AccountConfirmMutationVariables,
   AccountDeleteMutation,
@@ -31,7 +19,20 @@ import {
   SetAccountDefaultAddressMutationVariables,
   UpdateAccountAddressMutation,
   UpdateAccountAddressMutationVariables,
-} from "../apollo/types";
+} from "@dashboard//graphql";
+
+import {
+  CONFIRM_ACCOUNT,
+  CONFIRM_EMAIL_CHANGE,
+  CREATE_ACCOUNT_ADDRESS,
+  DELETE_ACCOUNT,
+  DELETE_ACCOUNT_ADDRESS,
+  REQUEST_DELETE_ACCOUNT,
+  REQUEST_EMAIL_CHANGE,
+  SET_ACCOUNT_DEFAULT_ADDRESS,
+  UPDATE_ACCOUNT,
+  UPDATE_ACCOUNT_ADDRESS,
+} from "../apollo/mutations";
 import { auth } from "./auth";
 import {
   AccountDeleteResult,

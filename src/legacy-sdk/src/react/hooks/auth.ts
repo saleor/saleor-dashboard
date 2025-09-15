@@ -1,5 +1,6 @@
+import { UserQuery, UserQueryVariables } from "@dashboard/graphql";
+
 import { USER } from "../../apollo/queries";
-import { UserQuery, UserQueryVariables } from "../../apollo/types";
 import { hookFactory } from "../helpers/hookFactory";
 import { hookStateFactory } from "../helpers/hookStateFactory";
 

@@ -110,7 +110,6 @@ const handleLegacyTheming = () => {
 handleLegacyTheming();
 
 const App = () => (
-  // @ts-expect-error legacy types
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <Router>

@@ -4,10 +4,10 @@ import {
   ChannelErrorCode,
   ChannelErrorFragment,
   MarkAsPaidStrategyEnum,
+  MoneyFragment,
   ProductFragment,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
-import { Money } from "@saleor/sdk/dist/apollo/types";
 
 export const channelCreateErrors: ChannelErrorFragment[] = [
   {
@@ -378,10 +378,10 @@ type ProductChannelsWithPricing = NonNullable<ProductFragment["channelListings"]
   pricing: {
     priceRange: {
       start: {
-        net: Money;
+        net: MoneyFragment;
       };
       stop: {
-        net: Money;
+        net: MoneyFragment;
       };
     };
   };
@@ -405,12 +405,14 @@ export const productChannels: ProductChannelsWithPricing[] = [
         start: {
           net: {
             amount: 1.2,
+            __typename: "Money",
             currency: "USD",
           },
         },
         stop: {
           net: {
             amount: 3.5,
+            __typename: "Money",
             currency: "USD",
           },
         },
@@ -435,15 +437,13 @@ export const productChannels: ProductChannelsWithPricing[] = [
       priceRange: {
         start: {
           net: {
+            __typename: "Money",
             amount: 2.2,
             currency: "USD",
           },
         },
         stop: {
-          net: {
-            amount: 7.1,
-            currency: "USD",
-          },
+          net: { __typename: "Money", amount: 7.1, currency: "USD" },
         },
       },
     },
@@ -465,16 +465,10 @@ export const productChannels: ProductChannelsWithPricing[] = [
     pricing: {
       priceRange: {
         start: {
-          net: {
-            amount: 30.1,
-            currency: "USD",
-          },
+          net: { __typename: "Money", amount: 30.1, currency: "USD" },
         },
         stop: {
-          net: {
-            amount: 44.9,
-            currency: "USD",
-          },
+          net: { __typename: "Money", amount: 44.9, currency: "USD" },
         },
       },
     },

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const accountErrorFragment = gql`
-  fragment AccountErrorFragment on AccountError {
+  fragment SdkAccountError on AccountError {
     code
     field
     message
@@ -9,7 +9,7 @@ export const accountErrorFragment = gql`
 `;
 
 export const addressFragment = gql`
-  fragment AddressFragment on Address {
+  fragment SdkAddress on Address {
     id
     firstName
     lastName
@@ -31,7 +31,7 @@ export const addressFragment = gql`
 `;
 
 export const userBaseFragment = gql`
-  fragment UserBaseFragment on User {
+  fragment SdkUserBase on User {
     id
     email
     firstName
@@ -47,20 +47,21 @@ export const userBaseFragment = gql`
 export const userDetailsFragment = gql`
   ${addressFragment}
   ${userBaseFragment}
-  fragment UserDetailsFragment on User {
-    ...UserBaseFragment
+
+  fragment SdkUserDetails on User {
+    ...SdkUserBase
     metadata {
       key
       value
     }
     defaultShippingAddress {
-      ...AddressFragment
+      ...SdkAddress
     }
     defaultBillingAddress {
-      ...AddressFragment
+      ...SdkAddress
     }
     addresses {
-      ...AddressFragment
+      ...SdkAddress
     }
   }
 `;

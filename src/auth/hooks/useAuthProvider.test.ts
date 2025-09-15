@@ -6,8 +6,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useAuthProvider } from "./useAuthProvider";
 
-// Mock dependencies
-jest.mock("@saleor/sdk");
+jest.mock("@dashboard/legacy-sdk");
 
 const useAuthStateMock = {
   authenticated: false,

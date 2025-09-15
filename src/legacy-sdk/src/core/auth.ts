@@ -1,22 +1,4 @@
 import {
-  CHANGE_USER_PASSWORD,
-  EXTERNAL_AUTHENTICATION_URL,
-  EXTERNAL_LOGOUT,
-  EXTERNAL_REFRESH,
-  EXTERNAL_REFRESH_WITH_USER,
-  EXTERNAL_VERIFY_TOKEN,
-  LOGIN,
-  LOGIN_WITHOUT_DETAILS,
-  OBTAIN_EXTERNAL_ACCESS_TOKEN,
-  REFRESH_TOKEN,
-  REFRESH_TOKEN_WITH_USER,
-  REGISTER,
-  REQUEST_PASSWORD_RESET,
-  SET_PASSWORD,
-  VERIFY_TOKEN,
-} from "../apollo/mutations";
-import { USER, USER_WITHOUT_DETAILS } from "../apollo/queries";
-import {
   ExternalAuthenticationUrlMutation,
   ExternalAuthenticationUrlMutationVariables,
   ExternalLogoutMutation,
@@ -45,7 +27,26 @@ import {
   SetPasswordMutationVariables,
   VerifyTokenMutation,
   VerifyTokenMutationVariables,
-} from "../apollo/types";
+} from "@dashboard/graphql";
+
+import {
+  CHANGE_USER_PASSWORD,
+  EXTERNAL_AUTHENTICATION_URL,
+  EXTERNAL_LOGOUT,
+  EXTERNAL_REFRESH,
+  EXTERNAL_REFRESH_WITH_USER,
+  EXTERNAL_VERIFY_TOKEN,
+  LOGIN,
+  LOGIN_WITHOUT_DETAILS,
+  OBTAIN_EXTERNAL_ACCESS_TOKEN,
+  REFRESH_TOKEN,
+  REFRESH_TOKEN_WITH_USER,
+  REGISTER,
+  REQUEST_PASSWORD_RESET,
+  SET_PASSWORD,
+  VERIFY_TOKEN,
+} from "../apollo/mutations";
+import { USER, USER_WITHOUT_DETAILS } from "../apollo/queries";
 import { hasNonEmptyPermissions } from "./helpers";
 import { storage } from "./storage";
 import {

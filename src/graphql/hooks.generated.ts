@@ -3661,15 +3661,15 @@ export const WebhookDetailsFragmentDoc = gql`
   customHeaders
 }
     ${WebhookFragmentDoc}`;
-export const AccountErrorFragmentFragmentDoc = gql`
-    fragment AccountErrorFragment on AccountError {
+export const SdkAccountErrorFragmentDoc = gql`
+    fragment SdkAccountError on AccountError {
   code
   field
   message
 }
     `;
-export const UserBaseFragmentFragmentDoc = gql`
-    fragment UserBaseFragment on User {
+export const SdkUserBaseFragmentDoc = gql`
+    fragment SdkUserBase on User {
   id
   email
   firstName
@@ -3681,8 +3681,8 @@ export const UserBaseFragmentFragmentDoc = gql`
   }
 }
     `;
-export const AddressFragmentFragmentDoc = gql`
-    fragment AddressFragment on Address {
+export const SdkAddressFragmentDoc = gql`
+    fragment SdkAddress on Address {
   id
   firstName
   lastName
@@ -3702,25 +3702,25 @@ export const AddressFragmentFragmentDoc = gql`
   isDefaultShippingAddress
 }
     `;
-export const UserDetailsFragmentFragmentDoc = gql`
-    fragment UserDetailsFragment on User {
-  ...UserBaseFragment
+export const SdkUserDetailsFragmentDoc = gql`
+    fragment SdkUserDetails on User {
+  ...SdkUserBase
   metadata {
     key
     value
   }
   defaultShippingAddress {
-    ...AddressFragment
+    ...SdkAddress
   }
   defaultBillingAddress {
-    ...AddressFragment
+    ...SdkAddress
   }
   addresses {
-    ...AddressFragment
+    ...SdkAddress
   }
 }
-    ${UserBaseFragmentFragmentDoc}
-${AddressFragmentFragmentDoc}`;
+    ${SdkUserBaseFragmentDoc}
+${SdkAddressFragmentDoc}`;
 export const AppFailedPendingWebhooksDocument = gql`
     query AppFailedPendingWebhooks($canFetchAppEvents: Boolean!) {
   apps(first: 50, filter: {type: THIRDPARTY}) {
@@ -10831,15 +10831,15 @@ export const LoginWithoutDetailsDocument = gql`
     refreshToken
     token
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserBaseFragment
+      ...SdkUserBase
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserBaseFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserBaseFragmentDoc}`;
 export type LoginWithoutDetailsMutationFn = Apollo.MutationFunction<Types.LoginWithoutDetailsMutation, Types.LoginWithoutDetailsMutationVariables>;
 
 /**
@@ -10873,15 +10873,15 @@ export const LoginDocument = gql`
     token
     refreshToken
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<Types.LoginMutation, Types.LoginMutationVariables>;
 
 /**
@@ -10913,12 +10913,12 @@ export const RegisterDocument = gql`
     mutation register($input: AccountRegisterInput!) {
   accountRegister(input: $input) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     requiresConfirmation
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}`;
 export type RegisterMutationFn = Apollo.MutationFunction<Types.RegisterMutation, Types.RegisterMutationVariables>;
 
 /**
@@ -10950,11 +10950,11 @@ export const RefreshTokenDocument = gql`
   tokenRefresh(refreshToken: $refreshToken) {
     token
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}`;
 export type RefreshTokenMutationFn = Apollo.MutationFunction<Types.RefreshTokenMutation, Types.RefreshTokenMutationVariables>;
 
 /**
@@ -10986,15 +10986,15 @@ export const RefreshTokenWithUserDocument = gql`
   tokenRefresh(refreshToken: $refreshToken) {
     token
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${UserDetailsFragmentFragmentDoc}
-${AccountErrorFragmentFragmentDoc}`;
+    ${SdkUserDetailsFragmentDoc}
+${SdkAccountErrorFragmentDoc}`;
 export type RefreshTokenWithUserMutationFn = Apollo.MutationFunction<Types.RefreshTokenWithUserMutation, Types.RefreshTokenWithUserMutationVariables>;
 
 /**
@@ -11027,15 +11027,15 @@ export const VerifyTokenDocument = gql`
     isValid
     payload
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${UserDetailsFragmentFragmentDoc}
-${AccountErrorFragmentFragmentDoc}`;
+    ${SdkUserDetailsFragmentDoc}
+${SdkAccountErrorFragmentDoc}`;
 export type VerifyTokenMutationFn = Apollo.MutationFunction<Types.VerifyTokenMutation, Types.VerifyTokenMutationVariables>;
 
 /**
@@ -11067,11 +11067,11 @@ export const ExternalAuthenticationUrlDocument = gql`
   externalAuthenticationUrl(pluginId: $pluginId, input: $input) {
     authenticationData
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}`;
 export type ExternalAuthenticationUrlMutationFn = Apollo.MutationFunction<Types.ExternalAuthenticationUrlMutation, Types.ExternalAuthenticationUrlMutationVariables>;
 
 /**
@@ -11105,15 +11105,15 @@ export const ExternalObtainAccessTokensDocument = gql`
     token
     refreshToken
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${UserDetailsFragmentFragmentDoc}
-${AccountErrorFragmentFragmentDoc}`;
+    ${SdkUserDetailsFragmentDoc}
+${SdkAccountErrorFragmentDoc}`;
 export type ExternalObtainAccessTokensMutationFn = Apollo.MutationFunction<Types.ExternalObtainAccessTokensMutation, Types.ExternalObtainAccessTokensMutationVariables>;
 
 /**
@@ -11147,11 +11147,11 @@ export const ExternalRefreshDocument = gql`
     token
     refreshToken
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}`;
 export type ExternalRefreshMutationFn = Apollo.MutationFunction<Types.ExternalRefreshMutation, Types.ExternalRefreshMutationVariables>;
 
 /**
@@ -11185,15 +11185,15 @@ export const ExternalRefreshWithUserDocument = gql`
     token
     refreshToken
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${UserDetailsFragmentFragmentDoc}
-${AccountErrorFragmentFragmentDoc}`;
+    ${SdkUserDetailsFragmentDoc}
+${SdkAccountErrorFragmentDoc}`;
 export type ExternalRefreshWithUserMutationFn = Apollo.MutationFunction<Types.ExternalRefreshWithUserMutation, Types.ExternalRefreshWithUserMutationVariables>;
 
 /**
@@ -11227,19 +11227,19 @@ export const ExternalVerifyDocument = gql`
     isValid
     verifyData
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
       userPermissions {
         code
         name
       }
     }
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${UserDetailsFragmentFragmentDoc}
-${AccountErrorFragmentFragmentDoc}`;
+    ${SdkUserDetailsFragmentDoc}
+${SdkAccountErrorFragmentDoc}`;
 export type ExternalVerifyMutationFn = Apollo.MutationFunction<Types.ExternalVerifyMutation, Types.ExternalVerifyMutationVariables>;
 
 /**
@@ -11272,11 +11272,11 @@ export const ExternalLogoutDocument = gql`
   externalLogout(pluginId: $pluginId, input: $input) {
     logoutData
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}`;
 export type ExternalLogoutMutationFn = Apollo.MutationFunction<Types.ExternalLogoutMutation, Types.ExternalLogoutMutationVariables>;
 
 /**
@@ -11308,11 +11308,11 @@ export const PasswordChangeDocument = gql`
     mutation passwordChange($newPassword: String!, $oldPassword: String!) {
   passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}`;
 export type PasswordChangeMutationFn = Apollo.MutationFunction<Types.PasswordChangeMutation, Types.PasswordChangeMutationVariables>;
 
 /**
@@ -11348,11 +11348,11 @@ export const Sdk_RequestPasswordResetDocument = gql`
     channel: $channel
   ) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}`;
 export type Sdk_RequestPasswordResetMutationFn = Apollo.MutationFunction<Types.Sdk_RequestPasswordResetMutation, Types.Sdk_RequestPasswordResetMutationVariables>;
 
 /**
@@ -11385,17 +11385,17 @@ export const SetPasswordDocument = gql`
     mutation setPassword($token: String!, $email: String!, $password: String!) {
   setPassword(token: $token, email: $email, password: $password) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     token
     refreshToken
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type SetPasswordMutationFn = Apollo.MutationFunction<Types.SetPasswordMutation, Types.SetPasswordMutationVariables>;
 
 /**
@@ -11433,15 +11433,15 @@ export const RequestEmailChangeDocument = gql`
     redirectUrl: $redirectUrl
   ) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type RequestEmailChangeMutationFn = Apollo.MutationFunction<Types.RequestEmailChangeMutation, Types.RequestEmailChangeMutationVariables>;
 
 /**
@@ -11475,15 +11475,15 @@ export const ConfirmEmailChangeDocument = gql`
     mutation confirmEmailChange($channel: String!, $token: String!) {
   confirmEmailChange(channel: $channel, token: $token) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type ConfirmEmailChangeMutationFn = Apollo.MutationFunction<Types.ConfirmEmailChangeMutation, Types.ConfirmEmailChangeMutationVariables>;
 
 /**
@@ -11515,11 +11515,11 @@ export const AccountRequestDeletionDocument = gql`
     mutation accountRequestDeletion($channel: String!, $redirectUrl: String!) {
   accountRequestDeletion(channel: $channel, redirectUrl: $redirectUrl) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}`;
 export type AccountRequestDeletionMutationFn = Apollo.MutationFunction<Types.AccountRequestDeletionMutation, Types.AccountRequestDeletionMutationVariables>;
 
 /**
@@ -11551,15 +11551,15 @@ export const AccountDeleteDocument = gql`
     mutation accountDelete($token: String!) {
   accountDelete(token: $token) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type AccountDeleteMutationFn = Apollo.MutationFunction<Types.AccountDeleteMutation, Types.AccountDeleteMutationVariables>;
 
 /**
@@ -11590,15 +11590,15 @@ export const AccountUpdateDocument = gql`
     mutation accountUpdate($input: AccountInput!) {
   accountUpdate(input: $input) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type AccountUpdateMutationFn = Apollo.MutationFunction<Types.AccountUpdateMutation, Types.AccountUpdateMutationVariables>;
 
 /**
@@ -11629,15 +11629,15 @@ export const SetAccountDefaultAddressDocument = gql`
     mutation setAccountDefaultAddress($id: ID!, $type: AddressTypeEnum!) {
   accountSetDefaultAddress(id: $id, type: $type) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type SetAccountDefaultAddressMutationFn = Apollo.MutationFunction<Types.SetAccountDefaultAddressMutation, Types.SetAccountDefaultAddressMutationVariables>;
 
 /**
@@ -11669,15 +11669,15 @@ export const DeleteAccountAddressDocument = gql`
     mutation deleteAccountAddress($addressId: ID!) {
   accountAddressDelete(id: $addressId) {
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type DeleteAccountAddressMutationFn = Apollo.MutationFunction<Types.DeleteAccountAddressMutation, Types.DeleteAccountAddressMutationVariables>;
 
 /**
@@ -11708,19 +11708,19 @@ export const CreateAccountAddressDocument = gql`
     mutation createAccountAddress($input: AddressInput!) {
   accountAddressCreate(input: $input) {
     address {
-      ...AddressFragment
+      ...SdkAddress
     }
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AddressFragmentFragmentDoc}
-${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAddressFragmentDoc}
+${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type CreateAccountAddressMutationFn = Apollo.MutationFunction<Types.CreateAccountAddressMutation, Types.CreateAccountAddressMutationVariables>;
 
 /**
@@ -11751,19 +11751,19 @@ export const UpdateAccountAddressDocument = gql`
     mutation updateAccountAddress($input: AddressInput!, $id: ID!) {
   accountAddressUpdate(input: $input, id: $id) {
     address {
-      ...AddressFragment
+      ...SdkAddress
     }
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
   }
 }
-    ${AddressFragmentFragmentDoc}
-${AccountErrorFragmentFragmentDoc}
-${UserDetailsFragmentFragmentDoc}`;
+    ${SdkAddressFragmentDoc}
+${SdkAccountErrorFragmentDoc}
+${SdkUserDetailsFragmentDoc}`;
 export type UpdateAccountAddressMutationFn = Apollo.MutationFunction<Types.UpdateAccountAddressMutation, Types.UpdateAccountAddressMutationVariables>;
 
 /**
@@ -11795,15 +11795,15 @@ export const AccountConfirmDocument = gql`
     mutation accountConfirm($email: String!, $token: String!) {
   confirmAccount(email: $email, token: $token) {
     user {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
     errors {
-      ...AccountErrorFragment
+      ...SdkAccountError
     }
   }
 }
-    ${UserDetailsFragmentFragmentDoc}
-${AccountErrorFragmentFragmentDoc}`;
+    ${SdkUserDetailsFragmentDoc}
+${SdkAccountErrorFragmentDoc}`;
 export type AccountConfirmMutationFn = Apollo.MutationFunction<Types.AccountConfirmMutation, Types.AccountConfirmMutationVariables>;
 
 /**
@@ -11834,12 +11834,12 @@ export type AccountConfirmMutationOptions = Apollo.BaseMutationOptions<Types.Acc
 export const UserWithoutDetailsDocument = gql`
     query UserWithoutDetails {
   user: me {
-    ...UserBaseFragment
+    ...SdkUserBase
   }
   authenticated @client
   authenticating @client
 }
-    ${UserBaseFragmentFragmentDoc}`;
+    ${SdkUserBaseFragmentDoc}`;
 
 /**
  * __useUserWithoutDetailsQuery__
@@ -11870,12 +11870,12 @@ export type UserWithoutDetailsQueryResult = Apollo.QueryResult<Types.UserWithout
 export const UserDocument = gql`
     query User {
   user: me {
-    ...UserDetailsFragment
+    ...SdkUserDetails
   }
   authenticated @client
   authenticating @client
 }
-    ${UserDetailsFragmentFragmentDoc}`;
+    ${SdkUserDetailsFragmentDoc}`;
 
 /**
  * __useUserQuery__

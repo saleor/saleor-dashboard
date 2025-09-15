@@ -1,6 +1,4 @@
 import { ApolloClient, FetchResult, NormalizedCacheObject } from "@apollo/client";
-
-import { FetchConfig } from "../apollo";
 import {
   AccountConfirmMutation,
   AccountConfirmMutationVariables,
@@ -8,38 +6,40 @@ import {
   AccountRegisterInput,
   AccountRequestDeletionMutation,
   AccountUpdateMutation,
+  AccountUpdateMutationVariables,
+  ChangeUserPasswordMutationVariables,
   ConfirmEmailChangeMutation,
   CreateAccountAddressMutation,
+  CreateAccountAddressMutationVariables,
   DeleteAccountAddressMutation,
   ExternalAuthenticationUrlMutation,
+  ExternalAuthenticationUrlMutationVariables,
   ExternalLogoutMutation,
+  ExternalLogoutMutationVariables,
   ExternalObtainAccessTokensMutation,
+  ExternalObtainAccessTokensMutationVariables,
   ExternalRefreshMutation,
   ExternalVerifyMutation,
   LoginMutation,
-  MutationAccountAddressCreateArgs,
-  MutationAccountAddressUpdateArgs,
-  MutationAccountSetDefaultAddressArgs,
-  MutationAccountUpdateArgs,
-  MutationExternalAuthenticationUrlArgs,
-  MutationExternalLogoutArgs,
-  MutationExternalObtainAccessTokensArgs,
-  MutationPasswordChangeArgs,
-  MutationRequestEmailChangeArgs,
-  MutationRequestPasswordResetArgs,
-  MutationSetPasswordArgs,
-  MutationTokenCreateArgs,
-  MutationTokenRefreshArgs,
+  LoginWithoutDetailsMutationVariables,
   PasswordChangeMutation,
   RefreshTokenMutation,
+  RefreshTokenMutationVariables,
   RegisterMutation,
   RequestEmailChangeMutation,
+  RequestEmailChangeMutationVariables,
   RequestPasswordResetMutation,
+  Sdk_RequestPasswordResetMutationVariables,
   SetAccountDefaultAddressMutation,
+  SetAccountDefaultAddressMutationVariables,
   SetPasswordMutation,
+  SetPasswordMutationVariables,
   UpdateAccountAddressMutation,
+  UpdateAccountAddressMutationVariables,
   VerifyTokenMutation,
-} from "../apollo/types";
+} from "@dashboard/graphql";
+
+import { FetchConfig } from "../apollo";
 import { AuthSDK } from "./auth";
 import { State } from "./state";
 import { UserSDK } from "./user";
@@ -87,21 +87,21 @@ export type JWTToken = {
 
 // Meethods opts
 // Auth
-export type ChangePasswordOpts = MutationPasswordChangeArgs;
-export type LoginOpts = MutationTokenCreateArgs & { includeDetails?: boolean };
-export type RefreshTokenOpts = Pick<MutationTokenRefreshArgs, "refreshToken">;
+export type ChangePasswordOpts = ChangeUserPasswordMutationVariables;
+export type LoginOpts = LoginWithoutDetailsMutationVariables & { includeDetails?: boolean };
+export type RefreshTokenOpts = Pick<RefreshTokenMutationVariables, "refreshToken">;
 export type RegisterOpts = AccountRegisterInput;
-export type RequestPasswordResetOpts = MutationRequestPasswordResetArgs;
-export type SetPasswordOpts = MutationSetPasswordArgs;
-export type GetExternalAuthUrlOpts = MutationExternalAuthenticationUrlArgs;
-export type GetExternalAccessTokenOpts = MutationExternalObtainAccessTokensArgs;
-export type LogoutOpts = Pick<MutationExternalLogoutArgs, "input">;
+export type RequestPasswordResetOpts = Sdk_RequestPasswordResetMutationVariables;
+export type SetPasswordOpts = SetPasswordMutationVariables;
+export type GetExternalAuthUrlOpts = ExternalAuthenticationUrlMutationVariables;
+export type GetExternalAccessTokenOpts = ExternalObtainAccessTokensMutationVariables;
+export type LogoutOpts = Pick<ExternalLogoutMutationVariables, "input">;
 // User
-export type CreateAccountAddressOpts = MutationAccountAddressCreateArgs;
-export type RequestEmailChangeOpts = MutationRequestEmailChangeArgs;
-export type SetAccountDefaultAddressOpts = MutationAccountSetDefaultAddressArgs;
-export type UpdateAccountOpts = MutationAccountUpdateArgs;
-export type UpdateAccountAddressOpts = MutationAccountAddressUpdateArgs;
+export type CreateAccountAddressOpts = CreateAccountAddressMutationVariables;
+export type RequestEmailChangeOpts = RequestEmailChangeMutationVariables;
+export type SetAccountDefaultAddressOpts = SetAccountDefaultAddressMutationVariables;
+export type UpdateAccountOpts = AccountUpdateMutationVariables;
+export type UpdateAccountAddressOpts = UpdateAccountAddressMutationVariables;
 export type ConfirmAccountOpts = AccountConfirmMutationVariables;
 
 // Meethods results

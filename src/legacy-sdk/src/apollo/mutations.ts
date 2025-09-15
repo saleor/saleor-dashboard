@@ -15,10 +15,10 @@ export const LOGIN_WITHOUT_DETAILS = gql`
       refreshToken
       token
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserBaseFragment
+        ...SdkUserBase
       }
     }
   }
@@ -32,10 +32,10 @@ export const LOGIN = gql`
       token
       refreshToken
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -46,7 +46,7 @@ export const REGISTER = gql`
   mutation register($input: AccountRegisterInput!) {
     accountRegister(input: $input) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       requiresConfirmation
     }
@@ -59,7 +59,7 @@ export const REFRESH_TOKEN = gql`
     tokenRefresh(refreshToken: $refreshToken) {
       token
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -74,10 +74,10 @@ export const REFRESH_TOKEN_WITH_USER = gql`
     tokenRefresh(refreshToken: $refreshToken) {
       token
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -91,10 +91,10 @@ export const VERIFY_TOKEN = gql`
       isValid
       payload
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -109,7 +109,7 @@ export const EXTERNAL_AUTHENTICATION_URL = gql`
     externalAuthenticationUrl(pluginId: $pluginId, input: $input) {
       authenticationData
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -126,10 +126,10 @@ export const OBTAIN_EXTERNAL_ACCESS_TOKEN = gql`
       token
       refreshToken
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -145,7 +145,7 @@ export const EXTERNAL_REFRESH = gql`
       token
       refreshToken
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -162,10 +162,10 @@ export const EXTERNAL_REFRESH_WITH_USER = gql`
       token
       refreshToken
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -182,14 +182,14 @@ export const EXTERNAL_VERIFY_TOKEN = gql`
       isValid
       verifyData
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
         userPermissions {
           code
           name
         }
       }
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -204,7 +204,7 @@ export const EXTERNAL_LOGOUT = gql`
     externalLogout(pluginId: $pluginId, input: $input) {
       logoutData
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -215,7 +215,7 @@ export const CHANGE_USER_PASSWORD = gql`
   mutation passwordChange($newPassword: String!, $oldPassword: String!) {
     passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -226,7 +226,7 @@ export const REQUEST_PASSWORD_RESET = gql`
   mutation sdk_requestPasswordReset($email: String!, $redirectUrl: String!, $channel: String!) {
     requestPasswordReset(email: $email, redirectUrl: $redirectUrl, channel: $channel) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -238,12 +238,12 @@ export const SET_PASSWORD = gql`
   mutation setPassword($token: String!, $email: String!, $password: String!) {
     setPassword(token: $token, email: $email, password: $password) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       token
       refreshToken
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -265,10 +265,10 @@ export const REQUEST_EMAIL_CHANGE = gql`
       redirectUrl: $redirectUrl
     ) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -280,10 +280,10 @@ export const CONFIRM_EMAIL_CHANGE = gql`
   mutation confirmEmailChange($channel: String!, $token: String!) {
     confirmEmailChange(channel: $channel, token: $token) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -294,7 +294,7 @@ export const REQUEST_DELETE_ACCOUNT = gql`
   mutation accountRequestDeletion($channel: String!, $redirectUrl: String!) {
     accountRequestDeletion(channel: $channel, redirectUrl: $redirectUrl) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }
@@ -306,10 +306,10 @@ export const DELETE_ACCOUNT = gql`
   mutation accountDelete($token: String!) {
     accountDelete(token: $token) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -321,10 +321,10 @@ export const UPDATE_ACCOUNT = gql`
   mutation accountUpdate($input: AccountInput!) {
     accountUpdate(input: $input) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -336,10 +336,10 @@ export const SET_ACCOUNT_DEFAULT_ADDRESS = gql`
   mutation setAccountDefaultAddress($id: ID!, $type: AddressTypeEnum!) {
     accountSetDefaultAddress(id: $id, type: $type) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -351,10 +351,10 @@ export const DELETE_ACCOUNT_ADDRESS = gql`
   mutation deleteAccountAddress($addressId: ID!) {
     accountAddressDelete(id: $addressId) {
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -367,13 +367,13 @@ export const CREATE_ACCOUNT_ADDRESS = gql`
   mutation createAccountAddress($input: AddressInput!) {
     accountAddressCreate(input: $input) {
       address {
-        ...AddressFragment
+        ...SdkAddress
       }
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -386,13 +386,13 @@ export const UPDATE_ACCOUNT_ADDRESS = gql`
   mutation updateAccountAddress($input: AddressInput!, $id: ID!) {
     accountAddressUpdate(input: $input, id: $id) {
       address {
-        ...AddressFragment
+        ...SdkAddress
       }
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
     }
   }
@@ -404,10 +404,10 @@ export const CONFIRM_ACCOUNT = gql`
   mutation accountConfirm($email: String!, $token: String!) {
     confirmAccount(email: $email, token: $token) {
       user {
-        ...UserDetailsFragment
+        ...SdkUserDetails
       }
       errors {
-        ...AccountErrorFragment
+        ...SdkAccountError
       }
     }
   }

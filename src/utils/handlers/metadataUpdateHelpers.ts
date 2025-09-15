@@ -1,4 +1,4 @@
-import { MetadataInput } from "@saleor/sdk/dist/apollo/types";
+import { MetadataInput } from "@dashboard/graphql";
 import isEqual from "lodash/isEqual";
 import sortBy from "lodash/sortBy";
 

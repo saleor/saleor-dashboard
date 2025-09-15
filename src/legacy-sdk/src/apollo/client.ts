@@ -16,8 +16,6 @@ import { auth, AuthSDK } from "../core/auth";
 import { storage } from "../core/storage";
 import { isInternalToken } from "../helpers";
 
-
-
 let client: ApolloClient<NormalizedCacheObject>;
 let authClient: AuthSDK;
 let refreshPromise:

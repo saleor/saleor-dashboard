@@ -8,7 +8,7 @@ jest.mock("@graphiql/toolkit", () => ({
   createGraphiQLFetcher: jest.fn(),
 }));
 
-jest.mock("@saleor/sdk", () => ({
+jest.mock("@dashboard/legacy-sdk", () => ({
   createFetch: jest.fn().mockReturnValue(jest.fn()),
 }));
 

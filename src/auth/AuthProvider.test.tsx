@@ -44,7 +44,7 @@ jest.mock("react-intl", () => ({
   })),
   defineMessages: jest.fn(x => x),
 }));
-jest.mock("@saleor/sdk", () => ({
+jest.mock("@dashboard/legacy-sdk", () => ({
   useAuth: jest.fn(() => ({
     login: jest.fn(() => ({
       data: {

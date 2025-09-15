@@ -59,7 +59,6 @@ import { MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { ShippingMethodPostalCodeRule } from "@saleor/sdk/dist/apollo/types";
 import { useReducer } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -70,6 +69,15 @@ export interface RateUpdateProps {
   rateId: string;
   params: ShippingRateUrlQueryParams;
 }
+
+// TODO This should be included in generated types
+type ShippingMethodPostalCodeRule = {
+  __typename: "ShippingMethodPostalCodeRule";
+  id: string;
+  inclusionType: PostalCodeRuleInclusionTypeEnum | null;
+  start: string | null;
+  end: string | null;
+};
 
 export const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   const navigate = useNavigator();

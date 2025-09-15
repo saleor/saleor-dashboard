@@ -6,7 +6,7 @@ export const USER_WITHOUT_DETAILS = gql`
   ${userBaseFragment}
   query UserWithoutDetails {
     user: me {
-      ...UserBaseFragment
+      ...SdkUserBase
     }
     authenticated @client
     authenticating @client
@@ -17,7 +17,7 @@ export const USER = gql`
   ${userDetailsFragment}
   query User {
     user: me {
-      ...UserDetailsFragment
+      ...SdkUserDetails
     }
     authenticated @client
     authenticating @client
