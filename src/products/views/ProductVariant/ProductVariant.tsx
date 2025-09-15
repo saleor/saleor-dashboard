@@ -44,6 +44,7 @@ import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
+import { useReferencePageSearch, useReferenceProductSearch } from "@dashboard/searches/useReferenceSearch";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -234,20 +235,20 @@ export const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         id: attribute.id,
       }),
     );
-  const {
-    loadMore: loadMorePages,
-    search: searchPages,
-    result: searchPagesOpts,
-  } = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  const refAttr = params.action === "assign-attribute-value" && params.id
+    ? variant?.nonSelectionAttributes?.find(a => a.attribute.id === params.id)?.attribute
+    : undefined;
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
     result: searchProductsOpts,
-  } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  } = useReferenceProductSearch(refAttr);
+
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts,
+  } = useReferencePageSearch(refAttr);
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
