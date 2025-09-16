@@ -38,7 +38,7 @@ enum PageListUrlFiltersWithMultipleValues {
 
 export type PageListUrlFilters = Filters<PageListUrlFiltersEnum> &
   FiltersWithMultipleValues<PageListUrlFiltersWithMultipleValues>;
-export type PageListUrlSort = Sort<PageListUrlSortField>;
+type PageListUrlSort = Sort<PageListUrlSortField>;
 export type PageListUrlQueryParams = BulkAction &
   PageListUrlFilters &
   Dialog<PageListUrlDialog> &

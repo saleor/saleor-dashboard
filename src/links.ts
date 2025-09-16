@@ -52,7 +52,7 @@ export const MANUAL_REFUND_DOCS_URL =
 export const SALEOR_GITHUB_URL = "https://github.com/saleor/saleor";
 export const SALEOR_DISCORD_URL = "https://saleor.io/discord";
 export const DASHBOARD_DOCS_URL = "https://github.com/saleor/saleor-dashboard/releases";
-export const COMMUNITY_LIVE_UPDATE_URL = "https://saleor.io/community-update";
+const COMMUNITY_LIVE_UPDATE_URL = "https://saleor.io/community-update";
 
 export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): string => {
   if (!errorCode) {

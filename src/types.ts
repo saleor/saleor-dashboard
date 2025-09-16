@@ -163,7 +163,7 @@ export interface SlugNode {
   slug: string;
 }
 
-export interface TagNode {
+interface TagNode {
   tag: string;
 }
 

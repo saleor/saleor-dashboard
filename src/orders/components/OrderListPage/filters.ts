@@ -16,7 +16,7 @@ export enum OrderFilterKeys {
   metadata = "metadata",
 }
 
-export enum OrderFilterGiftCard {
+enum OrderFilterGiftCard {
   bought = "bought",
   paid = "paid",
 }

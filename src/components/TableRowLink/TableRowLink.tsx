@@ -10,7 +10,7 @@ type MaterialTableRowPropsType = TableRowTypeMap["props"];
 
 type LocationDescriptor = LinkProps["to"];
 
-export interface TableRowLinkProps extends MaterialTableRowPropsType {
+interface TableRowLinkProps extends MaterialTableRowPropsType {
   children: React.ReactNode;
   href?: string | LocationDescriptor;
   className?: string;

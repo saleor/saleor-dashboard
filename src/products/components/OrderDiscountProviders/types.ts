@@ -22,7 +22,7 @@ export interface OrderDiscountConsumerCommonProps {
   isDialogOpen: boolean;
 }
 
-export interface OrderLineDiscountConsumerProps {
+interface OrderLineDiscountConsumerProps {
   children: (values: OrderLineDiscountContextConsumerProps) => React.ReactNode;
   orderLineId: string;
 }
