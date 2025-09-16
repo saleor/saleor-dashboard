@@ -1,4 +1,8 @@
-import { GiftCardEventsEnum, OrderDetailsFragment, OrderGiftCardEventBalanceFragment } from "@dashboard/graphql";
+import {
+  GiftCardEventsEnum,
+  OrderDetailsFragment,
+  OrderGiftCardEventBalanceFragment,
+} from "@dashboard/graphql";
 import compact from "lodash/compact";
 import { IntlShape } from "react-intl";
 
@@ -25,12 +29,14 @@ export const extractOrderGiftCardUsedAmount = (
     return undefined;
   }
 
-  return usedInOrderEvents.filter(event => !!event.balance).reduce((resultAmount, { balance }) => {
-    const { currentBalance, oldCurrentBalance } = balance as OrderGiftCardEventBalanceFragment;
-    const amountToAdd = oldCurrentBalance?.amount ?? 0 - currentBalance.amount;
+  return usedInOrderEvents
+    .filter(event => !!event.balance)
+    .reduce((resultAmount, { balance }) => {
+      const { currentBalance, oldCurrentBalance } = balance as OrderGiftCardEventBalanceFragment;
+      const amountToAdd = oldCurrentBalance?.amount ?? 0 - currentBalance.amount;
 
-    return resultAmount + amountToAdd;
-  }, 0);
+      return resultAmount + amountToAdd;
+    }, 0);
 };
 
 export const getDeliveryMethodName = (order: OrderDetailsFragment, intl: IntlShape) => {

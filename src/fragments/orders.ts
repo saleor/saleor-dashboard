@@ -639,21 +639,21 @@ export const fragmentOrderGiftcard = gql`
 `;
 
 export const fragmentOrderGiftCardEventBalance = gql`
-fragment OrderGiftCardEventBalance on GiftCardEventBalance {
-        initialBalance {
-          ...Money
-        }
-        currentBalance {
-          ...Money
-        }
-        oldInitialBalance {
-          ...Money
-        }
-        oldCurrentBalance {
-          ...Money
-        }
-}
-`
+  fragment OrderGiftCardEventBalance on GiftCardEventBalance {
+    initialBalance {
+      ...Money
+    }
+    currentBalance {
+      ...Money
+    }
+    oldInitialBalance {
+      ...Money
+    }
+    oldCurrentBalance {
+      ...Money
+    }
+  }
+`;
 
 export const fragmentOrderGrantedRefunds = gql`
   fragment OrderGrantedRefund on OrderGrantedRefund {

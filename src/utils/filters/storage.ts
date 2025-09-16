@@ -66,4 +66,3 @@ export function createFilterTabUtils<TUrlFilters>(key: string): StorageUtils<TUr
       updateFilterTab<TUrlFilters>(tabName, data, key),
   };
 }
-
