@@ -44,6 +44,7 @@ const allMarkAsDoneStepsIds = [
   "create-product",
   "explore-orders",
   "graphql-playground",
+  "view-extensions",
   "invite-staff",
 ];
 
@@ -137,31 +138,57 @@ describe("WelcomePageOnboarding", () => {
       </Wrapper>,
     );
 
-    // First expand the get-started accordion
-    const getStartedAccordion = screen.getByTestId("accordion-step-trigger-get-started");
+    // Wait for the accordions to be rendered
+    await waitFor(() => {
+      expect(screen.getByTestId("accordion-step-trigger-get-started")).toBeInTheDocument();
+    });
 
-    await user.click(getStartedAccordion);
-    jest.runAllTimers();
-
-    // 'get-started' has only 'Next step' button
-    const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
+    // The get-started accordion should be open by default for new users
+    // But the button only appears if the step is NOT completed
+    // Let's check if the button exists initially
+    const getStartedNextStepBtn = await waitFor(
+      () => {
+        return screen.getByTestId("get-started-next-step-btn");
+      },
+      { timeout: 3000 },
+    );
 
     await user.click(getStartedNextStepBtn);
     jest.runAllTimers();
 
+    // After clicking "Next step", the create-product accordion should automatically expand
+    await waitFor(() => {
+      const createProductAccordion = screen.getByTestId(
+        "accordion-step-trigger-create-product",
+      ).parentElement;
+
+      expect(createProductAccordion).toHaveAttribute("data-state", "open");
+    });
+
     for (const stepId of allMarkAsDoneStepsIds) {
-      // Click on the accordion trigger to expand the step
+      // Each step needs to be expanded - either it's already open or we need to click to open it
+      // After marking a step as done, the next one automatically opens
       const accordionTrigger = screen.getByTestId(`accordion-step-trigger-${stepId}`);
+      const accordionItem = accordionTrigger.parentElement;
 
-      await user.click(accordionTrigger);
+      // Check if we need to expand the accordion
+      const needsExpansion = accordionItem?.getAttribute("data-state") === "closed";
 
-      // Run timers to handle any animations
-      jest.runAllTimers();
+      if (needsExpansion) {
+        await user.click(accordionTrigger);
+        jest.runAllTimers();
+      }
+
+      // Wait for the accordion to be open before proceeding
+      await waitFor(() => {
+        expect(accordionItem).toHaveAttribute("data-state", "open");
+      });
 
       // Wait for the specific mark-as-done button to appear
       const markAsDone = await screen.findByTestId(stepId + "-mark-as-done", {}, { timeout: 2000 });
 
       await user.click(markAsDone);
+      jest.runAllTimers();
     }
 
     // Assert
