@@ -1,7 +1,6 @@
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import {
   getErrorMessage,
-  getReferenceDisplayValue,
   getSingleReferenceDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
