@@ -13,6 +13,7 @@ import formatjs from "eslint-plugin-formatjs";
 import globals from "globals";
 import localRules from "./lint/rules/index.mjs";
 import unusedImports from "eslint-plugin-unused-imports";
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
 export default tseslint.config(
   globalIgnores([
@@ -79,6 +80,7 @@ export default tseslint.config(
     files: ["src/**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
       globals: {
+        ...globals.builtin,
         ...globals.browser,
         ...globals.es2015,
       },
@@ -90,9 +92,11 @@ export default tseslint.config(
       formatjs: formatjs,
       "local-rules": { rules: localRules },
       "unused-imports": unusedImports,
+      unicorn: eslintPluginUnicorn,
     },
     rules: {
       "unused-imports/no-unused-imports": "error",
+      "unicorn/no-empty-file": "error",
       "import/no-default-export": "warn",
       "import/no-duplicates": "error",
       "simple-import-sort/imports": "error",
