@@ -44,8 +44,9 @@ import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/Pr
 import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import { ProductVariantPrice } from "../ProductVariantPrice";
-import ProductVariantCreateForm, {
+import {
   ProductVariantCreateData,
+  ProductVariantCreateForm,
   ProductVariantCreateHandlers,
 } from "./form";
 
@@ -115,7 +116,7 @@ interface ProductVariantCreatePageProps {
   searchWarehouses: (query: string) => void;
 }
 
-const ProductVariantCreatePage = ({
+export const ProductVariantCreatePage = ({
   productId,
   defaultVariantId,
   disabled,
@@ -180,6 +181,8 @@ const ProductVariantCreatePage = ({
       onSubmit={onSubmit}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
+      referenceCategories={referenceCategories}
+      referenceCollections={referenceCollections}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}
@@ -371,4 +374,3 @@ const ProductVariantCreatePage = ({
 };
 
 ProductVariantCreatePage.displayName = "ProductVariantCreatePage";
-export default ProductVariantCreatePage;

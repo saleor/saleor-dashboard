@@ -6,7 +6,7 @@ This guide provides detailed instructions for adding new filter fields and avoid
 
 The ConditionalFilter system is complex with many interconnected parts. This guide will help you navigate the common pitfalls and ensure your new fields work correctly.
 
-**📋 For high-level architecture, see [CLAUDE.md](./CLAUDE.md)**, [README.md](./README.md) and [Saleor Docs](https://docs.saleor.io)
+**📋 For high-level architecture, see [AGENTS.md](./AGENTS.md)**, [README.md](../../../README.md) and [Saleor Docs](https://docs.saleor.io)
 
 ## Common Pitfalls
 
