@@ -137,20 +137,31 @@ export const ExtensionsUrls = {
   resolveAppDeepUrl: (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
     ExtensionsPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params),
 
-  // Used when checking if navigation was made inside app iframe
+  /** Check if navigation is made inside app's iframe so that we don't navigate user
+   * in dashboard, but change URL of the iframe
+   *
+   * This check is used for appActionsHandler - to handle events from appBridge
+   * if app requests navigation event in appbridge to itself */
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = ExtensionsUrls.resolveViewManifestExtensionUrl(
       encodeURIComponent(appId),
     ).replace("?", "");
+
     // Note: we need to support old /apps path as well, in order for backwards compatibility
     const legacyAppPath = ExtensionsPaths.resolveLegacyAppPath(encodeURIComponent(appId)).replace(
       "?",
       "",
     );
 
+    /**
+     * We always navigate from appCompletePath - this is current route in Dashboard (/extensions/app/XYZ/...)
+     * App might want to change navigation in itself by using following routes:
+     * - `/extensions/app/XYZ/new-subpath` - new route in extensions
+     * - `/apps/XYZ/app/new-subpath` - legacy route in apps (now replaced with /extensions)
+     **/
     return (
-      (to.startsWith(appCompletePath) && from.startsWith(appCompletePath)) ||
-      (to.startsWith(legacyAppPath) && from.startsWith(legacyAppPath))
+      from.startsWith(appCompletePath) &&
+      (to.startsWith(appCompletePath) || to.startsWith(legacyAppPath))
     );
   },
 
