@@ -12,7 +12,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { Container, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress, Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AssignContainerDialogProps } from "../AssignContainerDialog";
@@ -53,10 +53,6 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [selectedVariantId, setSelectedVariantId] = useState<string>(selectedId ?? "");
-
-  useEffect(() => {
-    setSelectedVariantId(selectedId ?? "");
-  }, [selectedId]);
 
   const handleClose = () => {
     queryReset();
