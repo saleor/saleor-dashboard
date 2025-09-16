@@ -57,7 +57,7 @@ export interface StorageUtils<TUrlFilters> {
   updateFilterTab: (name: string, data: TUrlFilters) => void;
 }
 
-function createFilterTabUtils<TUrlFilters>(key: string): StorageUtils<TUrlFilters> {
+export function createFilterTabUtils<TUrlFilters>(key: string): StorageUtils<TUrlFilters> {
   return {
     deleteFilterTab: (id: number) => deleteFilterTab(id, key),
     getFilterTabs: () => getFilterTabs<TUrlFilters>(key),
@@ -67,4 +67,3 @@ function createFilterTabUtils<TUrlFilters>(key: string): StorageUtils<TUrlFilter
   };
 }
 
-export default createFilterTabUtils;
