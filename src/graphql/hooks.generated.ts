@@ -1749,6 +1749,22 @@ export const OrderPaymentFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const OrderGiftCardEventBalanceFragmentDoc = gql`
+    fragment OrderGiftCardEventBalance on GiftCardEventBalance {
+  initialBalance {
+    ...Money
+  }
+  currentBalance {
+    ...Money
+  }
+  oldInitialBalance {
+    ...Money
+  }
+  oldCurrentBalance {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
 export const OrderGiftCardFragmentDoc = gql`
     fragment OrderGiftCard on GiftCard {
   id
@@ -1759,22 +1775,11 @@ export const OrderGiftCardFragmentDoc = gql`
     orderId
     date
     balance {
-      initialBalance {
-        ...Money
-      }
-      currentBalance {
-        ...Money
-      }
-      oldInitialBalance {
-        ...Money
-      }
-      oldCurrentBalance {
-        ...Money
-      }
+      ...OrderGiftCardEventBalance
     }
   }
 }
-    ${MoneyFragmentDoc}`;
+    ${OrderGiftCardEventBalanceFragmentDoc}`;
 export const UserBaseAvatarFragmentDoc = gql`
     fragment UserBaseAvatar on User {
   id

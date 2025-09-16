@@ -632,6 +632,14 @@ export const fragmentOrderGiftcard = gql`
       orderId
       date
       balance {
+        ...OrderGiftCardEventBalance
+      }
+    }
+  }
+`;
+
+export const fragmentOrderGiftCardEventBalance = gql`
+fragment OrderGiftCardEventBalance on GiftCardEventBalance {
         initialBalance {
           ...Money
         }
@@ -644,10 +652,8 @@ export const fragmentOrderGiftcard = gql`
         oldCurrentBalance {
           ...Money
         }
-      }
-    }
-  }
-`;
+}
+`
 
 export const fragmentOrderGrantedRefunds = gql`
   fragment OrderGrantedRefund on OrderGrantedRefund {
