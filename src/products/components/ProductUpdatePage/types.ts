@@ -54,10 +54,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
   preorderEndDateTime?: string;
   weight: string;
 }
-interface FileAttributeInputData {
-  attributeId: string;
-  file: File;
-}
 export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: AttributeInput[];
   channels: ProductChannelListingUpdateInput;

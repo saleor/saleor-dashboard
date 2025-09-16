@@ -249,16 +249,6 @@ const createChannelsDataFromSale = (saleData?: SaleDetailsFragment): ChannelSale
     fixedValue: saleData.type === SaleType.FIXED ? option.discountValue.toString() : "",
   })) || [];
 
-const extractVariantsIdsForChannel = (
-  productVariants: ProductDetailsVariantFragment[],
-  channelId: string,
-) =>
-  productVariants
-    ?.filter(({ channelListings }) =>
-      channelListings?.some(({ channel }) => channel.id === channelId),
-    )
-    .map(({ id }) => id) || [];
-
 export const createSortedChannelsData = (data?: ChannelFragment[]) =>
   createChannelsData(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name),
