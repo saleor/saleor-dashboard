@@ -2730,12 +2730,10 @@ export const AttributeDetailsFragmentDoc = gql`
   valueRequired
   referenceTypes {
     ... on ProductType {
-      __typename
       id
       name
     }
     ... on PageType {
-      __typename
       id
       name
     }
@@ -2760,6 +2758,16 @@ export const VariantAttributeFragmentDoc = gql`
   entityType
   valueRequired
   unit
+  referenceTypes {
+    ... on ProductType {
+      id
+      name
+    }
+    ... on PageType {
+      id
+      name
+    }
+  }
   choices(
     first: $firstValues
     after: $afterValues
