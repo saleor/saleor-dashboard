@@ -22,7 +22,10 @@ import { getMutationErrors } from "@dashboard/misc";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
-import { useReferencePageSearch, useReferenceProductSearch } from "@dashboard/searches/useReferenceSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -152,9 +155,10 @@ export const PageCreate = ({ params }: PageCreateProps) => {
         id: attribute.id,
       }),
     );
-  const refAttr = params.action === "assign-attribute-value" && params.id
-    ? selectedPageType?.pageType.attributes?.find(a => a.id === params.id)
-    : undefined;
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? selectedPageType?.pageType.attributes?.find(a => a.id === params.id)
+      : undefined;
   const fetchMorePageTypes = {
     hasMore: searchPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPageTypesOpts.loading,

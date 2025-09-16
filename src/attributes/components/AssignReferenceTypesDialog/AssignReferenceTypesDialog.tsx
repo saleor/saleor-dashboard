@@ -1,7 +1,6 @@
 import AssignContainerDialog, {
   AssignContainerDialogProps,
 } from "@dashboard/components/AssignContainerDialog";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";

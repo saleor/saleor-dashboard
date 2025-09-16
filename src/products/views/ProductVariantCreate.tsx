@@ -22,7 +22,10 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import { useReferencePageSearch, useReferenceProductSearch } from "@dashboard/searches/useReferenceSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
@@ -185,9 +188,10 @@ export const ProductVariant = ({ productId, params }: ProductVariantCreateProps)
         id: attribute.id,
       }),
     );
-  const refAttr = params.action === "assign-attribute-value" && params.id
-    ? product?.productType.nonSelectionVariantAttributes?.find(a => a.id === params.id)
-    : undefined;
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? product?.productType.nonSelectionVariantAttributes?.find(a => a.id === params.id)
+      : undefined;
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,

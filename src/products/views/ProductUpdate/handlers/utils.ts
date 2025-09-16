@@ -25,7 +25,6 @@ import { getNameData } from "./data/name";
 import { getSkuData } from "./data/sku";
 import { getStockData, getVaraintUpdateStockData } from "./data/stock";
 
-
 export function getProductUpdateVariables(
   product: ProductFragment,
   data: ProductUpdateSubmitData,

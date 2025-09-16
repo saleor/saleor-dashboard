@@ -42,7 +42,10 @@ import {
 import { handleAssignMedia } from "@dashboard/products/utils/handlers";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import { useReferencePageSearch, useReferenceProductSearch } from "@dashboard/searches/useReferenceSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -233,9 +236,10 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         id: attribute.id,
       }),
     );
-  const refAttr = params.action === "assign-attribute-value" && params.id
-    ? variant?.nonSelectionAttributes?.find(a => a.attribute.id === params.id)?.attribute
-    : undefined;
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? variant?.nonSelectionAttributes?.find(a => a.attribute.id === params.id)?.attribute
+      : undefined;
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,

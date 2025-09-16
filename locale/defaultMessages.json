@@ -1329,11 +1329,11 @@
     "context": "open new window button",
     "string": "Open this order in GraphiQL"
   },
+  "5ixtBQ": {
+    "string": "Assign Model Types"
+  },
   "5kODlC": {
     "string": "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}"
-  },
-    "5ixtBQ": {
-    "string": "Assign Model Types"
   },
   "5kvaFR": {
     "context": "product field",

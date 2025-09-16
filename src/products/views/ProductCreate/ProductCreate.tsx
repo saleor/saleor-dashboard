@@ -36,7 +36,10 @@ import {
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
-import { useReferencePageSearch, useReferenceProductSearch} from "@dashboard/searches/useReferenceSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
@@ -220,9 +223,10 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
     }
   }, [productCreateComplete]);
 
-  const refAttr = params.action === "assign-attribute-value" && params.id
-    ? selectedProductType?.productType.productAttributes?.find(a => a.id === params.id)
-    : undefined;
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? selectedProductType?.productType.productAttributes?.find(a => a.id === params.id)
+      : undefined;
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,

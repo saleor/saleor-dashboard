@@ -14,7 +14,9 @@ export enum ReferenceWhereKey {
   PageType = "pageType",
 }
 
-type AttributeWithReferenceTypes = NonNullable<AttributeDetailsFragment> | NonNullable<VariantAttributeFragment>;
+type AttributeWithReferenceTypes =
+  | NonNullable<AttributeDetailsFragment>
+  | NonNullable<VariantAttributeFragment>;
 
 export const getAllowedReferenceTypeIds = (
   refAttr: AttributeWithReferenceTypes | undefined,
@@ -49,10 +51,7 @@ export const useReferenceProductSearch = (refAttr: AttributeWithReferenceTypes |
 };
 
 export const useReferencePageSearch = (refAttr: AttributeWithReferenceTypes | undefined) => {
-  const ids = useMemo(
-    () => getAllowedReferenceTypeIds(refAttr, ReferenceType.PageType),
-    [refAttr],
-  );
+  const ids = useMemo(() => getAllowedReferenceTypeIds(refAttr, ReferenceType.PageType), [refAttr]);
   const variables = useMemo(
     () => buildReferenceSearchVariables(ids, ReferenceWhereKey.PageType),
     [ids],

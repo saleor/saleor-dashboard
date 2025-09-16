@@ -33,7 +33,10 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import { useReferencePageSearch, useReferenceProductSearch } from "@dashboard/searches/useReferenceSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -145,9 +148,10 @@ export const PageDetails = ({ id, params }: PageDetailsProps) => {
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
-  const refAttr = params.action === "assign-attribute-value" && params.id
-    ? pageDetails?.data?.page?.attributes?.find(a => a.attribute.id === params.id)?.attribute
-    : undefined;
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? pageDetails?.data?.page?.attributes?.find(a => a.attribute.id === params.id)?.attribute
+      : undefined;
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,

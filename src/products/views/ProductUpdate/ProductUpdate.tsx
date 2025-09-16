@@ -21,7 +21,10 @@ import { commonMessages, errorMessages } from "@dashboard/intl";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import { useReferencePageSearch, useReferenceProductSearch} from "@dashboard/searches/useReferenceSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
@@ -187,9 +190,10 @@ export const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     submitOpts.errors,
     createProductMediaOpts.data?.productMediaCreate.errors,
   );
-  const refAttr = params.action === "assign-attribute-value" && params.id
-    ? product?.attributes?.find(a => a.attribute.id === params.id)?.attribute
-    : undefined;
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? product?.attributes?.find(a => a.attribute.id === params.id)?.attribute
+      : undefined;
 
   const {
     loadMore: loadMoreProducts,
