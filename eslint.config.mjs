@@ -73,6 +73,16 @@ export default tseslint.config(
     },
   },
 
+  // Properly resolve Node.js globals in .cjs files
+  {
+    files: ["**/*.cjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node, // Use all Node.js globals
+      },
+    },
+  },
+
   // Configure custom plugins and rules for React files
   {
     files: ["src/**/*.{js,jsx,ts,tsx}"],
@@ -226,11 +236,13 @@ export default tseslint.config(
             {
               name: "react",
               importNames: ["default", "React", "*"],
-              message: "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
+              message:
+                "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
             },
             {
               name: "lodash",
-              message: "Do not import lodash directly, import only needed functions, e.g. 'import debounce from \"lodash/debounce\"'",
+              message:
+                "Do not import lodash directly, import only needed functions, e.g. 'import debounce from \"lodash/debounce\"'",
             },
             {
               name: "classnames",
