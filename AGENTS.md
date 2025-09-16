@@ -38,7 +38,6 @@ Saleor Dashboard is a GraphQL-powered, single-page React application built with 
 The codebase follows a feature-based architecture with shared components:
 
 - **Feature Modules**: Each business domain (products, orders, customers, etc.) has its own directory containing:
-
   - `index.tsx` - Main feature export
   - `views/` - Page components and view logic
   - `components/` - Feature-specific components

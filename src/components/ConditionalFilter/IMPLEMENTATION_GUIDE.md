@@ -350,17 +350,14 @@ metadata: MetadataFilterInput; // { key: string; value?: { eq?: string } }
 ### Key Differences
 
 1. **Field Names**: WHERE API sometimes uses different field names
-
    - `customer` → `user` in OrderWhereInput
    - Check GraphQL schema for exact field names
 
 2. **Input Types**: WHERE API uses specific input types
-
    - FILTER: `string` → WHERE: `StringFilterInput`
    - FILTER: `number` → WHERE: `IntFilterInput`
 
 3. **Enum Types**: Might use different enums for WHERE API
-
    - FILTER: `OrderStatusFilter` (includes READY_TO_CAPTURE, READY_TO_FULFILL)
    - WHERE: `OrderStatus` (excludes READY_TO_CAPTURE, READY_TO_FULFILL)
 
