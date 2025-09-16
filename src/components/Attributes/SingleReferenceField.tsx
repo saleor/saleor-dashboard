@@ -1,5 +1,9 @@
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
-import { getErrorMessage, getReferenceDisplayValue } from "@dashboard/components/Attributes/utils";
+import {
+  getErrorMessage,
+  getReferenceDisplayValue,
+  getSingleReferenceDisplayValue,
+} from "@dashboard/components/Attributes/utils";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
 import { Box, Button, EditIcon, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -24,7 +28,7 @@ export const SingleReferenceField = ({
   onReferencesRemove,
 }: SingleReferenceFieldProps) => {
   const intl = useIntl();
-  const selected = getReferenceDisplayValue(attribute)[0];
+  const selected = getSingleReferenceDisplayValue(attribute);
 
   return (
     <BasicAttributeRow label={attribute.label}>
