@@ -1,3 +1,0 @@
-// @ts-strict-ignore
-
-
