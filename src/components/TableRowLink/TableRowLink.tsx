@@ -10,7 +10,7 @@ type MaterialTableRowPropsType = TableRowTypeMap["props"];
 
 type LocationDescriptor = LinkProps["to"];
 
-interface TableRowLinkProps extends MaterialTableRowPropsType {
+export interface TableRowLinkProps extends MaterialTableRowPropsType {
   children: React.ReactNode;
   href?: string | LocationDescriptor;
   className?: string;
@@ -27,6 +27,7 @@ const useStyles = makeStyles(
   },
   { name: "TableRowLink" },
 );
+
 const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, ref) => {
   const { href, children, linkClassName, onClick, ...restProps } = props;
   const classes = useStyles();

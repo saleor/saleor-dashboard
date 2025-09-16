@@ -15,7 +15,8 @@ const useStyles = makeStyles(
   }),
   { name: "TabContainer" },
 );
-const TabContainer = (props: TabContainerProps) => {
+
+export const TabContainer = (props: TabContainerProps) => {
   const { children } = props;
   const classes = useStyles(props);
 
