@@ -86,8 +86,8 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
 export interface UseProductVariantCreateFormOpts {
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
-  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
-  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
+  referenceCategories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections: RelayToFlat<SearchCollectionsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -329,7 +329,7 @@ function useProductVariantCreateForm(
   };
 }
 
-const ProductVariantCreateForm = ({
+export const ProductVariantCreateForm = ({
   children,
   product,
   onSubmit,
@@ -342,4 +342,3 @@ const ProductVariantCreateForm = ({
 };
 
 ProductVariantCreateForm.displayName = "ProductVariantCreateForm";
-export default ProductVariantCreateForm;

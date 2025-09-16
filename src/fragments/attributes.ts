@@ -49,12 +49,10 @@ export const attributeDetailsFragment = gql`
     valueRequired
     referenceTypes {
       ... on ProductType {
-        __typename
         id
         name
       }
       ... on PageType {
-        __typename
         id
         name
       }
