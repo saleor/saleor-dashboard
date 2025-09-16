@@ -32,8 +32,8 @@ import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, weight } from "../../misc";
-import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
+import { ProductVariantCreatePage } from "../components/ProductVariantCreatePage/ProductVariantCreatePage";
 import {
   productListUrl,
   productVariantAddUrl,
