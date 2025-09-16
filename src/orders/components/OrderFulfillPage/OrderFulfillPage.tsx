@@ -3,7 +3,6 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -35,7 +34,7 @@ import {
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -48,6 +47,7 @@ import { useStyles } from "./styles";
 interface OrderFulfillFormData {
   sendInfo: boolean;
   allowStockToBeExceeded: boolean;
+  trackingNumber: string | undefined;
 }
 export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
@@ -67,7 +67,9 @@ export interface OrderFulfillPageProps {
 const initialFormData: OrderFulfillFormData = {
   sendInfo: true,
   allowStockToBeExceeded: false,
+  trackingNumber: undefined,
 };
+
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     params,
@@ -242,16 +244,29 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 <DashboardCard>
                   <DashboardCard.Header>
                     <DashboardCard.Title>
+                      {/* TODO: rename */}
                       {intl.formatMessage(messages.shipmentInformation)}
                     </DashboardCard.Title>
                   </DashboardCard.Header>
-                  <DashboardCard.Content>
-                    <ControlledCheckbox
-                      checked={data.sendInfo}
-                      label={intl.formatMessage(messages.sentShipmentDetails)}
-                      name="sendInfo"
+                  <DashboardCard.Content __maxWidth="fit-content" display="grid" gap={4}>
+                    <Input
+                      name="trackingNumber"
+                      label="Tracking number"
+                      // label={intl.formatMessage(messages.trackingNumber)}
+                      value={data.trackingNumber}
                       onChange={change}
+                      helperText={"Optionally provide a tracking number for this fulfillment"}
                     />
+                    <Checkbox
+                      checked={data.sendInfo}
+                      name="sendInfo"
+                      defaultChecked={data.sendInfo}
+                      onCheckedChange={checked =>
+                        change({ target: { name: "sendInfo", value: checked } })
+                      }
+                    >
+                      <Text>{intl.formatMessage(messages.sentShipmentDetails)}</Text>
+                    </Checkbox>
                   </DashboardCard.Content>
                 </DashboardCard>
               )}
