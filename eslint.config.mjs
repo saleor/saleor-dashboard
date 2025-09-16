@@ -12,6 +12,7 @@ import importPlugin from "eslint-plugin-import";
 import formatjs from "eslint-plugin-formatjs";
 import globals from "globals";
 import localRules from "./lint/rules/index.mjs";
+import unusedImports from "eslint-plugin-unused-imports";
 
 export default tseslint.config(
   globalIgnores([
@@ -88,8 +89,10 @@ export default tseslint.config(
       import: importPlugin,
       formatjs: formatjs,
       "local-rules": { rules: localRules },
+      "unused-imports": unusedImports,
     },
     rules: {
+      "unused-imports/no-unused-imports": "error",
       "import/no-default-export": "warn",
       "import/no-duplicates": "error",
       "simple-import-sort/imports": "error",
