@@ -5,7 +5,7 @@ module.exports = {
     name: "dashboard",
     service: {
       localSchemaFile: "schema.graphql",
-      name: "saleor"
-    }
-  }
+      name: "saleor",
+    },
+  },
 };

@@ -2181,6 +2181,10 @@
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
   },
+  "BHr3fj": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for this product. To add stock quantity to the product <a>configure a warehouse</a> or use existing one by clicking button below."
+  },
   "BJtUQI": {
     "context": "button",
     "string": "Add"
@@ -2504,10 +2508,6 @@
     "context": "table header column",
     "string": "Country name"
   },
-  "D8nsBc": {
-    "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
-  },
   "D95l71": {
     "context": "tab name",
     "string": "All customers"
@@ -2572,6 +2572,9 @@
   "DP6b8U": {
     "context": "section header",
     "string": "Background Image (optional)"
+  },
+  "DPsabz": {
+    "string": "New Refund"
   },
   "DPz5y6": {
     "context": "dialog header",
@@ -4059,6 +4062,9 @@
     "context": "WarehouseSettings pickup title",
     "string": "Pickup"
   },
+  "MIl9FZ": {
+    "string": "All transactions are non-refundable."
+  },
   "MIp3c7": {
     "context": "input adornment helper text",
     "string": "of {value}"
@@ -4221,6 +4227,10 @@
   "NBP8uu": {
     "context": "page header",
     "string": "New Product"
+  },
+  "NCp87D": {
+    "context": "no warehouses info",
+    "string": "There are no warehouses set up for this variant. To add stock quantity to the variant <a>configure a warehouse</a> or use existing one by clicking button below."
   },
   "ND5x+V": {
     "string": "We’re generating the invoice you requested. Please wait a couple of moments"
@@ -4453,6 +4463,9 @@
   "OTDo9I": {
     "context": "tab name",
     "string": "All staff members"
+  },
+  "OUFoJX": {
+    "string": "There are no transactions to refund."
   },
   "OUX4LB": {
     "context": "input label",
@@ -4948,10 +4961,6 @@
   "RK6l3Z": {
     "context": "radio button label",
     "string": "Refund with manual amount"
-  },
-  "RLBLPQ": {
-    "context": "no warehouses info",
-    "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
   },
   "RLTaAR": {
     "context": "order history message",
@@ -9000,6 +9009,9 @@
     "context": "card title",
     "string": "Default settings"
   },
+  "pXQSzm": {
+    "string": "Refunds"
+  },
   "paa4m0": {
     "string": "Successfully created product type"
   },
@@ -9232,6 +9244,9 @@
   },
   "qrWOxx": {
     "string": "No members found"
+  },
+  "qs0dIo": {
+    "string": "No refunds made for this order."
   },
   "qtF0Ft": {
     "context": "transaction event type, amount was authorized, but not captured",

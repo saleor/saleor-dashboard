@@ -4,26 +4,26 @@ import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { useOverflowDetection } from "@dashboard/hooks/useOverflowDetection/useOverflowDetection";
 import { getUserInitials, getUserName, User } from "@dashboard/misc";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
+import {
+  OrderRefundDisplay,
+  OrderRefundsViewModel,
+} from "@dashboard/orders-v2/order-refunds/order-refunds-view-model";
 import { Box, Button, EditIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { EventTime } from "../OrderTransaction/components/TransactionEvents/components";
 import { OrderTransactionRefundStatusPill } from "../OrderTransactionRefundPage/components/OrderTransactionRefundStatusPill/OrderTransactionRefundStatusPill";
-import { DatagridRefund } from "./refunds";
-import {
-  getGrantedRefundStatusMessage,
-  getNotEditabledRefundMessage,
-  isRefundEditable,
-} from "./utils";
+import { refundGridMessages } from "./messages";
+import { getGrantedRefundStatusMessage, getNotEditableRefundMessage } from "./utils";
 
 interface OrderDetailsRefundLineProps {
-  refund: DatagridRefund;
+  refund: OrderRefundDisplay;
   orderId: string;
 }
 
 export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLineProps) => {
-  const isEditable = isRefundEditable(refund);
+  const isEditable = OrderRefundsViewModel.canEditRefund(refund);
   const intl = useIntl();
   const { isOverflowing, elementRef } = useOverflowDetection<HTMLTableCellElement>();
 
@@ -49,21 +49,30 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
             overflow="hidden"
             textOverflow="ellipsis"
           >
-            <Box>
-              {refund.reasonTypeName && (
-                <Text size={2} fontWeight="medium">
-                  {refund.reasonTypeName}
-                  {": "}
-                </Text>
-              )}
-              <Text ellipsis size={2} color="default2">
-                {refund.reason}
-              </Text>
-            </Box>
+            {/*<Box>*/}
+            {/*  {refund.reasonTypeName && (*/}
+            {/*    <Text size={2} fontWeight="medium">*/}
+            {/*      {refund.reasonTypeName}*/}
+            {/*      {": "}*/}
+            {/*    </Text>*/}
+            {/*  )}*/}
+            {/*  <Text ellipsis size={2} color="default2">*/}
+            {/*    {refund.reason}*/}
+            {/*  </Text>*/}
+            {/*</Box>*/}
+            <Text ellipsis size={2}>
+              {refund.type === "manual"
+                ? intl.formatMessage(refundGridMessages.manualRefund)
+                : refund.reason}
+            </Text>
           </GridTable.Cell>
         </Tooltip.Trigger>
         <Tooltip.Content>
-          <Box __maxWidth="300px">{refund.reason}</Box>
+          <Box __maxWidth="300px">
+            {refund.type === "manual"
+              ? intl.formatMessage(refundGridMessages.manualRefund)
+              : refund.reason}
+          </Box>
         </Tooltip.Content>
       </Tooltip>
       <Tooltip>
@@ -94,7 +103,7 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
               </Tooltip.Trigger>
               <Tooltip.Content>
                 <Tooltip.Arrow />
-                <FormattedMessage {...getNotEditabledRefundMessage(refund)} />
+                <FormattedMessage {...getNotEditableRefundMessage(refund)} />
               </Tooltip.Content>
             </Tooltip>
           )}

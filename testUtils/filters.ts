@@ -2,7 +2,9 @@ import { IFilter } from "@dashboard/components/Filter";
 import clone from "lodash/clone";
 
 export function getExistingKeys(o: {}): string[] {
-  return Object.keys(o).filter((key) => o[key as keyof typeof o] !== undefined && o[key as keyof typeof o] !== null);
+  return Object.keys(o).filter(
+    key => o[key as keyof typeof o] !== undefined && o[key as keyof typeof o] !== null,
+  );
 }
 
 export function setFilterOptsStatus<T extends string>(
