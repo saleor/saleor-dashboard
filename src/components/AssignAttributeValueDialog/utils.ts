@@ -14,14 +14,15 @@ export type PagesToFilter = RelayToFlat<SearchPagesQuery["search"]>;
 export type CollectionsToFilter = RelayToFlat<SearchCollectionsQuery["search"]>;
 export type CategoriesToFilter = RelayToFlat<SearchCategoriesQuery["search"]>;
 
+const isSingleAttribute = (attribute: AttributeInput) =>
+  attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
 export const filterProductsByAttributeValues = (
   products: ProductsToFilter,
   attribute: AttributeInput,
 ): ProductsToFilter => {
-  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
-
   // For single reference, don't filter - show all items to view current selection
-  if (isSingle) {
+  if (isSingleAttribute(attribute)) {
     return products;
   }
 
@@ -45,10 +46,8 @@ export const filterPagesByAttributeValues = (
   pages: PagesToFilter,
   attribute: AttributeInput,
 ): PagesToFilter => {
-  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
-
   // For single reference, don't filter - show all items to view current selection
-  if (isSingle) {
+  if (isSingleAttribute(attribute)) {
     return pages;
   }
 
@@ -59,10 +58,8 @@ export const filterCollectionsByAttributeValues = (
   collections: CollectionsToFilter,
   attribute: AttributeInput,
 ): CollectionsToFilter => {
-  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
-
   // For single reference, don't filter - show all items to view current selection
-  if (isSingle) {
+  if (isSingleAttribute(attribute)) {
     return collections;
   }
 
@@ -73,10 +70,8 @@ export const filterCategoriesByAttributeValues = (
   categories: CategoriesToFilter,
   attribute: AttributeInput,
 ): CategoriesToFilter => {
-  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
-
   // For single reference, don't filter - show all items to view current selection
-  if (isSingle) {
+  if (isSingleAttribute(attribute)) {
     return categories;
   }
 
