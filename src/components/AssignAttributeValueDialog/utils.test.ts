@@ -8,31 +8,29 @@ import {
   ProductsToFilter,
 } from "./utils";
 
-const createMockProduct = (id: string, name: string) =>
-  ({
-    __typename: "Product",
-    id,
-    name,
-    productType: {
-      __typename: "ProductType",
-      id: "type-1",
-      name: "Product Type",
-    },
-    thumbnail: {
-      __typename: "Image",
-      url: "https://example.com/image.jpg",
-    },
-    channelListings: [],
-    variants: [],
-    collections: [],
-  }) as NonNullable<ProductsToFilter>[number];
+const createMockProduct = (id: string, name: string): NonNullable<ProductsToFilter>[number] => ({
+  __typename: "Product",
+  id,
+  name,
+  productType: {
+    __typename: "ProductType",
+    id: "type-1",
+    name: "Product Type",
+  },
+  thumbnail: {
+    __typename: "Image",
+    url: "https://example.com/image.jpg",
+  },
+  channelListings: [],
+  variants: [],
+  collections: [],
+});
 
-const createMockPage = (id: string, title: string) =>
-  ({
-    __typename: "Page",
-    id,
-    title,
-  }) as NonNullable<PagesToFilter>[number];
+const createMockPage = (id: string, title: string): NonNullable<PagesToFilter>[number] => ({
+  __typename: "Page",
+  id,
+  title,
+});
 
 describe("AssignAttributeValueDialog/utils", () => {
   describe("filterProductsByAttributeValues", () => {
