@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import {
-  TaxClassRateInput,
-  TaxCountryConfigurationFragment,
-} from "@dashboard/graphql";
+import { TaxClassRateInput, TaxCountryConfigurationFragment } from "@dashboard/graphql";
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";

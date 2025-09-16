@@ -1,8 +1,4 @@
-import {
-  FetchMoreProps,
-  Search,
-  SearchProps,
-} from "@dashboard/types";
+import { FetchMoreProps, Search, SearchProps } from "@dashboard/types";
 
 enum GiftCardListUrlFiltersEnum {
   currency = "currency",

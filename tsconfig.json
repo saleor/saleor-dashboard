@@ -4,11 +4,7 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "lib": [
-      "es2020",
-      "dom",
-      "esnext"
-    ],
+    "lib": ["es2020", "dom", "esnext"],
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "ES2020",
@@ -23,22 +19,11 @@
       }
     ],
     "paths": {
-      "@assets/*": [
-        "assets/*"
-      ],
-      "@locale/*": [
-        "locale/*"
-      ],
-      "@dashboard/*": [
-        "src/*"
-      ],
-      "@test/*": [
-        "testUtils/*"
-      ]
+      "@assets/*": ["assets/*"],
+      "@locale/*": ["locale/*"],
+      "@dashboard/*": ["src/*"],
+      "@test/*": ["testUtils/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "playwright"
-  ]
+  "exclude": ["node_modules", "playwright"]
 }

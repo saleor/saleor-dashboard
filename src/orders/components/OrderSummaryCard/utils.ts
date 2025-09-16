@@ -1,4 +1,3 @@
-
 import { GiftCardEventsEnum, OrderDetailsFragment } from "@dashboard/graphql";
 import compact from "lodash/compact";
 import { IntlShape } from "react-intl";

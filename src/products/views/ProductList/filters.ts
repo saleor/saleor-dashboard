@@ -1,11 +1,7 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import {
-  AttributeFragment,
-  AttributeInputTypeEnum,
-  StockAvailability,
-} from "@dashboard/graphql";
+import { AttributeFragment, AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
 import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
 
 import {

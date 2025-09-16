@@ -16,10 +16,7 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Pages } from "@dashboard/modeling/types";
-import {
-  PageListUrlSortField,
-  pageUrl,
-} from "@dashboard/modeling/urls";
+import { PageListUrlSortField, pageUrl } from "@dashboard/modeling/urls";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import { useState } from "react";

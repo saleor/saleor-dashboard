@@ -3,7 +3,7 @@ import { FetchResult } from "@apollo/client";
 import {
   ChannelData,
   ChannelPriceAndPreorderData,
-  ChannelPriceArgs
+  ChannelPriceArgs,
 } from "@dashboard/channels/utils";
 import {
   ProductChannelListingAddInput,
@@ -110,17 +110,17 @@ export const createPreorderEndDateChangeHandler =
     triggerChange: () => void,
     preorderPastDateErrorMessage: string,
   ): FormChange =>
-    event => {
-      form.change(event);
+  event => {
+    form.change(event);
 
-      if (moment(event.target.value).isSameOrBefore(Date.now())) {
-        form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
-      } else {
-        form.clearErrors("preorderEndDateTime");
-      }
+    if (moment(event.target.value).isSameOrBefore(Date.now())) {
+      form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
+    } else {
+      form.clearErrors("preorderEndDateTime");
+    }
 
-      triggerChange();
-    };
+    triggerChange();
+  };
 
 export const createMediaChangeHandler =
   (form: UseFormResult<{ media: string[] }>, triggerChange: () => void) => (ids: string[]) => {

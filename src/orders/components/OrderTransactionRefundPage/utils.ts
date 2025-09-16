@@ -1,4 +1,3 @@
-
 import { OrderDetailsGrantRefundFragment, OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { ConfirmButtonTransitionState, SavebarLabels } from "@saleor/macaw-ui";
 import { useEffect } from "react";
