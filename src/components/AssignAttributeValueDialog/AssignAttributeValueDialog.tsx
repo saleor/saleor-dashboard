@@ -57,6 +57,18 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 };
 
+const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
+  if (!isSingle) {
+    return { selectionMode: "multiple" as const };
+  }
+
+  const selectedId = attribute.value?.length > 0 ? attribute.value[0] : undefined;
+
+  return { selectedId, selectionMode: "single" as const };
+};
+
 const AssignAttributeValueDialog = ({
   entityType,
   pages,
@@ -72,10 +84,6 @@ const AssignAttributeValueDialog = ({
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
   const filteredCollections = filterCollectionsByAttributeValues(collections, attribute);
   const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
-
-  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
-  const selectedId = isSingle && attribute.value?.length > 0 ? attribute.value[0] : "";
-  const selectionMode = isSingle ? "single" : "multiple";
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
@@ -95,8 +103,7 @@ const AssignAttributeValueDialog = ({
             title: intl.formatMessage(pagesMessages.header),
             ...labels,
           }}
-          selectionMode={selectionMode}
-          selectedId={isSingle ? selectedId : undefined}
+          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
       );
@@ -104,8 +111,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignProductDialog
           products={filteredProducts ?? []}
-          selectionMode={selectionMode}
-          selectedId={isSingle ? selectedId : undefined}
+          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
       );
@@ -113,8 +119,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignVariantDialog
           products={filteredProducts}
-          selectionMode={selectionMode}
-          selectedId={isSingle ? selectedId : undefined}
+          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
       );
@@ -122,8 +127,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignCollectionDialog
           collections={filteredCollections}
-          selectionMode={selectionMode}
-          selectedId={isSingle ? selectedId : undefined}
+          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
       );
@@ -131,8 +135,7 @@ const AssignAttributeValueDialog = ({
       return (
         <AssignCategoryDialog
           categories={filteredCategories}
-          selectionMode={selectionMode}
-          selectedId={isSingle ? selectedId : undefined}
+          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
       );
