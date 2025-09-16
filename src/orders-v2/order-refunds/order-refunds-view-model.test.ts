@@ -37,6 +37,7 @@ const createTransactionEvent = (
     },
     message: "",
     externalUrl: "",
+    reasonReference: null,
     ...overrides,
   };
 };
@@ -72,6 +73,7 @@ const createGrantedRefund = (
     lines: [],
     transactionEvents: null,
     type: "standard" as const,
+    reasonReference: null,
     ...overrides,
   };
 };
@@ -432,7 +434,8 @@ describe("OrderRefundsViewModel", () => {
       };
 
       // Act
-      const result = OrderRefundsViewModel["mapEventGroupsToOrderRefunds"](eventsByPspReference);
+      const result =
+        OrderRefundsViewModel["mapEventGroupsToOrderManualRefunds"](eventsByPspReference);
 
       // Assert
       expect(result).toStrictEqual([
@@ -478,7 +481,8 @@ describe("OrderRefundsViewModel", () => {
       };
 
       // Act
-      const result = OrderRefundsViewModel["mapEventGroupsToOrderRefunds"](eventsByPspReference);
+      const result =
+        OrderRefundsViewModel["mapEventGroupsToOrderManualRefunds"](eventsByPspReference);
 
       // Assert
       expect(result[0]).toEqual(
