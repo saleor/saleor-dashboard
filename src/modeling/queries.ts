@@ -58,20 +58,7 @@ export const pageTypeQuery = gql`
       id
       name
       attributes {
-        id
-        inputType
-        entityType
-        slug
-        name
-        valueRequired
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
-          ...AttributeValueList
-        }
+        ...AttributeDetails
       }
     }
   }
