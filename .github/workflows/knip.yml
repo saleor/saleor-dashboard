@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || (github.event.pull_request.draft == false || contains(github.event.pull_request.labels.*.name, 'Run QA checks'))
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-node-modules
         with:
