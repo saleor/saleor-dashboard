@@ -89,9 +89,9 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
 
         onSubmit([
           {
+            ...variantWithLabel,
             name: getCompositeLabel(variantWithLabel),
             id: variant.id,
-            ...variantWithLabel,
           },
         ]);
 
