@@ -1,4 +1,6 @@
 name: Knip
+permissions:
+  contents: read
 
 on:
   push:
