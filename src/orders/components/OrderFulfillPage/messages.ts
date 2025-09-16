@@ -52,8 +52,8 @@ export const messages = defineMessages({
     description: "no variant stock in warehouse",
   },
   sentShipmentDetails: {
-    id: "0VDwAP",
-    defaultMessage: "Send shipment details to customer",
+    id: "8Cve4h",
+    defaultMessage: "Send fulfillment email to customer",
     description: "checkbox label",
   },
   shipmentInformation: {
