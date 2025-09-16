@@ -15,7 +15,7 @@ import {
 const modelTypesSection = "/model-types/";
 
 export const modelTypesPath = modelTypesSection;
-export enum PageTypeListUrlFiltersEnum {
+enum PageTypeListUrlFiltersEnum {
   type = "type",
   query = "query",
 }

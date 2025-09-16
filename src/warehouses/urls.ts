@@ -14,7 +14,7 @@ import {
 export const warehouseSection = "/warehouses/";
 
 export const warehouseListPath = warehouseSection;
-export enum WarehouseListUrlFiltersEnum {
+enum WarehouseListUrlFiltersEnum {
   query = "query",
 }
 export type WarehouseListUrlFilters = Filters<WarehouseListUrlFiltersEnum>;

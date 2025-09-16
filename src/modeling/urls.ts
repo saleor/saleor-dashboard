@@ -32,7 +32,7 @@ enum PageListUrlFiltersEnum {
   query = "query",
 }
 
-export enum PageListUrlFiltersWithMultipleValues {
+enum PageListUrlFiltersWithMultipleValues {
   pageTypes = "pageTypes",
 }
 

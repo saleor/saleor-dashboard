@@ -10,12 +10,12 @@ enum JWTError {
   expired = "ExpiredSignatureError",
 }
 
-export const AuthError = {
+const AuthError = {
   PermissionDenied: "PermissionDenied",
   OAuthError: "OAuthError",
 } as const;
 
-export type AuthError = (typeof AuthError)[keyof typeof AuthError];
+type AuthError = (typeof AuthError)[keyof typeof AuthError];
 
 export function isJwtError(error: GraphQLError): boolean {
   let jwtError: boolean;
