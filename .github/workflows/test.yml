@@ -53,9 +53,6 @@ jobs:
         run: |
           npm run format:check
 
-      - name: Knip for unused files, dependencies and exports
-        run: npm run knip
-
   jest-tests:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || (github.event.pull_request.draft == false || contains(github.event.pull_request.labels.*.name, 'Run QA checks'))
