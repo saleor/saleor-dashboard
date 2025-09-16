@@ -9,7 +9,7 @@ const InnerSortableTableBody = SortableContainer<TableBodyProps>(({ children, ..
   <TableBody {...props}>{children}</TableBody>
 ));
 
-export interface SortableTableBodyProps {
+interface SortableTableBodyProps {
   onSortEnd: ReorderAction;
 }
 
