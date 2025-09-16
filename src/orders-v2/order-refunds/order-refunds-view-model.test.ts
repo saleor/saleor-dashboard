@@ -7,7 +7,11 @@ import {
 } from "@dashboard/graphql";
 
 import { OrderFixture } from "../fixtures/order-fixture";
-import { OrderRefundsViewModel } from "./order-refunds-view-model";
+import {
+  OrderRefundDisplay,
+  type OrderRefundDisplayStatus,
+  OrderRefundsViewModel,
+} from "./order-refunds-view-model";
 
 const createTransactionEvent = (
   overrides: Partial<TransactionEventFragment> = {},
@@ -74,6 +78,27 @@ const createGrantedRefund = (
     transactionEvents: null,
     type: "standard" as const,
     reasonReference: null,
+    ...overrides,
+  };
+};
+
+const createOrderRefundDisplay = (overrides: Partial<OrderRefundDisplay>): OrderRefundDisplay => {
+  return {
+    reasonType: null,
+    createdAt: "2023-01-02T10:00:00Z",
+    status: OrderRefundDisplayStatus.SUCCESS,
+    type: "manual",
+    id: "refund-1",
+    reasonNote: null,
+    user: {
+      email: "staff@example.com",
+      firstName: "Jane",
+      lastName: "Smith",
+    },
+    amount: {
+      amount: 100,
+      currency: "USD",
+    },
     ...overrides,
   };
 };
@@ -304,6 +329,98 @@ describe("OrderRefundsViewModel", () => {
       expect(result).toHaveLength(3);
       expect(result.find(r => r.id === "unsupported")).toBeUndefined();
     });
+
+    it("Should properly map reasonReference to reasonType in OrderRefundDisplay", () => {
+      // Only requests have reasons
+      const manualEvents = [
+        createTransactionEvent({
+          id: "request-1",
+          pspReference: "psp-request-1",
+          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          reasonReference: null,
+          message: "Reason manual note without type",
+        }),
+        createTransactionEvent({
+          id: "request-2",
+          pspReference: "psp-request-2",
+          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          reasonReference: { __typename: "Page", id: "ref-1", title: "Broken in shipping" },
+          message: "Reason manual note with type",
+        }),
+        createTransactionEvent({
+          id: "request-3",
+          pspReference: "psp-request-3",
+          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          reasonReference: {
+            __typename: "Page",
+            id: "ref-1",
+            title: "Broken in shipping (no message)",
+          },
+          message: "",
+        }),
+      ];
+      const grantedRefunds = [
+        createGrantedRefund({
+          reason: "Reason without type [grant]",
+        }),
+        createGrantedRefund({
+          reason: "Reason with type [grant]",
+          reasonReference: {
+            __typename: "Page",
+            id: "ref-1",
+            title: "Broken in shipping",
+          },
+        }),
+        createGrantedRefund({
+          reason: null,
+          reasonReference: {
+            __typename: "Page",
+            id: "ref-1",
+            title: "Broken in shipping (no note) [grant]",
+          },
+        }),
+      ];
+
+      const results = OrderRefundsViewModel.prepareOrderRefundDisplayList(
+        manualEvents,
+        grantedRefunds,
+      );
+
+      // For brevity, check only fields related to reason mapping
+      const onlyReasons = results.map(r => ({
+        reasonType: r.reasonType,
+        reasonNote: r.reasonNote,
+      }));
+
+      expect(onlyReasons).toMatchInlineSnapshot(`
+Array [
+  Object {
+    "reasonNote": "Reason without type [grant]",
+    "reasonType": null,
+  },
+  Object {
+    "reasonNote": "Reason with type [grant]",
+    "reasonType": "Broken in shipping",
+  },
+  Object {
+    "reasonNote": null,
+    "reasonType": "Broken in shipping (no note) [grant]",
+  },
+  Object {
+    "reasonNote": "Reason manual note without type",
+    "reasonType": null,
+  },
+  Object {
+    "reasonNote": "Reason manual note with type",
+    "reasonType": "Broken in shipping",
+  },
+  Object {
+    "reasonNote": "",
+    "reasonType": "Broken in shipping (no message)",
+  },
+]
+`);
+    });
   });
 
   describe("mapEventToRefundStatus", () => {
@@ -500,8 +617,8 @@ describe("OrderRefundsViewModel", () => {
   describe("canEditRefund", () => {
     it("should return true for editable refunds (not successful, not pending, not manual)", () => {
       // Arrange
-      const editableRefund = createGrantedRefund({
-        status: OrderGrantedRefundStatusEnum.FAILURE,
+      const editableRefund = createOrderRefundDisplay({
+        status: OrderRefundDisplayStatus.FAILURE,
         type: "standard",
       });
 
@@ -514,8 +631,8 @@ describe("OrderRefundsViewModel", () => {
 
     it("should return false for successful refunds", () => {
       // Arrange
-      const successfulRefund = createGrantedRefund({
-        status: OrderGrantedRefundStatusEnum.SUCCESS,
+      const successfulRefund = createOrderRefundDisplay({
+        status: OrderRefundDisplayStatus.SUCCESS,
         type: "standard",
       });
 
@@ -528,8 +645,8 @@ describe("OrderRefundsViewModel", () => {
 
     it("should return false for pending refunds", () => {
       // Arrange
-      const pendingRefund = createGrantedRefund({
-        status: OrderGrantedRefundStatusEnum.PENDING,
+      const pendingRefund = createOrderRefundDisplay({
+        status: OrderRefundDisplayStatus.PENDING,
         type: "standard",
       });
 
@@ -542,15 +659,14 @@ describe("OrderRefundsViewModel", () => {
 
     it("should return false for manual refunds", () => {
       // Arrange
-      const manualRefund = {
+      const manualRefund = createOrderRefundDisplay({
         id: "manual-1",
         type: "manual" as const,
         status: OrderGrantedRefundStatusEnum.FAILURE,
         amount: { amount: 50, currency: "USD" },
-        reason: null,
         createdAt: "2023-01-01T10:00:00Z",
         user: null,
-      };
+      });
 
       // Act
       const result = OrderRefundsViewModel.canEditRefund(manualRefund);
@@ -561,15 +677,14 @@ describe("OrderRefundsViewModel", () => {
 
     it("should return false for refunds that are successful AND manual", () => {
       // Arrange
-      const successfulManualRefund = {
+      const successfulManualRefund = createOrderRefundDisplay({
         id: "manual-success-1",
         type: "manual" as const,
         status: OrderGrantedRefundStatusEnum.SUCCESS,
         amount: { amount: 50, currency: "USD" },
-        reason: null,
         createdAt: "2023-01-01T10:00:00Z",
         user: null,
-      };
+      });
 
       // Act
       const result = OrderRefundsViewModel.canEditRefund(successfulManualRefund);
@@ -580,15 +695,14 @@ describe("OrderRefundsViewModel", () => {
 
     it("should return false for refunds that are pending AND manual", () => {
       // Arrange
-      const pendingManualRefund = {
+      const pendingManualRefund = createOrderRefundDisplay({
         id: "manual-pending-1",
         type: "manual" as const,
         status: OrderGrantedRefundStatusEnum.PENDING,
         amount: { amount: 50, currency: "USD" },
-        reason: null,
         createdAt: "2023-01-01T10:00:00Z",
         user: null,
-      };
+      });
 
       // Act
       const result = OrderRefundsViewModel.canEditRefund(pendingManualRefund);
@@ -599,7 +713,7 @@ describe("OrderRefundsViewModel", () => {
 
     it("should return true for NONE status standard refunds", () => {
       // Arrange
-      const noneStatusRefund = createGrantedRefund({
+      const noneStatusRefund = createOrderRefundDisplay({
         status: OrderGrantedRefundStatusEnum.NONE,
         type: "standard",
       });
