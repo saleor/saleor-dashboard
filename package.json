@@ -199,6 +199,7 @@
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^6.2.0",
     "playwright-ctrf-json-reporter": "^0.0.18",
+    "remove-unused-vars": "^0.0.6",
     "rollup-plugin-polyfill-node": "^0.11.0",
     "sort-package-json": "3.4.0",
     "storybook": "9.0.18",

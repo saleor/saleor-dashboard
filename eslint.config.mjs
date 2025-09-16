@@ -65,7 +65,7 @@ export default tseslint.config(
       "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["error", { vars: "local", args: "after-used", caughtErrors: "none", argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       // Disabled after migration to ESLint 9, we need to migrate code to enable these rules:
       "@typescript-eslint/no-empty-object-type": "off",
       "no-constant-binary-expression": "off",
