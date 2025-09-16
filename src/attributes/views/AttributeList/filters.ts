@@ -6,16 +6,8 @@ import { FilterElement } from "@dashboard/components/Filter";
 import { AttributeFilterInput } from "@dashboard/graphql";
 import { parseBoolean } from "@dashboard/misc";
 
-import {
-  createFilterTabUtils,
-  createFilterUtils,
-  getSingleValueQueryParam,
-} from "../../../utils/filters";
-import {
-  AttributeListUrlFilters,
-  AttributeListUrlFiltersEnum,
-  AttributeListUrlQueryParams,
-} from "../../urls";
+import { createFilterTabUtils, getSingleValueQueryParam } from "../../../utils/filters";
+import { AttributeListUrlFilters, AttributeListUrlFiltersEnum } from "../../urls";
 
 const ATTRIBUTE_FILTERS_KEY = "attributeFilters";
 

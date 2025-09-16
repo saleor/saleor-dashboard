@@ -3,12 +3,8 @@ import { StaffMemberStatus, StaffUserInput } from "@dashboard/graphql";
 import { findValueInEnum } from "@dashboard/misc";
 import { StaffFilterKeys, StaffListFilterOpts } from "@dashboard/staff/components/StaffListPage";
 
-import {
-  createFilterTabUtils,
-  createFilterUtils,
-  getSingleEnumValueQueryParam,
-} from "../../../utils/filters";
-import { StaffListUrlFilters, StaffListUrlFiltersEnum, StaffListUrlQueryParams } from "../../urls";
+import { createFilterTabUtils, getSingleEnumValueQueryParam } from "../../../utils/filters";
+import { StaffListUrlFilters, StaffListUrlFiltersEnum } from "../../urls";
 
 const STAFF_FILTERS_KEY = "staffFilters";
 

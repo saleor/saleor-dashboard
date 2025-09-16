@@ -7,7 +7,6 @@ import { Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
-  createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
@@ -19,7 +18,6 @@ import {
   SaleListUrlFilters,
   SaleListUrlFiltersEnum,
   SaleListUrlFiltersWithMultipleValues,
-  SaleListUrlQueryParams,
 } from "../../urls";
 
 const SALE_FILTERS_KEY = "saleFilters";

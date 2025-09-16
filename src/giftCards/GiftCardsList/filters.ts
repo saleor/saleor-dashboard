@@ -4,7 +4,6 @@ import { GiftCardFilterInput, SearchCustomersQuery, SearchProductsQuery } from "
 import { RelayToFlat } from "@dashboard/types";
 import {
   createFilterTabUtils,
-  createFilterUtils,
   dedupeFilter,
   getMinMaxQueryParam,
   getMultipleValueQueryParam,

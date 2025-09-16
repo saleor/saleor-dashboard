@@ -10,15 +10,10 @@ import { Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
-  createFilterUtils,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
 } from "../../../utils/filters";
-import {
-  CollectionListUrlFilters,
-  CollectionListUrlFiltersEnum,
-  CollectionListUrlQueryParams,
-} from "../../urls";
+import { CollectionListUrlFilters, CollectionListUrlFiltersEnum } from "../../urls";
 
 const COLLECTION_FILTERS_KEY = "collectionFilters";
 

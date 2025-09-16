@@ -7,15 +7,10 @@ import { CustomerFilterInput } from "@dashboard/graphql";
 
 import {
   createFilterTabUtils,
-  createFilterUtils,
   getGteLteVariables,
   getMinMaxQueryParam,
 } from "../../../utils/filters";
-import {
-  CustomerListUrlFilters,
-  CustomerListUrlFiltersEnum,
-  CustomerListUrlQueryParams,
-} from "../../urls";
+import { CustomerListUrlFilters, CustomerListUrlFiltersEnum } from "../../urls";
 
 const CUSTOMER_FILTERS_KEY = "customerFilters";
 

@@ -2,11 +2,7 @@
 import { FilterElement, IFilter } from "@dashboard/components/Filter";
 import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
 import { SearchPageTypesQuery } from "@dashboard/graphql";
-import {
-  PageListUrlFilters,
-  PageListUrlFiltersWithMultipleValues,
-  PageListUrlSort,
-} from "@dashboard/modeling/urls";
+import { PageListUrlFilters, PageListUrlSort } from "@dashboard/modeling/urls";
 import {
   ActiveTab,
   AutocompleteFilterOpts,
@@ -14,11 +10,7 @@ import {
   Pagination,
   Search,
 } from "@dashboard/types";
-import {
-  createFilterTabUtils,
-  createFilterUtils,
-  getMultipleValueQueryParam,
-} from "@dashboard/utils/filters";
+import { createFilterTabUtils, getMultipleValueQueryParam } from "@dashboard/utils/filters";
 import { createAutocompleteField } from "@dashboard/utils/filters/fields";
 import { mapNodeToChoice, mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
 import { defineMessages, IntlShape } from "react-intl";

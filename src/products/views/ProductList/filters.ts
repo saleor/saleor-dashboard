@@ -17,7 +17,6 @@ import {
 } from "../../../components/Filter";
 import {
   createFilterTabUtils,
-  createFilterUtils,
   getGteLteVariables,
   getKeyValueQueryParam,
   getMinMaxQueryParam,
@@ -32,7 +31,6 @@ import {
   ProductListUrlFiltersEnum,
   ProductListUrlFiltersWithKeyValueValues,
   ProductListUrlFiltersWithMultipleValues,
-  ProductListUrlQueryParams,
 } from "../../urls";
 
 const PRODUCT_FILTERS_KEY = "productPresets";

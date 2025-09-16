@@ -10,7 +10,6 @@ import { Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
-  createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
@@ -21,7 +20,6 @@ import {
   VoucherListUrlFilters,
   VoucherListUrlFiltersEnum,
   VoucherListUrlFiltersWithMultipleValues,
-  VoucherListUrlQueryParams,
 } from "../../urls";
 
 const VOUCHER_FILTERS_KEY = "voucherFilters";

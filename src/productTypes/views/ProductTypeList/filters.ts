@@ -11,16 +11,8 @@ import {
   ProductTypeListFilterOpts,
 } from "@dashboard/productTypes/components/ProductTypeListPage";
 
-import {
-  createFilterTabUtils,
-  createFilterUtils,
-  getSingleValueQueryParam,
-} from "../../../utils/filters";
-import {
-  ProductTypeListUrlFilters,
-  ProductTypeListUrlFiltersEnum,
-  ProductTypeListUrlQueryParams,
-} from "../../urls";
+import { createFilterTabUtils, getSingleValueQueryParam } from "../../../utils/filters";
+import { ProductTypeListUrlFilters, ProductTypeListUrlFiltersEnum } from "../../urls";
 
 const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
 
