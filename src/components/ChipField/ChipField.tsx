@@ -48,7 +48,7 @@ export const ChipField = forwardRef<HTMLDivElement, ChipFieldProps>(
         opacity={"1"}
         {...props}
       >
-        <Box display="flex" alignItems="center" style={{ visibility: "visible" }} paddingLeft={2}>
+        <Box display="flex" alignItems="center" paddingLeft={2}>
           <ChipLabel label={label} url={url} />
           <Box marginLeft={1}>
             <Button
