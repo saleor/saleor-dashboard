@@ -139,7 +139,7 @@ export function getAttributeInput(
 
   if (inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
     return {
-      reference: values[0]?.reference ?? null,
+      reference: values?.[0]?.reference || null,
     };
   }
 

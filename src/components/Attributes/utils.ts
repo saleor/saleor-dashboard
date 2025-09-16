@@ -71,7 +71,7 @@ export function getSingleReferenceDisplayValue(
     return null;
   }
 
-  const reference = attribute?.data?.references[0];
+  const reference = attribute?.data?.references?.[0];
 
   if (reference) {
     return {
