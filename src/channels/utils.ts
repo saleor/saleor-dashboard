@@ -7,7 +7,6 @@ import {
   ChannelDetailsFragment,
   ChannelFragment,
   CollectionDetailsFragment,
-  ProductDetailsVariantFragment,
   ProductVariantDetailsQuery,
   SaleDetailsFragment,
   SaleType,
