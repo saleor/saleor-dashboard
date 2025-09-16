@@ -8,14 +8,14 @@ import { messages } from "./messages";
 interface WarehouseInformationMessageProps {
   isCreate: boolean;
   hasVariants: boolean;
-  hasWarehouses: boolean;
+  hasStocks: boolean;
   onWarehouseConfigure: () => void;
 }
 
 export const WarehouseInformationMessage: React.FC<WarehouseInformationMessageProps> = ({
   isCreate,
   hasVariants,
-  hasWarehouses,
+  hasStocks,
   onWarehouseConfigure,
 }) => {
   if (isCreate) {
@@ -30,7 +30,7 @@ export const WarehouseInformationMessage: React.FC<WarehouseInformationMessagePr
     );
   }
 
-  if (hasWarehouses) {
+  if (hasStocks) {
     return null;
   }
 
