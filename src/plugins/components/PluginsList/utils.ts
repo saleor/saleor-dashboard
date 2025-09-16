@@ -5,9 +5,6 @@ import { MessageDescriptor } from "react-intl";
 
 import { pluginStatusMessages } from "./messages";
 
-const getAllChannelConfigsCount = (channelConfigurations: PluginConfigurationBaseFragment[]) =>
-  channelConfigurations?.length;
-
 export const getActiveChannelConfigsCount = (
   channelConfigurations: PluginConfigurationBaseFragment[],
 ) => channelConfigurations?.filter(({ active }) => !!active).length;

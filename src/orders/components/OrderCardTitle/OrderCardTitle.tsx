@@ -13,11 +13,6 @@ import { getOrderTitleMessage } from "./utils";
 
 export type CardTitleStatus = FulfillmentStatus | "unfulfilled";
 
-type CardTitleLines = Array<{
-  quantity: number;
-  quantityToFulfill?: number;
-}>;
-
 interface OrderCardTitleProps {
   fulfillmentOrder?: number;
   status: CardTitleStatus;

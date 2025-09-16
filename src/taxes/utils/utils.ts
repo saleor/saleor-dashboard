@@ -2,7 +2,6 @@
 import {
   CountryFragment,
   TaxClassFragment,
-  TaxCountriesListQuery,
   TaxCountryConfigurationFragment,
 } from "@dashboard/graphql";
 import uniqBy from "lodash/uniqBy";
@@ -10,12 +9,6 @@ import uniqBy from "lodash/uniqBy";
 export const encodeURIComponentOptional = (
   uriComponent: string | number | boolean | undefined,
 ): string | undefined => (uriComponent ? encodeURIComponent(uriComponent) : undefined);
-
-const filterChosenCountries = (
-  countries: CountryFragment[],
-  configurations: TaxCountryConfigurationFragment[],
-) =>
-  countries.filter(country => !configurations.find(config => config.country.code === country.code));
 
 export const mapUndefinedTaxRatesToCountries = (
   taxConfigurations: TaxCountryConfigurationFragment[],
@@ -60,9 +53,6 @@ export const mapUndefinedTaxRatesToCountries = (
       }
     })
     .sort((a, b) => a.country.country.localeCompare(b.country.country));
-
-const getCountriesFromCountryConfigurations = (data: TaxCountriesListQuery): CountryFragment[] =>
-  data?.taxCountryConfigurations?.map(config => config.country);
 
 export const mapUndefinedCountriesToTaxClasses = (
   taxConfigurations: TaxCountryConfigurationFragment[],

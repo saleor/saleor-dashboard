@@ -166,7 +166,3 @@ export function fromFlat<TMenuData = {}, TValue = string>(
     .filter(menuItem => menuItem.parent === null)
     .map(menuItem => _fromFlat(menu, menuItem));
 }
-
-function isLeaf<TMenuData = {}, TValue = string>(menuItem: IMenuItem<TMenuData, TValue>): boolean {
-  return menuItem.children.length === 0;
-}

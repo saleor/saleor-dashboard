@@ -23,9 +23,6 @@ type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
   MutationResultWithOpts<TData>,
 ];
-type UseMutationHook<TData, TVariables> = (
-  cbs: MutationHookOptions<TData, TVariables>,
-) => UseMutation<TData, TVariables>;
 
 export type MutationHookOptions<TData, TVariables> = BaseMutationHookOptions<TData, TVariables> & {
   disableErrorHandling?: boolean;
@@ -93,11 +90,4 @@ export function useMutation<TData, TVariables>(
       status: getMutationStatus(result),
     },
   ];
-}
-
-function makeMutation<TData, TVariables>(
-  mutation: DocumentNode,
-): UseMutationHook<TData, TVariables> {
-  return (opts: MutationHookOptions<TData, TVariables>) =>
-    useMutation<TData, TVariables>(mutation, opts);
 }

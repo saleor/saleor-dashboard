@@ -58,7 +58,6 @@ const OrderListPage = ({
   onAdd,
   onSearchChange,
   onSettingsOpen,
-  params,
   onTabChange,
   onTabDelete,
   onTabSave,

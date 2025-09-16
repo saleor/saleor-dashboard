@@ -2,13 +2,10 @@
 import { FilterElement, IFilter } from "@dashboard/components/Filter";
 import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
 import { SearchPageTypesQuery } from "@dashboard/graphql";
-import { PageListUrlFilters, PageListUrlSort } from "@dashboard/modeling/urls";
+import { PageListUrlFilters, } from "@dashboard/modeling/urls";
 import {
-  ActiveTab,
   AutocompleteFilterOpts,
-  FilterOpts,
-  Pagination,
-  Search,
+  FilterOpts
 } from "@dashboard/types";
 import { createFilterTabUtils, getMultipleValueQueryParam } from "@dashboard/utils/filters";
 import { createAutocompleteField } from "@dashboard/utils/filters/fields";
@@ -92,11 +89,5 @@ export function getFilterQueryParam(filter: FilterElement<PageListFilterKeys>): 
       return getMultipleValueQueryParam(filter, name);
   }
 }
-
-type PageListUrlQueryParams = Pagination &
-  PageListUrlFilters &
-  PageListUrlSort &
-  ActiveTab &
-  Search;
 
 export const storageUtils = createFilterTabUtils<string>(PAGES_FILTERS_KEY);

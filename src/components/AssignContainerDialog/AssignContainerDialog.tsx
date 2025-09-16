@@ -13,11 +13,6 @@ import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { useStyles } from "./styles";
 
-interface AssignContainerDialogFormData {
-  containers: string[];
-  query: string;
-}
-
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
 export interface Container extends Node {
   name: string;

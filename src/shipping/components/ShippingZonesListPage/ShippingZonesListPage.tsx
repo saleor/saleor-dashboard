@@ -25,9 +25,7 @@ interface ShippingZonesListPageProps extends PageListProps, SearchPageProps, Use
 }
 
 const ShippingZonesListPage = ({
-  defaultWeightUnit,
   disabled,
-  onSubmit,
   onRemove,
   selectedShippingZonesIds,
   initialSearch,

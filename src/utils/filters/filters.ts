@@ -5,40 +5,6 @@ import {
   IFilter,
 } from "@dashboard/components/Filter";
 import { findValueInEnum } from "@dashboard/misc";
-import { ActiveTab } from "@dashboard/types";
-
-function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters: {}) {
-  function getActiveFilters(params: TQueryParams): TFilters {
-    return Object.keys(params)
-      .filter(key => Object.values(filters).includes(key))
-      .reduce((acc, key) => {
-        acc[key] = params[key as keyof typeof params];
-
-        return acc;
-      }, {} as any);
-  }
-
-  function areFiltersApplied(params: TQueryParams): boolean {
-    return Object.keys(getActiveFilters(params)).some(key => !!params[key as keyof typeof params]);
-  }
-
-  function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(
-    params: TQueryTabParams,
-    tabs: unknown[],
-  ) {
-    return params.activeTab === undefined
-      ? areFiltersApplied(params as unknown as TQueryParams)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 10);
-  }
-
-  return {
-    areFiltersApplied,
-    getActiveFilters,
-    getFiltersCurrentTab,
-  };
-}
 
 export function dedupeFilter<T>(array: T[]): T[] {
   if (!Array.isArray(array)) {

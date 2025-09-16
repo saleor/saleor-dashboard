@@ -1,10 +1,5 @@
 import {
-  AutocompleteFilterOpts,
   FetchMoreProps,
-  FilterOpts,
-  Filters,
-  FiltersWithMultipleValues,
-  MinMax,
   Search,
   SearchProps,
 } from "@dashboard/types";
@@ -35,19 +30,6 @@ enum GiftCardListFilterKeys {
   product = "product",
   usedBy = "usedBy",
   status = "status",
-}
-
-type GiftCardListUrlFilters = Filters<GiftCardListUrlFiltersEnum> &
-  FiltersWithMultipleValues<GiftCardListUrlFiltersWithMultipleValuesEnum>;
-
-interface GiftCardListFilterOpts {
-  tag: FilterOpts<string[]> & AutocompleteFilterOpts;
-  currency: FilterOpts<string> & AutocompleteFilterOpts;
-  product: FilterOpts<string[]> & AutocompleteFilterOpts;
-  usedBy: FilterOpts<string[]> & AutocompleteFilterOpts;
-  initialBalanceAmount: FilterOpts<MinMax>;
-  currentBalanceAmount: FilterOpts<MinMax>;
-  status: FilterOpts<string>;
 }
 
 export type SearchWithFetchMoreProps = FetchMoreProps & Search & SearchProps;

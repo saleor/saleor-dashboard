@@ -4,12 +4,9 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import {
   AttributeInputTypeEnum,
   ProductFragment,
-  useGridWarehousesLazyQuery,
-  useWarehouseListLazyQuery,
   WarehouseFragment,
 } from "@dashboard/graphql";
 import { useClientPagination } from "@dashboard/hooks/useClientPagination";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useState } from "react";
 import { IntlShape } from "react-intl";
 
@@ -209,18 +206,6 @@ export const useWarehouseAdapter = ({
   };
 };
 
-const getAvailableWarehousesData = ({
-  availableWarehouses,
-  initialWarehouses,
-}: {
-  availableWarehouses: ReturnType<typeof useWarehouseListLazyQuery>[1];
-  initialWarehouses: ReturnType<typeof useGridWarehousesLazyQuery>[1];
-}) =>
-  mapEdgesToItems(availableWarehouses.data?.warehouses) ??
-  (availableWarehouses.loading
-    ? undefined
-    : (mapEdgesToItems(initialWarehouses.data?.availableWarehouses) ?? []));
-
 const parseWarehousesColumns = (data: WarehouseFragment[] | undefined, intl: IntlShape) => {
   return data?.map(warehouse => ({
     id: `warehouse:${warehouse.id}`,
@@ -230,68 +215,3 @@ const parseWarehousesColumns = (data: WarehouseFragment[] | undefined, intl: Int
     width: 150,
   }));
 };
-
-// Reuse when fixing #4165
-const getWarehousesFetchMoreProps = ({
-  queryAvailableWarehouses,
-  availableWarehousesData,
-  gridWarehousesData,
-}: {
-  queryAvailableWarehouses: ReturnType<typeof useWarehouseListLazyQuery>[0];
-  availableWarehousesData: ReturnType<typeof useWarehouseListLazyQuery>[1];
-  gridWarehousesData: ReturnType<typeof useGridWarehousesLazyQuery>[1];
-}) => {
-  const onNextPage = (query: string) =>
-    queryAvailableWarehouses({
-      variables: {
-        filter: {
-          search: query,
-        },
-        after:
-          availableWarehousesData.data?.warehouses?.pageInfo.endCursor ??
-          gridWarehousesData.data?.availableWarehouses?.pageInfo.endCursor,
-        first: 10,
-        last: null,
-        before: null,
-      },
-    });
-  const onPreviousPage = (query: string) =>
-    queryAvailableWarehouses({
-      variables: {
-        filter: {
-          search: query,
-        },
-        before: availableWarehousesData.data?.warehouses?.pageInfo.startCursor,
-        last: 10,
-        first: null,
-        after: null,
-      },
-    });
-  const hasNextPage =
-    availableWarehousesData.data?.warehouses?.pageInfo?.hasNextPage ??
-    gridWarehousesData.data?.availableWarehouses?.pageInfo?.hasNextPage ??
-    false;
-  const hasPreviousPage =
-    availableWarehousesData.data?.warehouses?.pageInfo?.hasPreviousPage ?? false;
-
-  return {
-    hasNextPage,
-    hasPreviousPage,
-    onNextPage,
-    onPreviousPage,
-  };
-};
-
-const prefix = "warehouse";
-
-function getWarehouseColumnValue(id: string) {
-  return `${prefix}:${id}`;
-}
-
-function isWarehouseColumnValue(value: string) {
-  return value?.includes(`${prefix}:`);
-}
-
-function getWarehouseIdFromColumnValue(value: string) {
-  return value.substr(prefix.length + 1);
-}

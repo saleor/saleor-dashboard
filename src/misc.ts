@@ -2,7 +2,6 @@ import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import {
   AddressInput,
   CountryCode,
-  DateRangeInput,
   OrderChargeStatusEnum,
   OrderStatus,
   OrderStatusFilter,
@@ -16,7 +15,6 @@ import {
   StatusType,
   UserError,
 } from "@dashboard/types";
-import { ThemeType } from "@saleor/macaw-ui";
 import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui-next";
 import Fuse from "fuse.js";
 import moment from "moment-timezone";
@@ -71,8 +69,6 @@ export function decimal(value: string | number) {
 export function weight(value: string) {
   return value === "" ? null : parseFloat(value);
 }
-
-const removeDoubleSlashes = (url: string) => url.replace(/([^:]\/)\/+/g, "$1");
 
 export const transformPaymentStatus = (
   status: string,
@@ -240,16 +236,6 @@ export function maybe(exp: any, d?: any) {
   }
 }
 
-function only<T extends object>(obj: T, key: keyof T): boolean {
-  return Object.keys(obj).every(objKey =>
-    objKey === key ? obj[key] !== undefined : obj[key] === undefined,
-  );
-}
-
-function empty(obj: {}): boolean {
-  return Object.keys(obj).every(key => obj[key as keyof typeof obj] === undefined);
-}
-
 function hasErrors(errorList: UserError[] | null): boolean {
   return !(errorList === undefined || errorList === null || errorList.length === 0);
 }
@@ -287,16 +273,6 @@ export const extractMutationErrors = async <
   const e = getMutationErrors(result);
 
   return e as TErrors;
-};
-
-const hasMutationErrors = (result: FetchResult): boolean => {
-  if (!result?.data) {
-    return false;
-  }
-
-  return Object.values(result.data).some(
-    ({ errors }: SaleorMutationResult) => errors && errors.length > 0,
-  );
 };
 
 export const getMutationErrors = <
@@ -412,21 +388,6 @@ export function stopPropagation<T extends AnyEventWithPropagation>(cb: (event?: 
   };
 }
 
-interface AnyEventWithPreventDefault {
-  preventDefault: () => void;
-}
-function preventDefault<T extends AnyEventWithPreventDefault>(cb: (event?: T) => void) {
-  return (event: T) => {
-    event.preventDefault();
-    cb(event);
-  };
-}
-
-interface DateTime {
-  date: string;
-  time: string;
-}
-
 export function joinDateTime(date: string, time?: string) {
   if (!date) {
     return null;
@@ -453,21 +414,6 @@ export function splitDateTime(dateTime: string) {
     date: splitDateTime[0],
     time: splitDateTime[1],
   };
-}
-
-function generateCode(charNum: number) {
-  let result = "";
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-  for (let i = 0; i < charNum; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-
-  return result;
-}
-
-function isInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
-  return Object.keys(haystack).includes(needle);
 }
 
 export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
@@ -516,23 +462,6 @@ export function getStringOrPlaceholder(s: string | undefined | null, placeholder
   return s || placeholder || "...";
 }
 
-const getDatePeriod = (days: number): DateRangeInput => {
-  if (days < 1) {
-    return {};
-  }
-
-  const end = moment().startOf("day");
-  const start = end.subtract(days - 1);
-  const format = "YYYY-MM-DD";
-
-  return {
-    gte: start.format(format),
-    lte: end.format(format),
-  };
-};
-
-const isDarkTheme = (themeType: ThemeType) => themeType === "dark";
-
 export const transformAddressToAddressInput = (data?: AddressType) => ({
   city: data?.city || "",
   cityArea: data?.cityArea || "",
@@ -569,20 +498,6 @@ export const flatten = (obj: object) => {
 
   return result;
 };
-
-function PromiseQueue() {
-  let queue = Promise.resolve();
-
-  function add<T>(operation: (value: T | void) => PromiseLike<T>) {
-    return new Promise((resolve, reject) => {
-      queue = queue.then(operation).then(resolve).catch(reject);
-    });
-  }
-
-  return { queue, add };
-}
-
-type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 export const getBySlug = (slugToCompare: string) => (obj: SlugNode) => obj.slug === slugToCompare;
 

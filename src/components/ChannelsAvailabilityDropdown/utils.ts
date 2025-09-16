@@ -11,7 +11,6 @@ export type CollectionChannels = Pick<
   CollectionFragment["channelListings"][0],
   "isPublished" | "publishedAt" | "channel"
 >;
-type Channels = Pick<CollectionFragment["channelListings"][0], "channel">;
 
 const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
 const isScheduled = (channelData: CollectionChannels) =>

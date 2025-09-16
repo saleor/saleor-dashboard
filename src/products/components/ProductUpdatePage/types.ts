@@ -23,7 +23,6 @@ import {
   SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import {
-  FormsetAtomicData,
   FormsetChange,
   FormsetData,
   FormsetMetadataChange,
@@ -58,11 +57,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
 interface FileAttributeInputData {
   attributeId: string;
   file: File;
-}
-type FileAttributeInput = FormsetAtomicData<FileAttributeInputData, string[]>;
-
-interface FileAttributesSubmitData {
-  fileAttributes: FileAttributeInput[];
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: AttributeInput[];

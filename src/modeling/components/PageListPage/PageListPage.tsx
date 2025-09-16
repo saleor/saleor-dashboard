@@ -17,8 +17,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Pages } from "@dashboard/modeling/types";
 import {
-  PageListUrlDialog,
-  PageListUrlQueryParams,
   PageListUrlSortField,
   pageUrl,
 } from "@dashboard/modeling/urls";
@@ -36,10 +34,6 @@ import {
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 
-interface PageListActionDialogOpts {
-  open: (action: PageListUrlDialog, newParams?: PageListUrlQueryParams) => void;
-  close: () => void;
-}
 interface PageListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<PageListFilterKeys, PageListFilterOpts>,

@@ -1,4 +1,4 @@
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+
 import { OrderDetailsGrantRefundFragment, OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { ConfirmButtonTransitionState, SavebarLabels } from "@saleor/macaw-ui";
 import { useEffect } from "react";
@@ -37,12 +37,6 @@ function parseStringOrNumber(value: number | string): number {
   const parsed = parseInt(value, 10);
 
   return parsed;
-}
-
-interface ValidateQtyParams {
-  update: DatagridChangeOpts["currentUpdate"];
-  order: OrderDetailsGrantRefundFragment | undefined | null;
-  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
 }
 export const validateQty = ({
   update,

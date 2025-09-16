@@ -48,9 +48,6 @@ export const WEBHOOK_PAYLOAD_SIGNATURE_DOCS_URL =
 export const MANUAL_REFUND_DOCS_URL =
   "https://docs.saleor.io/developer/payments/refunds#manual-refund";
 
-const NOTIFY_USER_MIGRATION_DOCS_URL =
-  "https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user";
-
 // Welcome page links
 export const SALEOR_GITHUB_URL = "https://github.com/saleor/saleor";
 export const SALEOR_DISCORD_URL = "https://saleor.io/discord";

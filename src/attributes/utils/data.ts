@@ -3,7 +3,6 @@ import { AttributeInput, AttributeInputData } from "@dashboard/components/Attrib
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
-  AttributeFragment,
   AttributeInputTypeEnum,
   AttributeValueDeleteMutation,
   AttributeValueFragment,
@@ -49,10 +48,6 @@ export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.NUMERIC,
   AttributeInputTypeEnum.SWATCH,
 ];
-
-function filterable(attribute: Pick<AttributeFragment, "inputType">): boolean {
-  return ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(attribute.inputType!);
-}
 
 export interface AttributeReference {
   label: string;

@@ -38,10 +38,6 @@ interface UnknownFilterElementData {
   type: KeyValueFilterElementData["type"] | RegularFilterElementData["type"];
 }
 
-type FilterElementValueData = RegularFilterElementData | KeyValueFilterElementData;
-
-type IFilterElementMutableData = FilterElementCommonData & FilterElementValueData;
-
 export type IFilterElementMutableDataGeneric<T extends FieldType> = T extends FieldType.keyValue
   ? KeyValueFilterElementData & FilterElementCommonData
   : RegularFilterElementData & FilterElementCommonData;

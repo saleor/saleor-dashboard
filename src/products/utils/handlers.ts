@@ -3,8 +3,7 @@ import { FetchResult } from "@apollo/client";
 import {
   ChannelData,
   ChannelPriceAndPreorderData,
-  ChannelPriceArgs,
-  ChannelPriceData,
+  ChannelPriceArgs
 } from "@dashboard/channels/utils";
 import {
   ProductChannelListingAddInput,
@@ -52,30 +51,6 @@ export function createChannelsChangeHandler(
     ];
 
     updateChannels(updatedChannels);
-    triggerChange();
-  };
-}
-
-function createVariantChannelsChangeHandler(
-  channelListings: ChannelPriceData[],
-  setData: (data: ChannelPriceData[]) => void,
-  triggerChange: () => void,
-) {
-  return (id: string, priceData: ChannelPriceArgs) => {
-    const { costPrice, price } = priceData;
-    const channelIndex = channelListings.findIndex(channel => channel.id === id);
-    const channel = channelListings[channelIndex];
-    const updatedChannels = [
-      ...channelListings.slice(0, channelIndex),
-      {
-        ...channel,
-        costPrice,
-        price,
-      },
-      ...channelListings.slice(channelIndex + 1),
-    ];
-
-    setData(updatedChannels);
     triggerChange();
   };
 }
@@ -135,17 +110,17 @@ export const createPreorderEndDateChangeHandler =
     triggerChange: () => void,
     preorderPastDateErrorMessage: string,
   ): FormChange =>
-  event => {
-    form.change(event);
+    event => {
+      form.change(event);
 
-    if (moment(event.target.value).isSameOrBefore(Date.now())) {
-      form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
-    } else {
-      form.clearErrors("preorderEndDateTime");
-    }
+      if (moment(event.target.value).isSameOrBefore(Date.now())) {
+        form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
+      } else {
+        form.clearErrors("preorderEndDateTime");
+      }
 
-    triggerChange();
-  };
+      triggerChange();
+    };
 
 export const createMediaChangeHandler =
   (form: UseFormResult<{ media: string[] }>, triggerChange: () => void) => (ids: string[]) => {

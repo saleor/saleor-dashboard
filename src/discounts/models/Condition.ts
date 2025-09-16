@@ -16,10 +16,6 @@ export const createEmptyCodition = (): Condition => ({
   value: null,
 });
 
-const isString = (conditionValue: ConditionValue): conditionValue is string => {
-  return typeof conditionValue === "string";
-};
-
 export const isTuple = (conditionValue: ConditionValue): conditionValue is [string, string] => {
   return (
     Array.isArray(conditionValue) &&

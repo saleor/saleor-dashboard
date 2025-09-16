@@ -63,7 +63,6 @@ const CollectionListPage = ({
   onFilterChange,
   onFilterAttributeFocus,
   hasPresetsChanged,
-  currencySymbol,
   selectedCollectionIds,
   onCollectionsDelete,
   ...listProps

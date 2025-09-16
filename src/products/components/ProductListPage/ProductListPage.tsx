@@ -82,7 +82,6 @@ const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
 const ProductListPage = (props: ProductListPageProps) => {
   const {
-    currencySymbol,
     defaultSettings,
     gridAttributesOpts,
     limits,

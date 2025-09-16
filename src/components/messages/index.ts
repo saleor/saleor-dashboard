@@ -30,13 +30,6 @@ export interface ITimer {
   timeoutId: number;
 }
 
-const types = {
-  ERROR: "error",
-  INFO: "info",
-  SUCCESS: "success",
-  WARNING: "warning",
-};
-
 export interface INotificationContext {
   show: (message: IMessage, timeout?: number | null) => void;
   remove: (notificationId: number) => void;

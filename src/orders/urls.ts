@@ -23,7 +23,6 @@ import {
   Sort,
   TabActionDialog,
 } from "../types";
-import { OrderFilterGiftCard } from "./components/OrderListPage";
 
 const orderSectionUrl = "/orders";
 
@@ -224,11 +223,6 @@ export const orderGrantRefundEditUrl = (orderId: string, refundId: string) =>
   orderGrantRefundEditPath(encodeURIComponent(orderId), encodeURIComponent(refundId));
 
 export const orderReturnUrl = (id: string) => orderReturnPath(encodeURIComponent(id));
-
-const orderGiftCardBoughtPath = () =>
-  orderListUrl({
-    giftCard: [OrderFilterGiftCard.paid],
-  });
 
 export const orderTransactionRefundPath = (id: string) => urlJoin(orderPath(id), "refund");
 

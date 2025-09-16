@@ -5,6 +5,4 @@ export type ProductVariantItem = NonNullable<
   | NonNullable<NonNullable<ProductVariantCreateDataQuery["product"]>["variants"]>[number]
 >;
 
-type ProductVariantItems = ProductVariantItem[];
-
 export type ProductVariantItemThumbnail = NonNullable<ProductVariantItem["media"]>[number];

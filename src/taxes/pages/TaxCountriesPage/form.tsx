@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import {
-  TaxClassFragment,
   TaxClassRateInput,
   TaxCountryConfigurationFragment,
 } from "@dashboard/graphql";
@@ -12,13 +11,6 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
-interface TaxCountriesPageFormData {
-  rates: Array<{
-    rate: string;
-    taxClass: Omit<TaxClassFragment, "countries">;
-  }>;
-  country: string;
-}
 interface UseTaxCountriesFormResult {
   data: FormsetData<TaxClassRateInput>;
   submit: () => SubmitPromise;

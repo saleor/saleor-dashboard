@@ -1,11 +1,9 @@
 // @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { FlagValue } from "@dashboard/featureFlags/FlagContent";
 import {
   AttributeFragment,
   AttributeInputTypeEnum,
-  ProductWhereInput,
   StockAvailability,
 } from "@dashboard/graphql";
 import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
@@ -190,19 +188,6 @@ export function getFilterQueryParam(
 }
 
 export const storageUtils = createFilterTabUtils<string>(PRODUCT_FILTERS_KEY);
-
-const getWhereVariables = (
-  productListingPageFiltersFlag: FlagValue,
-  value: FilterContainer,
-): ProductWhereInput => {
-  if (productListingPageFiltersFlag.enabled) {
-    const queryVars = createProductQueryVariables(value);
-
-    return queryVars;
-  }
-
-  return undefined;
-};
 
 export const getFilterVariables = ({
   filterContainer,

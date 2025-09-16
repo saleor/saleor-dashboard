@@ -5,5 +5,3 @@ export type Product = ProductVariantCreateDataQuery["product"];
 export type Variant = ProductVariantFragment;
 export type ProductChannelListing = Product["channelListings"];
 export type VariantChannelListing = Variant["channelListings"];
-type ChannelListings = ProductChannelListing | VariantChannelListing;
-type Channel = ProductChannelListing[number]["channel"];

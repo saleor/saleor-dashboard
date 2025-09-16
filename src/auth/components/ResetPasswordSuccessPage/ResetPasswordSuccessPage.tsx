@@ -2,9 +2,6 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-interface ResetPasswordSuccessPageFormData {
-  email: string;
-}
 interface ResetPasswordSuccessPageProps {
   onBack: () => void;
 }

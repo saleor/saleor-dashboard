@@ -29,10 +29,6 @@ import {
   VariantWithProductLabel,
 } from "./utils";
 
-interface AssignVariantDialogFormData {
-  products: RelayToFlat<SearchProductsQuery["search"]>;
-  query: string;
-}
 interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;

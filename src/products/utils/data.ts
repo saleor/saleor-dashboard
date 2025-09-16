@@ -19,15 +19,9 @@ import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { maybe } from "@dashboard/misc";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { Option } from "@saleor/macaw-ui-next";
-import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductUpdateFormData } from "../components/ProductUpdatePage/types";
-
-interface Collection {
-  id: string;
-  label: string;
-}
 
 interface Node {
   id: string;
@@ -170,17 +164,6 @@ export function getStockInputFromVariant(variant: ProductVariantFragment): Produ
   );
 }
 
-function getCollectionInput(productCollections: ProductFragment["collections"]): Collection[] {
-  return maybe(
-    () =>
-      productCollections.map(collection => ({
-        id: collection.id,
-        label: collection.name,
-      })),
-    [],
-  );
-}
-
 export function getChoices(nodes: Node[]): Option[] {
   return maybe(
     () =>
@@ -242,12 +225,6 @@ export function mapFormsetStockToStockInput(stock: FormsetAtomicData<null, strin
     warehouse: stock.id,
   };
 }
-
-const getPreorderEndDateFormData = (endDate?: string) =>
-  endDate ? moment(endDate).format("YYYY-MM-DD") : "";
-
-const getPreorderEndHourFormData = (endDate?: string) =>
-  endDate ? moment(endDate).format("HH:mm") : "";
 
 export const getSelectedMedia = <T extends Pick<ProductMediaFragment, "id" | "sortOrder">>(
   media: T[] = [],
