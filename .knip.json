@@ -26,9 +26,7 @@
     "src/**/fixtures.ts",
     "scripts/**"
   ],
-  "project": [
-    "**/*.{js,ts,tsx,jsx}"
-  ],
+  "project": ["**/*.{js,ts,tsx,jsx}"],
   "jest": true,
   "vite": true,
   "eslint": true,
@@ -39,11 +37,7 @@
   "storybook": true,
   "typescript": true,
   "prettier": true,
-  "ignore": [
-    "playwright/**",
-    "**/*.generated.ts",
-    "apollo.config.js"
-  ],
+  "ignore": ["playwright/**", "**/*.generated.ts", "apollo.config.js"],
   "ignoreDependencies": [
     "keycode",
     "tslib",
