@@ -36,11 +36,11 @@ import {
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 
-export interface PageListActionDialogOpts {
+interface PageListActionDialogOpts {
   open: (action: PageListUrlDialog, newParams?: PageListUrlQueryParams) => void;
   close: () => void;
 }
-export interface PageListPageProps
+interface PageListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<PageListFilterKeys, PageListFilterOpts>,
     SortPage<PageListUrlSortField> {

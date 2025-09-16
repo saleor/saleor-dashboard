@@ -20,7 +20,7 @@ import {
   CollectionListUrlQueryParams,
 } from "../../urls";
 
-export const COLLECTION_FILTERS_KEY = "collectionFilters";
+const COLLECTION_FILTERS_KEY = "collectionFilters";
 
 export function getFilterOpts(
   params: CollectionListUrlFilters,
@@ -64,8 +64,3 @@ export function getFilterQueryParam(
 }
 
 export const storageUtils = createFilterTabUtils<string>(COLLECTION_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  CollectionListUrlQueryParams,
-  CollectionListUrlFilters
->(CollectionListUrlFiltersEnum);

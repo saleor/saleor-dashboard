@@ -9,7 +9,7 @@ import { VariantChannelListing } from "./types";
 
 type FormChannels = UseFormsetOutput<ChannelPriceAndPreorderData>;
 
-export const validateChannels = (channels: FormChannels["data"]) =>
+const validateChannels = (channels: FormChannels["data"]) =>
   channels.some(
     channelData =>
       validatePrice(channelData.value.price) || validateCostPrice(channelData.value.costPrice),

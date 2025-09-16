@@ -33,7 +33,7 @@ interface OrderReturnRefundLinesCardProps {
   onSetMaxQuantity: () => any;
 }
 
-export const ItemsCard = ({
+const ItemsCard = ({
   lines,
   onSetMaxQuantity,
   onChangeQuantity,

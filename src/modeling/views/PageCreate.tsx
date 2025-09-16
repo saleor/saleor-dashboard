@@ -33,12 +33,12 @@ import PageDetailsPage from "../components/PageDetailsPage";
 import { PageSubmitData } from "../components/PageDetailsPage/form";
 import { pageCreateUrl, PageCreateUrlQueryParams, pageUrl } from "../urls";
 
-export interface PageCreateProps {
+interface PageCreateProps {
   id: string;
   params: PageCreateUrlQueryParams;
 }
 
-export const PageCreate = ({ params }: PageCreateProps) => {
+const PageCreate = ({ params }: PageCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -241,5 +241,6 @@ export const PageCreate = ({ params }: PageCreateProps) => {
     </>
   );
 };
+
 PageCreate.displayName = "PageCreate";
 export default PageCreate;

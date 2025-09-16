@@ -7,11 +7,11 @@ import { Pill } from "../Pill";
 import messages from "./messages";
 import useStyles from "./styles";
 
-export interface PreviewPillProps {
+interface PreviewPillProps {
   className?: string;
 }
 
-export const PreviewPill = ({ className }: PreviewPillProps) => {
+const PreviewPill = ({ className }: PreviewPillProps) => {
   const intl = useIntl();
   const [active, setActive] = useState(false);
   const anchor = useRef<HTMLDivElement>(null);

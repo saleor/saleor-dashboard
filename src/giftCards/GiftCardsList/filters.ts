@@ -32,7 +32,7 @@ import {
   SearchWithFetchMoreProps,
 } from "./types";
 
-export const GIFT_CARD_FILTERS_KEY = "giftCardFilters";
+const GIFT_CARD_FILTERS_KEY = "giftCardFilters";
 
 interface GiftCardFilterOptsProps {
   params: GiftCardListUrlFilters;
@@ -322,11 +322,6 @@ export function createFilterStructure(
 }
 
 export const storageUtils = createFilterTabUtils<string>(GIFT_CARD_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  GiftCardListUrlQueryParams,
-  GiftCardListUrlFilters
->(GiftCardListUrlFiltersEnum);
 
 export function getFilterVariables({
   status,

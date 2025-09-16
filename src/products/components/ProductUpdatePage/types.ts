@@ -55,13 +55,13 @@ export interface ProductUpdateFormData extends MetadataFormData {
   preorderEndDateTime?: string;
   weight: string;
 }
-export interface FileAttributeInputData {
+interface FileAttributeInputData {
   attributeId: string;
   file: File;
 }
-export type FileAttributeInput = FormsetAtomicData<FileAttributeInputData, string[]>;
+type FileAttributeInput = FormsetAtomicData<FileAttributeInputData, string[]>;
 
-export interface FileAttributesSubmitData {
+interface FileAttributesSubmitData {
   fileAttributes: FileAttributeInput[];
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
@@ -102,10 +102,7 @@ export interface UseProductUpdateFormOutput
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
-export type UseProductUpdateFormRenderProps = Omit<
-  UseProductUpdateFormOutput,
-  "datagrid" | "richText"
->;
+type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid" | "richText">;
 
 export interface UseProductUpdateFormOpts
   extends Record<"categories" | "collections" | "taxClasses", Option[]> {

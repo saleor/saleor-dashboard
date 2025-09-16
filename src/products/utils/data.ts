@@ -24,7 +24,7 @@ import moment from "moment";
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductUpdateFormData } from "../components/ProductUpdatePage/types";
 
-export interface Collection {
+interface Collection {
   id: string;
   label: string;
 }
@@ -90,7 +90,7 @@ export function getAttributeInputFromProductType(productType: ProductType): Attr
   }));
 }
 
-export function getAttributeInputFromAttributes(
+function getAttributeInputFromAttributes(
   variantAttributes: VariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope,
 ): AttributeInput[] {
@@ -109,7 +109,7 @@ export function getAttributeInputFromAttributes(
   }));
 }
 
-export function getAttributeInputFromSelectedAttributes(
+function getAttributeInputFromSelectedAttributes(
   variantAttributes: SelectedVariantAttributeFragment[],
   variantAttributeScope: VariantAttributeScope,
 ): AttributeInput[] {
@@ -170,9 +170,7 @@ export function getStockInputFromVariant(variant: ProductVariantFragment): Produ
   );
 }
 
-export function getCollectionInput(
-  productCollections: ProductFragment["collections"],
-): Collection[] {
+function getCollectionInput(productCollections: ProductFragment["collections"]): Collection[] {
   return maybe(
     () =>
       productCollections.map(collection => ({
@@ -245,10 +243,10 @@ export function mapFormsetStockToStockInput(stock: FormsetAtomicData<null, strin
   };
 }
 
-export const getPreorderEndDateFormData = (endDate?: string) =>
+const getPreorderEndDateFormData = (endDate?: string) =>
   endDate ? moment(endDate).format("YYYY-MM-DD") : "";
 
-export const getPreorderEndHourFormData = (endDate?: string) =>
+const getPreorderEndHourFormData = (endDate?: string) =>
   endDate ? moment(endDate).format("HH:mm") : "";
 
 export const getSelectedMedia = <T extends Pick<ProductMediaFragment, "id" | "sortOrder">>(

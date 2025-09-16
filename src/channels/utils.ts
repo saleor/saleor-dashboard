@@ -42,7 +42,7 @@ export interface ChannelData {
   unitsSold?: number;
 }
 
-export interface ProductChannelListingData extends Channel {
+interface ProductChannelListingData extends Channel {
   isPublished: boolean;
   publishedAt: string | null;
   availableForPurchaseAt: string;
@@ -59,13 +59,13 @@ export interface ChannelPriceData {
   costPrice?: string;
 }
 
-export interface IChannelPriceArgs {
+interface IChannelPriceArgs {
   price: string;
   costPrice: string;
 }
 export type ChannelPriceArgs = RequireOnlyOne<IChannelPriceArgs, "price" | "costPrice">;
 
-export interface ChannelPreorderArgs {
+interface ChannelPreorderArgs {
   preorderThreshold: number;
   unitsSold: number;
   hasPreorderEndDate: boolean;
@@ -123,7 +123,7 @@ export const createCollectionChannels = (data?: ChannelFragment[]) =>
     publishedAt: null,
   }));
 
-export const createVoucherChannels = (data?: ChannelFragment[]) =>
+const createVoucherChannels = (data?: ChannelFragment[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
     discountValue: "",
@@ -132,7 +132,7 @@ export const createVoucherChannels = (data?: ChannelFragment[]) =>
     name: channel.name,
   }));
 
-export const createSaleChannels = (data?: ChannelFragment[]) =>
+const createSaleChannels = (data?: ChannelFragment[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
     discountValue: "",
@@ -186,7 +186,7 @@ export const createChannelsDataWithDiscountPrice = (
   return [];
 };
 
-export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
+const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
   data?.map(channel => ({
     availableForPurchaseAt: undefined,
     costPrice: "",
@@ -201,7 +201,7 @@ export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
     visibleInListings: true,
   })) || [];
 
-export const createChannelsDataWithPrice = (
+const createChannelsDataWithPrice = (
   productData?: ProductFragment,
   data?: ChannelFragment[],
 ): ChannelData[] => {
@@ -215,7 +215,7 @@ export const createChannelsDataWithPrice = (
   return [];
 };
 
-export const createShippingChannels = (
+const createShippingChannels = (
   data?: NonNullable<ShippingZoneQuery["shippingZone"]>["channels"],
 ): ChannelShippingData[] =>
   data?.map(channel => ({
@@ -261,7 +261,7 @@ export interface ChannelShippingData {
   price: string;
 }
 
-export const createChannelsDataFromVoucher = (voucherData?: VoucherDetailsFragment) =>
+const createChannelsDataFromVoucher = (voucherData?: VoucherDetailsFragment) =>
   voucherData?.channelListings?.map(option => ({
     currency: option.channel.currencyCode || option?.minSpent?.currency || "",
     discountValue: option.discountValue.toString() || "",
@@ -270,7 +270,7 @@ export const createChannelsDataFromVoucher = (voucherData?: VoucherDetailsFragme
     name: option.channel.name,
   })) || [];
 
-export const createChannelsDataFromSale = (saleData?: SaleDetailsFragment): ChannelSaleFormData[] =>
+const createChannelsDataFromSale = (saleData?: SaleDetailsFragment): ChannelSaleFormData[] =>
   saleData?.channelListings?.map(option => ({
     currency: option.channel.currencyCode || "",
     discountValue: option.discountValue.toString() || "",
@@ -280,7 +280,7 @@ export const createChannelsDataFromSale = (saleData?: SaleDetailsFragment): Chan
     fixedValue: saleData.type === SaleType.FIXED ? option.discountValue.toString() : "",
   })) || [];
 
-export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
+const createChannelsDataFromProduct = (productData?: ProductFragment) =>
   productData?.channelListings?.map(
     ({
       channel,
@@ -325,7 +325,7 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
     },
   ) || [];
 
-export const extractVariantsIdsForChannel = (
+const extractVariantsIdsForChannel = (
   productVariants: ProductDetailsVariantFragment[],
   channelId: string,
 ) =>
@@ -335,7 +335,7 @@ export const extractVariantsIdsForChannel = (
     )
     .map(({ id }) => id) || [];
 
-export const createSortedChannelsDataFromProduct = (productData?: ProductFragment): ChannelData[] =>
+const createSortedChannelsDataFromProduct = (productData?: ProductFragment): ChannelData[] =>
   createChannelsDataFromProduct(productData).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name),
   ) as ChannelData[];
@@ -352,7 +352,7 @@ export const createSortedShippingChannels = (
     channel.name.localeCompare(nextChannel.name),
   );
 
-export const createSortedShippingChannelsFromRate = (
+const createSortedShippingChannelsFromRate = (
   data?: ShippingMethodTypeFragment["channelListings"],
 ) =>
   createShippingChannelsFromRate(data)?.sort((channel, nextChannel) =>

@@ -27,7 +27,7 @@ function useBulkActions(initial: string[] = []) {
 }
 export default useBulkActions;
 
-export interface UseBulkActionsProps {
+interface UseBulkActionsProps {
   isSelected: (id: string) => boolean;
   listElements: string[];
   toggle: (id: string) => void;

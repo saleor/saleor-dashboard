@@ -320,5 +320,3 @@ export const OrderDraftDetails = ({
     </>
   );
 };
-
-export default OrderDraftDetails;

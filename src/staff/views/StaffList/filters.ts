@@ -10,7 +10,7 @@ import {
 } from "../../../utils/filters";
 import { StaffListUrlFilters, StaffListUrlFiltersEnum, StaffListUrlQueryParams } from "../../urls";
 
-export const STAFF_FILTERS_KEY = "staffFilters";
+const STAFF_FILTERS_KEY = "staffFilters";
 
 export function getFilterOpts(params: StaffListUrlFilters): StaffListFilterOpts {
   return {
@@ -42,8 +42,3 @@ export function getFilterQueryParam(filter: FilterElement<StaffFilterKeys>): Sta
 }
 
 export const storageUtils = createFilterTabUtils<string>(STAFF_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  StaffListUrlQueryParams,
-  StaffListUrlFilters
->(StaffListUrlFiltersEnum);

@@ -101,7 +101,7 @@ export const productCardMessages = defineMessages({
   },
 });
 
-export const fulfilmentStatusMessages = defineMessages({
+const fulfilmentStatusMessages = defineMessages({
   fulfillment: {
     id: "MewrtN",
     defaultMessage: "Fulfillment",
@@ -119,7 +119,7 @@ export const fulfilmentStatusMessages = defineMessages({
   },
 });
 
-export const getTitle = (fulfillmentStatus: FulfillmentStatus, intl: IntlShape) => {
+const getTitle = (fulfillmentStatus: FulfillmentStatus, intl: IntlShape) => {
   switch (fulfillmentStatus) {
     case FulfillmentStatus.RETURNED:
       return intl.formatMessage(fulfilmentStatusMessages.fulfillmentReturned);

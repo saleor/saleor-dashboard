@@ -18,7 +18,7 @@ import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface DiscountCollectionsProps extends ListProps, ListActions {
+interface DiscountCollectionsProps extends ListProps, ListActions {
   collections: CollectionWithTotalProductsFragment[];
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;

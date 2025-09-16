@@ -99,7 +99,7 @@ export function getCustomAppErrorMessage(
   return undefined;
 }
 
-export interface IntrospectionNode {
+interface IntrospectionNode {
   name: string;
   interfaces: Array<{
     name: string;

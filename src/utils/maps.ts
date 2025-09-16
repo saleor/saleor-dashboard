@@ -67,7 +67,7 @@ export function mapSlugNodeToChoice(nodes: Array<ExtendedNode & SlugNode>): Opti
   return mapNodeToChoice(nodes, node => node.slug);
 }
 
-export function mapTagNodeToChoice(nodes: Array<Node & TagNode>): Option[] {
+function mapTagNodeToChoice(nodes: Array<Node & TagNode>): Option[] {
   return mapNodeToChoice(nodes, node => node.tag);
 }
 

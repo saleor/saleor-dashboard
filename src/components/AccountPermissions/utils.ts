@@ -5,7 +5,7 @@ import {
   UserUserPermissionWithSourcePermissionGroupsFragment,
 } from "@dashboard/graphql";
 
-export const getLastSourcesOfPermission = (
+const getLastSourcesOfPermission = (
   groupId: string,
   userPermissions: Array<NonNullable<UserUserPermissionWithSourcePermissionGroupsFragment>>,
 ) =>
@@ -16,7 +16,7 @@ export const getLastSourcesOfPermission = (
     )
     .map(perm => perm.code);
 
-export const getPermissionsComponentChoices = (
+const getPermissionsComponentChoices = (
   userPermissions: UserPermissionFragment[],
   shopPermissions: PermissionFragment[],
   lastSourcesOfPermissionIds: string[],

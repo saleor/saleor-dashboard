@@ -13,7 +13,7 @@ import { getOrderTitleMessage } from "./utils";
 
 export type CardTitleStatus = FulfillmentStatus | "unfulfilled";
 
-export type CardTitleLines = Array<{
+type CardTitleLines = Array<{
   quantity: number;
   quantityToFulfill?: number;
 }>;

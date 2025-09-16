@@ -48,7 +48,7 @@ const isRefundPending = (refund?: OrderRefundDisplay) => {
   return refund.status === OrderGrantedRefundStatusEnum.PENDING;
 };
 
-export const isRefundEditable = (refund?: OrderRefundDisplay) => {
+const isRefundEditable = (refund?: OrderRefundDisplay) => {
   if (!refund) {
     return false;
   }

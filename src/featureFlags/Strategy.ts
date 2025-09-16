@@ -4,6 +4,6 @@ export interface Strategy {
   fetchAll: () => Promise<FlagList>;
 }
 
-export interface PersistableStrategy extends Strategy {
+interface PersistableStrategy extends Strategy {
   store?: (flags: FlagList) => Promise<void>;
 }

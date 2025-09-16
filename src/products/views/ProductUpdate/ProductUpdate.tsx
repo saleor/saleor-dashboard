@@ -48,7 +48,7 @@ interface ProductUpdateProps {
   params: ProductUrlQueryParams;
 }
 
-export const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
+const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -294,4 +294,5 @@ export const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     </>
   );
 };
+
 export default ProductUpdate;

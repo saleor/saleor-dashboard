@@ -47,5 +47,4 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const Shop = ShopContext.Consumer;
-export default Shop;
+const Shop = ShopContext.Consumer;

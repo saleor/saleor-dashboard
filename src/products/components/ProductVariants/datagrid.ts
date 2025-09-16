@@ -163,7 +163,7 @@ export const useAttributesAdapter = ({
   };
 };
 
-export const parseAttributeColumns = (
+const parseAttributeColumns = (
   attributes: ProductFragment["productType"]["variantAttributes"] | undefined,
   intl: IntlShape,
 ): AvailableColumn[] | undefined =>
@@ -209,7 +209,7 @@ export const useWarehouseAdapter = ({
   };
 };
 
-export const getAvailableWarehousesData = ({
+const getAvailableWarehousesData = ({
   availableWarehouses,
   initialWarehouses,
 }: {
@@ -232,7 +232,7 @@ const parseWarehousesColumns = (data: WarehouseFragment[] | undefined, intl: Int
 };
 
 // Reuse when fixing #4165
-export const getWarehousesFetchMoreProps = ({
+const getWarehousesFetchMoreProps = ({
   queryAvailableWarehouses,
   availableWarehousesData,
   gridWarehousesData,
@@ -284,14 +284,14 @@ export const getWarehousesFetchMoreProps = ({
 
 const prefix = "warehouse";
 
-export function getWarehouseColumnValue(id: string) {
+function getWarehouseColumnValue(id: string) {
   return `${prefix}:${id}`;
 }
 
-export function isWarehouseColumnValue(value: string) {
+function isWarehouseColumnValue(value: string) {
   return value?.includes(`${prefix}:`);
 }
 
-export function getWarehouseIdFromColumnValue(value: string) {
+function getWarehouseIdFromColumnValue(value: string) {
   return value.substr(prefix.length + 1);
 }

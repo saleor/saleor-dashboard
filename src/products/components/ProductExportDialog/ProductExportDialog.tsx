@@ -31,7 +31,7 @@ import ProductExportDialogInfo, {
 } from "./ProductExportDialogInfo";
 import { exportSettingsInitialFormData } from "./types";
 
-export enum ProductExportStep {
+enum ProductExportStep {
   INFO = 0,
   SETTINGS = 1,
 }
@@ -70,7 +70,7 @@ const initialForm: ExportProductsInput = {
 };
 const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
-export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
+interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   attributes: RelayToFlat<SearchAttributesQuery["search"]>;
   channels: ChannelFragment[];
   confirmButtonState: ConfirmButtonTransitionState;

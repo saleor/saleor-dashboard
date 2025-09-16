@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface TabsProps {
+interface TabsProps {
   children: (props: { changeTab: (index: number) => void; currentTab: number }) => React.ReactNode;
 }
 
@@ -22,5 +22,3 @@ class Tabs extends React.Component<TabsProps, TabsState> {
     });
   }
 }
-
-export default Tabs;

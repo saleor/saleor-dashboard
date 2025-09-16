@@ -789,4 +789,3 @@ export const introspectionMocks: MockedResponse[] = [
   },
 ];
 
-export default introspectionMocks;

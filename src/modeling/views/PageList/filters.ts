@@ -27,7 +27,7 @@ export enum PageListFilterKeys {
   pageTypes = "pageTypes",
 }
 
-export const PAGES_FILTERS_KEY = "pagesFilters";
+const PAGES_FILTERS_KEY = "pagesFilters";
 
 export interface PageListFilterOpts {
   pageType: FilterOpts<string[]> & AutocompleteFilterOpts;
@@ -101,15 +101,10 @@ export function getFilterQueryParam(filter: FilterElement<PageListFilterKeys>): 
   }
 }
 
-export type PageListUrlQueryParams = Pagination &
+type PageListUrlQueryParams = Pagination &
   PageListUrlFilters &
   PageListUrlSort &
   ActiveTab &
   Search;
 
 export const storageUtils = createFilterTabUtils<string>(PAGES_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  PageListUrlQueryParams,
-  PageListUrlFilters
->(PageListUrlFiltersWithMultipleValues);

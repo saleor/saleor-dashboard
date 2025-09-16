@@ -3,7 +3,7 @@ import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useState } from "react";
 
-export type RefundType = "standard" | "manual";
+type RefundType = "standard" | "manual";
 
 export const useOrderRefundDialog = () => {
   const [selectedRefundType, setSelected] = useState<RefundType>("standard");

@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import TranslationsLanguageList from "../TranslationsLanguageList";
 
-export interface TranslationsLanguageListPageProps {
+interface TranslationsLanguageListPageProps {
   languages: LanguageFragment[];
 }
 

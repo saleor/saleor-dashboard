@@ -5,7 +5,7 @@ import { WhereOnlyQueryVarsBuilder } from "./types";
 
 type MetadataInput = { metadata?: { key: string; value?: { eq?: string; oneOf?: string[] } } };
 
-export type ArrayMetadataFilterQueryPart = {
+type ArrayMetadataFilterQueryPart = {
   lines?: Array<MetadataInput>;
   transactions?: Array<MetadataInput>;
   fulfillments?: Array<MetadataInput>;

@@ -84,7 +84,7 @@ export const useStyles = makeStyles(
   { name: "AppLayout" },
 );
 
-export const useFullSizeStyles = makeStyles(
+const useFullSizeStyles = makeStyles(
   () => ({
     content: {
       height: "100vh",

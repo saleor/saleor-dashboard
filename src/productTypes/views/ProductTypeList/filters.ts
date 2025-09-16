@@ -22,7 +22,7 @@ import {
   ProductTypeListUrlQueryParams,
 } from "../../urls";
 
-export const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
+const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
 
 export function getFilterOpts(params: ProductTypeListUrlFilters): ProductTypeListFilterOpts {
   return {
@@ -62,8 +62,3 @@ export function getFilterQueryParam(
 }
 
 export const storageUtils = createFilterTabUtils<string>(PRODUCT_TYPE_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  ProductTypeListUrlQueryParams,
-  ProductTypeListUrlFilters
->(ProductTypeListUrlFiltersEnum);

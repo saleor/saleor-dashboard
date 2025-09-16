@@ -45,7 +45,7 @@ export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
   return status;
 }
 
-export function handleError(error: Error) {
+function handleError(error: Error) {
   throw error;
 }
 

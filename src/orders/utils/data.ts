@@ -288,7 +288,7 @@ export function mergeRepeatedOrderLines(
   }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
-export function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
+function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
   const { id, __typename, ...rest } = address;
 
   return {
@@ -309,10 +309,7 @@ export const getVariantSearchAddress = (order: OrderDetailsFragment): AddressInp
   return { country: order.channel.defaultCountry.code as CountryCode };
 };
 
-export const getAllocatedQuantityForLine = (
-  line: OrderLineStockDataFragment,
-  warehouseId: string,
-) => {
+const getAllocatedQuantityForLine = (line: OrderLineStockDataFragment, warehouseId: string) => {
   const warehouseAllocation = line.allocations.find(
     allocation => allocation.warehouse.id === warehouseId,
   );
@@ -351,7 +348,7 @@ export const getFulfillmentFormsetQuantity = (
 export const getWarehouseStock = (stocks: StockFragment[], warehouseId: string) =>
   stocks?.find(stock => stock.warehouse.id === warehouseId);
 
-export const isLineAvailableInWarehouse = (
+const isLineAvailableInWarehouse = (
   line: OrderFulfillLineFragment | OrderLineStockDataFragment,
   warehouse: WarehouseFragment,
 ): boolean => {
@@ -396,7 +393,7 @@ export const getLineAllocationWithHighestQuantity = (
     return prevAllocation;
   }, null);
 
-export const getWarehouseWithHighestAvailableQuantity = (
+const getWarehouseWithHighestAvailableQuantity = (
   lines?: OrderLineFragment[],
 ): WarehouseFragment | undefined => {
   let highestAvailableQuantity = 0;

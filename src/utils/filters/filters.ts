@@ -193,5 +193,3 @@ export function getKeyValueQueryParam<TKey extends string, TUrlKey extends strin
     [key]: filledOutPairs,
   };
 }
-
-export default createFilterUtils;

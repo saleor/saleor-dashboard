@@ -13,7 +13,7 @@ import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { useStyles } from "./styles";
 
-export interface AssignContainerDialogFormData {
+interface AssignContainerDialogFormData {
   containers: string[];
   query: string;
 }

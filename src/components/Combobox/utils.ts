@@ -8,4 +8,4 @@ export const toWithCustomValues = (addNewValueLabel: string) => (value: Option) 
   return value;
 };
 
-export const toValue = (value: Option) => value.value;
+const toValue = (value: Option) => value.value;

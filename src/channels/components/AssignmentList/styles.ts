@@ -1,6 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
-export const useExpanderStyles = makeStyles(
+const useExpanderStyles = makeStyles(
   theme => ({
     expanded: {},
     root: {
@@ -20,7 +20,7 @@ export const useExpanderStyles = makeStyles(
   { name: "Expander" },
 );
 
-export const useHeaderStyles = makeStyles(
+const useHeaderStyles = makeStyles(
   theme => ({
     container: {
       width: "100%",

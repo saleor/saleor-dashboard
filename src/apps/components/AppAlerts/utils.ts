@@ -17,7 +17,7 @@ const hasFailedAttemptsInPendingCheck = (webhook: Webhook) => {
   );
 };
 
-export const webhookFailedAttemptsCheck = (webhook: Webhook) =>
+const webhookFailedAttemptsCheck = (webhook: Webhook) =>
   hasFailedAttemptsCheck(webhook) || hasFailedAttemptsInPendingCheck(webhook);
 
 type LatestWebhookDelivery =

@@ -18,7 +18,7 @@ function getWarehouseErrorMessage(
   return getCommonFormFieldErrorMessage(err, intl);
 }
 
-export function getWarehouseSlugErrorMessage(
+function getWarehouseSlugErrorMessage(
   err: Omit<WarehouseErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
 ): string | undefined {

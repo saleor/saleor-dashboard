@@ -35,7 +35,7 @@ import {
   ProductListUrlQueryParams,
 } from "../../urls";
 
-export const PRODUCT_FILTERS_KEY = "productPresets";
+const PRODUCT_FILTERS_KEY = "productPresets";
 
 function getAttributeFilterParamType(inputType: AttributeInputTypeEnum) {
   switch (inputType) {
@@ -193,16 +193,7 @@ export function getFilterQueryParam(
 
 export const storageUtils = createFilterTabUtils<string>(PRODUCT_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  ProductListUrlQueryParams,
-  ProductListUrlFilters
->({
-  ...ProductListUrlFiltersEnum,
-  ...ProductListUrlFiltersWithMultipleValues,
-  ...ProductListUrlFiltersAsDictWithMultipleValues,
-});
-
-export const getWhereVariables = (
+const getWhereVariables = (
   productListingPageFiltersFlag: FlagValue,
   value: FilterContainer,
 ): ProductWhereInput => {

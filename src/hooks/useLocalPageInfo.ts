@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export interface PageInfo {
+interface PageInfo {
   endCursor: number;
   hasNextPage: boolean;
   hasPreviousPage: boolean;

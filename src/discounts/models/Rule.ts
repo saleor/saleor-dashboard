@@ -16,7 +16,7 @@ export interface Rule {
   hasPredicateNestedConditions?: boolean;
 }
 
-export const createEmptyRule = (): Rule => ({
+const createEmptyRule = (): Rule => ({
   id: "",
   name: "",
   description: "",

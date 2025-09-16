@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 
 import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
 
-export const OrderSettings = () => {
+const OrderSettings = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const { data, loading } = useOrderSettingsQuery({});
@@ -66,4 +66,5 @@ export const OrderSettings = () => {
     />
   );
 };
+
 export default OrderSettings;

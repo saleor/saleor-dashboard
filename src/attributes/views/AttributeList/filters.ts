@@ -17,7 +17,7 @@ import {
   AttributeListUrlQueryParams,
 } from "../../urls";
 
-export const ATTRIBUTE_FILTERS_KEY = "attributeFilters";
+const ATTRIBUTE_FILTERS_KEY = "attributeFilters";
 
 export function getFilterOpts(params: AttributeListUrlFilters): AttributeListFilterOpts {
   return {
@@ -79,8 +79,3 @@ export function getFilterQueryParam(
 }
 
 export const storageUtils = createFilterTabUtils<string>(ATTRIBUTE_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  AttributeListUrlQueryParams,
-  AttributeListUrlFilters
->(AttributeListUrlFiltersEnum);

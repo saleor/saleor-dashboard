@@ -56,7 +56,7 @@ export function createChannelsChangeHandler(
   };
 }
 
-export function createVariantChannelsChangeHandler(
+function createVariantChannelsChangeHandler(
   channelListings: ChannelPriceData[],
   setData: (data: ChannelPriceData[]) => void,
   triggerChange: () => void,

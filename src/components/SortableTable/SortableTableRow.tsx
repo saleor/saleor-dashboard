@@ -20,5 +20,3 @@ const SortableTableRow = SortableElement<any>(({ children, ...props }) => (
 )) as unknown as <T extends SortableTableRowTypesUnion = "link">(
   props: SortableElementProps & SortableTableRowProps<T>,
 ) => JSX.Element;
-
-export default SortableTableRow;

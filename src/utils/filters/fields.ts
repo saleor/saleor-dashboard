@@ -2,7 +2,7 @@ import { FieldType, FilterElementGeneric } from "@dashboard/components/Filter";
 import { FetchMoreProps, KeyValue, MinMax, SearchPageProps } from "@dashboard/types";
 import { Option } from "@saleor/macaw-ui-next";
 
-export function createPriceField<K extends string = string>(
+function createPriceField<K extends string = string>(
   name: K,
   label: string,
   defaultValue: MinMax,
@@ -17,7 +17,7 @@ export function createPriceField<K extends string = string>(
   };
 }
 
-export function createKeyValueField<K extends string = string>(
+function createKeyValueField<K extends string = string>(
   name: K,
   label: string,
   defaultValue: KeyValue[],
@@ -47,7 +47,7 @@ export function createDateField<K extends string>(
   };
 }
 
-export function createDateTimeField<K extends string>(
+function createDateTimeField<K extends string>(
   name: K,
   label: string,
   defaultValue: MinMax,

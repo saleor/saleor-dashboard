@@ -20,7 +20,7 @@ import { getLinkTypeOptions } from "./options";
 import { MenuItemDialogFormData } from "./types";
 import { getValidationSchema } from "./validationSchema";
 
-export interface MenuItemDialogProps {
+interface MenuItemDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: MenuErrorFragment[];

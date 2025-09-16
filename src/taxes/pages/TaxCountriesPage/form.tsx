@@ -12,14 +12,14 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
-export interface TaxCountriesPageFormData {
+interface TaxCountriesPageFormData {
   rates: Array<{
     rate: string;
     taxClass: Omit<TaxClassFragment, "countries">;
   }>;
   country: string;
 }
-export interface UseTaxCountriesFormResult {
+interface UseTaxCountriesFormResult {
   data: FormsetData<TaxClassRateInput>;
   submit: () => SubmitPromise;
   handlers: { handleRateChange: (id: string, value: string) => void };

@@ -35,7 +35,7 @@ export type FormErrors<T> = {
 };
 
 /** @deprecated Use react-hook-form instead */
-export interface UseFormOpts<T> {
+interface UseFormOpts<T> {
   confirmLeave: boolean;
   formId?: FormId;
   checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<T>;

@@ -72,7 +72,7 @@ export function weight(value: string) {
   return value === "" ? null : parseFloat(value);
 }
 
-export const removeDoubleSlashes = (url: string) => url.replace(/([^:]\/)\/+/g, "$1");
+const removeDoubleSlashes = (url: string) => url.replace(/([^:]\/)\/+/g, "$1");
 
 export const transformPaymentStatus = (
   status: string,
@@ -240,17 +240,17 @@ export function maybe(exp: any, d?: any) {
   }
 }
 
-export function only<T extends object>(obj: T, key: keyof T): boolean {
+function only<T extends object>(obj: T, key: keyof T): boolean {
   return Object.keys(obj).every(objKey =>
     objKey === key ? obj[key] !== undefined : obj[key] === undefined,
   );
 }
 
-export function empty(obj: {}): boolean {
+function empty(obj: {}): boolean {
   return Object.keys(obj).every(key => obj[key as keyof typeof obj] === undefined);
 }
 
-export function hasErrors(errorList: UserError[] | null): boolean {
+function hasErrors(errorList: UserError[] | null): boolean {
   return !(errorList === undefined || errorList === null || errorList.length === 0);
 }
 
@@ -270,7 +270,7 @@ export function getMutationState(
   return "default";
 }
 
-export interface SaleorMutationResult {
+interface SaleorMutationResult {
   errors?: any[];
 }
 
@@ -289,7 +289,7 @@ export const extractMutationErrors = async <
   return e as TErrors;
 };
 
-export const hasMutationErrors = (result: FetchResult): boolean => {
+const hasMutationErrors = (result: FetchResult): boolean => {
   if (!result?.data) {
     return false;
   }
@@ -415,14 +415,14 @@ export function stopPropagation<T extends AnyEventWithPropagation>(cb: (event?: 
 interface AnyEventWithPreventDefault {
   preventDefault: () => void;
 }
-export function preventDefault<T extends AnyEventWithPreventDefault>(cb: (event?: T) => void) {
+function preventDefault<T extends AnyEventWithPreventDefault>(cb: (event?: T) => void) {
   return (event: T) => {
     event.preventDefault();
     cb(event);
   };
 }
 
-export interface DateTime {
+interface DateTime {
   date: string;
   time: string;
 }
@@ -455,7 +455,7 @@ export function splitDateTime(dateTime: string) {
   };
 }
 
-export function generateCode(charNum: number) {
+function generateCode(charNum: number) {
   let result = "";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -466,7 +466,7 @@ export function generateCode(charNum: number) {
   return result;
 }
 
-export function isInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
+function isInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   return Object.keys(haystack).includes(needle);
 }
 
@@ -516,7 +516,7 @@ export function getStringOrPlaceholder(s: string | undefined | null, placeholder
   return s || placeholder || "...";
 }
 
-export const getDatePeriod = (days: number): DateRangeInput => {
+const getDatePeriod = (days: number): DateRangeInput => {
   if (days < 1) {
     return {};
   }
@@ -531,7 +531,7 @@ export const getDatePeriod = (days: number): DateRangeInput => {
   };
 };
 
-export const isDarkTheme = (themeType: ThemeType) => themeType === "dark";
+const isDarkTheme = (themeType: ThemeType) => themeType === "dark";
 
 export const transformAddressToAddressInput = (data?: AddressType) => ({
   city: data?.city || "",
@@ -570,7 +570,7 @@ export const flatten = (obj: object) => {
   return result;
 };
 
-export function PromiseQueue() {
+function PromiseQueue() {
   let queue = Promise.resolve();
 
   function add<T>(operation: (value: T | void) => PromiseLike<T>) {
@@ -582,7 +582,7 @@ export function PromiseQueue() {
   return { queue, add };
 }
 
-export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 export const getBySlug = (slugToCompare: string) => (obj: SlugNode) => obj.slug === slugToCompare;
 

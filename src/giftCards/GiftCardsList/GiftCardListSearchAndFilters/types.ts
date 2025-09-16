@@ -9,7 +9,7 @@ import {
   SearchProps,
 } from "@dashboard/types";
 
-export enum GiftCardListUrlFiltersEnum {
+enum GiftCardListUrlFiltersEnum {
   currency = "currency",
   initialBalanceAmountFrom = "initialBalanceAmountFrom",
   initialBalanceAmountTo = "initialBalanceAmountTo",
@@ -18,13 +18,13 @@ export enum GiftCardListUrlFiltersEnum {
   status = "status",
 }
 
-export enum GiftCardListUrlFiltersWithMultipleValuesEnum {
+enum GiftCardListUrlFiltersWithMultipleValuesEnum {
   tag = "tag",
   product = "product",
   usedBy = "usedBy",
 }
 
-export enum GiftCardListFilterKeys {
+enum GiftCardListFilterKeys {
   currency = "currency",
   balance = "balance",
   initialBalance = "initialBalance",
@@ -37,10 +37,10 @@ export enum GiftCardListFilterKeys {
   status = "status",
 }
 
-export type GiftCardListUrlFilters = Filters<GiftCardListUrlFiltersEnum> &
+type GiftCardListUrlFilters = Filters<GiftCardListUrlFiltersEnum> &
   FiltersWithMultipleValues<GiftCardListUrlFiltersWithMultipleValuesEnum>;
 
-export interface GiftCardListFilterOpts {
+interface GiftCardListFilterOpts {
   tag: FilterOpts<string[]> & AutocompleteFilterOpts;
   currency: FilterOpts<string> & AutocompleteFilterOpts;
   product: FilterOpts<string[]> & AutocompleteFilterOpts;
@@ -52,7 +52,7 @@ export interface GiftCardListFilterOpts {
 
 export type SearchWithFetchMoreProps = FetchMoreProps & Search & SearchProps;
 
-export enum GiftCardStatusFilterEnum {
+enum GiftCardStatusFilterEnum {
   enabled = "enabled",
   disabled = "disabled",
 }

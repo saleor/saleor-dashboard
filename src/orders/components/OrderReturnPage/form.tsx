@@ -41,7 +41,7 @@ export interface OrderReturnData {
   amountCalculationMode: OrderRefundAmountCalculationMode;
 }
 
-export interface OrderReturnHandlers {
+interface OrderReturnHandlers {
   changeFulfiledItemsQuantity: FormsetChange<number>;
   changeWaitingItemsQuantity: FormsetChange<number>;
   changeUnfulfiledItemsQuantity: FormsetChange<number>;
@@ -60,7 +60,7 @@ export interface OrderReturnFormData extends OrderReturnData {
 
 export type OrderRefundSubmitData = OrderReturnFormData;
 
-export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
+type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
   OrderReturnFormData,
   OrderReturnHandlers
 > & { isAmountDirty: boolean };

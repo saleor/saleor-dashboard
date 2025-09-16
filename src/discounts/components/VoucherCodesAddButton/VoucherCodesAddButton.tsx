@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface VoucherCodesAddButtonProps {
+interface VoucherCodesAddButtonProps {
   onMultiCodesGenerate: () => void;
   onSingleCodesGenerate: () => void;
 }

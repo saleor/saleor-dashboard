@@ -22,7 +22,7 @@ import { useStyles } from "./styles";
 import { Products, SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
-export interface AssignProductDialogFormData {
+interface AssignProductDialogFormData {
   products: Products;
   query: string;
 }

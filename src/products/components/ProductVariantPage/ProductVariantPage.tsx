@@ -79,7 +79,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ProductVariantPageFormData extends MetadataFormData {
+interface ProductVariantPageFormData extends MetadataFormData {
   costPrice: string;
   price: string;
   sku: string;
@@ -87,7 +87,7 @@ export interface ProductVariantPageFormData extends MetadataFormData {
   weight: string;
 }
 
-export interface ProductVariantPageSubmitData extends ProductVariantPageFormData {
+interface ProductVariantPageSubmitData extends ProductVariantPageFormData {
   attributes: AttributeInput[];
   addStocks: ProductStockInput[];
   updateStocks: ProductStockInput[];

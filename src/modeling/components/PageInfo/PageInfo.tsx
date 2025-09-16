@@ -15,7 +15,7 @@ import { useIntl } from "react-intl";
 
 import { PageData } from "../PageDetailsPage/form";
 
-export interface PageInfoProps {
+interface PageInfoProps {
   data: PageData;
   disabled: boolean;
   errors: PageErrorFragment[];

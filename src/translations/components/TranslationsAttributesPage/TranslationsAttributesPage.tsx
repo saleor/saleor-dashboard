@@ -21,7 +21,7 @@ import { getTranslationFields } from "../../utils";
 import TranslationFields from "../TranslationFields";
 import { transtionsAttributesPageFieldsMessages as messages } from "./messages";
 
-export interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;

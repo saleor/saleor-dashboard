@@ -72,7 +72,7 @@ export enum OrderListUrlSortField {
   total = "total",
   rank = "rank",
 }
-export type OrderListUrlSort = Sort<OrderListUrlSortField>;
+type OrderListUrlSort = Sort<OrderListUrlSortField>;
 export type OrderListUrlQueryParams = BulkAction &
   Dialog<OrderListUrlDialog> &
   OrderListUrlFilters &
@@ -137,7 +137,7 @@ export enum OrderDraftListUrlSortField {
   date = "date",
   total = "total",
 }
-export type OrderDraftListUrlSort = Sort<OrderDraftListUrlSortField>;
+type OrderDraftListUrlSort = Sort<OrderDraftListUrlSortField>;
 export type OrderDraftListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<OrderDraftListUrlDialog> &
@@ -178,7 +178,7 @@ export type OrderUrlDialog =
   | "add-manual-transaction"
   | "view-metadata";
 
-export interface TransactionAction {
+interface TransactionAction {
   action: "transaction-action";
   id: string;
   type: TransactionActionEnum;
@@ -188,8 +188,8 @@ export type OrderUrlQueryParams =
   | (Dialog<OrderUrlDialog> & SingleAction & { type?: never })
   | TransactionAction;
 
-export type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
-export type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
+type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
+type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
 export type OrderFulfillUrlDialog = "change-warehouse";
 export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> & OrderFulfillUrlFilters;
 
@@ -225,7 +225,7 @@ export const orderGrantRefundEditUrl = (orderId: string, refundId: string) =>
 
 export const orderReturnUrl = (id: string) => orderReturnPath(encodeURIComponent(id));
 
-export const orderGiftCardBoughtPath = () =>
+const orderGiftCardBoughtPath = () =>
   orderListUrl({
     giftCard: [OrderFilterGiftCard.paid],
   });

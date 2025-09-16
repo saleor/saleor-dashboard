@@ -28,7 +28,7 @@ export enum PageListUrlSortField {
   visible = "visible",
 }
 
-export enum PageListUrlFiltersEnum {
+enum PageListUrlFiltersEnum {
   query = "query",
 }
 
@@ -49,8 +49,8 @@ export const pageListUrl = (params?: PageListUrlQueryParams) =>
   pageListPath + "?" + stringifyQs(params);
 
 export const pagePath = (id: string) => urlJoin(modelingSection, id);
-export type PageUrlDialog = "remove" | "assign-attribute-value";
-export interface PageCreateUrlPageType {
+type PageUrlDialog = "remove" | "assign-attribute-value";
+interface PageCreateUrlPageType {
   "page-type-id"?: string;
 }
 export type PageUrlQueryParams = Dialog<PageUrlDialog> & SingleAction;

@@ -16,7 +16,7 @@ export const getRefundFormDefaultValues = ({
   return getRefundEditDefaultValues(order, draftRefund);
 };
 
-export const getRefundCreateDefaultValues = (
+const getRefundCreateDefaultValues = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
 ): OrderTransactionRefundPageFormData => ({
   linesToRefund: getRefundCreateOrderLinesToRefund(order) ?? [],
@@ -60,7 +60,7 @@ export const getRefundEditOrderLinesToRefund = (
   });
 };
 
-export const getRefundCreateOrderLinesToRefund = (
+const getRefundCreateOrderLinesToRefund = (
   order: OrderDetailsGrantRefundFragment | undefined | null,
 ) => {
   return order?.lines.map(() => ({
@@ -69,7 +69,7 @@ export const getRefundCreateOrderLinesToRefund = (
   }));
 };
 
-export const getDefaultTransaction = (
+const getDefaultTransaction = (
   transactions: OrderDetailsGrantRefundFragment["transactions"] | undefined,
 ) =>
   transactions?.find(transaction => transaction.actions.includes(TransactionActionEnum.REFUND))?.id;

@@ -2,7 +2,7 @@ import { Option } from "@saleor/macaw-ui-next";
 
 export type ConditionType = "is" | "between" | "lower" | "greater";
 
-export type ConditionValue = Option[] | string | [string, string] | null;
+type ConditionValue = Option[] | string | [string, string] | null;
 
 export interface Condition {
   id: string | null;
@@ -16,7 +16,7 @@ export const createEmptyCodition = (): Condition => ({
   value: null,
 });
 
-export const isString = (conditionValue: ConditionValue): conditionValue is string => {
+const isString = (conditionValue: ConditionValue): conditionValue is string => {
   return typeof conditionValue === "string";
 };
 

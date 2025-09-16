@@ -103,7 +103,7 @@ interface ProductCreatePageProps {
   searchWarehouses: (query: string) => void;
 }
 
-export const ProductCreatePage = ({
+const ProductCreatePage = ({
   allChannelsCount,
   channelsErrors,
   currentChannels,
@@ -415,5 +415,6 @@ export const ProductCreatePage = ({
     </ProductCreateForm>
   );
 };
+
 ProductCreatePage.displayName = "ProductCreatePage";
 export default ProductCreatePage;

@@ -135,7 +135,7 @@ export const orderRules = [
   },
 ] as Rule[];
 
-export const orderComplexRules = [
+const orderComplexRules = [
   ...orderRules,
   {
     id: "order-3",

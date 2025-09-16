@@ -39,7 +39,7 @@ function parseStringOrNumber(value: number | string): number {
   return parsed;
 }
 
-export interface ValidateQtyParams {
+interface ValidateQtyParams {
   update: DatagridChangeOpts["currentUpdate"];
   order: OrderDetailsGrantRefundFragment | undefined | null;
   draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;

@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 import { GiftCardSettingsFormData } from "../types";
 import { giftCardExpirySettingsCard as messages } from "./messages";
 
-export interface GiftCardExpirySettingsCardProps
+interface GiftCardExpirySettingsCardProps
   extends Pick<GiftCardSettingsExpirySelectProps, "errors"> {
   data: GiftCardSettingsFormData;
   disabled: boolean;

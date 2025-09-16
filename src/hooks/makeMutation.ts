@@ -19,11 +19,11 @@ import useNotifier from "./useNotifier";
 
 export type MutationResultWithOpts<TData> = MutationResult<TData> & MutationResultAdditionalProps;
 
-export type UseMutation<TData, TVariables> = [
+type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
   MutationResultWithOpts<TData>,
 ];
-export type UseMutationHook<TData, TVariables> = (
+type UseMutationHook<TData, TVariables> = (
   cbs: MutationHookOptions<TData, TVariables>,
 ) => UseMutation<TData, TVariables>;
 
@@ -101,5 +101,3 @@ function makeMutation<TData, TVariables>(
   return (opts: MutationHookOptions<TData, TVariables>) =>
     useMutation<TData, TVariables>(mutation, opts);
 }
-
-export default makeMutation;

@@ -48,7 +48,7 @@ import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
 import { messages } from "./messages";
 
-export interface PageDetailsPageProps {
+interface PageDetailsPageProps {
   loading: boolean;
   errors: PageErrorWithAttributesFragment[];
   page: PageDetailsFragment;

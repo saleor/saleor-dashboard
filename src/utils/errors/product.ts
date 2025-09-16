@@ -115,7 +115,7 @@ function getProductErrorMessage(
   return getCommonFormFieldErrorMessage(err, intl);
 }
 
-export function getProductVariantAttributeErrorMessage(
+function getProductVariantAttributeErrorMessage(
   err: Omit<ProductErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
 ): string | undefined {
@@ -131,7 +131,7 @@ export function getProductVariantAttributeErrorMessage(
   return undefined;
 }
 
-export function getBulkProductErrorMessage(
+function getBulkProductErrorMessage(
   err: BulkProductErrorFragment | undefined,
   intl: IntlShape,
 ): string | undefined {

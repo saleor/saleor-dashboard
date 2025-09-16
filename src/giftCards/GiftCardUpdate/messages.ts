@@ -5,7 +5,7 @@ import commonErrorMessages, {
 } from "@dashboard/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 
-export const giftCardUpdateDetailsCardMessages = defineMessages({
+const giftCardUpdateDetailsCardMessages = defineMessages({
   title: {
     id: "xPnZ0R",
     defaultMessage: "Details",

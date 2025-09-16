@@ -2,7 +2,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import * as React from "react";
 
-export interface TabContainerProps {
+interface TabContainerProps {
   children: React.ReactNode | React.ReactNodeArray;
   className?: string;
 }
@@ -23,5 +23,3 @@ const TabContainer = (props: TabContainerProps) => {
 };
 
 TabContainer.displayName = "TabContainer";
-
-export default TabContainer;

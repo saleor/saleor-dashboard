@@ -35,7 +35,7 @@ const GitHubIcon = () => <SVG src={github} className={noShrink} />;
 const DiscordIcon = () => <SVG src={discord} className={noShrink} />;
 const ExternalLinkIcon = () => <SVG src={externalLink} className={noShrink} />;
 
-export const CommunityLiveUpdate = ({
+const CommunityLiveUpdate = ({
   onTileButtonClick,
 }: {
   onTileButtonClick: (tileId: string) => void;
