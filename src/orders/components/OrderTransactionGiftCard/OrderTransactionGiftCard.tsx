@@ -39,6 +39,7 @@ const OrderTransactionGiftCard = ({ order, giftCard }: OrderTransactionGiftCardP
     id: event.id,
     pspReference: event.id,
     type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+    reasonReference: null,
     createdAt: event.date,
     amount: {
       amount: event.balance.oldCurrentBalance.amount - event.balance.currentBalance.amount,

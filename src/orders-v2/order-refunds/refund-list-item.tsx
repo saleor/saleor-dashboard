@@ -52,12 +52,13 @@ export const RefundListItem = ({ refund, onEditRefund, ...props }: RefundListIte
           overflow="hidden"
           textOverflow="ellipsis"
         >
+          {/* TODO: This should show reasonReference and reasonNote like order v1 */}
           {refund.type === "manual"
             ? intl.formatMessage({
                 defaultMessage: "Manual refund",
                 id: "FZTrzW",
               })
-            : refund.reason}
+            : refund.reasonNote}
         </Text>
       </Box>
 
