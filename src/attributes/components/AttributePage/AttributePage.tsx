@@ -325,6 +325,7 @@ const AttributePage = ({
             </DetailPageLayout>
             <AssignReferenceTypesDialog
               open={params.action === "assign-reference-types"}
+              confirmButtonState="default"
               onClose={onCloseAssignReferenceTypes}
               loading={Boolean(fetchMoreReferenceTypes?.loading)}
               selectedReferenceTypesIds={data.referenceTypes.map(ref => ref.value)}
