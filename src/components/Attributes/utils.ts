@@ -64,6 +64,29 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
   });
 }
 
+export function getSingleReferenceDisplayValue(
+  attribute: AttributeInput,
+): SortableChipsFieldValueType {
+  if (!attribute.value || attribute.value.length === 0) {
+    return null;
+  }
+
+  const reference = attribute?.data?.references?.[0];
+
+  if (reference) {
+    return {
+      label: reference.label,
+      value: reference.value,
+      url: getEntityUrl({
+        entityType: attribute.data.entityType,
+        entityId: reference.value,
+      }),
+    };
+  }
+
+  return null;
+}
+
 export function getMultiChoices(values: AttributeValueFragment[]): Option[] {
   return values.map(value => ({
     label: value.name,
