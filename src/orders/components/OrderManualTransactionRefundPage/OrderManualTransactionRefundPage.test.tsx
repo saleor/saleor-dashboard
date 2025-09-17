@@ -1,6 +1,7 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import {
+  ModelsOfTypeDocument,
   OrderTransactionRequestActionDocument,
   TransactionActionEnum,
   TransactionItemFragment,
@@ -22,6 +23,7 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
+  defineMessage: (message: string) => message,
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
 jest.mock("@dashboard/hooks/useNotifier", () => ({
@@ -63,11 +65,23 @@ describe("OrderManualTransactionRefundPage", () => {
             action: "REFUND",
             transactionId: "2",
             amount: 5,
+            reason: "",
+            reasonReferenceId: undefined,
           },
         },
         result: { data: { transactionRequestAction: { errors: [] } } },
       },
+      {
+        request: {
+          query: ModelsOfTypeDocument,
+          variables: {
+            pageTypeId: "",
+          },
+        },
+        result: { data: { pages: { edges: [] } } },
+      },
     ];
+
     const transactions = [
       {
         id: "1",
@@ -94,6 +108,7 @@ describe("OrderManualTransactionRefundPage", () => {
         currency="USD"
         loading={false}
         orderId="1"
+        modelForRefundReasonRefId={null}
         transactions={transactions}
       />,
       { wrapper: getWrapper(mocks) },
@@ -125,6 +140,7 @@ describe("OrderManualTransactionRefundPage", () => {
     render(
       <OrderManualTransactionRefundPage
         currency="USD"
+        modelForRefundReasonRefId={null}
         loading={false}
         orderId="1"
         transactions={transactions}
@@ -148,6 +164,7 @@ describe("OrderManualTransactionRefundPage", () => {
       <OrderManualTransactionRefundPage
         currency="USD"
         loading={true}
+        modelForRefundReasonRefId={null}
         orderId="1"
         transactions={[]}
       />,

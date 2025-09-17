@@ -159,6 +159,9 @@ export interface PartialMutationProviderOutput<TData extends {} = {}, TVariables
 export interface Node {
   id: string;
 }
+export interface Container extends Node {
+  name: string;
+}
 export interface SlugNode {
   slug: string;
 }

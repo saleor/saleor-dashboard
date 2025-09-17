@@ -319,6 +319,15 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
+    if (inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
+      attrInput.push({
+        id: attr.id,
+        reference: attr.value?.[0] ?? null,
+      });
+
+      return attrInput;
+    }
+
     if (inputType === AttributeInputTypeEnum.DATE) {
       attrInput.push({
         id: attr.id,

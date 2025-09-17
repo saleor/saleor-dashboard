@@ -26,6 +26,7 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
+  defineMessage: (message: string) => message,
   FormattedMessage: ({ defaultMessage }: { defaultMessage: any }) => <>{defaultMessage}</>,
 }));
 jest.mock("./onboardingContext/useOnboardingStorage");

@@ -1,16 +1,16 @@
 // @ts-check
 
-import { globalIgnores } from "eslint/config";
 import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
 import prettierConfig from "eslint-config-prettier";
+import formatjs from "eslint-plugin-formatjs";
+import importPlugin from "eslint-plugin-import";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import importPlugin from "eslint-plugin-import";
-import formatjs from "eslint-plugin-formatjs";
+import { globalIgnores } from "eslint/config";
 import globals from "globals";
+import tseslint from "typescript-eslint";
 import localRules from "./lint/rules/index.mjs";
 import unusedImports from "eslint-plugin-unused-imports";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";

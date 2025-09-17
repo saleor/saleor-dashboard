@@ -24,11 +24,13 @@ import { maybe } from "@dashboard/misc";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { pluginListUrl } from "@dashboard/plugins/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
+import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
+import { PaymentOutlined } from "@material-ui/icons";
 import { IntlShape, useIntl } from "react-intl";
 
 import { ConfigurationPage } from "./ConfigurationPage";
@@ -187,6 +189,17 @@ export function createConfigurationMenu(
           title: intl.formatMessage(sectionNames.siteSettings),
           url: siteSettingsUrl(),
           testId: "configuration-menu-site-settings",
+        },
+        {
+          description: intl.formatMessage({
+            id: "rUnw7n",
+            defaultMessage: "Configure refunds behavior",
+          }),
+          icon: <PaymentOutlined />,
+          permissions: [PermissionEnum.MANAGE_SETTINGS],
+          title: intl.formatMessage(sectionNames.refundsSettings),
+          url: refundsSettingsPath,
+          testId: "configuration-menu-refunds-settings",
         },
         {
           description: intl.formatMessage({

@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Text, Textarea } from "@saleor/macaw-ui-next";
+import { Textarea, TextareaProps } from "@saleor/macaw-ui-next";
 import { Control, useController } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -10,26 +10,39 @@ interface OrderTransactionReasonProps {
   control: Control<OrderTransactionRefundPageFormData, any>;
 }
 
-export const OrderTransactionReason = ({ control }: OrderTransactionReasonProps) => {
-  const { field } = useController({ name: "reason", control });
+export const OrderTransactionReasonUi = (props: { textAreaProps?: TextareaProps }) => {
   const intl = useIntl();
 
   return (
     <DashboardCard>
       <DashboardCard.Content display="flex" flexDirection="column" gap={3}>
-        <Text fontWeight="medium" marginTop={6}>
+        <DashboardCard.Title>
           <FormattedMessage {...transactionRefundReasonMessages.reasonForRefund} />
-        </Text>
+        </DashboardCard.Title>
         <Textarea
           data-test-id="refund-reason-input"
           placeholder={intl.formatMessage(transactionRefundReasonMessages.optionalPlaceholder)}
           size="medium"
-          rows={4}
-          maxRows={8}
-          value={field.value}
-          onChange={field.onChange}
+          rows={8}
+          maxRows={24}
+          {...props.textAreaProps}
         />
       </DashboardCard.Content>
     </DashboardCard>
+  );
+};
+
+export const RefundWithLinesOrderTransactionReason = ({ control }: OrderTransactionReasonProps) => {
+  const { field } = useController({ name: "reason", control });
+
+  return (
+    <OrderTransactionReasonUi
+      textAreaProps={{
+        // @ts-expect-error - todo fix in macaw
+        resize: "vertical",
+        value: field.value,
+        onChange: field.onChange,
+      }}
+    />
   );
 };

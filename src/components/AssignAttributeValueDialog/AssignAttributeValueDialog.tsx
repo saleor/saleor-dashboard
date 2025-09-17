@@ -1,5 +1,6 @@
 import {
   AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
   SearchPagesQuery,
@@ -56,6 +57,18 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 };
 
+const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
+  if (!isSingle) {
+    return { selectionMode: "multiple" as const };
+  }
+
+  const selectedId = attribute.value?.length > 0 ? attribute.value[0] : undefined;
+
+  return { selectedId, selectionMode: "single" as const };
+};
+
 const AssignAttributeValueDialog = ({
   entityType,
   pages,
@@ -90,17 +103,42 @@ const AssignAttributeValueDialog = ({
             title: intl.formatMessage(pagesMessages.header),
             ...labels,
           }}
+          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
       );
     case AttributeEntityTypeEnum.PRODUCT:
-      return <AssignProductDialog products={filteredProducts ?? []} {...rest} />;
+      return (
+        <AssignProductDialog
+          products={filteredProducts ?? []}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
-      return <AssignVariantDialog products={filteredProducts} {...rest} />;
+      return (
+        <AssignVariantDialog
+          products={filteredProducts}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
     case AttributeEntityTypeEnum.COLLECTION:
-      return <AssignCollectionDialog collections={filteredCollections} {...rest} />;
+      return (
+        <AssignCollectionDialog
+          collections={filteredCollections}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
     case AttributeEntityTypeEnum.CATEGORY:
-      return <AssignCategoryDialog categories={filteredCategories} {...rest} />;
+      return (
+        <AssignCategoryDialog
+          categories={filteredCategories}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
   }
 };
 
