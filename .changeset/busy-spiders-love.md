@@ -2,7 +2,7 @@
 "saleor-dashboard": minor
 ---
 
-Narrow down reference attrbute choices.
+Narrow down reference attribute choices.
 
 Now you can narrow down reference attribute options by providing:
 
