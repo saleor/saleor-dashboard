@@ -636,6 +636,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Installed",
     description: "installed extensions section name",
   },
+  refundsSettings: {
+    id: "mFr9YY",
+    defaultMessage: "Refunds Settings",
+    description: "configuration section name for refund settings",
+  },
 });
 
 export const commonStatusMessages = defineMessages({

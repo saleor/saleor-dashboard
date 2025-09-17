@@ -12,12 +12,14 @@ import {
 export type OrderRefundDisplay = {
   id: string;
   type: "standard" | "manual";
+  // Manual refund doesn't have its backend representation so we reuse one from granted refund
   status: OrderGrantedRefundStatusEnum;
   amount: {
     amount: number;
     currency: string;
   };
-  reason: string | null;
+  reasonNote: string | null;
+  reasonType: string | null;
   createdAt: string;
   user: {
     email: string;
@@ -104,7 +106,7 @@ export abstract class OrderRefundsViewModel {
     return null;
   };
 
-  private static mapEventGroupsToOrderRefunds = (
+  private static mapEventGroupsToOrderManualRefunds = (
     eventsByPspReference: Record<string, TransactionEventFragment[]>,
   ): OrderRefundDisplay[] => {
     return Object.values(eventsByPspReference).map(eventGroup => {
@@ -115,7 +117,7 @@ export abstract class OrderRefundsViewModel {
       const latestEventWithAuthor =
         OrderRefundsViewModel.findLatestEventWithUserAuthor(sortedEvents);
 
-      return {
+      const resultModel: OrderRefundDisplay = {
         id: latestEvent.id,
         type: "manual" as const,
         status: OrderRefundsViewModel.mapEventToRefundStatus(latestEvent),
@@ -124,8 +126,19 @@ export abstract class OrderRefundsViewModel {
         user: OrderRefundsViewModel.determineCreatorDisplay(
           latestEventWithAuthor?.createdBy || null,
         ),
-        reason: null,
+        reasonNote: null,
+        reasonType: null,
       };
+
+      // Only REQUEST contains a reason, that is attached when transactionRequestAction("refund") is executed
+      const eventRequestType = sortedEvents.find(e => e.type === "REFUND_REQUEST");
+
+      if (eventRequestType) {
+        resultModel.reasonNote = eventRequestType.message ?? null;
+        resultModel.reasonType = eventRequestType.reasonReference?.title ?? null;
+      }
+
+      return resultModel;
     });
   };
 
@@ -152,13 +165,18 @@ export abstract class OrderRefundsViewModel {
     const eventsByPspReference =
       OrderRefundsViewModel.groupEventsByPspReference(manualRefundEvents);
 
-    return OrderRefundsViewModel.mapEventGroupsToOrderRefunds(eventsByPspReference);
+    return OrderRefundsViewModel.mapEventGroupsToOrderManualRefunds(eventsByPspReference);
   }
 
   private static convertGrantedRefundsToOrderRefunds(
     grantedRefunds: OrderGrantedRefundFragment[],
   ): OrderRefundDisplay[] {
-    return grantedRefunds.map(refund => ({ ...refund, type: "standard" }));
+    return grantedRefunds.map(refund => ({
+      ...refund,
+      type: "standard",
+      reasonType: refund.reasonReference?.title ?? null,
+      reasonNote: refund.reason,
+    }));
   }
 
   static prepareOrderRefundDisplayList(
