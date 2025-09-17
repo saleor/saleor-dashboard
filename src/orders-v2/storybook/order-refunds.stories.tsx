@@ -25,7 +25,8 @@ export const Success: Story = {
         id: "1",
         createdAt: "2023-10-10T10:00:00Z",
         type: "manual",
-        reason: "Customer requested refund",
+        reasonNote: "Customer requested refund",
+        reasonType: null,
         status: OrderGrantedRefundStatusEnum.SUCCESS,
         amount: {
           currency: "USD",
@@ -49,7 +50,8 @@ export const Failure: Story = {
         id: "1",
         createdAt: "2023-10-10T10:00:00Z",
         type: "manual",
-        reason: "Customer requested refund",
+        reasonNote: "Customer requested refund",
+        reasonType: null,
         status: OrderGrantedRefundStatusEnum.FAILURE,
         amount: {
           currency: "USD",
@@ -73,7 +75,8 @@ export const Pending: Story = {
         id: "1",
         createdAt: "2023-10-10T10:00:00Z",
         type: "manual",
-        reason: null,
+        reasonNote: null,
+        reasonType: null,
         status: OrderGrantedRefundStatusEnum.PENDING,
         amount: {
           currency: "USD",
@@ -97,7 +100,8 @@ export const withGrantedRefunds: Story = {
         id: "1",
         createdAt: "2023-10-10T10:00:00Z",
         type: "standard",
-        reason:
+        reasonType: null,
+        reasonNote:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         status: OrderGrantedRefundStatusEnum.SUCCESS,
         amount: {
@@ -122,7 +126,8 @@ export const withEditableRefund: Story = {
         id: "1",
         createdAt: "2023-10-10T10:00:00Z",
         type: "standard",
-        reason: "",
+        reasonType: null,
+        reasonNote: "",
         status: OrderGrantedRefundStatusEnum.FAILURE,
         amount: {
           currency: "USD",
@@ -146,8 +151,9 @@ export const WithMultipleRefunds: Story = {
         id: "1",
         createdAt: "2023-10-10T10:00:00Z",
         type: "manual",
-        reason: "Customer requested refund",
+        reasonNote: "Customer requested refund",
         status: OrderGrantedRefundStatusEnum.SUCCESS,
+        reasonType: null,
         amount: {
           currency: "USD",
           amount: 100,
@@ -162,7 +168,8 @@ export const WithMultipleRefunds: Story = {
         id: "2",
         createdAt: "2023-10-11T10:00:00Z",
         type: "standard",
-        reason: "Granted refund for returned items",
+        reasonNote: "Granted refund for returned items",
+        reasonType: null,
         status: OrderGrantedRefundStatusEnum.PENDING,
         amount: {
           currency: "USD",
