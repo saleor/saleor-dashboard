@@ -539,21 +539,34 @@ const findCategoryReference = (
   return null;
 };
 
-// Helper to build a Map from variant ID to {product, variant} for O(1) lookup
-function buildVariantIdMap(
-  products: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
-): Map<string, { product: typeof products[0]; variant: typeof products[0]["variants"][0] }> {
-  const map = new Map();
+type SearchProduct = RelayToFlat<NonNullable<SearchProductsQuery["search"]>>[0];
+type SearchProductVariant = NonNullable<SearchProduct["variants"]>[0];
 
-  for (const product of products) {
+// Using WeakMap because it allows garbage collection when products are no longer referenced
+const productVariantMapCache = new WeakMap<
+  SearchProduct,
+  Map<string, SearchProductVariant>
+>();
+
+function getProductVariantMap(
+  product: SearchProduct,
+): Map<string, SearchProductVariant> {
+  let variantMap = productVariantMapCache.get(product);
+
+  if (!variantMap) {
+    // Build new map for this product
+    variantMap = new Map();
+
     if (product.variants) {
       for (const variant of product.variants) {
-        map.set(variant.id, { product, variant });
+        variantMap.set(variant.id, variant);
       }
     }
+
+    productVariantMapCache.set(product, variantMap);
   }
 
-  return map;
+  return variantMap;
 }
 
 const findProductVariantReference = (
@@ -562,14 +575,17 @@ const findProductVariantReference = (
 ): AttributeReference | null => {
   if (!referencesEntitiesSearchResult.products) return null;
 
-  const variantIdMap = buildVariantIdMap(referencesEntitiesSearchResult.products);
-  const entry = variantIdMap.get(valueId);
+  // Search through products using cached variant maps
+  for (const product of referencesEntitiesSearchResult.products) {
+    const variantMap = getProductVariantMap(product);
+    const variant = variantMap.get(valueId);
 
-  if (entry) {
-    return {
-      label: `${entry.product.name} ${entry.variant.name}`,
-      value: valueId,
-    };
+    if (variant) {
+      return {
+        label: `${product.name} ${variant.name}`,
+        value: valueId,
+      };
+    }
   }
 
   return null;
