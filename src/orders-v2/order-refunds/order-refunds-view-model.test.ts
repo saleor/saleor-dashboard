@@ -7,11 +7,7 @@ import {
 } from "@dashboard/graphql";
 
 import { OrderFixture } from "../fixtures/order-fixture";
-import {
-  OrderRefundDisplay,
-  type OrderRefundDisplayStatus,
-  OrderRefundsViewModel,
-} from "./order-refunds-view-model";
+import { OrderRefundDisplay, OrderRefundsViewModel } from "./order-refunds-view-model";
 
 const createTransactionEvent = (
   overrides: Partial<TransactionEventFragment> = {},
@@ -86,7 +82,7 @@ const createOrderRefundDisplay = (overrides: Partial<OrderRefundDisplay>): Order
   return {
     reasonType: null,
     createdAt: "2023-01-02T10:00:00Z",
-    status: OrderRefundDisplayStatus.SUCCESS,
+    status: OrderGrantedRefundStatusEnum.SUCCESS,
     type: "manual",
     id: "refund-1",
     reasonNote: null,
@@ -217,7 +213,8 @@ describe("OrderRefundsViewModel", () => {
             amount: 100,
             currency: "USD",
           }),
-          reason: null,
+          reasonNote: null,
+          reasonType: null,
           createdAt: "2023-01-01T10:00:00Z",
           user: expect.objectContaining({
             email: "user@example.com",
@@ -560,12 +557,18 @@ Array [
           id: "newer",
           type: "manual",
           status: OrderGrantedRefundStatusEnum.SUCCESS,
+          reasonNote: null,
+          reasonType: null,
           amount: expect.objectContaining({
             amount: 100,
             currency: "USD",
           }),
           createdAt: "2023-01-01T10:00:00Z",
-          reason: null,
+          user: {
+            email: "user@example.com",
+            firstName: "John",
+            lastName: "Doe",
+          },
         }),
       ]);
     });
@@ -618,7 +621,7 @@ Array [
     it("should return true for editable refunds (not successful, not pending, not manual)", () => {
       // Arrange
       const editableRefund = createOrderRefundDisplay({
-        status: OrderRefundDisplayStatus.FAILURE,
+        status: OrderGrantedRefundStatusEnum.FAILURE,
         type: "standard",
       });
 
@@ -632,7 +635,7 @@ Array [
     it("should return false for successful refunds", () => {
       // Arrange
       const successfulRefund = createOrderRefundDisplay({
-        status: OrderRefundDisplayStatus.SUCCESS,
+        status: OrderGrantedRefundStatusEnum.SUCCESS,
         type: "standard",
       });
 
@@ -646,7 +649,7 @@ Array [
     it("should return false for pending refunds", () => {
       // Arrange
       const pendingRefund = createOrderRefundDisplay({
-        status: OrderRefundDisplayStatus.PENDING,
+        status: OrderGrantedRefundStatusEnum.PENDING,
         type: "standard",
       });
 

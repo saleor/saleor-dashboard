@@ -9,13 +9,11 @@ import {
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 
-// Manual refunds do not have graphQL representation so we are using and mapping one from Granted Refund
-export type OrderRefundDisplayStatus = OrderGrantedRefundStatusEnum;
-
 export type OrderRefundDisplay = {
   id: string;
   type: "standard" | "manual";
-  status: OrderRefundDisplayStatus;
+  // Manual refund doesn't have its backend representation so we reuse one from granted refund
+  status: OrderGrantedRefundStatusEnum;
   amount: {
     amount: number;
     currency: string;
