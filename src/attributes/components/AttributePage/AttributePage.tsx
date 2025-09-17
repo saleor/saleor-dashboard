@@ -197,12 +197,10 @@ const AttributePage = ({
         );
 
         // Clear reference types in case entityType changes, as it may affect available options
-        const ENTITY_TYPE_FIELD = "entityType";
-
         const handleChange = (event: ChangeEvent) => {
           const fieldName = event.target?.name;
 
-          if (attribute === null && fieldName === ENTITY_TYPE_FIELD) {
+          if (attribute === null && fieldName === "entityType") {
             set({ referenceTypes: [] });
           }
 

@@ -138,7 +138,7 @@ function getFileOrReferenceAttributeData(
     availableInGrid: undefined,
     filterableInDashboard: undefined,
     filterableInStorefront: undefined,
-    referenceTypes: data.referenceTypes.map(ref => ref.value),
+    referenceTypes: data.referenceTypes?.map(ref => ref.value) ?? [],
   };
 }
 
