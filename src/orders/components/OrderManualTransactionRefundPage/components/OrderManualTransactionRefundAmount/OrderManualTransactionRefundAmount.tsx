@@ -15,7 +15,7 @@ export const OrderManualTransactionRefundAmount = ({
   const { control } = useFormContext<ManualRefundForm>();
 
   return (
-    <Box backgroundColor="default2" borderRadius={3} padding={4}>
+    <Box>
       <Controller
         name="amount"
         control={control}

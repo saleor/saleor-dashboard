@@ -71,3 +71,16 @@ export const pageCountQuery = gql`
     }
   }
 `;
+
+export const modelsOfTypeQuery = gql`
+  query ModelsOfType($pageTypeId: ID!) {
+    pages(first: 100, where: { pageType: { eq: $pageTypeId } }) {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
+  }
+`;

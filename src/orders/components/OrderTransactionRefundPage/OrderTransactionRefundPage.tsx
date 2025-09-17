@@ -2,20 +2,28 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import Link from "@dashboard/components/Link";
 import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
-import { OrderDetailsGrantRefundFragment, PermissionEnum } from "@dashboard/graphql";
+import {
+  OrderDetailsGrantRefundFragment,
+  PermissionEnum,
+  useModelsOfTypeQuery,
+} from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { pageListUrl } from "@dashboard/modeling/urls";
+import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
 import { orderUrl } from "@dashboard/orders/urls";
+import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { Control, SubmitHandler, useController, useFieldArray, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderTransactionReason } from "./components/OrderTransactionReason/OrderTransactionReason";
+import { RefundWithLinesOrderTransactionReason } from "./components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { OrderTransactionReasonModal } from "./components/OrderTransactionReasonModal/OrderTransactionReasonModal";
 import { OrderTransactionSummary } from "./components/OrderTransactionRefundSummary/OrderTransactionSummary";
 import {
@@ -58,6 +66,7 @@ export interface OrderTransactionRefundPageProps {
   onTransferFunds?: () => void;
   onSaveDraftState: ConfirmButtonTransitionState;
   onTransferFundsState?: ConfirmButtonTransitionState;
+  modelForRefundReasonRefId: string | null;
 }
 
 export interface LineToRefund {
@@ -71,7 +80,54 @@ export interface OrderTransactionRefundPageFormData {
   includeShipping: boolean;
   reason: string;
   transactionId: string;
+  reasonReference: string;
 }
+
+type ModelPickerProps = {
+  referenceModelTypeId: string;
+  control: Control<OrderTransactionRefundPageFormData>;
+  disabled: boolean;
+};
+
+/**
+ * This component can be written to be reused with Manual Refund, however, since we rewrite the Order page, it is not worth the effort now.
+ * If edited before that time, remember to update both of them
+ *
+ */
+const ModelsPicker = (props: ModelPickerProps) => {
+  const { field } = useController({ name: "reasonReference", control: props.control });
+  const intl = useIntl();
+
+  const { data, loading } = useModelsOfTypeQuery({
+    variables: {
+      pageTypeId: props.referenceModelTypeId,
+    },
+    skip: props.disabled,
+  });
+
+  if (loading) {
+    return <Skeleton />;
+  }
+
+  const options =
+    data?.pages?.edges.map(model => ({
+      value: model.node.id,
+      label: model.node.title,
+    })) ?? [];
+
+  const optionsWithEmpty = [
+    {
+      value: "",
+      label: intl.formatMessage({
+        defaultMessage: "Select a reason type",
+        id: "vSLaZ7",
+      }),
+    },
+    ...options,
+  ];
+
+  return <Select disabled={props.disabled} options={optionsWithEmpty} {...field} />;
+};
 
 const OrderTransactionRefundPage = ({
   errors,
@@ -82,6 +138,7 @@ const OrderTransactionRefundPage = ({
   onTransferFunds,
   onSaveDraftState,
   onTransferFundsState,
+  modelForRefundReasonRefId,
 }: OrderTransactionRefundPageProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
@@ -115,6 +172,7 @@ const OrderTransactionRefundPage = ({
 
   const permissions = useUserPermissions();
   const canHandlePayments = hasPermissions(permissions ?? [], [PermissionEnum.HANDLE_PAYMENTS]);
+  const canManageSettings = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SETTINGS]);
 
   const handleTransferFunds = (data: OrderTransactionRefundPageFormData) => {
     if (!data.amount) {
@@ -230,13 +288,7 @@ const OrderTransactionRefundPage = ({
           <OrderTransactionTiles transactions={order?.transactions} control={control} />
         </DetailPageLayout.Content>
         <DetailPageLayout.RightSidebar>
-          <Box
-            __width="400px"
-            display="flex"
-            flexDirection="column"
-            height="100%"
-            justifyContent="space-between"
-          >
+          <Box __width="400px" display="flex" flexDirection="column" height="100%">
             <OrderTransactionSummary
               amountError={amountError || formErrors.amount}
               control={control}
@@ -244,8 +296,48 @@ const OrderTransactionRefundPage = ({
               canRefundShipping={canRefundShipping(order, draftRefund)}
               shippingCost={order?.shippingPrice.gross}
               currency={order?.total.gross.currency}
+              marginBottom={12}
             />
-            <OrderTransactionReason control={control} />
+            <Box marginBottom={12}>
+              <DashboardCard>
+                <DashboardCard.Header>
+                  <DashboardCard.Title>Refund reason</DashboardCard.Title>
+                </DashboardCard.Header>
+                <DashboardCard.Content>
+                  <ModelsPicker
+                    disabled={!modelForRefundReasonRefId}
+                    referenceModelTypeId={modelForRefundReasonRefId ?? ""}
+                    control={control}
+                  />
+                  <Box marginTop={2}>
+                    {canManageSettings && modelForRefundReasonRefId && (
+                      <Link href={pageListUrl()}>
+                        <Text color="inherit">
+                          {intl.formatMessage(refundReasonSelectHelperMessages.manageReasons)}
+                        </Text>
+                      </Link>
+                    )}
+                    {canManageSettings && !modelForRefundReasonRefId && (
+                      <Link href={refundsSettingsPath}>
+                        <Text color="inherit">
+                          {intl.formatMessage(
+                            refundReasonSelectHelperMessages.enableReasonsInSettings,
+                          )}
+                        </Text>
+                      </Link>
+                    )}
+                    {!canManageSettings && (
+                      <Text color="default2">
+                        {intl.formatMessage(refundReasonSelectHelperMessages.noPermissionsHint)}
+                      </Text>
+                    )}
+                  </Box>
+                </DashboardCard.Content>
+              </DashboardCard>
+            </Box>
+            <Box>
+              <RefundWithLinesOrderTransactionReason control={control} />
+            </Box>
           </Box>
         </DetailPageLayout.RightSidebar>
         <Savebar>
