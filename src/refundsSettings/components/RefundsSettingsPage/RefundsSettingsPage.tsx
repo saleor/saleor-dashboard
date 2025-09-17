@@ -53,7 +53,10 @@ export const RefundsSettingsPage = () => {
   const modelTypesOptionsWithEmptyValue = [
     {
       value: "",
-      label: "None",
+      label: intl.formatMessage({
+        defaultMessage: "None",
+        id: "450Fty",
+      }),
     },
   ].concat(modelTypesOptions ?? []);
 

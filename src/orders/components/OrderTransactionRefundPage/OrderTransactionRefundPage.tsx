@@ -97,6 +97,7 @@ type ModelPickerProps = {
  */
 const ModelsPicker = (props: ModelPickerProps) => {
   const { field } = useController({ name: "reasonReference", control: props.control });
+  const intl = useIntl();
 
   const { data, loading } = useModelsOfTypeQuery({
     variables: {
@@ -115,7 +116,16 @@ const ModelsPicker = (props: ModelPickerProps) => {
       label: model.node.title,
     })) ?? [];
 
-  const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
+  const optionsWithEmpty = [
+    {
+      value: "",
+      label: intl.formatMessage({
+        defaultMessage: "Select a reason type",
+        id: "vSLaZ7",
+      }),
+    },
+    ...options,
+  ];
 
   return <Select disabled={props.disabled} options={optionsWithEmpty} {...field} />;
 };

@@ -52,6 +52,7 @@ const Reason = () => {
 const ModelsPicker = (props: { referenceModelTypeId: string; disabled: boolean }) => {
   const { control } = useFormContext<ManualRefundForm>();
   const { field } = useController({ name: "reasonReferenceId", control });
+  const intl = useIntl();
 
   const { data, loading } = useModelsOfTypeQuery({
     variables: {
@@ -69,7 +70,16 @@ const ModelsPicker = (props: { referenceModelTypeId: string; disabled: boolean }
       label: model.node.title,
     })) ?? [];
 
-  const optionsWithEmpty = [{ value: "", label: "Select a reason type" }, ...options];
+  const optionsWithEmpty = [
+    {
+      value: "",
+      label: intl.formatMessage({
+        defaultMessage: "Select a reason type",
+        id: "vSLaZ7",
+      }),
+    },
+    ...options,
+  ];
 
   return <Select {...field} disabled={props.disabled} options={optionsWithEmpty} />;
 };
