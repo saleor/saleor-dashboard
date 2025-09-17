@@ -539,21 +539,37 @@ const findCategoryReference = (
   return null;
 };
 
+// Helper to build a Map from variant ID to {product, variant} for O(1) lookup
+function buildVariantIdMap(
+  products: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
+): Map<string, { product: typeof products[0]; variant: typeof products[0]["variants"][0] }> {
+  const map = new Map();
+
+  for (const product of products) {
+    if (product.variants) {
+      for (const variant of product.variants) {
+        map.set(variant.id, { product, variant });
+      }
+    }
+  }
+
+  return map;
+}
+
 const findProductVariantReference = (
   valueId: string,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
 ): AttributeReference | null => {
   if (!referencesEntitiesSearchResult.products) return null;
 
-  for (const product of referencesEntitiesSearchResult.products) {
-    const variant = product.variants?.find(v => v.id === valueId);
+  const variantIdMap = buildVariantIdMap(referencesEntitiesSearchResult.products);
+  const entry = variantIdMap.get(valueId);
 
-    if (variant) {
-      return {
-        label: `${product.name} ${variant.name}`,
-        value: valueId,
-      };
-    }
+  if (entry) {
+    return {
+      label: `${entry.product.name} ${entry.variant.name}`,
+      value: valueId,
+    };
   }
 
   return null;
