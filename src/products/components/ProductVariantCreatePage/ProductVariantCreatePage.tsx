@@ -6,7 +6,6 @@ import {
 } from "@dashboard/attributes/utils/data";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import { Container } from "@dashboard/components/AssignContainerDialog";
 import {
   AttributeInput,
   Attributes,
@@ -32,7 +31,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
-import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import { Container, FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { defineMessages, useIntl } from "react-intl";
 

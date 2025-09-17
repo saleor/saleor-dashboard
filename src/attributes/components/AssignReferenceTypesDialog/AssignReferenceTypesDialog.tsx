@@ -40,6 +40,7 @@ export const AssignReferenceTypesDialog = ({
       // Should be removed after moving the selectedContainers outside AssignContainerDialog
       key={entityType}
       containers={filteredReferenceTypes}
+      selectionMode="multiple"
       labels={{
         title: title,
         label: intl.formatMessage(messages.searchLabel),

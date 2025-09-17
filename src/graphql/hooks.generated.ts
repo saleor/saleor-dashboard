@@ -6145,7 +6145,7 @@ export const _GetDynamicLeftOperandsDocument = gql`
   attributes(
     first: $first
     search: $query
-    where: {type: {eq: PRODUCT_TYPE}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE]}}
+    where: {type: {eq: PRODUCT_TYPE}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE, SINGLE_REFERENCE]}}
   ) {
     edges {
       node {
