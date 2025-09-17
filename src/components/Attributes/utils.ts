@@ -53,7 +53,6 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
   }
 
   return attribute.data.references.map(referenceData => {
-    console.log(referenceData, attribute);
 
     return {
       label: referenceData.label,
