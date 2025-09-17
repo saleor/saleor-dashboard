@@ -27,12 +27,12 @@ export const messages = defineMessages({
     description: "name",
   },
   trackingNumberInputLabel: {
-    id: "X2m4b0",
+    id: "R4IIw1",
     defaultMessage: "Tracking number",
     description: "tracking number of the shipment",
   },
   trackingNumberInputHelperText: {
-    id: "YkX6mD",
+    id: "Q7eRF7",
     defaultMessage: "Optionally provide a tracking number for this fulfillment",
     description: "tracking number input helper text",
   },
