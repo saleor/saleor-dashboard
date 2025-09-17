@@ -460,10 +460,6 @@
     "context": "add country dialog header",
     "string": "Choose country you want to add"
   },
-  "0VDwAP": {
-    "context": "checkbox label",
-    "string": "Send shipment details to customer"
-  },
   "0VkxrS": {
     "string": "GraphQL Playground"
   },
@@ -1655,6 +1651,10 @@
   "8BBMRj": {
     "context": "default tax class name for new tax classes",
     "string": "New tax class"
+  },
+  "8Cve4h": {
+    "context": "checkbox label",
+    "string": "Send fulfillment email to customer"
   },
   "8EGagh": {
     "context": "search box label",
@@ -3444,6 +3444,10 @@
   "IWP25U": {
     "string": "You cannot issue a granted refund for this order. None of your transactions have authorized or charged amount."
   },
+  "IXswaJ": {
+    "context": "checkbox label, fulfillment approval",
+    "string": "Send fulfillment email to customer"
+  },
   "IYuKD6": {
     "string": "No discounts found"
   },
@@ -5100,10 +5104,6 @@
     "context": "channel availability dialog header",
     "string": "Manage Channel Availability"
   },
-  "SqhC7g": {
-    "context": "checkbox label, fulfillment approval",
-    "string": "Send shipment details to customer"
-  },
   "Sxzua5": {
     "context": "order payment",
     "string": "Settled"
@@ -5817,6 +5817,10 @@
     "context": "label",
     "string": "Normal"
   },
+  "X2m4b0": {
+    "context": "tracking number of the shipment",
+    "string": "Tracking number"
+  },
   "X6PF8z": {
     "context": "entity (product, collection, shipping method) name",
     "string": "Name"
@@ -6119,6 +6123,10 @@
   "YkOzse": {
     "context": "used warehouses counter",
     "string": "{count}/{max} warehouses used"
+  },
+  "YkX6mD": {
+    "context": "tracking number input helper text",
+    "string": "Optionally provide a tracking number for this fulfillment"
   },
   "Ykw8k5": {
     "context": "dialog title",

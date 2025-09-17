@@ -244,18 +244,16 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 <DashboardCard>
                   <DashboardCard.Header>
                     <DashboardCard.Title>
-                      {/* TODO: rename */}
                       {intl.formatMessage(messages.shipmentInformation)}
                     </DashboardCard.Title>
                   </DashboardCard.Header>
                   <DashboardCard.Content __maxWidth="fit-content" display="grid" gap={4}>
                     <Input
                       name="trackingNumber"
-                      label="Tracking number"
-                      // label={intl.formatMessage(messages.trackingNumber)}
+                      label={intl.formatMessage(messages.trackingNumberInputLabel)}
                       value={data.trackingNumber}
                       onChange={change}
-                      helperText={"Optionally provide a tracking number for this fulfillment"}
+                      helperText={intl.formatMessage(messages.trackingNumberInputHelperText)}
                     />
                     <Checkbox
                       checked={data.sendInfo}
@@ -265,7 +263,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         change({ target: { name: "sendInfo", value: checked } })
                       }
                     >
-                      <Text>{intl.formatMessage(messages.sentShipmentDetails)}</Text>
+                      <Text>{intl.formatMessage(messages.sentFulfillmentDetails)}</Text>
                     </Checkbox>
                   </DashboardCard.Content>
                 </DashboardCard>
