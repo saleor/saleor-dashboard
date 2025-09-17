@@ -57,7 +57,6 @@ import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import AttributeValues from "../AttributeValues";
-import { messages } from "./messages";
 
 export interface AttributePageProps {
   attribute?: AttributeDetailsFragment | null | undefined;
@@ -198,10 +197,12 @@ const AttributePage = ({
         );
 
         // Clear reference types in case entityType changes, as it may affect available options
+        const ENTITY_TYPE_FIELD = "entityType";
+
         const handleChange = (event: ChangeEvent) => {
           const fieldName = event.target?.name;
 
-          if (attribute === null && fieldName === "entityType") {
+          if (attribute === null && fieldName === ENTITY_TYPE_FIELD) {
             set({ referenceTypes: [] });
           }
 
@@ -334,11 +335,7 @@ const AttributePage = ({
               onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
               onFetch={activeRefSearch.search}
               onSubmit={setReferenceTypes}
-              title={
-                data.entityType === AttributeEntityTypeEnum.PAGE
-                  ? intl.formatMessage(messages.titleModelTypes)
-                  : intl.formatMessage(messages.titleProductTypes)
-              }
+              entityType={data.entityType}
             />
             {children(data)}
           </>
