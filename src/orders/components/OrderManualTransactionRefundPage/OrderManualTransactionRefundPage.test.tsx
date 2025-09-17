@@ -23,7 +23,7 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
-  defineMessage: (message: any) => message,
+  defineMessage: (message: string) => message,
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
 }));
 jest.mock("@dashboard/hooks/useNotifier", () => ({

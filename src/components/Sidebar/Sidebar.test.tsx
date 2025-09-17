@@ -15,7 +15,7 @@ jest.mock("react-intl", () => ({
   })),
   defineMessages: jest.fn(x => x),
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-  defineMessage: (message: any) => message,
+  defineMessage: (message: string) => message,
 }));
 jest.mock("./menu/hooks/useMenuStructure", () => ({
   useMenuStructure: jest.fn(() => []),
