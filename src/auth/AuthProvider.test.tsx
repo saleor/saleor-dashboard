@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client";
 import { useUserDetailsQuery } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { useAuth, useAuthState } from "@saleor/sdk";
+import { useAuth, useAuthState } from "@dashboard/legacy-sdk";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useIntl } from "react-intl";
 
@@ -44,7 +44,7 @@ jest.mock("react-intl", () => ({
   })),
   defineMessages: jest.fn(x => x),
 }));
-jest.mock("@saleor/sdk", () => ({
+jest.mock("@dashboard/legacy-sdk", () => ({
   useAuth: jest.fn(() => ({
     login: jest.fn(() => ({
       data: {

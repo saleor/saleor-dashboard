@@ -1,0 +1,5 @@
+# Extends Saleor Query type with local/client only fields
+type Query {
+  authenticated: Boolean!
+  authenticating: Boolean!
+}

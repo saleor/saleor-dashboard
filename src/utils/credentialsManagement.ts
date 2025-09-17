@@ -1,5 +1,4 @@
-import { UserFragment } from "@dashboard/graphql";
-import { UserDetailsFragment } from "@saleor/sdk/dist/apollo/types";
+import { SdkUserDetailsFragment, UserFragment } from "@dashboard/graphql";
 
 export const isSupported = !!window.PasswordCredential;
 
@@ -32,7 +31,7 @@ export async function checkIfCredentialsExist() {
 }
 
 export async function saveCredentials(
-  user: UserFragment | UserDetailsFragment,
+  user: UserFragment | SdkUserDetailsFragment,
   password: string,
 ): Promise<CredentialType | null> {
   if (!isSupported) return null;

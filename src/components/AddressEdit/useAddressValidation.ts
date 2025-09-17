@@ -4,7 +4,12 @@ import {
   CountryCode,
   useAddressValidationRulesQuery,
 } from "@dashboard/graphql";
-import { ChoiceValue } from "@saleor/sdk/dist/apollo/types";
+
+// TODO Should come from generated types, but somehow its missing there
+type ChoiceValue = {
+  verbose: string;
+  raw: string;
+};
 
 interface AreaChoices {
   label: string;

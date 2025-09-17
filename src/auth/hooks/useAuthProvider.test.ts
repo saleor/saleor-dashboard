@@ -1,13 +1,12 @@
 import { ApolloError } from "@apollo/client";
 import { AccountErrorCode } from "@dashboard/graphql";
-import { useAuth, useAuthState } from "@saleor/sdk";
+import { useAuth, useAuthState } from "@dashboard/legacy-sdk";
 import { waitFor } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { useAuthProvider } from "./useAuthProvider";
 
-// Mock dependencies
-jest.mock("@saleor/sdk");
+jest.mock("@dashboard/legacy-sdk");
 
 const useAuthStateMock = {
   authenticated: false,

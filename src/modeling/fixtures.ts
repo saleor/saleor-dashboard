@@ -1,5 +1,9 @@
-import { AttributeInputTypeEnum, PageDetailsFragment, PageFragment } from "@dashboard/graphql";
-import { PageType } from "@saleor/sdk/dist/apollo/types";
+import {
+  AttributeInputTypeEnum,
+  PageDetailsFragment,
+  PageFragment,
+  PageTypeFragment,
+} from "@dashboard/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 
@@ -438,7 +442,7 @@ export const page: PageDetailsFragment = {
   title: "About",
 };
 
-export const pageTypesList: Array<Pick<PageType, "id" | "name">> = [
+export const pageTypesList: Array<Pick<PageTypeFragment, "id" | "name">> = [
   {
     id: "1111ZHVjdFR5cGU6Nw==",
     name: "General",

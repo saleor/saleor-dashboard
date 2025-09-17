@@ -6,13 +6,18 @@ import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import {
+  GetExternalAccessTokenData,
+  LoginData,
+  useAuth,
+  useAuthState,
+} from "@dashboard/legacy-sdk";
+import {
   checkIfCredentialsExist,
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
   saveCredentials,
 } from "@dashboard/utils/credentialsManagement";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import { GetExternalAccessTokenData, LoginData, useAuth, useAuthState } from "@saleor/sdk";
 import isEmpty from "lodash/isEmpty";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";

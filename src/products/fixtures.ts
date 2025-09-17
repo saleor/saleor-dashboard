@@ -12,8 +12,8 @@ import {
   VariantAttributeFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
+import { ProductType } from "@dashboard/products/utils/data";
 import { RelayToFlat } from "@dashboard/types";
-import { ProductType } from "@saleor/sdk/dist/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

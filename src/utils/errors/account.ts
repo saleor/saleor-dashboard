@@ -1,8 +1,4 @@
-import { AccountErrorCode } from "@dashboard/graphql";
-import {
-  AccountError,
-  AccountErrorCode as SdkAccountErrorCode,
-} from "@saleor/sdk/dist/apollo/types";
+import { AccountErrorCode, AccountErrorFragment } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import { getCommonFormFieldErrorMessage } from "./common";
@@ -56,7 +52,7 @@ interface ErrorFragment {
 }
 
 function getAccountErrorMessage(
-  err: ErrorFragment | Omit<AccountError, "addressType">,
+  err: ErrorFragment | Omit<AccountErrorFragment, "addressType">,
   intl: IntlShape,
 ): string | undefined {
   if (err) {
@@ -84,7 +80,7 @@ function getAccountErrorMessage(
     }
   }
 
-  return getCommonFormFieldErrorMessage<AccountErrorCode | SdkAccountErrorCode>(err, intl);
+  return getCommonFormFieldErrorMessage<AccountErrorCode | AccountErrorFragment>(err, intl);
 }
 
 export default getAccountErrorMessage;
