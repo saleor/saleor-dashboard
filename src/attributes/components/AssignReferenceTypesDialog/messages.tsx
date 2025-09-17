@@ -13,4 +13,12 @@ export const messages = defineMessages({
     id: "gVqSnA",
     defaultMessage: "Assign and save",
   },
+  titleProductTypes: {
+    id: "YXhaCZ",
+    defaultMessage: "Assign Product Types",
+  },
+  titleModelTypes: {
+    id: "5ixtBQ",
+    defaultMessage: "Assign Model Types",
+  },
 });
