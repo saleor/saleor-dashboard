@@ -83,6 +83,7 @@ export function createAttributeReferenceChangeHandler(
     // Sync metadata when removing references - remove metadata for unselected values
     const currentMetadata = attributes.data.find(a => a.id === attributeId)?.metadata || [];
     const syncedMetadata = currentMetadata.filter(meta => values.includes(meta.value));
+
     attributes.setMetadata(attributeId, syncedMetadata);
 
     triggerChange();
@@ -106,6 +107,7 @@ export function createAttributeReferenceMetadataHandler(
     const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
       const merged = mergeReferencesMetadata(prev, next);
       const currentValues = attributes.data.find(a => a.id === attributeId)?.value || [];
+
       // Filter out metadata for references that were removed from attribute
       return merged.filter(meta => currentValues.includes(meta.value));
     };
