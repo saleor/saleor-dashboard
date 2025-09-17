@@ -32,8 +32,8 @@ const config = {
     "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
     "^react$": "<rootDir>/node_modules/react",
     "^react-dom$": "<rootDir>/node_modules/react-dom",
-    collectCoverageFrom: ["<rootDir>/src/**/*.{ts,tsx}"],
   },
+  collectCoverageFrom: ["<rootDir>/src/**/*.{ts,tsx}"],
 };
 
 module.exports = config;
