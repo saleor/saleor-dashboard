@@ -137,6 +137,12 @@ export function getAttributeInput(
     };
   }
 
+  if (inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
+    return {
+      reference: values?.[0]?.reference || null,
+    };
+  }
+
   if (inputType === AttributeInputTypeEnum.DATE) {
     return {
       date: getAttributeValueOrNull(values[0], "date"),
