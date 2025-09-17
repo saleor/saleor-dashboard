@@ -96,6 +96,7 @@ const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementProps) =
               <div className={classes.refundsButtons}>
                 {canGrantRefund && (
                   <Button
+                    as="a"
                     href={orderGrantRefundUrl(order.id)}
                     variant="secondary"
                     data-test-id="grantRefundButton"
@@ -105,6 +106,7 @@ const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementProps) =
                 )}
                 {canSendRefund && (
                   <Button
+                    as="a"
                     variant="secondary"
                     href={orderSendRefundUrl(order.id)}
                     data-test-id="refund-button"

@@ -763,6 +763,7 @@ export class OrderFixture {
               },
               externalUrl: "https://example.com/transaction",
               createdAt: "2025-09-12T08:57:38.515000+00:00",
+              reasonReference: null,
               createdBy: {
                 id: "created-by-app",
                 name: "Dummy Payment App",
@@ -782,6 +783,7 @@ export class OrderFixture {
               },
               externalUrl: "https://example.com/transaction",
               createdAt: "2025-09-12T08:26:37.572285+00:00",
+              reasonReference: null,
               createdBy: {
                 id: "VXNlcjox",
                 email: "test@saleor.io",
@@ -827,6 +829,7 @@ export class OrderFixture {
           },
           reason: "Customer requested a refund.",
           createdAt: "2023-10-02T12:00:00Z",
+          reasonReference: null,
           user: {
             __typename: "User",
             email: "customer@example.com",
