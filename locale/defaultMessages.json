@@ -1037,6 +1037,10 @@
     "context": "order status",
     "string": "Returned"
   },
+  "4DkQt1": {
+    "context": "empty state for model types",
+    "string": "No model types assigned"
+  },
   "4ELCCk": {
     "context": "column picker section default header",
     "string": "Categories"
@@ -1315,6 +1319,9 @@
   "5i/InH": {
     "context": "open new window button",
     "string": "Open this order in GraphiQL"
+  },
+  "5ixtBQ": {
+    "string": "Assign Model Types"
   },
   "5kODlC": {
     "string": "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}"
@@ -2366,6 +2373,10 @@
   "CLeDae": {
     "context": "section header",
     "string": "Preferences"
+  },
+  "COWJSG": {
+    "context": "helper explaining the effect of assigning reference types",
+    "string": "Assigning reference types narrows the list of items this attribute can reference."
   },
   "CPPACf": {
     "string": "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})"
@@ -3997,6 +4008,10 @@
     "context": "button",
     "string": "Upload image"
   },
+  "M3aMq+": {
+    "context": "empty state for reference types",
+    "string": "No product types assigned"
+  },
   "M59JhX": {
     "string": "Manual"
   },
@@ -5556,6 +5571,10 @@
     "context": "attribute values",
     "string": "Value {number}"
   },
+  "UvZuf7": {
+    "context": "section title for reference types selector",
+    "string": "Reference Types"
+  },
   "Uwo+ai": {
     "string": "Product unavailable in discount channels"
   },
@@ -6197,6 +6216,9 @@
   "YVIajc": {
     "context": "product field",
     "string": "Description"
+  },
+  "YXhaCZ": {
+    "string": "Assign Product Types"
   },
   "YZl6cv": {
     "string": "Miscellaneous"
@@ -7464,6 +7486,9 @@
   "gVD1os": {
     "context": "empty list message",
     "string": "You haven’t assigned any member to this permission group yet."
+  },
+  "gVqSnA": {
+    "string": "Assign and save"
   },
   "gXvoFf": {
     "context": "information",
@@ -9749,6 +9774,9 @@
     "context": "order history message",
     "string": "Order was confirmed"
   },
+  "ubd+Kj": {
+    "string": "Search by name…"
+  },
   "ubmFc8": {
     "string": "Install"
   },
@@ -10317,6 +10345,9 @@
   },
   "xl7Fag": {
     "string": "Category created"
+  },
+  "xmcVZ0": {
+    "string": "Search"
   },
   "xo5UIb": {
     "context": "dialog title",

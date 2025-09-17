@@ -1,4 +1,9 @@
-import { AttributeInputTypeEnum, PageDetailsFragment, PageFragment } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  AttributeTypeEnum,
+  PageDetailsFragment,
+  PageFragment,
+} from "@dashboard/graphql";
 import { PageType } from "@saleor/sdk/dist/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
@@ -47,6 +52,7 @@ export const page: PageDetailsFragment = {
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
         unit: null,
+        referenceTypes: [],
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -114,6 +120,14 @@ export const page: PageDetailsFragment = {
           ],
         },
         __typename: "Attribute",
+        availableInGrid: false,
+        storefrontSearchPosition: 0,
+        type: AttributeTypeEnum.PAGE_TYPE,
+        visibleInStorefront: false,
+        filterableInDashboard: false,
+        filterableInStorefront: false,
+        metadata: [],
+        privateMetadata: [],
       },
       values: [
         {
@@ -227,6 +241,15 @@ export const page: PageDetailsFragment = {
           ],
         },
         __typename: "Attribute",
+        availableInGrid: false,
+        storefrontSearchPosition: 0,
+        type: AttributeTypeEnum.PAGE_TYPE,
+        visibleInStorefront: false,
+        filterableInDashboard: false,
+        filterableInStorefront: false,
+        referenceTypes: [],
+        metadata: [],
+        privateMetadata: [],
       },
       values: [
         {
