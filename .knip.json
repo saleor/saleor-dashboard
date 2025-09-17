@@ -12,9 +12,9 @@
     "nsExports": "warn",
     "unlisted": "warn",
     "binaries": "off",
-    "optionalPeerDependencies": "warn",
-    "dependencies": "warn",
-    "devDependencies": "warn"
+    "optionalPeerDependencies": "error",
+    "dependencies": "error",
+    "devDependencies": "error"
   },
   "entry": [
     "src/index.tsx!",
