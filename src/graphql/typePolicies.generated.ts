@@ -5464,21 +5464,27 @@ export type RefundReasonReferenceTypeClearFieldPolicy = {
 	refundSettings?: FieldPolicy<any> | FieldReadFunction<any>,
 	refundSettingsErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type RefundSettingsKeySpecifier = ('reasonReferenceType' | RefundSettingsKeySpecifier)[];
-export type RefundSettingsFieldPolicy = {
-	reasonReferenceType?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type RefundSettingsErrorKeySpecifier = ('code' | 'field' | 'message' | RefundSettingsErrorKeySpecifier)[];
-export type RefundSettingsErrorFieldPolicy = {
+export type RefundReasonReferenceTypeClearErrorKeySpecifier = ('code' | 'field' | 'message' | RefundReasonReferenceTypeClearErrorKeySpecifier)[];
+export type RefundReasonReferenceTypeClearErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type RefundSettingsKeySpecifier = ('reasonReferenceType' | RefundSettingsKeySpecifier)[];
+export type RefundSettingsFieldPolicy = {
+	reasonReferenceType?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type RefundSettingsUpdateKeySpecifier = ('errors' | 'refundSettings' | 'refundSettingsErrors' | RefundSettingsUpdateKeySpecifier)[];
 export type RefundSettingsUpdateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	refundSettings?: FieldPolicy<any> | FieldReadFunction<any>,
 	refundSettingsErrors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type RefundSettingsUpdateErrorKeySpecifier = ('code' | 'field' | 'message' | RefundSettingsUpdateErrorKeySpecifier)[];
+export type RefundSettingsUpdateErrorFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	field?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type RequestEmailChangeKeySpecifier = ('accountErrors' | 'errors' | 'user' | RequestEmailChangeKeySpecifier)[];
 export type RequestEmailChangeFieldPolicy = {
@@ -9803,17 +9809,21 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | RefundReasonReferenceTypeClearKeySpecifier | (() => undefined | RefundReasonReferenceTypeClearKeySpecifier),
 		fields?: RefundReasonReferenceTypeClearFieldPolicy,
 	},
+	RefundReasonReferenceTypeClearError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | RefundReasonReferenceTypeClearErrorKeySpecifier | (() => undefined | RefundReasonReferenceTypeClearErrorKeySpecifier),
+		fields?: RefundReasonReferenceTypeClearErrorFieldPolicy,
+	},
 	RefundSettings?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | RefundSettingsKeySpecifier | (() => undefined | RefundSettingsKeySpecifier),
 		fields?: RefundSettingsFieldPolicy,
 	},
-	RefundSettingsError?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | RefundSettingsErrorKeySpecifier | (() => undefined | RefundSettingsErrorKeySpecifier),
-		fields?: RefundSettingsErrorFieldPolicy,
-	},
 	RefundSettingsUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | RefundSettingsUpdateKeySpecifier | (() => undefined | RefundSettingsUpdateKeySpecifier),
 		fields?: RefundSettingsUpdateFieldPolicy,
+	},
+	RefundSettingsUpdateError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | RefundSettingsUpdateErrorKeySpecifier | (() => undefined | RefundSettingsUpdateErrorKeySpecifier),
+		fields?: RefundSettingsUpdateErrorFieldPolicy,
 	},
 	RequestEmailChange?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | RequestEmailChangeKeySpecifier | (() => undefined | RequestEmailChangeKeySpecifier),
