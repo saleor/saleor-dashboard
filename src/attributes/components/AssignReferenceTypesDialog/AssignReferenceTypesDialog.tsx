@@ -12,7 +12,7 @@ interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
   selectedReferenceTypesIds: string[];
   referenceTypes: ReferenceTypes;
-  entityType: AttributeEntityTypeEnum;
+  entityType: AttributeEntityTypeEnum | null;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
