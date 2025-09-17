@@ -12052,4 +12052,4 @@ export type WelcomePageNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type WelcomePageNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
+export type WelcomePageNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null }

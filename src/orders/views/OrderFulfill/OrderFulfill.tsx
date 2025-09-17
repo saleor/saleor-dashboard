@@ -101,6 +101,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                   })),
                 notifyCustomer: settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
                 allowStockToBeExceeded: formData.allowStockToBeExceeded,
+                trackingNumber: formData.trackingNumber,
               },
               orderId,
             },

@@ -12,8 +12,8 @@ export const messages = defineMessages({
     description: "dialog description",
   },
   notifyCustomer: {
-    id: "SqhC7g",
-    defaultMessage: "Send shipment details to customer",
+    id: "IXswaJ",
+    defaultMessage: "Send fulfillment email to customer",
     description: "checkbox label, fulfillment approval",
   },
 });
