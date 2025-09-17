@@ -20,12 +20,17 @@ export function getAttributeInputFromPage(page: PageDetailsFragment): AttributeI
     id: attribute.attribute.id,
     label: attribute.attribute.name,
     value: getSelectedAttributeValues(attribute),
-    // Preserve initial labels for reference values to ensure display
-    // even when filtered searches do not return them
-    metadata: attribute.values.map(value => ({
-      label: value.name,
-      value: value.reference,
-    })),
+    // Note: this is part of useFormset API, not Saleor metadata
+    //
+    // Preserve initial reference labels so UI can render chips even when
+    // filtered reference searches do not return them. Entries without a
+    // reference ID are ignored because they cannot be displayed or submitted.
+    metadata: attribute.values
+      .filter(value => value.reference)
+      .map(value => ({
+        label: value.name,
+        value: value.reference,
+      })),
   }));
 }
 
