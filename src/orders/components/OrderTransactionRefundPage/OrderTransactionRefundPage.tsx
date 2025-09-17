@@ -93,7 +93,6 @@ type ModelPickerProps = {
  * This component can be written to be reused with Manual Refund, however, since we rewrite the Order page, it is not worth the effort now.
  * If edited before that time, remember to update both of them
  *
- * todo: disabled in case of no permissions
  */
 const ModelsPicker = (props: ModelPickerProps) => {
   const { field } = useController({ name: "reasonReference", control: props.control });

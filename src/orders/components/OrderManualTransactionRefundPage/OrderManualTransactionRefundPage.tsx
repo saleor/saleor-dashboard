@@ -47,7 +47,6 @@ const Reason = () => {
  * This component can be written to be reused with Granted Refund, however, since we rewrite the Order page, it is not worth the effort now.
  * If edited before that time, remember to update both of them
  *
- * todo: disabled in case of no permissions
  */
 const ModelsPicker = (props: { referenceModelTypeId: string; disabled: boolean }) => {
   const { control } = useFormContext<ManualRefundForm>();

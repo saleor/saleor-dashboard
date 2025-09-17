@@ -176,7 +176,7 @@ export const RefundsSettingsPage = () => {
                 </>
               )}
             </Box>
-            {currentRefundReasonReferenceType ? (
+            {!!currentRefundReasonReferenceType && (
               <Box marginTop={6}>
                 <Text fontWeight="medium" display="block" marginBottom={2}>
                   {intl.formatMessage(refundsSettingsPageMessages.previewTitle)}{" "}
@@ -206,7 +206,7 @@ export const RefundsSettingsPage = () => {
                   </Text>
                 )}
               </Box>
-            ) : null}
+            )}
           </Box>
 
           <Savebar>
