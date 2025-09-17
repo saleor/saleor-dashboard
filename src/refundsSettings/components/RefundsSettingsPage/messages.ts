@@ -30,4 +30,12 @@ export const refundsSettingsPageMessages = defineMessages({
     defaultMessage: "Current refund reasons from",
     id: "VSLrmT",
   },
+  emptyModels: {
+    defaultMessage: "This Model Type does not have created models yet.",
+    id: "qZB1cn",
+  },
+  createModelLink: {
+    defaultMessage: "Create a Model",
+    id: "6J1m2c",
+  },
 });

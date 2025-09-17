@@ -13,11 +13,12 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
+import { pageCreateUrl } from "@dashboard/modeling/urls";
 import { pageTypeAddUrl, pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPageMessages } from "@dashboard/refundsSettings/components/RefundsSettingsPage/messages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Combobox, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { z } from "zod";
@@ -65,8 +66,6 @@ export const RefundsSettingsPage = () => {
 
   const currentRefundReasonReferenceType = getValues("refundReasonReferenceType");
 
-  const selectedTypeLabel = modelsList?.pageTypes?.edges?.find(edge => edge.node.id)?.node.name;
-
   const { data: exampleModelData } = useModelsOfTypeQuery({
     variables: {
       pageTypeId: currentRefundReasonReferenceType,
@@ -106,6 +105,10 @@ export const RefundsSettingsPage = () => {
   });
 
   watch("refundReasonReferenceType");
+
+  const selectedTypeLabel = modelsList?.pageTypes?.edges.find(
+    edge => edge.node.id === currentRefundReasonReferenceType,
+  )?.node.name;
 
   const exampleModels = exampleModelData?.pages?.edges.map(edge => edge.node) ?? [];
 
@@ -188,6 +191,16 @@ export const RefundsSettingsPage = () => {
                       ))}
                     </Box>
                   </Box>
+                )}
+                {exampleModels.length === 0 && (
+                  <Text>
+                    {intl.formatMessage(refundsSettingsPageMessages.emptyModels)}{" "}
+                    <Link
+                      href={pageCreateUrl({ "page-type-id": currentRefundReasonReferenceType })}
+                    >
+                      {intl.formatMessage(refundsSettingsPageMessages.createModelLink)}
+                    </Link>
+                  </Text>
                 )}
               </Box>
             ) : null}
