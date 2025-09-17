@@ -505,6 +505,14 @@ export type AttributeCreateInput = {
   isVariantOnly?: InputMaybe<Scalars['Boolean']>;
   /** Name of an attribute displayed in the interface. */
   name: Scalars['String'];
+  /**
+   * Specifies reference types to narrow down the choices of reference objects. Applicable only for `REFERENCE` and `SINGLE_REFERENCE` attributes with `PRODUCT`, `PRODUCT_VARIANT` and `PAGE` entity types. Accepts `ProductType` IDs for `PRODUCT` and `PRODUCT_VARIANT` entity types, and `PageType` IDs for `PAGE` entity type. If omitted, all objects of the selected entity type are available as attribute values.
+   *
+   * A maximum of 100 reference types can be specified.
+   *
+   * Added in Saleor 3.22.
+   */
+  referenceTypes?: InputMaybe<Array<Scalars['ID']>>;
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']>;
   /**
@@ -696,6 +704,14 @@ export type AttributeUpdateInput = {
   isVariantOnly?: InputMaybe<Scalars['Boolean']>;
   /** Name of an attribute displayed in the interface. */
   name?: InputMaybe<Scalars['String']>;
+  /**
+   * Specifies reference types to narrow down the choices of reference objects. Applicable only for `REFERENCE` and `SINGLE_REFERENCE` attributes with `PRODUCT`, `PRODUCT_VARIANT` and `PAGE` entity types. Accepts `ProductType` IDs for `PRODUCT` and `PRODUCT_VARIANT` entity types, and `PageType` IDs for `PAGE` entity type. If omitted, all objects of the selected entity type are available as attribute values.
+   *
+   * A maximum of 100 reference types can be specified.
+   *
+   * Added in Saleor 3.22.
+   */
+  referenceTypes?: InputMaybe<Array<Scalars['ID']>>;
   /** IDs of values to be removed from this attribute. */
   removeValues?: InputMaybe<Array<Scalars['ID']>>;
   /** Internal representation of an attribute name. */
@@ -4427,6 +4443,12 @@ export type OrderGrantRefundCreateInput = {
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
   /**
+   * ID of a `Page` (Model) to reference in reason.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']>;
+  /**
    * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from Saleor 3.21.
    *
    * Added in Saleor 3.20.
@@ -4469,6 +4491,12 @@ export type OrderGrantRefundUpdateInput = {
   grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason.
+   *
+   * Added in Saleor 3.22.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']>;
   /** Lines to remove from granted refund. */
   removeLines?: InputMaybe<Array<Scalars['ID']>>;
   /**
@@ -6515,6 +6543,21 @@ export type PublishableChannelListingInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
+export enum RefundSettingsErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  REQUIRED = 'REQUIRED'
+}
+
+export type RefundSettingsUpdateInput = {
+  /**
+   * The ID of a model type, that will be used to reference refund reasons. All models with of this type will be accepted as refund reasons.
+   *
+   * Added in Saleor 3.22.
+   */
+  refundReasonReferenceType: Scalars['ID'];
+};
+
 export type ReorderInput = {
   /** The ID of the item to move. */
   id: Scalars['ID'];
@@ -7407,7 +7450,8 @@ export enum TransactionRequestActionErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK = 'MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK',
-  NOT_FOUND = 'NOT_FOUND'
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
 }
 
 export enum TransactionRequestRefundForGrantedRefundErrorCode {
@@ -7961,6 +8005,17 @@ export enum WebhookEventTypeAsyncEnum {
   CHANNEL_UPDATED = 'CHANNEL_UPDATED',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  /**
+   * A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
+  /**
+   * A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   /** A checkout metadata is updated. */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
@@ -8259,6 +8314,17 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS',
+  /**
+   * A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
+  /**
+   * A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   /** A checkout metadata is updated. */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
@@ -8594,6 +8660,7 @@ export enum WebhookSampleEventTypeEnum {
   CHANNEL_STATUS_CHANGED = 'CHANNEL_STATUS_CHANGED',
   CHANNEL_UPDATED = 'CHANNEL_UPDATED',
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
