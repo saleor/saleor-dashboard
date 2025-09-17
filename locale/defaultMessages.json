@@ -4669,6 +4669,10 @@
   "Q6wcZ5": {
     "string": "First Name"
   },
+  "Q7eRF7": {
+    "context": "tracking number input helper text",
+    "string": "Optionally provide a tracking number for this fulfillment"
+  },
   "Q7uuDr": {
     "context": "attribute slug input field helper text",
     "string": "This is used internally. Make sure you don’t use spaces"
@@ -4825,6 +4829,10 @@
   "QslFl8": {
     "context": "add new refund button",
     "string": "New refund"
+  },
+  "R4IIw1": {
+    "context": "tracking number of the shipment",
+    "string": "Tracking number"
   },
   "R98JLZ": {
     "context": "OrderCustomer Fulfillment from All Warehouses",
@@ -5817,10 +5825,6 @@
     "context": "label",
     "string": "Normal"
   },
-  "X2m4b0": {
-    "context": "tracking number of the shipment",
-    "string": "Tracking number"
-  },
   "X6PF8z": {
     "context": "entity (product, collection, shipping method) name",
     "string": "Name"
@@ -6123,10 +6127,6 @@
   "YkOzse": {
     "context": "used warehouses counter",
     "string": "{count}/{max} warehouses used"
-  },
-  "YkX6mD": {
-    "context": "tracking number input helper text",
-    "string": "Optionally provide a tracking number for this fulfillment"
   },
   "Ykw8k5": {
     "context": "dialog title",
