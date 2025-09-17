@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.21.11
+
+### Patch Changes
+
+- dc58dec: - Added tracking number input field to order fulfillment form
+  - Changed fulfillment email notification checkbox text from "Send shipment details" to "Send fulfillment email to customer".
+
 ## 3.21.10
 
 ### Patch Changes
