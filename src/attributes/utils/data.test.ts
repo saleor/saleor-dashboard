@@ -1,87 +1,242 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
+import { Container } from "@dashboard/types";
 
-import { AttributePageFormData } from "../components/AttributePage";
-import { getAttributeData } from "./data";
+import { handleContainerReferenceAssignment, handleMetadataReferenceAssignment } from "./data";
 
-describe("attributes utils", () => {
-  it("returns swatch attributes data with its values", () => {
-    // Arrange
-    const attribute = {
-      inputType: AttributeInputTypeEnum.SWATCH,
-      storefrontSearchPosition: "10",
-    } as AttributePageFormData;
-    const values = [{ name: "11", value: "v11" }];
-    // Act
-    const attributeData = getAttributeData(attribute, values);
+describe("attributes/utils/data", () => {
+  describe("handleContainerReferenceAssignment", () => {
+    const mockHandlers = {
+      selectAttributeReference: jest.fn(),
+      selectAttributeReferenceMetadata: jest.fn(),
+    };
 
-    // Assert
-    expect(attributeData).toEqual({
-      inputType: "SWATCH",
-      storefrontSearchPosition: 10,
-      metadata: undefined,
-      privateMetadata: undefined,
-      values: [
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should replace value for SINGLE_REFERENCE attribute after selecting item in modal", () => {
+      // Arrange
+      const assignReferencesAttributeId = "attr-1";
+      const attributeValues: Container[] = [
+        { id: "val-1", name: "Value 1" },
+        { id: "val-2", name: "Value 2" },
+      ];
+      const attributes = [
         {
-          name: "11",
-          value: "v11",
+          id: "attr-1",
+          value: ["old-value"],
+          label: "Test Attribute",
+          data: {
+            inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
+            isRequired: false,
+            values: [],
+          },
         },
-      ],
+      ];
+
+      // Act
+      handleContainerReferenceAssignment(
+        assignReferencesAttributeId,
+        attributeValues,
+        attributes,
+        mockHandlers,
+      );
+
+      // Assert
+      expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["val-1"]);
+      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", [
+        { value: "val-1", label: "Value 1" },
+      ]);
+    });
+
+    it("should append values for REFERENCE attribute after selecting item in modal", () => {
+      // Arrange
+      const assignReferencesAttributeId = "attr-1";
+      const attributeValues: Container[] = [
+        { id: "val-1", name: "Value 1" },
+        { id: "val-2", name: "Value 2" },
+      ];
+      const attributes = [
+        {
+          id: "attr-1",
+          value: ["existing-1", "existing-2"],
+          label: "Test Attribute",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            isRequired: false,
+            values: [],
+          },
+        },
+      ];
+
+      // Act
+      handleContainerReferenceAssignment(
+        assignReferencesAttributeId,
+        attributeValues,
+        attributes,
+        mockHandlers,
+      );
+
+      // Assert
+      expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", [
+        "existing-1",
+        "existing-2",
+        "val-1",
+        "val-2",
+      ]);
+      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", [
+        { value: "val-1", label: "Value 1" },
+        { value: "val-2", label: "Value 2" },
+      ]);
+    });
+
+    it("should handle empty initial values", () => {
+      // Arrange
+      const assignReferencesAttributeId = "attr-1";
+      const attributeValues: Container[] = [{ id: "val-1", name: "Value 1" }];
+      const attributes = [
+        {
+          id: "attr-1",
+          value: [],
+          label: "Test Attribute",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            isRequired: false,
+            values: [],
+          },
+        },
+      ];
+
+      // Act
+      handleContainerReferenceAssignment(
+        assignReferencesAttributeId,
+        attributeValues,
+        attributes,
+        mockHandlers,
+      );
+
+      // Assert
+      expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["val-1"]);
+      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", [
+        { value: "val-1", label: "Value 1" },
+      ]);
     });
   });
-  // Arrange
-  it.each([
-    {
-      attribute: {
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        storefrontSearchPosition: "10",
-      } as AttributePageFormData,
-      values: [{ name: "dropdown1", value: "dropdown1-val" }],
-      expected: {
-        inputType: "DROPDOWN",
-        storefrontSearchPosition: 10,
-        metadata: undefined,
-        privateMetadata: undefined,
-        values: [{ name: "dropdown1" }],
-      },
-    },
-    {
-      attribute: {
-        inputType: AttributeInputTypeEnum.MULTISELECT,
-        storefrontSearchPosition: "10",
-      } as AttributePageFormData,
-      values: [{ name: "multiselect1", value: "multiselect1-val" }],
-      expected: {
-        inputType: "MULTISELECT",
-        storefrontSearchPosition: 10,
-        metadata: undefined,
-        privateMetadata: undefined,
-        values: [{ name: "multiselect1" }],
-      },
-    },
-    {
-      attribute: {
-        inputType: AttributeInputTypeEnum.SWATCH,
-        storefrontSearchPosition: "10",
-      } as AttributePageFormData,
-      values: [{ name: "swatch1", value: "swatch1-val" }],
-      expected: {
-        inputType: "SWATCH",
-        storefrontSearchPosition: 10,
-        metadata: undefined,
-        privateMetadata: undefined,
-        values: [
-          {
-            name: "swatch1",
-            value: "swatch1-val",
-          },
-        ],
-      },
-    },
-  ])("returns attributes data with deticated values", ({ attribute, values, expected }) => {
-    // Act
-    const attributeData = getAttributeData(attribute, values);
 
-    // Assert
-    expect(attributeData).toEqual(expected);
+  describe("handleMetadataReferenceAssignment", () => {
+    const mockHandlers = {
+      selectAttributeReference: jest.fn(),
+      selectAttributeReferenceMetadata: jest.fn(),
+    };
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should replace value for SINGLE_REFERENCE attribute after selecting item in modal", () => {
+      // Arrange
+      const assignReferencesAttributeId = "attr-1";
+      const attributeValues = [
+        { value: "val-1", label: "Value 1" },
+        { value: "val-2", label: "Value 2" },
+      ];
+      const attributes = [
+        {
+          id: "attr-1",
+          value: ["old-value"],
+          label: "Test Attribute",
+          data: {
+            inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
+            isRequired: false,
+            values: [],
+          },
+        },
+      ];
+
+      // Act
+      handleMetadataReferenceAssignment(
+        assignReferencesAttributeId,
+        attributeValues,
+        attributes,
+        mockHandlers,
+      );
+
+      // Assert
+      expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["val-1"]);
+      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", [
+        { value: "val-1", label: "Value 1" },
+      ]);
+    });
+
+    it("should append values for REFERENCE attribute after selecting item in modal", () => {
+      // Arrange
+      const assignReferencesAttributeId = "attr-1";
+      const attributeValues = [
+        { value: "val-1", label: "Value 1" },
+        { value: "val-2", label: "Value 2" },
+      ];
+      const attributes = [
+        {
+          id: "attr-1",
+          value: ["existing-1", "existing-2"],
+          label: "Test Attribute",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            isRequired: false,
+            values: [],
+          },
+        },
+      ];
+
+      // Act
+      handleMetadataReferenceAssignment(
+        assignReferencesAttributeId,
+        attributeValues,
+        attributes,
+        mockHandlers,
+      );
+
+      // Assert
+      expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", [
+        "existing-1",
+        "existing-2",
+        "val-1",
+        "val-2",
+      ]);
+      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith(
+        "attr-1",
+        attributeValues,
+      );
+    });
+
+    it("should handle empty attribute values", () => {
+      // Arrange
+      const assignReferencesAttributeId = "attr-1";
+      const attributeValues: Array<{ value: string; label: string }> = [];
+      const attributes = [
+        {
+          id: "attr-1",
+          value: ["existing-1"],
+          label: "Test Attribute",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            isRequired: false,
+            values: [],
+          },
+        },
+      ];
+
+      // Act
+      handleMetadataReferenceAssignment(
+        assignReferencesAttributeId,
+        attributeValues,
+        attributes,
+        mockHandlers,
+      );
+
+      // Assert
+      expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["existing-1"]);
+      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", []);
+    });
   });
 });

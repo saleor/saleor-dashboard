@@ -789,6 +789,7 @@ export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
   DROPDOWN: [{ type: "multiselect", label: "in", value: "input-2" }],
   MULTISELECT: [{ type: "multiselect", label: "in", value: "input-2" }],
   REFERENCE: [{ type: "multiselect", label: "in", value: "input-2" }],
+  SINGLE_REFERENCE: [{ type: "multiselect", label: "in", value: "input-2" }],
   BOOLEAN: [{ type: "select", label: "is", value: "input-5" }],
   NUMERIC: [
     { type: "number", label: "is", value: "input-1" },
