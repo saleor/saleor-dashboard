@@ -9,7 +9,6 @@ import {
   AttributeValueFragment,
   AttributeValueInput,
   FileUploadMutation,
-  Node,
   PageSelectedAttributeFragment,
   ProductFragment,
   SearchCategoriesQuery,
@@ -22,7 +21,7 @@ import {
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { Container, RelayToFlat } from "@dashboard/types";
-import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
@@ -451,21 +450,34 @@ export const getPageReferenceAttributeDisplayData = (
   data: {
     ...attribute.data,
     references:
-      referencePages?.length > 0 && attribute.value?.length > 0
-        ? mapPagesToChoices(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchPagesQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referencePages.find(reference => reference.id === value);
+      attribute.value?.length > 0
+        ? attribute.value.reduce<AttributeReference[]>((acc, valueId) => {
+          // First, try to find the reference in the fetched pages
+          const reference = referencePages?.find(reference => reference.id === valueId);
 
-                if (reference) {
-                  acc.push(reference);
-                }
+          if (reference) {
+            acc.push({
+              label: reference.title,
+              value: reference.id,
+            });
+          } else {
+            // When reference is not returned by our fetched pages (e.g. due to referenceType restriction)
+            // When a reference is filtered out by referenceType restrictions,
+            // it won't be in search results, but we still need to display it to prevent data loss.
+            // Note: 'metadata' here is an internal Dashboard field for preserving initial labels,
+            // NOT Saleor's product metadata. It contains the original 'name' from the GraphQL query.
+            const metadataReference = attribute.metadata?.find(meta => meta.value === valueId);
 
-                return acc;
-              },
-              [],
-            ),
-          )
+            if (metadataReference) {
+              acc.push({
+                label: metadataReference.label,
+                value: metadataReference.value,
+              });
+            }
+          }
+
+          return acc;
+        }, [])
         : [],
   },
 });
@@ -478,21 +490,31 @@ export const getProductReferenceAttributeDisplayData = (
   data: {
     ...attribute.data,
     references:
-      referenceProducts?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchProductsQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceProducts.find(reference => reference.id === value);
+      attribute.value?.length > 0
+        ? attribute.value.reduce<AttributeReference[]>((acc, valueId) => {
+          // First, try to find the reference in the fetched products
+          const reference = referenceProducts?.find(reference => reference.id === valueId);
 
-                if (reference) {
-                  acc.push(reference);
-                }
+          if (reference) {
+            acc.push({
+              label: reference.name,
+              value: reference.id,
+            });
+          } else {
+            // If not found in fetched products, look for it in metadata
+            // Metadata contains the initial labels for all selected references
+            const metadataReference = attribute.metadata?.find(meta => meta.value === valueId);
 
-                return acc;
-              },
-              [],
-            ),
-          )
+            if (metadataReference) {
+              acc.push({
+                label: metadataReference.label,
+                value: metadataReference.value,
+              });
+            }
+          }
+
+          return acc;
+        }, [])
         : [],
   },
 });
@@ -505,20 +527,30 @@ export const getProductVariantReferenceAttributeDisplayData = (
   data: {
     ...attribute.data,
     references:
-      referenceProducts?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<Array<Node & Record<"name", string>>>((acc, value) => {
-              const reference = mapReferenceProductsToVariants(referenceProducts).find(
-                reference => reference.id === value,
-              );
+      attribute.value?.length > 0
+        ? attribute.value.reduce<AttributeReference[]>((acc, valueId) => {
+          const referenceVariants = mapReferenceProductsToVariants(referenceProducts || []);
+          const reference = referenceVariants.find(reference => reference.id === valueId);
 
-              if (reference) {
-                acc.push(reference);
-              }
+          if (reference) {
+            acc.push({
+              label: reference.name,
+              value: reference.id,
+            });
+          } else {
+            // If not found in fetched variants, look for it in metadata
+            const metadataReference = attribute.metadata?.find(meta => meta.value === valueId);
 
-              return acc;
-            }, []),
-          )
+            if (metadataReference) {
+              acc.push({
+                label: metadataReference.label,
+                value: metadataReference.value,
+              });
+            }
+          }
+
+          return acc;
+        }, [])
         : [],
   },
 });
@@ -531,21 +563,29 @@ export const getCollectionReferenceAttributeDisplayData = (
   data: {
     ...attribute.data,
     references:
-      referenceCollections?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceCollections.find(reference => reference.id === value);
+      attribute.value?.length > 0
+        ? attribute.value.reduce<AttributeReference[]>((acc, valueId) => {
+          const reference = referenceCollections?.find(reference => reference.id === valueId);
 
-                if (reference) {
-                  acc.push(reference);
-                }
+          if (reference) {
+            acc.push({
+              label: reference.name,
+              value: reference.id,
+            });
+          } else {
+            // If not found in fetched collections, look for it in metadata
+            const metadataReference = attribute.metadata?.find(meta => meta.value === valueId);
 
-                return acc;
-              },
-              [],
-            ),
-          )
+            if (metadataReference) {
+              acc.push({
+                label: metadataReference.label,
+                value: metadataReference.value,
+              });
+            }
+          }
+
+          return acc;
+        }, [])
         : [],
   },
 });
@@ -558,21 +598,29 @@ export const getCategoryReferenceAttributeDisplayData = (
   data: {
     ...attribute.data,
     references:
-      referenceCategories?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceCategories.find(reference => reference.id === value);
+      attribute.value?.length > 0
+        ? attribute.value.reduce<AttributeReference[]>((acc, valueId) => {
+          const reference = referenceCategories?.find(reference => reference.id === valueId);
 
-                if (reference) {
-                  acc.push(reference);
-                }
+          if (reference) {
+            acc.push({
+              label: reference.name,
+              value: reference.id,
+            });
+          } else {
+            // If not found in fetched categories, look for it in metadata
+            const metadataReference = attribute.metadata?.find(meta => meta.value === valueId);
 
-                return acc;
-              },
-              [],
-            ),
-          )
+            if (metadataReference) {
+              acc.push({
+                label: metadataReference.label,
+                value: metadataReference.value,
+              });
+            }
+          }
+
+          return acc;
+        }, [])
         : [],
   },
 });

@@ -201,14 +201,48 @@ export function createAttributeValueReorderHandler(
     triggerChange();
 
     const attribute = attributes.find(attribute => attribute.id === attributeId);
-    const reorderedValues = move(
-      attribute?.value?.[reorder.oldIndex] ?? "",
-      attribute?.value ?? [],
-      (a, b) => a === b,
-      reorder.newIndex,
-    );
 
-    changeAttributeData(attributeId, reorderedValues);
+    if (!attribute?.value) {
+      return;
+    }
+
+    // For reference attributes, we need to handle reordering only among visible items
+    if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE ||
+        attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
+
+      // Get the list of visible reference IDs (those that have display data)
+      const visibleIds = attribute.value.filter(valueId =>
+        attribute.data.references?.some(ref => ref.value === valueId)
+      );
+
+      // Get the list of hidden reference IDs (those without display data)
+      const hiddenIds = attribute.value.filter(valueId =>
+        !attribute.data.references?.some(ref => ref.value === valueId)
+      );
+
+      // Reorder only the visible items
+      const reorderedVisibleIds = move(
+        visibleIds[reorder.oldIndex] ?? "",
+        visibleIds,
+        (a, b) => a === b,
+        reorder.newIndex,
+      );
+
+      // Rebuild the full value array: visible items in new order + hidden items at the end
+      const reorderedValues = [...reorderedVisibleIds, ...hiddenIds];
+
+      changeAttributeData(attributeId, reorderedValues);
+    } else {
+      // For non-reference attributes, use the original logic
+      const reorderedValues = move(
+        attribute?.value?.[reorder.oldIndex] ?? "",
+        attribute?.value ?? [],
+        (a, b) => a === b,
+        reorder.newIndex,
+      );
+
+      changeAttributeData(attributeId, reorderedValues);
+    }
   };
 }
 
