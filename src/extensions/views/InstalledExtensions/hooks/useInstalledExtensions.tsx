@@ -1,14 +1,11 @@
-import {
-  getLatestFailedAttemptFromWebhooks,
-  LatestWebhookDeliveryWithMoment,
-} from "@dashboard/apps/components/AppAlerts/utils";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
-import { useFlag } from "@dashboard/featureFlags";
 import {
+  AppEventDeliveriesFragment,
   AppTypeEnum,
+  EventDeliveryStatusEnum,
   PermissionEnum,
   useEventDeliveryQuery,
   useInstalledAppsListQuery,
@@ -19,10 +16,70 @@ import { PluginIcon } from "@dashboard/icons/PluginIcon";
 import { WebhookIcon } from "@dashboard/icons/WebhookIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, GenericAppIcon, Skeleton } from "@saleor/macaw-ui-next";
+import moment from "moment-timezone";
 import { useMemo } from "react";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
 import { FailedWebhookInfo } from "../components/InfoLabels/FailedWebhookInfo";
+
+type Webhook = NonNullable<AppEventDeliveriesFragment["webhooks"]>[0];
+
+type LatestWebhookDelivery =
+  | NonNullable<Webhook["failedDelivers"]>["edges"][0]["node"]
+  | NonNullable<
+      NonNullable<Webhook["pendingDelivers"]>["edges"][0]["node"]["attempts"]
+    >["edges"][0]["node"];
+
+export type LatestWebhookDeliveryWithMoment = LatestWebhookDelivery & { createdAt: moment.Moment };
+
+// TODO: Get rid of moment.js
+const toWebhookDeliveryWithMoment = (
+  delivery: LatestWebhookDelivery | null | undefined,
+): LatestWebhookDeliveryWithMoment | null =>
+  delivery
+    ? {
+        ...delivery,
+        createdAt: moment(delivery.createdAt),
+      }
+    : null;
+
+const getLatest = (
+  a: LatestWebhookDeliveryWithMoment | null,
+  b: LatestWebhookDeliveryWithMoment | null,
+) => {
+  if (a && b) {
+    return a.createdAt.isAfter(b.createdAt) ? a : b;
+  }
+
+  return a ?? b;
+};
+
+const getLatestFailedAttemptFromWebhook = (
+  webhook: Webhook,
+): LatestWebhookDeliveryWithMoment | null => {
+  // Edge case: Saleor failed to make a single delivery attempt
+  const failedEventDelivery = toWebhookDeliveryWithMoment(webhook.failedDelivers?.edges?.[0]?.node);
+  const fromFailedDeliveryAttempts = toWebhookDeliveryWithMoment(
+    webhook.failedDelivers?.edges?.[0]?.node?.attempts?.edges?.[0]?.node,
+  );
+
+  // handling the edge case and checking which one is newer
+  const fromFailedDelivers = getLatest(failedEventDelivery, fromFailedDeliveryAttempts);
+
+  const fromPendingDelivers = toWebhookDeliveryWithMoment(
+    webhook.pendingDelivers?.edges?.[0]?.node.attempts?.edges.find(
+      ({ node: { status } }) => status === EventDeliveryStatusEnum.FAILED,
+    )?.node,
+  );
+
+  return getLatest(fromFailedDelivers, fromPendingDelivers);
+};
+
+export const getLatestFailedAttemptFromWebhooks = (webhooks: Webhook[]) =>
+  webhooks
+    .map(getLatestFailedAttemptFromWebhook)
+    .filter(Boolean)
+    .sort((a, b) => b?.createdAt.diff(a?.createdAt))[0] ?? null;
 
 export const getExtensionInfo = ({
   loading,
@@ -47,7 +104,12 @@ export const getExtensionInfo = ({
     return (
       <FailedWebhookInfo
         link={ExtensionsUrls.resolveEditManifestExtensionUrl(id)}
-        date={lastFailedAttempt.createdAt}
+        // TODO: We should get rid of moment.js
+        date={
+          typeof lastFailedAttempt.createdAt === "string"
+            ? lastFailedAttempt.createdAt
+            : lastFailedAttempt.createdAt.toISOString()
+        }
       />
     );
   }
@@ -101,7 +163,6 @@ const resolveExtensionHref = ({
 
 export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const userPermissions = useUserPermissions();
   const hasManagePluginsPermission = !!userPermissions?.find(
     ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
@@ -111,11 +172,6 @@ export const useInstalledExtensions = () => {
     displayLoader: true,
     variables: {
       first: 100,
-      ...(!isExtensionsDevEnabled && {
-        filter: {
-          type: AppTypeEnum.THIRDPARTY,
-        },
-      }),
     },
   });
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
@@ -125,7 +181,7 @@ export const useInstalledExtensions = () => {
     variables: {
       first: 100,
     },
-    skip: !isExtensionsDevEnabled || !hasManagePluginsPermission,
+    skip: !hasManagePluginsPermission,
   });
   const installedPluginsData = hasManagePluginsPermission
     ? mapEdgesToItems(plugins?.plugins) || []
@@ -137,9 +193,6 @@ export const useInstalledExtensions = () => {
       first: 100,
       filter: {
         isActive: true,
-        ...(!isExtensionsDevEnabled && {
-          type: AppTypeEnum.THIRDPARTY,
-        }),
       },
       canFetchAppEvents: hasManagedAppsPermission,
     },
@@ -188,8 +241,7 @@ export const useInstalledExtensions = () => {
 
   return {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
-    installedAppsLoading:
-      !data?.apps || (isExtensionsDevEnabled && hasManagePluginsPermission && !plugins?.plugins),
+    installedAppsLoading: !data?.apps || (hasManagePluginsPermission && !plugins?.plugins),
     refetchInstalledApps: refetch,
   };
 };

@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { AppUrls } from "@dashboard/apps/urls";
 import { Extension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppExtensionMountEnum } from "@dashboard/graphql";
@@ -8,18 +7,11 @@ import { matchPath } from "react-router";
 
 import { SidebarMenuItem } from "./types";
 
-// TODO: Remove newExtensionsFlag once "extensions" feature flag is removed
-export const mapToExtensionsItems = (
-  extensions: Extension[],
-  header: SidebarMenuItem,
-  newExtensionsFlag: boolean,
-) => {
+export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMenuItem) => {
   const items: SidebarMenuItem[] = extensions.map(({ label, id, app, url, permissions, open }) => ({
     id: `extension-${id}`,
     label,
-    url: newExtensionsFlag
-      ? ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl(url, app.appUrl, app.id)
-      : AppUrls.resolveDashboardUrlFromAppCompleteUrl(url, app.appUrl, app.id),
+    url: ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl(url, app.appUrl, app.id),
     permissions,
     onClick: open,
     type: "item",

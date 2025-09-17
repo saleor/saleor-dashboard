@@ -31,18 +31,13 @@ export const initialOnboardingSteps: OnboardingStep[] = [
     expanded: undefined,
   },
   {
-    id: "view-webhooks",
-    completed: false,
-    expanded: undefined,
-  },
-  {
     id: "invite-staff",
     completed: false,
     expanded: undefined,
   },
 ];
 
-export const TOTAL_STEPS_COUNT = initialOnboardingSteps.length - 1; // we either show view-extensions or view-webhooks but not both
+export const TOTAL_STEPS_COUNT = initialOnboardingSteps.length;
 
 export const getInitialOnboardingState = (isNewUser: boolean): OnboardingState => {
   if (isNewUser) {

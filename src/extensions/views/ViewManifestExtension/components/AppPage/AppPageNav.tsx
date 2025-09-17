@@ -1,6 +1,5 @@
-import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
-import { AppLogo } from "@dashboard/apps/types";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
+import { AppAvatar, LegacyAppLogo } from "@dashboard/extensions/components/AppAvatar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -9,8 +8,6 @@ import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./message";
-
-type Logo = AppLogo | undefined;
 
 interface AppPageNavProps {
   name?: string | undefined | null;
@@ -46,12 +43,7 @@ export const AppPageNav = ({
     navigate(ExtensionsUrls.resolveEditManifestExtensionUrl(appId));
   };
   const logo = useMemo(
-    (): Logo =>
-      appLogoUrl
-        ? {
-            source: appLogoUrl,
-          }
-        : undefined,
+    (): LegacyAppLogo => (appLogoUrl ? { source: appLogoUrl } : undefined),
     [appLogoUrl],
   );
 

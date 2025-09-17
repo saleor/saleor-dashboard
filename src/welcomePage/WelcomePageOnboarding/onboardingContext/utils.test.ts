@@ -186,7 +186,6 @@ describe("getFirstNotCompletedAndNotExpandedStep", () => {
       { id: "explore-orders", completed: false, expanded: undefined },
       { id: "graphql-playground", completed: false, expanded: undefined },
       { id: "view-extensions", completed: false, expanded: undefined },
-      { id: "view-webhooks", completed: false, expanded: undefined },
       { id: "invite-staff", completed: false, expanded: undefined },
     ];
 
@@ -209,7 +208,6 @@ describe("getFirstNotCompletedAndNotExpandedStep", () => {
         "explore-orders",
         "graphql-playground",
         "view-extensions",
-        "view-webhooks",
         "invite-staff",
       ],
       stepsExpanded: {},
@@ -220,7 +218,6 @@ describe("getFirstNotCompletedAndNotExpandedStep", () => {
       { id: "explore-orders", completed: true, expanded: undefined },
       { id: "graphql-playground", completed: true, expanded: undefined },
       { id: "view-extensions", completed: true, expanded: undefined },
-      { id: "view-webhooks", completed: true, expanded: undefined },
       { id: "invite-staff", completed: true, expanded: undefined },
     ];
 
@@ -248,7 +245,6 @@ describe("getNextStepToExpand", () => {
       { id: "explore-orders", completed: false, expanded: undefined },
       { id: "graphql-playground", completed: false, expanded: undefined },
       { id: "view-extensions", completed: false, expanded: undefined },
-      { id: "view-webhooks", completed: false, expanded: undefined },
       { id: "invite-staff", completed: false, expanded: undefined },
     ];
 
@@ -271,7 +267,6 @@ describe("getNextStepToExpand", () => {
       { id: "explore-orders", completed: true, expanded: undefined },
       { id: "graphql-playground", completed: true, expanded: undefined },
       { id: "view-extensions", completed: true, expanded: undefined },
-      { id: "view-webhooks", completed: true, expanded: undefined },
       { id: "invite-staff", completed: true, expanded: undefined },
     ];
 

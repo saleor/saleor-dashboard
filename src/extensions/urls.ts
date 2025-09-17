@@ -1,4 +1,3 @@
-import { AppPaths } from "@dashboard/apps/urls";
 import { getApiUrl } from "@dashboard/config";
 import { FlagList } from "@dashboard/featureFlags";
 import { Dialog, SingleAction } from "@dashboard/types";
@@ -34,6 +33,9 @@ export const ExtensionsPaths = {
 
   // Plugins
   resolveEditPluginExtension: (id: string) => urlJoin(extensionsPluginSection, id),
+
+  // Legacy paths to handle old app urls
+  resolveLegacyAppPath: (id: string) => `/apps/${id}/app`,
 };
 
 export const MANIFEST_ATTR = "manifestUrl";
@@ -89,6 +91,15 @@ export type CustomExtensionDetailsUrlDialog =
 export type CustomExtensionDetailsUrlQueryParams = Dialog<CustomExtensionDetailsUrlDialog> &
   SingleAction;
 
+// Legacy CustomApp types for compatibility
+export type CustomAppDetailsUrlDialog =
+  | "create-token"
+  | "remove-webhook"
+  | "remove-token"
+  | "app-activate"
+  | "app-deactivate";
+export type CustomAppDetailsUrlQueryParams = Dialog<CustomAppDetailsUrlDialog> & SingleAction;
+
 export const ExtensionsUrls = {
   resolveInstalledExtensionsUrl: (params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.installedExtensions + "?" + stringifyQs(params),
@@ -126,18 +137,31 @@ export const ExtensionsUrls = {
   resolveAppDeepUrl: (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
     ExtensionsPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params),
 
-  // Used when checking if navigation was made inside app iframe
+  /** Check if navigation is made inside app's iframe so that we don't navigate user
+   * in dashboard, but change URL of the iframe
+   *
+   * This check is used for appActionsHandler - to handle events from appBridge
+   * if app requests navigation event in appbridge to itself */
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = ExtensionsUrls.resolveViewManifestExtensionUrl(
       encodeURIComponent(appId),
     ).replace("?", "");
 
-    // Handle legacy app navigation made to /apps/XYZ/app
-    const legacyAppCompletePath = AppPaths.resolveAppPath(appId);
+    // Note: we need to support old /apps path as well, in order for backwards compatibility
+    const legacyAppPath = ExtensionsPaths.resolveLegacyAppPath(encodeURIComponent(appId)).replace(
+      "?",
+      "",
+    );
 
+    /**
+     * We always navigate from appCompletePath - this is current route in Dashboard (/extensions/app/XYZ/...)
+     * App might want to change navigation in itself by using following routes:
+     * - `/extensions/app/XYZ/new-subpath` - new route in extensions
+     * - `/apps/XYZ/app/new-subpath` - legacy route in apps (now replaced with /extensions)
+     **/
     return (
-      (to.startsWith(appCompletePath) || to.startsWith(legacyAppCompletePath)) &&
-      (from.startsWith(appCompletePath) || from.startsWith(legacyAppCompletePath))
+      from.startsWith(appCompletePath) &&
+      (to.startsWith(appCompletePath) || to.startsWith(legacyAppPath))
     );
   },
 

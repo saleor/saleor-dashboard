@@ -5,14 +5,6 @@ import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { SidebarMenuItem } from "./types";
 import { getMenuItemExtension, isMenuActive, mapToExtensionsItems } from "./utils";
 
-jest.mock("@dashboard/apps/urls", () => ({
-  AppUrls: {
-    resolveDashboardUrlFromAppCompleteUrl: jest.fn(
-      (url, appUrl, appId) => `mockAppUrl:${url}:${appUrl}:${appId}`,
-    ),
-  },
-}));
-
 jest.mock("@dashboard/extensions/urls", () => ({
   ExtensionsUrls: {
     resolveDashboardUrlFromAppCompleteUrl: jest.fn(
@@ -22,12 +14,10 @@ jest.mock("@dashboard/extensions/urls", () => ({
 }));
 
 // To grab the mocked functions for assertions
-const { AppUrls } = jest.requireMock("@dashboard/apps/urls");
 const { ExtensionsUrls } = jest.requireMock("@dashboard/extensions/urls");
 
 describe("mapToExtensionsItems", () => {
   beforeEach(() => {
-    AppUrls.resolveDashboardUrlFromAppCompleteUrl.mockClear();
     ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl.mockClear();
   });
 
@@ -59,7 +49,7 @@ describe("mapToExtensionsItems", () => {
   };
 
   it("should map extensions to menu items when extensions flag is enabled", () => {
-    const result = mapToExtensionsItems([mockExtension], mockHeader, true);
+    const result = mapToExtensionsItems([mockExtension], mockHeader);
 
     expect(result).toHaveLength(2);
     expect(result[0]).toBe(mockHeader);
@@ -76,32 +66,30 @@ describe("mapToExtensionsItems", () => {
       mockExtension.app.appUrl,
       mockExtension.app.id,
     );
-    expect(AppUrls.resolveDashboardUrlFromAppCompleteUrl).not.toHaveBeenCalled();
   });
 
   it("should map extensions to menu items when extensions flag is disabled", () => {
-    const result = mapToExtensionsItems([mockExtension], mockHeader, false);
+    const result = mapToExtensionsItems([mockExtension], mockHeader);
 
     expect(result).toHaveLength(2);
     expect(result[0]).toBe(mockHeader);
     expect(result[1]).toEqual({
       id: "extension-test-extension",
       label: "Test Extension",
-      url: "mockAppUrl:/test:https://app.example.com:app-1",
+      url: "mockExtensionUrl:/test:https://app.example.com:app-1",
       permissions: [] as PermissionEnum[],
       onClick: mockExtension.open,
       type: "item",
     });
-    expect(AppUrls.resolveDashboardUrlFromAppCompleteUrl).toHaveBeenCalledWith(
+    expect(ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl).toHaveBeenCalledWith(
       mockExtension.url,
       mockExtension.app.appUrl,
       mockExtension.app.id,
     );
-    expect(ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl).not.toHaveBeenCalled();
   });
 
   it("should return no menu items if no extensions are provided", () => {
-    const result = mapToExtensionsItems([], mockHeader, true);
+    const result = mapToExtensionsItems([], mockHeader);
 
     expect(result).toHaveLength(0);
   });

@@ -7,9 +7,9 @@ import { Savebar } from "@dashboard/components/Savebar";
 import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler,
-} from "@dashboard/custom-apps/handlers";
-import { IntrospectionNode } from "@dashboard/custom-apps/utils";
+} from "@dashboard/extensions/handlers";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { IntrospectionNode } from "@dashboard/extensions/utils";
 import {
   WebhookDetailsFragment,
   WebhookErrorCode,

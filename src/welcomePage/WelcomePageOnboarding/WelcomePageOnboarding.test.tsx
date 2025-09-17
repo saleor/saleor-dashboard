@@ -1,5 +1,4 @@
 import { useUser } from "@dashboard/auth";
-import { useFlag } from "@dashboard/featureFlags";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -16,11 +15,6 @@ jest.mock("@dashboard/components/Router/useRouteChange", () => ({
   }),
 }));
 jest.mock("@dashboard/auth");
-jest.mock("@dashboard/featureFlags", () => ({
-  useFlag: jest.fn().mockReturnValue({
-    enabled: false,
-  }),
-}));
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
@@ -51,7 +45,7 @@ const allMarkAsDoneStepsIds = [
   "create-product",
   "explore-orders",
   "graphql-playground",
-  "view-webhooks",
+  "view-extensions",
   "invite-staff",
 ];
 
@@ -136,7 +130,7 @@ describe("WelcomePageOnboarding", () => {
       saveOnboardingState: jest.fn(),
     });
 
-    const user = userEvent.setup();
+    const user = userEvent.setup({ delay: null });
 
     // Act
     render(
@@ -145,19 +139,57 @@ describe("WelcomePageOnboarding", () => {
       </Wrapper>,
     );
 
-    // 'get-started' has only 'Next step' button
-    const getStartedNextStepBtn = screen.getByTestId("get-started-next-step-btn");
+    // Wait for the accordions to be rendered
+    await waitFor(() => {
+      expect(screen.getByTestId("accordion-step-trigger-get-started")).toBeInTheDocument();
+    });
 
-    user.click(getStartedNextStepBtn);
+    // The get-started accordion should be open by default for new users
+    // But the button only appears if the step is NOT completed
+    // Let's check if the button exists initially
+    const getStartedNextStepBtn = await waitFor(
+      () => {
+        return screen.getByTestId("get-started-next-step-btn");
+      },
+      { timeout: 3000 },
+    );
+
+    await user.click(getStartedNextStepBtn);
+    jest.runAllTimers();
+
+    // After clicking "Next step", the create-product accordion should automatically expand
+    await waitFor(() => {
+      const createProductAccordion = screen.getByTestId(
+        "accordion-step-trigger-create-product",
+      ).parentElement;
+
+      expect(createProductAccordion).toHaveAttribute("data-state", "open");
+    });
 
     for (const stepId of allMarkAsDoneStepsIds) {
+      // Each step needs to be expanded - either it's already open or we need to click to open it
+      // After marking a step as done, the next one automatically opens
+      const accordionTrigger = screen.getByTestId(`accordion-step-trigger-${stepId}`);
+      const accordionItem = accordionTrigger.parentElement;
+
+      // Check if we need to expand the accordion
+      const needsExpansion = accordionItem?.getAttribute("data-state") === "closed";
+
+      if (needsExpansion) {
+        await user.click(accordionTrigger);
+        jest.runAllTimers();
+      }
+
+      // Wait for the accordion to be open before proceeding
       await waitFor(() => {
-        expect(screen.getByTestId(stepId + "-mark-as-done")).toBeInTheDocument();
+        expect(accordionItem).toHaveAttribute("data-state", "open");
       });
 
-      const markAsDone = screen.getByTestId(stepId + "-mark-as-done");
+      // Wait for the specific mark-as-done button to appear
+      const markAsDone = await screen.findByTestId(stepId + "-mark-as-done", {}, { timeout: 2000 });
 
-      markAsDone.click();
+      await user.click(markAsDone);
+      jest.runAllTimers();
     }
 
     // Assert
@@ -250,17 +282,13 @@ describe("WelcomePageOnboarding", () => {
     });
   });
 
-  it("should show 'Discover extension capabilities' step when extensions flag is enabled", () => {
+  it("should show 'Discover extension capabilities' step", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({ user: { dateJoined: NEW_ACCOUNT_DATE } });
     (useOnboardingStorage as jest.Mock).mockReturnValue({
       getOnboardingState: jest.fn(() => onboardingInitState),
       saveOnboardingState: jest.fn(),
     });
-    // Override useFlag mock for this specific test
-    (useFlag as jest.Mock).mockImplementation((flag: string) => ({
-      enabled: flag === "extensions",
-    }));
 
     // Act
     render(
@@ -276,12 +304,7 @@ describe("WelcomePageOnboarding", () => {
     screen.getByTestId("accordion-step-trigger-view-extensions").click();
 
     // Assert
-    // Check for 'view-extensions' step
     expect(screen.getByText("Discover extension capabilities")).toBeInTheDocument();
     expect(screen.getByTestId("view-extensions-mark-as-done")).toBeInTheDocument();
-
-    // Check that 'view-webhooks' step is NOT present
-    expect(screen.queryByText("View webhooks functionalities")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("view-webhooks-mark-as-done")).not.toBeInTheDocument();
   });
 });

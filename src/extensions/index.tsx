@@ -1,22 +1,19 @@
-import { AppPaths } from "@dashboard/apps/urls";
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { CustomAppDetailsUrlQueryParams } from "@dashboard/custom-apps/urls";
 import {
   AppDetailsUrlQueryParams,
+  CustomExtensionDetailsUrlQueryParams,
   ExtensionInstallQueryParams,
   ExtensionsPaths,
+  PluginUrlQueryParams,
 } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
 import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtensions";
-import { useFlag } from "@dashboard/featureFlags";
 import { PermissionEnum } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
-import { PluginUrlQueryParams } from "@dashboard/plugins/urls";
 import { parse as parseQs } from "qs";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
@@ -54,7 +51,7 @@ const EditCustomExtensionView = ({
   onTokenClose,
 }: RouteComponentProps<{ id?: string }> & { token: string; onTokenClose: () => void }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: CustomAppDetailsUrlQueryParams = qs;
+  const params: CustomExtensionDetailsUrlQueryParams = qs;
   const id = match.params.id;
 
   if (!id) {
@@ -120,16 +117,8 @@ const EditCustomExtensionWebhookView = ({ match }: RouteComponentProps<{ id?: st
 
 export const ExtensionsSection = () => {
   const intl = useIntl();
-  const navigate = useNavigator();
-  const { enabled: isExtensionsEnabled } = useFlag("extensions");
 
   const { customAppToken, setCustomAppToken } = useCustomAppToken();
-
-  if (!isExtensionsEnabled) {
-    navigate(AppPaths.appListPath, { replace: true });
-
-    return <>Redirecting...</>;
-  }
 
   return (
     <>

@@ -1,8 +1,5 @@
 // @ts-strict-ignore
 import {
-  AppsListDocument,
-  AppsListQuery,
-  AppsListQueryVariables,
   AttributeListDocument,
   AttributeListQuery,
   AttributeListQueryVariables,
@@ -21,6 +18,9 @@ import {
   GiftCardListDocument,
   GiftCardListQuery,
   GiftCardListQueryVariables,
+  InstalledAppsListDocument,
+  InstalledAppsListQuery,
+  InstalledAppsListQueryVariables,
   ListCustomersDocument,
   ListCustomersQuery,
   ListCustomersQueryVariables,
@@ -68,7 +68,7 @@ export type TData =
   | OrderListQuery
   | GiftCardListQuery
   | CustomerAddressesQuery
-  | AppsListQuery
+  | InstalledAppsListQuery
   | AttributeListQuery
   | CategoryDetailsQuery
   | CheckoutListQuery
@@ -93,7 +93,7 @@ export type TVariables =
   | OrderListQueryVariables
   | GiftCardListQueryVariables
   | CustomerAddressesQueryVariables
-  | AppsListQueryVariables
+  | InstalledAppsListQueryVariables
   | AttributeListQueryVariables
   | CategoryDetailsQueryVariables
   | ListCustomersQueryVariables
@@ -122,7 +122,7 @@ interface Document {
 
 export const DocumentMap: Record<string, Document> = {
   APP: {
-    document: AppsListDocument,
+    document: InstalledAppsListDocument,
     variables: DefaultVariables,
     displayedAttribute: "name",
   },
