@@ -3775,10 +3775,6 @@
   "KFv8hX": {
     "string": "An attribute already exists."
   },
-  "KGsaGO": {
-    "context": "tooltip",
-    "string": "This feature is in a preview state and can be subject to changes at later point"
-  },
   "KHI/qv": {
     "string": "You don't have permission to manage products"
   },
@@ -8883,10 +8879,6 @@
   "p1D4Ok": {
     "context": "order send refund, manual transaction refund was created",
     "string": "Manual refund was created successfully"
-  },
-  "p3eRUm": {
-    "context": "indicator that feature is in preview mode",
-    "string": "Preview"
   },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
