@@ -36,7 +36,7 @@ interface CustomerListProps {
   params: CustomerListUrlQueryParams;
 }
 
-export const CustomerList = ({ params }: CustomerListProps) => {
+const CustomerList = ({ params }: CustomerListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -217,4 +217,5 @@ export const CustomerList = ({ params }: CustomerListProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CustomerList;

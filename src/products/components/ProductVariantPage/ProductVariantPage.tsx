@@ -18,7 +18,6 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { MetadataFormData } from "@dashboard/components/Metadata";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -47,7 +46,7 @@ import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ProductShipping } from "../ProductShipping";
-import { ProductStockInput, ProductStocks } from "../ProductStocks";
+import { ProductStocks } from "../ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
@@ -77,21 +76,6 @@ const messages = defineMessages({
     description: "attributes, section header",
   },
 });
-
-export interface ProductVariantPageFormData extends MetadataFormData {
-  costPrice: string;
-  price: string;
-  sku: string;
-  trackInventory: boolean;
-  weight: string;
-}
-
-export interface ProductVariantPageSubmitData extends ProductVariantPageFormData {
-  attributes: AttributeInput[];
-  addStocks: ProductStockInput[];
-  updateStocks: ProductStockInput[];
-  removeStocks: string[];
-}
 
 function byAttributeScope(scope: VariantAttributeScope) {
   return (attribute: AttributeInput) => attribute.data.variantAttributeScope === scope;

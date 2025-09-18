@@ -48,7 +48,7 @@ const useStyles = makeStyles(
   },
 );
 
-export interface PspReferenceProps {
+interface PspReferenceProps {
   reference: string;
   url?: string;
 }

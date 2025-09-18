@@ -5,7 +5,7 @@ import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGr
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface PermissionDeleteDialogProps {
+interface PermissionDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   error?: PermissionGroupErrorFragment;
   name: string;

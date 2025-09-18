@@ -49,7 +49,7 @@ import {
   ShippingZoneUrlQueryParams,
 } from "../../urls";
 
-export interface ShippingZoneDetailsProps {
+interface ShippingZoneDetailsProps {
   id: string;
   params: ShippingZoneUrlQueryParams;
 }

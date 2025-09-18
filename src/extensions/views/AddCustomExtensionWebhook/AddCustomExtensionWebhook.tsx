@@ -14,7 +14,7 @@ import { useIntl } from "react-intl";
 import WebhookDetailsPage, { WebhookFormData } from "../../components/WebhookDetailsPage";
 import { useAvailableEvents } from "../../hooks/useAvailableEvents";
 
-export interface CustomAppWebhookCreateProps {
+interface CustomAppWebhookCreateProps {
   appId: string;
 }
 

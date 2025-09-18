@@ -2,7 +2,7 @@ import { subtractMoney } from "@dashboard/components/Money";
 import { OrderDetailsFragment, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { IMoney } from "@dashboard/utils/intl";
 
-export const extractOutstandingBalance = (order: OrderDetailsFragment): IMoney =>
+const extractOutstandingBalance = (order: OrderDetailsFragment): IMoney =>
   order?.totalCaptured &&
   order?.total?.gross &&
   subtractMoney(order.total.gross, order.totalCaptured);

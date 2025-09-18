@@ -39,5 +39,3 @@ export const ShippingWeightUnitDialog = ({
     </DashboardModal>
   );
 };
-
-export default ShippingWeightUnitDialog;

@@ -38,7 +38,7 @@ const getShipmentCost = (order: OrderRefundSharedType) =>
     currency: getAuthorizedAmount(order)?.currency,
   });
 
-export const getProductsAmountValues = ({
+const getProductsAmountValues = ({
   order,
   fulfilledItemsQuantities,
   waitingItemsQuantities,

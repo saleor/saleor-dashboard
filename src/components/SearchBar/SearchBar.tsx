@@ -88,4 +88,3 @@ const SearchBar = (props: SearchBarProps) => {
 };
 
 SearchBar.displayName = "SearchBar";
-export default SearchBar;

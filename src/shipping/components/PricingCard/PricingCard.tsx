@@ -20,7 +20,7 @@ interface Value {
   price: string;
 }
 
-export interface PricingCardProps {
+interface PricingCardProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
@@ -29,7 +29,7 @@ export interface PricingCardProps {
 
 const numberOfColumns = 2;
 
-export const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps) => {
+const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price"], errors);

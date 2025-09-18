@@ -37,7 +37,7 @@ const useStyles = makeStyles(
   { name: "ShippingMethodProducts" },
 );
 
-export interface ShippingMethodProductsProps
+interface ShippingMethodProductsProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions {
   products: RelayToFlat<

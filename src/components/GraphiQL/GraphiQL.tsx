@@ -29,7 +29,7 @@ import DryRun from "../DryRun";
 import { messages } from "./messages";
 import { useDashboardTheme, useEditorStyles, useGraphiQLThemeSwitcher, useStyles } from "./styles";
 
-export interface GraphiQLToolbarConfig {
+interface GraphiQLToolbarConfig {
   /**
    * This content will be rendered after the built-in buttons of the toolbar.
    * Note that this will not apply if you provide a completely custom toolbar
@@ -38,9 +38,9 @@ export interface GraphiQLToolbarConfig {
   additionalContent?: React.ReactNode;
 }
 
-export type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
+type GraphiQLProps = Omit<GraphiQLProviderProps, "children"> & GraphiQLInterfaceProps;
 
-export function GraphiQL({
+function GraphiQL({
   dangerouslyAssumeSchemaIsValid,
   defaultQuery,
   defaultTabs,
@@ -133,7 +133,7 @@ type AddSuffix<Obj extends Record<string, any>, Suffix extends string> = {
   [Key in keyof Obj as `${string & Key}${Suffix}`]: Obj[Key];
 };
 
-export type GraphiQLInterfaceProps = WriteableEditorProps &
+type GraphiQLInterfaceProps = WriteableEditorProps &
   AddSuffix<Pick<UseQueryEditorArgs, "onEdit">, "Query"> &
   Pick<UseQueryEditorArgs, "onCopyQuery"> &
   AddSuffix<Pick<UseVariableEditorArgs, "onEdit">, "Variables"> &
@@ -148,7 +148,7 @@ export type GraphiQLInterfaceProps = WriteableEditorProps &
     result?: string;
   };
 
-export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
+function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const intl = useIntl();
   const editorContext = useEditorContext({ nonNull: true });
   const pluginContext = usePluginContext();

@@ -7,5 +7,6 @@ const SiteSettings = () => {
   return <SiteSettingsComponent />;
 };
 
-export const SiteSettingsSection = () => <Route path={siteSettingsPath} component={SiteSettings} />;
+const SiteSettingsSection = () => <Route path={siteSettingsPath} component={SiteSettings} />;
+
 export default SiteSettingsSection;

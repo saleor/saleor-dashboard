@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import { giftCardCreateMessages as messages } from "./messages";
 import { GiftCardCreateFormCustomer } from "./types";
 
-export interface GiftCardCustomerSelectFieldProps {
+interface GiftCardCustomerSelectFieldProps {
   selectedCustomer: GiftCardCreateFormCustomer;
   setSelectedCustomer: (customer: GiftCardCreateFormCustomer) => void;
   disabled?: boolean;

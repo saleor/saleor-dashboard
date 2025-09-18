@@ -21,7 +21,7 @@ import { pluginUrl, PluginUrlDialog, PluginUrlQueryParams } from "../urls";
 import { isSecretField } from "../utils";
 import { getConfigByChannelId, isPluginGlobal } from "./utils";
 
-export interface PluginsDetailsProps {
+interface PluginsDetailsProps {
   id: string;
   params: PluginUrlQueryParams;
 }
@@ -42,7 +42,7 @@ export function getConfigurationInput(
     }));
 }
 
-export const PluginsDetails = ({ id, params }: PluginsDetailsProps) => {
+const PluginsDetails = ({ id, params }: PluginsDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -160,5 +160,6 @@ export const PluginsDetails = ({ id, params }: PluginsDetailsProps) => {
     </>
   );
 };
+
 PluginsDetails.displayName = "PluginsDetails";
 export default PluginsDetails;

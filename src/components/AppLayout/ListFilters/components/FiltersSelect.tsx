@@ -15,7 +15,7 @@ import { FormattedMessage } from "react-intl";
 
 import { getSelectedFilterAmount } from "../utils";
 
-export interface FilterProps<TFilterKeys extends string = string> {
+interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
   errorMessages?: FilterErrorMessages<TFilterKeys>;
   menu: IFilter<TFilterKeys>;

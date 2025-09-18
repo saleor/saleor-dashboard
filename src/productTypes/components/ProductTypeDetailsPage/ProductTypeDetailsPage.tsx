@@ -49,7 +49,7 @@ export interface ProductTypeForm extends MetadataFormData {
   weight: number;
 }
 
-export interface ProductTypeDetailsPageProps {
+interface ProductTypeDetailsPageProps {
   errors: UserError[];
   productType: ProductTypeDetailsQuery["productType"];
   defaultWeightUnit: WeightUnitsEnum;

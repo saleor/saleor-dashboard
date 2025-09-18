@@ -15,16 +15,3 @@ export interface Rule {
   conditions: Condition[];
   hasPredicateNestedConditions?: boolean;
 }
-
-export const createEmptyRule = (): Rule => ({
-  id: "",
-  name: "",
-  description: "",
-  channel: null,
-  rewardType: null,
-  rewardValue: 0,
-  rewardGifts: [],
-  rewardValueType: RewardValueTypeEnum.FIXED,
-  conditions: [],
-  hasPredicateNestedConditions: false,
-});

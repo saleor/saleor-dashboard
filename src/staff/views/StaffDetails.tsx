@@ -26,7 +26,7 @@ interface OrderListProps {
   params: StaffMemberDetailsUrlQueryParams;
 }
 
-export const StaffDetails = ({ id, params }: PropsWithChildren<OrderListProps>) => {
+const StaffDetails = ({ id, params }: PropsWithChildren<OrderListProps>) => {
   const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();

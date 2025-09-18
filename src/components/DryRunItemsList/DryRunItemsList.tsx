@@ -21,7 +21,7 @@ import Avatar from "../TableCellAvatar/Avatar";
 import { messages } from "./messages";
 import { DocumentMap, TData, TVariables } from "./utils";
 
-export interface DryRunItemsListProps {
+interface DryRunItemsListProps {
   objectId: string;
   setObjectId: React.Dispatch<any>;
   object: string;

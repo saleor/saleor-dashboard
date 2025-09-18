@@ -78,7 +78,7 @@ import {
   voucherCodeExists,
 } from "./utils";
 
-export interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "selected"> {
+interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "selected"> {
   countries: CountryWithCodeFragment[];
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];

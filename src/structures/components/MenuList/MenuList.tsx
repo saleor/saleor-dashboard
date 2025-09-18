@@ -18,7 +18,7 @@ import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-export interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
+interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
   onDelete: (id: string) => void;
 }

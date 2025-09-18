@@ -2,7 +2,7 @@ import { GridTable } from "@dashboard/components/GridTable";
 import Drag from "@dashboard/icons/Drag";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 
-export const ProductTableItemSkeleton = () => (
+const ProductTableItemSkeleton = () => (
   <GridTable.Row __height="50px" backgroundColor="default1">
     <GridTable.Cell>
       <Box

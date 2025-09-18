@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "../ActionDialog";
 
-export interface DeleteFilterTabDialogProps {
+interface DeleteFilterTabDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   tabName: string;

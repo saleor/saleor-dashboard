@@ -28,7 +28,8 @@ export const CUSTOM_EXTENSIONS_DOCS_URL =
   "https://docs.saleor.io/developer/extending/webhooks/creating";
 export const MANIFEST_FORMAT_DOCS_URL =
   "https://docs.saleor.io/developer/extending/apps/architecture/manifest";
-export const EXTENSION_MANIFEST_DOCS =
+
+const EXTENSION_MANIFEST_DOCS =
   "https://docs.saleor.io/developer/extending/apps/developing-apps/app-error-codes";
 
 // Additional docs.saleor.io links
@@ -46,14 +47,11 @@ export const WEBHOOK_PAYLOAD_SIGNATURE_DOCS_URL =
   "https://docs.saleor.io/developer/extending/webhooks/payload-signature";
 export const MANUAL_REFUND_DOCS_URL =
   "https://docs.saleor.io/developer/payments/refunds#manual-refund";
-export const NOTIFY_USER_MIGRATION_DOCS_URL =
-  "https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user";
 
 // Welcome page links
 export const SALEOR_GITHUB_URL = "https://github.com/saleor/saleor";
 export const SALEOR_DISCORD_URL = "https://saleor.io/discord";
 export const DASHBOARD_DOCS_URL = "https://github.com/saleor/saleor-dashboard/releases";
-export const COMMUNITY_LIVE_UPDATE_URL = "https://saleor.io/community-update";
 
 export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): string => {
   if (!errorCode) {

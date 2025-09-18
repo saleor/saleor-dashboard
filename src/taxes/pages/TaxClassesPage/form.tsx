@@ -17,7 +17,7 @@ interface TaxClassesFormHandlers {
   changeMetadata: FormChange;
 }
 
-export interface UseTaxClassesFormResult {
+interface UseTaxClassesFormResult {
   validationErrors: TaxClassError[];
   data: TaxClassesPageFormData;
   submit: () => SubmitPromise<TaxClassError[]>;

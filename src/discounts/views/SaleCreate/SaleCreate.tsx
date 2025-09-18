@@ -33,7 +33,7 @@ interface SaleCreateProps {
   params: SaleCreateUrlQueryParams;
 }
 
-export const SaleCreateView = ({ params }: SaleCreateProps) => {
+const SaleCreateView = ({ params }: SaleCreateProps) => {
   const navigate = useNavigator();
   const pushMessage = useNotifier();
   const intl = useIntl();
@@ -122,4 +122,5 @@ export const SaleCreateView = ({ params }: SaleCreateProps) => {
     </>
   );
 };
+
 export default SaleCreateView;

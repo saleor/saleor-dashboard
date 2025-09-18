@@ -11,7 +11,7 @@ export interface NewPasswordPageFormData {
   password: string;
   confirmPassword: string;
 }
-export interface NewPasswordPageProps {
+interface NewPasswordPageProps {
   loading: boolean;
   errors: AccountErrorFragment[];
   onSubmit: (data: NewPasswordPageFormData) => SubmitPromise;

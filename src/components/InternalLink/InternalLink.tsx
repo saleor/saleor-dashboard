@@ -8,5 +8,3 @@ export const InternalLink = ({ className, ...props }: LinkProps) => {
 
   return <Link className={clsx(classes.root, className)} {...props} />;
 };
-
-export default InternalLink;

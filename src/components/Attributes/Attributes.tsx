@@ -35,8 +35,7 @@ export type AttributeInput = FormsetAtomicData<
   string[],
   AttributeValuesMetadata[]
 >;
-export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
-export interface AttributesProps extends AttributeRowHandlers {
+interface AttributesProps extends AttributeRowHandlers {
   attributes: AttributeInput[];
   attributeValues: AttributeValueFragment[];
   fetchAttributeValues: (query: string, attributeId: string) => void;

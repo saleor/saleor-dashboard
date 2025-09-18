@@ -12,7 +12,7 @@ import {
   TabActionDialog,
 } from "../types";
 
-export const customerSection = "/customers/";
+const customerSection = "/customers/";
 
 export const customerListPath = customerSection;
 export enum CustomerListUrlFiltersEnum {
@@ -29,7 +29,7 @@ export enum CustomerListUrlSortField {
   email = "email",
   orders = "orders",
 }
-export type CustomerListUrlSort = Sort<CustomerListUrlSortField>;
+type CustomerListUrlSort = Sort<CustomerListUrlSortField>;
 export type CustomerListUrlQueryParams = ActiveTab &
   BulkAction &
   CustomerListUrlFilters &
@@ -40,7 +40,7 @@ export const customerListUrl = (params?: CustomerListUrlQueryParams) =>
   customerListPath + "?" + stringifyQs(params);
 
 export const customerPath = (id: string) => urlJoin(customerSection, id);
-export type CustomerUrlDialog = "remove";
+type CustomerUrlDialog = "remove";
 export type CustomerUrlQueryParams = Dialog<CustomerUrlDialog>;
 export const customerUrl = (id: string, params?: CustomerUrlQueryParams) =>
   customerPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

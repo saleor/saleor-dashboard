@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageFormData } from "../PageDetailsPage/form";
 
-export interface PageOrganizeContentProps {
+interface PageOrganizeContentProps {
   canChangeType: boolean;
   data: PageFormData;
   pageType?: PageDetailsFragment["pageType"];

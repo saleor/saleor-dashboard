@@ -12,11 +12,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface OrderFulfillmentAcceptDialogFormData {
+interface OrderFulfillmentAcceptDialogFormData {
   notifyCustomer: boolean;
 }
 
-export interface OrderFulfillmentAcceptDialogProps {
+interface OrderFulfillmentAcceptDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;

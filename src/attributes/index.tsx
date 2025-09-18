@@ -45,7 +45,7 @@ const AttributeDetails = ({ location, match }: RouteComponentProps<{ id: string 
   return <AttributeDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const AttributeSection = () => {
+const AttributeSection = () => {
   const intl = useIntl();
 
   return (
@@ -59,4 +59,5 @@ export const AttributeSection = () => {
     </>
   );
 };
+
 export default AttributeSection;

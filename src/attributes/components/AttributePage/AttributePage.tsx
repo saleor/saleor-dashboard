@@ -58,7 +58,7 @@ import AttributeProperties from "../AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import AttributeValues from "../AttributeValues";
 
-export interface AttributePageProps {
+interface AttributePageProps {
   attribute?: AttributeDetailsFragment | null | undefined;
   disabled: boolean;
   errors: AttributeErrorFragment[];

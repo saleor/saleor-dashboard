@@ -26,7 +26,7 @@ interface TaxChannelsListProps {
   params: TaxesUrlQueryParams | undefined;
 }
 
-export const TaxChannelsList = ({ id, params }: TaxChannelsListProps) => {
+const TaxChannelsList = ({ id, params }: TaxChannelsListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

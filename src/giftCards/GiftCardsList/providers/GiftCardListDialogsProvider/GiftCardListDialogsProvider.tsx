@@ -17,7 +17,7 @@ interface GiftCardListDialogsProviderProps {
   params: GiftCardListUrlQueryParams;
 }
 
-export interface GiftCardListDialogsConsumerProps {
+interface GiftCardListDialogsConsumerProps {
   openCreateDialog: () => void;
   openBulkCreateDialog: () => void;
   openDeleteDialog: (id?: string | React.MouseEvent) => void;
@@ -28,9 +28,7 @@ export interface GiftCardListDialogsConsumerProps {
   id: string;
 }
 
-export const GiftCardListDialogsContext = createContext<GiftCardListDialogsConsumerProps | null>(
-  null,
-);
+const GiftCardListDialogsContext = createContext<GiftCardListDialogsConsumerProps | null>(null);
 
 export const useGiftCardListDialogs = () => {
   const context = useContext(GiftCardListDialogsContext);

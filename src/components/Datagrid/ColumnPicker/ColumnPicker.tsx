@@ -18,7 +18,7 @@ import { ColumnPickerStaticColumns } from "./ColumnPickerStaticColumns";
 import messages from "./messages";
 import { ColumnCategory } from "./useColumns";
 
-export interface ColumnPickerProps {
+interface ColumnPickerProps {
   staticColumns: AvailableColumn[];
   dynamicColumns?: AvailableColumn[] | null | undefined;
   selectedColumns: string[];

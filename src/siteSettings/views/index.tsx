@@ -14,7 +14,7 @@ import SiteSettingsPage, {
   SiteSettingsPageFormData,
 } from "../components/SiteSettingsPage";
 
-export const SiteSettings = () => {
+const SiteSettings = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const siteSettings = useSiteSettingsQuery({
@@ -84,4 +84,5 @@ export const SiteSettings = () => {
     </>
   );
 };
+
 export default SiteSettings;

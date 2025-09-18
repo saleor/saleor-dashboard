@@ -8,7 +8,7 @@ import {
 } from "../FilterElement/ConditionValue";
 import { StaticQueryPart } from "./types";
 
-export type ProcessedConditionValue =
+type ProcessedConditionValue =
   | string
   | boolean
   | string[]
@@ -58,7 +58,7 @@ function extractValuesFromOptionArray(value: ConditionValue): string[] {
  * Extracts a boolean value from various input formats.
  * Handles ItemOption with string values, direct boolean, or stringified values.
  */
-export function getBooleanValueFromElement(element: FilterElement): boolean {
+function getBooleanValueFromElement(element: FilterElement): boolean {
   const { value: selectedValue } = element.condition.selected;
 
   return extractBooleanValue(selectedValue);
@@ -247,7 +247,7 @@ function handleArrayCondition(selectedValue: ConditionValue): ProcessedCondition
 /**
  * Processes condition values for different condition types.
  */
-export const extractConditionValueFromFilterElement = (
+const extractConditionValueFromFilterElement = (
   element: FilterElement,
 ): ProcessedConditionValue => {
   const { value: selectedValue, conditionValue } = element.condition.selected;

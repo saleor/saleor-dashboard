@@ -6,7 +6,7 @@ interface OrderCustomerNoteProps {
   note: string;
 }
 
-export const OrderCustomerNote = ({ note }: OrderCustomerNoteProps) => {
+const OrderCustomerNote = ({ note }: OrderCustomerNoteProps) => {
   const intl = useIntl();
 
   return (
@@ -34,4 +34,5 @@ export const OrderCustomerNote = ({ note }: OrderCustomerNoteProps) => {
     </DashboardCard>
   );
 };
+
 export default OrderCustomerNote;

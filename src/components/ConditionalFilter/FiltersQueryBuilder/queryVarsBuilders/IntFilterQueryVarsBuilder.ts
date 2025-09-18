@@ -9,7 +9,7 @@ const SUPPORTED_INT_FILTERS = new Set(["linesCount", "number"] as const);
 
 type SupportedIntKeys = typeof SUPPORTED_INT_FILTERS extends Set<infer T> ? T : never;
 
-export type IntFilterQueryPart = {
+type IntFilterQueryPart = {
   linesCount?: IntFilterInput;
   number?: IntFilterInput;
 };

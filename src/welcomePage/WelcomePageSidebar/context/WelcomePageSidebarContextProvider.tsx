@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { WelcomePageSidebarContext } from "./welcomePageSidebarContext";
 
-export interface WelcomePageSidebarContextProviderProps {
+interface WelcomePageSidebarContextProviderProps {
   children: React.ReactNode;
   channel: ChannelFragment | undefined;
   setChannel: (channelId: string) => void;

@@ -12,11 +12,11 @@ import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface FormData {
+interface FormData {
   trackingNumber: string;
 }
 
-export interface OrderFulfillmentTrackingDialogProps {
+interface OrderFulfillmentTrackingDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;

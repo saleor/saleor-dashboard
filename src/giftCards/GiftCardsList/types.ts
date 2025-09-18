@@ -22,7 +22,7 @@ export enum GiftCardUrlSortField {
   product = "product",
 }
 
-export type GiftCardUrlSort = Sort<GiftCardUrlSortField>;
+type GiftCardUrlSort = Sort<GiftCardUrlSortField>;
 
 export enum GiftCardListActionParamsEnum {
   CREATE = "gift-card-create",
@@ -50,7 +50,7 @@ export enum GiftCardListUrlFiltersEnum {
   status = "status",
 }
 
-export enum GiftCardListUrlFiltersWithMultipleValuesEnum {
+enum GiftCardListUrlFiltersWithMultipleValuesEnum {
   tag = "tag",
   product = "product",
   usedBy = "usedBy",

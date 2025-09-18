@@ -44,7 +44,7 @@ export interface FormData extends StockSettingsInput {
   automaticallyCompleteCheckouts: boolean;
 }
 
-export interface ChannelFormProps {
+interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
   currencyCodes?: Option[];

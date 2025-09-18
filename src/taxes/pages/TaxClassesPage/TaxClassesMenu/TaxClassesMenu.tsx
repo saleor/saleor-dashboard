@@ -20,7 +20,7 @@ interface TaxClassesMenuProps {
   onCreateNew: () => void;
 }
 
-export const TaxClassesMenu = ({
+const TaxClassesMenu = ({
   taxClasses,
   selectedTaxClassId,
   onTaxClassDelete,

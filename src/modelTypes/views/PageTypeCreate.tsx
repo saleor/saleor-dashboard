@@ -14,7 +14,7 @@ import { useIntl } from "react-intl";
 import PageTypeCreatePage, { PageTypeForm } from "../components/PageTypeCreatePage";
 import { pageTypeUrl } from "../urls";
 
-export const PageTypeCreate = () => {
+const PageTypeCreate = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -72,4 +72,5 @@ export const PageTypeCreate = () => {
     </>
   );
 };
+
 export default PageTypeCreate;

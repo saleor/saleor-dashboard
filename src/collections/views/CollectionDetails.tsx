@@ -42,7 +42,7 @@ interface CollectionDetailsProps {
   params: CollectionUrlQueryParams;
 }
 
-export const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
+const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -281,4 +281,5 @@ export const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
     </>
   );
 };
+
 export default CollectionDetails;

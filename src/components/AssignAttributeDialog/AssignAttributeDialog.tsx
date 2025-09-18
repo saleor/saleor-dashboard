@@ -38,7 +38,7 @@ const useStyles = makeStyles(
   { name: "AssignAttributeDialog" },
 );
 
-export interface AssignAttributeDialogProps extends FetchMoreProps {
+interface AssignAttributeDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: string[];
   open: boolean;

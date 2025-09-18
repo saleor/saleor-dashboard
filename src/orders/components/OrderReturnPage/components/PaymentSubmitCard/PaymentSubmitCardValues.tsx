@@ -130,4 +130,3 @@ export const PaymentSubmitCardValues = (props: PaymentSubmitCardValuesProps) => 
 };
 
 PaymentSubmitCardValues.displayName = "PaymentSubmitCardValues";
-export default PaymentSubmitCardValues;

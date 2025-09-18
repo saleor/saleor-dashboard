@@ -5,7 +5,7 @@ import urlJoin from "url-join";
 
 import { BulkAction, Dialog, Pagination, Search, SingleAction } from "../types";
 
-export const shippingSection = "/shipping/";
+const shippingSection = "/shipping/";
 
 export const shippingZonesListPath = shippingSection;
 export type ShippingZonesListUrlDialog = "remove" | "change-weight-unit";
@@ -27,7 +27,7 @@ export type ShippingZoneUrlDialog =
   | "remove-rate"
   | "unassign-country";
 
-export type ShippingMethodActions = "assign-product" | "unassign-product";
+type ShippingMethodActions = "assign-product" | "unassign-product";
 
 export type ShippingZoneUrlQueryParams = Dialog<ShippingZoneUrlDialog> &
   SingleAction &

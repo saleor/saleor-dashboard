@@ -3,14 +3,14 @@ import urlJoin from "url-join";
 
 import { Dialog, Filters, SingleAction, Sort } from "../types";
 
-export enum ChannelsListUrlFiltersEnum {
+enum ChannelsListUrlFiltersEnum {
   query = "query",
 }
 export enum ChannelsListUrlSortField {
   name = "name",
 }
-export type ChannelsListUrlSort = Sort<ChannelsListUrlSortField>;
-export type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;
+type ChannelsListUrlSort = Sort<ChannelsListUrlSortField>;
+type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;
 export type ChannelUrlDialog = "remove";
 export type ChannelUrlQueryParams = Dialog<ChannelUrlDialog>;
 export type ChannelsListUrlDialog = "remove";

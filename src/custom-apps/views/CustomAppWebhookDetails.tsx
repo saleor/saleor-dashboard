@@ -14,11 +14,11 @@ import WebhookDetailsPage, { WebhookFormData } from "../components/WebhookDetail
 import { useAvailableEvents } from "../hooks";
 import { CustomAppUrls } from "../urls";
 
-export interface CustomAppWebhookDetailsProps {
+interface CustomAppWebhookDetailsProps {
   id: string;
 }
 
-export const CustomAppWebhookDetails = ({ id }: CustomAppWebhookDetailsProps) => {
+const CustomAppWebhookDetails = ({ id }: CustomAppWebhookDetailsProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const availableEvents = useAvailableEvents();

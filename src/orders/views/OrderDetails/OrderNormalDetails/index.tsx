@@ -476,5 +476,3 @@ export const OrderNormalDetails = ({
     </>
   );
 };
-
-export default OrderNormalDetails;

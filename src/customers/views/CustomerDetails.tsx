@@ -146,9 +146,10 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   );
 };
 
-export const CustomerDetailsView = ({ id, params }: CustomerDetailsViewProps) => (
+const CustomerDetailsView = ({ id, params }: CustomerDetailsViewProps) => (
   <CustomerDetailsProvider id={id}>
     <CustomerDetailsViewInner id={id} params={params} />
   </CustomerDetailsProvider>
 );
+
 export default CustomerDetailsView;

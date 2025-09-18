@@ -15,7 +15,7 @@ import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
-export type AppWidgetsProps = {
+type AppWidgetsProps = {
   extensions: ExtensionWithParams[];
   params: AppDetailsUrlMountQueryParams;
 };

@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Mono } from "../TokenCreateDialog/Mono";
 
-export interface CustomAppDefaultTokenProps {
+interface CustomAppDefaultTokenProps {
   token: string;
   onTokenClose: () => void;
 }

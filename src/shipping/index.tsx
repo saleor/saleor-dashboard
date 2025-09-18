@@ -66,7 +66,7 @@ const RateUpdate = ({
   );
 };
 
-export const ShippingRouter = () => {
+const ShippingRouter = () => {
   const intl = useIntl();
 
   return (
@@ -82,4 +82,5 @@ export const ShippingRouter = () => {
     </>
   );
 };
+
 export default ShippingRouter;

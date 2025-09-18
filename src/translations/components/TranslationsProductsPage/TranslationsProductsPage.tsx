@@ -24,7 +24,7 @@ import { useIntl } from "react-intl";
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
   productId: string;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];

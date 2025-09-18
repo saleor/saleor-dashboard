@@ -15,7 +15,7 @@ import useStyles from "../styles";
 import LoginForm, { LoginFormData } from "./form";
 import { getErrorMessage } from "./messages";
 
-export interface LoginCardProps {
+interface LoginCardProps {
   errors: UserContextError[];
   disabled: boolean;
   loading: boolean;

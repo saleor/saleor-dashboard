@@ -134,30 +134,3 @@ export const orderRules = [
     rewardValueType: RewardValueTypeEnum.PERCENTAGE,
   },
 ] as Rule[];
-
-export const orderComplexRules = [
-  ...orderRules,
-  {
-    id: "order-3",
-    name: "Order rule 3",
-    description: "",
-    hasPredicateNestedConditions: true,
-    channel: { label: "Test", value: "Q2hhbm5lcDoy" },
-    conditions: [
-      {
-        id: "baseSubtotalPrice",
-        type: "greater",
-        value: "33",
-      },
-      {
-        id: "baseTotalPrice",
-        type: "greater",
-        value: "55",
-      },
-    ],
-    rewardGifts: [],
-    rewardValue: 12,
-    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
-    rewardValueType: RewardValueTypeEnum.FIXED,
-  },
-] as Rule[];

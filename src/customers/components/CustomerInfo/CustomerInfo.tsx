@@ -24,7 +24,7 @@ const useStyles = makeStyles(
   { name: "CustomerInfo" },
 );
 
-export interface CustomerInfoProps {
+interface CustomerInfoProps {
   data: {
     firstName: string;
     lastName: string;

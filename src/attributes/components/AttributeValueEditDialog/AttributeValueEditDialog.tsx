@@ -14,7 +14,7 @@ import { AttributeValueEditDialogFormData } from "../../utils/data";
 import AttributeSwatchField from "../AttributeSwatchField";
 import { getAttributeValueFields } from "./utils";
 
-export interface AttributeValueEditDialogProps {
+interface AttributeValueEditDialogProps {
   attributeValue: AttributeValueEditDialogFormData | null;
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;

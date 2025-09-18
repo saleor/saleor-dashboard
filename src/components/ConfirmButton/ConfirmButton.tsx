@@ -9,7 +9,7 @@ const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
 
 export type ConfirmButtonTransitionState = "default" | "loading" | "success" | "error";
 
-export type ConfirmButtonLabels = Partial<Record<"confirm" | "error", string>>;
+type ConfirmButtonLabels = Partial<Record<"confirm" | "error", string>>;
 
 export interface ConfirmButtonProps extends ButtonProps {
   labels?: ConfirmButtonLabels;

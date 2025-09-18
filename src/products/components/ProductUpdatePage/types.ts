@@ -22,12 +22,7 @@ import {
   FormErrors,
   SubmitPromise,
 } from "@dashboard/hooks/useForm";
-import {
-  FormsetAtomicData,
-  FormsetChange,
-  FormsetData,
-  FormsetMetadataChange,
-} from "@dashboard/hooks/useFormset";
+import { FormsetChange, FormsetData, FormsetMetadataChange } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
@@ -54,15 +49,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
   weight: string;
-}
-export interface FileAttributeInputData {
-  attributeId: string;
-  file: File;
-}
-export type FileAttributeInput = FormsetAtomicData<FileAttributeInputData, string[]>;
-
-export interface FileAttributesSubmitData {
-  fileAttributes: FileAttributeInput[];
 }
 export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: AttributeInput[];
@@ -102,10 +88,7 @@ export interface UseProductUpdateFormOutput
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
-export type UseProductUpdateFormRenderProps = Omit<
-  UseProductUpdateFormOutput,
-  "datagrid" | "richText"
->;
+type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid" | "richText">;
 
 export interface UseProductUpdateFormOpts
   extends Record<"categories" | "collections" | "taxClasses", Option[]> {

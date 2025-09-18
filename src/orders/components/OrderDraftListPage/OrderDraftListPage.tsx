@@ -16,7 +16,7 @@ import { OrderDraftListHeader } from "../OrderDraftListHeader/OrderDraftListHead
 import OrderLimitReached from "../OrderLimitReached";
 import { createFilterStructure, OrderDraftFilterKeys, OrderDraftListFilterOpts } from "./filters";
 
-export interface OrderDraftListPageProps
+interface OrderDraftListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
     SortPage<OrderDraftListUrlSortField> {

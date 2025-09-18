@@ -42,7 +42,7 @@ interface CollectionListProps {
   params: CollectionListUrlQueryParams;
 }
 
-export const CollectionList = ({ params }: CollectionListProps) => {
+const CollectionList = ({ params }: CollectionListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
@@ -256,4 +256,5 @@ export const CollectionList = ({ params }: CollectionListProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CollectionList;

@@ -20,7 +20,7 @@ interface ProductMediaProps {
   params: ProductImageUrlQueryParams;
 }
 
-export const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
+const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -102,4 +102,5 @@ export const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) 
     </>
   );
 };
+
 export default ProductImage;

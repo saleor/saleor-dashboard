@@ -9,7 +9,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { cancelOrderDialogMessages } from "./messages";
 
-export interface OrderCancelDialogProps {
+interface OrderCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   number: string;

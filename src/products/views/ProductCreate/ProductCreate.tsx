@@ -59,7 +59,7 @@ interface ProductCreateProps {
   params: ProductCreateUrlQueryParams;
 }
 
-export const ProductCreateView = ({ params }: ProductCreateProps) => {
+const ProductCreateView = ({ params }: ProductCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -357,4 +357,5 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
     </>
   );
 };
+
 export default ProductCreateView;

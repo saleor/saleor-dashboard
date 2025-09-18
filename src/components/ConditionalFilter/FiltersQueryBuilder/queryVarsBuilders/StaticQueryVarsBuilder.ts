@@ -28,7 +28,7 @@ const SUPPORTED_STATIC_FIELDS = new Set([
 
 type SupportedStaticFieldsKeys = typeof SUPPORTED_STATIC_FIELDS extends Set<infer T> ? T : never;
 
-export type StaticWhereQueryPart = { eq?: string } | { oneOf?: string[] };
+type StaticWhereQueryPart = { eq?: string } | { oneOf?: string[] };
 
 /** Static definitions provide a list of chosable elements based on entity type (e.g. category)
  * and return a list of selected entity IDs

@@ -37,7 +37,7 @@ import { ProductsTable } from "./ProductsTable";
 import { ProductTableSkeleton } from "./ProductTableSkeleton";
 import { useCollectionId } from "./useCollectionId";
 
-export interface CollectionProductsProps {
+interface CollectionProductsProps {
   collection: CollectionDetailsQuery["collection"];
   params: CollectionUrlQueryParams;
   currentChannels: ChannelCollectionData[];

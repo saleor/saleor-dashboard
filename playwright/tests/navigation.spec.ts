@@ -1,5 +1,4 @@
 import { NAVIGATION_ITEMS } from "@data/e2eTestData";
-import { ConfigurationPage } from "@pages/configurationPage";
 import { AddNavigationMenuItemDialog } from "@pages/dialogs/addNavigationMenuItemDialog";
 import { NavigationDetailsPage } from "@pages/navigationDetailsPage";
 import { NavigationPage } from "@pages/navigationPage";
@@ -11,12 +10,10 @@ test.use({ permissionName: "admin" });
 
 let navigation: NavigationPage;
 let navigationDetailsPage: NavigationDetailsPage;
-let config: ConfigurationPage;
 let addNavigationMenuItemDialog: AddNavigationMenuItemDialog;
 
 test.beforeEach(({ page }) => {
   navigation = new NavigationPage(page);
-  config = new ConfigurationPage(page);
   navigationDetailsPage = new NavigationDetailsPage(page);
   addNavigationMenuItemDialog = new AddNavigationMenuItemDialog(page);
 });

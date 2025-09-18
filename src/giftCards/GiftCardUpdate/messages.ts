@@ -5,14 +5,6 @@ import commonErrorMessages, {
 } from "@dashboard/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 
-export const giftCardUpdateDetailsCardMessages = defineMessages({
-  title: {
-    id: "xPnZ0R",
-    defaultMessage: "Details",
-    description: "title",
-  },
-});
-
 const giftCardErrorMessages = defineMessages({
   notFound: {
     id: "29L5Yq",

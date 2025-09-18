@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { useEffect, useState } from "react";
 
-export interface PageInfo {
+interface PageInfo {
   endCursor: string | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;

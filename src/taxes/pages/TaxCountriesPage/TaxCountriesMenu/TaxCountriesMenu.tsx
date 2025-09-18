@@ -20,7 +20,7 @@ interface TaxCountriesMenuProps {
   onCountryAdd: () => void;
 }
 
-export const TaxCountriesMenu = ({
+const TaxCountriesMenu = ({
   configurations,
   selectedCountryId,
   onCountryDelete,

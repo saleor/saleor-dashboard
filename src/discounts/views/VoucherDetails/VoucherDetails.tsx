@@ -71,7 +71,7 @@ interface VoucherDetailsProps {
   params: VoucherUrlQueryParams;
 }
 
-export const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
+const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -696,4 +696,5 @@ export const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default VoucherDetails;

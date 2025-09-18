@@ -3,14 +3,14 @@ import { Option } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-export interface ConditionType {
+interface ConditionType {
   type: string;
   label: string;
   value: string;
 }
 
 // Current support condition type field: multiselect, price, price.range, number, number.range
-export const getConditionsTypes = (
+const getConditionsTypes = (
   intl: IntlShape,
 ): Record<CatalogConditions | OrderConditions, ConditionType[]> => {
   const CONDITIONT_TYPES_LABELS = {

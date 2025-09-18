@@ -12,7 +12,7 @@ import { FormattedMessage } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 
-export interface TranslationsLanguageListProps {
+interface TranslationsLanguageListProps {
   languages: LanguageFragment[];
 }
 

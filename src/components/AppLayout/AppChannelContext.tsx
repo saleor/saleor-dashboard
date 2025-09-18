@@ -13,7 +13,7 @@ interface UseAppChannel {
   refreshChannels: () => void;
   setChannel: (id: string) => void;
 }
-export interface AppChannelContextData extends UseAppChannel {
+interface AppChannelContextData extends UseAppChannel {
   setPickerActive: (isActive: boolean) => void;
 }
 

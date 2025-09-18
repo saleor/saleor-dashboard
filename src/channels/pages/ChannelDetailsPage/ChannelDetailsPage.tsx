@@ -49,7 +49,7 @@ import {
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
-export interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
+interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
   currencyCodes?: Option[];
   disabled: boolean;

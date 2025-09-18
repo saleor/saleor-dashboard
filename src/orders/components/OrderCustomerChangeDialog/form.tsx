@@ -13,7 +13,7 @@ export interface OrderCustomerChangeData {
 
 type UseOrderCustomerChangeFormResult = CommonUseFormResult<OrderCustomerChangeData>;
 
-export interface OrderCustomerChangeFormProps {
+interface OrderCustomerChangeFormProps {
   children: (props: UseOrderCustomerChangeFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerChangeData>;
   onSubmit: (data: OrderCustomerChangeData) => void;

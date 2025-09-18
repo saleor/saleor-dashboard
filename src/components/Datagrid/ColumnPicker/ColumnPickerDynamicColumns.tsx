@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { AvailableColumn } from "../types";
 import messages from "./messages";
 
-export interface ColumnPickerDynamicColumnsProps {
+interface ColumnPickerDynamicColumnsProps {
   dynamicColumns?: AvailableColumn[] | null | undefined;
   setExpanded: (value: React.SetStateAction<boolean>) => void;
   onToggle: (id: string) => void;

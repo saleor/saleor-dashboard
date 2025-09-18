@@ -58,7 +58,7 @@ const getPostalCodeRulesToAdd = (rules: ShippingMethodTypeFragment["postalCodeRu
         }) as ShippingPostalCodeRulesCreateInputRange,
     );
 
-export function getCreateShippingPriceRateVariables(
+function getCreateShippingPriceRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
   addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
@@ -83,7 +83,7 @@ export function getCreateShippingPriceRateVariables(
   };
 }
 
-export function getCreateShippingWeightRateVariables(
+function getCreateShippingWeightRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
   addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],

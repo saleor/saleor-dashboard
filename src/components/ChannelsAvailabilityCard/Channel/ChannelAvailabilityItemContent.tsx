@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
 import { availabilityItemMessages } from "./messages";
 
-export interface ChannelContentProps {
+interface ChannelContentProps {
   disabled?: boolean;
   data: ChannelData;
   errors: ChannelsAvailabilityError[];

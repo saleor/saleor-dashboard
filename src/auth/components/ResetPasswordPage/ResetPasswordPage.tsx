@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 export interface ResetPasswordPageFormData {
   email: string;
 }
-export interface ResetPasswordPageProps {
+interface ResetPasswordPageProps {
   disabled: boolean;
   error: string;
   onSubmit: (data: ResetPasswordPageFormData) => SubmitPromise<AccountErrorCode[]>;

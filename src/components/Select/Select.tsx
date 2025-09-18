@@ -5,7 +5,7 @@ import {
   SelectProps as SelectComponentProps,
 } from "@saleor/macaw-ui-next";
 
-export interface SelectProps<T, V> extends Omit<SelectComponentProps<T, V>, "onChange"> {
+interface SelectProps<T, V> extends Omit<SelectComponentProps<T, V>, "onChange"> {
   onChange: (event: ChangeEvent) => void;
 }
 

@@ -180,7 +180,7 @@ for (const { conditionType, value, conditionDesc } of notEqConditions) {
     await discounts.promotionRuleDialog.typeRuleConditionValue("100.00");
     await discounts.promotionRuleDialog.clickAddRuleConditionButton();
     await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
-    await discounts.promotionRuleDialog.selectPredicate("Total price", 1);
+    await discounts.promotionRuleDialog.selectPredicate("Total price");
     await discounts.promotionRuleDialog.selectRuleConditionType(conditionType);
     await discounts.promotionRuleDialog.typeRuleConditionValue(value, 1);
     await discounts.promotionRuleDialog.clickSaveRuleButton();
@@ -253,7 +253,7 @@ for (const rule of orderRules) {
     if (await discounts.promotionRuleDialog.ruleConditionRow.isVisible()) {
       await discounts.promotionRuleDialog.clickAddRuleConditionButton();
       await discounts.promotionRuleDialog.clickRuleConditionPredicateDropdown();
-      await discounts.promotionRuleDialog.selectPredicate("Total price", 1);
+      await discounts.promotionRuleDialog.selectPredicate("Total price");
       await discounts.promotionRuleDialog.typeRuleConditionValue("13.33", 1);
       await discounts.promotionRuleDialog.typeRewardValue("1.00");
       await discounts.promotionRuleDialog.clickSaveEditedRuleButton();

@@ -21,7 +21,7 @@ import { getAttributeValueTranslationsInputData, getParsedTranslationInputData }
 export interface TranslationsPagesQueryParams {
   activeField: string;
 }
-export interface TranslationsPagesProps {
+interface TranslationsPagesProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsPagesQueryParams;

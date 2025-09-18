@@ -3,14 +3,10 @@ import { StaffMemberStatus, StaffUserInput } from "@dashboard/graphql";
 import { findValueInEnum } from "@dashboard/misc";
 import { StaffFilterKeys, StaffListFilterOpts } from "@dashboard/staff/components/StaffListPage";
 
-import {
-  createFilterTabUtils,
-  createFilterUtils,
-  getSingleEnumValueQueryParam,
-} from "../../../utils/filters";
-import { StaffListUrlFilters, StaffListUrlFiltersEnum, StaffListUrlQueryParams } from "../../urls";
+import { createFilterTabUtils, getSingleEnumValueQueryParam } from "../../../utils/filters";
+import { StaffListUrlFilters, StaffListUrlFiltersEnum } from "../../urls";
 
-export const STAFF_FILTERS_KEY = "staffFilters";
+const STAFF_FILTERS_KEY = "staffFilters";
 
 export function getFilterOpts(params: StaffListUrlFilters): StaffListFilterOpts {
   return {
@@ -42,8 +38,3 @@ export function getFilterQueryParam(filter: FilterElement<StaffFilterKeys>): Sta
 }
 
 export const storageUtils = createFilterTabUtils<string>(STAFF_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  StaffListUrlQueryParams,
-  StaffListUrlFilters
->(StaffListUrlFiltersEnum);

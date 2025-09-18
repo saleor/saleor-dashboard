@@ -19,7 +19,7 @@ export interface TranslatableEntity {
   };
 }
 
-export interface TranslationsEntitiesListProps extends ListProps {
+interface TranslationsEntitiesListProps extends ListProps {
   entities: TranslatableEntity[];
   getRowHref: (id: string) => string;
 }

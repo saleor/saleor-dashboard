@@ -24,7 +24,7 @@ import { useLocation } from "react-router";
 import { SaleListDatagrid } from "../SaleListDatagrid";
 import { createFilterStructure, SaleFilterKeys, SaleListFilterOpts } from "./filters";
 
-export interface SaleListPageProps
+interface SaleListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<SaleFilterKeys, SaleListFilterOpts>,
     SortPage<SaleListUrlSortField>,

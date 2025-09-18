@@ -47,7 +47,7 @@ const useStyles = makeStyles(
   },
 );
 
-export interface CollectionImageProps {
+interface CollectionImageProps {
   data: {
     backgroundImageAlt: string;
   };
@@ -135,4 +135,3 @@ export const CollectionImage = (props: CollectionImageProps) => {
 };
 
 CollectionImage.displayName = "CollectionImage";
-export default CollectionImage;

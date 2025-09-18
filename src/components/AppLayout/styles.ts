@@ -83,23 +83,3 @@ export const useStyles = makeStyles(
   }),
   { name: "AppLayout" },
 );
-
-export const useFullSizeStyles = makeStyles(
-  () => ({
-    content: {
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-    },
-    viewContainer: {
-      flex: 1,
-      display: "flex",
-      flexDirection: "column",
-    },
-    view: {
-      flex: 1,
-    },
-    viewContainerWrapper: {},
-  }),
-  { name: "AppLayoutFullSize" },
-);

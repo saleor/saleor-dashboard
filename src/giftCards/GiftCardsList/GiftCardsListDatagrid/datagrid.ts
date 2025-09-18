@@ -139,7 +139,7 @@ export const createGetCellContent =
     }
   };
 
-export const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
+const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
   if (tags.length) {
     return tags.map(({ name }) => name).join(", ");
   }
@@ -147,7 +147,7 @@ export const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
   return PLACEHOLDER;
 };
 
-export const getStatusText = (giftCard: ExtendedGiftCard<GiftCardBase & { isActive: boolean }>) => {
+const getStatusText = (giftCard: ExtendedGiftCard<GiftCardBase & { isActive: boolean }>) => {
   const { isExpired, isActive } = giftCard;
 
   if (isExpired) {

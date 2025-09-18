@@ -5,11 +5,6 @@ import { Container, DialogProps, FetchMoreProps } from "@dashboard/types";
 import { AssignContainerDialogMulti } from "./AssignContainerDialogMulti";
 import { AssignContainerDialogSingle } from "./AssignContainerDialogSingle";
 
-export interface AssignContainerDialogFormData {
-  containers: string[];
-  query: string;
-}
-
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
 
 export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps {

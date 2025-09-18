@@ -5,7 +5,7 @@ import { ListViews } from "@dashboard/types";
 
 import { VoucherCode } from "../../VoucherCodesDatagrid/types";
 
-export interface UseVoucherCodesPagination {
+interface UseVoucherCodesPagination {
   pagination: LocalPagination;
   paginatedCodes: VoucherCode[];
   onSettingsChange: UseListSettings["updateListSettings"];

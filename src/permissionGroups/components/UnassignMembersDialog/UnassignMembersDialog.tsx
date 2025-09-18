@@ -2,7 +2,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface UnassignMembersDialogProps {
+interface UnassignMembersDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   quantity: number;
   open: boolean;

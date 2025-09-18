@@ -22,7 +22,7 @@ export function canBeSorted(sort: ProductListUrlSortField, isChannelSelected: bo
   }
 }
 
-export function getSortQueryField(sort: ProductListUrlSortField): ProductOrderField {
+function getSortQueryField(sort: ProductListUrlSortField): ProductOrderField {
   switch (sort) {
     case ProductListUrlSortField.name:
       return ProductOrderField.NAME;

@@ -55,7 +55,7 @@ export const getExtensionInfo = ({
   return null;
 };
 
-export const getExtensionLogo = ({
+const getExtensionLogo = ({
   logo,
   type,
   name,

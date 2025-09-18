@@ -13,7 +13,7 @@ type Data = {
   privateMetadata: MetadataInput[];
 };
 
-export interface MetadataProps
+interface MetadataProps
   extends Omit<MetadataCardProps, "data" | "isPrivate" | "onChange">,
     Pick<UseFormReturn<Data>, "getValues" | "control" | "trigger"> {
   isLoading?: boolean;

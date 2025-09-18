@@ -13,7 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { translateVoucherTypes } from "../../translations";
 
-export interface VoucherSummaryProps extends ChannelProps {
+interface VoucherSummaryProps extends ChannelProps {
   voucher: VoucherDetailsFragment;
 }
 

@@ -21,12 +21,7 @@ interface CategoryDetailsFormProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const CategoryDetailsForm = ({
-  disabled,
-  data,
-  onChange,
-  errors,
-}: CategoryDetailsFormProps) => {
+const CategoryDetailsForm = ({ disabled, data, onChange, errors }: CategoryDetailsFormProps) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);
@@ -85,4 +80,5 @@ export const CategoryDetailsForm = ({
     </DashboardCard>
   );
 };
+
 export default CategoryDetailsForm;

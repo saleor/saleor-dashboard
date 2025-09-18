@@ -35,7 +35,7 @@ export interface ColumnCategory {
   onPreviousPage: (query: string) => void;
 }
 
-export interface UseColumnsProps {
+interface UseColumnsProps {
   gridName?: string;
   staticColumns: AvailableColumn[];
   columnCategories?: ColumnCategory[];

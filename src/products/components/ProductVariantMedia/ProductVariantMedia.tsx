@@ -30,7 +30,7 @@ interface ProductVariantMediaProps {
   onImageAdd: () => any;
 }
 
-export const ProductVariantMedia = (props: ProductVariantMediaProps) => {
+const ProductVariantMedia = (props: ProductVariantMediaProps) => {
   const intl = useIntl();
   const { disabled, media, onImageAdd } = props;
 
@@ -69,5 +69,6 @@ export const ProductVariantMedia = (props: ProductVariantMediaProps) => {
     </DashboardCard>
   );
 };
+
 ProductVariantMedia.displayName = "ProductVariantMedia";
 export default ProductVariantMedia;

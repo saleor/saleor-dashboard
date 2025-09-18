@@ -39,7 +39,7 @@ const useStyles = makeStyles(
   { name: "CategoryBackground" },
 );
 
-export interface CategoryBackgroundProps {
+interface CategoryBackgroundProps {
   data: CategoryUpdateData;
   image: CategoryDetailsFragment["backgroundImage"] | undefined | null;
   onChange: (event: React.ChangeEvent<any>) => void;

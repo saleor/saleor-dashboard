@@ -17,7 +17,7 @@ export interface PageTypeForm extends MetadataFormData {
   name: string;
 }
 
-export interface PageTypeCreatePageProps {
+interface PageTypeCreatePageProps {
   errors: PageErrorFragment[];
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;

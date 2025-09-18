@@ -17,7 +17,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface WebhooksListProps {
+interface WebhooksListProps {
   webhooks: WebhookFragment[];
   onRemove: (id: string) => void;
   createHref?: string;

@@ -3,7 +3,7 @@ import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
 import { AvailableColumn } from "../types";
 import { filterEmptyColumn, isLastEnabledColumn } from "./utils";
 
-export interface ColumnPickerStaticColumnsProps {
+interface ColumnPickerStaticColumnsProps {
   staticColumns: AvailableColumn[];
   handleToggle: (id: string) => void;
   selectedColumns: string[];

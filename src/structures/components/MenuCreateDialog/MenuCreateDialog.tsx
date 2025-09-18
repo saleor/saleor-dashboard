@@ -10,11 +10,11 @@ import { TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface MenuCreateDialogFormData {
+interface MenuCreateDialogFormData {
   name: string;
 }
 
-export interface MenuCreateDialogProps {
+interface MenuCreateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: MenuErrorFragment[];

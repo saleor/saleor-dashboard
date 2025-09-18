@@ -1,13 +1,9 @@
 import { WarehouseFilterInput } from "@dashboard/graphql";
 
-import { createFilterTabUtils, createFilterUtils } from "../../../utils/filters";
-import {
-  WarehouseListUrlFilters,
-  WarehouseListUrlFiltersEnum,
-  WarehouseListUrlQueryParams,
-} from "../../urls";
+import { createFilterTabUtils } from "../../../utils/filters";
+import { WarehouseListUrlFilters } from "../../urls";
 
-export const WAREHOUSE_FILTERS_KEY = "warehouseFilters";
+const WAREHOUSE_FILTERS_KEY = "warehouseFilters";
 
 export function getFilterVariables(params: WarehouseListUrlFilters): WarehouseFilterInput {
   return {
@@ -16,8 +12,3 @@ export function getFilterVariables(params: WarehouseListUrlFilters): WarehouseFi
 }
 
 export const storageUtils = createFilterTabUtils<string>(WAREHOUSE_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  WarehouseListUrlQueryParams,
-  WarehouseListUrlFilters
->(WarehouseListUrlFiltersEnum);

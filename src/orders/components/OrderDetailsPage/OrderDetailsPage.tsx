@@ -48,7 +48,7 @@ import {
   hasAnyItemsReplaceable,
 } from "./utils";
 
-export interface OrderDetailsPageProps {
+interface OrderDetailsPageProps {
   order: OrderDetailsFragment | OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
   shippingMethods?: Array<{

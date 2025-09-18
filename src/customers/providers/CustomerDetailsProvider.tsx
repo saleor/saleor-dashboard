@@ -3,7 +3,7 @@ import { CustomerDetailsQuery, useCustomerDetailsQuery } from "@dashboard/graphq
 import { createContext } from "react";
 import * as React from "react";
 
-export interface CustomerDetailsProviderProps {
+interface CustomerDetailsProviderProps {
   id: string;
 }
 

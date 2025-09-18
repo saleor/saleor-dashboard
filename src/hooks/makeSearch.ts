@@ -18,7 +18,7 @@ export interface UseSearchResult<TData, TVariables extends SearchVariables> {
   search: (query: string) => void;
   query: string;
 }
-export type UseSearchOpts<TVariables extends SearchVariables> = Partial<{
+type UseSearchOpts<TVariables extends SearchVariables> = Partial<{
   skip: boolean;
   variables: TVariables;
 }>;

@@ -10,10 +10,10 @@ import { TextField } from "@material-ui/core";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface PluginSecretFieldDialogFormData {
+interface PluginSecretFieldDialogFormData {
   value: string;
 }
-export interface PluginSecretFieldDialogProps extends DialogProps {
+interface PluginSecretFieldDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   field: ConfigurationItemFragment;
   onConfirm: (data: PluginSecretFieldDialogFormData) => void;

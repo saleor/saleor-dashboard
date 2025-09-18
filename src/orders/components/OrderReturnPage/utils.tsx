@@ -18,7 +18,7 @@ const fulfiledStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.REFUNDE
 export const getOrderUnfulfilledLines = (order: OrderDetailsFragment) =>
   order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
-export const getFulfilledFulfillment = (fulfillment: OrderDetailsFragment["fulfillments"][0]) =>
+const getFulfilledFulfillment = (fulfillment: OrderDetailsFragment["fulfillments"][0]) =>
   fulfiledStatuses.includes(fulfillment.status);
 
 export const getFulfilledFulfillemnts = (order?: OrderDetailsFragment) =>
@@ -80,12 +80,12 @@ export function getParsedLineDataForFulfillmentStatus<T>(
   );
 }
 
-export const getFulfillmentsWithStatus = (
+const getFulfillmentsWithStatus = (
   order: OrderDetailsFragment,
   fulfillmentStatus: FulfillmentStatus,
 ) => order?.fulfillments.filter(({ status }) => status === fulfillmentStatus) || [];
 
-export const getParsedLinesOfFulfillments = (
+const getParsedLinesOfFulfillments = (
   fullfillments: OrderDetailsFragment["fulfillments"],
 ): ParsedFulfillmentLine[] =>
   fullfillments.reduce((result, { lines }) => [...result, ...getParsedLines(lines)], []);
@@ -111,10 +111,6 @@ const isIncludedInIds = function <T extends Node>(arrayToCompare: string[] | T[]
 
 export function getByIds<T extends Node>(arrayToCompare: string[] | T[]) {
   return (obj: Node) => isIncludedInIds(arrayToCompare, obj);
-}
-
-export function getByUnmatchingIds<T extends Node>(arrayToCompare: string[] | T[]) {
-  return (obj: Node) => !isIncludedInIds(arrayToCompare, obj);
 }
 
 export function getByType<TType, TObject extends { type: TType }>(typeToCompare: TType) {

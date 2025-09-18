@@ -61,7 +61,7 @@ export interface TaxConfigurationFormData {
   removeCountriesConfiguration: CountryCode[];
 }
 
-export const TaxChannelsPage = (props: TaxChannelsPageProps) => {
+const TaxChannelsPage = (props: TaxChannelsPageProps) => {
   const {
     taxConfigurations,
     selectedConfigurationId,
@@ -293,4 +293,5 @@ export const TaxChannelsPage = (props: TaxChannelsPageProps) => {
     </Form>
   );
 };
+
 export default TaxChannelsPage;

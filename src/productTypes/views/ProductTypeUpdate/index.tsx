@@ -43,7 +43,7 @@ interface ProductTypeUpdateProps {
   params: ProductTypeUrlQueryParams;
 }
 
-export const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
+const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const productAttributeListActions = useBulkActions();
@@ -441,4 +441,5 @@ export const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     </>
   );
 };
+
 export default ProductTypeUpdate;

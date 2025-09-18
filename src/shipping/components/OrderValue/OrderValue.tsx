@@ -20,7 +20,7 @@ interface Value {
   minValue: string;
   price: string;
 }
-export interface OrderValueProps {
+interface OrderValueProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
@@ -31,7 +31,7 @@ export interface OrderValueProps {
 
 const numberOfColumns = 3;
 
-export const OrderValue = ({
+const OrderValue = ({
   channels,
   errors,
   orderValueRestricted,

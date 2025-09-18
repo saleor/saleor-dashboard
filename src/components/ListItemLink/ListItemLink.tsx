@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import Link from "../Link";
 
-export interface ListItemLinkProps extends Omit<BaseListItemProps, "onClick" | "classes"> {
+interface ListItemLinkProps extends Omit<BaseListItemProps, "onClick" | "classes"> {
   href?: string;
   className?: string;
   linkClassName?: string;
@@ -19,7 +19,7 @@ const useStyles = makeStyles(
   { name: "ListItemLink" },
 );
 
-export const ListItemLink = ({ href, children, linkClassName, ...props }: ListItemLinkProps) => {
+const ListItemLink = ({ href, children, linkClassName, ...props }: ListItemLinkProps) => {
   const classes = useStyles();
 
   if (!href) {

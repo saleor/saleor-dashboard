@@ -9,11 +9,7 @@ import { AssignVariantDialogMulti } from "./AssignVariantDialogMulti";
 import { AssignVariantDialogSingle } from "./AssignVariantDialogSingle";
 import { messages } from "./messages";
 
-export interface AssignVariantDialogFormData {
-  products: RelayToFlat<SearchProductsQuery["search"]>;
-  query: string;
-}
-export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
+interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;

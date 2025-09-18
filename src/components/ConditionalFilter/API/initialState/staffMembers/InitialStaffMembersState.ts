@@ -1,7 +1,7 @@
 import { ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import { UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 
-export interface InitialStaffMembersState {
+interface InitialStaffMembersState {
   staffMemberStatus: ItemOption[];
 }
 

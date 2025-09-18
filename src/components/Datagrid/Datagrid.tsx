@@ -57,7 +57,7 @@ export interface GetCellContentOpts {
   getChangeIndex: (column: string, row: number) => number;
 }
 
-export interface MenuItemsActions {
+interface MenuItemsActions {
   removeRows: (indexes: number[]) => void;
 }
 
@@ -68,7 +68,7 @@ export interface DatagridRenderHeaderProps {
   isAnimationOpenFinished: boolean;
 }
 
-export interface DatagridProps {
+interface DatagridProps {
   fillHandle?: boolean;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
@@ -102,7 +102,7 @@ export interface DatagridProps {
   navigatorOpts?: NavigatorOpts;
 }
 
-export const Datagrid = ({
+const Datagrid = ({
   availableColumns,
   emptyText,
   getCellContent,

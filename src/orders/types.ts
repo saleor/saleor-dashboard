@@ -12,8 +12,7 @@ import { RelayToFlat } from "@dashboard/types";
 export const orderHasTransactions = (order: OrderDetailsFragment): boolean =>
   order?.transactions?.length > 0;
 
-export const orderHasPayments = (order: OrderDetailsFragment): boolean =>
-  order?.payments?.length > 0;
+const orderHasPayments = (order: OrderDetailsFragment): boolean => order?.payments?.length > 0;
 
 export const orderShouldUseTransactions = (order: OrderDetailsFragment): boolean => {
   if (orderHasTransactions(order)) {

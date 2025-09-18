@@ -10,7 +10,7 @@ interface DateProps {
   plain?: boolean;
 }
 
-export const Date = ({ date, plain }: DateProps) => {
+const Date = ({ date, plain }: DateProps) => {
   const localizeDate = useDateLocalize();
   const getHumanized = (value: string, locale: string, currentDate: number) =>
     moment(value).locale(locale).from(currentDate);
@@ -41,5 +41,6 @@ export const Date = ({ date, plain }: DateProps) => {
     </LocaleConsumer>
   );
 };
+
 Date.displayName = "Date";
 export default Date;

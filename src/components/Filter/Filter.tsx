@@ -12,7 +12,7 @@ import { FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "./t
 import useFilter from "./useFilter";
 import { extractInvalidFilters, getSelectedFiltersAmount } from "./utils";
 
-export interface FilterProps<TFilterKeys extends string = string> {
+interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
   errorMessages?: FilterErrorMessages<TFilterKeys>;
   menu: IFilter<TFilterKeys>;

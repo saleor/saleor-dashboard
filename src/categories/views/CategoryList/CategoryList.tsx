@@ -39,7 +39,7 @@ interface CategoryListProps {
   params: CategoryListUrlQueryParams;
 }
 
-export const CategoryList = ({ params }: CategoryListProps) => {
+const CategoryList = ({ params }: CategoryListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.CATEGORY_LIST);
@@ -225,4 +225,5 @@ export const CategoryList = ({ params }: CategoryListProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CategoryList;

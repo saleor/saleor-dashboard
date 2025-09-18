@@ -22,7 +22,7 @@ export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {
   return hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn || hasAnyWaitingLines;
 };
 
-export interface ConditionalItem {
+interface ConditionalItem {
   shouldExist: boolean;
   item: any;
 }

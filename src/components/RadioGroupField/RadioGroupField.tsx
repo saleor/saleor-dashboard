@@ -37,7 +37,7 @@ interface RadioGroupFieldProps {
 
 export const NewRadioGroupField = SimpleRadioGroupField;
 
-export const RadioGroupField = (props: RadioGroupFieldProps) => {
+const RadioGroupField = (props: RadioGroupFieldProps) => {
   const {
     alignTop,
     className,
@@ -108,5 +108,6 @@ export const RadioGroupField = (props: RadioGroupFieldProps) => {
     </FormControl>
   );
 };
+
 RadioGroupField.displayName = "RadioGroupField";
 export default RadioGroupField;

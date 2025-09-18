@@ -87,7 +87,7 @@ interface MediaTileBaseProps {
   onEdit?: (event: React.ChangeEvent<any>) => void;
 }
 
-export type MediaTileProps = MediaTileBaseProps &
+type MediaTileProps = MediaTileBaseProps &
   (
     | {
         onEdit?: React.MouseEventHandler<HTMLButtonElement>;

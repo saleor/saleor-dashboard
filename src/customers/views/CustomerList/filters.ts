@@ -7,17 +7,12 @@ import { CustomerFilterInput } from "@dashboard/graphql";
 
 import {
   createFilterTabUtils,
-  createFilterUtils,
   getGteLteVariables,
   getMinMaxQueryParam,
 } from "../../../utils/filters";
-import {
-  CustomerListUrlFilters,
-  CustomerListUrlFiltersEnum,
-  CustomerListUrlQueryParams,
-} from "../../urls";
+import { CustomerListUrlFilters, CustomerListUrlFiltersEnum } from "../../urls";
 
-export const CUSTOMER_FILTERS_KEY = "customerFilters";
+const CUSTOMER_FILTERS_KEY = "customerFilters";
 
 export function getFilterOpts(params: CustomerListUrlFilters): CustomerListFilterOpts {
   return {
@@ -77,8 +72,3 @@ export function getFilterQueryParam(
 }
 
 export const storageUtils = createFilterTabUtils<string>(CUSTOMER_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  CustomerListUrlQueryParams,
-  CustomerListUrlFilters
->(CustomerListUrlFiltersEnum);

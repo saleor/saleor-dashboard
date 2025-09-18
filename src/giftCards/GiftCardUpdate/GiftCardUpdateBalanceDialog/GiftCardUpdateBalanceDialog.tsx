@@ -17,7 +17,7 @@ import { getGiftCardErrorMessage } from "../messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
 
-export interface GiftCardBalanceUpdateFormData {
+interface GiftCardBalanceUpdateFormData {
   balanceAmount: number;
 }
 

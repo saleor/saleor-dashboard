@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface ProductTypePickerDialogProps {
+interface ProductTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   productTypes?: Option[];

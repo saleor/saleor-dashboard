@@ -22,7 +22,7 @@ interface AddressEditCommonProps {
 }
 
 export const stringifyAddress = (address: Partial<AddressFragment>): string => {
-  const { id, ...addressWithoutId } = address;
+  const { ...addressWithoutId } = address;
 
   return Object.values(flatten(addressWithoutId)).join(" ");
 };

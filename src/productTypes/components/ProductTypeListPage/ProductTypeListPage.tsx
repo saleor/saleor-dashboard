@@ -17,7 +17,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { FilterPageProps, ListActions, PageListProps, SortPage } from "../../../types";
 import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
 
-export interface ProductTypeListPageProps
+interface ProductTypeListPageProps
   extends PageListProps,
     ListActions,
     Omit<FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>, "onTabDelete">,

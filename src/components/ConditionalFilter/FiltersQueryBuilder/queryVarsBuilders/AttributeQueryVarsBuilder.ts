@@ -21,7 +21,7 @@ import {
 import { QueryVarsBuilderUtils } from "../utils";
 import { WhereOnlyQueryVarsBuilder } from "./types";
 
-export type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
+type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 
 export class AttributeQueryVarsBuilder
   implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart>

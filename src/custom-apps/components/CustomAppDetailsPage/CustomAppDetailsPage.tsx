@@ -34,7 +34,7 @@ export interface CustomAppDetailsPageFormData {
   name: string;
   permissions: PermissionEnum[];
 }
-export interface CustomAppDetailsPageProps {
+interface CustomAppDetailsPageProps {
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"];

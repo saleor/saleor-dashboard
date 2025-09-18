@@ -17,7 +17,7 @@ export interface PriceFieldProps extends InputProps {
   onChange: (event: any) => any;
 }
 
-export const PriceField = (props: PriceFieldProps) => {
+const PriceField = (props: PriceFieldProps) => {
   const {
     className,
     disabled,
@@ -59,6 +59,7 @@ export const PriceField = (props: PriceFieldProps) => {
     />
   );
 };
+
 PriceField.defaultProps = {
   name: "price",
 };

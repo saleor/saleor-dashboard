@@ -12,7 +12,7 @@ export const flagListToMetadata = (
   return [{ key: METADATA_KEY, value: JSON.stringify(list) }];
 };
 
-export const flagListFromMetadata = (
+const flagListFromMetadata = (
   metadata: Array<Omit<MetadataItemFragment, "__typename">>,
 ): FlagList => {
   const defaultsList = asFlagValue();

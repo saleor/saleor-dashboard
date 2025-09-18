@@ -85,7 +85,7 @@ export class PromotionRuleDialog {
     await this.rewardValueInput.fill(value);
   }
 
-  async selectPredicate(predicate: string, index = 0) {
+  async selectPredicate(predicate: string) {
     await this.page.getByRole("option", { name: predicate, exact: true }).click();
   }
 

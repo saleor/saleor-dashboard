@@ -15,8 +15,3 @@ export enum OrderFilterKeys {
   invoicesCreatedAt = "invoicesCreatedAt",
   metadata = "metadata",
 }
-
-export enum OrderFilterGiftCard {
-  bought = "bought",
-  paid = "paid",
-}

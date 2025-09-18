@@ -43,12 +43,12 @@ import {
 import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
 import { categoryListUrl, categoryUrl, CategoryUrlDialog, CategoryUrlQueryParams } from "../urls";
 
-export interface CategoryDetailsProps {
+interface CategoryDetailsProps {
   params: CategoryUrlQueryParams;
   id: string;
 }
 
-export const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
+const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -384,4 +384,5 @@ export const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CategoryDetails;

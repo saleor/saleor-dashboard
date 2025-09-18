@@ -11,7 +11,7 @@ export interface FileChoiceType {
   file?: FileFragment;
 }
 
-export interface FileUploadFieldProps {
+interface FileUploadFieldProps {
   inputProps?: React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement

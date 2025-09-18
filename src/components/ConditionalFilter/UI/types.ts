@@ -1,6 +1,6 @@
 import { Option, RangeValue } from "@saleor/macaw-ui-next";
 
-export type DisabledScope = "left" | "right" | "condition";
+type DisabledScope = "left" | "right" | "condition";
 
 export type RightOperatorOption = Option & {
   slug: string;
@@ -10,7 +10,7 @@ export type LeftOperatorOption = Option & {
   type: string;
 };
 
-export type ConditionOption<T extends string> = Option & {
+type ConditionOption<T extends string> = Option & {
   type: T;
 };
 
@@ -115,12 +115,12 @@ export interface DateTimeOperator {
   conditionValue: ConditionOption<"datetime"> | null;
 }
 
-export interface DateRangeOperator {
+interface DateRangeOperator {
   value: RangeValue;
   conditionValue: ConditionOption<"date.range"> | null;
 }
 
-export interface DateTimeRangeOperator {
+interface DateTimeRangeOperator {
   value: RangeValue;
   conditionValue: ConditionOption<"datetime.range"> | null;
 }

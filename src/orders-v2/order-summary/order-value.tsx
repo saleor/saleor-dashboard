@@ -22,7 +22,6 @@ export const OrderValue = ({
   shippingPrice,
   orderTotal,
   discounts,
-  orderId,
   giftCardsAmount,
   usedGiftCards,
   ...props

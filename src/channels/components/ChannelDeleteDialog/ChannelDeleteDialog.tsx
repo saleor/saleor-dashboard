@@ -43,7 +43,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ChannelDeleteDialogProps {
+interface ChannelDeleteDialogProps {
   channelsChoices: Option[];
   channelSlug: string;
   currency: string;

@@ -20,7 +20,7 @@ interface ChannelsListProps {
   params: ChannelsListUrlQueryParams;
 }
 
-export const ChannelsList = ({ params }: ChannelsListProps) => {
+const ChannelsList = ({ params }: ChannelsListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -3,7 +3,7 @@ import { FilterElement } from "../../FilterElement";
 import { isItemOptionArray } from "../../FilterElement/ConditionValue";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
-export type OrderIdFilterQueryPart = {
+type OrderIdFilterQueryPart = {
   ids?: string[];
 };
 

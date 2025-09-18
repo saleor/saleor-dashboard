@@ -13,9 +13,10 @@ import {
   TabActionDialog,
 } from "../types";
 
-export const discountSection = "/discounts/";
+const discountSection = "/discounts/";
 
-export const saleSection = urlJoin(discountSection, "sales");
+const saleSection = urlJoin(discountSection, "sales");
+
 export const saleListPath = saleSection;
 export enum SaleListUrlFiltersEnum {
   type = "type",
@@ -37,7 +38,7 @@ export enum SaleListUrlSortField {
   type = "type",
   value = "value",
 }
-export type SaleListUrlSort = Sort<SaleListUrlSortField>;
+type SaleListUrlSort = Sort<SaleListUrlSortField>;
 export type SaleListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<SaleListUrlDialog> &
@@ -66,7 +67,8 @@ export const saleAddPath = urlJoin(saleSection, "add");
 export const saleAddUrl = (params?: SaleCreateUrlQueryParams) =>
   saleAddPath + "?" + stringifyQs(params);
 
-export const voucherSection = urlJoin(discountSection, "vouchers");
+const voucherSection = urlJoin(discountSection, "vouchers");
+
 export const voucherListPath = voucherSection;
 export enum VoucherListUrlFiltersEnum {
   startedFrom = "startedFrom",
@@ -92,7 +94,7 @@ export enum VoucherListUrlSortField {
   type = "type",
   value = "value",
 }
-export type VoucherListUrlSort = Sort<VoucherListUrlSortField>;
+type VoucherListUrlSort = Sort<VoucherListUrlSortField>;
 export type VoucherListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<VoucherListUrlDialog> &

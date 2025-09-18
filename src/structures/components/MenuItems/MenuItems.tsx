@@ -11,7 +11,7 @@ import { MenuItemsSortableTree } from "../MenuItemsSortableTree";
 import { getNodeData } from "../MenuItemsSortableTree/utils";
 import { getDiff, TreeOperation } from "./tree";
 
-export interface MenuItemsProps {
+interface MenuItemsProps {
   canUndo: boolean;
   items: RecursiveMenuItem[];
   onChange: (operations: TreeOperation[]) => void;

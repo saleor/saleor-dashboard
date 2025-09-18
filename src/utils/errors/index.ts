@@ -28,7 +28,7 @@ export interface ChannelError {
   channels: string[] | [];
 }
 
-export function getFieldChannelError<T extends ChannelError>(errors: T[], field: string): T[] {
+function getFieldChannelError<T extends ChannelError>(errors: T[], field: string): T[] {
   return errors.filter(err => err.field === field);
 }
 

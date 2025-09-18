@@ -30,7 +30,7 @@ import {
   VariantWithProductLabel,
 } from "./utils";
 
-export interface AssignVariantDialogMultiProps extends FetchMoreProps {
+interface AssignVariantDialogMultiProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;

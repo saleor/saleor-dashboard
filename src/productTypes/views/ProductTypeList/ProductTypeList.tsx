@@ -41,7 +41,7 @@ interface ProductTypeListProps {
   params: ProductTypeListUrlQueryParams;
 }
 
-export const ProductTypeList = ({ params }: ProductTypeListProps) => {
+const ProductTypeList = ({ params }: ProductTypeListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
@@ -216,5 +216,6 @@ export const ProductTypeList = ({ params }: ProductTypeListProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 ProductTypeList.displayName = "ProductTypeList";
 export default ProductTypeList;

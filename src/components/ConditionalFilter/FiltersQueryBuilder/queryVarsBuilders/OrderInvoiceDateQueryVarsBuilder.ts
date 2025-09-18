@@ -3,7 +3,7 @@ import { FilterElement } from "../../FilterElement";
 import { QueryVarsDateUtils } from "../dateUtils";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
-export type OrderInvoiceDateQueryVars = {
+type OrderInvoiceDateQueryVars = {
   invoices?: Array<{ createdAt?: { gte?: string; lte?: string } }>;
 };
 

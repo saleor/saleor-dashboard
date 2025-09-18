@@ -38,8 +38,6 @@ export const getAppErrorMessageDescriptor = (code: AppErrorCode) => {
     case AppErrorCode.NOT_FOUND:
       return appManifestErrorMessages.notFound;
     default:
-      // @ts-expect-error _exhaustiveCheck is intentionally unused for exhaustiveness checking
-
       const _exhaustiveCheck: never = code;
 
       errorTracker.captureException(new Error(`Unhandled AppErrorCode: ${code}`));
@@ -99,7 +97,7 @@ export function getCustomAppErrorMessage(
   return undefined;
 }
 
-export interface IntrospectionNode {
+interface IntrospectionNode {
   name: string;
   interfaces: Array<{
     name: string;

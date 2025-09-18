@@ -21,14 +21,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { TaxConfigurationFormData } from "../TaxChannelsPage";
 import { useStyles } from "./styles";
 
-export interface TaxSettingsCardProps {
+interface TaxSettingsCardProps {
   values: TaxConfigurationFormData;
   strategyChoices: Option[];
   onChange: FormChange;
   strategyChoicesLoading: boolean;
 }
 
-export const TaxSettingsCard = ({
+const TaxSettingsCard = ({
   values,
   strategyChoices,
   onChange,

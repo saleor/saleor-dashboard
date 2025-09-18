@@ -3,7 +3,7 @@ import { FilterElement } from "../../FilterElement";
 import { QueryVarsDateUtils } from "../dateUtils";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
-export type DateTimeRangeQueryVars = {
+type DateTimeRangeQueryVars = {
   createdAt?: { gte?: string; lte?: string };
   updatedAt?: { gte?: string; lte?: string };
   dateJoined?: { gte?: string; lte?: string };
