@@ -3,6 +3,7 @@ import { Container } from "@dashboard/types";
 
 import {
   getReferenceAttributeDisplayData,
+  getSelectedAttributeValues,
   handleContainerReferenceAssignment,
   handleMetadataReferenceAssignment,
 } from "./data";
@@ -586,6 +587,300 @@ describe("attributes/utils/data", () => {
           { value: "non-existent", label: "non-existent" }, // Fallback
         ]);
       });
+    });
+  });
+
+  describe("getSelectedAttributeValues", () => {
+    it("should return empty array for REFERENCE attribute with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.REFERENCE },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should return reference IDs for REFERENCE attribute with values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.REFERENCE },
+        values: [
+          { reference: "ref-1" },
+          { reference: "ref-2" },
+        ],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual(["ref-1", "ref-2"]);
+    });
+
+    it("should return empty array for SINGLE_REFERENCE attribute with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.SINGLE_REFERENCE },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should return array with reference ID for SINGLE_REFERENCE attribute with value", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.SINGLE_REFERENCE },
+        values: [{ reference: "ref-1" }],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual(["ref-1"]);
+    });
+
+    it("should return empty array for PLAIN_TEXT attribute with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.PLAIN_TEXT },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should return array with text for PLAIN_TEXT attribute with value", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.PLAIN_TEXT },
+        values: [{ plainText: "Some text" }],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual(["Some text"]);
+    });
+
+    it("should return empty array for RICH_TEXT attribute with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.RICH_TEXT },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should return array with rich text for RICH_TEXT attribute with value", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.RICH_TEXT },
+        values: [{ richText: "<p>Rich text</p>" }],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual(["<p>Rich text</p>"]);
+    });
+
+    it("should return empty array for NUMERIC attribute with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.NUMERIC },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should return array with name for NUMERIC attribute with value", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.NUMERIC },
+        values: [{ name: "123" }],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual(["123"]);
+    });
+
+    it("should return empty array for BOOLEAN attribute with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.BOOLEAN },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should return array with false for BOOLEAN attribute with false value", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.BOOLEAN },
+        values: [{ boolean: false }],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([false]);
+    });
+
+    it("should return array with true for BOOLEAN attribute with true value", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.BOOLEAN },
+        values: [{ boolean: true }],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([true]);
+    });
+
+    it("should return empty array for DATE attribute with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.DATE },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should return array with date for DATE attribute with value", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.DATE },
+        values: [{ date: "2024-01-15" }],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual(["2024-01-15"]);
+    });
+
+    it("should return empty array for DATE_TIME attribute with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.DATE_TIME },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should return array with datetime for DATE_TIME attribute with value", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.DATE_TIME },
+        values: [{ dateTime: "2024-01-15T10:30:00Z" }],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual(["2024-01-15T10:30:00Z"]);
+    });
+
+    it("should return slugs for default attribute type (DROPDOWN/MULTISELECT) with values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.DROPDOWN },
+        values: [
+          { slug: "option-1" },
+          { slug: "option-2" },
+        ],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual(["option-1", "option-2"]);
+    });
+
+    it("should return empty array for default attribute type with empty values", () => {
+      // Arrange
+      const attribute = {
+        attribute: { inputType: AttributeInputTypeEnum.MULTISELECT },
+        values: [],
+      };
+
+      // Act
+      const result = getSelectedAttributeValues(attribute);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+
+    it("should handle null/undefined fields gracefully", () => {
+      // Arrange
+      const attributeWithNullReference = {
+        attribute: { inputType: AttributeInputTypeEnum.SINGLE_REFERENCE },
+        values: [{ reference: null }],
+      };
+      const attributeWithUndefinedPlainText = {
+        attribute: { inputType: AttributeInputTypeEnum.PLAIN_TEXT },
+        values: [{ plainText: undefined }],
+      };
+
+      // Act
+      const result1 = getSelectedAttributeValues(attributeWithNullReference);
+      const result2 = getSelectedAttributeValues(attributeWithUndefinedPlainText);
+
+      // Assert
+      expect(result1).toEqual([]);
+      expect(result2).toEqual([]);
     });
   });
 });
