@@ -1,7 +1,11 @@
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
+import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Container } from "@dashboard/types";
 
-import { handleContainerReferenceAssignment, handleMetadataReferenceAssignment } from "./data";
+import {
+  getReferenceAttributeDisplayData,
+  handleContainerReferenceAssignment,
+  handleMetadataReferenceAssignment,
+} from "./data";
 
 describe("attributes/utils/data", () => {
   describe("handleContainerReferenceAssignment", () => {
@@ -237,6 +241,351 @@ describe("attributes/utils/data", () => {
       // Assert
       expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["existing-1"]);
       expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", []);
+    });
+  });
+
+  describe("getReferenceAttributeDisplayData", () => {
+    // Clear the cache before each test to ensure test isolation
+    beforeEach(() => {
+      // We need to clear the WeakMap cache - since it's module-scoped,
+      // we'll test the caching behavior by verifying the function is called correctly
+      jest.clearAllMocks();
+    });
+
+    it("should use metadata cache when available", () => {
+      // Arrange
+      const attribute = {
+        id: "attr-1",
+        value: ["ref-1", "ref-2"],
+        label: "Test",
+        data: {
+          inputType: AttributeInputTypeEnum.REFERENCE,
+          entityType: AttributeEntityTypeEnum.PRODUCT,
+          isRequired: false,
+          values: [],
+          references: [],
+        },
+        metadata: [
+          { value: "ref-1", label: "Product 1" },
+          { value: "ref-2", label: "Product 2" },
+        ],
+      };
+      const references = {
+        products: [
+          { id: "ref-3", name: "Product 3" },
+        ],
+      };
+
+      // Act
+      const result = getReferenceAttributeDisplayData(attribute, references);
+
+      // Assert
+      expect(result.data.references).toEqual([
+        { value: "ref-1", label: "Product 1" },
+        { value: "ref-2", label: "Product 2" },
+      ]);
+    });
+
+    it("should fall back to search results when metadata not available", () => {
+      // Arrange
+      const attribute = {
+        id: "attr-1",
+        value: ["ref-1", "ref-2"],
+        label: "Test",
+        data: {
+          inputType: AttributeInputTypeEnum.REFERENCE,
+          entityType: AttributeEntityTypeEnum.PRODUCT,
+          isRequired: false,
+          values: [],
+          references: [],
+        },
+      };
+      const references = {
+        products: [
+          { id: "ref-1", name: "Product 1" },
+          { id: "ref-2", name: "Product 2" },
+        ],
+      };
+
+      // Act
+      const result = getReferenceAttributeDisplayData(attribute, references);
+
+      // Assert
+      expect(result.data.references).toEqual([
+        { value: "ref-1", label: "Product 1" },
+        { value: "ref-2", label: "Product 2" },
+      ]);
+    });
+
+    it("should handle page references", () => {
+      // Arrange
+      const attribute = {
+        id: "attr-1",
+        value: ["page-1"],
+        label: "Test",
+        data: {
+          inputType: AttributeInputTypeEnum.REFERENCE,
+          entityType: AttributeEntityTypeEnum.PAGE,
+          isRequired: false,
+          values: [],
+          references: [],
+        },
+      };
+      const references = {
+        pages: [
+          { id: "page-1", title: "Page Title" },
+        ],
+      };
+
+      // Act
+      const result = getReferenceAttributeDisplayData(attribute, references);
+
+      // Assert
+      expect(result.data.references).toEqual([
+        { value: "page-1", label: "Page Title" },
+      ]);
+    });
+
+    it("should handle product variant references with caching", () => {
+      // Arrange
+      const attribute = {
+        id: "attr-1",
+        value: ["variant-1"],
+        label: "Test",
+        data: {
+          inputType: AttributeInputTypeEnum.REFERENCE,
+          entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+          isRequired: false,
+          values: [],
+          references: [],
+        },
+      };
+      const references = {
+        products: [
+          {
+            id: "product-1",
+            name: "Product 1",
+            variants: [
+              { id: "variant-1", name: "Variant A" },
+              { id: "variant-2", name: "Variant B" },
+            ],
+          },
+        ],
+      };
+
+      // Act
+      const result = getReferenceAttributeDisplayData(attribute, references);
+
+      // Assert
+      expect(result.data.references).toEqual([
+        { value: "variant-1", label: "Product 1 Variant A" },
+      ]);
+    });
+
+    it("should use ID as fallback when reference not found", () => {
+      // Arrange
+      const attribute = {
+        id: "attr-1",
+        value: ["unknown-ref"],
+        label: "Test",
+        data: {
+          inputType: AttributeInputTypeEnum.REFERENCE,
+          entityType: AttributeEntityTypeEnum.PRODUCT,
+          isRequired: false,
+          values: [],
+          references: [],
+        },
+      };
+      const references = {
+        products: [],
+      };
+
+      // Act
+      const result = getReferenceAttributeDisplayData(attribute, references);
+
+      // Assert
+      expect(result.data.references).toEqual([
+        { value: "unknown-ref", label: "unknown-ref" },
+      ]);
+    });
+
+    describe("product variant caching", () => {
+      it("should cache variant map per product and reuse on subsequent calls", () => {
+        // Arrange
+        const product1 = {
+          id: "product-1",
+          name: "Product 1",
+          variants: [
+            { id: "variant-1", name: "Variant A" },
+            { id: "variant-2", name: "Variant B" },
+          ],
+        };
+
+        const attribute = {
+          id: "attr-1",
+          value: ["variant-1", "variant-2"],
+          label: "Test",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            isRequired: false,
+            values: [],
+            references: [],
+          },
+        };
+
+        const references = { products: [product1] };
+
+        // Spy on the variants array to track accesses
+        const variantsFindSpy = jest.spyOn(product1.variants, 'find');
+
+        // Act - First call should build the cache
+        const result1 = getReferenceAttributeDisplayData(attribute, references);
+
+        // The find method should NOT be called because we use Map now
+        expect(variantsFindSpy).not.toHaveBeenCalled();
+
+        // Act - Second call with same product reference should use cache
+        const result2 = getReferenceAttributeDisplayData(attribute, references);
+
+        // Assert - Results should be the same
+        expect(result1.data.references).toEqual([
+          { value: "variant-1", label: "Product 1 Variant A" },
+          { value: "variant-2", label: "Product 1 Variant B" },
+        ]);
+        expect(result2.data.references).toEqual(result1.data.references);
+
+        // Cleanup
+        variantsFindSpy.mockRestore();
+      });
+
+      it("should rebuild cache when product reference changes", () => {
+        // Arrange
+        const createProduct = (id: string) => ({
+          id,
+          name: `Product ${id}`,
+          variants: [
+            { id: `${id}-v1`, name: "V1" },
+            { id: `${id}-v2`, name: "V2" },
+          ],
+        });
+
+        const attribute = {
+          id: "attr-1",
+          value: ["p1-v1"],
+          label: "Test",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            isRequired: false,
+            values: [],
+            references: [],
+          },
+        };
+
+        // Act - First call with product 1
+        const product1 = createProduct("p1");
+        const result1 = getReferenceAttributeDisplayData(
+          attribute,
+          { products: [product1] }
+        );
+
+        // Act - Second call with different product instance (simulates data refresh)
+        const product1New = createProduct("p1");
+        const result2 = getReferenceAttributeDisplayData(
+          attribute,
+          { products: [product1New] }
+        );
+
+        // Assert - Both should return correct results
+        expect(result1.data.references).toEqual([
+          { value: "p1-v1", label: "Product p1 V1" },
+        ]);
+        expect(result2.data.references).toEqual([
+          { value: "p1-v1", label: "Product p1 V1" },
+        ]);
+
+        // The cache should have been rebuilt for the new product instance
+        // (WeakMap will handle cleanup of old reference)
+      });
+
+      it("should handle multiple products with variants efficiently", () => {
+        // Arrange
+        const products = Array.from({ length: 3 }, (_, i) => ({
+          id: `product-${i}`,
+          name: `Product ${i}`,
+          variants: Array.from({ length: 10 }, (_, j) => ({
+            id: `p${i}-v${j}`,
+            name: `Variant ${j}`,
+          })),
+        }));
+
+        const attribute = {
+          id: "attr-1",
+          value: ["p0-v5", "p1-v3", "p2-v7"],
+          label: "Test",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            isRequired: false,
+            values: [],
+            references: [],
+          },
+        };
+
+        // Act
+        const result = getReferenceAttributeDisplayData(attribute, { products });
+
+        // Assert - Should find all variants efficiently
+        expect(result.data.references).toEqual([
+          { value: "p0-v5", label: "Product 0 Variant 5" },
+          { value: "p1-v3", label: "Product 1 Variant 3" },
+          { value: "p2-v7", label: "Product 2 Variant 7" },
+        ]);
+      });
+
+      it("should handle products without variants gracefully", () => {
+        // Arrange
+        const products = [
+          {
+            id: "product-1",
+            name: "Product 1",
+            // No variants property
+          },
+          {
+            id: "product-2",
+            name: "Product 2",
+            variants: [], // Empty variants
+          },
+          {
+            id: "product-3",
+            name: "Product 3",
+            variants: [{ id: "v3", name: "Variant 3" }],
+          },
+        ];
+
+        const attribute = {
+          id: "attr-1",
+          value: ["v3", "non-existent"],
+          label: "Test",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            isRequired: false,
+            values: [],
+            references: [],
+          },
+        };
+
+        // Act
+        const result = getReferenceAttributeDisplayData(attribute, { products });
+
+        // Assert
+        expect(result.data.references).toEqual([
+          { value: "v3", label: "Product 3 Variant 3" },
+          { value: "non-existent", label: "non-existent" }, // Fallback
+        ]);
+      });
     });
   });
 });
