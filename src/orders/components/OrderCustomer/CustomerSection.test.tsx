@@ -14,7 +14,15 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 
 jest.mock("@dashboard/components/Link", () => ({
   __esModule: true,
-  default: ({ children, href, onClick }) => (
+  default: ({
+    children,
+    href,
+    onClick,
+  }: {
+    children: ReactNode;
+    href: string;
+    onClick?: () => void;
+  }) => (
     <a href={href} onClick={onClick}>
       {children}
     </a>
@@ -23,7 +31,7 @@ jest.mock("@dashboard/components/Link", () => ({
 
 jest.mock("@dashboard/components/RequirePermissions", () => ({
   __esModule: true,
-  default: ({ children }) => <>{children}</>,
+  default: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
 
 const defaultProps: CustomerSectionProps = {

@@ -120,7 +120,7 @@ export const CustomerSection: React.FC<CustomerSectionProps> = ({
   }
 
   if (user === null) {
-    if (userEmail === null) {
+    if (userEmail === null || userEmail === undefined) {
       return <AnonymousCustomer />;
     }
 

@@ -1,6 +1,7 @@
 import { Combobox } from "@dashboard/components/Combobox";
 import Form from "@dashboard/components/Form";
 import { SearchCustomersQuery } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
@@ -38,7 +39,7 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
   return (
     <Form confirmLeave initial={{ query: "" }}>
       {({ change, data }) => {
-        const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const handleChange = (event: ChangeEvent<string>) => {
           change(event);
 
           const value = event.target.value;
@@ -60,15 +61,11 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
           value: user.id,
         }));
 
-        const handleUserChange = (event: any) => {
-          const handler = createSingleAutocompleteSelectHandler(
-            handleChange,
-            setUserDisplayName,
-            userChoices,
-          );
-
-          handler(event);
-        };
+        const handleUserChange = createSingleAutocompleteSelectHandler(
+          handleChange,
+          setUserDisplayName,
+          userChoices,
+        );
 
         return (
           <Combobox
