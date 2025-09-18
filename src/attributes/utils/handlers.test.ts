@@ -1047,6 +1047,7 @@ describe("createAttributeReferenceMetadataHandler", () => {
 
   it("should filter out metadata for removed references", () => {
     // Arrange
+    const setMetadataMock = jest.fn();
     const mockAttributes = {
       data: [
         {
@@ -1056,11 +1057,11 @@ describe("createAttributeReferenceMetadataHandler", () => {
           data: { inputType: AttributeInputTypeEnum.REFERENCE },
         },
       ],
-      setMetadata: jest.fn(),
+      setMetadata: setMetadataMock,
     } as unknown as UseFormsetOutput<AttributeInputData>;
 
     // Mock the merge function behavior
-    mockAttributes.setMetadata.mockImplementation((id, values, mergeFn) => {
+    setMetadataMock.mockImplementation((_id, _values, mergeFn) => {
       const prev = [{ value: "ref-1", label: "Reference 1" }];
       const next = [
         { value: "ref-2", label: "Reference 2" },
@@ -1082,7 +1083,7 @@ describe("createAttributeReferenceMetadataHandler", () => {
     ]);
 
     // Assert
-    expect(mockAttributes.setMetadata).toHaveBeenCalled();
+    expect(setMetadataMock).toHaveBeenCalled();
     expect(triggerChange).toHaveBeenCalled();
   });
 });

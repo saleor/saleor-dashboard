@@ -460,7 +460,7 @@ export const getFileAttributeDisplayData = (
   return attribute;
 };
 
-interface ReferenceEntitiesSearch {
+export interface ReferenceEntitiesSearch {
   pages?: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>;
   products?: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>;
   collections?: RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>;
