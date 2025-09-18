@@ -26,6 +26,16 @@ export const messages = defineMessages({
     defaultMessage: "Product name",
     description: "name",
   },
+  trackingNumberInputLabel: {
+    id: "R4IIw1",
+    defaultMessage: "Tracking number",
+    description: "tracking number of the shipment",
+  },
+  trackingNumberInputHelperText: {
+    id: "Q7eRF7",
+    defaultMessage: "Optionally provide a tracking number for this fulfillment",
+    description: "tracking number input helper text",
+  },
   sku: {
     id: "fw+VAN",
     defaultMessage: "SKU",
@@ -51,9 +61,9 @@ export const messages = defineMessages({
     defaultMessage: "No Stock",
     description: "no variant stock in warehouse",
   },
-  sentShipmentDetails: {
-    id: "0VDwAP",
-    defaultMessage: "Send shipment details to customer",
+  sentFulfillmentDetails: {
+    id: "8Cve4h",
+    defaultMessage: "Send fulfillment email to customer",
     description: "checkbox label",
   },
   shipmentInformation: {
