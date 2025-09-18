@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import {
   WarehouseClickAndCollectOptionEnum,
@@ -40,9 +39,6 @@ const useStyles = makeStyles(
       "&:not(:last-of-type)": {
         marginBottom: theme.spacing(),
       },
-    },
-    preview: {
-      marginLeft: theme.spacing(1),
     },
   }),
   {
@@ -183,7 +179,6 @@ const WarehouseSettings = ({
       <DashboardCard.Header>
         <DashboardCard.Title>
           <FormattedMessage {...messages.warehouseSettingsPickupTitle} />
-          <PreviewPill className={classes.preview} />
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>

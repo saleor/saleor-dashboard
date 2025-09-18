@@ -11,7 +11,7 @@
   "scripts": {
     "prebuild": "npm run generate",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build",
-    "build-flags": "node scripts/build-flags.js",
+    "build-flags": "node scripts/build-flags.cjs",
     "build-storybook": "storybook build",
     "change:add": "changeset add",
     "change:status": "changeset status",

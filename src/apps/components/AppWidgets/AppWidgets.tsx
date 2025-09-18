@@ -4,7 +4,7 @@ import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import { APP_VERSION } from "@dashboard/config";
+import { APP_VERSION, getApiUrl } from "@dashboard/config";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
@@ -83,7 +83,7 @@ const IframePost = ({
   return (
     <Box>
       <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
-        <input type="hidden" name="saleorApiUrl" value={process.env.API_URL} />
+        <input type="hidden" name="saleorApiUrl" value={getApiUrl()} />
         <input type="hidden" name="accessToken" value={accessToken} />
         <input type="hidden" name="appId" value={appId} />
         <>
@@ -150,7 +150,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
           const appPageUrl = AppUrls.resolveAppUrl(appWithExtensions.app.id);
 
           return (
-            <Box marginBottom={4} key={appId}>
+            <Box marginBottom={8} key={appId}>
               <Box display="flex" alignItems="center" marginBottom={2}>
                 <AppAvatar size={6} logo={logo ? { source: logo } : undefined} marginRight={2} />
                 <Text
@@ -263,11 +263,11 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 const renderNonIframe = !isIframeType;
 
                 return (
-                  <>
+                  <Box marginBottom={4} key={ext.id}>
                     {renderGETiframe && renderIframeGETvariant()}
                     {renderPOSTiframe && renderIframePOSTvariant()}
                     {renderNonIframe && renderNonIframeExtension()}
-                  </>
+                  </Box>
                 );
               })}
             </Box>

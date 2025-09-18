@@ -3,6 +3,7 @@ import { AttributeInput, AttributeInputData } from "@dashboard/components/Attrib
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
+  AttributeFragment,
   AttributeInputTypeEnum,
   AttributeValueDeleteMutation,
   AttributeValueFragment,
@@ -49,6 +50,21 @@ export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.NUMERIC,
   AttributeInputTypeEnum.SWATCH,
 ];
+
+export const REFERENCE_ATTRIBUTE_TYPES = [
+  AttributeInputTypeEnum.REFERENCE,
+  AttributeInputTypeEnum.SINGLE_REFERENCE,
+];
+
+export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
+  AttributeEntityTypeEnum.PRODUCT,
+  AttributeEntityTypeEnum.PRODUCT_VARIANT,
+  AttributeEntityTypeEnum.PAGE,
+];
+
+export function filterable(attribute: Pick<AttributeFragment, "inputType">): boolean {
+  return ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(attribute.inputType!);
+}
 
 export interface AttributeReference {
   label: string;
@@ -123,6 +139,7 @@ function getFileOrReferenceAttributeData(
     availableInGrid: undefined,
     filterableInDashboard: undefined,
     filterableInStorefront: undefined,
+    referenceTypes: data.referenceTypes?.map(ref => ref.value) ?? [],
   };
 }
 
@@ -364,10 +381,11 @@ export const getFileValuesToUploadFromAttributes = (
   attributesWithNewFileValue: FormsetData<null, File>,
 ) => attributesWithNewFileValue.filter(fileAttribute => !!fileAttribute.value);
 
-const getFileValuesRemovedFromAttributes = (attributesWithNewFileValue: FormsetData<null, File>) =>
-  attributesWithNewFileValue.filter(attribute => !attribute.value);
+export const getFileValuesRemovedFromAttributes = (
+  attributesWithNewFileValue: FormsetData<null, File>,
+) => attributesWithNewFileValue.filter(attribute => !attribute.value);
 
-const getAttributesOfRemovedFiles = (
+export const getAttributesOfRemovedFiles = (
   fileAttributesRemoved: FormsetData<null, File>,
 ): AtributesOfFiles[] =>
   fileAttributesRemoved.map(attribute => ({
@@ -377,7 +395,7 @@ const getAttributesOfRemovedFiles = (
     values: [],
   }));
 
-const getAttributesOfUploadedFiles = (
+export const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
   uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
 ): AtributesOfFiles[] =>
@@ -407,7 +425,7 @@ export const getAttributesAfterFileAttributesUpdate = (
   return uploadedFileAttributes.concat(removedFileAttributes);
 };
 
-const getFileAttributeDisplayData = (
+export const getFileAttributeDisplayData = (
   attribute: AttributeInput,
   attributesWithNewFileValue: FormsetData<null, File>,
 ) => {
@@ -425,7 +443,7 @@ const getFileAttributeDisplayData = (
   return attribute;
 };
 
-const getPageReferenceAttributeDisplayData = (
+export const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
 ) => ({
@@ -452,7 +470,7 @@ const getPageReferenceAttributeDisplayData = (
   },
 });
 
-const getProductReferenceAttributeDisplayData = (
+export const getProductReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => ({
@@ -479,7 +497,7 @@ const getProductReferenceAttributeDisplayData = (
   },
 });
 
-const getProductVariantReferenceAttributeDisplayData = (
+export const getProductVariantReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => ({
@@ -505,7 +523,7 @@ const getProductVariantReferenceAttributeDisplayData = (
   },
 });
 
-const getCollectionReferenceAttributeDisplayData = (
+export const getCollectionReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referenceCollections: RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>,
 ) => ({
@@ -532,7 +550,7 @@ const getCollectionReferenceAttributeDisplayData = (
   },
 });
 
-const getCategoryReferenceAttributeDisplayData = (
+export const getCategoryReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referenceCategories: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>,
 ) => ({
@@ -559,7 +577,7 @@ const getCategoryReferenceAttributeDisplayData = (
   },
 });
 
-const getReferenceAttributeDisplayData = (
+export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
   referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
   referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
@@ -615,7 +633,7 @@ export const getReferenceAttributeEntityTypeFromAttribute = (
   return attributes?.find(attribute => attribute.id === attributeId)?.data?.entityType;
 };
 
-const mapReferenceProductsToVariants = (
+export const mapReferenceProductsToVariants = (
   referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) =>
   referenceProducts.flatMap(product =>

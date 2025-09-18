@@ -621,7 +621,7 @@ export type AssignedVariantAttributeFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	variantSelection?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AttributeKeySpecifier = ('availableInGrid' | 'choices' | 'entityType' | 'externalReference' | 'filterableInDashboard' | 'filterableInStorefront' | 'id' | 'inputType' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productTypes' | 'productVariantTypes' | 'slug' | 'storefrontSearchPosition' | 'translation' | 'type' | 'unit' | 'valueRequired' | 'visibleInStorefront' | 'withChoices' | AttributeKeySpecifier)[];
+export type AttributeKeySpecifier = ('availableInGrid' | 'choices' | 'entityType' | 'externalReference' | 'filterableInDashboard' | 'filterableInStorefront' | 'id' | 'inputType' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productTypes' | 'productVariantTypes' | 'referenceTypes' | 'slug' | 'storefrontSearchPosition' | 'translation' | 'type' | 'unit' | 'valueRequired' | 'visibleInStorefront' | 'withChoices' | AttributeKeySpecifier)[];
 export type AttributeFieldPolicy = {
 	availableInGrid?: FieldPolicy<any> | FieldReadFunction<any>,
 	choices?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -640,6 +640,7 @@ export type AttributeFieldPolicy = {
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
 	productTypes?: FieldPolicy<any> | FieldReadFunction<any>,
 	productVariantTypes?: FieldPolicy<any> | FieldReadFunction<any>,
+	referenceTypes?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
 	storefrontSearchPosition?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1331,6 +1332,14 @@ export type CheckoutFilterShippingMethodsFieldPolicy = {
 	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CheckoutFullyAuthorizedKeySpecifier = ('checkout' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'version' | CheckoutFullyAuthorizedKeySpecifier)[];
+export type CheckoutFullyAuthorizedFieldPolicy = {
+	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CheckoutFullyPaidKeySpecifier = ('checkout' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'version' | CheckoutFullyPaidKeySpecifier)[];
@@ -3136,6 +3145,11 @@ export type NewTabTargetOptionsFieldPolicy = {
 export type NodeKeySpecifier = ('id' | NodeKeySpecifier)[];
 export type NodeFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ObjectWithAttributesKeySpecifier = ('assignedAttribute' | 'assignedAttributes' | ObjectWithAttributesKeySpecifier)[];
+export type ObjectWithAttributesFieldPolicy = {
+	assignedAttribute?: FieldPolicy<any> | FieldReadFunction<any>,
+	assignedAttributes?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ObjectWithMetadataKeySpecifier = ('metadata' | 'metafield' | 'metafields' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | ObjectWithMetadataKeySpecifier)[];
 export type ObjectWithMetadataFieldPolicy = {
@@ -5450,21 +5464,27 @@ export type RefundReasonReferenceTypeClearFieldPolicy = {
 	refundSettings?: FieldPolicy<any> | FieldReadFunction<any>,
 	refundSettingsErrors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type RefundSettingsKeySpecifier = ('reasonReferenceType' | RefundSettingsKeySpecifier)[];
-export type RefundSettingsFieldPolicy = {
-	reasonReferenceType?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type RefundSettingsErrorKeySpecifier = ('code' | 'field' | 'message' | RefundSettingsErrorKeySpecifier)[];
-export type RefundSettingsErrorFieldPolicy = {
+export type RefundReasonReferenceTypeClearErrorKeySpecifier = ('code' | 'field' | 'message' | RefundReasonReferenceTypeClearErrorKeySpecifier)[];
+export type RefundReasonReferenceTypeClearErrorFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type RefundSettingsKeySpecifier = ('reasonReferenceType' | RefundSettingsKeySpecifier)[];
+export type RefundSettingsFieldPolicy = {
+	reasonReferenceType?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type RefundSettingsUpdateKeySpecifier = ('errors' | 'refundSettings' | 'refundSettingsErrors' | RefundSettingsUpdateKeySpecifier)[];
 export type RefundSettingsUpdateFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	refundSettings?: FieldPolicy<any> | FieldReadFunction<any>,
 	refundSettingsErrors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type RefundSettingsUpdateErrorKeySpecifier = ('code' | 'field' | 'message' | RefundSettingsUpdateErrorKeySpecifier)[];
+export type RefundSettingsUpdateErrorFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	field?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type RequestEmailChangeKeySpecifier = ('accountErrors' | 'errors' | 'user' | RequestEmailChangeKeySpecifier)[];
 export type RequestEmailChangeFieldPolicy = {
@@ -6169,9 +6189,10 @@ export type StoredPaymentMethodRequestDeleteFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	result?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | SubscriptionKeySpecifier)[];
+export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyAuthorized' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | SubscriptionKeySpecifier)[];
 export type SubscriptionFieldPolicy = {
 	checkoutCreated?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutFullyAuthorized?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutFullyPaid?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutMetadataUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -7876,6 +7897,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | CheckoutFilterShippingMethodsKeySpecifier | (() => undefined | CheckoutFilterShippingMethodsKeySpecifier),
 		fields?: CheckoutFilterShippingMethodsFieldPolicy,
 	},
+	CheckoutFullyAuthorized?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CheckoutFullyAuthorizedKeySpecifier | (() => undefined | CheckoutFullyAuthorizedKeySpecifier),
+		fields?: CheckoutFullyAuthorizedFieldPolicy,
+	},
 	CheckoutFullyPaid?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CheckoutFullyPaidKeySpecifier | (() => undefined | CheckoutFullyPaidKeySpecifier),
 		fields?: CheckoutFullyPaidFieldPolicy,
@@ -8683,6 +8708,10 @@ export type StrictTypedTypePolicies = {
 	Node?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | NodeKeySpecifier | (() => undefined | NodeKeySpecifier),
 		fields?: NodeFieldPolicy,
+	},
+	ObjectWithAttributes?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ObjectWithAttributesKeySpecifier | (() => undefined | ObjectWithAttributesKeySpecifier),
+		fields?: ObjectWithAttributesFieldPolicy,
 	},
 	ObjectWithMetadata?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ObjectWithMetadataKeySpecifier | (() => undefined | ObjectWithMetadataKeySpecifier),
@@ -9780,17 +9809,21 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | RefundReasonReferenceTypeClearKeySpecifier | (() => undefined | RefundReasonReferenceTypeClearKeySpecifier),
 		fields?: RefundReasonReferenceTypeClearFieldPolicy,
 	},
+	RefundReasonReferenceTypeClearError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | RefundReasonReferenceTypeClearErrorKeySpecifier | (() => undefined | RefundReasonReferenceTypeClearErrorKeySpecifier),
+		fields?: RefundReasonReferenceTypeClearErrorFieldPolicy,
+	},
 	RefundSettings?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | RefundSettingsKeySpecifier | (() => undefined | RefundSettingsKeySpecifier),
 		fields?: RefundSettingsFieldPolicy,
 	},
-	RefundSettingsError?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | RefundSettingsErrorKeySpecifier | (() => undefined | RefundSettingsErrorKeySpecifier),
-		fields?: RefundSettingsErrorFieldPolicy,
-	},
 	RefundSettingsUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | RefundSettingsUpdateKeySpecifier | (() => undefined | RefundSettingsUpdateKeySpecifier),
 		fields?: RefundSettingsUpdateFieldPolicy,
+	},
+	RefundSettingsUpdateError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | RefundSettingsUpdateErrorKeySpecifier | (() => undefined | RefundSettingsUpdateErrorKeySpecifier),
+		fields?: RefundSettingsUpdateErrorFieldPolicy,
 	},
 	RequestEmailChange?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | RequestEmailChangeKeySpecifier | (() => undefined | RequestEmailChangeKeySpecifier),

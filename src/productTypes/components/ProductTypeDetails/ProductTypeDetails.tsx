@@ -1,12 +1,11 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Divider, Input, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Divider, Input, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -65,9 +64,6 @@ const ProductTypeDetails = (props: ProductTypeDetailsProps) => {
             label: (
               <>
                 <FormattedMessage {...option.title} />
-                {option.type === ProductTypeKindEnum.GIFT_CARD && (
-                  <PreviewPill className={sprinkles({ marginLeft: 2 })} />
-                )}
                 {option.subtitle && (
                   <Text color="default2" size={2} fontWeight="light" display="block">
                     <FormattedMessage {...option.subtitle} />
