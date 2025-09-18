@@ -26,6 +26,7 @@ import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
+import { getProductVariantById } from "./productVariantCache";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
 
@@ -545,31 +546,6 @@ const findCategoryReference = (
   return null;
 };
 
-type SearchProduct = RelayToFlat<NonNullable<SearchProductsQuery["search"]>>[0];
-type SearchProductVariant = NonNullable<SearchProduct["variants"]>[0];
-
-// Using WeakMap because it allows garbage collection when products are no longer referenced
-const productVariantMapCache = new WeakMap<SearchProduct, Map<string, SearchProductVariant>>();
-
-function getProductVariantMap(product: SearchProduct): Map<string, SearchProductVariant> {
-  let variantMap = productVariantMapCache.get(product);
-
-  if (!variantMap) {
-    // Build new map for this product
-    variantMap = new Map();
-
-    if (product.variants) {
-      for (const variant of product.variants) {
-        variantMap.set(variant.id, variant);
-      }
-    }
-
-    productVariantMapCache.set(product, variantMap);
-  }
-
-  return variantMap;
-}
-
 const findProductVariantReference = (
   valueId: string,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
@@ -578,8 +554,7 @@ const findProductVariantReference = (
 
   // Search through products using cached variant maps
   for (const product of referencesEntitiesSearchResult.products) {
-    const variantMap = getProductVariantMap(product);
-    const variant = variantMap.get(valueId);
+    const variant = getProductVariantById(product, valueId);
 
     if (variant) {
       return {

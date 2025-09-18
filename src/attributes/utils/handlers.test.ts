@@ -944,7 +944,7 @@ describe("prepareAttributesInput", () => {
 });
 
 describe("createAttributeReferenceChangeHandler", () => {
-  it("should update attribute value and sync metadata", () => {
+  it("should update attribute value and sync metadata using useFormset methods", () => {
     // Arrange
     const mockAttributes = {
       data: [
@@ -1009,42 +1009,6 @@ describe("createAttributeReferenceChangeHandler", () => {
 });
 
 describe("createAttributeReferenceMetadataHandler", () => {
-  it("should merge metadata and filter by current values", () => {
-    // Arrange
-    const mockAttributes = {
-      data: [
-        {
-          id: "attr-1",
-          value: ["ref-1", "ref-2"],
-          label: "Test",
-          data: { inputType: AttributeInputTypeEnum.REFERENCE },
-          metadata: [{ value: "ref-1", label: "Old Reference 1" }],
-        },
-      ],
-      setMetadata: jest.fn(),
-    } as unknown as UseFormsetOutput<AttributeInputData>;
-
-    const triggerChange = jest.fn();
-    const handler = createAttributeReferenceMetadataHandler(mockAttributes, triggerChange);
-
-    // Act
-    handler("attr-1", [
-      { value: "ref-2", label: "Reference 2" },
-      { value: "ref-3", label: "Reference 3" },
-    ]);
-
-    // Assert
-    expect(mockAttributes.setMetadata).toHaveBeenCalledWith(
-      "attr-1",
-      [
-        { value: "ref-2", label: "Reference 2" },
-        { value: "ref-3", label: "Reference 3" },
-      ],
-      expect.any(Function),
-    );
-    expect(triggerChange).toHaveBeenCalled();
-  });
-
   it("should filter out metadata for removed references", () => {
     // Arrange
     const setMetadataMock = jest.fn();

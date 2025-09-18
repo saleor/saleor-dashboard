@@ -13,6 +13,21 @@ import {
   ReferenceEntitiesSearch,
 } from "./data";
 
+jest.mock("./productVariantCache", () => {
+  const actual =
+    jest.requireActual<typeof import("./productVariantCache")>("./productVariantCache");
+
+  return {
+    ...actual,
+    getProductVariantById: jest.fn(actual.getProductVariantById),
+  };
+});
+
+const actualProductVariantCache =
+  jest.requireActual<typeof import("./productVariantCache")>("./productVariantCache");
+
+import * as productVariantCache from "./productVariantCache";
+
 // Helper function to create mock reference data with minimal required properties
 const createMockReferenceData = (data: {
   products?: Array<{
@@ -322,11 +337,16 @@ describe("attributes/utils/data", () => {
   });
 
   describe("getReferenceAttributeDisplayData", () => {
-    // Clear the cache before each test to ensure test isolation
     beforeEach(() => {
-      // We need to clear the WeakMap cache - since it's module-scoped,
-      // we'll test the caching behavior by verifying the function is called correctly
       jest.clearAllMocks();
+      productVariantCache.resetProductVariantCache();
+
+      const variantLookupMock = productVariantCache.getProductVariantById as jest.MockedFunction<
+        typeof actualProductVariantCache.getProductVariantById
+      >;
+
+      variantLookupMock.mockImplementation(actualProductVariantCache.getProductVariantById);
+      variantLookupMock.mockClear();
     });
 
     it("should use metadata cache when available", () => {
@@ -479,86 +499,55 @@ describe("attributes/utils/data", () => {
     });
 
     describe("product variant caching", () => {
-      it("should cache variant map per product and reuse on subsequent calls", () => {
+      it("should delegate variant lookup to the product variant cache", () => {
         // Arrange
-        const product1 = {
+        const variantLookupMock = productVariantCache.getProductVariantById as jest.MockedFunction<
+          typeof actualProductVariantCache.getProductVariantById
+        >;
+
+        variantLookupMock.mockImplementation(
+          () =>
+            ({
+              id: "variant-1",
+              name: "Variant A",
+              __typename: "ProductVariant",
+            }) as any,
+        );
+
+        const attribute = {
+          id: "attr-1",
+          value: ["variant-1"],
+          label: "Test",
+          data: {
+            inputType: AttributeInputTypeEnum.REFERENCE,
+            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            isRequired: false,
+            values: [],
+            references: [],
+          },
+        };
+
+        const product = {
+          __typename: "Product",
           id: "product-1",
           name: "Product 1",
-          variants: [
-            { id: "variant-1", name: "Variant A" },
-            { id: "variant-2", name: "Variant B" },
-          ],
-        };
+        } as ReferenceEntitiesSearch["products"][number];
 
-        const attribute = {
-          id: "attr-1",
-          value: ["variant-1", "variant-2"],
-          label: "Test",
-          data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
-            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
-            isRequired: false,
-            values: [],
-            references: [],
-          },
-        };
+        const references = createMockReferenceData({ products: [product] });
 
-        const references = createMockReferenceData({ products: [product1] });
+        // Act
+        const result = getReferenceAttributeDisplayData(attribute, references);
 
-        // Act - First call should build the cache
-        const result1 = getReferenceAttributeDisplayData(attribute, references);
-
-        // Act - Second call with same product reference should use cache
-        const result2 = getReferenceAttributeDisplayData(attribute, references);
-
-        // Assert - Results should be the same
-        expect(result1.data.references).toEqual([
+        // Assert
+        expect(variantLookupMock).toHaveBeenCalledWith(
+          expect.objectContaining({ id: "product-1", name: "Product 1" }),
+          "variant-1",
+        );
+        expect(result.data.references).toEqual([
           { value: "variant-1", label: "Product 1 Variant A" },
-          { value: "variant-2", label: "Product 1 Variant B" },
         ]);
-        expect(result2.data.references).toEqual(result1.data.references);
-      });
 
-      it("should rebuild cache when product reference changes", () => {
-        // Arrange
-        const createProduct = (id: string) => ({
-          id,
-          name: `Product ${id}`,
-          variants: [
-            { id: `${id}-v1`, name: "V1" },
-            { id: `${id}-v2`, name: "V2" },
-          ],
-        });
-
-        const attribute = {
-          id: "attr-1",
-          value: ["p1-v1"],
-          label: "Test",
-          data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
-            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
-            isRequired: false,
-            values: [],
-            references: [],
-          },
-        };
-
-        // Act - First call with product 1
-        const product1 = createProduct("p1");
-        const references1 = createMockReferenceData({ products: [product1] });
-        const result1 = getReferenceAttributeDisplayData(attribute, references1);
-
-        // Act - Second call with different product instance (simulates data refresh)
-        const product1New = createProduct("p1");
-        const references2 = createMockReferenceData({ products: [product1New] });
-        const result2 = getReferenceAttributeDisplayData(attribute, references2);
-
-        // Assert - Both should return correct results
-        expect(result1.data.references).toEqual([{ value: "p1-v1", label: "Product p1 V1" }]);
-        expect(result2.data.references).toEqual([{ value: "p1-v1", label: "Product p1 V1" }]);
-
-        // The cache should have been rebuilt for the new product instance
-        // (WeakMap will handle cleanup of old reference)
+        variantLookupMock.mockImplementation(actualProductVariantCache.getProductVariantById);
       });
 
       it("should handle multiple products with variants efficiently", () => {
