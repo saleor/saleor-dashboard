@@ -4397,6 +4397,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
   },
+  "O9SefD": {
+    "context": "card text, app install page",
+    "string": "Uninstalling the extension will remove all metadata stored by {extensionName}. {learnMoreLink}"
+  },
   "OA+fw+": {
     "context": "conjunction, choice between going to dashboard or refreshing page",
     "string": "or"
@@ -4461,10 +4465,6 @@
   },
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
-  },
-  "ObscZF": {
-    "context": "card text, app install page",
-    "string": "Uninstalling the extension will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}"
   },
   "Oe62bR": {
     "context": "product availability",
