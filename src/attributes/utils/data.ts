@@ -543,14 +543,9 @@ type SearchProduct = RelayToFlat<NonNullable<SearchProductsQuery["search"]>>[0];
 type SearchProductVariant = NonNullable<SearchProduct["variants"]>[0];
 
 // Using WeakMap because it allows garbage collection when products are no longer referenced
-const productVariantMapCache = new WeakMap<
-  SearchProduct,
-  Map<string, SearchProductVariant>
->();
+const productVariantMapCache = new WeakMap<SearchProduct, Map<string, SearchProductVariant>>();
 
-function getProductVariantMap(
-  product: SearchProduct,
-): Map<string, SearchProductVariant> {
+function getProductVariantMap(product: SearchProduct): Map<string, SearchProductVariant> {
   let variantMap = productVariantMapCache.get(product);
 
   if (!variantMap) {
@@ -622,42 +617,42 @@ export const getReferenceAttributeDisplayData = (
     references:
       attribute.value && attribute.value.length > 0
         ? attribute.value.map(valueId => {
-          // "Metadata" is the label cache. It is populated from the
-          // initial GraphQL payload and whenever the user assigns references in
-          // the dialog into useFormset data.
-          // Prefer it so that chips always display, even if the
-          // current search response does not include a given reference.
-          const meta = attribute.metadata?.find(m => m.value === valueId);
+            // "Metadata" is the label cache. It is populated from the
+            // initial GraphQL payload and whenever the user assigns references in
+            // the dialog into useFormset data.
+            // Prefer it so that chips always display, even if the
+            // current search response does not include a given reference.
+            const meta = attribute.metadata?.find(m => m.value === valueId);
 
-          if (meta) {
+            if (meta) {
+              return {
+                label: meta.label,
+                value: meta.value,
+              };
+            }
+
+            // As a fallback, look at the latest search results.
+            // This should cover scenarios where the user has just added a reference in modal
+            // and metadata has not been updated yet.
+            //
+            // It's not default, because it can fail:
+            // search query filters out references based on `referenceType` and use search query for filtering
+            const searchResult = findReferenceByEntityType(
+              valueId,
+              attribute.data.entityType,
+              referencesEntitiesSearchResult,
+            );
+
+            if (searchResult) {
+              return searchResult;
+            }
+
+            // Fallback to ID as label - this shouldn't happen, leave it for graceful error handling
             return {
-              label: meta.label,
-              value: meta.value,
+              label: valueId,
+              value: valueId,
             };
-          }
-
-          // As a fallback, look at the latest search results.
-          // This should cover scenarios where the user has just added a reference in modal
-          // and metadata has not been updated yet.
-          //
-          // It's not default, because it can fail:
-          // search query filters out references based on `referenceType` and use search query for filtering
-          const searchResult = findReferenceByEntityType(
-            valueId,
-            attribute.data.entityType,
-            referencesEntitiesSearchResult,
-          )
-
-          if (searchResult) {
-            return searchResult;
-          }
-
-          // Fallback to ID as label - this shouldn't happen, leave it for graceful error handling
-          return {
-            label: valueId,
-            value: valueId,
-          };
-        })
+          })
         : [],
   },
 });

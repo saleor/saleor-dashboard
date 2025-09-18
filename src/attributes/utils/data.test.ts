@@ -1,7 +1,7 @@
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  SelectedVariantAttributeFragment
+  SelectedVariantAttributeFragment,
 } from "@dashboard/graphql";
 import { Container } from "@dashboard/types";
 
@@ -15,7 +15,11 @@ import {
 
 // Helper function to create mock reference data with minimal required properties
 const createMockReferenceData = (data: {
-  products?: Array<{ id: string; name: string; variants?: Array<{ id: string; name: string }> | undefined }>;
+  products?: Array<{
+    id: string;
+    name: string;
+    variants?: Array<{ id: string; name: string }> | undefined;
+  }>;
   pages?: Array<{ id: string; title: string }>;
   collections?: Array<{ id: string; name: string }>;
   categories?: Array<{ id: string; name: string }>;
@@ -30,22 +34,24 @@ const createMockReferenceData = (data: {
       productType: { __typename: "ProductType" as const, id: "type-1", name: "Type" },
       thumbnail: null,
       channelListings: null,
-      variants: p.variants ? p.variants.map(v => ({
-        __typename: "ProductVariant" as const,
-        id: v.id,
-        name: v.name,
-        sku: null,
-        product: {
-          __typename: "Product" as const,
-          id: p.id,
-          name: p.name,
-          thumbnail: null,
-          productType: { __typename: "ProductType" as const, id: "type-1", name: "Type" }
-        },
-        channelListings: null
-      })) : null,
+      variants: p.variants
+        ? p.variants.map(v => ({
+            __typename: "ProductVariant" as const,
+            id: v.id,
+            name: v.name,
+            sku: null,
+            product: {
+              __typename: "Product" as const,
+              id: p.id,
+              name: p.name,
+              thumbnail: null,
+              productType: { __typename: "ProductType" as const, id: "type-1", name: "Type" },
+            },
+            channelListings: null,
+          }))
+        : null,
       collections: null,
-    }))
+    }));
   }
 
   if (data.pages) {
@@ -61,7 +67,7 @@ const createMockReferenceData = (data: {
       __typename: "Collection" as const,
       id: c.id,
       name: c.name,
-    }))
+    }));
   }
 
   if (data.categories) {
@@ -72,7 +78,7 @@ const createMockReferenceData = (data: {
       level: 0,
       parent: null,
       ancestors: null,
-    }))
+    }));
   }
 
   return result;
@@ -342,9 +348,7 @@ describe("attributes/utils/data", () => {
         ],
       };
       const references = createMockReferenceData({
-        products: [
-          { id: "ref-3", name: "Product 3" },
-        ],
+        products: [{ id: "ref-3", name: "Product 3" }],
       });
 
       // Act
@@ -403,18 +407,14 @@ describe("attributes/utils/data", () => {
         },
       };
       const references = createMockReferenceData({
-        pages: [
-          { id: "page-1", title: "Page Title" },
-        ],
+        pages: [{ id: "page-1", title: "Page Title" }],
       });
 
       // Act
       const result = getReferenceAttributeDisplayData(attribute, references);
 
       // Assert
-      expect(result.data.references).toEqual([
-        { value: "page-1", label: "Page Title" },
-      ]);
+      expect(result.data.references).toEqual([{ value: "page-1", label: "Page Title" }]);
     });
 
     it("should handle product variant references with caching", () => {
@@ -475,9 +475,7 @@ describe("attributes/utils/data", () => {
       const result = getReferenceAttributeDisplayData(attribute, references);
 
       // Assert
-      expect(result.data.references).toEqual([
-        { value: "unknown-ref", label: "unknown-ref" },
-      ]);
+      expect(result.data.references).toEqual([{ value: "unknown-ref", label: "unknown-ref" }]);
     });
 
     describe("product variant caching", () => {
@@ -548,26 +546,16 @@ describe("attributes/utils/data", () => {
         // Act - First call with product 1
         const product1 = createProduct("p1");
         const references1 = createMockReferenceData({ products: [product1] });
-        const result1 = getReferenceAttributeDisplayData(
-          attribute,
-          references1
-        );
+        const result1 = getReferenceAttributeDisplayData(attribute, references1);
 
         // Act - Second call with different product instance (simulates data refresh)
         const product1New = createProduct("p1");
         const references2 = createMockReferenceData({ products: [product1New] });
-        const result2 = getReferenceAttributeDisplayData(
-          attribute,
-          references2
-        );
+        const result2 = getReferenceAttributeDisplayData(attribute, references2);
 
         // Assert - Both should return correct results
-        expect(result1.data.references).toEqual([
-          { value: "p1-v1", label: "Product p1 V1" },
-        ]);
-        expect(result2.data.references).toEqual([
-          { value: "p1-v1", label: "Product p1 V1" },
-        ]);
+        expect(result1.data.references).toEqual([{ value: "p1-v1", label: "Product p1 V1" }]);
+        expect(result2.data.references).toEqual([{ value: "p1-v1", label: "Product p1 V1" }]);
 
         // The cache should have been rebuilt for the new product instance
         // (WeakMap will handle cleanup of old reference)
@@ -598,7 +586,10 @@ describe("attributes/utils/data", () => {
         };
 
         // Act
-        const result = getReferenceAttributeDisplayData(attribute, createMockReferenceData({ products }));
+        const result = getReferenceAttributeDisplayData(
+          attribute,
+          createMockReferenceData({ products }),
+        );
 
         // Assert - Should find all variants efficiently
         expect(result.data.references).toEqual([
@@ -642,7 +633,10 @@ describe("attributes/utils/data", () => {
         };
 
         // Act
-        const result = getReferenceAttributeDisplayData(attribute, createMockReferenceData({ products }));
+        const result = getReferenceAttributeDisplayData(
+          attribute,
+          createMockReferenceData({ products }),
+        );
 
         // Assert
         expect(result.data.references).toEqual([
@@ -655,10 +649,7 @@ describe("attributes/utils/data", () => {
 
   describe("getSelectedAttributeValues", () => {
     // Helper to create minimal test attributes that satisfy the type requirements
-    const createTestAttribute = (
-      inputType: AttributeInputTypeEnum,
-      values: any[]
-    ) => {
+    const createTestAttribute = (inputType: AttributeInputTypeEnum, values: any[]) => {
       return {
         attribute: { inputType },
         values,
@@ -678,13 +669,10 @@ describe("attributes/utils/data", () => {
 
     it("should return reference IDs for REFERENCE attribute with values", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.REFERENCE,
-        [
-          { reference: "ref-1" },
-          { reference: "ref-2" },
-        ]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.REFERENCE, [
+        { reference: "ref-1" },
+        { reference: "ref-2" },
+      ]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -706,10 +694,9 @@ describe("attributes/utils/data", () => {
 
     it("should return array with reference ID for SINGLE_REFERENCE attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.SINGLE_REFERENCE,
-        [{ reference: "ref-1" }]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.SINGLE_REFERENCE, [
+        { reference: "ref-1" },
+      ]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -731,10 +718,9 @@ describe("attributes/utils/data", () => {
 
     it("should return array with text for PLAIN_TEXT attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.PLAIN_TEXT,
-        [{ plainText: "Some text" }]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.PLAIN_TEXT, [
+        { plainText: "Some text" },
+      ]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -756,10 +742,9 @@ describe("attributes/utils/data", () => {
 
     it("should return array with rich text for RICH_TEXT attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.RICH_TEXT,
-        [{ richText: "<p>Rich text</p>" }]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.RICH_TEXT, [
+        { richText: "<p>Rich text</p>" },
+      ]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -781,10 +766,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with name for NUMERIC attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.NUMERIC,
-        [{ name: "123" }]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.NUMERIC, [{ name: "123" }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -806,10 +788,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with false for BOOLEAN attribute with false value", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.BOOLEAN,
-        [{ boolean: false }]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.BOOLEAN, [{ boolean: false }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -820,10 +799,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with true for BOOLEAN attribute with true value", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.BOOLEAN,
-        [{ boolean: true }]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.BOOLEAN, [{ boolean: true }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -845,10 +821,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with date for DATE attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.DATE,
-        [{ date: "2024-01-15" }]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.DATE, [{ date: "2024-01-15" }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -870,10 +843,9 @@ describe("attributes/utils/data", () => {
 
     it("should return array with datetime for DATE_TIME attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.DATE_TIME,
-        [{ dateTime: "2024-01-15T10:30:00Z" }]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.DATE_TIME, [
+        { dateTime: "2024-01-15T10:30:00Z" },
+      ]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -884,13 +856,10 @@ describe("attributes/utils/data", () => {
 
     it("should return slugs for default attribute type (DROPDOWN/MULTISELECT) with values", () => {
       // Arrange
-      const attribute = createTestAttribute(
-        AttributeInputTypeEnum.DROPDOWN,
-        [
-          { slug: "option-1" },
-          { slug: "option-2" },
-        ]
-      );
+      const attribute = createTestAttribute(AttributeInputTypeEnum.DROPDOWN, [
+        { slug: "option-1" },
+        { slug: "option-2" },
+      ]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -914,11 +883,11 @@ describe("attributes/utils/data", () => {
       // Arrange
       const attributeWithNullReference = createTestAttribute(
         AttributeInputTypeEnum.SINGLE_REFERENCE,
-        [{ reference: null }]
+        [{ reference: null }],
       );
       const attributeWithUndefinedPlainText = createTestAttribute(
         AttributeInputTypeEnum.PLAIN_TEXT,
-        [{ plainText: undefined }]
+        [{ plainText: undefined }],
       );
 
       // Act
