@@ -2,7 +2,6 @@ import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
-import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
 import { extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -49,7 +48,7 @@ import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
-import { DEMO_MODE, GTM_ID } from "./config";
+import { GTM_ID } from "./config";
 import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
@@ -169,7 +168,6 @@ const Routes = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
         <ExternalAppProvider>
           <AppLayout fullSize={isAppPath}>
