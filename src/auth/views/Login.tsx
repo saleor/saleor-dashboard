@@ -42,7 +42,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     const result = await login(data.email, data.password);
     const errors = result?.errors || [];
 
-    if (result.errors.length === 0) {
+    if (errors.length === 0) {
       setLastLoginMethod("password");
     }
 
