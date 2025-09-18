@@ -1,5 +1,4 @@
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import { sectionNames } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { FormattedMessage } from "react-intl";
@@ -20,7 +19,6 @@ export const TaxPageTitle = () => {
     <div className={classes.wrapper}>
       <FormattedMessage {...sectionNames.taxes} />
       <HorizontalSpacer />
-      <PreviewPill />
     </div>
   );
 };
