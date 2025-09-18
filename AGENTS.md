@@ -25,7 +25,7 @@ Before completing changes make sure you run these commands:
 #### Test Scripts
 
 - `npm run test:quiet <file_path>` - RECOMMENDED: Run specific test with minimal output (--silent flag)
-- `npm run test:debug <file_path>` - Run ALL test with full console output and extended React Testing Library output (DEBUG_PRINT_LIMIT=20000)
+- `npm run test:debug <file_path>` - Run specific test file with full console output and extended React Testing Library output (DEBUG_PRINT_LIMIT=20000)
 
 **Important for testing:**
 
