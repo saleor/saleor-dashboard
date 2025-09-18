@@ -23,22 +23,28 @@ const createMockReferenceData = (data: {
   const result: ReferenceEntitiesSearch = {};
 
   if (data.products) {
-    result.products = data.products.map<ReferenceEntitiesSearch["products"][0]>(p => ({
+    result.products = data.products.map(p => ({
       __typename: "Product" as const,
       id: p.id,
       name: p.name,
       productType: { __typename: "ProductType" as const, id: "type-1", name: "Type" },
-      thumbnail: { __typename: "Image" as const, url: "" },
-      channelListings: [],
-      variants: (p.variants?.map(v => ({
-        __typename: "ProductVariant",
+      thumbnail: null,
+      channelListings: null,
+      variants: p.variants ? p.variants.map(v => ({
+        __typename: "ProductVariant" as const,
         id: v.id,
         name: v.name,
         sku: null,
-        product: null,
-        channelListings: []
-      })) || []),
-      collections: [],
+        product: {
+          __typename: "Product" as const,
+          id: p.id,
+          name: p.name,
+          thumbnail: null,
+          productType: { __typename: "ProductType" as const, id: "type-1", name: "Type" }
+        },
+        channelListings: null
+      })) : null,
+      collections: null,
     }))
   }
 
@@ -59,7 +65,7 @@ const createMockReferenceData = (data: {
   }
 
   if (data.categories) {
-    result.categories = data.categories.map<ReferenceEntitiesSearch["categories"][0]>(c => ({
+    result.categories = data.categories.map(c => ({
       __typename: "Category" as const,
       id: c.id,
       name: c.name,
