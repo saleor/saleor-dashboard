@@ -155,6 +155,12 @@ export function getAttributeData(
   }
 }
 
+function getFirstValueAsArray<T, K extends keyof T>(values: T[], propertyName: K): Array<T[K]> {
+  const value = values[0]?.[propertyName];
+
+  return value !== undefined && value !== null ? [value] : [];
+}
+
 export function getSelectedAttributeValues(
   attribute:
     | PageSelectedAttributeFragment
@@ -165,25 +171,25 @@ export function getSelectedAttributeValues(
     case AttributeInputTypeEnum.REFERENCE:
       return attribute.values.map(value => value.reference);
     case AttributeInputTypeEnum.SINGLE_REFERENCE:
-      return attribute.values[0]?.reference ? [attribute.values[0].reference] : [];
+      return getFirstValueAsArray(attribute.values, "reference");
 
     case AttributeInputTypeEnum.PLAIN_TEXT:
-      return attribute.values[0]?.plainText ? [attribute.values[0].plainText] : [];
+      return getFirstValueAsArray(attribute.values, "plainText");
 
     case AttributeInputTypeEnum.RICH_TEXT:
-      return attribute.values[0]?.richText ? [attribute.values[0].richText] : [];
+      return getFirstValueAsArray(attribute.values, "richText");
 
     case AttributeInputTypeEnum.NUMERIC:
-      return attribute.values[0]?.name ? [attribute.values[0].name] : [];
+      return getFirstValueAsArray(attribute.values, "name");
 
     case AttributeInputTypeEnum.BOOLEAN:
-      return attribute.values[0]?.boolean !== undefined ? [attribute.values[0].boolean] : [];
+      return getFirstValueAsArray(attribute.values, "boolean");
 
     case AttributeInputTypeEnum.DATE:
-      return attribute.values[0]?.date ? [attribute.values[0].date] : [];
+      return getFirstValueAsArray(attribute.values, "date");
 
     case AttributeInputTypeEnum.DATE_TIME:
-      return attribute.values[0]?.dateTime ? [attribute.values[0].dateTime] : [];
+      return getFirstValueAsArray(attribute.values, "dateTime");
 
     default:
       return attribute.values.map(value => value.slug);
