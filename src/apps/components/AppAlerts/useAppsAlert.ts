@@ -9,7 +9,7 @@ import { useSidebarDotState } from "./useSidebarDotState";
 const DELIVERIES_FETCHING_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
 /** @todo Move to extensions/* or sidebar */
-export const useAppsAlert = (enabled: boolean | undefined = true) => {
+export const useAppsAlert = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { hasNewFailedAttempts, handleFailedAttempt, handleAppsListItemClick } =
     useSidebarDotState();
@@ -19,7 +19,7 @@ export const useAppsAlert = (enabled: boolean | undefined = true) => {
     action: fetchAppsWebhooks,
     interval: DELIVERIES_FETCHING_INTERVAL,
     key: "webhook_deliveries_last_fetched",
-    skip: !hasManagedAppsPermission || !enabled,
+    skip: !hasManagedAppsPermission,
   });
 
   useEffect(() => {
