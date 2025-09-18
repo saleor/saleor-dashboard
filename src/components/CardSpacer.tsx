@@ -13,10 +13,22 @@ const useStyles = makeStyles(
   { name: "CardSpacer" },
 );
 
+/**
+ * @interface CardSpacerProps
+ * @property {React.ReactNode} [children] - CardSpacer 组件的子元素。
+ *
+ * CardSpacer 组件的属性。
+ */
 interface CardSpacerProps {
   children?: React.ReactNode;
 }
 
+/**
+ * CardSpacer 组件，用于在卡片之间添加垂直间距。
+ *
+ * @param {CardSpacerProps} props - CardSpacer 组件的属性。
+ * @returns {React.ReactElement} 一个带有垂直间距的 div 元素。
+ */
 export const CardSpacer: React.FC<CardSpacerProps> = props => {
   const { children } = props;
   const classes = useStyles(props);

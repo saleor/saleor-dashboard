@@ -9,15 +9,39 @@ import { ArrowLeftIcon, Box, Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+/**
+ * @interface ResetPasswordPageFormData
+ * @property {string} email - 用户的电子邮件地址。
+ *
+ * 重置密码页面的表单数据。
+ */
 export interface ResetPasswordPageFormData {
   email: string;
 }
+
+/**
+ * @interface ResetPasswordPageProps
+ * @property {boolean} disabled - 表单是否被禁用。
+ * @property {string} error - 要显示的错误消息。
+ * @property {(data: ResetPasswordPageFormData) => SubmitPromise<AccountErrorCode[]>} onSubmit - 提交表单的回调。
+ *
+ * ResetPasswordPage 组件的属性。
+ */
 export interface ResetPasswordPageProps {
   disabled: boolean;
   error: string;
   onSubmit: (data: ResetPasswordPageFormData) => SubmitPromise<AccountErrorCode[]>;
 }
 
+/**
+ * ResetPasswordPage 组件，用于显示请求密码重置的表单。
+ *
+ * 此组件允许用户输入其电子邮件地址以接收密码
+ * 重置链接。它处理表单提交并显示发生的任何错误。
+ *
+ * @param {ResetPasswordPageProps} props - ResetPasswordPage 组件的属性。
+ * @returns {React.ReactElement} 一个显示密码重置表单的 React 元素。
+ */
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   const { disabled, error, onSubmit } = props;
   const intl = useIntl();

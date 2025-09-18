@@ -3,10 +3,24 @@ import React from "react";
 
 import { AddressType } from "../../customers/types";
 
+/**
+ * @interface AddressFormatterProps
+ * @property {AddressType} [address] - 要格式化的地址对象。
+ *
+ * AddressFormatter 组件的属性。
+ */
 interface AddressFormatterProps {
   address?: AddressType;
 }
 
+/**
+ * AddressFormatter 组件，用于以标准格式显示地址。
+ *
+ * 如果未提供地址，则显示一个骨架加载状态。
+ *
+ * @param {AddressFormatterProps} props - AddressFormatter 组件的属性。
+ * @returns {React.ReactElement} 一个呈现格式化地址或骨架加载状态的 React 元素。
+ */
 const AddressFormatter: React.FC<AddressFormatterProps> = ({ address }) => {
   if (!address) {
     return <Skeleton />;

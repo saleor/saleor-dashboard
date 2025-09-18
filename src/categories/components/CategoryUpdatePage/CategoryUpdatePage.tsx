@@ -27,11 +27,39 @@ import { CategoryProducts } from "../CategoryProducts";
 import { CategorySubcategories } from "../CategorySubcategories";
 import CategoryUpdateForm, { CategoryUpdateData } from "./form";
 
+/**
+ * @enum {string}
+ * 分类页面上选项卡的枚举。
+ */
 export enum CategoryPageTab {
   categories = "categories",
   products = "products",
 }
 
+/**
+ * @interface CategoryUpdatePageProps
+ * @extends {Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings">}
+ * @property {string} categoryId - 正在更新的分类的 ID。
+ * @property {(index: CategoryPageTab) => void} changeTab - 更改选项卡的回调。
+ * @property {CategoryPageTab} currentTab - 当前活动的选项卡。
+ * @property {ProductErrorFragment[]} errors - 要显示的错误。
+ * @property {boolean} disabled - 表单是否被禁用。
+ * @property {CategoryDetailsQuery["category"] | undefined | null} category - 正在更新的分类。
+ * @property {RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["products"]>} [products] - 分类中的产品。
+ * @property {RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["children"]>} [subcategories] - 分类的子分类。
+ * @property {ConfirmButtonTransitionState} saveButtonBarState - 保存按钮的状态。
+ * @property {string} addProductHref - 用于添加新产品的 URL。
+ * @property {() => void} onImageDelete - 删除分类图像的回调。
+ * @property {(data: CategoryUpdateData) => SubmitPromise} onSubmit - 提交表单的回调。
+ * @property {() => void} onCategoriesDelete - 删除子分类的回调。
+ * @property {() => void} onProductsDelete - 删除产品的回调。
+ * @property {(ids: number[], clearSelection: () => void) => void} onSelectProductsIds - 选择产品 ID 的回调。
+ * @property {(ids: number[], clearSelection: () => void) => void} onSelectCategoriesIds - 选择分类 ID 的回调。
+ * @property {(file: File | null) => any} onImageUpload - 上传图像的回调。
+ * @property {() => any} onDelete - 删除分类的回调。
+ *
+ * CategoryUpdatePage 组件的属性。
+ */
 export interface CategoryUpdatePageProps
   extends Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings"> {
   categoryId: string;
@@ -57,6 +85,17 @@ export interface CategoryUpdatePageProps
 const CategoriesTab = Tab(CategoryPageTab.categories);
 const ProductsTab = Tab(CategoryPageTab.products);
 
+/**
+ * CategoryUpdatePage 组件，用于显示更新分类的页面。
+ *
+ * 此组件是用于编辑分类的所有表单和部分的容器。
+ * 它处理整个页面的状态和逻辑，包括获取数据、
+ * 处理用户输入和提交表单。它还包括用于管理
+ * 分类中的子分类和产品的选项卡。
+ *
+ * @param {CategoryUpdatePageProps} props - CategoryUpdatePage 组件的属性。
+ * @returns {React.ReactElement} 一个显示分类更新页面的 React 元素。
+ */
 export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   categoryId,
   changeTab,

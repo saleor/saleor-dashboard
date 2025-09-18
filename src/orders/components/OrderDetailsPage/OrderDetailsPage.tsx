@@ -50,6 +50,46 @@ import {
   hasAnyItemsReplaceable,
 } from "./utils";
 
+/**
+ * @interface OrderDetailsPageProps
+ * @property {OrderDetailsFragment | OrderDetailsFragment} order - 要显示的订单。
+ * @property {OrderDetailsQuery["shop"]} shop - 商店数据。
+ * @property {Array<{ id: string; name: string; }>} [shippingMethods] - 可用的送货方式。
+ * @property {boolean} loading - 页面是否正在加载。
+ * @property {ConfirmButtonTransitionState} saveButtonBarState - 保存按钮的状态。
+ * @property {OrderErrorFragment[]} errors - 要显示的错误。
+ * @property {() => void} [onOrderLineAdd] - 添加新订单行的回调。
+ * @property {(id: string, data: OrderDraftDetailsProductsFormData) => void} [onOrderLineChange] - 更改订单行的回调。
+ * @property {(id: string) => void} [onOrderLineRemove] - 删除订单行的回调。
+ * @property {() => void} [onShippingMethodEdit] - 编辑送货方式的回调。
+ * @property {() => any} onBillingAddressEdit - 编辑账单地址的回调。
+ * @property {(id:string) => any} onFulfillmentApprove - 批准履行的回调。
+ * @property {(id: string) => any} onFulfillmentCancel - 取消履行的回调。
+ * @property {(id: string) => void} onShowMetadata - 显示元数据的回调。
+ * @property {(id: string) => any} onFulfillmentTrackingNumberUpdate - 更新履行的跟踪号的回调。
+ * @property {() => any} onOrderFulfill - 履行订单的回调。
+ * @property {(id: string) => any} [onProductClick] - 单击产品的回调。
+ * @property {() => any} onPaymentCapture - 捕获付款的回调。
+ * @property {() => any} onMarkAsPaid - 将付款标记为已支付的回调。
+ * @property {() => any} onPaymentRefund - 退款的回调。
+ * @property {() => any} onPaymentVoid - 作废付款的回调。
+ * @property {() => any} onShippingAddressEdit - 编辑送货地址的回调。
+ * @property {() => any} onOrderCancel - 取消订单的回调。
+ * @property {(data: HistoryFormData) => any} onNoteAdd - 向订单添加备注的回调。
+ * @property {(id: string, message: string) => Promise<FetchResult<OrderNoteUpdateMutation>>} onNoteUpdate - 更新备注的回调。
+ * @property {boolean} onNoteUpdateLoading - 备注更新是否正在加载。
+ * @property {() => any} onProfileView - 查看客户资料的回调。
+ * @property {() => any} onOrderReturn - 退货的回调。
+ * @property {(invoiceId: string) => any} onInvoiceClick - 单击发票的回调。
+ * @property {() => any} onInvoiceGenerate - 生成发票的回调。
+ * @property {(invoiceId: string) => any} onInvoiceSend - 发送发票的回调。
+ * @property {(transactionId: string, actionType: TransactionActionEnum) => any} onTransactionAction - 执行交易操作的回调。
+ * @property {() => any} onAddManualTransaction - 添加手动交易的回调。
+ * @property {() => void} onRefundAdd - 添加退款的回调。
+ * @property {(data: MetadataIdSchema) => SubmitPromise} onSubmit - 提交表单的回调。
+ *
+ * OrderDetailsPage 组件的属性。
+ */
 export interface OrderDetailsPageProps {
   order: OrderDetailsFragment | OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
@@ -91,6 +131,16 @@ export interface OrderDetailsPageProps {
   onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }
 
+/**
+ * OrderDetailsPage 组件，用于显示订单的详细信息。
+ *
+ * 此组件负责呈现有关订单的所有信息，
+ * 包括其产品、客户、付款和历史记录。它还提供
+ * 用于管理订单的操作，例如履行、取消和退款。
+ *
+ * @param {OrderDetailsPageProps} props - OrderDetailsPage 组件的属性。
+ * @returns {React.ReactElement} 一个显示订单详细信息的 React 元素。
+ */
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
     loading,

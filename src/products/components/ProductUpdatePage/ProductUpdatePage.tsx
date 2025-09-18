@@ -69,6 +69,56 @@ import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
 import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
 
+/**
+ * @interface ProductUpdatePageProps
+ * @property {ChannelFragment[]} channels - 产品可用的渠道。
+ * @property {string} productId - 正在更新的产品的 ID。
+ * @property {ProductChannelListingErrorFragment[]} channelsErrors - 与渠道列表相关的错误。
+ * @property {ProductVariantListError[]} variantListErrors - 与变体列表相关的错误。
+ * @property {UseProductUpdateHandlerError[]} errors - 来自更新处理程序的错误。
+ * @property {RelayToFlat<SearchCollectionsQuery["search"]>} collections - 可用的集合。
+ * @property {RelayToFlat<SearchCategoriesQuery["search"]>} categories - 可用的类别。
+ * @property {RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>} attributeValues - 可用的属性值。
+ * @property {boolean} disabled - 表单是否被禁用。
+ * @property {FetchMoreProps} fetchMoreCategories - 用于获取更多类别的属性。
+ * @property {FetchMoreProps} fetchMoreCollections - 用于获取更多集合的属性。
+ * @property {boolean} [isMediaUrlModalVisible] - 媒体 URL 模态框是否可见。
+ * @property {RefreshLimitsQuery["shop"]["limits"]} limits - 商店的限制。
+ * @property {ProductDetailsVariantFragment[]} variants - 产品的变体。
+ * @property {ProductFragment["media"]} media - 产品的媒体。
+ * @property {ProductDetailsQuery["product"]} product - 正在更新的产品。
+ * @property {string} header - 页面的标题文本。
+ * @property {ConfirmButtonTransitionState} saveButtonBarState - 保存按钮的状态。
+ * @property {TaxClassBaseFragment[]} taxClasses - 可用的税种。
+ * @property {FetchMoreProps} fetchMoreTaxClasses - 用于获取更多税种的属性。
+ * @property {RelayToFlat<SearchPagesQuery["search"]>} [referencePages] - 可用的参考页面。
+ * @property {RelayToFlat<SearchProductsQuery["search"]>} [referenceProducts] - 可用的参考产品。
+ * @property {string} [assignReferencesAttributeId] - 要分配参考的属性的 ID。
+ * @property {FetchMoreProps} [fetchMoreReferencePages] - 用于获取更多参考页面的属性。
+ * @property {FetchMoreProps} [fetchMoreReferenceProducts] - 用于获取更多参考产品的属性。
+ * @property {FetchMoreProps} [fetchMoreAttributeValues] - 用于获取更多属性值的属性。
+ * @property {boolean} isSimpleProduct - 产品是否为简单产品。
+ * @property {(query: string) => void} fetchCategories - 获取类别的函数。
+ * @property {(query: string) => void} fetchCollections - 获取集合的函数。
+ * @property {(data: string) => void} [fetchReferencePages] - 获取参考页面的函数。
+ * @property {(data: string) => void} [fetchReferenceProducts] - 获取参考产品的函数。
+ * @property {(query: string, attributeId: string) => void} fetchAttributeValues - 获取属性值的函数。
+ * @property {() => Promise<any>} refetch - 重新获取产品数据的函数。
+ * @property {(id: string, query: string) => Promise<Option[]>} onAttributeValuesSearch - 搜索属性值的函数。
+ * @property {(attribute: AttributeInput) => void} onAssignReferencesClick - 单击分配参考按钮的回调。
+ * @property {() => void} onCloseDialog - 关闭对话框的回调。
+ * @property {(id: string) => () => void} onImageDelete - 删除图像的回调。
+ * @property {(data: ProductUpdateSubmitData) => SubmitPromise} onSubmit - 提交表单的回调。
+ * @property {(id: string) => void} onVariantShow - 显示变体的回调。
+ * @property {() => void} onAttributeSelectBlur - 属性选择模糊时的回调。
+ * @property {() => any} onDelete - 删除产品的回调。
+ * @property {(event: { oldIndex: number; newIndex: number }) => any} [onImageReorder] - 重新排序图像的回调。
+ * @property {(file: File) => any} onImageUpload - 上传图像的回调。
+ * @property {(mediaUrl: string) => any} onMediaUrlUpload - 上传媒体 URL 的回调。
+ * @property {() => any} [onSeoClick] - 单击 SEO 表单的回调。
+ *
+ * ProductUpdatePage 组件的属性。
+ */
 export interface ProductUpdatePageProps {
   channels: ChannelFragment[];
   productId: string;
@@ -117,6 +167,16 @@ export interface ProductUpdatePageProps {
   onSeoClick?: () => any;
 }
 
+/**
+ * ProductUpdatePage 组件，用于显示更新产品的页面。
+ *
+ * 此组件是用于编辑产品的所有表单和部分的容器。
+ * 它处理整个页面的状态和逻辑，包括获取数据、
+ * 处理用户输入和提交表单。
+ *
+ * @param {ProductUpdatePageProps} props - ProductUpdatePage 组件的属性。
+ * @returns {React.ReactElement} 一个显示产品更新页面的 React 元素。
+ */
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   productId,
   disabled,

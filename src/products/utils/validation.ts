@@ -6,8 +6,20 @@ import { ProductCreateData } from "../components/ProductCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 
+/**
+ * 验证价格。
+ *
+ * @param {string} price - 要验证的价格。
+ * @returns {boolean} 价格是否有效。
+ */
 export const validatePrice = (price: string) => price === "" || parseInt(price, 10) < 0;
 
+/**
+ * 验证成本价。
+ *
+ * @param {string} price - 要验证的成本价。
+ * @returns {boolean} 成本价是否有效。
+ */
 export const validateCostPrice = (price: string) => price !== "" && parseInt(price, 10) < 0;
 
 const toChannelPriceField = (id: string) => `${id}-channelListing-price`;
@@ -22,6 +34,12 @@ const createRequiredError = (
   attributes: [],
 });
 
+/**
+ * 验证产品创建数据。
+ *
+ * @param {ProductCreateData} [data] - 要验证的产品创建数据。
+ * @returns {ProductErrorWithAttributesFragment[]} 错误列表。
+ */
 export const validateProductCreateData = (data?: ProductCreateData) => {
   let errors: ProductErrorWithAttributesFragment[] = [];
 
@@ -65,6 +83,11 @@ const channelListingSchema = z
   })
   .partial();
 
+/**
+ * @typedef {ProductVariantCreateData | ProductVariantUpdateSubmitData} ProductVariantType
+ *
+ * 表示产品变体的类型。
+ */
 export type ProductVariantType = ProductVariantCreateData | ProductVariantUpdateSubmitData;
 
 const handleValidationError = (
@@ -93,6 +116,13 @@ const handleValidationError = (
   }
 };
 
+/**
+ * 验证产品变体。
+ *
+ * @param {ProductVariantType} data - 要验证的产品变体数据。
+ * @param {IntlShape} intl - intl 对象。
+ * @returns {ProductErrorWithAttributesFragment[]} 错误列表。
+ */
 export const validateProductVariant = (data: ProductVariantType, intl: IntlShape) => {
   const result = channelListingSchema.safeParse(data);
 

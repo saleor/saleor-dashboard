@@ -28,6 +28,14 @@ import {
 } from "../types";
 import { displayDemoMessage } from "../utils";
 
+/**
+ * @interface UseAuthProviderOpts
+ * @property {IntlShape} intl - 来自 react-intl 的 intl 对象。
+ * @property {IMessageContext} notify - 用于显示消息的通知上下文。
+ * @property {ApolloClient<any>} apolloClient - Apollo 客户端实例。
+ *
+ * useAuthProvider 钩子的选项。
+ */
 export interface UseAuthProviderOpts {
   intl: IntlShape;
   notify: IMessageContext;
@@ -35,6 +43,20 @@ export interface UseAuthProviderOpts {
 }
 type AuthErrorCodes = `${AccountErrorCode}`;
 
+/**
+ * 一个提供与身份验证相关的逻辑和状态的钩子。
+ *
+ * 此钩子管理整个身份验证流程，包括：
+ * - 使用电子邮件和密码登录。
+ * - 处理使用插件的外部身份验证。
+ * - 注销。
+ * - 管理用户数据和身份验证状态。
+ * - 处理身份验证错误。
+ * - 与 Credentials Management API 交互。
+ *
+ * @param {UseAuthProviderOpts} opts - 钩子的选项。
+ * @returns {UserContext} 一个包含身份验证状态和操作处理程序的对象。
+ */
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
   const navigate = useNavigator();

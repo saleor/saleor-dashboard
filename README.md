@@ -25,44 +25,63 @@
   <a href="https://githubbox.com/saleor/saleor-dashboard">🔎 Explore Code</a>
 </div>
 
-## Prerequisites
+## 项目概述
+
+Saleor Dashboard 是一个基于 GraphQL 的单页应用程序，为 [Saleor](https://github.com/saleor/saleor/) 提供管理界面。它旨在提供一个功能强大、易于使用的界面，用于管理电子商务商店的方方面面，包括产品、订单、客户和配置。
+
+### 核心功能
+
+*   **产品管理**: 创建、更新和管理产品、类别和系列。
+*   **订单处理**: 查看和处理订单、管理配送和退款。
+*   **客户管理**: 查看和管理客户信息。
+*   **店铺配置**: 配置配送、支付和税收等设置。
+*   **可扩展性**: 通过应用程序和插件轻松扩展功能。
+
+### 技术栈
+
+*   **React**: 用于构建用户界面的 JavaScript 库。
+*   **TypeScript**: 为 JavaScript 添加了静态类型。
+*   **Apollo Client**: 用于管理 GraphQL 数据和状态。
+*   **Macaw UI**: Saleor 的设计系统，提供一套可重用的 UI 组件。
+
+## 先决条件
 
 - Node.js v20
-- A running instance of [Saleor](https://github.com/saleor/saleor/)
+- 一个正在运行的 [Saleor](https://github.com/saleor/saleor/) 实例
 
 > [!NOTE]
-> Currently both Node v20 and v18 are supported. We recommend using Node v20, since support for older versions will be dropped.
+> 目前支持 Node v20 和 v18。我们建议使用 Node v20，因为将放弃对旧版本的支持。
 
-## Development
+## 开发
 
-1. Clone the repository:
+1.  克隆仓库：
 
-```bash
-git clone https://github.com/saleor/saleor-dashboard.git
-```
+    ```bash
+    git clone https://github.com/saleor/saleor-dashboard.git
+    ```
 
-2. Enter the project directory:
+2.  进入项目目录：
 
-```bash
-cd saleor-dashboard
-```
+    ```bash
+    cd saleor-dashboard
+    ```
 
-3. Install the dependencies:
+3.  安装依赖：
 
-```bash
-npm i
-```
+    ```bash
+    npm i
+    ```
 
-4. Configure the env vars as described in [docs/configuration.md](docs/configuration.md).
+4.  按照 [docs/configuration.md](docs/configuration.md) 中的说明配置环境变量。
 
-5. Start the development server with:
+5.  启动开发服务器：
 
-```bash
-npm run dev
-```
+    ```bash
+    npm run dev
+    ```
 
-> Note:
-> If you see CORS errors, check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
+> 注意：
+> 如果遇到 CORS 错误，请检查您的 Saleor 实例的 [CORS 配置](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) 或在云控制台中的 CORS 设置。
 
 ## Docs
 
