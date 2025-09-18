@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 import useStyles from "../styles";
 import LoginForm, { LoginFormData } from "./form";
+import { LastLoginIndicator } from "./last-login-indicator";
 import { getErrorMessage } from "./messages";
 
 export interface LoginCardProps {
@@ -120,7 +121,9 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               type="submit"
               transitionState={loading ? "loading" : "default"}
               data-test-id="submit"
+              position="relative"
             >
+              {lastLoginMethod === "password" && <LastLoginIndicator />}
               <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
             </ButtonWithLoader>
           </div>
@@ -156,17 +159,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
                 position="relative"
               >
                 {externalAuthentication.name}
-                {lastLoginMethod === externalAuthentication.id ? (
-                  <Box
-                    position="absolute"
-                    __inset="-9px -6px auto auto"
-                    backgroundColor="info1"
-                    paddingX={2}
-                    borderRadius={4}
-                  >
-                    <Text size={1}>Last used</Text>
-                  </Box>
-                ) : null}
+                {lastLoginMethod === externalAuthentication.id && <LastLoginIndicator />}
               </ButtonWithLoader>
             </React.Fragment>
           ))}
