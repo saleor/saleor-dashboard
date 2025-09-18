@@ -593,7 +593,7 @@ const findProductVariantReference = (
 
 const findReferenceByEntityType = (
   valueId: string,
-  entityType: AttributeEntityTypeEnum | null,
+  entityType: AttributeEntityTypeEnum | undefined,
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
 ): AttributeReference | null => {
   switch (entityType) {
