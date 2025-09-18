@@ -8,6 +8,7 @@ import useRouter from "use-react-router";
 import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/types";
+import { useLastLoginMethod } from "../hooks/use-last-login-method";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
 
@@ -31,6 +32,8 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     setFallbackUri,
     setRequestedExternalPluginId,
   } = useAuthParameters();
+  const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
+
   const handleSubmit = async (data: LoginFormData) => {
     if (!login) {
       return;
@@ -38,6 +41,10 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
 
     const result = await login(data.email, data.password);
     const errors = result?.errors || [];
+
+    if (result.errors.length === 0) {
+      setLastLoginMethod("password");
+    }
 
     return errors;
   };
@@ -95,6 +102,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
       onSubmit={handleSubmit}
+      lastLoginMethod={lastLoginMethod}
     />
   );
 };

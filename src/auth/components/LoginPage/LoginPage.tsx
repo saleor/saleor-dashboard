@@ -1,3 +1,4 @@
+import { LastLoginMethod } from "@dashboard/auth/hooks/use-last-login-method";
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
@@ -22,6 +23,7 @@ export interface LoginCardProps {
   externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
   onExternalAuthentication: (pluginId: string) => void;
   onSubmit: (event: LoginFormData) => SubmitPromise;
+  lastLoginMethod: LastLoginMethod;
 }
 
 const LoginPage: React.FC<LoginCardProps> = props => {
@@ -32,6 +34,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
     externalAuthentications = [],
     onExternalAuthentication,
     onSubmit,
+    lastLoginMethod,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -150,8 +153,20 @@ const LoginPage: React.FC<LoginCardProps> = props => {
                 transitionState={
                   optimisticLoaderAuthId === externalAuthentication.id ? "loading" : "default"
                 }
+                position="relative"
               >
                 {externalAuthentication.name}
+                {lastLoginMethod === externalAuthentication.id ? (
+                  <Box
+                    position="absolute"
+                    __inset="-9px -6px auto auto"
+                    backgroundColor="info1"
+                    paddingX={2}
+                    borderRadius={4}
+                  >
+                    <Text size={1}>Last used</Text>
+                  </Box>
+                ) : null}
               </ButtonWithLoader>
             </React.Fragment>
           ))}
