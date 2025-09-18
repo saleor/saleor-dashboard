@@ -1,14 +1,11 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { useFlag } from "@dashboard/featureFlags";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
-import { orderGrantRefundUrl, orderSendRefundUrl } from "@dashboard/orders/urls";
 import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
-import { Button, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
-import { RefundsSummary } from "./components";
 import { OrderPaymentStatusPill } from "./components/OrderPaymentStatusPill";
 import { PaymentsSummary } from "./components/PaymentsSummary";
 import { orderPaymentActionButtonMessages, orderPaymentMessages } from "./messages";
@@ -19,10 +16,8 @@ interface OrderPaymementProps {
   onMarkAsPaid: () => void;
 }
 
-const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementProps) => {
+export const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementProps) => {
   const classes = useStyles();
-
-  const { enabled } = useFlag("improved_refunds");
 
   const giftCardAmount = extractOrderGiftCardUsedAmount(order);
   const canGrantRefund = order?.transactions?.length > 0 || order?.payments?.length > 0;
@@ -85,45 +80,6 @@ const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementProps) =
       ) : (
         <PaymentsSummary order={order} />
       )}
-      {canAnyRefund && !enabled && (
-        <>
-          <Divider />
-          <DashboardCard.Header>
-            <DashboardCard.Title>
-              <FormattedMessage {...orderPaymentMessages.refundsTitle} />
-            </DashboardCard.Title>
-            <DashboardCard.Toolbar>
-              <div className={classes.refundsButtons}>
-                {canGrantRefund && (
-                  <Button
-                    as="a"
-                    href={orderGrantRefundUrl(order.id)}
-                    variant="secondary"
-                    data-test-id="grantRefundButton"
-                  >
-                    <FormattedMessage {...orderPaymentActionButtonMessages.grantRefund} />
-                  </Button>
-                )}
-                {canSendRefund && (
-                  <Button
-                    as="a"
-                    variant="secondary"
-                    href={orderSendRefundUrl(order.id)}
-                    data-test-id="refund-button"
-                  >
-                    <FormattedMessage {...orderPaymentActionButtonMessages.sendRefund} />
-                  </Button>
-                )}
-              </div>
-            </DashboardCard.Toolbar>
-          </DashboardCard.Header>
-          <DashboardCard.Content>
-            <RefundsSummary order={order} />
-          </DashboardCard.Content>
-        </>
-      )}
     </DashboardCard>
   );
 };
-
-export default OrderPaymentSummaryCard;

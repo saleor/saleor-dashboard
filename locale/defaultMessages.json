@@ -1636,10 +1636,6 @@
     "context": "select title",
     "string": "Select channels you want for {contentType} to be available on"
   },
-  "7t+oJp": {
-    "context": "orde, granted refunds card, unsettled amount",
-    "string": "Unsettled {money}"
-  },
   "7u9Ep7": {
     "context": "Label when app is disabled",
     "string": "Disabled"
@@ -4404,10 +4400,6 @@
   "OA+fw+": {
     "context": "conjunction, choice between going to dashboard or refreshing page",
     "string": "or"
-  },
-  "OAcl78": {
-    "context": "order, granted refunds card, title",
-    "string": "Granted refunds"
   },
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
