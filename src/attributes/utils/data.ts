@@ -165,25 +165,25 @@ export function getSelectedAttributeValues(
     case AttributeInputTypeEnum.REFERENCE:
       return attribute.values.map(value => value.reference);
     case AttributeInputTypeEnum.SINGLE_REFERENCE:
-      return [attribute.values[0]?.reference];
+      return attribute.values[0]?.reference ? [attribute.values[0].reference] : [];
 
     case AttributeInputTypeEnum.PLAIN_TEXT:
-      return [attribute.values[0]?.plainText];
+      return attribute.values[0]?.plainText ? [attribute.values[0].plainText] : [];
 
     case AttributeInputTypeEnum.RICH_TEXT:
-      return [attribute.values[0]?.richText];
+      return attribute.values[0]?.richText ? [attribute.values[0].richText] : [];
 
     case AttributeInputTypeEnum.NUMERIC:
-      return [attribute.values[0]?.name];
+      return attribute.values[0]?.name ? [attribute.values[0].name] : [];
 
     case AttributeInputTypeEnum.BOOLEAN:
-      return [attribute.values[0]?.boolean];
+      return attribute.values[0]?.boolean !== undefined ? [attribute.values[0].boolean] : [];
 
     case AttributeInputTypeEnum.DATE:
-      return [attribute.values[0]?.date];
+      return attribute.values[0]?.date ? [attribute.values[0].date] : [];
 
     case AttributeInputTypeEnum.DATE_TIME:
-      return [attribute.values[0]?.dateTime];
+      return attribute.values[0]?.dateTime ? [attribute.values[0].dateTime] : [];
 
     default:
       return attribute.values.map(value => value.slug);
@@ -620,43 +620,45 @@ export const getReferenceAttributeDisplayData = (
   data: {
     ...attribute.data,
     references:
-      attribute.value?.map(valueId => {
-        // "Metadata" is the label cache. It is populated from the
-        // initial GraphQL payload and whenever the user assigns references in
-        // the dialog into useFormset data.
-        // Prefer it so that chips always display, even if the
-        // current search response does not include a given reference.
-        const meta = attribute.metadata?.find(m => m.value === valueId);
+      attribute.value && attribute.value.length > 0
+        ? attribute.value.map(valueId => {
+          // "Metadata" is the label cache. It is populated from the
+          // initial GraphQL payload and whenever the user assigns references in
+          // the dialog into useFormset data.
+          // Prefer it so that chips always display, even if the
+          // current search response does not include a given reference.
+          const meta = attribute.metadata?.find(m => m.value === valueId);
 
-        if (meta) {
+          if (meta) {
+            return {
+              label: meta.label,
+              value: meta.value,
+            };
+          }
+
+          // As a fallback, look at the latest search results.
+          // This should cover scenarios where the user has just added a reference in modal
+          // and metadata has not been updated yet.
+          //
+          // It's not default, because it can fail:
+          // search query filters out references based on `referenceType` and use search query for filtering
+          const searchResult = findReferenceByEntityType(
+            valueId,
+            attribute.data.entityType,
+            referencesEntitiesSearchResult,
+          );
+
+          if (searchResult) {
+            return searchResult;
+          }
+
+          // Fallback to ID as label - this shouldn't happen, leave it for graceful error handling
           return {
-            label: meta.label,
-            value: meta.value,
+            label: valueId,
+            value: valueId,
           };
-        }
-
-        // As a fallback, look at the latest search results.
-        // This should cover scenarios where the user has just added a reference in modal
-        // and metadata has not been updated yet.
-        //
-        // It's not default, because it can fail:
-        // search query filters out references based on `referenceType` and use search query for filtering
-        const searchResult = findReferenceByEntityType(
-          valueId,
-          attribute.data.entityType,
-          referencesEntitiesSearchResult,
-        );
-
-        if (searchResult) {
-          return searchResult;
-        }
-
-        // Fallback to ID as label - this shouldn't happen, leave it for graceful error handling
-        return {
-          label: valueId,
-          value: valueId,
-        };
-      }) || [],
+        })
+        : [],
   },
 });
 
