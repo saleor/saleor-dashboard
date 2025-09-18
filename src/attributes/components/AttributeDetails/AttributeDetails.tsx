@@ -7,7 +7,7 @@ import {
   AttributeErrorFragment,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
-import { ChangeEvent, UseFormResult } from "@dashboard/hooks/useForm";
+import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
@@ -56,7 +56,7 @@ export interface AttributeDetailsProps
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];
-  onChange: (event: ChangeEvent) => void;
+  onChange: FormChange;
 }
 
 const AttributeDetails = (props: AttributeDetailsProps) => {
