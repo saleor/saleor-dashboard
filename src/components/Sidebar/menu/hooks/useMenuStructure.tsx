@@ -45,8 +45,7 @@ import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
-  const { enabled: hasAppAlertsFeatureFlag } = useFlag("app_alerts");
-  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert(hasAppAlertsFeatureFlag);
+  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert();
 
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
@@ -66,9 +65,7 @@ export function useMenuStructure() {
     id: "apps",
     url: AppPaths.appListPath,
     type: "item",
-    endAdornment: hasAppAlertsFeatureFlag ? (
-      <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />
-    ) : null,
+    endAdornment: <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />,
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
   });
 
@@ -79,18 +76,14 @@ export function useMenuStructure() {
     id: "installed-extensions",
     url: ExtensionsPaths.installedExtensions,
     type: "itemGroup",
-    endAdornment: hasAppAlertsFeatureFlag ? (
-      <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />
-    ) : null,
+    endAdornment: <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />,
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
     children: [
       {
         label: (
           <Box display="flex" alignItems="center" gap={3}>
             {intl.formatMessage(sectionNames.installedExtensions)}
-            {hasAppAlertsFeatureFlag && (
-              <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} small />
-            )}
+            {<SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} small />}
           </Box>
         ),
         id: "installed-extensions",
