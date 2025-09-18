@@ -11,8 +11,8 @@ import { AttributeInput } from "../Attributes";
 
 export type ProductsToFilter = RelayToFlat<SearchProductsQuery["search"]>;
 export type PagesToFilter = RelayToFlat<SearchPagesQuery["search"]>;
-export type CollectionsToFilter = RelayToFlat<SearchCollectionsQuery["search"]>;
-export type CategoriesToFilter = RelayToFlat<SearchCategoriesQuery["search"]>;
+type CollectionsToFilter = RelayToFlat<SearchCollectionsQuery["search"]>;
+type CategoriesToFilter = RelayToFlat<SearchCategoriesQuery["search"]>;
 
 const isSingleAttribute = (attribute: AttributeInput) =>
   attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
