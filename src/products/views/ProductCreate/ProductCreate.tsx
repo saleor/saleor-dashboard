@@ -18,6 +18,7 @@ import {
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
 } from "@dashboard/graphql";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -34,9 +35,11 @@ import {
 } from "@dashboard/products/urls";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
@@ -94,20 +97,6 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
     search: searchProductTypes,
     result: searchProductTypesOpts,
   } = useProductTypeSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMorePages,
-    search: searchPages,
-    result: searchPagesOpts,
-  } = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreProducts,
-    search: searchProducts,
-    result: searchProductsOpts,
-  } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
@@ -234,6 +223,21 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
     }
   }, [productCreateComplete]);
 
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? selectedProductType?.productType.productAttributes?.find(a => a.id === params.id)
+      : undefined;
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts,
+  } = useReferenceProductSearch(refAttr);
+
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts,
+  } = useReferencePageSearch(refAttr);
   const fetchMoreProductTypes = {
     hasMore: searchProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductTypesOpts.loading,
@@ -249,16 +253,8 @@ export const ProductCreateView = ({ params }: ProductCreateProps) => {
     loading: searchCategoriesOpts.loading,
     onFetchMore: loadMoreCategories,
   };
-  const fetchMoreReferencePages = {
-    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
-    loading: searchPagesOpts.loading,
-    onFetchMore: loadMorePages,
-  };
-  const fetchMoreReferenceProducts = {
-    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
-    loading: searchProductsOpts.loading,
-    onFetchMore: loadMoreProducts,
-  };
+  const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
+  const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,

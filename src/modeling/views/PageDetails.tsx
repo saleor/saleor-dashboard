@@ -33,8 +33,10 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -146,20 +148,20 @@ export const PageDetails = ({ id, params }: PageDetailsProps) => {
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
   );
-  const {
-    loadMore: loadMorePages,
-    search: searchPages,
-    result: searchPagesOpts,
-  } = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? pageDetails?.data?.page?.attributes?.find(a => a.attribute.id === params.id)?.attribute
+      : undefined;
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
     result: searchProductsOpts,
-  } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  } = useReferenceProductSearch(refAttr);
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts,
+  } = useReferencePageSearch(refAttr);
   const {
     loadMore: loadMoreCollections,
     search: searchCollections,

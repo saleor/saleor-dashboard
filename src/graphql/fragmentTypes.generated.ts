@@ -76,6 +76,7 @@
       "ChannelUpdated",
       "CheckoutCreated",
       "CheckoutFilterShippingMethods",
+      "CheckoutFullyAuthorized",
       "CheckoutFullyPaid",
       "CheckoutMetadataUpdated",
       "CheckoutUpdated",
@@ -315,6 +316,11 @@
       "Warehouse",
       "Webhook"
     ],
+    "ObjectWithAttributes": [
+      "Page",
+      "Product",
+      "ProductVariant"
+    ],
     "ObjectWithMetadata": [
       "Address",
       "App",
@@ -382,6 +388,10 @@
       "PromotionRuleCreatedEvent",
       "PromotionRuleDeletedEvent",
       "PromotionRuleUpdatedEvent"
+    ],
+    "ReferenceType": [
+      "PageType",
+      "ProductType"
     ],
     "TaxSourceLine": [
       "CheckoutLine",

@@ -195,48 +195,6 @@ export const InstalledAppDetailsFragmentDoc = gql`
   }
 }
     `;
-export const AttributeFragmentDoc = gql`
-    fragment Attribute on Attribute {
-  id
-  name
-  slug
-  type
-  visibleInStorefront
-  filterableInDashboard
-  filterableInStorefront
-  unit
-  inputType
-}
-    `;
-export const MetadataItemFragmentDoc = gql`
-    fragment MetadataItem on MetadataItem {
-  key
-  value
-}
-    `;
-export const MetadataFragmentDoc = gql`
-    fragment Metadata on ObjectWithMetadata {
-  metadata {
-    ...MetadataItem
-  }
-  privateMetadata {
-    ...MetadataItem
-  }
-}
-    ${MetadataItemFragmentDoc}`;
-export const AttributeDetailsFragmentDoc = gql`
-    fragment AttributeDetails on Attribute {
-  ...Attribute
-  ...Metadata
-  availableInGrid
-  inputType
-  entityType
-  unit
-  storefrontSearchPosition
-  valueRequired
-}
-    ${AttributeFragmentDoc}
-${MetadataFragmentDoc}`;
 export const AvailableAttributeFragmentDoc = gql`
     fragment AvailableAttribute on Attribute {
   id
@@ -311,6 +269,22 @@ export const CategoryFragmentDoc = gql`
   }
 }
     `;
+export const MetadataItemFragmentDoc = gql`
+    fragment MetadataItem on MetadataItem {
+  key
+  value
+}
+    `;
+export const MetadataFragmentDoc = gql`
+    fragment Metadata on ObjectWithMetadata {
+  metadata {
+    ...MetadataItem
+  }
+  privateMetadata {
+    ...MetadataItem
+  }
+}
+    ${MetadataItemFragmentDoc}`;
 export const CategoryDetailsFragmentDoc = gql`
     fragment CategoryDetails on Category {
   id
@@ -2421,6 +2395,20 @@ export const PageTypeFragmentDoc = gql`
   hasPages
 }
     `;
+export const AttributeFragmentDoc = gql`
+    fragment Attribute on Attribute {
+  id
+  name
+  slug
+  type
+  visibleInStorefront
+  filterableInDashboard
+  filterableInStorefront
+  unit
+  inputType
+  ...Metadata
+}
+    ${MetadataFragmentDoc}`;
 export const PageTypeDetailsFragmentDoc = gql`
     fragment PageTypeDetails on PageType {
   ...PageType
@@ -2482,30 +2470,44 @@ export const AttributeValueListFragmentDoc = gql`
 }
     ${PageInfoFragmentDoc}
 ${AttributeValueDetailsFragmentDoc}`;
+export const AttributeDetailsFragmentDoc = gql`
+    fragment AttributeDetails on Attribute {
+  ...Attribute
+  availableInGrid
+  entityType
+  storefrontSearchPosition
+  valueRequired
+  referenceTypes {
+    ... on ProductType {
+      id
+      name
+    }
+    ... on PageType {
+      id
+      name
+    }
+  }
+  choices(
+    first: $firstValues
+    after: $afterValues
+    last: $lastValues
+    before: $beforeValues
+  ) {
+    ...AttributeValueList
+  }
+}
+    ${AttributeFragmentDoc}
+${AttributeValueListFragmentDoc}`;
 export const PageSelectedAttributeFragmentDoc = gql`
     fragment PageSelectedAttribute on SelectedAttribute {
   attribute {
-    id
-    slug
-    name
-    inputType
-    entityType
-    valueRequired
-    unit
-    choices(
-      first: $firstValues
-      after: $afterValues
-      last: $lastValues
-      before: $beforeValues
-    ) {
-      ...AttributeValueList
-    }
+    ...AttributeDetails
   }
   values {
     ...AttributeValueDetails
   }
 }
-    ${AttributeValueListFragmentDoc}
+    ${AttributeDetailsFragmentDoc}
 ${AttributeValueDetailsFragmentDoc}`;
 export const PageAttributesFragmentDoc = gql`
     fragment PageAttributes on Page {
@@ -2754,6 +2756,16 @@ export const VariantAttributeFragmentDoc = gql`
   entityType
   valueRequired
   unit
+  referenceTypes {
+    ... on ProductType {
+      id
+      name
+    }
+    ... on PageType {
+      id
+      name
+    }
+  }
   choices(
     first: $firstValues
     after: $afterValues
@@ -2769,21 +2781,7 @@ export const ProductVariantAttributesFragmentDoc = gql`
   id
   attributes {
     attribute {
-      id
-      slug
-      name
-      inputType
-      entityType
-      valueRequired
-      unit
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeValueList
-      }
+      ...AttributeDetails
     }
     values {
       ...AttributeValueDetails
@@ -2803,7 +2801,7 @@ export const ProductVariantAttributesFragmentDoc = gql`
     }
   }
 }
-    ${AttributeValueListFragmentDoc}
+    ${AttributeDetailsFragmentDoc}
 ${AttributeValueDetailsFragmentDoc}
 ${VariantAttributeFragmentDoc}`;
 export const ProductMediaFragmentDoc = gql`
@@ -4474,14 +4472,14 @@ export const AttributeUpdateDocument = gql`
     mutation AttributeUpdate($id: ID!, $input: AttributeUpdateInput!) {
   attributeUpdate(id: $id, input: $input) {
     attribute {
-      ...AttributeDetails
+      ...Attribute
     }
     errors {
       ...AttributeError
     }
   }
 }
-    ${AttributeDetailsFragmentDoc}
+    ${AttributeFragmentDoc}
 ${AttributeErrorFragmentDoc}`;
 export type AttributeUpdateMutationFn = Apollo.MutationFunction<Types.AttributeUpdateMutation, Types.AttributeUpdateMutationVariables>;
 
@@ -11429,24 +11427,11 @@ export const PageTypeDocument = gql`
     id
     name
     attributes {
-      id
-      inputType
-      entityType
-      slug
-      name
-      valueRequired
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeValueList
-      }
+      ...AttributeDetails
     }
   }
 }
-    ${AttributeValueListFragmentDoc}`;
+    ${AttributeDetailsFragmentDoc}`;
 
 /**
  * __usePageTypeQuery__
@@ -15963,21 +15948,7 @@ export const ProductTypeDocument = gql`
     name
     hasVariants
     productAttributes {
-      id
-      inputType
-      entityType
-      slug
-      name
-      valueRequired
-      unit
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
-        ...AttributeValueList
-      }
+      ...AttributeDetails
     }
     taxClass {
       id
@@ -15985,7 +15956,7 @@ export const ProductTypeDocument = gql`
     }
   }
 }
-    ${AttributeValueListFragmentDoc}`;
+    ${AttributeDetailsFragmentDoc}`;
 
 /**
  * __useProductTypeQuery__
@@ -17195,8 +17166,8 @@ export type SearchOrderVariantQueryHookResult = ReturnType<typeof useSearchOrder
 export type SearchOrderVariantLazyQueryHookResult = ReturnType<typeof useSearchOrderVariantLazyQuery>;
 export type SearchOrderVariantQueryResult = Apollo.QueryResult<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>;
 export const SearchPagesDocument = gql`
-    query SearchPages($after: String, $first: Int!, $query: String!) {
-  search: pages(after: $after, first: $first, filter: {search: $query}) {
+    query SearchPages($after: String, $first: Int!, $query: String!, $where: PageWhereInput) {
+  search: pages(after: $after, first: $first, search: $query, where: $where) {
     edges {
       node {
         id
@@ -17225,6 +17196,7 @@ export const SearchPagesDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      where: // value for 'where'
  *   },
  * });
  */
@@ -17331,12 +17303,13 @@ export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchP
 export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
 export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>;
 export const SearchProductsDocument = gql`
-    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String) {
+    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput) {
   search: products(
     after: $after
     first: $first
-    filter: {search: $query}
+    search: $query
     channel: $channel
+    where: $where
   ) {
     edges {
       node {
@@ -17367,6 +17340,7 @@ ${PageInfoFragmentDoc}`;
  *      first: // value for 'first'
  *      query: // value for 'query'
  *      channel: // value for 'channel'
+ *      where: // value for 'where'
  *   },
  * });
  */
