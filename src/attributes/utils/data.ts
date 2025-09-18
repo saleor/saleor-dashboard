@@ -26,7 +26,17 @@ import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
-import { getProductVariantById } from "./productVariantCache";
+import { ProductVariantCacheManager } from "./productVariantCache";
+
+// Create a module-level cache manager instance
+const productVariantCacheManager = new ProductVariantCacheManager();
+
+// Export function to reset cache for testing purposes
+// This should be done via dep. injection, but we don't want to rewrite this entire file
+// to use classes
+//
+// TODO: Rewrite to use a class
+export const resetProductVariantCache = () => productVariantCacheManager.reset();
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
 
@@ -554,7 +564,7 @@ const findProductVariantReference = (
 
   // Search through products using cached variant maps
   for (const product of referencesEntitiesSearchResult.products) {
-    const variant = getProductVariantById(product, valueId);
+    const variant = productVariantCacheManager.getProductVariantById(product, valueId);
 
     if (variant) {
       return {

@@ -11,22 +11,8 @@ import {
   handleContainerReferenceAssignment,
   handleMetadataReferenceAssignment,
   ReferenceEntitiesSearch,
+  resetProductVariantCache,
 } from "./data";
-
-jest.mock("./productVariantCache", () => {
-  const actual =
-    jest.requireActual<typeof import("./productVariantCache")>("./productVariantCache");
-
-  return {
-    ...actual,
-    getProductVariantById: jest.fn(actual.getProductVariantById),
-  };
-});
-
-const actualProductVariantCache =
-  jest.requireActual<typeof import("./productVariantCache")>("./productVariantCache");
-
-import * as productVariantCache from "./productVariantCache";
 
 // Helper function to create mock reference data with minimal required properties
 const createMockReferenceData = (data: {
@@ -339,14 +325,7 @@ describe("attributes/utils/data", () => {
   describe("getReferenceAttributeDisplayData", () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      productVariantCache.resetProductVariantCache();
-
-      const variantLookupMock = productVariantCache.getProductVariantById as jest.MockedFunction<
-        typeof actualProductVariantCache.getProductVariantById
-      >;
-
-      variantLookupMock.mockImplementation(actualProductVariantCache.getProductVariantById);
-      variantLookupMock.mockClear();
+      resetProductVariantCache();
     });
 
     it("should use metadata cache when available", () => {
@@ -499,57 +478,6 @@ describe("attributes/utils/data", () => {
     });
 
     describe("product variant caching", () => {
-      it("should delegate variant lookup to the product variant cache", () => {
-        // Arrange
-        const variantLookupMock = productVariantCache.getProductVariantById as jest.MockedFunction<
-          typeof actualProductVariantCache.getProductVariantById
-        >;
-
-        variantLookupMock.mockImplementation(
-          () =>
-            ({
-              id: "variant-1",
-              name: "Variant A",
-              __typename: "ProductVariant",
-            }) as any,
-        );
-
-        const attribute = {
-          id: "attr-1",
-          value: ["variant-1"],
-          label: "Test",
-          data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
-            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
-            isRequired: false,
-            values: [],
-            references: [],
-          },
-        };
-
-        const product = {
-          __typename: "Product",
-          id: "product-1",
-          name: "Product 1",
-        } as ReferenceEntitiesSearch["products"][number];
-
-        const references = createMockReferenceData({ products: [product] });
-
-        // Act
-        const result = getReferenceAttributeDisplayData(attribute, references);
-
-        // Assert
-        expect(variantLookupMock).toHaveBeenCalledWith(
-          expect.objectContaining({ id: "product-1", name: "Product 1" }),
-          "variant-1",
-        );
-        expect(result.data.references).toEqual([
-          { value: "variant-1", label: "Product 1 Variant A" },
-        ]);
-
-        variantLookupMock.mockImplementation(actualProductVariantCache.getProductVariantById);
-      });
-
       it("should handle multiple products with variants efficiently", () => {
         // Arrange
         const products = Array.from({ length: 3 }, (_, i) => ({

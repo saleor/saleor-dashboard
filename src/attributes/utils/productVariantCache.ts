@@ -4,38 +4,45 @@ import { RelayToFlat } from "@dashboard/types";
 export type CachedSearchProduct = RelayToFlat<NonNullable<SearchProductsQuery["search"]>>[0];
 export type CachedSearchProductVariant = NonNullable<CachedSearchProduct["variants"]>[0];
 
-let productVariantMapCache = new WeakMap<
-  CachedSearchProduct,
-  Map<string, CachedSearchProductVariant>
->();
+export class ProductVariantCacheManager {
+  private cache: WeakMap<CachedSearchProduct, Map<string, CachedSearchProductVariant>>;
 
-const buildVariantMap = (product: CachedSearchProduct) => {
-  const variantMap = new Map<string, CachedSearchProductVariant>();
+  constructor() {
+    this.cache = new WeakMap();
+  }
 
-  if (product.variants) {
-    for (const variant of product.variants) {
-      variantMap.set(variant.id, variant);
+  private buildVariantMap(product: CachedSearchProduct): Map<string, CachedSearchProductVariant> {
+    const variantMap = new Map<string, CachedSearchProductVariant>();
+
+    if (product.variants) {
+      for (const variant of product.variants) {
+        variantMap.set(variant.id, variant);
+      }
     }
+
+    this.cache.set(product, variantMap);
+
+    return variantMap;
   }
 
-  productVariantMapCache.set(product, variantMap);
+  getProductVariantMap(product: CachedSearchProduct): Map<string, CachedSearchProductVariant> {
+    const cached = this.cache.get(product);
 
-  return variantMap;
-};
+    if (cached) {
+      return cached;
+    }
 
-export const getProductVariantMap = (product: CachedSearchProduct) => {
-  const cached = productVariantMapCache.get(product);
-
-  if (cached) {
-    return cached;
+    return this.buildVariantMap(product);
   }
 
-  return buildVariantMap(product);
-};
+  getProductVariantById(
+    product: CachedSearchProduct,
+    variantId: string,
+  ): CachedSearchProductVariant | undefined {
+    return this.getProductVariantMap(product).get(variantId);
+  }
 
-export const getProductVariantById = (product: CachedSearchProduct, variantId: string) =>
-  getProductVariantMap(product).get(variantId);
-
-export const resetProductVariantCache = () => {
-  productVariantMapCache = new WeakMap();
-};
+  reset(): void {
+    this.cache = new WeakMap();
+  }
+}
