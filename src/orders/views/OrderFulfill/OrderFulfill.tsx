@@ -100,6 +100,7 @@ const OrderFulfill = ({ orderId, params }: OrderFulfillProps) => {
                   })),
                 notifyCustomer: settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
                 allowStockToBeExceeded: formData.allowStockToBeExceeded,
+                trackingNumber: formData.trackingNumber,
               },
               orderId,
             },

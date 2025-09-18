@@ -20,7 +20,8 @@ import {
   UploadErrorFragment,
 } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import { RelayToFlat } from "@dashboard/types";
+import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
+import { Container, RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@dashboard/utils/maps";
 import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
@@ -48,6 +49,17 @@ export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.DATE_TIME,
   AttributeInputTypeEnum.NUMERIC,
   AttributeInputTypeEnum.SWATCH,
+];
+
+export const REFERENCE_ATTRIBUTE_TYPES = [
+  AttributeInputTypeEnum.REFERENCE,
+  AttributeInputTypeEnum.SINGLE_REFERENCE,
+];
+
+export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
+  AttributeEntityTypeEnum.PRODUCT,
+  AttributeEntityTypeEnum.PRODUCT_VARIANT,
+  AttributeEntityTypeEnum.PAGE,
 ];
 
 export function filterable(attribute: Pick<AttributeFragment, "inputType">): boolean {
@@ -127,6 +139,7 @@ function getFileOrReferenceAttributeData(
     availableInGrid: undefined,
     filterableInDashboard: undefined,
     filterableInStorefront: undefined,
+    referenceTypes: data.referenceTypes?.map(ref => ref.value) ?? [],
   };
 }
 
@@ -152,6 +165,8 @@ export function getSelectedAttributeValues(
   switch (attribute.attribute.inputType) {
     case AttributeInputTypeEnum.REFERENCE:
       return attribute.values.map(value => value.reference);
+    case AttributeInputTypeEnum.SINGLE_REFERENCE:
+      return [attribute.values[0]?.reference];
 
     case AttributeInputTypeEnum.PLAIN_TEXT:
       return [attribute.values[0]?.plainText];
@@ -254,6 +269,91 @@ export const mergeAttributes = (...attributeLists: AttributeInput[][]): Attribut
 
     return [...prev.filter(attr => !newAttributeIds.has(attr.id)), ...attributes];
   }, []);
+
+/**
+ * Handles reference attribute assignment for Container-based data
+ * Used by ProductCreatePage, ProductVariantPage, and PageDetailsPage
+ */
+export function handleContainerReferenceAssignment(
+  assignReferencesAttributeId: string,
+  attributeValues: Container[],
+  attributes: AttributeInput[],
+  handlers: {
+    selectAttributeReference: (id: string, values: string[]) => void;
+    selectAttributeReferenceMetadata: (
+      id: string,
+      metadata: Array<{ value: string; label: string }>,
+    ) => void;
+  },
+): void {
+  const attribute = attributes.find(({ id }) => id === assignReferencesAttributeId);
+  const isSingle = attribute?.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
+  if (isSingle) {
+    const firstValue = attributeValues[0];
+    const selectedId = firstValue?.id ?? "";
+    const selectedLabel = firstValue?.name ?? "";
+
+    handlers.selectAttributeReference(assignReferencesAttributeId, selectedId ? [selectedId] : []);
+    handlers.selectAttributeReferenceMetadata(
+      assignReferencesAttributeId,
+      firstValue ? [{ value: selectedId, label: selectedLabel }] : [],
+    );
+  } else {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues.map(({ id }) => id),
+        attributes as FormsetData<AttributeInputData, string[]>,
+      ),
+    );
+    handlers.selectAttributeReferenceMetadata(
+      assignReferencesAttributeId,
+      attributeValues.map(({ id, name }) => ({ value: id, label: name })),
+    );
+  }
+}
+
+/**
+ * Handles reference attribute assignment for AttributeValuesMetadata-based data
+ */
+export function handleMetadataReferenceAssignment(
+  assignReferencesAttributeId: string,
+  attributeValues: AttributeValuesMetadata[],
+  attributes: AttributeInput[],
+  handlers: {
+    selectAttributeReference: (id: string, values: string[]) => void;
+    selectAttributeReferenceMetadata: (id: string, metadata: AttributeValuesMetadata[]) => void;
+  },
+): void {
+  const attribute = attributes.find(({ id }) => id === assignReferencesAttributeId);
+  const isSingle = attribute?.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
+  if (isSingle) {
+    const firstValue = attributeValues[0];
+    const selectedValue = firstValue?.value ?? "";
+
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      selectedValue ? [selectedValue] : [],
+    );
+    handlers.selectAttributeReferenceMetadata(
+      assignReferencesAttributeId,
+      firstValue ? [firstValue] : [],
+    );
+  } else {
+    handlers.selectAttributeReference(
+      assignReferencesAttributeId,
+      mergeAttributeValues(
+        assignReferencesAttributeId,
+        attributeValues.map(({ value }) => value),
+        attributes as FormsetData<AttributeInputData, string[]>,
+      ),
+    );
+    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, attributeValues);
+  }
+}
 
 export function getRichTextAttributesFromMap(
   attributes: AttributeInput[],
@@ -506,7 +606,10 @@ export const getAttributesDisplayData = (
   referenceCategories: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>,
 ) =>
   attributes.map(attribute => {
-    if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
+    if (
+      attribute.data.inputType === AttributeInputTypeEnum.REFERENCE ||
+      attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE
+    ) {
       return getReferenceAttributeDisplayData(
         attribute,
         referencePages,

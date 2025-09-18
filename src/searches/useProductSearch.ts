@@ -8,8 +8,20 @@ import {
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchProducts = gql`
-  query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String) {
-    search: products(after: $after, first: $first, filter: { search: $query }, channel: $channel) {
+  query SearchProducts(
+    $after: String
+    $first: Int!
+    $query: String!
+    $channel: String
+    $where: ProductWhereInput
+  ) {
+    search: products(
+      after: $after
+      first: $first
+      search: $query
+      channel: $channel
+      where: $where
+    ) {
       edges {
         node {
           ...SearchProduct

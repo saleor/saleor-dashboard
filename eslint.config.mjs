@@ -1,16 +1,16 @@
 // @ts-check
 
-import { globalIgnores } from "eslint/config";
 import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
 import prettierConfig from "eslint-config-prettier";
+import formatjs from "eslint-plugin-formatjs";
+import importPlugin from "eslint-plugin-import";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import importPlugin from "eslint-plugin-import";
-import formatjs from "eslint-plugin-formatjs";
+import { globalIgnores } from "eslint/config";
 import globals from "globals";
+import tseslint from "typescript-eslint";
 import localRules from "./lint/rules/index.mjs";
 
 export default tseslint.config(
@@ -157,21 +157,6 @@ export default tseslint.config(
       "local-rules/named-styles": "error",
       "local-rules/no-deprecated-icons": "warn",
       "no-console": ["error", { allow: ["warn", "error"] }],
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: [
-            "lodash",
-            "classnames",
-            {
-              name: "react",
-              importNames: ["default", "React"],
-              message:
-                "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
-            },
-          ],
-        },
-      ],
     },
   },
 
@@ -208,7 +193,6 @@ export default tseslint.config(
     },
   },
 
-  // Additional rules (needs to be here, because other imports have "error", not "warn")
   {
     rules: {
       "no-restricted-imports": [
@@ -236,6 +220,23 @@ export default tseslint.config(
             {
               name: "moment-timezone",
               message: "Use react-intl formatDate instead of moment-timezone.",
+            },
+
+            // Note: these should be errors but we cannot use "warn" and "error" rules in ESLint together
+            {
+              name: "react",
+              importNames: ["default", "React", "*"],
+              message:
+                "Import directly the needed functions, e.g. 'import {useState} from \"react\"'",
+            },
+            {
+              name: "lodash",
+              message:
+                "Do not import lodash directly, import only needed functions, e.g. 'import debounce from \"lodash/debounce\"'",
+            },
+            {
+              name: "classnames",
+              message: "Do not import classnames, use clsx instead",
             },
           ],
         },

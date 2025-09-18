@@ -324,10 +324,6 @@
   "/jJLYy": {
     "string": "Transactions"
   },
-  "/jU+sI": {
-    "context": "dialog header",
-    "string": "Delete model types"
-  },
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
   },
@@ -465,10 +461,6 @@
   "0V1q0d": {
     "context": "add country dialog header",
     "string": "Choose country you want to add"
-  },
-  "0VDwAP": {
-    "context": "checkbox label",
-    "string": "Send shipment details to customer"
   },
   "0VkxrS": {
     "string": "GraphQL Playground"
@@ -700,9 +692,6 @@
   "2+v1wX": {
     "context": "number of metadata fields in model",
     "string": "{number,plural,one{{number} string} other{{number} strings}}"
-  },
-  "2/L4zZ": {
-    "string": "Select all channels"
   },
   "21cJ+Z": {
     "context": "structures section name",
@@ -1013,9 +1002,8 @@
     "context": "extensions list has been installed",
     "string": "Extension installed"
   },
-  "45W13E": {
-    "context": "delete model types with its models",
-    "string": "{counter,plural,one{Model type you want to delete is used by some models. Deleting this model type will also delete those models. Are you sure you want to delete this model type? After doing so you won’t be able to revert changes.} other{Model types you want to delete are used by some models. Deleting these model types will also delete those models. Are you sure you want to delete {displayQuantity} model types? After doing so you won’t be able to revert changes.}}"
+  "450Fty": {
+    "string": "None"
   },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
@@ -1044,6 +1032,10 @@
   "4Dc2j0": {
     "context": "order status",
     "string": "Returned"
+  },
+  "4DkQt1": {
+    "context": "empty state for model types",
+    "string": "No model types assigned"
   },
   "4ELCCk": {
     "context": "column picker section default header",
@@ -1086,6 +1078,9 @@
   "4PlW0w": {
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
+  },
+  "4Rj36Y": {
+    "string": "Create new Model Type"
   },
   "4T/RzC": {
     "string": "Make sure to save token, you won’t be able to see it again."
@@ -1298,10 +1293,6 @@
     "context": "Dry run items list default message",
     "string": "Choose the object"
   },
-  "5blVMu": {
-    "context": "e-mail or full name",
-    "string": "Customer"
-  },
   "5dLpx0": {
     "context": "references attribute type",
     "string": "References"
@@ -1324,6 +1315,9 @@
   "5i/InH": {
     "context": "open new window button",
     "string": "Open this order in GraphiQL"
+  },
+  "5ixtBQ": {
+    "string": "Assign Model Types"
   },
   "5kODlC": {
     "string": "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}"
@@ -1413,6 +1407,9 @@
     "context": "tax strategy combobox hint",
     "string": "Select the method of tax calculation"
   },
+  "6J1m2c": {
+    "string": "Create a Model"
+  },
   "6QjMei": {
     "string": "Preorder end time needs to be set in the future"
   },
@@ -1440,6 +1437,9 @@
   },
   "6Y1YDn": {
     "string": "Updated extension permissions"
+  },
+  "6ZubLQ": {
+    "string": "Manage available refunds reasons"
   },
   "6aBkJm": {
     "context": "section header",
@@ -1644,10 +1644,6 @@
     "context": "Label when app is disabled",
     "string": "Disabled"
   },
-  "7v2oBd": {
-    "context": "header",
-    "string": "Error"
-  },
   "7v8suW": {
     "context": "info text",
     "string": "This rate will apply to all orders"
@@ -1680,6 +1676,10 @@
   "8BBMRj": {
     "context": "default tax class name for new tax classes",
     "string": "New tax class"
+  },
+  "8Cve4h": {
+    "context": "checkbox label",
+    "string": "Send fulfillment email to customer"
   },
   "8EGagh": {
     "context": "search box label",
@@ -1797,10 +1797,6 @@
   "98WMlR": {
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
-  },
-  "991li9": {
-    "context": "input label",
-    "string": "Reason for refund"
   },
   "9B2mOB": {
     "context": "tile view pagination label",
@@ -2161,9 +2157,6 @@
   "B8PvdI": {
     "string": "extending Saleor with Webhooks"
   },
-  "B9yrkK": {
-    "string": "No Channels found"
-  },
   "BA4leV": {
     "string": "API guide"
   },
@@ -2380,6 +2373,10 @@
   "CLeDae": {
     "context": "section header",
     "string": "Preferences"
+  },
+  "COWJSG": {
+    "context": "helper explaining the effect of assigning reference types",
+    "string": "Assigning reference types narrows the list of items this attribute can reference."
   },
   "CPPACf": {
     "string": "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})"
@@ -2665,9 +2662,6 @@
     "context": "disabled status label",
     "string": "Disabled"
   },
-  "EEW+ND": {
-    "string": "Navigator"
-  },
   "EEWsPs": {
     "string": "Plugin built-in to Saleor's core codebase"
   },
@@ -2707,9 +2701,6 @@
   },
   "ESDTC/": {
     "string": "Manage Sales Channel Availability"
-  },
-  "EWCUdP": {
-    "string": "Channels A to Z"
   },
   "EWD/wU": {
     "context": "delete app",
@@ -3233,10 +3224,6 @@
     "context": "dialog content",
     "string": "You are not able to modify this group members. Solve this problem to continue with request."
   },
-  "H/xj8R": {
-    "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
-    "string": "Published since {getPublishedAt}"
-  },
   "H1L1cc": {
     "context": "url",
     "string": "URL"
@@ -3499,6 +3486,10 @@
   },
   "IWP25U": {
     "string": "You cannot issue a granted refund for this order. None of your transactions have authorized or charged amount."
+  },
+  "IXswaJ": {
+    "context": "checkbox label, fulfillment approval",
+    "string": "Send fulfillment email to customer"
   },
   "IYuKD6": {
     "string": "No discounts found"
@@ -3784,19 +3775,11 @@
   "KFv8hX": {
     "string": "An attribute already exists."
   },
-  "KGsaGO": {
-    "context": "tooltip",
-    "string": "This feature is in a preview state and can be subject to changes at later point"
-  },
   "KHI/qv": {
     "string": "You don't have permission to manage products"
   },
   "KHZlmi": {
     "string": "Discount Type"
-  },
-  "KIsu7m": {
-    "context": "delete model types",
-    "string": "{counter,plural,one{Are you sure you want to delete this model type? After doing so you won’t be able to revert changes.} other{Are you sure you want to delete {displayQuantity} model types? After doing so you won’t be able to revert changes.}}"
   },
   "KMxiiF": {
     "context": "button",
@@ -4025,6 +4008,10 @@
     "context": "button",
     "string": "Upload image"
   },
+  "M3aMq+": {
+    "context": "empty state for reference types",
+    "string": "No product types assigned"
+  },
   "M59JhX": {
     "string": "Manual"
   },
@@ -4243,10 +4230,6 @@
   },
   "NGWTE4": {
     "string": "Create webhook/extension manually"
-  },
-  "NJbzcP": {
-    "context": "dialog header",
-    "string": "Cancel Orders"
   },
   "NL5C12": {
     "context": "orderLine.quantity, subheader, oredr line metadata dialog",
@@ -4469,6 +4452,10 @@
     "context": "input label",
     "string": "Model type"
   },
+  "OZc365": {
+    "context": "single reference attribute type",
+    "string": "Single Reference"
+  },
   "OaA0f9": {
     "string": "You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
@@ -4599,10 +4586,6 @@
   "PHT8z1": {
     "context": "extension form permissions section header",
     "string": "Permissions"
-  },
-  "PHUcrU": {
-    "context": "date when order was placed",
-    "string": "Date"
   },
   "PJDcQs": {
     "context": "set balance button label",
@@ -4769,6 +4752,10 @@
   "Q6wcZ5": {
     "string": "First Name"
   },
+  "Q7eRF7": {
+    "context": "tracking number input helper text",
+    "string": "Optionally provide a tracking number for this fulfillment"
+  },
   "Q7uuDr": {
     "context": "attribute slug input field helper text",
     "string": "This is used internally. Make sure you don’t use spaces"
@@ -4800,10 +4787,6 @@
   },
   "QDxJib": {
     "string": "Fulfill"
-  },
-  "QFBjlV": {
-    "context": "error message",
-    "string": "Stock for this warehouse already exists for this product variant"
   },
   "QFCUEt": {
     "string": "Slug must be unique"
@@ -4921,6 +4904,9 @@
     "context": "label for radio button",
     "string": "Product prices are entered without tax"
   },
+  "QpYazu": {
+    "string": "Refund reasons"
+  },
   "QpetOV": {
     "string": "Channel: {channelNameLink}"
   },
@@ -4934,6 +4920,10 @@
   "QslFl8": {
     "context": "add new refund button",
     "string": "New refund"
+  },
+  "R4IIw1": {
+    "context": "tracking number of the shipment",
+    "string": "Tracking number"
   },
   "R98JLZ": {
     "context": "OrderCustomer Fulfillment from All Warehouses",
@@ -5218,10 +5208,6 @@
   "SqcGBK": {
     "context": "channel availability dialog header",
     "string": "Manage Channel Availability"
-  },
-  "SqhC7g": {
-    "context": "checkbox label, fulfillment approval",
-    "string": "Send shipment details to customer"
   },
   "Sxzua5": {
     "context": "order payment",
@@ -5589,6 +5575,10 @@
     "context": "attribute values",
     "string": "Value {number}"
   },
+  "UvZuf7": {
+    "context": "section title for reference types selector",
+    "string": "Reference Types"
+  },
   "Uwo+ai": {
     "string": "Product unavailable in discount channels"
   },
@@ -5702,6 +5692,9 @@
   "VS0YOp": {
     "context": "Request extension",
     "string": "Request Extension"
+  },
+  "VSLrmT": {
+    "string": "Current refund reasons from"
   },
   "VSj89H": {
     "context": "fulfill button label",
@@ -5951,10 +5944,6 @@
   "WzHfj8": {
     "context": "successfully created gift card alert title",
     "string": "Successfully created gift card"
-  },
-  "X/K4LI": {
-    "context": "label",
-    "string": "Normal"
   },
   "X6PF8z": {
     "context": "entity (product, collection, shipping method) name",
@@ -6220,10 +6209,6 @@
   "YIT1XP": {
     "string": "Create voucher"
   },
-  "YKyNm9": {
-    "context": "label",
-    "string": "Gift Card"
-  },
   "YQ3EXR": {
     "context": "product types section name",
     "string": "Product Types"
@@ -6235,6 +6220,9 @@
   "YVIajc": {
     "context": "product field",
     "string": "Description"
+  },
+  "YXhaCZ": {
+    "string": "Assign Product Types"
   },
   "YZl6cv": {
     "string": "Miscellaneous"
@@ -7148,6 +7136,9 @@
     "context": "Transaction title",
     "string": "Gift card (**** {code})"
   },
+  "e71euF": {
+    "string": "Refunds Model Type"
+  },
   "e7Nyu7": {
     "context": "section header",
     "string": "Customer History"
@@ -7304,18 +7295,12 @@
   "fL08MU": {
     "string": "Order value"
   },
-  "fLCV/w": {
-    "string": "Add new value"
-  },
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
   },
   "fM7xZh": {
     "string": "updated"
-  },
-  "fNFEkh": {
-    "string": "No of Rows:"
   },
   "fOXF9A": {
     "string": "Request Extension"
@@ -7348,10 +7333,6 @@
   },
   "fg8dzN": {
     "string": "Add condition"
-  },
-  "fgHLXc": {
-    "context": "attribute value",
-    "string": "Value"
   },
   "fhksPD": {
     "string": "Number of Orders"
@@ -7418,10 +7399,6 @@
   "fw+VAN": {
     "context": "product's sku",
     "string": "SKU"
-  },
-  "fyE8BN": {
-    "context": "product organization, header",
-    "string": "Organization"
   },
   "fzk04H": {
     "context": "dialog title",
@@ -7513,6 +7490,9 @@
   "gVD1os": {
     "context": "empty list message",
     "string": "You haven’t assigned any member to this permission group yet."
+  },
+  "gVqSnA": {
+    "string": "Assign and save"
   },
   "gXvoFf": {
     "context": "information",
@@ -7748,9 +7728,6 @@
   "hzSNj4": {
     "string": "Dashboard"
   },
-  "i+JSEZ": {
-    "string": "{counter,plural,one{Are you sure you want to cancel this order?} other{Are you sure you want to cancel {displayQuantity} orders?}}"
-  },
   "i+Vox0": {
     "context": "invoice generating has finished, header",
     "string": "Invoice Generated"
@@ -7914,10 +7891,6 @@
     "context": "attribute is filterable in dashboard",
     "string": "Filterable in dashboard"
   },
-  "j8PV7E": {
-    "context": "attribute values",
-    "string": "Values"
-  },
   "jBu2yj": {
     "context": "acre-inch unit",
     "string": "acre-inch"
@@ -8079,10 +8052,6 @@
   "k6sfZr": {
     "context": "tooltip content when product is in preorder",
     "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
-  },
-  "k9hf7F": {
-    "context": "total order price",
-    "string": "Total"
   },
   "kAAlGL": {
     "string": "Rules"
@@ -8337,6 +8306,9 @@
     "context": "collection",
     "string": "Published"
   },
+  "lLKEMH": {
+    "string": "Use refund settings to configure available reasons (permissions required)"
+  },
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
@@ -8472,6 +8444,10 @@
   },
   "mFC5Rq": {
     "string": "Assign Warehouses"
+  },
+  "mFr9YY": {
+    "context": "configuration section name for refund settings",
+    "string": "Refunds Settings"
   },
   "mGiA6q": {
     "context": "modal button upload",
@@ -8888,10 +8864,6 @@
     "context": "currency filter label",
     "string": "Currency"
   },
-  "p+UDec": {
-    "context": "payment status",
-    "string": "Payment"
-  },
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
@@ -8907,10 +8879,6 @@
   "p1D4Ok": {
     "context": "order send refund, manual transaction refund was created",
     "string": "Manual refund was created successfully"
-  },
-  "p3eRUm": {
-    "context": "indicator that feature is in preview mode",
-    "string": "Preview"
   },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
@@ -9003,6 +8971,9 @@
   },
   "pdJlXC": {
     "string": "See all global search results"
+  },
+  "pepgIN": {
+    "string": "Choose the Model Type whose extended Models will serve as refund reasons."
   },
   "pgTwKM": {
     "context": "section header",
@@ -9179,6 +9150,9 @@
     "context": "order line total price",
     "string": "Total"
   },
+  "qZB1cn": {
+    "string": "This Model Type does not have created models yet."
+  },
   "qZHHed": {
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
@@ -9315,6 +9289,9 @@
     "context": "status label active",
     "string": "Active"
   },
+  "rUnw7n": {
+    "string": "Configure refunds behavior"
+  },
   "rVIlBs": {
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
@@ -9403,6 +9380,10 @@
   "s2y5eG": {
     "context": "Status label",
     "string": "Status"
+  },
+  "s3jmO9": {
+    "context": "input label",
+    "string": "Reason notes"
   },
   "s3xi3B": {
     "context": "extension form app name field label",
@@ -9558,6 +9539,9 @@
     "context": "install app privacy",
     "string": "Uninstalling the app will remove all your customer’s personal data stored by {name}."
   },
+  "t1scMK": {
+    "string": "Refunds settings"
+  },
   "t3aiWF": {
     "context": "section header",
     "string": "Excluded Products"
@@ -9590,9 +9574,6 @@
   },
   "tLM9Jr": {
     "string": "The operation cannot be performed right now. This might be due to a pending installation with the same identifier. {docsLink} ({errorCode})"
-  },
-  "tQuE1q": {
-    "string": "Select channels you want for {contentType} to be available on"
   },
   "tQxBXs": {
     "context": "PageTypeDeleteWarningDialog single assigned items description",
@@ -9735,6 +9716,9 @@
     "context": "dialog header",
     "string": "Changed Customer"
   },
+  "uGqPKY": {
+    "string": "Select a Model Type. All Models extending the type will be available as refund reasons when issuing a refund."
+  },
   "uIPD1i": {
     "context": "app has been removed",
     "string": "App successfully removed"
@@ -9789,6 +9773,9 @@
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
+  },
+  "ubd+Kj": {
+    "string": "Search by name…"
   },
   "ubmFc8": {
     "string": "Install"
@@ -9948,6 +9935,9 @@
   "vQunFc": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
+  },
+  "vSLaZ7": {
+    "string": "Select a reason type"
   },
   "vSy+II": {
     "string": "Star on Github"
@@ -10356,6 +10346,9 @@
   "xl7Fag": {
     "string": "Category created"
   },
+  "xmcVZ0": {
+    "string": "Search"
+  },
   "xo5UIb": {
     "context": "dialog title",
     "string": "Delete category"
@@ -10597,6 +10590,9 @@
   "zHx85l": {
     "context": "value input helper text",
     "string": "Cannot be higher than 100%"
+  },
+  "zIPK5M": {
+    "string": "Enable refund reasons in settings"
   },
   "zJpP1T": {
     "context": "create new structure, header",

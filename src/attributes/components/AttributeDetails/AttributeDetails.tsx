@@ -7,7 +7,7 @@ import {
   AttributeErrorFragment,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
-import { ChangeEvent, UseFormResult } from "@dashboard/hooks/useForm";
+import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
@@ -56,7 +56,7 @@ export interface AttributeDetailsProps
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];
-  onChange: (event: ChangeEvent) => void;
+  onChange: FormChange;
 }
 
 const AttributeDetails = (props: AttributeDetailsProps) => {
@@ -79,6 +79,10 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
     {
       label: intl.formatMessage(inputTypeMessages.references),
       value: AttributeInputTypeEnum.REFERENCE,
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.singleReference),
+      value: AttributeInputTypeEnum.SINGLE_REFERENCE,
     },
     {
       label: intl.formatMessage(inputTypeMessages.plainText),
@@ -188,7 +192,8 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
               options={inputTypeChoices}
             />
           </Box>
-          {data.inputType === AttributeInputTypeEnum.REFERENCE && (
+          {(data.inputType === AttributeInputTypeEnum.REFERENCE ||
+            data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) && (
             <Box width="100%">
               <Select
                 aria-disabled={disabled || !canChangeType}

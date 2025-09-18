@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { IMoney } from "@dashboard/utils/intl";
-import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { Control, FieldError, useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
@@ -11,7 +11,7 @@ import {
 } from "../../OrderTransactionRefundPage";
 import { orderTransactionRefundSummaryMessages as messages } from "./messages";
 
-interface OrderTransactionSummaryProps {
+interface OrderTransactionSummaryProps extends BoxProps {
   amountError?: OrderTransactionRefundError | FieldError;
   control: Control<OrderTransactionRefundPageFormData, any>;
   selectedProductsValue: number;
@@ -27,6 +27,7 @@ export const OrderTransactionSummary = ({
   canRefundShipping,
   shippingCost,
   currency,
+  ...props
 }: OrderTransactionSummaryProps) => {
   const { field: shippingField } = useController({
     name: "includeShipping",
@@ -38,23 +39,17 @@ export const OrderTransactionSummary = ({
   });
 
   return (
-    <DashboardCard>
+    <DashboardCard {...props}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          <FormattedMessage {...messages.amount} />
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content display="flex" flexDirection="column" gap={5}>
-        <DashboardCard.Header>
-          <DashboardCard.Title paddingX={0}>
-            <FormattedMessage {...messages.amount} />
-          </DashboardCard.Title>
-        </DashboardCard.Header>
         <Text as="p">
           <FormattedMessage {...messages.amountDescription} />
         </Text>
-        <Box
-          display="flex"
-          flexDirection="column"
-          backgroundColor="default2"
-          paddingX={3}
-          borderRadius={3}
-        >
+        <Box display="flex" flexDirection="column" backgroundColor="default2" borderRadius={3}>
           <Box
             display="flex"
             justifyContent="space-between"

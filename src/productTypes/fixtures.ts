@@ -15,13 +15,22 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      availableInGrid: false,
+      storefrontSearchPosition: 0,
+      metadata: [],
+      privateMetadata: [],
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
+      visibleInStorefront: false,
+      filterableInDashboard: false,
+      filterableInStorefront: false,
       name: "Author",
       slug: "author",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -79,13 +88,22 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      availableInGrid: false,
+      storefrontSearchPosition: 0,
+      metadata: [],
+      privateMetadata: [],
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo2",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
+      visibleInStorefront: false,
+      filterableInDashboard: false,
+      filterableInStorefront: false,
       name: "Box Size",
       slug: "box-size",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -183,13 +201,22 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      availableInGrid: false,
+      storefrontSearchPosition: 0,
+      metadata: [],
+      privateMetadata: [],
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToz",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      visibleInStorefront: false,
+      filterableInDashboard: false,
+      filterableInStorefront: false,
       name: "Brand",
       slug: "brand",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -227,13 +254,22 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      availableInGrid: false,
+      storefrontSearchPosition: 0,
+      metadata: [],
+      privateMetadata: [],
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo4",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
+      visibleInStorefront: false,
+      filterableInDashboard: false,
+      filterableInStorefront: false,
       name: "Candy Box Size",
       slug: "candy-box-size",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -311,13 +347,22 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      availableInGrid: false,
+      storefrontSearchPosition: 0,
+      metadata: [],
+      privateMetadata: [],
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo1",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
+      visibleInStorefront: false,
+      filterableInDashboard: false,
+      filterableInStorefront: false,
       name: "Coffee Genre",
       slug: "coffee-genre",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -375,13 +420,22 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
+      availableInGrid: false,
+      storefrontSearchPosition: 0,
+      metadata: [],
+      privateMetadata: [],
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToy",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
+      visibleInStorefront: false,
+      filterableInDashboard: false,
+      filterableInStorefront: false,
       name: "Collar",
       slug: "collar",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -462,10 +516,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTox",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       name: "Color",
       slug: "color",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -526,10 +582,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMg==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       name: "Cover",
       slug: "cover",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -670,10 +728,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo3",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       name: "Flavor",
       slug: "flavor",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -734,10 +794,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       name: "Language",
       slug: "language",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -798,10 +860,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       name: "Publisher",
       slug: "publisher",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -862,10 +926,12 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       entityType: null,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo0",
       inputType: AttributeInputTypeEnum.DROPDOWN,
+      type: AttributeTypeEnum.PRODUCT_TYPE,
       name: "Size",
       slug: "size",
       valueRequired: true,
       unit: null,
+      referenceTypes: [],
       choices: {
         __typename: "AttributeValueCountableConnection" as const,
         pageInfo: {
@@ -1000,7 +1066,16 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       },
     },
   },
-].map(edge => edge.node);
+].map(edge => ({
+  ...edge.node,
+  availableInGrid: edge.node.availableInGrid ?? false,
+  storefrontSearchPosition: edge.node.storefrontSearchPosition ?? 0,
+  metadata: edge.node.metadata ?? [],
+  privateMetadata: edge.node.privateMetadata ?? [],
+  visibleInStorefront: edge.node.visibleInStorefront ?? false,
+  filterableInDashboard: edge.node.filterableInDashboard ?? false,
+  filterableInStorefront: edge.node.filterableInStorefront ?? false,
+}));
 
 export const productTypeSearch: ProductTypeQuery["productType"] = {
   __typename: "ProductType" as const,
@@ -1123,6 +1198,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
   productAttributes: [
     {
       __typename: "Attribute" as const,
+      metadata: [],
+      privateMetadata: [],
       filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
@@ -1135,6 +1212,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
     },
     {
       __typename: "Attribute" as const,
+      metadata: [],
+      privateMetadata: [],
       filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
@@ -1147,6 +1226,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
     },
     {
       __typename: "Attribute" as const,
+      metadata: [],
+      privateMetadata: [],
       filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
@@ -1186,6 +1267,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       __typename: "AssignedVariantAttribute" as const,
       attribute: {
         __typename: "Attribute" as const,
+        metadata: [],
+        privateMetadata: [],
         filterableInDashboard: true,
         filterableInStorefront: false,
         id: "UHJvZHVjdEF0dHJpYnV0ATo5",
