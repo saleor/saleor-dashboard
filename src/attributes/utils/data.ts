@@ -31,13 +31,6 @@ import { ProductVariantCacheManager } from "./productVariantCache";
 // Create a module-level cache manager instance
 const productVariantCacheManager = new ProductVariantCacheManager();
 
-// Export function to reset cache for testing purposes
-// This should be done via dep. injection, but we don't want to rewrite this entire file
-// to use classes
-//
-// TODO: Rewrite to use a class
-export const resetProductVariantCache = () => productVariantCacheManager.reset();
-
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
 
 export interface RichTextProps {
