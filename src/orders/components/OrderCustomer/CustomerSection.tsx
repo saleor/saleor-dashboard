@@ -60,8 +60,8 @@ const RegisteredCustomer = ({ user, className, onProfileView }: RegisteredCustom
 );
 
 export interface CustomerSectionProps extends Partial<FetchMoreProps> {
-  user: OrderDetailsFragment["user"];
-  userEmail: OrderDetailsFragment["userEmail"];
+  user: OrderDetailsFragment["user"] | undefined;
+  userEmail: OrderDetailsFragment["userEmail"] | undefined;
   onProfileView: () => void;
   userEmailClassName?: string;
 }

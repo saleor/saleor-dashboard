@@ -40,11 +40,14 @@ jest.mock("@dashboard/components/Form", () => ({
 }));
 
 const defaultProps = {
-  user: { id: "user-1", email: "user@example.com" },
-  userEmail: "user@example.com",
+  currentUser: { __typename: "User" as const, id: "user-1", email: "user@example.com" },
+  currentUserEmail: "user@example.com",
   toggleEditMode: jest.fn(),
   setUserDisplayName: jest.fn(),
   userDisplayName: "user@example.com",
+  loading: false,
+  hasMore: false,
+  onFetchMore: jest.fn(),
 };
 
 const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -158,7 +161,7 @@ describe("CustomerEditForm", () => {
     });
   });
 
-  it("renders user choices when users are provided", () => {
+  it("renders user choices when allUsers are provided", () => {
     // Arrange
     const users = [
       { id: "user-1", email: "user1@example.com" },
@@ -168,7 +171,7 @@ describe("CustomerEditForm", () => {
     // Act
     render(
       <Wrapper>
-        <CustomerEditForm {...defaultProps} users={users} />
+        <CustomerEditForm {...defaultProps} allUsers={users} />
       </Wrapper>,
     );
 
@@ -198,7 +201,7 @@ describe("CustomerEditForm", () => {
     expect(screen.getByTestId("select-customer")).toBeInTheDocument();
   });
 
-  it("handles null userEmail correctly", async () => {
+  it("handles null currentUserEmail correctly", async () => {
     // Arrange
     const onCustomerEditMock = jest.fn();
     const toggleEditModeMock = jest.fn();
@@ -208,7 +211,7 @@ describe("CustomerEditForm", () => {
       <Wrapper>
         <CustomerEditForm
           {...defaultProps}
-          userEmail={null}
+          currentUserEmail={null}
           onCustomerEdit={onCustomerEditMock}
           toggleEditMode={toggleEditModeMock}
         />
@@ -229,7 +232,7 @@ describe("CustomerEditForm", () => {
     });
   });
 
-  it("handles undefined user correctly", async () => {
+  it("handles null currentUser correctly", async () => {
     // Arrange
     const onCustomerEditMock = jest.fn();
     const toggleEditModeMock = jest.fn();
@@ -239,7 +242,7 @@ describe("CustomerEditForm", () => {
       <Wrapper>
         <CustomerEditForm
           {...defaultProps}
-          user={undefined}
+          currentUser={null}
           onCustomerEdit={onCustomerEditMock}
           toggleEditMode={toggleEditModeMock}
         />

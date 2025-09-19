@@ -35,17 +35,9 @@ jest.mock("@dashboard/components/RequirePermissions", () => ({
 }));
 
 const defaultProps: CustomerSectionProps = {
-  order: {
-    id: "order-1",
-    user: null,
-    userEmail: null,
-  } as any,
-  canEditCustomer: false,
+  user: null,
+  userEmail: null,
   onProfileView: jest.fn(),
-  isInEditMode: false,
-  toggleEditMode: jest.fn(),
-  setUserDisplayName: jest.fn(),
-  userDisplayName: "",
   userEmailClassName: "test-class",
 };
 
@@ -60,11 +52,8 @@ describe("CustomerSection", () => {
     // Arrange
     const props: CustomerSectionProps = {
       ...defaultProps,
-      order: {
-        id: "order-1",
-        user: undefined,
-        userEmail: undefined,
-      } as any,
+      user: undefined,
+      userEmail: undefined,
     };
 
     // Act
@@ -85,11 +74,8 @@ describe("CustomerSection", () => {
     // Arrange
     const props: CustomerSectionProps = {
       ...defaultProps,
-      order: {
-        id: "order-1",
-        user: null,
-        userEmail: null,
-      } as any,
+      user: null,
+      userEmail: null,
     };
 
     // Act
@@ -107,11 +93,8 @@ describe("CustomerSection", () => {
     // Arrange
     const props: CustomerSectionProps = {
       ...defaultProps,
-      order: {
-        id: "order-1",
-        user: null,
-        userEmail: "test@example.com",
-      } as any,
+      user: null,
+      userEmail: "test@example.com",
     };
 
     // Act
@@ -135,14 +118,12 @@ describe("CustomerSection", () => {
     // Arrange
     const props: CustomerSectionProps = {
       ...defaultProps,
-      order: {
-        id: "order-1",
-        user: {
-          id: "user-123",
-          email: "user@example.com",
-        },
-        userEmail: "user@example.com",
-      } as any,
+      user: {
+        __typename: "User" as const,
+        id: "user-123",
+        email: "user@example.com",
+      },
+      userEmail: "user@example.com",
     };
 
     // Act
@@ -163,51 +144,18 @@ describe("CustomerSection", () => {
     expect(viewOrdersLink).toHaveAttribute("href", expect.stringContaining("user-123"));
   });
 
-  it("renders CustomerEditForm when in edit mode", () => {
-    // Arrange
-    const props: CustomerSectionProps = {
-      ...defaultProps,
-      canEditCustomer: true,
-      isInEditMode: true,
-      users: [],
-      fetchUsers: jest.fn(),
-      onCustomerEdit: jest.fn(),
-      order: {
-        id: "order-1",
-        user: {
-          id: "user-123",
-          email: "user@example.com",
-        },
-        userEmail: "user@example.com",
-      } as any,
-    };
-
-    // Act
-    render(
-      <Wrapper>
-        <CustomerSection {...props} />
-      </Wrapper>,
-    );
-
-    // Assert
-    expect(screen.getByTestId("select-customer")).toBeInTheDocument();
-    expect(screen.getByText("Search Customers")).toBeInTheDocument();
-  });
-
   it("calls onProfileView when View Profile link is clicked", () => {
     // Arrange
     const onProfileViewMock = jest.fn();
     const props: CustomerSectionProps = {
       ...defaultProps,
       onProfileView: onProfileViewMock,
-      order: {
-        id: "order-1",
-        user: {
-          id: "user-123",
-          email: "user@example.com",
-        },
-        userEmail: "user@example.com",
-      } as any,
+      user: {
+        __typename: "User" as const,
+        id: "user-123",
+        email: "user@example.com",
+      },
+      userEmail: "user@example.com",
     };
 
     // Act
