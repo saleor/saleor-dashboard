@@ -131,11 +131,11 @@ export function useProductUpdateForm(
     triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
-    attributes.change,
+    attributes,
     triggerChange,
   );
   const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
-    attributes.setMetadata,
+    attributes,
     triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
@@ -174,17 +174,16 @@ export function useProductUpdateForm(
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const data: ProductUpdateData = {
     ...formData,
-    attributes: getAttributesDisplayData(
-      attributes.data,
-      attributesWithNewFileValue.data,
-      opts.referencePages,
-      opts.referenceProducts,
-      opts.referenceCollections,
-      opts.referenceCategories,
-    ),
+    attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
+      pages: opts.referencePages,
+      products: opts.referenceProducts,
+      collections: opts.referenceCollections,
+      categories: opts.referenceCategories,
+    }),
     channels,
     description: null,
   };
+
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...form.changedData,
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),

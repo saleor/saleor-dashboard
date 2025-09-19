@@ -245,11 +245,11 @@ function useProductCreateForm(
     triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
-    attributes.change,
+    attributes,
     triggerChange,
   );
   const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
-    attributes.setMetadata,
+    attributes,
     triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
@@ -326,14 +326,12 @@ function useProductCreateForm(
   );
   const data: ProductCreateData = {
     ...formData,
-    attributes: getAttributesDisplayData(
-      attributes.data,
-      attributesWithNewFileValue.data,
-      opts.referencePages,
-      opts.referenceProducts,
-      opts.referenceCollections,
-      opts.referenceCategories,
-    ),
+    attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
+      pages: opts.referencePages,
+      products: opts.referenceProducts,
+      collections: opts.referenceCollections,
+      categories: opts.referenceCategories,
+    }),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: null,
     productType: opts.selectedProductType,

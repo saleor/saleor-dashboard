@@ -32,7 +32,11 @@ export interface UseFormsetOutput<TData = {}, TValue = any, TMetadata = any> {
   add: (data: FormsetAtomicData<TData, TValue, TMetadata>) => void;
   change: FormsetChange<TValue>;
   data: FormsetData<TData, TValue, TMetadata>;
-  setMetadata: (id: string, metadata: TMetadata) => void;
+  setMetadata: (
+    id: string,
+    metadata: TMetadata,
+    merge?: (prev: TMetadata, next: TMetadata) => TMetadata,
+  ) => void;
   get: (id: string) => FormsetAtomicData<TData, TValue>;
   // Used for some rare situations like dataset change
   set: (data: FormsetData<TData, TValue>) => void;
