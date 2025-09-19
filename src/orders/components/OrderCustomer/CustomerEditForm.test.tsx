@@ -223,7 +223,7 @@ describe("CustomerEditForm", () => {
     await waitFor(() => {
       expect(onCustomerEditMock).toHaveBeenCalledWith({
         prevUser: "user-1",
-        prevUserEmail: null,
+        prevUserEmail: undefined,
         userEmail: "newemail@example.com",
       });
     });

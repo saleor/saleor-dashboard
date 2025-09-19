@@ -50,7 +50,7 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
 
           onCustomerEdit?.({
             prevUser: user?.id,
-            prevUserEmail: userEmail ?? undefined,
+            prevUserEmail: userEmail || undefined,
             [value.includes("@") ? "userEmail" : "user"]: value,
           });
           toggleEditMode();
