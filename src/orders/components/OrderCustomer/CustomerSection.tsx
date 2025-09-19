@@ -1,16 +1,12 @@
 import Link from "@dashboard/components/Link";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { customerUrl } from "@dashboard/customers/urls";
-import { OrderDetailsFragment, PermissionEnum, SearchCustomersQuery } from "@dashboard/graphql";
-import { maybe } from "@dashboard/misc";
+import { OrderDetailsFragment, PermissionEnum } from "@dashboard/graphql";
 import { orderListUrlWithCustomerEmail, orderListUrlWithCustomerId } from "@dashboard/orders/urls";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { FetchMoreProps } from "@dashboard/types";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { CustomerEditForm } from "./CustomerEditForm";
-import { CustomerEditData } from "./OrderCustomer";
 
 const AnonymousCustomer = () => (
   <Text>
@@ -64,59 +60,20 @@ const RegisteredCustomer = ({ user, className, onProfileView }: RegisteredCustom
 );
 
 export interface CustomerSectionProps extends Partial<FetchMoreProps> {
-  order: OrderDetailsFragment;
-  users?: RelayToFlat<SearchCustomersQuery["search"]>;
-  loading?: boolean;
-  canEditCustomer: boolean;
-  fetchUsers?: (query: string) => void;
-  onCustomerEdit?: (data: CustomerEditData) => void;
+  user: OrderDetailsFragment["user"];
+  userEmail: OrderDetailsFragment["userEmail"];
   onProfileView: () => void;
-  isInEditMode: boolean;
-  toggleEditMode: () => void;
-  setUserDisplayName: (name: string) => void;
-  userDisplayName: string;
   userEmailClassName?: string;
 }
 
 export const CustomerSection: React.FC<CustomerSectionProps> = ({
-  order,
-  users,
-  loading,
-  canEditCustomer,
-  fetchUsers,
-  hasMore: hasMoreUsers,
-  onCustomerEdit,
-  onFetchMore: onFetchMoreUsers,
-  onProfileView,
-  isInEditMode,
-  toggleEditMode,
-  setUserDisplayName,
-  userDisplayName,
+  user,
+  userEmail,
   userEmailClassName,
+  onProfileView,
 }) => {
-  const user = maybe(() => order.user);
-  const userEmail = maybe(() => order.userEmail);
-
   if (user === undefined) {
     return <Skeleton />;
-  }
-
-  if (isInEditMode && canEditCustomer) {
-    return (
-      <CustomerEditForm
-        user={user}
-        userEmail={userEmail ?? null}
-        users={users}
-        fetchUsers={fetchUsers}
-        onCustomerEdit={onCustomerEdit}
-        onFetchMore={onFetchMoreUsers}
-        hasMore={hasMoreUsers}
-        loading={loading}
-        toggleEditMode={toggleEditMode}
-        setUserDisplayName={setUserDisplayName}
-        userDisplayName={userDisplayName}
-      />
-    );
   }
 
   if (user === null) {

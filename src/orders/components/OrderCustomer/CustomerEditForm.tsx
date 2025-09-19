@@ -1,6 +1,6 @@
 import { Combobox } from "@dashboard/components/Combobox";
 import Form from "@dashboard/components/Form";
-import { SearchCustomersQuery } from "@dashboard/graphql";
+import { OrderDetailsFragment, SearchCustomersQuery } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -9,22 +9,21 @@ import { useIntl } from "react-intl";
 
 import { CustomerEditData } from "./OrderCustomer";
 
-interface CustomerEditFormProps extends Partial<FetchMoreProps> {
-  user: any;
-  userEmail: string | null;
-  users?: RelayToFlat<SearchCustomersQuery["search"]>;
+interface CustomerEditFormProps extends FetchMoreProps {
+  currentUser: OrderDetailsFragment["user"] | null;
+  currentUserEmail: string | null;
+  allUsers?: RelayToFlat<SearchCustomersQuery["search"]>;
   fetchUsers?: (query: string) => void;
   onCustomerEdit?: (data: CustomerEditData) => void;
-  loading?: boolean;
   toggleEditMode: () => void;
   setUserDisplayName: (name: string) => void;
   userDisplayName: string;
 }
 
 export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
-  user,
-  userEmail,
-  users,
+  currentUser,
+  currentUserEmail,
+  allUsers,
   fetchUsers,
   onCustomerEdit,
   onFetchMore,
@@ -49,14 +48,14 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
           }
 
           onCustomerEdit?.({
-            prevUser: user?.id,
-            prevUserEmail: userEmail || undefined,
+            prevUser: currentUser?.id,
+            prevUserEmail: currentUserEmail || undefined,
             [value.includes("@") ? "userEmail" : "user"]: value,
           });
           toggleEditMode();
         };
 
-        const userChoices = (users || []).map(user => ({
+        const userChoices = (allUsers || []).map(user => ({
           label: user.email,
           value: user.id,
         }));
@@ -77,9 +76,9 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
             })}
             options={userChoices}
             fetchMore={{
-              onFetchMore: onFetchMore || (() => {}),
-              hasMore: hasMore || false,
-              loading: loading || false,
+              onFetchMore: onFetchMore,
+              hasMore: hasMore,
+              loading: loading,
             }}
             fetchOptions={fetchUsers || (() => {})}
             name="query"

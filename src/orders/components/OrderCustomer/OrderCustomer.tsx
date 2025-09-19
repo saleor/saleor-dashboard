@@ -20,6 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { AddressTextError } from "./AddrssTextError";
+import { CustomerEditForm } from "./CustomerEditForm";
 import { CustomerSection } from "./CustomerSection";
 import { PickupAnnotation } from "./PickupAnnotation";
 import { useStyles } from "./styles";
@@ -102,22 +103,28 @@ const OrderCustomer = (props: OrderCustomerProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <CustomerSection
-          order={order}
-          users={users}
-          loading={loading}
-          canEditCustomer={canEditCustomer}
-          fetchUsers={fetchUsers}
-          hasMore={hasMoreUsers}
-          onCustomerEdit={onCustomerEdit}
-          onFetchMore={onFetchMoreUsers}
-          onProfileView={onProfileView}
-          isInEditMode={isInEditMode}
-          toggleEditMode={toggleEditMode}
-          setUserDisplayName={setUserDisplayName}
-          userDisplayName={userDisplayName}
-          userEmailClassName={classes.userEmail}
-        />
+        {isInEditMode ? (
+          <CustomerEditForm
+            currentUser={user}
+            currentUserEmail={order?.userEmail}
+            allUsers={users}
+            fetchUsers={fetchUsers}
+            onCustomerEdit={onCustomerEdit}
+            onFetchMore={onFetchMoreUsers}
+            hasMore={hasMoreUsers}
+            loading={loading}
+            toggleEditMode={toggleEditMode}
+            setUserDisplayName={setUserDisplayName}
+            userDisplayName={userDisplayName}
+          />
+        ) : (
+          <CustomerSection
+            user={user}
+            userEmail={order?.userEmail}
+            onProfileView={onProfileView}
+            userEmailClassName={classes.userEmail}
+          />
+        )}
       </DashboardCard.Content>
       {!!user && (
         <>
