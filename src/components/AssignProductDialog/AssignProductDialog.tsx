@@ -8,11 +8,6 @@ import { AssignProductDialogSingle } from "./AssignProductDialogSingle";
 import { messages } from "./messages";
 import { Products, SelectedChannel } from "./types";
 
-export interface AssignProductDialogFormData {
-  products: Products;
-  query: string;
-}
-
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: Products;

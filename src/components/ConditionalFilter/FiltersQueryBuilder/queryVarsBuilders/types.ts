@@ -5,7 +5,7 @@ import { FilterElement } from "../../FilterElement";
 
 export type FilterQuery = Record<string, unknown>;
 
-export interface BaseQueryVarsBuilder {
+interface BaseQueryVarsBuilder {
   /**
    * Determines if this definition should handle the given filter element.
    */

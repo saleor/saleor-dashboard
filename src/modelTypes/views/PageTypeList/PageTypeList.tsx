@@ -34,7 +34,7 @@ interface PageTypeListProps {
   params: PageTypeListUrlQueryParams;
 }
 
-export const PageTypeList = ({ params }: PageTypeListProps) => {
+const PageTypeList = ({ params }: PageTypeListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const {
@@ -200,5 +200,6 @@ export const PageTypeList = ({ params }: PageTypeListProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 PageTypeList.displayName = "PageTypeList";
 export default PageTypeList;

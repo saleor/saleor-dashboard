@@ -23,7 +23,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import { messages } from "./messages";
 
-export interface CategoryTableProps
+interface CategoryTableProps
   extends PageListProps,
     SearchPageProps,
     SortPage<CategoryListUrlSortField>,
@@ -149,4 +149,3 @@ export const CategoryListPage = ({
   );
 };
 CategoryListPage.displayName = "CategoryListPage";
-export default CategoryListPage;

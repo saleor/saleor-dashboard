@@ -14,7 +14,7 @@ interface FeatureFlagsProviderProps {
   deps?: unknown[];
 }
 
-export const FeatureFlagsProvider = ({ children, strategies }: FeatureFlagsProviderProps) => {
+const FeatureFlagsProvider = ({ children, strategies }: FeatureFlagsProviderProps) => {
   const [flags, setFlags] = useState<FlagList | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const disableLoading = () => setLoading(false);

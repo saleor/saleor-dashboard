@@ -21,7 +21,7 @@ export const getWebhookTypes = (webhookEvents: string[]) => {
   }, {});
 };
 
-export const AsyncWebhookTypes: Record<string, Actions> = getWebhookTypes(
+const AsyncWebhookTypes: Record<string, Actions> = getWebhookTypes(
   Object.keys(WebhookEventTypeAsyncEnum),
 );
 

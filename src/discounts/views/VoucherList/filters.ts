@@ -10,7 +10,6 @@ import { Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
-  createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
@@ -21,10 +20,9 @@ import {
   VoucherListUrlFilters,
   VoucherListUrlFiltersEnum,
   VoucherListUrlFiltersWithMultipleValues,
-  VoucherListUrlQueryParams,
 } from "../../urls";
 
-export const VOUCHER_FILTERS_KEY = "voucherFilters";
+const VOUCHER_FILTERS_KEY = "voucherFilters";
 
 export function getFilterOpts(
   params: VoucherListUrlFilters,
@@ -129,11 +127,3 @@ export function getFilterQueryParam(
 }
 
 export const storageUtils = createFilterTabUtils<string>(VOUCHER_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  VoucherListUrlQueryParams,
-  VoucherListUrlFilters
->({
-  ...VoucherListUrlFiltersEnum,
-  ...VoucherListUrlFiltersWithMultipleValues,
-});

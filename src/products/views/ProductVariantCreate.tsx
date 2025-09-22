@@ -50,7 +50,7 @@ interface ProductVariantCreateProps {
   params: ProductVariantAddUrlQueryParams;
 }
 
-export const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
+const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -310,4 +310,5 @@ export const ProductVariant = ({ productId, params }: ProductVariantCreateProps)
     </>
   );
 };
+
 export default ProductVariant;

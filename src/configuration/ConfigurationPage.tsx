@@ -25,7 +25,7 @@ interface VersionInfo {
   coreVersion: string;
 }
 
-export interface ConfigurationPageProps {
+interface ConfigurationPageProps {
   menu: MenuSection[];
   user: UserFragment;
   versionInfo: VersionInfo;

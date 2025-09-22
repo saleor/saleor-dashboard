@@ -53,7 +53,7 @@ const useStyles = makeStyles(
   { name: "ImageUpload" },
 );
 
-export const ImageUpload = (props: ImageUploadProps) => {
+const ImageUpload = (props: ImageUploadProps) => {
   const {
     children,
     className,
@@ -101,5 +101,6 @@ export const ImageUpload = (props: ImageUploadProps) => {
     </Dropzone>
   );
 };
+
 ImageUpload.displayName = "ImageUpload";
 export default ImageUpload;

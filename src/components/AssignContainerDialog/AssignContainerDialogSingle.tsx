@@ -15,7 +15,7 @@ import { useStyles } from "./styles";
 
 type Labels = Record<"confirmBtn" | "title" | "label" | "placeholder", string>;
 
-export interface AssignContainerDialogSingleProps extends FetchMoreProps {
+interface AssignContainerDialogSingleProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   containers: Container[];
   loading: boolean;

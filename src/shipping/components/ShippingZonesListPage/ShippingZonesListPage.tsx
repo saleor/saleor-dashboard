@@ -14,10 +14,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ShippingZoneListDatagrid } from "../ShippingZonesListDatagrid";
 import { messages } from "./messages";
 
-export interface ShippingZonesListPageProps
-  extends PageListProps,
-    SearchPageProps,
-    UserPermissionProps {
+interface ShippingZonesListPageProps extends PageListProps, SearchPageProps, UserPermissionProps {
   defaultWeightUnit: WeightUnitsEnum | undefined;
   shippingZones: ShippingZoneFragment[] | undefined;
   selectedShippingZonesIds: string[];
@@ -28,9 +25,7 @@ export interface ShippingZonesListPageProps
 }
 
 const ShippingZonesListPage = ({
-  defaultWeightUnit,
   disabled,
-  onSubmit,
   onRemove,
   selectedShippingZonesIds,
   initialSearch,

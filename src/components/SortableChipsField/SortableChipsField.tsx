@@ -25,7 +25,7 @@ export interface SortableChipsFieldValueType {
   url?: string;
 }
 
-export interface SortableChipsFieldProps {
+interface SortableChipsFieldProps {
   loading?: boolean;
   disabled?: boolean;
   values: SortableChipsFieldValueType[];

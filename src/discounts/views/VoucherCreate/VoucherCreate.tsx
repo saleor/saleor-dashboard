@@ -38,7 +38,7 @@ interface VoucherCreateProps {
   params: VoucherCreateUrlQueryParams;
 }
 
-export const VoucherCreateView = ({ params }: VoucherCreateProps) => {
+const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -173,4 +173,5 @@ export const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     </>
   );
 };
+
 export default VoucherCreateView;

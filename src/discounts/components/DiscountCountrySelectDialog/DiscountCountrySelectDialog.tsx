@@ -21,7 +21,7 @@ interface FormData {
   query: string;
 }
 
-export interface DiscountCountrySelectDialogProps {
+interface DiscountCountrySelectDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: CountryWithCodeFragment[];
   initial: string[];
