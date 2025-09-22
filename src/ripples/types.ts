@@ -9,6 +9,10 @@ export type Ripple = {
   dateAdded: Date;
   content: {
     /**
+     * Short header-like text for global view
+     */
+    oneLiner: string;
+    /**
      * In global changelog-like list
      */
     global: ReactNode; // React Node / md -> react / md -> html or just plain here

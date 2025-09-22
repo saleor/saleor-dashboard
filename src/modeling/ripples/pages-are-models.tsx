@@ -5,6 +5,7 @@ export const ripplePagesAreModels: Ripple = {
   ID: "pages-are-models",
   TTL: 60 * 60 * 24 * 2, // 2 days
   content: {
+    oneLiner: "Pages are now called Models",
     contextual: "Pages are now called Models",
     global:
       "We have renamed Pages to Models. API still uses the old naming, but we it will change in the future.",

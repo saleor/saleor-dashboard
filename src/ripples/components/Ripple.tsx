@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
  * We need to fix macaw-next or re-export similar helper from it
  *
  * TODO
- * Consider removing "ok / hide" button
+ * Make tooltip working on click instead of hover
  */
 export const Ripple = (props: { model: RippleModel }) => {
   const content = props.model.content.contextual;
