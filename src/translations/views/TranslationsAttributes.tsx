@@ -26,7 +26,7 @@ type HandleSubmitData = string | OutputData;
 export interface TranslationsAttributesQueryParams extends Pagination {
   activeField: string;
 }
-export interface TranslationsAttributesProps {
+interface TranslationsAttributesProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsAttributesQueryParams;

@@ -15,7 +15,7 @@ import {
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "./types";
 import { getChannelsAvailabilityMessages } from "./utils";
 
-export interface ChannelsAvailability
+interface ChannelsAvailability
   extends Omit<ChannelsAvailabilityWrapperProps, "children" | "selectedChannelsCount"> {
   channels: ChannelData[];
   /** Channels that have no settings */
@@ -27,7 +27,7 @@ export interface ChannelsAvailability
   onChange?: (id: string, data: ChannelOpts) => void;
 }
 
-export type ChannelsAvailabilityCardProps = RequireOnlyOne<
+type ChannelsAvailabilityCardProps = RequireOnlyOne<
   ChannelsAvailability,
   "channels" | "channelsList"
 >;

@@ -18,13 +18,7 @@ interface UsePendingInstallationProps {
   searchQuery: string;
 }
 
-export const getPendingInstallationLogo = ({
-  logo,
-  name,
-}: {
-  logo?: string | null;
-  name: string;
-}) => {
+const getPendingInstallationLogo = ({ logo, name }: { logo?: string | null; name: string }) => {
   if (logo) {
     return <Box as="img" src={logo} alt={name} display="block" maxWidth="100%" />;
   }

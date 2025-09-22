@@ -288,8 +288,8 @@ export function mergeRepeatedOrderLines(
   }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
-export function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
-  const { id, __typename, ...rest } = address;
+function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
+  const { __typename, ...rest } = address;
 
   return {
     ...rest,
@@ -309,10 +309,7 @@ export const getVariantSearchAddress = (order: OrderDetailsFragment): AddressInp
   return { country: order.channel.defaultCountry.code as CountryCode };
 };
 
-export const getAllocatedQuantityForLine = (
-  line: OrderLineStockDataFragment,
-  warehouseId: string,
-) => {
+const getAllocatedQuantityForLine = (line: OrderLineStockDataFragment, warehouseId: string) => {
   const warehouseAllocation = line.allocations.find(
     allocation => allocation.warehouse.id === warehouseId,
   );
@@ -351,23 +348,6 @@ export const getFulfillmentFormsetQuantity = (
 export const getWarehouseStock = (stocks: StockFragment[], warehouseId: string) =>
   stocks?.find(stock => stock.warehouse.id === warehouseId);
 
-export const isLineAvailableInWarehouse = (
-  line: OrderFulfillLineFragment | OrderLineStockDataFragment,
-  warehouse: WarehouseFragment,
-): boolean => {
-  if (!line?.variant?.stocks) {
-    return false;
-  }
-
-  const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
-
-  if (stock) {
-    return line.quantityToFulfill <= getOrderLineAvailableQuantity(line, stock);
-  }
-
-  return false;
-};
-
 export const getLineAvailableQuantityInWarehouse = (
   line: OrderFulfillLineFragment,
   warehouse: WarehouseFragment,
@@ -395,26 +375,6 @@ export const getLineAllocationWithHighestQuantity = (
 
     return prevAllocation;
   }, null);
-
-export const getWarehouseWithHighestAvailableQuantity = (
-  lines?: OrderLineFragment[],
-): WarehouseFragment | undefined => {
-  let highestAvailableQuantity = 0;
-
-  return lines?.reduce(
-    (selectedWarehouse, line) =>
-      line.allocations.reduce((warehouse, allocation) => {
-        if (allocation.quantity > highestAvailableQuantity) {
-          highestAvailableQuantity = allocation.quantity;
-
-          return allocation.warehouse;
-        }
-
-        return warehouse;
-      }, selectedWarehouse),
-    null as WarehouseFragment,
-  );
-};
 
 export const transformFuflillmentLinesToStockFormsetData = (
   lines: FulfillmentFragment["lines"],

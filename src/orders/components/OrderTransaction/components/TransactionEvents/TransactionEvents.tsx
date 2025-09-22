@@ -11,7 +11,7 @@ import { FormattedMessage } from "react-intl";
 import { EventItem } from "./components";
 import { messages } from "./messages";
 
-export interface OrderTransactionEventsProps {
+interface OrderTransactionEventsProps {
   events: TransactionEventFragment[] | TransactionFakeEvent[];
 }
 

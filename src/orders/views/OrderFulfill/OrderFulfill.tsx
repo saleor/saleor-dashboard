@@ -21,7 +21,7 @@ import {
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useIntl } from "react-intl";
 
-export interface OrderFulfillProps {
+interface OrderFulfillProps {
   orderId: string;
   params: OrderFulfillUrlQueryParams;
 }
@@ -100,6 +100,7 @@ const OrderFulfill = ({ orderId, params }: OrderFulfillProps) => {
                   })),
                 notifyCustomer: settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
                 allowStockToBeExceeded: formData.allowStockToBeExceeded,
+                trackingNumber: formData.trackingNumber,
               },
               orderId,
             },

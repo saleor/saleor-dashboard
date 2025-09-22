@@ -9,7 +9,7 @@ import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
+interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   onSubmit: (range: MinMax) => void;
 }

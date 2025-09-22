@@ -20,7 +20,7 @@ interface TaxCountryExceptionListItemProps {
   strategyChoicesLoading: boolean;
 }
 
-export const TaxCountryExceptionListItem = ({
+const TaxCountryExceptionListItem = ({
   country,
   onDelete,
   onChange,
@@ -72,4 +72,5 @@ export const TaxCountryExceptionListItem = ({
     </>
   );
 };
+
 export default TaxCountryExceptionListItem;

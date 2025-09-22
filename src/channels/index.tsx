@@ -29,7 +29,7 @@ const ChannelsList = ({ location }: RouteComponentProps) => {
   return <ChannelsListComponent params={params} />;
 };
 
-export const ChannelsSection = () => {
+const ChannelsSection = () => {
   const intl = useIntl();
 
   return (
@@ -43,4 +43,5 @@ export const ChannelsSection = () => {
     </>
   );
 };
+
 export default ChannelsSection;

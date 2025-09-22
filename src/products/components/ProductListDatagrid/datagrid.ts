@@ -142,7 +142,7 @@ export const productListDynamicColumnAdapter = ({
   },
 ];
 
-export const parseAttributesColumns = (
+const parseAttributesColumns = (
   attributes: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,

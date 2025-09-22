@@ -11,7 +11,7 @@ import {
 import { getFullName } from "@dashboard/misc";
 import { pageUrl } from "@dashboard/modeling/urls";
 import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
-import { Node, SlugNode, TagNode } from "@dashboard/types";
+import { Node, SlugNode } from "@dashboard/types";
 import { Choice } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
 
@@ -65,10 +65,6 @@ export function mapNodeToChoice<T extends ExtendedNode>(nodes: T[], getterFn?: (
 
 export function mapSlugNodeToChoice(nodes: Array<ExtendedNode & SlugNode>): Option[] {
   return mapNodeToChoice(nodes, node => node.slug);
-}
-
-export function mapTagNodeToChoice(nodes: Array<Node & TagNode>): Option[] {
-  return mapNodeToChoice(nodes, node => node.tag);
 }
 
 export function mapMetadataItemToInput(item: MetadataItemFragment): MetadataInput {

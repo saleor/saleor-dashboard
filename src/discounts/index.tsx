@@ -102,7 +102,7 @@ const VoucherCreateView = ({ location }: RouteComponentProps) => {
   return <VoucherCreateViewComponent params={params} />;
 };
 
-export const DiscountSection = () => {
+const DiscountSection = () => {
   const intl = useIntl();
 
   return (
@@ -119,4 +119,5 @@ export const DiscountSection = () => {
     </>
   );
 };
+
 export default DiscountSection;

@@ -30,7 +30,7 @@ import {
   getWaitingFulfillments,
 } from "./utils";
 
-export interface OrderReturnPageProps {
+interface OrderReturnPageProps {
   order: OrderDetailsFragment | undefined | null;
   loading: boolean;
   returnErrors?: OrderErrorFragment[];

@@ -4,12 +4,12 @@ import usePageSearch from "@dashboard/searches/usePageSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import { useMemo } from "react";
 
-export enum ReferenceType {
+enum ReferenceType {
   ProductType = "ProductType",
   PageType = "PageType",
 }
 
-export enum ReferenceWhereKey {
+enum ReferenceWhereKey {
   ProductType = "productType",
   PageType = "pageType",
 }
@@ -18,7 +18,7 @@ type AttributeWithReferenceTypes =
   | NonNullable<AttributeDetailsFragment>
   | NonNullable<VariantAttributeFragment>;
 
-export const getAllowedReferenceTypeIds = (
+const getAllowedReferenceTypeIds = (
   refAttr: AttributeWithReferenceTypes | undefined,
   type: ReferenceType,
 ): string[] => {
@@ -29,7 +29,7 @@ export const getAllowedReferenceTypeIds = (
   return [];
 };
 
-export const buildReferenceSearchVariables = (
+const buildReferenceSearchVariables = (
   allowedIds: string[] | undefined,
   whereKey: ReferenceWhereKey,
 ) => ({

@@ -17,7 +17,7 @@ import { OutputData } from "@editorjs/editorjs";
 import { useEffect } from "react";
 import * as React from "react";
 
-export interface CollectionCreateFormData extends MetadataFormData {
+interface CollectionCreateFormData extends MetadataFormData {
   backgroundImage: {
     url: string;
     value: string;
@@ -37,12 +37,12 @@ interface CollectionCreateHandlers {
   changeMetadata: FormChange;
   changeChannels: (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => void;
 }
-export type UseCollectionCreateFormResult = CommonUseFormResultWithHandlers<
+type UseCollectionCreateFormResult = CommonUseFormResultWithHandlers<
   CollectionCreateData,
   CollectionCreateHandlers
 >;
 
-export interface CollectionCreateFormProps {
+interface CollectionCreateFormProps {
   currentChannels: ChannelCollectionData[];
   setChannels: (data: ChannelCollectionData[]) => void;
   children: (props: UseCollectionCreateFormResult) => React.ReactNode;
