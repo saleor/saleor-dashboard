@@ -9,7 +9,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import msgs from "./messages";
 
 /** @deprecated use component from extensions/ */
-export interface AppDeactivateDialogProps {
+interface AppDeactivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name?: string | null;

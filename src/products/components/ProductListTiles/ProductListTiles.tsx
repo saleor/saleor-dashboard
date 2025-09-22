@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import { messages } from "../ProductListDatagrid/messages";
 import { ProductTile } from "../ProductTile/ProductTile";
 
-export interface ProductListTilesProps extends ListProps<ProductListColumns> {
+interface ProductListTilesProps extends ListProps<ProductListColumns> {
   products: RelayToFlat<ProductListQuery["products"]> | undefined;
   loading?: boolean;
   onTileClick: (id: string) => void;

@@ -1,17 +1,10 @@
 import { ApolloError, ServerError } from "@apollo/client/core";
 import { IMessage, IMessageContext } from "@dashboard/components/messages";
-import { UseNotifierResult } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors, parseLogMessage } from "@dashboard/misc";
 import { IntlShape } from "react-intl";
 
 import { isJwtError, isTokenExpired } from "./errors";
-
-export const displayDemoMessage = (intl: IntlShape, notify: UseNotifierResult) => {
-  notify({
-    text: intl.formatMessage(commonMessages.demo),
-  });
-};
 
 const getNetworkErrors = (error: ApolloError): string[] => {
   const networkErrors = error.networkError as ServerError;

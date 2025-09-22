@@ -2,7 +2,7 @@
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import * as React from "react";
 
-export interface ControlledCheckboxProps {
+interface ControlledCheckboxProps {
   className?: string;
   name: string;
   label?: React.ReactNode;

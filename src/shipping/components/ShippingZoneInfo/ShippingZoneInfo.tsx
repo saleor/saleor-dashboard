@@ -27,7 +27,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneInfoProps {
+interface ShippingZoneInfoProps {
   data: Record<"name" | "description", string>;
   disabled: boolean;
   errors: ShippingErrorFragment[];

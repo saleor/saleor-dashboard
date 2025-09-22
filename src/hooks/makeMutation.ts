@@ -19,13 +19,10 @@ import useNotifier from "./useNotifier";
 
 export type MutationResultWithOpts<TData> = MutationResult<TData> & MutationResultAdditionalProps;
 
-export type UseMutation<TData, TVariables> = [
+type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
   MutationResultWithOpts<TData>,
 ];
-export type UseMutationHook<TData, TVariables> = (
-  cbs: MutationHookOptions<TData, TVariables>,
-) => UseMutation<TData, TVariables>;
 
 export type MutationHookOptions<TData, TVariables> = BaseMutationHookOptions<TData, TVariables> & {
   disableErrorHandling?: boolean;
@@ -94,12 +91,3 @@ export function useMutation<TData, TVariables>(
     },
   ];
 }
-
-function makeMutation<TData, TVariables>(
-  mutation: DocumentNode,
-): UseMutationHook<TData, TVariables> {
-  return (opts: MutationHookOptions<TData, TVariables>) =>
-    useMutation<TData, TVariables>(mutation, opts);
-}
-
-export default makeMutation;

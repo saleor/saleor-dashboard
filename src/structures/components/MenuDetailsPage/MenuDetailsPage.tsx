@@ -26,7 +26,7 @@ export interface MenuDetailsSubmitData extends MenuDetailsFormData {
   operations: TreeOperation[];
 }
 
-export interface MenuDetailsPageProps {
+interface MenuDetailsPageProps {
   saveButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: MenuErrorFragment[];

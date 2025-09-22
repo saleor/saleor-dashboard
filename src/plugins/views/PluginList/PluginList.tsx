@@ -39,7 +39,7 @@ interface PluginsListProps {
   params: PluginListUrlQueryParams;
 }
 
-export const PluginsList = ({ params }: PluginsListProps) => {
+const PluginsList = ({ params }: PluginsListProps) => {
   const navigate = useNavigator();
   const { updateListSettings, settings } = useListSettings(ListViews.PLUGINS_LIST);
 

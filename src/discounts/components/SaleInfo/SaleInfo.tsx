@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
-export interface SaleInfoProps {
+interface SaleInfoProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];

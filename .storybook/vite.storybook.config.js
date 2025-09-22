@@ -19,7 +19,6 @@ export default defineConfig({
   define: {
     "process.env": {
       NODE_ENV: JSON.stringify("development"),
-      DEMO_MODE: JSON.stringify(false),
     },
     FLAGS_SERVICE_ENABLED: false,
     FLAGS: JSON.stringify({}),

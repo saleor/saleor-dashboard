@@ -21,7 +21,7 @@ import {
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useIntl } from "react-intl";
 
-export interface OrderFulfillProps {
+interface OrderFulfillProps {
   orderId: string;
   params: OrderFulfillUrlQueryParams;
 }

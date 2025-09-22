@@ -6,7 +6,8 @@ import { encodeURIComponentOptional } from "./utils/utils";
 
 export type TaxTab = "channels" | "countries" | "tax-classes";
 
-export const taxSection = "/taxes/";
+const taxSection = "/taxes/";
+
 export const taxTabPath = (tab: TaxTab) => urlJoin(taxSection, tab);
 
 export type TaxesUrlDialog = "add-country";

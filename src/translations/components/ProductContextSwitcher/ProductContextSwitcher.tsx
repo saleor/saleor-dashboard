@@ -7,7 +7,7 @@ type ProductOrVariantId = string;
 type BaseSelectProps = SelectProps<ProductOrVariantId, ProductOrVariantId>;
 type CutProps = Omit<BaseSelectProps, "onChange" | "options" | "value">;
 
-export interface ProductContextSwitcherProps extends CutProps {
+interface ProductContextSwitcherProps extends CutProps {
   productId: string;
   selectedId: string;
   onItemChange(id: string, type: "variant" | "main"): void;

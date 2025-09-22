@@ -32,7 +32,7 @@ export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   isPrivate: boolean;
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
-export interface WarehouseDetailsPageProps {
+interface WarehouseDetailsPageProps {
   countries: CountryWithCodeFragment[];
   disabled: boolean;
   errors: WarehouseErrorFragment[];

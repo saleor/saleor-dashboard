@@ -18,7 +18,7 @@ import PluginsList from "../PluginsList/PluginsList";
 import { createFilterStructure, PluginFilterKeys, PluginListFilterOpts } from "./filters";
 import { pluginsFilterErrorMessages, pluginsListPageMessages } from "./messages";
 
-export interface PluginsListPageProps
+interface PluginsListPageProps
   extends PageListProps,
     FilterPageProps<PluginFilterKeys, PluginListFilterOpts>,
     SortPage<PluginListUrlSortField>,

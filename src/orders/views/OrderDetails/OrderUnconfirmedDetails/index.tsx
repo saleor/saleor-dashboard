@@ -500,5 +500,3 @@ export const OrderUnconfirmedDetails = ({
     </>
   );
 };
-
-export default OrderUnconfirmedDetails;

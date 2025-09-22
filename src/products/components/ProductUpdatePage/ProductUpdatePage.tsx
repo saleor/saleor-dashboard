@@ -69,7 +69,7 @@ import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
 import { ProductUpdateData, ProductUpdateHandlers, ProductUpdateSubmitData } from "./types";
 
-export interface ProductUpdatePageProps {
+interface ProductUpdatePageProps {
   channels: ChannelFragment[];
   productId: string;
   channelsErrors: ProductChannelListingErrorFragment[];
@@ -123,7 +123,7 @@ export interface ProductUpdatePageProps {
   onSeoClick?: () => any;
 }
 
-export const ProductUpdatePage = ({
+const ProductUpdatePage = ({
   productId,
   disabled,
   categories: categoryChoiceList,
@@ -498,5 +498,6 @@ export const ProductUpdatePage = ({
     </ProductUpdateForm>
   );
 };
+
 ProductUpdatePage.displayName = "ProductUpdatePage";
 export default ProductUpdatePage;

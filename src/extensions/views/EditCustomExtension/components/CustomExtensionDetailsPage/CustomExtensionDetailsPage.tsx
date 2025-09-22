@@ -33,7 +33,7 @@ export interface CustomExtensionDetailsPageFormData {
   name: string;
   permissions: PermissionEnum[];
 }
-export interface CustomExtensionDetailsPageProps {
+interface CustomExtensionDetailsPageProps {
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"] | null | undefined;
