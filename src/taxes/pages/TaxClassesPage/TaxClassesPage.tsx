@@ -52,7 +52,7 @@ interface TaxClassesPageProps {
   onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise;
 }
 
-export const TaxClassesPage = (props: TaxClassesPageProps) => {
+const TaxClassesPage = (props: TaxClassesPageProps) => {
   const {
     taxClasses,
     selectedTaxClassId,

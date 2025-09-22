@@ -3,7 +3,7 @@ import { FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { WhereOnlyQueryVarsBuilder } from "./types";
 
-export type AddressFilterQueryPart = {
+type AddressFilterQueryPart = {
   billingAddress?: {
     phoneNumber?: { eq?: string; oneOf?: string[] };
     country?: { eq?: string; oneOf?: string[] };

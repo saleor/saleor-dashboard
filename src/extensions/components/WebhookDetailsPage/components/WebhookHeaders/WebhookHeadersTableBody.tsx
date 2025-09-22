@@ -16,7 +16,7 @@ const nameSeparator = ":";
 const nameInputPrefix = "name";
 const valueInputPrefix = "value";
 
-export interface WebhookHeadersTableBodyProps {
+interface WebhookHeadersTableBodyProps {
   onChange: FormChange;
   headers: Header[];
 }

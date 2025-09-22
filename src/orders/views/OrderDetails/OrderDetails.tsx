@@ -34,7 +34,7 @@ interface OrderDetailsProps {
   params: OrderUrlQueryParams;
 }
 
-export const OrderDetails = ({ id, params }: OrderDetailsProps) => {
+const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   const navigate = useNavigator();
   const { queue } = useBackgroundTask();
   const intl = useIntl();

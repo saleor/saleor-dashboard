@@ -9,7 +9,7 @@ const SUPPORTED_PRICE_FILTERS = new Set(["totalGross", "totalNet"] as const);
 
 type SupportedPriceKeys = typeof SUPPORTED_PRICE_FILTERS extends Set<infer T> ? T : never;
 
-export type PriceFilterQueryPart = {
+type PriceFilterQueryPart = {
   totalGross?: PriceFilterInput;
   totalNet?: PriceFilterInput;
 };

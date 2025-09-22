@@ -2,7 +2,7 @@ import { Alert, AlertProps } from "@saleor/macaw-ui";
 import { sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 
-export type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;
+type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;
 
 const LimitReachedAlert = (props: LimitReachedAlertProps) => (
   // TODO: migrate to new macaw-ui alert

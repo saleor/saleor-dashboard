@@ -8,11 +8,7 @@ export type FilterDispatchFunction<K extends string = string> = <T extends Field
   value: FilterReducerAction<K, T>,
 ) => void;
 
-export type UseFilter<K extends string> = [
-  Array<FilterElement<K>>,
-  FilterDispatchFunction<K>,
-  () => void,
-];
+type UseFilter<K extends string> = [Array<FilterElement<K>>, FilterDispatchFunction<K>, () => void];
 
 function getParsedInitialFilter<T extends string>(initialFilter: IFilter<T>): IFilter<T> {
   return initialFilter.reduce((resultFilter, filterField) => {

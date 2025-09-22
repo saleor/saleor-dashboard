@@ -8,14 +8,14 @@ import { Box } from "@saleor/macaw-ui-next";
 import { AppFrame } from "../AppFrame";
 import { AppPageNav } from "./AppPageNav";
 
-export interface AppPageProps {
+interface AppPageProps {
   data: AppQuery["app"];
   url: string;
   onError: () => void;
   refetch?: () => void;
 }
 
-export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
+const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
   const shop = useShop();
 
   /**

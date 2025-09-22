@@ -13,10 +13,10 @@ export interface InvoiceGenerateParams {
   invoiceId: string;
 }
 
-export interface OnCompletedTaskData {
+interface OnCompletedTaskData {
   status: TaskStatus;
 }
-export type OnCompletedTaskFn = (data: OnCompletedTaskData) => void;
+type OnCompletedTaskFn = (data: OnCompletedTaskData) => void;
 
 export interface QueuedTask {
   id: number;

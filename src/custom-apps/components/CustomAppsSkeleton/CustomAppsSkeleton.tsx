@@ -4,7 +4,7 @@ import { Skeleton } from "@saleor/macaw-ui-next";
 
 import { useStyles } from "./styles";
 
-export const CustomAppsSkeleton = () => {
+const CustomAppsSkeleton = () => {
   const classes = useStyles();
 
   return (

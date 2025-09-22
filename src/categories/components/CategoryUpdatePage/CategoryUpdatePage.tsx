@@ -35,7 +35,7 @@ export enum CategoryPageTab {
   products = "products",
 }
 
-export interface CategoryUpdatePageProps
+interface CategoryUpdatePageProps
   extends Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings"> {
   categoryId: string;
   changeTab: (index: CategoryPageTab) => void;
@@ -236,4 +236,3 @@ export const CategoryUpdatePage = ({
   );
 };
 CategoryUpdatePage.displayName = "CategoryUpdatePage";
-export default CategoryUpdatePage;

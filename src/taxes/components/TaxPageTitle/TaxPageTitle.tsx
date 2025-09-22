@@ -12,7 +12,7 @@ const useStyles = makeStyles(
   { name: "TaxPageTitle" },
 );
 
-export const TaxPageTitle = () => {
+const TaxPageTitle = () => {
   const classes = useStyles();
 
   return (

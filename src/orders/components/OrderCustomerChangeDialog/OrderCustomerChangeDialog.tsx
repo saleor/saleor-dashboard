@@ -9,7 +9,7 @@ import OrderCustomerChangeForm, { CustomerChangeActionEnum, OrderCustomerChangeD
 import messages from "./messages";
 import { useStyles } from "./styles";
 
-export interface OrderCustomerChangeDialogProps {
+interface OrderCustomerChangeDialogProps {
   open: boolean;
   onConfirm: (data: OrderCustomerChangeData) => void;
   onClose: () => any;

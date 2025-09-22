@@ -39,7 +39,7 @@ interface PageTypeDetailsProps {
   params: PageTypeUrlQueryParams;
 }
 
-export const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
+const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const attributeListActions = useBulkActions();
@@ -301,4 +301,5 @@ export const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
     </>
   );
 };
+
 export default PageTypeDetails;

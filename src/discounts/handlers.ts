@@ -22,7 +22,7 @@ import { arrayDiff } from "@dashboard/utils/arrays";
 
 import { getAddedChannelsInputFromFormData } from "./data";
 
-export interface ChannelArgs {
+interface ChannelArgs {
   discountValue: string;
   minSpent: string;
 }
