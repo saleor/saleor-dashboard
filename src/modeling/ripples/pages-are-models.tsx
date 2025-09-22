@@ -22,3 +22,6 @@ export const ripplePagesAreModels: Ripple = {
     },
   ],
 };
+
+// todo
+// https://saleor.io/blog/modeling

@@ -18,9 +18,9 @@ export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) =
   const content = props.model.content.contextual;
   const isPlainString = typeof content === "string";
   const intl = useIntl();
-  const { setFirstSeenFlag, shouldShow, setManuallyHidden } = useRippleStorage();
+  const { setFirstSeenFlag, getShouldShow, setManuallyHidden } = useRippleStorage();
 
-  if (!shouldShow(props.model)) {
+  if (!getShouldShow(props.model)) {
     return null;
   }
 

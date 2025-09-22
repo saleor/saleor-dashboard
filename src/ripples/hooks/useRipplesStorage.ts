@@ -1,4 +1,5 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import { allRipples } from "@dashboard/ripples/all-ripples";
 import { Ripple } from "@dashboard/ripples/types";
 import lodashSet from "lodash/set";
 
@@ -17,15 +18,15 @@ export const useRippleStorage = () => {
 
   const [storedState, setStoreState] = useLocalStorage<StoredRipplesRecord>(RIPPLE_STORAGE_KEY, {});
 
-  const isManuallyHidden = (ID: string) => storedState[ID]?.manuallyHidden || false;
+  const getIsManuallyHidden = (ID: string) => storedState[ID]?.manuallyHidden || false;
 
-  const firstSeenAt = (ID: string) => storedState[ID]?.firstSeenAt;
+  const getFirstSeenAt = (ID: string) => storedState[ID]?.firstSeenAt;
 
-  const isStale = (ID: string, TTL: number) =>
-    firstSeenAt(ID) ? firstSeenAt(ID) + TTL < nowInSeconds : false;
+  const getIsStale = (ID: string, TTL: number) =>
+    getFirstSeenAt(ID) ? getFirstSeenAt(ID) + TTL < nowInSeconds : false;
 
-  const shouldShow = (ripple: Ripple) =>
-    !isManuallyHidden(ripple.ID) && !isStale(ripple.ID, ripple.TTL);
+  const getShouldShow = (ripple: Ripple) =>
+    !getIsManuallyHidden(ripple.ID) && !getIsStale(ripple.ID, ripple.TTL);
 
   const setFirstSeenFlag = (ripple: Ripple) => {
     // Do not override, we only store the first event
@@ -48,9 +49,20 @@ export const useRippleStorage = () => {
     setStoreState(newState);
   };
 
+  const hideAllRipples = () => {
+    const newState = structuredClone(storedState);
+
+    allRipples.forEach(ripple => {
+      lodashSet(newState, `${ripple.ID}.manuallyHidden`, true);
+    });
+
+    setStoreState(newState);
+  };
+
   return {
     setFirstSeenFlag,
-    shouldShow,
+    getShouldShow,
     setManuallyHidden,
+    hideAllRipples,
   };
 };
