@@ -2,6 +2,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { allRipples } from "@dashboard/ripples/all-ripples";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
+import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introduced-ripples";
 import { Ripple } from "@dashboard/ripples/types";
 import { Box, Button, ModalRootProps, Text } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
@@ -41,12 +42,13 @@ const logsByMonths = logsSorted.reduce(
 // todo idea: show last change instead of "recent changes", ripple should be visible if something new exists
 export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
   const intl = useIntl();
-  const { hideAllRipples } = useRippleStorage();
+  const { hideAllRipples, setManuallyHidden } = useRippleStorage();
   const { trackEvent } = useAnalytics();
 
   useEffect(() => {
     if (props.open) {
       trackEvent("ripples.modal-opened");
+      setManuallyHidden(rippleIntroducedRipples);
     }
   }, [props.open, trackEvent]);
 

@@ -1,5 +1,6 @@
 import { allRipplesModalOpen } from "@dashboard/ripples/state";
 import { Ripple } from "@dashboard/ripples/types";
+import { Text } from "@saleor/macaw-ui-next";
 import { getDefaultStore } from "jotai";
 import { defineMessage } from "react-intl";
 
@@ -10,9 +11,18 @@ export const rippleIntroducedRipples: Ripple = {
   ID: "introducing-ripples",
   content: {
     oneLiner: "Introducing hints few latest changes",
-    contextual: "We are now notifying about new changes in Saleor. You can find all of them here",
-    global:
-      "We are now showing latest features directly in the Dashboard. You can find them contextually and in the 'Recent changes' modal",
+    contextual: (
+      <>
+        <Text display="block">We are now notifying about new changes in Saleor.</Text>
+        <Text>You can find all of them here</Text>
+      </>
+    ),
+    global: (
+      <>
+        <Text display="block">We are now showing latest features directly in the Dashboard.</Text>
+        <Text>You can find them contextually and in the &#34;Recent changes&#34; modal</Text>
+      </>
+    ),
   },
   dateAdded: new Date(2025, 8),
   actions: [

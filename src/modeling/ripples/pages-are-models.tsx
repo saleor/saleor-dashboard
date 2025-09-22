@@ -15,13 +15,12 @@ export const ripplePagesAreModels: Ripple = {
   actions: [
     {
       label: defineMessage({
-        defaultMessage: "Test",
-        id: "xu6eM8",
+        defaultMessage: "Read a blog post",
+        id: "7DMWSy",
       }),
-      onClick() {},
+      onClick() {
+        window.open("https://saleor.io/blog/modeling", "_blank");
+      },
     },
   ],
 };
-
-// todo
-// https://saleor.io/blog/modeling
