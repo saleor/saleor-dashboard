@@ -233,7 +233,7 @@ export function createConfigurationMenu(
 
 export const configurationMenuUrl = "/configuration/";
 
-export const ConfigurationSection = () => {
+const ConfigurationSection = () => {
   const shop = useShop();
   const versions = {
     dashboardVersion,
@@ -254,4 +254,5 @@ export const ConfigurationSection = () => {
     </>
   );
 };
+
 export default ConfigurationSection;

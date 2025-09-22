@@ -4,7 +4,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-export interface ProductVariantDeleteDialogProps {
+interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name: string;

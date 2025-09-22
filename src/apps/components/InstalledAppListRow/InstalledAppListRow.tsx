@@ -117,5 +117,3 @@ export const InstalledAppListRow = (props: InstalledApp) => {
     </Link>
   );
 };
-
-export default InstalledAppListRow;

@@ -8,7 +8,7 @@ import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGr
 import { TextField } from "@material-ui/core";
 import { useIntl } from "react-intl";
 
-export interface PermissionGroupInfoProps {
+interface PermissionGroupInfoProps {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   onChange: FormChange;

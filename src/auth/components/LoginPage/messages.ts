@@ -1,7 +1,7 @@
 import { UserContextError } from "@dashboard/auth/types";
 import { defineMessages, IntlShape } from "react-intl";
 
-export const errorMessages = defineMessages({
+const errorMessages = defineMessages({
   loginError: {
     id: "FopBSj",
     defaultMessage: "Your username and/or password are incorrect. Please try again.",

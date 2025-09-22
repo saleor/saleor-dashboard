@@ -8,7 +8,7 @@ import { ListProps } from "@dashboard/types";
 import { Box, List, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import InstalledAppListRow from "../InstalledAppListRow";
+import { InstalledAppListRow } from "../InstalledAppListRow";
 import NotInstalledAppListRow from "../NotInstalledAppListRow";
 import { messages } from "./messages";
 import { appsAreLoading, hasEmptyAppList } from "./utils";

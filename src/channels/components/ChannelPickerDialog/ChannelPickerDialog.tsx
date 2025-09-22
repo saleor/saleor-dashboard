@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface ChannelPickerDialogProps {
+interface ChannelPickerDialogProps {
   channelsChoices: Option[];
   confirmButtonState: ConfirmButtonTransitionState;
   defaultChoice: string;

@@ -28,7 +28,7 @@ interface CustomAppListProps {
   params: CustomAppListUrlQueryParams;
 }
 
-export const CustomAppList = ({ params }: CustomAppListProps) => {
+const CustomAppList = ({ params }: CustomAppListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

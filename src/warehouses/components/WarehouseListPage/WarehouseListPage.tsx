@@ -18,7 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import WarehouseList from "../WarehouseList";
 
-export interface WarehouseListPageProps
+interface WarehouseListPageProps
   extends PageListProps,
     SearchPageProps,
     SortPage<WarehouseListUrlSortField>,
@@ -31,7 +31,7 @@ export interface WarehouseListPageProps
   hasPresetsChanged: () => boolean;
 }
 
-export const WarehouseListPage = ({
+const WarehouseListPage = ({
   warehouses,
   currentTab,
   disabled,
@@ -158,5 +158,6 @@ export const WarehouseListPage = ({
     </ListPageLayout>
   );
 };
+
 WarehouseListPage.displayName = "WarehouseListPage";
 export default WarehouseListPage;

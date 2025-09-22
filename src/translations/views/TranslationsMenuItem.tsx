@@ -17,10 +17,10 @@ import TranslationsMenuItemPage from "../components/TranslationsMenuItemPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import { getParsedTranslationInputData } from "../utils";
 
-export interface TranslationsMenuItemQueryParams {
+interface TranslationsMenuItemQueryParams {
   activeField: string;
 }
-export interface TranslationsMenuItemProps {
+interface TranslationsMenuItemProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsMenuItemQueryParams;

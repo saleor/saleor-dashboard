@@ -16,7 +16,7 @@ const initialForm: SaveFilterTabDialogFormData = {
   name: "",
 };
 
-export interface SaveFilterTabDialogProps {
+interface SaveFilterTabDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onClose: () => void;

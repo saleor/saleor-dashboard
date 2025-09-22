@@ -4,7 +4,7 @@ import { defineMessages, IntlShape } from "react-intl";
 import { getCommonFormFieldErrorMessage } from "./common";
 
 /** @deprecated use appManifestErrorMessage from extensions */
-export const appErrorMessages = defineMessages({
+const appErrorMessages = defineMessages({
   invalidManifestFormat: {
     id: "pC6/1z",
     defaultMessage: "Invalid manifest format",

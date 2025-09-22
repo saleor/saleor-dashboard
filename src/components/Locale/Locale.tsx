@@ -117,7 +117,7 @@ function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
 const localeCode = process.env.LOCALE_CODE || "EN";
 const defaultLocale = Locale[localeCode];
 
-export interface LocaleContextType {
+interface LocaleContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
 }

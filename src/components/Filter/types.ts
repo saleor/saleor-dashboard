@@ -23,24 +23,20 @@ interface FilterElementCommonData {
   options?: Option[];
 }
 
-export interface KeyValueFilterElementData {
+interface KeyValueFilterElementData {
   value: KeyValue[];
   type: FieldType.keyValue;
 }
 
-export interface RegularFilterElementData {
+interface RegularFilterElementData {
   value: string[];
   type: Omit<FieldType, FieldType.keyValue>;
 }
 
-export interface UnknownFilterElementData {
+interface UnknownFilterElementData {
   value: Array<string | KeyValue>;
   type: KeyValueFilterElementData["type"] | RegularFilterElementData["type"];
 }
-
-export type FilterElementValueData = RegularFilterElementData | KeyValueFilterElementData;
-
-export type IFilterElementMutableData = FilterElementCommonData & FilterElementValueData;
 
 export type IFilterElementMutableDataGeneric<T extends FieldType> = T extends FieldType.keyValue
   ? KeyValueFilterElementData & FilterElementCommonData

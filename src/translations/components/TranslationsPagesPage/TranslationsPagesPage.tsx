@@ -21,7 +21,7 @@ import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsPagesPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsPagesPageProps extends TranslationsEntitiesPageProps {
   data: PageTranslationFragment;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
