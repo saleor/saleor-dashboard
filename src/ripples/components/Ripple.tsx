@@ -18,16 +18,16 @@ export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) =
   const content = props.model.content.contextual;
   const isPlainString = typeof content === "string";
   const intl = useIntl();
-  const { setFirstSeenFlag, shouldShow, setManuallyHidden } = useRippleStorage(props.model);
+  const { setFirstSeenFlag, shouldShow, setManuallyHidden } = useRippleStorage();
 
-  if (!shouldShow) {
+  if (!shouldShow(props.model)) {
     return null;
   }
 
   return (
     <Tooltip
       onOpenChange={() => {
-        setFirstSeenFlag();
+        setFirstSeenFlag(props.model);
       }}
     >
       <Tooltip.Trigger>
@@ -49,7 +49,7 @@ export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) =
                   e.preventDefault();
                   e.stopPropagation();
 
-                  setManuallyHidden();
+                  setManuallyHidden(props.model);
 
                   act.onClick();
                 }}
@@ -63,7 +63,7 @@ export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) =
               e.stopPropagation();
               e.preventDefault();
 
-              setManuallyHidden();
+              setManuallyHidden(props.model);
             }}
           >
             Ok & Hide
