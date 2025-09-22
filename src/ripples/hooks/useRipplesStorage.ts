@@ -1,6 +1,7 @@
-import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { allRipples } from "@dashboard/ripples/all-ripples";
 import { Ripple } from "@dashboard/ripples/types";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/vanilla/utils";
 import lodashSet from "lodash/set";
 
 type StoredRipple = {
@@ -12,11 +13,13 @@ type StoredRipplesRecord = Record<string, StoredRipple>;
 
 const RIPPLE_STORAGE_KEY = "dashboard-ripples";
 
+const storageAtom = atomWithStorage<StoredRipplesRecord>(RIPPLE_STORAGE_KEY, {});
+
 // extract plain function and test it
 export const useRippleStorage = () => {
   const nowInSeconds = new Date().getTime() / 1000;
 
-  const [storedState, setStoreState] = useLocalStorage<StoredRipplesRecord>(RIPPLE_STORAGE_KEY, {});
+  const [storedState, setStoreState] = useAtom(storageAtom);
 
   const getIsManuallyHidden = (ID: string) => storedState[ID]?.manuallyHidden || false;
 
