@@ -1,5 +1,4 @@
 import { useUser } from "@dashboard/auth";
-import { AllRipplesModal } from "@dashboard/ripples/components/AllRipplesModal";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
@@ -136,7 +135,6 @@ export const UserControls = () => {
         </Dropdown.Content>
       </Dropdown>
       <FeatureFlagsModal open={flagsModalOpen} onChange={setFlagsModalOpen} />
-      <AllRipplesModal />
     </>
   );
 };

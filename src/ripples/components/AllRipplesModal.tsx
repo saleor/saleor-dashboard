@@ -34,7 +34,7 @@ const logsByMonths = logsSorted.reduce(
   >,
 );
 
-export const AllRipplesModal = (props: ModalRootProps) => {
+export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
   return (
     <DashboardModal {...props}>
       <DashboardModal.Content size="sm">
@@ -65,7 +65,7 @@ export const AllRipplesModal = (props: ModalRootProps) => {
           </Box>
           <DashboardModal.Actions>
             <Button variant="secondary">Close and hide all hints</Button>
-            <Button>Close</Button>
+            <Button onClick={() => props.onChange && props.onChange(false)}>Close</Button>
           </DashboardModal.Actions>
         </DashboardModal.Grid>
       </DashboardModal.Content>

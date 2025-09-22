@@ -11,4 +11,9 @@ export const shortcutsMessages = defineMessages({
     defaultMessage: "Playground",
     description: "playground shortcut",
   },
+  recentChanges: {
+    id: "p2Tmh0",
+    defaultMessage: "Recent changes",
+    description: "recent changes shortcut",
+  },
 });

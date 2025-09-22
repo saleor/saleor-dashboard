@@ -2,7 +2,9 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { Graphql } from "@dashboard/icons/Graphql";
 import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
+import { useAllRipplesModalState } from "@dashboard/ripples/state";
 import { Box } from "@saleor/macaw-ui-next";
+import { Scroll } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import * as React from "react";
 import { useIntl } from "react-intl";
@@ -14,7 +16,7 @@ export interface Shortcut {
   id: string;
   name: string;
   icon: React.ReactNode;
-  shortcut: string;
+  shortcut?: string;
   action: () => void;
 }
 
@@ -32,6 +34,8 @@ export const useShortcuts = (): Shortcut[] => {
   const handleOpenSearch = useCallback(() => {
     setNavigatorVisibility(true);
   }, []);
+
+  const { setModalState } = useAllRipplesModalState();
 
   const shortcuts = useMemo(
     () => [
@@ -52,6 +56,14 @@ export const useShortcuts = (): Shortcut[] => {
         icon: <Graphql />,
         shortcut: `${controlKey} + '`,
         action: handleOpenPlayground,
+      },
+      {
+        id: "recent-changes-ripples",
+        name: intl.formatMessage(shortcutsMessages.recentChanges),
+        icon: <Scroll />,
+        action: () => {
+          setModalState(true);
+        },
       },
     ],
     [intl],
