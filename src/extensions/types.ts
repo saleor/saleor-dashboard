@@ -44,7 +44,7 @@ interface PluginExtensionData extends CommonExtensionData {
 
 export type ExtensionData = AppExtensionData | PluginExtensionData;
 
-export type ExtensionGroup = "payments" | "taxes" | "cms" | "automation";
+type ExtensionGroup = "payments" | "taxes" | "cms" | "automation";
 
 export type ExtensionsGroups = Record<ExtensionGroup, { title: string; items: ExtensionData[] }>;
 

@@ -7,7 +7,7 @@ import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-export interface CustomExtensionInfoProps {
+interface CustomExtensionInfoProps {
   data: {
     name: string;
   };

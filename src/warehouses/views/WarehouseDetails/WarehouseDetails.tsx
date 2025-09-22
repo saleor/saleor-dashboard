@@ -28,7 +28,7 @@ import {
 } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";
 
-export interface WarehouseDetailsProps {
+interface WarehouseDetailsProps {
   id: string;
   params: WarehouseUrlQueryParams;
 }

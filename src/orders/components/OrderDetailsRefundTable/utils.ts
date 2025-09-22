@@ -40,22 +40,6 @@ const isRefundSuccessful = (refund?: OrderRefundDisplay) => {
   return refund.status === OrderGrantedRefundStatusEnum.SUCCESS;
 };
 
-const isRefundPending = (refund?: OrderRefundDisplay) => {
-  if (!refund) {
-    return false;
-  }
-
-  return refund.status === OrderGrantedRefundStatusEnum.PENDING;
-};
-
-export const isRefundEditable = (refund?: OrderRefundDisplay) => {
-  if (!refund) {
-    return false;
-  }
-
-  return !(isRefundSuccessful(refund) || isRefundPending(refund) || isRefundManual(refund));
-};
-
 export const getNotEditableRefundMessage = (refund?: OrderRefundDisplay) => {
   if (isRefundManual(refund)) {
     return refundGridMessages.notEditableManual;

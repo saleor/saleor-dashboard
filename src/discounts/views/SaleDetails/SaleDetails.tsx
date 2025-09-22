@@ -63,7 +63,7 @@ interface SaleDetailsProps {
   params: SaleUrlQueryParams;
 }
 
-export const SaleDetails = ({ id, params }: SaleDetailsProps) => {
+const SaleDetails = ({ id, params }: SaleDetailsProps) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const navigate = useNavigator();
@@ -547,4 +547,5 @@ export const SaleDetails = ({ id, params }: SaleDetailsProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default SaleDetails;

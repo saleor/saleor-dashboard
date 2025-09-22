@@ -15,11 +15,7 @@ interface SectionRouteProps extends RouteProps {
 
 const matchAll = (match: MatchPermissionType) => match === "all";
 
-export const SectionRoute = ({
-  permissions,
-  matchPermission = "all",
-  ...props
-}: SectionRouteProps) => {
+const SectionRoute = ({ permissions, matchPermission = "all", ...props }: SectionRouteProps) => {
   const { user } = useUser();
 
   // Prevents race condition
@@ -41,5 +37,6 @@ export const SectionRoute = ({
 
   return hasSectionPermissions() ? <Route {...props} /> : <NotFound />;
 };
+
 SectionRoute.displayName = "Route";
 export default SectionRoute;

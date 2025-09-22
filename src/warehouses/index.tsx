@@ -31,7 +31,7 @@ const WarehouseDetails = ({ match, location }: RouteComponentProps<{ id: string 
   return <WarehouseDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const WarehouseSection = () => {
+const WarehouseSection = () => {
   const intl = useIntl();
 
   return (
@@ -45,4 +45,5 @@ export const WarehouseSection = () => {
     </>
   );
 };
+
 export default WarehouseSection;

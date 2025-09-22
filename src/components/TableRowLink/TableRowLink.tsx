@@ -27,6 +27,7 @@ const useStyles = makeStyles(
   },
   { name: "TableRowLink" },
 );
+
 const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, ref) => {
   const { href, children, linkClassName, onClick, ...restProps } = props;
   const classes = useStyles();

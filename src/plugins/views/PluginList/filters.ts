@@ -23,7 +23,7 @@ import {
   PluginListUrlQueryParams,
 } from "../../urls";
 
-export const PLUGIN_FILTERS_KEY = "pluginFilters";
+const PLUGIN_FILTERS_KEY = "pluginFilters";
 
 export function getFilterOpts(
   params: PluginListUrlFilters,
@@ -100,7 +100,7 @@ export function getFilterQueryParam(filter: FilterElement<PluginFilterKeys>): Pl
 export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
   createFilterTabUtils<PluginListUrlFilters>(PLUGIN_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
+export const { getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
   PluginListUrlQueryParams,
   PluginListUrlFilters
 >(PluginListUrlFiltersEnum);

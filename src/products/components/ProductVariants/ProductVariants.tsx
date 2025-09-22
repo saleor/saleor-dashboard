@@ -45,7 +45,7 @@ interface ProductVariantsProps {
   onRowClick: (id: string) => void;
 }
 
-export const ProductVariants = ({
+const ProductVariants = ({
   channels,
   errors,
   variants,
@@ -217,5 +217,6 @@ export const ProductVariants = ({
     />
   );
 };
+
 ProductVariants.displayName = "ProductVariants";
 export default ProductVariants;

@@ -12,7 +12,7 @@ export const UnderlineLink = ({ children, textProps, ...props }: UnderlineLinkPr
 );
 
 // TODO: move to MacawUI
-export const UnderlineText = ({ children, ...props }: TextProps) => (
+const UnderlineText = ({ children, ...props }: TextProps) => (
   <Text
     as="span"
     textDecoration="underline"

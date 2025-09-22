@@ -50,7 +50,7 @@ const initialForm: CustomerCreatePageFormData & AddressTypeInput = {
   streetAddress2: "",
 };
 
-export interface CustomerCreatePageProps {
+interface CustomerCreatePageProps {
   countries: CustomerCreateDataQuery["shop"]["countries"];
   disabled: boolean;
   errors: AccountErrorFragment[];

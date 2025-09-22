@@ -81,7 +81,7 @@ export class AttributesPage extends BasePage {
     }
   }
 
-  async searchForAttribute(attributeName: string) {
+  async searchForAttribute() {
     await this.searchInputListView.click();
   }
 

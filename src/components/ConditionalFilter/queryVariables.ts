@@ -34,7 +34,6 @@ import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuil
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };
 type CollectionQueryVars = CollectionFilterInput & { channel?: string };
-export type OrderQueryVars = OrderWhereInput;
 
 export const createProductQueryVariables = (filterContainer: FilterContainer): ProductQueryVars => {
   const { topLevel, filters } = new FiltersQueryBuilder<ProductQueryVars, "channel">({

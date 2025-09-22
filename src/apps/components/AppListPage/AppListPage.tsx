@@ -26,12 +26,12 @@ import {
   resolveSectionsAvailability,
 } from "./utils";
 
-export interface AppListPageProps extends AppListPageSections, ListProps {
+interface AppListPageProps extends AppListPageSections, ListProps {
   marketplaceError?: Error;
   showAvailableApps: boolean;
 }
 
-export const AppListPage = (props: AppListPageProps) => {
+const AppListPage = (props: AppListPageProps) => {
   const {
     appsInstallations,
     installedApps,
@@ -156,5 +156,6 @@ export const AppListPage = (props: AppListPageProps) => {
     </>
   );
 };
+
 AppListPage.displayName = "AppListPage";
 export default AppListPage;

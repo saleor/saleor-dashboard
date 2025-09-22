@@ -38,7 +38,7 @@ export interface StaffDetailsFormData {
   permissionGroups: Option[];
 }
 
-export interface StaffDetailsPageProps extends SearchPageProps {
+interface StaffDetailsPageProps extends SearchPageProps {
   availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
   canEditAvatar: boolean;
   canEditPreferences: boolean;

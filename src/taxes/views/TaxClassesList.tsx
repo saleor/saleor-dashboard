@@ -33,7 +33,7 @@ interface TaxClassesListProps {
   id: string | undefined;
 }
 
-export const TaxClassesList = ({ id }: TaxClassesListProps) => {
+const TaxClassesList = ({ id }: TaxClassesListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
