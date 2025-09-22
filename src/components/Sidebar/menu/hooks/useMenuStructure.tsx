@@ -33,6 +33,7 @@ import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
@@ -300,6 +301,19 @@ export function useMenuStructure() {
       permissions: [PermissionEnum.MANAGE_PAGES, PermissionEnum.MANAGE_MENUS],
       id: "modeling",
       url: pageListPath,
+      endAdornment: (
+        <Ripple
+          model={{
+            TTL: 2000,
+            content: {
+              contextual: "Pages are now called Models",
+              global:
+                "We have renamed Pages to Models. API still uses the old naming, but we it will change in the future.",
+            },
+            actions: [],
+          }}
+        />
+      ),
       type: "itemGroup",
     },
     {
