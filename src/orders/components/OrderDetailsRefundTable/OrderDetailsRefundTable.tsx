@@ -1,7 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsFragment } from "@dashboard/graphql";
+import { rippleNewRefundReasons } from "@dashboard/orders/ripples/new-refund-reasons";
 import { OrderRefundsViewModel } from "@dashboard/orders-v2/order-refunds/order-refunds-view-model";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Button, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,9 +32,12 @@ export const OrderDetailsRefundTable = ({
   return (
     <DashboardCard data-test-id="order-refund-section">
       <Box paddingTop={6} display="flex" justifyContent="space-between" paddingX={6}>
-        <Text size={5} fontWeight="bold">
-          <FormattedMessage {...refundGridMessages.refundSection} />
-        </Text>
+        <Box display="flex" alignItems="center">
+          <Text size={5} fontWeight="bold">
+            <FormattedMessage {...refundGridMessages.refundSection} />
+          </Text>
+          <Ripple model={rippleNewRefundReasons} triggerProps={{ marginLeft: 4 }} />
+        </Box>
         <Tooltip>
           <Tooltip.Trigger>
             <Button

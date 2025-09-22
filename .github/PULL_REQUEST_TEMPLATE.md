@@ -4,4 +4,4 @@
 
 <!-- External contributors: Please attach GitHub issue number. -->
 
-- [] I confirm I added change ripples (see src/ripples) or my feature doesn't contain any
+- [ ] I confirm I added ripples for changes (see src/ripples) or my feature doesn't contain any user-facing changes

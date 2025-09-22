@@ -66,7 +66,10 @@ export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) =
               setManuallyHidden(props.model);
             }}
           >
-            Ok & Hide
+            {intl.formatMessage({
+              defaultMessage: "OK",
+              id: "kAEQyV",
+            })}
           </Button>
         </Box>
       </Tooltip.Content>

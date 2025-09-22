@@ -1,4 +1,6 @@
+import Link from "@dashboard/components/Link";
 import { Ripple } from "@dashboard/ripples/types";
+import { Text } from "@saleor/macaw-ui-next";
 import { defineMessage } from "react-intl";
 
 export const ripplePagesAreModels: Ripple = {
@@ -7,8 +9,20 @@ export const ripplePagesAreModels: Ripple = {
   content: {
     oneLiner: "Pages are now called Models",
     contextual: "Pages are now called Models",
-    global:
-      "We have renamed Pages to Models. API still uses the old naming, but we it will change in the future.",
+    global: (
+      <>
+        <Text>
+          We have renamed Pages to Models. API still uses the old naming, but we it will change in
+          the future.
+        </Text>
+        <Text>
+          Read more in{" "}
+          <Link href="https://saleor.io/blog/modeling" target="_blank">
+            the article
+          </Link>
+        </Text>
+      </>
+    ),
   },
   // Approx June it was changed in the dashboard
   dateAdded: new Date(2025, 5, 1),
