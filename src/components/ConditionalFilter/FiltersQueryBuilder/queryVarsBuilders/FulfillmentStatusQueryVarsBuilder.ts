@@ -3,7 +3,7 @@ import { FilterElement } from "../../FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { WhereOnlyQueryVarsBuilder } from "./types";
 
-export type FulfillmentStatusFilterQueryPart = {
+type FulfillmentStatusFilterQueryPart = {
   fulfillments?: Array<{
     status?: { eq?: string; oneOf?: string[] };
   }>;

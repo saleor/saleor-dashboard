@@ -88,4 +88,3 @@ export const CategoryCreateView = ({ parentId }: CategoryCreateViewProps) => {
     </>
   );
 };
-export default CategoryCreateView;

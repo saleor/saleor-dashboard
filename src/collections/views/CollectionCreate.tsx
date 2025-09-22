@@ -30,7 +30,7 @@ interface CollectionCreateProps {
   params: CollectionCreateUrlQueryParams;
 }
 
-export const CollectionCreate = ({ params }: CollectionCreateProps) => {
+const CollectionCreate = ({ params }: CollectionCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -164,4 +164,5 @@ export const CollectionCreate = ({ params }: CollectionCreateProps) => {
     </>
   );
 };
+
 export default CollectionCreate;

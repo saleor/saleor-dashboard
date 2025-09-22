@@ -16,7 +16,7 @@ import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderDraftListHeaderProps extends FilterPresetsProps {
+interface OrderDraftListHeaderProps extends FilterPresetsProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   isFilterPresetOpen: boolean;
   disabled: boolean;

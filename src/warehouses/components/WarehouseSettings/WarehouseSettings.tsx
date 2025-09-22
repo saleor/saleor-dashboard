@@ -25,7 +25,7 @@ const WarehouseRadioSubtitle = ({ children }: { children: ReactNode }) => (
   </Text>
 );
 
-export interface WarehouseSettingsProps {
+interface WarehouseSettingsProps {
   zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
   disabled: boolean;
   data: WarehouseDetailsPageFormData;

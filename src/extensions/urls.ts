@@ -69,7 +69,7 @@ export interface AppDetailsUrlMountQueryParams {
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;
 }
-export interface AppDetailsCommonParams {
+interface AppDetailsCommonParams {
   theme: ThemeType;
 }
 

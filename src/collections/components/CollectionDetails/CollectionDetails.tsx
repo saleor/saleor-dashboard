@@ -11,7 +11,7 @@ import { Input } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
-export interface CollectionDetailsProps {
+interface CollectionDetailsProps {
   data: {
     description: OutputData;
     name: string;

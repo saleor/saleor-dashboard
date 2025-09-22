@@ -5,7 +5,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import * as React from "react";
 
-export interface ChipProps {
+interface ChipProps {
   className?: string;
   label: React.ReactNode;
   onClose?: () => void;

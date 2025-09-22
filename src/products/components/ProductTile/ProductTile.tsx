@@ -6,7 +6,7 @@ import { Box, ProductsIcons, sprinkles, Text, vars } from "@saleor/macaw-ui-next
 
 import { getTileStatus } from "./utils";
 
-export interface ProductTileProps {
+interface ProductTileProps {
   product: RelayToFlat<ProductListQuery["products"]>[0];
   onClick: () => void;
 }

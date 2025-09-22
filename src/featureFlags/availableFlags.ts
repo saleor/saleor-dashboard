@@ -12,11 +12,10 @@ export interface FlagDefinition {
   };
 }
 
-export const AVAILABLE_FLAGS = GENERATED_FLAGS;
+const AVAILABLE_FLAGS = GENERATED_FLAGS;
 
 type TypedEntry = (typeof AVAILABLE_FLAGS)[number];
 type GeneralEntry = TypedEntry extends never ? FlagDefinition : TypedEntry;
-export type Entry = TypedEntry;
 export type Name = TypedEntry["name"];
 export type FlagList = Record<Name, FlagValue>;
 export type GeneralFlagList = TypedEntry extends never ? Record<string, FlagValue> : FlagList;

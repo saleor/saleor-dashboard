@@ -57,7 +57,7 @@ const useSummaryStyles = makeStyles(
   { name: "FilterContentExpanderSummary" },
 );
 
-export interface FilterContentProps<K extends string = string> {
+interface FilterContentProps<K extends string = string> {
   filters: IFilter<K>;
   onFilterPropertyChange: <T extends FieldType>(value: FilterReducerAction<K, T>) => void;
   onFilterAttributeFocus?: (id?: string) => void;

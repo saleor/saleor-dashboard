@@ -19,7 +19,7 @@ export function canBeSorted(sort: DiscountListUrlSortField | undefined) {
   }
 }
 
-export function getSortQueryField(sort: DiscountListUrlSortField): PromotionSortField | undefined {
+function getSortQueryField(sort: DiscountListUrlSortField): PromotionSortField | undefined {
   switch (sort) {
     case DiscountListUrlSortField.name:
       return PromotionSortField.NAME;

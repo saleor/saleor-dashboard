@@ -16,8 +16,6 @@ test.beforeEach(({ page }) => {
   installationPage = new AppInstallationPage(page);
   appPage = new AppPage(page);
 });
-
-const PRE_INSTALLATION_TIMEOUT = 20 * 1000;
 const INSTALLATION_PENDING_TIMEOUT = 50 * 1000;
 const APP_EXPECT_UI_TIMEOUT = 15 * 1000;
 
