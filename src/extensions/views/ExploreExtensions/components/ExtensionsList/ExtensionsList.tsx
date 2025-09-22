@@ -6,7 +6,7 @@ import { ExtensionItem } from "../ExtenionItem";
 import { ExtensionsGroup } from "../ExtensionsGroup";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 
-export interface ExtensionsListProps {
+interface ExtensionsListProps {
   extensions: ExtensionsGroups;
   loading?: boolean;
   clearSearch: () => void;

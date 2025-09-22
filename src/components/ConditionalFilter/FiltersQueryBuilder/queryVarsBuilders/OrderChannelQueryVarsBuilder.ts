@@ -5,7 +5,7 @@ import { Handler, LegacyChannelHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
-export type OrderChannelFilterQueryPart = {
+type OrderChannelFilterQueryPart = {
   channelId?: GlobalIdFilterInput;
 };
 

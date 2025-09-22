@@ -37,7 +37,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import OrderLimitReached from "../OrderLimitReached";
 import { OrderListDatagrid } from "../OrderListDatagrid";
 
-export interface OrderListPageProps
+interface OrderListPageProps
   extends PageListProps,
     SearchPageProps,
     Omit<TabPageProps, "onTabDelete">,
@@ -58,7 +58,6 @@ const OrderListPage = ({
   onAdd,
   onSearchChange,
   onSettingsOpen,
-  params,
   onTabChange,
   onTabDelete,
   onTabSave,

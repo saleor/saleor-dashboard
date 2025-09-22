@@ -1,5 +1,4 @@
 import {
-  BulkProductErrorFragment,
   CollectionErrorFragment,
   ProductChannelListingErrorFragment,
   ProductErrorCode,
@@ -113,33 +112,6 @@ function getProductErrorMessage(
   }
 
   return getCommonFormFieldErrorMessage(err, intl);
-}
-
-export function getProductVariantAttributeErrorMessage(
-  err: Omit<ProductErrorFragment, "__typename"> | undefined,
-  intl: IntlShape,
-): string | undefined {
-  if (err) {
-    switch (err.code) {
-      case ProductErrorCode.UNIQUE:
-        return intl.formatMessage(messages.variantUnique);
-      default:
-        return getProductErrorMessage(err, intl);
-    }
-  }
-
-  return undefined;
-}
-
-export function getBulkProductErrorMessage(
-  err: BulkProductErrorFragment | undefined,
-  intl: IntlShape,
-): string | undefined {
-  if (err?.code === ProductErrorCode.UNIQUE && err.field === "sku") {
-    return intl.formatMessage(messages.skuUnique);
-  }
-
-  return getProductErrorMessage(err, intl);
 }
 
 export default getProductErrorMessage;

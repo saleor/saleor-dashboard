@@ -3,7 +3,7 @@ import { SearchProductsQuery } from "@dashboard/graphql";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import { RelayToFlat } from "@dashboard/types";
 
-export type SearchVariant = RelayToFlat<SearchProductsQuery["search"]>[0]["variants"][0];
+type SearchVariant = RelayToFlat<SearchProductsQuery["search"]>[0]["variants"][0];
 
 export interface VariantWithProductLabel extends SearchVariant {
   productName: string;

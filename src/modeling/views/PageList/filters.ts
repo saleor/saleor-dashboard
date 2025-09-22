@@ -2,23 +2,9 @@
 import { FilterElement, IFilter } from "@dashboard/components/Filter";
 import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
 import { SearchPageTypesQuery } from "@dashboard/graphql";
-import {
-  PageListUrlFilters,
-  PageListUrlFiltersWithMultipleValues,
-  PageListUrlSort,
-} from "@dashboard/modeling/urls";
-import {
-  ActiveTab,
-  AutocompleteFilterOpts,
-  FilterOpts,
-  Pagination,
-  Search,
-} from "@dashboard/types";
-import {
-  createFilterTabUtils,
-  createFilterUtils,
-  getMultipleValueQueryParam,
-} from "@dashboard/utils/filters";
+import { PageListUrlFilters } from "@dashboard/modeling/urls";
+import { AutocompleteFilterOpts, FilterOpts } from "@dashboard/types";
+import { createFilterTabUtils, getMultipleValueQueryParam } from "@dashboard/utils/filters";
 import { createAutocompleteField } from "@dashboard/utils/filters/fields";
 import { mapNodeToChoice, mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
 import { defineMessages, IntlShape } from "react-intl";
@@ -27,7 +13,7 @@ export enum PageListFilterKeys {
   pageTypes = "pageTypes",
 }
 
-export const PAGES_FILTERS_KEY = "pagesFilters";
+const PAGES_FILTERS_KEY = "pagesFilters";
 
 export interface PageListFilterOpts {
   pageType: FilterOpts<string[]> & AutocompleteFilterOpts;
@@ -101,15 +87,4 @@ export function getFilterQueryParam(filter: FilterElement<PageListFilterKeys>): 
   }
 }
 
-export type PageListUrlQueryParams = Pagination &
-  PageListUrlFilters &
-  PageListUrlSort &
-  ActiveTab &
-  Search;
-
 export const storageUtils = createFilterTabUtils<string>(PAGES_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  PageListUrlQueryParams,
-  PageListUrlFilters
->(PageListUrlFiltersWithMultipleValues);

@@ -33,7 +33,7 @@ interface TaxCountriesListProps {
   params: TaxesUrlQueryParams | undefined;
 }
 
-export const TaxCountriesList = ({ id, params }: TaxCountriesListProps) => {
+const TaxCountriesList = ({ id, params }: TaxCountriesListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -1,5 +1,4 @@
-import { FulfillmentStatus } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { defineMessages } from "react-intl";
 
 export const grantRefundPageMessages = defineMessages({
   pageHeader: {
@@ -100,32 +99,3 @@ export const productCardMessages = defineMessages({
     description: "grant refund table, column header",
   },
 });
-
-export const fulfilmentStatusMessages = defineMessages({
-  fulfillment: {
-    id: "MewrtN",
-    defaultMessage: "Fulfillment",
-    description: "section header",
-  },
-  fulfillmentReturned: {
-    id: "H/f9KR",
-    defaultMessage: "Fulfillment returned",
-    description: "section header returned",
-  },
-  fulfillmentWaitingForApproval: {
-    id: "i/ZhxL",
-    defaultMessage: "Fulfillment waiting for approval",
-    description: "section header returned",
-  },
-});
-
-export const getTitle = (fulfillmentStatus: FulfillmentStatus, intl: IntlShape) => {
-  switch (fulfillmentStatus) {
-    case FulfillmentStatus.RETURNED:
-      return intl.formatMessage(fulfilmentStatusMessages.fulfillmentReturned);
-    case FulfillmentStatus.WAITING_FOR_APPROVAL:
-      return intl.formatMessage(fulfilmentStatusMessages.fulfillmentWaitingForApproval);
-    default:
-      return intl.formatMessage(fulfilmentStatusMessages.fulfillment);
-  }
-};

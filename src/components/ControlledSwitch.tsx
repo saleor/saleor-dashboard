@@ -14,7 +14,7 @@ interface ControlledSwitchProps {
   onChange?: (event: React.ChangeEvent<any>) => any;
 }
 
-export const ControlledSwitch = (props: ControlledSwitchProps) => {
+const ControlledSwitch = (props: ControlledSwitchProps) => {
   const { checked, disabled, onChange, label, name, secondLabel, uncheckedLabel, className } =
     props;
 
@@ -48,5 +48,6 @@ export const ControlledSwitch = (props: ControlledSwitchProps) => {
     />
   );
 };
+
 ControlledSwitch.displayName = "ControlledSwitch";
 export default ControlledSwitch;

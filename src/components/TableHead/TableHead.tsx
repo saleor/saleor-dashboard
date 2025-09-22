@@ -11,7 +11,7 @@ import { FormattedMessage } from "react-intl";
 import { Node } from "../../types";
 import Checkbox from "../Checkbox";
 
-export interface TableHeadProps extends MuiTableHeadProps {
+interface TableHeadProps extends MuiTableHeadProps {
   colSpan: number;
   disabled: boolean;
   dragRows?: boolean;

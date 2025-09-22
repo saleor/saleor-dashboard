@@ -19,7 +19,7 @@ import { getParsedTranslationInputData } from "../utils";
 export interface TranslationsCollectionsQueryParams {
   activeField: string;
 }
-export interface TranslationsCollectionsProps {
+interface TranslationsCollectionsProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsCollectionsQueryParams;

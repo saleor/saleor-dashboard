@@ -12,7 +12,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Mono } from "./Mono";
 import { useClipboardCopy } from "./useClipboardCopy";
 
-export interface TokenCreateDialogProps {
+interface TokenCreateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   token: string | undefined;

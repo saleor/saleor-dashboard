@@ -26,7 +26,7 @@ import {
   UserContextError,
 } from "../types";
 
-export interface UseAuthProviderOpts {
+interface UseAuthProviderOpts {
   intl: IntlShape;
   notify: IMessageContext;
   apolloClient: ApolloClient<any>;

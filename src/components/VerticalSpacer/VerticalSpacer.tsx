@@ -1,6 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
-export interface VerticalSpacerProps {
+interface VerticalSpacerProps {
   spacing?: number;
 }
 

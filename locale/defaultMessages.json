@@ -1741,10 +1741,6 @@
     "context": "CannotDefineChannelsAvailabilityCard subtitle",
     "string": "You will be able to define availability of product after creating variants."
   },
-  "8u7els": {
-    "context": "channel config plugin status popup title",
-    "string": "Assigned to {activeChannelsCount} of {allChannelsCount} channels"
-  },
   "8uLHBY": {
     "context": "unassign attribute from object",
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
@@ -2250,10 +2246,6 @@
   "BjxQ3u": {
     "context": "add shipping address first label",
     "string": "add shipping address first"
-  },
-  "BkFke9": {
-    "context": "section header",
-    "string": "Unfulfilled Items"
   },
   "Bkxrhw": {
     "context": "no webhooks message",
@@ -2897,9 +2889,6 @@
   "Fc3O3r": {
     "context": "staff member's account",
     "string": "Deactivated"
-  },
-  "FcC842": {
-    "string": "Tune in for live updates with product news, tips, and how teams are building with Saleor."
   },
   "FcTTvh": {
     "context": "postal codes, header",
@@ -4353,10 +4342,6 @@
     "context": "status",
     "string": "Not active"
   },
-  "NxRsHQ": {
-    "context": "section header",
-    "string": "Fulfillment - #{fulfilmentId}"
-  },
   "NxeDbG": {
     "context": "image upload",
     "string": "Drop here to upload"
@@ -4390,6 +4375,10 @@
   "O9QPe1": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
+  },
+  "O9SefD": {
+    "context": "card text, app install page",
+    "string": "Uninstalling the extension will remove all metadata stored by {extensionName}. {learnMoreLink}"
   },
   "OA+fw+": {
     "context": "conjunction, choice between going to dashboard or refreshing page",
@@ -4451,10 +4440,6 @@
   },
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
-  },
-  "ObscZF": {
-    "context": "card text, app install page",
-    "string": "Uninstalling the extension will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}"
   },
   "Oe62bR": {
     "context": "product availability",
@@ -5720,9 +5705,6 @@
   },
   "VrFy8e": {
     "string": "No notes from customer"
-  },
-  "Vrch8P": {
-    "string": "April 24th at 3 PM CET | 9 AM EDT"
   },
   "VsGcdP": {
     "context": "section header",
@@ -7086,9 +7068,6 @@
     "context": "products export type label",
     "string": "products"
   },
-  "dcFARy": {
-    "string": "✨ Join Live Community Update"
-  },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
   },
@@ -7992,9 +7971,6 @@
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
   },
-  "jzO3qY": {
-    "string": "Join us on Discord"
-  },
   "jzu97k": {
     "context": "attribute product type",
     "string": "Product type"
@@ -8604,10 +8580,6 @@
   "nK68Sg": {
     "context": "model availability date label",
     "string": "Set availability date"
-  },
-  "nKjLjT": {
-    "context": "error message",
-    "string": "Slug must be unique for each warehouse"
   },
   "nKwgxY": {
     "context": "select label",
@@ -10275,10 +10247,6 @@
   "xOEZjV": {
     "context": "attribute's label",
     "string": "Default Label"
-  },
-  "xPnZ0R": {
-    "context": "title",
-    "string": "Details"
   },
   "xRbqcg": {
     "context": "option",

@@ -2,7 +2,7 @@ import { Handler, NoopValuesHandler } from "../../API/Handler";
 import { FilterElement } from "../../FilterElement";
 import { BaseMappableQueryVarsBuilder } from "./BaseMappableQueryVarsBuilder";
 
-export type ProductTypeFilterQueryPart = {
+type ProductTypeFilterQueryPart = {
   productType?: string;
 };
 

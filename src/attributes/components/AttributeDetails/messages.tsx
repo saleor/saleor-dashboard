@@ -164,7 +164,7 @@ export const unitTypeMessages = defineMessages({
   },
 });
 
-export const unitMessages = defineMessages({
+const unitMessages = defineMessages({
   pint: { id: "B0PaVS", defaultMessage: "pint", description: "pint unit" },
   acreInch: {
     id: "jBu2yj",

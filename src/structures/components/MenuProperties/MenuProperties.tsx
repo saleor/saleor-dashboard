@@ -9,7 +9,7 @@ import { useIntl } from "react-intl";
 
 import { MenuDetailsFormData } from "../MenuDetailsPage";
 
-export interface MenuPropertiesProps {
+interface MenuPropertiesProps {
   data: MenuDetailsFormData;
   disabled: boolean;
   errors: MenuErrorFragment[];

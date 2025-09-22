@@ -10,7 +10,7 @@ import { messages } from "../ChannelsAvailabilityDropdown/messages";
 import { Pill } from "../Pill";
 import { useStyles } from "./styles";
 
-export interface ChannelsAvailabilityMenuContentProps {
+interface ChannelsAvailabilityMenuContentProps {
   pills: Pill[];
 }
 export interface Pill {
@@ -19,9 +19,7 @@ export interface Pill {
   label: MessageDescriptor;
 }
 
-export const ChannelsAvailabilityMenuContent = ({
-  pills,
-}: ChannelsAvailabilityMenuContentProps) => {
+const ChannelsAvailabilityMenuContent = ({ pills }: ChannelsAvailabilityMenuContentProps) => {
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -47,5 +45,6 @@ export const ChannelsAvailabilityMenuContent = ({
     </div>
   );
 };
+
 ChannelsAvailabilityMenuContent.displayName = "ChannelsAvailabilityMenuContent";
 export default ChannelsAvailabilityMenuContent;

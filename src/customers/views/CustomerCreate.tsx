@@ -9,7 +9,7 @@ import { extractMutationErrors, maybe } from "../../misc";
 import CustomerCreatePage, { CustomerCreatePageSubmitData } from "../components/CustomerCreatePage";
 import { customerUrl } from "../urls";
 
-export const CustomerCreate = () => {
+const CustomerCreate = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -65,4 +65,5 @@ export const CustomerCreate = () => {
     </>
   );
 };
+
 export default CustomerCreate;

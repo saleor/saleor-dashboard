@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { statusMessages } from "../messages";
 
-export interface EventStatusProps {
+interface EventStatusProps {
   status: TransactionEventStatus | null;
 }
 

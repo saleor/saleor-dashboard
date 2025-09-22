@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { Mono } from "../TokenCreateDialog/Mono";
 import { useClipboardCopy } from "../TokenCreateDialog/useClipboardCopy";
 
-export interface CustomExtensionDefaultTokenProps {
+interface CustomExtensionDefaultTokenProps {
   token: string;
   onTokenClose: () => void;
 }

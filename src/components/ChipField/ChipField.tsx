@@ -14,7 +14,7 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   return labelContent;
 };
 
-export type ChipFieldProps = {
+type ChipFieldProps = {
   label: ReactNode;
   onClose?: () => void;
   loading?: boolean;

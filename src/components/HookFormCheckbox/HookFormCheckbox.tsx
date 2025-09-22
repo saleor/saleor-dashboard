@@ -4,7 +4,7 @@ import { ForwardedRef } from "react";
 import * as React from "react";
 import { Control, FieldPath, FieldValues, RegisterOptions, useController } from "react-hook-form";
 
-export type HookFormCheckboxProps<
+type HookFormCheckboxProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = Omit<CheckboxProps, "checked" | "onCheckedChange" | "name"> & {

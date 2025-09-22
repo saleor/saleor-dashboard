@@ -6,7 +6,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-export interface TitleProps {
+interface TitleProps {
   order?: OrderDetailsFragment;
 }
 

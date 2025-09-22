@@ -18,7 +18,7 @@ const textRightStyle = sprinkles({
   textAlign: "right",
 });
 
-export interface CustomerOrdersProps {
+interface CustomerOrdersProps {
   orders: RelayToFlat<NonNullable<NonNullable<CustomerDetailsQuery["user"]>["orders"]>>;
   viewAllHref: string;
 }

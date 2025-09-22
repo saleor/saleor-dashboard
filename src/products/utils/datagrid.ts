@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-export function makeGetColumnData(regexp: RegExp): (column: string) => string | null {
+function makeGetColumnData(regexp: RegExp): (column: string) => string | null {
   return column => {
     if (!regexp.test(column)) {
       return null;

@@ -20,7 +20,7 @@ import { PluginDetailsPageFormData, PluginsDetailsPage } from "./components/Plug
 import { PluginSecretFieldDialog } from "./components/PluginSecretFieldDialog";
 import { getConfigByChannelId, isPluginGlobal, isSecretField } from "./utils";
 
-export interface PluginsDetailsProps {
+interface PluginsDetailsProps {
   id: string;
   params: PluginUrlQueryParams;
 }
