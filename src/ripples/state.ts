@@ -1,6 +1,6 @@
 import { atom, useAtom } from "jotai";
 
-const allRipplesModalOpen = atom(false);
+export const allRipplesModalOpen = atom(false);
 
 export const useAllRipplesModalState = () => {
   const [isModalOpen, setState] = useAtom(allRipplesModalOpen);

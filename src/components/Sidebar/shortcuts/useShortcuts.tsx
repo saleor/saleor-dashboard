@@ -2,6 +2,8 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch/useNavigatorSearchContext";
 import { Graphql } from "@dashboard/icons/Graphql";
 import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introduced-ripples";
 import { useAllRipplesModalState } from "@dashboard/ripples/state";
 import { Box } from "@saleor/macaw-ui-next";
 import { Scroll } from "lucide-react";
@@ -14,7 +16,7 @@ import { getShortcutLeadingKey } from "./utils";
 
 export interface Shortcut {
   id: string;
-  name: string;
+  name: string | React.ReactNode;
   icon: React.ReactNode;
   shortcut?: string;
   action: () => void;
@@ -59,7 +61,12 @@ export const useShortcuts = (): Shortcut[] => {
       },
       {
         id: "recent-changes-ripples",
-        name: intl.formatMessage(shortcutsMessages.recentChanges),
+        name: (
+          <Box>
+            {intl.formatMessage(shortcutsMessages.recentChanges)}{" "}
+            <Ripple model={rippleIntroducedRipples} triggerProps={{ marginLeft: 4 }} />
+          </Box>
+        ),
         icon: <Scroll />,
         action: () => {
           setModalState(true);

@@ -2,7 +2,7 @@ import { RippleAnimation } from "@dashboard/ripples/components/RippleAnimation";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
 import { TooltipMountWrapper } from "@saleor/macaw-ui";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 /**
@@ -14,7 +14,7 @@ import { useIntl } from "react-intl";
  * TODO
  * Make tooltip working on click instead of hover
  */
-export const Ripple = (props: { model: RippleModel }) => {
+export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) => {
   const content = props.model.content.contextual;
   const isPlainString = typeof content === "string";
   const intl = useIntl();
@@ -32,7 +32,7 @@ export const Ripple = (props: { model: RippleModel }) => {
     >
       <Tooltip.Trigger>
         <TooltipMountWrapper>
-          <RippleAnimation cursor="pointer" />
+          <RippleAnimation cursor="pointer" {...props.triggerProps} />
         </TooltipMountWrapper>
       </Tooltip.Trigger>
       <Tooltip.Content align="start" side="bottom">
@@ -48,6 +48,8 @@ export const Ripple = (props: { model: RippleModel }) => {
                 onClick={e => {
                   e.preventDefault();
                   e.stopPropagation();
+
+                  setManuallyHidden();
 
                   act.onClick();
                 }}

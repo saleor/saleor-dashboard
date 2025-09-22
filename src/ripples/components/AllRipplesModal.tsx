@@ -2,6 +2,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { allRipples } from "@dashboard/ripples/all-ripples";
 import { Ripple } from "@dashboard/ripples/types";
 import { Box, Button, ModalRootProps, Text } from "@saleor/macaw-ui-next";
+import { useIntl } from "react-intl";
 
 const logsSorted = allRipples.sort((r1, r2) => r2.dateAdded.getTime() - r1.dateAdded.getTime());
 
@@ -35,6 +36,8 @@ const logsByMonths = logsSorted.reduce(
 );
 
 export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
+  const intl = useIntl();
+
   return (
     <DashboardModal {...props}>
       <DashboardModal.Content size="sm">
@@ -64,8 +67,18 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
             })}
           </Box>
           <DashboardModal.Actions>
-            <Button variant="secondary">Close and hide all hints</Button>
-            <Button onClick={() => props.onChange && props.onChange(false)}>Close</Button>
+            <Button variant="secondary">
+              {intl.formatMessage({
+                defaultMessage: "Close and hide all hints",
+                id: "pJ5/7G",
+              })}
+            </Button>
+            <Button onClick={() => props.onChange && props.onChange(false)}>
+              {intl.formatMessage({
+                defaultMessage: "Close",
+                id: "rbrahO",
+              })}
+            </Button>
           </DashboardModal.Actions>
         </DashboardModal.Grid>
       </DashboardModal.Content>
