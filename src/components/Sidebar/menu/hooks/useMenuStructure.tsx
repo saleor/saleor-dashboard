@@ -40,7 +40,7 @@ import { languageListUrl } from "@dashboard/translations/urls";
 import { Box, SearchIcon } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
 import * as React from "react";
-import { useIntl } from "react-intl";
+import { defineMessage, useIntl } from "react-intl";
 
 import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
@@ -310,7 +310,15 @@ export function useMenuStructure() {
               global:
                 "We have renamed Pages to Models. API still uses the old naming, but we it will change in the future.",
             },
-            actions: [],
+            actions: [
+              {
+                label: defineMessage({
+                  defaultMessage: "Test",
+                  id: "xu6eM8",
+                }),
+                onClick() {},
+              },
+            ],
           }}
         />
       ),
