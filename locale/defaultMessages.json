@@ -462,9 +462,6 @@
     "context": "add country dialog header",
     "string": "Choose country you want to add"
   },
-  "0VkxrS": {
-    "string": "GraphQL Playground"
-  },
   "0XHXTZ": {
     "context": "column header",
     "string": "Title"
@@ -3962,9 +3959,6 @@
   "Lm2Zw7": {
     "context": "name placeholder",
     "string": "Unnamed webhook"
-  },
-  "LmKz3g": {
-    "string": "Storefront"
   },
   "LnRlch": {
     "context": "attribute's editor component entity",
@@ -7707,10 +7701,6 @@
     "context": "section header returned",
     "string": "Fulfillment waiting for approval"
   },
-  "i0AcKY": {
-    "context": "notification message after log in",
-    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
-  },
   "i3Mvj8": {
     "context": "product attribute error",
     "string": "This variant already exists"
@@ -9902,9 +9892,6 @@
   },
   "vSLaZ7": {
     "string": "Select a reason type"
-  },
-  "vSy+II": {
-    "string": "Star on Github"
   },
   "vTN5DZ": {
     "context": "button",
