@@ -1,4 +1,5 @@
 import { RippleAnimation } from "@dashboard/ripples/components/RippleAnimation";
+import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
 import { TooltipMountWrapper } from "@saleor/macaw-ui";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
@@ -9,14 +10,26 @@ import { useIntl } from "react-intl";
  * Looks like tooltip from macaw-next doesnt work for non-button triggers.
  * the TooltipMountWrapper is imported from old macaw, but it works
  * We need to fix macaw-next or re-export similar helper from it
+ *
+ * TODO
+ * Consider removing "ok / hide" button
  */
 export const Ripple = (props: { model: RippleModel }) => {
   const content = props.model.content.contextual;
   const isPlainString = typeof content === "string";
   const intl = useIntl();
+  const { setFirstSeenFlag, shouldShow, setManuallyHidden } = useRippleStorage(props.model);
+
+  if (!shouldShow) {
+    return null;
+  }
 
   return (
-    <Tooltip>
+    <Tooltip
+      onOpenChange={() => {
+        setFirstSeenFlag();
+      }}
+    >
       <Tooltip.Trigger>
         <TooltipMountWrapper>
           <RippleAnimation cursor="pointer" />
@@ -47,6 +60,8 @@ export const Ripple = (props: { model: RippleModel }) => {
             onClick={e => {
               e.stopPropagation();
               e.preventDefault();
+
+              setManuallyHidden();
             }}
           >
             Ok & Hide

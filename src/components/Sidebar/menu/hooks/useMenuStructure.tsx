@@ -29,6 +29,7 @@ import { OrdersIcon } from "@dashboard/icons/Orders";
 import { ProductsIcon } from "@dashboard/icons/Products";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { commonMessages, sectionNames } from "@dashboard/intl";
+import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pages-are-models";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
@@ -40,7 +41,7 @@ import { languageListUrl } from "@dashboard/translations/urls";
 import { Box, SearchIcon } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
 import * as React from "react";
-import { defineMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
@@ -301,27 +302,7 @@ export function useMenuStructure() {
       permissions: [PermissionEnum.MANAGE_PAGES, PermissionEnum.MANAGE_MENUS],
       id: "modeling",
       url: pageListPath,
-      endAdornment: (
-        <Ripple
-          model={{
-            TTL: 2000,
-            content: {
-              contextual: "Pages are now called Models",
-              global:
-                "We have renamed Pages to Models. API still uses the old naming, but we it will change in the future.",
-            },
-            actions: [
-              {
-                label: defineMessage({
-                  defaultMessage: "Test",
-                  id: "xu6eM8",
-                }),
-                onClick() {},
-              },
-            ],
-          }}
-        />
-      ),
+      endAdornment: <Ripple model={ripplePagesAreModels} />,
       type: "itemGroup",
     },
     {

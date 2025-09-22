@@ -2,6 +2,11 @@ import { ReactNode } from "react";
 import { MessageDescriptor } from "react-intl";
 
 export type Ripple = {
+  /**
+   * Date when the Ripple was added to the system. It doesn't have to accurate, but will be used for sorting.
+   * Can be approx date of the release
+   */
+  dateAdded: Date;
   content: {
     /**
      * In global changelog-like list
@@ -16,6 +21,8 @@ export type Ripple = {
    * After first mount, how long to show the contextual ripple (seconds). In global list it's permanent.
    */
   TTL: number;
+  // A unique ID to reference Ripple when checking it's state in the storage
+  ID: string;
   /**
    * Extra buttons rendered apart from the default "OK" button
    */
