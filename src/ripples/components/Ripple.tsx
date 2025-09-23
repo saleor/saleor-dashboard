@@ -5,15 +5,6 @@ import { TooltipMountWrapper } from "@saleor/macaw-ui";
 import { Box, BoxProps, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-/**
- * TODO
- * Looks like tooltip from macaw-next doesnt work for non-button triggers.
- * the TooltipMountWrapper is imported from old macaw, but it works
- * We need to fix macaw-next or re-export similar helper from it
- *
- * TODO
- * Make tooltip working on click instead of hover
- */
 export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) => {
   const content = props.model.content.contextual;
   const isPlainString = typeof content === "string";
@@ -43,6 +34,7 @@ export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) =
           {props.model.actions?.map((act, index) => {
             return (
               <Button
+                size="small"
                 key={index}
                 variant="tertiary"
                 onClick={e => {
@@ -59,6 +51,7 @@ export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) =
             );
           })}
           <Button
+            size="small"
             onClick={e => {
               e.stopPropagation();
               e.preventDefault();

@@ -6,7 +6,7 @@ import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introduced-ripples";
 import { useAllRipplesModalState } from "@dashboard/ripples/state";
 import { Box } from "@saleor/macaw-ui-next";
-import { Scroll } from "lucide-react";
+import { Gift } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import * as React from "react";
 import { useIntl } from "react-intl";
@@ -64,10 +64,12 @@ export const useShortcuts = (): Shortcut[] => {
         name: (
           <Box>
             {intl.formatMessage(shortcutsMessages.recentChanges)}{" "}
-            <Ripple model={rippleIntroducedRipples} triggerProps={{ marginLeft: 4 }} />
+            <Box marginLeft={4} display="inline-block">
+              <Ripple model={rippleIntroducedRipples} />
+            </Box>
           </Box>
         ),
-        icon: <Scroll />,
+        icon: <Gift />,
         action: () => {
           setModalState(true);
         },
