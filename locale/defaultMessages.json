@@ -924,6 +924,9 @@
     "context": "ProductTypeDeleteWarningDialog with items multiple description",
     "string": "You are about to delete multiple product types. Some of them are assigned to products. Deleting those product types will also delete those products"
   },
+  "3eR8iC": {
+    "string": "Show me"
+  },
   "3evXPj": {
     "string": "Leave your note here..."
   },
@@ -1526,6 +1529,9 @@
   },
   "7Chrsf": {
     "string": "Passwords do not match"
+  },
+  "7DMWSy": {
+    "string": "Read a blog post"
   },
   "7EDqed": {
     "context": "tab name",
@@ -6195,6 +6201,10 @@
   "YZl6cv": {
     "string": "Miscellaneous"
   },
+  "YcJdUV": {
+    "context": "recent changes shortcut",
+    "string": "What’s New"
+  },
   "YdeHZX": {
     "context": "unassign products from shipping method, button",
     "string": "Unassign"
@@ -8014,6 +8024,9 @@
   "kAAlGL": {
     "string": "Rules"
   },
+  "kAEQyV": {
+    "string": "OK"
+  },
   "kAPaN6": {
     "context": "empty metadata text",
     "string": "Empty"
@@ -8881,6 +8894,9 @@
   "pGwvpX": {
     "context": "status",
     "string": "Deactivated"
+  },
+  "pJ5/7G": {
+    "string": "Close and hide all hints"
   },
   "pOUOnw": {
     "context": "tab name",
