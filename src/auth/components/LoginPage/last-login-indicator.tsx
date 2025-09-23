@@ -15,8 +15,8 @@ export const LastLoginIndicator = () => {
     >
       <Text size={1}>
         {formatMessage({
-          id: "w45jpQ",
-          defaultMessage: "Last login method",
+          id: "AR/VVX",
+          defaultMessage: "Last used",
           description: "Indicates last login method user used",
         })}
       </Text>
