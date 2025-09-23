@@ -61,7 +61,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
         <DashboardModal.Grid>
           <DashboardModal.Header>Recent changes</DashboardModal.Header>
           <Box>
-            {Object.values(groupedRipples).map((monthGroup, index) => {
+            {Object.values(groupedRipples).map(monthGroup => {
               return (
                 <Box key={monthGroup[0].dateDisplay} marginBottom={8}>
                   <Text marginBottom={4} display="block" color="default2">
