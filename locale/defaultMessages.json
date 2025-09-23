@@ -9900,6 +9900,10 @@
     "context": "section header",
     "string": "Plugin Information and Status"
   },
+  "w45jpQ": {
+    "context": "Indicates last login method user used",
+    "string": "Last login method"
+  },
   "w6kcxY": {
     "string": "What happens if I approve?"
   },
