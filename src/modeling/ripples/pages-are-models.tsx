@@ -12,8 +12,8 @@ export const ripplePagesAreModels: Ripple = {
     global: (
       <>
         <Paragraph>
-          We have renamed Pages to Models. API still uses the old naming, but it will change in
-          the future.
+          We have renamed Pages to Models. API still uses the old naming, but it will change in the
+          future.
         </Paragraph>
         <Paragraph>
           Read more in{" "}
