@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { MessageDescriptor } from "react-intl";
 
+// TODO Consider translations
 export type Ripple = {
   /**
    * Date when the Ripple was added to the system. It doesn't have to be accurate, but will be used for sorting.
@@ -24,7 +25,7 @@ export type Ripple = {
   /**
    * After first mount, how long to show the contextual ripple (seconds). In global list it's permanent.
    */
-  TTL: number;
+  TTL_seconds: number;
   // A unique ID to reference Ripple when checking it's state in the storage
   ID: string;
   /**

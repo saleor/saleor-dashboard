@@ -7,7 +7,7 @@ import { defineMessage } from "react-intl";
 const defaultStore = getDefaultStore();
 
 export const rippleIntroducedRipples: Ripple = {
-  TTL: 60 * 60 * 24 * 2,
+  TTL_seconds: 60 * 60 * 24 * 2,
   ID: "introducing-ripples",
   content: {
     oneLiner: "Introducing hints few latest changes",

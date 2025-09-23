@@ -5,7 +5,6 @@ import type { CSSProperties } from "react";
 
 interface RippleAnimationProps extends BoxProps {}
 
-// generated with v0, feel free to improve it
 export function RippleAnimation({ ...props }: RippleAnimationProps) {
   const containerStyle: CSSProperties = {
     position: "relative",

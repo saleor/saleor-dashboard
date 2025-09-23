@@ -5,7 +5,7 @@ import { defineMessage } from "react-intl";
 
 export const rippleNewRefundReasons: Ripple = {
   ID: "new-refund-reasons",
-  TTL: 60 * 60 * 24 * 2, // 2 days
+  TTL_seconds: 60 * 60 * 24 * 2, // 2 days
   content: {
     oneLiner: "Structured refund reasons",
     contextual: "Refund reasons are now more powerful with pre-defined choices",

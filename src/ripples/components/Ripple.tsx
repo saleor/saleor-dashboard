@@ -1,11 +1,10 @@
 import { RippleAnimation } from "@dashboard/ripples/components/RippleAnimation";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import type { Ripple as RippleModel } from "@dashboard/ripples/types";
-import { TooltipMountWrapper } from "@saleor/macaw-ui";
-import { Box, BoxProps, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) => {
+export const Ripple = (props: { model: RippleModel }) => {
   const content = props.model.content.contextual;
   const isPlainString = typeof content === "string";
   const intl = useIntl();
@@ -22,9 +21,9 @@ export const Ripple = (props: { model: RippleModel; triggerProps?: BoxProps }) =
       }}
     >
       <Tooltip.Trigger>
-        <TooltipMountWrapper>
-          <RippleAnimation cursor="pointer" {...props.triggerProps} />
-        </TooltipMountWrapper>
+        <Box>
+          <RippleAnimation cursor="pointer" />
+        </Box>
       </Tooltip.Trigger>
       <Tooltip.Content align="start" side="bottom">
         <Tooltip.Arrow />

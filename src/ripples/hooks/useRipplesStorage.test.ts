@@ -10,7 +10,7 @@ if (!global.structuredClone) {
 // Mock ripples for testing
 const mockRipple1: Ripple = {
   ID: "test-ripple-1",
-  TTL: 3600, // 1 hour
+  TTL_seconds: 3600, // 1 hour
   dateAdded: new Date("2023-01-01"),
   content: {
     oneLiner: "Test ripple 1",
@@ -21,7 +21,7 @@ const mockRipple1: Ripple = {
 
 const mockRipple2: Ripple = {
   ID: "test-ripple-2",
-  TTL: 7200, // 2 hours
+  TTL_seconds: 7200, // 2 hours
   dateAdded: new Date("2023-01-02"),
   content: {
     oneLiner: "Test ripple 2",
@@ -32,7 +32,7 @@ const mockRipple2: Ripple = {
 
 const mockRipple3: Ripple = {
   ID: "test-ripple-3",
-  TTL: 1800, // 30 minutes
+  TTL_seconds: 1800, // 30 minutes
   dateAdded: new Date("2023-01-03"),
   content: {
     oneLiner: "Test ripple 3",
@@ -91,7 +91,7 @@ describe("RipplesStorage", () => {
 
     it("should return false for stale ripple", () => {
       // Arrange
-      const staleTime = currentTime - mockRipple1.TTL * 1000 - 100000; // TTL in ms + 100 seconds ago
+      const staleTime = currentTime - mockRipple1.TTL_seconds * 1000 - 100000; // TTL in ms + 100 seconds ago
       const storageWithStaleRipple = new RipplesStorage(
         {
           [mockRipple1.ID]: {
@@ -112,7 +112,7 @@ describe("RipplesStorage", () => {
 
     it("should return true for ripple within TTL", () => {
       // Arrange
-      const recentTime = currentTime - mockRipple1.TTL * 1000 + 100000; // TTL in ms - 100 seconds ago
+      const recentTime = currentTime - mockRipple1.TTL_seconds * 1000 + 100000; // TTL in ms - 100 seconds ago
       const storageWithRecentRipple = new RipplesStorage(
         {
           [mockRipple1.ID]: {

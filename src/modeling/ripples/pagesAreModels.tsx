@@ -5,7 +5,7 @@ import { defineMessage } from "react-intl";
 
 export const ripplePagesAreModels: Ripple = {
   ID: "pages-are-models",
-  TTL: 60 * 60 * 24 * 2, // 2 days
+  TTL_seconds: 60 * 60 * 24 * 2, // 2 days
   content: {
     oneLiner: "Pages are now called Models",
     contextual: "Pages are now called Models",

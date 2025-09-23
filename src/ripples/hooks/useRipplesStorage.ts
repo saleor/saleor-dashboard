@@ -51,7 +51,7 @@ export class RipplesStorage {
   }
 
   getShouldShow(ripple: Ripple): boolean {
-    return !this.getIsManuallyHidden(ripple.ID) && !this.getIsStale(ripple.ID, ripple.TTL);
+    return !this.getIsManuallyHidden(ripple.ID) && !this.getIsStale(ripple.ID, ripple.TTL_seconds);
   }
 
   setFirstSeenFlag(ripple: Ripple): void {

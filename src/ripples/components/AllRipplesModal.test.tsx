@@ -12,7 +12,7 @@ describe("getRipplesSortedAndGroupedByMonths", () => {
       global: `Global content for ${id}`,
       contextual: `Contextual content for ${id}`,
     },
-    TTL: 30,
+    TTL_seconds: 30,
   });
 
   it("should return empty object for empty array", () => {
