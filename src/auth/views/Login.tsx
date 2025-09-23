@@ -9,6 +9,7 @@ import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
+import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
 import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
 
 interface LoginViewProps {
@@ -31,6 +32,8 @@ const LoginView = ({ params }: LoginViewProps) => {
     setFallbackUri,
     setRequestedExternalPluginId,
   } = useAuthParameters();
+  const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
+
   const handleSubmit = async (data: LoginFormData) => {
     if (!login) {
       return;
@@ -38,6 +41,10 @@ const LoginView = ({ params }: LoginViewProps) => {
 
     const result = await login(data.email, data.password);
     const errors = result?.errors || [];
+
+    if (errors.length === 0) {
+      setLastLoginMethod("password");
+    }
 
     return errors;
   };
@@ -95,6 +102,7 @@ const LoginView = ({ params }: LoginViewProps) => {
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
       onSubmit={handleSubmit}
+      lastLoginMethod={lastLoginMethod}
     />
   );
 };
