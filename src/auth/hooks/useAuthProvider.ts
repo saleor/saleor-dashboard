@@ -27,7 +27,7 @@ import {
   UserContextError,
 } from "../types";
 import { displayDemoMessage } from "../utils";
-import { useLastLoginMethod } from "./use-last-login-method";
+import { useLastLoginMethod } from "./useLastLoginMethod";
 
 export interface UseAuthProviderOpts {
   intl: IntlShape;

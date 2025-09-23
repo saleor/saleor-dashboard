@@ -8,8 +8,8 @@ import useRouter from "use-react-router";
 import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/types";
-import { useLastLoginMethod } from "../hooks/use-last-login-method";
 import { useAuthParameters } from "../hooks/useAuthParameters";
+import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
 import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
 
 interface LoginViewProps {

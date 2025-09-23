@@ -1,4 +1,4 @@
-import { LastLoginMethod } from "@dashboard/auth/hooks/use-last-login-method";
+import { LastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
