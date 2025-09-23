@@ -1,6 +1,6 @@
-import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pages-are-models";
-import { rippleNewRefundReasons } from "@dashboard/orders/ripples/new-refund-reasons";
-import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introduced-ripples";
+import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
+import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
+import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { Ripple } from "@dashboard/ripples/types";
 
 export const allRipples: Ripple[] = [

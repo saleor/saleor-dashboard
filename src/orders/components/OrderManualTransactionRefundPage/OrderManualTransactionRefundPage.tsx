@@ -9,7 +9,7 @@ import { pageListUrl } from "@dashboard/modeling/urls";
 import { ManualRefundForm } from "@dashboard/orders/components/OrderManualTransactionRefundPage/components/OrderManualTransactionRefundForm/manualRefundValidationSchema";
 import { OrderTransactionReasonUi } from "@dashboard/orders/components/OrderTransactionRefundPage/components/OrderTransactionReason/RefundWithLinesOrderTransactionReason";
 import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
-import { rippleNewRefundReasons } from "@dashboard/orders/ripples/new-refund-reasons";
+import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
 import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";

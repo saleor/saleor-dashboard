@@ -3,7 +3,7 @@ import { useNavigatorSearchContext } from "@dashboard/components/NavigatorSearch
 import { Graphql } from "@dashboard/icons/Graphql";
 import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introduced-ripples";
+import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { useAllRipplesModalState } from "@dashboard/ripples/state";
 import { Box } from "@saleor/macaw-ui-next";
 import { Gift } from "lucide-react";

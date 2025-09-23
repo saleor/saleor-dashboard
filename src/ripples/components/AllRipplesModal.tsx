@@ -1,8 +1,8 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
-import { allRipples } from "@dashboard/ripples/all-ripples";
+import { allRipples } from "@dashboard/ripples/allRipples";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
-import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introduced-ripples";
+import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { Ripple } from "@dashboard/ripples/types";
 import { Box, Button, ModalRootProps, Text } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";

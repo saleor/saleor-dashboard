@@ -1,4 +1,4 @@
-import { allRipples } from "@dashboard/ripples/all-ripples";
+import { allRipples } from "@dashboard/ripples/allRipples";
 import { Ripple } from "@dashboard/ripples/types";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/vanilla/utils";

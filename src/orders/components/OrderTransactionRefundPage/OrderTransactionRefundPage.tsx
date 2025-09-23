@@ -15,7 +15,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { pageListUrl } from "@dashboard/modeling/urls";
 import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
-import { rippleNewRefundReasons } from "@dashboard/orders/ripples/new-refund-reasons";
+import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
 import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
