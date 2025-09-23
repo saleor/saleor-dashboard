@@ -1,3 +1,4 @@
+import { LastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
@@ -13,6 +14,7 @@ import { Link } from "react-router-dom";
 
 import useStyles from "../styles";
 import LoginForm, { LoginFormData } from "./form";
+import { LastLoginIndicator } from "./LastLoginIndicator";
 import { getErrorMessage } from "./messages";
 
 export interface LoginCardProps {
@@ -22,6 +24,7 @@ export interface LoginCardProps {
   externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
   onExternalAuthentication: (pluginId: string) => void;
   onSubmit: (event: LoginFormData) => SubmitPromise;
+  lastLoginMethod: LastLoginMethod;
 }
 
 const LoginPage: React.FC<LoginCardProps> = props => {
@@ -32,6 +35,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
     externalAuthentications = [],
     onExternalAuthentication,
     onSubmit,
+    lastLoginMethod,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -117,7 +121,9 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               type="submit"
               transitionState={loading ? "loading" : "default"}
               data-test-id="submit"
+              position="relative"
             >
+              {lastLoginMethod === "password" && <LastLoginIndicator />}
               <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
             </ButtonWithLoader>
           </div>
@@ -150,8 +156,10 @@ const LoginPage: React.FC<LoginCardProps> = props => {
                 transitionState={
                   optimisticLoaderAuthId === externalAuthentication.id ? "loading" : "default"
                 }
+                position="relative"
               >
                 {externalAuthentication.name}
+                {lastLoginMethod === externalAuthentication.id && <LastLoginIndicator />}
               </ButtonWithLoader>
             </React.Fragment>
           ))}
