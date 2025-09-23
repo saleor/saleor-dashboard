@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 import useStyles from "../styles";
 import LoginForm, { LoginFormData } from "./form";
-import { LastLoginIndicator } from "./last-login-indicator";
+import { LastLoginIndicator } from "./LastLoginIndicator";
 import { getErrorMessage } from "./messages";
 
 export interface LoginCardProps {
