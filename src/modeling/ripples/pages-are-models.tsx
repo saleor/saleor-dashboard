@@ -1,6 +1,6 @@
 import Link from "@dashboard/components/Link";
 import { Ripple } from "@dashboard/ripples/types";
-import { Text } from "@saleor/macaw-ui-next";
+import { Paragraph } from "@saleor/macaw-ui-next";
 import { defineMessage } from "react-intl";
 
 export const ripplePagesAreModels: Ripple = {
@@ -11,16 +11,16 @@ export const ripplePagesAreModels: Ripple = {
     contextual: "Pages are now called Models",
     global: (
       <>
-        <Text>
+        <Paragraph>
           We have renamed Pages to Models. API still uses the old naming, but we it will change in
           the future.
-        </Text>
-        <Text>
+        </Paragraph>
+        <Paragraph>
           Read more in{" "}
           <Link href="https://saleor.io/blog/modeling" target="_blank">
             the article
           </Link>
-        </Text>
+        </Paragraph>
       </>
     ),
   },

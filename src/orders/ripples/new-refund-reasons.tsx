@@ -1,6 +1,6 @@
 import Link from "@dashboard/components/Link";
 import { Ripple } from "@dashboard/ripples/types";
-import { Text } from "@saleor/macaw-ui-next";
+import { Paragraph } from "@saleor/macaw-ui-next";
 import { defineMessage } from "react-intl";
 
 export const rippleNewRefundReasons: Ripple = {
@@ -11,17 +11,17 @@ export const rippleNewRefundReasons: Ripple = {
     contextual: "Refund reasons are now more powerful with pre-defined choices",
     global: (
       <>
-        <Text>
+        <Paragraph>
           Refund reasons are now more powerful. You can add reason to the &#34;manual refund&#34;.
           Additionally, you can configure refunds to use structured data to enforce specific reasons
           to be provided when refunds are issued.
-        </Text>
-        <Text>
+        </Paragraph>
+        <Paragraph>
           Read more in{" "}
           <Link href="https://saleor.io/blog/refund-reasons" target="_blank">
             the article
           </Link>
-        </Text>
+        </Paragraph>
       </>
     ),
   },

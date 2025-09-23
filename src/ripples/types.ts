@@ -3,7 +3,7 @@ import { MessageDescriptor } from "react-intl";
 
 export type Ripple = {
   /**
-   * Date when the Ripple was added to the system. It doesn't have to accurate, but will be used for sorting.
+   * Date when the Ripple was added to the system. It doesn't have to be accurate, but will be used for sorting.
    * Can be approx date of the release
    */
   dateAdded: Date;

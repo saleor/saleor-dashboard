@@ -15,57 +15,84 @@ const RIPPLE_STORAGE_KEY = "dashboard-ripples";
 
 const storageAtom = atomWithStorage<StoredRipplesRecord>(RIPPLE_STORAGE_KEY, {});
 
-// extract plain function and test it
-export const useRippleStorage = () => {
-  const nowInSeconds = new Date().getTime() / 1000;
+export class RipplesStorage {
+  private readonly storedState: StoredRipplesRecord;
 
-  const [storedState, setStoreState] = useAtom(storageAtom);
+  private readonly updateState: (newState: StoredRipplesRecord) => void;
 
-  const getIsManuallyHidden = (ID: string) => storedState[ID]?.manuallyHidden || false;
+  private readonly allRipples: Ripple[];
 
-  const getFirstSeenAt = (ID: string) => storedState[ID]?.firstSeenAt;
+  constructor(
+    storedState: StoredRipplesRecord,
+    updateState: (newState: StoredRipplesRecord) => void,
+    allRipples: Ripple[],
+  ) {
+    this.storedState = storedState;
+    this.updateState = updateState;
+    this.allRipples = allRipples;
+  }
 
-  const getIsStale = (ID: string, TTL: number) =>
-    getFirstSeenAt(ID) ? getFirstSeenAt(ID) + TTL < nowInSeconds : false;
+  private get now() {
+    return new Date().getTime();
+  }
 
-  const getShouldShow = (ripple: Ripple) =>
-    !getIsManuallyHidden(ripple.ID) && !getIsStale(ripple.ID, ripple.TTL);
+  private getIsManuallyHidden(ID: string): boolean {
+    return this.storedState[ID]?.manuallyHidden || false;
+  }
 
-  const setFirstSeenFlag = (ripple: Ripple) => {
+  private getFirstSeenAt(ID: string): number | undefined {
+    return this.storedState[ID]?.firstSeenAt;
+  }
+
+  private getIsStale(ID: string, TTL: number): boolean {
+    const firstSeenAt = this.getFirstSeenAt(ID);
+
+    return firstSeenAt ? firstSeenAt + TTL * 1000 < this.now : false;
+  }
+
+  getShouldShow(ripple: Ripple): boolean {
+    return !this.getIsManuallyHidden(ripple.ID) && !this.getIsStale(ripple.ID, ripple.TTL);
+  }
+
+  setFirstSeenFlag(ripple: Ripple): void {
     // Do not override, we only store the first event
-    if (storedState[ripple.ID]?.firstSeenAt) {
+    if (this.storedState[ripple.ID]?.firstSeenAt) {
       return;
     }
 
-    const newState = structuredClone(storedState);
+    const newState = structuredClone(this.storedState);
 
-    lodashSet(newState, `${ripple.ID}.firstSeenAt`, nowInSeconds);
+    lodashSet(newState, `${ripple.ID}.firstSeenAt`, this.now);
+    this.updateState(newState);
+  }
 
-    setStoreState(newState);
-  };
-
-  const setManuallyHidden = (ripple: Ripple) => {
-    const newState = structuredClone(storedState);
+  setManuallyHidden(ripple: Ripple): void {
+    const newState = structuredClone(this.storedState);
 
     lodashSet(newState, `${ripple.ID}.manuallyHidden`, true);
+    this.updateState(newState);
+  }
 
-    setStoreState(newState);
-  };
+  hideAllRipples(): void {
+    const newState = structuredClone(this.storedState);
 
-  const hideAllRipples = () => {
-    const newState = structuredClone(storedState);
-
-    allRipples.forEach(ripple => {
+    this.allRipples.forEach(ripple => {
       lodashSet(newState, `${ripple.ID}.manuallyHidden`, true);
     });
 
-    setStoreState(newState);
-  };
+    this.updateState(newState);
+  }
+}
+
+export const useRippleStorage = () => {
+  const [storedState, setStoreState] = useAtom(storageAtom);
+
+  const storage = new RipplesStorage(storedState, setStoreState, allRipples);
 
   return {
-    setFirstSeenFlag,
-    getShouldShow,
-    setManuallyHidden,
-    hideAllRipples,
+    setFirstSeenFlag: (ripple: Ripple) => storage.setFirstSeenFlag(ripple),
+    getShouldShow: (ripple: Ripple) => storage.getShouldShow(ripple),
+    setManuallyHidden: (ripple: Ripple) => storage.setManuallyHidden(ripple),
+    hideAllRipples: () => storage.hideAllRipples(),
   };
 };
