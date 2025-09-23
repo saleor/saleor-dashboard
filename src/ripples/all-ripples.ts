@@ -24,11 +24,13 @@ export const allRipples: Ripple[] = [
 /**
  * Ensure all ripple IDs are unique
  */
-(function () {
-  const ids = allRipples.map(r => r.ID);
-  const uniqueIds = new Set(ids);
+if (process.env.NODE_ENV !== "production") {
+  (function () {
+    const ids = allRipples.map(r => r.ID);
+    const uniqueIds = new Set(ids);
 
-  if (ids.length !== uniqueIds.size) {
-    throw new Error("Duplicate ripple IDs detected in allRipples");
-  }
-})();
+    if (ids.length !== uniqueIds.size) {
+      throw new Error("Duplicate ripple IDs detected in allRipples");
+    }
+  })();
+}
