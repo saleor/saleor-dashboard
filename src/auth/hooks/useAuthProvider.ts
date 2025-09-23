@@ -25,6 +25,7 @@ import {
   UserContext,
   UserContextError,
 } from "../types";
+import { useLastLoginMethod } from "./useLastLoginMethod";
 
 interface UseAuthProviderOpts {
   intl: IntlShape;
@@ -41,6 +42,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
   const [isCredentialsLogin, setIsCredentialsLogin] = useState(false);
   const [errors, setErrors] = useState<UserContextError[]>([]);
   const permitCredentialsAPI = useRef(true);
+  const { setLastLoginMethod } = useLastLoginMethod();
 
   useEffect(() => {
     if (authenticating && errors.length) {
@@ -217,6 +219,8 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       }
 
       await logoutNonStaffUser(result.data?.externalObtainAccessTokens!);
+
+      setLastLoginMethod(pluginId);
 
       return result?.data?.externalObtainAccessTokens;
     } catch (error) {

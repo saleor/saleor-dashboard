@@ -2022,6 +2022,10 @@
     "context": "order discount was updated automatically event title",
     "string": "Order discount was updated automatically updated"
   },
+  "AR/VVX": {
+    "context": "Indicates last login method user used",
+    "string": "Last used"
+  },
   "ARfw53": {
     "context": "description",
     "string": "Install apps created by Saleor team or install external apps."
