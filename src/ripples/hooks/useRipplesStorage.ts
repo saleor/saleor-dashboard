@@ -16,21 +16,11 @@ const RIPPLE_STORAGE_KEY = "dashboard-ripples";
 const storageAtom = atomWithStorage<StoredRipplesRecord>(RIPPLE_STORAGE_KEY, {});
 
 export class RipplesStorage {
-  private readonly storedState: StoredRipplesRecord;
-
-  private readonly updateState: (newState: StoredRipplesRecord) => void;
-
-  private readonly allRipples: Ripple[];
-
   constructor(
-    storedState: StoredRipplesRecord,
-    updateState: (newState: StoredRipplesRecord) => void,
-    allRipples: Ripple[],
-  ) {
-    this.storedState = storedState;
-    this.updateState = updateState;
-    this.allRipples = allRipples;
-  }
+    private storedState: StoredRipplesRecord,
+    private updateState: (newState: StoredRipplesRecord) => void,
+    private allRipples: Ripple[],
+  ) {}
 
   private get now() {
     return new Date().getTime();

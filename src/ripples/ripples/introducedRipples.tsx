@@ -31,7 +31,8 @@ export const rippleIntroducedRipples: Ripple = {
     {
       label: defineMessage({
         defaultMessage: "Show me",
-        id: "3eR8iC",
+        id: "1ACBFw",
+        description: "Ripple tooltip confirmation button",
       }),
       onClick() {
         defaultStore.set(allRipplesModalOpen, true);

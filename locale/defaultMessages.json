@@ -600,6 +600,10 @@
   "19o9WS": {
     "string": "Learn more about {userPermissions}"
   },
+  "1ACBFw": {
+    "context": "Ripple tooltip confirmation button",
+    "string": "Show me"
+  },
   "1BNKCZ": {
     "context": "sale channel",
     "string": "Channel"
@@ -923,9 +927,6 @@
   "3dVKNR": {
     "context": "ProductTypeDeleteWarningDialog with items multiple description",
     "string": "You are about to delete multiple product types. Some of them are assigned to products. Deleting those product types will also delete those products"
-  },
-  "3eR8iC": {
-    "string": "Show me"
   },
   "3evXPj": {
     "string": "Leave your note here..."
@@ -6205,10 +6206,6 @@
   "YZl6cv": {
     "string": "Miscellaneous"
   },
-  "YcJdUV": {
-    "context": "recent changes shortcut",
-    "string": "What’s New"
-  },
   "YdeHZX": {
     "context": "unassign products from shipping method, button",
     "string": "Unassign"
@@ -10238,6 +10235,10 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
+  },
+  "xFSJR1": {
+    "context": "recent changes shortcut",
+    "string": "What's New"
   },
   "xGC2Ge": {
     "context": "grant refund, button",

@@ -1,4 +1,4 @@
-"use client";
+import "./RippleAnimation.css";
 
 import { Box, BoxProps } from "@saleor/macaw-ui-next";
 import type { CSSProperties } from "react";
@@ -24,19 +24,6 @@ export function RippleAnimation({ ...props }: RippleAnimationProps) {
 
   return (
     <Box style={containerStyle} {...props}>
-      <style>{`
-        @keyframes ripple {
-          0% {
-            transform: scale(0);
-            opacity: 1;
-          }
-          100% {
-            transform: scale(4);
-            opacity: 0;
-          }
-        }
-      `}</style>
-
       {/* First ripple */}
       <div
         style={{
@@ -45,7 +32,6 @@ export function RippleAnimation({ ...props }: RippleAnimationProps) {
           animationDelay: "0s",
         }}
       />
-
       {/* Second ripple */}
       <div
         style={{
@@ -54,7 +40,6 @@ export function RippleAnimation({ ...props }: RippleAnimationProps) {
           animationDelay: "1s",
         }}
       />
-
       {/* Third ripple */}
       <div
         style={{
@@ -63,7 +48,6 @@ export function RippleAnimation({ ...props }: RippleAnimationProps) {
           animationDelay: "2s",
         }}
       />
-
       {/* Fourth ripple */}
       <div
         style={{

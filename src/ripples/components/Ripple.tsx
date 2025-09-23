@@ -30,7 +30,7 @@ export const Ripple = (props: { model: RippleModel }) => {
         <Tooltip.ContentHeading>Hint</Tooltip.ContentHeading>
         <Box marginBottom={4}>{isPlainString ? <Text>{content}</Text> : content}</Box>
         <Box display="flex" justifyContent="flex-end" gap={2}>
-          {props.model.actions?.map((act, index) => {
+          {props.model.actions?.map((rippleAction, index) => {
             return (
               <Button
                 size="small"
@@ -42,10 +42,10 @@ export const Ripple = (props: { model: RippleModel }) => {
 
                   setManuallyHidden(props.model);
 
-                  act.onClick();
+                  rippleAction.onClick();
                 }}
               >
-                {intl.formatMessage(act.label)}
+                {intl.formatMessage(rippleAction.label)}
               </Button>
             );
           })}
