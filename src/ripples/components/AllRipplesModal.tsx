@@ -8,36 +8,39 @@ import { Box, Button, ModalRootProps, Text } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-const logsSorted = allRipples.sort((r1, r2) => r2.dateAdded.getTime() - r1.dateAdded.getTime());
+export const getRipplesSortedAndGroupedByMonths = (ripples: Ripple[]) =>
+  ripples
+    .sort((r1, r2) => r2.dateAdded.getTime() - r1.dateAdded.getTime())
+    .reduce(
+      (acc, ripple) => {
+        const logYear = ripple.dateAdded.getFullYear();
+        const logMonth = ripple.dateAdded.toLocaleString("default", { month: "long" });
+        const monthKey = `${logYear} ${logMonth}`;
 
-const logsByMonths = logsSorted.reduce(
-  (acc, ripple) => {
-    const logYear = ripple.dateAdded.getFullYear();
-    const logMonth = ripple.dateAdded.toLocaleString("default", { month: "long" });
-    const monthKey = `${logYear} ${logMonth}`;
+        if (!acc[monthKey]) {
+          acc[monthKey] = [];
+        }
 
-    if (!acc[monthKey]) {
-      acc[monthKey] = [];
-    }
+        acc[monthKey].push({
+          ripple: ripple,
+          dateDisplay: ripple.dateAdded.toLocaleDateString("default", {
+            month: "long",
+            year: "numeric",
+          }),
+        });
 
-    acc[monthKey].push({
-      ripple: ripple,
-      dateDisplay: ripple.dateAdded.toLocaleDateString("default", {
-        month: "long",
-        year: "numeric",
-      }),
-    });
+        return acc;
+      },
+      {} as Record<
+        string,
+        Array<{
+          ripple: Ripple;
+          dateDisplay: string;
+        }>
+      >,
+    );
 
-    return acc;
-  },
-  {} as Record<
-    string,
-    Array<{
-      ripple: Ripple;
-      dateDisplay: string;
-    }>
-  >,
-);
+const groupedRipples = getRipplesSortedAndGroupedByMonths(allRipples);
 
 // todo idea: show last change instead of "recent changes", ripple should be visible if something new exists
 export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
@@ -58,7 +61,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
         <DashboardModal.Grid>
           <DashboardModal.Header>Recent changes</DashboardModal.Header>
           <Box>
-            {Object.values(logsByMonths).map((monthGroup, index) => {
+            {Object.values(groupedRipples).map((monthGroup, index) => {
               return (
                 <Box key={`${monthGroup}-${index}`} marginBottom={8}>
                   <Text marginBottom={4} display="block" color="default2">
