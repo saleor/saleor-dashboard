@@ -18,7 +18,8 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { Sparkles } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
@@ -66,6 +67,13 @@ const TranslationsProductsPage = ({
         )}
       >
         <Box display="flex" gap={3}>
+          {/*TODO: This should be rendered by app extension mount*/}
+          <Button
+            variant="secondary"
+            icon={<Sparkles color="orange" />}
+            __height="50px"
+            __width="50px"
+          />
           <ProductContextSwitcher
             productId={productId}
             selectedId={productId}
