@@ -25,9 +25,18 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
             id: "ABSQ9z",
           }),
         });
+
+        setEmail("");
       }
 
-      setEmail("");
+      notify({
+        status: "error",
+        text: data.requestPasswordReset?.errors.join(", "),
+        title: intl.formatMessage({
+          defaultMessage: "Password reset failed",
+          id: "ZLcjD2",
+        }),
+      });
     },
   });
 
