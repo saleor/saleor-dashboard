@@ -8,6 +8,7 @@ type TranslateProductForm = {
     fieldName: string;
     fieldValue: string;
     fieldOriginal: string;
+    type: "short" | "rich";
   }>;
 };
 

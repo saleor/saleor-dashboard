@@ -63,8 +63,11 @@ export const AppFrame = ({
 
   useEffect(() => {
     if (formState && handshakeDone) {
-      console.log("pushing to extension");
-      postToExtension(DashboardEventFactory.createFormDataEvent(formState.formId, formState));
+      // todo we need to find mechanism to delay pushing when extension is actually ready
+      // maybe NotifyReady should set extra flag?
+      setTimeout(() => {
+        postToExtension(DashboardEventFactory.createFormDataEvent(formState.formId, formState));
+      }, 1000);
     }
   }, [formState, postToExtension, handshakeDone]);
 
@@ -87,7 +90,6 @@ export const AppFrame = ({
         dashboard: dashboardVersion,
       }),
     );
-    console.log("Handshake done");
     setHandshakeDone(true);
   }, [appToken, postToExtension, setHandshakeDone]);
 
