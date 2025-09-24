@@ -37,7 +37,7 @@ jest.mock("@dashboard/auth/utils", () => ({
 }));
 
 describe("StaffPasswordResetDialog", () => {
-  it("renders the form with input field", () => {
+  it("renders the dialog with input field", () => {
     // Arrange & Act
     render(
       <TestWrapper>
@@ -46,7 +46,7 @@ describe("StaffPasswordResetDialog", () => {
     );
 
     // Assert
-    expect(screen.getByRole("form")).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
     expect(screen.getByTestId("email")).toBeInTheDocument();
     expect(screen.getByTestId("submit")).toBeInTheDocument();
   });
