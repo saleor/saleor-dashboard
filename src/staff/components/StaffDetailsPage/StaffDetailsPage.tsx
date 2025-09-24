@@ -98,7 +98,21 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
       {({ data: formData, change, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={staffListBackLink} title={getUserName(staffMember)} />
+            <TopNav href={staffListBackLink} title={getUserName(staffMember)}>
+              {canEditPreferences && (
+                <Button
+                  onClick={onResetPassword}
+                  data-test-id="resetPasswordBtn"
+                  variant="secondary"
+                  alignSelf="center"
+                >
+                  {intl.formatMessage({
+                    defaultMessage: "Reset password",
+                    id: "Yy/yDL",
+                  })}
+                </Button>
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <StaffProperties
                 errors={errors}
@@ -110,22 +124,6 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 onImageUpload={onImageUpload}
                 onImageDelete={onImageDelete}
               />
-              {canEditPreferences && (
-                <>
-                  <Button
-                    onClick={onResetPassword}
-                    data-test-id="changePasswordBtn"
-                    variant="secondary"
-                    marginLeft={6}
-                    marginTop={6}
-                  >
-                    {intl.formatMessage({
-                      defaultMessage: "Reset password",
-                      id: "Yy/yDL",
-                    })}
-                  </Button>
-                </>
-              )}
             </DetailPageLayout.Content>
 
             <DetailPageLayout.RightSidebar>
