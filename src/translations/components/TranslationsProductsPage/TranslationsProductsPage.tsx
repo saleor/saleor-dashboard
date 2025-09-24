@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -47,6 +48,9 @@ const TranslationsProductsPage = ({
 }: TranslationsProductsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const { TRANSLATION_PRODUCT_FORM: formExtensionsList } = useExtensions([
+    "TRANSLATION_PRODUCT_FORM",
+  ]);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -67,13 +71,18 @@ const TranslationsProductsPage = ({
         )}
       >
         <Box display="flex" gap={3}>
-          {/*TODO: This should be rendered by app extension mount*/}
-          <Button
-            variant="secondary"
-            icon={<Sparkles color="orange" />}
-            __height="50px"
-            __width="50px"
-          />
+          {/*TODO: This should be rendered by app extension mount. How to figure out many apps on this mount? Can app set its own icon? */}
+          {formExtensionsList.length > 0 && (
+            <Button
+              onClick={() => {
+                formExtensionsList[0].open();
+              }}
+              variant="secondary"
+              icon={<Sparkles color="orange" />}
+              __height="50px"
+              __width="50px"
+            />
+          )}
           <ProductContextSwitcher
             productId={productId}
             selectedId={productId}
