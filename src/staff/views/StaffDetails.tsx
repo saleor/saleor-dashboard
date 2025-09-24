@@ -13,10 +13,11 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import StaffDetailsPage, {
+import {
   StaffDetailsFormData,
+  StaffDetailsPage,
 } from "../components/StaffDetailsPage/StaffDetailsPage";
-import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
+import { StaffPasswordResetDialog } from "../components/StaffPasswordResetDialog/StaffPasswordResetDialog";
 import { useProfileOperations, useStaffUserOperations } from "../hooks";
 import { staffListUrl, staffMemberDetailsUrl, StaffMemberDetailsUrlQueryParams } from "../urls";
 import { groupsDiff } from "../utils";
@@ -26,7 +27,7 @@ interface OrderListProps {
   params: StaffMemberDetailsUrlQueryParams;
 }
 
-export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
+export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();
@@ -48,8 +49,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   const {
     updateUserAccount,
     updateUserAccountOpts,
-    changePassword,
-    changePasswordOpts,
     deleteAvatarResult,
     deleteUserAvatar,
     updateUserAvatar,
@@ -109,10 +108,10 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         canRemove={!isUserSameAsViewer}
         disabled={loading}
         initialSearch=""
-        onChangePassword={() =>
+        onResetPassword={() =>
           navigate(
             staffMemberDetailsUrl(id, {
-              action: "change-password",
+              action: "reset-password",
             }),
           )
         }
@@ -194,19 +193,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
           }}
         />
       </ActionDialog>
-      <StaffPasswordResetDialog
-        confirmButtonState={changePasswordOpts.status}
-        errors={changePasswordOpts?.data?.passwordChange?.errors || []}
-        open={params.action === "change-password"}
-        onClose={closeModal}
-        onSubmit={data =>
-          changePassword({
-            variables: data,
-          })
-        }
-      />
+      <StaffPasswordResetDialog open={params.action === "reset-password"} onClose={closeModal} />
     </>
   );
 };
-
-export default StaffDetails;

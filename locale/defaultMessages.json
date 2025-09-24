@@ -146,10 +146,6 @@
     "context": "limit voucher",
     "string": "Limit to staff only"
   },
-  "+kb2lM": {
-    "context": "dialog header",
-    "string": "Change Password"
-  },
   "+mbkbU": {
     "context": "unknown customer display name",
     "string": "Unknown customer"
@@ -1974,6 +1970,9 @@
     "context": "area units type",
     "string": "Area"
   },
+  "ABSQ9z": {
+    "string": "Password reset link has been sent to the provided email address"
+  },
   "AD1PlC": {
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
@@ -2266,9 +2265,6 @@
   "C035fF": {
     "context": "grant refund, refund card explanation next to submit button",
     "string": "Funds will be returned in a separate step"
-  },
-  "C0JLNW": {
-    "string": "Provided email address does not exist in our database."
   },
   "C4IOEN": {
     "string": "Created structure"
@@ -2959,6 +2955,10 @@
     "context": "assign products to shipping rate and save, button",
     "string": "Assign and save"
   },
+  "Fzky6q": {
+    "context": "dialog header",
+    "string": "Reset password"
+  },
   "G+9nOZ": {
     "context": "checkbox description",
     "string": "If selected, this will add all of the countries not selected to other shipping zones"
@@ -3068,10 +3068,6 @@
   "GVinbz": {
     "context": "column title",
     "string": "Value"
-  },
-  "GXdwyR": {
-    "context": "input label",
-    "string": "Previous Password"
   },
   "GbBCmr": {
     "context": "window title",
@@ -4116,10 +4112,6 @@
   },
   "N2SbNc": {
     "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
-  },
-  "N3Zot1": {
-    "context": "button",
-    "string": "Change your password"
   },
   "N43t3/": {
     "context": "error message",
@@ -6288,10 +6280,6 @@
     "context": "dialog description",
     "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
   },
-  "ZhDQel": {
-    "context": "header",
-    "string": "Password"
-  },
   "ZhqH8J": {
     "context": "button",
     "string": "Copy headers"
@@ -6778,10 +6766,6 @@
   },
   "cLcy6F": {
     "string": "Number of products"
-  },
-  "cMFlOp": {
-    "context": "input label",
-    "string": "New Password"
   },
   "cMov2n": {
     "context": "error message",
@@ -7820,6 +7804,9 @@
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
   },
+  "jm/spn": {
+    "string": "Reset"
+  },
   "jm2YzF": {
     "context": "description",
     "string": "Use Saleor Cloud to access Saleor Extensions"
@@ -8354,9 +8341,6 @@
   },
   "mgFyBA": {
     "string": "This name should be unique"
-  },
-  "mm0CXe": {
-    "string": "You should change your password every month to avoid security issues."
   },
   "mmcHeH": {
     "string": "Discount Value"
@@ -8918,9 +8902,6 @@
   },
   "qDwvZ4": {
     "string": "Unknown error"
-  },
-  "qEJT8e": {
-    "string": "New password must be at least 8 characters long"
   },
   "qEZ463": {
     "context": "export selected items to csv file",

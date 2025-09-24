@@ -22,11 +22,10 @@ import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListPath } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import { Option, Text } from "@saleor/macaw-ui-next";
+import { Button, Option, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
 import { staffDetailsPageMessages as messages } from "./messages";
@@ -50,14 +49,14 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   staffMember: StaffMemberDetailsFragment | UserFragment;
   errors: StaffErrorFragment[];
-  onChangePassword: () => void;
+  onResetPassword: () => void;
   onDelete: () => void;
   onImageDelete: () => void;
   onSubmit: (data: StaffDetailsFormData) => SubmitPromise;
   onImageUpload: (file: File) => any;
 }
 
-const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
+export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   availablePermissionGroups,
   canEditAvatar,
   canEditPreferences,
@@ -67,7 +66,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   errors,
   fetchMorePermissionGroups,
   initialSearch,
-  onChangePassword,
+  onResetPassword,
   onDelete,
   onImageDelete,
   onImageUpload,
@@ -113,8 +112,18 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
               />
               {canEditPreferences && (
                 <>
-                  <CardSpacer />
-                  <StaffPassword onChangePassword={onChangePassword} />
+                  <Button
+                    onClick={onResetPassword}
+                    data-test-id="changePasswordBtn"
+                    variant="secondary"
+                    marginLeft={6}
+                    marginTop={6}
+                  >
+                    {intl.formatMessage({
+                      defaultMessage: "Reset password",
+                      id: "Yy/yDL",
+                    })}
+                  </Button>
                 </>
               )}
             </DetailPageLayout.Content>
@@ -182,6 +191,3 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     </Form>
   );
 };
-
-StaffDetailsPage.displayName = "StaffDetailsPage";
-export default StaffDetailsPage;
