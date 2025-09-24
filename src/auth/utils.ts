@@ -2,9 +2,12 @@ import { ApolloError, ServerError } from "@apollo/client/core";
 import { IMessage, IMessageContext } from "@dashboard/components/messages";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors, parseLogMessage } from "@dashboard/misc";
+import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { IntlShape } from "react-intl";
+import urlJoin from "url-join";
 
 import { isJwtError, isTokenExpired } from "./errors";
+import { newPasswordUrl } from "./urls";
 
 const getNetworkErrors = (error: ApolloError): string[] => {
   const networkErrors = error.networkError as ServerError;
@@ -98,3 +101,6 @@ export async function handleQueryAuthError(
     showAllErrors({ notify, error });
   }
 }
+
+export const getNewPasswordResetRedirectUrl = () =>
+  urlJoin(window.location.origin, getAppMountUriForRedirect(), newPasswordUrl().replace(/\?/, ""));
