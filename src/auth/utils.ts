@@ -3,9 +3,12 @@ import { IMessage, IMessageContext } from "@dashboard/components/messages";
 import { UseNotifierResult } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors, parseLogMessage } from "@dashboard/misc";
+import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { IntlShape } from "react-intl";
+import urlJoin from "url-join";
 
 import { isJwtError, isTokenExpired } from "./errors";
+import { newPasswordUrl } from "./urls";
 
 export const displayDemoMessage = (intl: IntlShape, notify: UseNotifierResult) => {
   notify({
@@ -105,3 +108,6 @@ export async function handleQueryAuthError(
     showAllErrors({ notify, error });
   }
 }
+
+export const getNewPasswordResetRedirectUrl = () =>
+  urlJoin(window.location.origin, getAppMountUriForRedirect(), newPasswordUrl().replace(/\?/, ""));

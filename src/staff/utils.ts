@@ -2,7 +2,7 @@
 import { StaffMemberDetailsFragment, UserFragment } from "@dashboard/graphql";
 import difference from "lodash/difference";
 
-import { StaffDetailsFormData } from "./components/StaffDetailsPage";
+import { StaffDetailsFormData } from "./components/StaffDetailsPage/StaffDetailsPage";
 
 /**
  * Return lists of groups which have to be added and removed from user.
