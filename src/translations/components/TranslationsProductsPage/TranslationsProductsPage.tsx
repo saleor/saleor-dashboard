@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { translateProductFormStateAtom } from "@dashboard/extensions/form-context-state";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -20,7 +21,9 @@ import {
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { useAtom } from "jotai";
 import { Sparkles } from "lucide-react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
@@ -51,6 +54,29 @@ const TranslationsProductsPage = ({
   const { TRANSLATION_PRODUCT_FORM: formExtensionsList } = useExtensions([
     "TRANSLATION_PRODUCT_FORM",
   ]);
+  const [, setFormStateForExtension] = useAtom(translateProductFormStateAtom);
+
+  useEffect(() => {
+    setFormStateForExtension({
+      formId: "translate-product",
+      langauge: languageCode,
+      productId,
+      fields: [
+        {
+          fieldName: TranslationInputFieldName.name,
+          fieldValue: data?.translation?.name ?? "",
+          fieldOriginal: data?.product?.name ?? "",
+          type: "short",
+        },
+        {
+          fieldName: TranslationInputFieldName.description,
+          fieldValue: data?.translation?.description ?? "",
+          fieldOriginal: data?.product?.description ?? "",
+          type: "rich",
+        },
+      ],
+    });
+  }, [setFormStateForExtension, languageCode, data, productId]);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>

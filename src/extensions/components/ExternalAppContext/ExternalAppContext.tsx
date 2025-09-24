@@ -38,7 +38,7 @@ export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
 };
 
 export const useExternalApp = () => {
-  const { open, setOpen, setAppData } = useContext(ExternalAppContext);
+  const { open, setOpen, setAppData, appData } = useContext(ExternalAppContext);
   const navigate = useNavigator();
   const openApp = (appData: AppData) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {
@@ -52,5 +52,5 @@ export const useExternalApp = () => {
   };
   const closeApp = () => setOpen(false);
 
-  return { open, openApp, closeApp };
+  return { open, openApp, closeApp, appData };
 };
