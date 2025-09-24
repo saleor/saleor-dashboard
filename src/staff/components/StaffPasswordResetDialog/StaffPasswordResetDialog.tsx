@@ -16,7 +16,7 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
 
   const [resetPassword, { status }] = useRequestPasswordResetMutation({
     onCompleted: data => {
-      if (data.requestPasswordReset?.errors.length === 0) {
+      if (data?.requestPasswordReset?.errors.length === 0) {
         onClose();
         notify({
           status: "success",
@@ -27,16 +27,16 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
         });
 
         setEmail("");
+      } else {
+        notify({
+          status: "error",
+          text: data.requestPasswordReset?.errors.join(", "),
+          title: intl.formatMessage({
+            defaultMessage: "Password reset failed",
+            id: "ZLcjD2",
+          }),
+        });
       }
-
-      notify({
-        status: "error",
-        text: data.requestPasswordReset?.errors.join(", "),
-        title: intl.formatMessage({
-          defaultMessage: "Password reset failed",
-          id: "ZLcjD2",
-        }),
-      });
     },
   });
 
