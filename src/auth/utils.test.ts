@@ -3,6 +3,7 @@ import { getNewPasswordResetRedirectUrl } from "./utils";
 describe("getNewPasswordResetRedirectUrl", () => {
   it("should return the correct redirect URL if dashboard is mounted under /", () => {
     const redirectUrl = getNewPasswordResetRedirectUrl();
+
     expect(redirectUrl).toBe("http://localhost/new-password/");
   });
 
@@ -13,6 +14,7 @@ describe("getNewPasswordResetRedirectUrl", () => {
     };
 
     const redirectUrl = getNewPasswordResetRedirectUrl();
+
     expect(redirectUrl).toBe("http://localhost/dashboard/new-password/");
   });
 });

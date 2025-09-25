@@ -13,6 +13,6 @@ export const useLastLoginMethod = () => {
   return {
     lastLoginMethod,
     setLastLoginMethod,
-    hasUserLoggedViaExternalMethod: lastLoginMethod !== "password",
+    hasUserLoggedViaExternalMethod: lastLoginMethod !== null && lastLoginMethod !== "password",
   };
 };
