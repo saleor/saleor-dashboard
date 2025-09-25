@@ -37,7 +37,7 @@ interface ShippingZonesListProps {
   params: ShippingZonesListUrlQueryParams;
 }
 
-export const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
+const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -191,5 +191,6 @@ export const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 ShippingZonesList.displayName = "ShippingZonesList";
 export default ShippingZonesList;

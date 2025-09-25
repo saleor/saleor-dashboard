@@ -7,7 +7,7 @@ import { ColumnPickerSearch } from "./ColumnPickerSearch";
 import messages from "./messages";
 import { ColumnCategory } from "./useColumns";
 
-export interface ColumnPickerAvailableNodesProps {
+interface ColumnPickerAvailableNodesProps {
   currentCategory: ColumnCategory;
   selectedColumns: string[];
   query: string;

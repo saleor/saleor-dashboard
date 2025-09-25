@@ -25,7 +25,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { changeWarehouseDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface OrderChangeWarehouseDialogProps {
+interface OrderChangeWarehouseDialogProps {
   open: boolean;
   line: OrderFulfillLineFragment;
   currentWarehouseId: string;
@@ -33,7 +33,7 @@ export interface OrderChangeWarehouseDialogProps {
   onClose: () => any;
 }
 
-export const OrderChangeWarehouseDialog = ({
+const OrderChangeWarehouseDialog = ({
   open,
   line,
   currentWarehouseId,
@@ -196,5 +196,6 @@ export const OrderChangeWarehouseDialog = ({
     </DashboardModal>
   );
 };
+
 OrderChangeWarehouseDialog.displayName = "OrderChangeWarehouseDialog";
 export default OrderChangeWarehouseDialog;

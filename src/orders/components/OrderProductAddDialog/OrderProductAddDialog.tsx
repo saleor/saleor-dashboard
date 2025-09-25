@@ -26,7 +26,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { hasAllVariantsSelected, isVariantSelected, onProductAdd, onVariantAdd } from "./utils";
 
-export interface OrderProductAddDialogProps extends FetchMoreProps {
+interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;

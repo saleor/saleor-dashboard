@@ -3,7 +3,6 @@ import { AttributeInput, AttributeInputData } from "@dashboard/components/Attrib
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
-  AttributeFragment,
   AttributeInputTypeEnum,
   AttributeValueDeleteMutation,
   AttributeValueFragment,
@@ -61,10 +60,6 @@ export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
   AttributeEntityTypeEnum.PRODUCT_VARIANT,
   AttributeEntityTypeEnum.PAGE,
 ];
-
-export function filterable(attribute: Pick<AttributeFragment, "inputType">): boolean {
-  return ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(attribute.inputType!);
-}
 
 export interface AttributeReference {
   label: string;
@@ -404,11 +399,10 @@ export const getFileValuesToUploadFromAttributes = (
   attributesWithNewFileValue: FormsetData<null, File>,
 ) => attributesWithNewFileValue.filter(fileAttribute => !!fileAttribute.value);
 
-export const getFileValuesRemovedFromAttributes = (
-  attributesWithNewFileValue: FormsetData<null, File>,
-) => attributesWithNewFileValue.filter(attribute => !attribute.value);
+const getFileValuesRemovedFromAttributes = (attributesWithNewFileValue: FormsetData<null, File>) =>
+  attributesWithNewFileValue.filter(attribute => !attribute.value);
 
-export const getAttributesOfRemovedFiles = (
+const getAttributesOfRemovedFiles = (
   fileAttributesRemoved: FormsetData<null, File>,
 ): AtributesOfFiles[] =>
   fileAttributesRemoved.map(attribute => ({
@@ -418,7 +412,7 @@ export const getAttributesOfRemovedFiles = (
     values: [],
   }));
 
-export const getAttributesOfUploadedFiles = (
+const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
   uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
 ): AtributesOfFiles[] =>
@@ -448,7 +442,7 @@ export const getAttributesAfterFileAttributesUpdate = (
   return uploadedFileAttributes.concat(removedFileAttributes);
 };
 
-export const getFileAttributeDisplayData = (
+const getFileAttributeDisplayData = (
   attribute: AttributeInput,
   attributesWithNewFileValue: FormsetData<null, File>,
 ) => {

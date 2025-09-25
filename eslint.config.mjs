@@ -12,6 +12,8 @@ import { globalIgnores } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import localRules from "./lint/rules/index.mjs";
+import unusedImports from "eslint-plugin-unused-imports";
+import eslintPluginUnicorn from "eslint-plugin-unicorn";
 
 export default tseslint.config(
   globalIgnores([
@@ -24,6 +26,7 @@ export default tseslint.config(
     "type-policies.ts",
     "playwright/auth.js",
     "**/*.generated.ts",
+    ".github/**/*.js",
   ]),
 
   eslint.configs.recommended,
@@ -64,7 +67,16 @@ export default tseslint.config(
       "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          vars: "local",
+          args: "after-used",
+          caughtErrors: "none",
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
       // Disabled after migration to ESLint 9, we need to migrate code to enable these rules:
       "@typescript-eslint/no-empty-object-type": "off",
       "no-constant-binary-expression": "off",
@@ -73,11 +85,22 @@ export default tseslint.config(
     },
   },
 
+  // Properly resolve Node.js globals in .cjs files
+  {
+    files: ["**/*.cjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node, // Use all Node.js globals
+      },
+    },
+  },
+
   // Configure custom plugins and rules for React files
   {
     files: ["src/**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
       globals: {
+        ...globals.builtin,
         ...globals.browser,
         ...globals.es2015,
       },
@@ -88,8 +111,12 @@ export default tseslint.config(
       import: importPlugin,
       formatjs: formatjs,
       "local-rules": { rules: localRules },
+      "unused-imports": unusedImports,
+      unicorn: eslintPluginUnicorn,
     },
     rules: {
+      "unused-imports/no-unused-imports": "error",
+      "unicorn/no-empty-file": "error",
       "import/no-default-export": "warn",
       "import/no-duplicates": "error",
       "simple-import-sort/imports": "error",

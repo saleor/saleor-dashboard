@@ -34,7 +34,7 @@ interface SaleListProps {
   params: SaleListUrlQueryParams;
 }
 
-export const SaleList = ({ params }: SaleListProps) => {
+const SaleList = ({ params }: SaleListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
@@ -225,4 +225,5 @@ export const SaleList = ({ params }: SaleListProps) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default SaleList;

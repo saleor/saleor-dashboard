@@ -1,7 +1,7 @@
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export const OrderLimitReached = () => {
+const OrderLimitReached = () => {
   const intl = useIntl();
 
   return (

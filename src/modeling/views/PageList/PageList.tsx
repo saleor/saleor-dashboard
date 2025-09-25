@@ -43,7 +43,7 @@ interface PageListProps {
   params: PageListUrlQueryParams;
 }
 
-export const PageList = ({ params }: PageListProps) => {
+const PageList = ({ params }: PageListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

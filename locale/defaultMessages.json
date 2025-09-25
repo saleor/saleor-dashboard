@@ -149,10 +149,6 @@
     "context": "limit voucher",
     "string": "Limit to staff only"
   },
-  "+kb2lM": {
-    "context": "dialog header",
-    "string": "Change Password"
-  },
   "+mbkbU": {
     "context": "unknown customer display name",
     "string": "Unknown customer"
@@ -462,9 +458,6 @@
     "context": "add country dialog header",
     "string": "Choose country you want to add"
   },
-  "0VkxrS": {
-    "string": "GraphQL Playground"
-  },
   "0XHXTZ": {
     "context": "column header",
     "string": "Title"
@@ -602,6 +595,10 @@
   },
   "19o9WS": {
     "string": "Learn more about {userPermissions}"
+  },
+  "1ACBFw": {
+    "context": "Ripple tooltip confirmation button",
+    "string": "Show me"
   },
   "1BNKCZ": {
     "context": "sale channel",
@@ -1170,9 +1167,6 @@
     "context": "months after label",
     "string": "months after issue"
   },
-  "54M0Gu": {
-    "string": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
-  },
   "55LMJv": {
     "context": "country list header",
     "string": "Countries"
@@ -1530,6 +1524,9 @@
   "7Chrsf": {
     "string": "Passwords do not match"
   },
+  "7DMWSy": {
+    "string": "Read a blog post"
+  },
   "7EDqed": {
     "context": "tab name",
     "string": "All gift cards"
@@ -1743,10 +1740,6 @@
   "8qL/tV": {
     "context": "CannotDefineChannelsAvailabilityCard subtitle",
     "string": "You will be able to define availability of product after creating variants."
-  },
-  "8u7els": {
-    "context": "channel config plugin status popup title",
-    "string": "Assigned to {activeChannelsCount} of {allChannelsCount} channels"
   },
   "8uLHBY": {
     "context": "unassign attribute from object",
@@ -1994,6 +1987,9 @@
     "context": "area units type",
     "string": "Area"
   },
+  "ABSQ9z": {
+    "string": "Password reset link has been sent to the provided email address"
+  },
   "AD1PlC": {
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
@@ -2022,6 +2018,10 @@
   "AQSmqG": {
     "context": "order discount was updated automatically event title",
     "string": "Order discount was updated automatically updated"
+  },
+  "AR/VVX": {
+    "context": "Indicates last login method user used",
+    "string": "Last used"
   },
   "ARfw53": {
     "context": "description",
@@ -2254,10 +2254,6 @@
     "context": "add shipping address first label",
     "string": "add shipping address first"
   },
-  "BkFke9": {
-    "context": "section header",
-    "string": "Unfulfilled Items"
-  },
   "Bkxrhw": {
     "context": "no webhooks message",
     "string": "No webhooks found"
@@ -2292,9 +2288,6 @@
   "C035fF": {
     "context": "grant refund, refund card explanation next to submit button",
     "string": "Funds will be returned in a separate step"
-  },
-  "C0JLNW": {
-    "string": "Provided email address does not exist in our database."
   },
   "C4IOEN": {
     "string": "Created structure"
@@ -2901,9 +2894,6 @@
     "context": "staff member's account",
     "string": "Deactivated"
   },
-  "FcC842": {
-    "string": "Tune in for live updates with product news, tips, and how teams are building with Saleor."
-  },
   "FcTTvh": {
     "context": "postal codes, header",
     "string": "Postal codes"
@@ -2988,6 +2978,10 @@
   "FzEew9": {
     "context": "assign products to shipping rate and save, button",
     "string": "Assign and save"
+  },
+  "Fzky6q": {
+    "context": "dialog header",
+    "string": "Reset password"
   },
   "G+9nOZ": {
     "context": "checkbox description",
@@ -3098,10 +3092,6 @@
   "GVinbz": {
     "context": "column title",
     "string": "Value"
-  },
-  "GXdwyR": {
-    "context": "input label",
-    "string": "Previous Password"
   },
   "GbBCmr": {
     "context": "window title",
@@ -3974,9 +3964,6 @@
     "context": "name placeholder",
     "string": "Unnamed webhook"
   },
-  "LmKz3g": {
-    "string": "Storefront"
-  },
   "LnRlch": {
     "context": "attribute's editor component entity",
     "string": "Entity"
@@ -4174,10 +4161,6 @@
   "N2SbNc": {
     "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
   },
-  "N3Zot1": {
-    "context": "button",
-    "string": "Change your password"
-  },
   "N43t3/": {
     "context": "error message",
     "string": "Number not set for an invoice"
@@ -4359,10 +4342,6 @@
     "context": "status",
     "string": "Not active"
   },
-  "NxRsHQ": {
-    "context": "section header",
-    "string": "Fulfillment - #{fulfilmentId}"
-  },
   "NxeDbG": {
     "context": "image upload",
     "string": "Drop here to upload"
@@ -4396,6 +4375,10 @@
   "O9QPe1": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
+  },
+  "O9SefD": {
+    "context": "card text, app install page",
+    "string": "Uninstalling the extension will remove all metadata stored by {extensionName}. {learnMoreLink}"
   },
   "OA+fw+": {
     "context": "conjunction, choice between going to dashboard or refreshing page",
@@ -4457,10 +4440,6 @@
   },
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
-  },
-  "ObscZF": {
-    "context": "card text, app install page",
-    "string": "Uninstalling the extension will remove all your customer's personal data stored by {extensionName}. {learnMoreLink}"
   },
   "Oe62bR": {
     "context": "product availability",
@@ -5727,9 +5706,6 @@
   "VrFy8e": {
     "string": "No notes from customer"
   },
-  "Vrch8P": {
-    "string": "April 24th at 3 PM CET | 9 AM EDT"
-  },
   "VsGcdP": {
     "context": "section header",
     "string": "App permissions"
@@ -6354,6 +6330,9 @@
     "context": "accepted header names",
     "string": "Headers with in following format are accepted: <code>authorization*</code>, <code>x-*</code>"
   },
+  "ZLcjD2": {
+    "string": "Password reset failed"
+  },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
@@ -6397,10 +6376,6 @@
   "Zg0dRo": {
     "context": "dialog description",
     "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
-  },
-  "ZhDQel": {
-    "context": "header",
-    "string": "Password"
   },
   "ZhqH8J": {
     "context": "button",
@@ -6505,10 +6480,6 @@
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
-  },
-  "aFU0vm": {
-    "context": "description",
-    "string": "or continue with"
   },
   "aFVFeH": {
     "context": "submit button",
@@ -6892,10 +6863,6 @@
   "cLcy6F": {
     "string": "Number of products"
   },
-  "cMFlOp": {
-    "context": "input label",
-    "string": "New Password"
-  },
   "cMov2n": {
     "context": "error message",
     "string": "Error loading apps marketplace"
@@ -7091,9 +7058,6 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
-  },
-  "dcFARy": {
-    "string": "✨ Join Live Community Update"
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
@@ -7588,6 +7552,9 @@
     "context": "voucher",
     "string": "Times used"
   },
+  "h7yWcT": {
+    "string": "Enter your email. If it matches an account, we’ll send you a reset link within a few minutes."
+  },
   "h84DkG": {
     "string": "Go to explore extensions"
   },
@@ -7695,6 +7662,9 @@
     "context": "button",
     "string": "Send"
   },
+  "hrhqju": {
+    "string": "You are currently logged in using an external identity provider. Logging in through email and password may result in loss of permissions and may render you incapable of managing the store. If you experience trouble authenticating, go back and contact your organization's administrator for assistance."
+  },
   "ht9yOD": {
     "context": "table head",
     "string": "Collection Name"
@@ -7727,10 +7697,6 @@
   "i/ZhxL": {
     "context": "section header returned",
     "string": "Fulfillment waiting for approval"
-  },
-  "i0AcKY": {
-    "context": "notification message after log in",
-    "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
   },
   "i3Mvj8": {
     "context": "product attribute error",
@@ -7955,6 +7921,9 @@
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
   },
+  "jm/spn": {
+    "string": "Reset"
+  },
   "jm2YzF": {
     "context": "description",
     "string": "Use Saleor Cloud to access Saleor Extensions"
@@ -8002,9 +7971,6 @@
     "context": "refunded fulfillment, section header",
     "string": "Replaced"
   },
-  "jzO3qY": {
-    "string": "Join us on Discord"
-  },
   "jzu97k": {
     "context": "attribute product type",
     "string": "Product type"
@@ -8047,6 +8013,9 @@
   },
   "kAAlGL": {
     "string": "Rules"
+  },
+  "kAEQyV": {
+    "string": "OK"
   },
   "kAPaN6": {
     "context": "empty metadata text",
@@ -8497,9 +8466,6 @@
   "mgFyBA": {
     "string": "This name should be unique"
   },
-  "mm0CXe": {
-    "string": "You should change your password every month to avoid security issues."
-  },
   "mmcHeH": {
     "string": "Discount Value"
   },
@@ -8614,10 +8580,6 @@
   "nK68Sg": {
     "context": "model availability date label",
     "string": "Set availability date"
-  },
-  "nKjLjT": {
-    "context": "error message",
-    "string": "Slug must be unique for each warehouse"
   },
   "nKwgxY": {
     "context": "select label",
@@ -8920,6 +8882,9 @@
     "context": "status",
     "string": "Deactivated"
   },
+  "pJ5/7G": {
+    "string": "Close and hide all hints"
+  },
   "pOUOnw": {
     "context": "tab name",
     "string": "All vouchers"
@@ -9077,9 +9042,6 @@
   "qDwvZ4": {
     "string": "Unknown error"
   },
-  "qEJT8e": {
-    "string": "New password must be at least 8 characters long"
-  },
   "qEZ463": {
     "context": "export selected items to csv file",
     "string": "Selected products ({number})"
@@ -9153,6 +9115,9 @@
     "context": "GraphiQL Playground in the dev mode panel",
     "string": "Playground"
   },
+  "qank7+": {
+    "string": "Continue with SSO"
+  },
   "qbFKVI": {
     "context": "notification, form submitted",
     "string": "Refund for order #{orderNumber} was granted"
@@ -9168,6 +9133,9 @@
   "qddy2Z": {
     "context": "order history message",
     "string": "Invoice was sent to customer by {sentBy}"
+  },
+  "qf8OtW": {
+    "string": "Continue with Saleor Cloud"
   },
   "qgQeVW": {
     "string": "Generate Voucher Codes"
@@ -9931,9 +9899,6 @@
   "vSLaZ7": {
     "string": "Select a reason type"
   },
-  "vSy+II": {
-    "string": "Star on Github"
-  },
   "vTN5DZ": {
     "context": "button",
     "string": "Discard"
@@ -10260,6 +10225,10 @@
     "context": "dialog header",
     "string": "Assign Variant"
   },
+  "xFSJR1": {
+    "context": "recent changes shortcut",
+    "string": "What's New"
+  },
   "xGC2Ge": {
     "context": "grant refund, button",
     "string": "Set max. quantities"
@@ -10288,10 +10257,6 @@
   "xOEZjV": {
     "context": "attribute's label",
     "string": "Default Label"
-  },
-  "xPnZ0R": {
-    "context": "title",
-    "string": "Details"
   },
   "xRbqcg": {
     "context": "option",

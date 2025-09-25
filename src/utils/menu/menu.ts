@@ -3,16 +3,16 @@ interface IBaseMenuItem<TMenuData = {}, TValue = string> {
   value?: TValue;
   data: TMenuData | null;
 }
-export type IFlatMenuItem<TMenuData = {}, TValue = string> = IBaseMenuItem<TMenuData, TValue> & {
+type IFlatMenuItem<TMenuData = {}, TValue = string> = IBaseMenuItem<TMenuData, TValue> & {
   id: string;
   parent: string | null;
   sort: number;
 };
-export type IMenuItem<TMenuData = {}, TValue = string> = IBaseMenuItem<TMenuData, TValue> & {
+type IMenuItem<TMenuData = {}, TValue = string> = IBaseMenuItem<TMenuData, TValue> & {
   children: Array<IMenuItem<TMenuData, TValue>>;
 };
 export type IMenu<TMenuData = {}, TValue = string> = Array<IMenuItem<TMenuData, TValue>>;
-export type IFlatMenu<TMenuData = {}, TValue = string> = Array<IFlatMenuItem<TMenuData, TValue>>;
+type IFlatMenu<TMenuData = {}, TValue = string> = Array<IFlatMenuItem<TMenuData, TValue>>;
 
 export function validateMenuOptions<TMenuData = {}, TValue = string>(
   menu: IMenu<TMenuData, TValue>,
@@ -165,10 +165,4 @@ export function fromFlat<TMenuData = {}, TValue = string>(
   return menu
     .filter(menuItem => menuItem.parent === null)
     .map(menuItem => _fromFlat(menu, menuItem));
-}
-
-export function isLeaf<TMenuData = {}, TValue = string>(
-  menuItem: IMenuItem<TMenuData, TValue>,
-): boolean {
-  return menuItem.children.length === 0;
 }

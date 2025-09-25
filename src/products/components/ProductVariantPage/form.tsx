@@ -70,7 +70,7 @@ import {
   extractChannelPricesFromVariantChannel,
 } from "../ProductVariantChannels/formOpretations";
 
-export interface ProductVariantUpdateFormData extends MetadataFormData {
+interface ProductVariantUpdateFormData extends MetadataFormData {
   sku: string;
   trackInventory: boolean;
   weight: string;
@@ -97,7 +97,7 @@ export interface ProductVariantUpdateSubmitData extends ProductVariantUpdateForm
   removeStocks: string[];
 }
 
-export interface UseProductVariantUpdateFormOpts {
+interface UseProductVariantUpdateFormOpts {
   currentChannels: ChannelPriceAndPreorderData[];
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
@@ -133,7 +133,7 @@ export interface ProductVariantUpdateHandlers
   selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
 }
 
-export interface UseProductVariantUpdateFormResult
+interface UseProductVariantUpdateFormResult
   extends CommonUseFormResultWithHandlers<ProductVariantUpdateData, ProductVariantUpdateHandlers>,
     Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantUpdateData>;
@@ -141,7 +141,7 @@ export interface UseProductVariantUpdateFormResult
   disabled: boolean;
 }
 
-export interface ProductVariantUpdateFormProps extends UseProductVariantUpdateFormOpts {
+interface ProductVariantUpdateFormProps extends UseProductVariantUpdateFormOpts {
   children: (props: UseProductVariantUpdateFormResult) => React.ReactNode;
   variant: ProductVariantFragment;
   loading: boolean;

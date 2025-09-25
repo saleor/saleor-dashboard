@@ -10,7 +10,7 @@ export interface UseExitFormDialogResult
   setExitDialogSubmitRef: (submitFn: SubmitFn) => void;
 }
 
-export interface UseExitFormDialogProps {
+interface UseExitFormDialogProps {
   formId: symbol | undefined;
   isDisabled?: boolean;
 }

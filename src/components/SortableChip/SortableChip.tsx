@@ -15,7 +15,7 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   return labelContent;
 };
 
-export type SortableChipProps = {
+type SortableChipProps = {
   label: ReactNode;
   onClose?: () => void;
   loading?: boolean;

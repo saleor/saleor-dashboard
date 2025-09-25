@@ -7,7 +7,7 @@ import {
 } from "@saleor/macaw-ui-next";
 import * as React from "react";
 
-export interface SearchInputProps extends SearchPageProps {
+interface SearchInputProps extends SearchPageProps {
   placeholder: string;
   size?: MacawSearchInputProps["size"];
 }

@@ -9,7 +9,7 @@ import getInvoiceErrorMessage from "@dashboard/utils/errors/invoice";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderInvoiceEmailSendDialogProps extends DialogProps {
+interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: InvoiceErrorFragment[];
   invoice: InvoiceFragment;

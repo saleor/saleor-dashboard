@@ -27,7 +27,7 @@ export enum CollectionListUrlSortField {
   availability = "availability",
   productCount = "productCount",
 }
-export type CollectionListUrlSort = Sort<CollectionListUrlSortField>;
+type CollectionListUrlSort = Sort<CollectionListUrlSortField>;
 export type CollectionListUrlQueryParams = ActiveTab &
   BulkAction &
   CollectionListUrlFilters &

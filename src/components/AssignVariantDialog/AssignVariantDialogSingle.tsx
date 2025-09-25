@@ -21,7 +21,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { getCompositeLabel, VariantWithProductLabel } from "./utils";
 
-export interface AssignVariantDialogSingleProps extends FetchMoreProps {
+interface AssignVariantDialogSingleProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
