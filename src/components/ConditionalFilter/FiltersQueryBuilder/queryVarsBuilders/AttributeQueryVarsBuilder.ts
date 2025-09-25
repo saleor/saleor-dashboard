@@ -131,9 +131,7 @@ export class AttributeQueryVarsBuilder
   }
 
   private buildReferenceFilter(referencedObjectIds: string[]) {
-    const filterValue = {
-      containsAny: [...referencedObjectIds].sort((a, b) => a.localeCompare(b)),
-    };
+    const filterValue = { containsAny: referencedObjectIds };
 
     return { referencedIds: filterValue };
   }
