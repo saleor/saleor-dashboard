@@ -28,7 +28,6 @@ import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/us
 import { AttributePageFormData } from "../components/AttributePage";
 import { ProductVariantCacheManager } from "./productVariantCache";
 
-// Create a module-level cache manager instance
 const productVariantCacheManager = new ProductVariantCacheManager();
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
@@ -352,24 +351,23 @@ export function handleMetadataReferenceAssignment(
       firstValue ? [firstValue] : [],
     );
   } else {
-    // Get the final merged values
     const finalValues = mergeAttributeValues(
       assignReferencesAttributeId,
       attributeValues.map(({ value }) => value),
       attributes as FormsetData<AttributeInputData, string[]>,
     );
 
-    // Set the reference values in useFormset
+    // Set the reference values in useFormset hook
     handlers.selectAttributeReference(assignReferencesAttributeId, finalValues);
 
-    // We need to store "metadata" (part of useFormset) to display data - it works as a cache
-    // for references selected by user before saving
-    // we need to keep this data only for currently selected values, once selection is removed delete this cache
+    /* We will store attribute selection display values in useFormset "metadata" field
+     * This has to be done, because when user chooses new references in the modal,
+     * we don't yet have referenced item details from the query */
     const existingMetadata = attribute?.metadata || [];
     const newMetadata = attributeValues;
     const allMetadata = [...existingMetadata, ...newMetadata];
 
-    // Dedupe and filter to only selected values
+    // Remove duplicate entries, happens when user deletes and adds value before saving the form
     const uniqueMetadata = allMetadata.reduce((acc, meta) => {
       if (finalValues.includes(meta.value) && !acc.find(m => m.value === meta.value)) {
         acc.push(meta);
@@ -601,11 +599,9 @@ export const getReferenceAttributeDisplayData = (
     references:
       attribute.value && attribute.value.length > 0
         ? attribute.value.map(valueId => {
-            // "Metadata" is the label cache. It is populated from the
-            // initial GraphQL payload and whenever the user assigns references in
-            // the dialog into useFormset data.
-            // Prefer it so that chips always display, even if the
-            // current search response does not include a given reference.
+            /* "Metadata" is the cache for newly selected values from useFormset hook.
+             * It is populated from the initial GraphQL payload
+             * and whenever the user assigns references in the dialog into useFormset data. */
             const meta = attribute.metadata?.find(m => m.value === valueId);
 
             if (meta) {
@@ -615,12 +611,12 @@ export const getReferenceAttributeDisplayData = (
               };
             }
 
-            // As a fallback, look at the latest search results.
-            // This should cover scenarios where the user has just added a reference in modal
-            // and metadata has not been updated yet.
-            //
-            // It's not default, because it can fail:
-            // search query filters out references based on `referenceType` and use search query for filtering
+            /* As a fallback, look at the latest referenced entity search results.
+             * This should cover scenarios where the user has just added a reference in modal
+             * and metadata has not been updated yet.
+             *
+             * It's not default, because it can fail:
+             * search query filters out references based on `referenceType` and use search query for filtering */
             const searchResult = findReferenceByEntityType(
               valueId,
               attribute.data.entityType,
