@@ -68,11 +68,11 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
           display={"grid"}
           gap={4}
         >
-          <Paragraph fontWeight="light" color="default2">
+          <Paragraph color="default2" size={2} fontWeight="bold">
             {intl.formatMessage({
               defaultMessage:
-                "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes.",
-              id: "54M0Gu",
+                "Enter your email. If it matches an account, we’ll send you a reset link within a few minutes.",
+              id: "h7yWcT",
             })}
           </Paragraph>
           {hasUserLoggedViaExternalMethod && <ChangingPasswordWarning />}
