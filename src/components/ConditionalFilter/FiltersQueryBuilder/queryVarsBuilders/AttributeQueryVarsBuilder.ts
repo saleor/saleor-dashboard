@@ -107,7 +107,7 @@ export class AttributeQueryVarsBuilder
       return {
         ...baseAttribute,
         value: {
-          reference: { referencedIds: this.buildIdsFilter([value.value]) },
+          reference: this.buildReferenceFilter([value.value]),
         },
       };
     }
@@ -122,7 +122,7 @@ export class AttributeQueryVarsBuilder
       return {
         ...baseAttribute,
         value: {
-          reference: { referencedIds: this.buildIdsFilter(referencedObjectIds) },
+          reference: this.buildReferenceFilter(referencedObjectIds),
         },
       };
     }
@@ -130,11 +130,12 @@ export class AttributeQueryVarsBuilder
     return baseAttribute;
   }
 
-  private buildIdsFilter(referencedObjectIds: string[]) {
-    // Sort ids in order to avoid unnecessary changes in query variables and prevent duplicate requests
-    const sortedIds = [...referencedObjectIds].sort((a, b) => a.localeCompare(b));
+  private buildReferenceFilter(referencedObjectIds: string[]) {
+    const filterValue = {
+      containsAny: [...referencedObjectIds].sort((a, b) => a.localeCompare(b)),
+    };
 
-    return { containsAny: sortedIds };
+    return { referencedIds: filterValue };
   }
 
   private buildConditionAttribute(
