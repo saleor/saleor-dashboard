@@ -20,11 +20,9 @@ export function getAttributeInputFromPage(page: PageDetailsFragment): AttributeI
     id: attribute.attribute.id,
     label: attribute.attribute.name,
     value: getSelectedAttributeValues(attribute),
-    // Note: this is part of useFormset API, not Saleor metadata
-    //
-    // Preserve initial reference labels so UI can render chips even when
-    // filtered reference searches do not return them. Entries without a
-    // reference ID are ignored because they cannot be displayed or submitted.
+    /** Load selected options in this attribute to useFormset metadata
+     * in order to display labels for selection correctly in the UI
+     * see: src/attributes/utils/data.ts */
     metadata: attribute.values
       .filter(value => value.reference)
       .map(value => ({
