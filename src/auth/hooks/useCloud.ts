@@ -1,7 +1,8 @@
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 
-const CLOUD_PLUGIN_ID = "cloud_auth.CloudAuthorizationPlugin";
+import { CLOUD_PLUGIN_ID } from "../utils";
+
 const PLUGIN_KEY = "_saleorAuthPluginId";
 
 export const useCloud = () => {

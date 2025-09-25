@@ -6387,10 +6387,6 @@
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
   },
-  "aFU0vm": {
-    "context": "description",
-    "string": "or continue with"
-  },
   "aFVFeH": {
     "context": "submit button",
     "string": "Add manual capture"
@@ -8976,6 +8972,9 @@
     "context": "GraphiQL Playground in the dev mode panel",
     "string": "Playground"
   },
+  "qank7+": {
+    "string": "Continue with SSO"
+  },
   "qbFKVI": {
     "context": "notification, form submitted",
     "string": "Refund for order #{orderNumber} was granted"
@@ -8991,6 +8990,9 @@
   "qddy2Z": {
     "context": "order history message",
     "string": "Invoice was sent to customer by {sentBy}"
+  },
+  "qf8OtW": {
+    "string": "Continue with Saleor Cloud"
   },
   "qgQeVW": {
     "string": "Generate Voucher Codes"
