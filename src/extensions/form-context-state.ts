@@ -1,15 +1,7 @@
+import { AppBridgeState } from "@saleor/app-sdk/app-bridge";
 import { atom } from "jotai";
 
-type TranslateProductForm = {
-  formId: "translate-product";
-  langauge: string;
-  productId: string;
-  fields: Array<{
-    fieldName: string;
-    fieldValue: string;
-    fieldOriginal: string;
-    type: "short" | "rich";
-  }>;
-};
+// todo import from sdk
+type State = AppBridgeState["formContext"];
 
-export const translateProductFormStateAtom = atom<TranslateProductForm>();
+export const translateProductFormStateAtom = atom<State>();

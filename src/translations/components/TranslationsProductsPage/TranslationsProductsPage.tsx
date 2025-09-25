@@ -5,7 +5,11 @@ import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { translateProductFormStateAtom } from "@dashboard/extensions/form-context-state";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql";
+import {
+  AppExtensionMountEnum,
+  LanguageCodeEnum,
+  ProductTranslationFragment,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
@@ -52,26 +56,26 @@ const TranslationsProductsPage = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const { TRANSLATION_PRODUCT_FORM: formExtensionsList } = useExtensions([
-    "TRANSLATION_PRODUCT_FORM",
+    AppExtensionMountEnum.TRANSLATION_PRODUCT_FORM,
   ]);
   const [, setFormStateForExtension] = useAtom(translateProductFormStateAtom);
 
   useEffect(() => {
     setFormStateForExtension({
       formId: "translate-product",
-      langauge: languageCode,
+      translationLanguage: languageCode,
       productId,
       fields: [
         {
           fieldName: TranslationInputFieldName.name,
-          fieldValue: data?.translation?.name ?? "",
-          fieldOriginal: data?.product?.name ?? "",
+          translatedValue: data?.translation?.name ?? "",
+          originalValue: data?.product?.name ?? "",
           type: "short",
         },
         {
           fieldName: TranslationInputFieldName.description,
-          fieldValue: data?.translation?.description ?? "",
-          fieldOriginal: data?.product?.description ?? "",
+          translatedValue: data?.translation?.description ?? "",
+          originalValue: data?.product?.description ?? "",
           type: "rich",
         },
       ],
