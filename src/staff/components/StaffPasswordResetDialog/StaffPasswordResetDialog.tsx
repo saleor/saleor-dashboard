@@ -1,3 +1,5 @@
+import { ChangingPasswordWarning } from "@dashboard/auth/components/ChangingPasswordWarning";
+import { useLastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import { getNewPasswordResetRedirectUrl } from "@dashboard/auth/utils";
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
@@ -13,6 +15,7 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
   const intl = useIntl();
   const [email, setEmail] = React.useState("");
   const notify = useNotifier();
+  const { hasUserLoggedViaExternalMethod } = useLastLoginMethod();
 
   const [resetPassword, { status }] = useRequestPasswordResetMutation({
     onCompleted: data => {
@@ -72,6 +75,7 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
               id: "54M0Gu",
             })}
           </Paragraph>
+          {hasUserLoggedViaExternalMethod && <ChangingPasswordWarning />}
           <Input
             name="email"
             type="email"
