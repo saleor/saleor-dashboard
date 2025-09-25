@@ -59,11 +59,6 @@ export function getAttributeInputFromProduct(product: ProductFragment): Attribut
     })) ?? []
   );
 }
-/**
- * Lightweight cache of reference labels stored in the formset metadata.
- * The label is surfaced in chips when the underlying reference search does
- * not return a result (for example, when filtered by reference type).
- */
 export interface AttributeValuesMetadata {
   value: string;
   label: string;
@@ -131,9 +126,9 @@ export function getAttributeInputFromSelectedAttributes(
     id: attribute.attribute.id,
     label: attribute.attribute.name,
     value: getSelectedAttributeValues(attribute),
-    // Preserve initial reference labels so UI can render chips even when
-    // filtered reference searches do not return them. Filter out entries
-    // without a reference ID because they cannot be displayed or submitted.
+    /** Load selected options in this attribute to useFormset metadata
+     * in order to display labels for selection correctly in the UI
+     * see: src/attributes/utils/data.ts */
     metadata: attribute.values
       .filter(value => value.reference)
       .map(value => ({
