@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Store email used to sucessfully login via password in local storage.
+Store email used to successfully login via password in local storage.
