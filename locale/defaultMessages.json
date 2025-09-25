@@ -1167,9 +1167,6 @@
     "context": "months after label",
     "string": "months after issue"
   },
-  "54M0Gu": {
-    "string": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
-  },
   "55LMJv": {
     "context": "country list header",
     "string": "Countries"
@@ -7555,6 +7552,9 @@
     "context": "voucher",
     "string": "Times used"
   },
+  "h7yWcT": {
+    "string": "Enter your email. If it matches an account, we’ll send you a reset link within a few minutes."
+  },
   "h84DkG": {
     "string": "Go to explore extensions"
   },
@@ -7661,6 +7661,9 @@
   "hqVMLQ": {
     "context": "button",
     "string": "Send"
+  },
+  "hrhqju": {
+    "string": "You are currently logged in using an external identity provider. Logging in through email and password may result in loss of permissions and may render you incapable of managing the store. If you experience trouble authenticating, go back and contact your organization's administrator for assistance."
   },
   "ht9yOD": {
     "context": "table head",
