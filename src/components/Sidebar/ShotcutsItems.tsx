@@ -15,7 +15,7 @@ export const ShortcutsItems = memo(({ items }: ShortcutsItemsProps) => {
         <ShortcutItem key={id} onClick={action}>
           <ShortcutItem.Icon>{icon}</ShortcutItem.Icon>
           {name}
-          <ShortcutItem.KeyboardShortcut>{shortcut}</ShortcutItem.KeyboardShortcut>
+          {shortcut && <ShortcutItem.KeyboardShortcut>{shortcut}</ShortcutItem.KeyboardShortcut>}
         </ShortcutItem>
       ))}
     </Box>
