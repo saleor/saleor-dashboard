@@ -76,12 +76,13 @@ export function createAttributeReferenceChangeHandler(
   return (attributeId: string, values: string[]) => {
     attributes.change(attributeId, values);
 
-    // Note: "metadata" is a part of useFormset API, NOT Saleor metadata
-    // In here is used to hold display values for references selected by user
-    // before they are returned from our API as attribute references
-
-    // Sync metadata when removing references - remove metadata for unselected values
+    /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
+     * In here is used to hold display values for references selected by user
+     * before they are returned from our API as attribute references
+     *  */
     const currentMetadata = attributes.data.find(a => a.id === attributeId)?.metadata || [];
+
+    // When user removes attribute values from selection, delete them in useFormset metadata
     const syncedMetadata = currentMetadata.filter((meta: AttributeValuesMetadata) =>
       values.includes(meta.value),
     );
@@ -101,9 +102,10 @@ export function createAttributeReferenceMetadataHandler(
   attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
 ): FormsetMetadataChange<AttributeValuesMetadata[]> {
-  // Note: "metadata" is a part of useFormset API, NOT Saleor metadata
-  // In here is used to hold display values for references selected by user
-  // before they are returned from our API as attribute references
+  /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
+   * In here is used to hold display values for references selected by user
+   * before they are returned from our API as attribute references
+   *  */
 
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
     const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
