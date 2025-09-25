@@ -26,9 +26,7 @@ import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
-import { ProductVariantCacheManager } from "./productVariantCache";
-
-const productVariantCacheManager = new ProductVariantCacheManager();
+import { productVariantCacheManager } from "./productVariantCache";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
 

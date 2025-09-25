@@ -5,11 +5,21 @@ export type CachedSearchProduct = RelayToFlat<NonNullable<SearchProductsQuery["s
 export type CachedSearchProductVariant = NonNullable<CachedSearchProduct["variants"]>[0];
 
 /** Cache available variants in product in order to build fast labels based on selected values in the form */
-export class ProductVariantCacheManager {
+export class ProductVariantCacheManagerSingleton {
+  private static instance: ProductVariantCacheManagerSingleton;
+
   private cache: WeakMap<CachedSearchProduct, Map<string, CachedSearchProductVariant>>;
 
-  constructor() {
+  private constructor() {
     this.cache = new WeakMap();
+  }
+
+  public static getInstance(): ProductVariantCacheManagerSingleton {
+    if (!ProductVariantCacheManagerSingleton.instance) {
+      ProductVariantCacheManagerSingleton.instance = new ProductVariantCacheManagerSingleton();
+    }
+
+    return ProductVariantCacheManagerSingleton.instance;
   }
 
   private buildVariantMap(product: CachedSearchProduct): Map<string, CachedSearchProductVariant> {
@@ -43,7 +53,9 @@ export class ProductVariantCacheManager {
     return this.getProductVariantMap(product).get(variantId);
   }
 
-  reset(): void {
+  resetCache(): void {
     this.cache = new WeakMap();
   }
 }
+
+export const productVariantCacheManager = ProductVariantCacheManagerSingleton.getInstance();

@@ -1,10 +1,8 @@
-import { CachedSearchProduct, ProductVariantCacheManager } from "./productVariantCache";
+import { CachedSearchProduct, productVariantCacheManager } from "./productVariantCache";
 
 describe("ProductVariantCacheManager", () => {
-  let cacheManager: ProductVariantCacheManager;
-
   beforeEach(() => {
-    cacheManager = new ProductVariantCacheManager();
+    productVariantCacheManager.resetCache();
   });
 
   it("should cache variant maps per product instance", () => {
@@ -33,7 +31,7 @@ describe("ProductVariantCacheManager", () => {
     });
 
     // Act
-    const firstAccess = cacheManager.getProductVariantById(product, "variant-1");
+    const firstAccess = productVariantCacheManager.getProductVariantById(product, "variant-1");
 
     // Assert
     expect(firstAccess?.name).toBe("Variant A");
@@ -47,7 +45,7 @@ describe("ProductVariantCacheManager", () => {
     });
 
     // Act
-    const secondAccess = cacheManager.getProductVariantById(product, "variant-1");
+    const secondAccess = productVariantCacheManager.getProductVariantById(product, "variant-1");
 
     // Assert
     expect(secondAccess?.name).toBe("Variant A");
@@ -87,7 +85,10 @@ describe("ProductVariantCacheManager", () => {
     const firstProduct = createProduct("p1");
 
     // Act
-    const firstResult = cacheManager.getProductVariantById(firstProduct, "p1-variant-1");
+    const firstResult = productVariantCacheManager.getProductVariantById(
+      firstProduct,
+      "p1-variant-1",
+    );
 
     // Assert
     expect(firstResult?.name).toBe("Variant 1");
@@ -95,7 +96,10 @@ describe("ProductVariantCacheManager", () => {
     const secondProduct = createProduct("p1");
 
     // Act
-    const secondResult = cacheManager.getProductVariantById(secondProduct, "p1-variant-1");
+    const secondResult = productVariantCacheManager.getProductVariantById(
+      secondProduct,
+      "p1-variant-1",
+    );
 
     // Assert
     expect(secondResult?.name).toBe("Variant 1");
@@ -116,7 +120,7 @@ describe("ProductVariantCacheManager", () => {
     } as unknown as CachedSearchProduct;
 
     // Act
-    const result = cacheManager.getProductVariantById(product, "missing");
+    const result = productVariantCacheManager.getProductVariantById(product, "missing");
 
     // Assert
     expect(result).toBeUndefined();
@@ -159,142 +163,21 @@ describe("ProductVariantCacheManager", () => {
       },
     });
 
-    // Act - First access, should cache
-    cacheManager.getProductVariantById(product, "variant-1");
+    // Act
+    // First access, should cache
+    productVariantCacheManager.getProductVariantById(product, "variant-1");
     expect(accessCount).toBe(2); // truthy check + iteration
 
-    // Act - Second access, should use cache
-    cacheManager.getProductVariantById(product, "variant-1");
+    // Second access, should use cache
+    productVariantCacheManager.getProductVariantById(product, "variant-1");
     expect(accessCount).toBe(2); // No additional access
 
-    // Act - Reset cache
-    cacheManager.reset();
+    // Reset cache
+    productVariantCacheManager.resetCache();
 
-    // Act - Access after reset, should rebuild cache
-    cacheManager.getProductVariantById(product, "variant-1");
+    // Access after reset, should rebuild cache
+    productVariantCacheManager.getProductVariantById(product, "variant-1");
 
-    // Assert
     expect(accessCount).toBe(4); // truthy check + iteration again after reset
-  });
-
-  it("should provide isolated cache instances", () => {
-    // Arrange
-    const cache1 = new ProductVariantCacheManager();
-    const cache2 = new ProductVariantCacheManager();
-
-    const product = {
-      __typename: "Product",
-      id: "product-1",
-      name: "Product 1",
-      productType: {
-        __typename: "ProductType",
-        id: "type-id",
-        name: "Type",
-      },
-      variants: [
-        {
-          __typename: "ProductVariant",
-          id: "variant-1",
-          name: "Variant 1",
-        },
-      ],
-    } as unknown as CachedSearchProduct;
-
-    // Act
-    const variant1 = cache1.getProductVariantById(product, "variant-1");
-
-    cache1.reset();
-
-    const variant1AfterReset = cache1.getProductVariantById(product, "variant-1");
-    const variant2 = cache2.getProductVariantById(product, "variant-1");
-
-    // Assert
-    expect(variant1?.name).toBe("Variant 1");
-    expect(variant1AfterReset?.name).toBe("Variant 1");
-    expect(variant2?.name).toBe("Variant 1");
-  });
-
-  it("should maintain separate caches for different instances", () => {
-    // Arrange
-    const cache1 = new ProductVariantCacheManager();
-    const cache2 = new ProductVariantCacheManager();
-
-    let cache1AccessCount = 0;
-    let cache2AccessCount = 0;
-
-    const createProductWithAccessCounter = (accessCountRef: {
-      count: number;
-    }): CachedSearchProduct => {
-      const product = {
-        __typename: "Product",
-        id: "product-1",
-        name: "Product 1",
-        productType: {
-          __typename: "ProductType",
-          id: "type-id",
-          name: "Type",
-        },
-      } as unknown as CachedSearchProduct;
-
-      Object.defineProperty(product, "variants", {
-        configurable: true,
-        get: () => {
-          accessCountRef.count += 1;
-
-          return [
-            {
-              __typename: "ProductVariant",
-              id: "variant-1",
-              name: "Variant 1",
-            },
-          ] as CachedSearchProduct["variants"];
-        },
-      });
-
-      return product;
-    };
-
-    const product1 = createProductWithAccessCounter({ count: 0 });
-    const product2 = createProductWithAccessCounter({ count: 0 });
-
-    Object.defineProperty(product1, "variants", {
-      configurable: true,
-      get: () => {
-        cache1AccessCount += 1;
-
-        return [
-          {
-            __typename: "ProductVariant",
-            id: "variant-1",
-            name: "Variant 1",
-          },
-        ] as CachedSearchProduct["variants"];
-      },
-    });
-
-    Object.defineProperty(product2, "variants", {
-      configurable: true,
-      get: () => {
-        cache2AccessCount += 1;
-
-        return [
-          {
-            __typename: "ProductVariant",
-            id: "variant-1",
-            name: "Variant 1",
-          },
-        ] as CachedSearchProduct["variants"];
-      },
-    });
-
-    // Act
-    cache1.getProductVariantById(product1, "variant-1");
-    cache1.getProductVariantById(product1, "variant-1");
-    cache2.getProductVariantById(product2, "variant-1");
-    cache2.getProductVariantById(product2, "variant-1");
-
-    // Assert
-    expect(cache1AccessCount).toBe(2); // truthy check + iteration on first call
-    expect(cache2AccessCount).toBe(2); // truthy check + iteration on first call
   });
 });
