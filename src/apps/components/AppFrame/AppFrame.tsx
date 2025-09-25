@@ -66,7 +66,12 @@ export const AppFrame = ({
       // todo we need to find mechanism to delay pushing when extension is actually ready
       // maybe NotifyReady should set extra flag?
       setTimeout(() => {
-        postToExtension(DashboardEventFactory.createFormDataEvent(formState.formId, formState));
+        // todo wtf this is not working?
+        // postToExtension(DashboardEventFactory.createFormDataEvent(formState));
+        postToExtension({
+          type: "formData",
+          payload: formState,
+        });
       }, 1000);
     }
   }, [formState, postToExtension, handshakeDone]);

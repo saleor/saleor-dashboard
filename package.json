@@ -153,7 +153,7 @@
     "@graphql-codegen/typescript-operations": "^2.2.4",
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
     "@playwright/test": "^1.47.0",
-    "@saleor/app-sdk": "0.0.0-pr-20250925064601",
+    "@saleor/app-sdk": "0.0.0-pr-20250925102530",
     "@sentry/cli": "^2.33.0",
     "@storybook/react-vite": "9.0.18",
     "@swc/jest": "^0.2.26",

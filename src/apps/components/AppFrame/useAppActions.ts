@@ -28,6 +28,7 @@ export const useAppActions = (
     versions,
   );
   const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
+  const { handle: handleApplyFormFields } = AppActionsHandler.useHandleApplyFormFields();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
@@ -56,6 +57,10 @@ export const useAppActions = (
       case "requestPermissions": {
         return handlePermissionRequest(action);
       }
+      case "applyFormFields": {
+        return handleApplyFormFields(action);
+      }
+
       default: {
         throw new Error("Unknown action type");
       }

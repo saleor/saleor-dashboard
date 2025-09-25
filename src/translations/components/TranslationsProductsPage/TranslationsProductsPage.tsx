@@ -3,7 +3,10 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { translateProductFormStateAtom } from "@dashboard/extensions/form-context-state";
+import {
+  translateProductFormStateAtom,
+  translateProductFromAppResponseAtom,
+} from "@dashboard/extensions/form-context-state";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   AppExtensionMountEnum,
@@ -59,6 +62,13 @@ const TranslationsProductsPage = ({
     AppExtensionMountEnum.TRANSLATION_PRODUCT_FORM,
   ]);
   const [, setFormStateForExtension] = useAtom(translateProductFormStateAtom);
+  const [responseFromApp] = useAtom(translateProductFromAppResponseAtom);
+
+  useEffect(() => {
+    console.log(responseFromApp);
+
+    // todo close modal
+  }, [responseFromApp]);
 
   useEffect(() => {
     setFormStateForExtension({
@@ -80,6 +90,10 @@ const TranslationsProductsPage = ({
         },
       ],
     });
+
+    return () => {
+      setFormStateForExtension(null);
+    };
   }, [setFormStateForExtension, languageCode, data, productId]);
 
   return (

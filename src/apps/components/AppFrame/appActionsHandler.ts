@@ -3,10 +3,12 @@ import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostT
 import { AppUrls } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import { useExternalApp } from "@dashboard/extensions/components/ExternalAppContext/ExternalAppContext";
+import { translateProductFromAppResponseAtom } from "@dashboard/extensions/form-context-state";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
+  ApplyFormFields,
   DashboardEventFactory,
   DispatchResponseEvent,
   NotificationAction,
@@ -15,6 +17,7 @@ import {
   RequestPermissions,
   UpdateRouting,
 } from "@saleor/app-sdk/app-bridge";
+import { getDefaultStore } from "jotai";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
@@ -225,6 +228,25 @@ const useHandlePermissionRequest = (appId: string) => {
   };
 };
 
+const useHandleApplyFormFields = () => {
+  return {
+    handle: (action: ApplyFormFields) => {
+      switch (action.payload.formId) {
+        case "translate-product": {
+          const defaultStore = getDefaultStore();
+
+          defaultStore.set(translateProductFromAppResponseAtom, action.payload.fields);
+
+          return createResponseStatus(action.payload.actionId, true);
+        }
+        default: {
+          return createResponseStatus(action.payload.actionId, false);
+        }
+      }
+    },
+  };
+};
+
 /** @deprecated Use utils from extensions/ */
 export const AppActionsHandler = {
   useHandleNotificationAction,
@@ -233,4 +255,5 @@ export const AppActionsHandler = {
   useNotifyReadyAction,
   createResponseStatus,
   useHandlePermissionRequest,
+  useHandleApplyFormFields,
 };
