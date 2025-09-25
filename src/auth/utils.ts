@@ -104,3 +104,30 @@ export async function handleQueryAuthError(
 
 export const getNewPasswordResetRedirectUrl = () =>
   urlJoin(window.location.origin, getAppMountUriForRedirect(), newPasswordUrl().replace(/\?/, ""));
+
+export const CLOUD_PLUGIN_ID = "cloud_auth.CloudAuthorizationPlugin";
+
+export const SSO_PLUGIN_ID = "mirumee.authentication.openidconnect";
+
+export const getExternalAuthenticationMethodName = ({
+  pluginId,
+  intl,
+}: {
+  pluginId: string;
+  intl: IntlShape;
+}): string | null => {
+  switch (pluginId) {
+    case CLOUD_PLUGIN_ID:
+      return intl.formatMessage({
+        defaultMessage: "Continue with Saleor Cloud",
+        id: "qf8OtW",
+      });
+    case SSO_PLUGIN_ID:
+      return intl.formatMessage({
+        defaultMessage: "Continue with SSO",
+        id: "qank7+",
+      });
+    default:
+      return null;
+  }
+};
