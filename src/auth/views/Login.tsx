@@ -10,6 +10,7 @@ import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
+import { useStoreEmailUsedToLogin } from "../hooks/useStoreEmailUsedToLogin";
 import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
 
 interface LoginViewProps {
@@ -33,6 +34,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     setRequestedExternalPluginId,
   } = useAuthParameters();
   const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
+  const { setEmailUsedToLogin } = useStoreEmailUsedToLogin();
 
   const handleSubmit = async (data: LoginFormData) => {
     if (!login) {
@@ -44,6 +46,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
 
     if (errors.length === 0) {
       setLastLoginMethod("password");
+      setEmailUsedToLogin(data.email);
     }
 
     return errors;

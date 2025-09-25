@@ -1,3 +1,4 @@
+import { useStoreEmailUsedToLogin } from "@dashboard/auth/hooks/useStoreEmailUsedToLogin";
 import { DEMO_MODE } from "@dashboard/config";
 import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
@@ -20,7 +21,7 @@ export interface LoginFormProps {
   onSubmit: (data: LoginFormData) => SubmitPromise;
 }
 
-const getLoginFormData = () => {
+const getLoginFormData = (defaultEmail: string | null) => {
   if (DEMO_MODE) {
     return {
       email: "admin@example.com",
@@ -28,11 +29,12 @@ const getLoginFormData = () => {
     };
   }
 
-  return { email: "", password: "" };
+  return { email: defaultEmail, password: "" };
 };
 
 function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLoginFormResult {
-  const form = useForm(getLoginFormData());
+  const { emailUsedToLogin } = useStoreEmailUsedToLogin();
+  const form = useForm(getLoginFormData(emailUsedToLogin));
   const { change, data, reset } = form;
   const handleFormSubmit = useHandleFormSubmit({ onSubmit });
   const submit = async () => handleFormSubmit(data);
