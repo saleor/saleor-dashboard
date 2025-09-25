@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.21.12
+
+### Patch Changes
+
+- 3c90ac1: Added warning message when user who previously logged via external auth (like SSO or Saleor Cloud) wanted to reset password. Also reset password description has been updated to be more concise.
+- c731b7e: Changed text for external methods of authorization on dashboard login page.
+
+  | Previous name              | Current name               |
+  | -------------------------- | -------------------------- |
+  | Saleor Cloud Authorization | Continue with Saleor Cloud |
+  | OpenID Connect             | Continue with SSO          |
+
+- d53d244: Store last login method in local storage so user can see badge that informs them about with which method they have logged into.
+- d0a0306: After this change `Account Settings` page will have `Reset password` button instead of `Change password`. We also removed text about changing password every month.
+
 ## 3.21.11
 
 ### Patch Changes
