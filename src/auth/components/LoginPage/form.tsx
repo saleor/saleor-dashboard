@@ -21,7 +21,7 @@ export interface LoginFormProps {
   onSubmit: (data: LoginFormData) => SubmitPromise;
 }
 
-const getLoginFormData = (defaultEmail: string | null) => {
+const getLoginFormData = (defaultEmail: string) => {
   if (DEMO_MODE) {
     return {
       email: "admin@example.com",
@@ -34,7 +34,7 @@ const getLoginFormData = (defaultEmail: string | null) => {
 
 function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLoginFormResult {
   const { emailUsedToLogin } = useStoreEmailUsedToLogin();
-  const form = useForm(getLoginFormData(emailUsedToLogin));
+  const form = useForm(getLoginFormData(emailUsedToLogin ?? ""));
   const { change, data, reset } = form;
   const handleFormSubmit = useHandleFormSubmit({ onSubmit });
   const submit = async () => handleFormSubmit(data);
