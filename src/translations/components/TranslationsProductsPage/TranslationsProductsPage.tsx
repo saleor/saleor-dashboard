@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { useExternalApp } from "@dashboard/extensions/components/ExternalAppContext";
 import {
   translateProductFormStateAtom,
   translateProductFromAppResponseAtom,
@@ -62,10 +63,26 @@ const TranslationsProductsPage = ({
     AppExtensionMountEnum.TRANSLATION_PRODUCT_FORM,
   ]);
   const [, setFormStateForExtension] = useAtom(translateProductFormStateAtom);
-  const [responseFromApp] = useAtom(translateProductFromAppResponseAtom);
+  const [responseFromApp, setResponseFromApp] = useAtom(translateProductFromAppResponseAtom);
+  const { closeApp } = useExternalApp();
+
+  useEffect(() => {
+    return () => {
+      setFormStateForExtension(null);
+      setResponseFromApp(null);
+    };
+  }, []);
 
   useEffect(() => {
     console.log(responseFromApp);
+
+    if (!responseFromApp) {
+      return;
+    }
+
+    onEdit([TranslationInputFieldName.name, TranslationInputFieldName.description]);
+
+    closeApp();
 
     // todo close modal
   }, [responseFromApp]);
@@ -90,10 +107,6 @@ const TranslationsProductsPage = ({
         },
       ],
     });
-
-    return () => {
-      setFormStateForExtension(null);
-    };
   }, [setFormStateForExtension, languageCode, data, productId]);
 
   return (
@@ -162,7 +175,9 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Product Name",
               }),
               name: TranslationInputFieldName.name,
-              translation: data?.translation?.name || null,
+              translation:
+                (responseFromApp && responseFromApp[TranslationInputFieldName.name]?.newValue) ??
+                (data?.translation?.name || null),
               type: "short",
               value: data?.product?.name,
             },
@@ -172,7 +187,10 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Description",
               }),
               name: TranslationInputFieldName.description,
-              translation: data?.translation?.description || null,
+              translation:
+                (responseFromApp &&
+                  responseFromApp[TranslationInputFieldName.description]?.newValue) ??
+                (data?.translation?.description || null),
               type: "rich",
               value: data?.product?.description,
             },

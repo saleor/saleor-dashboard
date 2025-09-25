@@ -9,7 +9,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
-import { stringifyQs } from "@dashboard/utils/urls";
+import { getArrayQueryParam, stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
 
@@ -44,7 +44,8 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      navigate("?", { replace: true });
+      // todo only hide saved
+      // navigate("?", { replace: true });
     }
   };
   const [updateTranslations, updateTranslationsOpts] = useUpdateProductTranslationsMutation({
@@ -53,7 +54,7 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
   const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
     onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
   });
-  const onEdit = (field: string) =>
+  const onEdit = (field: string | string[]) =>
     navigate(
       "?" +
         stringifyQs({
@@ -61,8 +62,20 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
         }),
       { replace: true },
     );
-  const onDiscard = () => {
-    navigate("?", { replace: true });
+  const onDiscard = (field?: string) => {
+    if (!field) {
+      navigate("?", { replace: true });
+    }
+
+    const activeFields = getArrayQueryParam("activeField");
+
+    navigate(
+      "?" +
+        stringifyQs({
+          activeField: activeFields.filter(f => f !== field),
+        }),
+      { replace: true },
+    );
   };
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
