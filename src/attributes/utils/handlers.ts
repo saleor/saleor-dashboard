@@ -13,10 +13,10 @@ import {
   ProductVariantDetailsQuery,
 } from "@dashboard/graphql";
 import {
+  FormsetAdditionalDataChange,
   FormsetAtomicData,
   FormsetChange,
   FormsetData,
-  FormsetMetadataChange,
   UseFormsetOutput,
 } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
@@ -80,14 +80,14 @@ export function createAttributeReferenceChangeHandler(
      * In here is used to hold display values for references selected by user
      * before they are returned from our API as attribute references
      *  */
-    const currentMetadata = attributes.data.find(a => a.id === attributeId)?.metadata || [];
+    const currentMetadata = attributes.data.find(a => a.id === attributeId)?.additionalData || [];
 
     // When user removes attribute values from selection, delete them in useFormset metadata
     const syncedMetadata = currentMetadata.filter((meta: AttributeValuesMetadata) =>
       values.includes(meta.value),
     );
 
-    attributes.setMetadata(attributeId, syncedMetadata);
+    attributes.setAdditionalData(attributeId, syncedMetadata);
 
     triggerChange();
   };
@@ -101,7 +101,7 @@ const mergeReferencesMetadata = (
 export function createAttributeReferenceMetadataHandler(
   attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
-): FormsetMetadataChange<AttributeValuesMetadata[]> {
+): FormsetAdditionalDataChange<AttributeValuesMetadata[]> {
   /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
    * In here is used to hold display values for references selected by user
    * before they are returned from our API as attribute references
@@ -116,7 +116,7 @@ export function createAttributeReferenceMetadataHandler(
       return merged.filter(meta => currentValues.includes(meta.value));
     };
 
-    attributes.setMetadata(attributeId, values, mergeFunction);
+    attributes.setAdditionalData(attributeId, values, mergeFunction);
     triggerChange();
   };
 }

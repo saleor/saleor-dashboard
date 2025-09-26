@@ -34,9 +34,9 @@ import useForm, {
   SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useFormset, {
+  FormsetAdditionalDataChange,
   FormsetChange,
   FormsetData,
-  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import {
@@ -84,7 +84,7 @@ export interface PageUpdateHandlers {
   selectAttribute: FormsetChange<string>;
   selectAttributeMulti: FormsetChange<string>;
   selectAttributeReference: FormsetChange<string[]>;
-  selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
+  selectAttributeReferenceMetadata: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   fetchReferences: (value: string) => void;

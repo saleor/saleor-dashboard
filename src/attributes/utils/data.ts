@@ -356,7 +356,7 @@ export function handleMetadataReferenceAssignment(
     /* We will store attribute selection display values in useFormset "metadata" field
      * This has to be done, because when user chooses new references in the modal,
      * we don't yet have referenced item details from the query */
-    const existingMetadata = attribute?.metadata || [];
+    const existingMetadata = attribute?.additionalData || [];
     const newMetadata = attributeValues;
     const allMetadata = [...existingMetadata, ...newMetadata];
 
@@ -594,7 +594,7 @@ export const getReferenceAttributeDisplayData = (
             /* "Metadata" is the cache for newly selected values from useFormset hook.
              * It is populated from the initial GraphQL payload
              * and whenever the user assigns references in the dialog into useFormset data. */
-            const meta = attribute.metadata?.find(m => m.value === valueId);
+            const meta = attribute.additionalData?.find(m => m.value === valueId);
 
             if (meta) {
               return {

@@ -972,7 +972,7 @@ describe("createAttributeReferenceChangeHandler", () => {
 
     // Assert
     expect(mockAttributes.change).toHaveBeenCalledWith("attr-1", ["ref-1", "ref-3"]);
-    expect(mockAttributes.setMetadata).toHaveBeenCalledWith("attr-1", [
+    expect(mockAttributes.setAdditionalData).toHaveBeenCalledWith("attr-1", [
       { value: "ref-1", label: "Reference 1" },
       { value: "ref-3", label: "Reference 3" },
     ]);
@@ -1003,7 +1003,7 @@ describe("createAttributeReferenceChangeHandler", () => {
 
     // Assert
     expect(mockAttributes.change).toHaveBeenCalledWith("attr-1", []);
-    expect(mockAttributes.setMetadata).toHaveBeenCalledWith("attr-1", []);
+    expect(mockAttributes.setAdditionalData).toHaveBeenCalledWith("attr-1", []);
     expect(triggerChange).toHaveBeenCalled();
   });
 });

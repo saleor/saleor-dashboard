@@ -36,9 +36,9 @@ import useForm, {
   SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useFormset, {
+  FormsetAdditionalDataChange,
   FormsetChange,
   FormsetData,
-  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { errorMessages } from "@dashboard/intl";
@@ -125,7 +125,7 @@ export interface ProductCreateHandlers
   changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
-  selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
+  selectAttributeReferenceMetadata: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
 }
 interface UseProductCreateFormOutput
   extends CommonUseFormResultWithHandlers<ProductCreateData, ProductCreateHandlers>,

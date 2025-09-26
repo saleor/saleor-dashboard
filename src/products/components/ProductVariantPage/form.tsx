@@ -37,9 +37,9 @@ import useForm, {
   SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useFormset, {
+  FormsetAdditionalDataChange,
   FormsetChange,
   FormsetData,
-  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { errorMessages } from "@dashboard/intl";
@@ -130,7 +130,7 @@ export interface ProductVariantUpdateHandlers
   updateChannels: (selectedChannelsIds: string[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
-  selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
+  selectAttributeReferenceMetadata: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
 }
 
 interface UseProductVariantUpdateFormResult
