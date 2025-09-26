@@ -1,0 +1,11 @@
+schema-version: v1
+rulesets:
+  - javascript-best-practices
+  - javascript-browser-security
+  - javascript-code-style
+  - javascript-common-security
+  - javascript-express
+  - javascript-inclusive
+  - javascript-node-security
+  - jsx-react
+  - github-actions
