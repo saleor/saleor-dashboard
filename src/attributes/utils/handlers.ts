@@ -70,11 +70,25 @@ export function createAttributeMultiChangeHandler(
 }
 
 export function createAttributeReferenceChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
+  attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
 ): FormsetChange<string[]> {
   return (attributeId: string, values: string[]) => {
-    changeAttributeData(attributeId, values);
+    attributes.change(attributeId, values);
+
+    /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
+     * In here is used to hold display values for references selected by user
+     * before they are returned from our API as attribute references
+     *  */
+    const currentMetadata = attributes.data.find(a => a.id === attributeId)?.metadata || [];
+
+    // When user removes attribute values from selection, delete them in useFormset metadata
+    const syncedMetadata = currentMetadata.filter((meta: AttributeValuesMetadata) =>
+      values.includes(meta.value),
+    );
+
+    attributes.setMetadata(attributeId, syncedMetadata);
+
     triggerChange();
   };
 }
@@ -85,11 +99,24 @@ const mergeReferencesMetadata = (
 ) => uniqBy([...(prev ?? []), ...(next ?? [])], "value");
 
 export function createAttributeReferenceMetadataHandler(
-  changeAttributeMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>,
+  attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
 ): FormsetMetadataChange<AttributeValuesMetadata[]> {
+  /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
+   * In here is used to hold display values for references selected by user
+   * before they are returned from our API as attribute references
+   *  */
+
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
-    changeAttributeMetadata(attributeId, values, mergeReferencesMetadata);
+    const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
+      const merged = mergeReferencesMetadata(prev, next);
+      const currentValues = attributes.data.find(a => a.id === attributeId)?.value || [];
+
+      // Filter out metadata for references that were removed from attribute
+      return merged.filter(meta => currentValues.includes(meta.value));
+    };
+
+    attributes.setMetadata(attributeId, values, mergeFunction);
     triggerChange();
   };
 }
