@@ -167,7 +167,7 @@ export const ProductVariantCreatePage = ({
         data.attributes,
       ),
     );
-    handlers.selectAttributeReferenceMetadata(
+    handlers.selectAttributeReferenceAdditionalData(
       assignReferencesAttributeId,
       attributeValues.map(({ id, name }) => ({ value: id, label: name })),
     );

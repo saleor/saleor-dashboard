@@ -7,35 +7,35 @@ import useStateFromProps from "./useStateFromProps";
 export type FormsetChange<TValue = any> = (id: string, value: TValue) => void;
 
 /** @deprecated Use react-hook-form instead */
-export interface FormsetAtomicData<TData = {}, TValue = any, TMetadata = any> {
+export interface FormsetAtomicData<TData = {}, TValue = any, TAdditionalData = any> {
   data: TData;
-  metadata?: TMetadata;
+  additionalData?: TAdditionalData;
   id: string;
   label: string;
   value: TValue;
 }
 
 /** @deprecated Use react-hook-form instead */
-export type FormsetData<TData = {}, TValue = any, TMetadata = any> = Array<
-  FormsetAtomicData<TData, TValue, TMetadata>
+export type FormsetData<TData = {}, TValue = any, TAdditionalData = any> = Array<
+  FormsetAtomicData<TData, TValue, TAdditionalData>
 >;
 
 /** @deprecated Use react-hook-form instead */
-export type FormsetMetadataChange<TMetadata = any> = (
+export type FormsetAdditionalDataChange<TAdditionalData = any> = (
   id: string,
-  metadata: TMetadata,
-  merge?: (prev: TMetadata, next: TMetadata) => TMetadata,
+  additionalData: TAdditionalData,
+  merge?: (prev: TAdditionalData, next: TAdditionalData) => TAdditionalData,
 ) => void;
 
 /** @deprecated Use react-hook-form instead */
-export interface UseFormsetOutput<TData = {}, TValue = any, TMetadata = any> {
-  add: (data: FormsetAtomicData<TData, TValue, TMetadata>) => void;
+export interface UseFormsetOutput<TData = {}, TValue = any, TAdditionalData = any> {
+  add: (data: FormsetAtomicData<TData, TValue, TAdditionalData>) => void;
   change: FormsetChange<TValue>;
-  data: FormsetData<TData, TValue, TMetadata>;
-  setMetadata: (
+  data: FormsetData<TData, TValue, TAdditionalData>;
+  setAdditionalData: (
     id: string,
-    metadata: TMetadata,
-    merge?: (prev: TMetadata, next: TMetadata) => TMetadata,
+    additionalData: TAdditionalData,
+    merge?: (prev: TAdditionalData, next: TAdditionalData) => TAdditionalData,
   ) => void;
   get: (id: string) => FormsetAtomicData<TData, TValue>;
   // Used for some rare situations like dataset change
@@ -44,16 +44,18 @@ export interface UseFormsetOutput<TData = {}, TValue = any, TMetadata = any> {
 }
 
 /** @deprecated Use react-hook-form instead */
-function useFormset<TData = {}, TValue = any, TMetadata = any>(
+function useFormset<TData = {}, TValue = any, TAdditionalData = any>(
   initial: FormsetData<TData, TValue>,
 ): UseFormsetOutput<TData, TValue> {
-  const [data, setData] = useStateFromProps<FormsetData<TData, TValue, TMetadata>>(initial || []);
+  const [data, setData] = useStateFromProps<FormsetData<TData, TValue, TAdditionalData>>(
+    initial || [],
+  );
 
-  function addItem(itemData: FormsetAtomicData<TData, TValue, TMetadata>) {
+  function addItem(itemData: FormsetAtomicData<TData, TValue, TAdditionalData>) {
     setData(prevData => [...prevData, itemData]);
   }
 
-  function getItem(id: string): FormsetAtomicData<TData, TValue, TMetadata> {
+  function getItem(id: string): FormsetAtomicData<TData, TValue, TAdditionalData> {
     return data.find(item => item.id === id);
   }
 
@@ -81,17 +83,17 @@ function useFormset<TData = {}, TValue = any, TMetadata = any>(
     });
   }
 
-  const setItemMetadata: FormsetMetadataChange = (
+  const setItemMetadata: FormsetAdditionalDataChange = (
     id: string,
-    metadata: TMetadata,
-    merge?: (prev, next) => TMetadata,
+    additionalData: TAdditionalData,
+    merge?: (prev, next) => TAdditionalData,
   ) => {
     setData(data =>
       data.map(item =>
         item.id === id
           ? {
               ...item,
-              metadata: merge ? merge(item.metadata, metadata) : metadata,
+              additionalData: merge ? merge(item.additionalData, additionalData) : additionalData,
             }
           : item,
       ),
@@ -102,7 +104,7 @@ function useFormset<TData = {}, TValue = any, TMetadata = any>(
     add: addItem,
     change: setItemValue,
     data,
-    setMetadata: setItemMetadata,
+    setAdditionalData: setItemMetadata,
     get: getItem,
     remove: removeItem,
     set: setData,

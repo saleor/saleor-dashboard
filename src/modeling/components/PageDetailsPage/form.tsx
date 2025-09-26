@@ -10,8 +10,8 @@ import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
+  createAttributeReferenceAdditionalDataHandler,
   createAttributeReferenceChangeHandler,
-  createAttributeReferenceMetadataHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
@@ -34,9 +34,9 @@ import useForm, {
   SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import useFormset, {
+  FormsetAdditionalDataChange,
   FormsetChange,
   FormsetData,
-  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import {
@@ -84,7 +84,7 @@ export interface PageUpdateHandlers {
   selectAttribute: FormsetChange<string>;
   selectAttributeMulti: FormsetChange<string>;
   selectAttributeReference: FormsetChange<string[]>;
-  selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
+  selectAttributeReferenceAdditionalData: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   fetchReferences: (value: string) => void;
@@ -192,7 +192,7 @@ function usePageForm(
     attributes,
     triggerChange,
   );
-  const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
+  const handleAttributeMetadataChange = createAttributeReferenceAdditionalDataHandler(
     attributes,
     triggerChange,
   );
@@ -305,7 +305,7 @@ function usePageForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMulti: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
-      selectAttributeReferenceMetadata: handleAttributeMetadataChange,
+      selectAttributeReferenceAdditionalData: handleAttributeMetadataChange,
       selectPageType: handlePageTypeSelect,
     },
     submit,
