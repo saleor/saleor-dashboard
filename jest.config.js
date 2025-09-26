@@ -18,6 +18,8 @@ const config = {
     "^.+\\.(jsx?|tsx?)$": "@swc/jest",
     "^.+\\.(png|svg|jpe?g)$": "jest-file",
   },
+  // Define where tests are located - defaults to src/ directory
+  roots: ["<rootDir>/src/"],
   testRegex: ".*\\.test\\.tsx?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   transformIgnorePatterns: ["/node_modules/(?!chroma-js/.*)"],

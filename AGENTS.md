@@ -16,10 +16,22 @@ Saleor Dashboard is a GraphQL-powered, single-page React application built with 
 
 Before completing changes make sure you run these commands:
 
-- `npm run lint` - Run ESLint and Prettier formatting on src/ and playwright/ directories
-- `./node_modules/.bin/jest <file_path>` - Run specific test file (recommended for local development, running all tests is slow)
+- `npm run lint` - Run ESLint with auto-fix on src/ and playwright/ directories
+- `npm run test:quiet <file_path>` - Run specific test file with console output suppressed
 - `npm run check-types` - Run TypeScript type checking
 - `npm run knip` - Check for unused files/dependencies/exports
+
+#### Test Scripts
+
+- `npm run test:quiet <file_path>` - RECOMMENDED: Run specific test with minimal output (--silent flag)
+- `npm run test:debug <file_path>` - Run specific test file with full console output and extended React Testing Library output (DEBUG_PRINT_LIMIT=20000)
+
+**Important for testing:**
+
+- Always use `npm run test:quiet <file_path>` for specific files
+- Use `npm run test:debug <file_path>` when you need to see full React component output for debugging
+- Console output is suppressed in quiet command
+- Tests automatically run from the `src/` directory (configured in jest.config.js)
 
 ### GraphQL & Code Generation
 

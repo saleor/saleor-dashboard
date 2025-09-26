@@ -44,9 +44,11 @@
     "serve:lhci": "cross-env NODE_ENV=production npm run server",
     "prestart": "npm run generate",
     "storybook": "storybook dev -p 6006",
-    "test": "jest src/",
-    "test:ci": "jest src/ --coverage",
-    "test:watch": "jest --watch src/"
+    "test": "jest",
+    "test:ci": "CI=true jest --coverage --silent",
+    "test:debug": "DEBUG_PRINT_LIMIT=20000 jest",
+    "test:quiet": "jest --silent",
+    "test:watch": "jest --watch"
   },
   "config": {
     "saleor": {
