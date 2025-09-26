@@ -17,7 +17,7 @@ Saleor Dashboard is a GraphQL-powered, single-page React application built with 
 Before completing changes make sure you run these commands:
 
 - `npm run lint` - Run ESLint with auto-fix on src/ and playwright/ directories
-- `npm run test:debug <file_path>` - Run specific test file with console output suppressed (recommended for AI)
+- `npm run test:quiet <file_path>` - Run specific test file with console output suppressed
 - `npm run check-types` - Run TypeScript type checking
 - `npm run format:check` - Format files using prettier
 - `npm run knip` - Check for unused files/dependencies/exports
