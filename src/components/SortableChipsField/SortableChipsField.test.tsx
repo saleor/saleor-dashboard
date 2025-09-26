@@ -93,4 +93,36 @@ describe("SortableChipsField", () => {
     expect(closeButtons[0]).toBeDisabled();
     expect(closeButtons[1]).toBeDisabled();
   });
+
+  it("should expand hidden chips when the more button is clicked", () => {
+    // Arrange
+    const longValues = [
+      { value: "1", label: "Value 1" },
+      { value: "2", label: "Value 2" },
+      { value: "3", label: "Value 3" },
+      { value: "4", label: "Value 4" },
+      { value: "5", label: "Value 5" },
+    ];
+
+    render(
+      <SortableChipsField
+        values={longValues}
+        onValueDelete={onValueDelete}
+        onValueReorder={onValueReorder}
+      />,
+    );
+
+    // Assert
+    expect(screen.getByRole("button", { name: "+2 more" })).toBeInTheDocument();
+    expect(screen.queryByText("Value 4")).not.toBeInTheDocument();
+    expect(screen.queryByText("Value 5")).not.toBeInTheDocument();
+
+    // Act
+    fireEvent.click(screen.getByRole("button", { name: "+2 more" }));
+
+    // Assert
+    expect(screen.queryByRole("button", { name: "+2 more" })).not.toBeInTheDocument();
+    expect(screen.getByText("Value 4")).toBeInTheDocument();
+    expect(screen.getByText("Value 5")).toBeInTheDocument();
+  });
 });
