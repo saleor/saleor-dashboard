@@ -385,6 +385,8 @@ export enum AreaUnitsEnum {
 }
 
 export type AssignedAttributeReferenceInput = {
+  /** Returns objects with a reference pointing to a category identified by the given slug. */
+  categorySlugs?: InputMaybe<ContainsFilterInput>;
   /** Returns objects with a reference pointing to a page identified by the given slug. */
   pageSlugs?: InputMaybe<ContainsFilterInput>;
   /** Returns objects with a reference pointing to a product identified by the given slug. */
