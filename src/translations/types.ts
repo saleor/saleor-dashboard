@@ -43,7 +43,7 @@ export interface TranslationsEntitiesPageProps {
   languageCode: string;
   languages: LanguageFragment[];
   saveButtonState: ConfirmButtonTransitionState;
-  onEdit: (field: string) => void;
-  onDiscard: () => void;
+  onEdit: (field: string | string[]) => void;
+  onDiscard: (field?: string) => void;
   onSubmit: (field: TranslationField, data: string | OutputData) => SubmitPromise<any[]>;
 }

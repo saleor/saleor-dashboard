@@ -1,11 +1,13 @@
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
 import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
+import { translateProductFormStateAtom } from "@dashboard/extensions/form-context-state";
 import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
-import { PropsWithChildren, useCallback, useRef } from "react";
+import { useAtom } from "jotai";
+import { PropsWithChildren, useCallback, useEffect, useRef } from "react";
 
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
@@ -42,6 +44,9 @@ export const AppFrame = ({
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
+
+  const [formState] = useAtom(translateProductFormStateAtom);
+
   /**
    * React on messages from App
    */
@@ -55,6 +60,21 @@ export const AppFrame = ({
       dashboard: dashboardVersion,
     },
   );
+
+  useEffect(() => {
+    if (formState && handshakeDone) {
+      // todo we need to find mechanism to delay pushing when extension is actually ready
+      // maybe NotifyReady should set extra flag?
+      setTimeout(() => {
+        // todo wtf this is not working?
+        // postToExtension(DashboardEventFactory.createFormDataEvent(formState));
+        postToExtension({
+          type: "formData",
+          payload: formState,
+        });
+      }, 1000);
+    }
+  }, [formState, postToExtension, handshakeDone]);
 
   /**
    * Listen to Dashboard context like theme or locale and inform app about it
