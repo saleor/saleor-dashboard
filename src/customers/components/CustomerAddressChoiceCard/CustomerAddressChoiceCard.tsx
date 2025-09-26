@@ -6,12 +6,11 @@ import { commonMessages } from "@dashboard/intl";
 import { EditIcon } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export interface CustomerAddressChoiceCardProps {
+interface CustomerAddressChoiceCardProps {
   address: AddressFragment;
   selected?: boolean;
   editable?: boolean;
@@ -19,7 +18,7 @@ export interface CustomerAddressChoiceCardProps {
   onEditClick?: () => void;
 }
 
-const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = props => {
+const CustomerAddressChoiceCard = (props: CustomerAddressChoiceCardProps) => {
   const { address, selected, editable, onSelect, onEditClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -36,7 +35,11 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
         <AddressFormatter address={address} />
         {editable && (
           <div onClick={onEditClick}>
-            <EditIcon className={classes.editIcon} />
+            <EditIcon
+              className={classes.editIcon}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            />
           </div>
         )}
         {selected && (

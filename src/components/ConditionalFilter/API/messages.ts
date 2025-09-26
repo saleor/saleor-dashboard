@@ -128,3 +128,54 @@ export const attributeTypesMessages = defineMessages({
     description: "attribute page type",
   },
 });
+
+export const paymentMethodTypeMessages = defineMessages({
+  card: {
+    defaultMessage: "Card",
+    id: "UGm9nx",
+    description: "payment method type card",
+  },
+  other: {
+    defaultMessage: "Other",
+    id: "g1bk+A",
+    description: "payment method type other",
+  },
+});
+
+export const fulfillmentStatusMessages = defineMessages({
+  canceled: {
+    defaultMessage: "Canceled",
+    id: "jiXbx5",
+    description: "fulfillment status canceled",
+  },
+  fulfilled: {
+    defaultMessage: "Fulfilled",
+    id: "lSOmbK",
+    description: "fulfillment status fulfilled",
+  },
+  refunded: {
+    defaultMessage: "Refunded",
+    id: "cwjmte",
+    description: "fulfillment status refunded",
+  },
+  refundedAndReturned: {
+    defaultMessage: "Refunded and Returned",
+    id: "zY1K7Q",
+    description: "fulfillment status refunded and returned",
+  },
+  replaced: {
+    defaultMessage: "Replaced",
+    id: "epB7b7",
+    description: "fulfillment status replaced",
+  },
+  returned: {
+    defaultMessage: "Returned",
+    id: "zUHPnm",
+    description: "fulfillment status returned",
+  },
+  waitingForApproval: {
+    defaultMessage: "Waiting for Approval",
+    id: "L/ZbnW",
+    description: "fulfillment status waiting for approval",
+  },
+});

@@ -1,7 +1,7 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FieldError, FieldErrors, UseFormReturn } from "react-hook-form";
 
 import { MetadataCard, MetadataCardProps } from "../Metadata/MetadataCard";
@@ -13,7 +13,7 @@ type Data = {
   privateMetadata: MetadataInput[];
 };
 
-export interface MetadataProps
+interface MetadataProps
   extends Omit<MetadataCardProps, "data" | "isPrivate" | "onChange">,
     Pick<UseFormReturn<Data>, "getValues" | "control" | "trigger"> {
   isLoading?: boolean;

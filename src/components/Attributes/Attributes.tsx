@@ -13,7 +13,7 @@ import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 import { Accordion, Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -35,8 +35,7 @@ export type AttributeInput = FormsetAtomicData<
   string[],
   AttributeValuesMetadata[]
 >;
-export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
-export interface AttributesProps extends AttributeRowHandlers {
+interface AttributesProps extends AttributeRowHandlers {
   attributes: AttributeInput[];
   attributeValues: AttributeValueFragment[];
   fetchAttributeValues: (query: string, attributeId: string) => void;
@@ -62,7 +61,7 @@ const messages = defineMessages({
   },
 });
 
-export const Attributes: React.FC<AttributesProps> = ({
+export const Attributes = ({
   attributes,
   attributeValues,
   errors,
@@ -70,7 +69,7 @@ export const Attributes: React.FC<AttributesProps> = ({
   onAttributeSelectBlur,
   richTextGetters,
   ...props
-}) => {
+}: AttributesProps) => {
   const intl = useIntl();
 
   return (

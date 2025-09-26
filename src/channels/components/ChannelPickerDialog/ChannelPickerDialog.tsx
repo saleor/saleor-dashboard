@@ -4,12 +4,12 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import useChoiceSearch from "@dashboard/hooks/useChoiceSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { Option } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface ChannelPickerDialogProps {
+interface ChannelPickerDialogProps {
   channelsChoices: Option[];
   confirmButtonState: ConfirmButtonTransitionState;
   defaultChoice: string;
@@ -18,14 +18,14 @@ export interface ChannelPickerDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
+const ChannelPickerDialog = ({
   channelsChoices = [],
   confirmButtonState,
   defaultChoice,
   open,
   onClose,
   onConfirm,
-}) => {
+}: ChannelPickerDialogProps) => {
   const intl = useIntl();
   const [choice, setChoice] = useState("");
   const { result, search } = useChoiceSearch(channelsChoices);

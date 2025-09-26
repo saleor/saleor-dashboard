@@ -30,11 +30,13 @@ const attachVariablesLink = new ApolloLink((operation, forward) => {
   }));
 });
 
-export const link = attachVariablesLink.concat(
+const link = attachVariablesLink.concat(
   createUploadLink({
     credentials: "include",
     uri: getApiUrl(),
-    fetch: createFetch(),
+    // TODO: Remove once @saleor/sdk is removed in favor of local implementation for auth
+    // Note this has to be as typeof fetch: ts-expect-error breaks TS in non-strict mode, without it strict mode breaks
+    fetch: createFetch() as typeof fetch,
   }) as unknown as ApolloLink, // type mismatch between apollo-upload-client and @apollo/cient
 );
 

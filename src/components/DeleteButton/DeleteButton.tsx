@@ -1,6 +1,6 @@
 import { buttonMessages } from "@dashboard/intl";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface DeleteButtonProps {
@@ -10,12 +10,7 @@ interface DeleteButtonProps {
   testId?: string;
 }
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({
-  onClick,
-  label,
-  testId,
-  disabled = false,
-}) => {
+const DeleteButton = ({ onClick, label, testId, disabled = false }: DeleteButtonProps) => {
   const intl = useIntl();
 
   return (

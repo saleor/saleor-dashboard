@@ -5,7 +5,7 @@ import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -16,12 +16,12 @@ const nameSeparator = ":";
 const nameInputPrefix = "name";
 const valueInputPrefix = "value";
 
-export interface WebhookHeadersTableBodyProps {
+interface WebhookHeadersTableBodyProps {
   onChange: FormChange;
   headers: Header[];
 }
 
-const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({ onChange, headers }) => {
+const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const updateWebhookItem = (target: EventTarget & HTMLTextAreaElement) => {
@@ -104,7 +104,7 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({ onCha
                 })
               }
             >
-              <DeleteIcon />
+              <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
             </IconButton>
           </TableCell>
         </TableRowLink>

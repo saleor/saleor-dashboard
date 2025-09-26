@@ -7,7 +7,7 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { toggle } from "@dashboard/utils/lists";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { ProductChannelListing } from "../types";
 
@@ -19,13 +19,13 @@ interface VariantChannelsDialogProps {
   onConfirm: (selectedIds: string[]) => void;
 }
 
-export const VariantChannelsDialog: React.FC<VariantChannelsDialogProps> = ({
+export const VariantChannelsDialog = ({
   channelListings,
   selectedChannelListings,
   open,
   onClose,
   onConfirm,
-}) => {
+}: VariantChannelsDialogProps) => {
   const selectedOrDefaults = selectedChannelListings ?? channelListings;
   const allChannelsIds = channelListings.map(c => c.channel.id);
   const allChannels = channelListings.map(c => c.channel);

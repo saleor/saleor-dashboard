@@ -13,9 +13,10 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import * as React from "react";
 
-export interface CollectionUpdateFormData extends MetadataFormData {
+interface CollectionUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
   channelListings: ChannelCollectionData[];
   name: string;
@@ -31,12 +32,12 @@ interface CollectionUpdateHandlers {
   changeMetadata: FormChange;
   changeChannels: (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => void;
 }
-export type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
+type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
   CollectionUpdateData,
   CollectionUpdateHandlers
 >;
 
-export interface CollectionUpdateFormProps {
+interface CollectionUpdateFormProps {
   children: (props: UseCollectionUpdateFormResult) => React.ReactNode;
   collection: CollectionDetailsFragment;
   currentChannels: ChannelCollectionData[];
@@ -129,14 +130,14 @@ function useCollectionUpdateForm(
   };
 }
 
-const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
+const CollectionUpdateForm = ({
   collection,
   currentChannels,
   setChannels,
   children,
   onSubmit,
   disabled,
-}) => {
+}: CollectionUpdateFormProps) => {
   const { richText, ...props } = useCollectionUpdateForm(
     collection,
     currentChannels,

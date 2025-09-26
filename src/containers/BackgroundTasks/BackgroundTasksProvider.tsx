@@ -2,7 +2,7 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import React from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import BackgroundTasksContext from "./context";
@@ -17,10 +17,10 @@ export function useBackgroundTasks(
   notify: IMessageContext,
   intl: IntlShape,
 ) {
-  const idCounter = React.useRef(0);
-  const tasks = React.useRef<QueuedTask[]>([]);
+  const idCounter = useRef(0);
+  const tasks = useRef<QueuedTask[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const intervalId = setInterval(() => {
       const queue = async () => {
         await Promise.all(
@@ -99,7 +99,7 @@ export function useBackgroundTasks(
   };
 }
 
-const BackgroundTasksProvider: React.FC = ({ children }) => {
+const BackgroundTasksProvider = ({ children }: { children: ReactNode }) => {
   const apolloClient = useApolloClient();
   const notify = useNotifier();
   const intl = useIntl();

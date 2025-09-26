@@ -13,7 +13,6 @@ import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -21,14 +20,14 @@ import { ListActions, ListProps } from "../../../types";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface SaleVariantsProps extends ListProps, ListActions {
+interface SaleVariantsProps extends ListProps, ListActions {
   variants: SaleDetailsFragment["variants"] | VoucherDetailsFragment["variants"];
   onVariantAssign: () => void;
   onVariantUnassign: (id: string) => void;
 }
 
 const numberOfColumns = 5;
-const DiscountVariants: React.FC<SaleVariantsProps> = props => {
+const DiscountVariants = (props: SaleVariantsProps) => {
   const {
     variants: discountVariants,
     disabled,
@@ -135,7 +134,11 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                           onVariantUnassign(variant.id);
                         }}
                       >
-                        <DeleteIcon color="primary" />
+                        <DeleteIcon
+                          color="primary"
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

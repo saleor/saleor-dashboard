@@ -1,7 +1,6 @@
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsGrantRefundFragment, OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { ConfirmButtonTransitionState, SavebarLabels } from "@saleor/macaw-ui";
-import React from "react";
+import { useEffect } from "react";
 import { UseFieldArrayUpdate, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { IntlShape } from "react-intl";
 
@@ -37,12 +36,6 @@ function parseStringOrNumber(value: number | string): number {
   const parsed = parseInt(value, 10);
 
   return parsed;
-}
-
-export interface ValidateQtyParams {
-  update: DatagridChangeOpts["currentUpdate"];
-  order: OrderDetailsGrantRefundFragment | undefined | null;
-  draftRefund: OrderDetailsGrantRefundFragment["grantedRefunds"][0] | undefined;
 }
 export const validateQty = ({
   update,
@@ -142,7 +135,7 @@ export const useRecalculateTotalAmount = ({
   linesToRefund: LineToRefund[];
   isFormDirty: boolean;
 }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFormDirty) {
       const customAmount = getValues("amount");
 

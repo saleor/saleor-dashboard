@@ -23,6 +23,7 @@
 !.husky
 !.changeset
 !.knip.json
+!.swcrc
 *.log
 *.pyc
 *.mo

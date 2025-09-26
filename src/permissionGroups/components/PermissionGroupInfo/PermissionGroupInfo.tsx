@@ -6,10 +6,9 @@ import { commonMessages } from "@dashboard/intl";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { TextField } from "@material-ui/core";
-import React from "react";
 import { useIntl } from "react-intl";
 
-export interface PermissionGroupInfoProps {
+interface PermissionGroupInfoProps {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   onChange: FormChange;
@@ -18,12 +17,7 @@ export interface PermissionGroupInfoProps {
   };
 }
 
-const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
-  disabled,
-  onChange,
-  data,
-  errors,
-}) => {
+const PermissionGroupInfo = ({ disabled, onChange, data, errors }: PermissionGroupInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

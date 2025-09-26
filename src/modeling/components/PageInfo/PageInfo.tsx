@@ -10,12 +10,12 @@ import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { PageData } from "../PageDetailsPage/form";
 
-export interface PageInfoProps {
+interface PageInfoProps {
   data: PageData;
   disabled: boolean;
   errors: PageErrorFragment[];
@@ -30,7 +30,7 @@ const useStyles = makeStyles(
   },
   { name: "PageInfo" },
 );
-const PageInfo: React.FC<PageInfoProps> = props => {
+const PageInfo = (props: PageInfoProps) => {
   const { data, disabled, errors, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

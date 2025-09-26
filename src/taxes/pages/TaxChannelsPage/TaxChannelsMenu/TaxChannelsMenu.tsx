@@ -7,7 +7,7 @@ import { Card, Divider } from "@material-ui/core";
 import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -17,10 +17,7 @@ interface TaxChannelsMenuProps {
   selectedConfigurationId: string;
 }
 
-export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
-  configurations,
-  selectedConfigurationId,
-}) => {
+const TaxChannelsMenu = ({ configurations, selectedConfigurationId }: TaxChannelsMenuProps) => {
   const classes = useStyles();
 
   return (
@@ -35,7 +32,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
         </ListHeader>
         <Divider />
         {configurations?.map((configuration, confIndex) => (
-          <React.Fragment key={configuration.id}>
+          <Fragment key={configuration.id}>
             <ListItemLink
               data-test-id="channels-list-rows"
               className={clsx(classes.clickable, classes.tableRow, {
@@ -46,7 +43,7 @@ export const TaxChannelsMenu: React.FC<TaxChannelsMenuProps> = ({
               <ListItemCell className={classes.ellipsis}>{configuration.channel.name}</ListItemCell>
             </ListItemLink>
             {!isLastElement(configurations, confIndex) && <Divider />}
-          </React.Fragment>
+          </Fragment>
         )) ?? <Skeleton />}
       </List>
     </Card>

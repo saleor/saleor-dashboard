@@ -4,19 +4,19 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
-export interface SaleInfoProps {
+interface SaleInfoProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SaleInfo: React.FC<SaleInfoProps> = ({ data, disabled, errors, onChange }) => {
+const SaleInfo = ({ data, disabled, errors, onChange }: SaleInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

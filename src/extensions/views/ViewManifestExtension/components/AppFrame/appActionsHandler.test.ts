@@ -55,15 +55,23 @@ describe("AppActionsHandler", function () {
    */
   beforeEach((): void => {
     delete (window as { location?: unknown }).location;
-    // @ts-expect-error error
-    window.location = {
-      href: "http://localhost:3000",
-      hostname: "localhost",
-      pathname: "/extensions/XYZ",
-    };
+    // Mock window.location for testing purposes
+    Object.defineProperty(window, "location", {
+      value: {
+        href: "http://localhost:3000",
+        hostname: "localhost",
+        pathname: "/extensions/XYZ",
+      },
+      writable: true,
+      configurable: true,
+    });
   });
   afterAll((): void => {
-    window.location = location;
+    Object.defineProperty(window, "location", {
+      value: location,
+      writable: true,
+      configurable: true,
+    });
   });
   describe("useHandleNotificationAction", () => {
     it("Calls useNotifier with payload from action", () => {

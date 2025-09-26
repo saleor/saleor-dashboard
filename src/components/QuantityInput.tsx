@@ -1,5 +1,5 @@
 import { Input, InputProps, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
 interface QuantityInputProps extends InputProps {
@@ -14,7 +14,7 @@ interface QuantityInputProps extends InputProps {
   };
 }
 
-export const QuantityInput: React.FC<QuantityInputProps> = ({
+export const QuantityInput = ({
   disabled,
   className,
   value,
@@ -23,7 +23,7 @@ export const QuantityInput: React.FC<QuantityInputProps> = ({
   isError,
   labels,
   ...props
-}) => (
+}: QuantityInputProps) => (
   <Input
     {...props}
     disabled={disabled}

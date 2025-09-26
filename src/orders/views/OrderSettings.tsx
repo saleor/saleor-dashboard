@@ -4,12 +4,11 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getMutationState } from "@dashboard/misc";
 import OrderSettingsPage from "@dashboard/orders/components/OrderSettingsPage";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
 
-export const OrderSettings: React.FC = () => {
+const OrderSettings = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const { data, loading } = useOrderSettingsQuery({});
@@ -67,4 +66,5 @@ export const OrderSettings: React.FC = () => {
     />
   );
 };
+
 export default OrderSettings;

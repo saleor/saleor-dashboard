@@ -4,10 +4,11 @@ import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
 import { WebhookErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
+import { WEBHOOK_PAYLOAD_SIGNATURE_DOCS_URL } from "@dashboard/links";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWebhookErrorMessage from "@dashboard/utils/errors/webhooks";
 import { Box, Chip, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../../WebhookDetailsPage";
@@ -23,13 +24,7 @@ interface WebhookInfoProps {
   setValue: (data: Partial<WebhookFormData>) => void;
 }
 
-const WebhookInfo: React.FC<WebhookInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-  setValue,
-}) => {
+const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: WebhookInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
@@ -116,7 +111,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
                     <Link
                       target="_blank"
                       rel="noopener noreferrer"
-                      href="https://docs.saleor.io/docs/3.x/developer/extending/apps/synchronous-webhooks/key-concepts#payload-signature"
+                      href={WEBHOOK_PAYLOAD_SIGNATURE_DOCS_URL}
                     >
                       <FormattedMessage {...messages.learnMore} />
                     </Link>

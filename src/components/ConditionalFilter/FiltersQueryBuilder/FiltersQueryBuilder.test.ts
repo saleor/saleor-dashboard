@@ -416,4 +416,144 @@ describe("FiltersQueryBuilder", () => {
       expect(result.filters).toEqual({ foo: "where" });
     });
   });
+
+  describe("useAndWrapper option", () => {
+    it("should wrap all root fields in AND array when useAndWrapper is true", () => {
+      // Arrange
+      const element1 = new FilterElement(
+        new ExpressionValue("status", "Status", "status"),
+        Condition.createEmpty(),
+        false,
+      );
+      const element2 = new FilterElement(
+        new ExpressionValue("channelId", "Channel", "channelId"),
+        Condition.createEmpty(),
+        false,
+      );
+      const mockQueryVarsBuilder: QueryVarsBuilder<Record<string, unknown>> = {
+        canHandle: jest.fn(() => true),
+        createOptionFetcher: jest.fn(),
+        updateWhereQueryVariables: jest.fn((query, el) => ({
+          ...query,
+          [el.value.value]: { eq: "test" },
+        })),
+      };
+      const resolver = new FilterQueryVarsBuilderResolver([mockQueryVarsBuilder]);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element1, element2],
+        useAndWrapper: true,
+        filterDefinitionResolver: resolver,
+      });
+
+      // Act
+      const result = builder.build();
+
+      // Assert
+      expect(result.filters).toEqual({
+        AND: [{ status: { eq: "test" } }, { channelId: { eq: "test" } }],
+      });
+    });
+
+    it("should merge existing AND items with wrapped root fields", () => {
+      // Arrange
+      const element1 = new FilterElement(
+        new ExpressionValue("status", "Status", "status"),
+        Condition.createEmpty(),
+        false,
+      );
+
+      // Mock a mocked query vars builder definition that adds to
+      // AND array (like MetadataFilterInputQueryVarsBuilder)
+      type QueryWithAnd = { AND?: Array<Record<string, unknown>> };
+
+      const mockDefWithAnd: QueryVarsBuilder<QueryWithAnd> = {
+        canHandle: jest.fn(el => el.value.value === "metadata"),
+        createOptionFetcher: jest.fn(),
+        updateWhereQueryVariables: jest.fn((query: QueryWithAnd) => ({
+          ...query,
+          AND: [...(query.AND || []), { metadata: { key: "color", value: { eq: "red" } } }],
+        })),
+      };
+      const mockDefTopLevelKey: QueryVarsBuilder<QueryWithAnd> = {
+        canHandle: jest.fn(el => el.value.value === "status"),
+        createOptionFetcher: jest.fn(),
+        updateWhereQueryVariables: jest.fn(query => ({
+          ...query,
+          status: { eq: "PAID" },
+        })),
+      };
+      const element2 = new FilterElement(
+        new ExpressionValue("metadata", "Metadata", "metadata"),
+        Condition.createEmpty(),
+        false,
+      );
+      const resolver = new FilterQueryVarsBuilderResolver<QueryWithAnd>([
+        mockDefWithAnd,
+        mockDefTopLevelKey,
+      ]);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element1, element2],
+        useAndWrapper: true,
+        filterDefinitionResolver: resolver,
+      });
+
+      // Act
+      const result = builder.build();
+
+      // Assert
+      expect(result.filters).toEqual({
+        AND: [{ metadata: { key: "color", value: { eq: "red" } } }, { status: { eq: "PAID" } }],
+      });
+    });
+
+    it("should return empty object when no fields to wrap", () => {
+      // Arrange
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [],
+        useAndWrapper: true,
+      });
+
+      // Act
+      const result = builder.build();
+
+      // Assert
+      expect(result.filters).toEqual({});
+    });
+
+    it("should exclude OR operators from being wrapped", () => {
+      // Arrange
+      const element = new FilterElement(
+        new ExpressionValue("status", "Status", "status"),
+        Condition.createEmpty(),
+        false,
+      );
+      const mockDef: QueryVarsBuilder<Record<string, unknown>> = {
+        canHandle: jest.fn(() => true),
+        createOptionFetcher: jest.fn(),
+        updateWhereQueryVariables: jest.fn(() => ({
+          status: { eq: "PAID" },
+          OR: [{ channelId: { eq: "123" } }, { channelId: { eq: "456" } }],
+        })),
+      };
+      const resolver = new FilterQueryVarsBuilderResolver([mockDef]);
+      const builder = new FiltersQueryBuilder({
+        apiType: QueryApiType.WHERE,
+        filterContainer: [element],
+        useAndWrapper: true,
+        filterDefinitionResolver: resolver,
+      });
+
+      // Act
+      const result = builder.build();
+
+      // Assert
+      expect(result.filters).toStrictEqual({
+        AND: [{ status: { eq: "PAID" } }],
+        OR: [{ channelId: { eq: "123" } }, { channelId: { eq: "456" } }],
+      });
+    });
+  });
 });

@@ -17,7 +17,7 @@ import { findById } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import CustomAppListPage from "../components/CustomAppListPage";
@@ -28,7 +28,7 @@ interface CustomAppListProps {
   params: CustomAppListUrlQueryParams;
 }
 
-export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
+const CustomAppList = ({ params }: CustomAppListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

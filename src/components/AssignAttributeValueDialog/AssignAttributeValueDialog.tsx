@@ -1,11 +1,11 @@
 import {
   AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
   SearchCategoriesQuery,
   SearchCollectionsQuery,
   SearchPagesQuery,
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignCategoryDialog from "../AssignCategoryDialog";
@@ -42,6 +42,11 @@ const pagesMessages = defineMessages({
     defaultMessage: "Search by model name, etc...",
     description: "placeholder",
   },
+  noPagesFound: {
+    id: "BOYzu+",
+    defaultMessage: "No models found",
+    description: "search results",
+  },
 });
 
 type AssignAttributeValueDialogProps = AssignProductDialogProps & {
@@ -52,7 +57,19 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
 };
 
-const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
+const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
+  if (!isSingle) {
+    return { selectionMode: "multiple" as const };
+  }
+
+  const selectedId = attribute.value?.length > 0 ? attribute.value[0] : undefined;
+
+  return { selectedId, selectionMode: "single" as const };
+};
+
+const AssignAttributeValueDialog = ({
   entityType,
   pages,
   products,
@@ -61,7 +78,7 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
   attribute,
   labels,
   ...rest
-}) => {
+}: AssignAttributeValueDialogProps) => {
   const intl = useIntl();
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
@@ -78,6 +95,7 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
               name: page.title,
             })) ?? []
           }
+          emptyMessage={intl.formatMessage(pagesMessages.noPagesFound)}
           labels={{
             confirmBtn: intl.formatMessage(pagesMessages.confirmBtn),
             label: intl.formatMessage(pagesMessages.searchLabel),
@@ -85,17 +103,42 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
             title: intl.formatMessage(pagesMessages.header),
             ...labels,
           }}
+          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
       );
     case AttributeEntityTypeEnum.PRODUCT:
-      return <AssignProductDialog products={filteredProducts ?? []} {...rest} />;
+      return (
+        <AssignProductDialog
+          products={filteredProducts ?? []}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
-      return <AssignVariantDialog products={filteredProducts} {...rest} />;
+      return (
+        <AssignVariantDialog
+          products={filteredProducts}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
     case AttributeEntityTypeEnum.COLLECTION:
-      return <AssignCollectionDialog collections={filteredCollections} {...rest} />;
+      return (
+        <AssignCollectionDialog
+          collections={filteredCollections}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
     case AttributeEntityTypeEnum.CATEGORY:
-      return <AssignCategoryDialog categories={filteredCategories} {...rest} />;
+      return (
+        <AssignCategoryDialog
+          categories={filteredCategories}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
   }
 };
 

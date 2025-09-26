@@ -4,13 +4,13 @@ import useGiftCardUpdateForm from "@dashboard/giftCards/GiftCardUpdate/providers
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { TextField } from "@material-ui/core";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardExpirySelectMessages as messages } from "./messages";
 import { useGiftCardExpirySelectStyles as useStyles } from "./styles";
 
-const GiftCardUpdateExpirySelect: React.FC = () => {
+const GiftCardUpdateExpirySelect = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const {

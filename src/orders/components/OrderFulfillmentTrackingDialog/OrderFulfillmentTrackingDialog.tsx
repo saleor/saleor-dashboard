@@ -10,14 +10,13 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface FormData {
+interface FormData {
   trackingNumber: string;
 }
 
-export interface OrderFulfillmentTrackingDialogProps {
+interface OrderFulfillmentTrackingDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -26,14 +25,14 @@ export interface OrderFulfillmentTrackingDialogProps {
   onConfirm: (data: FormData) => any;
 }
 
-const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogProps> = ({
+const OrderFulfillmentTrackingDialog = ({
   confirmButtonState,
   errors: apiErrors,
   open,
   trackingNumber,
   onConfirm,
   onClose,
-}) => {
+}: OrderFulfillmentTrackingDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
   const formFields = ["trackingNumber"];

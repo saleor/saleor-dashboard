@@ -28,8 +28,30 @@ export const CUSTOM_EXTENSIONS_DOCS_URL =
   "https://docs.saleor.io/developer/extending/webhooks/creating";
 export const MANIFEST_FORMAT_DOCS_URL =
   "https://docs.saleor.io/developer/extending/apps/architecture/manifest";
-export const EXTENSION_MANIFEST_DOCS =
+
+const EXTENSION_MANIFEST_DOCS =
   "https://docs.saleor.io/developer/extending/apps/developing-apps/app-error-codes";
+
+// Additional docs.saleor.io links
+export const PAYMENT_APPS_DOCS_URL = "https://docs.saleor.io/developer/payments/payment-apps";
+export const PAYMENT_PLUGINS_DOCS_URL =
+  "https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin";
+export const TRANSACTION_FLOW_STRATEGY_DOCS_URL =
+  "https://docs.saleor.io/api-reference/payments/enums/transaction-flow-strategy-enum";
+export const APPS_OVERVIEW_DOCS_URL = "https://docs.saleor.io/developer/extending/apps/overview";
+export const CHECKOUT_OVERVIEW_DOCS_URL =
+  "https://docs.saleor.io/developer/checkout/overview#introduction";
+export const APP_PERMISSIONS_DOCS_URL =
+  "https://docs.saleor.io/developer/permissions#app-permissions";
+export const WEBHOOK_PAYLOAD_SIGNATURE_DOCS_URL =
+  "https://docs.saleor.io/developer/extending/webhooks/payload-signature";
+export const MANUAL_REFUND_DOCS_URL =
+  "https://docs.saleor.io/developer/payments/refunds#manual-refund";
+
+// Welcome page links
+export const SALEOR_GITHUB_URL = "https://github.com/saleor/saleor";
+export const SALEOR_DISCORD_URL = "https://saleor.io/discord";
+export const DASHBOARD_DOCS_URL = "https://github.com/saleor/saleor-dashboard/releases";
 
 export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): string => {
   if (!errorCode) {

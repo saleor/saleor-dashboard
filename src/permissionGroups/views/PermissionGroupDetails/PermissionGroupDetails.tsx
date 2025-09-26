@@ -23,7 +23,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import AssignMembersDialog from "../../components/AssignMembersDialog";
@@ -53,7 +53,7 @@ interface PermissionGroupDetailsProps {
 
 type Members = NonNullable<NonNullable<PermissionGroupDetailsQuery["permissionGroup"]>["users"]>;
 
-export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({ id, params }) => {
+export const PermissionGroupDetails = ({ id, params }: PermissionGroupDetailsProps) => {
   const navigate = useNavigator();
   const shop = useShop();
   const notify = useNotifier();
@@ -108,7 +108,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({ 
     params => permissionGroupDetailsUrl(id, params),
     params,
   );
-  const [deleteError, setDeleteError] = React.useState<PermissionGroupErrorFragment>();
+  const [deleteError, setDeleteError] = useState<PermissionGroupErrorFragment>();
   const [permissionGroupDelete, permissionGroupDeleteOps] = usePermissionGroupDeleteMutation({
     onCompleted: data => {
       if (data?.permissionGroupDelete?.errors?.length === 0) {

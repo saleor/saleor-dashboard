@@ -19,7 +19,7 @@ import {
   useListWidths,
 } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -36,12 +36,12 @@ interface WebhookEventsProps {
   onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
-const WebhookEvents: React.FC<WebhookEventsProps> = ({
+const WebhookEvents = ({
   data,
   setQuery,
   onSyncEventChange,
   onAsyncEventChange,
-}) => {
+}: WebhookEventsProps) => {
   const intl = useIntl();
   const { checkbox } = useListWidths();
   const classes = useStyles({ checkbox });
@@ -85,9 +85,11 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
           </PageTabs>
 
           <Text fontSize={2} style={{ padding: "1rem 0" }}>
+            {/* @ts-expect-error legacy types */}
             <PageTabPanel show={tab === "sync"}>
               <FormattedMessage {...messages.synchronousDescription} />
             </PageTabPanel>
+            {/* @ts-expect-error legacy types */}
             <PageTabPanel show={tab === "async"}>
               <FormattedMessage {...messages.asynchronousDescription} />
             </PageTabPanel>
@@ -96,6 +98,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
         <Hr />
         <Grid variant="uniform">
           <div className={classes.objectsWrapper}>
+            {/* @ts-expect-error legacy types */}
             <PageTabPanel show={true}>
               <List gridTemplate={["1fr 50px"]}>
                 <ListHeader>

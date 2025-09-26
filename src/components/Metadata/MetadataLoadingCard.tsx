@@ -1,11 +1,10 @@
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
 import { getMetadataTitle } from "./utils";
 
-export const MetadataLoadingCard: React.FC<{ isPrivate?: boolean }> = ({ isPrivate = false }) => {
+export const MetadataLoadingCard = ({ isPrivate = false }: { isPrivate?: boolean }) => {
   const intl = useIntl();
 
   return (

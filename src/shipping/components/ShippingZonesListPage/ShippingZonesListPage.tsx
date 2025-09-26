@@ -9,16 +9,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { shippingZoneAddUrl } from "@dashboard/shipping/urls";
 import { PageListProps, SearchPageProps, UserPermissionProps } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ShippingZoneListDatagrid } from "../ShippingZonesListDatagrid";
 import { messages } from "./messages";
 
-export interface ShippingZonesListPageProps
-  extends PageListProps,
-    SearchPageProps,
-    UserPermissionProps {
+interface ShippingZonesListPageProps extends PageListProps, SearchPageProps, UserPermissionProps {
   defaultWeightUnit: WeightUnitsEnum | undefined;
   shippingZones: ShippingZoneFragment[] | undefined;
   selectedShippingZonesIds: string[];
@@ -28,17 +24,15 @@ export interface ShippingZonesListPageProps
   onWeightUnitChange: () => void;
 }
 
-const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
-  defaultWeightUnit,
+const ShippingZonesListPage = ({
   disabled,
-  onSubmit,
   onRemove,
   selectedShippingZonesIds,
   initialSearch,
   onSearchChange,
   onWeightUnitChange,
   ...listProps
-}) => {
+}: ShippingZonesListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

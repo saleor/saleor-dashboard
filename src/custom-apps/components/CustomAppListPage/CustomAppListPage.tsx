@@ -13,23 +13,18 @@ import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell } from "@material-ui/core";
 import { ResponsiveTable } from "@saleor/macaw-ui";
 import { Box, Button, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomAppsSkeleton from "../CustomAppsSkeleton";
 import { useStyles } from "./styles";
 
-export interface CustomAppListPageProps {
+interface CustomAppListPageProps {
   appsList: AppListItemFragment[];
   getCustomAppHref: (id: string) => string;
   onRemove: (id: string) => void;
 }
 
-const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
-  appsList,
-  onRemove,
-  getCustomAppHref,
-}) => {
+const CustomAppListPage = ({ appsList, onRemove, getCustomAppHref }: CustomAppListPageProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();

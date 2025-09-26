@@ -4,7 +4,7 @@ import { GiftCardCreateInput, useGiftCardCreateMutation } from "@dashboard/graph
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { DialogProps } from "@dashboard/types";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
@@ -18,11 +18,11 @@ interface GiftCardCreateDialogContentProps extends Pick<DialogProps, "onClose"> 
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = ({
+const GiftCardCreateDialogContent = ({
   onClose,
   refetchQueries,
   initialCustomer,
-}) => {
+}: GiftCardCreateDialogContentProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const [cardCode, setCardCode] = useState(null);

@@ -135,21 +135,7 @@ export const productVariantAttributesFragment = gql`
     id
     attributes {
       attribute {
-        id
-        slug
-        name
-        inputType
-        entityType
-        valueRequired
-        unit
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
-          ...AttributeValueList
-        }
+        ...AttributeDetails
       }
       values {
         ...AttributeValueDetails
@@ -257,6 +243,16 @@ export const variantAttributeFragment = gql`
     entityType
     valueRequired
     unit
+    referenceTypes {
+      ... on ProductType {
+        id
+        name
+      }
+      ... on PageType {
+        id
+        name
+      }
+    }
     choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
       ...AttributeValueList
     }

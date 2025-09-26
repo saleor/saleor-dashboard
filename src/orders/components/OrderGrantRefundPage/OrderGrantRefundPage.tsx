@@ -14,7 +14,8 @@ import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getOrderTitleMessage } from "../OrderCardTitle/utils";
@@ -37,7 +38,7 @@ import {
   prepareLineData,
 } from "./utils";
 
-export interface OrderGrantRefundPageProps {
+interface OrderGrantRefundPageProps {
   order?: OrderDetailsGrantRefundFragment;
   loading: boolean;
   submitState: ConfirmButtonTransitionState;
@@ -46,14 +47,14 @@ export interface OrderGrantRefundPageProps {
   initialData?: OrderDetailsGrantedRefundFragment;
 }
 
-const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
+const OrderGrantRefundPage = ({
   order,
   loading,
   submitState,
   onSubmit,
   isEdit,
   initialData,
-}) => {
+}: OrderGrantRefundPageProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
   const navigate = useNavigator();

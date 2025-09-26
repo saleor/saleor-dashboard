@@ -14,19 +14,18 @@ import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface WebhooksListProps {
+interface WebhooksListProps {
   webhooks: WebhookFragment[];
   onRemove: (id: string) => void;
   createHref?: string;
 }
 
-const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
+const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
@@ -105,7 +104,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
                         color="primary"
                         onClick={webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined}
                       >
-                        <DeleteIcon />
+                        <DeleteIcon
+                          onPointerEnterCapture={undefined}
+                          onPointerLeaveCapture={undefined}
+                        />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

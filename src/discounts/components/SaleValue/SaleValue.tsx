@@ -8,7 +8,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
@@ -16,7 +15,7 @@ import SaleValueTextField from "./SaleValueTextField";
 import { useStyles } from "./styles";
 import { SaleValueInputOnChangeType } from "./types";
 
-export interface SaleValueProps {
+interface SaleValueProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
@@ -24,7 +23,7 @@ export interface SaleValueProps {
 }
 
 const numberOfColumns = 2;
-const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange }) => {
+const SaleValue = ({ data, disabled, errors, onChange }: SaleValueProps) => {
   const { type } = data;
   const intl = useIntl();
   const classes = useStyles({});

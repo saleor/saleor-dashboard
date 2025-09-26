@@ -1,19 +1,14 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ChannelStatusProps {
+interface ChannelStatusProps {
   isActive: boolean;
   disabled: boolean;
   updateChannelStatus: () => void;
 }
 
-export const ChannelStatus: React.FC<ChannelStatusProps> = ({
-  disabled,
-  isActive,
-  updateChannelStatus,
-}) => {
+export const ChannelStatus = ({ disabled, isActive, updateChannelStatus }: ChannelStatusProps) => {
   const intl = useIntl();
 
   return (
@@ -57,4 +52,3 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
 };
 
 ChannelStatus.displayName = "ChannelStatus";
-export default ChannelStatus;

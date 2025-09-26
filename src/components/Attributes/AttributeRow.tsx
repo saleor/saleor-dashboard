@@ -19,14 +19,14 @@ import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { Combobox, Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
+import { SingleReferenceField } from "./SingleReferenceField";
 import { AttributeRowProps } from "./types";
 
-const AttributeRow: React.FC<AttributeRowProps> = ({
+const AttributeRow = ({
   attribute,
   attributeValues,
   disabled,
@@ -42,10 +42,21 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
   richTextGetters,
-}) => {
+}: AttributeRowProps) => {
   const intl = useIntl();
 
   switch (attribute.data.inputType) {
+    case AttributeInputTypeEnum.SINGLE_REFERENCE:
+      return (
+        <SingleReferenceField
+          attribute={attribute}
+          disabled={disabled}
+          loading={loading}
+          error={error}
+          onReferencesAddClick={onReferencesAddClick}
+          onReferencesRemove={onReferencesRemove}
+        />
+      );
     case AttributeInputTypeEnum.REFERENCE:
       return (
         <BasicAttributeRow label={attribute.label}>

@@ -16,10 +16,9 @@ import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
+interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
   onDelete: (id: string) => void;
 }
@@ -48,7 +47,7 @@ const useStyles = makeStyles(
   { name: "MenuList" },
 );
 const numberOfColumns = 4;
-const MenuList: React.FC<MenuListProps> = props => {
+const MenuList = (props: MenuListProps) => {
   const {
     settings,
     disabled,
@@ -146,7 +145,10 @@ const MenuList: React.FC<MenuListProps> = props => {
                       disabled={disabled}
                       onClick={() => onDelete(menu.id)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

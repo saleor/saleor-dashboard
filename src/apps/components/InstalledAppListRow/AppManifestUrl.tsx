@@ -1,6 +1,6 @@
 import { Box, CopyIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { appsMessages } from "../../messages";
@@ -9,7 +9,7 @@ interface AppManifestUrlProps {
   manifestUrl: string;
 }
 
-export const AppManifestUrl: React.FC<AppManifestUrlProps> = ({ manifestUrl }) => {
+export const AppManifestUrl = ({ manifestUrl }: AppManifestUrlProps) => {
   const [copied, setCopied] = useState(false);
 
   return (

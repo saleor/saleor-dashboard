@@ -11,10 +11,9 @@ export type CollectionChannels = Pick<
   CollectionFragment["channelListings"][0],
   "isPublished" | "publishedAt" | "channel"
 >;
-export type Channels = Pick<CollectionFragment["channelListings"][0], "channel">;
 
-export const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
-export const isScheduled = (channelData: CollectionChannels) =>
+const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
+const isScheduled = (channelData: CollectionChannels) =>
   channelData?.publishedAt && !channelData?.isPublished;
 
 export const getDropdownColor = (channels: CollectionChannels[]) => {

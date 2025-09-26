@@ -26,7 +26,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
@@ -42,7 +42,7 @@ interface CollectionListProps {
   params: CollectionListUrlQueryParams;
 }
 
-export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
+const CollectionList = ({ params }: CollectionListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
@@ -88,7 +88,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
   const selectedChannel_legacy = availableChannels.find(channel => channel.slug === params.channel);
-  const queryVariables = React.useMemo(() => {
+  const queryVariables = useMemo(() => {
     if (!isNewCollectionFilterEnabled) {
       return {
         ...paginationState,
@@ -256,4 +256,5 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CollectionList;

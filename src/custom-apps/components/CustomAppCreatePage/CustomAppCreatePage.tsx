@@ -11,7 +11,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CustomAppInformation from "../CustomAppInformation";
@@ -21,7 +20,7 @@ export interface CustomAppCreatePageFormData {
   name: string;
   permissions: PermissionEnum[];
 }
-export interface CustomAppCreatePageProps {
+interface CustomAppCreatePageProps {
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: PermissionFragment[];
@@ -29,7 +28,7 @@ export interface CustomAppCreatePageProps {
   onSubmit: (data: CustomAppCreatePageFormData) => SubmitPromise<AppErrorFragment[]>;
 }
 
-const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
+const CustomAppCreatePage = (props: CustomAppCreatePageProps) => {
   const { disabled, errors, permissions, saveButtonBarState, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();

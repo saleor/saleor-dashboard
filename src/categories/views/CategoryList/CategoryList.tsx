@@ -22,7 +22,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { Box } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
@@ -39,7 +39,7 @@ interface CategoryListProps {
   params: CategoryListUrlQueryParams;
 }
 
-export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
+const CategoryList = ({ params }: CategoryListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.CATEGORY_LIST);
@@ -74,7 +74,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   usePaginationReset(categoryListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -225,4 +225,5 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CategoryList;

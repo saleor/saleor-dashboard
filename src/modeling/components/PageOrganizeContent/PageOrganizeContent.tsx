@@ -7,12 +7,11 @@ import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageFormData } from "../PageDetailsPage/form";
 
-export interface PageOrganizeContentProps {
+interface PageOrganizeContentProps {
   canChangeType: boolean;
   data: PageFormData;
   pageType?: PageDetailsFragment["pageType"];
@@ -25,7 +24,7 @@ export interface PageOrganizeContentProps {
   fetchMorePageTypes?: FetchMoreProps;
 }
 
-const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
+const PageOrganizeContent = (props: PageOrganizeContentProps) => {
   const {
     canChangeType,
     data,

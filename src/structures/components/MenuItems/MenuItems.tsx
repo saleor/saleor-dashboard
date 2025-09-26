@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { buttonMessages } from "@dashboard/intl";
 import { RecursiveMenuItem } from "@dashboard/structures/types";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
@@ -11,7 +11,7 @@ import { MenuItemsSortableTree } from "../MenuItemsSortableTree";
 import { getNodeData } from "../MenuItemsSortableTree/utils";
 import { getDiff, TreeOperation } from "./tree";
 
-export interface MenuItemsProps {
+interface MenuItemsProps {
   canUndo: boolean;
   items: RecursiveMenuItem[];
   onChange: (operations: TreeOperation[]) => void;
@@ -23,7 +23,7 @@ export interface MenuItemsProps {
   onUndo: () => void;
 }
 
-const MenuItems: React.FC<MenuItemsProps> = props => {
+const MenuItems = (props: MenuItemsProps) => {
   const { canUndo, items, onChange, onItemAdd, onItemClick, onItemEdit, onUndo, onTranslate } =
     props;
   const intl = useIntl();

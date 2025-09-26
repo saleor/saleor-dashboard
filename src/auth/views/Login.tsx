@@ -1,7 +1,7 @@
 import { useAvailableExternalAuthenticationsLazyQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
@@ -9,13 +9,14 @@ import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
+import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
 import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
 
 interface LoginViewProps {
   params: LoginUrlQueryParams;
 }
 
-const LoginView: React.FC<LoginViewProps> = ({ params }) => {
+const LoginView = ({ params }: LoginViewProps) => {
   const navigate = useNavigator();
   const { location } = useRouter();
   const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } =
@@ -31,6 +32,8 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     setFallbackUri,
     setRequestedExternalPluginId,
   } = useAuthParameters();
+  const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
+
   const handleSubmit = async (data: LoginFormData) => {
     if (!login) {
       return;
@@ -38,6 +41,10 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
 
     const result = await login(data.email, data.password);
     const errors = result?.errors || [];
+
+    if (errors.length === 0) {
+      setLastLoginMethod("password");
+    }
 
     return errors;
   };
@@ -95,6 +102,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
       onSubmit={handleSubmit}
+      lastLoginMethod={lastLoginMethod}
     />
   );
 };

@@ -14,14 +14,13 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PluginDetailsPageFormData, PluginsDetailsPage } from "./components/PluginsDetailsPage";
 import { PluginSecretFieldDialog } from "./components/PluginSecretFieldDialog";
 import { getConfigByChannelId, isPluginGlobal, isSecretField } from "./utils";
 
-export interface PluginsDetailsProps {
+interface PluginsDetailsProps {
   id: string;
   params: PluginUrlQueryParams;
 }
@@ -42,7 +41,7 @@ export function getConfigurationInput(
     }));
 }
 
-export const EditPluginExtension: React.FC<PluginsDetailsProps> = ({ id, params }) => {
+export const EditPluginExtension = ({ id, params }: PluginsDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

@@ -1,8 +1,7 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
-export const PluginLabel: React.FC = () => {
+export const PluginLabel = () => {
   const intl = useIntl();
 
   return (

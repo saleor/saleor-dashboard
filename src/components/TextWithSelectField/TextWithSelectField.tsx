@@ -1,6 +1,5 @@
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { Box, Input, Option, Select, Spinner } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface CommonFieldProps {
   name: string;
@@ -8,7 +7,7 @@ interface CommonFieldProps {
   label?: string;
 }
 
-export interface TextWithSelectFieldProps {
+interface TextWithSelectFieldProps {
   change: FormChange;
   choices: Option[];
   helperText?: string;
@@ -21,7 +20,7 @@ export interface TextWithSelectFieldProps {
   selectFieldProps: CommonFieldProps & { value: string };
 }
 
-const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
+const TextWithSelectField = ({
   change,
   choices,
   loading,
@@ -29,7 +28,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   selectFieldProps,
   helperText,
   isError,
-}) => {
+}: TextWithSelectFieldProps) => {
   const {
     name: textFieldName,
     value: textFieldValue,

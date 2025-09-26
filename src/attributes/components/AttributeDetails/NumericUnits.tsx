@@ -5,7 +5,7 @@ import { UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox, Option, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import * as M from "./messages";
@@ -38,14 +38,14 @@ interface NumericUnitsProps
   disabled: boolean;
 }
 
-export const NumericUnits: React.FC<NumericUnitsProps> = ({
+export const NumericUnits = ({
   data,
   disabled,
   errors,
   set,
   setError,
   clearErrors,
-}) => {
+}: NumericUnitsProps) => {
   const { formatMessage } = useIntl();
   const classes = useStyles();
   const [unitData, setUnitData] = useState<UnitData>({
@@ -180,7 +180,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
                 }))
               }
               value={unit as string}
-              options={(type && system ? unitChoices?.[system]?.[type] ?? [] : []) as Option[]}
+              options={(type && system ? (unitChoices?.[system]?.[type] ?? []) : []) as Option[]}
             />
           </Box>
         </Box>

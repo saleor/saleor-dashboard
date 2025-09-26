@@ -4,7 +4,6 @@ import { Select } from "@dashboard/components/Select";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
@@ -44,7 +43,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ChannelDeleteDialogProps {
+interface ChannelDeleteDialogProps {
   channelsChoices: Option[];
   channelSlug: string;
   currency: string;
@@ -56,7 +55,7 @@ export interface ChannelDeleteDialogProps {
   onConfirm: (targetChannelId: string) => void;
 }
 
-const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
+const ChannelDeleteDialog = ({
   channelsChoices = [],
   channelSlug,
   hasOrders,
@@ -66,7 +65,7 @@ const ChannelDeleteDialog: React.FC<ChannelDeleteDialogProps> = ({
   currency,
   onClose,
   onConfirm,
-}) => {
+}: ChannelDeleteDialogProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const [choice, setChoice] = useStateFromProps(

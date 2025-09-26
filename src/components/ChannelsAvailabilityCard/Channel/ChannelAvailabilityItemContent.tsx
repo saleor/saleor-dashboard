@@ -6,13 +6,13 @@ import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { Box, Checkbox, Divider, RadioGroup, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
 import { availabilityItemMessages } from "./messages";
 
-export interface ChannelContentProps {
+interface ChannelContentProps {
   disabled?: boolean;
   data: ChannelData;
   errors: ChannelsAvailabilityError[];
@@ -20,13 +20,13 @@ export interface ChannelContentProps {
   onChange: (id: string, data: ChannelOpts) => void;
 }
 
-export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
+export const ChannelAvailabilityItemContent = ({
   data,
   disabled,
   errors,
   messages,
   onChange,
-}) => {
+}: ChannelContentProps) => {
   const {
     availableForPurchaseAt,
     isAvailableForPurchase: isAvailable,

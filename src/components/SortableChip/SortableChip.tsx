@@ -1,5 +1,6 @@
 import { Box, BoxProps, Button, CloseIcon, GripIcon, Text } from "@saleor/macaw-ui-next";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 
 const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
@@ -14,7 +15,7 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   return labelContent;
 };
 
-export type SortableChipProps = {
+type SortableChipProps = {
   label: ReactNode;
   onClose?: () => void;
   loading?: boolean;
@@ -73,7 +74,6 @@ export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
               color="default2"
               size="small"
               data-test-id="button-drag-handle"
-              // @ts-expect-error - style is not accepted in types, but can be used
               style={{ cursor: isDragged ? "grabbing" : "grab", outline: "none" }}
             />
           </Box>

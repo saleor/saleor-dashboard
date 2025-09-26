@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { ShortcutItem } from "./shortcuts/ShortcutItem";
 import { Shortcut } from "./shortcuts/useShortcuts";
@@ -15,7 +15,7 @@ export const ShortcutsItems = memo(({ items }: ShortcutsItemsProps) => {
         <ShortcutItem key={id} onClick={action}>
           <ShortcutItem.Icon>{icon}</ShortcutItem.Icon>
           {name}
-          <ShortcutItem.KeyboardShortcut>{shortcut}</ShortcutItem.KeyboardShortcut>
+          {shortcut && <ShortcutItem.KeyboardShortcut>{shortcut}</ShortcutItem.KeyboardShortcut>}
         </ShortcutItem>
       ))}
     </Box>

@@ -2,10 +2,9 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export interface ProductVariantDeleteDialogProps {
+interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name: string;
@@ -13,7 +12,7 @@ export interface ProductVariantDeleteDialogProps {
   onConfirm?: () => any;
 }
 
-const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = props => {
+const ProductVariantDeleteDialog = (props: ProductVariantDeleteDialogProps) => {
   const { confirmButtonState, name, open, onConfirm, onClose } = props;
 
   return (

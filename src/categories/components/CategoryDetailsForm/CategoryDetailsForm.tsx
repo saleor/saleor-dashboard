@@ -8,7 +8,7 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface CategoryDetailsFormProps {
@@ -21,12 +21,7 @@ interface CategoryDetailsFormProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
-  disabled,
-  data,
-  onChange,
-  errors,
-}) => {
+const CategoryDetailsForm = ({ disabled, data, onChange, errors }: CategoryDetailsFormProps) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);
@@ -85,4 +80,5 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
     </DashboardCard>
   );
 };
+
 export default CategoryDetailsForm;

@@ -5,7 +5,7 @@ import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { useGrantRefundContext } from "../context";
@@ -18,7 +18,7 @@ interface ProductsCardProps {
   lines: OrderLineGrantRefundFragment[];
 }
 
-export const ProductsCard: React.FC<ProductsCardProps> = ({ title, subtitle, lines }) => {
+export const ProductsCard = ({ title, subtitle, lines }: ProductsCardProps) => {
   const classes = useProductsCardStyles();
   const { dispatch, state } = useGrantRefundContext();
 

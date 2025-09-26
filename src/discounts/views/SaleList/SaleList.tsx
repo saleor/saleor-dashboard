@@ -22,7 +22,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import SaleListPage from "../../components/SaleListPage";
@@ -34,7 +34,7 @@ interface SaleListProps {
   params: SaleListUrlQueryParams;
 }
 
-export const SaleList: React.FC<SaleListProps> = ({ params }) => {
+const SaleList = ({ params }: SaleListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
@@ -52,7 +52,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     SaleListUrlQueryParams
   >(navigate, saleListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -225,4 +225,5 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default SaleList;

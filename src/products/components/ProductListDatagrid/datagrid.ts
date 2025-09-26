@@ -142,7 +142,7 @@ export const productListDynamicColumnAdapter = ({
   },
 ];
 
-export const parseAttributesColumns = (
+const parseAttributesColumns = (
   attributes: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,
@@ -519,7 +519,7 @@ export const getAvailableAttributesData = ({
   mapEdgesToItems(availableColumnsAttributesData.data?.attributes) ??
   (availableColumnsAttributesData.loading
     ? undefined
-    : mapEdgesToItems(gridAttributesOpts.data?.availableAttributes) ?? []);
+    : (mapEdgesToItems(gridAttributesOpts.data?.availableAttributes) ?? []));
 
 export const getAttributesFetchMoreProps = ({
   queryAvailableColumnsAttributes,

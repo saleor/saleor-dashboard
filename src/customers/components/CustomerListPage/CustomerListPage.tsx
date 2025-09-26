@@ -18,13 +18,13 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagrid";
 import { createFilterStructure, CustomerFilterKeys, CustomerListFilterOpts } from "./filters";
 
-export interface CustomerListPageProps
+interface CustomerListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<CustomerFilterKeys, CustomerListFilterOpts>,
     SortPage<CustomerListUrlSortField> {
@@ -35,7 +35,7 @@ export interface CustomerListPageProps
   onCustomersDelete: () => void;
 }
 
-const CustomerListPage: React.FC<CustomerListPageProps> = ({
+const CustomerListPage = ({
   selectedFilterPreset,
   filterOpts,
   initialSearch,
@@ -51,7 +51,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   hasPresetsChanged,
   onCustomersDelete,
   ...customerListProps
-}) => {
+}: CustomerListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const userPermissions = useUserPermissions();

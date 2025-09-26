@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { Checkbox, FormControlLabel } from "@material-ui/core";
-import React from "react";
+import * as React from "react";
 
-export interface ControlledCheckboxProps {
+interface ControlledCheckboxProps {
   className?: string;
   name: string;
   label?: React.ReactNode;
@@ -14,7 +14,7 @@ export interface ControlledCheckboxProps {
   onChange: (event: any) => any;
 }
 
-export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
+export const ControlledCheckbox = ({
   checked,
   disabled,
   name,
@@ -24,7 +24,7 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
   indeterminate,
   testId,
   ...props
-}) => (
+}: ControlledCheckboxProps) => (
   <FormControlLabel
     disabled={disabled}
     control={

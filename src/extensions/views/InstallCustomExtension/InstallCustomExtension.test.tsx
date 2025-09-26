@@ -1,7 +1,6 @@
 import { MANIFEST_ATTR } from "@dashboard/extensions/urls";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 
 import { useFetchManifest } from "./hooks/useFetchManifest";
 import { useInstallApp } from "./hooks/useInstallApp";
@@ -20,6 +19,7 @@ jest.mock("react-intl", () => ({
     return defaultMessage || "";
   }),
   defineMessages: (messages: Record<string, any>) => messages,
+  defineMessage: (message: string) => message,
 }));
 
 jest.mock("react-router-dom", () => ({

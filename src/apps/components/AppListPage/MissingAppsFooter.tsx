@@ -1,12 +1,11 @@
 import { useFlag } from "@dashboard/featureFlags";
 import { MISSING_APPS_TYPEFORM_URL } from "@dashboard/links";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export const CONST_TYPEFORM_URL = `${MISSING_APPS_TYPEFORM_URL}?utm_button=${encodeURIComponent("Request integration")}`;
+const CONST_TYPEFORM_URL = `${MISSING_APPS_TYPEFORM_URL}?utm_button=${encodeURIComponent("Request integration")}`;
 
 export const MissingAppsFooter = () => {
   const intl = useIntl();

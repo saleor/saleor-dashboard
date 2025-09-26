@@ -2,7 +2,7 @@
 import { FileFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 export interface FileChoiceType {
@@ -11,7 +11,7 @@ export interface FileChoiceType {
   file?: FileFragment;
 }
 
-export interface FileUploadFieldProps {
+interface FileUploadFieldProps {
   inputProps?: React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
@@ -25,7 +25,7 @@ export interface FileUploadFieldProps {
   onFileDelete: () => void;
 }
 
-const FileUploadField: React.FC<FileUploadFieldProps> = props => {
+const FileUploadField = (props: FileUploadFieldProps) => {
   const { loading, disabled, file, error, helperText, onFileUpload, onFileDelete, inputProps } =
     props;
   const intl = useIntl();

@@ -2,7 +2,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import { DashboardModal } from "@dashboard/components/Modal";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
@@ -11,8 +10,7 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Button, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -21,7 +19,7 @@ import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { giftCardCustomerCardMessages as messages } from "./messages";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 
-const CustomerGiftCardsCard: React.FC = () => {
+const CustomerGiftCardsCard = () => {
   const intl = useIntl();
   const [openCreateDialog, setOpenCreateDialog] = useState(false);
   const customerDetails = useCustomerDetails();
@@ -71,7 +69,6 @@ const CustomerGiftCardsCard: React.FC = () => {
                   </Button>
                 </Link>
               )}
-              <PreviewPill className={sprinkles({ marginLeft: 2 })} />
             </>
           </DashboardCard.Toolbar>
         </DashboardCard.Header>

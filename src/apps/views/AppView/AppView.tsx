@@ -6,7 +6,7 @@ import { useAppQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -14,7 +14,7 @@ interface AppProps {
   id: string;
 }
 
-export const AppView: React.FC<AppProps> = ({ id }) => {
+export const AppView = ({ id }: AppProps) => {
   const location = useLocation();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const { data, refetch } = useAppQuery({

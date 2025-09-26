@@ -4,19 +4,19 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { TextField } from "@material-ui/core";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { MenuDetailsFormData } from "../MenuDetailsPage";
 
-export interface MenuPropertiesProps {
+interface MenuPropertiesProps {
   data: MenuDetailsFormData;
   disabled: boolean;
   errors: MenuErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors, onChange }) => {
+const MenuProperties = ({ data, disabled, errors, onChange }: MenuPropertiesProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

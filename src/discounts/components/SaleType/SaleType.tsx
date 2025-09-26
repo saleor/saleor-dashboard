@@ -3,12 +3,11 @@ import RadioGroupField, { RadioGroupFieldChoice } from "@dashboard/components/Ra
 import { SaleType as SaleTypeEnum } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
-export interface SaleTypeProps {
+interface SaleTypeProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   onChange: FormChange;
@@ -48,7 +47,7 @@ function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
   ];
 }
 
-const SaleType: React.FC<SaleTypeProps> = props => {
+const SaleType = (props: SaleTypeProps) => {
   const { data, disabled, onChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();

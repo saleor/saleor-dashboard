@@ -16,12 +16,11 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
 
-export interface CustomerAddressDialogProps {
+interface CustomerAddressDialogProps {
   address: AddressFragment;
   confirmButtonState: ConfirmButtonTransitionState;
   countries: CountryWithCodeFragment[];
@@ -32,7 +31,7 @@ export interface CustomerAddressDialogProps {
   onConfirm: (data: AddressInput) => void;
 }
 
-const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
+const CustomerAddressDialog = ({
   address,
   confirmButtonState,
   countries,
@@ -41,7 +40,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   variant,
   onClose,
   onConfirm,
-}) => {
+}: CustomerAddressDialogProps) => {
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     address?.country.country || "",
   );

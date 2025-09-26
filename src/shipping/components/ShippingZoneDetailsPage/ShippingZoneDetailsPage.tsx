@@ -26,7 +26,6 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
@@ -54,7 +53,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, ChannelProps {
+interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, ChannelProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -80,7 +79,7 @@ function warehouseToChoice(warehouse: Record<"id" | "name", string>): Option {
   };
 }
 
-const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
+const ShippingZoneDetailsPage = ({
   disabled,
   errors,
   hasMore,
@@ -102,7 +101,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   shippingZone,
   warehouses,
   allChannels,
-}) => {
+}: ShippingZoneDetailsPageProps) => {
   const intl = useIntl();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);

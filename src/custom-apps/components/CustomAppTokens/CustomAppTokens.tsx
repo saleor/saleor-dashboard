@@ -6,19 +6,18 @@ import { AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export interface CustomAppTokensProps {
+interface CustomAppTokensProps {
   tokens: AppUpdateMutation["appUpdate"]["app"]["tokens"] | null;
   onCreate: () => void;
   onDelete: (id: string) => void;
 }
 
 const numberOfColumns = 3;
-const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
+const CustomAppTokens = (props: CustomAppTokensProps) => {
   const { tokens, onCreate, onDelete } = props;
   const classes = useStyles(props);
   const intl = useIntl();

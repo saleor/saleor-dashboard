@@ -12,20 +12,19 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsVouchersPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsVouchersPageProps extends TranslationsEntitiesPageProps {
   data: VoucherTranslationFragment;
 }
 
-export const fieldNames = {
+const fieldNames = {
   name: "name",
 };
 
-const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
+const TranslationsVouchersPage = ({
   translationId,
   activeField,
   disabled,
@@ -36,7 +35,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsVouchersPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

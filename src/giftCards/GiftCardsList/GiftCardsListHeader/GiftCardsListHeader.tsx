@@ -11,7 +11,6 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardSettingsUrl } from "../../urls";
@@ -19,7 +18,7 @@ import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
 import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 
-const GiftCardsListHeader: React.FC = () => {
+const GiftCardsListHeader = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const subtitle = useContextualLink("gift_cards");

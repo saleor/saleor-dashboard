@@ -14,11 +14,11 @@ export class VoucherTimesUsedQueryVarsBuilder
 {
   protected readonly queryField = "timesUsed" as const;
 
-  public canHandle(element: FilterElement): boolean {
+  canHandle(element: FilterElement): boolean {
     return element.value.value === "timesUsed";
   }
 
-  public createOptionFetcher(): Handler {
+  createOptionFetcher(): Handler {
     return new NoopValuesHandler([]);
   }
 

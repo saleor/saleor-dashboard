@@ -7,7 +7,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CustomAppCreatePage, {
@@ -19,7 +18,7 @@ interface CustomAppCreateProps {
   setToken: (token: string) => void;
 }
 
-export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({ setToken }) => {
+const CustomAppCreate = ({ setToken }: CustomAppCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

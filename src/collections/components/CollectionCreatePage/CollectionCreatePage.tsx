@@ -16,14 +16,13 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionCreateForm, { CollectionCreateData } from "./form";
 
-export interface CollectionCreatePageProps {
+interface CollectionCreatePageProps {
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
   currentChannels: ChannelCollectionData[];
@@ -35,7 +34,7 @@ export interface CollectionCreatePageProps {
   openChannelsModal: () => void;
 }
 
-const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
+const CollectionCreatePage = ({
   channelsCount,
   channelsErrors,
   currentChannels = [],

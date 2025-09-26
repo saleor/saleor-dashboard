@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
@@ -16,16 +15,13 @@ interface AssignCollectionDialogProps
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
-  collections,
-  labels,
-  ...rest
-}) => {
+const AssignCollectionDialog = ({ collections, labels, ...rest }: AssignCollectionDialogProps) => {
   const intl = useIntl();
 
   return (
     <AssignContainerDialog
       containers={collections}
+      emptyMessage={intl.formatMessage(messages.noCollectionsFound)}
       labels={{
         title: intl.formatMessage(messages.assignCollectionDialogHeader),
         label: intl.formatMessage(messages.assignCollectionDialogLabel),

@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { FC } from "react";
+import { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
@@ -7,6 +7,7 @@ import { LeftOperand } from "./LeftOperandsProvider";
 import { useFiltersAreaTranslations } from "./messages";
 import { FilterEvent, Filters, Row } from "./UI";
 import { useFilterContainer } from "./useFilterContainer";
+import { useFilteredOperands } from "./useFilteredOperands";
 import { useTranslate } from "./useTranslate";
 import { ErrorEntry } from "./Validation";
 
@@ -34,6 +35,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
     updateAttribute,
     updateAvailableAttributesList,
   } = useFilterContainer(apiProvider);
+  const filteredOperands = useFilteredOperands(leftOperandsProvider.operands, value);
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;
 
@@ -83,7 +85,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
 
   return (
     <Filters
-      leftOptions={translateOperandOptions(leftOperandsProvider.operands)}
+      leftOptions={translateOperandOptions(filteredOperands)}
       value={translateSelectedOperands(value) as Array<string | Row>}
       onChange={handleStateChange}
       error={errors}

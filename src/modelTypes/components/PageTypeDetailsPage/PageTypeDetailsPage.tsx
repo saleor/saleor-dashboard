@@ -17,7 +17,6 @@ import { ListActions, ReorderEvent } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
@@ -27,7 +26,7 @@ export interface PageTypeForm extends MetadataFormData {
   attributes: Option[];
 }
 
-export interface PageTypeDetailsPageProps {
+interface PageTypeDetailsPageProps {
   errors: PageErrorFragment[];
   pageType: PageTypeDetailsFragment;
   disabled: boolean;
@@ -41,7 +40,7 @@ export interface PageTypeDetailsPageProps {
   onSubmit: (data: PageTypeForm) => void;
 }
 
-const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
+const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   const {
     disabled,
     errors,

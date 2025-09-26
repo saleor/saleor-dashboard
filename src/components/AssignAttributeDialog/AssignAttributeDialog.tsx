@@ -14,7 +14,6 @@ import { FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
@@ -39,7 +38,7 @@ const useStyles = makeStyles(
   { name: "AssignAttributeDialog" },
 );
 
-export interface AssignAttributeDialogProps extends FetchMoreProps {
+interface AssignAttributeDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: string[];
   open: boolean;
@@ -53,7 +52,7 @@ export interface AssignAttributeDialogProps extends FetchMoreProps {
 }
 
 const scrollableTargetId = "assignAttributeScrollableDialog";
-const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
+const AssignAttributeDialog = ({
   attributes,
   confirmButtonState,
   errors: apiErrors,

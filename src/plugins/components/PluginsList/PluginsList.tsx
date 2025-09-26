@@ -10,7 +10,6 @@ import { ListProps, SortPage } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { pluginsMiscMessages } from "./messages";
@@ -18,7 +17,7 @@ import PluginChannelAvailabilityCell from "./PluginChannelAvailabilityCell";
 import PluginChannelConfigurationCell from "./PluginChannelConfigurationCell";
 import PluginListTableHead from "./PluginListTableHead";
 
-export const useStyles = makeStyles(
+const useStyles = makeStyles(
   () => ({
     link: {
       cursor: "pointer",
@@ -30,12 +29,12 @@ export const useStyles = makeStyles(
 const pluginsWithAppReplacements = getPluginsWithAppReplacementsIds();
 const hasAppReplacement = (pluginId: string) => pluginsWithAppReplacements.includes(pluginId);
 
-export interface PluginListProps extends ListProps, SortPage<PluginListUrlSortField> {
+interface PluginListProps extends ListProps, SortPage<PluginListUrlSortField> {
   plugins: PluginBaseFragment[];
 }
 
 const totalColSpan = 10;
-const PluginList: React.FC<PluginListProps> = props => {
+const PluginList = (props: PluginListProps) => {
   const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } = props;
   const classes = useStyles(props);
   const navigate = useNavigator();
@@ -87,7 +86,7 @@ const PluginList: React.FC<PluginListProps> = props => {
                 <PluginChannelConfigurationCell plugin={plugin} />
                 <PluginChannelAvailabilityCell plugin={plugin} />
                 <TableCell align="right">
-                  <EditIcon />
+                  <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
                 </TableCell>
               </TableRowLink>
             ) : (

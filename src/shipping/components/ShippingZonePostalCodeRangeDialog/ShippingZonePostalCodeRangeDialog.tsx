@@ -7,20 +7,19 @@ import { commonMessages } from "@dashboard/intl";
 import { DialogProps, MinMax } from "@dashboard/types";
 import { TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
+interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   onSubmit: (range: MinMax) => void;
 }
 
-const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
+const ShippingZonePostalCodeRangeDialog = ({
   confirmButtonState,
   open,
   onClose,
   onSubmit,
-}) => {
+}: ShippingZonePostalCodeRangeDialogProps) => {
   const intl = useIntl();
   const initial: MinMax = {
     max: "",

@@ -8,7 +8,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
 import { Box, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import AllAppList from "../AllAppList";
@@ -26,12 +26,12 @@ import {
   resolveSectionsAvailability,
 } from "./utils";
 
-export interface AppListPageProps extends AppListPageSections, ListProps {
+interface AppListPageProps extends AppListPageSections, ListProps {
   marketplaceError?: Error;
   showAvailableApps: boolean;
 }
 
-export const AppListPage: React.FC<AppListPageProps> = props => {
+const AppListPage = (props: AppListPageProps) => {
   const {
     appsInstallations,
     installedApps,
@@ -156,5 +156,6 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     </>
   );
 };
+
 AppListPage.displayName = "AppListPage";
 export default AppListPage;

@@ -26,7 +26,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { Divider } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -49,7 +48,7 @@ import {
   hasAnyItemsReplaceable,
 } from "./utils";
 
-export interface OrderDetailsPageProps {
+interface OrderDetailsPageProps {
   order: OrderDetailsFragment | OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
   shippingMethods?: Array<{
@@ -90,7 +89,7 @@ export interface OrderDetailsPageProps {
   onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }
 
-const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
+const OrderDetailsPage = (props: OrderDetailsPageProps) => {
   const {
     loading,
     order,

@@ -9,7 +9,6 @@ import { orderUrl } from "@dashboard/orders/urls";
 import { RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Button, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -19,12 +18,12 @@ const textRightStyle = sprinkles({
   textAlign: "right",
 });
 
-export interface CustomerOrdersProps {
+interface CustomerOrdersProps {
   orders: RelayToFlat<NonNullable<NonNullable<CustomerDetailsQuery["user"]>["orders"]>>;
   viewAllHref: string;
 }
 
-const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
+const CustomerOrders = (props: CustomerOrdersProps) => {
   const { orders, viewAllHref } = props;
   const intl = useIntl();
 

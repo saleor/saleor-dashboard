@@ -4,7 +4,7 @@ import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import { APP_VERSION } from "@dashboard/config";
+import { APP_VERSION, getApiUrl } from "@dashboard/config";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
@@ -12,10 +12,10 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
-export type AppWidgetsProps = {
+type AppWidgetsProps = {
   extensions: ExtensionWithParams[];
   params: AppDetailsUrlMountQueryParams;
 };
@@ -46,18 +46,30 @@ const IframePost = ({
   const loadingRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    formRef.current && formRef.current.submit();
+    if (formRef.current) {
+      formRef.current.submit();
+    }
 
     if (iframeRef.current && loadingRef.current) {
+      const iframe = iframeRef.current;
+      const loading = loadingRef.current;
+
       const onload = () => {
-        loadingRef.current!.style.display = "none";
-        iframeRef.current!.style.visibility = "visible";
+        if (loading) {
+          loading.style.display = "none";
+        }
+
+        if (iframe) {
+          iframe.style.visibility = "visible";
+        }
       };
 
-      iframeRef.current.addEventListener("load", onload);
+      iframe.addEventListener("load", onload);
 
       return () => {
-        iframeRef.current!.removeEventListener("load", onload);
+        if (iframe) {
+          iframe.removeEventListener("load", onload);
+        }
       };
     }
   }, []);
@@ -71,7 +83,7 @@ const IframePost = ({
   return (
     <Box>
       <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
-        <input type="hidden" name="saleorApiUrl" value={process.env.API_URL} />
+        <input type="hidden" name="saleorApiUrl" value={getApiUrl()} />
         <input type="hidden" name="accessToken" value={accessToken} />
         <input type="hidden" name="appId" value={appId} />
         <>
@@ -124,7 +136,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
 
   // Sort alphabetically, so order of apps is constant, even if API returns them differently. This allows more consistent UX
   const sortedByAppName = Object.entries(groupedByApp).sort((a, b) =>
-    a[1].app.name ?? "" < (b[1].app.name ?? "") ? -1 : 1,
+    (a[1].app.name ?? "" < (b[1].app.name ?? "")) ? -1 : 1,
   );
 
   return (
@@ -138,7 +150,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
           const appPageUrl = AppUrls.resolveAppUrl(appWithExtensions.app.id);
 
           return (
-            <Box marginBottom={4} key={appId}>
+            <Box marginBottom={8} key={appId}>
               <Box display="flex" alignItems="center" marginBottom={2}>
                 <AppAvatar size={6} logo={logo ? { source: logo } : undefined} marginRight={2} />
                 <Text
@@ -251,11 +263,11 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 const renderNonIframe = !isIframeType;
 
                 return (
-                  <>
+                  <Box marginBottom={4} key={ext.id}>
                     {renderGETiframe && renderIframeGETvariant()}
                     {renderPOSTiframe && renderIframePOSTvariant()}
                     {renderNonIframe && renderNonIframeExtension()}
-                  </>
+                  </Box>
                 );
               })}
             </Box>

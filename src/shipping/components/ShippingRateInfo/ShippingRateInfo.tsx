@@ -11,7 +11,7 @@ import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -54,7 +54,7 @@ const useStyles = makeStyles(
   { name: "ShippingRateInfo" },
 );
 
-export interface ShippingRateInfoProps {
+interface ShippingRateInfoProps {
   data: {
     description: OutputData | null;
     name: string;
@@ -66,7 +66,7 @@ export interface ShippingRateInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
+const ShippingRateInfo = (props: ShippingRateInfoProps) => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
   const classes = useStyles(props);

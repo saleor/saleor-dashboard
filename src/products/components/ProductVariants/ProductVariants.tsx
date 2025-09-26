@@ -18,7 +18,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
@@ -45,7 +45,7 @@ interface ProductVariantsProps {
   onRowClick: (id: string) => void;
 }
 
-export const ProductVariants: React.FC<ProductVariantsProps> = ({
+const ProductVariants = ({
   channels,
   errors,
   variants,
@@ -55,7 +55,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   onAttributeValuesSearch,
   onChange,
   onRowClick,
-}) => {
+}: ProductVariantsProps) => {
   const intl = useIntl();
 
   // https://github.com/saleor/saleor-dashboard/issues/4165
@@ -69,7 +69,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   // Normally this should be in LS handled by useListSettings hook
   // https://github.com/saleor/saleor-dashboard/issues/4164
 
-  const initialSettings = React.useMemo(
+  const initialSettings = useMemo(
     () =>
       channels && warehouses && variantAttributes
         ? [
@@ -95,14 +95,14 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     initialSettings,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (columnSettings) {
       handlers.onResetDynamicToInitial();
     }
   }, [columnSettings]);
 
-  const handleColumnChange = React.useCallback(
-    picked => {
+  const handleColumnChange = useCallback(
+    (picked: string[]) => {
       setColumnSettings(picked);
     },
     [setColumnSettings],
@@ -130,7 +130,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     intl,
     warehouses,
   });
-  const memoizedStaticColumns = React.useMemo(() => variantsStaticColumnsAdapter(intl), [intl]);
+  const memoizedStaticColumns = useMemo(() => variantsStaticColumnsAdapter(intl), [intl]);
   const {
     handlers,
     columnCategories,
@@ -146,7 +146,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     selectedColumns: columnSettings ?? [],
     onSave: handleColumnChange,
   });
-  const getCellContent = React.useCallback(
+  const getCellContent = useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getData({
         availableColumns: visibleColumns,
@@ -159,7 +159,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       }),
     [channels, visibleColumns, onAttributeValuesSearch, variants],
   );
-  const getCellError = React.useCallback(
+  const getCellError = useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
       getError(errors, {
         availableColumns: visibleColumns,
@@ -217,5 +217,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     />
   );
 };
+
 ProductVariants.displayName = "ProductVariants";
 export default ProductVariants;

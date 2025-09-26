@@ -10,7 +10,7 @@ import { ListViews } from "@dashboard/types";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React from "react";
+import { useMemo } from "react";
 
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 import { permissionGroupListUrl, PermissionGroupListUrlQueryParams } from "../../urls";
@@ -20,14 +20,14 @@ interface PermissionGroupListProps {
   params: PermissionGroupListUrlQueryParams;
 }
 
-export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({ params }) => {
+const PermissionGroupList = ({ params }: PermissionGroupListProps) => {
   const navigate = useNavigator();
   const { updateListSettings, settings } = useListSettings(ListViews.PERMISSION_GROUP_LIST);
 
   usePaginationReset(permissionGroupListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       sort: getSortQueryVariables(params),

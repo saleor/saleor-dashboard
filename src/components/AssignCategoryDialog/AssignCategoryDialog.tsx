@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
@@ -16,16 +15,13 @@ interface AssignCategoryDialogProps
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({
-  categories,
-  labels,
-  ...rest
-}) => {
+const AssignCategoryDialog = ({ categories, labels, ...rest }: AssignCategoryDialogProps) => {
   const intl = useIntl();
 
   return (
     <AssignContainerDialog
       containers={categories}
+      emptyMessage={intl.formatMessage(messages.noCategoriesFound)}
       labels={{
         title: intl.formatMessage(messages.assignCategoryDialogHeader),
         label: intl.formatMessage(messages.assignCategoryDialogLabel),

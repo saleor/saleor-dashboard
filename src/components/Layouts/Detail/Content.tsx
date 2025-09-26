@@ -1,5 +1,5 @@
 import { Box, BoxProps } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 interface DetailPageLayoutContentProps extends BoxProps {
   [key: `data-${string}`]: string;
@@ -7,11 +7,11 @@ interface DetailPageLayoutContentProps extends BoxProps {
   hideScrollbar?: boolean;
 }
 
-export const Content: React.FC<DetailPageLayoutContentProps> = ({
+export const Content = ({
   children,
   hideScrollbar = true,
   ...rest
-}) => {
+}: DetailPageLayoutContentProps) => {
   return (
     <Box
       height="100%"

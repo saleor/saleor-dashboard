@@ -10,7 +10,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CategoryCreatePage from "../components/CategoryCreatePage";
@@ -21,7 +20,7 @@ interface CategoryCreateViewProps {
   parentId?: string;
 }
 
-export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId }) => {
+export const CategoryCreateView = ({ parentId }: CategoryCreateViewProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -89,4 +88,3 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId
     </>
   );
 };
-export default CategoryCreateView;

@@ -1,7 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderRefundFormData, OrderRefundType } from "../OrderRefundPage/form";
@@ -24,7 +23,7 @@ const messages = defineMessages({
     description: "refund type",
   },
 });
-const OrderRefund: React.FC<OrderRefundProps> = props => {
+const OrderRefund = (props: OrderRefundProps) => {
   const { data, disabled, onChange } = props;
   const intl = useIntl();
 

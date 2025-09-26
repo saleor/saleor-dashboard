@@ -29,7 +29,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { sprinkles } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
@@ -68,7 +68,7 @@ export enum SaleDetailsPageTab {
 
 export type SaleTabItemsCount = Partial<Record<SaleDetailsPageTab, number>>;
 
-export interface SaleDetailsPageProps
+interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar" | "variantListToolbar"
@@ -100,7 +100,7 @@ const CategoriesTab = Tab(SaleDetailsPageTab.categories);
 const CollectionsTab = Tab(SaleDetailsPageTab.collections);
 const ProductsTab = Tab(SaleDetailsPageTab.products);
 const VariantsTab = Tab(SaleDetailsPageTab.variants);
-const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
+const SaleDetailsPage = ({
   activeTab,
   tabItemsCount = {},
   allChannelsCount,
@@ -131,10 +131,10 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   selectedChannelId,
   toggle,
   toggleAll,
-}) => {
+}: SaleDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+  const [localErrors, setLocalErrors] = useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: SaleDetailsPageFormData = {
     channelListings,

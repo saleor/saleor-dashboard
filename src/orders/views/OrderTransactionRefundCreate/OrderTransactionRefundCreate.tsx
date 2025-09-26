@@ -1,6 +1,7 @@
 import {
   useOrderDetailsGrantRefundQuery,
   useOrderGrantRefundAddMutation,
+  useRefundSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -8,7 +9,7 @@ import OrderTransactionRefundPage, {
   OrderTransactionRefundError,
   OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -22,7 +23,7 @@ interface OrderTransactionRefundCreateProps {
   orderId: string;
 }
 
-const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ orderId }) => {
+const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) => {
   const notify = useNotifier();
   const navigate = useNavigator();
   const intl = useIntl();
@@ -35,6 +36,9 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
       id: orderId,
     },
   });
+
+  const { data: refundSettings } = useRefundSettingsQuery();
+  const requiredModelForRefundReason = refundSettings?.refundSettings.reasonReferenceType;
 
   const [createRefund, createRefundOpts] = useOrderGrantRefundAddMutation({
     onCompleted: submitData =>
@@ -54,7 +58,8 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
       return;
     }
 
-    const { amount, reason, linesToRefund, includeShipping, transactionId } = submitData;
+    const { amount, reason, linesToRefund, includeShipping, transactionId, reasonReference } =
+      submitData;
 
     if (
       checkAmountExceedsChargedAmount({
@@ -76,6 +81,8 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
         lines: prepareRefundAddLines({ linesToRefund, data }),
         grantRefundForShipping: includeShipping,
         transactionId,
+        // due to select api, object is passed, todo fix this in macaw
+        reasonReferenceId: reasonReference.length ? reasonReference : undefined,
       },
     });
   };
@@ -87,6 +94,7 @@ const OrderTransactionRefund: React.FC<OrderTransactionRefundCreateProps> = ({ o
       order={data?.order}
       onSaveDraft={handleCreateRefund}
       onSaveDraftState={createRefundOpts.status}
+      modelForRefundReasonRefId={requiredModelForRefundReason?.id ?? null}
     />
   );
 };

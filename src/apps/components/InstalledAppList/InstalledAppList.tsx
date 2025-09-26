@@ -6,7 +6,6 @@ import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsP
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ListProps } from "@dashboard/types";
 import { Box, List, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import InstalledAppListRow from "../InstalledAppListRow";
@@ -19,7 +18,7 @@ interface InstalledAppListProps extends ListProps {
   appInstallationList?: AppInstallation[];
 }
 
-const InstalledAppList: React.FC<InstalledAppListProps> = ({ appList, appInstallationList }) => {
+const InstalledAppList = ({ appList, appInstallationList }: InstalledAppListProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();

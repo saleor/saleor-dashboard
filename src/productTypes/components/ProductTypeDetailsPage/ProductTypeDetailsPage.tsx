@@ -25,7 +25,6 @@ import { FetchMoreProps, ListActions, ReorderEvent, UserError } from "@dashboard
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
@@ -50,7 +49,7 @@ export interface ProductTypeForm extends MetadataFormData {
   weight: number;
 }
 
-export interface ProductTypeDetailsPageProps {
+interface ProductTypeDetailsPageProps {
   errors: UserError[];
   productType: ProductTypeDetailsQuery["productType"];
   defaultWeightUnit: WeightUnitsEnum;
@@ -71,7 +70,7 @@ export interface ProductTypeDetailsPageProps {
   onFetchMoreTaxClasses: FetchMoreProps;
 }
 
-const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
+const ProductTypeDetailsPage = ({
   defaultWeightUnit,
   disabled,
   errors,
@@ -90,7 +89,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   setSelectedVariantAttributes,
   selectedVariantAttributes,
   onFetchMoreTaxClasses,
-}) => {
+}: ProductTypeDetailsPageProps) => {
   const navigate = useNavigator();
   const productTypeListBackLink = useBackLinkWithState({
     path: productTypeListPath,

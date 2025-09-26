@@ -3,15 +3,19 @@ import { categoryAddUrl, categoryListUrl } from "@dashboard/categories/urls";
 import { channelAddUrl, channelsListUrl } from "@dashboard/channels/urls";
 import { collectionAddUrl, collectionListUrl } from "@dashboard/collections/urls";
 import Link from "@dashboard/components/Link";
+import { customerAddPath, customerListUrl } from "@dashboard/customers/urls";
+import { saleAddUrl, saleListUrl, voucherAddUrl, voucherListUrl } from "@dashboard/discounts/urls";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { pageCreateUrl, pageListUrl } from "@dashboard/modeling/urls";
 import { pageTypeAddPath, pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
 import { shippingZoneAddUrl, shippingZonesListUrl } from "@dashboard/shipping/urls";
+import { staffListUrl } from "@dashboard/staff/urls";
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import * as React from "react";
+import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
   return (
@@ -38,18 +42,71 @@ const ActionLinkItem = ({ href, children }: { href: string; children: React.Reac
 };
 
 interface TriggerDescriptor {
-  section: {
-    id: string;
-    defaultMessage: string;
-  };
-  name: {
-    id: string;
-    defaultMessage: string;
-  };
+  section: MessageDescriptor;
+  name: MessageDescriptor;
   Component: React.ComponentType<{
     onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
   }>;
 }
+
+const allMessages = defineMessages({
+  inviteUser: {
+    defaultMessage: "Invite user/staff member",
+    id: "tZ/9Sl",
+  },
+  gotoUsers: {
+    defaultMessage: "Go to users/staff members",
+    id: "3xv4ez",
+  },
+  createCustomer: {
+    defaultMessage: "Create customer",
+    id: "ninItd",
+  },
+  gotoCustomers: {
+    defaultMessage: "Go to customers",
+    id: "o7ePJQ",
+  },
+  discountsSection: {
+    defaultMessage: "Discounts",
+    id: "n+Gwbu",
+  },
+  createPromotion: {
+    defaultMessage: "Create promotion",
+    id: "jNoqH0",
+  },
+  gotoPromotions: {
+    defaultMessage: "Go to promotions",
+    id: "Dd0Dwl",
+  },
+  createVoucher: {
+    defaultMessage: "Create voucher",
+    id: "YIT1XP",
+  },
+  gotoVouchers: {
+    defaultMessage: "Go to vouchers",
+    id: "nQQVdc",
+  },
+  extensionsSection: {
+    defaultMessage: "Extensions",
+    id: "nb2FlN",
+  },
+  gotoInstalledExtensions: {
+    defaultMessage: "Go to installed extensions",
+    id: "ivTlck",
+  },
+  gotoExploreExtensions: {
+    defaultMessage: "Go to explore extensions",
+    id: "h84DkG",
+  },
+  createWebhook: {
+    defaultMessage: "Create webhook/extension manually",
+    id: "NGWTE4",
+  },
+  installExtensionFromManifest: {
+    defaultMessage: "Install extension from manifest",
+    id: "mvVmbJ",
+  },
+});
 
 const allActions: TriggerDescriptor[] = [
   {
@@ -82,6 +139,34 @@ const allActions: TriggerDescriptor[] = [
       <Box onClick={onClick}>
         <ActionLinkItem href={orderListUrl()}>
           <FormattedMessage id="ofewGR" defaultMessage="Go to orders" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: {
+      id: "X7jl6w",
+      defaultMessage: "Orders",
+    },
+    name: allMessages.createCustomer,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={customerAddPath}>
+          <FormattedMessage {...allMessages.createCustomer} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: {
+      id: "X7jl6w",
+      defaultMessage: "Orders",
+    },
+    name: allMessages.gotoCustomers,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={customerListUrl()}>
+          <FormattedMessage {...allMessages.gotoCustomers} />
         </ActionLinkItem>
       </Box>
     ),
@@ -388,6 +473,122 @@ const allActions: TriggerDescriptor[] = [
       <Box onClick={onClick}>
         <ActionLinkItem href={shippingZoneAddUrl}>
           <FormattedMessage id="P4Hja1" defaultMessage="Create new shipping zone" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: {
+      id: "7OW8BT",
+      defaultMessage: "Configuration",
+    },
+    name: allMessages.gotoUsers,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={staffListUrl()}>
+          <FormattedMessage {...allMessages.gotoUsers} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: {
+      id: "7OW8BT",
+      defaultMessage: "Configuration",
+    },
+    name: allMessages.inviteUser,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={staffListUrl({ action: "add" })}>
+          <FormattedMessage {...allMessages.inviteUser} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: allMessages.discountsSection,
+    name: allMessages.gotoPromotions,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={saleListUrl()}>
+          <FormattedMessage {...allMessages.gotoPromotions} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: allMessages.discountsSection,
+    name: allMessages.createPromotion,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={saleAddUrl()}>
+          <FormattedMessage {...allMessages.createPromotion} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: allMessages.discountsSection,
+    name: allMessages.gotoVouchers,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={voucherListUrl()}>
+          <FormattedMessage {...allMessages.gotoVouchers} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: allMessages.discountsSection,
+    name: allMessages.createVoucher,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={voucherAddUrl()}>
+          <FormattedMessage {...allMessages.createVoucher} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: allMessages.extensionsSection,
+    name: allMessages.gotoInstalledExtensions,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={ExtensionsUrls.resolveInstalledExtensionsUrl()}>
+          <FormattedMessage {...allMessages.gotoInstalledExtensions} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: allMessages.extensionsSection,
+    name: allMessages.gotoExploreExtensions,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={ExtensionsUrls.resolveExploreExtensionsUrl()}>
+          <FormattedMessage {...allMessages.gotoExploreExtensions} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: allMessages.extensionsSection,
+    name: allMessages.createWebhook,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={ExtensionsUrls.addCustomExtensionUrl()}>
+          <FormattedMessage {...allMessages.createWebhook} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: allMessages.extensionsSection,
+    name: allMessages.installExtensionFromManifest,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={ExtensionsUrls.resolveInstallCustomExtensionUrl()}>
+          <FormattedMessage {...allMessages.installExtensionFromManifest} />
         </ActionLinkItem>
       </Box>
     ),

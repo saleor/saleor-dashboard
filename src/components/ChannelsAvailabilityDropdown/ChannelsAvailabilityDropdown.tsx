@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Popper } from "@material-ui/core";
-import React from "react";
+import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -9,17 +9,15 @@ import { Pill } from "../Pill";
 import { messages } from "./messages";
 import { CollectionChannels, getDropdownColor, mapChannelsToPills } from "./utils";
 
-export interface ChannelsAvailabilityDropdownProps {
+interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;
 }
 
-export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
-  channels,
-}) => {
+export const ChannelsAvailabilityDropdown = ({ channels }: ChannelsAvailabilityDropdownProps) => {
   const intl = useIntl();
-  const [isPopupOpen, setPopupOpen] = React.useState(false);
-  const anchor = React.useRef<HTMLDivElement>(null);
-  const dropdownColor = React.useMemo(() => getDropdownColor(channels), [channels]);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const anchor = useRef<HTMLDivElement>(null);
+  const dropdownColor = useMemo(() => getDropdownColor(channels), [channels]);
 
   if (!channels?.length) {
     return <Pill label={intl.formatMessage(messages.noChannels)} color="error" />;
@@ -53,4 +51,3 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
   );
 };
 ChannelsAvailabilityDropdown.displayName = "ChannelsAvailabilityDropdown";
-export default ChannelsAvailabilityDropdown;

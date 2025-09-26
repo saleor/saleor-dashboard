@@ -70,11 +70,25 @@ export function createAttributeMultiChangeHandler(
 }
 
 export function createAttributeReferenceChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
+  attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
 ): FormsetChange<string[]> {
   return (attributeId: string, values: string[]) => {
-    changeAttributeData(attributeId, values);
+    attributes.change(attributeId, values);
+
+    /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
+     * In here is used to hold display values for references selected by user
+     * before they are returned from our API as attribute references
+     *  */
+    const currentMetadata = attributes.data.find(a => a.id === attributeId)?.metadata || [];
+
+    // When user removes attribute values from selection, delete them in useFormset metadata
+    const syncedMetadata = currentMetadata.filter((meta: AttributeValuesMetadata) =>
+      values.includes(meta.value),
+    );
+
+    attributes.setMetadata(attributeId, syncedMetadata);
+
     triggerChange();
   };
 }
@@ -85,11 +99,24 @@ const mergeReferencesMetadata = (
 ) => uniqBy([...(prev ?? []), ...(next ?? [])], "value");
 
 export function createAttributeReferenceMetadataHandler(
-  changeAttributeMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>,
+  attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
 ): FormsetMetadataChange<AttributeValuesMetadata[]> {
+  /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
+   * In here is used to hold display values for references selected by user
+   * before they are returned from our API as attribute references
+   *  */
+
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
-    changeAttributeMetadata(attributeId, values, mergeReferencesMetadata);
+    const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
+      const merged = mergeReferencesMetadata(prev, next);
+      const currentValues = attributes.data.find(a => a.id === attributeId)?.value || [];
+
+      // Filter out metadata for references that were removed from attribute
+      return merged.filter(meta => currentValues.includes(meta.value));
+    };
+
+    attributes.setMetadata(attributeId, values, mergeFunction);
     triggerChange();
   };
 }
@@ -99,6 +126,8 @@ export function createFetchReferencesHandler(
   assignReferencesAttributeId: string,
   fetchReferencePages?: (data: string) => void,
   fetchReferenceProducts?: (data: string) => void,
+  fetchReferenceCategories?: (data: string) => void,
+  fetchReferenceCollections?: (data: string) => void,
 ) {
   return (value: string) => {
     const attribute = attributes?.find(attribute => attribute.id === assignReferencesAttributeId);
@@ -109,6 +138,16 @@ export function createFetchReferencesHandler(
 
     if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE && fetchReferencePages) {
       fetchReferencePages(value);
+    } else if (
+      attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION &&
+      fetchReferenceCollections
+    ) {
+      fetchReferenceCollections(value);
+    } else if (
+      attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY &&
+      fetchReferenceCategories
+    ) {
+      fetchReferenceCategories(value);
     } else if (
       attribute.data?.entityType &&
       [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
@@ -126,6 +165,8 @@ export function createFetchMoreReferencesHandler(
   assignReferencesAttributeId: string,
   fetchMoreReferencePages?: FetchMoreProps,
   fetchMoreReferenceProducts?: FetchMoreProps,
+  fetchMoreReferenceCategories?: FetchMoreProps,
+  fetchMoreReferenceCollections?: FetchMoreProps,
 ) {
   const attribute = attributes?.find(attribute => attribute.id === assignReferencesAttributeId);
 
@@ -135,6 +176,10 @@ export function createFetchMoreReferencesHandler(
 
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return fetchMoreReferencePages;
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION) {
+    return fetchMoreReferenceCollections;
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY) {
+    return fetchMoreReferenceCategories;
   } else if (
     attribute.data?.entityType &&
     [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
@@ -296,6 +341,15 @@ export const prepareAttributesInput = ({
       attrInput.push({
         id: attr.id,
         references: attr.value,
+      });
+
+      return attrInput;
+    }
+
+    if (inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
+      attrInput.push({
+        id: attr.id,
+        reference: attr.value?.[0] ?? null,
       });
 
       return attrInput;

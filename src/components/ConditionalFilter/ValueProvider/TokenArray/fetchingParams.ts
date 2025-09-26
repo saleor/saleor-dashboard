@@ -11,13 +11,29 @@ export interface FetchingParams {
 }
 
 export interface OrderFetchingParams {
-  paymentStatus: string[];
   status: string[];
+  fulfillmentStatus: string[];
   authorizeStatus: string[];
   chargeStatus: string[];
   channels: string[];
   customer: string[];
   ids: string[];
+  metadata: string[];
+  number: string[];
+  userEmail: string[];
+  voucherCode: string[];
+  linesCount: string[];
+  checkoutId: string[];
+  linesMetadata: string[];
+  transactionsMetadata: string[];
+  transactionsPaymentType: string[];
+  transactionsCardBrand: string[];
+  fulfillmentsMetadata: string[];
+  billingPhoneNumber: string[];
+  billingCountry: string[];
+  shippingPhoneNumber: string[];
+  shippingCountry: string[];
+  fulfillmentWarehouse: string[];
 }
 
 export interface VoucherFetchingParams {
@@ -75,49 +91,65 @@ export const emptyFetchingParams: FetchingParams = {
   attributeReference: {},
 };
 
-export const emptyOrderFetchingParams: OrderFetchingParams = {
-  paymentStatus: [],
+const emptyOrderFetchingParams: OrderFetchingParams = {
   status: [],
+  fulfillmentStatus: [],
   authorizeStatus: [],
   chargeStatus: [],
   channels: [],
   customer: [],
   ids: [],
+  metadata: [],
+  number: [],
+  userEmail: [],
+  voucherCode: [],
+  linesCount: [],
+  checkoutId: [],
+  linesMetadata: [],
+  transactionsMetadata: [],
+  transactionsPaymentType: [],
+  transactionsCardBrand: [],
+  fulfillmentsMetadata: [],
+  billingPhoneNumber: [],
+  billingCountry: [],
+  shippingPhoneNumber: [],
+  shippingCountry: [],
+  fulfillmentWarehouse: [],
 };
 
-export const emptyVoucherFetchingParams: VoucherFetchingParams = {
+const emptyVoucherFetchingParams: VoucherFetchingParams = {
   channel: [],
   discountType: [],
   voucherStatus: [],
 };
 
-export const emptyPageFetchingParams: PageFetchingParams = {
+const emptyPageFetchingParams: PageFetchingParams = {
   pageTypes: [],
 };
 
-export const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
+const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
   currency: [],
   products: [],
   tags: [],
   usedBy: [],
 };
 
-export const emptyCollectionFetchingParams: CollectionFetchingParams = {
+const emptyCollectionFetchingParams: CollectionFetchingParams = {
   channel: [],
   metadata: [],
   published: [],
 };
 
-export const emptyProductTypesFetchingParams: ProductTypesFetchingParams = {
+const emptyProductTypesFetchingParams: ProductTypesFetchingParams = {
   typeOfProduct: [],
   configurable: [],
 };
 
-export const emptyStaffMembersFetchingParams: StaffMembersFetchingParams = {
+const emptyStaffMembersFetchingParams: StaffMembersFetchingParams = {
   staffMemberStatus: [],
 };
 
-export const emptyAttributesFetchingParams: AttributesFetchingParams = {
+const emptyAttributesFetchingParams: AttributesFetchingParams = {
   channel: [],
   attributeType: [],
 };

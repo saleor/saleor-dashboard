@@ -1,5 +1,4 @@
 import { Toggle } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { WebhookFormData } from "../../WebhookDetailsPage";
@@ -11,7 +10,7 @@ interface WebhookStatusProps {
   setValue: (data: Partial<WebhookFormData>) => void;
 }
 
-const WebhookStatus: React.FC<WebhookStatusProps> = ({ data, disabled, setValue }) => {
+const WebhookStatus = ({ data, disabled, setValue }: WebhookStatusProps) => {
   const intl = useIntl();
 
   return (

@@ -28,7 +28,7 @@ const SUPPORTED_STATIC_FIELDS = new Set([
 
 type SupportedStaticFieldsKeys = typeof SUPPORTED_STATIC_FIELDS extends Set<infer T> ? T : never;
 
-export type StaticWhereQueryPart = { eq?: string } | { oneOf?: string[] };
+type StaticWhereQueryPart = { eq?: string } | { oneOf?: string[] };
 
 /** Static definitions provide a list of chosable elements based on entity type (e.g. category)
  * and return a list of selected entity IDs
@@ -36,11 +36,11 @@ export type StaticWhereQueryPart = { eq?: string } | { oneOf?: string[] };
  * These are actually not static, we fetch dynamically list from API, but we left name "static"
  * to be consistent with other parts of Dashboard */
 export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhereQueryPart> {
-  public canHandle(element: FilterElement): boolean {
+  canHandle(element: FilterElement): boolean {
     return SUPPORTED_STATIC_FIELDS.has(element.value.type as SupportedStaticFieldsKeys);
   }
 
-  public createOptionFetcher(
+  createOptionFetcher(
     client: ApolloClient<unknown>,
     inputValue: string,
     element: FilterElement,
@@ -65,7 +65,7 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhe
     }
   }
 
-  public updateWhereQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
+  updateWhereQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
     const { value: selectedValue } = element.condition.selected;
     const fieldName = element.value.value;
     let queryPart: StaticWhereQueryPart | undefined;
@@ -81,7 +81,7 @@ export class StaticQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticWhe
     return { ...query, [fieldName]: queryPart };
   }
 
-  public updateFilterQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
+  updateFilterQueryVariables(query: Readonly<FilterQuery>, element: FilterElement) {
     const whereQuery = this.updateWhereQueryVariables(query, element);
     const fieldName = element.value.value;
     const whereQueryPart = whereQuery[fieldName] as StaticWhereQueryPart;

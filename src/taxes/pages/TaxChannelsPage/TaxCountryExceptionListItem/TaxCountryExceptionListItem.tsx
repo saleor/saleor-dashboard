@@ -7,7 +7,6 @@ import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
 import { Box, Button, Option, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { useStyles } from "../styles";
 import { TaxCountryConfiguration } from "../TaxChannelsPage";
@@ -21,14 +20,14 @@ interface TaxCountryExceptionListItemProps {
   strategyChoicesLoading: boolean;
 }
 
-export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
+const TaxCountryExceptionListItem = ({
   country,
   onDelete,
   onChange,
   strategyChoices,
   divider = true,
   strategyChoicesLoading,
-}) => {
+}: TaxCountryExceptionListItemProps) => {
   const classes = useStyles();
 
   return (
@@ -73,4 +72,5 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
     </>
   );
 };
+
 export default TaxCountryExceptionListItem;

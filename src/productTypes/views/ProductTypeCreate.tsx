@@ -11,7 +11,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors } from "../../misc";
@@ -22,7 +21,7 @@ interface ProductTypeCreateProps {
   params: ProductTypeAddUrlQueryParams;
 }
 
-export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) => {
+const ProductTypeCreate = ({ params }: ProductTypeCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -106,4 +105,5 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) 
     </>
   );
 };
+
 export default ProductTypeCreate;

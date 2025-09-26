@@ -11,7 +11,7 @@ import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,7 +20,7 @@ import { getLinkTypeOptions } from "./options";
 import { MenuItemDialogFormData } from "./types";
 import { getValidationSchema } from "./validationSchema";
 
-export interface MenuItemDialogProps {
+interface MenuItemDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: MenuErrorFragment[];
@@ -37,7 +37,7 @@ const defaultInitial: MenuItemDialogFormData = {
   linkValue: "",
 };
 
-const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
+const MenuItemDialog = ({
   confirmButtonState,
   disabled,
   errors: apiErrors,
@@ -46,7 +46,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   onClose,
   onSubmit,
   open,
-}) => {
+}: MenuItemDialogProps) => {
   const intl = useIntl();
 
   const { handleSubmit, control, watch, formState, setValue, reset, clearErrors } =
@@ -66,7 +66,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   });
 
   // Refresh initial display value if changed
-  React.useEffect(() => {
+  useEffect(() => {
     // Form should be reset only when dialog is opened
     // otherwise it will reset form on every render and when input is empty
     reset(initial);

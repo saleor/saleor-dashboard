@@ -1,19 +1,17 @@
 // @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
   TransactionActionEnum,
 } from "@dashboard/graphql/types.generated";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import OrderAddTransaction from "../OrderAddTransaction";
 import { OrderDetailsRefundTable } from "../OrderDetailsRefundTable/OrderDetailsRefundTable";
-import OrderGrantedRefunds from "../OrderGrantedRefunds";
-import OrderPaymentSummaryCard from "../OrderPaymentSummaryCard";
+import { OrderPaymentSummaryCard } from "../OrderPaymentSummaryCard";
 import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
@@ -31,7 +29,7 @@ interface OrderTransactionsWrapper {
   onRefundAdd: () => void;
 }
 
-export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
+export const OrderTransactionsWrapper = ({
   order,
   shop,
   onTransactionAction,
@@ -40,9 +38,8 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   onPaymentVoid,
   onAddManualTransaction,
   onRefundAdd,
-}) => {
-  const filteredPayments = React.useMemo(() => getFilteredPayments(order), [order]);
-  const { enabled } = useFlag("improved_refunds");
+}: OrderTransactionsWrapper) => {
+  const filteredPayments = useMemo(() => getFilteredPayments(order), [order]);
 
   const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCards].some(
     arr => arr?.length > 0,
@@ -56,18 +53,10 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
       </Box>
       <CardSpacer />
       <>
-        {enabled && (
-          <>
-            <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
-            <CardSpacer />
-          </>
-        )}
-        {order?.grantedRefunds?.length !== 0 && !enabled && (
-          <>
-            <OrderGrantedRefunds order={order} />
-            <CardSpacer />
-          </>
-        )}
+        <>
+          <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
+          <CardSpacer />
+        </>
       </>
 
       <Box paddingTop={6}>

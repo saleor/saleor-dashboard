@@ -1,6 +1,5 @@
 import Link from "@dashboard/components/Link";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
@@ -8,16 +7,16 @@ import { messages } from "./messages";
 interface WarehouseInformationMessageProps {
   isCreate: boolean;
   hasVariants: boolean;
-  hasWarehouses: boolean;
+  hasStocks: boolean;
   onWarehouseConfigure: () => void;
 }
 
-export const WarehouseInformationMessage: React.FC<WarehouseInformationMessageProps> = ({
+export const WarehouseInformationMessage = ({
   isCreate,
   hasVariants,
-  hasWarehouses,
+  hasStocks,
   onWarehouseConfigure,
-}) => {
+}: WarehouseInformationMessageProps) => {
   if (isCreate) {
     const message = hasVariants
       ? messages.warehouseMessageVariantOnCreate
@@ -30,7 +29,7 @@ export const WarehouseInformationMessage: React.FC<WarehouseInformationMessagePr
     );
   }
 
-  if (hasWarehouses) {
+  if (hasStocks) {
     return null;
   }
 

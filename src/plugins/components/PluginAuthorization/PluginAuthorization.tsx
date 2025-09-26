@@ -5,7 +5,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { isSecretField } from "@dashboard/plugins/utils";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PluginAuthorizationProps {
@@ -32,7 +32,7 @@ const useStyles = makeStyles(
   }),
   { name: "PluginAuthorization" },
 );
-const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
+const PluginAuthorization = (props: PluginAuthorizationProps) => {
   const { fields, onClear, onEdit } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -51,7 +51,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         {secretFields.map((field, fieldIndex) => (
-          <React.Fragment key={field.name}>
+          <Fragment key={field.name}>
             <div className={classes.item} key={field.name}>
               {field.type === ConfigurationTypeFieldEnum.SECRET ||
               field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
@@ -83,7 +83,7 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
               )}
             </div>
             {fieldIndex !== secretFields.length - 1 && <Hr className={classes.hr} />}
-          </React.Fragment>
+          </Fragment>
         ))}
       </DashboardCard.Content>
     </DashboardCard>

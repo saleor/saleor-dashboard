@@ -1,16 +1,25 @@
+import BackButton from "@dashboard/components/BackButton";
+import Checkbox from "@dashboard/components/Checkbox";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+import { DashboardModal } from "@dashboard/components/Modal";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import { WarehouseFragment } from "@dashboard/graphql";
-import { Box, Button, Dropdown, List, Spinner, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
-import { FormattedMessage } from "react-intl";
-
-import { messages } from "../messages";
-import { ProductStocksInfinityScrollList } from "./ProductStocksInfinityScrollList";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { CircularProgress, TableBody, TableCell, TableRow, TextField } from "@material-ui/core";
+import { ConfirmButton } from "@saleor/macaw-ui";
+import { Button, Option, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { useState } from "react";
+import { useIntl } from "react-intl";
 
 interface ProductStocksAssignWarehousesProps {
   warehousesToAssign: WarehouseFragment[];
   hasMoreWarehouses: boolean;
   loadMoreWarehouses: () => void;
   onWarehouseSelect: (warehouseId: string, warehouseName: string) => void;
+  loading: boolean;
+  searchWarehouses: (query: string) => void;
+  showAssignWarehousesButton: boolean;
 }
 
 export const ProductStocksAssignWarehouses = ({
@@ -18,64 +27,126 @@ export const ProductStocksAssignWarehouses = ({
   loadMoreWarehouses,
   onWarehouseSelect,
   warehousesToAssign,
+  loading,
+  searchWarehouses,
+  showAssignWarehousesButton,
 }: ProductStocksAssignWarehousesProps) => {
-  useEffect(() => {
-    // In case there is no more warehouses to assign, load more warehouses
-    // Example: from first page all warehouse has been already assigned, so we need to load more warehouses to assign
-    if (hasMoreWarehouses && !warehousesToAssign.length) {
-      loadMoreWarehouses();
-    }
-  }, [hasMoreWarehouses, warehousesToAssign.length]);
+  const [warehouses, setWarehouses] = useState<Option[]>([]);
+  const intl = useIntl();
+  const [open, setOpen] = useState(false);
+  const [query, onQueryChange, queryReset] = useSearchQuery(searchWarehouses);
 
-  const handleOnScroll = () => {
-    if (hasMoreWarehouses) {
-      loadMoreWarehouses();
-    }
+  const handleClose = () => {
+    setOpen(false);
+    queryReset();
+    setWarehouses([]);
   };
 
   return (
-    <Dropdown>
-      <Dropdown.Trigger>
+    <>
+      {showAssignWarehousesButton && (
         <Button
+          onClick={() => setOpen(true)}
+          disabled={loading}
+          marginTop={5}
           type="button"
           variant="secondary"
-          marginTop={5}
           data-test-id="assign-warehouse-button"
         >
-          <FormattedMessage {...messages.assignWarehouse} />
+          {intl.formatMessage({
+            defaultMessage: "Assign Warehouses",
+            id: "mFC5Rq",
+          })}
         </Button>
-      </Dropdown.Trigger>
-      <Dropdown.Content align="end">
-        <Box>
-          <ProductStocksInfinityScrollList onLoadMore={handleOnScroll}>
-            {warehousesToAssign.map(warehouse => (
-              <Dropdown.Item key={warehouse.id}>
-                <List.Item
-                  paddingX={1.5}
-                  paddingY={2}
-                  borderRadius={4}
-                  onClick={() => onWarehouseSelect(warehouse.id, warehouse.name)}
-                >
-                  <Text>{warehouse.name}</Text>
-                </List.Item>
-              </Dropdown.Item>
-            ))}
-            {hasMoreWarehouses && (
-              <Dropdown.Item>
-                <List.Item
-                  paddingX={1.5}
-                  paddingY={2}
-                  borderRadius={4}
-                  display="flex"
-                  justifyContent="center"
-                >
-                  <Spinner />
-                </List.Item>
-              </Dropdown.Item>
-            )}
-          </ProductStocksInfinityScrollList>
-        </Box>
-      </Dropdown.Content>
-    </Dropdown>
+      )}
+      <DashboardModal onChange={handleClose} open={open}>
+        <DashboardModal.Content size="sm">
+          <DashboardModal.Header>
+            {intl.formatMessage({
+              defaultMessage: "Assign Warehouses",
+              id: "mFC5Rq",
+            })}
+          </DashboardModal.Header>
+
+          <TextField
+            name="query"
+            value={query}
+            onChange={onQueryChange}
+            label="Search warehouses"
+            placeholder="Search by warehouse name"
+            fullWidth
+            InputProps={{
+              autoComplete: "off",
+              endAdornment: loading && <CircularProgress size={16} />,
+            }}
+          />
+
+          <InfiniteScroll
+            id="assignWarehouseScrollableDialog"
+            dataLength={warehousesToAssign.length}
+            next={loadMoreWarehouses}
+            hasMore={hasMoreWarehouses}
+          >
+            <ResponsiveTable key="table">
+              <TableBody>
+                {warehousesToAssign.length === 0 && (
+                  <TableRow>
+                    <TableCell align="center">
+                      <Text>No warehouses available to add</Text>
+                    </TableCell>
+                  </TableRow>
+                )}
+                {warehousesToAssign.map(warehouse => {
+                  return (
+                    <TableRowLink key={warehouse.id}>
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          onChange={() =>
+                            setWarehouses(prev => [
+                              ...prev,
+                              { value: warehouse.id, label: warehouse.name },
+                            ])
+                          }
+                        />
+                      </TableCell>
+                      <TableCell
+                        className={sprinkles({
+                          paddingLeft: 0,
+                        })}
+                      >
+                        {warehouse.name}
+                      </TableCell>
+                    </TableRowLink>
+                  );
+                })}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+          <DashboardModal.Actions>
+            <BackButton onClick={handleClose} />
+            <ConfirmButton
+              type="submit"
+              transitionState="default"
+              labels={{
+                confirm: intl.formatMessage({
+                  defaultMessage: "Confirm",
+                  id: "N2IrpM",
+                }),
+                error: intl.formatMessage({
+                  defaultMessage: "Error",
+                  id: "KN7zKn",
+                }),
+              }}
+              onClick={() => {
+                warehouses.forEach(warehouse => {
+                  onWarehouseSelect(warehouse.value, warehouse.label);
+                });
+                handleClose();
+              }}
+            />
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
+    </>
   );
 };

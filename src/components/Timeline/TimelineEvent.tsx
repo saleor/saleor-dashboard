@@ -1,5 +1,5 @@
 import { Accordion, Box, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";
 
@@ -12,7 +12,7 @@ export interface TimelineEventProps {
   hasPlainDate?: boolean;
 }
 
-export const TimelineEvent: React.FC<TimelineEventProps> = props => {
+export const TimelineEvent = (props: TimelineEventProps) => {
   const { children, date, secondaryTitle, title, titleElements, hasPlainDate } = props;
   const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
 

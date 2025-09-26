@@ -3,7 +3,6 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -35,9 +34,9 @@ import {
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
@@ -48,11 +47,12 @@ import { useStyles } from "./styles";
 interface OrderFulfillFormData {
   sendInfo: boolean;
   allowStockToBeExceeded: boolean;
+  trackingNumber: string | undefined;
 }
 export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
-export interface OrderFulfillPageProps {
+interface OrderFulfillPageProps {
   params: OrderFulfillUrlQueryParams;
   loading: boolean;
   errors: FulfillOrderMutation["orderFulfill"]["errors"];
@@ -67,8 +67,9 @@ export interface OrderFulfillPageProps {
 const initialFormData: OrderFulfillFormData = {
   sendInfo: true,
   allowStockToBeExceeded: false,
+  trackingNumber: undefined,
 };
-const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
+const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   const {
     params,
     loading,
@@ -102,7 +103,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       };
     }),
   );
-  const [displayStockExceededDialog, setDisplayStockExceededDialog] = React.useState(false);
+  const [displayStockExceededDialog, setDisplayStockExceededDialog] = useState(false);
   const handleSubmit = ({
     formData,
     allowStockToBeExceeded,
@@ -127,7 +128,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (errors && errors.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)) {
       setDisplayStockExceededDialog(true);
     }
@@ -245,13 +246,23 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                       {intl.formatMessage(messages.shipmentInformation)}
                     </DashboardCard.Title>
                   </DashboardCard.Header>
-                  <DashboardCard.Content>
-                    <ControlledCheckbox
-                      checked={data.sendInfo}
-                      label={intl.formatMessage(messages.sentShipmentDetails)}
-                      name="sendInfo"
+                  <DashboardCard.Content __maxWidth="fit-content" display="grid" gap={4}>
+                    <Input
+                      name="trackingNumber"
+                      label={intl.formatMessage(messages.trackingNumberInputLabel)}
+                      value={data.trackingNumber}
                       onChange={change}
+                      helperText={intl.formatMessage(messages.trackingNumberInputHelperText)}
                     />
+                    <Checkbox
+                      checked={data.sendInfo}
+                      name="sendInfo"
+                      onCheckedChange={checked =>
+                        change({ target: { name: "sendInfo", value: checked } })
+                      }
+                    >
+                      <Text>{intl.formatMessage(messages.sentFulfillmentDetails)}</Text>
+                    </Checkbox>
                   </DashboardCard.Content>
                 </DashboardCard>
               )}

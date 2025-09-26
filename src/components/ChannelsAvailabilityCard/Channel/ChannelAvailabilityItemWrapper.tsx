@@ -2,21 +2,21 @@
 import { ChannelData } from "@dashboard/channels/utils";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { Accordion, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 import { Messages } from "../types";
 
-export interface ChannelContentWrapperProps {
+interface ChannelContentWrapperProps {
   data: ChannelData;
   children: React.ReactNode;
   messages: Messages;
 }
 
-export const ChannelAvailabilityItemWrapper: React.FC<ChannelContentWrapperProps> = ({
+export const ChannelAvailabilityItemWrapper = ({
   data: { name },
   messages,
   children,
-}) => (
+}: ChannelContentWrapperProps) => (
   <Accordion data-test-id="channel-availability-item">
     <Accordion.Item value="channel-availability-item" gap={9}>
       <Accordion.Trigger>

@@ -7,7 +7,7 @@ import { ReorderAction } from "@dashboard/types";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
@@ -27,7 +27,7 @@ interface ProductVariantNavigationProps {
   onReorder: ReorderAction;
 }
 
-const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props => {
+const ProductVariantNavigation = (props: ProductVariantNavigationProps) => {
   const { current, defaultVariantId, productId, isCreate, variants, onReorder } = props;
   const navigate = useNavigator();
   const intl = useIntl();
@@ -60,7 +60,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                 const thumbnail = variant.media?.filter(mediaObj => mediaObj.type === "IMAGE")[0];
 
                 return (
-                  <React.Fragment key={variant.id}>
+                  <Fragment key={variant.id}>
                     <VariantItem
                       variant={variant}
                       thumbnail={thumbnail}
@@ -70,7 +70,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
                       draggable={!isSaving}
                     />
                     <Divider height={0} />
-                  </React.Fragment>
+                  </Fragment>
                 );
               })}
             </SortableContext>

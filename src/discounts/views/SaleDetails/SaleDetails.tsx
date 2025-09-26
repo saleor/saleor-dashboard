@@ -51,7 +51,7 @@ import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCol
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { createUpdateHandler } from "./handlers";
@@ -63,7 +63,7 @@ interface SaleDetailsProps {
   params: SaleUrlQueryParams;
 }
 
-export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
+const SaleDetails = ({ id, params }: SaleDetailsProps) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const navigate = useNavigator();
@@ -547,4 +547,5 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default SaleDetails;

@@ -8,16 +8,15 @@ import { OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface OrderFulfillmentAcceptDialogFormData {
+interface OrderFulfillmentAcceptDialogFormData {
   notifyCustomer: boolean;
 }
 
-export interface OrderFulfillmentAcceptDialogProps {
+interface OrderFulfillmentAcceptDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -25,7 +24,7 @@ export interface OrderFulfillmentAcceptDialogProps {
   onConfirm: (data: OrderFulfillmentAcceptDialogFormData) => void;
 }
 
-const OrderFulfillmentApproveDialog: React.FC<OrderFulfillmentAcceptDialogProps> = props => {
+const OrderFulfillmentApproveDialog = (props: OrderFulfillmentAcceptDialogProps) => {
   const { confirmButtonState, errors, open, onConfirm, onClose } = props;
   const intl = useIntl();
 

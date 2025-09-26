@@ -2,13 +2,16 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";
-import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
+import {
+  SimpleRadioGroupField,
+  SimpleRadioGroupFieldChoice,
+} from "@dashboard/components/SimpleRadioGroupField";
 import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import * as React from "react";
+import { defineMessages, FormattedMessage, IntlShape, useIntl } from "react-intl";
 
 import {
   OrderRefundAmountCalculationMode,
@@ -74,6 +77,56 @@ interface PaymentSubmitCardProps {
   onRefund: () => void;
 }
 
+const getAmountCalculationModeOptions = ({
+  type,
+  intl,
+  allowNoRefund,
+  disabled,
+}: {
+  type: OrderRefundType;
+  intl: IntlShape;
+  allowNoRefund: boolean;
+  disabled: boolean;
+}): SimpleRadioGroupFieldChoice[] => {
+  const manualOption = {
+    label: intl.formatMessage({
+      id: "FOehC/",
+      defaultMessage: "Manual Amount",
+      description: "label",
+    }),
+    value: OrderRefundAmountCalculationMode.MANUAL,
+    disabled: disabled,
+  };
+
+  const noRefundOption = {
+    label: intl.formatMessage({
+      id: "zzfj8H",
+      defaultMessage: "No refund",
+      description: "label",
+    }),
+    value: OrderRefundAmountCalculationMode.NONE,
+    disabled: !allowNoRefund || disabled,
+  };
+
+  if (type === OrderRefundType.MISCELLANEOUS) {
+    return [noRefundOption, manualOption];
+  }
+
+  return [
+    noRefundOption,
+    {
+      label: intl.formatMessage({
+        id: "JEIN47",
+        defaultMessage: "Automatic Amount",
+        description: "label",
+      }),
+      value: OrderRefundAmountCalculationMode.AUTOMATIC,
+      disabled: disabled,
+    },
+    manualOption,
+  ];
+};
+
 export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
   const {
     data,
@@ -132,7 +185,8 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
   const disableRefundButton = shouldRefundButtonBeDisabled();
 
   const showRefundShipmentCheckbox =
-    data.amountCalculationMode !== OrderRefundAmountCalculationMode.NONE;
+    data.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC &&
+    type === OrderRefundType.PRODUCTS;
 
   return (
     <DashboardCard>
@@ -147,35 +201,12 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
       </DashboardCard.Header>
       <DashboardCard.Content className={classes.content}>
         <SimpleRadioGroupField
-          choices={[
-            {
-              label: intl.formatMessage({
-                id: "zzfj8H",
-                defaultMessage: "No refund",
-                description: "label",
-              }),
-              value: OrderRefundAmountCalculationMode.NONE,
-              disabled: !allowNoRefund || disabled,
-            },
-            {
-              label: intl.formatMessage({
-                id: "JEIN47",
-                defaultMessage: "Automatic Amount",
-                description: "label",
-              }),
-              value: OrderRefundAmountCalculationMode.AUTOMATIC,
-              disabled: disabled,
-            },
-            {
-              label: intl.formatMessage({
-                id: "FOehC/",
-                defaultMessage: "Manual Amount",
-                description: "label",
-              }),
-              value: OrderRefundAmountCalculationMode.MANUAL,
-              disabled: disabled,
-            },
-          ]}
+          choices={getAmountCalculationModeOptions({
+            type,
+            intl,
+            allowNoRefund,
+            disabled,
+          })}
           disabled={disabled}
           name={"amountCalculationMode" as keyof FormData}
           value={data.amountCalculationMode}
@@ -263,16 +294,18 @@ export const PaymentSubmitCard: React.FC<PaymentSubmitCardProps> = props => {
               previouslyRefunded={previouslyRefunded}
               maxRefund={maxRefund}
             />
-            <RefundAmountInput
-              data={data as OrderRefundFormData}
-              maxRefund={maxRefund}
-              amountTooSmall={isAmountTooSmall}
-              amountTooBig={isAmountTooBig}
-              currencySymbol={amountCurrency}
-              disabled={disabled}
-              onChange={onChange}
-              errors={errors}
-            />
+            {data.amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL && (
+              <RefundAmountInput
+                data={data as OrderRefundFormData}
+                maxRefund={maxRefund}
+                amountTooSmall={isAmountTooSmall}
+                amountTooBig={isAmountTooBig}
+                currencySymbol={amountCurrency}
+                disabled={disabled}
+                onChange={onChange}
+                errors={errors}
+              />
+            )}
           </>
         )}
         <ButtonWithLoader

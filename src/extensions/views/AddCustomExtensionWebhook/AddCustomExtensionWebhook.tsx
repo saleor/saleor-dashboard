@@ -9,17 +9,16 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import WebhookDetailsPage, { WebhookFormData } from "../../components/WebhookDetailsPage";
 import { useAvailableEvents } from "../../hooks/useAvailableEvents";
 
-export interface CustomAppWebhookCreateProps {
+interface CustomAppWebhookCreateProps {
   appId: string;
 }
 
-export const AddCustomExtensionWebhook: React.FC<CustomAppWebhookCreateProps> = ({ appId }) => {
+export const AddCustomExtensionWebhook = ({ appId }: CustomAppWebhookCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

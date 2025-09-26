@@ -25,13 +25,13 @@ import {
   SortPage,
 } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { VoucherListDatagrid } from "../VoucherListDatagrid";
 import { createFilterStructure, VoucherFilterKeys, VoucherListFilterOpts } from "./filters";
 
-export interface VoucherListPageProps
+interface VoucherListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<VoucherFilterKeys, VoucherListFilterOpts>,
     SortPage<VoucherListUrlSortField>,
@@ -42,7 +42,7 @@ export interface VoucherListPageProps
   onSelectVouchersIds: (rows: number[], clearSelection: () => void) => void;
 }
 
-const VoucherListPage: React.FC<VoucherListPageProps> = ({
+const VoucherListPage = ({
   filterOpts,
   initialSearch,
   onFilterChange,
@@ -59,7 +59,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   selectedVouchersIds,
   currencySymbol,
   ...listProps
-}) => {
+}: VoucherListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { enabled: isVoucherFiltersEnabled } = useFlag("new_filters");

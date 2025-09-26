@@ -64,7 +64,7 @@ export enum ProductListUrlSortField {
   date = "date",
   created = "created",
 }
-export type ProductListUrlSort = Sort<ProductListUrlSortField>;
+type ProductListUrlSort = Sort<ProductListUrlSortField>;
 export interface ProductListUrlQueryParams
   extends BulkAction,
     Dialog<ProductListUrlDialog>,
@@ -82,7 +82,7 @@ export const productPath = (id: string) => urlJoin(productSection + id);
 export type ProductUrlDialog = "remove" | "assign-attribute-value" | ChannelsAction;
 export type ProductUrlQueryParams = BulkAction & Dialog<ProductUrlDialog> & SingleAction;
 export type ProductCreateUrlDialog = "assign-attribute-value" | ChannelsAction;
-export interface ProductCreateUrlProductType {
+interface ProductCreateUrlProductType {
   "product-type-id"?: string;
 }
 export type ProductCreateUrlQueryParams = Dialog<ProductCreateUrlDialog> &
@@ -105,7 +105,7 @@ export const productVariantEditUrl = (
   params?: ProductVariantEditUrlQueryParams,
 ) => productVariantEditPath(encodeURIComponent(variantId)) + "?" + stringifyQs(params);
 
-export type ProductVariantAddUrlDialog = "assign-attribute-value";
+type ProductVariantAddUrlDialog = "assign-attribute-value";
 export type ProductVariantAddUrlQueryParams = Dialog<ProductVariantAddUrlDialog> & SingleAction;
 export const productVariantAddPath = (productId: string) =>
   urlJoin(productSection, productId, "variant/add");

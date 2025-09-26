@@ -3,11 +3,10 @@ import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
 import { ProductListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { Box, ProductsIcons, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { getTileStatus } from "./utils";
 
-export interface ProductTileProps {
+interface ProductTileProps {
   product: RelayToFlat<ProductListQuery["products"]>[0];
   onClick: () => void;
 }
@@ -18,7 +17,7 @@ const commonThumbnailProps = {
   aspectRatio: "1 / 1",
 } as const;
 
-export const ProductTile: React.FC<ProductTileProps> = ({ product, onClick }) => (
+export const ProductTile = ({ product, onClick }: ProductTileProps) => (
   <Box
     display="flex"
     flexDirection="column"

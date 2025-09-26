@@ -4,7 +4,7 @@ import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
@@ -12,7 +12,7 @@ import { FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "./t
 import useFilter from "./useFilter";
 import { extractInvalidFilters, getSelectedFiltersAmount } from "./utils";
 
-export interface FilterProps<TFilterKeys extends string = string> {
+interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
   errorMessages?: FilterErrorMessages<TFilterKeys>;
   menu: IFilter<TFilterKeys>;
@@ -82,10 +82,10 @@ const useStyles = makeStyles(
   }),
   { name: "Filter" },
 );
-const Filter: React.FC<FilterProps> = props => {
+const Filter = (props: FilterProps) => {
   const { currencySymbol, menu, onFilterAdd, onFilterAttributeFocus, errorMessages } = props;
   const classes = useStyles(props);
-  const anchor = React.useRef<HTMLDivElement>();
+  const anchor = useRef<HTMLDivElement>();
   const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
   const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
   const [data, dispatch, reset] = useFilter(menu);

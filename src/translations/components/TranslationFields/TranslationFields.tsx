@@ -13,7 +13,7 @@ import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import TranslationFieldsLong from "./TranslationFieldsLong";
@@ -22,7 +22,7 @@ import TranslationFieldsShort from "./TranslationFieldsShort";
 
 type Pagination = Pick<ListProps, Exclude<keyof ListProps, "getRowHref" | "disabled">>;
 
-export interface TranslationFieldsProps {
+interface TranslationFieldsProps {
   activeField: string;
   disabled: boolean;
   title: string;
@@ -101,7 +101,7 @@ const useStyles = makeStyles(
   { name: "TranslationFields" },
 );
 const numberOfColumns = 2;
-const TranslationFields: React.FC<TranslationFieldsProps> = props => {
+const TranslationFields = (props: TranslationFieldsProps) => {
   const {
     activeField,
     disabled,
@@ -116,7 +116,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     onSubmit,
   } = props;
   const classes = useStyles(props);
-  const [expanded, setExpandedState] = React.useState(initialState);
+  const [expanded, setExpandedState] = useState(initialState);
 
   return (
     <DashboardCard>
@@ -146,7 +146,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               />
             </Text>
             {fields.map(field => (
-              <React.Fragment key={field.name}>
+              <Fragment key={field.name}>
                 <Hr className={classes.hr} />
                 <Text className={classes.fieldName} fontSize={3}>
                   {field.displayName}
@@ -226,7 +226,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                     <Skeleton />
                   )}
                 </Text>
-              </React.Fragment>
+              </Fragment>
             ))}
           </Grid>
           {pagination && (

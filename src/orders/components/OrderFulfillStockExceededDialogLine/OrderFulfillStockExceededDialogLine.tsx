@@ -10,19 +10,16 @@ import {
 } from "@dashboard/orders/utils/data";
 import { TableCell } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
-export interface OrderFulfillStockExceededDialogLineProps {
+interface OrderFulfillStockExceededDialogLineProps {
   line: OrderFulfillLineFragment | FulfillmentFragment["lines"][0];
   warehouseId: string;
   formsetData: OrderFulfillStockFormsetData;
 }
 
-const OrderFulfillStockExceededDialogLine: React.FC<
-  OrderFulfillStockExceededDialogLineProps
-> = props => {
+const OrderFulfillStockExceededDialogLine = (props: OrderFulfillStockExceededDialogLineProps) => {
   const { line: genericLine, warehouseId, formsetData } = props;
   const classes = useStyles(props);
 

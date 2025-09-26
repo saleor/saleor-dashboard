@@ -1,16 +1,17 @@
 export enum OrderFilterKeys {
-  created = "created",
-  customer = "customer",
+  createdAt = "createdAt",
+  user = "user",
   status = "status",
-  paymentStatus = "paymentStatus",
-  clickAndCollect = "clickAndCollect",
-  preorder = "preorder",
-  channel = "channel",
-  giftCard = "giftCard",
+  authorizeStatus = "authorizeStatus",
+  chargeStatus = "chargeStatus",
+  isClickAndCollect = "isClickAndCollect",
+  channelId = "channelId",
+  isGiftCardUsed = "isGiftCardUsed",
+  isGiftCardBought = "isGiftCardBought",
+  totalGross = "totalGross",
+  totalNet = "totalNet",
+  hasInvoices = "hasInvoices",
+  hasFulfillments = "hasFulfillments",
+  invoicesCreatedAt = "invoicesCreatedAt",
   metadata = "metadata",
-}
-
-export enum OrderFilterGiftCard {
-  bought = "bought",
-  paid = "paid",
 }

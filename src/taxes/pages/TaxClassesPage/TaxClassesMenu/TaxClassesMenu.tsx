@@ -8,7 +8,7 @@ import { Card, CardContent, Divider } from "@material-ui/core";
 import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
 import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../TaxCountriesPage/TaxCountriesMenu/styles";
@@ -20,12 +20,12 @@ interface TaxClassesMenuProps {
   onCreateNew: () => void;
 }
 
-export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
+const TaxClassesMenu = ({
   taxClasses,
   selectedTaxClassId,
   onTaxClassDelete,
   onCreateNew,
-}) => {
+}: TaxClassesMenuProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const isCreatingNew = selectedTaxClassId === "new";
@@ -58,7 +58,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
           <Divider />
           <List gridTemplate={["1fr"]}>
             {taxClasses?.map((taxClass, taxClassId) => (
-              <React.Fragment key={taxClass.id}>
+              <Fragment key={taxClass.id}>
                 <ListItemLink
                   data-test-id="class-list-rows"
                   className={clsx(classes.clickable, classes.tableRow, {
@@ -85,7 +85,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
                   </ListItemCell>
                 </ListItemLink>
                 {!isLastElement(taxClasses, taxClassId) && <Divider />}
-              </React.Fragment>
+              </Fragment>
             )) ?? <Skeleton />}
           </List>
         </>

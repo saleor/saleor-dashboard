@@ -2,20 +2,20 @@ import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
-import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
 import { extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
+import { RefundsSettingsRoute } from "@dashboard/refundsSettings/route";
+import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
-import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
@@ -48,7 +48,7 @@ import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
-import { DEMO_MODE, GTM_ID } from "./config";
+import { GTM_ID } from "./config";
 import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
@@ -110,10 +110,12 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App: React.FC = () => (
+const App = () => (
+  // @ts-expect-error legacy types
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
       <Router>
+        {/* @ts-expect-error legacy types */}
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
             <DateProvider>
@@ -153,7 +155,7 @@ const App: React.FC = () => (
     </ApolloProvider>
   </SaleorProvider>
 );
-const Routes: React.FC = () => {
+const Routes = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();
@@ -166,7 +168,6 @@ const Routes: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
         <ExternalAppProvider>
           <AppLayout fullSize={isAppPath}>
@@ -270,6 +271,11 @@ const Routes: React.FC = () => {
                   path="/site-settings"
                   component={SiteSettingsSection}
                 />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                  path={refundsSettingsPath}
+                  component={RefundsSettingsRoute}
+                />
                 <SectionRoute path="/taxes" component={TaxesSection} />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_SHIPPING]}
@@ -337,4 +343,6 @@ const Routes: React.FC = () => {
   );
 };
 
-render(<App />, document.querySelector("#dashboard-app"));
+const root = createRoot(document.querySelector("#dashboard-app")!);
+
+root.render(<App />);

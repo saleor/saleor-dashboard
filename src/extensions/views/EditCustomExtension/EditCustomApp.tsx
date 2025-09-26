@@ -29,7 +29,7 @@ import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder, parseLogMessage } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -51,12 +51,7 @@ interface OrderListProps {
   onTokenClose: () => void;
 }
 
-export const EditCustomExtension: React.FC<OrderListProps> = ({
-  id,
-  params,
-  token,
-  onTokenClose,
-}) => {
+export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

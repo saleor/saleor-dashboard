@@ -1,7 +1,8 @@
 import { useUser } from "@dashboard/auth";
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { Header } from "./components/Header";
@@ -24,7 +25,7 @@ interface AccountPermissionsProps {
   onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
 }
 
-const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
+const AccountPermissions = (props: AccountPermissionsProps) => {
   const {
     data,
     disabled,

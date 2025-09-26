@@ -1,6 +1,6 @@
 import { ExtensionData } from "@dashboard/extensions/types";
 import { renderHook } from "@testing-library/react-hooks";
-import React from "react";
+import * as React from "react";
 import { FormattedMessageProps } from "react-intl";
 
 import { useExtension } from "./useExtension";

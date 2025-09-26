@@ -11,7 +11,6 @@ import {
   OrderDiscountContextConsumerProps,
 } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
@@ -30,7 +29,7 @@ interface OrderDraftDetailsProps {
   onShowMetadata: (id: string) => void;
 }
 
-const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
+const OrderDraftDetails = ({
   order,
   channelUsabilityData,
   errors,
@@ -40,7 +39,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   onOrderLineRemove,
   onShippingMethodEdit,
   onShowMetadata,
-}) => {
+}: OrderDraftDetailsProps) => {
   const intl = useIntl();
   const isChannelActive = order?.channel.isActive;
   const areProductsInChannel = !!channelUsabilityData?.products.totalCount;

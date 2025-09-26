@@ -3,7 +3,6 @@ import { ChannelFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Divider } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
@@ -18,7 +17,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneSettingsCardProps {
+interface ShippingZoneSettingsCardProps {
   formData: ShippingZoneUpdateFormData;
   warehousesChoices: Option[];
   onWarehouseAdd: () => void;
@@ -31,7 +30,7 @@ export interface ShippingZoneSettingsCardProps {
   loading: boolean;
 }
 
-export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> = ({
+const ShippingZoneSettingsCard = ({
   formData,
   hasMoreWarehouses,
   loading,
@@ -42,7 +41,7 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
   onWarehouseChange,
   allChannels,
   onChannelChange,
-}) => {
+}: ShippingZoneSettingsCardProps) => {
   const intl = useIntl();
 
   return (

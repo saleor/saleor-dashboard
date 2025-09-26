@@ -1,11 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
@@ -30,11 +28,11 @@ interface ChannelAllocationStrategyProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
+const ChannelAllocationStrategy = ({
   data,
   disabled,
   onChange,
-}) => {
+}: ChannelAllocationStrategyProps) => {
   const classes = useStyles();
 
   return (
@@ -43,7 +41,6 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
         <DashboardCard.Title>
           <div className={classes.preview}>
             <FormattedMessage {...messages.allocationStrategy} />
-            <PreviewPill />
           </div>
         </DashboardCard.Title>
       </DashboardCard.Header>

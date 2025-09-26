@@ -8,7 +8,7 @@ import {
   Text,
   vars,
 } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AvailableColumn } from "../types";
@@ -18,7 +18,7 @@ import { ColumnPickerStaticColumns } from "./ColumnPickerStaticColumns";
 import messages from "./messages";
 import { ColumnCategory } from "./useColumns";
 
-export interface ColumnPickerProps {
+interface ColumnPickerProps {
   staticColumns: AvailableColumn[];
   dynamicColumns?: AvailableColumn[] | null | undefined;
   selectedColumns: string[];

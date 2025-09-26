@@ -8,7 +8,7 @@ import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
   { name: "CustomerDetails" },
 );
 
-export interface CustomerDetailsProps {
+interface CustomerDetailsProps {
   customer: CustomerDetailsQuery["user"];
   data: {
     isActive: boolean;
@@ -40,7 +40,7 @@ export interface CustomerDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
+const CustomerDetails = (props: CustomerDetailsProps) => {
   const { customer, data, disabled, errors, onChange } = props;
 
   const classes = useStyles(props);

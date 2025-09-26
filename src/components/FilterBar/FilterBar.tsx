@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterProps } from "../../types";
@@ -10,9 +9,7 @@ import { SearchBarProps } from "../SearchBar";
 import SearchInput from "../SearchBar/SearchInput";
 import FilterTabs, { FilterTab } from "../TableFilter";
 
-export interface FilterBarProps<TKeys extends string = string>
-  extends FilterProps<TKeys>,
-    SearchBarProps {
+interface FilterBarProps<TKeys extends string = string> extends FilterProps<TKeys>, SearchBarProps {
   errorMessages?: FilterErrorMessages<TKeys>;
   filterStructure: IFilter<TKeys>;
   withoutBorder?: boolean;
@@ -36,7 +33,7 @@ const useStyles = makeStyles<{ withoutBorder?: boolean }>(
     name: "FilterBar",
   },
 );
-const FilterBar: React.FC<FilterBarProps> = props => {
+const FilterBar = (props: FilterBarProps) => {
   const {
     allTabLabel,
     currencySymbol,

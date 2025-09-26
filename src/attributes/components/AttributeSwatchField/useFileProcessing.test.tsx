@@ -1,6 +1,5 @@
 import { useFileUploadMutation } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react-hooks";
-import React from "react";
 
 import { useFileProcessing } from "./useFileProcessing";
 

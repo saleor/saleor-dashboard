@@ -8,7 +8,7 @@
 
 import { CountryWithCodeFragment } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import React from "react";
+import { useEffect } from "react";
 
 interface TaxEntityWithId {
   id: string;
@@ -32,7 +32,7 @@ export function useTaxUrlRedirect({
   navigate,
   urlFunction,
 }: UseTaxUrlRedirectOpts): void {
-  React.useEffect(() => {
+  useEffect(() => {
     if (id === "undefined" && data?.length) {
       const defaultTaxEntity = data[0];
 

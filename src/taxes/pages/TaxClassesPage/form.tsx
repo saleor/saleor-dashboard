@@ -9,14 +9,15 @@ import { getTaxClassInitialFormData } from "@dashboard/taxes/utils/data";
 import { validateTaxClassFormData } from "@dashboard/taxes/utils/validation";
 import { TaxClassError } from "@dashboard/utils/errors/taxes";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import React, { useState } from "react";
+import { useState } from "react";
+import * as React from "react";
 
 interface TaxClassesFormHandlers {
   handleRateChange: (id: string, value: string) => void;
   changeMetadata: FormChange;
 }
 
-export interface UseTaxClassesFormResult {
+interface UseTaxClassesFormResult {
   validationErrors: TaxClassError[];
   data: TaxClassesPageFormData;
   submit: () => SubmitPromise<TaxClassError[]>;
@@ -107,13 +108,13 @@ function useTaxClassesForm(
   };
 }
 
-const TaxClassesForm: React.FC<TaxClassesFormProps> = ({
+const TaxClassesForm = ({
   children,
   taxClass,
   onTaxClassCreate,
   onTaxClassUpdate,
   disabled,
-}) => {
+}: TaxClassesFormProps) => {
   const props = useTaxClassesForm(taxClass, onTaxClassCreate, onTaxClassUpdate, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;

@@ -1,6 +1,5 @@
 import DeletableItem from "@dashboard/components/DeletableItem";
 import { Divider, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import SortableHandle from "./SortableHandle";
@@ -23,6 +22,7 @@ const Item = SortableElement(({ item, sortable = false, onDelete }: ItemProps) =
       <div className={classes.container}>
         <div className={classes.containerContent}>
           {sortable && (
+            // @ts-expect-error - legacy types
             <SortableHandle className={classes.sortableHandle} data-test-id="button-drag-handle" />
           )}
           <Text size={3}>{name}</Text>

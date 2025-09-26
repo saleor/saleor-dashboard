@@ -20,7 +20,7 @@ import { CircularProgress } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
-import React, {
+import {
   MutableRefObject,
   ReactElement,
   ReactNode,
@@ -57,7 +57,7 @@ export interface GetCellContentOpts {
   getChangeIndex: (column: string, row: number) => number;
 }
 
-export interface MenuItemsActions {
+interface MenuItemsActions {
   removeRows: (indexes: number[]) => void;
 }
 
@@ -68,7 +68,7 @@ export interface DatagridRenderHeaderProps {
   isAnimationOpenFinished: boolean;
 }
 
-export interface DatagridProps {
+interface DatagridProps {
   fillHandle?: boolean;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
@@ -102,7 +102,7 @@ export interface DatagridProps {
   navigatorOpts?: NavigatorOpts;
 }
 
-export const Datagrid: React.FC<DatagridProps> = ({
+const Datagrid = ({
   availableColumns,
   emptyText,
   getCellContent,
@@ -134,7 +134,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   renderHeader,
   navigatorOpts,
   ...datagridProps
-}): ReactElement => {
+}: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
   const { themeValues, theme } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);

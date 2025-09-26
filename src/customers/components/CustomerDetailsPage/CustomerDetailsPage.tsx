@@ -24,7 +24,6 @@ import { orderListUrl } from "@dashboard/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Divider } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";
@@ -42,7 +41,7 @@ export interface CustomerDetailsPageFormData extends MetadataFormData {
   note: string;
 }
 
-export interface CustomerDetailsPageProps {
+interface CustomerDetailsPageProps {
   customerId: string;
   customer: CustomerDetailsQuery["user"];
   disabled: boolean;
@@ -52,7 +51,7 @@ export interface CustomerDetailsPageProps {
   onDelete: () => void;
 }
 
-const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
+const CustomerDetailsPage = ({
   customerId,
   customer,
   disabled,

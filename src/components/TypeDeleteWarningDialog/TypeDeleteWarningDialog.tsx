@@ -3,7 +3,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
 import { Box, Spinner } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export interface TypeDeleteMessages {
   multipleWithoutItemsMessages: TypeDeleteWarningMessages;
 }
 
-export interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends TypeDeleteMessages {
+interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends TypeDeleteMessages {
   isOpen: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
   onClose: () => void;
@@ -116,9 +116,8 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
                 onClick={onDelete}
                 disabled={hasAssignedItems ? !isConsentChecked : false}
                 testId="confirm-delete"
-              >
-                {intl.formatMessage(buttonMessages.delete)}
-              </DeleteButton>
+                label={intl.formatMessage(buttonMessages.delete)}
+              />
             </DashboardModal.Actions>
           </>
         )}

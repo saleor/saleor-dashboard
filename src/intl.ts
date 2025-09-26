@@ -22,12 +22,6 @@ export const commonMessages = defineMessages({
     id: "hzSNj4",
     defaultMessage: "Dashboard",
   },
-  demo: {
-    id: "i0AcKY",
-    defaultMessage:
-      "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
-    description: "notification message after log in",
-  },
   description: {
     id: "Q8Qw5B",
     defaultMessage: "Description",
@@ -636,6 +630,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Installed",
     description: "installed extensions section name",
   },
+  refundsSettings: {
+    id: "mFr9YY",
+    defaultMessage: "Refunds Settings",
+    description: "configuration section name for refund settings",
+  },
 });
 
 export const commonStatusMessages = defineMessages({
@@ -709,6 +708,11 @@ export const orderStatusMessages = defineMessages({
   unfulfilled: {
     id: "oB0y5Y",
     defaultMessage: "Unfulfilled",
+    description: "order status",
+  },
+  expired: {
+    id: "z45PdE",
+    defaultMessage: "Expired",
     description: "order status",
   },
 });

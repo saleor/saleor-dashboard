@@ -15,16 +15,15 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsShippingMethodPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsShippingMethodPageProps extends TranslationsEntitiesPageProps {
   data: ShippingMethodTranslationFragment;
 }
 
-const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPageProps> = ({
+const TranslationsShippingMethodPage = ({
   translationId,
   activeField,
   disabled,
@@ -35,7 +34,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsShippingMethodPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

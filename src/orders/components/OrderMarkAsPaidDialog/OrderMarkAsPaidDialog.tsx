@@ -5,10 +5,10 @@ import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderMarkAsPaidDialogProps {
+interface OrderMarkAsPaidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -18,7 +18,7 @@ export interface OrderMarkAsPaidDialogProps {
   handleTransactionReference: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
+const OrderMarkAsPaidDialog = ({
   confirmButtonState,
   errors: apiErrors,
   handleTransactionReference,
@@ -26,7 +26,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
   onConfirm,
   open,
   transactionReference,
-}) => {
+}: OrderMarkAsPaidDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
 

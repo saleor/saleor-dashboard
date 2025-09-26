@@ -38,7 +38,7 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -47,7 +47,7 @@ import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
 
-export interface ProductListPageProps
+interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     SearchPageProps,
     Omit<TabPageProps, "onTabDelete" | "onTabDelete">,
@@ -80,9 +80,8 @@ export type ProductListViewType = "datagrid" | "tile";
 
 const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
-export const ProductListPage: React.FC<ProductListPageProps> = props => {
+const ProductListPage = (props: ProductListPageProps) => {
   const {
-    currencySymbol,
     defaultSettings,
     gridAttributesOpts,
     limits,
@@ -301,5 +300,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     </ListPageLayout>
   );
 };
+
 ProductListPage.displayName = "ProductListPage";
 export default ProductListPage;

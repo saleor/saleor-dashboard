@@ -1,13 +1,12 @@
 import { EmptySearchList } from "@dashboard/extensions/components/EmptyListState";
 import { ExtensionsGroups } from "@dashboard/extensions/types";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { ExtensionItem } from "../ExtenionItem";
 import { ExtensionsGroup } from "../ExtensionsGroup";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 
-export interface ExtensionsListProps {
+interface ExtensionsListProps {
   extensions: ExtensionsGroups;
   loading?: boolean;
   clearSearch: () => void;

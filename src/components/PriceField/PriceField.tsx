@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { Input, InputProps, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { usePriceField } from "./usePriceField";
 
@@ -18,7 +17,7 @@ export interface PriceFieldProps extends InputProps {
   onChange: (event: any) => any;
 }
 
-export const PriceField: React.FC<PriceFieldProps> = props => {
+const PriceField = (props: PriceFieldProps) => {
   const {
     className,
     disabled,
@@ -60,6 +59,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     />
   );
 };
+
 PriceField.defaultProps = {
   name: "price",
 };

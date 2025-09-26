@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
@@ -11,39 +10,17 @@ const config: CodegenConfig = {
   ],
   generates: {
     "./src/graphql/fragmentTypes.generated.ts": {
-      plugins: [
-        {
-          add: {
-            content: "/* eslint-disable */",
-          },
-        },
-        "fragment-matcher",
-      ],
+      plugins: ["fragment-matcher"],
       config: {
         minify: false,
         apolloClientVersion: 3,
       },
     },
     "./src/graphql/typePolicies.generated.ts": {
-      plugins: [
-        {
-          add: {
-            content: "/* eslint-disable */",
-          },
-        },
-        "typescript-apollo-client-helpers",
-      ],
+      plugins: ["typescript-apollo-client-helpers"],
     },
     "./src/graphql/types.generated.ts": {
-      plugins: [
-        {
-          add: {
-            content: "/* eslint-disable */",
-          },
-        },
-        "typescript",
-        "typescript-operations",
-      ],
+      plugins: ["typescript", "typescript-operations"],
       config: {
         nonOptionalTypename: true,
         avoidOptionals: {
@@ -59,14 +36,7 @@ const config: CodegenConfig = {
       },
     },
     "./src/graphql/hooks.generated.ts": {
-      plugins: [
-        {
-          add: {
-            content: "/* eslint-disable */",
-          },
-        },
-        "typescript-react-apollo",
-      ],
+      plugins: ["typescript-react-apollo"],
       config: {
         withHooks: true,
         apolloReactHooksImportFrom: "@dashboard/hooks/graphql",

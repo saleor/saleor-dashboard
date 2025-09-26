@@ -3,14 +3,13 @@ import { ReorderAction } from "@dashboard/types";
 import { TableBody } from "@material-ui/core";
 import { TableBodyProps } from "@material-ui/core/TableBody";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { SortableContainer } from "react-sortable-hoc";
 
 const InnerSortableTableBody = SortableContainer<TableBodyProps>(({ children, ...props }) => (
   <TableBody {...props}>{children}</TableBody>
 ));
 
-export interface SortableTableBodyProps {
+interface SortableTableBodyProps {
   onSortEnd: ReorderAction;
 }
 
@@ -31,7 +30,7 @@ const useStyles = makeStyles(
 );
 
 /** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
-const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, "ref">> = props => {
+export const SortableTableBody = (props: Omit<TableBodyProps & SortableTableBodyProps, "ref">) => {
   const classes = useStyles({});
 
   return (
@@ -44,5 +43,3 @@ const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, 
     />
   );
 };
-
-export default SortableTableBody;

@@ -1,7 +1,6 @@
 import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Combobox, ComboboxProps } from "@saleor/macaw-ui-next";
-import React from "react";
 
 type BaseComboboxProps = ComboboxProps<
   { value: LanguageCodeEnum; label: string },
@@ -9,13 +8,13 @@ type BaseComboboxProps = ComboboxProps<
 >;
 type CutProps = Omit<BaseComboboxProps, "options" | "value">;
 
-export interface LanguageSwitchProps extends CutProps {
+interface LanguageSwitchProps extends CutProps {
   currentLanguage: LanguageCodeEnum;
   languages: LanguageFragment[];
   onLanguageChange: (lang: LanguageCodeEnum) => void;
 }
 
-export const LanguageSwitch = (props: LanguageSwitchProps) => {
+const LanguageSwitch = (props: LanguageSwitchProps) => {
   const { currentLanguage, languages, onLanguageChange, ...rest } = props;
 
   return (

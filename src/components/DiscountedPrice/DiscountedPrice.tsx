@@ -1,6 +1,5 @@
 import { IMoney } from "@dashboard/utils/intl";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import Money from "../Money";
 import { useStyles } from "./styles";
@@ -10,7 +9,7 @@ interface DiscountedPriceProps {
   discountedPrice: IMoney;
 }
 
-const DiscountedPrice: React.FC<DiscountedPriceProps> = ({ regularPrice, discountedPrice }) => {
+const DiscountedPrice = ({ regularPrice, discountedPrice }: DiscountedPriceProps) => {
   const classes = useStyles();
 
   return (

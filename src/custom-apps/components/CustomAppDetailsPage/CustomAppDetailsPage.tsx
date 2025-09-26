@@ -21,7 +21,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomAppDefaultToken from "../CustomAppDefaultToken";
@@ -35,7 +34,7 @@ export interface CustomAppDetailsPageFormData {
   name: string;
   permissions: PermissionEnum[];
 }
-export interface CustomAppDetailsPageProps {
+interface CustomAppDetailsPageProps {
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"];
@@ -52,7 +51,7 @@ export interface CustomAppDetailsPageProps {
   onAppDeactivateOpen: () => void;
 }
 
-const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
+const CustomAppDetailsPage = (props: CustomAppDetailsPageProps) => {
   const {
     disabled,
     errors,

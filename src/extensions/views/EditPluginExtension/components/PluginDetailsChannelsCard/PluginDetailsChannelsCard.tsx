@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { sectionNames } from "@dashboard/intl";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -8,7 +7,7 @@ import {
   PluginDetailsChannelsCardProps,
 } from "./PluginDetailsChannelsCardContent";
 
-export const PluginDetailsChannelsCard: React.FC<PluginDetailsChannelsCardProps> = props => {
+export const PluginDetailsChannelsCard = (props: PluginDetailsChannelsCardProps) => {
   const intl = useIntl();
 
   return (

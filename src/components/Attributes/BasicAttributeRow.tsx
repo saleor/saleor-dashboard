@@ -1,23 +1,24 @@
 import { Box, InfoIcon, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 interface BasicAttributeRowProps {
   label: string | React.ReactNode;
   description?: string | React.ReactNode;
   id?: string;
   clickableLabel?: boolean;
+  children?: React.ReactNode;
 }
 
 const capitalize = (str: BasicAttributeRowProps["label"]) =>
   typeof str === "string" ? str.charAt(0).toUpperCase() + str.slice(1) : str;
 
-export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
+export const BasicAttributeRow = ({
   label,
   description,
   children,
   id,
   clickableLabel = false,
-}) => (
+}: BasicAttributeRowProps) => (
   <Box
     as="li"
     justifyContent="space-between"

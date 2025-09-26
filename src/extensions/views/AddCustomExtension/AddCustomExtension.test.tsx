@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
+import * as React from "react";
 
 import { AddCustomExtension } from "./AddCustomExtension";
 import { useHandleCreateAppSubmit } from "./hooks/useHandleCreateAppSubmit";
@@ -41,6 +41,7 @@ jest.mock("react-intl", () => ({
   }),
   FormattedMessage: ({ defaultMessage }: { id: string; defaultMessage: string }) => defaultMessage,
   defineMessages: (messages: Record<string, any>) => messages,
+  defineMessage: (message: string) => message,
 }));
 
 jest.mock("./hooks/usePermissions");

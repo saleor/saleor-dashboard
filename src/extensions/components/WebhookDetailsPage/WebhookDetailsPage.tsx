@@ -21,7 +21,8 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box } from "@saleor/macaw-ui-next";
 import { parse, print } from "graphql";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import PermissionAlert from "./components/PermissionAlert";
@@ -43,7 +44,7 @@ export interface WebhookFormData {
   customHeaders: string;
 }
 
-export interface WebhookDetailsPageProps {
+interface WebhookDetailsPageProps {
   appId: string;
   appName: string;
   disabled: boolean;
@@ -54,7 +55,7 @@ export interface WebhookDetailsPageProps {
   availableEvents: IntrospectionNode[];
 }
 
-const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
+const WebhookDetailsPage = ({
   appId,
   disabled,
   errors,
@@ -62,7 +63,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   saveButtonBarState,
   onSubmit,
   availableEvents,
-}) => {
+}: WebhookDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

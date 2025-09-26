@@ -1,14 +1,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import PreviewPill from "@dashboard/components/PreviewPill";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Input } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import useStyles from "./styles";
 
 interface ProductVariantCheckoutSettingsProps {
   data: {
@@ -19,19 +16,15 @@ interface ProductVariantCheckoutSettingsProps {
   onChange: FormChange;
 }
 
-const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsProps> = props => {
+const ProductVariantCheckoutSettings = (props: ProductVariantCheckoutSettingsProps) => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
-  const classes = useStyles();
   const formErrors = getFormErrors(["quantityLimitPerCustomer"], errors);
 
   return (
     <DashboardCard>
       <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage(messages.checkoutLimits)}
-          <PreviewPill className={classes.preview} />
-        </DashboardCard.Title>
+        <DashboardCard.Title>{intl.formatMessage(messages.checkoutLimits)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
         <Input

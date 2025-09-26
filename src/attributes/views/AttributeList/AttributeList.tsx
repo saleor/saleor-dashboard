@@ -1,5 +1,6 @@
 import {
   getFilterOpts,
+  getFilterQueryParam,
   getFilterVariables,
   storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
@@ -26,20 +27,19 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import { attributeListUrl, AttributeListUrlDialog, AttributeListUrlQueryParams } from "../../urls";
-import { getFilterQueryParam } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface AttributeListProps {
   params: AttributeListUrlQueryParams;
 }
 
-const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
+const AttributeList = ({ params }: AttributeListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -51,7 +51,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   usePaginationReset(attributeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -59,7 +59,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const newQueryVariables = React.useMemo(
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {

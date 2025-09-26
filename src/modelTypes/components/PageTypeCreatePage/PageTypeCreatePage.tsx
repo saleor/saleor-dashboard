@@ -9,7 +9,6 @@ import { PageErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
@@ -18,7 +17,7 @@ export interface PageTypeForm extends MetadataFormData {
   name: string;
 }
 
-export interface PageTypeCreatePageProps {
+interface PageTypeCreatePageProps {
   errors: PageErrorFragment[];
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -31,7 +30,7 @@ const formInitialData: PageTypeForm = {
   privateMetadata: [],
 };
 
-const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
+const PageTypeCreatePage = (props: PageTypeCreatePageProps) => {
   const { disabled, errors, saveButtonBarState, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();

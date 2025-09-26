@@ -1,9 +1,9 @@
 import { List, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 import { ColumnCategory } from "./useColumns";
 
-export interface ColumnPickerCategoryListProps {
+interface ColumnPickerCategoryListProps {
   columnCategories: ColumnCategory[];
   setCurrentCategory: React.Dispatch<React.SetStateAction<string | null>>;
 }

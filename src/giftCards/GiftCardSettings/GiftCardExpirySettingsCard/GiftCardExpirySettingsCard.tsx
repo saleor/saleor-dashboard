@@ -4,13 +4,13 @@ import GiftCardSettingsExpirySelect, {
   GiftCardSettingsExpirySelectProps,
 } from "@dashboard/giftCards/components/GiftCardSettingsExpirySelect";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { GiftCardSettingsFormData } from "../types";
 import { giftCardExpirySettingsCard as messages } from "./messages";
 
-export interface GiftCardExpirySettingsCardProps
+interface GiftCardExpirySettingsCardProps
   extends Pick<GiftCardSettingsExpirySelectProps, "errors"> {
   data: GiftCardSettingsFormData;
   disabled: boolean;
@@ -25,12 +25,12 @@ const useStyles = makeStyles(
   }),
   { name: "GiftCardExpirySettingsCard" },
 );
-const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
+const GiftCardExpirySettingsCard = ({
   data,
   disabled,
   errors,
   onChange,
-}) => {
+}: GiftCardExpirySettingsCardProps) => {
   const intl = useIntl();
   const classes = useStyles({});
 

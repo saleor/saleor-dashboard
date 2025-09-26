@@ -14,7 +14,6 @@ import { getFormChannelError, getFormChannelErrors, getFormErrors } from "@dashb
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Skeleton, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 interface ProductVariantPriceProps {
@@ -30,7 +29,7 @@ const numberOfColumns = 2;
 
 const COMMON_CELL_STYLES = { verticalAlign: "baseline" };
 
-export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
+export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
   const {
     disabled = false,
     errors = [],

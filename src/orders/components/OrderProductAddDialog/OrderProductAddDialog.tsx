@@ -18,7 +18,7 @@ import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
@@ -26,7 +26,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { hasAllVariantsSelected, isVariantSelected, onProductAdd, onVariantAdd } from "./utils";
 
-export interface OrderProductAddDialogProps extends FetchMoreProps {
+interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -38,7 +38,7 @@ export interface OrderProductAddDialogProps extends FetchMoreProps {
 }
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
-const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
+const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
   const {
     confirmButtonState,
     errors: apiErrors,
@@ -55,7 +55,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [variants, setVariants] = React.useState<
+  const [variants, setVariants] = useState<
     SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
   >([]);
   const errors = useModalDialogErrors(apiErrors, open);
@@ -131,7 +131,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
               {renderCollection(
                 productChoicesWithValidVariants,
                 (product, productIndex) => (
-                  <React.Fragment key={product ? product.id : "skeleton"}>
+                  <Fragment key={product ? product.id : "skeleton"}>
                     <TableRowLink data-test-id="product">
                       <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                         <Checkbox
@@ -200,7 +200,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                           </TableCell>
                         </TableRowLink>
                       ))}
-                  </React.Fragment>
+                  </Fragment>
                 ),
                 () => (
                   <Text marginBottom={3}>

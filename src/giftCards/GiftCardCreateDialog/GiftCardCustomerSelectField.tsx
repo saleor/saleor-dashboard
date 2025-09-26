@@ -5,23 +5,23 @@ import { commonMessages } from "@dashboard/intl";
 import { getFullName } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardCreateMessages as messages } from "./messages";
 import { GiftCardCreateFormCustomer } from "./types";
 
-export interface GiftCardCustomerSelectFieldProps {
+interface GiftCardCustomerSelectFieldProps {
   selectedCustomer: GiftCardCreateFormCustomer;
   setSelectedCustomer: (customer: GiftCardCreateFormCustomer) => void;
   disabled?: boolean;
 }
 
-const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = ({
+const GiftCardCustomerSelectField = ({
   selectedCustomer,
   setSelectedCustomer,
   disabled = false,
-}) => {
+}: GiftCardCustomerSelectFieldProps) => {
   const intl = useIntl();
   const { loadMore, search, result } = useCustomerSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,

@@ -2,7 +2,7 @@
 import { FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -40,7 +40,7 @@ interface RadioSwitchFieldProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
+const RadioSwitchField = (props: RadioSwitchFieldProps) => {
   const {
     classes: overrideClasses,
     className,
@@ -89,5 +89,6 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
     </FormControl>
   );
 };
+
 RadioSwitchField.displayName = "RadioSwitchField";
 export default RadioSwitchField;

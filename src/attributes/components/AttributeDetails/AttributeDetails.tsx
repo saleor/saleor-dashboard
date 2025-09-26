@@ -7,13 +7,12 @@ import {
   AttributeErrorFragment,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
-import { ChangeEvent, UseFormResult } from "@dashboard/hooks/useForm";
+import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import { TextField } from "@material-ui/core";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -49,7 +48,7 @@ const entityTypeMessages = defineMessages({
   },
 });
 
-export interface AttributeDetailsProps
+interface AttributeDetailsProps
   extends Pick<
     UseFormResult<AttributePageFormData>,
     "set" | "setError" | "data" | "clearErrors" | "errors"
@@ -57,10 +56,10 @@ export interface AttributeDetailsProps
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];
-  onChange: (event: ChangeEvent) => void;
+  onChange: FormChange;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
+const AttributeDetails = (props: AttributeDetailsProps) => {
   const { canChangeType, errors, clearErrors, setError, data, disabled, apiErrors, onChange, set } =
     props;
   const intl = useIntl();
@@ -80,6 +79,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(inputTypeMessages.references),
       value: AttributeInputTypeEnum.REFERENCE,
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.singleReference),
+      value: AttributeInputTypeEnum.SINGLE_REFERENCE,
     },
     {
       label: intl.formatMessage(inputTypeMessages.plainText),
@@ -189,7 +192,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
               options={inputTypeChoices}
             />
           </Box>
-          {data.inputType === AttributeInputTypeEnum.REFERENCE && (
+          {(data.inputType === AttributeInputTypeEnum.REFERENCE ||
+            data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) && (
             <Box width="100%">
               <Select
                 aria-disabled={disabled || !canChangeType}

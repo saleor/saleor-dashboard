@@ -1,7 +1,6 @@
 import { Alert } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import msgs from "./messages";
@@ -11,7 +10,7 @@ interface MarketplaceAlertProps {
   error?: Error;
 }
 
-export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({ error }) => {
+const MarketplaceAlert = ({ error }: MarketplaceAlertProps) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -37,5 +36,6 @@ export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({ error }) => 
     </Alert>
   );
 };
+
 MarketplaceAlert.displayName = "MarketplaceAlert";
 export default MarketplaceAlert;

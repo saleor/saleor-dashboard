@@ -14,7 +14,7 @@ import {
   transactionRequestMessages,
 } from "@dashboard/utils/errors/transaction";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -67,6 +67,8 @@ export const OrderManualTransactionRefundForm = ({
         action: TransactionActionEnum.REFUND,
         transactionId: data.transationId,
         amount: data.amount,
+        reason: data.reason,
+        reasonReferenceId: data.reasonReferenceId.length > 0 ? data.reasonReferenceId : undefined,
       },
     });
   };

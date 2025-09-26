@@ -16,7 +16,7 @@ import { FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Product, Products } from "./types";
@@ -40,7 +40,7 @@ const useStyles = makeStyles(
   { name: "ShippingMethodProductsAddDialog" },
 );
 
-export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
+interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   products: Products;
@@ -67,7 +67,7 @@ const handleProductAssign = (
 
 const scrollableTargetId = "shippingMethodProductsAddScrollableDialog";
 
-const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = ({
+const ShippingMethodProductsAddDialog = ({
   confirmButtonState,
   open,
   loading,
@@ -78,11 +78,11 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   onClose,
   onSubmit,
   availableChannels,
-}) => {
+}: ShippingMethodProductsAddDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
-  const [selectedProducts, setSelectedProducts] = React.useState<Products>([]);
+  const [selectedProducts, setSelectedProducts] = useState<Products>([]);
   const handleSubmit = () => {
     onSubmit(selectedProducts.map(product => product.id)).then(() => {
       setSelectedProducts([]);
@@ -151,7 +151,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                   const isProductDisabled = loading || !isProductAvailable;
 
                   return (
-                    <React.Fragment key={product ? product.id : `skeleton-${productIndex}`}>
+                    <Fragment key={product ? product.id : `skeleton-${productIndex}`}>
                       <TableRowLink data-test-id="product-row">
                         <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                           {product && (
@@ -188,7 +188,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                           )}
                         </TableCell>
                       </TableRowLink>
-                    </React.Fragment>
+                    </Fragment>
                   );
                 },
                 () => (

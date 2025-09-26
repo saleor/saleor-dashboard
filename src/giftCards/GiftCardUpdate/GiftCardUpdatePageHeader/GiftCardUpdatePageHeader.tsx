@@ -9,7 +9,6 @@ import { giftCardsListPath } from "@dashboard/giftCards/urls";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
@@ -19,7 +18,7 @@ import GiftCardEnableDisableSection from "./GiftCardEnableDisableSection";
 import { giftCardUpdatePageHeaderMessages as messages } from "./messages";
 import useStyles from "./styles";
 
-const GiftCardUpdatePageHeader: React.FC = () => {
+const GiftCardUpdatePageHeader = () => {
   const classes = useStyles();
   const giftCardBackLink = useBackLinkWithState({
     path: giftCardsListPath,

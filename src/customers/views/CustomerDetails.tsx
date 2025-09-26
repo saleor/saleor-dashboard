@@ -13,7 +13,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerDetailsPage, {
@@ -28,7 +27,7 @@ interface CustomerDetailsViewProps {
   params: CustomerUrlQueryParams;
 }
 
-const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, params }) => {
+const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -147,9 +146,10 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, para
   );
 };
 
-export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({ id, params }) => (
+const CustomerDetailsView = ({ id, params }: CustomerDetailsViewProps) => (
   <CustomerDetailsProvider id={id}>
     <CustomerDetailsViewInner id={id} params={params} />
   </CustomerDetailsProvider>
 );
+
 export default CustomerDetailsView;

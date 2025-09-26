@@ -20,7 +20,7 @@ import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ExportDialogSettings, { ExportItemsQuantity } from "./ExportDialogSettings";
@@ -31,7 +31,7 @@ import ProductExportDialogInfo, {
 } from "./ProductExportDialogInfo";
 import { exportSettingsInitialFormData } from "./types";
 
-export enum ProductExportStep {
+enum ProductExportStep {
   INFO = 0,
   SETTINGS = 1,
 }
@@ -70,7 +70,7 @@ const initialForm: ExportProductsInput = {
 };
 const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
-export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
+interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   attributes: RelayToFlat<SearchAttributesQuery["search"]>;
   channels: ChannelFragment[];
   confirmButtonState: ConfirmButtonTransitionState;
@@ -82,7 +82,7 @@ export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   onSubmit: (data: ExportProductsInput) => void;
 }
 
-const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
+const ProductExportDialog = ({
   attributes,
   channels,
   confirmButtonState,
@@ -94,7 +94,7 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   selectedProducts,
   warehouses,
   ...fetchMoreProps
-}) => {
+}: ProductExportDialogProps) => {
   const [step, { next, prev, set: setStep }] = useWizard(ProductExportStep.INFO, [
     ProductExportStep.INFO,
     ProductExportStep.SETTINGS,
@@ -103,8 +103,8 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
   const dialogErrors = useModalDialogErrors(errors, open);
   const notFormErrors = dialogErrors.filter(err => !err.field);
   const intl = useIntl();
-  const [selectedAttributes, setSelectedAttributes] = React.useState<Option[]>([]);
-  const [selectedChannels, setSelectedChannels] = React.useState([]);
+  const [selectedAttributes, setSelectedAttributes] = useState<Option[]>([]);
+  const [selectedChannels, setSelectedChannels] = useState([]);
   const { change, data, reset, submit } = useForm(initialForm, onSubmit);
 
   useModalDialogOpen(open, {

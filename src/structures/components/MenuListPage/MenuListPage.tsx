@@ -13,21 +13,17 @@ import { sectionNames } from "@dashboard/intl";
 import { menuListUrl, MenuListUrlSortField } from "@dashboard/structures/urls";
 import { ListActions, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import MenuList from "../MenuList";
 
-export interface MenuListPageProps
-  extends PageListProps,
-    ListActions,
-    SortPage<MenuListUrlSortField> {
+interface MenuListPageProps extends PageListProps, ListActions, SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
   onDelete: (id: string) => void;
   selectedMenuIds: string[];
 }
 
-const MenuListPage: React.FC<MenuListPageProps> = ({ selectedMenuIds, ...listProps }) => {
+const MenuListPage = ({ selectedMenuIds, ...listProps }: MenuListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

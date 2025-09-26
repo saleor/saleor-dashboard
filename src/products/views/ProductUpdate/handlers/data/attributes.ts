@@ -51,7 +51,7 @@ export function getAttributeType(
 }
 
 // Datagrid only support PLAIN_TEXT and DROPDOWN attribute types
-export function getDatagridAttributeInput(
+function getDatagridAttributeInput(
   inputType: AttributeInputTypeEnum,
   value = "",
 ): BulkAttributeValueInput {
@@ -134,6 +134,12 @@ export function getAttributeInput(
   if (inputType === AttributeInputTypeEnum.REFERENCE) {
     return {
       references: values.map(({ reference }) => reference).filter(byAttributeName),
+    };
+  }
+
+  if (inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
+    return {
+      reference: values?.[0]?.reference || null,
     };
   }
 

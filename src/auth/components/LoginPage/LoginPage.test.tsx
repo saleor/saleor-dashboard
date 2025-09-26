@@ -1,7 +1,7 @@
 import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import React from "react";
+import * as React from "react";
 
 import LoginPage from "./LoginPage";
 
@@ -39,7 +39,7 @@ describe("LoginPage", () => {
   describe("External Authentication", () => {
     it("sets optimisticLoaderAuthId when clicking external auth button", async () => {
       // Arrange & Act
-      render(<LoginPage {...defaultProps} />);
+      render(<LoginPage lastLoginMethod={null} {...defaultProps} />);
 
       const authButton = screen.getByRole("button", { name: "Cloud" });
 
@@ -60,7 +60,9 @@ describe("LoginPage", () => {
       ] as AuthType;
 
       // Act
-      render(<LoginPage {...defaultProps} externalAuthentications={twoAuths} />);
+      render(
+        <LoginPage lastLoginMethod={null} {...defaultProps} externalAuthentications={twoAuths} />,
+      );
 
       const oidcButton = screen.getByRole("button", { name: "OIDC" });
       const cloudButton = screen.getByRole("button", { name: "Cloud" });

@@ -2,7 +2,6 @@ import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
-import React from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -20,7 +19,7 @@ import { PermissionGroupCreate } from "./views/PermissionGroupCreate";
 import { PermissionGroupDetails as PermissionGroupDetailsComponent } from "./views/PermissionGroupDetails";
 import PermissionGroupListComponent from "./views/PermissionGroupList";
 
-const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const permissionGroupList = () => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PermissionGroupListUrlQueryParams = asSortParams(
     qs,
@@ -34,9 +33,9 @@ interface PermissionGroupDetailsRouteProps {
   id: string;
 }
 
-const PermissionGroupDetails: React.FC<RouteComponentProps<PermissionGroupDetailsRouteProps>> = ({
+const PermissionGroupDetails = ({
   match,
-}) => {
+}: RouteComponentProps<PermissionGroupDetailsRouteProps>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PermissionGroupDetailsUrlQueryParams = asSortParams(qs, MembersListUrlSortField);
 

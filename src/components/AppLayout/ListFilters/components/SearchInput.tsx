@@ -5,14 +5,14 @@ import {
   SearchInput as MacawSearchInput,
   SearchInputProps as MacawSearchInputProps,
 } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
-export interface SearchInputProps extends SearchPageProps {
+interface SearchInputProps extends SearchPageProps {
   placeholder: string;
   size?: MacawSearchInputProps["size"];
 }
 
-const SearchInput: React.FC<SearchInputProps> = props => {
+const SearchInput = (props: SearchInputProps) => {
   const { initialSearch, onSearchChange, placeholder, size = "small" } = props;
   const [search, setSearch] = React.useState(initialSearch);
 

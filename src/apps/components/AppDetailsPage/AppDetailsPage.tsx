@@ -1,7 +1,6 @@
 import { AppQuery } from "@dashboard/graphql";
 import errorTracker from "@dashboard/services/errorTracking";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
@@ -10,7 +9,7 @@ import { DataPrivacyCard } from "./DataPrivacyCard";
 import Header from "./Header";
 import { PermissionsCard } from "./PermissionsCard";
 
-export interface AppDetailsPageProps {
+interface AppDetailsPageProps {
   loading: boolean;
   data: AppQuery["app"];
   onAppActivateOpen: () => void;
@@ -18,13 +17,13 @@ export interface AppDetailsPageProps {
   onAppDeleteOpen: () => void;
 }
 
-export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
+export const AppDetailsPage = ({
   data,
   loading,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
-}) => {
+}: AppDetailsPageProps) => {
   if (!data) {
     return null;
   }

@@ -15,7 +15,7 @@ import { ListViews, ReorderEvent } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists";
-import React from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -47,12 +47,12 @@ function areValuesEqual(a: AttributeValueEditDialogFormData, b: AttributeValueEd
   return a.name === b.name;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
+const AttributeDetails = ({ params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [values, setValues] = React.useState<AttributeValueEditDialogFormData[]>([]);
-  const [valueErrors, setValueErrors] = React.useState<AttributeErrorFragment[]>([]);
+  const [values, setValues] = useState<AttributeValueEditDialogFormData[]>([]);
+  const [valueErrors, setValueErrors] = useState<AttributeErrorFragment[]>([]);
   const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_VALUE_LIST);
   const { pageInfo, pageValues, loadNextPage, loadPreviousPage, loadPage } = useLocalPageInfo(
     values,
@@ -80,7 +80,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     AttributeAddUrlQueryParams
   >(navigate, attributeAddUrl, params);
 
-  React.useEffect(() => setValueErrors([]), [params.action]);
+  useEffect(() => setValueErrors([]), [params.action]);
 
   const handleValueDelete = () => {
     if (id !== undefined) {
@@ -154,6 +154,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       attribute={null}
       disabled={attributeCreateOpts.loading}
       errors={attributeCreateOpts?.data?.attributeCreate?.errors || []}
+      params={params}
       onDelete={() => undefined}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
@@ -168,6 +169,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           id,
         })
       }
+      onOpenReferenceTypes={() => openModal("assign-reference-types")}
+      onCloseAssignReferenceTypes={closeModal}
       saveButtonBarState={attributeCreateOpts.status}
       values={{
         __typename: "AttributeValueCountableConnection" as const,

@@ -3,8 +3,9 @@ import { getPermissionsDiff } from "@dashboard/apps/getPermissionsDiff";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import Link from "@dashboard/components/Link";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
+import { APP_PERMISSIONS_DOCS_URL } from "@dashboard/links";
 import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui-next";
-import React, { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation, useParams } from "react-router";
 
@@ -30,7 +31,7 @@ const WrapperBox = (props: BoxProps) => (
 function usePageQuery() {
   const { search } = useLocation();
 
-  return React.useMemo(() => {
+  return useMemo(() => {
     const params = new URLSearchParams(search);
     const permissionsParams = params.get("requestedPermissions");
     const requestedPermissions = permissionsParams
@@ -161,10 +162,7 @@ export const AppPermissionRequestView = () => {
             {formatMessage(appPermissionsRequestViewMessages.approveScenarioHelperBody)}
           </SmallText>
           <SmallText as="p">
-            <Link
-              target="__blank"
-              href="https://docs.saleor.io/docs/3.x/developer/permissions#app-permissions"
-            >
+            <Link target="__blank" href={APP_PERMISSIONS_DOCS_URL}>
               {formatMessage(appPermissionsRequestViewMessages.permissionsDocsLink)}
             </Link>
           </SmallText>

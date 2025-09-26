@@ -23,13 +23,13 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { FilterPresetsProps, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { DiscountListDatagrid } from "../DiscountListDatagrid";
 
-export interface DiscountListPageProps
+interface DiscountListPageProps
   extends PageListProps,
     FilterPresetsProps,
     SortPage<DiscountListUrlSortField> {
@@ -38,7 +38,7 @@ export interface DiscountListPageProps
   promotions: PromotionFragment[];
 }
 
-const DiscountListPage: React.FC<DiscountListPageProps> = ({
+const DiscountListPage = ({
   initialSearch,
   onSearchChange,
   onFilterPresetChange,
@@ -51,7 +51,7 @@ const DiscountListPage: React.FC<DiscountListPageProps> = ({
   selectedFilterPreset,
 
   ...listProps
-}) => {
+}: DiscountListPageProps) => {
   const intl = useIntl();
   const navigation = useNavigator();
   const location = useLocation();

@@ -16,7 +16,6 @@ import { ChangeEvent, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { isSecretField } from "../utils";
@@ -30,7 +29,7 @@ export interface PluginDetailsPageFormData {
   configuration: ConfigurationItemFragment[];
 }
 
-export interface PluginsDetailsPageProps {
+interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: PluginErrorFragment[];
   plugin?: PluginsDetailsFragment;
@@ -42,7 +41,7 @@ export interface PluginsDetailsPageProps {
   setSelectedChannelId: (channelId: string) => void;
 }
 
-export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
+export const PluginsDetailsPage = ({
   disabled,
   errors,
   plugin,
@@ -52,7 +51,7 @@ export const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   onSubmit,
   selectedConfig,
   setSelectedChannelId,
-}) => {
+}: PluginsDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const initialFormData: PluginDetailsPageFormData = {

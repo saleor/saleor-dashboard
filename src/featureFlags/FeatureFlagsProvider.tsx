@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth";
 import LoginLoading from "@dashboard/auth/components/LoginLoading/LoginLoading";
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { FlagList } from "./availableFlags";
 import { Provider } from "./context";
@@ -14,7 +14,7 @@ interface FeatureFlagsProviderProps {
   deps?: unknown[];
 }
 
-export const FeatureFlagsProvider = ({ children, strategies }: FeatureFlagsProviderProps) => {
+const FeatureFlagsProvider = ({ children, strategies }: FeatureFlagsProviderProps) => {
   const [flags, setFlags] = useState<FlagList | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const disableLoading = () => setLoading(false);

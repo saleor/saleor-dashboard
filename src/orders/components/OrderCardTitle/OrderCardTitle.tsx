@@ -4,7 +4,7 @@ import { FulfillmentStatus } from "@dashboard/graphql";
 import { StatusType } from "@dashboard/types";
 import { CircleIndicator } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { orderTitleMessages } from "./messages";
@@ -12,11 +12,6 @@ import { useStyles } from "./styles";
 import { getOrderTitleMessage } from "./utils";
 
 export type CardTitleStatus = FulfillmentStatus | "unfulfilled";
-
-export type CardTitleLines = Array<{
-  quantity: number;
-  quantityToFulfill?: number;
-}>;
 
 interface OrderCardTitleProps {
   fulfillmentOrder?: number;
@@ -48,13 +43,13 @@ const selectStatus = (status: CardTitleStatus) => {
       return StatusType.ERROR;
   }
 };
-const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
+const OrderCardTitle = ({
   status,
   warehouseName,
   withStatus = false,
   toolbar,
   className,
-}) => {
+}: OrderCardTitleProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const messageForStatus = getOrderTitleMessage(status);

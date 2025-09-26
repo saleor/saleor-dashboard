@@ -19,15 +19,14 @@ import {
   orderUrl,
 } from "@dashboard/orders/urls";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
 import { useIntl } from "react-intl";
 
-export interface OrderFulfillProps {
+interface OrderFulfillProps {
   orderId: string;
   params: OrderFulfillUrlQueryParams;
 }
 
-const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
+const OrderFulfill = ({ orderId, params }: OrderFulfillProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -101,6 +100,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId, params }) => {
                   })),
                 notifyCustomer: settings?.shop?.fulfillmentAutoApprove && formData.sendInfo,
                 allowStockToBeExceeded: formData.allowStockToBeExceeded,
+                trackingNumber: formData.trackingNumber,
               },
               orderId,
             },

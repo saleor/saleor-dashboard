@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import { Text, TextProps } from "@saleor/macaw-ui-next";
-import React from "react";
 
 import { useManualTransactionContext } from "../context";
 
-export const ErrorText: React.FC<TextProps> = props => {
+export const ErrorText = (props: TextProps) => {
   const { error } = useManualTransactionContext();
 
   if (!error) {

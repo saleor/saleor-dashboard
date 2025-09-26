@@ -3,7 +3,6 @@ import InlineAlert from "@dashboard/components/Alert/InlineAlert";
 import errorTracker from "@dashboard/services/errorTracking";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { validationMessages } from "../messages";
@@ -41,11 +40,11 @@ interface FilterErrorsListProps<T extends string = string> {
   errorMessages?: FilterErrorMessages<T>;
 }
 
-const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
+const FilterErrorsList = ({
   filter: { dependencies },
   errors = [],
   errorMessages,
-}) => {
+}: FilterErrorsListProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const getErrorMessage = (code: string) => {

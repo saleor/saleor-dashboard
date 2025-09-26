@@ -11,7 +11,7 @@ import {
 import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
 import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { createPortal } from "react-dom";
 
 import { Draggable } from "../Draggable/Draggable";
@@ -25,7 +25,7 @@ export interface SortableChipsFieldValueType {
   url?: string;
 }
 
-export interface SortableChipsFieldProps {
+interface SortableChipsFieldProps {
   loading?: boolean;
   disabled?: boolean;
   values: SortableChipsFieldValueType[];
@@ -48,7 +48,7 @@ function disableSortingStrategy() {
   return null;
 }
 
-const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
+const SortableChipsField = ({
   loading,
   disabled,
   values,
@@ -57,7 +57,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = ({
   onValueDelete,
   onValueReorder,
   onAdd,
-}) => {
+}: SortableChipsFieldProps) => {
   const { activeId, handleDragStart, handleDragEnd } = useActiveDragId();
   const { handleDragOver } = useSortableDragOver({
     items: values,

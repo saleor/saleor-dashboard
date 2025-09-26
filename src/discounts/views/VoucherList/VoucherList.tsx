@@ -26,7 +26,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import VoucherListPage from "../../components/VoucherListPage";
@@ -38,7 +38,7 @@ interface VoucherListProps {
   params: VoucherListUrlQueryParams;
 }
 
-export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
+const VoucherList = ({ params }: VoucherListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
@@ -59,7 +59,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     VoucherListUrlQueryParams
   >(navigate, voucherListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -68,7 +68,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber, channel],
   );
-  const newFiltersQueryVariables = React.useMemo(
+  const newFiltersQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {
@@ -242,4 +242,5 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default VoucherList;

@@ -1,6 +1,5 @@
 import { TransactionItemFragment } from "@dashboard/graphql";
 import { Box, RadioGroup, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { transactionRefundTilesMessages } from "./messages";
@@ -11,7 +10,7 @@ interface TileHeaderProps {
   isDisabled?: boolean;
 }
 
-export const TileHeader: React.FC<TileHeaderProps> = ({ transaction, isDisabled = false }) => {
+export const TileHeader = ({ transaction, isDisabled = false }: TileHeaderProps) => {
   return (
     <RadioGroup.Item
       position="relative"

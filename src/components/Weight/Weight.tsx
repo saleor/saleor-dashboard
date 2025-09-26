@@ -1,15 +1,14 @@
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 export interface Weight {
   unit: string;
   value: number;
 }
-export interface WeightProps {
+interface WeightProps {
   weight: Weight;
 }
 
-const Weight: React.FC<WeightProps> = ({ weight }) => (
+const Weight = ({ weight }: WeightProps) => (
   <FormattedMessage
     id="NtFVFS"
     defaultMessage="{value} {unit}"
@@ -18,5 +17,6 @@ const Weight: React.FC<WeightProps> = ({ weight }) => (
   />
 );
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 Weight.displayName = "Weight";
-export default Weight;

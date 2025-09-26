@@ -5,7 +5,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
-import React from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -20,13 +19,13 @@ import {
 import PluginsListComponent from "./views/PluginList";
 import PluginsDetailsComponent from "./views/PluginsDetails";
 
-const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
+const PluginList = ({ location }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PluginListUrlQueryParams = asSortParams(qs, PluginListUrlSortField);
 
   return <PluginsListComponent params={params} />;
 };
-const PageDetails: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const PageDetails = ({ match }: RouteComponentProps<any>) => {
   const qs = parseQs(location.search.substr(1));
   const params: PluginUrlQueryParams = qs;
 

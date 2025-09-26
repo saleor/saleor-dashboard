@@ -6,7 +6,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -18,7 +17,7 @@ const useStyles = makeStyles(
   { name: "AccountPermissions" },
 );
 
-export interface CustomAppInfoProps {
+interface CustomAppInfoProps {
   data: {
     name: string;
   };
@@ -27,12 +26,7 @@ export interface CustomAppInfoProps {
   onChange: FormChange;
 }
 
-const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const CustomAppInformation = ({ data, disabled, errors, onChange }: CustomAppInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name"], errors);

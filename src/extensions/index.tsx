@@ -18,7 +18,6 @@ import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
 import { PluginUrlQueryParams } from "@dashboard/plugins/urls";
 import { parse as parseQs } from "qs";
-import React from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -109,9 +108,7 @@ const AddCustomExtensionWebhookView = ({ match }: RouteComponentProps<{ appId?: 
   return <AddCustomExtensionWebhook appId={decodeURIComponent(appId)} />;
 };
 
-const EditCustomExtensionWebhookView: React.FC<RouteComponentProps<{ id?: string }>> = ({
-  match,
-}) => {
+const EditCustomExtensionWebhookView = ({ match }: RouteComponentProps<{ id?: string }>) => {
   const id = match.params.id;
 
   if (!id) {

@@ -24,7 +24,6 @@ import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
@@ -37,7 +36,7 @@ interface ChannelDetailsProps {
   params: ChannelUrlQueryParams;
 }
 
-export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) => {
+const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

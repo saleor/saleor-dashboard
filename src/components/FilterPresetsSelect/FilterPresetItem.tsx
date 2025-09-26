@@ -1,5 +1,6 @@
 import { Box, Dropdown, List, RemoveIcon, Text } from "@saleor/macaw-ui-next";
-import React, { MouseEvent } from "react";
+import { MouseEvent } from "react";
+import * as React from "react";
 
 interface FilterPresetItemProps {
   onSelect: (e: MouseEvent<HTMLLIElement>) => void;
@@ -49,6 +50,7 @@ export const FilterPresetItem = ({
           >
             <RemoveIcon
               data-test-id="preset-delete-button"
+              // @ts-expect-error - check why style is not accepted in types, but can be used
               color={{
                 default: "default2",
                 hover: "default1",

@@ -1,4 +1,9 @@
-import { AppDetailsUrlQueryParams, AppInstallUrlQueryParams } from "@dashboard/apps/urls";
+import {
+  AppDetailsUrlQueryParams,
+  AppInstallUrlQueryParams,
+  AppListUrlQueryParams,
+  AppPaths,
+} from "@dashboard/apps/urls";
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
@@ -7,7 +12,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
-import React from "react";
+import { PropsWithChildren } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import {
@@ -19,27 +24,26 @@ import {
 } from "src/apps/views";
 
 import { WindowTitle } from "../components/WindowTitle";
-import { AppListUrlQueryParams, AppPaths } from "./urls";
 
 /** @deprecated use /extensions view */
-const AppManageRoute: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+const AppManageRoute = ({ match }: PropsWithChildren<RouteComponentProps<{ id: string }>>) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppDetailsUrlQueryParams = qs;
 
   return <AppManageView id={decodeURIComponent(match.params.id)} params={params} />;
 };
 /** @deprecated use /extensions view */
-const AppViewRoute: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
+const AppViewRoute = ({ match }: PropsWithChildren<RouteComponentProps<{ id: string }>>) => (
   <AppView id={decodeURIComponent(match.params.id)} />
 );
 /** @deprecated use /extensions view */
-const AppInstallRoute: React.FC<RouteComponentProps> = props => {
+const AppInstallRoute = (props: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppInstallUrlQueryParams = qs;
 
   return <AppInstallView params={params} {...props} />;
 };
-const AppListRoute: React.FC<RouteComponentProps> = () => {
+const AppListRoute = (_props: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1));
   const params: AppListUrlQueryParams = qs;
   const navigate = useNavigator();

@@ -60,7 +60,8 @@ export class InitialProductStateResponse implements InitialProductState {
   public filterByUrlToken(token: UrlToken) {
     if (token.isAttribute() && token.hasDynamicValues()) {
       const attribute = this.attribute[token.name];
-      const isReference = attribute?.inputType === "REFERENCE";
+      const isReference =
+        attribute?.inputType === "REFERENCE" || attribute?.inputType === "SINGLE_REFERENCE";
 
       if (isReference) {
         return attribute.choices.filter(({ slug }) => {
@@ -86,6 +87,19 @@ export class InitialProductStateResponse implements InitialProductState {
       return attr.inputType === "BOOLEAN"
         ? createBooleanOption(token.value === "true", AttributeInputTypeEnum.BOOLEAN)
         : token.value;
+    }
+
+    // Special handling for metadata fields - preserve tuple structure
+    // Metadata fields use text.double and should return the raw tuple value
+    const isMetadataField = [
+      "metadata",
+      "linesMetadata",
+      "transactionsMetadata",
+      "fulfillmentsMetadata",
+    ].includes(token.name);
+
+    if (isMetadataField) {
+      return token.value;
     }
 
     if (!token.isLoadable()) {

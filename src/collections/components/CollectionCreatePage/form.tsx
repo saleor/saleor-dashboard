@@ -14,9 +14,10 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import * as React from "react";
 
-export interface CollectionCreateFormData extends MetadataFormData {
+interface CollectionCreateFormData extends MetadataFormData {
   backgroundImage: {
     url: string;
     value: string;
@@ -36,12 +37,12 @@ interface CollectionCreateHandlers {
   changeMetadata: FormChange;
   changeChannels: (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => void;
 }
-export type UseCollectionCreateFormResult = CommonUseFormResultWithHandlers<
+type UseCollectionCreateFormResult = CommonUseFormResultWithHandlers<
   CollectionCreateData,
   CollectionCreateHandlers
 >;
 
-export interface CollectionCreateFormProps {
+interface CollectionCreateFormProps {
   currentChannels: ChannelCollectionData[];
   setChannels: (data: ChannelCollectionData[]) => void;
   children: (props: UseCollectionCreateFormResult) => React.ReactNode;
@@ -128,13 +129,13 @@ function useCollectionCreateForm(
   };
 }
 
-const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
+const CollectionCreateForm = ({
   currentChannels,
   setChannels,
   children,
   onSubmit,
   disabled,
-}) => {
+}: CollectionCreateFormProps) => {
   const { richText, ...props } = useCollectionCreateForm(
     currentChannels,
     setChannels,

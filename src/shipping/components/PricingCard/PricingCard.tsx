@@ -10,7 +10,6 @@ import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/erro
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { TableBody, TableCell } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -21,7 +20,7 @@ interface Value {
   price: string;
 }
 
-export interface PricingCardProps {
+interface PricingCardProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
@@ -30,12 +29,7 @@ export interface PricingCardProps {
 
 const numberOfColumns = 2;
 
-export const PricingCard: React.FC<PricingCardProps> = ({
-  channels,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price"], errors);

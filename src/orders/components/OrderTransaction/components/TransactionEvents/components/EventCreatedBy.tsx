@@ -6,14 +6,13 @@ import { AppAvatarFragment, StaffMemberAvatarFragment } from "@dashboard/graphql
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { Link } from "react-router-dom";
 
 interface EventCreatedByProps {
   createdBy: StaffMemberAvatarFragment | AppAvatarFragment | null;
 }
 
-export const EventCreatedBy: React.FC<EventCreatedByProps> = ({ createdBy }) => {
+export const EventCreatedBy = ({ createdBy }: EventCreatedByProps) => {
   const { enabled: areExtensionsEnabled } = useFlag("extensions");
 
   if (!createdBy) {

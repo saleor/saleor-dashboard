@@ -5,10 +5,9 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Input } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
-export interface CustomExtensionInfoProps {
+interface CustomExtensionInfoProps {
   data: {
     name: string;
   };
@@ -17,12 +16,12 @@ export interface CustomExtensionInfoProps {
   onChange: FormChange;
 }
 
-const CustomExtensionInformation: React.FC<CustomExtensionInfoProps> = ({
+const CustomExtensionInformation = ({
   data,
   disabled,
   errors,
   onChange,
-}) => {
+}: CustomExtensionInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

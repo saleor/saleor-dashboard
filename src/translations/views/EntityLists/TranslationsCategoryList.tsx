@@ -4,12 +4,11 @@ import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
 
 import { TranslationsEntityListProps } from "./types";
 import { sumCompleted } from "./utils";
 
-const TranslationsCategoryList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
+const TranslationsCategoryList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useCategoryTranslationsQuery({
     displayLoader: true,
     variables,

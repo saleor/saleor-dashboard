@@ -4,7 +4,7 @@ import { getAttributeInputType } from "../constants";
 import { ConditionSelected } from "../FilterElement/ConditionSelected";
 import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
-export const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
+const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
 
 const PRODUCT_STATICS = [
   "category",
@@ -19,16 +19,33 @@ const PRODUCT_STATICS = [
 ];
 
 const ORDER_STATICS = [
-  "paymentStatus",
   "status",
+  "fulfillmentStatus",
   "authorizeStatus",
   "chargeStatus",
-  "giftCardBought",
-  "giftCardUsed",
-  "isPreorder",
+  "isGiftCardBought",
+  "isGiftCardUsed",
   "isClickAndCollect",
+  "hasInvoices",
+  "hasFulfillments",
   "channels",
   "ids",
+  "metadata",
+  "number",
+  "userEmail",
+  "voucherCode",
+  "linesCount",
+  "checkoutId",
+  "linesMetadata",
+  "transactionsMetadata",
+  "transactionsPaymentType",
+  "transactionsCardBrand",
+  "fulfillmentsMetadata",
+  "billingPhoneNumber",
+  "billingCountry",
+  "shippingPhoneNumber",
+  "shippingCountry",
+  "fulfillmentWarehouse",
 ];
 
 const VOUCHER_STATICS = ["channel", "discountType", "voucherStatus"];
@@ -75,7 +92,7 @@ export const TokenType = {
   STATIC: "s",
 } as const;
 
-export type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType];
+type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType];
 
 const resolveTokenType = (name: string): TokenTypeValue => {
   const key = `ATTRIBUTE_${name}` as keyof typeof TokenType;
@@ -119,7 +136,8 @@ export class UrlEntry {
   public getInfo() {
     const [key, value] = Object.entries(this)[0] as [string, string | string[]];
     const [identifier, entryName] = key.split(".");
-    const [type, control] = identifier.split("") as [TokenTypeValue, number];
+    const type = identifier.charAt(0) as TokenTypeValue;
+    const control = parseInt(identifier.slice(1), 10);
     const conditionKid = CONDITIONS[control];
 
     return { key, value, entryName, type, conditionKid };

@@ -18,20 +18,19 @@ import {
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductVariantTranslationFragment;
   productId: string;
   variantId: string;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
+const TranslationsProductsPage = ({
   translationId,
   activeField,
   disabled,
@@ -45,7 +44,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   onEdit,
   onSubmit,
   onAttributeValueSubmit,
-}) => {
+}: TranslationsProductsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

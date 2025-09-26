@@ -6,12 +6,11 @@ import { AddressTypeEnum, CustomerAddressesFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import CustomerAddress from "../CustomerAddress/CustomerAddress";
 
-export interface CustomerAddressListPageProps {
+interface CustomerAddressListPageProps {
   customer: CustomerAddressesFragment;
   disabled: boolean;
   onAdd: () => void;
@@ -80,7 +79,7 @@ const useStyles = makeStyles(
   { name: "CustomerAddressListPage" },
 );
 
-const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props => {
+const CustomerAddressListPage = (props: CustomerAddressListPageProps) => {
   const { customer, disabled, onAdd, onEdit, onRemove, onSetAsDefault } = props;
   const classes = useStyles(props);
 

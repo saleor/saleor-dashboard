@@ -6,7 +6,7 @@ import Link from "@dashboard/components/Link";
 import { StopPropagation } from "@dashboard/components/StopPropagation";
 import { useFlag } from "@dashboard/featureFlags";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -17,7 +17,7 @@ import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
-export const InstalledAppListRow: React.FC<InstalledApp> = props => {
+const InstalledAppListRow = (props: InstalledApp) => {
   const { enabled: appAlertsEnabled } = useFlag("app_alerts"); // Note: when removing clean up tests
   const { app, isExternal, logo } = props;
   const intl = useIntl();

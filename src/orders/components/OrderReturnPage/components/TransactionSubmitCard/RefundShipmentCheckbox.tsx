@@ -1,7 +1,8 @@
 import { FormChange } from "@dashboard/hooks/useForm";
 import { IMoney } from "@dashboard/utils/intl";
 import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { CheckedState } from "@saleor/macaw-ui-next/dist/components/Checkbox/Checkbox";
+import { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { submitCardMessages } from "./messages";
@@ -14,15 +15,15 @@ interface RefundShipmentCheckboxProps {
   onChange: FormChange;
 }
 
-const RefundShipmentCheckbox: React.FC<RefundShipmentCheckboxProps> = ({
+const RefundShipmentCheckbox = ({
   refundShipmentCosts,
   canRefundShipping,
   autoGrantRefund,
   shipmentCost,
   onChange,
-}) => {
-  const handleRefundShipmentCosts = React.useCallback(
-    checked => {
+}: RefundShipmentCheckboxProps) => {
+  const handleRefundShipmentCosts = useCallback(
+    (checked: CheckedState) => {
       onChange({
         target: {
           name: "refundShipmentCosts",

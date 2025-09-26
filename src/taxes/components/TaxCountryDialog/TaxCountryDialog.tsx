@@ -8,7 +8,7 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import { Divider, FormControlLabel, InputAdornment, Radio, TextField } from "@material-ui/core";
 import { SearchIcon } from "@saleor/macaw-ui";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -20,15 +20,10 @@ interface TaxCountryDialogProps {
   onClose: () => void;
 }
 
-export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
-  open,
-  countries,
-  onConfirm,
-  onClose,
-}) => {
+const TaxCountryDialog = ({ open, countries, onConfirm, onClose }: TaxCountryDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
-  const [selectedCountry, setSelectedCountry] = React.useState<CountryFragment>();
+  const [selectedCountry, setSelectedCountry] = useState<CountryFragment>();
 
   useModalDialogOpen(open, {
     onClose: () => {
@@ -60,7 +55,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
               </InputAdornment>
             ),
           }}
@@ -76,7 +71,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
           __paddingLeft={15}
         >
           {filteredCountries.map(country => (
-            <React.Fragment key={country.code}>
+            <Fragment key={country.code}>
               <FormControlLabel
                 data-test-id="country-row"
                 label={country.country}
@@ -85,7 +80,7 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
                 control={<Radio />}
               />
               <Divider />
-            </React.Fragment>
+            </Fragment>
           ))}
         </Box>
 

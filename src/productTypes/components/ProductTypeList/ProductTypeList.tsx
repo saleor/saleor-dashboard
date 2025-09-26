@@ -12,7 +12,6 @@ import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -50,10 +49,18 @@ interface ProductTypeListProps
 }
 
 const numberOfColumns = 4;
-const ProductTypeList: React.FC<ProductTypeListProps> = props => {
-  const { disabled, productTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
-    props;
-  const classes = useStyles(props);
+const ProductTypeList = ({
+  disabled,
+  productTypes,
+  onSort,
+  isChecked,
+  selected,
+  sort,
+  toggle,
+  toggleAll,
+  toolbar,
+}: ProductTypeListProps) => {
+  const classes = useStyles();
   const location = useLocation();
 
   return (

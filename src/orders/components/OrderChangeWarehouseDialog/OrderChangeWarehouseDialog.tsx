@@ -19,13 +19,13 @@ import {
 } from "@material-ui/core";
 import { Button, isScrolledToBottom, SearchIcon, useElementScroll } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { changeWarehouseDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface OrderChangeWarehouseDialogProps {
+interface OrderChangeWarehouseDialogProps {
   open: boolean;
   line: OrderFulfillLineFragment;
   currentWarehouseId: string;
@@ -33,13 +33,13 @@ export interface OrderChangeWarehouseDialogProps {
   onClose: () => any;
 }
 
-export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProps> = ({
+const OrderChangeWarehouseDialog = ({
   open,
   line,
   currentWarehouseId,
   onConfirm,
   onClose,
-}) => {
+}: OrderChangeWarehouseDialogProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const { anchor, position, setAnchor } = useElementScroll();
@@ -115,7 +115,10 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon />
+                      <SearchIcon
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
                     </InputAdornment>
                   ),
                 }}
@@ -193,5 +196,6 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     </DashboardModal>
   );
 };
+
 OrderChangeWarehouseDialog.displayName = "OrderChangeWarehouseDialog";
 export default OrderChangeWarehouseDialog;

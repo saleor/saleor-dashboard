@@ -5,7 +5,6 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductTypeTaxesProps {
@@ -19,7 +18,7 @@ interface ProductTypeTaxesProps {
   onFetchMore: FetchMoreProps;
 }
 
-const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
+const ProductTypeTaxes = (props: ProductTypeTaxesProps) => {
   const { data, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const intl = useIntl();
 

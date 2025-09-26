@@ -1,7 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { DialogProps } from "@dashboard/types";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import GiftCardExportDialogContent from "../GiftCardExportDialogContent";
@@ -11,11 +11,11 @@ interface GiftCardBulkCreateSuccessDialogProps extends DialogProps {
   idsToExport: string[] | null;
 }
 
-const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogProps> = ({
+const GiftCardBulkCreateSuccessDialog = ({
   open,
   onClose,
   idsToExport,
-}) => {
+}: GiftCardBulkCreateSuccessDialogProps) => {
   const intl = useIntl();
   const [openEmailExport, setOpenEmailExport] = useState(false);
   const onExportDialogClose = () => {

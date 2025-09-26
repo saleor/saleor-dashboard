@@ -1,11 +1,11 @@
 import * as RadixRadioGroup from "@radix-ui/react-radio-group";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useState } from "react";
 
 import { RadioTileIndicator } from "./RadioTileIndicator";
 import { getBgColor, getBorderColor, getHoverStateBgColor } from "./utils";
 
-export interface RadioTileProps {
+interface RadioTileProps {
   checked: boolean;
   title: string;
   description: string;
@@ -21,7 +21,7 @@ export const RadioTile = ({
   disabled,
   ...props
 }: RadioTileProps) => {
-  const [isHoverState, setHoverState] = React.useState(false);
+  const [isHoverState, setHoverState] = useState(false);
 
   return (
     <RadixRadioGroup.Item value={value} disabled={disabled} asChild {...props}>

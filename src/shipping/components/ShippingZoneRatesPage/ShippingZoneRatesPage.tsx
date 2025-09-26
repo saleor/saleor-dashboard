@@ -34,13 +34,13 @@ import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { FormEventHandler } from "react";
+import { FormEventHandler, useMemo } from "react";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 import { ShippingZoneRateUpdateFormData } from "./types";
 
-export interface ShippingZoneRatesPageProps
+interface ShippingZoneRatesPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions,
     WithFormId {
@@ -71,7 +71,7 @@ export interface ShippingZoneRatesPageProps
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
+const ShippingZoneRatesPage = ({
   allChannelsCount,
   shippingChannels,
   channelErrors,
@@ -95,10 +95,10 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   taxClasses,
   fetchMoreTaxClasses,
   ...listProps
-}) => {
+}: ShippingZoneRatesPageProps) => {
   const navigate = useNavigator();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
-  const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = React.useMemo(
+  const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = useMemo(
     () => ({
       channelListings: shippingChannels,
       maxDays: rate?.maximumDeliveryDays?.toString() || "",

@@ -1,6 +1,6 @@
 import { AppWebhookDeliveriesQuery } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages as parentMessages } from "../../messages";
@@ -16,7 +16,7 @@ interface EventDeliveriesListProps {
   eventDeliveries: EventDelivery[];
 }
 
-export const EventDeliveriesList: React.FC<EventDeliveriesListProps> = ({ eventDeliveries }) => {
+export const EventDeliveriesList = ({ eventDeliveries }: EventDeliveriesListProps) => {
   const intl = useIntl();
 
   // Only keep deliveries with at least one attempt

@@ -6,7 +6,6 @@ import {
 } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, findInEnum } from "../../misc";
@@ -14,13 +13,8 @@ import SiteSettingsPage, {
   areAddressInputFieldsModified,
   SiteSettingsPageFormData,
 } from "../components/SiteSettingsPage";
-import { SiteSettingsUrlQueryParams } from "../urls";
 
-export interface SiteSettingsProps {
-  params: SiteSettingsUrlQueryParams;
-}
-
-export const SiteSettings: React.FC<SiteSettingsProps> = () => {
+const SiteSettings = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const siteSettings = useSiteSettingsQuery({
@@ -90,4 +84,5 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
     </>
   );
 };
+
 export default SiteSettings;

@@ -8,7 +8,17 @@ export const initialDynamicLeftOperands = gql`
       where: {
         type: { eq: PRODUCT_TYPE }
         inputType: {
-          oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE]
+          oneOf: [
+            DROPDOWN
+            MULTISELECT
+            BOOLEAN
+            NUMERIC
+            DATE
+            DATE_TIME
+            SWATCH
+            REFERENCE
+            SINGLE_REFERENCE
+          ]
         }
       }
     ) {
@@ -297,6 +307,30 @@ export const dynamicOperandsQueries = gql`
           product {
             name
           }
+        }
+      }
+    }
+  }
+
+  query _GetWarehouseChoices($first: Int!, $query: String!) {
+    warehouses(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
+  query _SearchWarehouseOperands($first: Int!, $warehouseSlugs: [String!]) {
+    warehouses(first: $first, filter: { slugs: $warehouseSlugs }) {
+      edges {
+        node {
+          id
+          name
+          slug
         }
       }
     }

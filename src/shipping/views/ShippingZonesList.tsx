@@ -22,7 +22,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Text } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ShippingWeightUnitDialog } from "../components/ShippingWeightUnitDialog";
@@ -37,7 +37,7 @@ interface ShippingZonesListProps {
   params: ShippingZonesListUrlQueryParams;
 }
 
-export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) => {
+const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -54,7 +54,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) 
 
   const intl = useIntl();
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       ...(!!params.query && { filter: { search: params.query } }),
@@ -191,5 +191,6 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) 
     </PaginatorContext.Provider>
   );
 };
+
 ShippingZonesList.displayName = "ShippingZonesList";
 export default ShippingZonesList;

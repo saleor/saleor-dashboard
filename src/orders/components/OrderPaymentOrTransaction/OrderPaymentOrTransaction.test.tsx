@@ -2,7 +2,6 @@
 import { MarkAsPaidStrategyEnum } from "@dashboard/graphql";
 import { order as orderFixture, payments, shop } from "@dashboard/orders/fixtures";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 
 import {
   OrderPaymentOrTransaction,
@@ -14,6 +13,7 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn((x: any) => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
+  defineMessage: (message: string) => message,
   FormattedMessage: jest.fn(({ defaultMessage }) => defaultMessage),
 }));
 jest.mock("@saleor/macaw-ui", () => ({

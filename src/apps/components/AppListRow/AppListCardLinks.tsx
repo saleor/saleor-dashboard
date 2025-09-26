@@ -1,13 +1,12 @@
 import { AppLink } from "@dashboard/apps/types";
 import Link from "@dashboard/components/Link";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface AppListCardLinksProps {
   links: AppLink[];
 }
 
-const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
+const AppListCardLinks = ({ links }: AppListCardLinksProps) => {
   if (!links.length) {
     return null;
   }

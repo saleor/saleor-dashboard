@@ -1,7 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { Checkbox, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductTypeShippingProps {
@@ -14,12 +13,12 @@ interface ProductTypeShippingProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
+const ProductTypeShipping = ({
   data,
   weightUnit,
   disabled,
   onChange,
-}) => {
+}: ProductTypeShippingProps) => {
   const intl = useIntl();
 
   return (

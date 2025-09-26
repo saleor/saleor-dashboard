@@ -2,7 +2,7 @@ import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
@@ -19,7 +19,7 @@ import PageTypeCreate from "./views/PageTypeCreate";
 import PageTypeDetailsComponent from "./views/PageTypeDetails";
 import PageTypeListComponent from "./views/PageTypeList";
 
-const PageTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
+const PageTypeList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PageTypeListUrlQueryParams = asSortParams(qs, PageTypeListUrlSortField);
 
@@ -37,7 +37,7 @@ const PageTypeDetails: React.FC<RouteComponentProps<PageTypeDetailsRouteParams>>
   return <PageTypeDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const PageTypeRouter: React.FC = () => {
+const PageTypeRouter = () => {
   const intl = useIntl();
 
   return (
@@ -51,5 +51,6 @@ export const PageTypeRouter: React.FC = () => {
     </>
   );
 };
+
 PageTypeRouter.displayName = "PageTypeRouter";
 export default PageTypeRouter;

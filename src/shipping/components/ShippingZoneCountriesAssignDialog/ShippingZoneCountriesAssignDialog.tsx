@@ -11,7 +11,6 @@ import { fuzzySearch } from "@dashboard/misc";
 import { getCountrySelectionMap, isRestWorldCountriesSelected } from "@dashboard/shipping/handlers";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { createCountryChangeHandler, createRestOfTheWorldChangeHandler } from "./handlers";
@@ -23,7 +22,7 @@ interface FormData {
   query: string;
 }
 
-export interface ShippingZoneCountriesAssignDialogProps {
+interface ShippingZoneCountriesAssignDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: CountryWithCodeFragment[];
   restWorldCountries: string[];
@@ -33,9 +32,7 @@ export interface ShippingZoneCountriesAssignDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const ShippingZoneCountriesAssignDialog: React.FC<
-  ShippingZoneCountriesAssignDialogProps
-> = props => {
+const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDialogProps) => {
   const { confirmButtonState, onClose, countries, restWorldCountries, open, initial, onConfirm } =
     props;
   const classes = useStyles(props);

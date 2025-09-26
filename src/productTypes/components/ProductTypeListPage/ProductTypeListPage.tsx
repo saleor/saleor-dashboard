@@ -11,13 +11,13 @@ import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPageProps, ListActions, PageListProps, SortPage } from "../../../types";
 import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
 
-export interface ProductTypeListPageProps
+interface ProductTypeListPageProps
   extends PageListProps,
     ListActions,
     Omit<FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>, "onTabDelete">,
@@ -28,7 +28,7 @@ export interface ProductTypeListPageProps
   hasPresetsChanged: () => boolean;
 }
 
-const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
+const ProductTypeListPage = ({
   currentTab,
   filterOpts,
   initialSearch,
@@ -43,7 +43,7 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
   hasPresetsChanged,
   disabled,
   ...listProps
-}) => {
+}: ProductTypeListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);

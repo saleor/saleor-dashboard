@@ -4,7 +4,6 @@ import CollectionWithDividers from "@dashboard/components/CollectionWithDividers
 import { PluginsDetailsFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getPluginStatusColor, getPluginStatusLabel, isPluginGlobal } from "../../utils";
@@ -44,11 +43,11 @@ function mapPluginStatusToChipColor(status: string): "success1" | "critical1" | 
   }
 }
 
-export const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({
+export const PluginDetailsChannelsCardContent = ({
   plugin,
   selectedChannelId,
   setSelectedChannelId,
-}) => {
+}: PluginDetailsChannelsCardProps) => {
   const intl = useIntl();
   const classes = useStyles({});
 

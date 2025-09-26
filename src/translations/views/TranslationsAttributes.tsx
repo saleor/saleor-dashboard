@@ -15,7 +15,6 @@ import { commonMessages } from "@dashboard/intl";
 import { ListViews, Pagination } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getMutationState, maybe } from "../../misc";
@@ -27,17 +26,13 @@ type HandleSubmitData = string | OutputData;
 export interface TranslationsAttributesQueryParams extends Pagination {
   activeField: string;
 }
-export interface TranslationsAttributesProps {
+interface TranslationsAttributesProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsAttributesQueryParams;
 }
 
-const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsAttributes = ({ id, languageCode, params }: TranslationsAttributesProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();

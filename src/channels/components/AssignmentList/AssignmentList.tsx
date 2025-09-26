@@ -1,6 +1,5 @@
 import { ReorderEvent } from "@dashboard/types";
 import { Accordion, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import AssignmentListFooter from "./AssignmentListFooter";
@@ -16,7 +15,7 @@ const messages = defineMessages({
     description: "all selected items message",
   },
 });
-const AssignmentList: React.FC<AssignmentListProps> = props => {
+const AssignmentList = (props: AssignmentListProps) => {
   const { items, itemsName, totalCount = 0, loading, removeItem, reorderItem } = props;
   const intl = useIntl();
   const classes = useStyles();
@@ -52,6 +51,7 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
             <Skeleton className={classes.skeleton} />
           ) : (
             <>
+              {/* @ts-expect-error legacy types */}
               <SortableContainer
                 axis="xy"
                 lockAxis="xy"
@@ -64,6 +64,7 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
                     <Item
                       key={itemIndex}
                       index={itemIndex}
+                      // @ts-expect-error legacy types
                       item={item}
                       onDelete={removeItem}
                       sortable={!!reorderItem}

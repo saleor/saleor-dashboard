@@ -10,7 +10,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDeleteDialog from "../../components/ChannelDeleteDialog";
@@ -21,7 +20,7 @@ interface ChannelsListProps {
   params: ChannelsListUrlQueryParams;
 }
 
-export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
+const ChannelsList = ({ params }: ChannelsListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();

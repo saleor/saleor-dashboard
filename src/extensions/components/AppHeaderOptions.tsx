@@ -4,7 +4,6 @@ import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,12 +14,12 @@ interface HeaderOptionsProps {
   onAppDeleteOpen: () => void;
 }
 
-const AppHeaderOptions: React.FC<HeaderOptionsProps> = ({
+const AppHeaderOptions = ({
   isActive,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
-}) => {
+}: HeaderOptionsProps) => {
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const tooltipContent = !hasManagedAppsPermission

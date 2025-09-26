@@ -13,7 +13,6 @@ import {
 } from "@dashboard/products/components/ProductExportDialog/types";
 import { DialogProps } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
@@ -23,11 +22,12 @@ import { getExportGiftCardsInput } from "./utils";
 
 type IdsToExport = string[] | null;
 
-const GiftCardExportDialog: React.FC<
-  Pick<DialogProps, "onClose"> & {
-    idsToExport?: IdsToExport;
-  }
-> = ({ onClose, idsToExport }) => {
+const GiftCardExportDialog = ({
+  onClose,
+  idsToExport,
+}: Pick<DialogProps, "onClose"> & {
+  idsToExport?: IdsToExport;
+}) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();

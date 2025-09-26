@@ -5,7 +5,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./message";
@@ -30,7 +30,7 @@ interface AppPageNavProps {
   showMangeAppButton?: boolean;
 }
 
-export const AppPageNav: React.FC<AppPageNavProps> = ({
+export const AppPageNav = ({
   name,
   supportUrl,
   homepageUrl,
@@ -39,7 +39,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
   goBackUrl,
   appId,
   showMangeAppButton = true,
-}) => {
+}: AppPageNavProps) => {
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const navigateToManageAppScreen = () => {

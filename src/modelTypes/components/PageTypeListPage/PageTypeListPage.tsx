@@ -15,7 +15,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeAddUrl, PageTypeListUrlSortField } from "@dashboard/modelTypes/urls";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -27,7 +27,7 @@ import {
 } from "../../../types";
 import PageTypeList from "../PageTypeList";
 
-export interface PageTypeListPageProps
+interface PageTypeListPageProps
   extends PageListProps,
     ListActions,
     SearchPageProps,
@@ -40,7 +40,7 @@ export interface PageTypeListPageProps
   selectedPageTypes: string[];
 }
 
-const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
+const PageTypeListPage = ({
   currentTab,
   initialSearch,
   onAll,
@@ -53,7 +53,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   tabs,
   selectedPageTypes,
   ...listProps
-}) => {
+}: PageTypeListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);

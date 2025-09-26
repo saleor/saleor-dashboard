@@ -50,6 +50,7 @@ import {
 import {
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
+  createPreorderEndDateChangeHandler,
   createProductTypeSelectHandler,
 } from "@dashboard/products/utils/handlers";
 import {
@@ -67,10 +68,9 @@ import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichTe
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
 import { Option } from "@saleor/macaw-ui-next";
-import React, { useEffect, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
@@ -127,7 +127,7 @@ export interface ProductCreateHandlers
   fetchMoreReferences: FetchMoreProps;
   selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
 }
-export interface UseProductCreateFormOutput
+interface UseProductCreateFormOutput
   extends CommonUseFormResultWithHandlers<ProductCreateData, ProductCreateHandlers>,
     RichTextProps {
   disabled: boolean;
@@ -135,13 +135,13 @@ export interface UseProductCreateFormOutput
   validationErrors: ProductErrorWithAttributesFragment[];
 }
 
-export type UseProductCreateFormRenderProps = Omit<UseProductCreateFormOutput, "richText">;
+type UseProductCreateFormRenderProps = Omit<UseProductCreateFormOutput, "richText">;
 
-export interface UseProductCreateFormOpts
+interface UseProductCreateFormOpts
   extends Record<"categories" | "collections" | "taxClasses", Option[]> {
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
-  setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+  setSelectedCollections: Dispatch<SetStateAction<Option[]>>;
+  setSelectedTaxClass: Dispatch<SetStateAction<string>>;
   setChannels: (channels: ChannelData[]) => void;
   selectedCollections: Option[];
   productTypes: RelayToFlat<SearchProductTypesQuery["search"]>;
@@ -154,13 +154,17 @@ export interface UseProductCreateFormOpts
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchReferenceCollections?: (data: string) => void;
+  fetchMoreReferenceCollections?: FetchMoreProps;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchMoreReferenceCategories?: FetchMoreProps;
   assignReferencesAttributeId?: string;
   selectedProductType?: ProductTypeQuery["productType"];
   onSelectProductType: (productTypeId: string) => void;
 }
 
-export interface ProductCreateFormProps extends UseProductCreateFormOpts {
-  children: (props: UseProductCreateFormRenderProps) => React.ReactNode;
+interface ProductCreateFormProps extends UseProductCreateFormOpts {
+  children: (props: UseProductCreateFormRenderProps) => ReactNode;
   initial?: Partial<ProductCreateFormData>;
   onSubmit: (data: ProductCreateData) => SubmitPromise;
   loading: boolean;
@@ -241,11 +245,11 @@ function useProductCreateForm(
     triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
-    attributes.change,
+    attributes,
     triggerChange,
   );
   const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
-    attributes.setMetadata,
+    attributes,
     triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
@@ -253,12 +257,16 @@ function useProductCreateForm(
     opts.assignReferencesAttributeId,
     opts.fetchReferencePages,
     opts.fetchReferenceProducts,
+    opts.fetchReferenceCategories,
+    opts.fetchReferenceCollections,
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchMoreReferencePages,
     opts.fetchMoreReferenceProducts,
+    opts.fetchMoreReferenceCategories,
+    opts.fetchMoreReferenceCollections,
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
@@ -318,14 +326,12 @@ function useProductCreateForm(
   );
   const data: ProductCreateData = {
     ...formData,
-    attributes: getAttributesDisplayData(
-      attributes.data,
-      attributesWithNewFileValue.data,
-      opts.referencePages,
-      opts.referenceProducts,
-      opts.referenceCollections,
-      opts.referenceCategories,
-    ),
+    attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
+      pages: opts.referencePages,
+      products: opts.referenceProducts,
+      collections: opts.referenceCollections,
+      categories: opts.referenceCategories,
+    }),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: null,
     productType: opts.selectedProductType,
@@ -360,6 +366,9 @@ function useProductCreateForm(
     if (errors.length) {
       setIsSubmitDisabled(isSubmitDisabled);
       setIsDirty(true);
+    } else {
+      // Clear dirty state on successful submission
+      setIsDirty(false);
     }
 
     return errors;
@@ -398,7 +407,6 @@ function useProductCreateForm(
 
   useEffect(() => {
     setIsSubmitDisabled(isSubmitDisabled);
-    setIsDirty(true);
   }, [isSubmitDisabled]);
 
   return {
@@ -435,13 +443,13 @@ function useProductCreateForm(
   };
 }
 
-const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
+const ProductCreateForm = ({
   children,
   initial,
   onSubmit,
   loading,
   ...rest
-}) => {
+}: ProductCreateFormProps) => {
   const { richText, ...props } = useProductCreateForm(initial || {}, onSubmit, loading, rest);
 
   return (

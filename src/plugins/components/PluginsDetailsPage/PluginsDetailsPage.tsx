@@ -19,7 +19,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { pluginListUrl } from "@dashboard/plugins/urls";
 import { isSecretField } from "@dashboard/plugins/utils";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PluginAuthorization from "../PluginAuthorization";
@@ -32,7 +31,7 @@ export interface PluginDetailsPageFormData {
   configuration: ConfigurationItemInput[];
 }
 
-export interface PluginsDetailsPageProps {
+interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: PluginErrorFragment[];
   plugin?: PluginsDetailsFragment;
@@ -44,7 +43,7 @@ export interface PluginsDetailsPageProps {
   setSelectedChannelId: (channelId: string) => void;
 }
 
-const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
+const PluginsDetailsPage = ({
   disabled,
   errors,
   plugin,
@@ -54,7 +53,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   onSubmit,
   selectedConfig,
   setSelectedChannelId,
-}) => {
+}: PluginsDetailsPageProps) => {
   const intl = useIntl();
   const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const navigate = useNavigator();

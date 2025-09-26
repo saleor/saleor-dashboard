@@ -9,17 +9,16 @@ import { SaleDetailsFragment, SaleType } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ChannelProps } from "@dashboard/types";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import useStyles from "./styles";
 
-export interface SaleSummaryProps extends ChannelProps {
+interface SaleSummaryProps extends ChannelProps {
   sale: SaleDetailsFragment;
 }
 
-const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) => {
+const SaleSummary = ({ selectedChannelId, sale }: SaleSummaryProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const channel = sale?.channelListings?.find(listing => listing.channel.id === selectedChannelId);

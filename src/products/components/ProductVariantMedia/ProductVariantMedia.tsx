@@ -3,7 +3,6 @@ import { DashboardCard } from "@dashboard/components/Card";
 import MediaTile from "@dashboard/components/MediaTile";
 import { ProductMediaFragment } from "@dashboard/graphql";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -31,7 +30,7 @@ interface ProductVariantMediaProps {
   onImageAdd: () => any;
 }
 
-export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => {
+const ProductVariantMedia = (props: ProductVariantMediaProps) => {
   const intl = useIntl();
   const { disabled, media, onImageAdd } = props;
 
@@ -70,5 +69,6 @@ export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => 
     </DashboardCard>
   );
 };
+
 ProductVariantMedia.displayName = "ProductVariantMedia";
 export default ProductVariantMedia;

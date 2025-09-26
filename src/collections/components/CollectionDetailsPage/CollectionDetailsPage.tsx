@@ -28,7 +28,6 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { Box, Divider } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelProps, PageListProps } from "../../../types";
@@ -37,7 +36,7 @@ import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
 import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 
-export interface CollectionDetailsPageProps extends PageListProps, ChannelProps {
+interface CollectionDetailsPageProps extends PageListProps, ChannelProps {
   channelsCount: number;
   channelsErrors: CollectionChannelListingErrorFragment[];
   collection: CollectionDetailsQuery["collection"];
@@ -53,7 +52,7 @@ export interface CollectionDetailsPageProps extends PageListProps, ChannelProps 
   params: CollectionUrlQueryParams;
 }
 
-const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
+const CollectionDetailsPage = ({
   channelsCount,
   channelsErrors,
   collection,

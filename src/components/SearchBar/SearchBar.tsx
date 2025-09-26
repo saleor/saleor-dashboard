@@ -1,7 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import { SearchPageProps, TabPageProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import FilterTabs, { FilterTab } from "../TableFilter";
@@ -30,7 +29,7 @@ const useStyles = makeStyles(
     name: "SearchBar",
   },
 );
-const SearchBar: React.FC<SearchBarProps> = props => {
+const SearchBar = (props: SearchBarProps) => {
   const {
     allTabLabel,
     currentTab,
@@ -89,4 +88,3 @@ const SearchBar: React.FC<SearchBarProps> = props => {
 };
 
 SearchBar.displayName = "SearchBar";
-export default SearchBar;

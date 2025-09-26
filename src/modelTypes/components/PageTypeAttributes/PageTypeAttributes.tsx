@@ -13,7 +13,6 @@ import { ListActions, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -51,7 +50,7 @@ interface PageTypeAttributesProps extends ListActions {
 }
 
 const numberOfColumns = 5;
-const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
+const PageTypeAttributes = (props: PageTypeAttributesProps) => {
   const {
     attributes,
     disabled,

@@ -122,14 +122,14 @@ export function buildTree<T extends DataTypePlaceholder>(
   return root.children;
 }
 
-export function findItem<T extends DataTypePlaceholder>(
+function findItem<T extends DataTypePlaceholder>(
   items: Array<TreeItem<T>>,
   itemId: UniqueIdentifier,
 ) {
   return items.find(({ id }) => id === itemId);
 }
 
-export function findItemDeep<T extends DataTypePlaceholder>(
+function findItemDeep<T extends DataTypePlaceholder>(
   items: TreeItems<T>,
   itemId: UniqueIdentifier,
 ): TreeItem<T> | undefined {

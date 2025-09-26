@@ -1,5 +1,4 @@
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { ColumnPickerAvailableNodes } from "./ColumnPickerAvailableNodes";
@@ -11,7 +10,7 @@ import { useCategorySelection } from "./useCategorySelection";
 import { ColumnCategory } from "./useColumns";
 import { getExitIcon, getExitOnClick } from "./utils";
 
-export interface ColumnPickerCategoriesProps {
+interface ColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
   selectedColumns: string[];
   onClose: () => void;

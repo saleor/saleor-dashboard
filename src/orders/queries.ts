@@ -6,7 +6,8 @@ export const orderListQuery = gql`
     $after: String
     $last: Int
     $before: String
-    $filter: OrderFilterInput
+    $where: OrderWhereInput
+    $search: String
     $sort: OrderSortingInput
   ) {
     orders(
@@ -14,7 +15,8 @@ export const orderListQuery = gql`
       after: $after
       first: $first
       last: $last
-      filter: $filter
+      where: $where
+      search: $search
       sortBy: $sort
     ) {
       edges {
@@ -308,6 +310,17 @@ export const DevModeQuery = /* GraphQL */ `
           userEmail
           isPaid
         }
+      }
+    }
+  }
+`;
+
+export const refundSettings = gql`
+  query RefundSettings {
+    refundSettings {
+      reasonReferenceType {
+        id
+        name
       }
     }
   }

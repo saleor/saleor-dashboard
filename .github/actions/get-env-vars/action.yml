@@ -1,23 +1,23 @@
-name: 'Get Environment Variables'
-description: 'Retrieves environment variables for Cypress tests'
+name: "Get Environment Variables"
+description: "Retrieves environment variables for end-to-end tests"
 
 inputs:
   version:
-    description: 'Custom version to use'
+    description: "Custom version to use"
     required: true
   token:
-    description: 'Cloud access token'
+    description: "Cloud access token"
     required: true
   repo_token:
-    description: 'GitHub repository token'
+    description: "GitHub repository token"
     required: true
   project:
-    description: 'Project name'
+    description: "Project name"
     required: true
 
 outputs:
   IS_OLD_VERSION:
-    description: 'Whether the version is old'
+    description: "Whether the version is old"
     value: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
 
 runs:
@@ -38,8 +38,8 @@ runs:
         REPO_TOKEN: ${{ inputs.repo_token }}
         TOKEN: ${{ inputs.token }}
       run: |
-        node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
+        node .github/workflows/testsHelpers/getEnvironmentVariables.js \
           --version ${{ inputs.version }} \
           --token "$TOKEN" \
           --repo_token "$REPO_TOKEN" \
-          --project "${{ inputs.project }}" 
+          --project "${{ inputs.project }}"

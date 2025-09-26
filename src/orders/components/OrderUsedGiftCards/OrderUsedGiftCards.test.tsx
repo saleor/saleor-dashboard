@@ -1,7 +1,7 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { ThemeWrapper } from "@test/themeWrapper";
 import { render, screen } from "@testing-library/react";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
@@ -21,6 +21,7 @@ const mockGiftCards = [
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
+    // @ts-expect-error - legacy provider
     <BrowserRouter>
       <ThemeWrapper>
         <IntlProvider

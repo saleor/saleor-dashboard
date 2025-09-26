@@ -1,6 +1,5 @@
-import { useOrderTransactionsDataQuery } from "@dashboard/graphql";
+import { useOrderTransactionsDataQuery, useRefundSettingsQuery } from "@dashboard/graphql";
 import { OrderManualTransactionRefundPage } from "@dashboard/orders/components/OrderManualTransactionRefundPage";
-import React from "react";
 
 interface OrderManualTransactionRefundProps {
   orderId: string;
@@ -14,12 +13,16 @@ const OrderManualTransactionRefund = ({ orderId }: OrderManualTransactionRefundP
     },
   });
 
+  const { data: refundSettings, loading: refundSettingsLoading } = useRefundSettingsQuery();
+  const requiredModelForRefundReason = refundSettings?.refundSettings.reasonReferenceType;
+
   return (
     <OrderManualTransactionRefundPage
       orderId={data?.order?.id ?? ""}
       transactions={data?.order?.transactions ?? []}
-      loading={loading}
+      loading={loading || refundSettingsLoading}
       currency={data?.order?.total?.gross?.currency ?? ""}
+      modelForRefundReasonRefId={requiredModelForRefundReason?.id ?? null}
     />
   );
 };

@@ -16,7 +16,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import DiscountDates from "../DiscountDates";
@@ -37,7 +36,7 @@ export interface FormData extends MetadataFormData {
   value: string;
 }
 
-export interface SaleCreatePageProps {
+interface SaleCreatePageProps {
   allChannelsCount: number;
   channelListings: ChannelSaleFormData[];
   disabled: boolean;
@@ -49,7 +48,7 @@ export interface SaleCreatePageProps {
   onSubmit: (data: FormData) => SubmitPromise<any[]>;
 }
 
-const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
+const SaleCreatePage = ({
   allChannelsCount,
   channelListings = [],
   disabled,
@@ -59,7 +58,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   openChannelsModal,
   saveButtonBarState,
   onBack,
-}) => {
+}: SaleCreatePageProps) => {
   const intl = useIntl();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: FormData = {

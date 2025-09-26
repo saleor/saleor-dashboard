@@ -7,18 +7,18 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { getStatusColor } from "@dashboard/misc";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
 import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@dashboard/types";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import PluginsList from "../PluginsList/PluginsList";
 import { createFilterStructure, PluginFilterKeys, PluginListFilterOpts } from "./filters";
 import { pluginsFilterErrorMessages, pluginsListPageMessages } from "./messages";
 
-export interface PluginsListPageProps
+interface PluginsListPageProps
   extends PageListProps,
     FilterPageProps<PluginFilterKeys, PluginListFilterOpts>,
     SortPage<PluginListUrlSortField>,
@@ -26,7 +26,7 @@ export interface PluginsListPageProps
   plugins: PluginBaseFragment[];
 }
 
-const PluginsListPage: React.FC<PluginsListPageProps> = ({
+const PluginsListPage = ({
   currentTab,
   initialSearch,
   filterOpts,
@@ -38,7 +38,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   onTabDelete,
   onTabSave,
   ...listProps
-}) => {
+}: PluginsListPageProps) => {
   const intl = useIntl();
   const { theme: currentTheme } = useTheme();
   const filterStructure = createFilterStructure(intl, filterOpts);
@@ -62,10 +62,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
             </Text>
             <Text>
               {intl.formatMessage(pluginsListPageMessages.appStoreWarning)}{" "}
-              <ExternalLinkNext
-                target="_blank"
-                href="https://docs.saleor.io/docs/3.x/developer/app-store/overview"
-              >
+              <ExternalLinkNext target="_blank" href={EXTENSIONS_DOCS_URL}>
                 Saleor App Store.
               </ExternalLinkNext>
             </Text>

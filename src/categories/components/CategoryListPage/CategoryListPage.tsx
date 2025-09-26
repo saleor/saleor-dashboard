@@ -17,13 +17,13 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import { messages } from "./messages";
 
-export interface CategoryTableProps
+interface CategoryTableProps
   extends PageListProps,
     SearchPageProps,
     SortPage<CategoryListUrlSortField>,
@@ -37,7 +37,7 @@ export interface CategoryTableProps
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
 }
 
-export const CategoryListPage: React.FC<CategoryTableProps> = ({
+export const CategoryListPage = ({
   categories,
   currentTab,
   disabled,
@@ -53,7 +53,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   onCategoriesDelete,
   selectedCategoriesIds,
   ...listProps
-}) => {
+}: CategoryTableProps) => {
   const navigate = useNavigator();
 
   const intl = useIntl();
@@ -149,4 +149,3 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   );
 };
 CategoryListPage.displayName = "CategoryListPage";
-export default CategoryListPage;

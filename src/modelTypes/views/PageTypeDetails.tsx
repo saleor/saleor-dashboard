@@ -27,7 +27,6 @@ import { ReorderEvent } from "@dashboard/types";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
@@ -40,7 +39,7 @@ interface PageTypeDetailsProps {
   params: PageTypeUrlQueryParams;
 }
 
-export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) => {
+const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const attributeListActions = useBulkActions();
@@ -302,4 +301,5 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
     </>
   );
 };
+
 export default PageTypeDetails;

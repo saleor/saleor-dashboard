@@ -1,5 +1,4 @@
 import { Box, Button, ConfigurationIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 interface TopNavMenuItem {
   label: string;
@@ -12,7 +11,7 @@ interface TopNavMenuProps {
   dataTestId?: string;
 }
 
-export const Menu: React.FC<TopNavMenuProps> = ({ items, dataTestId }) => (
+export const Menu = ({ items, dataTestId }: TopNavMenuProps) => (
   <Dropdown data-test-id={dataTestId}>
     <Dropdown.Trigger>
       <Button icon={<ConfigurationIcon />} variant="secondary" data-test-id="show-more-button" />

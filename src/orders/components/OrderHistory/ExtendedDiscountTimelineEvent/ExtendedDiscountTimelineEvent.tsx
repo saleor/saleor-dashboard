@@ -6,7 +6,6 @@ import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import Label from "../Label";
@@ -25,7 +24,7 @@ const useStyles = makeStyles(
   { name: "ExtendedDiscountTimelineEvent" },
 );
 
-export const messages = defineMessages({
+const messages = defineMessages({
   reasonLabel: {
     id: "kVOslW",
     defaultMessage: "Reason for discount",
@@ -38,10 +37,7 @@ interface ExtendedTimelineEventProps {
   titleElements: TitleElement[];
 }
 
-const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
-  event,
-  titleElements,
-}) => {
+const ExtendedDiscountTimelineEvent = ({ event, titleElements }: ExtendedTimelineEventProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const { lines, date, type } = event;

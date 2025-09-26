@@ -37,6 +37,9 @@ import {
   _GetProductVariantChoicesDocument,
   _GetProductVariantChoicesQuery,
   _GetProductVariantChoicesQueryVariables,
+  _GetWarehouseChoicesDocument,
+  _GetWarehouseChoicesQuery,
+  _GetWarehouseChoicesQueryVariables,
   ChannelCurrenciesDocument,
   ChannelCurrenciesQuery,
   ChannelCurrenciesQueryVariables,
@@ -105,7 +108,7 @@ export const createAttributeProductVariantOptionsFromAPI = (
       ({
         // This label matches value from AttributeValue.name for product variant reference attributes
         // It's used by Saleor for searching ProductVariants
-        label: node.product ? `${node.product.name}: ${node.name}` : node.name ?? "",
+        label: node.product ? `${node.product.name}: ${node.name}` : (node.name ?? ""),
         value: node.id,
         slug: node.slug,
         originalSlug: node.originalSlug,
@@ -320,6 +323,28 @@ export class GiftCardTagsHandler implements Handler {
         slug: node.name,
       })) ?? []
     );
+  };
+}
+
+export class WarehouseHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetWarehouseChoicesQuery,
+      _GetWarehouseChoicesQueryVariables
+    >({
+      query: _GetWarehouseChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return createOptionsFromAPI(data.warehouses?.edges ?? []);
   };
 }
 

@@ -15,14 +15,13 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { ListSettings } from "@dashboard/types";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getTranslationFields } from "../../utils";
 import TranslationFields from "../TranslationFields";
 import { transtionsAttributesPageFieldsMessages as messages } from "./messages";
 
-export interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
@@ -34,7 +33,7 @@ export const fieldNames = {
   richTextValue: "attributeRichTextValue",
 };
 
-const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
+const TranslationsAttributesPage = ({
   translationId,
   activeField,
   disabled,
@@ -47,7 +46,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   onSubmit,
   settings,
   onUpdateListSettings,
-}) => {
+}: TranslationsAttributesPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const withChoices = data?.attribute?.withChoices;

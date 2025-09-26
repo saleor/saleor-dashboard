@@ -2,15 +2,11 @@ import { useShippingMethodTranslationsQuery } from "@dashboard/graphql";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
-import React from "react";
 
 import { TranslationsEntityListProps } from "./types";
 import { mapTranslationsToEntities } from "./utils";
 
-const TranslationsShippingMethodList: React.FC<TranslationsEntityListProps> = ({
-  params,
-  variables,
-}) => {
+const TranslationsShippingMethodList = ({ params, variables }: TranslationsEntityListProps) => {
   const { data, loading } = useShippingMethodTranslationsQuery({
     displayLoader: true,
     variables,

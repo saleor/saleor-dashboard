@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
-import { AppExtensionMountEnum, PermissionEnum } from "@dashboard/graphql";
+import { AppExtensionMountEnum, PermissionEnum, useExtensionListQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useExtensions } from "./useExtensions";
@@ -14,8 +14,14 @@ jest.mock("../new-tab-actions", () => ({
   },
 }));
 
-jest.mock("@dashboard/auth/hooks/useUserPermissions");
-jest.mock("@dashboard/graphql");
+jest.mock("@dashboard/auth/hooks/useUserPermissions", () => ({
+  useUserPermissions: jest.fn(),
+}));
+
+jest.mock("@dashboard/graphql", () => ({
+  ...(jest.requireActual("@dashboard/graphql") as jest.Mocked<typeof import("@dashboard/graphql")>),
+  useExtensionListQuery: jest.fn(),
+}));
 jest.mock("../components/ExternalAppContext", () => ({
   useExternalApp: () => ({
     openApp: mockOpenApp,
@@ -27,13 +33,9 @@ import { newTabActions } from "../new-tab-actions";
 const useUserPermissionsMock = jest.fn();
 const useExtensionListQueryMock = jest.fn();
 
-// Import the mocked modules
-const { useUserPermissions } = require("@dashboard/auth/hooks/useUserPermissions");
-const { useExtensionListQuery } = require("@dashboard/graphql");
-
 // Set up the mocks
-useUserPermissions.mockImplementation(useUserPermissionsMock);
-useExtensionListQuery.mockImplementation(useExtensionListQueryMock);
+(useUserPermissions as jest.Mock).mockImplementation(useUserPermissionsMock);
+(useExtensionListQuery as jest.Mock).mockImplementation(useExtensionListQueryMock);
 
 describe("Extensions / hooks / useExtensions", () => {
   const mockExtensionsData = {

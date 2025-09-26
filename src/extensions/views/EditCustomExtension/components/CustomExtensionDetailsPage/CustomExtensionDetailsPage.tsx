@@ -20,7 +20,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
@@ -34,7 +33,7 @@ export interface CustomExtensionDetailsPageFormData {
   name: string;
   permissions: PermissionEnum[];
 }
-export interface CustomExtensionDetailsPageProps {
+interface CustomExtensionDetailsPageProps {
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"] | null | undefined;
@@ -54,7 +53,7 @@ export interface CustomExtensionDetailsPageProps {
   onAppDeleteOpen: () => void;
 }
 
-const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = props => {
+const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProps) => {
   const {
     disabled,
     errors,

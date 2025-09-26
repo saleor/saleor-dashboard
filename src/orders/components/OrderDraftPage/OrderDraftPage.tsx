@@ -25,7 +25,6 @@ import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSe
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
@@ -33,7 +32,7 @@ import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderDraftAlert from "./OrderDraftAlert";
 
-export interface OrderDraftPageProps extends FetchMoreProps {
+interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
   order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
@@ -61,7 +60,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
 
 const draftOrderListUrl = orderDraftListUrl();
 
-const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
+const OrderDraftPage = (props: OrderDraftPageProps) => {
   const {
     loading,
     fetchUsers,

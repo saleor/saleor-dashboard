@@ -19,6 +19,10 @@ interface QueryBuilderOptions<
   topLevelKeys?: TTopLevelKeys[];
 
   filterDefinitionResolver?: FilterQueryVarsBuilderResolver<TQuery>;
+
+  /** When true, wraps all root-level fields in an AND array to avoid mixing operators with field filters
+   * e.g. {AND: [{metadata: {key: "...", ...}}], ids: ["a"]} -> {AND: [{metadata: ..., ids: ...}]}*/
+  useAndWrapper?: boolean;
 }
 
 /** Builds query based on filters selected by user in Dashboard's UI
@@ -35,10 +39,13 @@ export class FiltersQueryBuilder<
 
   private filterDefinitionResolver: FilterQueryVarsBuilderResolver<TQuery>;
 
+  private useAndWrapper: boolean;
+
   constructor(options: QueryBuilderOptions<TQuery, TTopLevelKeys>) {
     this.apiType = options.apiType;
     this.filterContainer = options.filterContainer;
     this.topLevelKeys = options.topLevelKeys || [];
+    this.useAndWrapper = options.useAndWrapper || false;
     this.filterDefinitionResolver =
       options.filterDefinitionResolver ||
       (FilterQueryVarsBuilderResolver.getDefaultResolver() as FilterQueryVarsBuilderResolver<TQuery>);
@@ -59,7 +66,7 @@ export class FiltersQueryBuilder<
 
     // Separate top-level keys from filters
     const topLevel: Pick<TQuery, TTopLevelKeys> = {} as Pick<TQuery, TTopLevelKeys>;
-    const filters: Omit<TQuery, TTopLevelKeys> = { ...query };
+    let filters: Omit<TQuery, TTopLevelKeys> = { ...query };
 
     for (const key of this.topLevelKeys) {
       if (key in query) {
@@ -68,7 +75,33 @@ export class FiltersQueryBuilder<
       }
     }
 
+    // Apply AND wrapper if configured
+    if (this.useAndWrapper && Object.keys(filters).length > 0) {
+      filters = this.wrapInAndArray(filters) as Omit<TQuery, TTopLevelKeys>;
+    }
+
     return { topLevel, filters };
+  }
+
+  private wrapInAndArray(query: FilterQuery): FilterQuery {
+    const andItems: Array<Record<string, unknown>> = [];
+
+    if ("AND" in query && Array.isArray(query.AND)) {
+      andItems.push(...query.AND);
+    }
+
+    // Convert all non-AND/OR root fields to AND array items
+    for (const [key, value] of Object.entries(query)) {
+      if (key !== "AND" && key !== "OR") {
+        andItems.push({ [key]: value });
+      }
+    }
+
+    if (andItems.length > 0) {
+      return { AND: andItems, OR: query?.OR };
+    }
+
+    return { OR: query?.OR };
   }
 
   private updateQueryWithDefinition(

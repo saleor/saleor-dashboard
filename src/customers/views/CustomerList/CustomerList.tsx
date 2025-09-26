@@ -24,7 +24,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerListPage from "../../components/CustomerListPage";
@@ -36,7 +36,7 @@ interface CustomerListProps {
   params: CustomerListUrlQueryParams;
 }
 
-export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
+const CustomerList = ({ params }: CustomerListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -70,7 +70,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -78,7 +78,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     }),
     [params, settings.rowNumber],
   );
-  const newQueryVariables = React.useMemo(
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: {
@@ -217,4 +217,5 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CustomerList;

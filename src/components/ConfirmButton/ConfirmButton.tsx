@@ -2,14 +2,14 @@ import { buttonMessages, commonMessages } from "@dashboard/intl";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CheckIcon from "@material-ui/icons/Check";
 import { Button, ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
 
 export type ConfirmButtonTransitionState = "default" | "loading" | "success" | "error";
 
-export type ConfirmButtonLabels = Partial<Record<"confirm" | "error", string>>;
+type ConfirmButtonLabels = Partial<Record<"confirm" | "error", string>>;
 
 export interface ConfirmButtonProps extends ButtonProps {
   labels?: ConfirmButtonLabels;

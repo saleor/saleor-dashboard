@@ -2,12 +2,13 @@
 import { commonMessages } from "@dashboard/intl";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface DateTimeFieldProps {
   onChange: (value: string) => void;
-  error?: string | React.ReactNode;
+  error?: string | React.ReactNode | undefined;
   setError?: () => void;
   futureDatesOnly?: boolean;
   value: string;
@@ -33,7 +34,7 @@ const isInputValid = (value: string) => {
   return isValid && isAfterMin && isBeforeMax;
 };
 
-export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
+export const DateTimeTimezoneField = ({
   disabled,
   name,
   onChange,
@@ -42,7 +43,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   label,
   helperText,
   value: initialValue,
-}) => {
+}: DateTimeFieldProps) => {
   const intl = useIntl();
   const [value, setValue] = useState<string>(
     initialValue ? convertToDateTimeLocal(initialValue) : "",

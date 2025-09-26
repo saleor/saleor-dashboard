@@ -1,6 +1,5 @@
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 
 type Choice = {
   id: string;
@@ -20,7 +19,7 @@ export type ChoiceWithAncestors = Choice & {
   } | null;
 };
 
-export const getAncestorsLabel = (choice: ChoiceWithAncestors): string => {
+const getAncestorsLabel = (choice: ChoiceWithAncestors): string => {
   const { parent, level, ancestors } = choice;
 
   if (level === 0) {

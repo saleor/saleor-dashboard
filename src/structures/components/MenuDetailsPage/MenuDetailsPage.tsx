@@ -11,7 +11,7 @@ import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { menuListUrl } from "@dashboard/structures/urls";
-import React from "react";
+import { useState } from "react";
 
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
@@ -26,7 +26,7 @@ export interface MenuDetailsSubmitData extends MenuDetailsFormData {
   operations: TreeOperation[];
 }
 
-export interface MenuDetailsPageProps {
+interface MenuDetailsPageProps {
   saveButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: MenuErrorFragment[];
@@ -40,7 +40,7 @@ export interface MenuDetailsPageProps {
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
-const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
+const MenuDetailsPage = ({
   disabled,
   errors,
   menu,
@@ -51,13 +51,13 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   onItemEdit,
   onSubmit,
   onTranslate,
-}) => {
+}: MenuDetailsPageProps) => {
   const navigate = useNavigator();
 
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
   };
-  const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>([]);
+  const [treeOperations, setTreeOperations] = useState<TreeOperation[]>([]);
   const removeSimulatedMoves = (operations: TreeOperation[]) =>
     operations.filter(operation => !operation.simulatedMove);
   const handleSubmit = async (data: MenuDetailsFormData) => {

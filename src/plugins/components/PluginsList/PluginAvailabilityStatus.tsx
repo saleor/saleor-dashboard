@@ -2,7 +2,6 @@
 import { Pill } from "@dashboard/components/Pill";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { pluginAvailabilityStatusMessages as messages, pluginStatusMessages } from "./messages";
@@ -12,9 +11,9 @@ interface PluginAvailabilityStatusProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
+const PluginAvailabilityStatus = ({
   plugin: { globalConfiguration, channelConfigurations },
-}) => {
+}: PluginAvailabilityStatusProps) => {
   const intl = useIntl();
   const isGlobalPlugin = isPluginGlobal(globalConfiguration);
   const activeChannelsCount = getActiveChannelConfigsCount(channelConfigurations);
