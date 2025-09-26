@@ -120,6 +120,15 @@ function getAttributeInputFromSelectedAttributes(
     id: attribute.attribute.id,
     label: attribute.attribute.name,
     value: getSelectedAttributeValues(attribute),
+    /** Load selected options in this attribute to useFormset metadata
+     * in order to display labels for selection correctly in the UI
+     * see: src/attributes/utils/data.ts */
+    metadata: attribute.values
+      .filter(value => value.reference)
+      .map(value => ({
+        label: value.name,
+        value: value.reference,
+      })),
   }));
 }
 
