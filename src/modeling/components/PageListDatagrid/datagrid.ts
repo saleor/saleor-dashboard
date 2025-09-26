@@ -27,6 +27,11 @@ export const pageListStaticColumnsAdapter = (
       width: 300,
     },
     {
+      id: "contentType",
+      title: intl.formatMessage(columnsMessages.contentType),
+      width: 250,
+    },
+    {
       id: "visible",
       title: intl.formatMessage(columnsMessages.visible),
       width: 300,
@@ -61,6 +66,8 @@ export const createGetCellContent =
         return readonlyTextCell(rowData?.title ?? "");
       case "slug":
         return readonlyTextCell(rowData?.slug ?? "");
+      case "contentType":
+        return readonlyTextCell(rowData?.pageType?.name ?? "");
       case "visible": {
         const tag = rowData?.isPublished
           ? intl.formatMessage(messages.published)
