@@ -60,3 +60,5 @@ introspection.json
 
 !.storybook
 storybook-static/
+
+!.claude
