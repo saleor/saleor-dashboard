@@ -76,43 +76,44 @@ export function createAttributeReferenceChangeHandler(
   return (attributeId: string, values: string[]) => {
     attributes.change(attributeId, values);
 
-    /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
-     * In here is used to hold display values for references selected by user
+    /* Note: "additionalData" is a part of useFormset API.
+     * In here it is used to hold display values for references selected by user
      * before they are returned from our API as attribute references
      *  */
-    const currentMetadata = attributes.data.find(a => a.id === attributeId)?.additionalData || [];
+    const currentAdditionalData =
+      attributes.data.find(a => a.id === attributeId)?.additionalData || [];
 
-    // When user removes attribute values from selection, delete them in useFormset metadata
-    const syncedMetadata = currentMetadata.filter((meta: AttributeValuesMetadata) =>
+    // When user removes attribute values from selection, delete them in useFormset additionalData
+    const syncedAdditionalData = currentAdditionalData.filter((meta: AttributeValuesMetadata) =>
       values.includes(meta.value),
     );
 
-    attributes.setAdditionalData(attributeId, syncedMetadata);
+    attributes.setAdditionalData(attributeId, syncedAdditionalData);
 
     triggerChange();
   };
 }
 
-const mergeReferencesMetadata = (
+const mergeReferencesAdditionalData = (
   prev: AttributeValuesMetadata[],
   next: AttributeValuesMetadata[],
 ) => uniqBy([...(prev ?? []), ...(next ?? [])], "value");
 
-export function createAttributeReferenceMetadataHandler(
+export function createAttributeReferenceAdditionalDataHandler(
   attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
 ): FormsetAdditionalDataChange<AttributeValuesMetadata[]> {
-  /* Note: "metadata" is a part of useFormset API, NOT Saleor metadata
-   * In here is used to hold display values for references selected by user
+  /* Note: "additionalData" is a part of useFormset API, NOT Saleor metadata
+   * In here it is used to hold display values for references selected by user
    * before they are returned from our API as attribute references
    *  */
 
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
     const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
-      const merged = mergeReferencesMetadata(prev, next);
+      const merged = mergeReferencesAdditionalData(prev, next);
       const currentValues = attributes.data.find(a => a.id === attributeId)?.value || [];
 
-      // Filter out metadata for references that were removed from attribute
+      // Filter out additionalData for references that were removed from attribute
       return merged.filter(meta => currentValues.includes(meta.value));
     };
 

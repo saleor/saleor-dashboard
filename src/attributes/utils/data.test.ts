@@ -88,7 +88,7 @@ describe("attributes/utils/data", () => {
   describe("handleContainerReferenceAssignment", () => {
     const mockHandlers = {
       selectAttributeReference: jest.fn(),
-      selectAttributeReferenceMetadata: jest.fn(),
+      selectAttributeReferenceAdditionalData: jest.fn(),
     };
 
     beforeEach(() => {
@@ -125,7 +125,7 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["val-1"]);
-      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", [
+      expect(mockHandlers.selectAttributeReferenceAdditionalData).toHaveBeenCalledWith("attr-1", [
         { value: "val-1", label: "Value 1" },
       ]);
     });
@@ -165,7 +165,7 @@ describe("attributes/utils/data", () => {
         "val-1",
         "val-2",
       ]);
-      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", [
+      expect(mockHandlers.selectAttributeReferenceAdditionalData).toHaveBeenCalledWith("attr-1", [
         { value: "val-1", label: "Value 1" },
         { value: "val-2", label: "Value 2" },
       ]);
@@ -198,7 +198,7 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["val-1"]);
-      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", [
+      expect(mockHandlers.selectAttributeReferenceAdditionalData).toHaveBeenCalledWith("attr-1", [
         { value: "val-1", label: "Value 1" },
       ]);
     });
@@ -207,7 +207,7 @@ describe("attributes/utils/data", () => {
   describe("handleMetadataReferenceAssignment", () => {
     const mockHandlers = {
       selectAttributeReference: jest.fn(),
-      selectAttributeReferenceMetadata: jest.fn(),
+      selectAttributeReferenceAdditionalData: jest.fn(),
     };
 
     beforeEach(() => {
@@ -244,7 +244,7 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["val-1"]);
-      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", [
+      expect(mockHandlers.selectAttributeReferenceAdditionalData).toHaveBeenCalledWith("attr-1", [
         { value: "val-1", label: "Value 1" },
       ]);
     });
@@ -284,7 +284,7 @@ describe("attributes/utils/data", () => {
         "val-1",
         "val-2",
       ]);
-      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith(
+      expect(mockHandlers.selectAttributeReferenceAdditionalData).toHaveBeenCalledWith(
         "attr-1",
         attributeValues,
       );
@@ -317,7 +317,10 @@ describe("attributes/utils/data", () => {
 
       // Assert
       expect(mockHandlers.selectAttributeReference).toHaveBeenCalledWith("attr-1", ["existing-1"]);
-      expect(mockHandlers.selectAttributeReferenceMetadata).toHaveBeenCalledWith("attr-1", []);
+      expect(mockHandlers.selectAttributeReferenceAdditionalData).toHaveBeenCalledWith(
+        "attr-1",
+        [],
+      );
     });
   });
 
@@ -339,7 +342,7 @@ describe("attributes/utils/data", () => {
           values: [],
           references: [],
         },
-        metadata: [
+        additionalData: [
           { value: "meta-ref-1", label: "Product 1" },
           { value: "meta-ref-2", label: "Product 2" },
         ],

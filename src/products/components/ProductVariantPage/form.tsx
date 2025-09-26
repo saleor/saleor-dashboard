@@ -9,8 +9,8 @@ import {
 import {
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
+  createAttributeReferenceAdditionalDataHandler,
   createAttributeReferenceChangeHandler,
-  createAttributeReferenceMetadataHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
@@ -130,7 +130,7 @@ export interface ProductVariantUpdateHandlers
   updateChannels: (selectedChannelsIds: string[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
-  selectAttributeReferenceMetadata: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
+  selectAttributeReferenceAdditionalData: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
 }
 
 interface UseProductVariantUpdateFormResult
@@ -223,7 +223,7 @@ function useProductVariantUpdateForm(
     attributes,
     triggerChange,
   );
-  const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
+  const handleAttributeMetadataChange = createAttributeReferenceAdditionalDataHandler(
     attributes,
     triggerChange,
   );
@@ -402,7 +402,7 @@ function useProductVariantUpdateForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
-      selectAttributeReferenceMetadata: handleAttributeMetadataChange,
+      selectAttributeReferenceAdditionalData: handleAttributeMetadataChange,
     },
     submit,
     isSaveDisabled,
