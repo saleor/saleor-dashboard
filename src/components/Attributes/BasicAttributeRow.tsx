@@ -36,9 +36,9 @@ export const BasicAttributeRow = ({
       display="flex"
       gap={1}
       cursor={clickableLabel ? "pointer" : "auto"}
-      alignSelf={"start"}
+      __alignSelf={"baseline"}
     >
-      <Text>{capitalize(label)}</Text>
+      <Text marginTop={2}>{capitalize(label)}</Text>
       {description && (
         <Tooltip>
           <Tooltip.Trigger>
