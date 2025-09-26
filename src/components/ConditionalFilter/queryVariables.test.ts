@@ -194,6 +194,59 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
     // Assert
     expect(result).toEqual(expectedOutput);
   });
+
+  it("should create variables for PRODUCT_VARIANT reference attribute", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("attribute", "Attribute", "attribute"),
+        new Condition(
+          ConditionOptions.fromAttributeType("SINGLE_REFERENCE"),
+          ConditionSelected.fromConditionItemAndValue(
+            { type: "multiselect", label: "in", value: "input-2" },
+            [
+              {
+                label: "Product A: Variant A",
+                slug: "UHJvZHVjdFZhcmlhbnQ6MQ==",
+                value: "UHJvZHVjdFZhcmlhbnQ6MQ==",
+                originalSlug: "SKU-1",
+              },
+            ],
+          ),
+          false,
+        ),
+        false,
+        undefined,
+        new ExpressionValue(
+          "variant-ref",
+          "Variant Attribute",
+          AttributeInputTypeEnum.SINGLE_REFERENCE,
+          AttributeEntityTypeEnum.PRODUCT_VARIANT,
+        ),
+      ),
+    ];
+
+    const expectedOutput = {
+      attributes: [
+        {
+          slug: "variant-ref",
+          value: {
+            reference: {
+              referencedIds: {
+                containsAny: ["UHJvZHVjdFZhcmlhbnQ6MQ=="],
+              },
+            },
+          },
+        },
+      ],
+    };
+
+    // Act
+    const result = createProductQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
 });
 
 describe("ConditionalFilter / queryVariables / createVoucherQueryVariables", () => {
