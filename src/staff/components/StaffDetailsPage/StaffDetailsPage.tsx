@@ -22,10 +22,9 @@ import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListPath } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import { Option, Text } from "@saleor/macaw-ui-next";
+import { Button, Option, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
 import { staffDetailsPageMessages as messages } from "./messages";
@@ -49,14 +48,14 @@ interface StaffDetailsPageProps extends SearchPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   staffMember: StaffMemberDetailsFragment | UserFragment;
   errors: StaffErrorFragment[];
-  onChangePassword: () => void;
+  onResetPassword: () => void;
   onDelete: () => void;
   onImageDelete: () => void;
   onSubmit: (data: StaffDetailsFormData) => SubmitPromise;
   onImageUpload: (file: File) => any;
 }
 
-const StaffDetailsPage = ({
+export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   availablePermissionGroups,
   canEditAvatar,
   canEditPreferences,
@@ -66,7 +65,7 @@ const StaffDetailsPage = ({
   errors,
   fetchMorePermissionGroups,
   initialSearch,
-  onChangePassword,
+  onResetPassword,
   onDelete,
   onImageDelete,
   onImageUpload,
@@ -98,7 +97,21 @@ const StaffDetailsPage = ({
       {({ data: formData, change, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={staffListBackLink} title={getUserName(staffMember)} />
+            <TopNav href={staffListBackLink} title={getUserName(staffMember)}>
+              {canEditPreferences && (
+                <Button
+                  onClick={onResetPassword}
+                  data-test-id="resetPasswordBtn"
+                  variant="secondary"
+                  alignSelf="center"
+                >
+                  {intl.formatMessage({
+                    defaultMessage: "Reset password",
+                    id: "Yy/yDL",
+                  })}
+                </Button>
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <StaffProperties
                 errors={errors}
@@ -110,12 +123,6 @@ const StaffDetailsPage = ({
                 onImageUpload={onImageUpload}
                 onImageDelete={onImageDelete}
               />
-              {canEditPreferences && (
-                <>
-                  <CardSpacer />
-                  <StaffPassword onChangePassword={onChangePassword} />
-                </>
-              )}
             </DetailPageLayout.Content>
 
             <DetailPageLayout.RightSidebar>
@@ -181,6 +188,3 @@ const StaffDetailsPage = ({
     </Form>
   );
 };
-
-StaffDetailsPage.displayName = "StaffDetailsPage";
-export default StaffDetailsPage;

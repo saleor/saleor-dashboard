@@ -85,6 +85,16 @@ export default tseslint.config(
     },
   },
 
+  // Properly resolve Node.js globals in .cjs files
+  {
+    files: ["**/*.cjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node, // Use all Node.js globals
+      },
+    },
+  },
+
   // Configure custom plugins and rules for React files
   {
     files: ["src/**/*.{js,jsx,ts,tsx}"],
