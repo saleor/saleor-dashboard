@@ -1,6 +1,8 @@
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
+  createAttributeReferenceChangeHandler,
+  createAttributeReferenceMetadataHandler,
   handleDeleteMultipleAttributeValues,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
@@ -938,5 +940,114 @@ describe("prepareAttributesInput", () => {
 
     // Assert
     expect(result).toEqual([{ id: ATTR_ID, values: [] }]);
+  });
+});
+
+describe("createAttributeReferenceChangeHandler", () => {
+  it("should update attribute value and sync metadata using useFormset methods", () => {
+    // Arrange
+    const mockAttributes = {
+      data: [
+        {
+          id: "attr-1",
+          value: ["ref-1", "ref-2"],
+          label: "Test",
+          data: { inputType: AttributeInputTypeEnum.REFERENCE },
+          metadata: [
+            { value: "ref-1", label: "Reference 1" },
+            { value: "ref-2", label: "Reference 2" },
+            { value: "ref-3", label: "Reference 3" },
+          ],
+        },
+      ],
+      change: jest.fn(),
+      setMetadata: jest.fn(),
+    } as unknown as UseFormsetOutput<AttributeInputData>;
+
+    const triggerChange = jest.fn();
+    const handler = createAttributeReferenceChangeHandler(mockAttributes, triggerChange);
+
+    // Act
+    handler("attr-1", ["ref-1", "ref-3"]);
+
+    // Assert
+    expect(mockAttributes.change).toHaveBeenCalledWith("attr-1", ["ref-1", "ref-3"]);
+    expect(mockAttributes.setMetadata).toHaveBeenCalledWith("attr-1", [
+      { value: "ref-1", label: "Reference 1" },
+      { value: "ref-3", label: "Reference 3" },
+    ]);
+    expect(triggerChange).toHaveBeenCalled();
+  });
+
+  it("should handle empty values", () => {
+    // Arrange
+    const mockAttributes = {
+      data: [
+        {
+          id: "attr-1",
+          value: ["ref-1"],
+          label: "Test",
+          data: { inputType: AttributeInputTypeEnum.REFERENCE },
+          metadata: [{ value: "ref-1", label: "Reference 1" }],
+        },
+      ],
+      change: jest.fn(),
+      setMetadata: jest.fn(),
+    } as unknown as UseFormsetOutput<AttributeInputData>;
+
+    const triggerChange = jest.fn();
+    const handler = createAttributeReferenceChangeHandler(mockAttributes, triggerChange);
+
+    // Act
+    handler("attr-1", []);
+
+    // Assert
+    expect(mockAttributes.change).toHaveBeenCalledWith("attr-1", []);
+    expect(mockAttributes.setMetadata).toHaveBeenCalledWith("attr-1", []);
+    expect(triggerChange).toHaveBeenCalled();
+  });
+});
+
+describe("createAttributeReferenceMetadataHandler", () => {
+  it("should filter out metadata for removed references", () => {
+    // Arrange
+    const setMetadataMock = jest.fn();
+    const mockAttributes = {
+      data: [
+        {
+          id: "attr-1",
+          value: ["ref-1"],
+          label: "Test",
+          data: { inputType: AttributeInputTypeEnum.REFERENCE },
+        },
+      ],
+      setMetadata: setMetadataMock,
+    } as unknown as UseFormsetOutput<AttributeInputData>;
+
+    // Mock the merge function behavior
+    setMetadataMock.mockImplementation((_id, _values, mergeFn) => {
+      const prev = [{ value: "ref-1", label: "Reference 1" }];
+      const next = [
+        { value: "ref-2", label: "Reference 2" },
+        { value: "ref-3", label: "Reference 3" },
+      ];
+      const merged = mergeFn(prev, next);
+
+      // Should only return ref-1 since that's the only one in current values
+      expect(merged).toEqual([{ value: "ref-1", label: "Reference 1" }]);
+    });
+
+    const triggerChange = jest.fn();
+    const handler = createAttributeReferenceMetadataHandler(mockAttributes, triggerChange);
+
+    // Act
+    handler("attr-1", [
+      { value: "ref-2", label: "Reference 2" },
+      { value: "ref-3", label: "Reference 3" },
+    ]);
+
+    // Assert
+    expect(setMetadataMock).toHaveBeenCalled();
+    expect(triggerChange).toHaveBeenCalled();
   });
 });

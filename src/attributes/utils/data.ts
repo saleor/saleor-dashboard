@@ -8,7 +8,6 @@ import {
   AttributeValueFragment,
   AttributeValueInput,
   FileUploadMutation,
-  Node,
   PageSelectedAttributeFragment,
   ProductFragment,
   SearchCategoriesQuery,
@@ -21,11 +20,12 @@ import {
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { Container, RelayToFlat } from "@dashboard/types";
-import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RichTextContextValues } from "@dashboard/utils/richText/context";
 import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
+import { productVariantCacheManager } from "./productVariantCache";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
 
@@ -151,6 +151,12 @@ export function getAttributeData(
   }
 }
 
+function getFirstValueAsArray<T, K extends keyof T>(values: T[], propertyName: K): Array<T[K]> {
+  const value = values[0]?.[propertyName];
+
+  return value !== undefined && value !== null ? [value] : [];
+}
+
 export function getSelectedAttributeValues(
   attribute:
     | PageSelectedAttributeFragment
@@ -161,25 +167,25 @@ export function getSelectedAttributeValues(
     case AttributeInputTypeEnum.REFERENCE:
       return attribute.values.map(value => value.reference);
     case AttributeInputTypeEnum.SINGLE_REFERENCE:
-      return [attribute.values[0]?.reference];
+      return getFirstValueAsArray(attribute.values, "reference");
 
     case AttributeInputTypeEnum.PLAIN_TEXT:
-      return [attribute.values[0]?.plainText];
+      return getFirstValueAsArray(attribute.values, "plainText");
 
     case AttributeInputTypeEnum.RICH_TEXT:
-      return [attribute.values[0]?.richText];
+      return getFirstValueAsArray(attribute.values, "richText");
 
     case AttributeInputTypeEnum.NUMERIC:
-      return [attribute.values[0]?.name];
+      return getFirstValueAsArray(attribute.values, "name");
 
     case AttributeInputTypeEnum.BOOLEAN:
-      return [attribute.values[0]?.boolean];
+      return getFirstValueAsArray(attribute.values, "boolean");
 
     case AttributeInputTypeEnum.DATE:
-      return [attribute.values[0]?.date];
+      return getFirstValueAsArray(attribute.values, "date");
 
     case AttributeInputTypeEnum.DATE_TIME:
-      return [attribute.values[0]?.dateTime];
+      return getFirstValueAsArray(attribute.values, "dateTime");
 
     default:
       return attribute.values.map(value => value.slug);
@@ -338,15 +344,32 @@ export function handleMetadataReferenceAssignment(
       firstValue ? [firstValue] : [],
     );
   } else {
-    handlers.selectAttributeReference(
+    const finalValues = mergeAttributeValues(
       assignReferencesAttributeId,
-      mergeAttributeValues(
-        assignReferencesAttributeId,
-        attributeValues.map(({ value }) => value),
-        attributes as FormsetData<AttributeInputData, string[]>,
-      ),
+      attributeValues.map(({ value }) => value),
+      attributes as FormsetData<AttributeInputData, string[]>,
     );
-    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, attributeValues);
+
+    // Set the reference values in useFormset hook
+    handlers.selectAttributeReference(assignReferencesAttributeId, finalValues);
+
+    /* We will store attribute selection display values in useFormset "metadata" field
+     * This has to be done, because when user chooses new references in the modal,
+     * we don't yet have referenced item details from the query */
+    const existingMetadata = attribute?.metadata || [];
+    const newMetadata = attributeValues;
+    const allMetadata = [...existingMetadata, ...newMetadata];
+
+    // Remove duplicate entries, happens when user deletes and adds value before saving the form
+    const uniqueMetadata = allMetadata.reduce((acc, meta) => {
+      if (finalValues.includes(meta.value) && !acc.find(m => m.value === meta.value)) {
+        acc.push(meta);
+      }
+
+      return acc;
+    }, [] as AttributeValuesMetadata[]);
+
+    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, uniqueMetadata);
   }
 }
 
@@ -437,180 +460,186 @@ const getFileAttributeDisplayData = (
   return attribute;
 };
 
-const getPageReferenceAttributeDisplayData = (
-  attribute: AttributeInput,
-  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
-) => ({
-  ...attribute,
-  data: {
-    ...attribute.data,
-    references:
-      referencePages?.length > 0 && attribute.value?.length > 0
-        ? mapPagesToChoices(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchPagesQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referencePages.find(reference => reference.id === value);
+export interface ReferenceEntitiesSearch {
+  pages?: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>;
+  products?: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>;
+  collections?: RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>;
+  categories?: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>;
+}
 
-                if (reference) {
-                  acc.push(reference);
-                }
+const findPageReference = (
+  valueId: string,
+  references: ReferenceEntitiesSearch,
+): AttributeReference | null => {
+  if (!references.pages) return null;
 
-                return acc;
-              },
-              [],
-            ),
-          )
-        : [],
-  },
-});
+  const page = references.pages.find(r => r.id === valueId);
 
-const getProductReferenceAttributeDisplayData = (
-  attribute: AttributeInput,
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
-) => ({
-  ...attribute,
-  data: {
-    ...attribute.data,
-    references:
-      referenceProducts?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchProductsQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceProducts.find(reference => reference.id === value);
+  if (page) {
+    return {
+      label: page.title,
+      value: valueId,
+    };
+  }
 
-                if (reference) {
-                  acc.push(reference);
-                }
+  return null;
+};
 
-                return acc;
-              },
-              [],
-            ),
-          )
-        : [],
-  },
-});
+const findProductReference = (
+  valueId: string,
+  references: ReferenceEntitiesSearch,
+): AttributeReference | null => {
+  if (!references.products) return null;
 
-const getProductVariantReferenceAttributeDisplayData = (
-  attribute: AttributeInput,
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
-) => ({
-  ...attribute,
-  data: {
-    ...attribute.data,
-    references:
-      referenceProducts?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<Array<Node & Record<"name", string>>>((acc, value) => {
-              const reference = mapReferenceProductsToVariants(referenceProducts).find(
-                reference => reference.id === value,
-              );
+  const product = references.products.find(r => r.id === valueId);
 
-              if (reference) {
-                acc.push(reference);
-              }
+  if (product) {
+    return {
+      label: product.name,
+      value: valueId,
+    };
+  }
 
-              return acc;
-            }, []),
-          )
-        : [],
-  },
-});
+  return null;
+};
 
-const getCollectionReferenceAttributeDisplayData = (
-  attribute: AttributeInput,
-  referenceCollections: RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>,
-) => ({
-  ...attribute,
-  data: {
-    ...attribute.data,
-    references:
-      referenceCollections?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceCollections.find(reference => reference.id === value);
+const findCollectionReference = (
+  valueId: string,
+  references: ReferenceEntitiesSearch,
+): AttributeReference | null => {
+  if (!references.collections) return null;
 
-                if (reference) {
-                  acc.push(reference);
-                }
+  const collection = references.collections.find(r => r.id === valueId);
 
-                return acc;
-              },
-              [],
-            ),
-          )
-        : [],
-  },
-});
+  if (collection) {
+    return {
+      label: collection.name,
+      value: valueId,
+    };
+  }
 
-const getCategoryReferenceAttributeDisplayData = (
-  attribute: AttributeInput,
-  referenceCategories: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>,
-) => ({
-  ...attribute,
-  data: {
-    ...attribute.data,
-    references:
-      referenceCategories?.length > 0 && attribute.value?.length > 0
-        ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>>(
-              (acc, value) => {
-                const reference = referenceCategories.find(reference => reference.id === value);
+  return null;
+};
 
-                if (reference) {
-                  acc.push(reference);
-                }
+const findCategoryReference = (
+  valueId: string,
+  references: ReferenceEntitiesSearch,
+): AttributeReference | null => {
+  if (!references.categories) return null;
 
-                return acc;
-              },
-              [],
-            ),
-          )
-        : [],
-  },
-});
+  const category = references.categories.find(r => r.id === valueId);
 
-const getReferenceAttributeDisplayData = (
-  attribute: AttributeInput,
-  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
-  referenceCollections: RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>,
-  referenceCategories: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>,
-) => {
-  if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
-    return getPageReferenceAttributeDisplayData(attribute, referencePages);
-  } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
-    return getProductReferenceAttributeDisplayData(attribute, referenceProducts);
-  } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT) {
-    return getProductVariantReferenceAttributeDisplayData(attribute, referenceProducts);
-  } else if (attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION) {
-    return getCollectionReferenceAttributeDisplayData(attribute, referenceCollections);
-  } else if (attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY) {
-    return getCategoryReferenceAttributeDisplayData(attribute, referenceCategories);
+  if (category) {
+    return {
+      label: category.name,
+      value: valueId,
+    };
+  }
+
+  return null;
+};
+
+const findProductVariantReference = (
+  valueId: string,
+  referencesEntitiesSearchResult: ReferenceEntitiesSearch,
+): AttributeReference | null => {
+  if (!referencesEntitiesSearchResult.products) return null;
+
+  // Search through products using cached variant maps
+  for (const product of referencesEntitiesSearchResult.products) {
+    const variant = productVariantCacheManager.getProductVariantById(product, valueId);
+
+    if (variant) {
+      return {
+        label: `${product.name} ${variant.name}`,
+        value: valueId,
+      };
+    }
+  }
+
+  return null;
+};
+
+const findReferenceByEntityType = (
+  valueId: string,
+  entityType: AttributeEntityTypeEnum | undefined,
+  referencesEntitiesSearchResult: ReferenceEntitiesSearch,
+): AttributeReference | null => {
+  switch (entityType) {
+    case AttributeEntityTypeEnum.PAGE:
+      return findPageReference(valueId, referencesEntitiesSearchResult);
+    case AttributeEntityTypeEnum.PRODUCT:
+      return findProductReference(valueId, referencesEntitiesSearchResult);
+    case AttributeEntityTypeEnum.COLLECTION:
+      return findCollectionReference(valueId, referencesEntitiesSearchResult);
+    case AttributeEntityTypeEnum.CATEGORY:
+      return findCategoryReference(valueId, referencesEntitiesSearchResult);
+    case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+      return findProductVariantReference(valueId, referencesEntitiesSearchResult);
+    default:
+      return null;
   }
 };
+
+export const getReferenceAttributeDisplayData = (
+  attribute: AttributeInput,
+  referencesEntitiesSearchResult: ReferenceEntitiesSearch,
+) => ({
+  ...attribute,
+  data: {
+    ...attribute.data,
+    references:
+      attribute.value && attribute.value.length > 0
+        ? attribute.value.map(valueId => {
+            /* "Metadata" is the cache for newly selected values from useFormset hook.
+             * It is populated from the initial GraphQL payload
+             * and whenever the user assigns references in the dialog into useFormset data. */
+            const meta = attribute.metadata?.find(m => m.value === valueId);
+
+            if (meta) {
+              return {
+                label: meta.label,
+                value: meta.value,
+              };
+            }
+
+            /* As a fallback, look at the latest referenced entity search results.
+             * This should cover scenarios where the user has just added a reference in modal
+             * and metadata has not been updated yet.
+             *
+             * It's not default, because it can fail:
+             * search query filters out references based on `referenceType` and use search query for filtering */
+            const searchResult = findReferenceByEntityType(
+              valueId,
+              attribute.data.entityType,
+              referencesEntitiesSearchResult,
+            );
+
+            if (searchResult) {
+              return searchResult;
+            }
+
+            // Fallback to ID as label - this shouldn't happen, leave it for graceful error handling
+            return {
+              label: valueId,
+              value: valueId,
+            };
+          })
+        : [],
+  },
+});
 
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
   attributesWithNewFileValue: FormsetData<null, File>,
-  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
-  referenceCollections: RelayToFlat<NonNullable<SearchCollectionsQuery["search"]>>,
-  referenceCategories: RelayToFlat<NonNullable<SearchCategoriesQuery["search"]>>,
+  references: ReferenceEntitiesSearch,
 ) =>
   attributes.map(attribute => {
     if (
       attribute.data.inputType === AttributeInputTypeEnum.REFERENCE ||
       attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE
     ) {
-      return getReferenceAttributeDisplayData(
-        attribute,
-        referencePages,
-        referenceProducts,
-        referenceCollections,
-        referenceCategories,
-      );
+      return getReferenceAttributeDisplayData(attribute, references);
     }
 
     if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
@@ -626,13 +655,3 @@ export const getReferenceAttributeEntityTypeFromAttribute = (
 ): AttributeEntityTypeEnum | undefined => {
   return attributes?.find(attribute => attribute.id === attributeId)?.data?.entityType;
 };
-
-const mapReferenceProductsToVariants = (
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
-) =>
-  referenceProducts.flatMap(product =>
-    (product.variants || []).map(variant => ({
-      ...variant,
-      name: `${product.name} ${variant.name}`,
-    })),
-  );

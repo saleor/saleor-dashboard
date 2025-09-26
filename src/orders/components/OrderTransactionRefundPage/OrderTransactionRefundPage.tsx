@@ -15,8 +15,10 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { pageListUrl } from "@dashboard/modeling/urls";
 import { refundReasonSelectHelperMessages } from "@dashboard/orders/messages";
+import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
 import { orderUrl } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Select, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
@@ -302,6 +304,9 @@ const OrderTransactionRefundPage = ({
               <DashboardCard>
                 <DashboardCard.Header>
                   <DashboardCard.Title>Refund reason</DashboardCard.Title>
+                  <Box marginLeft={4}>
+                    <Ripple model={rippleNewRefundReasons} />
+                  </Box>
                 </DashboardCard.Header>
                 <DashboardCard.Content>
                   <ModelsPicker
