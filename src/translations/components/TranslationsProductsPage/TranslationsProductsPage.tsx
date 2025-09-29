@@ -78,12 +78,17 @@ const TranslationsProductsPage = ({
       return;
     }
 
-    onEdit([TranslationInputFieldName.name, TranslationInputFieldName.description]);
+    onEdit([
+      TranslationInputFieldName.name,
+      TranslationInputFieldName.description,
+      TranslationInputFieldName.seoTitle,
+      TranslationInputFieldName.seoDescription,
+    ]);
 
     closeApp();
-
-    // todo close modal
   }, [responseFromApp]);
+
+  // todo broken display of description
 
   useEffect(() => {
     setFormStateForExtension({
@@ -102,6 +107,18 @@ const TranslationsProductsPage = ({
           translatedValue: data?.translation?.description ?? "",
           originalValue: data?.product?.description ?? "",
           type: "rich",
+        },
+        {
+          fieldName: TranslationInputFieldName.seoTitle,
+          translatedValue: data?.translation?.seoTitle ?? "",
+          originalValue: data?.product?.seoTitle ?? "",
+          type: "short",
+        },
+        {
+          fieldName: TranslationInputFieldName.seoDescription,
+          translatedValue: data?.translation?.seoDescription ?? "",
+          originalValue: data?.product?.seoDescription ?? "",
+          type: "short", //todo change to long? or plain / rich
         },
       ],
     });
@@ -217,7 +234,11 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Title",
               }),
               name: TranslationInputFieldName.seoTitle,
-              translation: data?.translation?.seoTitle || null,
+              translation:
+                (responseFromApp &&
+                  responseFromApp[TranslationInputFieldName.seoTitle]?.newValue) ||
+                data?.translation?.seoTitle ||
+                null,
               type: "short",
               value: data?.product?.seoTitle,
             },
@@ -227,7 +248,11 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Description",
               }),
               name: TranslationInputFieldName.seoDescription,
-              translation: data?.translation?.seoDescription || null,
+              translation:
+                (responseFromApp &&
+                  responseFromApp[TranslationInputFieldName.seoDescription]?.newValue) ||
+                data?.translation?.seoDescription ||
+                null,
               type: "long",
               value: data?.product?.seoDescription,
             },
