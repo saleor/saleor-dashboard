@@ -30,6 +30,9 @@ export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
             params={appData.params}
             dashboardVersion={APP_VERSION}
             coreVersion={shop?.version}
+            refetch={() => {
+              // todo we must fix that
+            }}
           />
         )}
       </AppDialog>
