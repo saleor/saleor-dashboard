@@ -9,7 +9,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
-import { getArrayQueryParam, stringifyQs } from "@dashboard/utils/urls";
+import { getMultipleUrlValues, stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
 
@@ -44,8 +44,6 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      // todo only hide saved
-      // navigate("?", { replace: true });
     }
   };
   const [updateTranslations, updateTranslationsOpts] = useUpdateProductTranslationsMutation({
@@ -57,9 +55,12 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
   const onEdit = (field: string | string[]) =>
     navigate(
       "?" +
-        stringifyQs({
-          activeField: field,
-        }),
+        stringifyQs(
+          {
+            activeField: field,
+          },
+          "repeat",
+        ),
       { replace: true },
     );
   const onDiscard = (field?: string) => {
@@ -67,13 +68,16 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
       navigate("?", { replace: true });
     }
 
-    const activeFields = getArrayQueryParam("activeField");
+    const activeFields = getMultipleUrlValues(new URL(window.location.href).search, "activeField");
 
     navigate(
       "?" +
-        stringifyQs({
-          activeField: activeFields.filter(f => f !== field),
-        }),
+        stringifyQs(
+          {
+            activeField: activeFields.filter(f => f !== field),
+          },
+          "repeat",
+        ),
       { replace: true },
     );
   };
@@ -94,26 +98,26 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
       }),
     ).then(errors => {
       if (errors.length === 0) {
-        const activeFields = new URLSearchParams(window.location.href).get("activeField");
-
-        console.log("activeFields");
-        console.log(activeFields);
+        const activeFields = getMultipleUrlValues(
+          new URL(window.location.href).search,
+          "activeField",
+        );
 
         const newActiveFields = activeFields.filter(f => f !== fieldName);
 
-        console.log("newActiveFields");
-        console.log(newActiveFields);
-
         navigate(
           "?" +
-            stringifyQs({
-              activeField: activeFields.filter(f => f !== fieldName),
-            }),
+            stringifyQs(
+              {
+                activeField: newActiveFields,
+              },
+              "repeat",
+            ),
           { replace: true },
         );
       }
 
-      return data;
+      return errors;
     });
   };
   const handleAttributeValueSubmit = (

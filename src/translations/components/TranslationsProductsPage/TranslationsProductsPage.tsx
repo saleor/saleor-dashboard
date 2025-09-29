@@ -174,8 +174,9 @@ const TranslationsProductsPage = ({
               }),
               name: TranslationInputFieldName.name,
               translation:
-                (responseFromApp && responseFromApp[TranslationInputFieldName.name]?.newValue) ??
-                (data?.translation?.name || null),
+                (responseFromApp && responseFromApp[TranslationInputFieldName.name]?.newValue) ||
+                data?.translation?.name ||
+                null,
               type: "short",
               value: data?.product?.name,
             },
@@ -187,8 +188,9 @@ const TranslationsProductsPage = ({
               name: TranslationInputFieldName.description,
               translation:
                 (responseFromApp &&
-                  responseFromApp[TranslationInputFieldName.description]?.newValue) ??
-                (data?.translation?.description || null),
+                  responseFromApp[TranslationInputFieldName.description]?.newValue) ||
+                data?.translation?.description ||
+                null,
               type: "rich",
               value: data?.product?.description,
             },
