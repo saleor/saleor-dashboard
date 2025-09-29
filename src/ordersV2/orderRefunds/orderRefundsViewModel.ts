@@ -7,7 +7,9 @@ import {
   TransactionActionEnum,
   TransactionEventFragment,
   TransactionEventTypeEnum,
+  UserBaseAvatarFragment,
 } from "@dashboard/graphql";
+import { getUserInitials } from "@dashboard/misc";
 
 export type OrderRefundDisplay = {
   id: string;
@@ -25,6 +27,10 @@ export type OrderRefundDisplay = {
     email: string;
     firstName: string;
     lastName: string;
+  } | null;
+  creator: {
+    initials: string;
+    logoUrl: string | null;
   } | null;
 };
 
@@ -53,10 +59,10 @@ export abstract class OrderRefundsViewModel {
     const isPending = refund.status === OrderGrantedRefundStatusEnum.PENDING;
     const isManual = refund.type === "manual";
 
-    // Can only edit refunds that are not successful, not pending, and not manual
     return !isSuccessful && !isPending && !isManual;
   }
 
+  // TODO: validate if this logic is correct - https://linear.app/saleor/issue/ENG-726
   private static groupEventsByPspReference = (
     events: TransactionEventFragment[],
   ): Record<string, TransactionEventFragment[]> => {
@@ -106,6 +112,26 @@ export abstract class OrderRefundsViewModel {
     return null;
   };
 
+  private static getCreator = (
+    creator: AppAvatarFragment | UserBaseAvatarFragment | StaffMemberAvatarFragment,
+  ): OrderRefundDisplay["creator"] => {
+    if (creator.__typename === "App") {
+      return {
+        initials: creator.name.slice(0, 2).toUpperCase(),
+        logoUrl: creator.brand?.logo?.default,
+      };
+    }
+
+    if (creator.__typename === "User") {
+      return {
+        initials: getUserInitials(creator),
+        logoUrl: creator.avatar.url,
+      };
+    }
+
+    return null;
+  };
+
   private static mapEventGroupsToOrderManualRefunds = (
     eventsByPspReference: Record<string, TransactionEventFragment[]>,
   ): OrderRefundDisplay[] => {
@@ -128,6 +154,7 @@ export abstract class OrderRefundsViewModel {
         ),
         reasonNote: null,
         reasonType: null,
+        creator: this.getCreator(latestEvent.createdBy),
       };
 
       // Only REQUEST contains a reason, that is attached when transactionRequestAction("refund") is executed
@@ -176,6 +203,7 @@ export abstract class OrderRefundsViewModel {
       type: "standard",
       reasonType: refund.reasonReference?.title ?? null,
       reasonNote: refund.reason,
+      creator: this.getCreator(refund.app || refund.user),
     }));
   }
 

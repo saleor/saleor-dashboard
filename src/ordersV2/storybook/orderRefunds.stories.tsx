@@ -37,6 +37,10 @@ export const Success: Story = {
           firstName: "John",
           lastName: "Doe",
         },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
+        },
       },
     ],
   },
@@ -62,6 +66,10 @@ export const Failure: Story = {
           firstName: "John",
           lastName: "Doe",
         },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
+        },
       },
     ],
   },
@@ -86,6 +94,10 @@ export const Pending: Story = {
           email: "customer@example.com",
           firstName: "John",
           lastName: "Doe",
+        },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
         },
       },
     ],
@@ -113,6 +125,10 @@ export const withGrantedRefunds: Story = {
           firstName: "John",
           lastName: "Doe",
         },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
+        },
       },
     ],
   },
@@ -137,6 +153,10 @@ export const withEditableRefund: Story = {
           email: "customer@example.com",
           firstName: "John",
           lastName: "Doe",
+        },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
         },
       },
     ],
@@ -163,6 +183,10 @@ export const WithMultipleRefunds: Story = {
           firstName: "John",
           lastName: "Doe",
         },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
+        },
       },
       {
         id: "2",
@@ -176,6 +200,11 @@ export const WithMultipleRefunds: Story = {
           amount: 100,
         },
         user: null,
+        creator: {
+          initials: "JD",
+          logoUrl:
+            "https://dev-kz.eu.saleor.cloud/media/thumbnails/app-brand-data/logo_9f313f5e_thumbnail_64.webp",
+        },
       },
     ],
   },
