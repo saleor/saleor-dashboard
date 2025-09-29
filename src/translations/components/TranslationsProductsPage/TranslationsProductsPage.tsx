@@ -74,8 +74,6 @@ const TranslationsProductsPage = ({
   }, []);
 
   useEffect(() => {
-    console.log(responseFromApp);
-
     if (!responseFromApp) {
       return;
     }

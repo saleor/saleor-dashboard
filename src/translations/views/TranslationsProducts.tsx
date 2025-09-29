@@ -80,8 +80,8 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
     data: string,
-  ) =>
-    extractMutationErrors(
+  ) => {
+    return extractMutationErrors(
       updateTranslations({
         variables: {
           id,
@@ -92,7 +92,30 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
           language: languageCode,
         },
       }),
-    );
+    ).then(errors => {
+      if (errors.length === 0) {
+        const activeFields = new URLSearchParams(window.location.href).get("activeField");
+
+        console.log("activeFields");
+        console.log(activeFields);
+
+        const newActiveFields = activeFields.filter(f => f !== fieldName);
+
+        console.log("newActiveFields");
+        console.log(newActiveFields);
+
+        navigate(
+          "?" +
+            stringifyQs({
+              activeField: activeFields.filter(f => f !== fieldName),
+            }),
+          { replace: true },
+        );
+      }
+
+      return data;
+    });
+  };
   const handleAttributeValueSubmit = (
     { id, type }: TranslationField<TranslationInputFieldName>,
     data: HandleSubmitAttributeValue,
