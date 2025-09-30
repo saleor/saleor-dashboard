@@ -2,7 +2,6 @@ import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
-import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
 import { extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -20,7 +19,7 @@ import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
-import { Switch } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 
 import { AppsSectionRoot } from "./apps";
 import { AppSections } from "./apps/urls";
@@ -49,12 +48,11 @@ import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
-import { DEMO_MODE, GTM_ID } from "./config";
+import { GTM_ID } from "./config";
 import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
@@ -71,7 +69,6 @@ import PageTypesSection from "./modelTypes";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PermissionGroupSection from "./permissionGroups";
-import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
 import SearchSection from "./search";
@@ -169,7 +166,6 @@ const Routes = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
         <ExternalAppProvider>
           <AppLayout fullSize={isAppPath}>
@@ -241,11 +237,6 @@ const Routes = () => {
                   path={modelTypesPath}
                   component={PageTypesSection}
                   matchPermission="any"
-                />
-                <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PLUGINS]}
-                  path="/plugins"
-                  component={PluginsSection}
                 />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_ORDERS]}
@@ -330,7 +321,8 @@ const Routes = () => {
                   path="/configuration"
                   component={ConfigurationSection}
                 />
-                <SectionRoute path={CustomAppSections.appsSection} component={CustomAppsSection} />
+                <Redirect to={extensionsSection} path={CustomAppSections.appsSection} />
+                <Redirect to={extensionsSection} path="/plugins" />
                 <Route component={NotFound} />
               </Switch>
             </ErrorBoundary>

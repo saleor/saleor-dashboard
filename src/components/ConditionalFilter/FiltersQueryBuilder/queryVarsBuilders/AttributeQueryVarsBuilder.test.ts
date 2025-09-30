@@ -164,7 +164,7 @@ describe("AttributeQueryVarsBuilder", () => {
       false,
     );
 
-    it("should correctly build query for REFERENCE attributes", () => {
+    it("should correctly build query for PAGE reference attributes", () => {
       // Arrange
       const attributeSlug = "ref-attr";
       const pageLabel = "Page 1";
@@ -174,11 +174,13 @@ describe("AttributeQueryVarsBuilder", () => {
         AttributeInputTypeEnum.REFERENCE,
         AttributeEntityTypeEnum.PAGE,
       );
-      const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, {
-        label: pageLabel,
-        value: "UGFnZTox", // Global ID (base64 encoded "Page:1")
-        slug: "page-1",
-      });
+      const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, [
+        {
+          label: pageLabel,
+          value: "UGFnZTox",
+          slug: "page-1",
+        },
+      ]);
       const condition = new Condition(
         ConditionOptions.fromName(AttributeInputTypeEnum.REFERENCE),
         selected,
@@ -197,6 +199,93 @@ describe("AttributeQueryVarsBuilder", () => {
               reference: {
                 referencedIds: {
                   containsAny: ["UGFnZTox"],
+                },
+              },
+            },
+          },
+        ],
+      });
+    });
+
+    it("should correctly build query for PRODUCT reference attributes", () => {
+      // Arrange
+      const attributeSlug = "product-ref";
+      const selectedAttribute = new ExpressionValue(
+        attributeSlug,
+        "Product Ref",
+        AttributeInputTypeEnum.REFERENCE,
+        AttributeEntityTypeEnum.PRODUCT,
+      );
+      const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, [
+        {
+          label: "Product 1",
+          value: "UHJvZHVjdDox",
+          slug: "product-1",
+        },
+      ]);
+      const condition = new Condition(
+        ConditionOptions.fromName(AttributeInputTypeEnum.REFERENCE),
+        selected,
+        false,
+      );
+      const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
+
+      // Act
+      const result = def.updateWhereQueryVariables({}, element);
+
+      // Assert
+      expect(result).toEqual({
+        attributes: [
+          {
+            slug: attributeSlug,
+            value: {
+              reference: {
+                referencedIds: {
+                  containsAny: ["UHJvZHVjdDox"],
+                },
+              },
+            },
+          },
+        ],
+      });
+    });
+
+    it("should correctly build query for PRODUCT_VARIANT SINGLE_REFERENCE attributes", () => {
+      // Arrange
+      const attributeSlug = "variant-ref";
+      const selectedAttribute = new ExpressionValue(
+        attributeSlug,
+        "Variant Ref",
+        AttributeInputTypeEnum.SINGLE_REFERENCE,
+        AttributeEntityTypeEnum.PRODUCT_VARIANT,
+      );
+      const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, [
+        {
+          label: "Product A: Variant A",
+          value: "UHJvZHVjdFZhcmlhbnQ6MQ==",
+          slug: "UHJvZHVjdFZhcmlhbnQ6MQ==",
+          originalSlug: "SKU-1",
+        },
+      ]);
+      const condition = new Condition(
+        ConditionOptions.fromName(AttributeInputTypeEnum.SINGLE_REFERENCE),
+        selected,
+        false,
+      );
+      const element = new FilterElement(baseValue, condition, false, undefined, selectedAttribute);
+
+      // Act
+      const result = def.updateWhereQueryVariables({}, element);
+
+      // Assert
+      expect(result).toEqual({
+        attributes: [
+          {
+            slug: attributeSlug,
+            value: {
+              reference: {
+                referencedIds: {
+                  containsAny: ["UHJvZHVjdFZhcmlhbnQ6MQ=="],
                 },
               },
             },

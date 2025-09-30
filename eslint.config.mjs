@@ -27,6 +27,7 @@ export default tseslint.config(
     "playwright/auth.js",
     "**/*.generated.ts",
     ".github/**/*.js",
+    ".featureFlags/",
   ]),
 
   eslint.configs.recommended,
@@ -82,6 +83,16 @@ export default tseslint.config(
       "no-constant-binary-expression": "off",
       "no-case-declarations": "off",
       "prefer-const": "off",
+    },
+  },
+
+  // Properly resolve Node.js globals in .cjs files
+  {
+    files: ["**/*.cjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node, // Use all Node.js globals
+      },
     },
   },
 

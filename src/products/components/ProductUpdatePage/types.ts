@@ -22,7 +22,11 @@ import {
   FormErrors,
   SubmitPromise,
 } from "@dashboard/hooks/useForm";
-import { FormsetChange, FormsetData, FormsetMetadataChange } from "@dashboard/hooks/useFormset";
+import {
+  FormsetAdditionalDataChange,
+  FormsetChange,
+  FormsetData,
+} from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
@@ -72,7 +76,7 @@ export interface ProductUpdateHandlers
     Record<"selectAttribute" | "selectAttributeMultiple", FormsetChange<string>> {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
-  selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
+  selectAttributeReferenceAdditionalData: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;

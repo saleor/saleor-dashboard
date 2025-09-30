@@ -2,6 +2,7 @@ import { GridTable } from "@dashboard/components/GridTable";
 import Money from "@dashboard/components/Money";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { getUserInitials, getUserName, User } from "@dashboard/misc";
+import { refundGridMessages } from "@dashboard/orders/components/OrderDetailsRefundTable/messages";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import {
   OrderRefundDisplay,
@@ -23,6 +24,7 @@ interface OrderDetailsRefundLineProps {
 export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLineProps) => {
   const isEditable = OrderRefundsViewModel.canEditRefund(refund);
   const intl = useIntl();
+  const noReasonTypeNorNote = !refund.reasonType && !refund.reasonNote;
 
   return (
     <GridTable.Row key={refund.id}>
@@ -40,6 +42,9 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
       </GridTable.Cell>
       <GridTable.Cell>
         <Box>
+          {noReasonTypeNorNote && (
+            <Text size={2}>{intl.formatMessage(refundGridMessages.manualRefund)}</Text>
+          )}
           {refund.reasonType && (
             <Text size={2} fontWeight="medium">
               {refund.reasonType}

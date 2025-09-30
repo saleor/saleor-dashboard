@@ -33,6 +33,7 @@ export const OrderDetailsRefundTable = ({
         <Text size={5} fontWeight="bold">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>
+
         <Tooltip>
           <Tooltip.Trigger>
             <Button

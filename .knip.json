@@ -49,8 +49,6 @@
     "react-transition-group",
     "@sentry/cli",
     "@react-editor-js/core",
-    "mocha",
-    "mochawesome",
     "playwright-ctrf-json-reporter",
     "downshift"
   ]

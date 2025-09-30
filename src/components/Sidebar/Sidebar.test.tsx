@@ -6,6 +6,7 @@ import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReactNode } from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import { Sidebar } from "./Sidebar";
 
@@ -44,18 +45,32 @@ jest.mock("@dashboard/components/NavigatorSearch/useNavigatorSearchContext", () 
     setNavigatorVisibility: jest.fn(),
   })),
 }));
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: jest.fn(() => ({
+    initialize: jest.fn(),
+    trackEvent: jest.fn(),
+  })),
+}));
+jest.mock("@dashboard/ripples/state", () => ({
+  useAllRipplesModalState: jest.fn(() => ({
+    isModalOpen: false,
+    setModalState: jest.fn(),
+  })),
+}));
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
-    // @ts-expect-error - legacy types
-    <LegacyThemeProvider>
-      <ThemeProvider>{children}</ThemeProvider>
-    </LegacyThemeProvider>
+    <MemoryRouter>
+      {/* @ts-expect-error - legacy types */}
+      <LegacyThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+      </LegacyThemeProvider>
+    </MemoryRouter>
   );
 };
 
 describe("Sidebar", () => {
-  it('shouldd render "Saleor Cloud" link when is cloud instance', () => {
+  it('should render "Saleor Cloud" link when is cloud instance', () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({
       isAuthenticatedViaCloud: true,
@@ -65,7 +80,7 @@ describe("Sidebar", () => {
     // Assert
     expect(screen.getByText("Saleor Cloud")).toBeInTheDocument();
   });
-  it('shouldd not render "Saleor Cloud" link when is not cloud instance', () => {
+  it('should not render "Saleor Cloud" link when is not cloud instance', () => {
     // Arrange
     (useCloud as jest.Mock).mockImplementation(() => ({
       isAuthenticatedViaCloud: false,
