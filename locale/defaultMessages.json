@@ -485,10 +485,6 @@
     "context": "ProductTypeDeleteWarningDialog multiple consent label",
     "string": "Yes, I want to delete those products types and assigned products"
   },
-  "0fM/pV": {
-    "context": "message title",
-    "string": "App installed"
-  },
   "0iMYc+": {
     "context": "field is optional",
     "string": "(Optional)"
@@ -1333,10 +1329,6 @@
   },
   "5sg7KC": {
     "string": "Password"
-  },
-  "5t/4um": {
-    "context": "message title",
-    "string": "Couldn’t Install {name}"
   },
   "5tMkmJ": {
     "context": "dialog header",
@@ -6385,10 +6377,6 @@
   "Zj/7QZ": {
     "context": "details title",
     "string": "Details"
-  },
-  "ZprV2g": {
-    "context": "app has been installed",
-    "string": "{name} is ready to be used"
   },
   "Zptsep": {
     "context": "order was discounted event title",
