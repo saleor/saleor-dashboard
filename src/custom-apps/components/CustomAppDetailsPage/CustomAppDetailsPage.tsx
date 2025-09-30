@@ -9,7 +9,6 @@ import { Savebar } from "@dashboard/components/Savebar";
 import WebhooksList from "@dashboard/custom-apps/components/WebhooksList";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   AppErrorFragment,
   AppUpdateMutation,
@@ -70,7 +69,6 @@ const CustomAppDetailsPage = (props: CustomAppDetailsPageProps) => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const navigate = useNavigator();
   const webhooks = app?.webhooks;
   const formErrors = getFormErrors(["permissions"], errors || []);
@@ -89,14 +87,7 @@ const CustomAppDetailsPage = (props: CustomAppDetailsPageProps) => {
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav
-            href={
-              isExtensionsDevEnabled
-                ? ExtensionsUrls.resolveInstalledExtensionsUrl()
-                : CustomAppUrls.resolveAppListUrl()
-            }
-            title={app?.name}
-          >
+          <TopNav href={ExtensionsUrls.resolveInstalledExtensionsUrl()} title={app?.name}>
             <Button
               variant="secondary"
               className={classes.activateButton}
