@@ -3,7 +3,7 @@ import {
   handleStateChangeAfterStepCompleted,
   handleStateChangeAfterToggle,
 } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/utils";
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 import { useNewUserCheck } from "../hooks/useNewUserCheck";
 import {
@@ -34,20 +34,6 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
 
   const storageService = useOnboardingStorage();
 
-  const visibleSteps = useMemo(() => {
-    return initialOnboardingSteps.filter(step => {
-      if (step.id === "view-extensions") {
-        return true;
-      }
-
-      if (step.id === "view-webhooks") {
-        return false;
-      }
-
-      return true;
-    });
-  }, []);
-
   useEffect(() => {
     if (loaded.current || isUserLoading) return;
 
@@ -70,24 +56,18 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
   }, [onboardingState]);
 
   // Calculate the valid completed steps based on feature flag
-  const validCompletedSteps = onboardingState.stepsCompleted.filter(step => {
-    if (step === "view-extensions") {
-      return true;
-    }
-
-    if (step === "view-webhooks") {
-      return false;
-    }
-
-    return true;
-  });
+  const validCompletedSteps = onboardingState.stepsCompleted;
 
   const validCompletedStepsCount = validCompletedSteps.length;
 
   // For old users, onboarding is always completed, for new one we need to calculate it
   const isOnboardingCompleted = isNewUser ? validCompletedStepsCount >= TOTAL_STEPS_COUNT : true;
 
-  const extendedStepId = useExpandedOnboardingId(onboardingState, loaded.current, visibleSteps);
+  const extendedStepId = useExpandedOnboardingId(
+    onboardingState,
+    loaded.current,
+    initialOnboardingSteps,
+  );
 
   const markOnboardingStepAsCompleted = (id: OnboardingStepsIDs) => {
     if (onboardingState.stepsCompleted.includes(id)) return;
@@ -101,7 +81,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
     analytics.trackEvent("home_onboarding_mark_all_steps_completed");
     setOnboardingState(prevOnboardingState => ({
       ...prevOnboardingState,
-      stepsCompleted: visibleSteps.map(step => step.id),
+      stepsCompleted: initialOnboardingSteps.map(step => step.id),
       stepsExpanded: {} as OnboardingState["stepsExpanded"],
     }));
   };
@@ -141,7 +121,7 @@ export const OnboardingProvider = ({ children }: OnboardingProviderProps) => {
         toggleExpandedOnboardingStep,
         toggleOnboarding,
         validCompletedStepsCount,
-        visibleSteps,
+        visibleSteps: initialOnboardingSteps,
       }}
     >
       {children}
