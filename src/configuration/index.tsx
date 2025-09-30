@@ -31,7 +31,6 @@ import { IntlShape, useIntl } from "react-intl";
 import { ConfigurationPage } from "./ConfigurationPage";
 import { MenuSection } from "./types";
 
-// TODO: Remove hideOldExtensions once "extensions" feature flag is removed
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
     {
