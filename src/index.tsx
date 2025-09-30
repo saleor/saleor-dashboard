@@ -19,7 +19,7 @@ import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
-import { Switch } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 
 import { AppsSectionRoot } from "./apps";
 import { AppSections } from "./apps/urls";
@@ -53,7 +53,6 @@ import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
@@ -70,7 +69,6 @@ import PageTypesSection from "./modelTypes";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PermissionGroupSection from "./permissionGroups";
-import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
 import SearchSection from "./search";
@@ -241,11 +239,6 @@ const Routes = () => {
                   matchPermission="any"
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PLUGINS]}
-                  path="/plugins"
-                  component={PluginsSection}
-                />
-                <SectionRoute
                   permissions={[PermissionEnum.MANAGE_ORDERS]}
                   path="/orders"
                   component={OrdersSection}
@@ -328,7 +321,8 @@ const Routes = () => {
                   path="/configuration"
                   component={ConfigurationSection}
                 />
-                <SectionRoute path={CustomAppSections.appsSection} component={CustomAppsSection} />
+                <Redirect to={extensionsSection} path={CustomAppSections.appsSection} />
+                <Redirect to={extensionsSection} path="/plugins" />
                 <Route component={NotFound} />
               </Switch>
             </ErrorBoundary>

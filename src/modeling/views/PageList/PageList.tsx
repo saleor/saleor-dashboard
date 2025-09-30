@@ -5,7 +5,6 @@ import { createPageQueryVariables } from "@dashboard/components/ConditionalFilte
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   usePageBulkPublishMutation,
   usePageBulkRemoveMutation,
@@ -37,7 +36,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import PageListPage from "../../components/PageListPage/PageListPage";
 import { pageCreateUrl, pageListUrl, PageListUrlDialog, PageListUrlQueryParams } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
-import { getFilterVariables, getSortQueryVariables } from "./sort";
+import { getSortQueryVariables } from "./sort";
 
 interface PageListProps {
   params: PageListUrlQueryParams;
@@ -48,7 +47,6 @@ const PageList = ({ params }: PageListProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.PAGES_LIST);
-  const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filter = createPageQueryVariables(valueProvider.value);
 
@@ -85,14 +83,7 @@ const PageList = ({ params }: PageListProps) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = useMemo(
-    () => ({
-      ...paginationState,
-      filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params),
-    }),
-    [params, settings.rowNumber],
-  );
+
   const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
@@ -106,7 +97,7 @@ const PageList = ({ params }: PageListProps) => {
   );
   const { data, refetch } = usePageListQuery({
     displayLoader: true,
-    variables: isPageFiltersEnabled ? newQueryVariables : queryVariables,
+    variables: newQueryVariables,
   });
   const pages = mapEdgesToItems(data?.pages);
   const paginationValues = usePaginator({

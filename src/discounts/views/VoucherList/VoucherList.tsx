@@ -6,7 +6,6 @@ import { createVoucherQueryVariables } from "@dashboard/components/ConditionalFi
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { useFlag } from "@dashboard/featureFlags";
 import { useVoucherBulkDeleteMutation, useVoucherListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -31,7 +30,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import VoucherListPage from "../../components/VoucherListPage";
 import { voucherListUrl, VoucherListUrlDialog, VoucherListUrlQueryParams } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface VoucherListProps {
@@ -42,7 +41,6 @@ const VoucherList = ({ params }: VoucherListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
-  const { enabled: isNewGiftCardsFilterEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const { filters, channel } = createVoucherQueryVariables(valueProvider.value);
 
@@ -59,15 +57,6 @@ const VoucherList = ({ params }: VoucherListProps) => {
     VoucherListUrlQueryParams
   >(navigate, voucherListUrl, params);
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = useMemo(
-    () => ({
-      ...paginationState,
-      filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params),
-      channel,
-    }),
-    [params, settings.rowNumber, channel],
-  );
   const newFiltersQueryVariables = useMemo(
     () => ({
       ...paginationState,
@@ -83,7 +72,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
 
   const { data, refetch } = useVoucherListQuery({
     displayLoader: true,
-    variables: isNewGiftCardsFilterEnabled ? newFiltersQueryVariables : queryVariables,
+    variables: newFiltersQueryVariables,
   });
   const {
     clearRowSelection,
