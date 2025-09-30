@@ -151,4 +151,3 @@ export const DiscountList = ({ params }: DiscountListProps) => {
     </PaginatorContext.Provider>
   );
 };
-export default DiscountList;

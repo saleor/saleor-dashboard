@@ -13,7 +13,7 @@ import { Text } from "@saleor/macaw-ui-next";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
-export interface OrderFulfillStockExceededDialogLineProps {
+interface OrderFulfillStockExceededDialogLineProps {
   line: OrderFulfillLineFragment | FulfillmentFragment["lines"][0];
   warehouseId: string;
   formsetData: OrderFulfillStockFormsetData;

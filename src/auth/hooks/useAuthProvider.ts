@@ -1,6 +1,5 @@
 import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
-import { DEMO_MODE } from "@dashboard/config";
 import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -26,9 +25,9 @@ import {
   UserContext,
   UserContextError,
 } from "../types";
-import { displayDemoMessage } from "../utils";
+import { useLastLoginMethod } from "./useLastLoginMethod";
 
-export interface UseAuthProviderOpts {
+interface UseAuthProviderOpts {
   intl: IntlShape;
   notify: IMessageContext;
   apolloClient: ApolloClient<any>;
@@ -43,6 +42,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
   const [isCredentialsLogin, setIsCredentialsLogin] = useState(false);
   const [errors, setErrors] = useState<UserContextError[]>([]);
   const permitCredentialsAPI = useRef(true);
+  const { setLastLoginMethod } = useLastLoginMethod();
 
   useEffect(() => {
     if (authenticating && errors.length) {
@@ -145,10 +145,6 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       const hasUser = !!result.data?.tokenCreate?.user;
 
       if (hasUser && !errorList?.length) {
-        if (DEMO_MODE) {
-          displayDemoMessage(intl, notify);
-        }
-
         saveCredentials(result.data!.tokenCreate!.user!, password);
       } else {
         const userContextErrorList: UserContextError[] = [];
@@ -217,16 +213,14 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         await handleLogout();
       }
 
-      if (result && !result.data?.externalObtainAccessTokens?.errors.length) {
-        if (DEMO_MODE) {
-          displayDemoMessage(intl, notify);
-        }
-      } else {
+      if (!result || result.data?.externalObtainAccessTokens?.errors.length) {
         setErrors(["externalLoginError"]);
         await handleLogout();
       }
 
       await logoutNonStaffUser(result.data?.externalObtainAccessTokens!);
+
+      setLastLoginMethod(pluginId);
 
       return result?.data?.externalObtainAccessTokens;
     } catch (error) {

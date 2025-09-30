@@ -3,7 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import * as React from "react";
 
-export type DraggableRenderProps = {
+type DraggableRenderProps = {
   ref: (node: HTMLElement | null) => void;
   style: React.CSSProperties;
   isDragging: boolean;

@@ -28,7 +28,7 @@ export interface AppDetailsUrlMountQueryParams {
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;
 }
-export interface AppDetailsCommonParams {
+interface AppDetailsCommonParams {
   theme: ThemeType;
 }
 export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
@@ -54,10 +54,7 @@ export const AppPaths = {
 };
 
 export const AppUrls = {
-  resolveAppListUrl: (params?: AppListUrlQueryParams, isExtensionsEnabled = false) =>
-    isExtensionsEnabled
-      ? ExtensionsPaths.installedExtensions
-      : AppPaths.appListPath + "?" + stringifyQs(params),
+  resolveAppListUrl: () => ExtensionsPaths.installedExtensions,
   resolveAppUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
     AppPaths.resolveAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
   resolveAppDetailsUrl: (id: string, params?: AppDetailsUrlQueryParams) =>

@@ -63,5 +63,3 @@ export function Tab<T>(value: T) {
 
   return Component;
 }
-
-export default Tab;

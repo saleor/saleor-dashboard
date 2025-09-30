@@ -33,7 +33,7 @@ import { useIntl } from "react-intl";
 import { getFilterVariables, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
-export interface WarehouseListProps {
+interface WarehouseListProps {
   params: WarehouseListUrlQueryParams;
 }
 

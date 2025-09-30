@@ -4,7 +4,7 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export const DEFAULT_SORT_KEY = OrderListUrlSortField.number;
 
-export function getSortQueryField(sort: OrderListUrlSortField): OrderSortField | undefined {
+function getSortQueryField(sort: OrderListUrlSortField): OrderSortField | undefined {
   switch (sort) {
     case OrderListUrlSortField.number:
       return OrderSortField.NUMBER;

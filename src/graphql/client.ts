@@ -30,7 +30,7 @@ const attachVariablesLink = new ApolloLink((operation, forward) => {
   }));
 });
 
-export const link = attachVariablesLink.concat(
+const link = attachVariablesLink.concat(
   createUploadLink({
     credentials: "include",
     uri: getApiUrl(),

@@ -1,6 +1,5 @@
 import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
-import { useFlag } from "@dashboard/featureFlags";
 import { AppQuery } from "@dashboard/graphql";
 import { PropsWithChildren } from "react";
 
@@ -19,7 +18,6 @@ const Header = ({
   onAppDeactivateOpen,
   onAppDeleteOpen,
 }: PropsWithChildren<HeaderProps>) => {
-  const { enabled: isExtensionsEnabled } = useFlag("extensions");
   const getBackButtonUrl = () => {
     /**
      * App is null with first render so fallback with HTML-safe fallback
@@ -30,9 +28,7 @@ const Header = ({
 
     const isAppActive = data.isActive;
 
-    return isAppActive
-      ? AppUrls.resolveAppUrl(data.id)
-      : AppUrls.resolveAppListUrl(undefined, isExtensionsEnabled);
+    return isAppActive ? AppUrls.resolveAppUrl(data.id) : AppUrls.resolveAppListUrl();
   };
 
   if (!data) {

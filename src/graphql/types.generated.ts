@@ -385,6 +385,10 @@ export enum AreaUnitsEnum {
 }
 
 export type AssignedAttributeReferenceInput = {
+  /** Returns objects with a reference pointing to a category identified by the given slug. */
+  categorySlugs?: InputMaybe<ContainsFilterInput>;
+  /** Returns objects with a reference pointing to a collection identified by the given slug. */
+  collectionSlugs?: InputMaybe<ContainsFilterInput>;
   /** Returns objects with a reference pointing to a page identified by the given slug. */
   pageSlugs?: InputMaybe<ContainsFilterInput>;
   /** Returns objects with a reference pointing to a product identified by the given slug. */
@@ -10399,6 +10403,8 @@ export type TransactionItemFragment = { __typename: 'TransactionItem', pspRefere
 export type OrderPaymentFragment = { __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null };
 
 export type OrderGiftCardFragment = { __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> };
+
+export type OrderGiftCardEventBalanceFragment = { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null };
 
 export type OrderGrantedRefundFragment = { __typename: 'OrderGrantedRefund', id: string, createdAt: any, shippingCostsIncluded: boolean, status: OrderGrantedRefundStatusEnum, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, transactionEvents: Array<{ __typename: 'TransactionEvent', id: string }> | null, reasonReference: { __typename: 'Page', id: string, title: string } | null, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null } | null, lines: Array<{ __typename: 'OrderGrantedRefundLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string } }> | null };
 

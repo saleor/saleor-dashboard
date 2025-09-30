@@ -8,7 +8,6 @@ import {
 } from "../../../components/Filter";
 import {
   createFilterTabUtils,
-  createFilterUtils,
   getKeyValueQueryParam,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
@@ -20,10 +19,9 @@ import {
   OrderListUrlFilters,
   OrderListUrlFiltersEnum,
   OrderListUrlFiltersWithMultipleValues,
-  OrderListUrlQueryParams,
 } from "../../urls";
 
-export const ORDER_FILTERS_KEY = "orderFiltersPresets";
+const ORDER_FILTERS_KEY = "orderFiltersPresets";
 
 export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): OrderListUrlFilters {
   const { name } = filter;
@@ -97,12 +95,3 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
 }
 
 export const storageUtils = createFilterTabUtils<string>(ORDER_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  OrderListUrlQueryParams,
-  OrderListUrlFilters
->({
-  ...OrderListUrlFiltersEnum,
-  ...OrderListUrlFiltersWithMultipleValues,
-  ...OrderListFitersWithKeyValueValues,
-});

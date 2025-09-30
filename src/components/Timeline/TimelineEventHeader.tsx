@@ -10,7 +10,7 @@ export interface TitleElement {
   link?: string;
 }
 
-export interface TimelineEventHeaderProps {
+interface TimelineEventHeaderProps {
   title?: React.ReactNode;
   date: string;
   titleElements?: TitleElement[];
@@ -19,7 +19,7 @@ export interface TimelineEventHeaderProps {
   children?: ReactNode;
 }
 
-export const TimelineEventHeader = ({
+const TimelineEventHeader = ({
   title,
   date,
   titleElements,

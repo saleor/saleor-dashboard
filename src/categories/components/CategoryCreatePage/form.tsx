@@ -9,7 +9,7 @@ import { OutputData } from "@editorjs/editorjs";
 import { useEffect } from "react";
 import * as React from "react";
 
-export interface CategoryCreateFormData extends MetadataFormData {
+interface CategoryCreateFormData extends MetadataFormData {
   name: string;
   seoDescription: string;
   seoTitle: string;
@@ -23,11 +23,11 @@ interface CategoryCreateHandlers {
   changeMetadata: FormChange;
 }
 
-export interface UseCategoryCreateFormResult extends CommonUseFormResult<CategoryCreateData> {
+interface UseCategoryCreateFormResult extends CommonUseFormResult<CategoryCreateData> {
   handlers: CategoryCreateHandlers;
 }
 
-export interface CategoryCreateFormProps {
+interface CategoryCreateFormProps {
   children: (props: UseCategoryCreateFormResult) => React.ReactNode;
   onSubmit: (data: CategoryCreateData) => Promise<any[]>;
   disabled: boolean;

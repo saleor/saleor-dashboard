@@ -11,36 +11,22 @@ import {
   getExtensionsItemsForPageOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { useFlag } from "@dashboard/featureFlags";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Pages } from "@dashboard/modeling/types";
-import {
-  PageListUrlDialog,
-  PageListUrlQueryParams,
-  PageListUrlSortField,
-  pageUrl,
-} from "@dashboard/modeling/urls";
+import { PageListUrlSortField, pageUrl } from "@dashboard/modeling/urls";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-import {
-  createFilterStructure,
-  PageListFilterKeys,
-  PageListFilterOpts,
-} from "../../views/PageList/filters";
+import { PageListFilterKeys, PageListFilterOpts } from "../../views/PageList/filters";
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 
-export interface PageListActionDialogOpts {
-  open: (action: PageListUrlDialog, newParams?: PageListUrlQueryParams) => void;
-  close: () => void;
-}
-export interface PageListPageProps
+interface PageListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<PageListFilterKeys, PageListFilterOpts>,
     SortPage<PageListUrlSortField> {
@@ -56,10 +42,8 @@ export interface PageListPageProps
 
 const PageListPage = ({
   selectedFilterPreset,
-  filterOpts,
   initialSearch,
   onFilterPresetsAll,
-  onFilterChange,
   onFilterPresetDelete,
   onFilterPresetUpdate,
   onSearchChange,
@@ -77,9 +61,7 @@ const PageListPage = ({
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();
-  const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
 
   const { PAGE_OVERVIEW_CREATE, PAGE_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.PAGE_LIST,
@@ -135,52 +117,27 @@ const PageListPage = ({
         </Box>
       </TopNav>
       <DashboardCard>
-        {isPageFiltersEnabled ? (
-          <ListFilters
-            type="expression-filter"
-            initialSearch={initialSearch}
-            searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
-            onSearchChange={onSearchChange}
-            actions={
-              selectedPageIds.length > 0 && (
-                <Box display="flex" gap={4}>
-                  <Button variant="secondary" onClick={onPagesUnpublish}>
-                    <FormattedMessage {...messages.unpublish} />
-                  </Button>
-                  <Button variant="secondary" onClick={onPagesPublish}>
-                    <FormattedMessage {...messages.publish} />
-                  </Button>
-                  <BulkDeleteButton onClick={onPagesDelete}>
-                    <FormattedMessage {...messages.delete} />
-                  </BulkDeleteButton>
-                </Box>
-              )
-            }
-          />
-        ) : (
-          <ListFilters
-            filterStructure={structure}
-            initialSearch={initialSearch}
-            searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
-            onFilterChange={onFilterChange}
-            onSearchChange={onSearchChange}
-            actions={
-              selectedPageIds.length > 0 && (
-                <Box display="flex" gap={4}>
-                  <Button variant="secondary" onClick={onPagesUnpublish}>
-                    <FormattedMessage {...messages.unpublish} />
-                  </Button>
-                  <Button variant="secondary" onClick={onPagesPublish}>
-                    <FormattedMessage {...messages.publish} />
-                  </Button>
-                  <BulkDeleteButton onClick={onPagesDelete}>
-                    <FormattedMessage {...messages.delete} />
-                  </BulkDeleteButton>
-                </Box>
-              )
-            }
-          />
-        )}
+        <ListFilters
+          type="expression-filter"
+          initialSearch={initialSearch}
+          searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
+          onSearchChange={onSearchChange}
+          actions={
+            selectedPageIds.length > 0 && (
+              <Box display="flex" gap={4}>
+                <Button variant="secondary" onClick={onPagesUnpublish}>
+                  <FormattedMessage {...messages.unpublish} />
+                </Button>
+                <Button variant="secondary" onClick={onPagesPublish}>
+                  <FormattedMessage {...messages.publish} />
+                </Button>
+                <BulkDeleteButton onClick={onPagesDelete}>
+                  <FormattedMessage {...messages.delete} />
+                </BulkDeleteButton>
+              </Box>
+            )
+          }
+        />
         <PageListDatagrid
           {...listProps}
           hasRowHover={!isFilterPresetOpen}

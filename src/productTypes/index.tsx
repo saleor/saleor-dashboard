@@ -59,7 +59,7 @@ const ProductTypeUpdate = ({ match }: RouteComponentProps<ProductTypeUpdateRoute
   return <ProductTypeUpdateComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-export const ProductTypeRouter = () => {
+const ProductTypeRouter = () => {
   const intl = useIntl();
 
   return (
@@ -73,5 +73,6 @@ export const ProductTypeRouter = () => {
     </>
   );
 };
+
 ProductTypeRouter.displayName = "ProductTypeRouter";
 export default ProductTypeRouter;

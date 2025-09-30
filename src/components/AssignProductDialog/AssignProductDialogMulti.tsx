@@ -21,7 +21,7 @@ import { useStyles } from "./styles";
 import { Products, SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
 
-export interface AssignProductDialogMultiProps extends FetchMoreProps {
+interface AssignProductDialogMultiProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   products: Products;
   selectedChannels?: SelectedChannel[];

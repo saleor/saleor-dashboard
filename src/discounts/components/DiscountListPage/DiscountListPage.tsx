@@ -29,7 +29,7 @@ import { useLocation } from "react-router";
 
 import { DiscountListDatagrid } from "../DiscountListDatagrid";
 
-export interface DiscountListPageProps
+interface DiscountListPageProps
   extends PageListProps,
     FilterPresetsProps,
     SortPage<DiscountListUrlSortField> {

@@ -13,10 +13,10 @@ import {
   ProductVariantDetailsQuery,
 } from "@dashboard/graphql";
 import {
+  FormsetAdditionalDataChange,
   FormsetAtomicData,
   FormsetChange,
   FormsetData,
-  FormsetMetadataChange,
   UseFormsetOutput,
 } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
@@ -70,26 +70,54 @@ export function createAttributeMultiChangeHandler(
 }
 
 export function createAttributeReferenceChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
+  attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
 ): FormsetChange<string[]> {
   return (attributeId: string, values: string[]) => {
-    changeAttributeData(attributeId, values);
+    attributes.change(attributeId, values);
+
+    /* Note: "additionalData" is a part of useFormset API.
+     * In here it is used to hold display values for references selected by user
+     * before they are returned from our API as attribute references
+     *  */
+    const currentAdditionalData =
+      attributes.data.find(a => a.id === attributeId)?.additionalData || [];
+
+    // When user removes attribute values from selection, delete them in useFormset additionalData
+    const syncedAdditionalData = currentAdditionalData.filter((meta: AttributeValuesMetadata) =>
+      values.includes(meta.value),
+    );
+
+    attributes.setAdditionalData(attributeId, syncedAdditionalData);
+
     triggerChange();
   };
 }
 
-const mergeReferencesMetadata = (
+const mergeReferencesAdditionalData = (
   prev: AttributeValuesMetadata[],
   next: AttributeValuesMetadata[],
 ) => uniqBy([...(prev ?? []), ...(next ?? [])], "value");
 
-export function createAttributeReferenceMetadataHandler(
-  changeAttributeMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>,
+export function createAttributeReferenceAdditionalDataHandler(
+  attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
-): FormsetMetadataChange<AttributeValuesMetadata[]> {
+): FormsetAdditionalDataChange<AttributeValuesMetadata[]> {
+  /* Note: "additionalData" is a part of useFormset API, NOT Saleor metadata
+   * In here it is used to hold display values for references selected by user
+   * before they are returned from our API as attribute references
+   *  */
+
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
-    changeAttributeMetadata(attributeId, values, mergeReferencesMetadata);
+    const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
+      const merged = mergeReferencesAdditionalData(prev, next);
+      const currentValues = attributes.data.find(a => a.id === attributeId)?.value || [];
+
+      // Filter out additionalData for references that were removed from attribute
+      return merged.filter(meta => currentValues.includes(meta.value));
+    };
+
+    attributes.setAdditionalData(attributeId, values, mergeFunction);
     triggerChange();
   };
 }

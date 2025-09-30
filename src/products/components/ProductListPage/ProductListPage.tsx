@@ -47,7 +47,7 @@ import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
 
-export interface ProductListPageProps
+interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     SearchPageProps,
     Omit<TabPageProps, "onTabDelete" | "onTabDelete">,
@@ -80,9 +80,8 @@ export type ProductListViewType = "datagrid" | "tile";
 
 const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
-export const ProductListPage = (props: ProductListPageProps) => {
+const ProductListPage = (props: ProductListPageProps) => {
   const {
-    currencySymbol,
     defaultSettings,
     gridAttributesOpts,
     limits,
@@ -301,5 +300,6 @@ export const ProductListPage = (props: ProductListPageProps) => {
     </ListPageLayout>
   );
 };
+
 ProductListPage.displayName = "ProductListPage";
 export default ProductListPage;

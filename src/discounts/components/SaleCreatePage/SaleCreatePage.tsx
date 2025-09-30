@@ -36,7 +36,7 @@ export interface FormData extends MetadataFormData {
   value: string;
 }
 
-export interface SaleCreatePageProps {
+interface SaleCreatePageProps {
   allChannelsCount: number;
   channelListings: ChannelSaleFormData[];
   disabled: boolean;

@@ -7,7 +7,6 @@ import { Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
-  createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
@@ -19,10 +18,9 @@ import {
   SaleListUrlFilters,
   SaleListUrlFiltersEnum,
   SaleListUrlFiltersWithMultipleValues,
-  SaleListUrlQueryParams,
 } from "../../urls";
 
-export const SALE_FILTERS_KEY = "saleFilters";
+const SALE_FILTERS_KEY = "saleFilters";
 
 export function getFilterOpts(params: SaleListUrlFilters, channels: Option[]): SaleListFilterOpts {
   return {
@@ -98,11 +96,3 @@ export function getFilterQueryParam(filter: FilterElement<SaleFilterKeys>): Sale
 }
 
 export const storageUtils = createFilterTabUtils<string>(SALE_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  SaleListUrlQueryParams,
-  SaleListUrlFilters
->({
-  ...SaleListUrlFiltersEnum,
-  ...SaleListUrlFiltersWithMultipleValues,
-});

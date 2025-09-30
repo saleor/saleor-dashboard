@@ -36,7 +36,7 @@ export interface CustomerEditData {
   prevUserEmail?: string;
 }
 
-export interface OrderCustomerProps extends Partial<FetchMoreProps> {
+interface OrderCustomerProps extends Partial<FetchMoreProps> {
   order: OrderDetailsFragment;
   users?: RelayToFlat<SearchCustomersQuery["search"]>;
   loading?: boolean;
