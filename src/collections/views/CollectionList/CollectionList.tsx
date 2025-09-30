@@ -5,7 +5,6 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { createCollectionsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
-import { useFlag } from "@dashboard/featureFlags";
 import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -35,7 +34,7 @@ import {
   CollectionListUrlDialog,
   CollectionListUrlQueryParams,
 } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface CollectionListProps {
@@ -47,7 +46,6 @@ const CollectionList = ({ params }: CollectionListProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.COLLECTION_LIST);
-  const { enabled: isNewCollectionFilterEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
@@ -87,17 +85,7 @@ const CollectionList = ({ params }: CollectionListProps) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const selectedChannel_legacy = availableChannels.find(channel => channel.slug === params.channel);
   const queryVariables = useMemo(() => {
-    if (!isNewCollectionFilterEnabled) {
-      return {
-        ...paginationState,
-        filter: getFilterVariables(params),
-        sort: getSortQueryVariables(params),
-        channel: selectedChannel_legacy?.slug,
-      };
-    }
-
     const { channel, filter } = createCollectionsQueryVariables(valueProvider.value);
 
     return {
@@ -109,7 +97,7 @@ const CollectionList = ({ params }: CollectionListProps) => {
       sort: getSortQueryVariables(params),
       channel, // Saleor docs say 'channel' in filter is deprecated and should be moved to root
     };
-  }, [params, settings.rowNumber, valueProvider.value, isNewCollectionFilterEnabled]);
+  }, [params, settings.rowNumber, valueProvider.value]);
   const selectedChannel = availableChannels.find(
     channel => channel.slug === queryVariables.channel,
   );
@@ -180,9 +168,7 @@ const CollectionList = ({ params }: CollectionListProps) => {
   }, [selectedRowIds]);
 
   const filterOpts = getFilterOpts(params, channelOpts);
-  const selectedChannelId = isNewCollectionFilterEnabled
-    ? selectedChannel?.id
-    : selectedChannel_legacy?.id;
+  const selectedChannelId = selectedChannel?.id;
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
