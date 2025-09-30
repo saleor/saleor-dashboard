@@ -7,7 +7,6 @@ import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   ConfigurationItemInput,
   PluginConfigurationExtendedFragment,
@@ -55,7 +54,6 @@ const PluginsDetailsPage = ({
   setSelectedChannelId,
 }: PluginsDetailsPageProps) => {
   const intl = useIntl();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const navigate = useNavigator();
   const initialFormData: PluginDetailsPageFormData = {
     active: selectedConfig?.active,
@@ -97,11 +95,7 @@ const PluginsDetailsPage = ({
         return (
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
-              href={
-                isExtensionsDevEnabled
-                  ? ExtensionsUrls.resolveInstalledExtensionsUrl()
-                  : pluginListUrl()
-              }
+              href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
               title={intl.formatMessage(
                 {
                   id: "EtGDeK",
