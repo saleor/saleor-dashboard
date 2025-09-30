@@ -5,7 +5,7 @@ import { AppQuery } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import { Box } from "@saleor/macaw-ui-next";
 
-import { AppFrame } from "../AppFrame";
+import { AppFrame } from "../AppFrame/AppFrame";
 import { AppPageNav } from "./AppPageNav";
 
 interface AppPageProps {
@@ -15,7 +15,7 @@ interface AppPageProps {
   refetch?: () => void;
 }
 
-const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
+export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
   const shop = useShop();
 
   /**
@@ -62,4 +62,3 @@ const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
 };
 
 AppPage.displayName = "AppPage";
-export default AppPage;
