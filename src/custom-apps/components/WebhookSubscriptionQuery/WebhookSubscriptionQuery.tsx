@@ -10,7 +10,7 @@ import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import GraphiQL from "../../../components/GraphiQL";
-import { WebhookFormData } from "../WebhookDetailsPage";
+import { WebhookFormData } from "../WebhookDetailsPage/WebhookDetailsPage";
 import { useStyles } from "./styles";
 
 const messages = defineMessages({

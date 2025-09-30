@@ -13,7 +13,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { useIntl } from "react-intl";
 
-import CustomAppInformation from "../CustomAppInformation";
+import CustomAppInformation from "../CustomAppInformation/CustomAppInformation";
 
 export interface CustomAppCreatePageFormData {
   hasFullAccess: boolean;

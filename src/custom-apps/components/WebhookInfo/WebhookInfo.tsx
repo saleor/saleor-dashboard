@@ -13,7 +13,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WebhookFormData } from "../WebhookDetailsPage";
+import { WebhookFormData } from "../WebhookDetailsPage/WebhookDetailsPage";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 

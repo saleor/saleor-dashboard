@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 
 import CustomAppCreatePage, {
   CustomAppCreatePageFormData,
-} from "../../components/CustomAppCreatePage";
+} from "../../components/CustomAppCreatePage/CustomAppCreatePage";
 import { messages } from "./messages";
 
 interface CustomAppCreateProps {
