@@ -27,6 +27,7 @@ export default tseslint.config(
     "playwright/auth.js",
     "**/*.generated.ts",
     ".github/**/*.js",
+    ".featureFlags/",
   ]),
 
   eslint.configs.recommended,
