@@ -4,7 +4,6 @@ import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
 import { StopPropagation } from "@dashboard/components/StopPropagation";
-import { useFlag } from "@dashboard/featureFlags";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -18,7 +17,6 @@ import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
 const InstalledAppListRow = (props: InstalledApp) => {
-  const { enabled: appAlertsEnabled } = useFlag("app_alerts"); // Note: when removing clean up tests
   const { app, isExternal, logo } = props;
   const intl = useIntl();
   const location = useLocation();
@@ -109,17 +107,8 @@ const InstalledAppListRow = (props: InstalledApp) => {
             onMouseLeave={() => setIsMouseOverAlertIcons(false)}
           >
             <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
-              {appAlertsEnabled ? (
-                <AppRowDisabledAlert app={app} />
-              ) : (
-                !app.isActive && (
-                  <Text size={2} color="default2">
-                    <FormattedMessage {...messages.appDisabled} />
-                  </Text>
-                )
-              )}
-
-              {appAlertsEnabled && <AppRowWebhookIssueAlert app={app} />}
+              <AppRowDisabledAlert app={app} />
+              <AppRowWebhookIssueAlert app={app} />
             </Box>
           </Box>
         </StopPropagation>

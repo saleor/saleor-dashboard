@@ -1,7 +1,6 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { getExtensionsConfig } from "@dashboard/config";
 import { ExtensionData, ExtensionsGroups } from "@dashboard/extensions/types";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   InstalledAppFragment,
   PermissionEnum,
@@ -12,8 +11,6 @@ import {
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
-
-const byAppType = (extension: ExtensionData) => extension.type === "APP";
 
 const isPluginEnabled = (plugin: PluginBaseFragment | undefined) => {
   if (!plugin) {
@@ -64,17 +61,14 @@ const toExtension = (
 const getFilteredExtensions = ({
   extensions,
   installedApps,
-  showAllExtensions,
   allPlugins,
 }: {
   extensions: ExtensionData[];
   installedApps: InstalledAppFragment[];
-  showAllExtensions: boolean;
+
   allPlugins: PluginBaseFragment[] | undefined;
 }) => {
-  const filteredExtensions = showAllExtensions ? extensions : extensions.filter(byAppType);
-
-  return filteredExtensions.map(extension => toExtension(extension, installedApps, allPlugins));
+  return extensions.map(extension => toExtension(extension, installedApps, allPlugins));
 };
 
 export const useExploreExtensions = () => {
@@ -84,7 +78,6 @@ export const useExploreExtensions = () => {
       first: 100,
     },
   });
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const userPermissions = useUserPermissions();
   const hasManagePluginsPermission = !!userPermissions?.find(
     ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
@@ -95,10 +88,8 @@ export const useExploreExtensions = () => {
     variables: {
       first: 100,
     },
-    skip: !isExtensionsDevEnabled || !hasManagePluginsPermission,
+    skip: !hasManagePluginsPermission,
   });
-
-  const { enabled: showAllExtensions } = useFlag("extensions");
 
   const installedApps = mapEdgesToItems(installedAppsData?.apps) ?? [];
   const plugins = mapEdgesToItems(pluginsQuery?.plugins) ?? [];
@@ -111,7 +102,6 @@ export const useExploreExtensions = () => {
         items: getFilteredExtensions({
           extensions: extensions.items,
           installedApps,
-          showAllExtensions,
           allPlugins: plugins,
         }),
       },

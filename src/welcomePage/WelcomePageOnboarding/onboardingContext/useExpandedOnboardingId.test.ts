@@ -22,7 +22,6 @@ describe("useExpandedOnboardingId", () => {
       { id: "explore-orders", completed: false, expanded: undefined },
       { id: "graphql-playground", completed: false, expanded: undefined },
       { id: "view-extensions", completed: false, expanded: undefined },
-      { id: "view-webhooks", completed: false, expanded: undefined },
       { id: "invite-staff", completed: false, expanded: undefined },
     ];
 
@@ -48,7 +47,6 @@ describe("useExpandedOnboardingId", () => {
       { id: "explore-orders", completed: false, expanded: undefined },
       { id: "graphql-playground", completed: false, expanded: undefined },
       { id: "view-extensions", completed: false, expanded: undefined },
-      { id: "view-webhooks", completed: false, expanded: undefined },
       { id: "invite-staff", completed: false, expanded: undefined },
     ];
 
@@ -72,7 +70,6 @@ describe("useExpandedOnboardingId", () => {
         "explore-orders": false,
         "graphql-playground": false,
         "view-extensions": false,
-        "view-webhooks": false,
         "invite-staff": false,
       },
     } as OnboardingState;
@@ -83,7 +80,6 @@ describe("useExpandedOnboardingId", () => {
       { id: "explore-orders", completed: false, expanded: false },
       { id: "graphql-playground", completed: false, expanded: false },
       { id: "view-extensions", completed: false, expanded: false },
-      { id: "view-webhooks", completed: false, expanded: false },
       { id: "invite-staff", completed: false, expanded: false },
     ];
 
@@ -119,7 +115,6 @@ describe("useExpandedOnboardingId", () => {
       { id: "explore-orders", completed: false, expanded: undefined },
       { id: "graphql-playground", completed: false, expanded: undefined },
       { id: "view-extensions", completed: false, expanded: undefined },
-      { id: "view-webhooks", completed: false, expanded: undefined },
       { id: "invite-staff", completed: false, expanded: undefined },
     ];
 
@@ -167,7 +162,6 @@ describe("useExpandedOnboardingId", () => {
       { id: "explore-orders", completed: false, expanded: undefined },
       { id: "graphql-playground", completed: false, expanded: undefined },
       { id: "view-extensions", completed: false, expanded: undefined },
-      { id: "view-webhooks", completed: false, expanded: undefined },
       { id: "invite-staff", completed: false, expanded: undefined },
     ];
 

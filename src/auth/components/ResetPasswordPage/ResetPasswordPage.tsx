@@ -1,3 +1,4 @@
+import { useLastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { getAppMountUri } from "@dashboard/config";
@@ -5,8 +6,10 @@ import { AccountErrorCode } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import { ArrowLeftIcon, Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ArrowLeftIcon, Box, Button, Paragraph, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { ChangingPasswordWarning } from "../ChangingPasswordWarning";
 
 export interface ResetPasswordPageFormData {
   email: string;
@@ -20,6 +23,7 @@ interface ResetPasswordPageProps {
 const ResetPasswordPage = (props: ResetPasswordPageProps) => {
   const { disabled, error, onSubmit } = props;
   const intl = useIntl();
+  const { hasUserLoggedViaExternalMethod } = useLastLoginMethod();
 
   return (
     <Form initial={{ email: "" }} onSubmit={onSubmit}>
@@ -47,12 +51,19 @@ const ResetPasswordPage = (props: ResetPasswordPageProps) => {
               <Text>{error}</Text>
             </Box>
           )}
-          <Text fontWeight="light" color="default2" display="block">
+          <Paragraph size={2} color="default2" fontWeight="bold">
             <FormattedMessage
-              id="54M0Gu"
-              defaultMessage="Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
+              id="h7yWcT"
+              defaultMessage="Enter your email. If it matches an account, we’ll send you a reset link within a few minutes."
             />
-          </Text>
+          </Paragraph>
+
+          {hasUserLoggedViaExternalMethod && (
+            <>
+              <FormSpacer />
+              <ChangingPasswordWarning />
+            </>
+          )}
           <FormSpacer />
           <TextField
             autoFocus

@@ -14,7 +14,6 @@ import {
   getExtensionsItemsForVoucherOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { useFlag } from "@dashboard/featureFlags";
 import { VoucherFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -45,7 +44,6 @@ interface VoucherListPageProps
 const VoucherListPage = ({
   filterOpts,
   initialSearch,
-  onFilterChange,
   onSearchChange,
   hasPresetsChanged,
   onFilterPresetChange,
@@ -57,12 +55,10 @@ const VoucherListPage = ({
   selectedFilterPreset,
   onVoucherDelete,
   selectedVouchersIds,
-  currencySymbol,
   ...listProps
 }: VoucherListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const { enabled: isVoucherFiltersEnabled } = useFlag("new_filters");
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterDependency = structure.find(getByName("channel"));
@@ -135,47 +131,24 @@ const VoucherListPage = ({
         </Box>
       </TopNav>
       <DashboardCard>
-        {isVoucherFiltersEnabled ? (
-          <ListFilters
-            type="expression-filter"
-            initialSearch={initialSearch}
-            onSearchChange={onSearchChange}
-            searchPlaceholder={intl.formatMessage({
-              id: "bPshhv",
-              defaultMessage: "Search vouchers...",
-            })}
-            actions={
-              <Box display="flex" gap={4}>
-                {selectedVouchersIds.length > 0 && (
-                  <BulkDeleteButton onClick={onVoucherDelete}>
-                    <FormattedMessage defaultMessage="Delete vouchers" id="lfXze9" />
-                  </BulkDeleteButton>
-                )}
-              </Box>
-            }
-          />
-        ) : (
-          <ListFilters<VoucherFilterKeys>
-            currencySymbol={currencySymbol}
-            initialSearch={initialSearch}
-            onFilterChange={onFilterChange}
-            onSearchChange={onSearchChange}
-            filterStructure={structure}
-            searchPlaceholder={intl.formatMessage({
-              id: "bPshhv",
-              defaultMessage: "Search vouchers...",
-            })}
-            actions={
-              <Box display="flex" gap={4}>
-                {selectedVouchersIds.length > 0 && (
-                  <BulkDeleteButton onClick={onVoucherDelete}>
-                    <FormattedMessage defaultMessage="Delete vouchers" id="lfXze9" />
-                  </BulkDeleteButton>
-                )}
-              </Box>
-            }
-          />
-        )}
+        <ListFilters
+          type="expression-filter"
+          initialSearch={initialSearch}
+          onSearchChange={onSearchChange}
+          searchPlaceholder={intl.formatMessage({
+            id: "bPshhv",
+            defaultMessage: "Search vouchers...",
+          })}
+          actions={
+            <Box display="flex" gap={4}>
+              {selectedVouchersIds.length > 0 && (
+                <BulkDeleteButton onClick={onVoucherDelete}>
+                  <FormattedMessage defaultMessage="Delete vouchers" id="lfXze9" />
+                </BulkDeleteButton>
+              )}
+            </Box>
+          }
+        />
 
         <VoucherListDatagrid filterDependency={filterDependency} {...listProps} />
       </DashboardCard>
