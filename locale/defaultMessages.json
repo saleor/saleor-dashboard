@@ -485,10 +485,6 @@
     "context": "ProductTypeDeleteWarningDialog multiple consent label",
     "string": "Yes, I want to delete those products types and assigned products"
   },
-  "0fM/pV": {
-    "context": "message title",
-    "string": "App installed"
-  },
   "0iMYc+": {
     "context": "field is optional",
     "string": "(Optional)"
@@ -1333,10 +1329,6 @@
   },
   "5sg7KC": {
     "string": "Password"
-  },
-  "5t/4um": {
-    "context": "message title",
-    "string": "Couldn’t Install {name}"
   },
   "5tMkmJ": {
     "context": "dialog header",
@@ -3198,9 +3190,6 @@
   "Gzg8hy": {
     "context": "section header",
     "string": "Invoices"
-  },
-  "H+4rvh": {
-    "string": "Webhooks are available in Saleor to Extensions. To create a Webhook you need to create an Extension. You can do that in the Extensions section."
   },
   "H/f9KR": {
     "context": "section header returned",
@@ -6389,10 +6378,6 @@
     "context": "details title",
     "string": "Details"
   },
-  "ZprV2g": {
-    "context": "app has been installed",
-    "string": "{name} is ready to be used"
-  },
   "Zptsep": {
     "context": "order was discounted event title",
     "string": "Order was discounted by"
@@ -6410,9 +6395,6 @@
   },
   "Zvo5iu": {
     "string": "API reference"
-  },
-  "Zz67wc": {
-    "string": "View and update your webhooks and events."
   },
   "a+WuZg": {
     "context": "cta button label",
@@ -7151,10 +7133,6 @@
     "context": "button",
     "string": "Choose file"
   },
-  "eWrHmu": {
-    "context": "onboarding step title",
-    "string": "View webhooks functionalities"
-  },
   "eY+BKQ": {
     "string": "The extension manifest was not found. ({errorCode})"
   },
@@ -7668,10 +7646,6 @@
   "ht9yOD": {
     "context": "table head",
     "string": "Collection Name"
-  },
-  "htGz4h": {
-    "context": "onboarding step description",
-    "string": "Invite team members and assign permissions on Product Information Management (PIM), Order Management System (OMS), Promotions engine, Integrations (Apps)"
   },
   "htvX+Z": {
     "string": "Deny"
@@ -8376,9 +8350,6 @@
   },
   "m0Dz+2": {
     "string": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
-  },
-  "m19JfL": {
-    "string": "View and update your plugins and their settings."
   },
   "m2Jb3P": {
     "string": "You don't have permission to manage authentication tokens. Contact your administrator for access."
@@ -9912,10 +9883,6 @@
   },
   "vUY6ir": {
     "string": "Amount must be higher than 0 when you transfer funds"
-  },
-  "vUzuyz": {
-    "context": "onboarding step description",
-    "string": "Webhooks are available in Saleor to both Local and External Apps. To create a Webhook you need to create a Local App first. You can do that in the Extensions section."
   },
   "vVviA2": {
     "string": "Those permissions are out of your scope"

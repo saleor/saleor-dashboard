@@ -6,7 +6,6 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";
-import { useFlag } from "@dashboard/featureFlags";
 import {
   AppTypeEnum,
   PermissionEnum,
@@ -101,7 +100,6 @@ const resolveExtensionHref = ({
 
 export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
-  const { enabled: isExtensionsDevEnabled } = useFlag("extensions");
   const userPermissions = useUserPermissions();
   const hasManagePluginsPermission = !!userPermissions?.find(
     ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
@@ -111,11 +109,6 @@ export const useInstalledExtensions = () => {
     displayLoader: true,
     variables: {
       first: 100,
-      ...(!isExtensionsDevEnabled && {
-        filter: {
-          type: AppTypeEnum.THIRDPARTY,
-        },
-      }),
     },
   });
   const installedAppsData = mapEdgesToItems(data?.apps) || [];
@@ -125,7 +118,7 @@ export const useInstalledExtensions = () => {
     variables: {
       first: 100,
     },
-    skip: !isExtensionsDevEnabled || !hasManagePluginsPermission,
+    skip: !hasManagePluginsPermission,
   });
   const installedPluginsData = hasManagePluginsPermission
     ? mapEdgesToItems(plugins?.plugins) || []
@@ -137,9 +130,6 @@ export const useInstalledExtensions = () => {
       first: 100,
       filter: {
         isActive: true,
-        ...(!isExtensionsDevEnabled && {
-          type: AppTypeEnum.THIRDPARTY,
-        }),
       },
       canFetchAppEvents: hasManagedAppsPermission,
     },
@@ -188,8 +178,7 @@ export const useInstalledExtensions = () => {
 
   return {
     installedExtensions: [...installedApps, ...installedPlugins].sort(sortByName),
-    installedAppsLoading:
-      !data?.apps || (isExtensionsDevEnabled && hasManagePluginsPermission && !plugins?.plugins),
+    installedAppsLoading: !data?.apps || (hasManagePluginsPermission && !plugins?.plugins),
     refetchInstalledApps: refetch,
   };
 };
