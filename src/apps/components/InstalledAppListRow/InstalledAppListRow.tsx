@@ -16,7 +16,7 @@ import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
-const InstalledAppListRow = (props: InstalledApp) => {
+export const InstalledAppListRow = (props: InstalledApp) => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
   const location = useLocation();
@@ -116,5 +116,3 @@ const InstalledAppListRow = (props: InstalledApp) => {
     </Link>
   );
 };
-
-export default InstalledAppListRow;

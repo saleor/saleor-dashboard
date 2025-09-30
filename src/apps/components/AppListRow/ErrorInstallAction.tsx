@@ -11,7 +11,7 @@ interface InstallErrorActionProps {
   removeInstall?: () => void;
 }
 
-const InstallErrorAction = ({
+export const InstallErrorAction = ({
   appInstallation,
   retryInstall,
   removeInstall,
@@ -66,4 +66,3 @@ const InstallErrorAction = ({
 };
 
 InstallErrorAction.displayName = "InstallErrorAction";
-export default InstallErrorAction;

@@ -1,7 +1,7 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 
-import AppInProgressDeleteDialog from "./AppInProgressDeleteDialog";
+import { AppInProgressDeleteDialog } from "./AppInProgressDeleteDialog";
 import msgs from "./messages";
 
 describe("Apps AppInProgressDeleteDialog", () => {

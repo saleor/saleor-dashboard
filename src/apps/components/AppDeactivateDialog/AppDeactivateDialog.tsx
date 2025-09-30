@@ -19,7 +19,7 @@ interface AppDeactivateDialogProps {
 }
 
 /** @deprecated use component from extensions/ */
-const AppDeactivateDialog = ({
+export const AppDeactivateDialog = ({
   confirmButtonState,
   open,
   name,
@@ -63,4 +63,3 @@ const AppDeactivateDialog = ({
 };
 
 AppDeactivateDialog.displayName = "AppDeactivateDialog";
-export default AppDeactivateDialog;

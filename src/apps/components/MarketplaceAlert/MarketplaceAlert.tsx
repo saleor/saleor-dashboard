@@ -10,7 +10,7 @@ interface MarketplaceAlertProps {
   error?: Error;
 }
 
-const MarketplaceAlert = ({ error }: MarketplaceAlertProps) => {
+export const MarketplaceAlert = ({ error }: MarketplaceAlertProps) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -38,4 +38,3 @@ const MarketplaceAlert = ({ error }: MarketplaceAlertProps) => {
 };
 
 MarketplaceAlert.displayName = "MarketplaceAlert";
-export default MarketplaceAlert;

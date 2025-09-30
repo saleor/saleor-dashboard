@@ -20,7 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { AppAvatar } from "../AppAvatar/AppAvatar";
 import { useStyles } from "./styles";
 
-const NotInstalledAppListRow = (props: AppInstallation) => {
+export const NotInstalledAppListRow = (props: AppInstallation) => {
   const { appInstallation, isExternal, logo } = props;
   const intl = useIntl();
   const classes = useStyles(props);
@@ -107,5 +107,3 @@ const NotInstalledAppListRow = (props: AppInstallation) => {
     </List.Item>
   );
 };
-
-export default NotInstalledAppListRow;

@@ -24,7 +24,7 @@ interface AppInstallPageProps {
   onSubmit: () => SubmitPromise<NonNullable<AppInstallMutation["appInstall"]>["errors"]>;
 }
 
-const AppInstallPage = ({
+export const AppInstallPage = ({
   data,
   loading,
   navigateToAppsList,
@@ -160,4 +160,3 @@ const AppInstallPage = ({
 };
 
 AppInstallPage.displayName = "AppInstallPage";
-export default AppInstallPage;
