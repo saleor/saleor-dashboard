@@ -10,7 +10,12 @@ interface HeaderProps {
   onAppDeleteOpen: () => void;
 }
 
-const Header = ({ data, onAppActivateOpen, onAppDeactivateOpen, onAppDeleteOpen }: HeaderProps) => {
+export const Header = ({
+  data,
+  onAppActivateOpen,
+  onAppDeactivateOpen,
+  onAppDeleteOpen,
+}: HeaderProps) => {
   const getBackButtonUrl = () => {
     /**
      * App is null with first render
@@ -56,5 +61,3 @@ const Header = ({ data, onAppActivateOpen, onAppDeactivateOpen, onAppDeleteOpen 
     </>
   );
 };
-
-export default Header;

@@ -10,7 +10,7 @@ interface TokenDeleteDialogProps {
   name: string;
 }
 
-const TokenDeleteDialog = ({
+export const TokenDeleteDialog = ({
   name,
   confirmButtonState,
   onClose,
@@ -45,4 +45,3 @@ const TokenDeleteDialog = ({
 };
 
 TokenDeleteDialog.displayName = "TokenDeleteDialog";
-export default TokenDeleteDialog;

@@ -15,7 +15,7 @@ interface AppActivateDialogProps {
   onConfirm: () => void;
 }
 
-const AppActivateDialog = ({
+export const AppActivateDialog = ({
   confirmButtonState,
   open,
   name,
@@ -50,4 +50,3 @@ const AppActivateDialog = ({
 };
 
 AppActivateDialog.displayName = "AppActivateDialog";
-export default AppActivateDialog;

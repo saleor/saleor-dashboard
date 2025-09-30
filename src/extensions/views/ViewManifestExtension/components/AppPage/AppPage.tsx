@@ -16,7 +16,7 @@ interface AppPageProps {
   refetch?: () => void;
 }
 
-const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
+export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
   const shop = useShop();
 
   /**
@@ -64,4 +64,3 @@ const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
 };
 
 AppPage.displayName = "AppPage";
-export default AppPage;

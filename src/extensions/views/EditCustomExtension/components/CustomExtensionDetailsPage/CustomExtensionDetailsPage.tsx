@@ -6,7 +6,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import AppHeaderOptions from "@dashboard/extensions/components/AppHeaderOptions";
+import { AppHeaderOptions } from "@dashboard/extensions/components/AppHeaderOptions";
 import { appMessages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
@@ -53,7 +53,7 @@ interface CustomExtensionDetailsPageProps {
   onAppDeleteOpen: () => void;
 }
 
-const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProps) => {
+export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProps) => {
   const {
     disabled,
     errors,
@@ -195,4 +195,3 @@ const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProps) => {
 };
 
 CustomExtensionDetailsPage.displayName = "CustomAppDetailsPage";
-export default CustomExtensionDetailsPage;

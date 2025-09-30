@@ -55,7 +55,7 @@ interface WebhookDetailsPageProps {
   availableEvents: IntrospectionNode[];
 }
 
-const WebhookDetailsPage = ({
+export const WebhookDetailsPage = ({
   appId,
   disabled,
   errors,
@@ -171,4 +171,3 @@ const WebhookDetailsPage = ({
 };
 
 WebhookDetailsPage.displayName = "WebhookDetailsPage";
-export default WebhookDetailsPage;
