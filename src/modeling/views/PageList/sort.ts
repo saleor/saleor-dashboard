@@ -11,6 +11,9 @@ function getSortQueryField(sort: PageListUrlSortField): PageSortField {
       return PageSortField.VISIBILITY;
     case PageListUrlSortField.slug:
       return PageSortField.SLUG;
+    case PageListUrlSortField.contentType:
+      // Content type sorting is not supported by the GraphQL API
+      return undefined;
     default:
       return undefined;
   }

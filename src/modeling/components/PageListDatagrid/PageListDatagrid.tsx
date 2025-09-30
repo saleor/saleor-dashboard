@@ -52,11 +52,12 @@ export const PageListDatagrid = ({
     },
     [onUpdateListSettings],
   );
+  const defaultColumns = ["title", "slug", "visible", "contentType"];
   const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
     useColumns({
       gridName: "page_list",
       staticColumns: pageListStaticColumns,
-      selectedColumns: settings?.columns ?? [],
+      selectedColumns: settings?.columns ?? defaultColumns,
       onSave: onColumnChange,
     });
   const { theme: currentTheme } = useTheme();

@@ -34,8 +34,8 @@ export const columnsMessages = defineMessages({
     description: "column header",
   },
   contentType: {
-    id: "YfenRT",
-    defaultMessage: "Content Type",
+    id: "fuUksg",
+    defaultMessage: "Model Type",
     description: "column header",
   },
 });
