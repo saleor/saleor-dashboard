@@ -4,9 +4,9 @@ import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents/WebhookEvents";
-import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo/WebhookInfo";
-import WebhookStatus from "@dashboard/custom-apps/components/WebhookStatus/WebhookStatus";
+import { WebhookEvents } from "@dashboard/custom-apps/components/WebhookEvents/WebhookEvents";
+import { WebhookInfo } from "@dashboard/custom-apps/components/WebhookInfo/WebhookInfo";
+import { WebhookStatus } from "@dashboard/custom-apps/components/WebhookStatus/WebhookStatus";
 import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler,
@@ -28,9 +28,9 @@ import { useEffect, useState } from "react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
-import PermissionAlert from "../PermissionAlert/PermissionAlert";
-import WebhookHeaders from "../WebhookHeaders/WebhookHeaders";
-import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery/WebhookSubscriptionQuery";
+import { PermissionAlert } from "../PermissionAlert/PermissionAlert";
+import { WebhookHeaders } from "../WebhookHeaders/WebhookHeaders";
+import { WebhookSubscriptionQuery } from "../WebhookSubscriptionQuery/WebhookSubscriptionQuery";
 import { getHeaderTitle, messages } from "./messages";
 import { getWebhookFormInitialFormValues } from "./webhookForm";
 
@@ -56,7 +56,7 @@ interface WebhookDetailsPageProps {
   availableEvents: IntrospectionNode[];
 }
 
-const WebhookDetailsPage = ({
+export const WebhookDetailsPage = ({
   appId,
   disabled,
   errors,
@@ -167,4 +167,3 @@ const WebhookDetailsPage = ({
 };
 
 WebhookDetailsPage.displayName = "WebhookDetailsPage";
-export default WebhookDetailsPage;

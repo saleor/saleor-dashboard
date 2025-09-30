@@ -13,7 +13,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { useIntl } from "react-intl";
 
-import CustomAppInformation from "../CustomAppInformation/CustomAppInformation";
+import { CustomAppInformation } from "../CustomAppInformation/CustomAppInformation";
 
 export interface CustomAppCreatePageFormData {
   hasFullAccess: boolean;
@@ -28,7 +28,7 @@ interface CustomAppCreatePageProps {
   onSubmit: (data: CustomAppCreatePageFormData) => SubmitPromise<AppErrorFragment[]>;
 }
 
-const CustomAppCreatePage = (props: CustomAppCreatePageProps) => {
+export const CustomAppCreatePage = (props: CustomAppCreatePageProps) => {
   const { disabled, errors, permissions, saveButtonBarState, onSubmit } = props;
   const intl = useIntl();
   const navigate = useNavigator();
@@ -97,4 +97,3 @@ const CustomAppCreatePage = (props: CustomAppCreatePageProps) => {
 };
 
 CustomAppCreatePage.displayName = "CustomAppCreatePage";
-export default CustomAppCreatePage;

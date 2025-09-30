@@ -11,7 +11,7 @@ interface WebhookStatusProps {
   onChange: (event: ChangeEvent, cb?: () => void) => void;
 }
 
-const WebhookStatus = ({ data, disabled, onChange }: WebhookStatusProps) => {
+export const WebhookStatus = ({ data, disabled, onChange }: WebhookStatusProps) => {
   const intl = useIntl();
 
   return (
@@ -30,4 +30,3 @@ const WebhookStatus = ({ data, disabled, onChange }: WebhookStatusProps) => {
 };
 
 WebhookStatus.displayName = "WebhookStatus";
-export default WebhookStatus;

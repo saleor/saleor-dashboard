@@ -36,7 +36,7 @@ interface WebhookEventsProps {
   onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
-const WebhookEvents = ({
+export const WebhookEvents = ({
   data,
   setQuery,
   onSyncEventChange,
@@ -172,4 +172,3 @@ const WebhookEvents = ({
 };
 
 WebhookEvents.displayName = "WebhookEvents";
-export default WebhookEvents;

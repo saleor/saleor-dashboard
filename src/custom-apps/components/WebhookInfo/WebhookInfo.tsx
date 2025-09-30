@@ -24,7 +24,7 @@ interface WebhookInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const WebhookInfo = ({ data, disabled, errors, onChange }: WebhookInfoProps) => {
+export const WebhookInfo = ({ data, disabled, errors, onChange }: WebhookInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
@@ -118,4 +118,3 @@ const WebhookInfo = ({ data, disabled, errors, onChange }: WebhookInfoProps) => 
 };
 
 WebhookInfo.displayName = "WebhookInfo";
-export default WebhookInfo;

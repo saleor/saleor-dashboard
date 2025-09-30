@@ -26,7 +26,7 @@ interface CustomAppInfoProps {
   onChange: FormChange;
 }
 
-const CustomAppInformation = ({ data, disabled, errors, onChange }: CustomAppInfoProps) => {
+export const CustomAppInformation = ({ data, disabled, errors, onChange }: CustomAppInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name"], errors);
@@ -63,4 +63,3 @@ const CustomAppInformation = ({ data, disabled, errors, onChange }: CustomAppInf
 };
 
 CustomAppInformation.displayName = "CustomAppInformation";
-export default CustomAppInformation;

@@ -11,7 +11,7 @@ interface CustomAppDefaultTokenProps {
   onTokenClose: () => void;
 }
 
-const CustomAppDefaultToken = (props: CustomAppDefaultTokenProps) => {
+export const CustomAppDefaultToken = (props: CustomAppDefaultTokenProps) => {
   const { token, onTokenClose } = props;
   const [copied, copy] = useClipboard();
 
@@ -54,4 +54,3 @@ const CustomAppDefaultToken = (props: CustomAppDefaultTokenProps) => {
 };
 
 CustomAppDefaultToken.displayName = "CustomAppDefaultToken";
-export default CustomAppDefaultToken;
