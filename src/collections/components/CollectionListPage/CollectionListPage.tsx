@@ -19,7 +19,6 @@ import {
   getExtensionsItemsForCollectionOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { useFlag } from "@dashboard/featureFlags";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -60,8 +59,6 @@ const CollectionListPage = ({
   selectedChannelId,
   tabs,
   filterOpts,
-  onFilterChange,
-  onFilterAttributeFocus,
   hasPresetsChanged,
   selectedCollectionIds,
   onCollectionsDelete,
@@ -72,7 +69,6 @@ const CollectionListPage = ({
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const { enabled: isNewCollectionListEnabled } = useFlag("new_filters");
   const filterDependency = filterStructure.find(getByName("channel"));
 
   const { COLLECTION_OVERVIEW_CREATE, COLLECTION_OVERVIEW_MORE_ACTIONS } = useExtensions(
@@ -148,7 +144,7 @@ const CollectionListPage = ({
       </TopNav>
 
       <DashboardCard>
-        {isNewCollectionListEnabled ? (
+        {
           <ListFilters
             type="expression-filter"
             initialSearch={initialSearch}
@@ -167,28 +163,7 @@ const CollectionListPage = ({
               </Box>
             }
           />
-        ) : (
-          <ListFilters
-            initialSearch={initialSearch}
-            onSearchChange={onSearchChange}
-            searchPlaceholder={intl.formatMessage({
-              id: "eRqx44",
-              defaultMessage: "Search collections...",
-            })}
-            actions={
-              <Box display="flex" gap={4}>
-                {selectedCollectionIds.length > 0 && (
-                  <BulkDeleteButton onClick={onCollectionsDelete}>
-                    <FormattedMessage defaultMessage="Delete collections" id="FTYkgw" />
-                  </BulkDeleteButton>
-                )}
-              </Box>
-            }
-            onFilterChange={onFilterChange}
-            onFilterAttributeFocus={onFilterAttributeFocus}
-            filterStructure={filterStructure}
-          />
-        )}
+        }
 
         <CollectionListDatagrid
           disabled={disabled}

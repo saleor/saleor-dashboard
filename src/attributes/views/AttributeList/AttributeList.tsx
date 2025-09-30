@@ -1,14 +1,12 @@
 import {
   getFilterOpts,
   getFilterQueryParam,
-  getFilterVariables,
   storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
-import { useFlag } from "@dashboard/featureFlags";
 import { useAttributeBulkDeleteMutation, useAttributeListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -44,21 +42,13 @@ const AttributeList = ({ params }: AttributeListProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_LIST);
-  const { enabled: isAttributesFilteringEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filters = createAttributesQueryVariables(valueProvider.value);
 
   usePaginationReset(attributeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = useMemo(
-    () => ({
-      ...paginationState,
-      filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params),
-    }),
-    [params, settings.rowNumber],
-  );
+
   const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
@@ -71,7 +61,7 @@ const AttributeList = ({ params }: AttributeListProps) => {
     [params, settings.rowNumber, valueProvider.value],
   );
   const { data, loading, refetch } = useAttributeListQuery({
-    variables: isAttributesFilteringEnabled ? newQueryVariables : queryVariables,
+    variables: newQueryVariables,
   });
   const {
     clearRowSelection,

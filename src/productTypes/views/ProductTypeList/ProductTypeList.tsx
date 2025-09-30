@@ -2,7 +2,6 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { createProductTypesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
-import { useFlag } from "@dashboard/featureFlags";
 import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
@@ -34,7 +33,7 @@ import {
   ProductTypeListUrlDialog,
   ProductTypeListUrlQueryParams,
 } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface ProductTypeListProps {
@@ -53,21 +52,13 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
     toggleAll,
   } = useBulkActions(params.ids);
   const { settings } = useListSettings(ListViews.PRODUCT_LIST);
-  const { enabled: isProductTypesFilterEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filters = createProductTypesQueryVariables(valueProvider.value);
 
   usePaginationReset(productTypeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = useMemo(
-    () => ({
-      ...paginationState,
-      filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params),
-    }),
-    [params, settings.rowNumber],
-  );
+
   const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
@@ -81,7 +72,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
   );
   const { data, loading, refetch } = useProductTypeListQuery({
     displayLoader: true,
-    variables: isProductTypesFilterEnabled ? newQueryVariables : queryVariables,
+    variables: newQueryVariables,
   });
   const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: reset,
