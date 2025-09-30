@@ -1,14 +1,10 @@
 // @ts-nocheck
 
-import Z36938 from "./images/app-alerts.png"
-import B43507 from "./images/extensions.png"
+import P48243 from "./images/app-alerts.png"
 
-const app_alerts = () => (<><p><img src={Z36938} alt="new filters"/>
+const app_alerts = () => (<><p><img src={P48243} alt="new filters"/>
 Benefit from new notifications in your Dashboard that alert you to issues with webhooks for your apps, helping you stay informed about potential problems.
 We’re continuously working to expand this feature to provide more insights for your apps.</p>
-</>)
-const extensions = () => (<><p><img src={B43507} alt="Extensions"/></p>
-<p>We are standardizing the extensibility model in Saleor by consolidating plugins, webhooks, and apps under a unified concept: extensions. For now, this change is reflected only in the user interface, providing a simplified and more cohesive way to manage extensions.</p>
 </>)
 const new_filters = () => (<><p>Experience the new look and enhanced abilities of new filtering mechanism.
 Combine any criteria you want, and quickly browse their values.
@@ -29,15 +25,6 @@ export const AVAILABLE_FLAGS = [{
   name: "app_alerts",
   displayName: "App alerts",
   component: app_alerts,
-  visible: true,
-  content: {
-    enabled: true,
-    payload: "default",
-  }
-},{
-  name: "extensions",
-  displayName: "New extensions view",
-  component: extensions,
   visible: true,
   content: {
     enabled: true,

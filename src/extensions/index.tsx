@@ -1,4 +1,3 @@
-import { AppPaths } from "@dashboard/apps/urls";
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -11,9 +10,7 @@ import {
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension";
 import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtensions";
-import { useFlag } from "@dashboard/featureFlags";
 import { PermissionEnum } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
 import { PluginUrlQueryParams } from "@dashboard/plugins/urls";
@@ -120,16 +117,8 @@ const EditCustomExtensionWebhookView = ({ match }: RouteComponentProps<{ id?: st
 
 export const ExtensionsSection = () => {
   const intl = useIntl();
-  const navigate = useNavigator();
-  const { enabled: isExtensionsEnabled } = useFlag("extensions");
 
   const { customAppToken, setCustomAppToken } = useCustomAppToken();
-
-  if (!isExtensionsEnabled) {
-    navigate(AppPaths.appListPath, { replace: true });
-
-    return <>Redirecting...</>;
-  }
 
   return (
     <>

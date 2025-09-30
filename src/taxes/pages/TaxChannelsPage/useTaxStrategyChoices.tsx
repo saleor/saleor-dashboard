@@ -1,6 +1,4 @@
-import { AppUrls } from "@dashboard/apps/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { useFlag } from "@dashboard/featureFlags";
 import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, ExternalLinkIcon, Option, Text } from "@saleor/macaw-ui-next";
@@ -20,15 +18,9 @@ const legacyPluginTaxChoice = {
 export const useTaxStrategyChoices = () => {
   const { data, loading } = useTaxStrategyChoicesQuery();
   const navigate = useNavigator();
-  const { enabled: areExtensionsEnabled } = useFlag("extensions");
 
-  const navigateToAppScreen = (id: string) => {
-    if (areExtensionsEnabled) {
-      navigate(ExtensionsUrls.resolveEditManifestExtensionUrl(id));
-    } else {
-      navigate(AppUrls.resolveAppDetailsUrl(id));
-    }
-  };
+  const navigateToAppScreen = (id: string) =>
+    navigate(ExtensionsUrls.resolveEditManifestExtensionUrl(id));
 
   const taxAppsChoices =
     data?.shop.availableTaxApps.map(app => ({
