@@ -2,9 +2,9 @@
 import { useApolloClient } from "@apollo/client";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
-import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
-import AppDeleteDialog from "@dashboard/extensions/components/AppDeleteDialog";
+import { AppActivateDialog } from "@dashboard/extensions/components/AppActivateDialog/AppActivateDialog";
+import { AppDeactivateDialog } from "@dashboard/extensions/components/AppDeactivateDialog/AppDeactivateDialog";
+import { AppDeleteDialog } from "@dashboard/extensions/components/AppDeleteDialog/AppDeleteDialog";
 import { appMessages, notifyMessages } from "@dashboard/extensions/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import { getAppInstallErrorMessage, getCustomAppErrorMessage } from "@dashboard/extensions/utils";
@@ -37,12 +37,13 @@ import {
   CustomExtensionDetailsUrlQueryParams,
   ExtensionsUrls,
 } from "../../urls";
-import CustomExtensionDetailsPage, {
+import {
+  CustomExtensionDetailsPage,
   CustomExtensionDetailsPageFormData,
-} from "./components/CustomExtensionDetailsPage";
-import TokenCreateDialog from "./components/TokenCreateDialog";
-import TokenDeleteDialog from "./components/TokenDeleteDialog";
-import WebhookDeleteDialog from "./components/WebhookDeleteDialog";
+} from "./components/CustomExtensionDetailsPage/CustomExtensionDetailsPage";
+import { TokenCreateDialog } from "./components/TokenCreateDialog/TokenCreateDialog";
+import { TokenDeleteDialog } from "./components/TokenDeleteDialog/TokenDeleteDialog";
+import { WebhookDeleteDialog } from "./components/WebhookDeleteDialog/WebhookDeleteDialog";
 
 interface OrderListProps {
   id: string;

@@ -18,9 +18,9 @@ import { Box, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import { AddExtensionDropdown } from "./components/AddExtensionDropdown";
+import { AddExtensionDropdown } from "./components/AddExtensionDropdown/AddExtensionDropdown";
 import { DeleteFailedInstallationDialog } from "./components/DeleteFailedInstallationDialog";
-import { InstalledExtensionsList } from "./components/InstalledExtensionsList";
+import { InstalledExtensionsList } from "./components/InstalledExtensionsList/InstalledExtensionsList";
 import { useInstalledExtensions } from "./hooks/useInstalledExtensions";
 import { usePendingInstallation } from "./hooks/usePendingInstallation";
 

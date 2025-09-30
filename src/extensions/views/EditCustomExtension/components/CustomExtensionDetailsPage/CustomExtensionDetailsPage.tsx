@@ -22,10 +22,10 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import { Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
-import CustomExtensionInformation from "../CustomExtensionInformation";
-import CustomExtensionTokens from "../CustomExtensionTokens";
-import { WebhooksList } from "../WebhooksList";
+import { CustomExtensionDefaultToken } from "../CustomExtensionDefaultToken/CustomExtensionDefaultToken";
+import { CustomExtensionInformation } from "../CustomExtensionInformation/CustomExtensionInformation";
+import { CustomExtensionTokens } from "../CustomExtensionTokens/CustomExtensionTokens";
+import { WebhooksList } from "../WebhooksList/WebhooksList";
 
 export interface CustomExtensionDetailsPageFormData {
   hasFullAccess: boolean;

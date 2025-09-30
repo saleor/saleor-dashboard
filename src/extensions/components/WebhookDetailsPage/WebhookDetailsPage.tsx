@@ -25,11 +25,11 @@ import { useEffect, useState } from "react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
-import PermissionAlert from "./components/PermissionAlert";
-import WebhookEvents from "./components/WebhookEvents/";
-import WebhookHeaders from "./components/WebhookHeaders";
-import WebhookInfo from "./components/WebhookInfo";
-import WebhookSubscriptionQuery from "./components/WebhookSubscriptionQuery";
+import { PermissionAlert } from "./components/PermissionAlert/PermissionAlert";
+import { WebhookEvents } from "./components/WebhookEvents/WebhookEvents";
+import { WebhookHeaders } from "./components/WebhookHeaders/WebhookHeaders";
+import { WebhookInfo } from "./components/WebhookInfo/WebhookInfo";
+import { WebhookSubscriptionQuery } from "./components/WebhookSubscriptionQuery/WebhookSubscriptionQuery";
 import { getHeaderTitle, messages } from "./messages";
 import { getWebhookFormInitialFormValues } from "./webhookForm";
 

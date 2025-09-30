@@ -4,7 +4,7 @@ import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen } from "@testing-library/react";
 
-import WebhookSubscriptionQuery from "./WebhookSubscriptionQuery";
+import { WebhookSubscriptionQuery } from "./WebhookSubscriptionQuery";
 
 jest.mock("@graphiql/toolkit", () => ({
   clear: jest.fn(),

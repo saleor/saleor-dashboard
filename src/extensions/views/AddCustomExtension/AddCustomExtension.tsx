@@ -3,7 +3,7 @@ import { Callout, calloutTitleMessages } from "@dashboard/components/Callout";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
+import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled/ExternalLinkUnstyled";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { CUSTOM_EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { zodResolver } from "@hookform/resolvers/zod";

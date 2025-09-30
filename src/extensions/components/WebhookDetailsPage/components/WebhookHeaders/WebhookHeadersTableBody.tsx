@@ -9,7 +9,7 @@ import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 import { Header, stringifyHeaders } from "./utils";
 
 const nameSeparator = ":";

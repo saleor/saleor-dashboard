@@ -11,7 +11,10 @@ import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 
-import WebhookDetailsPage, { WebhookFormData } from "../../components/WebhookDetailsPage";
+import {
+  WebhookDetailsPage,
+  WebhookFormData,
+} from "../../components/WebhookDetailsPage/WebhookDetailsPage";
 import { useAvailableEvents } from "../../hooks/useAvailableEvents";
 
 interface CustomAppWebhookCreateProps {

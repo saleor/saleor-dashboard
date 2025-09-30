@@ -9,7 +9,7 @@ import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
 import { useAppDashboardUpdates } from "./useAppDashboardUpdates";
-import useTokenRefresh from "./useTokenRefresh";
+import { useTokenRefresh } from "./useTokenRefresh";
 import { useUpdateAppToken } from "./useUpdateAppToken";
 
 interface Props {

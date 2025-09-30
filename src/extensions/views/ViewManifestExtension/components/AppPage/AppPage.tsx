@@ -6,7 +6,7 @@ import { AppQuery } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import { Box } from "@saleor/macaw-ui-next";
 
-import { AppFrame } from "../AppFrame";
+import { AppFrame } from "../AppFrame/AppFrame";
 import { AppPageNav } from "./AppPageNav";
 
 interface AppPageProps {

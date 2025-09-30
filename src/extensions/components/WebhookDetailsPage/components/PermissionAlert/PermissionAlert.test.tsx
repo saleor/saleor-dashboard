@@ -4,7 +4,7 @@ import { Fetcher } from "@graphiql/toolkit";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen } from "@testing-library/react";
 
-import PermissionAlert from "./PermissionAlert";
+import { PermissionAlert } from "./PermissionAlert";
 
 jest.mock("@graphiql/toolkit", () => ({
   clear: jest.fn(),

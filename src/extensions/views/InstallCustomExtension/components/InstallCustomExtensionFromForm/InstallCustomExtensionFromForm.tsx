@@ -15,7 +15,7 @@ import { previousPagePath } from "../../consts";
 import { useFetchManifest } from "../../hooks/useFetchManifest";
 import { useInstallApp } from "../../hooks/useInstallApp";
 import { ExtensionInstallFormData } from "../../types";
-import { InstallSectionData } from "../InstallSectionData";
+import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestUrlForm } from "../ManifestUrlForm/ManifestUrlForm";
 

@@ -16,7 +16,7 @@ import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
 import { createAppsDebug } from "../../utils/apps-debug";
-import { useExternalApp } from "../ExternalAppContext";
+import { useExternalApp } from "../ExternalAppContext/ExternalAppContext";
 import { usePostToExtension } from "./usePostToExtension";
 
 const debug = createAppsDebug("appActionsHandler");
