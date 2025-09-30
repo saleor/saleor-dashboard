@@ -14,7 +14,7 @@ import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@dashboa
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import PluginsList from "../PluginsList/PluginsList";
+import { PluginList } from "../PluginsList/PluginsList";
 import { createFilterStructure, PluginFilterKeys, PluginListFilterOpts } from "./filters";
 import { pluginsFilterErrorMessages, pluginsListPageMessages } from "./messages";
 
@@ -26,7 +26,7 @@ interface PluginsListPageProps
   plugins: PluginBaseFragment[];
 }
 
-const PluginsListPage = ({
+export const PluginsListPage = ({
   currentTab,
   initialSearch,
   filterOpts,
@@ -90,11 +90,10 @@ const PluginsListPage = ({
             defaultMessage: "Search Plugins...",
           })}
         />
-        <PluginsList {...listProps} />
+        <PluginList {...listProps} />
       </DashboardCard>
     </ListPageLayout>
   );
 };
 
 PluginsListPage.displayName = "PluginsListPage";
-export default PluginsListPage;

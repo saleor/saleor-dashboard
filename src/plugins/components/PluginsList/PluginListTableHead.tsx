@@ -10,7 +10,7 @@ import { pluginsListTableHeadMessages as messages } from "./messages";
 
 type PluginListTableHeadProps = SortPage<PluginListUrlSortField>;
 
-const PluginListTableHead = ({ sort, onSort }: PluginListTableHeadProps) => {
+export const PluginListTableHead = ({ sort, onSort }: PluginListTableHeadProps) => {
   const intl = useIntl();
 
   return (
@@ -39,5 +39,3 @@ const PluginListTableHead = ({ sort, onSort }: PluginListTableHeadProps) => {
     </TableHead>
   );
 };
-
-export default PluginListTableHead;

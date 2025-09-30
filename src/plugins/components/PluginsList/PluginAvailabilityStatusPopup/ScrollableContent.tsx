@@ -16,7 +16,7 @@ interface ScrollableContentProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
-const ScrollableContent = ({ children }: ScrollableContentProps) => {
+export const ScrollableContent = ({ children }: ScrollableContentProps) => {
   const classes = useStyles({});
 
   return (
@@ -25,5 +25,3 @@ const ScrollableContent = ({ children }: ScrollableContentProps) => {
     </div>
   );
 };
-
-export default ScrollableContent;

@@ -10,7 +10,7 @@ interface PluginChannelConfigurationCellProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginChannelConfigurationCell = ({ plugin }: PluginChannelConfigurationCellProps) => {
+export const PluginChannelConfigurationCell = ({ plugin }: PluginChannelConfigurationCellProps) => {
   const message = isPluginGlobal(plugin.globalConfiguration)
     ? messages.globalLabel
     : messages.channelLabel;
@@ -21,5 +21,3 @@ const PluginChannelConfigurationCell = ({ plugin }: PluginChannelConfigurationCe
     </TableCell>
   );
 };
-
-export default PluginChannelConfigurationCell;

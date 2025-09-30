@@ -9,7 +9,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
+import { PluginDetailsPageFormData } from "../PluginsDetailsPage/PluginsDetailsPage";
 
 interface PluginInfoProps {
   data: PluginDetailsPageFormData;
@@ -19,7 +19,7 @@ interface PluginInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const PluginInfo = ({ data, description, errors, name, onChange }: PluginInfoProps) => {
+export const PluginInfo = ({ data, description, errors, name, onChange }: PluginInfoProps) => {
   const intl = useIntl();
   const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
 
@@ -86,4 +86,3 @@ const PluginInfo = ({ data, description, errors, name, onChange }: PluginInfoPro
 };
 
 PluginInfo.displayName = "PluginInfo";
-export default PluginInfo;

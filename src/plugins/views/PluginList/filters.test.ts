@@ -3,7 +3,7 @@ import { PluginConfigurationType } from "@dashboard/graphql";
 import {
   createFilterStructure,
   PluginFilterKeys,
-} from "@dashboard/plugins/components/PluginsListPage";
+} from "@dashboard/plugins/components/PluginsListPage/filters";
 import { PluginListUrlFilters } from "@dashboard/plugins/urls";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";

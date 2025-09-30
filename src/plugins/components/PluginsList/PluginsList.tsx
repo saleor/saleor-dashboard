@@ -13,9 +13,9 @@ import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { pluginsMiscMessages } from "./messages";
-import PluginChannelAvailabilityCell from "./PluginChannelAvailabilityCell";
-import PluginChannelConfigurationCell from "./PluginChannelConfigurationCell";
-import PluginListTableHead from "./PluginListTableHead";
+import { PluginChannelAvailabilityCell } from "./PluginChannelAvailabilityCell";
+import { PluginChannelConfigurationCell } from "./PluginChannelConfigurationCell";
+import { PluginListTableHead } from "./PluginListTableHead";
 
 const useStyles = makeStyles(
   () => ({
@@ -34,7 +34,8 @@ interface PluginListProps extends ListProps, SortPage<PluginListUrlSortField> {
 }
 
 const totalColSpan = 10;
-const PluginList = (props: PluginListProps) => {
+
+export const PluginList = (props: PluginListProps) => {
   const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } = props;
   const classes = useStyles(props);
   const navigate = useNavigator();
@@ -114,4 +115,3 @@ const PluginList = (props: PluginListProps) => {
 };
 
 PluginList.displayName = "PluginList";
-export default PluginList;

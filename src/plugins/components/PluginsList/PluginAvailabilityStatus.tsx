@@ -11,7 +11,7 @@ interface PluginAvailabilityStatusProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginAvailabilityStatus = ({
+export const PluginAvailabilityStatus = ({
   plugin: { globalConfiguration, channelConfigurations },
 }: PluginAvailabilityStatusProps) => {
   const intl = useIntl();
@@ -36,5 +36,3 @@ const PluginAvailabilityStatus = ({
     />
   );
 };
-
-export default PluginAvailabilityStatus;

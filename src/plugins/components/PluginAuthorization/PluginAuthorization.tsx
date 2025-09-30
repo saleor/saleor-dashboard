@@ -32,7 +32,8 @@ const useStyles = makeStyles(
   }),
   { name: "PluginAuthorization" },
 );
-const PluginAuthorization = (props: PluginAuthorizationProps) => {
+
+export const PluginAuthorization = (props: PluginAuthorizationProps) => {
   const { fields, onClear, onEdit } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -91,4 +92,3 @@ const PluginAuthorization = (props: PluginAuthorizationProps) => {
 };
 
 PluginAuthorization.displayName = "PluginAuthorization";
-export default PluginAuthorization;

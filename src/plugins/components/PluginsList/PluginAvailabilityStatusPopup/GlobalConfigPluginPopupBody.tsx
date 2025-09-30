@@ -12,7 +12,7 @@ interface GlobalConfigPluginPopupBodyProps {
   plugin: PluginBaseFragment;
 }
 
-const GlobalConfigPluginPopupBody = ({ plugin }: GlobalConfigPluginPopupBodyProps) => {
+export const GlobalConfigPluginPopupBody = ({ plugin }: GlobalConfigPluginPopupBodyProps) => {
   const intl = useIntl();
   const { active } = plugin.globalConfiguration;
 
@@ -35,5 +35,3 @@ const GlobalConfigPluginPopupBody = ({ plugin }: GlobalConfigPluginPopupBodyProp
     </>
   );
 };
-
-export default GlobalConfigPluginPopupBody;
