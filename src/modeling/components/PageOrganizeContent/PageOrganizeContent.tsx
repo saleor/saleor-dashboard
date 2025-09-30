@@ -81,7 +81,11 @@ const PageOrganizeContent = (props: PageOrganizeContentProps) => {
               <FormattedMessage id="9FCrIN" defaultMessage="Model type" />
             </Text>
             <Text size={2}>
-              <Link href={pageTypeUrl(pageType?.id)}>{pageType?.name}</Link>
+              {pageType && pageType.id ? (
+                <Link href={pageTypeUrl(pageType.id)}>{pageType.name}</Link>
+              ) : (
+                pageType?.name ?? "-"
+              )}
             </Text>
           </Box>
         )}
