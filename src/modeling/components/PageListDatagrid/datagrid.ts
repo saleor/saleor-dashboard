@@ -67,7 +67,7 @@ export const createGetCellContent =
       case "slug":
         return readonlyTextCell(rowData?.slug ?? "");
       case "contentType":
-        return readonlyTextCell(rowData?.pageType?.name ?? "", true, "faded");
+        return readonlyTextCell(rowData?.pageType?.name ?? "");
       case "visible": {
         const tag = rowData?.isPublished
           ? intl.formatMessage(messages.published)
