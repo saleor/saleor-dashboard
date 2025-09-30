@@ -9,8 +9,8 @@ import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
+  createAttributeReferenceAdditionalDataHandler,
   createAttributeReferenceChangeHandler,
-  createAttributeReferenceMetadataHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
@@ -134,7 +134,7 @@ export function useProductUpdateForm(
     attributes,
     triggerChange,
   );
-  const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
+  const handleAttributeMetadataChange = createAttributeReferenceAdditionalDataHandler(
     attributes,
     triggerChange,
   );
@@ -290,7 +290,7 @@ export function useProductUpdateForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
-      selectAttributeReferenceMetadata: handleAttributeMetadataChange,
+      selectAttributeReferenceAdditionalData: handleAttributeMetadataChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxClass: handleTaxClassSelect,

@@ -49,7 +49,7 @@ export function getAttributeInputFromProduct(product: ProductFragment): Attribut
       id: attribute.attribute.id,
       label: attribute.attribute.name,
       value: getSelectedAttributeValues(attribute),
-      metadata: getReferenceAttributeValuesLabels(attribute),
+      additionalData: getReferenceAttributeValuesLabels(attribute),
     })) ?? []
   );
 }

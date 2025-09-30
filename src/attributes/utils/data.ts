@@ -281,7 +281,7 @@ export function handleContainerReferenceAssignment(
   attributes: AttributeInput[],
   handlers: {
     selectAttributeReference: (id: string, values: string[]) => void;
-    selectAttributeReferenceMetadata: (
+    selectAttributeReferenceAdditionalData: (
       id: string,
       metadata: Array<{ value: string; label: string }>,
     ) => void;
@@ -296,7 +296,7 @@ export function handleContainerReferenceAssignment(
     const selectedLabel = firstValue?.name ?? "";
 
     handlers.selectAttributeReference(assignReferencesAttributeId, selectedId ? [selectedId] : []);
-    handlers.selectAttributeReferenceMetadata(
+    handlers.selectAttributeReferenceAdditionalData(
       assignReferencesAttributeId,
       firstValue ? [{ value: selectedId, label: selectedLabel }] : [],
     );
@@ -309,7 +309,7 @@ export function handleContainerReferenceAssignment(
         attributes as FormsetData<AttributeInputData, string[]>,
       ),
     );
-    handlers.selectAttributeReferenceMetadata(
+    handlers.selectAttributeReferenceAdditionalData(
       assignReferencesAttributeId,
       attributeValues.map(({ id, name }) => ({ value: id, label: name })),
     );
@@ -325,7 +325,10 @@ export function handleMetadataReferenceAssignment(
   attributes: AttributeInput[],
   handlers: {
     selectAttributeReference: (id: string, values: string[]) => void;
-    selectAttributeReferenceMetadata: (id: string, metadata: AttributeValuesMetadata[]) => void;
+    selectAttributeReferenceAdditionalData: (
+      id: string,
+      metadata: AttributeValuesMetadata[],
+    ) => void;
   },
 ): void {
   const attribute = attributes.find(({ id }) => id === assignReferencesAttributeId);
@@ -339,7 +342,7 @@ export function handleMetadataReferenceAssignment(
       assignReferencesAttributeId,
       selectedValue ? [selectedValue] : [],
     );
-    handlers.selectAttributeReferenceMetadata(
+    handlers.selectAttributeReferenceAdditionalData(
       assignReferencesAttributeId,
       firstValue ? [firstValue] : [],
     );
@@ -353,10 +356,10 @@ export function handleMetadataReferenceAssignment(
     // Set the reference values in useFormset hook
     handlers.selectAttributeReference(assignReferencesAttributeId, finalValues);
 
-    /* We will store attribute selection display values in useFormset "metadata" field
+    /* We will store attribute selection display values in useFormset "additionalData" field
      * This has to be done, because when user chooses new references in the modal,
      * we don't yet have referenced item details from the query */
-    const existingMetadata = attribute?.metadata || [];
+    const existingMetadata = attribute?.additionalData || [];
     const newMetadata = attributeValues;
     const allMetadata = [...existingMetadata, ...newMetadata];
 
@@ -369,7 +372,7 @@ export function handleMetadataReferenceAssignment(
       return acc;
     }, [] as AttributeValuesMetadata[]);
 
-    handlers.selectAttributeReferenceMetadata(assignReferencesAttributeId, uniqueMetadata);
+    handlers.selectAttributeReferenceAdditionalData(assignReferencesAttributeId, uniqueMetadata);
   }
 }
 
@@ -591,10 +594,10 @@ export const getReferenceAttributeDisplayData = (
     references:
       attribute.value && attribute.value.length > 0
         ? attribute.value.map(valueId => {
-            /* "Metadata" is the cache for newly selected values from useFormset hook.
+            /* "additionalData" is the cache for newly selected values from useFormset hook.
              * It is populated from the initial GraphQL payload
              * and whenever the user assigns references in the dialog into useFormset data. */
-            const meta = attribute.metadata?.find(m => m.value === valueId);
+            const meta = attribute.additionalData?.find(m => m.value === valueId);
 
             if (meta) {
               return {
