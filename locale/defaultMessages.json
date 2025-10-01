@@ -1982,10 +1982,6 @@
     "context": "attribute properties regarding storefront",
     "string": "Storefront Properties"
   },
-  "AijtXU": {
-    "context": "table header configuration col label",
-    "string": "Configuration"
-  },
   "AjInNW": {
     "context": "dialog description",
     "string": "Choose countries you want to add to shipping zone from list below"
@@ -2642,10 +2638,6 @@
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle hidden",
     "string": "Hidden"
   },
-  "EtGDeK": {
-    "context": "header",
-    "string": "{pluginName} Details"
-  },
   "EuOXmr": {
     "context": "add items title",
     "string": "Add {itemsName}"
@@ -2701,9 +2693,6 @@
   "F8pCg4": {
     "context": "input placeholder",
     "string": "Optional"
-  },
-  "FA+MRz": {
-    "string": "Set plugin as active"
   },
   "FBtqtl": {
     "context": "payment status",
@@ -3191,10 +3180,6 @@
     "context": "table column header, sold units preorder quantity",
     "string": "Sold units"
   },
-  "HedXnw": {
-    "context": "plugin channel availability status title",
-    "string": "{activeChannelsCount,plural, =0 {Deactivated} other {Active in {activeChannelsCount}}}"
-  },
   "Hgz44z": {
     "context": "dialog header",
     "string": "Delete Voucher"
@@ -3227,9 +3212,6 @@
   },
   "HqRNN8": {
     "string": "Support"
-  },
-  "Hswqx2": {
-    "string": "Delete discounts"
   },
   "HvJPcU": {
     "string": "Category deleted"
@@ -3577,10 +3559,6 @@
   "JmdBa3": {
     "context": "product availability publish date",
     "string": "Publish on"
-  },
-  "JnzDrI": {
-    "context": "discount type",
-    "string": "Fixed Amount"
   },
   "Jo01VZ": {
     "context": "bought by label",
@@ -4604,10 +4582,6 @@
     "context": "number of products",
     "string": "Products"
   },
-  "QH74y5": {
-    "context": "table header name col label",
-    "string": "Name"
-  },
   "QHDtwH": {
     "string": "Has category"
   },
@@ -5035,10 +5009,6 @@
   },
   "T4GOiX": {
     "string": "End Date"
-  },
-  "T4wa2Y": {
-    "context": "global config plugin status popup title",
-    "string": "Global Plugin"
   },
   "T5nU7u": {
     "context": "header",
@@ -5663,10 +5633,6 @@
   },
   "Wk00wL": {
     "string": "Join the open source community"
-  },
-  "WkxE8/": {
-    "context": "percentage or fixed, header",
-    "string": "Discount Type"
   },
   "Wlc67M": {
     "context": "error message",
@@ -7246,10 +7212,6 @@
   "gygOA1": {
     "context": "button",
     "string": "Deactivate"
-  },
-  "gz9v22": {
-    "context": "PluginChannelConfigurationCell channel title",
-    "string": "Per channel"
   },
   "gzM1em": {
     "string": "Add rule"
@@ -8934,10 +8896,6 @@
   "rbrahO": {
     "string": "Close"
   },
-  "reP5Uf": {
-    "context": "global config plugin status popup description",
-    "string": "Global plugins are set across all channels in your ecommerce. Only status is shown for those types of plugins"
-  },
   "rfvBAF": {
     "context": "select all options, button",
     "string": "Select All"
@@ -9165,10 +9123,6 @@
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
-  },
-  "tA5HJx": {
-    "context": "webhook input help text",
-    "string": "secret key is used to create a hash signature with each payload. *optional field"
   },
   "tCLTCb": {
     "context": "tab name",
@@ -9722,10 +9676,6 @@
   "wFVOKJ": {
     "string": "Go to warehouses"
   },
-  "wHdMAX": {
-    "context": "sale value, header",
-    "string": "Value"
-  },
   "wJep/X": {
     "context": "refund amounts were settled",
     "string": "Settled"
@@ -9842,10 +9792,6 @@
     "context": "Transaction event description",
     "string": "Used in order"
   },
-  "x3g4Ry": {
-    "context": "sale discount",
-    "string": "Discount Value"
-  },
   "x3leH4": {
     "context": "ProductTypeDeleteWarningDialog title",
     "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
@@ -9897,10 +9843,6 @@
   },
   "xRkj2h": {
     "string": "Are you sure you want to delete {categoryName}?"
-  },
-  "xTIKA/": {
-    "context": "PluginChannelConfigurationCell global title",
-    "string": "Global"
   },
   "xTyg+p": {
     "string": "No options to select"
@@ -10053,10 +9995,6 @@
   "ychKsb": {
     "context": "error message",
     "string": "Shipping method is required for this order"
-  },
-  "ycrTBX": {
-    "context": "table header channel col label",
-    "string": "Channel"
   },
   "yeX6fA": {
     "context": "extensions page subheader",
@@ -10291,10 +10229,6 @@
   "zp9VHt": {
     "context": "cta button label",
     "string": "Explore Updates"
-  },
-  "zpWcU5": {
-    "context": "Types",
-    "string": "Model types"
   },
   "zqarUF": {
     "context": "modal information under title",

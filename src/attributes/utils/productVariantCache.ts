@@ -2,7 +2,7 @@ import { SearchProductsQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 
 export type CachedSearchProduct = RelayToFlat<NonNullable<SearchProductsQuery["search"]>>[0];
-export type CachedSearchProductVariant = NonNullable<CachedSearchProduct["variants"]>[0];
+type CachedSearchProductVariant = NonNullable<CachedSearchProduct["variants"]>[0];
 
 /** Cache available variants in product in order to build fast labels based on selected values in the form */
 export class ProductVariantCacheManagerSingleton {

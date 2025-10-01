@@ -1,5 +1,5 @@
 import { FieldType, FilterElementGeneric } from "@dashboard/components/Filter";
-import { FetchMoreProps, MinMax, SearchPageProps } from "@dashboard/types";
+import { MinMax } from "@dashboard/types";
 import { Option } from "@saleor/macaw-ui-next";
 
 export function createDateField<K extends string>(
@@ -49,31 +49,6 @@ export function createOptionsField<K extends string>(
     value: defaultValue,
   };
 }
-
-export function createAutocompleteField<K extends string>(
-  name: K,
-  label: string,
-  defaultValue: string[] = [],
-  displayValues: Option[],
-  multiple: boolean,
-  options: Option[],
-  opts: FetchMoreProps & SearchPageProps,
-  id?: string,
-): FilterElementGeneric<K, FieldType.autocomplete> {
-  return {
-    ...opts,
-    active: false,
-    displayValues,
-    label,
-    multiple,
-    name,
-    options,
-    type: FieldType.autocomplete,
-    value: defaultValue,
-    id,
-  };
-}
-
 export function createTextField<K extends string>(
   name: K,
   label: string,
