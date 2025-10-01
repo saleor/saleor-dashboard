@@ -1,5 +1,4 @@
 import { getApiUrl } from "@dashboard/config";
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { FlagList } from "@dashboard/featureFlags";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -39,22 +38,12 @@ export const AppPaths = {
   appListPath: AppSections.appsSection,
   resolveAppPath: (id: string) => urlJoin(AppSections.appsSection, id, "app"),
   resolveAppDetailsPath: (id: string) => urlJoin(AppSections.appsSection, id),
-  resolveAppDeepPath: (id: string, subPath: string) =>
-    urlJoin(AppPaths.resolveAppPath(id), subPath),
   appInstallPath: urlJoin(AppSections.appsSection, "install"),
-  resolveRequestPermissionsPath: (id: string) =>
-    urlJoin(AppSections.appsSection, id, "permissions"),
 };
 
 export const AppUrls = {
-  resolveAppListUrl: () => ExtensionsPaths.installedExtensions,
   resolveAppUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
     AppPaths.resolveAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
-  resolveAppDetailsUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
-    AppPaths.resolveAppDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
-  resolveAppInstallUrl: (manifestUrl: string) =>
-    `${AppPaths.appInstallPath}?manifestUrl=${manifestUrl}`,
-
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = AppPaths.resolveAppPath(encodeURIComponent(appId));
 

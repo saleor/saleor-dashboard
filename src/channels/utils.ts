@@ -8,7 +8,6 @@ import {
   ChannelFragment,
   CollectionDetailsFragment,
   ProductVariantDetailsQuery,
-  SaleDetailsFragment,
   SaleType,
   ShippingMethodTypeFragment,
   ShippingZoneQuery,
@@ -114,16 +113,6 @@ const createVoucherChannels = (data?: ChannelFragment[]) =>
     name: channel.name,
   }));
 
-const createSaleChannels = (data?: ChannelFragment[]) =>
-  data?.map(channel => ({
-    currency: channel.currencyCode,
-    discountValue: "",
-    id: channel.id,
-    name: channel.name,
-    percentageValue: "",
-    fixedValue: "",
-  }));
-
 export const createVariantChannels = (
   data?: ProductVariantDetailsQuery["productVariant"],
 ): ChannelPriceData[] => {
@@ -224,16 +213,6 @@ const createChannelsDataFromVoucher = (voucherData?: VoucherDetailsFragment) =>
     name: option.channel.name,
   })) || [];
 
-const createChannelsDataFromSale = (saleData?: SaleDetailsFragment): ChannelSaleFormData[] =>
-  saleData?.channelListings?.map(option => ({
-    currency: option.channel.currencyCode || "",
-    discountValue: option.discountValue.toString() || "",
-    id: option.channel.id,
-    name: option.channel.name,
-    percentageValue: saleData.type === SaleType.PERCENTAGE ? option.discountValue.toString() : "",
-    fixedValue: saleData.type === SaleType.FIXED ? option.discountValue.toString() : "",
-  })) || [];
-
 export const createSortedChannelsData = (data?: ChannelFragment[]) =>
   createChannelsData(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name),
@@ -250,24 +229,10 @@ export const createSortedVoucherData = (data?: ChannelFragment[]) =>
   createVoucherChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name),
   );
-
-export const createSortedSaleData = (data?: ChannelFragment[]) =>
-  createSaleChannels(data)?.sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name),
-  );
-
 export const createSortedChannelsDataFromVoucher = (data?: VoucherDetailsFragment) =>
   createChannelsDataFromVoucher(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name),
   );
-
-export const createSortedChannelsDataFromSale = (
-  data?: SaleDetailsFragment,
-): ChannelSaleFormData[] =>
-  createChannelsDataFromSale(data)?.sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name),
-  );
-
 export const getChannelsCurrencyChoices = (
   id: string,
   selectedChannel: ChannelDetailsFragment,
