@@ -1,13 +1,11 @@
 // @ts-strict-ignore
-import { FilterElement, IFilter } from "@dashboard/components/Filter";
+import { FilterElement } from "@dashboard/components/Filter";
 import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
 import { SearchPageTypesQuery } from "@dashboard/graphql";
 import { PageListUrlFilters } from "@dashboard/modeling/urls";
 import { AutocompleteFilterOpts, FilterOpts } from "@dashboard/types";
 import { createFilterTabUtils, getMultipleValueQueryParam } from "@dashboard/utils/filters";
-import { createAutocompleteField } from "@dashboard/utils/filters/fields";
 import { mapNodeToChoice, mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
-import { defineMessages, IntlShape } from "react-intl";
 
 export enum PageListFilterKeys {
   pageTypes = "pageTypes",
@@ -18,14 +16,6 @@ const PAGES_FILTERS_KEY = "pagesFilters";
 export interface PageListFilterOpts {
   pageType: FilterOpts<string[]> & AutocompleteFilterOpts;
 }
-
-const messages = defineMessages({
-  pageType: {
-    id: "zpWcU5",
-    defaultMessage: "Model types",
-    description: "Types",
-  },
-});
 
 interface PageListFilterOptsProps {
   params: PageListUrlFilters;
@@ -50,32 +40,6 @@ export const getFilterOpts = ({
     onSearchChange: pageTypesProps.onSearchChange,
   },
 });
-
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: PageListFilterOpts,
-): IFilter<PageListFilterKeys> {
-  return [
-    {
-      ...createAutocompleteField(
-        PageListFilterKeys.pageTypes,
-        intl.formatMessage(messages.pageType),
-        opts.pageType.value,
-        opts.pageType.displayValues,
-        true,
-        opts.pageType.choices,
-        {
-          hasMore: opts.pageType.hasMore,
-          initialSearch: "",
-          loading: opts.pageType.loading,
-          onFetchMore: opts.pageType.onFetchMore,
-          onSearchChange: opts.pageType.onSearchChange,
-        },
-      ),
-      active: opts.pageType.active,
-    },
-  ];
-}
 
 export function getFilterQueryParam(filter: FilterElement<PageListFilterKeys>): PageListUrlFilters {
   const { name } = filter;

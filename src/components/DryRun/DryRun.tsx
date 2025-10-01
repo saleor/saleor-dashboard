@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import Grid from "@dashboard/components/Grid";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
+import { useStyles } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/styles";
 import { useTriggerWebhookDryRunMutation, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { capitalize } from "@material-ui/core";
 import {

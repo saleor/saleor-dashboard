@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { PageFilterInput, PageSortField } from "@dashboard/graphql";
-import { PageListUrlFilters, PageListUrlSortField } from "@dashboard/modeling/urls";
+import { PageSortField } from "@dashboard/graphql";
+import { PageListUrlSortField } from "@dashboard/modeling/urls";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 function getSortQueryField(sort: PageListUrlSortField): PageSortField {
@@ -17,13 +17,6 @@ function getSortQueryField(sort: PageListUrlSortField): PageSortField {
     default:
       return undefined;
   }
-}
-
-export function getFilterVariables(params: PageListUrlFilters): PageFilterInput {
-  return {
-    search: params.query,
-    pageTypes: params.pageTypes,
-  };
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);
