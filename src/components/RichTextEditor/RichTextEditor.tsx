@@ -10,6 +10,7 @@ import { tools } from "./consts";
 import { useHasRendered, useUpdateOnRerender } from "./hooks";
 import { ReactEditorJS } from "./ReactEditorJS";
 import useStyles from "./styles";
+import { convertEditorJSListBlocks } from "./utils";
 
 export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
 
@@ -105,7 +106,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
             setHasValue(editorJsValue.blocks.length > 0);
 
-            return onChange?.(editorJsValue);
+            return onChange?.(convertEditorJSListBlocks(editorJsValue));
           }}
           {...props}
         >

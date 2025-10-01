@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Update editor.js dependencies to fix ordered/unordered list problems while editing descriptions. New version of editor.js introduced new icons and we migrated custom ones to match. We also fixed inline toolbar being truncated in some cases.
+Fixed issues with ordered and unordered lists in product and category descriptions. Lists now work correctly when editing, and the inline formatting toolbar no longer gets cut off on smaller screens.
