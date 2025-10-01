@@ -6,6 +6,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check-lock:
     runs-on: ubuntu-22.04
@@ -32,6 +36,9 @@ jobs:
 
       - name: Run lint
         run: npm run lint
+
+      - name: Check for uncommitted lint changes
+        run: git diff --exit-code ./src
 
       - name: Check Prettier formatting
         run: npm run format:check
