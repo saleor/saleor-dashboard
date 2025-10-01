@@ -25,6 +25,7 @@ export type PageListUrlDialog =
 export enum PageListUrlSortField {
   title = "title",
   slug = "slug",
+  contentType = "contentType",
   visible = "visible",
 }
 

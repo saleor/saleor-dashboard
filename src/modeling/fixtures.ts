@@ -17,6 +17,11 @@ export const pageList: PageFragment[] = [
     isPublished: true,
     slug: "about",
     title: "About",
+    pageType: {
+      __typename: "PageType",
+      id: "UGFnZVR5cGU6MQ==",
+      name: "Blog",
+    },
   },
   {
     __typename: "Page",
@@ -24,6 +29,11 @@ export const pageList: PageFragment[] = [
     isPublished: false,
     slug: "about",
     title: "About",
+    pageType: {
+      __typename: "PageType",
+      id: "UGFnZVR5cGU6Mg==",
+      name: "General",
+    },
   },
   {
     __typename: "Page",
@@ -31,6 +41,11 @@ export const pageList: PageFragment[] = [
     isPublished: true,
     slug: "about",
     title: "About",
+    pageType: {
+      __typename: "PageType",
+      id: "UGFnZVR5cGU6Mw==",
+      name: "Subpages",
+    },
   },
   {
     __typename: "Page",
@@ -38,6 +53,11 @@ export const pageList: PageFragment[] = [
     isPublished: true,
     slug: "about",
     title: "About",
+    pageType: {
+      __typename: "PageType",
+      id: "UGFnZVR5cGU6MQ==",
+      name: "Blog",
+    },
   },
 ];
 export const page: PageDetailsFragment = {
