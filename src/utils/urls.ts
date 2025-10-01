@@ -26,3 +26,9 @@ export const isExternalURL = (url: string) => /^https?:\/\//.test(url);
 
 export const getAppMountUriForRedirect = () =>
   getAppMountUri() === getAppDefaultUri() ? "" : getAppMountUri();
+
+export const getMultipleUrlValues = (urlSearch: string, fieldName: string): string[] => {
+  const params = new URLSearchParams(urlSearch);
+
+  return params.getAll(fieldName);
+};

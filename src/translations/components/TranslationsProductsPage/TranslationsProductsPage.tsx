@@ -3,7 +3,17 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql";
+import { useExternalApp } from "@dashboard/extensions/components/ExternalAppContext";
+import {
+  translateProductFormStateAtom,
+  translateProductFromAppResponseAtom,
+} from "@dashboard/extensions/form-context-state";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import {
+  AppExtensionMountEnum,
+  LanguageCodeEnum,
+  ProductTranslationFragment,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
@@ -18,7 +28,10 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { useAtom } from "jotai";
+import { Sparkles } from "lucide-react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
@@ -46,6 +59,70 @@ const TranslationsProductsPage = ({
 }: TranslationsProductsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const { TRANSLATION_PRODUCT_FORM: formExtensionsList } = useExtensions([
+    AppExtensionMountEnum.TRANSLATION_PRODUCT_FORM,
+  ]);
+  const [, setFormStateForExtension] = useAtom(translateProductFormStateAtom);
+  const [responseFromApp, setResponseFromApp] = useAtom(translateProductFromAppResponseAtom);
+  const { closeApp } = useExternalApp();
+
+  useEffect(() => {
+    return () => {
+      setFormStateForExtension(null);
+      setResponseFromApp(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!responseFromApp) {
+      return;
+    }
+
+    onEdit([
+      TranslationInputFieldName.name,
+      TranslationInputFieldName.description,
+      TranslationInputFieldName.seoTitle,
+      TranslationInputFieldName.seoDescription,
+    ]);
+
+    closeApp();
+  }, [responseFromApp]);
+
+  // todo broken display of description
+
+  useEffect(() => {
+    setFormStateForExtension({
+      formId: "translate-product",
+      translationLanguage: languageCode,
+      productId,
+      fields: [
+        {
+          fieldName: TranslationInputFieldName.name,
+          translatedValue: data?.translation?.name ?? "",
+          originalValue: data?.product?.name ?? "",
+          type: "short",
+        },
+        {
+          fieldName: TranslationInputFieldName.description,
+          translatedValue: data?.translation?.description ?? "",
+          originalValue: data?.product?.description ?? "",
+          type: "rich",
+        },
+        {
+          fieldName: TranslationInputFieldName.seoTitle,
+          translatedValue: data?.translation?.seoTitle ?? "",
+          originalValue: data?.product?.seoTitle ?? "",
+          type: "short",
+        },
+        {
+          fieldName: TranslationInputFieldName.seoDescription,
+          translatedValue: data?.translation?.seoDescription ?? "",
+          originalValue: data?.product?.seoDescription ?? "",
+          type: "short", //todo change to long? or plain / rich
+        },
+      ],
+    });
+  }, [setFormStateForExtension, languageCode, data, productId]);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -66,6 +143,18 @@ const TranslationsProductsPage = ({
         )}
       >
         <Box display="flex" gap={3}>
+          {/*TODO: This should be rendered by app extension mount. How to figure out many apps on this mount? Can app set its own icon? */}
+          {formExtensionsList.length > 0 && (
+            <Button
+              onClick={() => {
+                formExtensionsList[0].open();
+              }}
+              variant="secondary"
+              icon={<Sparkles color="orange" />}
+              __height="50px"
+              __width="50px"
+            />
+          )}
           <ProductContextSwitcher
             productId={productId}
             selectedId={productId}
@@ -101,7 +190,10 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Product Name",
               }),
               name: TranslationInputFieldName.name,
-              translation: data?.translation?.name || null,
+              translation:
+                (responseFromApp && responseFromApp[TranslationInputFieldName.name]?.newValue) ||
+                data?.translation?.name ||
+                null,
               type: "short",
               value: data?.product?.name,
             },
@@ -111,7 +203,11 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Description",
               }),
               name: TranslationInputFieldName.description,
-              translation: data?.translation?.description || null,
+              translation:
+                (responseFromApp &&
+                  responseFromApp[TranslationInputFieldName.description]?.newValue) ||
+                data?.translation?.description ||
+                null,
               type: "rich",
               value: data?.product?.description,
             },
@@ -138,7 +234,11 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Title",
               }),
               name: TranslationInputFieldName.seoTitle,
-              translation: data?.translation?.seoTitle || null,
+              translation:
+                (responseFromApp &&
+                  responseFromApp[TranslationInputFieldName.seoTitle]?.newValue) ||
+                data?.translation?.seoTitle ||
+                null,
               type: "short",
               value: data?.product?.seoTitle,
             },
@@ -148,7 +248,11 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Description",
               }),
               name: TranslationInputFieldName.seoDescription,
-              translation: data?.translation?.seoDescription || null,
+              translation:
+                (responseFromApp &&
+                  responseFromApp[TranslationInputFieldName.seoDescription]?.newValue) ||
+                data?.translation?.seoDescription ||
+                null,
               type: "long",
               value: data?.product?.seoDescription,
             },

@@ -72,7 +72,11 @@ const TranslationFieldsRich = ({
       <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
     </Text>
   ) : (
-    <Text>{isReadyForMount && <RichTextEditorContent key={resetKey} value={defaultValue} />}</Text>
+    <Text>
+      {isReadyForMount && (
+        <RichTextEditorContent key={resetKey + "_" + defaultValue?.time} value={defaultValue} />
+      )}
+    </Text>
   );
 };
 

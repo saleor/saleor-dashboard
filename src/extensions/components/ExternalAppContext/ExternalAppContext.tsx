@@ -30,6 +30,9 @@ export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
             params={appData.params}
             dashboardVersion={APP_VERSION}
             coreVersion={shop?.version}
+            refetch={() => {
+              // todo we must fix that
+            }}
           />
         )}
       </AppDialog>
@@ -38,7 +41,7 @@ export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
 };
 
 export const useExternalApp = () => {
-  const { open, setOpen, setAppData } = useContext(ExternalAppContext);
+  const { open, setOpen, setAppData, appData } = useContext(ExternalAppContext);
   const navigate = useNavigator();
   const openApp = (appData: AppData) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {
@@ -52,5 +55,5 @@ export const useExternalApp = () => {
   };
   const closeApp = () => setOpen(false);
 
-  return { open, openApp, closeApp };
+  return { open, openApp, closeApp, appData };
 };
