@@ -56,4 +56,4 @@ export const CustomExtensionInformation = ({
   );
 };
 
-CustomExtensionInformation.displayName = "CustomAppInformation";
+CustomExtensionInformation.displayName = "CustomExtensionInformation";

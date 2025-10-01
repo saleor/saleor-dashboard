@@ -149,4 +149,4 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
   );
 };
 
-CustomExtensionTokens.displayName = "CustomAppTokens";
+CustomExtensionTokens.displayName = "CustomExtensionTokens";
