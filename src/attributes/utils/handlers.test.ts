@@ -1,8 +1,8 @@
 import {
   createAttributeChangeHandler,
   createAttributeMultiChangeHandler,
+  createAttributeReferenceAdditionalDataHandler,
   createAttributeReferenceChangeHandler,
-  createAttributeReferenceMetadataHandler,
   handleDeleteMultipleAttributeValues,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
@@ -953,7 +953,7 @@ describe("createAttributeReferenceChangeHandler", () => {
           value: ["ref-1", "ref-2"],
           label: "Test",
           data: { inputType: AttributeInputTypeEnum.REFERENCE },
-          metadata: [
+          additionalData: [
             { value: "ref-1", label: "Reference 1" },
             { value: "ref-2", label: "Reference 2" },
             { value: "ref-3", label: "Reference 3" },
@@ -961,7 +961,7 @@ describe("createAttributeReferenceChangeHandler", () => {
         },
       ],
       change: jest.fn(),
-      setMetadata: jest.fn(),
+      setAdditionalData: jest.fn(),
     } as unknown as UseFormsetOutput<AttributeInputData>;
 
     const triggerChange = jest.fn();
@@ -972,7 +972,7 @@ describe("createAttributeReferenceChangeHandler", () => {
 
     // Assert
     expect(mockAttributes.change).toHaveBeenCalledWith("attr-1", ["ref-1", "ref-3"]);
-    expect(mockAttributes.setMetadata).toHaveBeenCalledWith("attr-1", [
+    expect(mockAttributes.setAdditionalData).toHaveBeenCalledWith("attr-1", [
       { value: "ref-1", label: "Reference 1" },
       { value: "ref-3", label: "Reference 3" },
     ]);
@@ -988,11 +988,11 @@ describe("createAttributeReferenceChangeHandler", () => {
           value: ["ref-1"],
           label: "Test",
           data: { inputType: AttributeInputTypeEnum.REFERENCE },
-          metadata: [{ value: "ref-1", label: "Reference 1" }],
+          additionalData: [{ value: "ref-1", label: "Reference 1" }],
         },
       ],
       change: jest.fn(),
-      setMetadata: jest.fn(),
+      setAdditionalData: jest.fn(),
     } as unknown as UseFormsetOutput<AttributeInputData>;
 
     const triggerChange = jest.fn();
@@ -1003,7 +1003,7 @@ describe("createAttributeReferenceChangeHandler", () => {
 
     // Assert
     expect(mockAttributes.change).toHaveBeenCalledWith("attr-1", []);
-    expect(mockAttributes.setMetadata).toHaveBeenCalledWith("attr-1", []);
+    expect(mockAttributes.setAdditionalData).toHaveBeenCalledWith("attr-1", []);
     expect(triggerChange).toHaveBeenCalled();
   });
 });
@@ -1011,7 +1011,7 @@ describe("createAttributeReferenceChangeHandler", () => {
 describe("createAttributeReferenceMetadataHandler", () => {
   it("should filter out metadata for removed references", () => {
     // Arrange
-    const setMetadataMock = jest.fn();
+    const setAdditionalDataMock = jest.fn();
     const mockAttributes = {
       data: [
         {
@@ -1021,11 +1021,11 @@ describe("createAttributeReferenceMetadataHandler", () => {
           data: { inputType: AttributeInputTypeEnum.REFERENCE },
         },
       ],
-      setMetadata: setMetadataMock,
+      setAdditionalData: setAdditionalDataMock,
     } as unknown as UseFormsetOutput<AttributeInputData>;
 
     // Mock the merge function behavior
-    setMetadataMock.mockImplementation((_id, _values, mergeFn) => {
+    setAdditionalDataMock.mockImplementation((_id, _values, mergeFn) => {
       const prev = [{ value: "ref-1", label: "Reference 1" }];
       const next = [
         { value: "ref-2", label: "Reference 2" },
@@ -1038,7 +1038,7 @@ describe("createAttributeReferenceMetadataHandler", () => {
     });
 
     const triggerChange = jest.fn();
-    const handler = createAttributeReferenceMetadataHandler(mockAttributes, triggerChange);
+    const handler = createAttributeReferenceAdditionalDataHandler(mockAttributes, triggerChange);
 
     // Act
     handler("attr-1", [
@@ -1047,7 +1047,7 @@ describe("createAttributeReferenceMetadataHandler", () => {
     ]);
 
     // Assert
-    expect(setMetadataMock).toHaveBeenCalled();
+    expect(setAdditionalDataMock).toHaveBeenCalled();
     expect(triggerChange).toHaveBeenCalled();
   });
 });

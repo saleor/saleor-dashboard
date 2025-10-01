@@ -76,9 +76,7 @@ const isProductTypeQuery = (
 
 const isAttributeQuery = (
   query: InitialProductAPIResponse,
-): query is ApolloQueryResult<_SearchAttributeOperandsQuery> =>
-  "attributes" in query.data &&
-  Boolean(query.data.attributes?.edges.some((edge: any) => Boolean(edge.node.choices)));
+): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
 
 const isPageTypesQuery = (
   query: InitialPageAPIResponse,
