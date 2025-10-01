@@ -194,4 +194,4 @@ export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProp
   );
 };
 
-CustomExtensionDetailsPage.displayName = "CustomAppDetailsPage";
+CustomExtensionDetailsPage.displayName = "xCustomAppDetailsPage";

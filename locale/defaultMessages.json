@@ -416,10 +416,6 @@
   "0HBlkO": {
     "string": "Search channels"
   },
-  "0KmZCN": {
-    "context": "button",
-    "string": "Open playground"
-  },
   "0MetrR": {
     "context": "webhook input help text",
     "string": "This URL will receive webhook POST requests"
@@ -1036,9 +1032,6 @@
   },
   "4Rj36Y": {
     "string": "Create new Model Type"
-  },
-  "4T/RzC": {
-    "string": "Make sure to save token, you won’t be able to see it again."
   },
   "4VLj3S": {
     "context": "overcharged order status",
@@ -2397,10 +2390,6 @@
     "context": "dialog header",
     "string": "Change customer billing address"
   },
-  "D4nzdD": {
-    "context": "checkbox label",
-    "string": "Grant this app full access to the store"
-  },
   "D5Wtf/": {
     "context": "table header column",
     "string": "Country name"
@@ -3048,10 +3037,6 @@
   "GibKGn": {
     "context": "success gift card disable message",
     "string": "Successfully disabled gift card"
-  },
-  "GjH9uy": {
-    "context": "header",
-    "string": "Create New App"
   },
   "Gkip05": {
     "context": "button",
@@ -4363,10 +4348,6 @@
   "P5HhQl": {
     "context": "catalog section name",
     "string": "Catalog"
-  },
-  "P5twxk": {
-    "context": "link",
-    "string": "Activate"
   },
   "P6+RQ1": {
     "context": "no products placeholder",
@@ -7072,10 +7053,6 @@
     "context": "order history message",
     "string": "Order was marked as paid"
   },
-  "flP8Hj": {
-    "context": "card description",
-    "string": "Expand or restrict app permissions to access certain part of Saleor system."
-  },
   "flnL3R": {
     "context": "sum of pending amount (any status) in order's transactions",
     "string": "Pending"
@@ -7087,10 +7064,6 @@
   "foB6wx": {
     "context": "weight based shipping methods, section header",
     "string": "Weight Based Rates"
-  },
-  "foNlhn": {
-    "context": "custom app name",
-    "string": "App Name"
   },
   "fqJXzO": {
     "context": "order history message",
@@ -7535,10 +7508,6 @@
   "ikRuLs": {
     "context": "translation progress",
     "string": "{current} of {max}"
-  },
-  "imYxM9": {
-    "context": "header",
-    "string": "App Information"
   },
   "inWs4U": {
     "context": "attribute visibility in storefront",
@@ -8912,10 +8881,6 @@
     "context": "model seo options description",
     "string": "Add search engine title and description to make this model easier to find"
   },
-  "r86alc": {
-    "context": "button",
-    "string": "Copied"
-  },
   "rCy3Fe": {
     "context": "invalid date in expirydate field content",
     "string": "Gift Card with past expiration date cannot be created"
@@ -9813,10 +9778,6 @@
   "wgA48T": {
     "context": "country selection",
     "string": "Countries A to Z"
-  },
-  "whTEcF": {
-    "context": "link",
-    "string": "Deactivate"
   },
   "wjKYSU": {
     "context": "WarehousesSection subtitle",
