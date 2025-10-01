@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { subtractMoney } from "@dashboard/components/Money";
 import {
   AddressFragment,
@@ -289,7 +288,7 @@ export function mergeRepeatedOrderLines(
 }
 
 function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
-  const { __typename, ...rest } = address;
+  const { __typename, id: _id, ...rest } = address;
 
   return {
     ...rest,
