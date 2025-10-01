@@ -52,7 +52,7 @@
   },
   "config": {
     "saleor": {
-      "schemaVersion": "22"
+      "schemaVersion": "main"
     }
   },
   "dependencies": {
