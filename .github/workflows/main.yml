@@ -1,4 +1,6 @@
 name: QA
+permissions:
+  contents: read
 
 on:
   push:
