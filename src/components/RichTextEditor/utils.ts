@@ -44,7 +44,8 @@ export function convertEditorJSListBlocks(data: OutputData): OutputData {
         if (
           Array.isArray(listData.items) &&
           listData.items.length > 0 &&
-          typeof listData.items[0] === "object"
+          typeof listData.items[0] === "object" &&
+          listData.items[0] !== null
         ) {
           return {
             ...block,
