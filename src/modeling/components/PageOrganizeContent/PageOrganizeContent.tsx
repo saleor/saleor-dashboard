@@ -84,7 +84,7 @@ const PageOrganizeContent = (props: PageOrganizeContentProps) => {
               {pageType && pageType.id ? (
                 <Link href={pageTypeUrl(pageType.id)}>{pageType.name}</Link>
               ) : (
-                pageType?.name ?? "-"
+                (pageType?.name ?? "-")
               )}
             </Text>
           </Box>
