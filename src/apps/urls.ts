@@ -6,7 +6,7 @@ import urlJoin from "url-join";
 
 import { Dialog, SingleAction } from "../types";
 
-export type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete";
+type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete";
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
   productIds?: string[];

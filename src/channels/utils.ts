@@ -1,14 +1,9 @@
-import {
-  ChannelSaleFormData,
-  SaleDetailsPageFormData,
-} from "@dashboard/discounts/components/SaleDetailsPage";
 import { RequirementsPicker } from "@dashboard/discounts/types";
 import {
   ChannelDetailsFragment,
   ChannelFragment,
   CollectionDetailsFragment,
   ProductVariantDetailsQuery,
-  SaleType,
   ShippingMethodTypeFragment,
   ShippingZoneQuery,
   VoucherDetailsFragment,
@@ -80,13 +75,6 @@ export interface ChannelVoucherData {
   discountValue: string;
   currency: string;
   minSpent: string;
-}
-
-export interface ChannelSaleData {
-  id: string;
-  name: string;
-  discountValue: string;
-  currency: string;
 }
 
 export interface ChannelCollectionData {
@@ -245,9 +233,6 @@ export const getChannelsCurrencyChoices = (
         ),
       )
     : [];
-
-export const validateSalePrice = (data: SaleDetailsPageFormData, channel: ChannelSaleFormData) =>
-  validatePrice(data.type === SaleType.PERCENTAGE ? channel.percentageValue : channel.fixedValue);
 
 export const validateVoucherPrice = (
   requirementsPicker: RequirementsPicker,
