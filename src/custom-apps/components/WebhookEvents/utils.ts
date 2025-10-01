@@ -1,5 +1,3 @@
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
-
 type Actions = string[];
 
 export const getWebhookTypes = (webhookEvents: string[]) => {
@@ -19,25 +17,4 @@ export const getWebhookTypes = (webhookEvents: string[]) => {
 
     return acc;
   }, {});
-};
-
-const AsyncWebhookTypes: Record<string, Actions> = getWebhookTypes(
-  Object.keys(WebhookEventTypeAsyncEnum),
-);
-
-const SyncWebhookTypes: Record<string, Actions> = getWebhookTypes(
-  Object.keys(WebhookEventTypeSyncEnum),
-);
-
-export const EventTypes = {
-  async: AsyncWebhookTypes,
-  sync: SyncWebhookTypes,
-};
-
-export const getEventName = (object: string, event: string) => {
-  if (object === event) {
-    return object.toUpperCase() as WebhookEventTypeSyncEnum;
-  }
-
-  return [object, event].join("_").toUpperCase() as WebhookEventTypeSyncEnum;
 };
