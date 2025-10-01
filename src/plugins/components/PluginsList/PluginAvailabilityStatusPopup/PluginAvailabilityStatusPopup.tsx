@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import ChannelsAvailabilityMenuContent from "@dashboard/components/ChannelsAvailabilityMenuContent";
+import { ChannelsAvailabilityMenuContent } from "@dashboard/components/ChannelsAvailabilityMenuContent/ChannelsAvailabilityMenuContent";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { Popper } from "@material-ui/core";
@@ -8,7 +8,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import * as React from "react";
 
 import { mapPluginsToPills } from "../utils";
-import GlobalConfigPluginPopupBody from "./GlobalConfigPluginPopupBody";
+import { GlobalConfigPluginPopupBody } from "./GlobalConfigPluginPopupBody";
 
 const useStyles = makeStyles(
   () => ({
@@ -26,7 +26,7 @@ interface PluginAvailabilityStatusPopupProps {
   anchor: React.RefObject<HTMLTableCellElement>;
 }
 
-const PluginAvailabilityStatusPopup = ({
+export const PluginAvailabilityStatusPopup = ({
   plugin,
   isOpen,
   anchor,
@@ -48,5 +48,3 @@ const PluginAvailabilityStatusPopup = ({
     </Popper>
   );
 };
-
-export default PluginAvailabilityStatusPopup;

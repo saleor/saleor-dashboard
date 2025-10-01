@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 
 import { headerTitles, messages } from "../../messages";
 import { ExploreExtensionsActions } from "./components/ExploreExtensionsActions";
-import { ExtensionsList } from "./components/ExtensionsList";
+import { ExtensionsList } from "./components/ExtensionsList/ExtensionsList";
 import { useExploreExtensions } from "./hooks/useExploreExtensions";
 import { useExtensionsFilter } from "./hooks/useExtenstionsFilter";
 

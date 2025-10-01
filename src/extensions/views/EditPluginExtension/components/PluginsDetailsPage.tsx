@@ -22,7 +22,7 @@ import { isSecretField } from "../utils";
 import { PluginAuthorization } from "./PluginAuthorization";
 import { PluginDetailsChannelsCard } from "./PluginDetailsChannelsCard";
 import { PluginInfo } from "./PluginInfo";
-import { PluginSettings } from "./PluginSettings";
+import { PluginSettings } from "./PluginSettings/PluginSettings";
 
 export interface PluginDetailsPageFormData {
   active: boolean;

@@ -8,7 +8,7 @@ interface AppListCardDescriptionProps {
   app: AppstoreApi.SaleorApp;
 }
 
-const AppListCardDescription = ({ app }: PropsWithChildren<AppListCardDescriptionProps>) => (
+export const AppListCardDescription = ({ app }: PropsWithChildren<AppListCardDescriptionProps>) => (
   <Box>
     <Box display="flex" flexDirection="row" alignItems="center" marginBottom={5} gap={3}>
       <AppLogo backgroundColor={app.logo.color}>
@@ -37,4 +37,3 @@ const AppListCardDescription = ({ app }: PropsWithChildren<AppListCardDescriptio
 );
 
 AppListCardDescription.displayName = "AppListCardDescription";
-export default AppListCardDescription;

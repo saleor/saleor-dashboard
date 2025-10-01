@@ -6,7 +6,7 @@ import { maybe, parseBoolean } from "@dashboard/misc";
 import {
   PluginFilterKeys,
   PluginListFilterOpts,
-} from "@dashboard/plugins/components/PluginsListPage";
+} from "@dashboard/plugins/components/PluginsListPage/filters";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 
 import {

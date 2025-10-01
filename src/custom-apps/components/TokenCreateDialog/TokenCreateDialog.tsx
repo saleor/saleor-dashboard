@@ -36,7 +36,7 @@ const tokenPaperStyles = {
 
 const createHeadersString = (token: string) => `{\n  "authorization": "Bearer ${token}"\n}`;
 
-const TokenCreateDialog = ({
+export const TokenCreateDialog = ({
   confirmButtonState,
   open,
   token,
@@ -187,4 +187,3 @@ const TokenCreateDialog = ({
 };
 
 TokenCreateDialog.displayName = "TokenCreateDialog";
-export default TokenCreateDialog;

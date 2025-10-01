@@ -10,7 +10,7 @@ import { Box, Tooltip } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
-import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
+import { PluginDetailsPageFormData } from "../PluginsDetailsPage/PluginsDetailsPage";
 
 interface PluginSettingsProps {
   data: PluginDetailsPageFormData;
@@ -20,7 +20,13 @@ interface PluginSettingsProps {
   fields: ConfigurationItemFragment[];
 }
 
-const PluginSettings = ({ data, disabled, errors, onChange, fields }: PluginSettingsProps) => {
+export const PluginSettings = ({
+  data,
+  disabled,
+  errors,
+  onChange,
+  fields,
+}: PluginSettingsProps) => {
   const intl = useIntl();
 
   return (
@@ -100,4 +106,3 @@ const PluginSettings = ({ data, disabled, errors, onChange, fields }: PluginSett
 };
 
 PluginSettings.displayName = "PluginSettings";
-export default PluginSettings;

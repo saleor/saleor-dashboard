@@ -25,7 +25,7 @@ interface WebhooksListProps {
   createHref?: string;
 }
 
-const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => {
+export const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const navigate = useNavigator();
@@ -129,4 +129,3 @@ const WebhooksList = ({ webhooks, createHref, onRemove }: WebhooksListProps) => 
 };
 
 WebhooksList.displayName = "WebhooksList";
-export default WebhooksList;

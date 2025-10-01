@@ -31,7 +31,8 @@ interface WebhookSubscriptionQueryProps {
 const fetcher = createGraphiQLFetcher({
   url: process.env.API_URL,
 });
-const WebhookSubscriptionQuery = ({
+
+export const WebhookSubscriptionQuery = ({
   errors,
   query,
   setQuery,
@@ -73,4 +74,3 @@ const WebhookSubscriptionQuery = ({
 };
 
 WebhookSubscriptionQuery.displayName = "WebhookSubscriptionQuery";
-export default WebhookSubscriptionQuery;

@@ -6,7 +6,7 @@ interface AppListCardIntegrationsProps {
   integrations: AppstoreApi.SaleorApp["integrations"];
 }
 
-const AppListCardIntegrations = ({ integrations }: AppListCardIntegrationsProps) => {
+export const AppListCardIntegrations = ({ integrations }: AppListCardIntegrationsProps) => {
   const { themeType } = useTheme();
 
   if (!integrations) {
@@ -54,4 +54,3 @@ const AppListCardIntegrations = ({ integrations }: AppListCardIntegrationsProps)
 };
 
 AppListCardIntegrations.displayName = "AppListCardIntegrations";
-export default AppListCardIntegrations;

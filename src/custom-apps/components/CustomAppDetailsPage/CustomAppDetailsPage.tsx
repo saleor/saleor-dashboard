@@ -6,7 +6,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import WebhooksList from "@dashboard/custom-apps/components/WebhooksList";
+import { WebhooksList } from "@dashboard/custom-apps/components/WebhooksList/WebhooksList";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
@@ -22,9 +22,9 @@ import getAppErrorMessage from "@dashboard/utils/errors/app";
 import { Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CustomAppDefaultToken from "../CustomAppDefaultToken";
-import CustomAppInformation from "../CustomAppInformation";
-import CustomAppTokens from "../CustomAppTokens";
+import { CustomAppDefaultToken } from "../CustomAppDefaultToken/CustomAppDefaultToken";
+import { CustomAppInformation } from "../CustomAppInformation/CustomAppInformation";
+import { CustomAppTokens } from "../CustomAppTokens/CustomAppTokens";
 import { useStyles } from "./styles";
 
 export interface CustomAppDetailsPageFormData {
@@ -50,7 +50,7 @@ interface CustomAppDetailsPageProps {
   onAppDeactivateOpen: () => void;
 }
 
-const CustomAppDetailsPage = (props: CustomAppDetailsPageProps) => {
+export const CustomAppDetailsPage = (props: CustomAppDetailsPageProps) => {
   const {
     disabled,
     errors,
@@ -163,4 +163,3 @@ const CustomAppDetailsPage = (props: CustomAppDetailsPageProps) => {
 };
 
 CustomAppDetailsPage.displayName = "CustomAppDetailsPage";
-export default CustomAppDetailsPage;

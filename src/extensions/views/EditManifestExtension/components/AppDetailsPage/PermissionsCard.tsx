@@ -6,7 +6,7 @@ import { Box, BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AppPermissionsDialog } from "../AppPermissionsDialog";
+import { AppPermissionsDialog } from "../AppPermissionsDialog/AppPermissionsDialog";
 import messages from "./messages";
 
 type PermissionsCardProps = {

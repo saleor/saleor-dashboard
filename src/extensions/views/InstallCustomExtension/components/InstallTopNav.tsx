@@ -1,5 +1,5 @@
 import { TopNav } from "@dashboard/components/AppLayout";
-import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled";
+import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled/ExternalLinkUnstyled";
 import { messages } from "@dashboard/extensions/messages";
 import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";
 import { FormattedMessage } from "react-intl";

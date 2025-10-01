@@ -21,7 +21,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { useMemo } from "react";
 
-import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
+import { PluginsListPage } from "../../components/PluginsListPage/PluginsListPage";
 import { pluginListUrl, PluginListUrlDialog, PluginListUrlQueryParams } from "../../urls";
 import {
   deleteFilterTab,
@@ -39,7 +39,7 @@ interface PluginsListProps {
   params: PluginListUrlQueryParams;
 }
 
-const PluginsList = ({ params }: PluginsListProps) => {
+export const PluginsList = ({ params }: PluginsListProps) => {
   const navigate = useNavigator();
   const { updateListSettings, settings } = useListSettings(ListViews.PLUGINS_LIST);
 
@@ -131,5 +131,3 @@ const PluginsList = ({ params }: PluginsListProps) => {
     </PaginatorContext.Provider>
   );
 };
-
-export default PluginsList;

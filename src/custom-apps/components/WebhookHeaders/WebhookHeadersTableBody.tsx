@@ -9,7 +9,7 @@ import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 import { Header, stringifyHeaders } from "./utils";
 
 const nameSeparator = ":";
@@ -21,7 +21,7 @@ interface WebhookHeadersTableBodyProps {
   headers: Header[];
 }
 
-const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyProps) => {
+export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const updateWebhookItem = (target: EventTarget & HTMLTextAreaElement) => {
@@ -114,4 +114,3 @@ const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyP
 };
 
 WebhookHeadersTableBody.displayName = "WebhookHeadersTableRow";
-export default WebhookHeadersTableBody;

@@ -1,8 +1,8 @@
 import { useApolloClient } from "@apollo/client";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
-import AppActivateDialog from "@dashboard/extensions/components/AppActivateDialog";
-import AppDeactivateDialog from "@dashboard/extensions/components/AppDeactivateDialog";
-import AppDeleteDialog from "@dashboard/extensions/components/AppDeleteDialog";
+import { AppActivateDialog } from "@dashboard/extensions/components/AppActivateDialog/AppActivateDialog";
+import { AppDeactivateDialog } from "@dashboard/extensions/components/AppDeactivateDialog/AppDeactivateDialog";
+import { AppDeleteDialog } from "@dashboard/extensions/components/AppDeleteDialog/AppDeleteDialog";
 import { appMessages } from "@dashboard/extensions/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import {
@@ -24,7 +24,7 @@ import getAppErrorMessage from "@dashboard/utils/errors/app";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useIntl } from "react-intl";
 
-import { AppDetailsPage } from "./components/AppDetailsPage";
+import { AppDetailsPage } from "./components/AppDetailsPage/AppDetailsPage";
 import { messages } from "./messages";
 
 interface Props {
