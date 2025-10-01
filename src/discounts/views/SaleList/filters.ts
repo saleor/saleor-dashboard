@@ -1,13 +1,10 @@
 // @ts-strict-ignore
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
-import { SaleFilterKeys, SaleListFilterOpts } from "@dashboard/discounts/components/SaleListPage";
+import { SaleFilterKeys } from "@dashboard/discounts/components/SaleListPage";
 import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from "@dashboard/graphql";
-import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
-import { Option } from "@saleor/macaw-ui-next";
+import { findValueInEnum, joinDateTime } from "@dashboard/misc";
 
 import {
-  createFilterTabUtils,
-  dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
@@ -19,38 +16,6 @@ import {
   SaleListUrlFiltersEnum,
   SaleListUrlFiltersWithMultipleValues,
 } from "../../urls";
-
-const SALE_FILTERS_KEY = "saleFilters";
-
-export function getFilterOpts(params: SaleListUrlFilters, channels: Option[]): SaleListFilterOpts {
-  return {
-    channel: {
-      active: params?.channel !== undefined,
-      choices: channels,
-      value: params?.channel,
-    },
-    saleType: {
-      active: !!maybe(() => params.type),
-      value: maybe(() => findValueInEnum(params.type, DiscountValueTypeEnum)),
-    },
-    started: {
-      active: maybe(
-        () => [params.startedFrom, params.startedTo].some(field => field !== undefined),
-        false,
-      ),
-      value: {
-        max: maybe(() => params.startedTo, ""),
-        min: maybe(() => params.startedFrom, ""),
-      },
-    },
-    status: {
-      active: !!maybe(() => params.status),
-      value: dedupeFilter(
-        params.status?.map(status => findValueInEnum(status, DiscountStatusEnum)) || [],
-      ),
-    },
-  };
-}
 
 export function getFilterVariables(params: SaleListUrlFilters): SaleFilterInput {
   return {
@@ -94,5 +59,3 @@ export function getFilterQueryParam(filter: FilterElement<SaleFilterKeys>): Sale
       return getSingleValueQueryParam(filter, SaleListUrlFiltersEnum.channel);
   }
 }
-
-export const storageUtils = createFilterTabUtils<string>(SALE_FILTERS_KEY);
