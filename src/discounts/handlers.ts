@@ -125,30 +125,6 @@ export const getChannelsVariables = (
   };
 };
 
-export const getSaleChannelsVariables = (
-  id: string,
-  formData: SaleDetailsPageFormData,
-  prevChannelsIds?: string[],
-) => {
-  const modifiedIds = formData.channelListings.map(channel => channel.id);
-  const idsDiff = arrayDiff(prevChannelsIds, modifiedIds);
-
-  return {
-    id,
-    input: {
-      addChannels:
-        formData.channelListings
-          ?.map(channel => ({
-            channelId: channel.id,
-            discountValue:
-              formData.type === SaleType.FIXED ? channel.fixedValue : channel.percentageValue,
-          }))
-          .filter(channel => !!channel.discountValue) || [],
-      removeChannels: idsDiff.removed,
-    },
-  };
-};
-
 export function createSaleUpdateHandler(
   submit: (data: SaleDetailsPageFormData) => SubmitPromise<any[]>,
   setLocalErrors: (errors: DiscountErrorFragment[]) => void,

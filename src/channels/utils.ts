@@ -140,20 +140,6 @@ export const createVariantChannels = (
   return [];
 };
 
-export const createChannelsDataWithSaleDiscountPrice = (
-  saleData?: SaleDetailsFragment,
-  data?: ChannelFragment[],
-): ChannelSaleData[] => {
-  if (data && saleData?.channelListings) {
-    const dataArr = createSaleChannels(data);
-    const saleDataArr = createChannelsDataFromSale(saleData);
-
-    return uniqBy([...saleDataArr, ...dataArr!], obj => obj.id);
-  }
-
-  return [];
-};
-
 export const createChannelsDataWithDiscountPrice = (
   voucherData?: VoucherDetailsFragment,
   data?: ChannelFragment[],

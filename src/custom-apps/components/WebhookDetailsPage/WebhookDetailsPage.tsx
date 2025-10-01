@@ -56,7 +56,7 @@ interface WebhookDetailsPageProps {
   availableEvents: IntrospectionNode[];
 }
 
-export const WebhookDetailsPage = ({
+const WebhookDetailsPage = ({
   appId,
   disabled,
   errors,
