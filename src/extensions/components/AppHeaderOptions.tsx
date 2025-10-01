@@ -14,7 +14,7 @@ interface HeaderOptionsProps {
   onAppDeleteOpen: () => void;
 }
 
-const AppHeaderOptions = ({
+export const AppHeaderOptions = ({
   isActive,
   onAppActivateOpen,
   onAppDeactivateOpen,
@@ -64,5 +64,3 @@ const AppHeaderOptions = ({
     </Box>
   );
 };
-
-export default AppHeaderOptions;

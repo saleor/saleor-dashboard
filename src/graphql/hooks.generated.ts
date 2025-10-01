@@ -2431,6 +2431,10 @@ export const PageFragmentDoc = gql`
   title
   slug
   isPublished
+  pageType {
+    id
+    name
+  }
 }
     `;
 export const FileFragmentDoc = gql`

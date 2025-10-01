@@ -32,7 +32,7 @@ interface WebhookEventsProps {
 
 type WebhookEventTypeSelection = "sync" | "async";
 
-const WebhookEvents = ({
+export const WebhookEvents = ({
   data,
   setQuery,
   onSyncEventChange,
@@ -188,4 +188,3 @@ const WebhookEvents = ({
 };
 
 WebhookEvents.displayName = "WebhookEvents";
-export default WebhookEvents;

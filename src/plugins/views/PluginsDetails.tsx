@@ -15,8 +15,11 @@ import { extractMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import PluginsDetailsPage, { PluginDetailsPageFormData } from "../components/PluginsDetailsPage";
-import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
+import {
+  PluginDetailsPageFormData,
+  PluginsDetailsPage,
+} from "../components/PluginsDetailsPage/PluginsDetailsPage";
+import { PluginSecretFieldDialog } from "../components/PluginSecretFieldDialog/PluginSecretFieldDialog";
 import { pluginUrl, PluginUrlDialog, PluginUrlQueryParams } from "../urls";
 import { isSecretField } from "../utils";
 import { getConfigByChannelId, isPluginGlobal } from "./utils";
@@ -42,7 +45,7 @@ export function getConfigurationInput(
     }));
 }
 
-const PluginsDetails = ({ id, params }: PluginsDetailsProps) => {
+export const PluginsDetails = ({ id, params }: PluginsDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -162,4 +165,3 @@ const PluginsDetails = ({ id, params }: PluginsDetailsProps) => {
 };
 
 PluginsDetails.displayName = "PluginsDetails";
-export default PluginsDetails;

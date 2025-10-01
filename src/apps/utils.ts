@@ -6,14 +6,6 @@ import { AppstoreApi } from "./appstore.types";
 import { appsMessages } from "./messages";
 import { AppLink } from "./types";
 
-const getInstallableAppstoreApps = (appstoreAppList?: AppstoreApi.SaleorApp[]) =>
-  appstoreAppList?.filter(app => "manifestUrl" in app || "githubForkUrl" in app) as
-    | AppstoreApi.ReleasedSaleorApp[]
-    | undefined;
-const getComingSoonAppstoreApps = (appstoreAppList?: AppstoreApi.SaleorApp[]) =>
-  appstoreAppList?.filter(
-    app => !("manifestUrl" in app) && !("githubForkUrl" in app) && "releaseDate" in app,
-  ) as AppstoreApi.ComingSoonSaleorApp[] | undefined;
 const getAppManifestUrl = (appstoreApp: AppstoreApi.SaleorApp) => {
   if ("manifestUrl" in appstoreApp) {
     return appstoreApp.manifestUrl;
@@ -29,23 +21,6 @@ export const resolveInstallationOfAppstoreApp = (
   if (manifestUrl) {
     return appInstallations?.find(appInstallation => appInstallation.manifestUrl === manifestUrl);
   }
-};
-
-export const getAppstoreAppsLists = (
-  isAppstoreAvailable: boolean,
-  appstoreAppList?: AppstoreApi.SaleorApp[],
-) => {
-  if (!isAppstoreAvailable) {
-    return {
-      installableMarketplaceApps: [],
-      comingSoonMarketplaceApps: [],
-    };
-  }
-
-  return {
-    installableMarketplaceApps: getInstallableAppstoreApps(appstoreAppList),
-    comingSoonMarketplaceApps: getComingSoonAppstoreApps(appstoreAppList),
-  };
 };
 
 /** @deprecated This is no longer used on production (tunnelUrlKeywords are empty) */
@@ -116,6 +91,3 @@ export const getAppDetails = ({
     links: isAppComingSoon ? [] : prepareAppLinks(intl, app),
   };
 };
-
-export const getAppInProgressName = (id: string, collection?: AppInstallationFragment[]) =>
-  collection?.find(app => app.id === id)?.appName || id;

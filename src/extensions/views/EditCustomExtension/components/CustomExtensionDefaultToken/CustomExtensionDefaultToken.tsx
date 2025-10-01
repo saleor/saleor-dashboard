@@ -11,7 +11,7 @@ interface CustomExtensionDefaultTokenProps {
   onTokenClose: () => void;
 }
 
-const CustomExtensionDefaultToken = (props: CustomExtensionDefaultTokenProps) => {
+export const CustomExtensionDefaultToken = (props: CustomExtensionDefaultTokenProps) => {
   const { token, onTokenClose } = props;
   const { copyToClipboard, copyState } = useClipboardCopy();
 
@@ -58,5 +58,4 @@ const CustomExtensionDefaultToken = (props: CustomExtensionDefaultTokenProps) =>
   );
 };
 
-CustomExtensionDefaultToken.displayName = "CustomAppDefaultToken";
-export default CustomExtensionDefaultToken;
+CustomExtensionDefaultToken.displayName = "CustomExtensionDefaultToken";

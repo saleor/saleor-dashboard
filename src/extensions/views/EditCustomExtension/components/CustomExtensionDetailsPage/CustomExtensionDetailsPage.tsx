@@ -6,7 +6,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import AppHeaderOptions from "@dashboard/extensions/components/AppHeaderOptions";
+import { AppHeaderOptions } from "@dashboard/extensions/components/AppHeaderOptions";
 import { appMessages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
@@ -22,10 +22,10 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import { Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
-import CustomExtensionInformation from "../CustomExtensionInformation";
-import CustomExtensionTokens from "../CustomExtensionTokens";
-import { WebhooksList } from "../WebhooksList";
+import { CustomExtensionDefaultToken } from "../CustomExtensionDefaultToken/CustomExtensionDefaultToken";
+import { CustomExtensionInformation } from "../CustomExtensionInformation/CustomExtensionInformation";
+import { CustomExtensionTokens } from "../CustomExtensionTokens/CustomExtensionTokens";
+import { WebhooksList } from "../WebhooksList/WebhooksList";
 
 export interface CustomExtensionDetailsPageFormData {
   hasFullAccess: boolean;
@@ -53,7 +53,7 @@ interface CustomExtensionDetailsPageProps {
   onAppDeleteOpen: () => void;
 }
 
-const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProps) => {
+export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProps) => {
   const {
     disabled,
     errors,
@@ -194,5 +194,4 @@ const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProps) => {
   );
 };
 
-CustomExtensionDetailsPage.displayName = "CustomAppDetailsPage";
-export default CustomExtensionDetailsPage;
+CustomExtensionDetailsPage.displayName = "xCustomAppDetailsPage";

@@ -37,7 +37,7 @@ export interface PluginDetailsChannelsCardProps {
   plugin: PluginsDetailsFragment;
 }
 
-const PluginDetailsChannelsCardContent = ({
+export const PluginDetailsChannelsCardContent = ({
   plugin,
   selectedChannelId,
   setSelectedChannelId,
@@ -92,5 +92,3 @@ const PluginDetailsChannelsCardContent = ({
     </>
   );
 };
-
-export default PluginDetailsChannelsCardContent;

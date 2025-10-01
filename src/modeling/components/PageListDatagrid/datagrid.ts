@@ -24,16 +24,21 @@ export const pageListStaticColumnsAdapter = (
     {
       id: "slug",
       title: intl.formatMessage(columnsMessages.slug),
-      width: 300,
+      width: 350,
     },
     {
       id: "visible",
       title: intl.formatMessage(columnsMessages.visible),
-      width: 300,
+      width: 130,
+    },
+    {
+      id: "contentType",
+      title: intl.formatMessage(columnsMessages.contentType),
+      width: 200,
     },
   ].map(column => ({
     ...column,
-    icon: getColumnSortDirectionIcon(sort, column.id),
+    icon: getColumnSortDirectionIcon(sort, column.id, { nonSortableColumns: ["contentType"] }),
   }));
 
 export const createGetCellContent =
@@ -61,6 +66,8 @@ export const createGetCellContent =
         return readonlyTextCell(rowData?.title ?? "");
       case "slug":
         return readonlyTextCell(rowData?.slug ?? "");
+      case "contentType":
+        return readonlyTextCell(rowData?.pageType?.name ?? "");
       case "visible": {
         const tag = rowData?.isPublished
           ? intl.formatMessage(messages.published)

@@ -23,7 +23,7 @@ interface UseActiveAppsInstallations {
 }
 
 /** @deprecated use hook from extensions/ */
-function useActiveAppsInstallations({
+export function useActiveAppsInstallations({
   appsInProgressData,
   appsInProgressRefetch,
   appInProgressLoading,
@@ -175,4 +175,3 @@ function useActiveAppsInstallations({
     },
   };
 }
-export default useActiveAppsInstallations;

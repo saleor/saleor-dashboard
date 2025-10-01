@@ -37,8 +37,3 @@ export const IntrospectionQuery = gql`
     }
   }
 `;
-
-const isEvent = ({ name }: { name: string }) => name === "Event";
-
-export const buildEventsMap = (elements: IntrospectionNode[]) =>
-  elements.filter(({ interfaces }) => (interfaces || []).some(isEvent));

@@ -15,7 +15,7 @@ interface AppDeleteDialogProps {
   type: "CUSTOM" | "EXTERNAL";
 }
 
-const AppDeleteDialog = ({
+export const AppDeleteDialog = ({
   confirmButtonState,
   open,
   name,
@@ -76,4 +76,3 @@ const AppDeleteDialog = ({
 };
 
 AppDeleteDialog.displayName = "AppDeleteDialog";
-export default AppDeleteDialog;

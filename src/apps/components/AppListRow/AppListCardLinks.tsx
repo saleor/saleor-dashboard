@@ -6,7 +6,7 @@ interface AppListCardLinksProps {
   links: AppLink[];
 }
 
-const AppListCardLinks = ({ links }: AppListCardLinksProps) => {
+export const AppListCardLinks = ({ links }: AppListCardLinksProps) => {
   if (!links.length) {
     return null;
   }
@@ -27,4 +27,3 @@ const AppListCardLinks = ({ links }: AppListCardLinksProps) => {
 };
 
 AppListCardLinks.displayName = "AppListCardLinks";
-export default AppListCardLinks;

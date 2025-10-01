@@ -6,6 +6,10 @@ export const pageFragment = gql`
     title
     slug
     isPublished
+    pageType {
+      id
+      name
+    }
   }
 `;
 

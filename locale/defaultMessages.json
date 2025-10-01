@@ -73,9 +73,6 @@
     "context": "tabel column header",
     "string": "Total"
   },
-  "+Ps1jL": {
-    "string": "Be extra careful with taxes and payment apps, ensure your configuration selects other apps to be used"
-  },
   "+RffqY": {
     "context": "Dry run dialog object title",
     "string": "Select object type to perform dry run on provided query"
@@ -267,19 +264,11 @@
     "context": "section header",
     "string": "Media"
   },
-  "/PhkXi": {
-    "context": "section header",
-    "string": "Installed Apps"
-  },
   "/TF6BZ": {
     "string": "Search Products"
   },
   "/U8FUp": {
     "string": "Couldn't load activities"
-  },
-  "/V7UOC": {
-    "context": "unassign category from sale and save, button",
-    "string": "Unassign and save"
   },
   "/VnDMl": {
     "string": "Other"
@@ -427,10 +416,6 @@
   "0HBlkO": {
     "string": "Search channels"
   },
-  "0KmZCN": {
-    "context": "button",
-    "string": "Open playground"
-  },
   "0MetrR": {
     "context": "webhook input help text",
     "string": "This URL will receive webhook POST requests"
@@ -449,10 +434,6 @@
   "0ReyKr": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
     "string": "Published since {publishedAt}"
-  },
-  "0TQuo4": {
-    "context": "dialog header",
-    "string": "Unassign Collection From Sale"
   },
   "0V1q0d": {
     "context": "add country dialog header",
@@ -528,10 +509,6 @@
     "context": "Dry run no objects found",
     "string": "No objects found in the provided query"
   },
-  "0vsMRq": {
-    "context": "delete custom app",
-    "string": "Deleting this app, you will delete all the data and webhooks regarding this app."
-  },
   "0whAeC": {
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
@@ -542,10 +519,6 @@
   "1/bAgt": {
     "context": "discount type fixed",
     "string": "Fixed"
-  },
-  "1/oG76": {
-    "context": "dialog header",
-    "string": "Delete Sale"
   },
   "1/oauz": {
     "context": "grant refund table, column header",
@@ -778,10 +751,6 @@
   "2atspc": {
     "string": "Drafts"
   },
-  "2cjt25": {
-    "context": "window title",
-    "string": "Install App"
-  },
   "2dgbGR": {
     "string": "Those codes already exist"
   },
@@ -816,10 +785,6 @@
   },
   "2qfU+C": {
     "string": "The extension identifier is already in use."
-  },
-  "2rJcFa": {
-    "context": "delete app",
-    "string": "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
   },
   "2x9ZgK": {
     "context": "card title",
@@ -1002,9 +967,6 @@
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
   },
-  "47hJzu": {
-    "string": "Updated app permissions"
-  },
   "48dMqY": {
     "context": "Dry run trigger button",
     "string": "Run"
@@ -1014,10 +976,6 @@
   },
   "4ABral": {
     "string": "View orders"
-  },
-  "4C7I61": {
-    "context": "sale Details delete button",
-    "string": "Removed sale"
   },
   "4CrCbD": {
     "string": "Community"
@@ -1074,9 +1032,6 @@
   },
   "4Rj36Y": {
     "string": "Create new Model Type"
-  },
-  "4T/RzC": {
-    "string": "Make sure to save token, you won’t be able to see it again."
   },
   "4VLj3S": {
     "context": "overcharged order status",
@@ -1147,10 +1102,6 @@
   },
   "4y3Smi": {
     "string": "Removing permissions may cause extension to break."
-  },
-  "4yRwN+": {
-    "context": "content",
-    "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
   },
   "4z1O0N": {
     "context": "Refund status success",
@@ -1403,10 +1354,6 @@
     "context": "order history message",
     "string": "Invoice no. {invoiceNumber} was updated"
   },
-  "6RtE2D": {
-    "context": "unassign collection from sale and save, button",
-    "string": "Unassign and save"
-  },
   "6SL46U": {
     "string": "by {author}"
   },
@@ -1473,9 +1420,6 @@
   "6udlH+": {
     "string": "Order draft successfully created"
   },
-  "6uy2gU": {
-    "string": "Manually change permission for the app."
-  },
   "6xC/Ls": {
     "context": "informations about product seo, header",
     "string": "SEO Information"
@@ -1533,10 +1477,6 @@
   },
   "7Hdiw2": {
     "string": "Rule name is required"
-  },
-  "7J1ZKs": {
-    "context": "button",
-    "string": "Back to apps list"
   },
   "7JAAul": {
     "context": "product field",
@@ -1905,10 +1845,6 @@
     "context": "collection",
     "string": "Hidden"
   },
-  "9g6Y7a": {
-    "context": "placeholder",
-    "string": "Nothing installed yet."
-  },
   "9gb9b4": {
     "context": "address type",
     "string": "Add new address"
@@ -2014,10 +1950,6 @@
   "AR/VVX": {
     "context": "Indicates last login method user used",
     "string": "Last used"
-  },
-  "ARfw53": {
-    "context": "description",
-    "string": "Install apps created by Saleor team or install external apps."
   },
   "AUaL7R": {
     "context": "notification",
@@ -2138,10 +2070,6 @@
     "context": "Empty filters text",
     "string": "Add filter to start"
   },
-  "B5yE8S": {
-    "context": "dialog header",
-    "string": "Unassign Categories From Sale"
-  },
   "B8PvdI": {
     "string": "extending Saleor with Webhooks"
   },
@@ -2167,10 +2095,6 @@
   "BJtUQI": {
     "context": "button",
     "string": "Add"
-  },
-  "BL/Lbk": {
-    "context": "install app permissions",
-    "string": "Installing this app will give it following permissions:"
   },
   "BLX9dz": {
     "context": "fulfill order, button",
@@ -2260,9 +2184,6 @@
   "Bphmwe": {
     "context": "header",
     "string": "Translation Collection \"{collectionName}\" - {languageCode}"
-  },
-  "BtErCZ": {
-    "string": "Search Plugins..."
   },
   "BvGp1I": {
     "string": "between"
@@ -2428,9 +2349,6 @@
     "context": "playground shortcut",
     "string": "Playground"
   },
-  "Co2U4u": {
-    "string": "No plugins found"
-  },
   "CrY98m": {
     "context": "button, marks order as paid (legacy payments)",
     "string": "Mark order as paid"
@@ -2446,10 +2364,6 @@
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
-  },
-  "D/+84n": {
-    "context": "snackbar text",
-    "string": "App activated"
   },
   "D0KaT6": {
     "context": "webhook input label",
@@ -2476,10 +2390,6 @@
     "context": "dialog header",
     "string": "Change customer billing address"
   },
-  "D4nzdD": {
-    "context": "checkbox label",
-    "string": "Grant this app full access to the store"
-  },
   "D5Wtf/": {
     "context": "table header column",
     "string": "Country name"
@@ -2502,10 +2412,6 @@
   },
   "DDYrvn": {
     "string": "Rule reward value must be less than 100"
-  },
-  "DEa1T1": {
-    "context": "button",
-    "string": "Save Search"
   },
   "DGWVA9": {
     "context": "variant created error message",
@@ -2680,9 +2586,6 @@
     "context": "max price in channel",
     "string": "Max. value"
   },
-  "ESDTC/": {
-    "string": "Manage Sales Channel Availability"
-  },
   "EWD/wU": {
     "context": "delete app",
     "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
@@ -2770,10 +2673,6 @@
     "context": "information",
     "string": "Installation is pending..."
   },
-  "F2cR19": {
-    "context": "error message",
-    "string": "Error details: {message}"
-  },
   "F2kF9e": {
     "string": "You must select transaction that you want to refund"
   },
@@ -2836,10 +2735,6 @@
   "FOehC/": {
     "context": "label",
     "string": "Manual Amount"
-  },
-  "FPzzh7": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to delete this sale?} other{Are you sure you want to delete {displayQuantity} sales?}}"
   },
   "FQc5z6": {
     "context": "customer gift cards card view all button",
@@ -3142,10 +3037,6 @@
   "GibKGn": {
     "context": "success gift card disable message",
     "string": "Successfully disabled gift card"
-  },
-  "GjH9uy": {
-    "context": "header",
-    "string": "Create New App"
   },
   "Gkip05": {
     "context": "button",
@@ -3479,10 +3370,6 @@
   "Ic7Wln": {
     "context": "card subtitle",
     "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
-  },
-  "Id7C0X": {
-    "context": "section header",
-    "string": "You are about to install {name}"
   },
   "IeoGgH": {
     "context": "variant created success message",
@@ -3833,10 +3720,6 @@
   "Kxiige": {
     "string": "Generated Token"
   },
-  "Kyyr7D": {
-    "context": "dialog header",
-    "string": "Unassign Variant From Sale"
-  },
   "KzgcFV": {
     "context": "category attribute entity type",
     "string": "Categories"
@@ -3848,9 +3731,6 @@
   "L/ZbnW": {
     "context": "fulfillment status waiting for approval",
     "string": "Waiting for Approval"
-  },
-  "L/sNGY": {
-    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
   },
   "L2tvTm": {
     "context": "mark as paid strategy checkbox label",
@@ -3971,10 +3851,6 @@
   "LwU0Vy": {
     "context": "datagrid title label",
     "string": "Select quantities to refund"
-  },
-  "LwX0Ug": {
-    "context": "Button with Manage app label",
-    "string": "Manage app"
   },
   "Lx1ima": {
     "context": "button",
@@ -4203,9 +4079,6 @@
     "context": "orderLine.quantity, subheader, oredr line metadata dialog",
     "string": "Qty"
   },
-  "NL6mvR": {
-    "string": "Visit App Store to replace with the App"
-  },
   "NLNonj": {
     "context": "send to channel select label",
     "string": "Send to channel"
@@ -4311,10 +4184,6 @@
   "NtFVFS": {
     "context": "weight",
     "string": "{value} {unit}"
-  },
-  "Ntk3CQ": {
-    "context": "footer title",
-    "string": "Missing something?"
   },
   "Nuq83+": {
     "string": "Create new channel"
@@ -4480,10 +4349,6 @@
     "context": "catalog section name",
     "string": "Catalog"
   },
-  "P5twxk": {
-    "context": "link",
-    "string": "Activate"
-  },
   "P6+RQ1": {
     "context": "no products placeholder",
     "string": "No products found"
@@ -4620,10 +4485,6 @@
     "context": "issue gift card button label",
     "string": "Issue"
   },
-  "PkCmGU": {
-    "context": "install button",
-    "string": "Install App"
-  },
   "PkjQS6": {
     "context": "description",
     "string": "No results found"
@@ -4690,20 +4551,12 @@
     "context": "Dry run icon label",
     "string": "Dry run"
   },
-  "Q47ovw": {
-    "context": "activate app",
-    "string": "Are you sure you want to activate this app? Activating will start gathering events."
-  },
   "Q4m1CG": {
     "string": "Edit Product"
   },
   "Q55cTG": {
     "context": "order refund amount",
     "string": "Previously refunded"
-  },
-  "Q69IGA": {
-    "context": "extension privacy policy link",
-    "string": "View this extension’s privacy policy."
   },
   "Q6VRrE": {
     "context": "dialog content",
@@ -4740,10 +4593,6 @@
   "QBxN6z": {
     "context": "is filter range or value",
     "string": "between"
-  },
-  "QCwBUI": {
-    "context": "button",
-    "string": "Delete Search"
   },
   "QDxJib": {
     "string": "Fulfill"
@@ -5031,9 +4880,6 @@
     "context": "total price",
     "string": "Total"
   },
-  "S1p0Ja": {
-    "string": "The app will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the app before you approve."
-  },
   "S1u2pa": {
     "context": "app settings error",
     "string": "Failed to fetch extension settings"
@@ -5068,10 +4914,6 @@
   "S8kqP9": {
     "string": "Conditions"
   },
-  "S90DJO": {
-    "context": "Button with  app settings label",
-    "string": "App settings"
-  },
   "SB//YQ": {
     "string": "Order summary"
   },
@@ -5092,9 +4934,6 @@
   },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
-  },
-  "SI3/nl": {
-    "string": "Nothing will change in terms of permissions. The Dashboard will redirect to the app and inform it that you denied the request."
   },
   "SKFr04": {
     "string": "Attribute not found."
@@ -5165,10 +5004,6 @@
     "context": "sale status",
     "string": "Status"
   },
-  "SqcGBK": {
-    "context": "channel availability dialog header",
-    "string": "Manage Channel Availability"
-  },
   "Sxzua5": {
     "context": "order payment",
     "string": "Settled"
@@ -5178,10 +5013,6 @@
   },
   "T/5OyA": {
     "string": "No translation yet"
-  },
-  "T/dYnE": {
-    "context": "plugin filters error messages status",
-    "string": "Status is not selected"
   },
   "T0Mfxq": {
     "context": "product status title",
@@ -5231,10 +5062,6 @@
   "TBftMD": {
     "context": "button. form submit, grant refund edit",
     "string": "Edit granted refund"
-  },
-  "TC/EOG": {
-    "context": "status section title",
-    "string": "Status in channel"
   },
   "TCR639": {
     "context": "order history message",
@@ -5456,10 +5283,6 @@
   "US3IPU": {
     "string": "Search Engine Description"
   },
-  "USO8PB": {
-    "context": "snackbar text",
-    "string": "App deactivated"
-  },
   "USS3Q7": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
@@ -5491,10 +5314,6 @@
   "UhcALJ": {
     "context": "attribute name",
     "string": "Name"
-  },
-  "Uj2hj8": {
-    "context": "unassign variant from sale and save, button",
-    "string": "Unassign and save"
   },
   "UjoSZB": {
     "context": "dialog content",
@@ -5538,9 +5357,6 @@
   "UvZuf7": {
     "context": "section title for reference types selector",
     "string": "Reference Types"
-  },
-  "Uwo+ai": {
-    "string": "Product unavailable in discount channels"
   },
   "UxOcKE": {
     "context": "order history message",
@@ -5592,10 +5408,6 @@
   },
   "V2BBQu": {
     "string": "Currency in both channels must be the same"
-  },
-  "V3fvcD": {
-    "context": "dialog content",
-    "string": "Removed sale"
   },
   "V8FhTt": {
     "context": "collection label",
@@ -5684,20 +5496,12 @@
   "VkYZQ8": {
     "string": "Current Permissions"
   },
-  "VlDG1B": {
-    "context": "Request integration",
-    "string": "Request integration"
-  },
   "VmMDLN": {
     "context": "permission list item description",
     "string": "This group is last source of that permission"
   },
   "VrFy8e": {
     "string": "No notes from customer"
-  },
-  "VsGcdP": {
-    "context": "section header",
-    "string": "App permissions"
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
@@ -5871,10 +5675,6 @@
   "Wm+KUd": {
     "string": "Headers"
   },
-  "WnlZMO": {
-    "context": "title",
-    "string": "There’s a problem with app."
-  },
   "Wr5UOV": {
     "context": "error message",
     "string": "Login went wrong. Please try again."
@@ -5931,10 +5731,6 @@
   },
   "XAvER/": {
     "string": "Product reordered"
-  },
-  "XB2Jj9": {
-    "context": "create app button",
-    "string": "Create App"
   },
   "XBfvKN": {
     "string": "Order History"
@@ -6155,10 +5951,6 @@
     "context": "product availability date label",
     "string": "Set availability date"
   },
-  "YHNozE": {
-    "context": "dialog header",
-    "string": "Activate App"
-  },
   "YI6Fhj": {
     "context": "no address is set in draft order",
     "string": "Not set"
@@ -6343,10 +6135,6 @@
     "context": "empty state message",
     "string": "No refunds made for this order."
   },
-  "ZWIjvr": {
-    "context": "dialog header",
-    "string": "Delete Sales"
-  },
   "ZXOpCJ": {
     "string": "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})"
   },
@@ -6491,10 +6279,6 @@
   "aMwxYb": {
     "string": "Countries"
   },
-  "aOelhW": {
-    "context": "tab name",
-    "string": "All Plugins"
-  },
   "aPCrsp": {
     "context": "shipping method name",
     "string": "Name"
@@ -6537,23 +6321,12 @@
     "context": "error message",
     "string": "Email address is not set"
   },
-  "abpvEI": {
-    "string": "Removing permissions may cause app to break."
-  },
-  "ac+Y98": {
-    "context": "app settings error",
-    "string": "Failed to fetch app settings"
-  },
   "acgbDa": {
     "context": "product created at",
     "string": "Created at"
   },
   "aenDwE": {
     "string": "Manage extension"
-  },
-  "agZQkB": {
-    "context": "window title",
-    "string": "Create App"
   },
   "aggaJg": {
     "string": "This attribute has already been assigned to this product type"
@@ -6594,9 +6367,6 @@
   "axFFaD": {
     "context": "range input label",
     "string": "Postal codes (end)"
-  },
-  "azj0kR": {
-    "string": "Adding permission allows app to have more access to your data."
   },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
@@ -6845,10 +6615,6 @@
   "cLcy6F": {
     "string": "Number of products"
   },
-  "cMov2n": {
-    "context": "error message",
-    "string": "Error loading apps marketplace"
-  },
   "cN8pa0": {
     "context": "radio button label",
     "string": "Refund with line items"
@@ -6949,10 +6715,6 @@
   "cwjmte": {
     "context": "fulfillment status refunded",
     "string": "Refunded"
-  },
-  "cwoN25": {
-    "context": "config type section title",
-    "string": "Configuration Type"
   },
   "cy8sV7": {
     "context": "volume units types",
@@ -7291,10 +7053,6 @@
     "context": "order history message",
     "string": "Order was marked as paid"
   },
-  "flP8Hj": {
-    "context": "card description",
-    "string": "Expand or restrict app permissions to access certain part of Saleor system."
-  },
   "flnL3R": {
     "context": "sum of pending amount (any status) in order's transactions",
     "string": "Pending"
@@ -7306,10 +7064,6 @@
   "foB6wx": {
     "context": "weight based shipping methods, section header",
     "string": "Weight Based Rates"
-  },
-  "foNlhn": {
-    "context": "custom app name",
-    "string": "App Name"
   },
   "fqJXzO": {
     "context": "order history message",
@@ -7329,6 +7083,10 @@
   "fuFCpI": {
     "context": "allow unpaid orders checkbox label",
     "string": "Allow unpaid orders"
+  },
+  "fuUksg": {
+    "context": "column header",
+    "string": "Model Type"
   },
   "fw+VAN": {
     "context": "product's sku",
@@ -7434,10 +7192,6 @@
   },
   "gZ1qnD": {
     "string": "No extensions API URL provided"
-  },
-  "gZHmaV": {
-    "context": "plugin filters error messages channels",
-    "string": "No channels selected"
   },
   "gaOXvo": {
     "context": "notification, form submitted",
@@ -7546,10 +7300,6 @@
   "hIh8bm": {
     "context": "automatically complete checkouts checkbox description",
     "string": "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. ({link})"
-  },
-  "hJDnLg": {
-    "context": "section header",
-    "string": "Upcoming Apps"
   },
   "hJZwTS": {
     "string": "Email address"
@@ -7759,10 +7509,6 @@
     "context": "translation progress",
     "string": "{current} of {max}"
   },
-  "imYxM9": {
-    "context": "header",
-    "string": "App Information"
-  },
   "inWs4U": {
     "context": "attribute visibility in storefront",
     "string": "Visible in storefront"
@@ -7861,10 +7607,6 @@
   "jUuHVn": {
     "context": "description",
     "string": "No members found"
-  },
-  "jVjsVq": {
-    "context": "App by Author",
-    "string": "by"
   },
   "jXf/9p": {
     "context": "product availability",
@@ -7969,13 +7711,6 @@
   },
   "k4brJy": {
     "string": "SKU"
-  },
-  "k5lHFp": {
-    "context": "app data privacy link",
-    "string": "Learn more about data privacy"
-  },
-  "k5yB6M": {
-    "string": "Extension webhooks"
   },
   "k62BKw": {
     "context": "select label",
@@ -8088,10 +7823,6 @@
     "context": "channel publication date",
     "string": "Published since {date}"
   },
-  "kYtxJ1": {
-    "context": "delete app",
-    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
-  },
   "kak5vT": {
     "context": "order refund amount",
     "string": "Selected Products Value"
@@ -8102,10 +7833,6 @@
   "kc4c4d": {
     "context": "product label",
     "string": "Product bought to get gift card"
-  },
-  "kcMVsB": {
-    "context": "balance amound missing error message",
-    "string": "Balance amount is missing"
   },
   "kdRcqU": {
     "string": "Search customers..."
@@ -8161,10 +7888,6 @@
   "kvSYZh": {
     "context": "replacement created order history message description",
     "string": "was created for replaced products"
-  },
-  "kyNv+Y": {
-    "context": "footer description",
-    "string": "Are we missing an integration your project requires? Let us know here"
   },
   "l0a2tU": {
     "context": "onboarding step description",
@@ -8487,13 +8210,6 @@
   "n74igO": {
     "string": "Not charged"
   },
-  "n7Fg8i": {
-    "string": "Successfully created sale"
-  },
-  "n7GIKB": {
-    "context": "dialog header",
-    "string": "Unassign Product From Sale"
-  },
   "n97Ii0": {
     "context": "export selected items to csv file",
     "string": "Selected giftCards ({number})"
@@ -8531,10 +8247,6 @@
   "nHmugP": {
     "context": "order history message",
     "string": "Fulfilled {quantity} items"
-  },
-  "nIrjSR": {
-    "context": "section header",
-    "string": "Ongoing Installations"
   },
   "nIuKz3": {
     "context": "Refund status none",
@@ -8624,10 +8336,6 @@
   },
   "ninItd": {
     "string": "Create customer"
-  },
-  "nioOBQ": {
-    "context": "delete custom app",
-    "string": "Deleting {name}, you will delete all the data and webhooks regarding this app."
   },
   "njBulj": {
     "context": "check to require attribute to have value",
@@ -8777,10 +8485,6 @@
   "onUvP+": {
     "context": "discount type",
     "string": "Order"
-  },
-  "opIDox": {
-    "context": "unassign product from sale and save, button",
-    "string": "Unassign and save"
   },
   "orvpWh": {
     "string": "Go back"
@@ -8947,10 +8651,6 @@
     "context": "card subtitle",
     "string": "Entered prices"
   },
-  "puUvKO": {
-    "context": "button",
-    "string": "Install external app"
-  },
   "puikeb": {
     "context": "button",
     "string": "Delete Address"
@@ -9019,9 +8719,6 @@
   },
   "qGwKT/": {
     "string": "Extension disabled. Activate the extension from the settings."
-  },
-  "qIgdO6": {
-    "string": "Custom Filter"
   },
   "qJedl0": {
     "context": "product label",
@@ -9184,10 +8881,6 @@
     "context": "model seo options description",
     "string": "Add search engine title and description to make this model easier to find"
   },
-  "r86alc": {
-    "context": "button",
-    "string": "Copied"
-  },
   "rCy3Fe": {
     "context": "invalid date in expirydate field content",
     "string": "Gift Card with past expiration date cannot be created"
@@ -9207,10 +8900,6 @@
   "rKf4LU": {
     "context": "dialog title",
     "string": "Delete attributes"
-  },
-  "rNzkIt": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {saleName}?"
   },
   "rPX1f2": {
     "context": "section title",
@@ -9466,10 +9155,6 @@
     "context": "ShippingZoneSettingsCard title",
     "string": "Settings"
   },
-  "t1UYU6": {
-    "context": "install app privacy",
-    "string": "Uninstalling the app will remove all your customer’s personal data stored by {name}."
-  },
   "t1scMK": {
     "string": "Refunds settings"
   },
@@ -9529,10 +9214,6 @@
   },
   "tWbE34": {
     "string": "Start Hour"
-  },
-  "tXIgmR": {
-    "context": "balance curreny missing error message",
-    "string": "Balance currency is missing"
   },
   "tXOS3M": {
     "string": "Authorized pending"
@@ -9649,10 +9330,6 @@
   },
   "uGqPKY": {
     "string": "Select a Model Type. All Models extending the type will be available as refund reasons when issuing a refund."
-  },
-  "uIPD1i": {
-    "context": "app has been removed",
-    "string": "App successfully removed"
   },
   "uIYU0D": {
     "context": "section header",
@@ -9955,10 +9632,6 @@
   "vlVTmY": {
     "string": "Product removed"
   },
-  "voRaz3": {
-    "context": "custom apps content",
-    "string": "Your custom-created apps will be shown here."
-  },
   "vof5TR": {
     "context": "button",
     "string": "Create category"
@@ -10043,9 +9716,6 @@
     "context": "order refund amount",
     "string": "Proposed refund amount"
   },
-  "wDYozn": {
-    "string": "App doesn't have any permissions granted."
-  },
   "wEQDC6": {
     "string": "Edit"
   },
@@ -10108,10 +9778,6 @@
   "wgA48T": {
     "context": "country selection",
     "string": "Countries A to Z"
-  },
-  "whTEcF": {
-    "context": "link",
-    "string": "Deactivate"
   },
   "wjKYSU": {
     "context": "WarehousesSection subtitle",
@@ -10373,10 +10039,6 @@
   "yT5zvU": {
     "string": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
   },
-  "yZB41s": {
-    "context": "section header",
-    "string": "All Apps"
-  },
   "yatGsm": {
     "context": "card title",
     "string": "Order Value"
@@ -10399,9 +10061,6 @@
   "yeX6fA": {
     "context": "extensions page subheader",
     "string": "Learn more about {extensions}"
-  },
-  "yfhLcv": {
-    "string": "We are working on replacing plugins with apps. Read more about"
   },
   "yg0ELD": {
     "string": "From {warehouseName}: {fulfillmentCreationDate}"
@@ -10468,10 +10127,6 @@
     "context": "file attribute type",
     "string": "File"
   },
-  "z2yYL3": {
-    "context": "hint",
-    "string": "Usually ends with /api/manifest"
-  },
   "z3GGbZ": {
     "context": "deleted multiple attributes",
     "string": "Attributes successfully deleted"
@@ -10533,10 +10188,6 @@
   "zQX6xO": {
     "context": "dialog header",
     "string": "Delete App"
-  },
-  "zQnYKn": {
-    "context": "status section subtitle",
-    "string": "Channel status"
   },
   "zQvVDJ": {
     "string": "All"

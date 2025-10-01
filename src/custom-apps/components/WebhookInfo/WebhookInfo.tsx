@@ -13,7 +13,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WebhookFormData } from "../WebhookDetailsPage";
+import { WebhookFormData } from "../WebhookDetailsPage/WebhookDetailsPage";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -24,7 +24,7 @@ interface WebhookInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const WebhookInfo = ({ data, disabled, errors, onChange }: WebhookInfoProps) => {
+export const WebhookInfo = ({ data, disabled, errors, onChange }: WebhookInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
@@ -118,4 +118,3 @@ const WebhookInfo = ({ data, disabled, errors, onChange }: WebhookInfoProps) => 
 };
 
 WebhookInfo.displayName = "WebhookInfo";
-export default WebhookInfo;

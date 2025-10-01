@@ -506,8 +506,6 @@ export const getById = (idToCompare: string) => (obj: Node) => obj.id === idToCo
 export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) =>
   obj.id !== idToCompare;
 
-export const findById = <T extends Node>(id: string, list?: T[]) => list?.find(getById(id));
-
 export type PillStatusType = "error" | "warning" | "info" | "success" | "generic";
 
 export const getStatusColor = ({

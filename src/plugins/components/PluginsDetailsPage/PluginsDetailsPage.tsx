@@ -20,10 +20,10 @@ import { pluginListUrl } from "@dashboard/plugins/urls";
 import { isSecretField } from "@dashboard/plugins/utils";
 import { useIntl } from "react-intl";
 
-import PluginAuthorization from "../PluginAuthorization";
-import PluginDetailsChannelsCard from "../PluginDetailsChannelsCard";
-import PluginInfo from "../PluginInfo";
-import PluginSettings from "../PluginSettings";
+import { PluginAuthorization } from "../PluginAuthorization/PluginAuthorization";
+import { PluginDetailsChannelsCard } from "../PluginDetailsChannelsCard/PluginDetailsChannelsCard";
+import { PluginInfo } from "../PluginInfo/PluginInfo";
+import { PluginSettings } from "../PluginSettings/PluginSettings";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -42,7 +42,7 @@ interface PluginsDetailsPageProps {
   setSelectedChannelId: (channelId: string) => void;
 }
 
-const PluginsDetailsPage = ({
+export const PluginsDetailsPage = ({
   disabled,
   errors,
   plugin,
@@ -166,5 +166,3 @@ const PluginsDetailsPage = ({
     </Form>
   );
 };
-
-export default PluginsDetailsPage;

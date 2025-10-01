@@ -10,7 +10,7 @@ interface WebhookDeleteDialogProps {
   onConfirm: () => void;
 }
 
-const WebhookDeleteDialog = ({
+export const WebhookDeleteDialog = ({
   confirmButtonState,
   open,
   name,
@@ -53,4 +53,3 @@ const WebhookDeleteDialog = ({
 };
 
 WebhookDeleteDialog.displayName = "WebhookDeleteDialog";
-export default WebhookDeleteDialog;

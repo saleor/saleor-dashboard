@@ -17,7 +17,7 @@ jest.mock("@dashboard/components/Link", () => {
   );
 });
 
-jest.mock("../AppInstallButton", () => ({
+jest.mock("../AppInstallButton/AppInstallButton", () => ({
   AppInstallButton: () => <div>Install</div>,
 }));
 
