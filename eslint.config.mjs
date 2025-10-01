@@ -94,6 +94,9 @@ export default tseslint.config(
         ...globals.node, // Use all Node.js globals
       },
     },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off", // CommonJS files use require()
+    },
   },
 
   // Configure custom plugins and rules for React files
