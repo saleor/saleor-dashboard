@@ -2216,9 +2216,6 @@
     "context": "header",
     "string": "Translation Collection \"{collectionName}\" - {languageCode}"
   },
-  "BtErCZ": {
-    "string": "Search Plugins..."
-  },
   "BvGp1I": {
     "string": "between"
   },
@@ -2383,9 +2380,6 @@
     "context": "playground shortcut",
     "string": "Playground"
   },
-  "Co2U4u": {
-    "string": "No plugins found"
-  },
   "CrY98m": {
     "context": "button, marks order as paid (legacy payments)",
     "string": "Mark order as paid"
@@ -2401,10 +2395,6 @@
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
-  },
-  "D/+84n": {
-    "context": "snackbar text",
-    "string": "App activated"
   },
   "D0KaT6": {
     "context": "webhook input label",
@@ -2457,10 +2447,6 @@
   },
   "DDYrvn": {
     "string": "Rule reward value must be less than 100"
-  },
-  "DEa1T1": {
-    "context": "button",
-    "string": "Save Search"
   },
   "DGWVA9": {
     "context": "variant created error message",
@@ -4143,9 +4129,6 @@
     "context": "orderLine.quantity, subheader, oredr line metadata dialog",
     "string": "Qty"
   },
-  "NL6mvR": {
-    "string": "Visit App Store to replace with the App"
-  },
   "NLNonj": {
     "context": "send to channel select label",
     "string": "Send to channel"
@@ -4665,10 +4648,6 @@
     "context": "is filter range or value",
     "string": "between"
   },
-  "QCwBUI": {
-    "context": "button",
-    "string": "Delete Search"
-  },
   "QDxJib": {
     "string": "Fulfill"
   },
@@ -5093,10 +5072,6 @@
   "T/5OyA": {
     "string": "No translation yet"
   },
-  "T/dYnE": {
-    "context": "plugin filters error messages status",
-    "string": "Status is not selected"
-  },
   "T0Mfxq": {
     "context": "product status title",
     "string": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}"
@@ -5145,10 +5120,6 @@
   "TBftMD": {
     "context": "button. form submit, grant refund edit",
     "string": "Edit granted refund"
-  },
-  "TC/EOG": {
-    "context": "status section title",
-    "string": "Status in channel"
   },
   "TCR639": {
     "context": "order history message",
@@ -5369,10 +5340,6 @@
   },
   "US3IPU": {
     "string": "Search Engine Description"
-  },
-  "USO8PB": {
-    "context": "snackbar text",
-    "string": "App deactivated"
   },
   "USS3Q7": {
     "context": "filters error messages unknown error",
@@ -6385,10 +6352,6 @@
   "aMwxYb": {
     "string": "Countries"
   },
-  "aOelhW": {
-    "context": "tab name",
-    "string": "All Plugins"
-  },
   "aPCrsp": {
     "context": "shipping method name",
     "string": "Name"
@@ -6431,20 +6394,12 @@
     "context": "error message",
     "string": "Email address is not set"
   },
-  "ac+Y98": {
-    "context": "app settings error",
-    "string": "Failed to fetch app settings"
-  },
   "acgbDa": {
     "context": "product created at",
     "string": "Created at"
   },
   "aenDwE": {
     "string": "Manage extension"
-  },
-  "agZQkB": {
-    "context": "window title",
-    "string": "Create App"
   },
   "aggaJg": {
     "string": "This attribute has already been assigned to this product type"
@@ -6833,10 +6788,6 @@
   "cwjmte": {
     "context": "fulfillment status refunded",
     "string": "Refunded"
-  },
-  "cwoN25": {
-    "context": "config type section title",
-    "string": "Configuration Type"
   },
   "cy8sV7": {
     "context": "volume units types",
@@ -7318,10 +7269,6 @@
   },
   "gZ1qnD": {
     "string": "No extensions API URL provided"
-  },
-  "gZHmaV": {
-    "context": "plugin filters error messages channels",
-    "string": "No channels selected"
   },
   "gaOXvo": {
     "context": "notification, form submitted",
@@ -8865,9 +8812,6 @@
   "qGwKT/": {
     "string": "Extension disabled. Activate the extension from the settings."
   },
-  "qIgdO6": {
-    "string": "Custom Filter"
-  },
   "qJedl0": {
     "context": "product label",
     "string": "Published"
@@ -10222,9 +10166,6 @@
     "context": "extensions page subheader",
     "string": "Learn more about {extensions}"
   },
-  "yfhLcv": {
-    "string": "We are working on replacing plugins with apps. Read more about"
-  },
   "yg0ELD": {
     "string": "From {warehouseName}: {fulfillmentCreationDate}"
   },
@@ -10351,10 +10292,6 @@
   "zQX6xO": {
     "context": "dialog header",
     "string": "Delete App"
-  },
-  "zQnYKn": {
-    "context": "status section subtitle",
-    "string": "Channel status"
   },
   "zQvVDJ": {
     "string": "All"
