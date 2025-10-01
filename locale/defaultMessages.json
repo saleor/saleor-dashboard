@@ -7084,6 +7084,10 @@
     "context": "allow unpaid orders checkbox label",
     "string": "Allow unpaid orders"
   },
+  "fuUksg": {
+    "context": "column header",
+    "string": "Model Type"
+  },
   "fw+VAN": {
     "context": "product's sku",
     "string": "SKU"

@@ -33,4 +33,9 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Visibility",
     description: "column header",
   },
+  contentType: {
+    id: "fuUksg",
+    defaultMessage: "Model Type",
+    description: "column header",
+  },
 });
