@@ -1,3 +1,4 @@
+import { convertEditorJSListBlocks } from "@dashboard/components/RichTextEditor/utils";
 import { OutputData } from "@editorjs/editorjs";
 import { EditorCore } from "@react-editor-js/core";
 import { MutableRefObject, useMemo, useRef, useState } from "react";
@@ -33,7 +34,9 @@ export function useRichText({
     if (editorRef.current) {
       setIsDirty(false);
 
-      return editorRef.current.save();
+      const convertedOutputData = convertEditorJSListBlocks(await editorRef.current.save());
+
+      return convertedOutputData;
     } else {
       throw new Error("Editor instance is not available");
     }
