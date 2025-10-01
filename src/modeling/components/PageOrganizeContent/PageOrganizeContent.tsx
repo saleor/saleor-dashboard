@@ -1,12 +1,14 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
+import Link from "@dashboard/components/Link";
 import { PageDetailsFragment, PageErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
+import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageFormData } from "../PageDetailsPage/form";
@@ -74,12 +76,18 @@ const PageOrganizeContent = (props: PageOrganizeContentProps) => {
             onChange={onPageTypeChange}
           />
         ) : (
-          <>
-            <Text size={2} fontWeight="light" display="block">
+          <Box display="flex" flexDirection="column">
+            <Text size={4} fontWeight="bold">
               <FormattedMessage id="9FCrIN" defaultMessage="Model type" />
             </Text>
-            <Text>{pageType?.name}</Text>
-          </>
+            <Text size={2}>
+              {pageType && pageType.id ? (
+                <Link href={pageTypeUrl(pageType.id)}>{pageType.name}</Link>
+              ) : (
+                (pageType?.name ?? "-")
+              )}
+            </Text>
+          </Box>
         )}
       </DashboardCard.Content>
     </DashboardCard>
