@@ -15,7 +15,7 @@ jest.mock("@dashboard/config", () => {
     ...actualModule,
   };
 });
-jest.mock("../ExternalAppContext");
+jest.mock("../ExternalAppContext/ExternalAppContext");
 
 const mockNotify = jest.fn();
 const mockCloseExternalApp = jest.fn();
