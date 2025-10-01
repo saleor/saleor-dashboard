@@ -9,16 +9,16 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../../WebhookDetailsPage";
 import { messages } from "./messages";
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 import { hasEmptyHeader, mapHeaders, stringifyHeaders } from "./utils";
-import WebhookHeadersTableBody from "./WebhookHeadersTableBody";
+import { WebhookHeadersTableBody } from "./WebhookHeadersTableBody";
 
 export interface WebhookHeadersProps {
   data: WebhookFormData;
   onChange: FormChange;
 }
 
-const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHeadersProps) => {
+export const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHeadersProps) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
@@ -141,4 +141,3 @@ const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHeadersPro
 };
 
 WebhookHeaders.displayName = "WebhookHeaders";
-export default WebhookHeaders;

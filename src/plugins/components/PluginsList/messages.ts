@@ -66,10 +66,3 @@ export const pluginStatusMessages = defineMessages({
     description: "status label deactivated",
   },
 });
-
-export const pluginsMiscMessages = defineMessages({
-  appReplacementMessage: {
-    defaultMessage: "Visit App Store to replace with the App",
-    id: "NL6mvR",
-  },
-});

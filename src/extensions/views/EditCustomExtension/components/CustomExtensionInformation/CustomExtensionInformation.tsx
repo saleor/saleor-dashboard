@@ -16,7 +16,7 @@ interface CustomExtensionInfoProps {
   onChange: FormChange;
 }
 
-const CustomExtensionInformation = ({
+export const CustomExtensionInformation = ({
   data,
   disabled,
   errors,
@@ -57,4 +57,3 @@ const CustomExtensionInformation = ({
 };
 
 CustomExtensionInformation.displayName = "CustomAppInformation";
-export default CustomExtensionInformation;

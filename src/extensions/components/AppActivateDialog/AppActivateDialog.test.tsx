@@ -1,7 +1,7 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 
-import AppActivateDialog from "./AppActivateDialog";
+import { AppActivateDialog } from "./AppActivateDialog";
 import msgs from "./messages";
 
 describe("Apps AppActivateDialog", () => {

@@ -7,7 +7,7 @@ import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter as Router } from "react-router-dom";
 
-import InstalledAppListRow from "./InstalledAppListRow";
+import { InstalledAppListRow } from "./InstalledAppListRow";
 
 jest.mock("@dashboard/featureFlags");
 (useFlag as jest.Mock).mockReturnValue({ enabled: true });

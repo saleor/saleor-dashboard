@@ -31,7 +31,7 @@ const tokenPaperStyles = {
 
 const createHeadersString = (token: string) => `{\n  "authorization": "Bearer ${token}"\n}`;
 
-const TokenCreateDialog = (props: TokenCreateDialogProps) => {
+export const TokenCreateDialog = (props: TokenCreateDialogProps) => {
   const { confirmButtonState, open, token, onClose, onCreate } = props;
   const [step, setStep] = useState<TokenCreateStep>("form");
   const intl = useIntl();
@@ -175,4 +175,3 @@ const TokenCreateDialog = (props: TokenCreateDialogProps) => {
 };
 
 TokenCreateDialog.displayName = "TokenCreateDialog";
-export default TokenCreateDialog;

@@ -9,7 +9,7 @@ import { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
-import AppPage from "./components/AppPage";
+import { AppPage } from "./components/AppPage/AppPage";
 
 interface AppProps {
   id: string;

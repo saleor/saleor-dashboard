@@ -10,7 +10,7 @@ interface PermissionAlertProps {
   query: string;
 }
 
-const PermissionAlert = ({ query }: PermissionAlertProps) => {
+export const PermissionAlert = ({ query }: PermissionAlertProps) => {
   const intl = useIntl();
   const introQuery = getIntrospectionQuery();
   const { data } = useQuery(gql(introQuery), {
@@ -79,4 +79,3 @@ const PermissionAlert = ({ query }: PermissionAlertProps) => {
 };
 
 PermissionAlert.displayName = "PermissionAlert";
-export default PermissionAlert;

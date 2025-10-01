@@ -1,7 +1,7 @@
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 
-import AppDeactivateDialog from "./AppDeactivateDialog";
+import { AppDeactivateDialog } from "./AppDeactivateDialog";
 import msgs from "./messages";
 
 describe("Apps AppDeactivateDialog", () => {

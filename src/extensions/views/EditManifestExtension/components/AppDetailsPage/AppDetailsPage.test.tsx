@@ -5,12 +5,13 @@ import { AppDetailsPage } from "./AppDetailsPage";
 
 const mockHeader = jest.fn();
 
-// eslint-disable-next-line react/display-name
-jest.mock("./Header", () => (props: unknown) => {
-  mockHeader(props);
+jest.mock("./Header", () => ({
+  Header: (props: unknown) => {
+    mockHeader(props);
 
-  return <></>;
-});
+    return <></>;
+  },
+}));
 
 const mockAboutCard = jest.fn();
 

@@ -7,7 +7,8 @@ interface AppToken {
 }
 
 const TIME_BEFORE_REFRESH = 30 * 1000; // 30 seconds
-const useTokenRefresh = (token?: string, refetch?: () => void) => {
+
+export const useTokenRefresh = (token?: string, refetch?: () => void) => {
   let decoded: AppToken = {
     exp: 0,
     iat: 0,
@@ -59,4 +60,3 @@ const useTokenRefresh = (token?: string, refetch?: () => void) => {
 };
 
 /** Use hook from extensions/ */
-export default useTokenRefresh;

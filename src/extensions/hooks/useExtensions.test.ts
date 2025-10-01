@@ -22,7 +22,7 @@ jest.mock("@dashboard/graphql", () => ({
   ...(jest.requireActual("@dashboard/graphql") as jest.Mocked<typeof import("@dashboard/graphql")>),
   useExtensionListQuery: jest.fn(),
 }));
-jest.mock("../components/ExternalAppContext", () => ({
+jest.mock("../components/ExternalAppContext/ExternalAppContext", () => ({
   useExternalApp: () => ({
     openApp: mockOpenApp,
   }),

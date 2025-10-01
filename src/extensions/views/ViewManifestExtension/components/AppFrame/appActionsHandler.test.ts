@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import * as ReactIntl from "react-intl";
 import { IntlShape } from "react-intl";
 
-import * as ExternalAppContext from "../ExternalAppContext";
+import * as ExternalAppContext from "../ExternalAppContext/ExternalAppContext";
 import { AppActionsHandler } from "./appActionsHandler";
 
 jest.mock("@dashboard/config", () => {
@@ -15,7 +15,7 @@ jest.mock("@dashboard/config", () => {
     ...actualModule,
   };
 });
-jest.mock("../ExternalAppContext");
+jest.mock("../ExternalAppContext/ExternalAppContext");
 
 const mockNotify = jest.fn();
 const mockCloseExternalApp = jest.fn();

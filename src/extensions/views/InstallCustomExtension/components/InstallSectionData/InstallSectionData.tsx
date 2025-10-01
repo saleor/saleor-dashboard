@@ -2,7 +2,7 @@ import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { Control, useWatch } from "react-hook-form";
 
 import { ExtensionInstallFormData, InstallDetailsManifestData } from "../../types";
-import { InstallExtensionManifestData } from "./InstallExtensionManifestData";
+import { InstallExtensionManifestData } from "./InstallExtensionManifestData/InstallExtensionManifestData";
 
 interface IInstallSectionDataProps {
   isFetchingManifest: boolean;

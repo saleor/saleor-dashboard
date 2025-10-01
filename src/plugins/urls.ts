@@ -13,7 +13,7 @@ import {
 
 const pluginSection = "/plugins/";
 
-export const pluginListPath = pluginSection;
+const pluginListPath = pluginSection;
 
 export enum PluginListUrlFiltersEnum {
   query = "query",
@@ -40,7 +40,8 @@ export type PluginListUrlQueryParams = ActiveTab &
 export const pluginListUrl = (params?: PluginListUrlQueryParams) =>
   pluginListPath + "?" + stringifyQs(params);
 
-export const pluginPath = (id: string) => urlJoin(pluginSection, id);
+const pluginPath = (id: string) => urlJoin(pluginSection, id);
+
 export type PluginUrlDialog = "clear" | "edit";
 export type PluginUrlQueryParams = Dialog<PluginUrlDialog> & SingleAction;
 export const pluginUrl = (id: string, params?: PluginUrlQueryParams) =>

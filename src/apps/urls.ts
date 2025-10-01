@@ -7,11 +7,6 @@ import urlJoin from "url-join";
 
 import { Dialog, SingleAction } from "../types";
 
-export const MANIFEST_ATTR = "manifestUrl";
-
-export type AppListUrlDialog = "app-installation-remove";
-export type AppListUrlQueryParams = Dialog<AppListUrlDialog> & SingleAction;
-
 export type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete";
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
@@ -36,8 +31,6 @@ export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
   AppDetailsUrlMountQueryParams &
   FeatureFlagsQueryParams;
 
-export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
-
 export const AppSections = {
   appsSection: "/apps/",
 };
@@ -61,8 +54,7 @@ export const AppUrls = {
     AppPaths.resolveAppDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
   resolveAppInstallUrl: (manifestUrl: string) =>
     `${AppPaths.appInstallPath}?manifestUrl=${manifestUrl}`,
-  resolveAppDeepUrl: (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
-    AppPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params),
+
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = AppPaths.resolveAppPath(encodeURIComponent(appId));
 
@@ -76,23 +68,7 @@ export const AppUrls = {
 
     return deepSubPath || "/";
   },
-  resolveAppCompleteUrlFromDashboardUrl: (
-    dashboardUrl: string,
-    appUrl?: string,
-    appId?: string,
-  ) => {
-    if (!appUrl || !appId) {
-      return appUrl;
-    }
 
-    const deepSubPath = dashboardUrl.replace(
-      AppPaths.resolveAppPath(encodeURIComponent(appId)),
-      "",
-    );
-    const appCompleteUrl = urlJoin(appUrl, deepSubPath);
-
-    return appCompleteUrl;
-  },
   resolveDashboardUrlFromAppCompleteUrl: (
     appCompleteUrl: string,
     appUrl?: string,

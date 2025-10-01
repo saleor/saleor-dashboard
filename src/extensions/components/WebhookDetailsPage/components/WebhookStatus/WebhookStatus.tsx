@@ -10,7 +10,7 @@ interface WebhookStatusProps {
   setValue: (data: Partial<WebhookFormData>) => void;
 }
 
-const WebhookStatus = ({ data, disabled, setValue }: WebhookStatusProps) => {
+export const WebhookStatus = ({ data, disabled, setValue }: WebhookStatusProps) => {
   const intl = useIntl();
 
   return (
@@ -30,4 +30,3 @@ const WebhookStatus = ({ data, disabled, setValue }: WebhookStatusProps) => {
 };
 
 WebhookStatus.displayName = "WebhookStatus";
-export default WebhookStatus;

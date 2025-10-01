@@ -1,6 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
-const useStyles = makeStyles(
+export const useStyles = makeStyles(
   theme => {
     const colAction: React.CSSProperties = {
       textAlign: "right",
@@ -67,5 +67,3 @@ const useStyles = makeStyles(
     name: "WebhookHeaders",
   },
 );
-
-export default useStyles;

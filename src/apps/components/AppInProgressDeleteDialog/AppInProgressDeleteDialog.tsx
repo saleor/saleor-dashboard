@@ -14,7 +14,7 @@ interface AppInProgressDeleteDialogProps {
   onConfirm: () => void;
 }
 
-const AppInProgressDeleteDialog = ({
+export const AppInProgressDeleteDialog = ({
   confirmButtonState,
   open,
   name,
@@ -48,4 +48,3 @@ const AppInProgressDeleteDialog = ({
 };
 
 AppInProgressDeleteDialog.displayName = "AppInProgressDeleteDialog";
-export default AppInProgressDeleteDialog;

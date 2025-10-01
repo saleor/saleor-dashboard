@@ -4,7 +4,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { Box, Button, ExternalLinkIcon } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { AppInstallButton } from "../AppInstallButton";
+import { AppInstallButton } from "../AppInstallButton/AppInstallButton";
 
 interface AppActionsProps {
   isInstalled: boolean;

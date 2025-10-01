@@ -4,7 +4,7 @@ import { Skeleton } from "@saleor/macaw-ui-next";
 
 import { useStyles } from "./styles";
 
-const CustomAppsSkeleton = () => {
+export const CustomAppsSkeleton = () => {
   const classes = useStyles();
 
   return (
@@ -17,4 +17,3 @@ const CustomAppsSkeleton = () => {
 };
 
 CustomAppsSkeleton.displayName = "CustomAppsSkeleton";
-export default CustomAppsSkeleton;

@@ -6,13 +6,11 @@ import {
   CountryWithCodeFragment,
   MetadataInput,
   MetadataItemFragment,
-  PageFragment,
 } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { pageUrl } from "@dashboard/modeling/urls";
 import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { Node, SlugNode } from "@dashboard/types";
-import { Choice } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
 
 interface Edge<T> {
@@ -34,13 +32,6 @@ export function mapCountriesToChoices(countries: CountryWithCodeFragment[]) {
   return countries.map(country => ({
     label: country.country,
     value: country.code,
-  }));
-}
-
-export function mapPagesToChoices(pages: Array<Pick<PageFragment, "title" | "id">>): Choice[] {
-  return pages.map(page => ({
-    label: page.title,
-    value: page.id,
   }));
 }
 

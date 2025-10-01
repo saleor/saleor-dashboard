@@ -10,7 +10,7 @@ import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import GraphiQL from "../../../components/GraphiQL";
-import { WebhookFormData } from "../WebhookDetailsPage";
+import { WebhookFormData } from "../WebhookDetailsPage/WebhookDetailsPage";
 import { useStyles } from "./styles";
 
 const messages = defineMessages({
@@ -31,7 +31,8 @@ interface WebhookSubscriptionQueryProps {
 const fetcher = createGraphiQLFetcher({
   url: process.env.API_URL,
 });
-const WebhookSubscriptionQuery = ({
+
+export const WebhookSubscriptionQuery = ({
   errors,
   query,
   setQuery,
@@ -73,4 +74,3 @@ const WebhookSubscriptionQuery = ({
 };
 
 WebhookSubscriptionQuery.displayName = "WebhookSubscriptionQuery";
-export default WebhookSubscriptionQuery;
