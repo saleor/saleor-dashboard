@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
-import TablePagination from "@dashboard/components/TablePagination";
+import { TablePagination } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   AttributeInputTypeEnum,

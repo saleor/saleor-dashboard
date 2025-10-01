@@ -58,14 +58,6 @@ export function renderCollection<T>(
   return collection.map(renderItem);
 }
 
-export function decimal(value: string | number) {
-  if (typeof value === "string") {
-    return value === "" ? null : value;
-  }
-
-  return value;
-}
-
 export function weight(value: string) {
   return value === "" ? null : parseFloat(value);
 }

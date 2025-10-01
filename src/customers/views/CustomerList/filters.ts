@@ -1,4 +1,4 @@
-import { FilterElement } from "@dashboard/components/Filter";
+import { FilterElement } from "@dashboard/components/Filter/types";
 import {
   CustomerFilterKeys,
   CustomerListFilterOpts,

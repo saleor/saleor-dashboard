@@ -7,7 +7,6 @@ import {
   MetadataInput,
   MetadataItemFragment,
 } from "@dashboard/graphql";
-import { getFullName } from "@dashboard/misc";
 import { pageUrl } from "@dashboard/modeling/urls";
 import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
 import { Node, SlugNode } from "@dashboard/types";
@@ -101,23 +100,6 @@ export function mapSingleValueNodeToChoice<T extends Record<string, any>>(
   }
 
   return (nodes as T[]).map(node => ({ label: node[key], value: node[key] }));
-}
-
-interface Person {
-  firstName: string;
-  lastName: string;
-  id: string;
-}
-
-export function mapPersonNodeToChoice<T extends Person>(nodes: T[]): Option[] {
-  if (!nodes) {
-    return [];
-  }
-
-  return nodes.map(({ firstName, lastName, id }) => ({
-    value: id,
-    label: getFullName({ firstName, lastName }),
-  }));
 }
 
 export function getLoadableList<T>(data: Connection<T> | undefined | null): T[] | undefined {

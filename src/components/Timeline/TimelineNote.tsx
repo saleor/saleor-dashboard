@@ -156,4 +156,3 @@ export const TimelineNote = ({
   );
 };
 TimelineNote.displayName = "TimelineNote";
-export default TimelineNote;

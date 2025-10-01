@@ -1,7 +1,7 @@
 import { ApolloError } from "@apollo/client";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { IFilter } from "@dashboard/components/Filter";
+import { IFilter } from "@dashboard/components/Filter/types";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
