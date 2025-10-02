@@ -244,6 +244,15 @@ type CustomAppDetailsUrlDialog =
 
 export type CustomAppDetailsUrlQueryParams = Dialog<CustomAppDetailsUrlDialog> & SingleAction;
 
+type CustomAppDetailsUrlDialog =
+  | "create-token"
+  | "remove-webhook"
+  | "remove-token"
+  | "app-activate"
+  | "app-deactivate";
+
+export type CustomAppDetailsUrlQueryParams = Dialog<CustomAppDetailsUrlDialog> & SingleAction;
+
 export const AppSections = {
   appsSection: "/apps/",
 };
