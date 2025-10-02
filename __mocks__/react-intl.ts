@@ -10,8 +10,9 @@ const useIntl = jest.fn(() => ({
 const defineMessages = jest.fn(x => x);
 const defineMessage = jest.fn(x => x);
 
-const FormattedMessage = ({ defaultMessage }: { defaultMessage: string }) =>
-  createElement(Fragment, null, defaultMessage);
+const FormattedMessage = jest.fn(({ defaultMessage }: { defaultMessage: string }) =>
+  createElement(Fragment, null, defaultMessage),
+);
 
 const IntlProvider = ({ children }: { children: React.ReactNode }) =>
   createElement(Fragment, null, children);
