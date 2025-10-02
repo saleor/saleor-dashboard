@@ -18,15 +18,6 @@ jest.mock("@dashboard/hooks/useHasManagedAppsPermission", () => ({
 
 jest.mock("@dashboard/hooks/useNavigator", () => jest.fn());
 
-jest.mock("react-intl", () => ({
-  FormattedMessage: ({ id, defaultMessage }: { defaultMessage: string; id: string }) =>
-    defaultMessage || id,
-  useIntl: () => ({
-    formatMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage,
-  }),
-  defineMessages: (messages: unknown) => messages,
-}));
-
 jest.mock("@dashboard/extensions/components/RequestExtensionsButton", () => ({
   RequestExtensionsButton: () => (
     <a href={CONST_TYPEFORM_URL} target="_blank" rel="noopener noreferrer">

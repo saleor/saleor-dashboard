@@ -2,17 +2,8 @@ import { MetadataInput } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Control } from "react-hook-form";
-import { IntlShape, MessageDescriptor } from "react-intl";
 
 import { MetadataHookForm } from "./MetadataHookForm";
-
-jest.mock("react-intl", () => ({
-  FormattedMessage: (props: MessageDescriptor) => <>{props.defaultMessage || props.id || ""}</>,
-  defineMessages: (messages: Record<string, MessageDescriptor>) => messages,
-  useIntl: (): Pick<IntlShape, "formatMessage"> => ({
-    formatMessage: ({ defaultMessage }: MessageDescriptor) => defaultMessage || "",
-  }),
-}));
 
 const mockData = {
   privateMetadata: [

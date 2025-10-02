@@ -1,7 +1,6 @@
 import { ExtensionData } from "@dashboard/extensions/types";
 import { render, screen } from "@testing-library/react";
 import * as React from "react";
-import { FormattedMessageProps } from "react-intl";
 
 import { ExtensionItem } from "./ExtenionItem";
 
@@ -12,14 +11,6 @@ jest.mock("@dashboard/hooks/useNavigator", () => ({
 
 jest.mock("@dashboard/utils/permissions", () => ({
   useUserHasPermissions: jest.fn(() => true),
-}));
-
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: FormattedMessageProps) => <>{defaultMessage}</>,
 }));
 
 jest.mock("@dashboard/components/Link", () => {
