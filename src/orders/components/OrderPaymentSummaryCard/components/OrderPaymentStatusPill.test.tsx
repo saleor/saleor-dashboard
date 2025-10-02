@@ -12,14 +12,6 @@ jest.mock("@dashboard/misc", () => ({
   }),
 }));
 
-jest.mock("react-intl", () => ({
-  FormattedMessage: jest.fn(({ defaultMessage }) => defaultMessage),
-  defineMessages: jest.fn(),
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-}));
-
 // It's tricky to render Pill component
 // The mock contains the most important part - label and color
 jest.mock("@dashboard/components/Pill", () => ({
