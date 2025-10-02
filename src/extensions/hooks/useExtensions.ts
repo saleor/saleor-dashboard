@@ -1,4 +1,4 @@
-import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
+import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import {
   AppExtensionMountEnum,

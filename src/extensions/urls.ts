@@ -1,4 +1,3 @@
-import { AppPaths } from "@dashboard/apps/urls";
 import { getApiUrl } from "@dashboard/config";
 import { FlagList } from "@dashboard/featureFlags";
 import { Dialog, SingleAction } from "@dashboard/types";
@@ -244,3 +243,66 @@ type CustomAppDetailsUrlDialog =
   | "app-deactivate";
 
 export type CustomAppDetailsUrlQueryParams = Dialog<CustomAppDetailsUrlDialog> & SingleAction;
+
+export const AppSections = {
+  appsSection: "/apps/",
+};
+
+export const AppPaths = {
+  appListPath: AppSections.appsSection,
+  resolveAppPath: (id: string) => urlJoin(AppSections.appsSection, id, "app"),
+  appInstallPath: urlJoin(AppSections.appsSection, "install"),
+};
+
+export const AppUrls = {
+  resolveAppUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
+    AppPaths.resolveAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
+  isAppDeepUrlChange: (appId: string, from: string, to: string) => {
+    const appCompletePath = AppPaths.resolveAppPath(encodeURIComponent(appId));
+
+    return to.startsWith(appCompletePath) && from.startsWith(appCompletePath);
+  },
+  resolveDashboardUrlFromAppCompleteUrl: (
+    appCompleteUrl: string,
+    appUrl?: string,
+    appId?: string,
+  ) => {
+    if (!appUrl || !appId) {
+      return appUrl;
+    }
+
+    const deepSubPath = appCompleteUrl.replace(appUrl, "");
+    const dashboardUrl = urlJoin(AppPaths.resolveAppPath(encodeURIComponent(appId)), deepSubPath);
+
+    return dashboardUrl;
+  },
+  resolveAppIframeUrl: (
+    appId: string,
+    appUrl: string,
+    params: AppDetailsUrlQueryParams & AppDetailsCommonParams,
+  ) => {
+    const apiUrl = new URL(getApiUrl(), window.location.origin).href;
+    /**
+     * Use host to preserve port, in case of multiple Saleors running on localhost
+     */
+    const apiUrlHost = new URL(apiUrl).host;
+    const iframeContextQueryString = `?${stringifyQs(
+      {
+        /**
+         * @deprecated - domain will be removed in favor of saleorApiUrl.
+         * Current hostname (used as domain) can be extracted from full URL
+         *
+         * Difference will be:
+         * shop.saleor.cloud -> https://shop.saleor.cloud/graphql/
+         */
+        domain: apiUrlHost,
+        saleorApiUrl: apiUrl,
+        id: appId,
+        ...params,
+      },
+      "comma",
+    )}`;
+
+    return urlJoin(appUrl, window.location.search, iframeContextQueryString);
+  },
+};

@@ -1,4 +1,4 @@
-import { appAvatar } from "@dashboard/apps/fixtures";
+import { appAvatar } from "@dashboard/extensions/fixtures";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";
 import { staffMemberDetailsPath } from "@dashboard/staff/urls";

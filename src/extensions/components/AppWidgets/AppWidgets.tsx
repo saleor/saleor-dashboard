@@ -1,12 +1,11 @@
-import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
-import { AppFrame } from "@dashboard/apps/components/AppFrame/AppFrame";
-import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
-import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION, getApiUrl } from "@dashboard/config";
+import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
+import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/extensions/urls";
+import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -14,6 +13,8 @@ import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
+
+import { AppAvatar } from "../AppAvatar/AppAvatar";
 
 type AppWidgetsProps = {
   extensions: ExtensionWithParams[];
