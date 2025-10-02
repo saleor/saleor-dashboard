@@ -1,7 +1,7 @@
 import { Provider as DateProvider } from "@dashboard/components/Date/DateContext";
 import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { TimezoneProvider } from "@dashboard/components/Timezone";
-import { ExternalAppProvider } from "@dashboard/extensions/components/ExternalAppContext";
+import { ExternalAppProvider } from "@dashboard/extensions/components/ExternalAppContext/ExternalAppContext";
 import React from "react";
 import { IntlProvider } from "react-intl";
 

@@ -63,4 +63,3 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   );
 };
 TimelineEvent.displayName = "TimelineEvent";
-export default TimelineEvent;

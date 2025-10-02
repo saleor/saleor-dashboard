@@ -31,7 +31,7 @@ interface FilterContentHeaderProps {
   onClear: () => void;
 }
 
-const FilterContentHeader = ({ onClear }: FilterContentHeaderProps) => {
+export const FilterContentHeader = ({ onClear }: FilterContentHeaderProps) => {
   const classes = useStyles({});
 
   return (
@@ -55,5 +55,3 @@ const FilterContentHeader = ({ onClear }: FilterContentHeaderProps) => {
     </div>
   );
 };
-
-export default FilterContentHeader;

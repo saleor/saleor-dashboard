@@ -1,9 +1,9 @@
+import { pluginStatusMessages } from "@dashboard/extensions/views/EditPluginExtension/messages";
 import {
   ConfigurationItemFragment,
   ConfigurationTypeFieldEnum,
   PluginConfigurationBaseFragment,
 } from "@dashboard/graphql";
-import { pluginStatusMessages } from "@dashboard/plugins/components/PluginsList/messages";
 import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 

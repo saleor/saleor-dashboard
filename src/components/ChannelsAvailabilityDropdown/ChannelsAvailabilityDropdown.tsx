@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
-import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent";
+import { ChannelsAvailabilityMenuContent } from "../ChannelsAvailabilityMenuContent/ChannelsAvailabilityMenuContent";
 import { Pill } from "../Pill";
 import { messages } from "./messages";
 import { CollectionChannels, getDropdownColor, mapChannelsToPills } from "./utils";

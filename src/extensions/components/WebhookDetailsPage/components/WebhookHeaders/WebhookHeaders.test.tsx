@@ -3,8 +3,9 @@ import Wrapper from "@test/wrapper";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { customHeaders } from "./utils.test";
-import WebhookHeaders, { WebhookHeadersProps } from "./WebhookHeaders";
+import { WebhookHeaders, WebhookHeadersProps } from "./WebhookHeaders";
+
+export const customHeaders = '{"x-auth-token":"ABC","authorization":"XYZ"}';
 
 export const props: WebhookHeadersProps = {
   data: {

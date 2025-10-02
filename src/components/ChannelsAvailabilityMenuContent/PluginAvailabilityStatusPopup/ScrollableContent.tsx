@@ -1,0 +1,27 @@
+import { List } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import * as React from "react";
+
+const useStyles = makeStyles(
+  () => ({
+    container: {
+      maxHeight: 450,
+      overflow: "auto",
+    },
+  }),
+  { name: "ScrollableContent" },
+);
+
+interface ScrollableContentProps {
+  children: React.ReactNode | React.ReactNode[];
+}
+
+export const ScrollableContent = ({ children }: ScrollableContentProps) => {
+  const classes = useStyles({});
+
+  return (
+    <div className={classes.container}>
+      <List>{children}</List>
+    </div>
+  );
+};

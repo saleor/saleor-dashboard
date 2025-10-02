@@ -1,4 +1,4 @@
-import { IFilter } from "@dashboard/components/Filter";
+import { IFilter } from "@dashboard/components/Filter/types";
 import { StaffMemberStatus } from "@dashboard/graphql";
 import { FilterOpts } from "@dashboard/types";
 import { createOptionsField } from "@dashboard/utils/filters/fields";

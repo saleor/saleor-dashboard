@@ -4,7 +4,6 @@ import { createCustomerQueryVariables } from "@dashboard/components/ConditionalF
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { useFlag } from "@dashboard/featureFlags";
 import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -29,7 +28,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerListPage from "../../components/CustomerListPage";
 import { customerListUrl, CustomerListUrlDialog, CustomerListUrlQueryParams } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, getFilterVariables, storageUtils } from "./filters";
+import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface CustomerListProps {
@@ -41,7 +40,6 @@ const CustomerList = ({ params }: CustomerListProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.CUSTOMER_LIST);
-  const { enabled: isCustomersFiltersEnabled } = useFlag("new_filters");
   const { valueProvider } = useConditionalFilterContext();
   const filter = createCustomerQueryVariables(valueProvider.value);
 
@@ -70,14 +68,6 @@ const CustomerList = ({ params }: CustomerListProps) => {
     storageUtils,
   });
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = useMemo(
-    () => ({
-      ...paginationState,
-      filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params),
-    }),
-    [params, settings.rowNumber],
-  );
   const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
@@ -92,7 +82,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
 
   const { data, refetch } = useListCustomersQuery({
     displayLoader: true,
-    variables: isCustomersFiltersEnabled ? newQueryVariables : queryVariables,
+    variables: newQueryVariables,
   });
   const customers = mapEdgesToItems(data?.customers);
   const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({

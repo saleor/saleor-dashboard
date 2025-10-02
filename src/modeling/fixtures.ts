@@ -1,45 +1,9 @@
-import {
-  AttributeInputTypeEnum,
-  AttributeTypeEnum,
-  PageDetailsFragment,
-  PageFragment,
-} from "@dashboard/graphql";
-import { PageType } from "@saleor/sdk/dist/apollo/types";
+import { AttributeInputTypeEnum, AttributeTypeEnum, PageDetailsFragment } from "@dashboard/graphql";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 
 const content = richTextEditorFixtures.richTextEditor;
 
-export const pageList: PageFragment[] = [
-  {
-    __typename: "Page",
-    id: "Jzx123sEt==",
-    isPublished: true,
-    slug: "about",
-    title: "About",
-  },
-  {
-    __typename: "Page",
-    id: "Jzx123sEx==",
-    isPublished: false,
-    slug: "about",
-    title: "About",
-  },
-  {
-    __typename: "Page",
-    id: "Jzx123sEu==",
-    isPublished: true,
-    slug: "about",
-    title: "About",
-  },
-  {
-    __typename: "Page",
-    id: "Jzx123sEm==",
-    isPublished: true,
-    slug: "about",
-    title: "About",
-  },
-];
 export const page: PageDetailsFragment = {
   __typename: "Page",
   attributes: [
@@ -460,18 +424,3 @@ export const page: PageDetailsFragment = {
   slug: "about",
   title: "About",
 };
-
-export const pageTypesList: Array<Pick<PageType, "id" | "name">> = [
-  {
-    id: "1111ZHVjdFR5cGU6Nw==",
-    name: "General",
-  },
-  {
-    id: "2222ZHVjdFR5cGU6Nw==",
-    name: "Subpages",
-  },
-  {
-    id: "3333ZHVjdFR5cGU6Nw==",
-    name: "Blog",
-  },
-];

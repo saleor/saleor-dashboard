@@ -3,7 +3,6 @@ import {
   ConditionalVoucherFilterProvider,
 } from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
-import { useFlag } from "@dashboard/featureFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -15,8 +14,6 @@ import { DiscountListUrlQueryParams, DiscountListUrlSortField } from "./discount
 import {
   saleAddPath,
   saleListPath,
-  SaleListUrlQueryParams,
-  SaleListUrlSortField,
   salePath,
   voucherAddPath,
   VoucherCreateUrlQueryParams,
@@ -29,51 +26,29 @@ import {
 import { DiscountCreate } from "./views/DiscountCreate";
 import { DiscountDetails } from "./views/DiscountDetails";
 import { DiscountList } from "./views/DiscountList";
-import SaleCreateViewComponent from "./views/SaleCreate/SaleCreate";
-import SaleDetailsViewComponent from "./views/SaleDetails";
-import SaleListViewComponent from "./views/SaleList";
 import VoucherCreateViewComponent from "./views/VoucherCreate";
 import VoucherDetailsViewComponent from "./views/VoucherDetails";
 import VoucherListViewComponent from "./views/VoucherList";
 
 const SaleListView = () => {
   const qs = parseQs(location.search.substr(1)) as any;
-  const params: SaleListUrlQueryParams = asSortParams(qs, SaleListUrlSortField);
-  const { enabled } = useFlag("discounts_rules");
 
-  if (enabled) {
-    const params: DiscountListUrlQueryParams = asSortParams(qs, DiscountListUrlSortField);
+  const params: DiscountListUrlQueryParams = asSortParams(qs, DiscountListUrlSortField);
 
-    return (
-      <ConditionalDiscountFilterProvider locationSearch={location.search}>
-        <DiscountList params={params} />
-      </ConditionalDiscountFilterProvider>
-    );
-  }
-
-  return <SaleListViewComponent params={params} />;
+  return (
+    <ConditionalDiscountFilterProvider locationSearch={location.search}>
+      <DiscountList params={params} />
+    </ConditionalDiscountFilterProvider>
+  );
 };
 const SaleDetailsView = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params = qs;
-  const { enabled } = useFlag("discounts_rules");
 
-  if (enabled) {
-    return <DiscountDetails id={decodeURIComponent(match.params.id)} params={params} />;
-  }
-
-  return <SaleDetailsViewComponent id={decodeURIComponent(match.params.id)} params={params} />;
+  return <DiscountDetails id={decodeURIComponent(match.params.id)} params={params} />;
 };
-const SaleCreateView = ({ location }: RouteComponentProps) => {
-  const qs = parseQs(location.search.substr(1));
-  const params = qs;
-  const { enabled } = useFlag("discounts_rules");
-
-  if (enabled) {
-    return <DiscountCreate />;
-  }
-
-  return <SaleCreateViewComponent params={params} />;
+const SaleCreateView = () => {
+  return <DiscountCreate />;
 };
 const VoucherListView = () => {
   const qs = parseQs(location.search.substr(1)) as any;

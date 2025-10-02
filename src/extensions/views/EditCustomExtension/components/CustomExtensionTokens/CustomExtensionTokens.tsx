@@ -21,7 +21,7 @@ interface CustomAppTokensProps {
 
 const numberOfColumns = 3;
 
-const CustomExtensionTokens = (props: CustomAppTokensProps) => {
+export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
   const { tokens, onCreate, onDelete, hasManagedAppsPermission, isLoading } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -149,5 +149,4 @@ const CustomExtensionTokens = (props: CustomAppTokensProps) => {
   );
 };
 
-CustomExtensionTokens.displayName = "CustomAppTokens";
-export default CustomExtensionTokens;
+CustomExtensionTokens.displayName = "CustomExtensionTokens";

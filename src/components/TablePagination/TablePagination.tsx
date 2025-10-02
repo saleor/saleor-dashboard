@@ -94,4 +94,3 @@ export const TablePagination = ({
 };
 
 TablePagination.displayName = "TablePagination";
-export default TablePagination;

@@ -1,4 +1,4 @@
-import { IFilter } from "@dashboard/components/Filter";
+import { IFilter } from "@dashboard/components/Filter/types";
 import { FilterOpts, MinMax } from "@dashboard/types";
 import { createDateField, createTextField } from "@dashboard/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";

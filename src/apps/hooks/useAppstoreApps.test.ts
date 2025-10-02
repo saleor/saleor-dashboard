@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react-hooks";
 
 import { comingSoonApp, releasedApp } from "../fixtures";
-import useAppstoreApps from "./useAppstoreApps";
+import { useAppstoreApps } from "./useAppstoreApps";
 
 const mockApps = [releasedApp, comingSoonApp];
 

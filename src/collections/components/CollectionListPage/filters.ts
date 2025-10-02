@@ -1,4 +1,4 @@
-import { IFilter } from "@dashboard/components/Filter";
+import { IFilter } from "@dashboard/components/Filter/types";
 import { CollectionPublished } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { FilterOpts } from "@dashboard/types";

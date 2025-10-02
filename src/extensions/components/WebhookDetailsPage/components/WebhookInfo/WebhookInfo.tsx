@@ -12,7 +12,7 @@ import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { WebhookFormData } from "../../WebhookDetailsPage";
-import WebhookStatus from "../WebhookStatus";
+import { WebhookStatus } from "../WebhookStatus/WebhookStatus";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -24,7 +24,7 @@ interface WebhookInfoProps {
   setValue: (data: Partial<WebhookFormData>) => void;
 }
 
-const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: WebhookInfoProps) => {
+export const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: WebhookInfoProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
@@ -127,4 +127,3 @@ const WebhookInfo = ({ data, disabled, errors, onChange, setValue }: WebhookInfo
 };
 
 WebhookInfo.displayName = "WebhookInfo";
-export default WebhookInfo;

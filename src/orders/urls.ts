@@ -89,12 +89,28 @@ export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
 };
 
 /**
- * Creates a customer filter element using the conditional filter system
- * so that we can use it to build URL with customer filter
+ * Creates a customer ID filter element using the conditional filter system
  */
-const createCustomerFilterElement = (userEmail: string): FilterElement => {
-  const expressionValue = new ExpressionValue("customer", "Customer", "customer");
+const createCustomerIdFilterElement = (userId: string): FilterElement => {
+  const expressionValue = new ExpressionValue("customer", "Customer ID", "customer");
   const conditionOptions = ConditionOptions.fromStaticElementName("customer");
+  const conditionSelected = new ConditionSelected(
+    userId,
+    { type: "text", label: "is", value: "input-1" },
+    [],
+    false,
+  );
+  const condition = new Condition(conditionOptions, conditionSelected, false);
+
+  return new FilterElement(expressionValue, condition, false);
+};
+
+/**
+ * Creates a customer email filter element using the conditional filter system
+ */
+const createCustomerEmailFilterElement = (userEmail: string): FilterElement => {
+  const expressionValue = new ExpressionValue("userEmail", "Customer Email", "userEmail");
+  const conditionOptions = ConditionOptions.fromStaticElementName("userEmail");
   const conditionSelected = new ConditionSelected(
     userEmail,
     { type: "text", label: "is", value: "input-1" },
@@ -107,14 +123,29 @@ const createCustomerFilterElement = (userEmail: string): FilterElement => {
 };
 
 /**
- * Builds order list URL with customer filter using conditional filter system
+ * Builds order list URL with customer email filter
  */
-export const orderListUrlWithCustomer = (userEmail?: string) => {
+export const orderListUrlWithCustomerEmail = (userEmail?: string) => {
   if (userEmail === undefined) {
     return orderListPath;
   }
 
-  const customerFilter = createCustomerFilterElement(userEmail);
+  const customerFilter = createCustomerEmailFilterElement(userEmail);
+  const filterContainer = [customerFilter];
+  const queryParams = prepareStructure(filterContainer);
+
+  return urlJoin(orderListPath, "?" + stringify(queryParams));
+};
+
+/**
+ * Builds order list URL with customer ID filter
+ */
+export const orderListUrlWithCustomerId = (userId?: string) => {
+  if (userId === undefined) {
+    return orderListPath;
+  }
+
+  const customerFilter = createCustomerIdFilterElement(userId);
   const filterContainer = [customerFilter];
   const queryParams = prepareStructure(filterContainer);
 

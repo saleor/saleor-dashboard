@@ -461,7 +461,7 @@ export const STATIC_ORDER_OPTIONS: LeftOperand[] = [
   },
   {
     value: "customer",
-    label: "Customer",
+    label: "Customer ID",
     type: "customer",
     slug: "customer",
   },
@@ -629,7 +629,7 @@ export const STATIC_PAGE_OPTIONS: LeftOperand[] = [
 export const STATIC_DRAFT_ORDER_OPTIONS: LeftOperand[] = [
   {
     value: "customer",
-    label: "Customer",
+    label: "Customer ID",
     type: "customer",
     slug: "customer",
   },

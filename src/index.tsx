@@ -3,7 +3,7 @@ import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
 import { history, Route, Router } from "@dashboard/components/Router";
-import { extensionsSection } from "@dashboard/extensions/urls";
+import { ExtensionsPaths, extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { pageListPath } from "@dashboard/modeling/urls";
@@ -19,10 +19,8 @@ import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
-import { Switch } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 
-import { AppsSectionRoot } from "./apps";
-import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth from "./auth";
@@ -53,12 +51,10 @@ import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import CustomAppsSection from "./custom-apps";
-import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import { ExtensionsSection } from "./extensions";
-import { ExternalAppProvider } from "./extensions/components/ExternalAppContext";
+import { ExternalAppProvider } from "./extensions/components/ExternalAppContext/ExternalAppContext";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
@@ -70,7 +66,6 @@ import PageTypesSection from "./modelTypes";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PermissionGroupSection from "./permissionGroups";
-import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
 import SearchSection from "./search";
@@ -241,11 +236,6 @@ const Routes = () => {
                   matchPermission="any"
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PLUGINS]}
-                  path="/plugins"
-                  component={PluginsSection}
-                />
-                <SectionRoute
                   permissions={[PermissionEnum.MANAGE_ORDERS]}
                   path="/orders"
                   component={OrdersSection}
@@ -303,11 +293,6 @@ const Routes = () => {
                 />
                 <SectionRoute
                   permissions={[]}
-                  path={AppSections.appsSection}
-                  component={AppsSectionRoot}
-                />
-                <SectionRoute
-                  permissions={[]}
                   path={extensionsSection}
                   component={ExtensionsSection}
                 />
@@ -328,7 +313,9 @@ const Routes = () => {
                   path="/configuration"
                   component={ConfigurationSection}
                 />
-                <SectionRoute path={CustomAppSections.appsSection} component={CustomAppsSection} />
+                <Redirect to={ExtensionsPaths.installedExtensions} path={"/apps"} />
+                <Redirect to={ExtensionsPaths.installedExtensions} path="/custom-apps/" />
+                <Redirect to={ExtensionsPaths.installedExtensions} path="/plugins" />
                 <Route component={NotFound} />
               </Switch>
             </ErrorBoundary>

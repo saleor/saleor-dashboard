@@ -1,11 +1,11 @@
 // @ts-strict-ignore
+import { FilterContent } from "@dashboard/components/Filter/FilterContent/FilterContent";
 import {
-  FilterContent,
   FilterElement,
   FilterErrorMessages,
   IFilter,
   InvalidFilters,
-} from "@dashboard/components/Filter";
+} from "@dashboard/components/Filter/types";
 import useFilter from "@dashboard/components/Filter/useFilter";
 import { extractInvalidFilters } from "@dashboard/components/Filter/utils";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";

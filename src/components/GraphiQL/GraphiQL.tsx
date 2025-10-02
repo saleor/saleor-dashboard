@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { WebhookFormData } from "@dashboard/custom-apps/components/WebhookDetailsPage";
+import { WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
 import {
   CopyIcon,
   GraphiQLProvider,

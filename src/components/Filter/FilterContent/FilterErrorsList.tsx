@@ -40,7 +40,7 @@ interface FilterErrorsListProps<T extends string = string> {
   errorMessages?: FilterErrorMessages<T>;
 }
 
-const FilterErrorsList = ({
+export const FilterErrorsList = ({
   filter: { dependencies },
   errors = [],
   errorMessages,
@@ -79,5 +79,3 @@ const FilterErrorsList = ({
     </div>
   );
 };
-
-export default FilterErrorsList;

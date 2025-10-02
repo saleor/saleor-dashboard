@@ -10,7 +10,7 @@ import { PropsWithChildren, useCallback, useRef } from "react";
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
-import useTokenRefresh from "./useTokenRefresh";
+import { useTokenRefresh } from "./useTokenRefresh";
 
 interface Props {
   src: string;

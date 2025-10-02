@@ -1,5 +1,4 @@
 import { getApiUrl } from "@dashboard/config";
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { FlagList } from "@dashboard/featureFlags";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -7,12 +6,7 @@ import urlJoin from "url-join";
 
 import { Dialog, SingleAction } from "../types";
 
-export const MANIFEST_ATTR = "manifestUrl";
-
-export type AppListUrlDialog = "app-installation-remove";
-export type AppListUrlQueryParams = Dialog<AppListUrlDialog> & SingleAction;
-
-export type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete";
+type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete";
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
   productIds?: string[];
@@ -36,8 +30,6 @@ export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
   AppDetailsUrlMountQueryParams &
   FeatureFlagsQueryParams;
 
-export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
-
 export const AppSections = {
   appsSection: "/apps/",
 };
@@ -46,26 +38,12 @@ export const AppPaths = {
   appListPath: AppSections.appsSection,
   resolveAppPath: (id: string) => urlJoin(AppSections.appsSection, id, "app"),
   resolveAppDetailsPath: (id: string) => urlJoin(AppSections.appsSection, id),
-  resolveAppDeepPath: (id: string, subPath: string) =>
-    urlJoin(AppPaths.resolveAppPath(id), subPath),
   appInstallPath: urlJoin(AppSections.appsSection, "install"),
-  resolveRequestPermissionsPath: (id: string) =>
-    urlJoin(AppSections.appsSection, id, "permissions"),
 };
 
 export const AppUrls = {
-  resolveAppListUrl: (params?: AppListUrlQueryParams, isExtensionsEnabled = false) =>
-    isExtensionsEnabled
-      ? ExtensionsPaths.installedExtensions
-      : AppPaths.appListPath + "?" + stringifyQs(params),
   resolveAppUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
     AppPaths.resolveAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
-  resolveAppDetailsUrl: (id: string, params?: AppDetailsUrlQueryParams) =>
-    AppPaths.resolveAppDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params),
-  resolveAppInstallUrl: (manifestUrl: string) =>
-    `${AppPaths.appInstallPath}?manifestUrl=${manifestUrl}`,
-  resolveAppDeepUrl: (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
-    AppPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params),
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = AppPaths.resolveAppPath(encodeURIComponent(appId));
 
@@ -79,23 +57,7 @@ export const AppUrls = {
 
     return deepSubPath || "/";
   },
-  resolveAppCompleteUrlFromDashboardUrl: (
-    dashboardUrl: string,
-    appUrl?: string,
-    appId?: string,
-  ) => {
-    if (!appUrl || !appId) {
-      return appUrl;
-    }
 
-    const deepSubPath = dashboardUrl.replace(
-      AppPaths.resolveAppPath(encodeURIComponent(appId)),
-      "",
-    );
-    const appCompleteUrl = urlJoin(appUrl, deepSubPath);
-
-    return appCompleteUrl;
-  },
   resolveDashboardUrlFromAppCompleteUrl: (
     appCompleteUrl: string,
     appUrl?: string,
