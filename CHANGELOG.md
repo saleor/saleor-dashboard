@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.13
+
+### Patch Changes
+
+- bf70951: Fixed issues with ordered and unordered lists in product and category descriptions. Lists now work correctly when editing, and the inline formatting toolbar no longer gets cut off on smaller screens.
+
 ## 3.21.12
 
 ### Patch Changes
