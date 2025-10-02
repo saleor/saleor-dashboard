@@ -60,6 +60,7 @@ jobs:
       IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+      BRANCH_NAME: ${{ env.BRANCH_NAME }}
     steps:
       - uses: actions/checkout@v4
 
@@ -154,7 +155,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
+          ref: ${{ needs.add-check-and-prepare-instance.outputs.BRANCH_NAME }}
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
