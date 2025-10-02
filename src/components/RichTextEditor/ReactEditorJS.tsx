@@ -29,8 +29,13 @@ class ClientEditorCore implements EditorCore {
     });
   }
 
+  /**
+   * This property is required by the EditorCore interface to optionally expose
+   * the underlying Editor.js instance for advanced use cases. In this implementation,
+   * we intentionally do not expose the low-level instance to maintain encapsulation
+   * and prevent unsafe direct access. Therefore, this always returns null.
+   */
   get dangerouslyLowLevelInstance(): any | null {
-    // needs to be implemented via EditorCore interface
     return null;
   }
 
