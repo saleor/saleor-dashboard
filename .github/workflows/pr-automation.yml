@@ -2,7 +2,7 @@ name: PR automation
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, labeled]
+    types: [labeled]
   workflow_dispatch:
     inputs:
       shards:
@@ -10,6 +10,10 @@ on:
         description: "Number of shards to use for parallel testing"
         required: false
         default: 2 # This is the default only for manually (re-)triggered runs. Default for runs triggered by pull requests is configured via `jobs.initialize-cloud.generate-shard-matrix.env.CONCURRENCY`.
+      API_URL:
+        type: string
+        description: "Custom API URL to use instead of cloud-generated one (optional)"
+        required: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,13 +21,14 @@ concurrency:
 
 jobs:
   initialize-cloud:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'test deployment') }}
     runs-on: ubuntu-22.04
     outputs:
       POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
       BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
       BASE_URL_DOMAIN: ${{ steps.cloud_variables.outputs.BASE_URL_DOMAIN }}
-      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+      API_URL: ${{ inputs.API_URL || steps.cloud_variables.outputs.API_URL }}
       BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
@@ -57,7 +62,7 @@ jobs:
           STRATEGY: reload
           CLI_TOKEN: ${{ env.STAGING_TOKEN }}
           BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
-          API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+          API_URL: ${{ inputs.API_URL || steps.cloud_variables.outputs.API_URL }}
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
