@@ -30,13 +30,6 @@ jest.mock("@dashboard/featureFlags", () => ({
   useFlag: jest.fn(() => ({ enabled: true })),
 }));
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: (x: unknown) => x,
-}));
-
 const mockedAppStoreExtensionsAppsOnly = {
   payments: {
     title: "Payments",
