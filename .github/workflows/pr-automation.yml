@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   initialize-cloud:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'test deployment') }}
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'test deployment') }}
     runs-on: ubuntu-22.04
     outputs:
       POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
