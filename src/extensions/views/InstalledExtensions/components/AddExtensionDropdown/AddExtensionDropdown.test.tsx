@@ -11,13 +11,6 @@ jest.mock("@dashboard/hooks/useHasManagedAppsPermission", () => ({
 
 jest.mock("@dashboard/hooks/useNavigator", () => jest.fn());
 
-jest.mock("react-intl", () => ({
-  useIntl: () => ({
-    formatMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage,
-  }),
-  defineMessages: (message: unknown) => message,
-}));
-
 jest.mock("@dashboard/extensions/urls", () => ({
   ExtensionsUrls: {
     resolveExploreExtensionsUrl: jest.fn(() => "/explore-extensions"),
