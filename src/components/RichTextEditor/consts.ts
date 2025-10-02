@@ -1,38 +1,28 @@
 // @ts-strict-ignore
 import { StrikethroughIcon } from "@dashboard/icons/StrikethroughIcon";
 import { ToolConstructable, ToolSettings } from "@editorjs/editorjs";
-import Embed from "@editorjs/embed";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
-import Paragraph from "@editorjs/paragraph";
-import Quote from "@editorjs/quote";
+import EmbedClass from "@editorjs/embed";
+import HeaderClass from "@editorjs/header";
+import ListClass from "@editorjs/list";
+import ParagraphClass from "@editorjs/paragraph";
+import QuoteClass from "@editorjs/quote";
 import createGenericInlineTool from "editorjs-inline-tool";
 
 const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
 
 export const tools: Record<string, ToolConstructable | ToolSettings> = {
-  embed: Embed,
+  embed: EmbedClass,
   header: {
-    class: Header,
+    class: HeaderClass,
     config: {
       defaultLevel: 1,
       levels: [1, 2, 3],
     },
     inlineToolbar,
   },
-  list: {
-    class: List,
-    inlineToolbar,
-  },
-  quote: {
-    class: Quote,
-    inlineToolbar,
-  },
-  paragraph: {
-    // @ts-expect-error Type mismatch between editorjs libraries (@editorjs/list and @editorjs/editorjs)
-    class: Paragraph,
-    inlineToolbar,
-  },
+  list: ListClass,
+  quote: QuoteClass,
+  paragraph: ParagraphClass,
   strikethrough: createGenericInlineTool({
     sanitize: {
       s: {},
