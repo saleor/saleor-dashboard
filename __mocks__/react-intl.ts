@@ -23,6 +23,7 @@ const createIntl = jest.fn(() => ({
   formatDate: jest.fn(x => x),
   formatTime: jest.fn(x => x),
   formatNumber: jest.fn(x => x),
+  locale: "en",
 }));
 
 const FormattedDate = ({ value }: { value: any }) => createElement(Fragment, null, value);

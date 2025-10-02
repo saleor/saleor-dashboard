@@ -9,7 +9,7 @@ import {
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { TextCell } from "@glideapps/glide-data-grid";
-import { intlMock } from "@test/intl";
+import { testIntlInstance } from "@test/intl";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { getCustomerCellContent, getPaymentCellContent, useGetCellContent } from "./datagrid";
@@ -208,7 +208,7 @@ describe("getPaymentCellContent", () => {
     } as RowDataType;
 
     // Act
-    const result = getPaymentCellContent(intlMock, "defaultLight", data);
+    const result = getPaymentCellContent(testIntlInstance, "defaultLight", data);
 
     // Assert
     expect((result.data as PillCell["data"]).value).toEqual("PAID");
@@ -221,7 +221,7 @@ describe("getPaymentCellContent", () => {
     } as RowDataType;
 
     // Act
-    const result = getPaymentCellContent(intlMock, "defaultLight", data);
+    const result = getPaymentCellContent(testIntlInstance, "defaultLight", data);
 
     // Assert
     expect((result.data as PillCell["data"]).value).toEqual("Overcharged");
