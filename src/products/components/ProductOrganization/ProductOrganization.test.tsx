@@ -6,14 +6,6 @@ import { MemoryRouter as Router } from "react-router-dom";
 
 import { ProductOrganization } from "./ProductOrganization";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-}));
-
 const intersectionObserverMock = () => ({
   observe: () => null,
   unobserve: () => null,
