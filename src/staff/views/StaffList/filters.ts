@@ -1,4 +1,4 @@
-import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
+import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import { StaffMemberStatus, StaffUserInput } from "@dashboard/graphql";
 import { findValueInEnum } from "@dashboard/misc";
 import { StaffFilterKeys, StaffListFilterOpts } from "@dashboard/staff/components/StaffListPage";

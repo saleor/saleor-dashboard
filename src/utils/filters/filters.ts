@@ -3,7 +3,7 @@ import {
   FilterElementKeyValue,
   FilterElementRegular,
   IFilter,
-} from "@dashboard/components/Filter";
+} from "@dashboard/components/Filter/types";
 import { findValueInEnum } from "@dashboard/misc";
 import { ActiveTab } from "@dashboard/types";
 

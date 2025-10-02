@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
+import { filterSelectedAsyncEvents, IntrospectionNode } from "@dashboard/extensions/utils";
 import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { capitalize } from "@dashboard/misc";
@@ -18,8 +19,6 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { Dispatch, SetStateAction } from "react";
 import * as React from "react";
-
-import { filterSelectedAsyncEvents, IntrospectionNode } from "./utils";
 
 interface CreateSyncEventsSelectHandler {
   change: (event: ChangeEvent, cb?: () => void) => void;

@@ -1,4 +1,4 @@
-import { isUnnamed } from "@dashboard/custom-apps/utils";
+import { isUnnamed } from "@dashboard/extensions/utils";
 import { WebhookDetailsQuery } from "@dashboard/graphql";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { defineMessages, IntlShape } from "react-intl";

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import compact from "lodash/compact";
 
-import { FieldType, FilterElement, IFilter, InvalidFilters, ValidationErrorCode } from "./types";
+import { FieldType, FilterElement, InvalidFilters, ValidationErrorCode } from "./types";
 
 export const getByName = (nameToCompare: string) => (obj: { name: string }) =>
   obj.name === nameToCompare;
@@ -104,17 +104,3 @@ export const extractInvalidFilters = function <T extends string>(
     };
   }, {} as InvalidFilters<T>);
 };
-
-export const getSelectedFiltersAmount = <TFilterKeys extends string = string>(
-  menu: IFilter<TFilterKeys>,
-  data: Array<FilterElement<string>>,
-) =>
-  menu.reduce((acc, filterElement) => {
-    const dataFilterElement = data.find(({ name }) => name === filterElement.name);
-
-    if (!dataFilterElement) {
-      return acc;
-    }
-
-    return acc + (dataFilterElement.active ? 1 : 0);
-  }, 0);

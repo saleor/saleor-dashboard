@@ -21,7 +21,6 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { Redirect, Switch } from "react-router-dom";
 
-import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth from "./auth";
@@ -52,7 +51,6 @@ import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import { ExtensionsSection } from "./extensions";
@@ -315,11 +313,8 @@ const Routes = () => {
                   path="/configuration"
                   component={ConfigurationSection}
                 />
-                <Redirect to={ExtensionsPaths.installedExtensions} path={AppSections.appsSection} />
-                <Redirect
-                  to={ExtensionsPaths.installedExtensions}
-                  path={CustomAppSections.appsSection}
-                />
+                <Redirect to={ExtensionsPaths.installedExtensions} path={"/apps"} />
+                <Redirect to={ExtensionsPaths.installedExtensions} path="/custom-apps/" />
                 <Redirect to={ExtensionsPaths.installedExtensions} path="/plugins" />
                 <Route component={NotFound} />
               </Switch>
