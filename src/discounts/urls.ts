@@ -31,7 +31,7 @@ export enum SaleListUrlFiltersWithMultipleValues {
 export type SaleListUrlFilters = Filters<SaleListUrlFiltersEnum> &
   FiltersWithMultipleValues<SaleListUrlFiltersWithMultipleValues>;
 type SaleListUrlDialog = "remove" | TabActionDialog;
-export enum SaleListUrlSortField {
+enum SaleListUrlSortField {
   name = "name",
   endDate = "endDate",
   startDate = "startDate",
@@ -39,7 +39,7 @@ export enum SaleListUrlSortField {
   value = "value",
 }
 type SaleListUrlSort = Sort<SaleListUrlSortField>;
-export type SaleListUrlQueryParams = ActiveTab &
+type SaleListUrlQueryParams = ActiveTab &
   BulkAction &
   Dialog<SaleListUrlDialog> &
   Pagination &
@@ -48,21 +48,7 @@ export type SaleListUrlQueryParams = ActiveTab &
 export const saleListUrl = (params?: SaleListUrlQueryParams) =>
   saleListPath + "?" + stringifyQs(params);
 export const salePath = (id: string) => urlJoin(saleSection, id);
-export type SaleUrlDialog =
-  | "assign-category"
-  | "assign-collection"
-  | "assign-product"
-  | "assign-variant"
-  | "unassign-category"
-  | "unassign-collection"
-  | "unassign-product"
-  | "unassign-variant"
-  | "remove"
-  | ChannelsAction;
-export type SaleUrlQueryParams = BulkAction & Dialog<SaleUrlDialog>;
-export type SaleCreateUrlQueryParams = Dialog<ChannelsAction>;
-export const saleUrl = (id: string, params?: SaleUrlQueryParams) =>
-  salePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+type SaleCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const saleAddPath = urlJoin(saleSection, "add");
 export const saleAddUrl = (params?: SaleCreateUrlQueryParams) =>
   saleAddPath + "?" + stringifyQs(params);

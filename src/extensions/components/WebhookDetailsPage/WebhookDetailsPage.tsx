@@ -7,8 +7,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import {
   createAsyncEventsSelectHandler,
   createSyncEventsSelectHandler,
-} from "@dashboard/custom-apps/handlers";
-import { IntrospectionNode } from "@dashboard/custom-apps/utils";
+} from "@dashboard/extensions/handlers";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import {
   WebhookDetailsFragment,
@@ -25,6 +24,7 @@ import { useEffect, useState } from "react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
+import { IntrospectionNode } from "../../utils";
 import { PermissionAlert } from "./components/PermissionAlert/PermissionAlert";
 import { WebhookEvents } from "./components/WebhookEvents/WebhookEvents";
 import { WebhookHeaders } from "./components/WebhookHeaders/WebhookHeaders";

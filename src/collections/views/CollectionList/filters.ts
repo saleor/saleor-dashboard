@@ -3,7 +3,7 @@ import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
 } from "@dashboard/collections/components/CollectionListPage";
-import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
+import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import { CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
 import { findValueInEnum, maybe } from "@dashboard/misc";
 import { Option } from "@saleor/macaw-ui-next";

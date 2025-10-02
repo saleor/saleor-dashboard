@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
+import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import { SaleFilterKeys } from "@dashboard/discounts/components/SaleListPage";
 import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from "@dashboard/graphql";
 import { findValueInEnum, joinDateTime } from "@dashboard/misc";

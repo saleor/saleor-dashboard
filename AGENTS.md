@@ -190,3 +190,5 @@ PR descriptions should:
 - Focus on the "why" rather than the "what" (code shows what)
 - Include screenshots for UI changes
 - Reference related issues or discussions
+
+Once opening a pull request or working with GitHub directly, prefer to use `gh` cli to execute operations

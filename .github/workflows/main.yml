@@ -1,0 +1,84 @@
+name: QA
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-lock:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate lock file
+        run: npx lockfile-lint --path package-lock.json --allowed-hosts npm yarn
+
+  tsc-and-linters:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run tsc
+        run: npm run check-types
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Check for uncommitted lint changes
+        run: git diff --exit-code ./src
+
+      - name: Check Prettier formatting
+        run: npm run format:check
+
+  jest-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:ci
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: saleor/saleor-dashboard
+
+  translation-messages:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Check message extraction
+        run: |
+          npm run extract-messages
+          git diff --exit-code ./locale

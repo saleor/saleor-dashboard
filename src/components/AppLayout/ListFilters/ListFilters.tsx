@@ -1,4 +1,4 @@
-import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
+import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter/types";
 import { FilterProps, SearchPageProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
 import { ReactNode } from "react";

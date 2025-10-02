@@ -51,7 +51,7 @@ export interface FilterContentBodyProps<K extends string> {
   setAutocompleteDisplayValues: React.Dispatch<React.SetStateAction<Record<string, Option[]>>>;
 }
 
-const FilterContentBody = <K extends string = string>({
+export const FilterContentBody = <K extends string = string>({
   filter,
   children,
   currencySymbol,
@@ -164,5 +164,3 @@ const FilterContentBody = <K extends string = string>({
     </div>
   );
 };
-
-export default FilterContentBody;
