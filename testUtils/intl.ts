@@ -5,6 +5,7 @@ export const config: IntlConfig = {
   locale: "en",
 };
 
+// todo remove
 export const intlMock = {
   formatMessage: ({ defaultMessage }) => defaultMessage,
 } as IntlShape;
