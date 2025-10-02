@@ -4,14 +4,6 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { usePendingInstallation } from "./usePendingInstallation";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-  defineMessages: jest.fn(x => x),
-}));
-
 jest.mock("@dashboard/graphql", () => ({
   ...(jest.requireActual("@dashboard/graphql") as object),
   useAppsInstallationsQuery: jest.fn(() => ({
