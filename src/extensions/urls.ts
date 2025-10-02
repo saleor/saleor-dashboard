@@ -88,6 +88,9 @@ export type CustomExtensionDetailsUrlDialog =
 export type CustomExtensionDetailsUrlQueryParams = Dialog<CustomExtensionDetailsUrlDialog> &
   SingleAction;
 
+// Alias for backward compatibility
+export type CustomAppDetailsUrlQueryParams = CustomExtensionDetailsUrlQueryParams;
+
 export const ExtensionsUrls = {
   resolveInstalledExtensionsUrl: (params?: ExtensionsListUrlQueryParams) =>
     ExtensionsPaths.installedExtensions + "?" + stringifyQs(params),
@@ -234,24 +237,6 @@ export const ExtensionsUrls = {
       })}`,
     ),
 };
-
-type CustomAppDetailsUrlDialog =
-  | "create-token"
-  | "remove-webhook"
-  | "remove-token"
-  | "app-activate"
-  | "app-deactivate";
-
-export type CustomAppDetailsUrlQueryParams = Dialog<CustomAppDetailsUrlDialog> & SingleAction;
-
-type CustomAppDetailsUrlDialog =
-  | "create-token"
-  | "remove-webhook"
-  | "remove-token"
-  | "app-activate"
-  | "app-deactivate";
-
-export type CustomAppDetailsUrlQueryParams = Dialog<CustomAppDetailsUrlDialog> & SingleAction;
 
 export const AppSections = {
   appsSection: "/apps/",
