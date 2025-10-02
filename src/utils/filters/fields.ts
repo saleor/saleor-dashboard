@@ -1,4 +1,4 @@
-import { FieldType, FilterElementGeneric } from "@dashboard/components/Filter";
+import { FieldType, FilterElementGeneric } from "@dashboard/components/Filter/types";
 import { MinMax } from "@dashboard/types";
 import { Option } from "@saleor/macaw-ui-next";
 

@@ -5,7 +5,7 @@ import {
   FilterElement,
   FilterElementKeyValue,
   FilterElementRegular,
-} from "../../../components/Filter";
+} from "../../../components/Filter/types";
 import {
   createFilterTabUtils,
   getKeyValueQueryParam,

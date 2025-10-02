@@ -4,6 +4,7 @@ on:
     branches:
       # Matches release branches
       - "[0-9]+.[0-9]+"
+      - main
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -32,12 +33,13 @@ jobs:
           )
           echo "GITHUB_TOKEN=$GITHUB_TOKEN" >> $GITHUB_ENV
       - name: Publishing version
-        uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
+        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
         id: changesets
         with:
           title: "Prepare release ${{ github.ref_name }}"
           commit: "Release ${{ github.ref_name }}"
           publish: "npm run release"
+          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
@@ -51,7 +53,8 @@ jobs:
       checks: write
     outputs:
       MINOR_VERSION: ${{ env.MINOR_VERSION }}
-      CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
+      CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.BRANCH_NAME }}
+      BRANCH_NAME: ${{ env.BRANCH_NAME }}
     env:
       ## backward compatibility for older versions
       APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
@@ -68,35 +71,28 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
       EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
-      VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
+      BRANCH_NAME: ${{ github.event.inputs.git_ref || github.ref_name }}
       IS_CLOUD_INSTANCE: true
       ENABLED_SERVICE_NAME_HEADER: true
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ env.VERSION }}
+          ref: ${{ env.BRANCH_NAME }}
 
-      - name: Set environment
-        # Convert version into staging deployment name (e.g 3.3.0 -> saleor-staging-v33)
-        run: |
-          set -x
-          environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
-          echo "ENVIRONMENT=${environment}" >> "$GITHUB_ENV"
-
-      - name: Set custom version
-        env:
-          VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
-        # Add commit hash to basic version number
+      - name: Set env variables
         run: |
           set -x
           HASH=$(git rev-parse --short HEAD)
           CURRENT_VERSION=$(jq -r .version package.json)
           RELEASE="${CURRENT_VERSION}-${HASH}"
+          MINOR_VERSION=$(echo "${RELEASE}" | sed -E 's/^([0-9]+\.[0-9]+)\..*/\1/')
+          ENVIRONMENT=$(echo "saleor-staging-v${MINOR_VERSION//./}")
+          echo "MINOR_VERSION=${MINOR_VERSION}" >> "$GITHUB_ENV"
           echo "CUSTOM_VERSION=${RELEASE}" >> "$GITHUB_ENV"
           echo "SENTRY_RELEASE=${RELEASE}" >> "$GITHUB_ENV"
-          minor_version=$(echo "$VERSION" | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#\1.\2#p')
-          echo "MINOR_VERSION=${minor_version}" >> "$GITHUB_ENV"
+          echo "ENVIRONMENT=${ENVIRONMENT}" >> "$GITHUB_ENV"
+          echo "BRANCH_NAME=${BRANCH_NAME}" >> "$GITHUB_ENV"
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -108,7 +104,7 @@ jobs:
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
-          PR_HEAD: "changeset-release/${{env.MINOR_VERSION}}"
+          PR_HEAD: "changeset-release/${{env.BRANCH_NAME}}"
           CHECK_NAME: "Deploy_staging"
           STATUS: "in_progress"
           TITLE: "Deploy staging"
@@ -163,7 +159,7 @@ jobs:
           JOB_STATUS: ${{ job.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
           SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
-          JOB_TITLE: "Dashboard deployment of ${{ env.CUSTOM_VERSION || env.VERSION }} to ${{ env.ENVIRONMENT }}"
+          JOB_TITLE: "Dashboard deployment of ${{ env.CUSTOM_VERSION || env.BRANCH_NAME }} to ${{ env.ENVIRONMENT }}"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py
 
@@ -193,4 +189,5 @@ jobs:
     with:
       VERSION: ${{ needs.build.outputs.MINOR_VERSION }} # eg. "3.19"
       CUSTOM_VERSION: ${{ needs.build.outputs.CUSTOM_VERSION }} # eg. "3.19.4-5a41d18"
+      BRANCH_NAME: ${{ needs.build.outputs.BRANCH_NAME }}
     secrets: inherit

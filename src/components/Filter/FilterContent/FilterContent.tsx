@@ -9,10 +9,10 @@ import { useState } from "react";
 import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
 import { FilterReducerAction } from "../reducer";
 import { FieldType, FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "../types";
-import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
-import FilterContentBodyNameField from "./FilterContentBodyNameField";
-import FilterContentHeader from "./FilterContentHeader";
-import FilterErrorsList from "./FilterErrorsList";
+import { FilterContentBody, FilterContentBodyProps } from "./FilterContentBody";
+import { FilterContentBodyNameField } from "./FilterContentBodyNameField";
+import { FilterContentHeader } from "./FilterContentHeader";
+import { FilterErrorsList } from "./FilterErrorsList";
 
 const useExpanderStyles = makeStyles(
   theme => ({
@@ -69,7 +69,7 @@ interface FilterContentProps<K extends string = string> {
   errorMessages?: FilterErrorMessages<K>;
 }
 
-const FilterContent = ({
+export const FilterContent = ({
   currencySymbol,
   errors,
   errorMessages,
@@ -240,4 +240,3 @@ const FilterContent = ({
 };
 
 FilterContent.displayName = "FilterContent";
-export default FilterContent;
