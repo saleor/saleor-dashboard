@@ -5,6 +5,7 @@ const useIntl = jest.fn(() => ({
   formatDate: jest.fn(x => x),
   formatTime: jest.fn(x => x),
   formatNumber: jest.fn(x => x),
+  locale: "en",
 }));
 
 const defineMessages = jest.fn(x => x);

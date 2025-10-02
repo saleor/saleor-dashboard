@@ -21,14 +21,7 @@ jest.mock("@dashboard/featureFlags", () => ({
     enabled: false,
   }),
 }));
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  defineMessage: (message: string) => message,
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: any }) => <>{defaultMessage}</>,
-}));
+
 jest.mock("./onboardingContext/useOnboardingStorage");
 jest.useFakeTimers();
 jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
