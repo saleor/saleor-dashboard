@@ -7,6 +7,8 @@ import {
 } from "@react-editor-js/core";
 import React from "react";
 
+import { convertEditorJSListBlocks } from "./utils";
+
 // Source of @react-editor-js
 class ClientEditorCore implements EditorCore {
   private readonly _editorJS: EditorJS;
@@ -27,6 +29,11 @@ class ClientEditorCore implements EditorCore {
     });
   }
 
+  get dangerouslyLowLevelInstance(): any | null {
+    // needs to be implemented via EditorCore interface
+    return null;
+  }
+
   public async clear() {
     await this._editorJS.clear();
   }
@@ -34,7 +41,7 @@ class ClientEditorCore implements EditorCore {
   public async save() {
     await this._editorJS.isReady;
 
-    return this._editorJS.save();
+    return convertEditorJSListBlocks(await this._editorJS.save());
   }
 
   public async destroy() {
