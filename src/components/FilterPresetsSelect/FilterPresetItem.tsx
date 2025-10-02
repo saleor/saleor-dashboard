@@ -49,6 +49,7 @@ export const FilterPresetItem = ({
           >
             <RemoveIcon
               data-test-id="preset-delete-button"
+              // @ts-expect-error - check why style is not accepted in types, but can be used
               color={{
                 default: "default2",
                 hover: "default1",

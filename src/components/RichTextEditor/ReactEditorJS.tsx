@@ -7,6 +7,8 @@ import {
 } from "@react-editor-js/core";
 import React from "react";
 
+import { convertEditorJSListBlocks } from "./utils";
+
 // Source of @react-editor-js
 class ClientEditorCore implements EditorCore {
   private readonly _editorJS: EditorJS;
@@ -27,6 +29,16 @@ class ClientEditorCore implements EditorCore {
     });
   }
 
+  /**
+   * This property is required by the EditorCore interface to optionally expose
+   * the underlying Editor.js instance for advanced use cases. In this implementation,
+   * we intentionally do not expose the low-level instance to maintain encapsulation
+   * and prevent unsafe direct access. Therefore, this always returns null.
+   */
+  get dangerouslyLowLevelInstance(): any | null {
+    return null;
+  }
+
   public async clear() {
     await this._editorJS.clear();
   }
@@ -34,7 +46,7 @@ class ClientEditorCore implements EditorCore {
   public async save() {
     await this._editorJS.isReady;
 
-    return this._editorJS.save();
+    return convertEditorJSListBlocks(await this._editorJS.save());
   }
 
   public async destroy() {
