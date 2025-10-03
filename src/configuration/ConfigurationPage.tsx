@@ -1,17 +1,13 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { UserFragment } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { ExclamationIcon } from "@dashboard/icons/ExclamationIcon";
 import { sectionNames } from "@dashboard/intl";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { NavigationCard } from "@saleor/macaw-ui";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import VersionInfo from "../components/VersionInfo";
@@ -43,12 +39,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
     <VersionInfo dashboardVersion={dashboardVersion} coreVersion={coreVersion} />
   );
   const intl = useIntl();
-
-  const navigate = useNavigator();
-
-  const goToExtensions = () => {
-    navigate(ExtensionsUrls.resolveInstalledExtensionsUrl());
-  };
 
   return (
     <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
@@ -92,29 +82,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
                 </div>
               </div>
             ))}
-          <Box marginY={4}>
-            <DashboardCard withBorder gap={2} __width="fit-content">
-              <DashboardCard.Title display="flex" gap={3} alignItems="center">
-                <ExclamationIcon />
-                <FormattedMessage defaultMessage="Navigation has changed" id="V1aPhG" />
-              </DashboardCard.Title>
-              <DashboardCard.Content fontSize={3} paddingRight={0}>
-                <FormattedMessage
-                  defaultMessage={`Plugins and Webhook Events have been moved to the "Extensions" page, available from the sidebar navigation.`}
-                  id="Dqo3Vf"
-                />
-
-                <Button
-                  onClick={goToExtensions}
-                  variant="primary"
-                  size="small"
-                  style={{ marginTop: 8 }}
-                >
-                  <FormattedMessage defaultMessage="Go to Extensions" id="vZglQ7" />
-                </Button>
-              </DashboardCard.Content>
-            </DashboardCard>
-          </Box>
         </Box>
       </DetailPageLayout.Content>
     </DetailPageLayout>
