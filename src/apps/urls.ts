@@ -1,4 +1,4 @@
-import { getApiUrl } from "@dashboard/config";
+import { getAbsoluteApiUrl } from "@dashboard/config";
 import { FlagList } from "@dashboard/featureFlags";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -77,7 +77,7 @@ export const AppUrls = {
     appUrl: string,
     params: AppDetailsUrlQueryParams & AppDetailsCommonParams,
   ) => {
-    const apiUrl = new URL(getApiUrl(), window.location.origin).href;
+    const apiUrl = getAbsoluteApiUrl();
     /**
      * Use host to preserve port, in case of multiple Saleors running on localhost
      */
