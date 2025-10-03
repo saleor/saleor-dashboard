@@ -1,3 +1,3 @@
-const Strikethrough = `<svg height="32" width="32" viewBox="-4 -1 24 16"><path d="M6.53333 14H10.2667V11.2H6.53333V14ZM1.86667 0V2.8H6.53333V5.6H10.2667V2.8H14.9333V0H1.86667ZM0 9.33333H16.8V7.46667H0V9.33333Z"></path></svg>`;
-
-export default Strikethrough;
+// Icon copied from https://github.com/codex-team/icons/blob/master/dist/icons/IconStrikethrough.svg - editor.js is using those icons for their inline tools
+export const StrikethroughIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 8.50001C13.5 7 10.935 6.66476 9.75315 7.79706C9.27092 8.25909 9 8.88574 9 9.53915C9 10.1926 9.27092 10.8192 9.75315 11.2812C10.9835 12.46 13.0165 11.5457 14.2468 12.7244C14.7291 13.1865 15 13.8131 15 14.4665C15 15.1199 14.7291 15.7466 14.2468 16.2086C12.8659 17.5317 10 17.5 9 16"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12H18"/></svg>
+`;
