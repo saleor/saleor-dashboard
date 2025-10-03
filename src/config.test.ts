@@ -12,11 +12,8 @@ describe("global config", () => {
 
     // Mock window.location for testing purposes
     Object.defineProperty(window, "location", {
-      value: {
-        href: testingUrl.href,
-        hostname: testingUrl.hostname,
-        pathname: testingUrl.pathname,
-      },
+      // URL matches fields from location so we can just put it there
+      value: testingUrl,
       writable: true,
       configurable: true,
     });
@@ -49,6 +46,10 @@ describe("global config", () => {
       {
         envParam: "https://foo.saleor.cloud/graphql/",
         expected: "https://foo.saleor.cloud/graphql/",
+      },
+      {
+        envParam: "https://other.saleor.cloud/graphql/",
+        expected: "https://other.saleor.cloud/graphql/",
       },
     ])("Correctly builds absolute url: %s", ({ envParam, expected }) => {
       window.__SALEOR_CONFIG__.API_URL = envParam;

@@ -6,6 +6,11 @@ export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
 // Can be `/graphql/` so don't rely on it
 export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
+/**
+ * Resolves full API URL.
+ * If config provided with absolute url, will use it directly
+ * If config is relative, e.g. /graphql/ it will merge it with Dashboard URL
+ */
 export const getAbsoluteApiUrl = () => new URL(getApiUrl(), window.location.origin).href;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL ?? "300", 10);
 export const IS_CLOUD_INSTANCE = window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
