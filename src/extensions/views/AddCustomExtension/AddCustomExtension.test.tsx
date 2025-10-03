@@ -35,15 +35,6 @@ jest.mock("react-router-dom", () => ({
 
 jest.mock("@dashboard/components/Savebar");
 
-jest.mock("react-intl", () => ({
-  useIntl: () => ({
-    formatMessage: (message: { id: string; defaultMessage: string }) => message.defaultMessage,
-  }),
-  FormattedMessage: ({ defaultMessage }: { id: string; defaultMessage: string }) => defaultMessage,
-  defineMessages: (messages: Record<string, any>) => messages,
-  defineMessage: (message: string) => message,
-}));
-
 jest.mock("./hooks/usePermissions");
 jest.mock("./hooks/useHandleCreateAppSubmit");
 jest.mock("./hooks/useUserAppCreationPermissions");

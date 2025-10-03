@@ -3,13 +3,6 @@ import * as React from "react";
 
 import { AppActions } from "./AppActions";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
-
 jest.mock("@dashboard/components/Link", () => {
   // eslint-disable-next-line react/display-name
   return ({ children, href }: { children: React.ReactNode; href: string }) => (

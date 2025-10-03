@@ -1,4 +1,3 @@
-import { ContextualLine } from "@dashboard/components/AppLayout/ContextualLinks/ContextualLine";
 import { renderHook } from "@testing-library/react-hooks";
 import { ReactNode } from "react";
 import { IntlProvider } from "react-intl";
@@ -19,16 +18,7 @@ describe("useContextualLink", () => {
     const { result } = renderHook(() => useContextualLink("staff_members"), { wrapper });
 
     // Assert
-    expect(result.current).toEqual([
-      "Learn more about ",
-      expect.objectContaining({
-        type: ContextualLine.Link,
-        props: expect.objectContaining({
-          href: "https://docs.saleor.io/developer/permissions#user-permissions",
-          children: "User permissions",
-        }),
-      }),
-    ]);
+    expect(result.current).toEqual("Learn more about {userPermissions}");
   });
 
   it("should return correct link for extending_saleor", () => {
@@ -36,16 +26,7 @@ describe("useContextualLink", () => {
     const { result } = renderHook(() => useContextualLink("extending_saleor"), { wrapper });
 
     // Assert
-    expect(result.current).toEqual([
-      "Learn more about ",
-      expect.objectContaining({
-        type: ContextualLine.Link,
-        props: expect.objectContaining({
-          href: "https://docs.saleor.io/developer/extending/webhooks/overview",
-          children: "extending Saleor with Webhooks",
-        }),
-      }),
-    ]);
+    expect(result.current).toEqual("Learn more about {extendingSaleor}");
   });
 
   it("should return correct link for dev_panel", () => {
@@ -53,24 +34,7 @@ describe("useContextualLink", () => {
     const { result } = renderHook(() => useContextualLink("dev_panel"), { wrapper });
 
     // Assert
-    expect(result.current).toEqual([
-      "Learn more about ",
-      expect.objectContaining({
-        type: ContextualLine.Link,
-        props: expect.objectContaining({
-          href: "https://docs.saleor.io/api-reference/",
-          children: "API reference",
-        }),
-      }),
-      " and view ",
-      expect.objectContaining({
-        type: ContextualLine.Link,
-        props: expect.objectContaining({
-          href: "https://docs.saleor.io/api-usage/overview",
-          children: "API guide",
-        }),
-      }),
-    ]);
+    expect(result.current).toEqual("Learn more about {apiReference} and view {apiGuide}");
   });
 
   it("should return correct link for order_list", () => {
@@ -78,16 +42,7 @@ describe("useContextualLink", () => {
     const { result } = renderHook(() => useContextualLink("order_list"), { wrapper });
 
     // Assert
-    expect(result.current).toEqual([
-      "Learn more about ",
-      expect.objectContaining({
-        type: ContextualLine.Link,
-        props: expect.objectContaining({
-          href: "https://docs.saleor.io/developer/checkout/order-status",
-          children: "order management",
-        }),
-      }),
-    ]);
+    expect(result.current).toEqual("Learn more about {orderManagement}");
   });
 
   it("should return correct link for product_list", () => {
@@ -95,16 +50,7 @@ describe("useContextualLink", () => {
     const { result } = renderHook(() => useContextualLink("product_list"), { wrapper });
 
     // Assert
-    expect(result.current).toEqual([
-      "Learn more about ",
-      expect.objectContaining({
-        type: ContextualLine.Link,
-        props: expect.objectContaining({
-          href: "https://docs.saleor.io/developer/products/configuration",
-          children: "product configurations",
-        }),
-      }),
-    ]);
+    expect(result.current).toEqual("Learn more about {productConfigurations}");
   });
 
   it("should return correct link for gift_cards", () => {
@@ -112,15 +58,6 @@ describe("useContextualLink", () => {
     const { result } = renderHook(() => useContextualLink("gift_cards"), { wrapper });
 
     // Assert
-    expect(result.current).toEqual([
-      "Learn more about ",
-      expect.objectContaining({
-        type: ContextualLine.Link,
-        props: expect.objectContaining({
-          href: "https://docs.saleor.io/developer/gift-cards",
-          children: "gift cards",
-        }),
-      }),
-    ]);
+    expect(result.current).toEqual("Learn more about {giftCards}");
   });
 });

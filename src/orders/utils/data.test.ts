@@ -12,7 +12,7 @@ import {
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import { intlMock } from "@test/intl";
+import { testIntlInstance } from "@test/intl";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
 import { OrderRefundSharedType } from "../types";
@@ -2794,7 +2794,7 @@ describe("Get discount type label", () => {
       type: OrderDiscountType.MANUAL,
     } as OrderDiscountFragment;
     // Act
-    const result = getDiscountTypeLabel(discount, intlMock);
+    const result = getDiscountTypeLabel(discount, testIntlInstance);
 
     // Assert
     expect(result).toBe("Staff added");
@@ -2806,7 +2806,7 @@ describe("Get discount type label", () => {
       name: "Subtotal discount: Test promotion",
     } as OrderDiscountFragment;
     // Act
-    const result = getDiscountTypeLabel(discount, intlMock);
+    const result = getDiscountTypeLabel(discount, testIntlInstance);
 
     // Assert
     expect(result).toBe("Subtotal discount");
@@ -2818,7 +2818,7 @@ describe("Get discount type label", () => {
       name: " :Test promotion",
     } as OrderDiscountFragment;
     // Act
-    const result = getDiscountTypeLabel(discount, intlMock);
+    const result = getDiscountTypeLabel(discount, testIntlInstance);
 
     // Assert
     expect(result).toBe("-");
@@ -2830,7 +2830,7 @@ describe("Get discount type label", () => {
       name: "Big sale",
     } as OrderDiscountFragment;
     // Act
-    const result = getDiscountTypeLabel(discount, intlMock);
+    const result = getDiscountTypeLabel(discount, testIntlInstance);
 
     // Assert
     expect(result).toContain("Voucher:");
@@ -2841,7 +2841,7 @@ describe("Get discount type label", () => {
       type: OrderDiscountType.SALE,
     } as OrderDiscountFragment;
     // Act
-    const result = getDiscountTypeLabel(discount, intlMock);
+    const result = getDiscountTypeLabel(discount, testIntlInstance);
 
     // Assert
     expect(result).toBe("Sale");
@@ -2852,7 +2852,7 @@ describe("Get discount type label", () => {
       type: OrderDiscountType.PROMOTION,
     } as OrderDiscountFragment;
     // Act
-    const result = getDiscountTypeLabel(discount, intlMock);
+    const result = getDiscountTypeLabel(discount, testIntlInstance);
 
     // Assert
     expect(result).toBe("Promotion");

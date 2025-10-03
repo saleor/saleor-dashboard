@@ -13,13 +13,6 @@ jest.mock("@dashboard/featureFlags", () => ({
   useFlag: jest.fn(() => ({ enabled: true })),
 }));
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
-jest.mock("react-intl", () => ({
-  defineMessages: (messages: unknown) => messages,
-  useIntl: jest.fn(() => ({
-    formatMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage,
-  })),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-}));
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ children }) => children),
 }));

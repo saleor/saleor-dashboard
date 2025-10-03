@@ -130,7 +130,7 @@ describe("Apps InstalledAppListRow", () => {
 
     // Assert
     expect(screen.queryAllByRole("link").at(-1)?.getAttribute("href")).toBe(
-      `/apps/${appWithFailedEventDeliveries.id}`,
+      `/apps/${encodeURIComponent(appWithFailedEventDeliveries.id)}/app`,
     );
   });
 });

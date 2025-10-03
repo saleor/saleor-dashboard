@@ -17,13 +17,6 @@ import { variantsWithProductDataMock } from "./componenets/RuleForm/components/R
 import { DiscountRules } from "./DiscountRules";
 import { catalogComplexRules, catalogRules, channels, orderRules } from "./mocksData";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-}));
 jest.mock("@dashboard/hooks/useNotifier", () => ({
   __esModule: true,
   default: jest.fn(() => () => undefined),

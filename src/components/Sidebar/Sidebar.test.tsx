@@ -10,14 +10,6 @@ import { MemoryRouter } from "react-router-dom";
 
 import { Sidebar } from "./Sidebar";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-  defineMessage: (message: string) => message,
-}));
 jest.mock("./menu/hooks/useMenuStructure", () => ({
   useMenuStructure: jest.fn(() => []),
 }));

@@ -1,16 +1,10 @@
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
-import { IntlShape, MessageDescriptor } from "react-intl";
 
 import { EventDataAction, EventDataField, MetadataFormData } from "../Metadata/types";
 import { useMetadataFormControls } from "./useMetadataFormControls";
 
-jest.mock("react-intl", () => ({
-  useIntl: (): Pick<IntlShape, "formatMessage"> => ({
-    formatMessage: ({ defaultMessage }: MessageDescriptor) => defaultMessage || "",
-  }),
-}));
 describe("useMetadataFormControls", () => {
   it("returns form values from hook form to be used in form", () => {
     // Arrange

@@ -1,17 +1,8 @@
 import { ExtensionData } from "@dashboard/extensions/types";
 import { renderHook } from "@testing-library/react-hooks";
 import * as React from "react";
-import { FormattedMessageProps } from "react-intl";
 
 import { useExtension } from "./useExtension";
-
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: FormattedMessageProps) => <>{defaultMessage}</>,
-}));
 
 jest.mock("@dashboard/components/Link", () => {
   // eslint-disable-next-line react/display-name

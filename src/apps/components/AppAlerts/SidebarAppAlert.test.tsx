@@ -17,11 +17,6 @@ jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ to, ...props }) => <a href={to} {...props} />),
 }));
 
-jest.mock("react-intl", () => ({
-  FormattedMessage: jest.fn(({ defaultMessage }) => defaultMessage),
-  defineMessages: jest.fn(),
-}));
-
 describe("SidebarAppAlert", () => {
   beforeEach(() => {
     jest.clearAllMocks();

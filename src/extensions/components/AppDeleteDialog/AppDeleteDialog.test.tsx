@@ -24,7 +24,7 @@ describe("Apps AppDeleteDialog", () => {
 
     const dialogContent = screen.getByTestId("dialog-content");
     // Assert
-    const expectedText = msgs.deleteNamedApp.defaultMessage.replace("{name}", name);
+    const expectedText = msgs.deleteNamedApp.defaultMessage;
     const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
 
     expect(dialogContent).toHaveTextContent(expectedText);
@@ -49,7 +49,7 @@ describe("Apps AppDeleteDialog", () => {
 
     const dialogContent = screen.getByTestId("dialog-content");
     // Assert
-    const expectedText = msgs.deleteLocalNamedApp.defaultMessage.replace("{name}", name);
+    const expectedText = msgs.deleteLocalNamedApp.defaultMessage;
     const expectedQuestion = msgs.deleteAppQuestion.defaultMessage;
 
     expect(dialogContent).toHaveTextContent(expectedText);
