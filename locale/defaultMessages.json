@@ -1460,9 +1460,6 @@
   "7Chrsf": {
     "string": "Passwords do not match"
   },
-  "7DMWSy": {
-    "string": "Read a blog post"
-  },
   "7EDqed": {
     "context": "tab name",
     "string": "All gift cards"
@@ -6665,6 +6662,9 @@
   "cryH86": {
     "context": "assign collections to sale and save",
     "string": "Assign and save"
+  },
+  "cti4iA": {
+    "string": "Read the blog post"
   },
   "cvVIV/": {
     "context": "dialog header",
