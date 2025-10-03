@@ -60,6 +60,8 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
     attribute,
     attributeReference,
   }: FetchingParams) => {
+    setLoading(true);
+
     if (channel.length > 0) {
       queriesToRun.push(
         client.query<_GetChannelOperandsQuery, _GetChannelOperandsQueryVariables>({
