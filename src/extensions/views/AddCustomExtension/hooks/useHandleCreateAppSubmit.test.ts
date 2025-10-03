@@ -20,12 +20,6 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
 const mockNotify = jest.fn();
 
 jest.mock("@dashboard/hooks/useNotifier", () => () => mockNotify);
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(messages => messages),
-}));
 
 const mockUseAppCreateMutation = useAppCreateMutation as jest.MockedFunction<
   typeof useAppCreateMutation

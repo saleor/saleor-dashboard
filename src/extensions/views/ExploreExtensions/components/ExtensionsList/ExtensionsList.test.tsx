@@ -3,13 +3,6 @@ import { render, screen } from "@testing-library/react";
 
 import { ExtensionsList } from "./ExtensionsList";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
-
 jest.mock("@saleor/macaw-ui-next", () => ({
   ...(jest.requireActual("@saleor/macaw-ui-next") as object),
   useTheme: () => ({ theme: "default" }),

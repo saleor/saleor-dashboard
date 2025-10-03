@@ -5,8 +5,7 @@ import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
-import { config } from "@test/intl";
-import { createIntl } from "react-intl";
+import { testIntlInstance } from "@test/intl";
 
 import { getFilterQueryParam, getFilterVariables } from "./filters";
 
@@ -30,8 +29,7 @@ describe("Filtering query params", () => {
   });
 });
 describe("Filtering URL params", () => {
-  const intl = createIntl(config);
-  const filters = createFilterStructure(intl, {
+  const filters = createFilterStructure(testIntlInstance, {
     channel: {
       active: false,
       choices: [

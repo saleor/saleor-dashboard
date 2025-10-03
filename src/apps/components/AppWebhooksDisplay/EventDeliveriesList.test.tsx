@@ -3,14 +3,6 @@ import { render } from "@testing-library/react";
 
 import { EventDeliveriesList, EventDelivery } from "./EventDeliveriesList";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: any }) => <>{defaultMessage}</>,
-}));
-
 describe("EventDeliveriesList", () => {
   const mockEventDeliveries: EventDelivery[] = [
     {

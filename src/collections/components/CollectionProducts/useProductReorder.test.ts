@@ -7,13 +7,6 @@ import { Product } from "./types";
 import { useProductReorder } from "./useProductReorder";
 import { useProductReorderOptimistic } from "./useProductReorderOptimistic";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: (x: unknown) => x,
-}));
-
 jest.mock("@dashboard/graphql", () => ({
   useReorderProductsInCollectionMutation: jest.fn(),
 }));

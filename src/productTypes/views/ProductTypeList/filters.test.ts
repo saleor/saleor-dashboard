@@ -4,8 +4,7 @@ import { ProductTypeListUrlFilters } from "@dashboard/productTypes/urls";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
-import { config } from "@test/intl";
-import { createIntl } from "react-intl";
+import { testIntlInstance } from "@test/intl";
 
 import { getFilterQueryParam, getFilterVariables } from "./filters";
 
@@ -27,7 +26,7 @@ describe("Filtering query params", () => {
   });
 });
 describe("Filtering URL params", () => {
-  const intl = createIntl(config);
+  const intl = testIntlInstance;
   const filters = createFilterStructure(intl, {
     configurable: {
       active: false,

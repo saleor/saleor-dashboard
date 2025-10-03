@@ -4,14 +4,6 @@ import { FormattedMessage } from "react-intl";
 
 import { OrderCancelDialog } from "./OrderCancelDialog";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: jest.fn(() => <></>),
-}));
-
 const defaultProps = {
   confirmButtonState: "default" as const,
   errors: [],
