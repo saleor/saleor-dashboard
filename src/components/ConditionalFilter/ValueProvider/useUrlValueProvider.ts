@@ -112,7 +112,7 @@ export const useUrlValueProvider = (
     if (loading) return;
 
     setValue(tokenizedUrl.asFilterValuesFromResponse(data));
-    // Run only after we fetch the initial data, otherwise we might have race-condition
+    // Only run after fetching the initial data; otherwise, a race condition may occur.
   }, [initialState?.data, initialState?.loading]);
 
   useEffect(() => {
