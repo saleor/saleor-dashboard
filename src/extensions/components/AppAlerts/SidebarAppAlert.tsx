@@ -1,4 +1,4 @@
-import { AppSections } from "@dashboard/apps/urls";
+import { AppSections } from "@dashboard/extensions/urls";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";

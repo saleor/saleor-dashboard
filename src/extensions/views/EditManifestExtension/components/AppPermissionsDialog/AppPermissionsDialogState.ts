@@ -1,4 +1,4 @@
-import { getPermissionsDiff } from "@dashboard/apps/getPermissionsDiff";
+import { getPermissionsDiff } from "@dashboard/extensions/getPermissionsDiff";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useState } from "react";
 

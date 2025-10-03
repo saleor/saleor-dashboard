@@ -1,10 +1,9 @@
-import { AppLogo } from "@dashboard/apps/types";
+import { AppLogo } from "@dashboard/extensions/types";
 import { Box, BoxProps, GenericAppIcon } from "@saleor/macaw-ui-next";
 
 type Logo = AppLogo | undefined;
 type Size = 4 | 6 | 8 | 12;
 
-/** @deprecated Use component from extensions/ */
 export const AppAvatar = ({ logo, size = 8, ...props }: { logo?: Logo; size?: Size } & BoxProps) =>
   logo ? (
     <Box

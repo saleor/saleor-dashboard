@@ -5,7 +5,12 @@ import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { SidebarMenuItem } from "./types";
 import { getMenuItemExtension, isMenuActive, mapToExtensionsItems } from "./utils";
 
-jest.mock("@dashboard/apps/urls", () => ({
+jest.mock("@dashboard/extensions/urls", () => ({
+  ExtensionsUrls: {
+    resolveDashboardUrlFromAppCompleteUrl: jest.fn(
+      (url, appUrl, appId) => `mockExtensionUrl:${url}:${appUrl}:${appId}`,
+    ),
+  },
   AppUrls: {
     resolveDashboardUrlFromAppCompleteUrl: jest.fn(
       (url, appUrl, appId) => `mockAppUrl:${url}:${appUrl}:${appId}`,
@@ -13,17 +18,8 @@ jest.mock("@dashboard/apps/urls", () => ({
   },
 }));
 
-jest.mock("@dashboard/extensions/urls", () => ({
-  ExtensionsUrls: {
-    resolveDashboardUrlFromAppCompleteUrl: jest.fn(
-      (url, appUrl, appId) => `mockExtensionUrl:${url}:${appUrl}:${appId}`,
-    ),
-  },
-}));
-
 // To grab the mocked functions for assertions
-const { AppUrls } = jest.requireMock("@dashboard/apps/urls");
-const { ExtensionsUrls } = jest.requireMock("@dashboard/extensions/urls");
+const { AppUrls, ExtensionsUrls } = jest.requireMock("@dashboard/extensions/urls");
 
 describe("mapToExtensionsItems", () => {
   beforeEach(() => {

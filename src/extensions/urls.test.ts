@@ -1,5 +1,5 @@
-import { AppUrls } from "@dashboard/apps/urls";
 import * as config from "@dashboard/config";
+import { AppUrls } from "@dashboard/extensions/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 
 jest.mock("@dashboard/config", () => {
