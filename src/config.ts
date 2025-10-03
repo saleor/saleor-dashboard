@@ -8,7 +8,7 @@ export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || 
 export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
 /**
  * Resolves full API URL.
- * If config provided with absolute url, will use it directly
+ * If the config provides an absolute URL, it will be used directly.
  * If config is relative, e.g. /graphql/ it will merge it with Dashboard URL
  */
 export const getAbsoluteApiUrl = () => new URL(getApiUrl(), window.location.origin).href;
