@@ -14,6 +14,7 @@ import tseslint from "typescript-eslint";
 import localRules from "./lint/rules/index.mjs";
 import unusedImports from "eslint-plugin-unused-imports";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
+import eslintGraphql from "@graphql-eslint/eslint-plugin";
 
 export default tseslint.config(
   globalIgnores([
@@ -269,6 +270,28 @@ export default tseslint.config(
           ],
         },
       ],
+    },
+  },
+
+  // Graphql plugin
+  {
+    /**
+     * Plugin first converts all ts(x) files to
+     * temp .graphql files which are checked in the next step
+     */
+    files: ["**/*.ts", "**/*.tsx"],
+    processor: eslintGraphql.processor,
+  },
+  {
+    files: ["**/*.graphql"],
+    languageOptions: {
+      parser: eslintGraphql.parser,
+    },
+    plugins: {
+      "@graphql-eslint": eslintGraphql,
+    },
+    rules: {
+      "@graphql-eslint/no-anonymous-operations": "error",
     },
   },
 
