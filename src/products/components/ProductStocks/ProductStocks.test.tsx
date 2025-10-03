@@ -3,11 +3,6 @@ import { render } from "@testing-library/react";
 import { messages } from "./messages";
 import { WarehouseInformationMessage } from "./WarehouseInformationMessage";
 
-jest.mock("react-intl", () => ({
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-}));
-
 describe("WarehouseInformationMessage", () => {
   const defaultProps = {
     hasVariants: false,

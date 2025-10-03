@@ -3,13 +3,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { ListSettings } from "../../types";
 import { TablePagination } from "./TablePagination";
 
-jest.mock("react-intl", () => ({
-  useIntl: () => ({
-    formatMessage: () => "Rows per page",
-  }),
-  defineMessages: (x: any) => x,
-}));
-
 const mockNavigate = jest.fn();
 
 jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
@@ -28,7 +21,7 @@ describe("TablePagination", () => {
     // Assert
     expect(screen.getByTestId("button-pagination-back")).toBeInTheDocument();
     expect(screen.getByTestId("button-pagination-next")).toBeInTheDocument();
-    expect(screen.queryByText("Rows per page")).not.toBeInTheDocument();
+    expect(screen.queryByText("No. of rows")).not.toBeInTheDocument();
   });
 
   it("renders pagination with row number selector", () => {
@@ -41,7 +34,7 @@ describe("TablePagination", () => {
     render(<TablePagination {...defaultProps} settings={settings} />);
 
     // Assert
-    expect(screen.getByText("Rows per page")).toBeInTheDocument();
+    expect(screen.getByText("No. of rows")).toBeInTheDocument();
     expect(screen.getByText("20")).toBeInTheDocument();
   });
 

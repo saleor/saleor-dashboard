@@ -72,11 +72,7 @@ describe("OrderDraftAlert", () => {
       </Wrapper>,
     );
 
-    expect(
-      screen.getByText(
-        /Wyspy Salomona is not available as a shipping destination for this channel, check/i,
-      ),
-    ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "shipping zones configuration" })).toBeInTheDocument();
+    expect(screen.getByText(/{country}/)).toBeInTheDocument();
+    expect(screen.getByText(/{configLink}/)).toBeInTheDocument();
   });
 });

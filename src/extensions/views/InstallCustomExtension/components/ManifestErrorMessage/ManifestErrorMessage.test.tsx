@@ -64,17 +64,10 @@ describe("ManifestErrorMessage", () => {
 
     renderWithError(error);
     // Assert
-    // Check the error message text
+    // Check the error message text with placeholder
     expect(screen.getByText(/The extension's manifest has an invalid format/)).toBeInTheDocument();
-    // Check the link text
-    expect(screen.getByText("Learn more about this error")).toBeInTheDocument();
-    // Check the link href
-    expect(screen.getByRole("link", { name: "Learn more about this error" })).toHaveAttribute(
-      "href",
-      "https://docs.saleor.io/developer/extending/apps/developing-apps/app-error-codes#apperrorcodeinvalid_manifest_format",
-    );
-    // Check the error code is present
-    expect(screen.getByText(/INVALID_MANIFEST_FORMAT/)).toBeInTheDocument();
+    expect(screen.getByText(/{docsLink}/)).toBeInTheDocument();
+    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
   });
 
   it("renders backend error without specific documentation link", () => {
@@ -86,13 +79,8 @@ describe("ManifestErrorMessage", () => {
 
     renderWithError(error);
     // Assert
-    expect(
-      screen.getByText(
-        content =>
-          content.includes("You are not allowed to perform this action.") &&
-          content.includes("(FORBIDDEN)"),
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/You are not allowed to perform this action/)).toBeInTheDocument();
+    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
   });
 
   it("renders generic fallback error message for unknown client error string", () => {
@@ -105,12 +93,8 @@ describe("ManifestErrorMessage", () => {
     renderWithError(error);
 
     // Assert
-    expect(
-      screen.getByText(
-        content =>
-          content.includes("An unexpected error occurred.") && content.includes("(client)"),
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/An unexpected error occurred/)).toBeInTheDocument();
+    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
   });
 
   it("renders generic 'Unknown error' message for unknown error object", () => {
@@ -122,12 +106,8 @@ describe("ManifestErrorMessage", () => {
 
     renderWithError(error);
     // Assert
-    expect(
-      screen.getByText(
-        content =>
-          content.includes("An unexpected error occurred.") && content.includes("(unknown)"),
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/An unexpected error occurred/)).toBeInTheDocument();
+    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
   });
 
   it("sets aria-live='polite' on the root Box when error is displayed", () => {

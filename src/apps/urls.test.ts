@@ -28,7 +28,7 @@ describe("AppUrls (apps/urls.ts)", () => {
     describe("For full URL provided in env", () => {
       beforeEach(() => {
         jest
-          .spyOn(config, "getApiUrl")
+          .spyOn(config, "getAbsoluteApiUrl")
           .mockImplementation(() => "https://shop.saleor.cloud/graphql/");
       });
       it.each<[string, string, Record<string, string> & { theme: ThemeType }, string]>([

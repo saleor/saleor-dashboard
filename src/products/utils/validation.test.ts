@@ -7,13 +7,6 @@ import {
   validateProductVariant,
 } from "./validation";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
-
 describe("validateProductCreateData", () => {
   it("returns errors when there is no productType or name", () => {
     // Arrange

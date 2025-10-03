@@ -22,14 +22,6 @@ const defaultProps = {
   onSubmit: jest.fn(),
 };
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: (x: unknown) => x,
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-}));
-
 jest.mock("react-router-dom", () => ({
   MemoryRouter: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   Link: ({ children }: { children: React.ReactNode }) => <>{children}</>,

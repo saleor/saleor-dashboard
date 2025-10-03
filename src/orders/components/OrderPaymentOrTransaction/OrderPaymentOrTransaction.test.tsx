@@ -8,14 +8,6 @@ import {
   OrderPaymentOrTransactionProps,
 } from "./OrderPaymentOrTransaction";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn((x: any) => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  defineMessage: (message: string) => message,
-  FormattedMessage: jest.fn(({ defaultMessage }) => defaultMessage),
-}));
 jest.mock("@saleor/macaw-ui", () => ({
   useTheme: jest.fn(() => () => ({})),
   useStyles: jest.fn(() => () => ({})),

@@ -1,4 +1,4 @@
-import { intlMock } from "@test/intl";
+import { testIntlInstance } from "@test/intl";
 
 import {
   CLOUD_PLUGIN_ID,
@@ -30,7 +30,7 @@ describe("getExternalAuthenticationMethodName", () => {
   it("returns Saleor Cloud label when cloud plugin is provided", () => {
     const result = getExternalAuthenticationMethodName({
       pluginId: CLOUD_PLUGIN_ID,
-      intl: intlMock,
+      intl: testIntlInstance,
     });
 
     expect(result).toBe("Continue with Saleor Cloud");
@@ -39,7 +39,7 @@ describe("getExternalAuthenticationMethodName", () => {
   it("returns SSO label when SSO plugin is provided", () => {
     const result = getExternalAuthenticationMethodName({
       pluginId: SSO_PLUGIN_ID,
-      intl: intlMock,
+      intl: testIntlInstance,
     });
 
     expect(result).toBe("Continue with SSO");
@@ -48,7 +48,7 @@ describe("getExternalAuthenticationMethodName", () => {
   it("returns null when plugin is not supported", () => {
     const result = getExternalAuthenticationMethodName({
       pluginId: "unsupported.plugin",
-      intl: intlMock,
+      intl: testIntlInstance,
     });
 
     expect(result).toBeNull();

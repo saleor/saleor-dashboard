@@ -1,4 +1,4 @@
-import { getApiUrl } from "@dashboard/config";
+import { getAbsoluteApiUrl } from "@dashboard/config";
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 
 const createInputElement = (name: string, value: string): HTMLInputElement => {
@@ -57,7 +57,7 @@ export const newTabActions = {
       ...args.appParams,
       accessToken: args.accessToken,
       appId: args.appId,
-      saleorApiUrl: getApiUrl(),
+      saleorApiUrl: getAbsoluteApiUrl(),
     };
 
     const form = document.createElement("form");

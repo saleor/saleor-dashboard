@@ -5,14 +5,6 @@ import userEvent from "@testing-library/user-event";
 import { props } from "./fixtures";
 import { Metadata } from "./Metadata";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-}));
-
 const Component = () => {
   const { change, data } = useForm(props.data, jest.fn());
 

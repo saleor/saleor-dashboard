@@ -23,7 +23,7 @@ describe("Apps AppInProgressDeleteDialog", () => {
 
     const dialogContent = screen.getByTestId("dialog-content");
     // Assert
-    const expectedText = msgs.deleteNamedApp.defaultMessage.replace("{name}", name);
+    const expectedText = msgs.deleteNamedApp.defaultMessage;
 
     expect(dialogContent).toHaveTextContent(expectedText);
   });

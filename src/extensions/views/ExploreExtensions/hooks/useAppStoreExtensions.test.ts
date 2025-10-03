@@ -2,13 +2,6 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useAppStoreExtensions } from "./useAppStoreExtensions";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
-
 const mockExtensionsResponse = {
   extensionCategories: [
     {
