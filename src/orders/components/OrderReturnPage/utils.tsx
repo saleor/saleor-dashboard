@@ -30,16 +30,16 @@ export const getWaitingFulfillments = (order: OrderDetailsFragment) =>
 export const getUnfulfilledLines = (order?: OrderDetailsFragment) =>
   order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
-export const getAllOrderFulfilledLines = (order?: OrderDetailsFragment) =>
+export const getAllOrderFulfilledLines = (order?: OrderDetailsFragment): ParsedFulfillmentLine[] =>
   getFulfilledFulfillemnts(order).reduce(
     (result, { lines }) => [...result, ...getParsedLines(lines)],
-    [],
+    [] as ParsedFulfillmentLine[],
   );
 
-export const getAllOrderWaitingLines = (order?: OrderDetailsFragment) =>
+export const getAllOrderWaitingLines = (order?: OrderDetailsFragment): ParsedFulfillmentLine[] =>
   getWaitingFulfillments(order).reduce(
     (result, { lines }) => [...result, ...getParsedLines(lines)],
-    [],
+    [] as ParsedFulfillmentLine[],
   );
 
 // TODO: Migrate this utils file to strict mode
@@ -88,7 +88,10 @@ const getFulfillmentsWithStatus = (
 const getParsedLinesOfFulfillments = (
   fullfillments: OrderDetailsFragment["fulfillments"],
 ): ParsedFulfillmentLine[] =>
-  fullfillments.reduce((result, { lines }) => [...result, ...getParsedLines(lines)], []);
+  fullfillments.reduce(
+    (result, { lines }) => [...result, ...getParsedLines(lines)],
+    [] as ParsedFulfillmentLine[],
+  );
 
 export const getParsedLines = (
   lines: OrderDetailsFragment["fulfillments"][0]["lines"],
