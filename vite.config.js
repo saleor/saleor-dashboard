@@ -171,10 +171,9 @@ export default defineConfig(({ command, mode }) => {
          */
         transformMixedEsModules: true,
       },
-      import { defineConfig } from "vite";
-      import nodePolyfills from "rollup-plugin-polyfill-node";
+      const { defineConfig } = require("vite");
       
-      export default defineConfig({
+      module.exports = defineConfig({
         build: {
           sourcemap: true, // ✅ moved here instead of output.sourcemap
           rollupOptions: {
