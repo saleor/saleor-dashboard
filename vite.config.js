@@ -171,19 +171,26 @@ export default defineConfig(({ command, mode }) => {
          */
         transformMixedEsModules: true,
       },
-      rollupOptions: {
-        plugins: [nodePolyfills()],
-        maxParallelFileOps: 2,
-        cache: false,
-        output: {
-          sourcemap,
-          manualChunks: id => {
-            if (id.includes("node_modules")) {
-              return "vendor";
-            }
+      import { defineConfig } from "vite";
+      import nodePolyfills from "rollup-plugin-polyfill-node";
+      
+      export default defineConfig({
+        build: {
+          sourcemap: true, // ✅ moved here instead of output.sourcemap
+          rollupOptions: {
+            plugins: [nodePolyfills()],
+            maxParallelFileOps: 2,
+            cache: false,
+            output: {
+              manualChunks: id => {
+                if (id.includes("node_modules")) {
+                  return "vendor";
+                }
+              },
+            },
           },
         },
-      },
+      });
     },
     optimizeDeps: {
       include: ["esm-dep > cjs-dep", "@saleor/macaw-ui"],
