@@ -10,7 +10,7 @@
   "main": "src/index.tsx",
   "scripts": {
     "prebuild": "npm run generate",
-    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build",
+  "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build --config vite.config.cjs",
     "build-flags": "node scripts/build-flags.cjs",
     "build-storybook": "storybook build",
     "change:add": "changeset add",
@@ -21,7 +21,7 @@
     "check-types:src": "tsc --noEmit && tsc-strict",
     "dep-status": "depcruise --config .dependency-cruiser.js src",
     "predev": "npm run generate",
-    "dev": "vite --host",
+  "dev": "vite --host --config vite.config.cjs",
     "e2e": "npx playwright test --grep \"#e2e\"",
     "e2e:ui": "npx playwright test --ui",
     "extract-messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --out-file locale/defaultMessages.json --format scripts/formatter.cjs",
@@ -38,7 +38,7 @@
     "lint:prettier": "prettier --ignore-unknown --write .",
     "lint:prettier:check": "prettier --ignore-unknown --check .",
     "prepare": "is-ci || husky install",
-    "preview": "vite preview",
+  "preview": "vite preview --config vite.config.cjs",
     "release": "changeset tag && git push --follow-tags",
     "release:cleanup": "./scripts/release-cleanup.sh",
     "serve:lhci": "cross-env NODE_ENV=production npm run server",
@@ -234,7 +234,7 @@
   },
   "packageManager": "npm@10.8.2",
   "engines": {
-    "node": "^18 || ^20",
+    "node": "22.x",
     "npm": ">=7"
   },
   "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed"
