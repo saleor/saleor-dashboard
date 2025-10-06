@@ -1,3 +1,5 @@
+import errorTracker from "@dashboard/services/errorTracking";
+
 import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { InitialResponseType } from "../types";
@@ -104,6 +106,18 @@ export class Condition {
 
     if (token.isAttribute()) {
       const attribute = (response as InitialProductStateResponse).attributeByName(token.name);
+
+      if (!attribute) {
+        const error = new Error(
+          `Attribute "${token.name}" not found when parsing URL filter token. This may indicate a race condition or invalid URL parameter.`,
+        );
+
+        console.error(error.message, { token, response });
+        errorTracker.captureException(error);
+
+        return Condition.createEmpty();
+      }
+
       const options = ConditionOptions.fromAttributeType(attribute.inputType);
       const option = options.find(item => item.label === token.conditionKind)!;
       const value = response.filterByUrlToken(token);
