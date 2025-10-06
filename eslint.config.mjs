@@ -14,6 +14,7 @@ import tseslint from "typescript-eslint";
 import localRules from "./lint/rules/index.mjs";
 import unusedImports from "eslint-plugin-unused-imports";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
+import reactYouMightNotNeedAnEffect from "eslint-plugin-react-you-might-not-need-an-effect";
 
 export default tseslint.config(
   globalIgnores([
@@ -36,6 +37,7 @@ export default tseslint.config(
   react.configs.flat["jsx-runtime"],
   reactHooks.configs["recommended-latest"],
   reactRefresh.configs.vite,
+  reactYouMightNotNeedAnEffect.configs.recommended,
 
   {
     settings: {
