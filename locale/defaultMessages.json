@@ -6220,6 +6220,9 @@
   "aGx3Z5": {
     "string": "Created {formattedDate}"
   },
+  "aHIrs/": {
+    "string": "Failed to load filter data. Please refresh page to try again."
+  },
   "aHc89n": {
     "context": "select warehouse to restock items",
     "string": "Select Warehouse"
