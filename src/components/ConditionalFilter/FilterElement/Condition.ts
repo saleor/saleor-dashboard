@@ -73,7 +73,9 @@ export class Condition {
       const isMultiSelect = selectedOption?.type === "multiselect" && valueItems.length > 0;
       const isBulkSelect = selectedOption?.type === "bulkselect" && valueItems.length > 0;
       const isPriceField = ["totalGross", "totalNet"].includes(token.name);
-      const isNumericField = ["number", "linesCount"].includes(token.name);
+      const isNumericField = ["number", "linesCount", "numberOfOrders", "timesUsed"].includes(
+        token.name,
+      );
       const isDate = [
         "created",
         "createdAt",
@@ -82,6 +84,7 @@ export class Condition {
         "endDate",
         "started",
         "invoicesCreatedAt",
+        "dateJoined",
       ].includes(token.name);
 
       // TODO: This doesn't make sense:
