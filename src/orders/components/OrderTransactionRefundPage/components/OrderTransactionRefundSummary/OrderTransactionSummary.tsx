@@ -29,7 +29,7 @@ const FullWidthLine = () => {
         borderBottomWidth={1}
         borderColor="default1"
         position="absolute"
-        style={{ left: -16, right: -16, bottom: 0, height: "1px" }}
+        style={{ left: -12, right: -16, bottom: 0, height: "1px" }}
       />
     </Box>
   );
@@ -64,10 +64,10 @@ export const OrderTransactionSummary = ({
         <Text as="p">
           <FormattedMessage {...messages.amountDescription} />
         </Text>
-        <Box backgroundColor="default2" borderRadius={3} padding={4}>
+        <Box backgroundColor="default2" borderRadius={3} padding={4} paddingLeft={3}>
           <Box
             display="grid"
-            __columnGap="6px"
+            columnGap={2}
             rowGap={4}
             __gridTemplateColumns="auto 1fr auto"
             alignItems="center"
