@@ -42,6 +42,8 @@ const LoginPage: React.FC<LoginCardProps> = props => {
   const intl = useIntl();
   const [showPassword, setShowPassword] = useState(false);
   const [optimisticLoaderAuthId, setOptimisticLoaderAuthId] = useState<null | string>(null);
+  const showLastLoginIndicatorForPassword =
+    lastLoginMethod === "password" && externalAuthentications.length > 0;
 
   return (
     <LoginForm onSubmit={onSubmit}>
@@ -124,7 +126,7 @@ const LoginPage: React.FC<LoginCardProps> = props => {
               data-test-id="submit"
               position="relative"
             >
-              {lastLoginMethod === "password" && <LastLoginIndicator />}
+              {showLastLoginIndicatorForPassword && <LastLoginIndicator />}
               <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
             </ButtonWithLoader>
           </div>
