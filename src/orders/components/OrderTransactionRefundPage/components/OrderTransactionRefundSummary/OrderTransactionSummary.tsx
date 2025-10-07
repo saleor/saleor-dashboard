@@ -20,6 +20,21 @@ interface OrderTransactionSummaryProps extends BoxProps {
   currency: string | undefined;
 }
 
+// For usage in grid that exceeds our 16px padding for full background line
+const FullWidthLine = () => {
+  return (
+    <Box gridColumn="full" position="relative">
+      <Box
+        borderBottomStyle="solid"
+        borderBottomWidth={1}
+        borderColor="default1"
+        position="absolute"
+        style={{ left: -16, right: -16, bottom: 0, height: "1px" }}
+      />
+    </Box>
+  );
+};
+
 export const OrderTransactionSummary = ({
   amountError,
   control,
@@ -50,7 +65,13 @@ export const OrderTransactionSummary = ({
           <FormattedMessage {...messages.amountDescription} />
         </Text>
         <Box backgroundColor="default2" borderRadius={3} padding={4}>
-          <Box display="grid" __columnGap="6px" rowGap={4} __gridTemplateColumns="auto 1fr auto" alignItems="center">
+          <Box
+            display="grid"
+            __columnGap="6px"
+            rowGap={4}
+            __gridTemplateColumns="auto 1fr auto"
+            alignItems="center"
+          >
             {/* Selected products row - no checkbox */}
             <Text gridColumnStart="2" size={3}>
               <FormattedMessage {...messages.selectedProducts} />
@@ -65,10 +86,7 @@ export const OrderTransactionSummary = ({
               )}
             </Box>
 
-            {/* Border - full width (incl. padding) */}
-            <Box gridColumn="full" position="relative">
-              <Box borderBottomStyle="solid" borderBottomWidth={1} borderColor="default1" position="absolute" style={{ left: -16, right: -16, bottom: 0, height: "1px" }} />
-            </Box>
+            <FullWidthLine />
 
             {canRefundShipping ? (
               <Checkbox
@@ -111,10 +129,7 @@ export const OrderTransactionSummary = ({
               )}
             </Box>
 
-            {/* Border - full width (incl. padding) */}
-            <Box gridColumn="full" position="relative">
-              <Box borderBottomStyle="solid" borderBottomWidth={1} borderColor="default1" position="absolute" style={{ left: -16, right: -16, bottom: 0, height: "1px" }} />
-            </Box>
+            <FullWidthLine />
 
             {/* Total row */}
             <Text gridColumnStart="2" size={5}>
@@ -145,6 +160,6 @@ export const OrderTransactionSummary = ({
           </Box>
         </Box>
       </DashboardCard.Content>
-    </DashboardCard >
+    </DashboardCard>
   );
 };
