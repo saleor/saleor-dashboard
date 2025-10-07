@@ -2,17 +2,6 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useValidateUrl } from "./useValidateUrl";
 
-jest.mock("react-intl", () => {
-  const reactIntl = jest.requireActual("react-intl");
-
-  return {
-    ...reactIntl,
-    useIntl: () => ({
-      formatMessage: jest.fn(({ defaultMessage }: { defaultMessage: string }) => defaultMessage),
-    }),
-  };
-});
-
 describe("useValidateUrl", () => {
   it("should return true for valid URLs", () => {
     // Arrange

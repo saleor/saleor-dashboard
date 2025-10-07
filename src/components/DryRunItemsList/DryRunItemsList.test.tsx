@@ -8,12 +8,6 @@ import DryRunItemsList from "./DryRunItemsList";
 
 const mocks: MockedResponse[] = [...productsMocks];
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
 describe("DryRunItemsList", () => {
   it("is available on the webhook page", async () => {
     // Arrange

@@ -29,8 +29,8 @@ export const ripplePagesAreModels: Ripple = {
   actions: [
     {
       label: defineMessage({
-        defaultMessage: "Read a blog post",
-        id: "7DMWSy",
+        defaultMessage: "Read the blog post",
+        id: "cti4iA",
       }),
       onClick() {
         window.open("https://saleor.io/blog/modeling", "_blank");

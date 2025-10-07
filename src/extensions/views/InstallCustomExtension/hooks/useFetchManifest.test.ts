@@ -17,14 +17,6 @@ jest.mock("@dashboard/extensions/utils", () => ({
   getAppInstallErrorMessage: jest.fn(),
 }));
 
-jest.mock("react-intl", () => ({
-  useIntl: () => ({
-    formatMessage: jest.fn(),
-  }),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => defaultMessage || "",
-  defineMessages: (messages: Record<string, any>) => messages,
-}));
-
 describe("useFetchManifest", () => {
   const mockGetValues = jest.fn();
   const mockSetError = jest.fn();

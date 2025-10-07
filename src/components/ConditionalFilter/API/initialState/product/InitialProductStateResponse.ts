@@ -33,7 +33,8 @@ export interface InitialProductState {
 }
 
 const isDateField = (name: string) =>
-  ["created", "updatedAt", "startDate", "endDate"].includes(name);
+  ["created", "updatedAt", "startDate", "endDate", "dateJoined", "started"].includes(name);
+const isNumericField = (name: string) => ["numberOfOrders", "timesUsed"].includes(name);
 
 export class InitialProductStateResponse implements InitialProductState {
   constructor(
@@ -77,7 +78,7 @@ export class InitialProductStateResponse implements InitialProductState {
       });
     }
 
-    if (isDateField(token.name)) {
+    if (isDateField(token.name) || isNumericField(token.name)) {
       return token.value;
     }
 

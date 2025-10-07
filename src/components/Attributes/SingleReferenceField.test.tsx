@@ -27,19 +27,6 @@ jest.mock("react-router-dom", () => ({
   useParams: () => ({}),
 }));
 
-jest.mock("react-intl", () => ({
-  defineMessages: (messages: unknown) => messages,
-  useIntl: () => ({
-    formatMessage: (msg: { id: string; defaultMessage: string }) => msg.defaultMessage || msg.id,
-    formatNumber: (num: number) => String(num),
-    formatDate: (date: Date) => date.toISOString(),
-    locale: "en",
-  }),
-  FormattedMessage: ({ defaultMessage, id }: { defaultMessage?: string; id: string }) => (
-    <>{defaultMessage || id}</>
-  ),
-}));
-
 describe("SingleReferenceField", () => {
   const defaultProps = {
     attribute: {

@@ -4,13 +4,6 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useActiveAppsInstallations } from "./useActiveAppsInstallations";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
-
 jest.mock("@apollo/client", () => ({
   gql: jest.fn(),
   useApolloClient: jest.fn(),

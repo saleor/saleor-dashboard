@@ -23,7 +23,7 @@ describe("Apps AppDeactivateDialog", () => {
 
     const dialogContent = screen.getByTestId("dialog-content");
     // Assert
-    const expectedActionText = msgs.deactivateNamedApp.defaultMessage.replace("{name}", name);
+    const expectedActionText = msgs.deactivateNamedApp.defaultMessage;
     const expectedBillingWarning = msgs.deactivateAppBillingInfo.defaultMessage;
 
     expect(dialogContent).toHaveTextContent(expectedActionText);

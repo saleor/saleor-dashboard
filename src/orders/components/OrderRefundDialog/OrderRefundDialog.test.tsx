@@ -6,13 +6,6 @@ import { OrderRefundDialog } from "./OrderRefundDialog";
 
 const order = orderMock("");
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-}));
 jest.mock("@dashboard/auth/hooks/useUserPermissions", () => ({
   useUserPermissions: jest.fn(() => [{ code: PermissionEnum.HANDLE_PAYMENTS }]),
 }));

@@ -9,13 +9,6 @@ import {
 
 import { ConfirmButton } from "./ConfirmButton";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }) => <>{defaultMessage}</>,
-}));
 describe("ConfirmButton", () => {
   it("should render a button with confirm label", () => {
     render(<ConfirmButton transitionState="default" labels={{ confirm: "Confirm" }} />);

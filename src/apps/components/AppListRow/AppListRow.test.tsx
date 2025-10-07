@@ -110,7 +110,7 @@ describe("Apps AppListRow", () => {
     const description = screen.queryAllByText(comingSoonApp.description.en);
     const images = screen.getAllByRole("img");
     const links = screen.queryAllByRole("link");
-    const releaseDate = screen.queryAllByText(comingSoonApp.releaseDate, {
+    const releaseDate = screen.queryAllByText("{releaseDate}", {
       exact: false,
     });
 

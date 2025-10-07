@@ -4,7 +4,7 @@ import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import { APP_VERSION, getApiUrl } from "@dashboard/config";
+import { APP_VERSION, getAbsoluteApiUrl } from "@dashboard/config";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
@@ -83,7 +83,7 @@ const IframePost = ({
   return (
     <Box>
       <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
-        <input type="hidden" name="saleorApiUrl" value={getApiUrl()} />
+        <input type="hidden" name="saleorApiUrl" value={getAbsoluteApiUrl()} />
         <input type="hidden" name="accessToken" value={accessToken} />
         <input type="hidden" name="appId" value={appId} />
         <>

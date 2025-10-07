@@ -7,14 +7,6 @@ jest.mock("@dashboard/graphql", () => ({
   useFileUploadMutation: jest.fn(),
 }));
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: (x: unknown) => x,
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-}));
-
 jest.mock("@dashboard/intl", () => ({
   errorMessages: {
     imgageUploadErrorTitle: "Image upload error title",
