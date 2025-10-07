@@ -1460,9 +1460,6 @@
   "7Chrsf": {
     "string": "Passwords do not match"
   },
-  "7DMWSy": {
-    "string": "Read a blog post"
-  },
   "7EDqed": {
     "context": "tab name",
     "string": "All gift cards"
@@ -2505,9 +2502,6 @@
   },
   "DovGIa": {
     "string": "Permission Group Deleted"
-  },
-  "Dqo3Vf": {
-    "string": "Plugins and Webhook Events have been moved to the \"Extensions\" page, available from the sidebar navigation."
   },
   "DyGpz4": {
     "context": "unapproved fulfillment, section header",
@@ -5367,9 +5361,6 @@
     "context": "shipping zones section name",
     "string": "Shipping Zones"
   },
-  "V1aPhG": {
-    "string": "Navigation has changed"
-  },
   "V21v8h": {
     "string": "{currency} {totalAmount}"
   },
@@ -6220,6 +6211,9 @@
   "aGx3Z5": {
     "string": "Created {formattedDate}"
   },
+  "aHIrs/": {
+    "string": "Failed to load filter data. Please refresh page to try again."
+  },
   "aHc89n": {
     "context": "select warehouse to restock items",
     "string": "Select Warehouse"
@@ -6665,6 +6659,9 @@
   "cryH86": {
     "context": "assign collections to sale and save",
     "string": "Assign and save"
+  },
+  "cti4iA": {
+    "string": "Read the blog post"
   },
   "cvVIV/": {
     "context": "dialog header",
@@ -9540,9 +9537,6 @@
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
-  },
-  "vZglQ7": {
-    "string": "Go to Extensions"
   },
   "vbop3G": {
     "string": "Create new model"

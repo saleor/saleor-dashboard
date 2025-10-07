@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { subtractMoney } from "@dashboard/components/Money";
 import {
   AddressFragment,
@@ -31,7 +30,7 @@ import { orderDiscountTypeLabelMessages } from "../messages";
 import { OrderRefundSharedType } from "../types";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
-  OrderRefundDataQuery["order"],
+  NonNullable<OrderRefundDataQuery["order"]>,
   "total" | "totalCaptured"
 >;
 
@@ -62,17 +61,17 @@ export function getWarehousesFromOrderLines<T extends OrderLineWithStockWarehous
             ? warehouses
             : [...warehouses, stock.warehouse],
         warehouses,
-      ),
+      ) ?? warehouses,
     [] as WarehouseFragment[],
   );
 }
 
 export function getPreviouslyRefundedPrice(order: OrderRefundSharedType): IMoney {
-  return (
-    getOrderCharged(order as OrderDetailsFragment) &&
-    order?.total?.gross &&
-    subtractMoney(getOrderCharged(order as OrderDetailsFragment), order?.total?.gross)
-  );
+  const orderDetails = order as OrderDetailsFragment;
+  const charged = getOrderCharged(orderDetails);
+  const total = orderDetails?.total?.gross;
+
+  return charged && total ? subtractMoney(charged, total) : charged;
 }
 
 export const getItemPriceAndQuantity = ({
@@ -94,9 +93,12 @@ export const getItemPriceAndQuantity = ({
   return { selectedQuantity, unitPrice: selectedOrderLine?.unitPrice };
 };
 
-const getFulfillmentByFulfillmentLineId = (order, fulfillmentLineId) => {
+const getFulfillmentByFulfillmentLineId = (
+  order: OrderDetailsFragment,
+  fulfillmentLineId: string,
+) => {
   for (const fulfillment of order.fulfillments) {
-    if (fulfillment.lines.find(getById(fulfillmentLineId))) {
+    if (fulfillment.lines?.find(getById(fulfillmentLineId))) {
       return fulfillment;
     }
   }
@@ -116,7 +118,7 @@ const selectItemPriceAndQuantity = (
   if (fulfillment?.status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
     return getItemPriceAndQuantity({
       id,
-      itemsQuantities: waitingItemsQuantities,
+      itemsQuantities: waitingItemsQuantities ?? [],
       orderLines: getAllOrderWaitingLines(order),
     });
   }
@@ -124,12 +126,12 @@ const selectItemPriceAndQuantity = (
   return isFulfillment
     ? getItemPriceAndQuantity({
         id,
-        itemsQuantities: fulfilledItemsQuantities,
+        itemsQuantities: fulfilledItemsQuantities ?? [],
         orderLines: getAllOrderFulfilledLines(order),
       })
     : getItemPriceAndQuantity({
         id,
-        itemsQuantities: unfulfilledItemsQuantities,
+        itemsQuantities: unfulfilledItemsQuantities ?? [],
         orderLines: order.lines,
       });
 };
@@ -143,7 +145,7 @@ export const getReplacedProductsAmount = (
     fulfilledItemsQuantities,
   }: Partial<OrderReturnFormData>,
 ) => {
-  if (!order || !itemsToBeReplaced.length) {
+  if (!order || !itemsToBeReplaced?.length) {
     return 0;
   }
 
@@ -167,7 +169,7 @@ export const getReplacedProductsAmount = (
         isFulfillment,
       );
 
-      return resultAmount + unitPrice?.gross?.amount * selectedQuantity;
+      return resultAmount + (unitPrice?.gross?.amount ?? 0) * (selectedQuantity ?? 0);
     },
     0,
   );
@@ -180,25 +182,25 @@ export const getReturnSelectedProductsAmount = (
     waitingItemsQuantities,
     unfulfilledItemsQuantities,
     fulfilledItemsQuantities,
-  },
+  }: Partial<OrderReturnFormData>,
 ) => {
   if (!order) {
     return 0;
   }
 
   const unfulfilledItemsValue = getPartialProductsValue({
-    itemsQuantities: unfulfilledItemsQuantities,
-    itemsToBeReplaced,
+    itemsQuantities: unfulfilledItemsQuantities ?? [],
+    itemsToBeReplaced: itemsToBeReplaced ?? [],
     orderLines: order.lines,
   });
   const fulfiledItemsValue = getPartialProductsValue({
-    itemsQuantities: fulfilledItemsQuantities,
-    itemsToBeReplaced,
+    itemsQuantities: fulfilledItemsQuantities ?? [],
+    itemsToBeReplaced: itemsToBeReplaced ?? [],
     orderLines: getAllOrderFulfilledLines(order),
   });
   const waitingItemsValue = getPartialProductsValue({
-    itemsQuantities: waitingItemsQuantities,
-    itemsToBeReplaced,
+    itemsQuantities: waitingItemsQuantities ?? [],
+    itemsToBeReplaced: itemsToBeReplaced ?? [],
     orderLines: getAllOrderWaitingLines(order),
   });
 
@@ -215,7 +217,7 @@ const getPartialProductsValue = ({
   orderLines: OrderLineFragment[];
 }) => {
   return itemsQuantities.reduce((resultAmount, { id, value: quantity, data: { isRefunded } }) => {
-    const { value: isItemToBeReplaced } = itemsToBeReplaced.find(getById(id));
+    const { value: isItemToBeReplaced } = itemsToBeReplaced.find(getById(id)) ?? { value: false };
 
     if (quantity < 1 || isItemToBeReplaced || isRefunded) {
       return resultAmount;
@@ -236,7 +238,7 @@ const getPartialProductsValue = ({
 };
 
 export function getRefundedLinesPriceSum(
-  lines: OrderRefundDataQuery["order"]["lines"],
+  lines: NonNullable<OrderRefundDataQuery["order"]>["lines"],
   refundedProductQuantities: FormsetData<null, string | number>,
 ): number {
   return lines?.reduce((sum, line) => {
@@ -249,47 +251,49 @@ export function getRefundedLinesPriceSum(
 }
 
 export function getAllFulfillmentLinesPriceSum(
-  fulfillments: OrderRefundDataQuery["order"]["fulfillments"],
+  fulfillments: NonNullable<OrderRefundDataQuery["order"]>["fulfillments"],
   refundedFulfilledProductQuantities: FormsetData<null, string | number>,
 ): number {
   return fulfillments?.reduce((sum, fulfillment) => {
-    const fulfilmentLinesSum = fulfillment?.lines.reduce((sum, line) => {
+    const fulfilmentLinesSum = fulfillment?.lines?.reduce((sum, line) => {
       const refundedLine = refundedFulfilledProductQuantities.find(
         refundedLine => refundedLine.id === line.id,
       );
 
-      return sum + line.orderLine.unitPrice.gross.amount * Number(refundedLine?.value || 0);
+      return sum + (line.orderLine?.unitPrice.gross.amount ?? 0) * Number(refundedLine?.value || 0);
     }, 0);
 
-    return sum + fulfilmentLinesSum;
+    return sum + (fulfilmentLinesSum ?? 0);
   }, 0);
 }
 
 export function mergeRepeatedOrderLines(
   fulfillmentLines: OrderDetailsFragment["fulfillments"][0]["lines"],
 ) {
-  return fulfillmentLines.reduce((prev, curr) => {
-    const existingOrderLineIndex = prev.findIndex(
-      prevLine => prevLine.orderLine.id === curr.orderLine.id,
-    );
+  return (
+    fulfillmentLines?.reduce((prev, curr) => {
+      const existingOrderLineIndex = prev.findIndex(
+        prevLine => prevLine.orderLine?.id === curr.orderLine?.id,
+      );
 
-    if (existingOrderLineIndex === -1) {
-      prev.push(curr);
-    } else {
-      const existingOrderLine = prev[existingOrderLineIndex];
+      if (existingOrderLineIndex === -1) {
+        prev.push(curr);
+      } else {
+        const existingOrderLine = prev[existingOrderLineIndex];
 
-      prev[existingOrderLineIndex] = {
-        ...existingOrderLine,
-        quantity: existingOrderLine.quantity + curr.quantity,
-      };
-    }
+        prev[existingOrderLineIndex] = {
+          ...existingOrderLine,
+          quantity: existingOrderLine.quantity + curr.quantity,
+        };
+      }
 
-    return prev;
-  }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
+      return prev;
+    }, Array<NonNullable<OrderDetailsFragment["fulfillments"][0]["lines"]>[0]>()) ?? []
+  );
 }
 
 function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
-  const { __typename, ...rest } = address;
+  const { __typename, id: _id, ...rest } = address;
 
   return {
     ...rest,
@@ -310,7 +314,7 @@ export const getVariantSearchAddress = (order: OrderDetailsFragment): AddressInp
 };
 
 const getAllocatedQuantityForLine = (line: OrderLineStockDataFragment, warehouseId: string) => {
-  const warehouseAllocation = line.allocations.find(
+  const warehouseAllocation = line.allocations?.find(
     allocation => allocation.warehouse.id === warehouseId,
   );
 
@@ -367,14 +371,17 @@ export const getLineAvailableQuantityInWarehouse = (
 
 export const getLineAllocationWithHighestQuantity = (
   line: OrderFulfillLineFragment,
-): OrderFulfillLineFragment["allocations"][number] | undefined =>
-  line.allocations.reduce((prevAllocation, allocation) => {
-    if (!prevAllocation || prevAllocation.quantity < allocation.quantity) {
-      return allocation;
-    }
+): NonNullable<OrderFulfillLineFragment["allocations"]>[number] | undefined | null =>
+  line.allocations?.reduce(
+    (prevAllocation, allocation) => {
+      if (!prevAllocation || prevAllocation.quantity < allocation.quantity) {
+        return allocation;
+      }
 
-    return prevAllocation;
-  }, null);
+      return prevAllocation;
+    },
+    null as NonNullable<OrderFulfillLineFragment["allocations"]>[number] | null,
+  );
 
 export const transformFuflillmentLinesToStockFormsetData = (
   lines: FulfillmentFragment["lines"],
@@ -382,17 +389,17 @@ export const transformFuflillmentLinesToStockFormsetData = (
 ): OrderFulfillStockFormsetData =>
   lines?.map(line => ({
     data: null,
-    id: line.orderLine.id,
+    id: line.orderLine?.id ?? "",
     value: [
       {
         quantity: line.quantity,
         warehouse,
       },
     ],
-  }));
+  })) ?? [];
 
 export const getAttributesCaption = (
-  attributes: OrderFulfillLineFragment["variant"]["attributes"] | undefined,
+  attributes: NonNullable<OrderFulfillLineFragment["variant"]>["attributes"] | undefined,
 ): string | undefined => {
   const separator = " / ";
 
@@ -400,7 +407,7 @@ export const getAttributesCaption = (
     ?.map(attribute => attribute.values.map(attributeValue => attributeValue.name).join(", "))
     .filter(Boolean);
 
-  if (names.length === 0) {
+  if (!names || names.length === 0) {
     return "";
   }
 
@@ -410,14 +417,16 @@ export const getAttributesCaption = (
 export const prepareMoney = (
   amount: number,
   currency: string,
-): OrderDetailsQuery["order"]["totalCaptured"] => ({
+): NonNullable<OrderDetailsQuery["order"]>["totalCaptured"] => ({
   __typename: "Money",
   amount,
   currency: currency ?? "USD",
 });
 
 export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
-  ["edit-customer-addresses", "edit-shipping-address", "edit-billing-address"].includes(uri);
+  uri
+    ? ["edit-customer-addresses", "edit-shipping-address", "edit-billing-address"].includes(uri)
+    : false;
 
 const NAME_SEPARATOR = ":";
 const getDiscountNameLabel = (name: string) => {
@@ -435,7 +444,7 @@ export const getDiscountTypeLabel = (discount: OrderDiscountFragment, intl: Intl
     case OrderDiscountType.MANUAL:
       return intl.formatMessage(orderDiscountTypeLabelMessages.staffAdded);
     case OrderDiscountType.ORDER_PROMOTION:
-      return getDiscountNameLabel(discount.name);
+      return getDiscountNameLabel(discount.name ?? "");
     case OrderDiscountType.VOUCHER:
       return intl.formatMessage(orderDiscountTypeLabelMessages.voucher, {
         voucherName: discount.name,
