@@ -49,38 +49,33 @@ export const OrderTransactionSummary = ({
         <Text as="p">
           <FormattedMessage {...messages.amountDescription} />
         </Text>
-        <Box display="flex" flexDirection="column" backgroundColor="default2" borderRadius={3}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            borderBottomStyle="solid"
-            borderBottomWidth={1}
-            borderColor="default1"
-            paddingY={4}
-          >
-            <Text size={3}>
+        <Box backgroundColor="default2" borderRadius={3} padding={4}>
+          <Box display="grid" __columnGap="6px" rowGap={4} __gridTemplateColumns="auto 1fr auto" alignItems="center">
+            {/* Selected products row - no checkbox */}
+            <Text gridColumnStart="2" size={3}>
               <FormattedMessage {...messages.selectedProducts} />
             </Text>
-            {currency ? (
-              <Money money={{ currency, amount: selectedProductsValue }} />
-            ) : (
-              <Box display="flex" width={20}>
-                <Skeleton />
-              </Box>
-            )}
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            borderBottomStyle="solid"
-            borderBottomWidth={1}
-            borderColor="default1"
-            paddingY={4}
-          >
+            <Box display="flex" justifyContent="flex-end">
+              {currency ? (
+                <Money money={{ currency, amount: selectedProductsValue }} />
+              ) : (
+                <Box display="flex" width={20}>
+                  <Skeleton />
+                </Box>
+              )}
+            </Box>
+
+            {/* Border - full width (incl. padding) */}
+            <Box gridColumn="full" position="relative">
+              <Box borderBottomStyle="solid" borderBottomWidth={1} borderColor="default1" position="absolute" style={{ left: -16, right: -16, bottom: 0, height: "1px" }} />
+            </Box>
+
             {canRefundShipping ? (
-              <Checkbox checked={shippingField.value} onCheckedChange={shippingField.onChange}>
+              <Checkbox
+                display="contents"
+                checked={shippingField.value}
+                onCheckedChange={shippingField.onChange}
+              >
                 <Text size={3}>
                   <FormattedMessage {...messages.shipping} />
                 </Text>
@@ -89,6 +84,7 @@ export const OrderTransactionSummary = ({
               <Tooltip>
                 <Tooltip.Trigger>
                   <Checkbox
+                    display="contents"
                     disabled
                     checked={shippingField.value}
                     onCheckedChange={shippingField.onChange}
@@ -105,21 +101,23 @@ export const OrderTransactionSummary = ({
                 </Tooltip.Content>
               </Tooltip>
             )}
-            {shippingCost ? (
-              <Money money={shippingCost} />
-            ) : (
-              <Box display="flex" width={20}>
-                <Skeleton />
-              </Box>
-            )}
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            paddingTop={4}
-            paddingBottom={amountError ? 2 : 4}
-          >
-            <Text size={5} display="flex" alignItems="center">
+            <Box display="flex" justifyContent="flex-end">
+              {shippingCost ? (
+                <Money money={shippingCost} />
+              ) : (
+                <Box display="flex" width={20}>
+                  <Skeleton />
+                </Box>
+              )}
+            </Box>
+
+            {/* Border - full width (incl. padding) */}
+            <Box gridColumn="full" position="relative">
+              <Box borderBottomStyle="solid" borderBottomWidth={1} borderColor="default1" position="absolute" style={{ left: -16, right: -16, bottom: 0, height: "1px" }} />
+            </Box>
+
+            {/* Total row */}
+            <Text gridColumnStart="2" size={5}>
               <FormattedMessage {...messages.totalAmount} />
             </Text>
             <Input
@@ -131,16 +129,22 @@ export const OrderTransactionSummary = ({
               __width={100}
               endAdornment={currency}
             />
+
+            {/* Error message */}
+            {!!amountError && (
+              <>
+                <Box />
+                <Box />
+                <Box textAlign="right">
+                  <Text color="critical1" size={1}>
+                    {amountError.message}
+                  </Text>
+                </Box>
+              </>
+            )}
           </Box>
-          {!!amountError && (
-            <Box textAlign="right" paddingBottom={4}>
-              <Text color="critical1" size={1}>
-                {amountError.message}
-              </Text>
-            </Box>
-          )}
         </Box>
       </DashboardCard.Content>
-    </DashboardCard>
+    </DashboardCard >
   );
 };
