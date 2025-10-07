@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Show last used bagde only if there are more than one login method
+Show last used badge only if multiple login methods are available.
