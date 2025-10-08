@@ -6,6 +6,7 @@ import Link from "@dashboard/components/Link";
 import { Pill } from "@dashboard/components/Pill";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
+import { useCustomSidebarBreakpoint } from "@dashboard/components/Sidebar/SidebarContext";
 import {
   OrderDetailsGrantRefundFragment,
   PermissionEnum,
@@ -144,6 +145,9 @@ const OrderTransactionRefundPage = ({
 }: OrderTransactionRefundPageProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
+
+  // Use wider breakpoint to show minimal sidebar and give more horizontal space for the transaction table
+  useCustomSidebarBreakpoint("wide");
 
   const [editedRefundLineIndex, setEditedRefundLineIndex] = useState<number | null>(null);
 
@@ -289,7 +293,13 @@ const OrderTransactionRefundPage = ({
           </DashboardCard>
           <OrderTransactionTiles transactions={order?.transactions} control={control} />
         </DetailPageLayout.Content>
-        <DetailPageLayout.RightSidebar>
+        <DetailPageLayout.RightSidebar
+          gridRow={{
+            mobile: "6",
+            tablet: "6",
+            desktop: "full",
+          }}
+        >
           <Box __width="400px" display="flex" flexDirection="column" height="100%" gap={8}>
             <OrderTransactionSummary
               amountError={amountError || formErrors.amount}
