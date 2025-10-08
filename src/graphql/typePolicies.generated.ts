@@ -1197,6 +1197,14 @@ export type CheckoutFilterShippingMethodsFieldPolicy = {
 	shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type CheckoutFullyAuthorizedKeySpecifier = ('checkout' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'version' | CheckoutFullyAuthorizedKeySpecifier)[];
+export type CheckoutFullyAuthorizedFieldPolicy = {
+	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type CheckoutFullyPaidKeySpecifier = ('checkout' | 'issuedAt' | 'issuingPrincipal' | 'recipient' | 'version' | CheckoutFullyPaidKeySpecifier)[];
 export type CheckoutFullyPaidFieldPolicy = {
 	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4077,9 +4085,12 @@ export type PaymentRefundEventFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PaymentSettingsKeySpecifier = ('defaultTransactionFlowStrategy' | PaymentSettingsKeySpecifier)[];
+export type PaymentSettingsKeySpecifier = ('checkoutReleaseFundsCutOffDate' | 'checkoutTtlBeforeReleasingFunds' | 'defaultTransactionFlowStrategy' | 'releaseFundsForExpiredCheckouts' | PaymentSettingsKeySpecifier)[];
 export type PaymentSettingsFieldPolicy = {
-	defaultTransactionFlowStrategy?: FieldPolicy<any> | FieldReadFunction<any>
+	checkoutReleaseFundsCutOffDate?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutTtlBeforeReleasingFunds?: FieldPolicy<any> | FieldReadFunction<any>,
+	defaultTransactionFlowStrategy?: FieldPolicy<any> | FieldReadFunction<any>,
+	releaseFundsForExpiredCheckouts?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PaymentSourceKeySpecifier = ('creditCardInfo' | 'gateway' | 'metadata' | 'paymentMethodId' | PaymentSourceKeySpecifier)[];
 export type PaymentSourceFieldPolicy = {
@@ -5983,9 +5994,10 @@ export type StoredPaymentMethodRequestDeleteFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	result?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | SubscriptionKeySpecifier)[];
+export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyAuthorized' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | SubscriptionKeySpecifier)[];
 export type SubscriptionFieldPolicy = {
 	checkoutCreated?: FieldPolicy<any> | FieldReadFunction<any>,
+	checkoutFullyAuthorized?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutFullyPaid?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutMetadataUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -7577,6 +7589,10 @@ export type StrictTypedTypePolicies = {
 	CheckoutFilterShippingMethods?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CheckoutFilterShippingMethodsKeySpecifier | (() => undefined | CheckoutFilterShippingMethodsKeySpecifier),
 		fields?: CheckoutFilterShippingMethodsFieldPolicy,
+	},
+	CheckoutFullyAuthorized?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CheckoutFullyAuthorizedKeySpecifier | (() => undefined | CheckoutFullyAuthorizedKeySpecifier),
+		fields?: CheckoutFullyAuthorizedFieldPolicy,
 	},
 	CheckoutFullyPaid?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CheckoutFullyPaidKeySpecifier | (() => undefined | CheckoutFullyPaidKeySpecifier),

@@ -4702,8 +4702,26 @@ export enum PaymentMethodTokenizationResult {
 }
 
 export type PaymentSettingsInput = {
+  /**
+   * Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date.
+   *
+   * Added in Saleor 3.20.
+   */
+  checkoutReleaseFundsCutOffDate?: InputMaybe<Scalars['DateTime']>;
+  /**
+   * The time in hours after which funds for expired checkouts will be released.
+   *
+   * Added in Saleor 3.20.
+   */
+  checkoutTtlBeforeReleasingFunds?: InputMaybe<Scalars['Hour']>;
   /** Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction. */
   defaultTransactionFlowStrategy?: InputMaybe<TransactionFlowStrategyEnum>;
+  /**
+   * Determine if the funds for expired checkouts should be released automatically.
+   *
+   * Added in Saleor 3.20.
+   */
+  releaseFundsForExpiredCheckouts?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum PermissionEnum {
@@ -7383,6 +7401,17 @@ export enum WebhookEventTypeAsyncEnum {
   CHANNEL_UPDATED = 'CHANNEL_UPDATED',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  /**
+   * A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
+  /**
+   * A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   /** A checkout metadata is updated. */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
@@ -7681,6 +7710,17 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS',
+  /**
+   * A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
+  /**
+   * A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+   *
+   * This event is emitted only for checkouts whose payments are processed through the Transaction API.
+   */
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   /** A checkout metadata is updated. */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
@@ -8016,6 +8056,7 @@ export enum WebhookSampleEventTypeEnum {
   CHANNEL_STATUS_CHANGED = 'CHANNEL_STATUS_CHANGED',
   CHANNEL_UPDATED = 'CHANNEL_UPDATED',
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
+  CHECKOUT_FULLY_AUTHORIZED = 'CHECKOUT_FULLY_AUTHORIZED',
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
@@ -12052,4 +12093,4 @@ export type WelcomePageNotificationsQueryVariables = Exact<{
 }>;
 
 
-export type WelcomePageNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null }
+export type WelcomePageNotificationsQuery = { __typename: 'Query', productsOutOfStock: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };

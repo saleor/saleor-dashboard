@@ -1975,6 +1975,19 @@ enum WebhookEventTypeEnum @doc(category: "Webhooks") {
   A checkout is updated. It also triggers all updates related to the checkout.
   """
   CHECKOUT_UPDATED
+
+  """
+  A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+  
+  This event is emitted only for checkouts whose payments are processed through the Transaction API.
+  """
+  CHECKOUT_FULLY_AUTHORIZED
+
+  """
+  A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+  
+  This event is emitted only for checkouts whose payments are processed through the Transaction API.
+  """
   CHECKOUT_FULLY_PAID
 
   """A checkout metadata is updated."""
@@ -2537,6 +2550,19 @@ enum WebhookEventTypeAsyncEnum @doc(category: "Webhooks") {
   A checkout is updated. It also triggers all updates related to the checkout.
   """
   CHECKOUT_UPDATED
+
+  """
+  A checkout was fully authorized (its `authorizeStatus` is `FULL`).
+  
+  This event is emitted only for checkouts whose payments are processed through the Transaction API.
+  """
+  CHECKOUT_FULLY_AUTHORIZED
+
+  """
+  A checkout was fully paid (its `chargeStatus` is `FULL` or `OVERCHARGED`). This event is not sent if payments are only authorized but not fully charged.
+  
+  This event is emitted only for checkouts whose payments are processed through the Transaction API.
+  """
   CHECKOUT_FULLY_PAID
 
   """A checkout metadata is updated."""
@@ -3274,6 +3300,7 @@ enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
   PRODUCT_VARIANT_STOCK_UPDATED
   CHECKOUT_CREATED
   CHECKOUT_UPDATED
+  CHECKOUT_FULLY_AUTHORIZED
   CHECKOUT_FULLY_PAID
   CHECKOUT_METADATA_UPDATED
   NOTIFY_USER
@@ -5239,6 +5266,27 @@ type PaymentSettings {
   Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.
   """
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum!
+
+  """
+  Determine if the funds for expired checkouts should be released automatically.
+  
+  Added in Saleor 3.20.
+  """
+  releaseFundsForExpiredCheckouts: Boolean
+
+  """
+  The time in hours after which funds for expired checkouts will be released.
+  
+  Added in Saleor 3.20.
+  """
+  checkoutTtlBeforeReleasingFunds: Hour
+
+  """
+  Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date.
+  
+  Added in Saleor 3.20.
+  """
+  checkoutReleaseFundsCutOffDate: DateTime
 }
 
 """
@@ -23578,6 +23626,7 @@ Confirms an unconfirmed order by changing status to unfulfilled.
 Requires one of the following permissions: MANAGE_ORDERS.
 """
 type OrderConfirm @doc(category: "Orders") {
+  """Order which has been confirmed."""
   order: Order
   orderErrors: [OrderError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [OrderError!]!
@@ -27604,6 +27653,27 @@ input PaymentSettingsInput @doc(category: "Payments") {
   Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.
   """
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum
+
+  """
+  Determine if the funds for expired checkouts should be released automatically.
+  
+  Added in Saleor 3.20.
+  """
+  releaseFundsForExpiredCheckouts: Boolean
+
+  """
+  The time in hours after which funds for expired checkouts will be released.
+  
+  Added in Saleor 3.20.
+  """
+  checkoutTtlBeforeReleasingFunds: Hour
+
+  """
+  Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date.
+  
+  Added in Saleor 3.20.
+  """
+  checkoutReleaseFundsCutOffDate: DateTime
 }
 
 """
@@ -27747,6 +27817,7 @@ Triggers the following webhook events:
 - ATTRIBUTE_CREATED (async): An attribute was created.
 """
 type AttributeCreate @doc(category: "Attributes") @webhookEventsInfo(asyncEvents: [ATTRIBUTE_CREATED], syncEvents: []) {
+  """The created attribute."""
   attribute: Attribute
   attributeErrors: [AttributeError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [AttributeError!]!
@@ -27882,6 +27953,7 @@ Triggers the following webhook events:
 - ATTRIBUTE_UPDATED (async): An attribute was updated.
 """
 type AttributeUpdate @doc(category: "Attributes") @webhookEventsInfo(asyncEvents: [ATTRIBUTE_UPDATED], syncEvents: []) {
+  """The updated attribute."""
   attribute: Attribute
   attributeErrors: [AttributeError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [AttributeError!]!
@@ -29052,11 +29124,12 @@ Triggers the following webhook events:
 - ACCOUNT_CONFIRMATION_REQUESTED (async): An user confirmation was requested. This event is always sent regardless of settings.
 """
 type AccountRegister @doc(category: "Users") @webhookEventsInfo(asyncEvents: [CUSTOMER_CREATED, NOTIFY_USER, ACCOUNT_CONFIRMATION_REQUESTED], syncEvents: []) {
+  user: User @deprecated(reason: "The field always returns a `User` object constructed from the input data. The `user.id` is always empty. To determine whether the user exists in Saleor, query via an external app with the required permissions.")
+
   """Informs whether users need to confirm their email address."""
   requiresConfirmation: Boolean
   accountErrors: [AccountError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [AccountError!]!
-  user: User
 }
 
 """Fields required to create a user."""
@@ -30025,6 +30098,20 @@ type Subscription @doc(category: "Miscellaneous") {
   ): CheckoutFullyPaid @doc(category: "Checkout")
 
   """
+  Event sent when checkout is fully authorized.
+  
+  Added in Saleor 3.21.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutFullyAuthorized(
+    """
+    List of channel slugs. The event will be sent only if the object belongs to one of the provided channels. If the channel slug list is empty, objects that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): CheckoutFullyAuthorized @doc(category: "Checkout")
+
+  """
   Event sent when checkout metadata is updated.
   
   Added in Saleor 3.21.
@@ -30364,9 +30451,33 @@ type CheckoutUpdated implements Event @doc(category: "Checkout") {
 }
 
 """
-Event sent when checkout is fully paid with transactions. The checkout is considered as fully paid when the checkout `charge_status` is `FULL` or `OVERCHARGED`. The event is not sent when the checkout authorization flow strategy is used.
+Event sent when a checkout was fully paid. A checkout is considered fully paid when its `chargeStatus` is `FULL` or `OVERCHARGED`. This event is not sent if payments are only authorized but not fully charged.
+
+It is triggered only for checkouts whose payments are processed through the Transaction API.
 """
 type CheckoutFullyPaid implements Event @doc(category: "Checkout") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The checkout the event relates to."""
+  checkout: Checkout
+}
+
+"""
+Event sent when a checkout was fully authorized. A checkout is considered fully authorized when its `authorizeStatus` is `FULL`.
+
+It is triggered only for checkouts whose payments are processed through the Transaction API.
+"""
+type CheckoutFullyAuthorized implements Event @doc(category: "Checkout") {
   """Time of the event."""
   issuedAt: DateTime
 
