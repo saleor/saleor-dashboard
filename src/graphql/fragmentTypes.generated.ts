@@ -51,6 +51,7 @@
       "ChannelUpdated",
       "CheckoutCreated",
       "CheckoutFilterShippingMethods",
+      "CheckoutFullyAuthorized",
       "CheckoutFullyPaid",
       "CheckoutMetadataUpdated",
       "CheckoutUpdated",
