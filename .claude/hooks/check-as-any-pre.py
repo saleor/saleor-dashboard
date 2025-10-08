@@ -30,6 +30,10 @@ def main():
     if not file_path:
         sys.exit(0)
 
+    # Only check files in src/ directory
+    if not file_path.startswith("src/") and "/src/" not in file_path:
+        sys.exit(0)
+
     # Convert to Path object for easier handling
     path = Path(file_path)
 

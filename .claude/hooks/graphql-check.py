@@ -29,6 +29,11 @@ try:
             if file_path:
                 files_to_check.append(file_path)
 
+    # Only proceed if files are in src/ directory
+    src_files = [f for f in files_to_check if f.startswith("src/") or "/src/" in f]
+    if not src_files:
+        sys.exit(0)
+
     # Check if any of the files are GraphQL query/mutation files
     graphql_files_modified = any(
         file_path.endswith("mutations.ts") or file_path.endswith("queries.ts")
