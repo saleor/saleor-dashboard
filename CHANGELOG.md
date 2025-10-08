@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.14
+
+### Patch Changes
+
+- ab0fbd2: Show last used badge only if multiple login methods are available.
+
 ## 3.21.13
 
 ### Patch Changes
