@@ -64,37 +64,49 @@ export const OrderTransactionTiles = ({ transactions, control }: OrderTransactio
                 ) : (
                   <TileHeader transaction={transaction} />
                 )}
-                <Box>
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="auto auto auto minmax(150px, 1fr) minmax(150px, auto)"
+                  __columnGap="32px"
+                  alignItems="start"
+                  paddingX={4}
+                >
                   {transaction.events.map((event, eventIndex) => {
                     const { type, status } = mapTransactionEvent(event);
+                    const isLastRow = eventIndex === transaction.events.length - 1;
 
                     return (
-                      <Box
-                        key={event.id}
-                        display="grid"
-                        gridTemplateColumns={5}
-                        alignItems="center"
-                        gap={8}
-                        borderBottomStyle={
-                          eventIndex === transaction.events.length - 1 ? "none" : "solid"
-                        }
-                        borderBottomWidth={1}
-                        borderColor="default1"
-                        padding={4}
-                      >
-                        <Box justifySelf="start" marginLeft={4}>
+                      <>
+                        <Box key={`${event.id}-status`} justifySelf="start" paddingY={4}>
                           <EventStatus status={status} />
                         </Box>
 
-                        <Money money={event.amount} />
-                        <EventType type={type} message={event.message} />
-                        {event.pspReference ? (
-                          <PspReference reference={event.pspReference} url={event.externalUrl} />
-                        ) : (
-                          <Box />
+                        <Box key={`${event.id}-amount`} paddingY={4} __whiteSpace="nowrap">
+                          <Money money={event.amount} />
+                        </Box>
+                        <Box key={`${event.id}-type`} paddingY={4} __whiteSpace="nowrap">
+                          <EventType type={type} message={event.message} />
+                        </Box>
+                        <Box key={`${event.id}-psp`} paddingY={4}>
+                          {event.pspReference ? (
+                            <PspReference reference={event.pspReference} url={event.externalUrl} />
+                          ) : (
+                            <Box />
+                          )}
+                        </Box>
+                        <Box key={`${event.id}-time`} paddingY={4}>
+                          <EventTime date={event.createdAt} />
+                        </Box>
+                        {!isLastRow && (
+                          <Box
+                            key={`${event.id}-border`}
+                            __gridColumn="1 / -1"
+                            borderBottomStyle="solid"
+                            borderBottomWidth={1}
+                            borderColor="default1"
+                          />
                         )}
-                        <EventTime date={event.createdAt} />
-                      </Box>
+                      </>
                     );
                   })}
                 </Box>
