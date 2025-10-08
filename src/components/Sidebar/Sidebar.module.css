@@ -1,8 +1,10 @@
 .fullSidebarWide {
+  height: 100%;
   display: none !important;
 }
 
 .drawerWide {
+  height: 100%;
   display: block !important;
 }
 
