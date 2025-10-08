@@ -1,0 +1,17 @@
+.fullSidebarWide {
+  display: none !important;
+}
+
+.drawerWide {
+  display: block !important;
+}
+
+@media (min-width: 1200px) {
+  .fullSidebarWide {
+    display: block !important;
+  }
+
+  .drawerWide {
+    display: none !important;
+  }
+}
