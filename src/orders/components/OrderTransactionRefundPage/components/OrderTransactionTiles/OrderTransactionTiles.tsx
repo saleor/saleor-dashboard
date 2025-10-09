@@ -63,6 +63,8 @@ export const OrderTransactionTiles = ({ transactions, control }: OrderTransactio
                   overflowX="auto"
                   width="100%"
                   paddingX={4}
+                  paddingTop={1}
+                  paddingBottom={2}
                 >
                   {isDisabled ? (
                     <Tooltip>
