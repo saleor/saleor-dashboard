@@ -1,19 +1,19 @@
 .fullSidebarWide {
   height: 100%;
-  display: none !important;
+  display: none;
 }
 
 .drawerWide {
   height: 100%;
-  display: block !important;
+  display: block;
 }
 
 @media (min-width: 1200px) {
   .fullSidebarWide {
-    display: block !important;
+    display: block;
   }
 
   .drawerWide {
-    display: none !important;
+    display: none;
   }
 }
