@@ -44,7 +44,11 @@ export const useShortcuts = (): Shortcut[] => {
       {
         id: "search",
         name: intl.formatMessage(shortcutsMessages.search),
-        icon: <TerminalIcon />,
+        icon: (
+          <Box __marginLeft={"-2px"}>
+            <TerminalIcon />
+          </Box>
+        ),
         shortcut: `${controlKey} + K`,
         action: handleOpenSearch,
       },
