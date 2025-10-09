@@ -51,7 +51,11 @@ export const useShortcuts = (): Shortcut[] => {
       {
         id: "playground",
         name: intl.formatMessage(shortcutsMessages.playground),
-        icon: <GraphqlIcon />,
+        icon: (
+          <LucideIconsWrapper>
+            <GraphqlIcon />
+          </LucideIconsWrapper>
+        ),
         shortcut: `${controlKey} + '`,
         action: handleOpenPlayground,
       },
