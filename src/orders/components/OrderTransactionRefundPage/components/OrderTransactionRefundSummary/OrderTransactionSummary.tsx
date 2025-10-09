@@ -20,7 +20,8 @@ interface OrderTransactionSummaryProps extends BoxProps {
   currency: string | undefined;
 }
 
-// For usage in grid that exceeds our 16px padding for full background line
+// For usage in grid that exceeds padding for full background line
+// Negative spacing offsets the parent container's padding (paddingLeft={3}, padding={4})
 const FullWidthLine = () => {
   return (
     <Box gridColumn="full" position="relative">
@@ -29,7 +30,14 @@ const FullWidthLine = () => {
         borderBottomWidth={1}
         borderColor="default1"
         position="absolute"
-        style={{ left: -12, right: -16, bottom: 0, height: "1px" }}
+        style={{
+          // Counteracts paddingLeft={3} (12px) from parent Box at line 67
+          left: "calc(var(--mu-spacing-3) * -1)",
+          // Counteracts padding={4} right side (16px) from parent Box at line 67
+          right: "calc(var(--mu-spacing-4) * -1)",
+          bottom: 0,
+          height: "1px",
+        }}
       />
     </Box>
   );
