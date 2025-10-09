@@ -27,7 +27,7 @@ export const OrderTransactionTiles = ({ transactions, control }: OrderTransactio
   if (!transactions) {
     return (
       <Box display="flex">
-        <Skeleton marginX={6} />
+        <Skeleton paddingY={28} marginX={6} />
       </Box>
     );
   }
@@ -35,12 +35,21 @@ export const OrderTransactionTiles = ({ transactions, control }: OrderTransactio
   return (
     <DashboardCard>
       <DashboardCard.Content>
-        <RadioGroup value={field.value} onValueChange={field.onChange}>
+        <RadioGroup
+          value={field.value}
+          onValueChange={field.onChange}
+          width="100%"
+          __minWidth="0"
+          display="flex"
+          flexDirection="column"
+          gap={4}
+        >
           {transactions.map(transaction => {
             const isDisabled = !transaction.actions.includes(TransactionActionEnum.REFUND);
 
             return (
               <Box
+                position="relative"
                 key={transaction.id}
                 borderStyle="solid"
                 borderWidth={1}
@@ -48,7 +57,11 @@ export const OrderTransactionTiles = ({ transactions, control }: OrderTransactio
                 borderRadius={3}
                 display="flex"
                 flexDirection="column"
-                marginBottom={3}
+                overflowX="auto"
+                paddingY={1}
+                paddingX={2}
+                // @ts-expect-error this works, missing type in macaw
+                __scrollbarGutter="stable both-edges"
               >
                 {isDisabled ? (
                   <Tooltip>
@@ -66,10 +79,16 @@ export const OrderTransactionTiles = ({ transactions, control }: OrderTransactio
                 )}
                 <Box
                   display="grid"
-                  __gridTemplateColumns="auto auto auto minmax(150px, 1fr) minmax(150px, auto)"
-                  __columnGap="32px"
-                  alignItems="start"
-                  paddingX={4}
+                  /* This always shows status, price, event type
+                   * shrinks pspRef to show min. 20 characters
+                   * shrinks date max to 2 lines of text
+                   * after no space can be shrank we show scrollbar */
+                  __gridTemplateColumns="auto auto auto minmax(20ch, 1fr) minmax(150px, auto)"
+                  columnGap={{
+                    desktop: 6,
+                    mobile: 3,
+                  }}
+                  alignItems="center"
                 >
                   {transaction.events.map((event, eventIndex) => {
                     const { type, status } = mapTransactionEvent(event);
@@ -77,7 +96,12 @@ export const OrderTransactionTiles = ({ transactions, control }: OrderTransactio
 
                     return (
                       <>
-                        <Box key={`${event.id}-status`} justifySelf="start" paddingY={4}>
+                        <Box
+                          key={`${event.id}-status`}
+                          justifySelf="start"
+                          paddingY={4}
+                          __marginTop="2px" // Optically align text inside status
+                        >
                           <EventStatus status={status} />
                         </Box>
 
