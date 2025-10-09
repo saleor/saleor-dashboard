@@ -9,6 +9,7 @@ import { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import { Sidebar } from "./Sidebar";
+import { SidebarProvider } from "./SidebarContext";
 
 jest.mock("./menu/hooks/useMenuStructure", () => ({
   useMenuStructure: jest.fn(() => []),
@@ -55,7 +56,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
     <MemoryRouter>
       {/* @ts-expect-error - legacy types */}
       <LegacyThemeProvider>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <SidebarProvider>{children}</SidebarProvider>
+        </ThemeProvider>
       </LegacyThemeProvider>
     </MemoryRouter>
   );
