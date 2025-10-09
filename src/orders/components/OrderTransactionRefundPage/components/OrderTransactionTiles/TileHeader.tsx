@@ -19,8 +19,7 @@ export const TileHeader = ({ transaction, isDisabled = false }: TileHeaderProps)
       width="100%"
       position="sticky"
       top={0}
-      left={4}
-      right={0}
+      left={0}
       display="grid"
       __gridTemplateColumns="max-content 1fr"
     >
