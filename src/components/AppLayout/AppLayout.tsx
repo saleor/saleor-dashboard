@@ -7,6 +7,7 @@ import { DevModePanel } from "../DevModePanel/DevModePanel";
 import NavigatorSearch from "../NavigatorSearch";
 import { useSavebarRef } from "../Savebar/SavebarRefContext";
 import { Sidebar } from "../Sidebar";
+import { SidebarProvider } from "../Sidebar/SidebarContext";
 import { useStyles } from "./styles";
 
 interface AppLayoutProps {
@@ -20,7 +21,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
   const [appState] = useAppState();
 
   return (
-    <>
+    <SidebarProvider>
       <DevModePanel />
       <NavigatorSearch />
 
@@ -58,7 +59,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           />
         </Box>
       </Box>
-    </>
+    </SidebarProvider>
   );
 };
 
