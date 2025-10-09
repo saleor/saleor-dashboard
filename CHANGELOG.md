@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.15
+
+### Patch Changes
+
+- 851c4d8: Regenerate 3.21 schema to add support for the new webhook event in webhook detail view.
+
 ## 3.21.14
 
 ### Patch Changes
