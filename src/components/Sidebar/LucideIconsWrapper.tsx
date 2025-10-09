@@ -1,8 +1,8 @@
 import { Box } from "@saleor/macaw-ui-next";
 
 // Constants for Lucide icon transform offsets
-const LUCIDE_ICON_TRANSLATE_X = -3.5; // px
-const LUCIDE_ICON_TRANSLATE_Y = -2; // px
+const LUCIDE_ICON_TRANSLATE_X = -2;
+const LUCIDE_ICON_TRANSLATE_Y = -2;
 
 export const LucideIconsWrapper = ({ children }: { children: React.ReactNode }) => (
   // Applying slight transform to center lucide icons vertically
