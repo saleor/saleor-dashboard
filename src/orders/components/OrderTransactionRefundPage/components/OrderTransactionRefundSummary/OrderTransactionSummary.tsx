@@ -156,9 +156,7 @@ export const OrderTransactionSummary = ({
             {/* Error message */}
             {!!amountError && (
               <>
-                <Box />
-                <Box />
-                <Box textAlign="right">
+                <Box gridColumnStart="2" textAlign="right">
                   <Text color="critical1" size={1}>
                     {amountError.message}
                   </Text>
