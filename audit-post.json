@@ -1,0 +1,343 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@babel/runtime": {
+      "name": "@babel/runtime",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1104000,
+          "name": "@babel/runtime",
+          "dependency": "@babel/runtime",
+          "title": "Babel has inefficient RegExp complexity in generated code with .replace when transpiling named capturing groups",
+          "url": "https://github.com/advisories/GHSA-968p-4wvh-cqc8",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 6.2,
+            "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<7.26.10"
+        }
+      ],
+      "effects": [
+        "@uiw/react-color-alpha",
+        "@uiw/react-color-hue",
+        "@uiw/react-color-saturation",
+        "@uiw/react-drag-event-interactive"
+      ],
+      "range": "<7.26.10",
+      "nodes": [
+        "node_modules/@uiw/react-color-alpha/node_modules/@babel/runtime",
+        "node_modules/@uiw/react-color-hue/node_modules/@babel/runtime",
+        "node_modules/@uiw/react-color-saturation/node_modules/@babel/runtime",
+        "node_modules/@uiw/react-drag-event-interactive/node_modules/@babel/runtime"
+      ],
+      "fixAvailable": {
+        "name": "@uiw/react-color-saturation",
+        "version": "2.9.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@glideapps/glide-data-grid-cells": {
+      "name": "@glideapps/glide-data-grid-cells",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@toast-ui/editor",
+        "@toast-ui/react-editor"
+      ],
+      "effects": [],
+      "range": ">=3.4.99-marked-test2",
+      "nodes": [
+        "node_modules/@glideapps/glide-data-grid-cells"
+      ],
+      "fixAvailable": {
+        "name": "@glideapps/glide-data-grid-cells",
+        "version": "3.4.1",
+        "isSemVerMajor": true
+      }
+    },
+    "@graphql-codegen/cli": {
+      "name": "@graphql-codegen/cli",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "@graphql-tools/prisma-loader"
+      ],
+      "effects": [],
+      "range": "2.16.2-alpha-20221208004256-1c235a000 - 3.3.1",
+      "nodes": [
+        "node_modules/@graphql-codegen/cli"
+      ],
+      "fixAvailable": true
+    },
+    "@graphql-tools/executor-graphql-ws": {
+      "name": "@graphql-tools/executor-graphql-ws",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "ws"
+      ],
+      "effects": [
+        "@graphql-tools/url-loader"
+      ],
+      "range": "<=1.0.1",
+      "nodes": [
+        "node_modules/@graphql-tools/executor-graphql-ws"
+      ],
+      "fixAvailable": true
+    },
+    "@graphql-tools/executor-legacy-ws": {
+      "name": "@graphql-tools/executor-legacy-ws",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "ws"
+      ],
+      "effects": [],
+      "range": "<=1.0.5-rc-20231209231904-e54d73f101707443b905403caac59ece59c784aa",
+      "nodes": [
+        "node_modules/@graphql-tools/executor-legacy-ws"
+      ],
+      "fixAvailable": true
+    },
+    "@graphql-tools/prisma-loader": {
+      "name": "@graphql-tools/prisma-loader",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@graphql-tools/url-loader"
+      ],
+      "effects": [
+        "@graphql-codegen/cli"
+      ],
+      "range": "7.2.33-alpha-20221108142800-3beb5fe2 - 8.0.0-rc-20230519104627-f6fea064",
+      "nodes": [
+        "node_modules/@graphql-tools/prisma-loader"
+      ],
+      "fixAvailable": true
+    },
+    "@graphql-tools/url-loader": {
+      "name": "@graphql-tools/url-loader",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@graphql-tools/executor-graphql-ws",
+        "@graphql-tools/executor-legacy-ws"
+      ],
+      "effects": [
+        "@graphql-tools/prisma-loader"
+      ],
+      "range": "7.16.13-alpha-20221108142800-3beb5fe2 - 8.0.0-rc-20230519104627-f6fea064",
+      "nodes": [
+        "node_modules/@graphql-tools/url-loader"
+      ],
+      "fixAvailable": true
+    },
+    "@toast-ui/editor": {
+      "name": "@toast-ui/editor",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "dompurify"
+      ],
+      "effects": [
+        "@glideapps/glide-data-grid-cells",
+        "@toast-ui/react-editor"
+      ],
+      "range": ">=3.1.1",
+      "nodes": [
+        "node_modules/@toast-ui/editor"
+      ],
+      "fixAvailable": {
+        "name": "@glideapps/glide-data-grid-cells",
+        "version": "3.4.1",
+        "isSemVerMajor": true
+      }
+    },
+    "@toast-ui/react-editor": {
+      "name": "@toast-ui/react-editor",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@toast-ui/editor"
+      ],
+      "effects": [],
+      "range": ">=3.1.1",
+      "nodes": [
+        "node_modules/@toast-ui/react-editor"
+      ],
+      "fixAvailable": true
+    },
+    "@uiw/react-color-alpha": {
+      "name": "@uiw/react-color-alpha",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@babel/runtime",
+        "@uiw/react-drag-event-interactive"
+      ],
+      "effects": [
+        "@uiw/react-color-hue"
+      ],
+      "range": "<=1.1.2",
+      "nodes": [
+        "node_modules/@uiw/react-color-alpha"
+      ],
+      "fixAvailable": {
+        "name": "@uiw/react-color-hue",
+        "version": "2.9.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@uiw/react-color-hue": {
+      "name": "@uiw/react-color-hue",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@babel/runtime",
+        "@uiw/react-color-alpha"
+      ],
+      "effects": [],
+      "range": "<=1.1.2",
+      "nodes": [
+        "node_modules/@uiw/react-color-hue"
+      ],
+      "fixAvailable": {
+        "name": "@uiw/react-color-hue",
+        "version": "2.9.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@uiw/react-color-saturation": {
+      "name": "@uiw/react-color-saturation",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@babel/runtime",
+        "@uiw/react-drag-event-interactive"
+      ],
+      "effects": [],
+      "range": "<=1.1.2",
+      "nodes": [
+        "node_modules/@uiw/react-color-saturation"
+      ],
+      "fixAvailable": {
+        "name": "@uiw/react-color-saturation",
+        "version": "2.9.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@uiw/react-drag-event-interactive": {
+      "name": "@uiw/react-drag-event-interactive",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@babel/runtime"
+      ],
+      "effects": [
+        "@uiw/react-color-alpha",
+        "@uiw/react-color-saturation"
+      ],
+      "range": "<=1.1.2",
+      "nodes": [
+        "node_modules/@uiw/react-drag-event-interactive"
+      ],
+      "fixAvailable": {
+        "name": "@uiw/react-color-hue",
+        "version": "2.9.0",
+        "isSemVerMajor": true
+      }
+    },
+    "dompurify": {
+      "name": "dompurify",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1105772,
+          "name": "dompurify",
+          "dependency": "dompurify",
+          "title": "DOMPurify allows Cross-site Scripting (XSS)",
+          "url": "https://github.com/advisories/GHSA-vhxf-7vqr-mrjg",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-79"
+          ],
+          "cvss": {
+            "score": 4.5,
+            "vectorString": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:C/C:L/I:L/A:N"
+          },
+          "range": "<3.2.4"
+        }
+      ],
+      "effects": [
+        "@toast-ui/editor"
+      ],
+      "range": "<3.2.4",
+      "nodes": [
+        "node_modules/dompurify"
+      ],
+      "fixAvailable": {
+        "name": "@glideapps/glide-data-grid-cells",
+        "version": "3.4.1",
+        "isSemVerMajor": true
+      }
+    },
+    "ws": {
+      "name": "ws",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1098392,
+          "name": "ws",
+          "dependency": "ws",
+          "title": "ws affected by a DoS when handling a request with many HTTP headers",
+          "url": "https://github.com/advisories/GHSA-3h5v-q93c-6h6q",
+          "severity": "high",
+          "cwe": [
+            "CWE-476"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=8.0.0 <8.17.1"
+        }
+      ],
+      "effects": [
+        "@graphql-tools/executor-graphql-ws",
+        "@graphql-tools/executor-legacy-ws"
+      ],
+      "range": "8.0.0 - 8.17.0",
+      "nodes": [
+        "node_modules/@graphql-tools/executor-graphql-ws/node_modules/ws",
+        "node_modules/@graphql-tools/executor-legacy-ws/node_modules/ws"
+      ],
+      "fixAvailable": true
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 9,
+      "high": 6,
+      "critical": 0,
+      "total": 15
+    },
+    "dependencies": {
+      "prod": 626,
+      "dev": 934,
+      "optional": 414,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 1880
+    }
+  }
+}
