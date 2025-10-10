@@ -130,7 +130,7 @@ export const ProductListDatagrid = ({
       sort,
       onSearch: (query: string) =>
         queryAvailableColumnsAttributes({
-          variables: { search: query, first: 10, type: AttributeTypeEnum.PRODUCT_TYPE},
+          variables: { search: query, first: 10, type: AttributeTypeEnum.PRODUCT_TYPE },
         }),
       initialSearch: availableColumnsAttributesData.variables?.search ?? "",
       ...getAttributesFetchMoreProps({
