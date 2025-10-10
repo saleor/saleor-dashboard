@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.22.1
+
+### Patch Changes
+
+- [#5951](https://github.com/saleor/saleor-dashboard/pull/5951) [`7e2ac0a`](https://github.com/saleor/saleor-dashboard/commit/7e2ac0a54cab9dd0f29ac8cc94e2501cbc75c2ba) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Fixed layout of Granted refund page. Transactions details box will no longer have overlayed text on top of each other and will instead add proper scrollbar on small viewport sizes. This page will now also switch to smaller sidebar sooner than other pages in order to show more details on smaller viewport sizes.
+
+- [#5956](https://github.com/saleor/saleor-dashboard/pull/5956) [`99a4948`](https://github.com/saleor/saleor-dashboard/commit/99a4948c8d4d504ca44ed7890eb613b866d790d4) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Migrated sidebar icons to Lucide React for better consistency. Replaced custom SVG icons (Cloud, Graphql, Gift) with Lucide equivalents and refactored TerminalIcon to match Lucide conventions.
+
 ## 3.22.0
 
 ### Minor Changes
