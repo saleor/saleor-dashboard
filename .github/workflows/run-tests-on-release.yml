@@ -14,10 +14,6 @@ on:
         type: string
         required: false
         default: "Dashboard Automation test run "
-      BRANCH_NAME:
-        type: string
-        required: false
-        description: Branch name for finding release PR
 
     secrets:
       STAGING_TOKEN:
@@ -51,7 +47,6 @@ jobs:
     env:
       VERSION: ${{inputs.VERSION}}
       CUSTOM_VERSION: ${{inputs.CUSTOM_VERSION}}
-      BRANCH_NAME: ${{inputs.BRANCH_NAME}}
     outputs:
       VERSION: ${{ env.VERSION }}
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
@@ -65,7 +60,6 @@ jobs:
       IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
       SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
-      BRANCH_NAME: ${{ env.BRANCH_NAME }}
     steps:
       - uses: actions/checkout@v4
 
@@ -93,7 +87,7 @@ jobs:
         id: create-check
         uses: ./.github/actions/checks/create-pull-request-check
         with:
-          PR_HEAD: "changeset-release/${{env.BRANCH_NAME || env.VERSION}}"
+          PR_HEAD: "changeset-release/${{env.VERSION}}"
           CHECK_NAME: "Automation_tests_run"
           STATUS: "in_progress"
           TITLE: "Automation tests run"
@@ -160,7 +154,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.add-check-and-prepare-instance.outputs.BRANCH_NAME }}
+          ref: ${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
 
       - name: Run playwright tests
         uses: ./.github/actions/run-pw-tests
