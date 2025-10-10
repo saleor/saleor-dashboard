@@ -293,7 +293,11 @@ export default tseslint.config(
       "@graphql-eslint": eslintGraphql,
     },
     rules: {
+      // TODO Enable recommended ruleset incrementally
+      // ...eslintGraphql.configs["flat/operations-recommended"].rules,
       "@graphql-eslint/no-anonymous-operations": "error",
+      "@graphql-eslint/no-duplicate-fields": "error",
+      "@graphql-eslint/no-deprecated": "warn",
     },
   },
 
