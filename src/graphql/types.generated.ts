@@ -5029,7 +5029,7 @@ export type PageTypeUpdateInput = {
   addAttributes?: InputMaybe<Array<Scalars['ID']>>;
   /** Name of the page type. */
   name?: InputMaybe<Scalars['String']>;
-  /** List of attribute IDs to be assigned to the page type. */
+  /** List of attribute IDs to be unassigned from the page type. */
   removeAttributes?: InputMaybe<Array<Scalars['ID']>>;
   /** Page type slug. */
   slug?: InputMaybe<Scalars['String']>;
