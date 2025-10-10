@@ -18,7 +18,7 @@ const AuthError = {
 type AuthError = (typeof AuthError)[keyof typeof AuthError];
 
 /**
- * Exception body is not typed so we assert it
+ * Exception body is not typed so we assert it. In previous graphql typings it was type "any", now its "unknown"
  */
 type ExceptionWithCode = {
   code: string;
