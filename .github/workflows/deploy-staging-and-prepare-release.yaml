@@ -32,13 +32,12 @@ jobs:
           )
           echo "GITHUB_TOKEN=$GITHUB_TOKEN" >> $GITHUB_ENV
       - name: Publishing version
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
+        uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
         id: changesets
         with:
           title: "Prepare release ${{ github.ref_name }}"
           commit: "Release ${{ github.ref_name }}"
           publish: "npm run release"
-          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
