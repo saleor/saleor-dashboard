@@ -10,7 +10,7 @@ export const rippleIntroducedRipples: Ripple = {
   TTL_seconds: 60 * 60 * 24 * 2,
   ID: "introducing-ripples",
   content: {
-    oneLiner: "Introducing hints few latest changes",
+    oneLiner: "Introducing hints about latest changes",
     contextual: (
       <>
         <Paragraph>We are now notifying about new changes in Saleor.</Paragraph>
