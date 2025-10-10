@@ -9,6 +9,7 @@ import {
   DocumentNode,
   FieldNode,
   InlineFragmentNode,
+  Kind,
   ObjectFieldNode,
   OperationDefinitionNode,
   parse,
@@ -17,8 +18,8 @@ import {
   visit,
 } from "graphql";
 import isEmpty from "lodash/isEmpty";
-import { Dispatch, SetStateAction } from "react";
 import * as React from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface CreateSyncEventsSelectHandler {
   change: (event: ChangeEvent, cb?: () => void) => void;
@@ -157,17 +158,17 @@ const handleQuery = ({ events, query, setQuery, availableEvents }: HandleQuery) 
   }
 };
 const createEventInlineFragment = (event: string): SelectionNode => ({
-  kind: "InlineFragment",
+  kind: Kind.INLINE_FRAGMENT,
   typeCondition: {
-    kind: "NamedType",
+    kind: Kind.NAMED_TYPE,
     name: {
-      kind: "Name",
+      kind: Kind.NAME,
       value: event,
     },
   },
   selectionSet: {
-    kind: "SelectionSet",
-    selections: [{ kind: "Field", name: { kind: "Name", value: "__typename" } }],
+    kind: Kind.SELECTION_SET,
+    selections: [{ kind: Kind.FIELD, name: { kind: Kind.NAME, value: "__typename" } }],
   },
 });
 const isEmptyQuery = (ast: DocumentNode): boolean => {
