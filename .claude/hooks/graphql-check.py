@@ -6,6 +6,7 @@ This script runs GraphQL codegen once agent modfiied any graphql related files
 import json
 import sys
 import os
+from pathlib import Path
 
 try:
     data = json.load(sys.stdin)
@@ -29,10 +30,15 @@ try:
             if file_path:
                 files_to_check.append(file_path)
 
+    # Only proceed if files are in src/ directory
+    src_files = [f for f in files_to_check if Path(f).parts and Path(f).parts[0] == "src"]
+    if not src_files:
+        sys.exit(0)
+
     # Check if any of the files are GraphQL query/mutation files
     graphql_files_modified = any(
         file_path.endswith("mutations.ts") or file_path.endswith("queries.ts")
-        for file_path in files_to_check
+        for file_path in src_files
     )
 
     if graphql_files_modified:
