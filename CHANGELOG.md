@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.2
+
+### Patch Changes
+
+- [#5962](https://github.com/saleor/saleor-dashboard/pull/5962) [`62c8d59`](https://github.com/saleor/saleor-dashboard/commit/62c8d595952ae69c5edb2322df4676f87640c6c9) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Retrigger workflow & remove changeset tag
+
 ## 3.22.1
 
 ### Patch Changes
