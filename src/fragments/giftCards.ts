@@ -52,9 +52,6 @@ export const giftCardDataFragment = gql`
       id
       name
     }
-    createdBy {
-      ...UserBase
-    }
     usedBy {
       ...UserBase
     }
