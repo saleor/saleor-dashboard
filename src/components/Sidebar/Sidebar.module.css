@@ -1,0 +1,21 @@
+.fullSidebarWide {
+  height: 100%;
+  display: none;
+}
+
+.drawerWide {
+  height: 100%;
+  display: block;
+}
+
+/** This is used when we want to show smaller sidebar sooner than the default 1024px
+* in order to show more page content */
+@media (min-width: 1200px) {
+  .fullSidebarWide {
+    display: block;
+  }
+
+  .drawerWide {
+    display: none;
+  }
+}

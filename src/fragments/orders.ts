@@ -426,7 +426,6 @@ export const fragmentOrderDetails = gql`
         markAsPaidStrategy
       }
     }
-    isPaid
     chargeStatus
   }
 `;
@@ -704,7 +703,6 @@ export const orderLineGrantRefund = gql`
     quantity
     quantityToFulfill
     variantName
-    productName
     unitPrice {
       gross {
         ...Money

@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.22.0-a.1",
+  "version": "3.22.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -100,7 +100,7 @@
     "fast-array-diff": "^0.2.0",
     "fuse.js": "^6.6.2",
     "graphiql": "^2.2.0",
-    "graphql": "^15.4.0",
+    "graphql": "16.11.0",
     "is-url": "^1.2.4",
     "jotai": "2.14.0",
     "jwt-decode": "^3.1.2",
@@ -148,6 +148,7 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "^2.1.10",
     "@graphql-codegen/typescript-operations": "^2.2.4",
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
+    "@graphql-eslint/eslint-plugin": "^4.4.0",
     "@playwright/test": "^1.47.0",
     "@saleor/app-sdk": "1.1.0",
     "@sentry/cli": "^2.33.0",

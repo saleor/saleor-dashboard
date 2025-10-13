@@ -13,7 +13,6 @@ import {
   Token,
   visit,
 } from "graphql";
-import { TypeMap } from "graphql/type/schema";
 
 type SubscriptionQueryPermission = Record<
   string,
@@ -96,7 +95,7 @@ const extractSubscriptions = (
     return acc as GraphQLObjectType[];
   }, [] as GraphQLObjectType[]);
 
-const getSubscriptions = (typeMap: TypeMap): GraphQLObjectType[] =>
+const getSubscriptions = (typeMap: Record<string, unknown>): GraphQLObjectType[] =>
   Object.keys(typeMap).reduce((acc, key) => {
     const type = typeMap[key] as GraphQLObjectType;
 

@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix links to old Saleor docs
+Fixed copy for Ripples ripple
