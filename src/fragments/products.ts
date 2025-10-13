@@ -320,9 +320,6 @@ export const fragmentVariant = gql`
           oembedData
         }
       }
-      defaultVariant {
-        id
-      }
     }
     channelListings {
       ...ChannelListingProductVariant

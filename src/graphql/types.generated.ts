@@ -11789,6 +11789,18 @@ export type GridWarehousesQueryVariables = Exact<{
 
 export type GridWarehousesQuery = { __typename: 'Query', availableWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
 
+export type SetRefundReasonTypeMutationVariables = Exact<{
+  modelTypeId: Scalars['ID'];
+}>;
+
+
+export type SetRefundReasonTypeMutation = { __typename: 'Mutation', refundSettingsUpdate: { __typename: 'RefundSettingsUpdate', refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null }, errors: Array<{ __typename: 'RefundSettingsUpdateError', message: string | null, code: RefundSettingsErrorCode }> } | null };
+
+export type ClearRefundReasonTypeMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ClearRefundReasonTypeMutation = { __typename: 'Mutation', refundReasonReferenceClear: { __typename: 'RefundReasonReferenceTypeClear', errors: Array<{ __typename: 'RefundReasonReferenceTypeClearError', message: string | null, code: RefundSettingsErrorCode }>, refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } } | null };
+
 export type RefundsSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
