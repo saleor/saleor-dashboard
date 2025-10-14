@@ -1,4 +1,4 @@
-import { AppQuery, AppTypeEnum, PermissionEnum } from "@dashboard/graphql";
+import { AppAvatarFragment, AppQuery, AppTypeEnum, PermissionEnum } from "@dashboard/graphql";
 
 export const appDetails: NonNullable<AppQuery["app"]> = {
   __typename: "App",
@@ -35,4 +35,10 @@ export const appDetails: NonNullable<AppQuery["app"]> = {
   version: "1.0.0",
   webhooks: [],
   brand: null,
+};
+
+export const appAvatarFixture: AppAvatarFragment = {
+  id: "QXBwOjE3Ng==",
+  name: "app",
+  __typename: "App",
 };

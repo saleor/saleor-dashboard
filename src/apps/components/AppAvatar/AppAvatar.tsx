@@ -1,4 +1,4 @@
-import { AppLogo } from "@dashboard/apps/types";
+import { AppLogo } from "@dashboard/extensions/types";
 import { Box, BoxProps, GenericAppIcon } from "@saleor/macaw-ui-next";
 
 type Logo = AppLogo | undefined;
