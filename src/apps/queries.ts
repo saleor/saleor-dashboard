@@ -34,36 +34,6 @@ export const appsList = gql`
   }
 `;
 
-export const appsInProgressList = gql`
-  query AppsInstallations {
-    appsInstallations {
-      ...AppInstallation
-    }
-  }
-`;
-
-/** @deprecated use src/extensions/queries */
-export const appDetails = gql`
-  query App($id: ID!, $hasManagedAppsPermission: Boolean!) {
-    app(id: $id) {
-      ...App
-      aboutApp
-      author
-      permissions {
-        code
-        name
-      }
-      dataPrivacy
-      dataPrivacyUrl
-      brand {
-        logo {
-          default(size: 64, format: WEBP)
-        }
-      }
-    }
-  }
-`;
-
 export const EXTENSION_LIST_QUERY = "ExtensionList";
 
 /** @deprecated use src/extensions/queries */
