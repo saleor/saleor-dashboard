@@ -1,4 +1,4 @@
-import { createAppsDebug } from "@dashboard/apps/apps-debug";
+import { createAppsDebug } from "@dashboard/extensions/views/ViewManifestExtension/utils/apps-debug";
 import { DashboardEventFactory, Events } from "@saleor/app-sdk/app-bridge";
 import { useEffect, useRef } from "react";
 

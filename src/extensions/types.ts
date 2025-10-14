@@ -84,3 +84,7 @@ export interface Extension {
 export interface ExtensionWithParams extends Omit<Extension, "open"> {
   open: (params: AppDetailsUrlMountQueryParams) => void;
 }
+
+export interface AppLogo {
+  source?: string;
+}
