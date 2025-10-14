@@ -1,8 +1,8 @@
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import {
   getLatestFailedAttemptFromWebhooks,
   LatestWebhookDeliveryWithMoment,
-} from "@dashboard/apps/components/AppAlerts/utils";
-import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+} from "@dashboard/extensions/components/AppAlerts/utils";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { byActivePlugin, sortByName } from "@dashboard/extensions/views/InstalledExtensions/utils";

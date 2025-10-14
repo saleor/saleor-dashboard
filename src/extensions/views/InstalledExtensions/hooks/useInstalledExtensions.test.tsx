@@ -1,4 +1,4 @@
-import { LatestWebhookDeliveryWithMoment } from "@dashboard/apps/components/AppAlerts/utils";
+import { LatestWebhookDeliveryWithMoment } from "@dashboard/extensions/components/AppAlerts/utils";
 import { EventDeliveryStatusEnum } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
