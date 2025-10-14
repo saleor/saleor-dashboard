@@ -1,6 +1,7 @@
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
 import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
+import { useAppActions } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/useAppActions";
 import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
@@ -9,7 +10,6 @@ import { PropsWithChildren, useCallback, useRef } from "react";
 
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
-import { useAppActions } from "./useAppActions";
 import { useTokenRefresh } from "./useTokenRefresh";
 
 interface Props {
