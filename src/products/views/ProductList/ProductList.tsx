@@ -13,6 +13,7 @@ import {
 } from "@dashboard/config";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
+  AttributeTypeEnum,
   ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
   useGridAttributesLazyQuery,
@@ -259,6 +260,7 @@ const ProductList = ({ params }: ProductListProps) => {
       variables: {
         ids: filteredColumnIds,
         hasAttributes: !!filteredColumnIds.length,
+        type: AttributeTypeEnum.PRODUCT_TYPE,
       },
     });
   }, []);

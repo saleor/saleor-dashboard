@@ -11765,6 +11765,7 @@ export type ProductMediaByIdQuery = { __typename: 'Query', product: { __typename
 export type GridAttributesQueryVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
   hasAttributes: Scalars['Boolean'];
+  type: AttributeTypeEnum;
 }>;
 
 
@@ -11772,6 +11773,7 @@ export type GridAttributesQuery = { __typename: 'Query', availableAttributes: { 
 
 export type AvailableColumnAttributesQueryVariables = Exact<{
   search: Scalars['String'];
+  type: AttributeTypeEnum;
   before?: InputMaybe<Scalars['String']>;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;

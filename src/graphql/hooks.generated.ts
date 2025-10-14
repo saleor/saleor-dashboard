@@ -16163,8 +16163,8 @@ export type ProductMediaByIdQueryHookResult = ReturnType<typeof useProductMediaB
 export type ProductMediaByIdLazyQueryHookResult = ReturnType<typeof useProductMediaByIdLazyQuery>;
 export type ProductMediaByIdQueryResult = Apollo.QueryResult<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>;
 export const GridAttributesDocument = gql`
-    query GridAttributes($ids: [ID!]!, $hasAttributes: Boolean!) {
-  availableAttributes: attributes(first: 10) {
+    query GridAttributes($ids: [ID!]!, $hasAttributes: Boolean!, $type: AttributeTypeEnum!) {
+  availableAttributes: attributes(first: 10, filter: {type: $type}) {
     edges {
       node {
         id
@@ -16200,6 +16200,7 @@ export const GridAttributesDocument = gql`
  *   variables: {
  *      ids: // value for 'ids'
  *      hasAttributes: // value for 'hasAttributes'
+ *      type: // value for 'type'
  *   },
  * });
  */
@@ -16215,9 +16216,9 @@ export type GridAttributesQueryHookResult = ReturnType<typeof useGridAttributesQ
 export type GridAttributesLazyQueryHookResult = ReturnType<typeof useGridAttributesLazyQuery>;
 export type GridAttributesQueryResult = Apollo.QueryResult<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>;
 export const AvailableColumnAttributesDocument = gql`
-    query AvailableColumnAttributes($search: String!, $before: String, $after: String, $first: Int, $last: Int) {
+    query AvailableColumnAttributes($search: String!, $type: AttributeTypeEnum!, $before: String, $after: String, $first: Int, $last: Int) {
   attributes(
-    filter: {search: $search}
+    filter: {search: $search, type: $type}
     before: $before
     after: $after
     first: $first
@@ -16249,6 +16250,7 @@ export const AvailableColumnAttributesDocument = gql`
  * const { data, loading, error } = useAvailableColumnAttributesQuery({
  *   variables: {
  *      search: // value for 'search'
+ *      type: // value for 'type'
  *      before: // value for 'before'
  *      after: // value for 'after'
  *      first: // value for 'first'
