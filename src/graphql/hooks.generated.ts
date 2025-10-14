@@ -7501,54 +7501,6 @@ export function useSaleUpdateMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type SaleUpdateMutationHookResult = ReturnType<typeof useSaleUpdateMutation>;
 export type SaleUpdateMutationResult = Apollo.MutationResult<Types.SaleUpdateMutation>;
 export type SaleUpdateMutationOptions = Apollo.BaseMutationOptions<Types.SaleUpdateMutation, Types.SaleUpdateMutationVariables>;
-export const SaleCataloguesAddDocument = gql`
-    mutation SaleCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
-  saleCataloguesAdd(id: $id, input: $input) {
-    errors {
-      ...DiscountError
-    }
-    sale {
-      ...SaleDetails
-    }
-  }
-}
-    ${DiscountErrorFragmentDoc}
-${SaleDetailsFragmentDoc}`;
-export type SaleCataloguesAddMutationFn = Apollo.MutationFunction<Types.SaleCataloguesAddMutation, Types.SaleCataloguesAddMutationVariables>;
-
-/**
- * __useSaleCataloguesAddMutation__
- *
- * To run a mutation, you first call `useSaleCataloguesAddMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSaleCataloguesAddMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [saleCataloguesAddMutation, { data, loading, error }] = useSaleCataloguesAddMutation({
- *   variables: {
- *      input: // value for 'input'
- *      id: // value for 'id'
- *      after: // value for 'after'
- *      before: // value for 'before'
- *      first: // value for 'first'
- *      last: // value for 'last'
- *      includeVariants: // value for 'includeVariants'
- *      includeProducts: // value for 'includeProducts'
- *      includeCollections: // value for 'includeCollections'
- *      includeCategories: // value for 'includeCategories'
- *   },
- * });
- */
-export function useSaleCataloguesAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SaleCataloguesAddMutation, Types.SaleCataloguesAddMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.SaleCataloguesAddMutation, Types.SaleCataloguesAddMutationVariables>(SaleCataloguesAddDocument, options);
-      }
-export type SaleCataloguesAddMutationHookResult = ReturnType<typeof useSaleCataloguesAddMutation>;
-export type SaleCataloguesAddMutationResult = Apollo.MutationResult<Types.SaleCataloguesAddMutation>;
-export type SaleCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.SaleCataloguesAddMutation, Types.SaleCataloguesAddMutationVariables>;
 export const SaleCataloguesRemoveDocument = gql`
     mutation SaleCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   saleCataloguesRemove(id: $id, input: $input) {

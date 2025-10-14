@@ -18,30 +18,6 @@ export const saleUpdate = gql`
   }
 `;
 
-export const saleCataloguesAdd = gql`
-  mutation SaleCataloguesAdd(
-    $input: CatalogueInput!
-    $id: ID!
-    $after: String
-    $before: String
-    $first: Int
-    $last: Int
-    $includeVariants: Boolean!
-    $includeProducts: Boolean!
-    $includeCollections: Boolean!
-    $includeCategories: Boolean!
-  ) {
-    saleCataloguesAdd(id: $id, input: $input) {
-      errors {
-        ...DiscountError
-      }
-      sale {
-        ...SaleDetails
-      }
-    }
-  }
-`;
-
 export const saleCataloguesRemove = gql`
   mutation SaleCataloguesRemove(
     $input: CatalogueInput!
