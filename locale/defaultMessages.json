@@ -3240,10 +3240,6 @@
     "context": "onboarding step title",
     "string": "Create a new product"
   },
-  "IEpmGQ": {
-    "context": "description",
-    "string": "Use Saleor Cloud to access Saleor Apps"
-  },
   "IF2KbT": {
     "string": "Saleor Cloud"
   },
@@ -3900,10 +3896,6 @@
   "MZDkkX": {
     "context": "button label",
     "string": "All"
-  },
-  "MaTR88": {
-    "context": "header",
-    "string": "Integrations"
   },
   "MbZHXE": {
     "context": "column title balance",
@@ -7110,10 +7102,6 @@
   "gVqSnA": {
     "string": "Assign and save"
   },
-  "gXvoFf": {
-    "context": "information",
-    "string": "{releaseDate}"
-  },
   "gZ1qnD": {
     "string": "No extensions API URL provided"
   },
@@ -10147,10 +10135,6 @@
   "zjkAMs": {
     "context": "header",
     "string": "Translation Sale \"{saleName}\" - {languageCode}"
-  },
-  "zmnGkp": {
-    "context": "button",
-    "string": "Fork on GitHub"
   },
   "znbVYT": {
     "context": "product available for purchase date",
