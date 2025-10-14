@@ -1,5 +1,5 @@
 import plusIcon from "@assets/images/plus-icon.svg";
-import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
+import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
 import { Box } from "@saleor/macaw-ui-next";
 
 import { SaleorLogo } from "./SaleorLogo";
