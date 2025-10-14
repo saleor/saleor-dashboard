@@ -1,5 +1,3 @@
-import { SidebarAppAlert } from "@dashboard/apps/components/AppAlerts/SidebarAppAlert";
-import { useAppsAlert } from "@dashboard/apps/components/AppAlerts/useAppsAlert";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
@@ -7,6 +5,8 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
+import { SidebarAppAlert } from "@dashboard/extensions/components/AppAlerts/SidebarAppAlert";
+import { useAppsAlert } from "@dashboard/extensions/components/AppAlerts/useAppsAlert";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {

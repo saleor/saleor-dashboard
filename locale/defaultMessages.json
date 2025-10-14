@@ -292,10 +292,6 @@
     "context": "products in collection",
     "string": "Products in {name}"
   },
-  "/eTYOp": {
-    "context": "app support",
-    "string": "Support"
-  },
   "/eWPsp": {
     "string": "Invalid currency used to create transaction"
   },
@@ -995,10 +991,6 @@
   "4IawKc": {
     "context": "onboarding step description",
     "string": "Go to all orders where you can create an fulfilment and refund and review corresponding statuses. View the order in GraphQL"
-  },
-  "4IgzXs": {
-    "context": "label",
-    "string": "App Manifest URL"
   },
   "4JW9iJ": {
     "context": "home section name",
@@ -2635,10 +2627,6 @@
     "context": "invoice create date prefix",
     "string": "created"
   },
-  "F1VtFa": {
-    "context": "information",
-    "string": "Installation is pending..."
-  },
   "F2kF9e": {
     "string": "You must select transaction that you want to refund"
   },
@@ -2900,10 +2888,6 @@
   },
   "GJwcSd": {
     "string": "PSP Reference (optional)"
-  },
-  "GKQGKG": {
-    "context": "app data privacy",
-    "string": "Data privacy"
   },
   "GLX9II": {
     "context": "billing address",
@@ -4718,10 +4702,6 @@
   "RXbkle": {
     "context": "copy code button label",
     "string": "Copy code"
-  },
-  "RY4PJY": {
-    "context": "information",
-    "string": "Installation failed"
   },
   "RZ32u5": {
     "context": "PageTypeDeleteWarningDialog single consent label",
@@ -6878,10 +6858,6 @@
     "context": "order transaction refund summary description",
     "string": "The refund amount is calculated automatically based on the items selected. You can modify it manually if needed."
   },
-  "f91E8b": {
-    "context": "app repository",
-    "string": "Repository"
-  },
   "fDc5ys": {
     "context": "order transaction refund summary label",
     "string": "Selected products"
@@ -8118,10 +8094,6 @@
   "n9JOI3": {
     "context": "money amount input label",
     "string": "Enter amount"
-  },
-  "nA2g2e": {
-    "context": "label",
-    "string": "External app"
   },
   "nABmvC": {
     "string": "No. of rows"

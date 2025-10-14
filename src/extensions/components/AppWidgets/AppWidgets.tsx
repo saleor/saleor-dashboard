@@ -1,10 +1,10 @@
-import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppFrame } from "@dashboard/apps/components/AppFrame/AppFrame";
-import { isUrlAbsolute } from "@dashboard/apps/isUrlAbsolute";
 import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION, getAbsoluteApiUrl } from "@dashboard/config";
+import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
+import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
