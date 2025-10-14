@@ -1,4 +1,3 @@
-import { getAppsConfig } from "@dashboard/config";
 import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
@@ -22,12 +21,6 @@ export const resolveInstallationOfAppstoreApp = (
     return appInstallations?.find(appInstallation => appInstallation.manifestUrl === manifestUrl);
   }
 };
-
-/** @deprecated This is no longer used on production (tunnelUrlKeywords are empty) */
-export const isAppInTunnel = (manifestUrl: string) =>
-  Boolean(
-    getAppsConfig().tunnelUrlKeywords.find(keyword => new URL(manifestUrl).host.includes(keyword)),
-  );
 
 const prepareAppLinks = (intl: IntlShape, app: AppstoreApi.ReleasedSaleorApp): AppLink[] => [
   {
