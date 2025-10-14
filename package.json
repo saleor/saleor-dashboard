@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.22.1",
+  "version": "3.22.3",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -39,7 +39,7 @@
     "lint:prettier:check": "prettier --ignore-unknown --check .",
     "prepare": "is-ci || husky install",
     "preview": "vite preview",
-    "release": "changeset tag && git push --follow-tags",
+    "release": "echo $npm_package_version | xargs git tag && git push --follow-tags",
     "release:cleanup": "./scripts/release-cleanup.sh",
     "serve:lhci": "cross-env NODE_ENV=production npm run server",
     "prestart": "npm run generate",

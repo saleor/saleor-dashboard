@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.22.3
+
+### Patch Changes
+
+- [#5969](https://github.com/saleor/saleor-dashboard/pull/5969) [`7adf04b`](https://github.com/saleor/saleor-dashboard/commit/7adf04bcaa5ad193785f19d1637ce7a484231714) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Some dead code from src/apps was removed. This should not introduce any visible change and is only cleanup/refactor
+
+- [#5970](https://github.com/saleor/saleor-dashboard/pull/5970) [`65025c2`](https://github.com/saleor/saleor-dashboard/commit/65025c2add2cab24a2b03b38298eb07d72f6bf99) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed another bunch of legacy apps/ code. This is only a refactor with no functional change
+
+- [#5971](https://github.com/saleor/saleor-dashboard/pull/5971) [`6dedfec`](https://github.com/saleor/saleor-dashboard/commit/6dedfec6f55bfc1ba53bc7d8cb07066ed594f02c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Refactored another batch of apps/ directory - mainly moved components to extensions/. This is non-functional change
+
+- [#5965](https://github.com/saleor/saleor-dashboard/pull/5965) [`f85daef`](https://github.com/saleor/saleor-dashboard/commit/f85daefa4c3218d49ae30dcdb8dde74c7aab71ec) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed copy for Ripples ripple
+
+## 3.22.2
+
+### Patch Changes
+
+- [#5962](https://github.com/saleor/saleor-dashboard/pull/5962) [`62c8d59`](https://github.com/saleor/saleor-dashboard/commit/62c8d595952ae69c5edb2322df4676f87640c6c9) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Retrigger workflow & remove changeset tag
+
 ## 3.22.1
 
 ### Patch Changes

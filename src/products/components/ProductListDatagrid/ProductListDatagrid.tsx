@@ -11,6 +11,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
 import {
+  AttributeTypeEnum,
   Exact,
   GridAttributesQuery,
   ProductListQuery,
@@ -129,7 +130,7 @@ export const ProductListDatagrid = ({
       sort,
       onSearch: (query: string) =>
         queryAvailableColumnsAttributes({
-          variables: { search: query, first: 10 },
+          variables: { search: query, first: 10, type: AttributeTypeEnum.PRODUCT_TYPE },
         }),
       initialSearch: availableColumnsAttributesData.variables?.search ?? "",
       ...getAttributesFetchMoreProps({

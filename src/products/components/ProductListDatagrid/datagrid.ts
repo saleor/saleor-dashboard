@@ -25,6 +25,7 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import {
+  AttributeTypeEnum,
   AvailableColumnAttributesQuery,
   Exact,
   GridAttributesQuery,
@@ -496,6 +497,7 @@ type AttributesLazyQuery = (
   options?: QueryLazyOptions<
     Exact<{
       search: string;
+      type: AttributeTypeEnum;
       before?: string;
       after?: string;
       first?: number;
@@ -534,6 +536,7 @@ export const getAttributesFetchMoreProps = ({
     queryAvailableColumnsAttributes({
       variables: {
         search: query,
+        type: AttributeTypeEnum.PRODUCT_TYPE,
         after:
           availableColumnsAttributesData.data?.attributes?.pageInfo.endCursor ??
           gridAttributesOpts.data?.availableAttributes?.pageInfo.endCursor,
@@ -546,6 +549,7 @@ export const getAttributesFetchMoreProps = ({
     queryAvailableColumnsAttributes({
       variables: {
         search: query,
+        type: AttributeTypeEnum.PRODUCT_TYPE,
         before: availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor,
         last: 10,
         first: null,
