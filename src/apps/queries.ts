@@ -35,39 +35,3 @@ export const appsList = gql`
 `;
 
 export const EXTENSION_LIST_QUERY = "ExtensionList";
-
-/** @deprecated use src/extensions/queries */
-export const appWebhookDeliveries = gql`
-  query AppWebhookDeliveries($appId: ID!) {
-    app(id: $appId) {
-      webhooks {
-        id
-        name
-        isActive
-        syncEvents {
-          name
-        }
-        asyncEvents {
-          name
-        }
-        eventDeliveries(first: 10, sortBy: { field: CREATED_AT, direction: DESC }) {
-          edges {
-            node {
-              id
-              createdAt
-              status
-              eventType
-              attempts(first: 10, sortBy: { field: CREATED_AT, direction: DESC }) {
-                edges {
-                  node {
-                    ...EventDeliveryAttempt
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
