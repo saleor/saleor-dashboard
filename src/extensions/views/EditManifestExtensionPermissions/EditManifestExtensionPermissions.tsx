@@ -1,5 +1,5 @@
-import { getPermissionsDiff } from "@dashboard/apps/getPermissionsDiff";
 import Link from "@dashboard/components/Link";
+import { getPermissionsDiff } from "@dashboard/extensions/getPermissionsDiff";
 import { useGetAvailableAppPermissions } from "@dashboard/extensions/views/EditManifestExtension/hooks/useGetAvailableAppPermissions";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import { APP_PERMISSIONS_DOCS_URL } from "@dashboard/links";

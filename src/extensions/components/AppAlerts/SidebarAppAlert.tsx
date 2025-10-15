@@ -1,4 +1,4 @@
-import { AppSections } from "@dashboard/apps/urls";
+import { extensionsSection } from "@dashboard/extensions/urls";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ export const SidebarAppAlert = ({
   return (
     <Tooltip>
       <Tooltip.Trigger>
-        <Link to={AppSections.appsSection} data-test-id="sidebar-app-alert-trigger">
+        <Link to={extensionsSection} data-test-id="sidebar-app-alert-trigger">
           <AlertExclamationIcon width={small ? 15 : 17} height={small ? 15 : 17} />
         </Link>
       </Tooltip.Trigger>

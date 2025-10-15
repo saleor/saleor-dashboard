@@ -187,8 +187,8 @@ export const productMediaQuery = gql`
 `;
 
 export const gridAttributes = gql`
-  query GridAttributes($ids: [ID!]!, $hasAttributes: Boolean!) {
-    availableAttributes: attributes(first: 10) {
+  query GridAttributes($ids: [ID!]!, $hasAttributes: Boolean!, $type: AttributeTypeEnum!) {
+    availableAttributes: attributes(first: 10, filter: { type: $type }) {
       edges {
         node {
           id
@@ -213,13 +213,14 @@ export const gridAttributes = gql`
 export const availableColumnAttribues = gql`
   query AvailableColumnAttributes(
     $search: String!
+    $type: AttributeTypeEnum!
     $before: String
     $after: String
     $first: Int
     $last: Int
   ) {
     attributes(
-      filter: { search: $search }
+      filter: { search: $search, type: $type }
       before: $before
       after: $after
       first: $first
