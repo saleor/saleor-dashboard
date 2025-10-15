@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.22.4
+
+### Patch Changes
+
+- [#5980](https://github.com/saleor/saleor-dashboard/pull/5980) [`6b4219e`](https://github.com/saleor/saleor-dashboard/commit/6b4219e2706fdadbd674f45000e1929915e37762) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added another bunch of refactors around apps and extensions. Less code, no functional changes
+
+- [#5980](https://github.com/saleor/saleor-dashboard/pull/5980) [`6b4219e`](https://github.com/saleor/saleor-dashboard/commit/6b4219e2706fdadbd674f45000e1929915e37762) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Remove batch of unused graphql operations. This is a cleanup only
+
+- [#5980](https://github.com/saleor/saleor-dashboard/pull/5980) [`6b4219e`](https://github.com/saleor/saleor-dashboard/commit/6b4219e2706fdadbd674f45000e1929915e37762) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Remove Content Attributes from `All Products` column picker on product list page. These attributes were never showing values if chosen.
+
+- [#5980](https://github.com/saleor/saleor-dashboard/pull/5980) [`6b4219e`](https://github.com/saleor/saleor-dashboard/commit/6b4219e2706fdadbd674f45000e1929915e37762) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Remove apps/ directory, which ends the refactor that moves apps/ to extensions/. This is not a functional change.
+
 ## 3.22.3
 
 ### Patch Changes
