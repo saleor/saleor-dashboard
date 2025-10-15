@@ -5,14 +5,6 @@ import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { SidebarMenuItem } from "./types";
 import { getMenuItemExtension, isMenuActive, mapToExtensionsItems } from "./utils";
 
-jest.mock("@dashboard/apps/urls", () => ({
-  AppUrls: {
-    resolveDashboardUrlFromAppCompleteUrl: jest.fn(
-      (url, appUrl, appId) => `mockAppUrl:${url}:${appUrl}:${appId}`,
-    ),
-  },
-}));
-
 jest.mock("@dashboard/extensions/urls", () => ({
   ExtensionsUrls: {
     resolveDashboardUrlFromAppCompleteUrl: jest.fn(
@@ -22,12 +14,10 @@ jest.mock("@dashboard/extensions/urls", () => ({
 }));
 
 // To grab the mocked functions for assertions
-const { AppUrls } = jest.requireMock("@dashboard/apps/urls");
 const { ExtensionsUrls } = jest.requireMock("@dashboard/extensions/urls");
 
 describe("mapToExtensionsItems", () => {
   beforeEach(() => {
-    AppUrls.resolveDashboardUrlFromAppCompleteUrl.mockClear();
     ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl.mockClear();
   });
 
@@ -76,7 +66,6 @@ describe("mapToExtensionsItems", () => {
       mockExtension.app.appUrl,
       mockExtension.app.id,
     );
-    expect(AppUrls.resolveDashboardUrlFromAppCompleteUrl).not.toHaveBeenCalled();
   });
 
   it("should return no menu items ", () => {

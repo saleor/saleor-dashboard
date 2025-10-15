@@ -1,10 +1,10 @@
-import { AppSections } from "@dashboard/apps/urls";
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
+import { ExtensionsPaths, LegacyAppSections } from "@dashboard/extensions/urls";
 import { matchPath, useLocation } from "react-router";
 
-const isAppPath = (pathname: string) =>
+// Exported for testing. Fix this. Once we drop legacy behavior, maybe we can drop this suite
+export const isAppPath = (pathname: string) =>
   !!matchPath(pathname, {
-    path: `${AppSections.appsSection}:id`,
+    path: `${LegacyAppSections.appsSection}:id`,
   }) ||
   !!matchPath(pathname, {
     path: ExtensionsPaths.resolveViewManifestExtension(":id"),

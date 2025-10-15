@@ -1,5 +1,3 @@
-import { AppFrame } from "@dashboard/apps/components/AppFrame/AppFrame";
-import { AppDetailsUrlMountQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION, getAbsoluteApiUrl } from "@dashboard/config";
@@ -7,6 +5,12 @@ import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar"
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
+import {
+  AppDetailsUrlMountQueryParams,
+  ExtensionsPaths,
+  ExtensionsUrls,
+} from "@dashboard/extensions/urls";
+import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -147,7 +151,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
       <DashboardCard.Content>
         {sortedByAppName.map(([appId, appWithExtensions]) => {
           const logo = appWithExtensions.app.brand?.logo.default;
-          const appPageUrl = AppUrls.resolveAppUrl(appWithExtensions.app.id);
+          const appPageUrl = ExtensionsPaths.resolveViewManifestExtension(appWithExtensions.app.id);
 
           return (
             <Box marginBottom={8} key={appId}>
@@ -178,10 +182,14 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
 
                 const extensionUrl = isExtensionAbsoluteUrl ? ext.url : ext.app.appUrl + ext.url;
 
-                const GETappIframeUrl = AppUrls.resolveAppIframeUrl(ext.app.id, extensionUrl, {
-                  id: ext.app.id,
-                  theme: themeRef.current!,
-                });
+                const GETappIframeUrl = ExtensionsUrls.resolveAppIframeUrl(
+                  ext.app.id,
+                  extensionUrl,
+                  {
+                    id: ext.app.id,
+                    theme: themeRef.current!,
+                  },
+                );
 
                 const renderIframeGETvariant = () => (
                   <Box __height={defaultIframeSize}>
