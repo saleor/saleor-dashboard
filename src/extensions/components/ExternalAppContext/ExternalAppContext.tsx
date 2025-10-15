@@ -1,7 +1,7 @@
-import { AppFrame } from "@dashboard/apps/components/AppFrame/AppFrame";
 import { APP_VERSION } from "@dashboard/config";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppDialog } from "@dashboard/extensions/views/ViewManifestExtension/components/AppDialog/AppDialog";
+import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
