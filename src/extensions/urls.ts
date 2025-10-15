@@ -9,7 +9,7 @@ export const LegacyAppSections = {
   appsSection: "/apps/",
 };
 
-const LegacyAppPaths = {
+export const LegacyAppPaths = {
   appListPath: LegacyAppSections.appsSection,
   resolveAppPath: (id: string) => urlJoin(LegacyAppSections.appsSection, id, "app"),
   appInstallPath: urlJoin(LegacyAppSections.appsSection, "install"),
