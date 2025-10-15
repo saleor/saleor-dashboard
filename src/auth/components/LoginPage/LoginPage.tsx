@@ -42,6 +42,8 @@ const LoginPage = (props: LoginCardProps) => {
   const intl = useIntl();
   const [showPassword, setShowPassword] = useState(false);
   const [optimisticLoaderAuthId, setOptimisticLoaderAuthId] = useState<null | string>(null);
+  const showLastLoginIndicatorForPassword =
+    lastLoginMethod === "password" && externalAuthentications.length > 0;
 
   return (
     <LoginForm onSubmit={onSubmit}>
@@ -126,7 +128,7 @@ const LoginPage = (props: LoginCardProps) => {
               data-test-id="submit"
               position="relative"
             >
-              {lastLoginMethod === "password" && <LastLoginIndicator />}
+              {showLastLoginIndicatorForPassword && <LastLoginIndicator />}
               <FormattedMessage id="AubJ/S" defaultMessage="Sign in" description="button" />
             </ButtonWithLoader>
           </div>

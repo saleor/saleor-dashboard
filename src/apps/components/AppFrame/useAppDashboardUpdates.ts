@@ -1,5 +1,5 @@
-import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
 import { AppUrls } from "@dashboard/apps/urls";
+import { usePostToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
 import useLocale from "@dashboard/hooks/useLocale";
 import { useTheme } from "@saleor/macaw-ui";
 import { useEffect } from "react";

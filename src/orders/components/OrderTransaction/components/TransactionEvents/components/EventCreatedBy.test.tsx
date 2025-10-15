@@ -1,4 +1,4 @@
-import { appAvatar } from "@dashboard/apps/fixtures";
+import { appAvatarFixture } from "@dashboard/extensions/fixtures";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";
 import { staffMemberDetailsPath } from "@dashboard/staff/urls";
@@ -19,17 +19,17 @@ describe("EventCreatedBy", () => {
   it("displays a link to the app if app is passed", () => {
     render(
       <MemoryRouter>
-        <EventCreatedBy createdBy={appAvatar} />
+        <EventCreatedBy createdBy={appAvatarFixture} />
       </MemoryRouter>,
     );
 
     const link = screen.getByRole("link");
 
-    expect(link).toHaveTextContent(appAvatar.name as string);
+    expect(link).toHaveTextContent(appAvatarFixture.name as string);
     expect(link).toHaveProperty(
       "href",
       "http://localhost" +
-        ExtensionsUrls.resolveViewManifestExtensionUrl(appAvatar.id).replace("?", ""),
+        ExtensionsUrls.resolveViewManifestExtensionUrl(appAvatarFixture.id).replace("?", ""),
     );
   });
   it("displays a link to the user settings if user is passed", () => {

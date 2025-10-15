@@ -1,5 +1,4 @@
 import { useApolloClient } from "@apollo/client";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import {
   AppInstallationFragment,
   AppsInstallationsQuery,
@@ -21,6 +20,8 @@ interface UseActiveAppsInstallations {
   onInstallError: (installation: AppInstallationFragment) => void;
   onRemoveInProgressAppSuccess: () => void;
 }
+
+const EXTENSION_LIST_QUERY = "ExtensionList";
 
 export const useActiveAppsInstallations = ({
   appsInProgressData,
