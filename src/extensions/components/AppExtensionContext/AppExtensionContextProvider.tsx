@@ -5,30 +5,32 @@ import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/comp
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
-import { useAtom } from "jotai";
 import { PropsWithChildren } from "react";
 
-import { ActiveAppExtensionContextData, ActiveAppExtensionContextState } from "./context";
+import { AppExtensionActiveParams, useAppExtensionPopup } from "./app-extension-popup-state";
 
 export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
-  const [open, setOpen] = useAtom(ActiveAppExtensionContextState.open);
-  const [appData, setAppData] = useAtom(ActiveAppExtensionContextState.data);
+  const { setInactive, state } = useAppExtensionPopup();
+
   const shop = useShop();
   const handleClose = () => {
-    setOpen(false);
-    setAppData(undefined);
+    setInactive();
   };
 
   return (
     <>
       {children}
-      <AppDialog open={open} onClose={handleClose} title={appData?.label}>
-        {open && appData && (
+      <AppDialog
+        open={state.active}
+        onClose={handleClose}
+        title={(state.active && state?.label) || undefined}
+      >
+        {state.active && (
           <AppFrame
-            src={appData.src}
-            appToken={appData.appToken}
-            appId={appData.id}
-            params={appData.params}
+            src={state.src}
+            appToken={state.appToken}
+            appId={state.id}
+            params={state.params}
             dashboardVersion={APP_VERSION}
             coreVersion={shop?.version}
           />
@@ -38,22 +40,21 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
+// todo extract modal from non-modal
 export const useActiveAppExtension = () => {
-  const [open, setOpen] = useAtom(ActiveAppExtensionContextState.open);
-  const [, setAppData] = useAtom(ActiveAppExtensionContextState.data);
+  const { setActive, setInactive } = useAppExtensionPopup();
   const navigate = useNavigator();
 
-  const activate = (appData: ActiveAppExtensionContextData) => {
+  const activate = (appData: AppExtensionActiveParams) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {
-      setOpen(true);
-      setAppData(appData);
+      setActive(appData);
     } else {
       navigate(ExtensionsUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {
         resetScroll: true,
       });
     }
   };
-  const deactivate = () => setOpen(false);
+  const deactivate = setInactive;
 
   return { active: open, activate, deactivate };
 };

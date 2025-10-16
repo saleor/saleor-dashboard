@@ -5,8 +5,8 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { Provider as JotaiProvider } from "jotai";
 import { IntlProvider } from "react-intl";
 
+import { AppExtensionActiveParams } from "./app-extension-popup-state";
 import { AppExtensionPopupProvider, useActiveAppExtension } from "./AppExtensionContextProvider";
-import { ActiveAppExtensionContextData } from "./context";
 
 // Create a minimal wrapper without ExternalAppProvider (since we want to test it)
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -114,7 +114,7 @@ describe("ExternalAppContext", () => {
     it("opens app in popup when target is POPUP", () => {
       // Arrange
       const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
-      const appData: ActiveAppExtensionContextData = {
+      const appData: AppExtensionActiveParams = {
         id: "test-app-id",
         appToken: "test-token",
         src: "https://example.com",
@@ -136,7 +136,7 @@ describe("ExternalAppContext", () => {
     it("navigates when target is APP_PAGE", () => {
       // Arrange
       const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
-      const appData: ActiveAppExtensionContextData = {
+      const appData: AppExtensionActiveParams = {
         id: "test-app-id",
         appToken: "test-token",
         src: "custom-path",
@@ -161,7 +161,7 @@ describe("ExternalAppContext", () => {
     it("closes app when deactivate is called", () => {
       // Arrange
       const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
-      const appData: ActiveAppExtensionContextData = {
+      const appData: AppExtensionActiveParams = {
         id: "test-app-id",
         appToken: "test-token",
         src: "https://example.com",
@@ -187,7 +187,7 @@ describe("ExternalAppContext", () => {
   describe("AppDialog and AppFrame rendering", () => {
     const TestComponent = () => {
       const { activate } = useActiveAppExtension();
-      const appData: ActiveAppExtensionContextData = {
+      const appData: AppExtensionActiveParams = {
         id: "test-app-id",
         appToken: "test-token",
         src: "https://example.com/app",
@@ -251,7 +251,7 @@ describe("ExternalAppContext", () => {
       // Arrange
       const TestVersionComponent = () => {
         const { activate } = useActiveAppExtension();
-        const appData: ActiveAppExtensionContextData = {
+        const appData: AppExtensionActiveParams = {
           id: "test-app-id",
           appToken: "test-token",
           src: "https://example.com/app",
@@ -297,7 +297,7 @@ describe("ExternalAppContext", () => {
       );
 
       const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
-      const appData: ActiveAppExtensionContextData = {
+      const appData: AppExtensionActiveParams = {
         id: "test-app-id",
         appToken: "test-token",
         src: "https://example.com",
