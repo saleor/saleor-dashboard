@@ -8,11 +8,11 @@ import useShop from "@dashboard/hooks/useShop";
 import { useAtom } from "jotai";
 import { PropsWithChildren } from "react";
 
-import { AppData, externalAppDataAtom, externalAppOpenAtom } from "./context";
+import { ActiveAppExtensionContextData, ActiveAppExtensionContextState } from "./context";
 
-export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
-  const [open, setOpen] = useAtom(externalAppOpenAtom);
-  const [appData, setAppData] = useAtom(externalAppDataAtom);
+export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
+  const [open, setOpen] = useAtom(ActiveAppExtensionContextState.open);
+  const [appData, setAppData] = useAtom(ActiveAppExtensionContextState.data);
   const shop = useShop();
   const handleClose = () => {
     setOpen(false);
@@ -38,11 +38,12 @@ export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-export const useExternalApp = () => {
-  const [open, setOpen] = useAtom(externalAppOpenAtom);
-  const [, setAppData] = useAtom(externalAppDataAtom);
+export const useActiveAppExtension = () => {
+  const [open, setOpen] = useAtom(ActiveAppExtensionContextState.open);
+  const [, setAppData] = useAtom(ActiveAppExtensionContextState.data);
   const navigate = useNavigator();
-  const openApp = (appData: AppData) => {
+
+  const activate = (appData: ActiveAppExtensionContextData) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {
       setOpen(true);
       setAppData(appData);
@@ -52,7 +53,7 @@ export const useExternalApp = () => {
       });
     }
   };
-  const closeApp = () => setOpen(false);
+  const deactivate = () => setOpen(false);
 
-  return { open, openApp, closeApp };
+  return { active: open, activate, deactivate };
 };

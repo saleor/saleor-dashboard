@@ -5,8 +5,8 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { Provider as JotaiProvider } from "jotai";
 import { IntlProvider } from "react-intl";
 
-import { AppData } from "./context";
-import { ExternalAppProvider, useExternalApp } from "./ExternalAppContext";
+import { AppExtensionPopupProvider, useActiveAppExtension } from "./AppExtensionContextProvider";
+import { ActiveAppExtensionContextData } from "./context";
 
 // Create a minimal wrapper without ExternalAppProvider (since we want to test it)
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -71,9 +71,9 @@ describe("ExternalAppContext", () => {
       // Arrange & Act
       render(
         <TestWrapper>
-          <ExternalAppProvider>
+          <AppExtensionPopupProvider>
             <div data-test-id="test-child">Test Content</div>
-          </ExternalAppProvider>
+          </AppExtensionPopupProvider>
         </TestWrapper>,
       );
 
@@ -85,9 +85,9 @@ describe("ExternalAppContext", () => {
       // Arrange & Act
       render(
         <TestWrapper>
-          <ExternalAppProvider>
+          <AppExtensionPopupProvider>
             <div>Test Content</div>
-          </ExternalAppProvider>
+          </AppExtensionPopupProvider>
         </TestWrapper>,
       );
 
@@ -99,22 +99,22 @@ describe("ExternalAppContext", () => {
   describe("useExternalApp hook", () => {
     const wrapper = ({ children }: any) => (
       <TestWrapper>
-        <ExternalAppProvider>{children}</ExternalAppProvider>
+        <AppExtensionPopupProvider>{children}</AppExtensionPopupProvider>
       </TestWrapper>
     );
 
     it("initially returns open as false", () => {
       // Arrange & Act
-      const { result } = renderHook(() => useExternalApp(), { wrapper });
+      const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
 
       // Assert
-      expect(result.current.open).toBe(false);
+      expect(result.current.active).toBe(false);
     });
 
     it("opens app in popup when target is POPUP", () => {
       // Arrange
-      const { result } = renderHook(() => useExternalApp(), { wrapper });
-      const appData: AppData = {
+      const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
+      const appData: ActiveAppExtensionContextData = {
         id: "test-app-id",
         appToken: "test-token",
         src: "https://example.com",
@@ -125,18 +125,18 @@ describe("ExternalAppContext", () => {
 
       // Act
       act(() => {
-        result.current.openApp(appData);
+        result.current.activate(appData);
       });
 
       // Assert
-      expect(result.current.open).toBe(true);
+      expect(result.current.active).toBe(true);
       expect(mockNavigate).not.toHaveBeenCalled();
     });
 
     it("navigates when target is APP_PAGE", () => {
       // Arrange
-      const { result } = renderHook(() => useExternalApp(), { wrapper });
-      const appData: AppData = {
+      const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
+      const appData: ActiveAppExtensionContextData = {
         id: "test-app-id",
         appToken: "test-token",
         src: "custom-path",
@@ -147,21 +147,21 @@ describe("ExternalAppContext", () => {
 
       // Act
       act(() => {
-        result.current.openApp(appData);
+        result.current.activate(appData);
       });
 
       // Assert
-      expect(result.current.open).toBe(false);
+      expect(result.current.active).toBe(false);
       expect(mockNavigate).toHaveBeenCalledWith(
         expect.stringContaining("test-app-id"),
         expect.objectContaining({ resetScroll: true }),
       );
     });
 
-    it("closes app when closeApp is called", () => {
+    it("closes app when deactivate is called", () => {
       // Arrange
-      const { result } = renderHook(() => useExternalApp(), { wrapper });
-      const appData: AppData = {
+      const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
+      const appData: ActiveAppExtensionContextData = {
         id: "test-app-id",
         appToken: "test-token",
         src: "https://example.com",
@@ -171,23 +171,23 @@ describe("ExternalAppContext", () => {
 
       // Act
       act(() => {
-        result.current.openApp(appData);
+        result.current.activate(appData);
       });
-      expect(result.current.open).toBe(true);
+      expect(result.current.active).toBe(true);
 
       act(() => {
-        result.current.closeApp();
+        result.current.deactivate();
       });
 
       // Assert
-      expect(result.current.open).toBe(false);
+      expect(result.current.active).toBe(false);
     });
   });
 
   describe("AppDialog and AppFrame rendering", () => {
     const TestComponent = () => {
-      const { openApp } = useExternalApp();
-      const appData: AppData = {
+      const { activate } = useActiveAppExtension();
+      const appData: ActiveAppExtensionContextData = {
         id: "test-app-id",
         appToken: "test-token",
         src: "https://example.com/app",
@@ -197,7 +197,7 @@ describe("ExternalAppContext", () => {
       };
 
       return (
-        <button onClick={() => openApp(appData)} data-test-id="open-app-button">
+        <button onClick={() => activate(appData)} data-test-id="open-app-button">
           Open App
         </button>
       );
@@ -207,9 +207,9 @@ describe("ExternalAppContext", () => {
       // Arrange & Act
       render(
         <TestWrapper>
-          <ExternalAppProvider>
+          <AppExtensionPopupProvider>
             <TestComponent />
-          </ExternalAppProvider>
+          </AppExtensionPopupProvider>
         </TestWrapper>,
       );
 
@@ -237,9 +237,9 @@ describe("ExternalAppContext", () => {
       // Arrange & Act
       render(
         <TestWrapper>
-          <ExternalAppProvider>
+          <AppExtensionPopupProvider>
             <div>Test Content</div>
-          </ExternalAppProvider>
+          </AppExtensionPopupProvider>
         </TestWrapper>,
       );
 
@@ -250,8 +250,8 @@ describe("ExternalAppContext", () => {
     it("passes dashboard and core versions to AppFrame", () => {
       // Arrange
       const TestVersionComponent = () => {
-        const { openApp } = useExternalApp();
-        const appData: AppData = {
+        const { activate } = useActiveAppExtension();
+        const appData: ActiveAppExtensionContextData = {
           id: "test-app-id",
           appToken: "test-token",
           src: "https://example.com/app",
@@ -260,7 +260,7 @@ describe("ExternalAppContext", () => {
         };
 
         return (
-          <button onClick={() => openApp(appData)} data-test-id="open-version-app-button">
+          <button onClick={() => activate(appData)} data-test-id="open-version-app-button">
             Open App
           </button>
         );
@@ -269,9 +269,9 @@ describe("ExternalAppContext", () => {
       // Act
       render(
         <TestWrapper>
-          <ExternalAppProvider>
+          <AppExtensionPopupProvider>
             <TestVersionComponent />
-          </ExternalAppProvider>
+          </AppExtensionPopupProvider>
         </TestWrapper>,
       );
 
@@ -292,12 +292,12 @@ describe("ExternalAppContext", () => {
       // Arrange
       const wrapper = ({ children }: any) => (
         <TestWrapper>
-          <ExternalAppProvider>{children}</ExternalAppProvider>
+          <AppExtensionPopupProvider>{children}</AppExtensionPopupProvider>
         </TestWrapper>
       );
 
-      const { result } = renderHook(() => useExternalApp(), { wrapper });
-      const appData: AppData = {
+      const { result } = renderHook(() => useActiveAppExtension(), { wrapper });
+      const appData: ActiveAppExtensionContextData = {
         id: "test-app-id",
         appToken: "test-token",
         src: "https://example.com",
@@ -307,17 +307,17 @@ describe("ExternalAppContext", () => {
 
       // Act - Open the app
       act(() => {
-        result.current.openApp(appData);
+        result.current.activate(appData);
       });
-      expect(result.current.open).toBe(true);
+      expect(result.current.active).toBe(true);
 
-      // Act - Close via closeApp
+      // Act - Close via deactivate
       act(() => {
-        result.current.closeApp();
+        result.current.deactivate();
       });
 
       // Assert
-      expect(result.current.open).toBe(false);
+      expect(result.current.active).toBe(false);
       expect(screen.queryByTestId("app-frame")).not.toBeInTheDocument();
     });
   });
