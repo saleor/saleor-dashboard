@@ -42,7 +42,7 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
 
 // todo extract modal from non-modal
 export const useActiveAppExtension = () => {
-  const { setActive, setInactive } = useAppExtensionPopup();
+  const { state, setActive, setInactive } = useAppExtensionPopup();
   const navigate = useNavigator();
 
   const activate = (appData: AppExtensionActiveParams) => {
@@ -56,5 +56,5 @@ export const useActiveAppExtension = () => {
   };
   const deactivate = setInactive;
 
-  return { active: open, activate, deactivate };
+  return { active: state.active, activate, deactivate };
 };

@@ -1,5 +1,5 @@
+import { AppExtensionActiveParams } from "@dashboard/extensions/components/AppExtensionContext/app-extension-popup-state";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
-import { ActiveAppExtensionContextData } from "@dashboard/extensions/components/AppExtensionContext/context";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import {
@@ -18,7 +18,7 @@ const prepareExtensionsWithActions = ({
   openAppInContext,
 }: {
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
-  openAppInContext: (appData: ActiveAppExtensionContextData) => void;
+  openAppInContext: (appData: AppExtensionActiveParams) => void;
 }): ExtensionWithParams[] =>
   extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
     const isNewTab = target === "NEW_TAB";
