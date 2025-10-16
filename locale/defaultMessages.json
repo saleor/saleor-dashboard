@@ -366,6 +366,9 @@
     "context": "order returned success message",
     "string": "Successfully returned products!"
   },
+  "/zFGgP": {
+    "string": "+{count} more"
+  },
   "0+zatS": {
     "string": "Hello {userName}, welcome to your Store Dashboard"
   },
@@ -8709,6 +8712,9 @@
   },
   "qy/XqL": {
     "string": "Select transaction"
+  },
+  "qyJtWy": {
+    "string": "Show less"
   },
   "qzDwLa": {
     "context": "Invalid url value",
