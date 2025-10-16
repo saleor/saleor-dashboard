@@ -5,13 +5,14 @@ import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/comp
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
-import { PropsWithChildren, useContext, useState } from "react";
+import { useAtom } from "jotai";
+import { PropsWithChildren } from "react";
 
-import { AppData, ExternalAppContext } from "./context";
+import { AppData, externalAppDataAtom, externalAppOpenAtom } from "./context";
 
 export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
-  const [open, setOpen] = useState(false);
-  const [appData, setAppData] = useState<AppData | undefined>();
+  const [open, setOpen] = useAtom(externalAppOpenAtom);
+  const [appData, setAppData] = useAtom(externalAppDataAtom);
   const shop = useShop();
   const handleClose = () => {
     setOpen(false);
@@ -19,7 +20,7 @@ export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <ExternalAppContext.Provider value={{ open, appData, setOpen, setAppData }}>
+    <>
       {children}
       <AppDialog open={open} onClose={handleClose} title={appData?.label}>
         {open && appData && (
@@ -33,12 +34,13 @@ export const ExternalAppProvider = ({ children }: PropsWithChildren) => {
           />
         )}
       </AppDialog>
-    </ExternalAppContext.Provider>
+    </>
   );
 };
 
 export const useExternalApp = () => {
-  const { open, setOpen, setAppData } = useContext(ExternalAppContext);
+  const [open, setOpen] = useAtom(externalAppOpenAtom);
+  const [, setAppData] = useAtom(externalAppDataAtom);
   const navigate = useNavigator();
   const openApp = (appData: AppData) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {

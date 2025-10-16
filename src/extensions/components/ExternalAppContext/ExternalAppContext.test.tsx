@@ -2,6 +2,7 @@ import { Locale } from "@dashboard/components/Locale";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
+import { Provider as JotaiProvider } from "jotai";
 import { IntlProvider } from "react-intl";
 
 import { AppData } from "./context";
@@ -9,9 +10,11 @@ import { ExternalAppProvider, useExternalApp } from "./ExternalAppContext";
 
 // Create a minimal wrapper without ExternalAppProvider (since we want to test it)
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <IntlProvider defaultLocale={Locale.EN} locale={Locale.EN}>
-    {children}
-  </IntlProvider>
+  <JotaiProvider>
+    <IntlProvider defaultLocale={Locale.EN} locale={Locale.EN}>
+      {children}
+    </IntlProvider>
+  </JotaiProvider>
 );
 
 // Mock the dependencies
