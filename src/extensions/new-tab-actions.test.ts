@@ -201,58 +201,17 @@ describe("newTabActions", () => {
   });
 
   describe("openPOSTinNewTab", () => {
-    let mockForm: HTMLFormElement;
-    let mockInputElements: HTMLInputElement[];
-    let createElementSpy: jest.SpyInstance;
-    let appendSpy: jest.SpyInstance;
-    let removeChildSpy: jest.SpyInstance;
-    let submitSpy: jest.Mock;
+    let submitSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      mockInputElements = [];
-      submitSpy = jest.fn();
-
-      mockForm = {
-        method: "",
-        action: "",
-        target: "",
-        style: { display: "" },
-        appendChild: jest.fn((input: HTMLInputElement) => {
-          mockInputElements.push(input);
-
-          return input;
-        }),
-        submit: submitSpy,
-      } as unknown as HTMLFormElement;
-
-      createElementSpy = jest
-        .spyOn(document, "createElement")
-        .mockImplementation((tagName: string) => {
-          if (tagName === "form") {
-            return mockForm;
-          }
-
-          if (tagName === "input") {
-            return {
-              type: "",
-              name: "",
-              value: "",
-            } as HTMLInputElement;
-          }
-
-          return {} as any;
-        });
-
-      appendSpy = jest.spyOn(document.body, "append").mockImplementation();
-      removeChildSpy = jest.spyOn(document.body, "removeChild").mockImplementation();
+      // Spy on form.submit() to prevent actual form submission
+      submitSpy = jest.spyOn(HTMLFormElement.prototype, "submit").mockImplementation();
 
       (getAbsoluteApiUrl as jest.Mock).mockReturnValue("https://api.example.com/graphql/");
     });
 
     afterEach(() => {
-      createElementSpy.mockRestore();
-      appendSpy.mockRestore();
-      removeChildSpy.mockRestore();
+      submitSpy.mockRestore();
       jest.clearAllMocks();
     });
 
@@ -269,10 +228,13 @@ describe("newTabActions", () => {
       newTabActions.openPOSTinNewTab(args);
 
       // Assert
-      expect(mockForm.method).toBe("POST");
-      expect(mockForm.action).toBe("https://extension.example.com");
-      expect(mockForm.target).toBe("_blank");
-      expect(mockForm.style.display).toBe("none");
+      const form = submitSpy.mock.instances[0] as HTMLFormElement;
+
+      expect(form.method).toBe("post");
+      expect(form.action).toBe("https://extension.example.com/");
+      expect(form.target).toBe("_blank");
+      expect(form.style.display).toBe("none");
+      expect(submitSpy).toHaveBeenCalledTimes(1);
     });
 
     it("Creates input elements for all form parameters", () => {
@@ -288,22 +250,27 @@ describe("newTabActions", () => {
       newTabActions.openPOSTinNewTab(args);
 
       // Assert
-      expect(mockInputElements).toHaveLength(5);
-      expect(mockInputElements[0].name).toBe("productId");
-      expect(mockInputElements[0].value).toBe("prod-1");
-      expect(mockInputElements[0].type).toBe("hidden");
+      const form = submitSpy.mock.instances[0] as HTMLFormElement;
+      const inputs = Array.from(form.querySelectorAll("input"));
 
-      expect(mockInputElements[1].name).toBe("customerId");
-      expect(mockInputElements[1].value).toBe("cust-1");
+      expect(inputs).toHaveLength(5);
+      expect(inputs[0].name).toBe("productId");
+      expect(inputs[0].value).toBe("prod-1");
+      expect(inputs[0].type).toBe("hidden");
 
-      expect(mockInputElements[2].name).toBe("accessToken");
-      expect(mockInputElements[2].value).toBe("token-123");
+      expect(inputs[1].name).toBe("customerId");
+      expect(inputs[1].value).toBe("cust-1");
 
-      expect(mockInputElements[3].name).toBe("appId");
-      expect(mockInputElements[3].value).toBe("app-456");
+      expect(inputs[2].name).toBe("accessToken");
+      expect(inputs[2].value).toBe("token-123");
 
-      expect(mockInputElements[4].name).toBe("saleorApiUrl");
-      expect(mockInputElements[4].value).toBe("https://api.example.com/graphql/");
+      expect(inputs[3].name).toBe("appId");
+      expect(inputs[3].value).toBe("app-456");
+
+      expect(inputs[4].name).toBe("saleorApiUrl");
+      expect(inputs[4].value).toBe("https://api.example.com/graphql/");
+
+      expect(submitSpy).toHaveBeenCalledTimes(1);
     });
 
     it("Includes saleorApiUrl from config", () => {
@@ -319,11 +286,14 @@ describe("newTabActions", () => {
       newTabActions.openPOSTinNewTab(args);
 
       // Assert
-      const saleorApiUrlInput = mockInputElements.find(input => input.name === "saleorApiUrl");
+      const form = submitSpy.mock.instances[0] as HTMLFormElement;
+      const inputs = Array.from(form.querySelectorAll("input"));
+      const saleorApiUrlInput = inputs.find(input => input.name === "saleorApiUrl");
 
       expect(saleorApiUrlInput).toBeDefined();
       expect(saleorApiUrlInput?.value).toBe("https://api.example.com/graphql/");
       expect(getAbsoluteApiUrl).toHaveBeenCalledTimes(1);
+      expect(submitSpy).toHaveBeenCalledTimes(1);
     });
 
     it("Handles array parameters by creating multiple inputs with same name", () => {
@@ -339,12 +309,15 @@ describe("newTabActions", () => {
       newTabActions.openPOSTinNewTab(args);
 
       // Assert
-      const productInputs = mockInputElements.filter(input => input.name === "productIds");
+      const form = submitSpy.mock.instances[0] as HTMLFormElement;
+      const inputs = Array.from(form.querySelectorAll("input"));
+      const productInputs = inputs.filter(input => input.name === "productIds");
 
       expect(productInputs).toHaveLength(3);
       expect(productInputs[0].value).toBe("p1");
       expect(productInputs[1].value).toBe("p2");
       expect(productInputs[2].value).toBe("p3");
+      expect(submitSpy).toHaveBeenCalledTimes(1);
     });
 
     it("Filters out null and undefined parameters", () => {
@@ -366,53 +339,16 @@ describe("newTabActions", () => {
       newTabActions.openPOSTinNewTab(args);
 
       // Assert
-      const paramNames = mockInputElements.map(input => input.name);
+      const form = submitSpy.mock.instances[0] as HTMLFormElement;
+      const inputs = Array.from(form.querySelectorAll("input"));
+      const paramNames = inputs.map(input => input.name);
 
       expect(paramNames).toContain("productId");
       expect(paramNames).toContain("appId");
       expect(paramNames).not.toContain("customerId");
       expect(paramNames).not.toContain("orderId");
       expect(paramNames).not.toContain("accessToken");
-    });
-
-    it("Appends form to body, submits it, and removes it", () => {
-      // Arrange
-      const args = {
-        appParams: {},
-        accessToken: "token-123",
-        appId: "app-456",
-        extensionUrl: "https://extension.example.com",
-      };
-
-      // Act
-      newTabActions.openPOSTinNewTab(args);
-
-      // Assert
-      expect(appendSpy).toHaveBeenCalledWith(mockForm);
       expect(submitSpy).toHaveBeenCalledTimes(1);
-      expect(removeChildSpy).toHaveBeenCalledWith(mockForm);
-    });
-
-    it("Executes operations in correct order", () => {
-      // Arrange
-      const args = {
-        appParams: {},
-        accessToken: "token-123",
-        appId: "app-456",
-        extensionUrl: "https://extension.example.com",
-      };
-
-      const callOrder: string[] = [];
-
-      appendSpy.mockImplementation(() => callOrder.push("append"));
-      submitSpy.mockImplementation(() => callOrder.push("submit"));
-      removeChildSpy.mockImplementation(() => callOrder.push("removeChild"));
-
-      // Act
-      newTabActions.openPOSTinNewTab(args);
-
-      // Assert
-      expect(callOrder).toEqual(["append", "submit", "removeChild"]);
     });
 
     it("Handles empty appParams", () => {
@@ -428,13 +364,17 @@ describe("newTabActions", () => {
       newTabActions.openPOSTinNewTab(args);
 
       // Assert
-      expect(mockInputElements.length).toBeGreaterThan(0);
+      const form = submitSpy.mock.instances[0] as HTMLFormElement;
+      const inputs = Array.from(form.querySelectorAll("input"));
 
-      const paramNames = mockInputElements.map(input => input.name);
+      expect(inputs.length).toBeGreaterThan(0);
+
+      const paramNames = inputs.map(input => input.name);
 
       expect(paramNames).toContain("accessToken");
       expect(paramNames).toContain("appId");
       expect(paramNames).toContain("saleorApiUrl");
+      expect(submitSpy).toHaveBeenCalledTimes(1);
     });
 
     it("Handles complex mixed parameters", () => {
@@ -457,15 +397,18 @@ describe("newTabActions", () => {
       newTabActions.openPOSTinNewTab(args);
 
       // Assert
-      const productIdInputs = mockInputElements.filter(input => input.name === "productId");
-      const customerIdsInputs = mockInputElements.filter(input => input.name === "customerIds");
-      const customerIdInputs = mockInputElements.filter(input => input.name === "customerId");
-      const collectionIdsInputs = mockInputElements.filter(input => input.name === "collectionIds");
+      const form = submitSpy.mock.instances[0] as HTMLFormElement;
+      const inputs = Array.from(form.querySelectorAll("input"));
+      const productIdInputs = inputs.filter(input => input.name === "productId");
+      const customerIdsInputs = inputs.filter(input => input.name === "customerIds");
+      const customerIdInputs = inputs.filter(input => input.name === "customerId");
+      const collectionIdsInputs = inputs.filter(input => input.name === "collectionIds");
 
       expect(productIdInputs).toHaveLength(1);
       expect(customerIdsInputs).toHaveLength(2);
       expect(customerIdInputs).toHaveLength(0);
       expect(collectionIdsInputs).toHaveLength(0);
+      expect(submitSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
