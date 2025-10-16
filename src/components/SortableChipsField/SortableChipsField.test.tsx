@@ -102,6 +102,8 @@ describe("SortableChipsField", () => {
       { value: "3", label: "Value 3" },
       { value: "4", label: "Value 4" },
       { value: "5", label: "Value 5" },
+      { value: "6", label: "Value 6" },
+      { value: "7", label: "Value 7" },
     ];
 
     render(
@@ -113,16 +115,53 @@ describe("SortableChipsField", () => {
     );
 
     // Assert
-    expect(screen.getByRole("button", { name: "+2 more" })).toBeInTheDocument();
-    expect(screen.queryByText("Value 4")).not.toBeInTheDocument();
-    expect(screen.queryByText("Value 5")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "+{count} more" })).toBeInTheDocument();
+    expect(screen.queryByText("Value 6")).not.toBeInTheDocument();
+    expect(screen.queryByText("Value 7")).not.toBeInTheDocument();
 
     // Act
-    fireEvent.click(screen.getByRole("button", { name: "+2 more" }));
+    fireEvent.click(screen.getByRole("button", { name: "+{count} more" }));
 
     // Assert
-    expect(screen.queryByRole("button", { name: "+2 more" })).not.toBeInTheDocument();
-    expect(screen.getByText("Value 4")).toBeInTheDocument();
-    expect(screen.getByText("Value 5")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Show less" })).toBeInTheDocument();
+    expect(screen.getByText("Value 6")).toBeInTheDocument();
+    expect(screen.getByText("Value 7")).toBeInTheDocument();
+  });
+
+  it("should collapse chips when the show less button is clicked", () => {
+    // Arrange
+    const longValues = [
+      { value: "1", label: "Value 1" },
+      { value: "2", label: "Value 2" },
+      { value: "3", label: "Value 3" },
+      { value: "4", label: "Value 4" },
+      { value: "5", label: "Value 5" },
+      { value: "6", label: "Value 6" },
+      { value: "7", label: "Value 7" },
+    ];
+
+    render(
+      <SortableChipsField
+        values={longValues}
+        onValueDelete={onValueDelete}
+        onValueReorder={onValueReorder}
+      />,
+    );
+
+    // Act - Expand first
+    fireEvent.click(screen.getByRole("button", { name: "+{count} more" }));
+
+    // Assert - All chips are visible
+    expect(screen.getByText("Value 6")).toBeInTheDocument();
+    expect(screen.getByText("Value 7")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Show less" })).toBeInTheDocument();
+
+    // Act - Collapse
+    fireEvent.click(screen.getByRole("button", { name: "Show less" }));
+
+    // Assert - Hidden chips are not visible, button text changed back
+    expect(screen.getByRole("button", { name: "+{count} more" })).toBeInTheDocument();
+    expect(screen.queryByText("Value 6")).not.toBeInTheDocument();
+    expect(screen.queryByText("Value 7")).not.toBeInTheDocument();
   });
 });

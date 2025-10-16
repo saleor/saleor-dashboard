@@ -13,6 +13,7 @@ import { SortableContext } from "@dnd-kit/sortable";
 import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import { useIntl } from "react-intl";
 
 import { Draggable } from "../Draggable/Draggable";
 import { SortableChip } from "../SortableChip/SortableChip";
@@ -60,6 +61,7 @@ const SortableChipsField = ({
   onValueReorder,
   onAdd,
 }: SortableChipsFieldProps) => {
+  const intl = useIntl();
   const { activeId, handleDragStart, handleDragEnd } = useActiveDragId();
   const { handleDragOver } = useSortableDragOver({
     items: values,
@@ -167,15 +169,26 @@ const SortableChipsField = ({
           />
         ) : null}
       </Box>
-      {hasHiddenChips && !showAllChips ? (
+      {hasHiddenChips ? (
         <Box marginTop={2}>
           <Button
             variant="tertiary"
             disabled={disabled}
-            onClick={() => setShowAllChips(true)}
+            onClick={() => setShowAllChips(prev => !prev)}
             size="small"
           >
-            {`+${hiddenChipsCount} more`}
+            {showAllChips
+              ? intl.formatMessage({
+                  id: "qyJtWy",
+                  defaultMessage: "Show less",
+                })
+              : intl.formatMessage(
+                  {
+                    id: "/zFGgP",
+                    defaultMessage: "+{count} more",
+                  },
+                  { count: hiddenChipsCount },
+                )}
           </Button>
         </Box>
       ) : null}
