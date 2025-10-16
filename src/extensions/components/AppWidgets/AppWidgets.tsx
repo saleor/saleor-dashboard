@@ -5,11 +5,7 @@ import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar"
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
-import {
-  AppDetailsUrlMountQueryParams,
-  ExtensionsPaths,
-  ExtensionsUrls,
-} from "@dashboard/extensions/urls";
+import { AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -151,7 +147,10 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
       <DashboardCard.Content>
         {sortedByAppName.map(([appId, appWithExtensions]) => {
           const logo = appWithExtensions.app.brand?.logo.default;
-          const appPageUrl = ExtensionsPaths.resolveViewManifestExtension(appWithExtensions.app.id);
+          const appPageUrl = ExtensionsUrls.resolveViewManifestExtensionUrl(
+            appWithExtensions.app.id,
+            {},
+          );
 
           return (
             <Box marginBottom={8} key={appId}>
