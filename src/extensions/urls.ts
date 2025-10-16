@@ -1,10 +1,19 @@
-import { AppPaths } from "@dashboard/apps/urls";
 import { getAbsoluteApiUrl } from "@dashboard/config";
 import { FlagList } from "@dashboard/featureFlags";
 import { Dialog, SingleAction } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import urlJoin from "url-join";
+
+export const LegacyAppSections = {
+  appsSection: "/apps/",
+};
+
+export const LegacyAppPaths = {
+  appListPath: LegacyAppSections.appsSection,
+  resolveAppPath: (id: string) => urlJoin(LegacyAppSections.appsSection, id, "app"),
+  appInstallPath: urlJoin(LegacyAppSections.appsSection, "install"),
+};
 
 export const extensionsSection = "/extensions";
 export const extensionsCustomSection = `${extensionsSection}/custom`;
@@ -133,7 +142,7 @@ export const ExtensionsUrls = {
     ).replace("?", "");
 
     // Handle legacy app navigation made to /apps/XYZ/app
-    const legacyAppCompletePath = AppPaths.resolveAppPath(appId);
+    const legacyAppCompletePath = LegacyAppPaths.resolveAppPath(appId);
 
     return (
       (to.startsWith(appCompletePath) || to.startsWith(legacyAppCompletePath)) &&

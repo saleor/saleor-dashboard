@@ -1,9 +1,8 @@
 // @ts-strict-ignore
-import { AppPaths } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { customerPath } from "@dashboard/customers/urls";
-import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { GiftCardDetailsQuery, GiftCardEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
@@ -96,7 +95,9 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
               !!user && (
                 <Link
                   href={
-                    event.user ? customerPath(event.user.id) : AppPaths.resolveAppPath(event.app.id)
+                    event.user
+                      ? customerPath(event.user.id)
+                      : ExtensionsPaths.resolveViewManifestExtension(event.app.id)
                   }
                 >{`${content} ${user}`}</Link>
               ),
