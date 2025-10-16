@@ -11,7 +11,6 @@ on:
 jobs:
   knip:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || (github.event.pull_request.draft == false || contains(github.event.pull_request.labels.*.name, 'Run QA checks'))
     steps:
       - uses: actions/checkout@v4
 
