@@ -11,8 +11,9 @@ import {
 import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
 import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import { useIntl } from "react-intl";
 
 import { Draggable } from "../Draggable/Draggable";
 import { SortableChip } from "../SortableChip/SortableChip";
@@ -48,6 +49,8 @@ function disableSortingStrategy() {
   return null;
 }
 
+const MAX_VISIBLE_CHIPS = 5;
+
 const SortableChipsField = ({
   loading,
   disabled,
@@ -58,11 +61,22 @@ const SortableChipsField = ({
   onValueReorder,
   onAdd,
 }: SortableChipsFieldProps) => {
+  const intl = useIntl();
   const { activeId, handleDragStart, handleDragEnd } = useActiveDragId();
   const { handleDragOver } = useSortableDragOver({
     items: values,
     onReorder: onValueReorder,
   });
+
+  const [showAllChips, setShowAllChips] = useState(false);
+  const hasHiddenChips = values.length > MAX_VISIBLE_CHIPS;
+  const hiddenChipsCount = hasHiddenChips ? values.length - MAX_VISIBLE_CHIPS : 0;
+
+  useEffect(() => {
+    if (!hasHiddenChips && showAllChips) {
+      setShowAllChips(false);
+    }
+  }, [hasHiddenChips, showAllChips]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -78,74 +92,106 @@ const SortableChipsField = ({
     );
   }, [values]);
 
+  const visibleValues =
+    showAllChips || !hasHiddenChips ? values : values.slice(0, MAX_VISIBLE_CHIPS);
   const activeItem = itemIdToValueMap.get(activeId as UniqueIdentifier);
 
   return (
     <Box>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={pointerWithin}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-        onDragCancel={handleDragEnd}
-        modifiers={[restrictToFirstScrollableAncestor]}
-      >
-        <SortableContext items={[...itemIdToValueMap.keys()]} strategy={disableSortingStrategy}>
-          <Box display="flex" flexWrap="wrap" gap={2}>
-            <>
-              {values.map(value => (
-                <Draggable key={value.value} id={value.value} disabled={disabled}>
-                  {({ isDragging, ...props }) => (
-                    <SortableChip
-                      label={value.label}
-                      url={value.url}
-                      loading={loading}
-                      onClose={() => onValueDelete(value.value)}
-                      // Overlay is the shadow that appears where element will be dropped
-                      // while dragging
-                      isDraggedOverlay={isDragging}
-                      {...props}
-                    />
-                  )}
-                </Draggable>
-              ))}
-              {onAdd ? (
-                <Button
-                  variant="secondary"
-                  disabled={disabled}
-                  marginLeft="auto"
-                  onClick={onAdd}
-                  icon={<PlusIcon />}
+      <Box display="flex">
+        <DndContext
+          sensors={sensors}
+          collisionDetection={pointerWithin}
+          onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
+          onDragEnd={handleDragEnd}
+          onDragCancel={handleDragEnd}
+          modifiers={[restrictToFirstScrollableAncestor]}
+        >
+          <SortableContext
+            items={visibleValues.map(value => value.value)}
+            strategy={disableSortingStrategy}
+          >
+            <Box display="flex" flexWrap="wrap" gap={2}>
+              <>
+                {visibleValues.map(value => (
+                  <Draggable key={value.value} id={value.value} disabled={disabled}>
+                    {({ isDragging, ...props }) => (
+                      <SortableChip
+                        label={value.label}
+                        url={value.url}
+                        loading={loading}
+                        onClose={() => onValueDelete(value.value)}
+                        // Overlay is the shadow that appears where element will be dropped
+                        // while dragging
+                        isDraggedOverlay={isDragging}
+                        {...props}
+                      />
+                    )}
+                  </Draggable>
+                ))}
+              </>
+            </Box>
+          </SortableContext>
+
+          {createPortal(
+            // Note: Ovelay is the element that user holds with mouse while dragging
+            // this is exactly the same element as on the list, except it has no handlers for @dnd-kit
+            // it moves with the cursor
+            <DragOverlay>
+              {activeId && activeItem ? (
+                <SortableChip
+                  label={activeItem.label}
+                  url={activeItem.url}
+                  loading={loading}
+                  isDragged
                 />
               ) : null}
-            </>
+            </DragOverlay>,
+            document.body,
+          )}
+        </DndContext>
+        {error && (
+          <Box marginTop={2}>
+            <Text size={2} color="critical1">
+              {helperText}
+            </Text>
           </Box>
-        </SortableContext>
-        {createPortal(
-          // Note: Ovelay is the element that user holds with mouse while dragging
-          // this is exactly the same element as on the list, except it has no handlers for @dnd-kit
-          // it moves with the cursor
-          <DragOverlay>
-            {activeId && activeItem ? (
-              <SortableChip
-                label={activeItem.label}
-                url={activeItem.url}
-                loading={loading}
-                isDragged
-              />
-            ) : null}
-          </DragOverlay>,
-          document.body,
         )}
-      </DndContext>
-      {error && (
+
+        {onAdd ? (
+          <Button
+            variant="secondary"
+            disabled={disabled}
+            marginLeft="auto"
+            onClick={onAdd}
+            icon={<PlusIcon />}
+          />
+        ) : null}
+      </Box>
+      {hasHiddenChips ? (
         <Box marginTop={2}>
-          <Text size={2} color="critical1">
-            {helperText}
-          </Text>
+          <Button
+            variant="tertiary"
+            disabled={disabled}
+            onClick={() => setShowAllChips(prev => !prev)}
+            size="small"
+          >
+            {showAllChips
+              ? intl.formatMessage({
+                  id: "qyJtWy",
+                  defaultMessage: "Show less",
+                })
+              : intl.formatMessage(
+                  {
+                    id: "/zFGgP",
+                    defaultMessage: "+{count} more",
+                  },
+                  { count: hiddenChipsCount },
+                )}
+          </Button>
         </Box>
-      )}
+      ) : null}
     </Box>
   );
 };
