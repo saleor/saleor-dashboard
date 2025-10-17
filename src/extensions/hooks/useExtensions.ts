@@ -1,4 +1,4 @@
-import { AppExtensionActiveParams } from "@dashboard/extensions/components/AppExtensionContext/app-extension-popup-state";
+import { AppExtensionActiveParams } from "@dashboard/extensions/app-extension-popup-state";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";

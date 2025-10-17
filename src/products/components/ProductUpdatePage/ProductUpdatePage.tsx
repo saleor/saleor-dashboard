@@ -17,6 +17,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
+import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForProductDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -245,6 +246,8 @@ const ProductUpdatePage = ({
   const backLinkProductUrl = useBackLinkWithState({
     path: productListPath,
   });
+
+  const { attachFormState, active } = useActiveAppExtension();
 
   return (
     <ProductUpdateForm

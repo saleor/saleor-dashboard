@@ -1,5 +1,6 @@
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
+import { AllFormPayloads } from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
 
 type ActiveParams = {
@@ -9,6 +10,7 @@ type ActiveParams = {
   label: string;
   target: AppExtensionTargetEnum;
   params?: AppDetailsUrlMountQueryParams;
+  formState?: AllFormPayloads;
 };
 
 /**
@@ -37,6 +39,8 @@ class ExtensionActiveState {
 
   params?: AppDetailsUrlMountQueryParams;
 
+  formState?: AllFormPayloads;
+
   constructor(params: ActiveParams) {
     this.id = params.id;
     this.appToken = params.appToken;
@@ -44,6 +48,7 @@ class ExtensionActiveState {
     this.label = params.label;
     this.target = params.target;
     this.params = params.params;
+    this.formState = params.formState;
   }
 }
 
@@ -63,6 +68,17 @@ export const useAppExtensionPopup = () => {
     },
     setInactive() {
       setState(inactiveState);
+    },
+    attachFormState(formState: AllFormPayloads) {
+      setState(currentState => {
+        if (!currentState.active) {
+          throw new Error("You can not attach form state for closed extension");
+        }
+
+        currentState.formState = formState;
+
+        return currentState;
+      });
     },
   };
 };
