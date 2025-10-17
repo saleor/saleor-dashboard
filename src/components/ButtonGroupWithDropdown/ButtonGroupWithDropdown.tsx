@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   Button,
+  ButtonProps,
   ChervonDownIcon,
   Dropdown,
   List,
@@ -17,6 +18,7 @@ interface ButtonGroupWithDropdownProps extends BoxProps {
   }>;
   testId?: string;
   disabled?: boolean;
+  variant?: ButtonProps["variant"];
 }
 
 // TODO: consider moving this to Macaw UI
@@ -26,12 +28,14 @@ export const ButtonGroupWithDropdown = ({
   onClick,
   disabled = false,
   testId,
+  variant,
   ...boxProps
 }: ButtonGroupWithDropdownProps) => {
   return (
     <Dropdown>
       <Box display="flex" {...boxProps}>
         <Button
+          variant={variant}
           onClick={onClick}
           data-test-id={testId}
           disabled={disabled}
@@ -44,6 +48,7 @@ export const ButtonGroupWithDropdown = ({
 
         <Dropdown.Trigger>
           <Button
+            variant={variant}
             icon={<ChervonDownIcon />}
             disabled={disabled}
             borderColor="default1"
