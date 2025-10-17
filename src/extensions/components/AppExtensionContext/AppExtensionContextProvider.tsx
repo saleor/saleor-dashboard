@@ -7,7 +7,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
 import { PropsWithChildren } from "react";
 
-import { AppExtensionActiveParams, useAppExtensionPopup } from "./app-extension-popup-state";
+import { AppExtensionActiveParams, useAppExtensionPopup } from "../../app-extension-popup-state";
 
 export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   const { setInactive, state } = useAppExtensionPopup();
@@ -42,7 +42,7 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
 
 // todo extract modal from non-modal
 export const useActiveAppExtension = () => {
-  const { state, setActive, setInactive } = useAppExtensionPopup();
+  const { state, setActive, setInactive, attachFormState } = useAppExtensionPopup();
   const navigate = useNavigator();
 
   const activate = (appData: AppExtensionActiveParams) => {
@@ -56,5 +56,5 @@ export const useActiveAppExtension = () => {
   };
   const deactivate = setInactive;
 
-  return { active: state.active, activate, deactivate };
+  return { active: state.active, activate, deactivate, attachFormState };
 };

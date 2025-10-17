@@ -5,7 +5,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { Provider as JotaiProvider } from "jotai";
 import { IntlProvider } from "react-intl";
 
-import { AppExtensionActiveParams } from "./app-extension-popup-state";
+import { AppExtensionActiveParams } from "../../app-extension-popup-state";
 import { AppExtensionPopupProvider, useActiveAppExtension } from "./AppExtensionContextProvider";
 
 // Create a minimal wrapper without ExternalAppProvider (since we want to test it)
