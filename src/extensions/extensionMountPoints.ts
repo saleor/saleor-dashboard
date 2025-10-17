@@ -1,3 +1,4 @@
+import { TRANSLATIONS_MOUNT_ENABLED } from "@dashboard/extensions/translations-mount-flag";
 import { AppExtensionMountEnum } from "@dashboard/graphql";
 
 export const extensionMountPoints = {
@@ -90,4 +91,9 @@ export const extensionMountPoints = {
     AppExtensionMountEnum.NAVIGATION_PAGES,
     AppExtensionMountEnum.NAVIGATION_TRANSLATIONS,
   ],
-};
+} as const;
+
+if (TRANSLATIONS_MOUNT_ENABLED) {
+  // @ts-expect-error - enable once schema is updated
+  extensionMountPoints["TRANSLATION_DETAILS"] = ["TRANSLATION_DETAILS"];
+}
