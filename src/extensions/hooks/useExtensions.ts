@@ -1,3 +1,5 @@
+import { AppExtensionActiveParams } from "@dashboard/extensions/components/AppExtensionContext/app-extension-popup-state";
+import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import {
@@ -8,8 +10,6 @@ import {
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
-import { AppData } from "../components/ExternalAppContext/context";
-import { useExternalApp } from "../components/ExternalAppContext/ExternalAppContext";
 import { Extension, ExtensionWithParams } from "../types";
 import { AppDetailsUrlMountQueryParams } from "../urls";
 
@@ -18,7 +18,7 @@ const prepareExtensionsWithActions = ({
   openAppInContext,
 }: {
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
-  openAppInContext: (appData: AppData) => void;
+  openAppInContext: (appData: AppExtensionActiveParams) => void;
 }): ExtensionWithParams[] =>
   extensions.map(({ id, accessToken, permissions, url, label, mount, target, app, options }) => {
     const isNewTab = target === "NEW_TAB";
@@ -96,7 +96,7 @@ const prepareExtensionsWithActions = ({
 export const useExtensions = <T extends AppExtensionMountEnum>(
   mountList: T[],
 ): Record<T, Extension[]> => {
-  const { openApp } = useExternalApp();
+  const { activate } = useActiveAppExtension();
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
     variables: {
@@ -107,7 +107,7 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
   });
   const extensions = prepareExtensionsWithActions({
     extensions: mapEdgesToItems(data?.appExtensions ?? undefined) || [],
-    openAppInContext: openApp,
+    openAppInContext: activate,
   });
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
