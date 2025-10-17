@@ -22,20 +22,22 @@ jest.mock("@dashboard/graphql", () => ({
   ...(jest.requireActual("@dashboard/graphql") as jest.Mocked<typeof import("@dashboard/graphql")>),
   useExtensionListQuery: jest.fn(),
 }));
-jest.mock("../components/ExternalAppContext/ExternalAppContext", () => ({
-  useExternalApp: () => ({
-    openApp: mockOpenApp,
-  }),
+
+jest.mock("../components/AppExtensionContext/AppExtensionContextProvider", () => ({
+  useActiveAppExtension: jest.fn(),
 }));
 
+import { useActiveAppExtension } from "../components/AppExtensionContext/AppExtensionContextProvider";
 import { newTabActions } from "../new-tab-actions";
 
 const useUserPermissionsMock = jest.fn();
 const useExtensionListQueryMock = jest.fn();
+const useActiveAppExtensionMock = jest.fn();
 
 // Set up the mocks
 (useUserPermissions as jest.Mock).mockImplementation(useUserPermissionsMock);
 (useExtensionListQuery as jest.Mock).mockImplementation(useExtensionListQueryMock);
+(useActiveAppExtension as jest.Mock).mockImplementation(useActiveAppExtensionMock);
 
 describe("Extensions / hooks / useExtensions", () => {
   const mockExtensionsData = {
@@ -166,6 +168,7 @@ describe("Extensions / hooks / useExtensions", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    useActiveAppExtensionMock.mockReturnValue({ activate: mockOpenApp });
   });
 
   it("should fetch and return extensions grouped by mount", () => {
@@ -337,9 +340,10 @@ describe("Extensions / hooks / useExtensions", () => {
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
-    const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE][0];
+    const extension = result.current[
+      AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE
+    ][0] as ExtensionWithParams;
 
-    // @ts-expect-error - there are broken types in useExtensions - this hook should return either Extension or ExtensionWithParams
     extension.open(mockParams);
 
     // Assert
@@ -362,9 +366,11 @@ describe("Extensions / hooks / useExtensions", () => {
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
-    const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE][1]; // ext3 has null accessToken
+    const extension = result.current[
+      AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE
+    ][1] as ExtensionWithParams; // ext3 has null accessToken
 
-    extension.open();
+    extension.open({});
 
     // Assert
     expect(mockOpenApp).toHaveBeenCalledWith({
@@ -373,7 +379,7 @@ describe("Extensions / hooks / useExtensions", () => {
       src: "https://example.com/ext3",
       label: "Extension 3",
       target: "POPUP",
-      params: undefined,
+      params: {},
     });
   });
 
