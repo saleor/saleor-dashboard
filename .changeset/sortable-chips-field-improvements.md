@@ -2,7 +2,7 @@
 "saleor-dashboard": patch
 ---
 
-Enhanced SortableChipsField component with collapsible functionality and internationalization:
-- Added "Show less" button to collapse expanded chips list back to showing only the first 5 chips
-- Implemented proper internationalization for button text using react-intl
-- Users can now toggle between collapsed and expanded views of chip lists
+Improved handling of long reference attribute lists in Product Create, Product Edit, and Page Details views:
+- Reference attributes (like product references, page references, etc.) with more than 5 items now display a "Show less" button when expanded
+- Users can toggle between collapsed view (showing first 5 items) and expanded view (showing all items)
+- Makes working with products and pages that have many reference attributes more manageable
