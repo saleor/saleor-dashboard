@@ -68,3 +68,4 @@ export const getExtensionsItemsForPageTypeOverviewActions =
 export const getExtensionsItemsForPageTypeDetails = getExtensionsItemsWithParam("pageTypeId");
 export const getExtensionsItemsForMenuOverviewActions = getExtensionsItemsWithParam("menuIds");
 export const getExtensionsItemsForMenuDetails = getExtensionsItemsWithParam("menuId");
+export const getExtensionsItemsForTranslationDetails = getExtensionsItemsWithManyParams;

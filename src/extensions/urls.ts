@@ -45,6 +45,18 @@ export const ExtensionsPaths = {
   resolveEditPluginExtension: (id: string) => urlJoin(extensionsPluginSection, id),
 };
 
+type TranslationContext =
+  | "product"
+  | "variant"
+  | "category"
+  | "collection"
+  | "sale"
+  | "voucher"
+  | "model"
+  | "attribute"
+  | "shipping-method"
+  | "structure";
+
 export const MANIFEST_ATTR = "manifestUrl";
 export type ExtensionInstallQueryParams = { [MANIFEST_ATTR]?: string };
 export type ExtensionsListUrlDialog = "app-installation-remove";
@@ -74,6 +86,7 @@ export interface AppDetailsUrlMountQueryParams {
   pageTypeIds?: string[];
   menuId?: string;
   menuIds?: string[];
+  translationContext?: TranslationContext;
 }
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;
