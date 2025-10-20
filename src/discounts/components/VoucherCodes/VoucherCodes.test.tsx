@@ -7,19 +7,10 @@ import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReactNode } from "react";
-import { FormattedMessageProps } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
 import { VoucherCode } from "../VoucherCodesDatagrid/types";
 import { VoucherCodes, VoucherCodesProps } from "./VoucherCodes";
-
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: FormattedMessageProps) => <>{defaultMessage}</>,
-}));
 
 jest.mock("@dashboard/components/Datagrid/persistance/usePersistance", () => ({
   usePersistance: () => ({

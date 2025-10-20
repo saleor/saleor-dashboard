@@ -1,11 +1,12 @@
 import SectionRoute from "@dashboard/auth/components/SectionRoute";
 import { Route } from "@dashboard/components/Router";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { CustomAppDetailsUrlQueryParams } from "@dashboard/custom-apps/urls";
 import {
   AppDetailsUrlQueryParams,
+  CustomAppDetailsUrlQueryParams,
   ExtensionInstallQueryParams,
   ExtensionsPaths,
+  PluginUrlQueryParams,
 } from "@dashboard/extensions/urls";
 import { ExploreExtensions } from "@dashboard/extensions/views/ExploreExtensions/ExploreExtensions";
 import { InstallCustomExtension } from "@dashboard/extensions/views/InstallCustomExtension/InstallCustomExtension";
@@ -13,7 +14,6 @@ import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtens
 import { PermissionEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
-import { PluginUrlQueryParams } from "@dashboard/plugins/urls";
 import { parse as parseQs } from "qs";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";

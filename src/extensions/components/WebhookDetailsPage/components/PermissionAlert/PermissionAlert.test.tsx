@@ -10,12 +10,7 @@ jest.mock("@graphiql/toolkit", () => ({
   clear: jest.fn(),
   createGraphiQLFetcher: jest.fn(_x => jest.fn() as Fetcher),
 }));
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
+
 jest.mock("@saleor/macaw-ui", () => ({
   useTheme: jest.fn(() => () => ({})),
   useStyles: jest.fn(() => () => ({})),

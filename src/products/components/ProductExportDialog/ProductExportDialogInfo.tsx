@@ -14,7 +14,7 @@ import { FetchMoreProps } from "@dashboard/types";
 import { toggle } from "@dashboard/utils/lists";
 import { Button, CircularProgress, FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Option, Text } from "@saleor/macaw-ui-next";
+import { Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
 import { PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -205,12 +205,12 @@ const FieldAccordion = ({
 };
 
 interface ProductExportDialogInfoProps extends FetchMoreProps {
-  attributes: Option[];
+  attributes: MacawOptionType[];
   channels: ChannelFragment[];
   selectedChannels: ChannelFragment[];
-  warehouses: Option[];
+  warehouses: MacawOptionType[];
   data: ExportProductsInput;
-  selectedAttributes: Option[];
+  selectedAttributes: MacawOptionType[];
   onAttrtibuteSelect: FormChange;
   onWarehouseSelect: FormChange;
   onChange: FormChange;

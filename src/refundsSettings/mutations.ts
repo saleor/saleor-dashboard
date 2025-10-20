@@ -18,18 +18,18 @@ export const setRefundReasonType = gql`
 `;
 
 export const clearRefundReasonType = gql`
-    mutation ClearRefundReasonType() {
-      refundReasonReferenceClear {
-        errors {
-          message
-          code
-        }
-        refundSettings {
-          reasonReferenceType {
-            id
-            name
-          }
+  mutation ClearRefundReasonType {
+    refundReasonReferenceClear {
+      errors {
+        message
+        code
+      }
+      refundSettings {
+        reasonReferenceType {
+          id
+          name
         }
       }
     }
+  }
 `;

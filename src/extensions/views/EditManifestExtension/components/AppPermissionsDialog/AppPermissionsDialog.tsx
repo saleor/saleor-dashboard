@@ -1,6 +1,6 @@
-import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { getCustomAppErrorMessage } from "@dashboard/extensions/utils";
+import { useGetAvailableAppPermissions } from "@dashboard/extensions/views/EditManifestExtension/hooks/useGetAvailableAppPermissions";
 import { PermissionEnum, useAppQuery, useAppUpdatePermissionsMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";

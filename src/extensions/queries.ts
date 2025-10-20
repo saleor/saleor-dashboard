@@ -182,3 +182,85 @@ export const appWebhookDeliveries = gql`
     }
   }
 `;
+
+export const webhooksDetails = gql`
+  query WebhookDetails($id: ID!) {
+    webhook(id: $id) {
+      ...WebhookDetails
+    }
+  }
+`;
+
+export const pluginsList = gql`
+  query Plugins(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $filter: PluginFilterInput
+    $sort: PluginSortingInput
+  ) {
+    plugins(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      filter: $filter
+      sortBy: $sort
+    ) {
+      edges {
+        node {
+          ...PluginBase
+        }
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+`;
+
+export const pluginsDetails = gql`
+  query Plugin($id: ID!) {
+    plugin(id: $id) {
+      ...PluginsDetails
+    }
+  }
+`;
+
+export const appsList = gql`
+  query AppsList(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $sort: AppSortingInput
+    $filter: AppFilterInput
+    $canFetchAppEvents: Boolean!
+  ) {
+    apps(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      sortBy: $sort
+      filter: $filter
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      totalCount
+      edges {
+        node {
+          ...AppListItem
+        }
+      }
+    }
+  }
+`;

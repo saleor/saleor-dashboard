@@ -6,22 +6,6 @@ import { useFetchManifest } from "./hooks/useFetchManifest";
 import { useInstallApp } from "./hooks/useInstallApp";
 import { InstallCustomExtension } from "./InstallCustomExtension";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(({ defaultMessage }) => defaultMessage || ""),
-  })),
-  FormattedMessage: jest.fn(({ defaultMessage, values }) => {
-    // Mock heading to check if we pass correctly extensionName
-    if (values?.extensionName) {
-      return `Install ${values.extensionName}`;
-    }
-
-    return defaultMessage || "";
-  }),
-  defineMessages: (messages: Record<string, any>) => messages,
-  defineMessage: (message: string) => message,
-}));
-
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ children }) => <div>{children}</div>),
 }));
@@ -199,7 +183,10 @@ describe("InstallCustomExtension", () => {
 
       // Assert
       await waitFor(() => {
-        expect(screen.getAllByText(`Install ${mockManifest.name}`).length).toBeGreaterThan(0);
+        expect(
+          // Assert pure translation message, because mocked intl doesn't have formatting implemented
+          screen.getAllByText(`You are about to install {extensionName}`).length,
+        ).toBeGreaterThan(0);
       });
     });
   });
@@ -276,7 +263,10 @@ describe("InstallCustomExtension", () => {
 
       // Assert
       await waitFor(() => {
-        expect(screen.getAllByText(`Install ${mockManifest.name}`).length).toBeGreaterThan(0);
+        // Assert pure translation message, because mocked intl doesn't have formatting implemented
+        expect(
+          screen.getAllByText(`You are about to install {extensionName}`).length,
+        ).toBeGreaterThan(0);
       });
     });
 

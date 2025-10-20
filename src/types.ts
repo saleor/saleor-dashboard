@@ -3,7 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { UserPermissionFragment } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-import { FilterElement, IFilter } from "./components/Filter";
+import { FilterElement, IFilter } from "./components/Filter/types";
 
 export interface UserError {
   field: string | null;

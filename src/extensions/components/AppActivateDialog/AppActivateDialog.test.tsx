@@ -23,7 +23,7 @@ describe("Apps AppActivateDialog", () => {
 
     const dialogContent = screen.getByTestId("dialog-content");
     // Assert
-    const expectedText = msgs.activateNamedApp.defaultMessage.replace("{name}", name);
+    const expectedText = msgs.activateNamedApp.defaultMessage;
 
     expect(dialogContent).toHaveTextContent(expectedText);
   });

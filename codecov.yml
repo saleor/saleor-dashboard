@@ -1,11 +1,22 @@
 coverage:
   status:
+    patch:
+      default:
+        target: auto
     project:
       default:
         target: auto
 
 ignore:
   - "src/graphql/**"
+  - "./src/**/queries.ts"
+  - "./src/**/mutations.ts"
+  - "./src/**/fragments/*.ts"
+  - "./src/searches/*.ts"
   - ".featureFlags/**"
   - "testUtils/**"
   - "assets/**"
+  - "lint/**"
+  - "scripts/**"
+  - "**/*.config.js"
+  - "**/*.config.ts"

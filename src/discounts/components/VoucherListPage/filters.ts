@@ -1,4 +1,4 @@
-import { IFilter } from "@dashboard/components/Filter";
+import { IFilter } from "@dashboard/components/Filter/types";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
 import { FilterOpts, MinMax } from "@dashboard/types";
 import {

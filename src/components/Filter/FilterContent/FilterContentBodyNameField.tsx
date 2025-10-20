@@ -21,7 +21,7 @@ interface FilterContentBodyNameFieldProps<K extends string = string> {
   onFilterPropertyChange: FilterDispatchFunction<K>;
 }
 
-const FilterContentBodyNameField = ({
+export const FilterContentBodyNameField = ({
   filter,
   onFilterPropertyChange,
 }: FilterContentBodyNameFieldProps) => {
@@ -50,5 +50,3 @@ const FilterContentBodyNameField = ({
     </div>
   );
 };
-
-export default FilterContentBodyNameField;

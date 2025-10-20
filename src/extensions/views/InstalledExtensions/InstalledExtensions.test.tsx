@@ -27,15 +27,6 @@ jest.mock("@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext", () =
   }),
 }));
 
-jest.mock("react-intl", () => ({
-  useIntl: () => ({
-    formatMessage: (message: { defaultMessage: string }) => message.defaultMessage || "",
-  }),
-  FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
-  defineMessages: (messages: Record<string, any>) => messages,
-  defineMessage: (message: string) => message,
-}));
-
 jest.mock("@dashboard/utils/handlers/dialogActionHandlers", () => ({
   __esModule: true,
   default: () => [mockOpenModal, mockCloseModal],

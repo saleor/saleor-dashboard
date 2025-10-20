@@ -1,19 +1,10 @@
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { render, screen } from "@testing-library/react";
 import * as React from "react";
-import { FormattedMessageProps } from "react-intl";
 
 import { AppInstallButton } from "./AppInstallButton";
 
 jest.mock("@dashboard/hooks/useHasManagedAppsPermission");
-
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: ({ defaultMessage }: FormattedMessageProps) => <>{defaultMessage}</>,
-}));
 
 jest.mock("@dashboard/featureFlags", () => ({
   useFlag: jest.fn(() => ({ enabled: true })),

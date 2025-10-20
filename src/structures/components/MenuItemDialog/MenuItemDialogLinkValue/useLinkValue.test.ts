@@ -5,13 +5,6 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useLinkValue } from "./useLinkValue";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
-
 jest.mock("@dashboard/searches/useCategorySearch");
 jest.mock("@dashboard/searches/useCollectionSearch");
 jest.mock("@dashboard/searches/usePageSearch");

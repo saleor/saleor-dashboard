@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 
-import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
+import { useStyles } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/styles";
 import { useQuery } from "@dashboard/hooks/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Radio } from "@material-ui/core";

@@ -25,6 +25,7 @@ const config = {
   transformIgnorePatterns: ["/node_modules/(?!chroma-js/.*)"],
   moduleNameMapper: {
     "\\.(css)$": "identity-obj-proxy",
+    "^react-intl$": "<rootDir>/__mocks__/react-intl.ts",
     "@assets(.*)$": "<rootDir>/assets/$1",
     "@locale(.*)$": "<rootDir>/locale/$1",
     "@dashboard(.*)$": "<rootDir>/src/$1",
@@ -38,4 +39,5 @@ const config = {
   collectCoverageFrom: ["<rootDir>/src/**/*.{ts,tsx}"],
 };
 
+// eslint-disable-next-line no-undef
 module.exports = config;

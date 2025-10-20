@@ -1,10 +1,9 @@
-import { IntlConfig, IntlShape } from "react-intl/src/types";
+import { IntlConfig } from "react-intl/src/types";
+import { createIntl } from "react-intl";
 
-export const config: IntlConfig = {
+export const testIntlConfig: IntlConfig = {
   defaultLocale: "en",
   locale: "en",
 };
 
-export const intlMock = {
-  formatMessage: ({ defaultMessage }) => defaultMessage,
-} as IntlShape;
+export const testIntlInstance = createIntl(testIntlConfig);

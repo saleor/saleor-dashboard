@@ -1,6 +1,5 @@
-import { AppPaths } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
-import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { ExtensionsUrls, LegacyAppPaths } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
@@ -53,7 +52,7 @@ const useHandleRedirectAction = (appId: string) => {
     debug("Handling deep app URL change");
 
     const getNewExactLocation = () => {
-      const legacyAppPath = AppPaths.resolveAppPath(appId);
+      const legacyAppPath = LegacyAppPaths.resolveAppPath(appId);
 
       if (action.payload.to.startsWith(legacyAppPath)) {
         /* Some apps might have used path in dashboard to /apps/XYZ/app/... as a way

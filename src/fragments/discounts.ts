@@ -306,7 +306,6 @@ export const promotionDetailsFragments = gql`
     description
     startDate
     endDate
-    type
     rules {
       ...PromotionRuleDetails
     }

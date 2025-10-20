@@ -184,7 +184,7 @@ export const OrderManualTransactionRefundPage = ({
             <Box marginBottom={"auto"}>
               <Reason />
             </Box>
-            <DashboardCard.Content>
+            <DashboardCard.Content marginTop={4}>
               <OrderManualTransactionRefundWarning />
             </DashboardCard.Content>
           </Box>
