@@ -3,7 +3,7 @@ import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
 import { OrderAction, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { getDiscountTypeLabel } from "@dashboard/orders/utils/data";
-import { OrderDetailsViewModel } from "@dashboard/orders-v2/order-details-view-model";
+import { OrderDetailsViewModel } from "@dashboard/ordersV2/OrderDetailsViewModel";
 import { Button, Divider, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { FormattedMessage, useIntl } from "react-intl";
