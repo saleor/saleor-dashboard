@@ -6,11 +6,12 @@ interface UserAvatarProps {
   initials?: string;
   className?: string;
   style?: React.CSSProperties;
+  scheme?: "accent1" | "transparent";
 }
 
-export const UserAvatar = ({ url, initials, ...rest }: UserAvatarProps) =>
+export const UserAvatar = ({ url, initials, scheme = "accent1", ...rest }: UserAvatarProps) =>
   url ? (
-    <Avatar.User scheme="accent1" src={url} {...rest} />
+    <Avatar.User scheme={scheme} src={url} {...rest} />
   ) : (
-    <Avatar.User scheme="accent1" initials={initials} {...rest} />
+    <Avatar.User scheme={scheme} initials={initials} {...rest} />
   );

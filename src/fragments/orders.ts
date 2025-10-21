@@ -682,6 +682,11 @@ export const fragmentOrderGrantedRefunds = gql`
     app {
       id
       name
+      brand {
+        logo {
+          default(format: WEBP, size: 64)
+        }
+      }
     }
     lines {
       id

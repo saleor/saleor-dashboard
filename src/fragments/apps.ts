@@ -111,7 +111,11 @@ export const appAvatarFragment = gql`
   fragment AppAvatar on App {
     id
     name
-    # TODO: Add app image
+    brand {
+      logo {
+        default(format: WEBP, size: 64)
+      }
+    }
   }
 `;
 

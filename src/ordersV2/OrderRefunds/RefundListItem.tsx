@@ -1,9 +1,8 @@
-import { getUserInitials } from "@dashboard/misc";
+import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { PencilIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import { UserAvatar } from "../UserAvatar";
 import { OrderRefundDisplay, OrderRefundsViewModel } from "./OrderRefundsViewModel";
 import { StatusBadge } from "./StatusBadge";
 
@@ -26,8 +25,12 @@ export const RefundListItem = ({ refund, onEditRefund, ...props }: RefundListIte
       {...props}
     >
       <Box display="flex" alignItems="center" gap={3}>
-        {refund.user ? (
-          <UserAvatar initials={getUserInitials(refund.user) || ""} />
+        {refund.creator ? (
+          <UserAvatar
+            initials={refund.creator.initials}
+            url={refund.creator.logoUrl ?? undefined}
+            scheme="transparent"
+          />
         ) : (
           <Box width={8} height={8} />
         )}
