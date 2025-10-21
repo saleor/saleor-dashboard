@@ -95,6 +95,7 @@ const createOrderRefundDisplay = (overrides: Partial<OrderRefundDisplay>): Order
       amount: 100,
       currency: "USD",
     },
+    creator: null,
     ...overrides,
   };
 };
@@ -445,6 +446,7 @@ Array [
       __typename: "App" as const,
       id: "app-1",
       name: "Test App",
+      brand: null,
     };
 
     it.each([
@@ -498,7 +500,7 @@ Array [
   describe("findLatestEventWithUserAuthor", () => {
     const appEvent = createTransactionEvent({
       id: "app-event",
-      createdBy: { __typename: "App" as const, id: "app-1", name: "Test App" },
+      createdBy: { __typename: "App" as const, id: "app-1", name: "Test App", brand: null },
     });
 
     const userEvent = createTransactionEvent({
@@ -578,7 +580,7 @@ Array [
       const appEvent = createTransactionEvent({
         id: "app-event",
         createdAt: "2023-01-01T10:00:00Z",
-        createdBy: { __typename: "App" as const, id: "app-1", name: "Test App" },
+        createdBy: { __typename: "App" as const, id: "app-1", name: "Test App", brand: null },
       });
       const userEvent = createTransactionEvent({
         id: "user-event",

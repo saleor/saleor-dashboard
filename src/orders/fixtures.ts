@@ -2742,6 +2742,7 @@ export const transactionApp: AppAvatarFragment = {
   name: "Checkout App",
   id: "1234",
   __typename: "App",
+  brand: null,
 };
 
 export const transactionEvent: Omit<TransactionEventFragment, "createdBy"> & {
@@ -3507,7 +3508,7 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     shippingCostsIncluded: true,
     amount: prepareMoney(),
     reason: "Products returned",
-    app: { id: "123", name: "Saleor Checkout", __typename: "App" },
+    app: { id: "123", name: "Saleor Checkout", __typename: "App", brand: null },
     user: null,
     createdAt: "2022-08-22T10:40:22.226875+00:00",
     __typename: "OrderGrantedRefund",

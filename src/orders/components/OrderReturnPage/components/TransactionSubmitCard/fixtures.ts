@@ -27,6 +27,7 @@ export const singleRefundableTransaction = [
           __typename: "App" as const,
           id: "QXBwOjY1",
           name: "Dummy Payment App",
+          brand: null,
         },
         externalUrl: "",
       },
