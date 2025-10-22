@@ -12,7 +12,6 @@ export const appExtensionManifest = z
     url: z.string().min(1),
     mount: ALL_APP_EXTENSION_MOUNTS,
     target: AppExtensionManifestTarget.default("POPUP"),
-    // todo add permissions check
     permissions: z.array(z.string()).optional().default([]),
     options: appExtensionManifestOptionsSchema.optional(),
   })
