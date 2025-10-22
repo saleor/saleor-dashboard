@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql";
@@ -74,7 +75,18 @@ const TranslationsProductsPage = ({
         )}
       >
         <Box display="flex" gap={3}>
-          <Box>todo apps here</Box>
+          {menuItems.length > 0 && (
+            <ExtensionsButtonSelector
+              extensions={menuItems}
+              onClick={extension => {
+                extension.onSelect({
+                  translationContext: "product",
+                  productId: productId,
+                  // todo pass translation-specific params
+                });
+              }}
+            />
+          )}
           <ProductContextSwitcher
             productId={productId}
             selectedId={productId}

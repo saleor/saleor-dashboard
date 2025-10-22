@@ -1,7 +1,7 @@
 import { ExtensionWithParams } from "./types";
 import { AppDetailsUrlMountQueryParams } from "./urls";
 
-interface ExtensionMenuItem {
+export interface ExtensionMenuItem {
   label: string;
   testId: string;
   onSelect: (params: AppDetailsUrlMountQueryParams) => void;

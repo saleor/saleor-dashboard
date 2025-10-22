@@ -1,12 +1,10 @@
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ExtensionMenuItem } from "@dashboard/extensions/getExtensionsItems";
 import { Box, Text } from "@saleor/macaw-ui-next";
 
 type ExtensionsButtonSelectorProps = {
-  extensions: Array<{
-    id: string;
-    name: string;
-  }>;
-  onClick(id: string): void;
+  extensions: Array<ExtensionMenuItem>;
+  onClick(ext: ExtensionMenuItem): void;
 };
 
 // todo implement "pin" functionality to keep selected extension on first position
@@ -23,13 +21,13 @@ export const ExtensionsButtonSelector = ({
       </Text>
       <ButtonGroupWithDropdown
         variant="secondary"
-        onClick={() => onClick(firstExtension.id)}
+        onClick={() => onClick(firstExtension)}
         options={dropdownExtensions.map(ext => ({
-          label: ext.name,
-          onSelect: () => onClick(ext.id),
+          label: ext.label,
+          onSelect: () => onClick(ext),
         }))}
       >
-        {firstExtension.name}
+        {firstExtension.label}
       </ButtonGroupWithDropdown>
     </Box>
   );
