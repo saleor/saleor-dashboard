@@ -3,6 +3,9 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
+import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -46,6 +49,12 @@ const TranslationsProductsPage = ({
 }: TranslationsProductsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  // @ts-expect-error - not yet in schema
+  const { TRANSLATION_DETAILS } = useExtensions("TRANSLATION_DETAILS");
+  const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATION_DETAILS, {
+    translationContext: "product",
+    productId: productId,
+  });
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -66,6 +75,18 @@ const TranslationsProductsPage = ({
         )}
       >
         <Box display="flex" gap={3}>
+          {menuItems.length > 0 && (
+            <ExtensionsButtonSelector
+              extensions={menuItems}
+              onClick={extension => {
+                extension.onSelect({
+                  translationContext: "product",
+                  productId: productId,
+                  // todo pass translation-specific params
+                });
+              }}
+            />
+          )}
           <ProductContextSwitcher
             productId={productId}
             selectedId={productId}
