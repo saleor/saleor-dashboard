@@ -56,6 +56,8 @@ export const InstallCustomExtensionFromUrl = ({
     manifest,
   });
 
+  // todo validate manifest
+
   return (
     <>
       <InstallTopNav
