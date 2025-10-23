@@ -1,4 +1,5 @@
 import { Savebar } from "@dashboard/components/Savebar";
+import { ExtensionManifestValidator } from "@dashboard/extensions/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box } from "@saleor/macaw-ui-next";
@@ -18,6 +19,8 @@ import { ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestUrlForm } from "../ManifestUrlForm/ManifestUrlForm";
+
+const manifestValidator = new ExtensionManifestValidator();
 
 export const InstallCustomExtensionFromForm = ({
   control,
@@ -50,6 +53,9 @@ export const InstallCustomExtensionFromForm = ({
     getValues,
     manifest,
   });
+
+  console.log(manifest);
+  console.log(manifestValidator.validateAppManifest(manifest));
 
   return (
     <>

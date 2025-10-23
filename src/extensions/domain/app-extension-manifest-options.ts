@@ -1,4 +1,4 @@
-import { z } from "zod/index";
+import { z } from "zod";
 
 const httpMethodSchema = z.enum(["GET", "POST"], { message: "Method must be either GET or POST" });
 

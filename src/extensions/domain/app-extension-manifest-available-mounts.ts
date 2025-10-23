@@ -1,4 +1,4 @@
-import { z } from "zod/index";
+import { z } from "zod";
 
 const PRODUCT_MOUNTS = [
   "PRODUCT_OVERVIEW_CREATE",

@@ -1,4 +1,5 @@
 import { Savebar } from "@dashboard/components/Savebar";
+import { ExtensionManifestValidator } from "@dashboard/extensions/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
 import { Box } from "@saleor/macaw-ui-next";
@@ -20,6 +21,8 @@ import { ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestErrorMessage } from "../ManifestErrorMessage/ManifestErrorMessage";
+
+const manifestValidator = new ExtensionManifestValidator();
 
 export const InstallCustomExtensionFromUrl = ({
   trigger,
@@ -55,6 +58,9 @@ export const InstallCustomExtensionFromUrl = ({
     getValues,
     manifest,
   });
+
+  coonsole.log(manifest);
+  console.log(manifestValidator.validateAppManifest(manifest));
 
   // todo validate manifest
 

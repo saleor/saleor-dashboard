@@ -1,5 +1,5 @@
 import { appExtensionManifest } from "@dashboard/extensions/domain/app-extension-manifest";
-import { z } from "zod/index";
+import { z } from "zod";
 
 // For now contains only partial fields, because Saleor is validating manifest anyway.
 // Subset here serves only fields needed for dashboard extensions.
