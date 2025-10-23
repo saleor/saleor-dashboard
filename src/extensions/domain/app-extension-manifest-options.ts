@@ -1,9 +1,6 @@
 import { z } from "zod/index";
 
-const httpMethodSchema = z.enum(["GET", "POST"], {
-  // todo errorMap or message?
-  errorMap: () => ({ message: "Method must be either GET or POST" }),
-});
+const httpMethodSchema = z.enum(["GET", "POST"], { message: "Method must be either GET or POST" });
 
 const newTabTargetOptionsSchema = z.object({
   method: httpMethodSchema,
