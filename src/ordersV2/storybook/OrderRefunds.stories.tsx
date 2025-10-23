@@ -2,7 +2,7 @@ import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { OrderRefunds } from "../OrderRefunds/OrderRefunds";
-import * as testLogo from "./testLogo.webp";
+import testLogo from "./testLogo.webp";
 
 const meta = {
   title: "Order Detail Page / Content / Refunds",
@@ -69,7 +69,7 @@ export const Failure: Story = {
         },
         creator: {
           initials: "AD",
-          logoUrl: testLogo.default,
+          logoUrl: testLogo,
         },
       },
     ],
