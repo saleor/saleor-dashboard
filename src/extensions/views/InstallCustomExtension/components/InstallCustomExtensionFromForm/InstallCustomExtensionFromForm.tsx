@@ -3,6 +3,7 @@ import { ExtensionManifestValidator } from "@dashboard/extensions/extension-mani
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import {
   Control,
   UseFormGetValues,
@@ -54,8 +55,11 @@ export const InstallCustomExtensionFromForm = ({
     manifest,
   });
 
-  console.log(manifest);
-  console.log(manifestValidator.validateAppManifest(manifest));
+  const issues = useMemo(() => {
+    const manifestValidation = manifestValidator.validateAppManifest(manifest);
+
+    return "issues" in manifestValidation ? manifestValidation.issues : undefined;
+  }, [manifest]);
 
   return (
     <>
@@ -77,6 +81,7 @@ export const InstallCustomExtensionFromForm = ({
           manifest={manifest}
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
+          issues={issues}
         />
       </Box>
       <Savebar>

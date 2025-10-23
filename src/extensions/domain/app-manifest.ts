@@ -5,8 +5,17 @@ import { z } from "zod";
 // Subset here serves only fields needed for dashboard extensions.
 export const appManifestSchema = z
   .object({
+    // todo temp: to test issues
+    name: z.string().min(50),
     appUrl: z.string().optional(),
-    permissions: z.array(z.string()).optional().default([]),
+    permissions: z
+      .array(
+        z.object({
+          code: z.string(),
+        }),
+      )
+      .optional()
+      .default([]),
     extensions: z.array(appExtensionManifest).optional().default([]),
   })
   .refine(
@@ -28,7 +37,9 @@ export const appManifestSchema = z
     data => {
       // Validate extension permissions are subset of app permissions
       return data.extensions.every(ext => {
-        return ext.permissions.every(perm => data.permissions.includes(perm));
+        return ext.permissions.every(extPerm =>
+          data.permissions.find(perm => perm.code === extPerm),
+        );
       });
     },
     {
