@@ -2,6 +2,7 @@ import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { OrderRefunds } from "../OrderRefunds/OrderRefunds";
+import testLogo from "./testLogo.webp";
 
 const meta = {
   title: "Order Detail Page / Content / Refunds",
@@ -37,6 +38,10 @@ export const Success: Story = {
           firstName: "John",
           lastName: "Doe",
         },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
+        },
       },
     ],
   },
@@ -62,6 +67,10 @@ export const Failure: Story = {
           firstName: "John",
           lastName: "Doe",
         },
+        creator: {
+          initials: "AD",
+          logoUrl: testLogo,
+        },
       },
     ],
   },
@@ -86,6 +95,10 @@ export const Pending: Story = {
           email: "customer@example.com",
           firstName: "John",
           lastName: "Doe",
+        },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
         },
       },
     ],
@@ -113,6 +126,10 @@ export const withGrantedRefunds: Story = {
           firstName: "John",
           lastName: "Doe",
         },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
+        },
       },
     ],
   },
@@ -137,6 +154,10 @@ export const withEditableRefund: Story = {
           email: "customer@example.com",
           firstName: "John",
           lastName: "Doe",
+        },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
         },
       },
     ],
@@ -163,6 +184,10 @@ export const WithMultipleRefunds: Story = {
           firstName: "John",
           lastName: "Doe",
         },
+        creator: {
+          initials: "JD",
+          logoUrl: null,
+        },
       },
       {
         id: "2",
@@ -176,6 +201,10 @@ export const WithMultipleRefunds: Story = {
           amount: 100,
         },
         user: null,
+        creator: {
+          initials: "JD",
+          logoUrl: null,
+        },
       },
     ],
   },
