@@ -6,7 +6,7 @@ describe("App Manifest Schema", () => {
       // Arrange
       const validData = {
         appUrl: "https://example.com",
-        permissions: ["MANAGE_PRODUCTS", "MANAGE_ORDERS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }, { code: "MANAGE_ORDERS" }],
         extensions: [
           {
             label: "My Extension",
@@ -24,7 +24,10 @@ describe("App Manifest Schema", () => {
 
       if (result.success) {
         expect(result.data.appUrl).toBe("https://example.com");
-        expect(result.data.permissions).toEqual(["MANAGE_PRODUCTS", "MANAGE_ORDERS"]);
+        expect(result.data.permissions).toEqual([
+          { code: "MANAGE_PRODUCTS" },
+          { code: "MANAGE_ORDERS" },
+        ]);
         expect(result.data.extensions).toHaveLength(1);
       }
     });
@@ -51,7 +54,7 @@ describe("App Manifest Schema", () => {
     it("should accept manifest with only permissions", () => {
       // Arrange
       const validData = {
-        permissions: ["MANAGE_PRODUCTS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }],
       };
 
       // Act
@@ -61,7 +64,7 @@ describe("App Manifest Schema", () => {
       expect(result.success).toBe(true);
 
       if (result.success) {
-        expect(result.data.permissions).toEqual(["MANAGE_PRODUCTS"]);
+        expect(result.data.permissions).toEqual([{ code: "MANAGE_PRODUCTS" }]);
         expect(result.data.appUrl).toBeUndefined();
         expect(result.data.extensions).toEqual([]); // default value
       }
@@ -87,7 +90,7 @@ describe("App Manifest Schema", () => {
       // Arrange
       const validData = {
         appUrl: "https://example.com",
-        permissions: ["MANAGE_PRODUCTS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }],
         extensions: [
           {
             label: "Extension",
@@ -154,7 +157,7 @@ describe("App Manifest Schema", () => {
     it("should reject when extension permission is not in app permissions", () => {
       // Arrange
       const invalidData = {
-        permissions: ["MANAGE_PRODUCTS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }],
         extensions: [
           {
             label: "Extension",
@@ -181,7 +184,7 @@ describe("App Manifest Schema", () => {
     it("should accept when all extension permissions are subset of app permissions", () => {
       // Arrange
       const validData = {
-        permissions: ["MANAGE_PRODUCTS", "MANAGE_ORDERS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }, { code: "MANAGE_ORDERS" }],
         extensions: [
           {
             label: "Extension",
@@ -202,7 +205,7 @@ describe("App Manifest Schema", () => {
     it("should accept extension with empty permissions", () => {
       // Arrange
       const validData = {
-        permissions: ["MANAGE_PRODUCTS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }],
         extensions: [
           {
             label: "Extension",
@@ -223,7 +226,7 @@ describe("App Manifest Schema", () => {
     it("should reject when any extension permission is not in app permissions", () => {
       // Arrange
       const invalidData = {
-        permissions: ["MANAGE_PRODUCTS", "MANAGE_ORDERS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }, { code: "MANAGE_ORDERS" }],
         extensions: [
           {
             label: "Extension",
@@ -253,7 +256,7 @@ describe("App Manifest Schema", () => {
       // Arrange
       const validData = {
         appUrl: "https://example.com",
-        permissions: ["MANAGE_PRODUCTS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }],
         extensions: [
           {
             label: "Product Extension",
@@ -329,7 +332,7 @@ describe("App Manifest Schema", () => {
       // Arrange
       const dataWithExtra = {
         appUrl: "https://example.com",
-        permissions: ["MANAGE_PRODUCTS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }],
         extraField: "should be ignored",
       };
 

@@ -5566,6 +5566,9 @@
     "context": "helper text",
     "string": "All items refunded"
   },
+  "Wj5TbN": {
+    "string": "Issues"
+  },
   "Wk00wL": {
     "string": "Join the open source community"
   },
@@ -9941,6 +9944,9 @@
   "ytKTTO": {
     "context": "draft orders section name",
     "string": "Drafts"
+  },
+  "yyJcyW": {
+    "string": "App manifest contains issues. You can still install it, but it may not work properly. See technical details below:"
   },
   "yzYXW/": {
     "context": "header, dialog",
