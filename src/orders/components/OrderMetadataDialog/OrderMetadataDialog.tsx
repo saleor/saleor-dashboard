@@ -1,6 +1,5 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
-import { MetadataFormData, MetadataNoMemo } from "@dashboard/components/Metadata";
-import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -11,12 +10,18 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
+import { NestedMetadataHookForm } from "./NestedMetadataHookForm";
 import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 import { useMetadataValues } from "./useMetadataValues";
 
 export type OrderMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
+
+export interface OrderAndVariantMetadataFormData {
+  orderLine: MetadataFormData;
+  variant: MetadataFormData;
+}
 
 interface OrderMetadataDialogProps {
   open: boolean;
@@ -38,14 +43,20 @@ export const OrderMetadataDialog = ({
   });
   const hasManageProducts = useHasManageProductsPermission();
 
-  const formMethods = useForm<MetadataFormData>({
+  const formMethods = useForm<OrderAndVariantMetadataFormData>({
     // Display last submitted data while re-fetching to avoid flicker on UI
     values: submitInProgress
       ? lastSubmittedData
       : {
           // Removes __typename from metadata item object
-          metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
-          privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+          orderLine: {
+            metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
+            privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+          },
+          variant: {
+            metadata: (data?.variant?.metadata ?? []).map(mapMetadataItemToInput),
+            privateMetadata: (data?.variant?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+          },
         },
   });
 
@@ -97,13 +108,14 @@ export const OrderMetadataDialog = ({
                   </Text>
                 </Box>
 
-                <MetadataHookForm
+                <NestedMetadataHookForm
                   isLoading={loading && !data}
                   disabled={loading || submitInProgress}
                   control={control}
                   getValues={getValues}
                   trigger={trigger}
                   formErrors={formState.errors}
+                  fieldPrefix="orderLine"
                 />
               </Box>
               <Divider />
@@ -117,30 +129,28 @@ export const OrderMetadataDialog = ({
                   <Text as="h2" size={5} fontWeight="bold">
                     <FormattedMessage
                       defaultMessage="Product variant metadata"
-                      description="modal header, read-only product variant metadata"
-                      id="PH4R7g"
+                      description="modal header, editable product variant metadata"
+                      id="hQDWIw"
                     />
                   </Text>
                   <Text>
                     <FormattedMessage
                       defaultMessage="This is a metadata of the variant that is being used in this ordered item"
-                      description="modal subheader, read-only product variant metadata"
-                      id="/mwSjm"
+                      description="modal subheader, editable product variant metadata"
+                      id="tquei9"
                     />
                   </Text>
                 </Box>
 
-                {/* We cannot use memo, because it won't show loading state correctly */}
-                <MetadataNoMemo
-                  onChange={() => undefined}
-                  readonly
+                <NestedMetadataHookForm
                   isLoading={loading && !data}
-                  data={{
-                    metadata: data?.variant?.metadata ?? [],
-                    privateMetadata: data?.variant?.privateMetadata ?? [],
-                  }}
+                  disabled={loading || submitInProgress || !hasManageProducts}
+                  control={control}
+                  getValues={getValues}
+                  trigger={trigger}
+                  formErrors={formState.errors}
+                  fieldPrefix="variant"
                   hidePrivateMetadata={!hasManageProducts}
-                  paddingBottom={0}
                 />
               </Box>
             </Box>
