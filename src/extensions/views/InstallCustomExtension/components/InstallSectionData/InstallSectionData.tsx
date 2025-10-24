@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { Control, useWatch } from "react-hook-form";
-import { ZodIssue } from "zod/index";
+import { ZodIssue } from "zod";
 
 import { ExtensionInstallFormData, InstallDetailsManifestData } from "../../types";
 import { InstallExtensionManifestData } from "./InstallExtensionManifestData/InstallExtensionManifestData";
