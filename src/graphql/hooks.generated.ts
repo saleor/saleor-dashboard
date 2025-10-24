@@ -17,6 +17,16 @@ export const AppManifestFragmentDoc = gql`
   dataPrivacyUrl
   homepageUrl
   supportUrl
+  extensions {
+    target
+    permissions {
+      code
+      name
+    }
+    mount
+    url
+    label
+  }
   permissions {
     code
     name

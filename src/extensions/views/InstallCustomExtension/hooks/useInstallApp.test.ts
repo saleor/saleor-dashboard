@@ -1,4 +1,4 @@
-import { PermissionEnum, useAppInstallMutation } from "@dashboard/graphql";
+import { AppManifestFragment, PermissionEnum, useAppInstallMutation } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -55,7 +55,8 @@ describe("useInstallApp", () => {
     appUrl: null,
     tokenTargetUrl: null,
     brand: null,
-  };
+    extensions: [],
+  } satisfies AppManifestFragment;
   const mockNavigate = jest.fn();
   const mockNotify = jest.fn();
   const mockSetActiveInstallations = jest.fn();

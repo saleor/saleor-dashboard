@@ -1,7 +1,9 @@
 import { Savebar } from "@dashboard/components/Savebar";
+import { ExtensionManifestValidator } from "@dashboard/extensions/domain/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import {
   Control,
   UseFormGetValues,
@@ -20,6 +22,8 @@ import { ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestErrorMessage } from "../ManifestErrorMessage/ManifestErrorMessage";
+
+const manifestValidator = new ExtensionManifestValidator();
 
 export const InstallCustomExtensionFromUrl = ({
   trigger,
@@ -56,6 +60,12 @@ export const InstallCustomExtensionFromUrl = ({
     manifest,
   });
 
+  const issues = useMemo(() => {
+    const manifestValidation = manifestValidator.validateAppManifest(manifest);
+
+    return "issues" in manifestValidation ? manifestValidation.issues : undefined;
+  }, [manifest]);
+
   return (
     <>
       <InstallTopNav
@@ -68,6 +78,7 @@ export const InstallCustomExtensionFromUrl = ({
           manifest={manifest}
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
+          issues={issues}
         />
         <ManifestErrorMessage error={errors.manifestUrl} />
       </Box>

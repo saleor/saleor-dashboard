@@ -1,7 +1,9 @@
 import { Savebar } from "@dashboard/components/Savebar";
+import { ExtensionManifestValidator } from "@dashboard/extensions/domain/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { useAutoSubmit } from "@dashboard/utils/hook-form/auto-submit";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import {
   Control,
   UseFormGetValues,
@@ -18,6 +20,8 @@ import { ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestUrlForm } from "../ManifestUrlForm/ManifestUrlForm";
+
+const manifestValidator = new ExtensionManifestValidator();
 
 export const InstallCustomExtensionFromForm = ({
   control,
@@ -51,6 +55,12 @@ export const InstallCustomExtensionFromForm = ({
     manifest,
   });
 
+  const issues = useMemo(() => {
+    const manifestValidation = manifestValidator.validateAppManifest(manifest);
+
+    return "issues" in manifestValidation ? manifestValidation.issues : undefined;
+  }, [manifest]);
+
   return (
     <>
       <InstallTopNav title={intl.formatMessage(headerTitles.addCustomExtensionManifest)} />
@@ -71,6 +81,7 @@ export const InstallCustomExtensionFromForm = ({
           manifest={manifest}
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
+          issues={issues}
         />
       </Box>
       <Savebar>
