@@ -3,6 +3,7 @@ import { ExtensionManifestValidator } from "@dashboard/extensions/extension-mani
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import {
   Control,
   UseFormGetValues,
@@ -59,10 +60,11 @@ export const InstallCustomExtensionFromUrl = ({
     manifest,
   });
 
-  coonsole.log(manifest);
-  console.log(manifestValidator.validateAppManifest(manifest));
+  const issues = useMemo(() => {
+    const manifestValidation = manifestValidator.validateAppManifest(manifest);
 
-  // todo validate manifest
+    return "issues" in manifestValidation ? manifestValidation.issues : undefined;
+  }, [manifest]);
 
   return (
     <>
@@ -76,6 +78,7 @@ export const InstallCustomExtensionFromUrl = ({
           manifest={manifest}
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
+          issues={issues}
         />
         <ManifestErrorMessage error={errors.manifestUrl} />
       </Box>

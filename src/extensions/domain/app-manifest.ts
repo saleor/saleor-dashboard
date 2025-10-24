@@ -5,8 +5,6 @@ import { z } from "zod";
 // Subset here serves only fields needed for dashboard extensions.
 export const appManifestSchema = z
   .object({
-    // todo temp: to test issues
-    name: z.string().min(50),
     appUrl: z.string().optional(),
     permissions: z
       .array(
