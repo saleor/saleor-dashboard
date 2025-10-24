@@ -41,4 +41,5 @@ export const appAvatarFixture: AppAvatarFragment = {
   id: "QXBwOjE3Ng==",
   name: "app",
   __typename: "App",
+  brand: null,
 };

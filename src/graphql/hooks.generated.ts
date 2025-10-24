@@ -1649,6 +1649,11 @@ export const AppAvatarFragmentDoc = gql`
     fragment AppAvatar on App {
   id
   name
+  brand {
+    logo {
+      default(format: WEBP, size: 64)
+    }
+  }
 }
     `;
 export const TransactionEventFragmentDoc = gql`
@@ -1800,6 +1805,11 @@ export const OrderGrantedRefundFragmentDoc = gql`
   app {
     id
     name
+    brand {
+      logo {
+        default(format: WEBP, size: 64)
+      }
+    }
   }
   lines {
     id
