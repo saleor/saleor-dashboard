@@ -1,5 +1,5 @@
 import { Savebar } from "@dashboard/components/Savebar";
-import { ExtensionManifestValidator } from "@dashboard/extensions/extension-manifest-validator";
+import { ExtensionManifestValidator } from "@dashboard/extensions/domain/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
 import { Box } from "@saleor/macaw-ui-next";
