@@ -312,10 +312,6 @@
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
   },
-  "/mwSjm": {
-    "context": "modal subheader, read-only product variant metadata",
-    "string": "This is a metadata of the variant that is being used in this ordered item"
-  },
   "/n+NRO": {
     "string": "Note id"
   },
@@ -4328,10 +4324,6 @@
   "PFtMy9": {
     "string": "Canceled"
   },
-  "PH4R7g": {
-    "context": "modal header, read-only product variant metadata",
-    "string": "Product variant metadata"
-  },
   "PHT8z1": {
     "context": "extension form permissions section header",
     "string": "Permissions"
@@ -7219,6 +7211,10 @@
   "hPB89Y": {
     "string": "No invoices to be shown"
   },
+  "hQDWIw": {
+    "context": "modal header, editable product variant metadata",
+    "string": "Product variant metadata"
+  },
   "hS+ZjH": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete this webhook?"
@@ -9124,6 +9120,10 @@
   "tqJwfo": {
     "context": "button",
     "string": "Set end date"
+  },
+  "tquei9": {
+    "context": "modal subheader, editable product variant metadata",
+    "string": "This is a metadata of the variant that is being used in this ordered item"
   },
   "tsL3IW": {
     "context": "gift card history message",

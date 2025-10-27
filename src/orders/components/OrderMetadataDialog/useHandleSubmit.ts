@@ -37,6 +37,7 @@ export const useHandleOrderLineMetadataSubmit = ({
 
     return createMetadataUpdateHandler(
       initialData,
+      // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
       () => Promise.resolve([]),
       variables => updateMetadata({ variables }),
       variables => updatePrivateMetadata({ variables }),
@@ -44,6 +45,9 @@ export const useHandleOrderLineMetadataSubmit = ({
   }, [initialData, updateMetadata, updatePrivateMetadata]);
 
   const variantSubmitHandler = useMemo(() => {
+    // Fallback handler: If there is no variant data to submit,
+    // return a promise resolving to an empty error array.
+    // This is appropriate because no submission occurs, so no errors are possible.
     if (!initialData?.variant) {
       return () => Promise.resolve([]);
     }
