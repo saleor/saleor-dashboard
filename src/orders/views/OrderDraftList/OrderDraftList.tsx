@@ -160,6 +160,10 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <OrderDraftListPage
+        // @ts-expect-error - due to strict-ignores, this prop is not typed properly but it is passed.
+        onRowClick={item => {
+          navigate(orderUrl(item));
+        }}
         selectedFilterPreset={selectedPreset}
         filterOpts={getFilterOpts(params)}
         limits={limitOpts.data?.shop.limits}

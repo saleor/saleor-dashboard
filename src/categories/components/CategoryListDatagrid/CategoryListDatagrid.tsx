@@ -9,6 +9,7 @@ import {
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { CategoryFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { PageListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
@@ -39,6 +40,7 @@ export const CategoryListDatagrid = ({
   selectionActionButton = null,
   hasRowHover = true,
 }: CategoryListDatagridProps) => {
+  const navigate = useNavigator();
   const location = useLocation();
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
@@ -94,6 +96,9 @@ export const CategoryListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         menuItems={() => []}
+        onRowClick={item => {
+          navigate(handleRowAnchor(item));
+        }}
         actionButtonPosition="right"
         selectionActions={() => selectionActionButton}
         onColumnResize={handlers.onResize}
