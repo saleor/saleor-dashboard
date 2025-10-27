@@ -132,6 +132,10 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <OrderListPage
+        // @ts-expect-error - due to strict-ignores, this prop is not typed properly but it is passed.
+        onRowClick={item => {
+          navigate(orderUrl(item));
+        }}
         settings={settings}
         currentTab={selectedPreset}
         disabled={!data}
