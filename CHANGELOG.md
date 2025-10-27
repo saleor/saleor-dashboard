@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.21.16
+
+### Patch Changes
+
+- 25fb9bf: Fixed cmd/ctrl + click on Datagrid rows. Now they will properly open row in the new tab as expected
+
 ## 3.21.15
 
 ### Patch Changes
