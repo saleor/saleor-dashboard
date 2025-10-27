@@ -270,7 +270,17 @@ const Datagrid = ({
       handleRowHover(args);
 
       if (rowAnchorRef.current) {
-        rowAnchorRef.current.click();
+        /**
+         * Dispatch click event with modifier keys preserved
+         * This allows CMD/CTRL+click to open in new tab
+         */
+        const clickEvent = new MouseEvent("click", {
+          metaKey: args.metaKey,
+          ctrlKey: args.ctrlKey,
+          shiftKey: args.shiftKey,
+        });
+
+        rowAnchorRef.current.dispatchEvent(clickEvent);
       }
     },
     [rowMarkers, onRowClick, handleRowHover, rowAnchorRef],
