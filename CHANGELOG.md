@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.22.6
+
+### Patch Changes
+
+- [#6002](https://github.com/saleor/saleor-dashboard/pull/6002) [`770e1b1`](https://github.com/saleor/saleor-dashboard/commit/770e1b1a5c621b00e7c8696009dfb6a8d13e6028) Thanks [@lkostrowski](https://github.com/lkostrowski)! - App <iframe>s now enable pop-ups (`"allow-popups"`) which means App can use native links to open new tab, instead using AppBridge action. In the nutshell `<a target="_blank"` is now working. It's still recommended to use `rel="noreferrer"` due to security reasons.
+
+- [#6003](https://github.com/saleor/saleor-dashboard/pull/6003) [`727c049`](https://github.com/saleor/saleor-dashboard/commit/727c049ad39a91a8e1377426f1811ae21bbddefc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed cmd/ctrl + click on Datagrid rows. Now they will properly open row in the new tab as expected
+
 ## 3.22.5
 
 ### Patch Changes
