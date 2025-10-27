@@ -39,6 +39,7 @@ export const CategoryListDatagrid = ({
   selectionActionButton = null,
   hasRowHover = true,
 }: CategoryListDatagridProps) => {
+  const navigate = useNavigator();
   const location = useLocation();
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
@@ -107,6 +108,9 @@ export const CategoryListDatagrid = ({
           />
         )}
         navigatorOpts={{ state: getPrevLocationState(location) }}
+        onRowClick={item => {
+          navigate(handleRowAnchor(item));
+        }}
       />
 
       <Box paddingX={6}>
