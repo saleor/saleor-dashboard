@@ -56,3 +56,5 @@ django-queries-results.html
 /playwright/.cache/
 
 introspection.json
+
+storybook-static/
