@@ -70,7 +70,7 @@ export const appExtensionManifest = z
       return true;
     },
     {
-      message: `APP_TAGE type of extension must start with "/"`,
+      message: `APP_PAGE type of extension must start with "/"`,
     },
   );
 

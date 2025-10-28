@@ -424,7 +424,7 @@ describe("App Extension Manifest Schema", () => {
 
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
-          `APP_TAGE type of extension must start with "/"`,
+          `APP_PAGE type of extension must start with "/"`,
         );
       }
     });
