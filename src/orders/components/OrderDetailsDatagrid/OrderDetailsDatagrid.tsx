@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
+import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
 
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
@@ -56,10 +57,10 @@ export const OrderDetailsDatagrid = ({
       columns: visibleColumns,
       data: lines,
       loading,
-      onShowMetadata,
       intl,
+      onShowMetadata,
     }),
-    [intl, visibleColumns, loading],
+    [visibleColumns, loading, lines],
   );
   const getMenuItems = useCallback(
     index => [
@@ -77,6 +78,22 @@ export const OrderDetailsDatagrid = ({
       },
     ],
     [intl, lines],
+  );
+
+  const renderRowActions = useCallback(
+    index => (
+      <OrderDetailsRowActions
+        key={`row-actions-${index}`}
+        menuItems={getMenuItems(index)}
+        onShowMetadata={() => {
+          if (lines[index]) {
+            onShowMetadata(lines[index].id);
+          }
+        }}
+        disabled={loading}
+      />
+    ),
+    [getMenuItems, lines, onShowMetadata, loading],
   );
 
   return (
@@ -104,6 +121,8 @@ export const OrderDetailsDatagrid = ({
             onToggle={handlers.onToggle}
           />
         )}
+        renderRowActions={renderRowActions}
+        rowActionBarWidth={88}
       />
     </DatagridChangeStateContext.Provider>
   );
