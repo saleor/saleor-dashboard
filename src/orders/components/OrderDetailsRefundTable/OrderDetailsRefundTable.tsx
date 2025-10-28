@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { GridTable } from "@dashboard/components/GridTable";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { OrderRefundsViewModel } from "@dashboard/orders-v2/order-refunds/order-refunds-view-model";
+import { OrderRefundsViewModel } from "@dashboard/ordersV2/OrderRefunds/OrderRefundsViewModel";
 import { Box, Button, PlusIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 

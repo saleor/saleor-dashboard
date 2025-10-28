@@ -244,14 +244,6 @@ describe("ExtensionsUrls - backward compatibility", () => {
       expect(result).toBe(`/apps/${appId}/app`);
     });
 
-    it("resolves legacy app install path", () => {
-      // Arrange & Act
-      const result = LegacyAppPaths.appInstallPath;
-
-      // Assert
-      expect(result).toBe("/apps/install");
-    });
-
     it("resolves legacy app list path", () => {
       // Arrange & Act
       const result = LegacyAppPaths.appListPath;

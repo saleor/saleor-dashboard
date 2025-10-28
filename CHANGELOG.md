@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.22.6
+
+### Patch Changes
+
+- [#6002](https://github.com/saleor/saleor-dashboard/pull/6002) [`770e1b1`](https://github.com/saleor/saleor-dashboard/commit/770e1b1a5c621b00e7c8696009dfb6a8d13e6028) Thanks [@lkostrowski](https://github.com/lkostrowski)! - App <iframe>s now enable pop-ups (`"allow-popups"`) which means App can use native links to open new tab, instead using AppBridge action. In the nutshell `<a target="_blank"` is now working. It's still recommended to use `rel="noreferrer"` due to security reasons.
+
+- [#6003](https://github.com/saleor/saleor-dashboard/pull/6003) [`727c049`](https://github.com/saleor/saleor-dashboard/commit/727c049ad39a91a8e1377426f1811ae21bbddefc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed cmd/ctrl + click on Datagrid rows. Now they will properly open row in the new tab as expected
+
+## 3.22.5
+
+### Patch Changes
+
+- [#5997](https://github.com/saleor/saleor-dashboard/pull/5997) [`0e45316`](https://github.com/saleor/saleor-dashboard/commit/0e453168b70f9c8bbebea8904df53ce9b7484abe) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added local-frontend validation of a subset of App Manifest fields during installation. Installing apps will be now more liberal, some errors initially thrown on the API level will be now warnings that don't block app installation.
+
+- [#5987](https://github.com/saleor/saleor-dashboard/pull/5987) [`457fb84`](https://github.com/saleor/saleor-dashboard/commit/457fb8450daff51e23aff7cc5276f5565e93de18) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed redirection from Apps Widgets (app name) to app page.
+
+- [#5999](https://github.com/saleor/saleor-dashboard/pull/5999) [`a1eec49`](https://github.com/saleor/saleor-dashboard/commit/a1eec4902e1e9849efa76b2a780126761c943e54) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Update Saleor logo on login page
+
+- [#5901](https://github.com/saleor/saleor-dashboard/pull/5901) [`af290ca`](https://github.com/saleor/saleor-dashboard/commit/af290ca104bb65c90207d482e83c500aa72f7d8a) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improved handling of long reference attribute lists in the Product Create, the Product Edit, and the Page Details views:
+  - Reference attributes (such as product references or page references) with more than 5 items now display a "Show more" button when collapsed and a "Show less" button when expanded
+  - Users can toggle between collapsed view (showing first 5 items) and expanded view (showing all items)
+  - Makes working with products and pages that have many reference attributes more manageable
+
 ## 3.22.4
 
 ### Patch Changes

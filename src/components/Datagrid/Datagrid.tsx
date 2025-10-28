@@ -259,8 +259,17 @@ const Datagrid = ({
         return;
       }
 
-      if (onRowClick) {
+      const intentToOpenInNewTab = args.metaKey || args.ctrlKey;
+
+      /**
+       * Assume rowClick is standard click, if ctrl/cmd is used, let it pass to anchor logic and allow to open in a new tab
+       *
+       * TODO: This can be refactored, but every Datagrid is used a little different way
+       */
+      if (onRowClick && !intentToOpenInNewTab) {
         onRowClick(item);
+
+        return;
       }
 
       if (getCellAction(availableColumns, item[0])) {
@@ -270,7 +279,18 @@ const Datagrid = ({
       handleRowHover(args);
 
       if (rowAnchorRef.current) {
-        rowAnchorRef.current.click();
+        /**
+         * Dispatch click event with modifier keys preserved
+         * This allows CMD/CTRL+click to open in new tab
+         */
+        const clickEvent = new MouseEvent("click", {
+          metaKey: args.metaKey,
+          ctrlKey: args.ctrlKey,
+          shiftKey: args.shiftKey,
+          bubbles: true,
+        });
+
+        rowAnchorRef.current.dispatchEvent(clickEvent);
       }
     },
     [rowMarkers, onRowClick, handleRowHover, rowAnchorRef],
