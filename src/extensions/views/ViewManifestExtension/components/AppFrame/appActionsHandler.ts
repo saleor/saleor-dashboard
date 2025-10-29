@@ -256,8 +256,6 @@ const useHandleAppFormUpdate = () => {
       const { actionId, ...payload } = action.payload;
       const shouldClosePopup = payload.closePopup ?? true;
 
-      debug("Received RequestPermissions action");
-
       attachFormResponseFrame(payload);
 
       if (shouldClosePopup) {

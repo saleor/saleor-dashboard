@@ -18,7 +18,6 @@ interface AppIFrameProps {
 const _AppIFrame = forwardRef<HTMLIFrameElement, AppIFrameProps>(
   ({ appId, src, featureFlags, params, onLoad, onError, className }, ref) => {
     const themeRef = useRef<ThemeType>();
-    // For some reason when forwardRef is used, there is no direct access to ref.current in hook unload
     const { themeType } = useTheme();
 
     // Ignore updates to themeType - iframe will be notified via events

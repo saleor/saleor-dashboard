@@ -252,9 +252,9 @@ const ProductUpdatePage = ({
     path: productListPath,
   });
 
-  const { attachFormState, active, byFormFrames } = useActiveAppExtension();
+  const { attachFormState, active, framesByFormType } = useActiveAppExtension();
 
-  const formFramesFromApp = byFormFrames["product-edit"];
+  const formFramesFromApp = framesByFormType["product-edit"];
 
   useEffect(() => {
     if (!formFramesFromApp || !changeHandlerRef.current) {
