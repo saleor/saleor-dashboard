@@ -5,6 +5,7 @@ import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/comp
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
+import { AllFormPayloadUpdatePayloads } from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
 import { PropsWithChildren } from "react";
 
@@ -41,22 +42,16 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-type StateFrame = {
-  formData: {
-    form: string;
-  }; //todo
-};
-
 // todo this must go to frame-level, to support widgets too
-const extensionFormResponseState = atom<StateFrame[]>([]);
+const extensionFormResponseState = atom<AllFormPayloadUpdatePayloads[]>([]);
 
 // todo test
 const extensionFormResponseByFormAtom = atom(
   get => {
     const states = get(extensionFormResponseState);
 
-    return states.reduce<Record<string, StateFrame[]>>((acc, state) => {
-      const formKey = state.formData.form;
+    return states.reduce<Record<string, AllFormPayloadUpdatePayloads[]>>((acc, state) => {
+      const formKey = state.form;
 
       if (!acc[formKey]) {
         acc[formKey] = [];
@@ -67,13 +62,11 @@ const extensionFormResponseByFormAtom = atom(
       return acc;
     }, {});
   },
-  (get, set, newState: StateFrame) => {
+  (get, set, newState: AllFormPayloadUpdatePayloads) => {
     const currentStates = get(extensionFormResponseState);
     // Check if this exact state already exists
     const exists = currentStates.some(
-      state =>
-        state.formData.form === newState.formData.form &&
-        JSON.stringify(state.formData) === JSON.stringify(newState.formData),
+      state => state.form === newState.form && JSON.stringify(state) === JSON.stringify(newState),
     );
 
     if (!exists) {
@@ -106,8 +99,8 @@ export const useActiveAppExtension = () => {
     deactivate,
     attachFormState,
     extensionResponseFrames,
-    attachFormResponseFrame(response: { form: string }) {
-      setExtensionResponseState(prev => [...prev, { formData: response }]);
+    attachFormResponseFrame(response: AllFormPayloadUpdatePayloads) {
+      setExtensionResponseState(prev => [...prev, response]);
     },
     byFormFrames,
   };

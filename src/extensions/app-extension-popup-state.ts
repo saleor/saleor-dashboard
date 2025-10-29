@@ -42,21 +42,7 @@ class ExtensionActiveState {
 
   params?: AppDetailsUrlMountQueryParams;
 
-  formState?:
-    | AllFormPayloads
-    | {
-        // todo move to sdk
-        form: "edit-product";
-        productId: string;
-        fields: Record<
-          string,
-          {
-            fieldName: string;
-            currentValue: string;
-            type: "short-text";
-          }
-        >;
-      };
+  formState?: AllFormPayloads;
 
   constructor(params: ActiveParams) {
     this.id = params.id;
@@ -102,23 +88,7 @@ export const useAppExtensionPopup = () => {
     setInactive() {
       setState(inactiveState);
     },
-    attachFormState(
-      formState:
-        | AllFormPayloads
-        | {
-            // todo move to sdk
-            form: "edit-product";
-            productId: string;
-            fields: Record<
-              string,
-              {
-                fieldName: string;
-                currentValue: string;
-                type: "short-text";
-              }
-            >;
-          },
-    ) {
+    attachFormState(formState: AllFormPayloads) {
       setState(currentState => {
         if (!currentState.active) {
           throw new Error("You can not attach form state for closed extension");

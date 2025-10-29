@@ -249,25 +249,33 @@ const ProductUpdatePage = ({
 
   const { attachFormState, active, byFormFrames } = useActiveAppExtension();
 
+  const formFramesFromApp = byFormFrames["edit-product"];
+
   useEffect(() => {
-    const lastFrame = byFormFrames["edit-product"][byFormFrames["edit-product"].length - 1];
+    if (!formFramesFromApp) {
+      return;
+    }
+
+    const lastFrame = formFramesFromApp[formFramesFromApp.length - 1];
 
     if (lastFrame) {
       // todo update form
       console.log("update form");
     }
-  }, [byFormFrames["edit-product"]]);
+  }, [formFramesFromApp]);
 
   useEffect(() => {
     if (active && product) {
       attachFormState({
-        form: "edit-product",
+        form: "product-edit",
         productId: productId,
         fields: {
-          name: {
+          productName: {
+            // todo current value should be from form
             currentValue: product.name,
             type: "short-text",
-            fieldName: "name",
+            fieldName: "productName",
+            originalValue: product.name,
           },
         },
       });
