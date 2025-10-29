@@ -91,12 +91,18 @@ export const useAppExtensionPopup = () => {
     attachFormState(formState: AllFormPayloads) {
       setState(currentState => {
         if (!currentState.active) {
-          throw new Error("You can not attach form state for closed extension");
+          throw new Error("You cannot attach form state for closed extension");
         }
 
-        currentState.formState = formState;
-
-        return currentState;
+        return new ExtensionActiveState({
+          id: currentState.id,
+          appToken: currentState.appToken,
+          src: currentState.src,
+          label: currentState.label,
+          target: currentState.target,
+          params: currentState.params,
+          formState,
+        });
       });
     },
   };
