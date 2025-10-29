@@ -57,7 +57,7 @@ import { productUrl as createTranslateProductUrl } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Divider, Option } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
@@ -177,6 +177,9 @@ const ProductUpdatePage = ({
   onCloseDialog,
   onAttributeSelectBlur,
 }: ProductUpdatePageProps) => {
+  // Cache inner form data so it can be passed into App when modal is opened
+  const dataCache = useRef<ProductUpdateData | null>(null);
+
   const intl = useIntl();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
@@ -271,8 +274,7 @@ const ProductUpdatePage = ({
         productId: productId,
         fields: {
           productName: {
-            // todo current value should be from form
-            currentValue: product.name,
+            currentValue: dataCache.current?.name ?? product.name,
             type: "short-text",
             fieldName: "productName",
             originalValue: product.name,
@@ -333,6 +335,8 @@ const ProductUpdatePage = ({
           onChange: handlers.changeChannels,
           openModal: () => setChannelPickerOpen(true),
         };
+
+        dataCache.current = data;
 
         const byChannel = mapByChannel(channels);
         const listings = data.channels.updateChannels?.map<ChannelData>(byChannel);
