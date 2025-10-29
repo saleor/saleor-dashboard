@@ -249,15 +249,20 @@ const useHandlePermissionRequest = (appId: string) => {
 };
 
 const useHandleAppFormUpdate = () => {
-  const { attachFormResponseFrame } = useActiveAppExtension();
+  const { attachFormResponseFrame, deactivate } = useActiveAppExtension();
 
   return {
     handle: (action: FormPayloadUpdate) => {
       const { actionId, ...payload } = action.payload;
+      const shouldClosePopup = payload.closePopup ?? true;
 
       debug("Received RequestPermissions action");
 
       attachFormResponseFrame(payload);
+
+      if (shouldClosePopup) {
+        deactivate();
+      }
 
       return createResponseStatus(actionId, true);
     },

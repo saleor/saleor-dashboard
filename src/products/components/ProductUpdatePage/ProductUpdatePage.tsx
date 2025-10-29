@@ -263,6 +263,7 @@ const ProductUpdatePage = ({
 
     const lastFrame = formFramesFromApp[formFramesFromApp.length - 1];
 
+    // todo handle errors from app
     if (lastFrame?.fields?.productName && "value" in lastFrame.fields.productName) {
       const newProductName = lastFrame.fields.productName.value;
       const currentProductName = dataCache.current?.name;
