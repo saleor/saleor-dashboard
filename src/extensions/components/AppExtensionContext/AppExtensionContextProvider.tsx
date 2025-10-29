@@ -5,6 +5,7 @@ import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/comp
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
+import { atom, useAtom } from "jotai";
 import { PropsWithChildren } from "react";
 
 import { AppExtensionActiveParams, useAppExtensionPopup } from "../../app-extension-popup-state";
@@ -40,10 +41,20 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
+type ExtensionId = string;
+type StateFrame = {
+  extensionId: string;
+  formData: any; //todo
+};
+
+// todo this must go to frame-level, to support widgets too
+const extensionFormResponseState = atom<StateFrame[]>([]);
+
 // todo extract modal from non-modal
 export const useActiveAppExtension = () => {
   const { state, setActive, setInactive, attachFormState } = useAppExtensionPopup();
   const navigate = useNavigator();
+  const [extensionState, setExtensionState] = useAtom(extensionFormResponseState);
 
   const activate = (appData: AppExtensionActiveParams) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {
@@ -56,5 +67,12 @@ export const useActiveAppExtension = () => {
   };
   const deactivate = setInactive;
 
-  return { active: state.active, activate, deactivate, attachFormState };
+  return {
+    active: state.active,
+    activate,
+    deactivate,
+    attachFormState,
+    extensionState,
+    setExtensionState,
+  };
 };

@@ -75,14 +75,14 @@ const inactiveState = new ExtensionInactiveState();
 
 const stateAtom = atom<AppPopupExtensionPossibleStates>(inactiveState);
 
+/**
+ * TODO: Make this to work also with widget extensions
+ */
 export const useAppExtensionPopup = () => {
   const [state, setState] = useAtom(stateAtom);
   const { iframes } = usePopupFrameReference();
 
-  // todo should send only once
   useEffect(() => {
-    console.log("iframe length", iframes.size);
-
     if (state.active) {
       iframes.entries().forEach(([iframe, { loaded }]) => {
         if (loaded) {

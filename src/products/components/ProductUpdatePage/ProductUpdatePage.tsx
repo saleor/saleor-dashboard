@@ -247,7 +247,7 @@ const ProductUpdatePage = ({
     path: productListPath,
   });
 
-  const { attachFormState, active } = useActiveAppExtension();
+  const { attachFormState, active, extensionState } = useActiveAppExtension();
 
   useEffect(() => {
     if (active && product) {
