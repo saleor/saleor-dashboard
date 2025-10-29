@@ -1,7 +1,10 @@
+import { usePopupFrameReference } from "@dashboard/extensions/popup-frame-reference";
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
+import { postToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
-import { AllFormPayloads } from "@saleor/app-sdk/app-bridge";
+import { AllFormPayloads, DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
+import { useEffect } from "react";
 
 type ActiveParams = {
   id: string;
@@ -39,7 +42,21 @@ class ExtensionActiveState {
 
   params?: AppDetailsUrlMountQueryParams;
 
-  formState?: AllFormPayloads;
+  formState?:
+    | AllFormPayloads
+    | {
+        // todo move to sdk
+        form: "edit-product";
+        productId: string;
+        fields: Record<
+          string,
+          {
+            fieldName: string;
+            currentValue: string;
+            type: "short-text";
+          }
+        >;
+      };
 
   constructor(params: ActiveParams) {
     this.id = params.id;
@@ -60,6 +77,22 @@ const stateAtom = atom<AppPopupExtensionPossibleStates>(inactiveState);
 
 export const useAppExtensionPopup = () => {
   const [state, setState] = useAtom(stateAtom);
+  const { iframes } = usePopupFrameReference();
+
+  // todo should send only once
+  useEffect(() => {
+    console.log("iframe length", iframes.size);
+
+    if (state.active) {
+      iframes.entries().forEach(([iframe, { loaded }]) => {
+        if (loaded) {
+          const origin = new URL(state.src).origin;
+
+          postToExtension(DashboardEventFactory.createFormEvent(state.formState!), iframe, origin);
+        }
+      });
+    }
+  }, [state.active, iframes]);
 
   return {
     state,
@@ -69,7 +102,23 @@ export const useAppExtensionPopup = () => {
     setInactive() {
       setState(inactiveState);
     },
-    attachFormState(formState: AllFormPayloads) {
+    attachFormState(
+      formState:
+        | AllFormPayloads
+        | {
+            // todo move to sdk
+            form: "edit-product";
+            productId: string;
+            fields: Record<
+              string,
+              {
+                fieldName: string;
+                currentValue: string;
+                type: "short-text";
+              }
+            >;
+          },
+    ) {
       setState(currentState => {
         if (!currentState.active) {
           throw new Error("You can not attach form state for closed extension");
