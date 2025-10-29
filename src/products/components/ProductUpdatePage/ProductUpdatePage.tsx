@@ -247,7 +247,16 @@ const ProductUpdatePage = ({
     path: productListPath,
   });
 
-  const { attachFormState, active, extensionState } = useActiveAppExtension();
+  const { attachFormState, active, byFormFrames } = useActiveAppExtension();
+
+  useEffect(() => {
+    const lastFrame = byFormFrames["edit-product"][byFormFrames["edit-product"].length - 1];
+
+    if (lastFrame) {
+      // todo update form
+      console.log("update form");
+    }
+  }, [byFormFrames["edit-product"]]);
 
   useEffect(() => {
     if (active && product) {

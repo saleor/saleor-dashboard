@@ -41,20 +41,53 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-type ExtensionId = string;
 type StateFrame = {
-  extensionId: string;
-  formData: any; //todo
+  formData: {
+    form: string;
+  }; //todo
 };
 
 // todo this must go to frame-level, to support widgets too
 const extensionFormResponseState = atom<StateFrame[]>([]);
 
+// todo test
+const extensionFormResponseByFormAtom = atom(
+  get => {
+    const states = get(extensionFormResponseState);
+
+    return states.reduce<Record<string, StateFrame[]>>((acc, state) => {
+      const formKey = state.formData.form;
+
+      if (!acc[formKey]) {
+        acc[formKey] = [];
+      }
+
+      acc[formKey].push(state);
+
+      return acc;
+    }, {});
+  },
+  (get, set, newState: StateFrame) => {
+    const currentStates = get(extensionFormResponseState);
+    // Check if this exact state already exists
+    const exists = currentStates.some(
+      state =>
+        state.formData.form === newState.formData.form &&
+        JSON.stringify(state.formData) === JSON.stringify(newState.formData),
+    );
+
+    if (!exists) {
+      set(extensionFormResponseState, [...currentStates, newState]);
+    }
+  },
+);
+
 // todo extract modal from non-modal
 export const useActiveAppExtension = () => {
   const { state, setActive, setInactive, attachFormState } = useAppExtensionPopup();
   const navigate = useNavigator();
-  const [extensionState, setExtensionState] = useAtom(extensionFormResponseState);
+  const [extensionResponseFrames, setExtensionResponseState] = useAtom(extensionFormResponseState);
+  const [byFormFrames] = useAtom(extensionFormResponseByFormAtom);
 
   const activate = (appData: AppExtensionActiveParams) => {
     if (appData.target === AppExtensionTargetEnum.POPUP) {
@@ -72,7 +105,10 @@ export const useActiveAppExtension = () => {
     activate,
     deactivate,
     attachFormState,
-    extensionState,
-    setExtensionState,
+    extensionResponseFrames,
+    attachFormResponseFrame(response: { form: string }) {
+      setExtensionResponseState(prev => [...prev, { formData: response }]);
+    },
+    byFormFrames,
   };
 };
