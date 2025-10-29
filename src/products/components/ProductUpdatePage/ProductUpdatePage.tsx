@@ -40,7 +40,7 @@ import {
   TaxClassBaseFragment,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
@@ -179,6 +179,8 @@ const ProductUpdatePage = ({
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
   const dataCache = useRef<ProductUpdateData | null>(null);
+  // Store form change handler to allow updating form from outside render prop
+  const changeHandlerRef = useRef<FormChange | null>(null);
 
   const intl = useIntl();
   const { user } = useUser();
@@ -252,18 +254,28 @@ const ProductUpdatePage = ({
 
   const { attachFormState, active, byFormFrames } = useActiveAppExtension();
 
-  const formFramesFromApp = byFormFrames["edit-product"];
+  const formFramesFromApp = byFormFrames["product-edit"];
 
   useEffect(() => {
-    if (!formFramesFromApp) {
+    if (!formFramesFromApp || !changeHandlerRef.current) {
       return;
     }
 
     const lastFrame = formFramesFromApp[formFramesFromApp.length - 1];
 
-    if (lastFrame) {
-      // todo update form
-      console.log("update form");
+    if (lastFrame?.fields?.productName && "value" in lastFrame.fields.productName) {
+      const newProductName = lastFrame.fields.productName.value;
+      const currentProductName = dataCache.current?.name;
+
+      // Only update if the value has changed
+      if (newProductName !== currentProductName) {
+        changeHandlerRef.current({
+          target: {
+            name: "name",
+            value: newProductName,
+          },
+        });
+      }
     }
   }, [formFramesFromApp]);
 
@@ -314,6 +326,9 @@ const ProductUpdatePage = ({
       refetch={refetch}
     >
       {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters }) => {
+        // Store change handler so it can be accessed from useEffect
+        changeHandlerRef.current = change;
+
         const availabilityCommonProps = {
           managePermissions: [PermissionEnum.MANAGE_PRODUCTS],
           messages: {

@@ -248,19 +248,16 @@ const useHandlePermissionRequest = (appId: string) => {
   };
 };
 
-const useHandleAppFormUpdate = (appId: string) => {
+const useHandleAppFormUpdate = () => {
   const { attachFormResponseFrame } = useActiveAppExtension();
 
   return {
     handle: (action: FormPayloadUpdate) => {
-      // todo pass full payload
-      const { actionId, form, fields } = action.payload;
+      const { actionId, ...payload } = action.payload;
 
       debug("Received RequestPermissions action");
 
-      attachFormResponseFrame({
-        form,
-      });
+      attachFormResponseFrame(payload);
 
       return createResponseStatus(actionId, true);
     },

@@ -28,7 +28,7 @@ export const useAppActions = (
     versions,
   );
   const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
-  const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate(appId);
+  const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
