@@ -56,6 +56,7 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { OutputData } from "@editorjs/editorjs";
 import { Box, Divider, Option } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
@@ -179,6 +180,8 @@ const ProductUpdatePage = ({
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
   const dataCache = useRef<ProductUpdateData | null>(null);
+  // Description is not passed in root "data"
+  const descriptionCache = useRef<OutputData>(null);
   // Store form change handler to allow updating form from outside render prop
   const changeHandlerRef = useRef<FormChange | null>(null);
 
@@ -278,6 +281,27 @@ const ProductUpdatePage = ({
         });
       }
     }
+
+    if (lastFrame?.fields?.productDescription && "value" in lastFrame.fields.productDescription) {
+      const newProductName = lastFrame.fields.productDescription.value;
+      const currentProductName = dataCache.current?.description;
+
+      try {
+        const parsedEditorJs = JSON.parse(newProductName) as OutputData;
+
+        // Only update if the value has changed
+        if (JSON.stringify(parsedEditorJs.blocks) !== JSON.stringify(currentProductName.blocks)) {
+          changeHandlerRef.current({
+            target: {
+              name: "description",
+              value: newProductName,
+            },
+          });
+        }
+      } catch (e) {
+        console.warn("App returned invalid response for product description field, ignoring");
+      }
+    }
   }, [formFramesFromApp]);
 
   useEffect(() => {
@@ -292,10 +316,18 @@ const ProductUpdatePage = ({
             fieldName: "productName",
             originalValue: product.name,
           },
+          productDescription: {
+            currentValue: descriptionCache.current
+              ? JSON.stringify(descriptionCache.current)
+              : product.description,
+            type: "editorjs",
+            fieldName: "productDescription",
+            originalValue: product.description,
+          },
         },
       });
     }
-  }, [active, product]);
+  }, [active, product, productId]);
 
   return (
     <ProductUpdateForm
@@ -392,6 +424,9 @@ const ProductUpdatePage = ({
                 disabled={disabled}
                 errors={productErrors}
                 onChange={change}
+                onDescriptionChange={value => {
+                  descriptionCache.current = value;
+                }}
               />
               <ProductMedia
                 media={media}
