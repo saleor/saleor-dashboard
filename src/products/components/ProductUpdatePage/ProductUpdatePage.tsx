@@ -184,6 +184,8 @@ const ProductUpdatePage = ({
   const descriptionCache = useRef<OutputData>(null);
   // Store form change handler to allow updating form from outside render prop
   const changeHandlerRef = useRef<FormChange | null>(null);
+  // Store richText ref to allow updating description from outside render prop
+  const richTextRef = useRef<any>(null);
 
   const intl = useIntl();
   const { user } = useUser();
@@ -296,12 +298,13 @@ const ProductUpdatePage = ({
           JSON.stringify(parsedEditorJs.blocks) !==
           JSON.stringify(productDescriptionWithFallback.blocks)
         ) {
-          changeHandlerRef.current({
-            target: {
-              name: "description",
-              value: newProductDescription,
-            },
-          });
+          // Update the EditorJS content directly
+          if (richTextRef.current?.editorRef?.current) {
+            richTextRef.current.editorRef.current.render(parsedEditorJs).then(() => {
+              // Mark as dirty and trigger change after render completes
+              richTextRef.current.handleChange();
+            });
+          }
         }
       } catch (e) {
         console.error(e);
@@ -365,9 +368,11 @@ const ProductUpdatePage = ({
       disabled={disabled}
       refetch={refetch}
     >
-      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters }) => {
+      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters, richText }) => {
         // Store change handler so it can be accessed from useEffect
         changeHandlerRef.current = change;
+        // Store richText so it can be accessed from useEffect
+        richTextRef.current = richText;
 
         const availabilityCommonProps = {
           managePermissions: [PermissionEnum.MANAGE_PRODUCTS],

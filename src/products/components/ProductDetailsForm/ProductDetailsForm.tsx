@@ -18,7 +18,7 @@ interface ProductDetailsFormProps {
   };
   disabled?: boolean;
   errors: ProductErrorFragment[];
-  onDescriptionChange: (data: OutputData) => void;
+  onDescriptionChange?: (data: OutputData) => void;
   onChange: (event: any) => any;
 }
 
