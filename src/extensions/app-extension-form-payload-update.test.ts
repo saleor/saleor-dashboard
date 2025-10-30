@@ -20,6 +20,7 @@ describe("app-extension-form-payload-update", () => {
         form: "product-edit",
         fields: {
           productName: { value: "Test Product" },
+          productDescription: { value: "Test Description" },
         },
       };
       const productTranslatePayload: AllFormPayloadUpdatePayloads = {
@@ -60,12 +61,14 @@ describe("app-extension-form-payload-update", () => {
         form: "product-edit",
         fields: {
           productName: { value: "Product 1" },
+          productDescription: { value: "Description 1" },
         },
       };
       const payload2: AllFormPayloadUpdatePayloads = {
         form: "product-edit",
         fields: {
           productName: { value: "Product 2" },
+          productDescription: { value: "Description 2" },
         },
       };
 
@@ -94,6 +97,7 @@ describe("app-extension-form-payload-update", () => {
         form: "product-edit",
         fields: {
           productName: { value: "Test Product" },
+          productDescription: { value: "Test Description" },
         },
       };
 
@@ -151,6 +155,7 @@ describe("app-extension-form-payload-update", () => {
         closePopup: false,
         fields: {
           productName: { value: "Test Product" },
+          productDescription: { value: "Test Description" },
         },
       };
 
@@ -184,6 +189,7 @@ describe("app-extension-form-payload-update", () => {
           form: "product-edit",
           fields: {
             productName: { value: "Test Product" },
+            productDescription: { value: "Test Description" },
           },
         };
 
@@ -204,6 +210,7 @@ describe("app-extension-form-payload-update", () => {
           form: "product-edit",
           fields: {
             productName: { value: "Product 1" },
+            productDescription: { value: "Description 1" },
           },
         };
         const payload2: AllFormPayloadUpdatePayloads = {
@@ -238,6 +245,7 @@ describe("app-extension-form-payload-update", () => {
           form: "product-edit",
           fields: {
             productName: { value: "Edited Product" },
+            productDescription: { value: "Edited Description" },
           },
         };
         const translatePayload: AllFormPayloadUpdatePayloads = {
@@ -273,6 +281,7 @@ describe("app-extension-form-payload-update", () => {
           form: "product-edit",
           fields: {
             productName: { value: "Test Product" },
+            productDescription: { value: "Test Description" },
           },
         };
 
@@ -301,6 +310,7 @@ describe("app-extension-form-payload-update", () => {
             productName: {
               errors: [{ message: "Name is required" }],
             },
+            productDescription: { value: "Test Description" },
           },
         };
 

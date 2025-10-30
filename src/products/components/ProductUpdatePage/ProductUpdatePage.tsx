@@ -186,6 +186,13 @@ const ProductUpdatePage = ({
   const changeHandlerRef = useRef<FormChange | null>(null);
   // Store richText ref to allow updating description from outside render prop
   const richTextRef = useRef<any>(null);
+  // Store error handlers to allow setting errors from outside render prop
+  const setErrorRef = useRef<
+    ((name: keyof ProductUpdateSubmitData, error: string | React.ReactNode) => void) | null
+  >(null);
+  const clearErrorsRef = useRef<
+    ((name?: keyof ProductUpdateSubmitData | Array<keyof ProductUpdateSubmitData>) => void) | null
+  >(null);
 
   const intl = useIntl();
   const { user } = useUser();
@@ -262,54 +269,84 @@ const ProductUpdatePage = ({
   const formFramesFromApp = framesByFormType["product-edit"];
 
   useEffect(() => {
-    if (!formFramesFromApp || !changeHandlerRef.current) {
+    if (
+      !formFramesFromApp ||
+      !changeHandlerRef.current ||
+      !setErrorRef.current ||
+      !clearErrorsRef.current
+    ) {
       return;
     }
 
     const lastFrame = formFramesFromApp[formFramesFromApp.length - 1];
 
-    // todo handle errors from app
-    if (lastFrame?.fields?.productName && "value" in lastFrame.fields.productName) {
-      const newProductName = lastFrame.fields.productName.value;
-      const currentProductName = dataCache.current?.name;
+    // Handle productName field
+    if (lastFrame?.fields?.productName) {
+      const productNameField = lastFrame.fields.productName;
 
-      // Only update if the value has changed
-      if (newProductName !== currentProductName) {
-        changeHandlerRef.current({
-          target: {
-            name: "name",
-            value: newProductName,
-          },
-        });
+      if ("errors" in productNameField && productNameField.errors) {
+        // Set error if errors exist
+        const errorMessage = productNameField.errors.map(e => e.message).join(", ");
+
+        setErrorRef.current("name", errorMessage);
+      } else if ("value" in productNameField) {
+        // Clear error and update value
+        clearErrorsRef.current("name");
+
+        const newProductName = productNameField.value;
+        const currentProductName = dataCache.current?.name;
+
+        // Only update if the value has changed
+        if (newProductName !== currentProductName) {
+          changeHandlerRef.current({
+            target: {
+              name: "name",
+              value: newProductName,
+            },
+          });
+        }
       }
     }
 
-    if (lastFrame?.fields?.productDescription && "value" in lastFrame.fields.productDescription) {
-      const newProductDescription = lastFrame.fields.productDescription.value;
+    // Handle productDescription field
+    if (lastFrame?.fields?.productDescription) {
+      const productDescriptionField = lastFrame.fields.productDescription;
 
-      // cache may be empty if editor was not used before sending event to app
-      const productDescriptionWithFallback = descriptionCache.current ?? product.description;
+      if ("errors" in productDescriptionField && productDescriptionField.errors) {
+        // Set error if errors exist
+        const errorMessage = productDescriptionField.errors.map(e => e.message).join(", ");
 
-      try {
-        const parsedEditorJs = JSON.parse(newProductDescription) as OutputData;
+        setErrorRef.current("description", errorMessage);
+      } else if ("value" in productDescriptionField) {
+        // Clear error and update value
+        clearErrorsRef.current("description");
 
-        // Only update if the value has changed
-        if (
-          JSON.stringify(parsedEditorJs.blocks) !==
-          JSON.stringify(productDescriptionWithFallback.blocks)
-        ) {
-          // Update the EditorJS content directly
-          if (richTextRef.current?.editorRef?.current) {
-            richTextRef.current.editorRef.current.render(parsedEditorJs).then(() => {
-              // Mark as dirty and trigger change after render completes
-              richTextRef.current.handleChange();
-            });
+        const newProductDescription = productDescriptionField.value;
+
+        // cache may be empty if editor was not used before sending event to app
+        const productDescriptionWithFallback = descriptionCache.current ?? product.description;
+
+        try {
+          const parsedEditorJs = JSON.parse(newProductDescription) as OutputData;
+
+          // Only update if the value has changed
+          if (
+            JSON.stringify(parsedEditorJs.blocks) !==
+            JSON.stringify(productDescriptionWithFallback.blocks)
+          ) {
+            // Update the EditorJS content directly
+            if (richTextRef.current?.editorRef?.current) {
+              richTextRef.current.editorRef.current.render(parsedEditorJs).then(() => {
+                // Mark as dirty and trigger change after render completes
+                richTextRef.current.handleChange();
+              });
+            }
           }
-        }
-      } catch (e) {
-        console.error(e);
+        } catch (e) {
+          console.error(e);
 
-        console.warn("App returned invalid response for product description field, ignoring");
+          console.warn("App returned invalid response for product description field, ignoring");
+        }
       }
     }
   }, [formFramesFromApp]);
@@ -368,11 +405,25 @@ const ProductUpdatePage = ({
       disabled={disabled}
       refetch={refetch}
     >
-      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters, richText }) => {
+      {({
+        change,
+        data,
+        handlers,
+        submit,
+        isSaveDisabled,
+        attributeRichTextGetters,
+        richText,
+        setError,
+        clearErrors,
+        formErrors,
+      }) => {
         // Store change handler so it can be accessed from useEffect
         changeHandlerRef.current = change;
         // Store richText so it can be accessed from useEffect
         richTextRef.current = richText;
+        // Store error handlers so they can be accessed from useEffect
+        setErrorRef.current = setError;
+        clearErrorsRef.current = clearErrors;
 
         const availabilityCommonProps = {
           managePermissions: [PermissionEnum.MANAGE_PRODUCTS],
@@ -435,6 +486,7 @@ const ProductUpdatePage = ({
                 data={data}
                 disabled={disabled}
                 errors={productErrors}
+                formErrors={formErrors}
                 onChange={change}
                 onDescriptionChange={value => {
                   descriptionCache.current = value;
