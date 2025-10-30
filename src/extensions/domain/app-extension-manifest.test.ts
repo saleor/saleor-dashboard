@@ -359,7 +359,7 @@ describe("App Extension Manifest Schema", () => {
   });
 
   describe("Invalid cases - URL validation", () => {
-    it("should reject relative URL on POPUP target", () => {
+    it("should accept relative URL on POPUP target", () => {
       // Arrange
       const invalidData = {
         label: "Invalid URL",
@@ -372,16 +372,10 @@ describe("App Extension Manifest Schema", () => {
       const result = appExtensionManifest.safeParse(invalidData);
 
       // Assert
-      expect(result.success).toBe(false);
-
-      if (!result.success) {
-        expect(result.error.issues[0].message).toBe(
-          "Incorrect relation between extension target and URL fields.",
-        );
-      }
+      expect(result.success).toBe(true);
     });
 
-    it("should reject relative URL on NEW_TAB target", () => {
+    it("should accept relative URL on NEW_TAB target", () => {
       // Arrange
       const invalidData = {
         label: "Invalid URL",
@@ -394,10 +388,10 @@ describe("App Extension Manifest Schema", () => {
       const result = appExtensionManifest.safeParse(invalidData);
 
       // Assert
-      expect(result.success).toBe(false);
+      expect(result.success).toBe(true);
     });
 
-    it("should reject relative URL on WIDGET target", () => {
+    it("should accept relative URL on WIDGET target", () => {
       // Arrange
       const invalidData = {
         label: "Invalid URL",
@@ -410,7 +404,7 @@ describe("App Extension Manifest Schema", () => {
       const result = appExtensionManifest.safeParse(invalidData);
 
       // Assert
-      expect(result.success).toBe(false);
+      expect(result.success).toBe(true);
     });
 
     it("should reject absolute URL on APP_PAGE target", () => {
@@ -430,7 +424,7 @@ describe("App Extension Manifest Schema", () => {
 
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
-          "Incorrect relation between extension target and URL fields.",
+          `APP_PAGE type of extension must start with "/"`,
         );
       }
     });
