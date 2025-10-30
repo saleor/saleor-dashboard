@@ -60,21 +60,17 @@ export const appExtensionManifest = z
       const url = data.url;
       const target = data.target;
 
-      // Relative URL validation
-      if (url.startsWith("/")) {
-        // APP_PAGE can use relative URLs
-        return target === "APP_PAGE";
-      }
+      const isAppPage = target === "APP_PAGE";
+      const isRelativeUrl = url.startsWith("/");
 
-      // APP_PAGE cannot use absolute URLs
-      if (target === "APP_PAGE") {
+      if (isAppPage && !isRelativeUrl) {
         return false;
       }
 
       return true;
     },
     {
-      message: "Incorrect relation between extension target and URL fields.",
+      message: `APP_PAGE type of extension must start with "/"`,
     },
   );
 
