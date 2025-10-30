@@ -66,6 +66,12 @@ export const InstallCustomExtensionFromUrl = ({
     return "issues" in manifestValidation ? manifestValidation.issues : undefined;
   }, [manifest]);
 
+  /**
+   * Prevent installation if validation fails. In the future we can change errors to warnings, but first we need to add special handling
+   * to Dashboard, e.g. render "warning" near widget that widget is broken.
+   */
+  const canInstall = !issues && manifest;
+
   return (
     <>
       <InstallTopNav
@@ -86,7 +92,7 @@ export const InstallCustomExtensionFromUrl = ({
         <Savebar.Spacer />
         <Savebar.CancelButton href={previousPagePath} />
         <Savebar.ConfirmButton
-          disabled={!manifest}
+          disabled={!canInstall}
           transitionState={isSubmittingInstallation ? "loading" : "default"}
           onClick={() => submitInstallApp()}
         >
