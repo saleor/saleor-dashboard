@@ -186,13 +186,6 @@ const ProductUpdatePage = ({
   const changeHandlerRef = useRef<FormChange | null>(null);
   // Store richText ref to allow updating description from outside render prop
   const richTextRef = useRef<any>(null);
-  // Store error handlers to allow setting errors from outside render prop
-  const setErrorRef = useRef<
-    ((name: keyof ProductUpdateSubmitData, error: string | React.ReactNode) => void) | null
-  >(null);
-  const clearErrorsRef = useRef<
-    ((name?: keyof ProductUpdateSubmitData | Array<keyof ProductUpdateSubmitData>) => void) | null
-  >(null);
 
   const intl = useIntl();
   const { user } = useUser();
@@ -269,12 +262,7 @@ const ProductUpdatePage = ({
   const formFramesFromApp = framesByFormType["product-edit"];
 
   useEffect(() => {
-    if (
-      !formFramesFromApp ||
-      !changeHandlerRef.current ||
-      !setErrorRef.current ||
-      !clearErrorsRef.current
-    ) {
+    if (!formFramesFromApp || !changeHandlerRef.current) {
       return;
     }
 
@@ -284,15 +272,7 @@ const ProductUpdatePage = ({
     if (lastFrame?.fields?.productName) {
       const productNameField = lastFrame.fields.productName;
 
-      if ("errors" in productNameField && productNameField.errors) {
-        // Set error if errors exist
-        const errorMessage = productNameField.errors.map(e => e.message).join(", ");
-
-        setErrorRef.current("name", errorMessage);
-      } else if ("value" in productNameField) {
-        // Clear error and update value
-        clearErrorsRef.current("name");
-
+      if ("value" in productNameField) {
         const newProductName = productNameField.value;
         const currentProductName = dataCache.current?.name;
 
@@ -312,15 +292,7 @@ const ProductUpdatePage = ({
     if (lastFrame?.fields?.productDescription) {
       const productDescriptionField = lastFrame.fields.productDescription;
 
-      if ("errors" in productDescriptionField && productDescriptionField.errors) {
-        // Set error if errors exist
-        const errorMessage = productDescriptionField.errors.map(e => e.message).join(", ");
-
-        setErrorRef.current("description", errorMessage);
-      } else if ("value" in productDescriptionField) {
-        // Clear error and update value
-        clearErrorsRef.current("description");
-
+      if ("value" in productDescriptionField) {
         const newProductDescription = productDescriptionField.value;
 
         // cache may be empty if editor was not used before sending event to app
@@ -413,17 +385,12 @@ const ProductUpdatePage = ({
         isSaveDisabled,
         attributeRichTextGetters,
         richText,
-        setError,
-        clearErrors,
         formErrors,
       }) => {
         // Store change handler so it can be accessed from useEffect
         changeHandlerRef.current = change;
         // Store richText so it can be accessed from useEffect
         richTextRef.current = richText;
-        // Store error handlers so they can be accessed from useEffect
-        setErrorRef.current = setError;
-        clearErrorsRef.current = clearErrors;
 
         const availabilityCommonProps = {
           managePermissions: [PermissionEnum.MANAGE_PRODUCTS],
