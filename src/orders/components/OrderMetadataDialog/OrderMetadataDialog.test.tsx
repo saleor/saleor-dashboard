@@ -4,10 +4,13 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { OrderMetadataDialog, OrderMetadataDialogData } from "./OrderMetadataDialog";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 
+const mockOnSubmit = jest.fn();
+
 jest.mock("./useHandleSubmit", () => ({
   useHandleOrderLineMetadataSubmit: jest.fn(() => ({
-    onSubmit: jest.fn(),
+    onSubmit: mockOnSubmit,
     lastSubmittedData: undefined,
+    submitInProgress: false,
   })),
 }));
 
@@ -124,9 +127,10 @@ describe("OrderMetadataDialog", () => {
     expect(thumbnailImage).toHaveAttribute("src", mockData.thumbnail.url);
   });
 
-  describe("ProductVariant metadata list", () => {
-    it("displays product variant metadata", async () => {
+  describe("ProductVariant metadata form", () => {
+    it("displays product variant metadata in editable form", async () => {
       // Arrange
+      (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
       render(
         <OrderMetadataDialog
           open={true}
@@ -138,10 +142,37 @@ describe("OrderMetadataDialog", () => {
 
       const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
 
-      // Assert - readonly metadata component displays all existing data without expansion
+      // Act - expand metadata section
+      const expandButtons = within(productVariantMetadata).getAllByTestId("expand");
+
+      fireEvent.click(expandButtons[0]);
+
+      // Assert - check metadata values after expansion
       expect(screen.getByText("Product variant metadata")).toBeInTheDocument();
       expect(within(productVariantMetadata).getByDisplayValue("variant-key")).toBeInTheDocument();
       expect(within(productVariantMetadata).getByDisplayValue("variant-value")).toBeInTheDocument();
+    });
+
+    it("displays product variant private metadata when user has MANAGE_PRODUCTS permission", () => {
+      // Arrange
+      (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
+      render(
+        <OrderMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
+
+      // Act - expand private metadata section
+      const expandButtons = within(productVariantMetadata).getAllByTestId("expand");
+
+      fireEvent.click(expandButtons[1]);
+
+      // Assert - check private metadata values after expansion
       expect(
         within(productVariantMetadata).getByDisplayValue("variant-private-key"),
       ).toBeInTheDocument();
@@ -150,7 +181,7 @@ describe("OrderMetadataDialog", () => {
       ).toBeInTheDocument();
     });
 
-    it("hides privateMetadata from product variant when user doesn't have MANAGE_PRODUCTS permission", () => {
+    it("hides and disables variant metadata editing when user doesn't have MANAGE_PRODUCTS permission", () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(false);
       render(
@@ -162,13 +193,26 @@ describe("OrderMetadataDialog", () => {
         />,
       );
 
-      // Assert
-      // Private metadata should not be visible in the readonly section
-      const metadataEditors = screen.getAllByTestId("metadata-editor");
-      const readonlyEditor = metadataEditors[1];
+      const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
 
-      expect(readonlyEditor).not.toHaveTextContent("variant-private-key");
-      expect(readonlyEditor).not.toHaveTextContent("variant-private-value");
+      // Act - expand public metadata section
+      const expandButtons = within(productVariantMetadata).getAllByTestId("expand");
+
+      // Should only have 1 expand button (for public metadata, not private)
+      expect(expandButtons.length).toBe(1);
+
+      fireEvent.click(expandButtons[0]);
+
+      // Assert - variant metadata fields should be disabled
+      const variantKeyInput = within(productVariantMetadata).getByDisplayValue(
+        "variant-key",
+      ) as HTMLInputElement;
+      const variantValueInput = within(productVariantMetadata).getByDisplayValue(
+        "variant-value",
+      ) as HTMLInputElement;
+
+      expect(variantKeyInput.disabled).toBe(true);
+      expect(variantValueInput.disabled).toBe(true);
     });
   });
 
