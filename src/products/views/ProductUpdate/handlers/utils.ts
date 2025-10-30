@@ -86,6 +86,10 @@ export function getProductUpdateVariables(
     variables.input["seo"].title = data.seoTitle;
   }
 
+  if (data.weight !== undefined && data.weight !== "") {
+    variables.input["weight"] = parseFloat(data.weight);
+  }
+
   return variables;
 }
 
