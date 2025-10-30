@@ -283,22 +283,29 @@ const ProductUpdatePage = ({
     }
 
     if (lastFrame?.fields?.productDescription && "value" in lastFrame.fields.productDescription) {
-      const newProductName = lastFrame.fields.productDescription.value;
-      const currentProductName = dataCache.current?.description;
+      const newProductDescription = lastFrame.fields.productDescription.value;
+
+      // cache may be empty if editor was not used before sending event to app
+      const productDescriptionWithFallback = descriptionCache.current ?? product.description;
 
       try {
-        const parsedEditorJs = JSON.parse(newProductName) as OutputData;
+        const parsedEditorJs = JSON.parse(newProductDescription) as OutputData;
 
         // Only update if the value has changed
-        if (JSON.stringify(parsedEditorJs.blocks) !== JSON.stringify(currentProductName.blocks)) {
+        if (
+          JSON.stringify(parsedEditorJs.blocks) !==
+          JSON.stringify(productDescriptionWithFallback.blocks)
+        ) {
           changeHandlerRef.current({
             target: {
               name: "description",
-              value: newProductName,
+              value: newProductDescription,
             },
           });
         }
       } catch (e) {
+        console.error(e);
+
         console.warn("App returned invalid response for product description field, ignoring");
       }
     }
