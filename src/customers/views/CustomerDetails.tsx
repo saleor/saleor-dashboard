@@ -78,6 +78,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
             email: data.email,
             firstName: data.firstName,
             isActive: data.isActive,
+            isConfirmed: data.isConfirmed,
             lastName: data.lastName,
             note: data.note,
           },

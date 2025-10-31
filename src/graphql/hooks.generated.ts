@@ -485,6 +485,7 @@ export const CustomerDetailsFragmentDoc = gql`
   }
   note
   isActive
+  isConfirmed
 }
     ${CustomerFragmentDoc}
 ${AddressFragmentDoc}`;

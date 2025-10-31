@@ -38,6 +38,7 @@ export interface CustomerDetailsPageFormData extends MetadataFormData {
   lastName: string;
   email: string;
   isActive: boolean;
+  isConfirmed: boolean;
   note: string;
 }
 
@@ -66,6 +67,7 @@ const CustomerDetailsPage = ({
     email: customer?.email || "",
     firstName: customer?.firstName || "",
     isActive: customer?.isActive || false,
+    isConfirmed: customer?.isConfirmed || false,
     lastName: customer?.lastName || "",
     metadata: customer?.metadata.map(mapMetadataItemToInput),
     note: customer?.note || "",

@@ -127,4 +127,46 @@ describe("useProductUpdateForm", () => {
       seoDescription: "seo-desc-1",
     });
   });
+
+  it("submits form with weight field when modified", async () => {
+    // Arrange
+    const mockOnSubmit = jest.fn();
+    const { result } = renderHook(() =>
+      useProductUpdateForm(
+        { variants: [], channelListings: [] } as unknown as ProductFragment,
+        mockOnSubmit,
+        false,
+        jest.fn(),
+        {} as UseProductUpdateFormOpts,
+      ),
+    );
+
+    // Act
+    await act(() => {
+      result.current.change({ target: { name: "weight", value: "15.5" } });
+    });
+
+    await act(async () => {
+      await result.current.submit();
+    });
+
+    // Assert
+    expect(mockOnSubmit).toHaveBeenCalledWith({
+      attributes: [],
+      attributesWithNewFileValue: [],
+      channels: {
+        removeChannels: [],
+        updateChannels: [],
+      },
+      description: undefined,
+      metadata: undefined,
+      privateMetadata: undefined,
+      variants: {
+        added: [],
+        removed: [],
+        updates: [],
+      },
+      weight: "15.5",
+    });
+  });
 });

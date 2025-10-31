@@ -22,6 +22,7 @@ export const customerDetailsFragment = gql`
     }
     note
     isActive
+    isConfirmed
   }
 `;
 

@@ -33,6 +33,7 @@ interface CustomerDetailsProps {
   customer: CustomerDetailsQuery["user"];
   data: {
     isActive: boolean;
+    isConfirmed: boolean;
     note: string;
   };
   disabled: boolean;
@@ -97,6 +98,29 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
               id: "+NUzaQ",
               defaultMessage: "User account active",
               description: "check to mark this account as active",
+            })}
+          </Text>
+        </Checkbox>
+        <Checkbox
+          data-test-id="customer-confirmed-checkbox"
+          checked={data.isConfirmed}
+          className={classes.checkbox}
+          disabled={disabled}
+          name="isConfirmed"
+          onCheckedChange={value => {
+            onChange({
+              target: {
+                name: "isConfirmed",
+                value,
+              },
+            } as React.ChangeEvent<any>);
+          }}
+        >
+          <Text fontSize={3}>
+            {intl.formatMessage({
+              id: "D0kWwR",
+              defaultMessage: "User email confirmed",
+              description: "check to mark this email as confirmed",
             })}
           </Text>
         </Checkbox>

@@ -47,6 +47,7 @@ export const customers = [
     email: "alexander_simonis@example.com",
     id: "11810",
     isActive: true,
+    isConfirmed: true,
     isStaff: false,
     note: null,
   },
@@ -1033,6 +1034,7 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
   firstName: "Tom",
   id: "VXNlcjoy",
   isActive: true,
+  isConfirmed: true,
   lastLogin: "2018-05-07T09:37:30.124154+00:00",
   lastName: "Cooper",
   lastPlacedOrder: {

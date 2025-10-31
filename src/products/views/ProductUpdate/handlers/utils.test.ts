@@ -7,6 +7,7 @@ import { product, variantAttributes } from "../../../fixtures";
 import {
   getBulkVariantUpdateInputs,
   getCreateVariantInput,
+  getProductUpdateVariables,
   inferProductChannelsAfterUpdate,
 } from "./utils";
 
@@ -425,5 +426,87 @@ describe("getBulkVariantUpdateInputs", () => {
         channelListings: { create: [], remove: [], update: [] },
       },
     ]);
+  });
+});
+
+describe("getProductUpdateVariables - weight handling", () => {
+  const baseProduct = product("http://google.com");
+  const baseSubmitData = {
+    attributes: [],
+    attributesWithNewFileValue: [],
+    channels: {
+      removeChannels: [],
+      updateChannels: [],
+    },
+  } as ProductUpdateSubmitData;
+
+  test("should include weight when provided with valid number string", () => {
+    // Arrange
+    const submitData = {
+      ...baseSubmitData,
+      weight: "10.5",
+    };
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, submitData, []);
+
+    // Assert
+    expect(result.input.weight).toBe(10.5);
+  });
+
+  test("should include weight as 0 when provided with '0'", () => {
+    // Arrange
+    const submitData = {
+      ...baseSubmitData,
+      weight: "0",
+    };
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, submitData, []);
+
+    // Assert
+    expect(result.input.weight).toBe(0);
+  });
+
+  test("should not include weight when undefined", () => {
+    // Arrange
+    const submitData = {
+      ...baseSubmitData,
+      weight: undefined,
+    };
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, submitData, []);
+
+    // Assert
+    expect(result.input.weight).toBeUndefined();
+  });
+
+  test("should not include weight when empty string", () => {
+    // Arrange
+    const submitData = {
+      ...baseSubmitData,
+      weight: "",
+    };
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, submitData, []);
+
+    // Assert
+    expect(result.input.weight).toBeUndefined();
+  });
+
+  test("should parse integer string weight correctly", () => {
+    // Arrange
+    const submitData = {
+      ...baseSubmitData,
+      weight: "25",
+    };
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, submitData, []);
+
+    // Assert
+    expect(result.input.weight).toBe(25);
   });
 });
