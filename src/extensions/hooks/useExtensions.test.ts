@@ -108,7 +108,7 @@ describe("Extensions / hooks / useExtensions", () => {
               brand: null,
             },
             __typename: "AppExtension",
-            settings: undefined,
+            settings: {},
           },
         },
         {
@@ -129,7 +129,7 @@ describe("Extensions / hooks / useExtensions", () => {
               name: "Test App 4",
             },
             __typename: "AppExtension",
-            settings: undefined,
+            settings: {},
           },
         },
         {
@@ -246,7 +246,9 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_ORDERS],
           url: "https://example.com/ext1",
           label: "Extension 1",
-          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          targetName: "POPUP",
+          settings: {},
           app: expect.objectContaining({
             id: "app1",
             name: "Test App 1",
@@ -259,7 +261,9 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_CHANNELS],
           url: "https://example.com/ext3",
           label: "Extension 3",
-          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          targetName: "POPUP",
+          settings: {},
           app: expect.objectContaining({
             id: "app3",
             name: "Test App 3",
@@ -272,7 +276,9 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext4",
           label: "Extension 4",
-          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          targetName: "NEW_TAB",
+          settings: {},
           app: expect.objectContaining({
             id: "app4",
             name: "Test App 4",
@@ -285,7 +291,9 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext5",
           label: "Extension 5",
-          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          targetName: "NEW_TAB",
+          settings: { newTabTarget: { method: "POST" } },
           app: expect.objectContaining({
             id: "app5",
             name: "Test App 5",
@@ -298,7 +306,9 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "/ext6",
           label: "Extension 6",
-          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          targetName: "NEW_TAB",
+          settings: { newTabTarget: { method: "GET" } },
           app: expect.objectContaining({
             id: "app6",
             name: "Test App 6",
@@ -312,7 +322,9 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "/ext7",
           label: "Extension 7",
-          mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          targetName: "NEW_TAB",
+          settings: { newTabTarget: { method: "POST" } },
           app: expect.objectContaining({
             id: "app7",
             name: "Test App 7",
@@ -328,7 +340,9 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext2",
           label: "Extension 2",
-          mount: AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
+          mountName: AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
+          targetName: "APP_PAGE",
+          settings: {},
           app: expect.objectContaining({
             id: "app2",
             name: "Test App 2",
@@ -393,7 +407,7 @@ describe("Extensions / hooks / useExtensions", () => {
       appToken: "token1",
       src: "https://example.com/ext1",
       label: "Extension 1",
-      target: "POPUP",
+      targetName: "POPUP",
       params: mockParams,
     });
   });
@@ -419,7 +433,7 @@ describe("Extensions / hooks / useExtensions", () => {
       appToken: "", // Should use empty string for null accessToken
       src: "https://example.com/ext3",
       label: "Extension 3",
-      target: "POPUP",
+      targetName: "POPUP",
       params: {},
     });
   });
