@@ -47,6 +47,8 @@ export const ALL_APP_EXTENSION_MOUNTS = z.enum([
   ...CUSTOMER_MOUNTS,
 ] as const);
 
+export type AllAppExtensionMounts = z.infer<typeof ALL_APP_EXTENSION_MOUNTS>;
+
 // Subset of mounts available for WIDGET target
 export const WIDGET_AVAILABLE_MOUNTS = [
   "ORDER_DETAILS_WIDGETS",
