@@ -33,4 +33,4 @@ export const extensionMountPoints = {
     "NAVIGATION_PAGES",
     "NAVIGATION_TRANSLATIONS",
   ],
-} satisfies Record<string, Array<AllAppExtensionMounts>>;
+} as const satisfies Record<string, Array<AllAppExtensionMounts>>;

@@ -8,7 +8,11 @@ import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
-import { ExtensionListQuery, useExtensionListQuery } from "@dashboard/graphql";
+import {
+  AppExtensionMountEnum,
+  ExtensionListQuery,
+  useExtensionListQuery,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
@@ -104,14 +108,14 @@ const prepareExtensionsWithActions = ({
   );
 
 export const useExtensions = <T extends AllAppExtensionMounts>(
-  mountList: T[],
+  mountList: readonly T[],
 ): Record<T, Extension[]> => {
   const { activate } = useActiveAppExtension();
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
     variables: {
       filter: {
-        mount: mountList,
+        mount: mountList as unknown as AppExtensionMountEnum[],
       },
     },
   });

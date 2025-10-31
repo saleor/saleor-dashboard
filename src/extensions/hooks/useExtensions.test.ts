@@ -215,7 +215,7 @@ describe("Extensions / hooks / useExtensions", () => {
     ]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE", "PRODUCT_DETAILS_MORE_ACTIONS"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE", "PRODUCT_DETAILS_MORE_ACTIONS"] as const;
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
@@ -350,7 +350,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: { appExtensions: { edges: [] } } });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
@@ -366,7 +366,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: undefined });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
@@ -382,7 +382,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
     const mockParams = { productIds: ["test-id"] };
 
     // Act
@@ -407,7 +407,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
@@ -435,7 +435,7 @@ describe("Extensions / hooks / useExtensions", () => {
       "PRODUCT_OVERVIEW_CREATE",
       "PRODUCT_DETAILS_MORE_ACTIONS",
       "NAVIGATION_CATALOG",
-    ];
+    ] as const;
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
@@ -453,7 +453,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
 
     // Act
     renderHook(() => useExtensions(mountList));
@@ -471,7 +471,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
@@ -486,7 +486,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
     const { result } = renderHook(() => useExtensions(mountList));
     const extension = result.current["PRODUCT_OVERVIEW_CREATE"].find(
       e => e.id === "ext4",
@@ -502,7 +502,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
     const { result } = renderHook(() => useExtensions(mountList));
     const extension = result.current["PRODUCT_OVERVIEW_CREATE"].find(
       e => e.id === "ext5",
@@ -523,7 +523,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
     const { result } = renderHook(() => useExtensions(mountList));
     const extension = result.current["PRODUCT_OVERVIEW_CREATE"].find(
       e => e.id === "ext6",
@@ -539,7 +539,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"] as const;
     const { result } = renderHook(() => useExtensions(mountList));
     const extension = result.current["PRODUCT_OVERVIEW_CREATE"].find(
       e => e.id === "ext7",
