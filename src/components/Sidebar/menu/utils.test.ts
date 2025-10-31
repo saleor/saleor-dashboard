@@ -37,8 +37,8 @@ describe("mapToExtensionsItems", () => {
     permissions: [] as PermissionEnum[],
     open: jest.fn(),
     accessToken: "mock-token",
-    mount: AppExtensionMountEnum.NAVIGATION_CATALOG,
-    target: AppExtensionTargetEnum.APP_PAGE,
+    mountName: AppExtensionMountEnum.NAVIGATION_CATALOG,
+    targetName: AppExtensionTargetEnum.APP_PAGE,
     options: null,
   };
 
@@ -210,7 +210,7 @@ describe("getMenuItemExtension", () => {
     permissions: [] as PermissionEnum[],
     open: jest.fn(),
     accessToken: "mock-token",
-    mount: AppExtensionMountEnum.NAVIGATION_CATALOG,
+    mountName: AppExtensionMountEnum.NAVIGATION_CATALOG,
     options: null,
     target: AppExtensionTargetEnum.POPUP,
   };
@@ -352,7 +352,7 @@ describe("getMenuItemExtension", () => {
       label: "Another Extension",
       app: { ...mockAppDefinition, id: "app-2" },
       url: "/another",
-      mount: AppExtensionMountEnum.NAVIGATION_CATALOG,
+      mountName: AppExtensionMountEnum.NAVIGATION_CATALOG,
     };
     const extensionsWithMultiple = {
       ...emptyExtensionsRecord,
@@ -377,7 +377,7 @@ describe("getMenuItemExtension", () => {
       label: "Catalog Extension",
       app: catalogExtensionApp,
       url: "/catalog-test",
-      mount: AppExtensionMountEnum.NAVIGATION_PAGES,
+      mountName: AppExtensionMountEnum.NAVIGATION_PAGES,
     };
     const extensionsWithMultipleMounts = {
       ...emptyExtensionsRecord,

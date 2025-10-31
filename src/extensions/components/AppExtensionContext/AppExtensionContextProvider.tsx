@@ -46,7 +46,7 @@ export const useActiveAppExtension = () => {
   const navigate = useNavigator();
 
   const activate = (appData: AppExtensionActiveParams) => {
-    if (appData.target === AppExtensionTargetEnum.POPUP) {
+    if (appData.targetName === AppExtensionTargetEnum.POPUP) {
       setActive(appData);
     } else {
       navigate(ExtensionsUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {

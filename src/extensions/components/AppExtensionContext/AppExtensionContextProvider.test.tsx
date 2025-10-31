@@ -119,7 +119,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "https://example.com",
         label: "Test App",
-        target: AppExtensionTargetEnum.POPUP,
+        targetName: AppExtensionTargetEnum.POPUP,
         params: { productId: "123" },
       };
 
@@ -141,7 +141,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "custom-path",
         label: "Test App",
-        target: AppExtensionTargetEnum.APP_PAGE,
+        targetName: AppExtensionTargetEnum.APP_PAGE,
         params: { productId: "123" },
       };
 
@@ -166,7 +166,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "https://example.com",
         label: "Test App",
-        target: AppExtensionTargetEnum.POPUP,
+        targetName: AppExtensionTargetEnum.POPUP,
       };
 
       // Act
@@ -192,7 +192,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "https://example.com/app",
         label: "Test App",
-        target: AppExtensionTargetEnum.POPUP,
+        targetName: AppExtensionTargetEnum.POPUP,
         params: { productId: "123" },
       };
 
@@ -256,7 +256,7 @@ describe("ExternalAppContext", () => {
           appToken: "test-token",
           src: "https://example.com/app",
           label: "Test App",
-          target: AppExtensionTargetEnum.POPUP,
+          targetName: AppExtensionTargetEnum.POPUP,
         };
 
         return (
@@ -302,7 +302,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "https://example.com",
         label: "Test App",
-        target: AppExtensionTargetEnum.POPUP,
+        targetName: AppExtensionTargetEnum.POPUP,
       };
 
       // Act - Open the app

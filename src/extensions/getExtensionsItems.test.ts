@@ -41,10 +41,10 @@ const mockedExtension: ExtensionWithParams = {
   },
   accessToken: "test-token",
   permissions: [PermissionEnum.MANAGE_ORDERS],
-  mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
+  mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
   url: "https://example.com/extension",
   open: jest.fn(),
-  target: AppExtensionTargetEnum.POPUP,
+  targetName: AppExtensionTargetEnum.POPUP,
   options: null,
 };
 
