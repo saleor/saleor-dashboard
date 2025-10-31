@@ -115,6 +115,7 @@ export const useExtensions = <T extends AllAppExtensionMounts>(
     fetchPolicy: "cache-first",
     variables: {
       filter: {
+        // TODO: Remove casting once API removes the enum
         mount: mountList as unknown as AppExtensionMountEnum[],
       },
     },
