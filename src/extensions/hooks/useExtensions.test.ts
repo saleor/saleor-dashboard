@@ -1,6 +1,11 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
-import { AppExtensionMountEnum, PermissionEnum, useExtensionListQuery } from "@dashboard/graphql";
+import {
+  AppExtensionMountEnum,
+  ExtensionListQuery,
+  PermissionEnum,
+  useExtensionListQuery,
+} from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useExtensions } from "./useExtensions";
@@ -45,126 +50,162 @@ describe("Extensions / hooks / useExtensions", () => {
       edges: [
         {
           node: {
+            __typename: "AppExtension",
             id: "ext1",
             accessToken: "token1",
-            permissions: [{ code: PermissionEnum.MANAGE_ORDERS }],
+            permissions: [{ code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission" }],
             url: "https://example.com/ext1",
             label: "Extension 1",
-            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-            target: "POPUP",
+            mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+            targetName: "POPUP",
+            settings: {},
             app: {
               id: "app1",
               name: "Test App 1",
+              __typename: "App",
+              appUrl: "https://example.com",
+              brand: null,
             },
           },
+          __typename: "AppExtensionCountableEdge",
         },
         {
           node: {
             id: "ext2",
             accessToken: "token2",
-            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS }],
+            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext2",
             label: "Extension 2",
-            mount: AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
-            target: "APP_PAGE",
+            mountName: "PRODUCT_DETAILS_MORE_ACTIONS",
+            targetName: "APP_PAGE",
             app: {
               id: "app2",
               name: "Test App 2",
+              __typename: "App",
+              appUrl: "https://example.com",
+              brand: null,
             },
+            __typename: "AppExtension",
+            settings: {},
           },
+          __typename: "AppExtensionCountableEdge",
         },
         {
+          __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext3",
             accessToken: null,
-            permissions: [{ code: PermissionEnum.MANAGE_CHANNELS }],
+            permissions: [{ code: PermissionEnum.MANAGE_CHANNELS, __typename: "Permission" }],
             url: "https://example.com/ext3",
             label: "Extension 3",
-            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-            target: "POPUP",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "POPUP",
             app: {
               id: "app3",
               name: "Test App 3",
+              __typename: "App",
+              appUrl: "https://example.com",
+              brand: null,
             },
+            __typename: "AppExtension",
+            settings: undefined,
           },
         },
         {
+          __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext4",
             accessToken: "token4",
-            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS }],
+            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext4",
             label: "Extension 4",
-            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-            target: "NEW_TAB",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "NEW_TAB",
             app: {
               id: "app4",
+              __typename: "App",
+              appUrl: "https://example.com",
+              brand: null,
               name: "Test App 4",
             },
+            __typename: "AppExtension",
+            settings: undefined,
           },
         },
         {
+          __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext5",
             accessToken: "token5",
-            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS }],
+            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext5",
             label: "Extension 5",
-            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-            target: "NEW_TAB",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "NEW_TAB",
             app: {
               id: "app5",
+              __typename: "App",
+              appUrl: "https://example.com",
+              brand: null,
               name: "Test App 5",
             },
-            options: {
-              __typename: "AppExtensionOptionsNewTab",
+            settings: {
               newTabTarget: { method: "POST" },
             },
+            __typename: "AppExtension",
           },
         },
         {
+          __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext6",
             accessToken: "token6",
-            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS }],
+            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "/ext6",
             label: "Extension 6",
-            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-            target: "NEW_TAB",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "NEW_TAB",
             app: {
               id: "app6",
+              __typename: "App",
+              brand: null,
               name: "Test App 6",
               appUrl: "https://app6.example.com",
             },
-            options: {
-              __typename: "AppExtensionOptionsNewTab",
+            settings: {
               newTabTarget: { method: "GET" },
             },
+            __typename: "AppExtension",
           },
         },
         {
+          __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext7",
             accessToken: "token7",
-            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS }],
+            permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "/ext7",
             label: "Extension 7",
-            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-            target: "NEW_TAB",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "NEW_TAB",
             app: {
+              __typename: "App",
+              brand: null,
               id: "app7",
               name: "Test App 7",
               appUrl: "https://app7.example.com",
             },
-            options: {
-              __typename: "AppExtensionOptionsNewTab",
+            settings: {
               newTabTarget: { method: "POST" },
             },
+            __typename: "AppExtension",
           },
         },
       ],
+      __typename: "AppExtensionCountableConnection",
     },
-  };
+    __typename: "Query",
+  } satisfies ExtensionListQuery;
 
   beforeEach(() => {
     jest.clearAllMocks();
