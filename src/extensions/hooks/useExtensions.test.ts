@@ -1,11 +1,6 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
-import {
-  AppExtensionMountEnum,
-  ExtensionListQuery,
-  PermissionEnum,
-  useExtensionListQuery,
-} from "@dashboard/graphql";
+import { ExtensionListQuery, PermissionEnum, useExtensionListQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useExtensions } from "./useExtensions";
@@ -56,7 +51,7 @@ describe("Extensions / hooks / useExtensions", () => {
             permissions: [{ code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission" }],
             url: "https://example.com/ext1",
             label: "Extension 1",
-            mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+            mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "POPUP",
             settings: {},
             app: {
@@ -220,10 +215,7 @@ describe("Extensions / hooks / useExtensions", () => {
     ]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [
-      AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-      AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
-    ];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE", "PRODUCT_DETAILS_MORE_ACTIONS"];
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
@@ -239,14 +231,14 @@ describe("Extensions / hooks / useExtensions", () => {
     });
 
     expect(result.current).toEqual({
-      [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [
+      ["PRODUCT_OVERVIEW_CREATE"]: [
         expect.objectContaining({
           id: "ext1",
           accessToken: "token1",
           permissions: [PermissionEnum.MANAGE_ORDERS],
           url: "https://example.com/ext1",
           label: "Extension 1",
-          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "POPUP",
           settings: {},
           app: expect.objectContaining({
@@ -261,7 +253,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_CHANNELS],
           url: "https://example.com/ext3",
           label: "Extension 3",
-          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "POPUP",
           settings: {},
           app: expect.objectContaining({
@@ -276,7 +268,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext4",
           label: "Extension 4",
-          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: {},
           app: expect.objectContaining({
@@ -291,7 +283,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext5",
           label: "Extension 5",
-          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "POST" } },
           app: expect.objectContaining({
@@ -306,7 +298,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "/ext6",
           label: "Extension 6",
-          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "GET" } },
           app: expect.objectContaining({
@@ -322,7 +314,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "/ext7",
           label: "Extension 7",
-          mountName: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+          mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "POST" } },
           app: expect.objectContaining({
@@ -333,14 +325,14 @@ describe("Extensions / hooks / useExtensions", () => {
           open: expect.any(Function),
         }),
       ],
-      [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: [
+      ["PRODUCT_DETAILS_MORE_ACTIONS"]: [
         expect.objectContaining({
           id: "ext2",
           accessToken: "token2",
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext2",
           label: "Extension 2",
-          mountName: AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
+          mountName: "PRODUCT_DETAILS_MORE_ACTIONS",
           targetName: "APP_PAGE",
           settings: {},
           app: expect.objectContaining({
@@ -358,14 +350,14 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: { appExtensions: { edges: [] } } });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
 
     // Assert
     expect(result.current).toEqual({
-      [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [],
+      ["PRODUCT_OVERVIEW_CREATE"]: [],
     });
   });
 
@@ -374,14 +366,14 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: undefined });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
 
     // Assert
     expect(result.current).toEqual({
-      [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [],
+      ["PRODUCT_OVERVIEW_CREATE"]: [],
     });
   });
 
@@ -390,14 +382,12 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
     const mockParams = { productIds: ["test-id"] };
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
-    const extension = result.current[
-      AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE
-    ][0] as ExtensionWithParams;
+    const extension = result.current["PRODUCT_OVERVIEW_CREATE"][0] as ExtensionWithParams;
 
     extension.open(mockParams);
 
@@ -417,13 +407,11 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
-    const extension = result.current[
-      AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE
-    ][1] as ExtensionWithParams; // ext3 has null accessToken
+    const extension = result.current["PRODUCT_OVERVIEW_CREATE"][1] as ExtensionWithParams; // ext3 has null accessToken
 
     extension.open({});
 
@@ -444,9 +432,9 @@ describe("Extensions / hooks / useExtensions", () => {
     useExtensionListQueryMock.mockReturnValue({ data: { appExtensions: { edges: [] } } });
 
     const mountList = [
-      AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-      AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
-      AppExtensionMountEnum.NAVIGATION_CATALOG,
+      "PRODUCT_OVERVIEW_CREATE",
+      "PRODUCT_DETAILS_MORE_ACTIONS",
+      "NAVIGATION_CATALOG",
     ];
 
     // Act
@@ -454,9 +442,9 @@ describe("Extensions / hooks / useExtensions", () => {
 
     // Assert
     expect(result.current).toEqual({
-      [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: [],
-      [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: [],
-      [AppExtensionMountEnum.NAVIGATION_CATALOG]: [],
+      ["PRODUCT_OVERVIEW_CREATE"]: [],
+      ["PRODUCT_DETAILS_MORE_ACTIONS"]: [],
+      ["NAVIGATION_CATALOG"]: [],
     });
   });
 
@@ -465,7 +453,7 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
 
     // Act
     renderHook(() => useExtensions(mountList));
@@ -483,13 +471,13 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
 
     // Act
     const { result } = renderHook(() => useExtensions(mountList));
 
     // Assert
-    const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE][0];
+    const extension = result.current["PRODUCT_OVERVIEW_CREATE"][0];
 
     expect(extension.permissions).toEqual([PermissionEnum.MANAGE_ORDERS]);
   });
@@ -498,9 +486,9 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
     const { result } = renderHook(() => useExtensions(mountList));
-    const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE].find(
+    const extension = result.current["PRODUCT_OVERVIEW_CREATE"].find(
       e => e.id === "ext4",
     ) as ExtensionWithParams;
 
@@ -514,9 +502,9 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
     const { result } = renderHook(() => useExtensions(mountList));
-    const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE].find(
+    const extension = result.current["PRODUCT_OVERVIEW_CREATE"].find(
       e => e.id === "ext5",
     ) as ExtensionWithParams;
 
@@ -535,9 +523,9 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
     const { result } = renderHook(() => useExtensions(mountList));
-    const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE].find(
+    const extension = result.current["PRODUCT_OVERVIEW_CREATE"].find(
       e => e.id === "ext6",
     ) as ExtensionWithParams;
 
@@ -551,9 +539,9 @@ describe("Extensions / hooks / useExtensions", () => {
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
 
-    const mountList = [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE];
+    const mountList = ["PRODUCT_OVERVIEW_CREATE"];
     const { result } = renderHook(() => useExtensions(mountList));
-    const extension = result.current[AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE].find(
+    const extension = result.current["PRODUCT_OVERVIEW_CREATE"].find(
       e => e.id === "ext7",
     ) as ExtensionWithParams;
     const params = { productId: "2137" };

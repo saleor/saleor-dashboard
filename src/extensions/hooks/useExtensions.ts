@@ -1,15 +1,14 @@
 import { AppExtensionActiveParams } from "@dashboard/extensions/components/AppExtensionContext/app-extension-popup-state";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
-import { ALL_APP_EXTENSION_MOUNTS } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
+import {
+  ALL_APP_EXTENSION_MOUNTS,
+  AllAppExtensionMounts,
+} from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
-import {
-  AppExtensionMountEnum,
-  ExtensionListQuery,
-  useExtensionListQuery,
-} from "@dashboard/graphql";
+import { ExtensionListQuery, useExtensionListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
@@ -104,7 +103,7 @@ const prepareExtensionsWithActions = ({
     },
   );
 
-export const useExtensions = <T extends AppExtensionMountEnum>(
+export const useExtensions = <T extends AllAppExtensionMounts>(
   mountList: T[],
 ): Record<T, Extension[]> => {
   const { activate } = useActiveAppExtension();
@@ -122,7 +121,7 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
   });
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
-    {} as Record<AppExtensionMountEnum, Extension[]>,
+    {} as Record<AllAppExtensionMounts, Extension[]>,
   );
 
   return extensions.reduce(
