@@ -58,11 +58,14 @@ export const warehouseList: WarehouseWithShippingFragment[] = [
   },
 ];
 
+const email = "test@saleor.io";
+
 export const warehouse: WarehouseDetailsFragment = {
   ...warehouseList[0],
   isPrivate: true,
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
   address,
+  email,
 };
 
 export const warehouseForPickup: WarehouseDetailsFragment = {
@@ -70,4 +73,5 @@ export const warehouseForPickup: WarehouseDetailsFragment = {
   isPrivate: false,
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
   address,
+  email,
 };
