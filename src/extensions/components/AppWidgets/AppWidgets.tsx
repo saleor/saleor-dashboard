@@ -8,7 +8,6 @@ import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
-import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -238,7 +237,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                   const onClick = () => ext.open(params);
 
                   switch (ext.targetName) {
-                    case AppExtensionTargetEnum.APP_PAGE:
+                    case "APP_PAGE":
                       return (
                         <Box marginTop={2}>
                           <Link
@@ -249,7 +248,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                           </Link>
                         </Box>
                       );
-                    case AppExtensionTargetEnum.NEW_TAB:
+                    case "NEW_TAB":
                       return (
                         <Box marginTop={2}>
                           <Link
@@ -263,7 +262,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                           </Link>
                         </Box>
                       );
-                    case AppExtensionTargetEnum.POPUP:
+                    case "POPUP":
                       return (
                         <Box marginTop={2}>
                           <Link
@@ -274,7 +273,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                           </Link>
                         </Box>
                       );
-                    case AppExtensionTargetEnum.WIDGET:
+                    case "WIDGET":
                       throw new Error("You should not render widget type as link");
                   }
                 };
