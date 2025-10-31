@@ -1,6 +1,7 @@
 import { AppExtensionActiveParams } from "@dashboard/extensions/components/AppExtensionContext/app-extension-popup-state";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { ALL_APP_EXTENSION_MOUNTS } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
+import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
@@ -28,12 +29,12 @@ const prepareExtensionsWithActions = ({
       const isWidget = targetName === "WIDGET";
       const appUrl = app.appUrl;
 
+      const settingsValidation = appExtensionManifestOptionsSchema.safeParse(settings);
+
       /**
        * Options are not required so fall back to safe GET
        */
-      const newTabMethod =
-        (settings?.__typename === "AppExtensionOptionsNewTab" && settings?.newTabTarget?.method) ||
-        "GET";
+      const newTabMethod = settingsValidation.data?.newTabTarget?.method ?? "GET";
 
       return {
         id,
@@ -50,6 +51,12 @@ const prepareExtensionsWithActions = ({
          * TODO: Change interface to *not* contain this method if type is WIDGET
          */
         open: (params: AppDetailsUrlMountQueryParams) => {
+          if (!settingsValidation.success) {
+            console.error("Invalid extension configuration", settingsValidation.error);
+
+            return;
+          }
+
           if (isWidget) {
             console.error("Widget-type app should not execute 'open' method");
 

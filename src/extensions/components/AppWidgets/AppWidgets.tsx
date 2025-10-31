@@ -2,6 +2,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION, getAbsoluteApiUrl } from "@dashboard/config";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
+import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
@@ -171,11 +172,24 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 </Text>
               </Box>
               {appWithExtensions.extensions.map(ext => {
-                const isIframeType = ext.target === "WIDGET";
-                const widgetOptions =
-                  ext.options?.__typename === "AppExtensionOptionsWidget" && ext.options;
+                const settingsValidation = appExtensionManifestOptionsSchema.safeParse(
+                  ext.settings,
+                );
 
-                const isPOST = widgetOptions && widgetOptions?.widgetTarget?.method === "POST";
+                if (!settingsValidation.success) {
+                  return (
+                    <Box marginTop={2} key={ext.id}>
+                      <Text>Error rendering extension</Text>
+                    </Box>
+                  );
+                }
+
+                const settings = settingsValidation.data;
+
+                const isIframeType = ext.targetName === "WIDGET";
+
+                const isIframePost =
+                  ext.targetName === "WIDGET" && settings?.widgetTarget?.method === "POST";
 
                 const isExtensionAbsoluteUrl = isUrlAbsolute(ext.url);
 
@@ -223,7 +237,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 const renderNonIframeExtension = () => {
                   const onClick = () => ext.open(params);
 
-                  switch (ext.target) {
+                  switch (ext.targetName) {
                     case AppExtensionTargetEnum.APP_PAGE:
                       return (
                         <Box marginTop={2}>
@@ -265,8 +279,8 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                   }
                 };
 
-                const renderPOSTiframe = isIframeType && isPOST;
-                const renderGETiframe = isIframeType && !isPOST;
+                const renderPOSTiframe = isIframeType && isIframePost;
+                const renderGETiframe = isIframeType && !isIframePost;
                 const renderNonIframe = !isIframeType;
 
                 return (
