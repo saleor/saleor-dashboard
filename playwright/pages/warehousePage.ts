@@ -21,6 +21,7 @@ export class WarehousePage extends BasePage {
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly warehousesList = page.getByTestId("warehouses-list"),
     readonly warehouseNameInput = page.getByTestId("warehouse-name-input").locator("input"),
+    readonly warehouseEmailInput = page.getByTestId("company-email-input").locator("input"),
     readonly companyNameInput = page.getByTestId("company-name-input").locator("input"),
     readonly companyAddressLine1Input = page
       .getByTestId("company-address-line-1-input")
@@ -51,6 +52,7 @@ export class WarehousePage extends BasePage {
 
   async completeWarehouseForm(
     warehouseName = "e2e test - warehouse XXL",
+    warehouseEmail = "e2e@saleor.io",
     companyName = "e2e test - Looney Acme",
     lineAddress1 = "e2e test - wild road",
     lineAddress2 = "e2e test - 999/0",
@@ -60,6 +62,7 @@ export class WarehousePage extends BasePage {
     country = "Argentina",
   ) {
     await this.typeWarehouseName(warehouseName);
+    await this.typeWarehouseEmail(warehouseEmail);
     await this.typeCompanyName(companyName);
     await this.typeAddressLine1(lineAddress1);
     await this.typeAddressLine2(lineAddress2);
@@ -72,6 +75,10 @@ export class WarehousePage extends BasePage {
 
   async typeWarehouseName(warehouseName: string) {
     await this.warehouseNameInput.fill(warehouseName);
+  }
+
+  async typeWarehouseEmail(warehouseEmail: string) {
+    await this.warehouseEmailInput.fill(warehouseEmail);
   }
 
   async typeAddressLine1(lineAddress1: string) {
