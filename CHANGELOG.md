@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.22.8
+
+### Patch Changes
+
+- [#6019](https://github.com/saleor/saleor-dashboard/pull/6019) [`78c8d64`](https://github.com/saleor/saleor-dashboard/commit/78c8d64f592dcbd9c36788f38febb12c7bbb2550) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fix error with invalid extension manifest validation, cause by invalid permissions schema
+
+## 3.22.7
+
+### Patch Changes
+
+- [#6011](https://github.com/saleor/saleor-dashboard/pull/6011) [`8aca1b7`](https://github.com/saleor/saleor-dashboard/commit/8aca1b775a8365f01c28d92e9a31b27b07940549) Thanks [@lkostrowski](https://github.com/lkostrowski)! - During app installation, Dashboard prevents installation in case errors occur. This mimics the behavior of API-side validation.
+
+- [#6010](https://github.com/saleor/saleor-dashboard/pull/6010) [`73f1ab6`](https://github.com/saleor/saleor-dashboard/commit/73f1ab66e2229c99b366d71b6db104c766be6427) Thanks [@lkostrowski](https://github.com/lkostrowski)! - AppExtension validation on installation page now properly validates relative extension URL.
+
+- [#6007](https://github.com/saleor/saleor-dashboard/pull/6007) [`abb3edc`](https://github.com/saleor/saleor-dashboard/commit/abb3edc8bc6c9b00f2ba54ab7f83f55f8033e351) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Add missing logic for handling product variant metadata when accessed from order line modal (on order details page).
+
 ## 3.22.6
 
 ### Patch Changes
