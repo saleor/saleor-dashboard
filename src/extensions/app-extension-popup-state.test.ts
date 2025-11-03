@@ -89,11 +89,23 @@ describe("useAppExtensionPopup", () => {
   // Arrange
   it("should attach form state to active extension", () => {
     const mockFormState = {
-      domain: "saleor.cloud.example",
-      payload: {
-        data: { name: "Test Product" },
+      form: "product-edit",
+      fields: {
+        productName: {
+          fieldName: "productName",
+          type: "short-text",
+          originalValue: "aaa",
+          currentValue: "bbb",
+        },
+        productDescription: {
+          fieldName: "productDescription",
+          type: "editorjs",
+          currentValue: "{}",
+          originalValue: "{}",
+        },
       },
-    } as unknown as AllFormPayloads;
+      productId: "id",
+    } satisfies AllFormPayloads;
     const { result, unmount } = renderHook(() => useAppExtensionPopup());
 
     act(() => {
@@ -109,7 +121,7 @@ describe("useAppExtensionPopup", () => {
     expect(result.current.state.active).toBe(true);
 
     if (result.current.state.active) {
-      expect(result.current.state.formState).toEqual(mockFormState);
+      expect(result.current.state.formState["product-edit"]).toEqual(mockFormState);
       expect(result.current.state.id).toBe(mockActiveParams.id);
     }
 
@@ -242,11 +254,23 @@ describe("useAppExtensionPopup", () => {
       params: { productId: "test-product-id" },
     };
     const mockFormState = {
-      domain: "saleor.cloud.example",
-      payload: {
-        data: { name: "Test Product" },
+      form: "product-edit",
+      fields: {
+        productName: {
+          fieldName: "productName",
+          type: "short-text",
+          originalValue: "aaa",
+          currentValue: "bbb",
+        },
+        productDescription: {
+          fieldName: "productDescription",
+          type: "editorjs",
+          currentValue: "{}",
+          originalValue: "{}",
+        },
       },
-    } as unknown as AllFormPayloads;
+      productId: "id",
+    } satisfies AllFormPayloads;
 
     const { result, unmount } = renderHook(() => useAppExtensionPopup());
 
@@ -269,7 +293,7 @@ describe("useAppExtensionPopup", () => {
       expect(result.current.state.label).toBe(initialParams.label);
       expect(result.current.state.targetName).toBe(initialParams.targetName);
       expect(result.current.state.params).toEqual(initialParams.params);
-      expect(result.current.state.formState).toEqual(mockFormState);
+      expect(result.current.state.formState["product-edit"]).toEqual(mockFormState);
     }
 
     // Cleanup
