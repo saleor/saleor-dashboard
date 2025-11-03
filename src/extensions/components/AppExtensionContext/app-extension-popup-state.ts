@@ -1,5 +1,5 @@
+import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
-import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import { atom, useAtom } from "jotai";
 
 type ActiveParams = {
@@ -7,7 +7,7 @@ type ActiveParams = {
   appToken: string;
   src: string;
   label: string;
-  target: AppExtensionTargetEnum;
+  targetName: AppExtensionManifestTarget;
   params?: AppDetailsUrlMountQueryParams;
 };
 
@@ -33,7 +33,7 @@ class ExtensionActiveState {
 
   label: string;
 
-  target: AppExtensionTargetEnum;
+  targetName: AppExtensionManifestTarget;
 
   params?: AppDetailsUrlMountQueryParams;
 
@@ -42,7 +42,7 @@ class ExtensionActiveState {
     this.appToken = params.appToken;
     this.src = params.src;
     this.label = params.label;
-    this.target = params.target;
+    this.targetName = params.targetName;
     this.params = params.params;
   }
 }

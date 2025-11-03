@@ -1,5 +1,4 @@
 import { Locale } from "@dashboard/components/Locale";
-import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { Provider as JotaiProvider } from "jotai";
@@ -119,7 +118,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "https://example.com",
         label: "Test App",
-        target: AppExtensionTargetEnum.POPUP,
+        targetName: "POPUP",
         params: { productId: "123" },
       };
 
@@ -141,7 +140,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "custom-path",
         label: "Test App",
-        target: AppExtensionTargetEnum.APP_PAGE,
+        targetName: "APP_PAGE",
         params: { productId: "123" },
       };
 
@@ -166,7 +165,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "https://example.com",
         label: "Test App",
-        target: AppExtensionTargetEnum.POPUP,
+        targetName: "POPUP",
       };
 
       // Act
@@ -192,7 +191,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "https://example.com/app",
         label: "Test App",
-        target: AppExtensionTargetEnum.POPUP,
+        targetName: "POPUP",
         params: { productId: "123" },
       };
 
@@ -256,7 +255,7 @@ describe("ExternalAppContext", () => {
           appToken: "test-token",
           src: "https://example.com/app",
           label: "Test App",
-          target: AppExtensionTargetEnum.POPUP,
+          targetName: "POPUP",
         };
 
         return (
@@ -302,7 +301,7 @@ describe("ExternalAppContext", () => {
         appToken: "test-token",
         src: "https://example.com",
         label: "Test App",
-        target: AppExtensionTargetEnum.POPUP,
+        targetName: "POPUP",
       };
 
       // Act - Open the app

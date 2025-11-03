@@ -2,12 +2,12 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import { APP_VERSION, getAbsoluteApiUrl } from "@dashboard/config";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
+import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
 import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
-import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
@@ -171,11 +171,24 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 </Text>
               </Box>
               {appWithExtensions.extensions.map(ext => {
-                const isIframeType = ext.target === "WIDGET";
-                const widgetOptions =
-                  ext.options?.__typename === "AppExtensionOptionsWidget" && ext.options;
+                const settingsValidation = appExtensionManifestOptionsSchema.safeParse(
+                  ext.settings,
+                );
 
-                const isPOST = widgetOptions && widgetOptions?.widgetTarget?.method === "POST";
+                if (!settingsValidation.success) {
+                  return (
+                    <Box marginTop={2} key={ext.id}>
+                      <Text>Error rendering extension</Text>
+                    </Box>
+                  );
+                }
+
+                const settings = settingsValidation.data;
+
+                const isIframeType = ext.targetName === "WIDGET";
+
+                const isIframePost =
+                  ext.targetName === "WIDGET" && settings?.widgetTarget?.method === "POST";
 
                 const isExtensionAbsoluteUrl = isUrlAbsolute(ext.url);
 
@@ -223,8 +236,8 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 const renderNonIframeExtension = () => {
                   const onClick = () => ext.open(params);
 
-                  switch (ext.target) {
-                    case AppExtensionTargetEnum.APP_PAGE:
+                  switch (ext.targetName) {
+                    case "APP_PAGE":
                       return (
                         <Box marginTop={2}>
                           <Link
@@ -235,7 +248,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                           </Link>
                         </Box>
                       );
-                    case AppExtensionTargetEnum.NEW_TAB:
+                    case "NEW_TAB":
                       return (
                         <Box marginTop={2}>
                           <Link
@@ -249,7 +262,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                           </Link>
                         </Box>
                       );
-                    case AppExtensionTargetEnum.POPUP:
+                    case "POPUP":
                       return (
                         <Box marginTop={2}>
                           <Link
@@ -260,13 +273,13 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                           </Link>
                         </Box>
                       );
-                    case AppExtensionTargetEnum.WIDGET:
+                    case "WIDGET":
                       throw new Error("You should not render widget type as link");
                   }
                 };
 
-                const renderPOSTiframe = isIframeType && isPOST;
-                const renderGETiframe = isIframeType && !isPOST;
+                const renderPOSTiframe = isIframeType && isIframePost;
+                const renderGETiframe = isIframeType && !isIframePost;
                 const renderNonIframe = !isIframeType;
 
                 return (
