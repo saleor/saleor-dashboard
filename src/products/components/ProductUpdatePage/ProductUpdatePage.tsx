@@ -273,19 +273,17 @@ const ProductUpdatePage = ({
     if (lastFrame?.fields?.productName) {
       const productNameField = lastFrame.fields.productName;
 
-      if ("value" in productNameField) {
-        const newProductName = productNameField.value;
-        const currentProductName = dataCache.current?.name;
+      const newProductName = productNameField.value;
+      const currentProductName = dataCache.current?.name;
 
-        // Only update if the value has changed
-        if (newProductName !== currentProductName) {
-          changeHandlerRef.current({
-            target: {
-              name: "name",
-              value: newProductName,
-            },
-          });
-        }
+      // Only update if the value has changed
+      if (newProductName !== currentProductName) {
+        changeHandlerRef.current({
+          target: {
+            name: "name",
+            value: newProductName,
+          },
+        });
       }
     }
 
@@ -293,33 +291,31 @@ const ProductUpdatePage = ({
     if (lastFrame?.fields?.productDescription) {
       const productDescriptionField = lastFrame.fields.productDescription;
 
-      if ("value" in productDescriptionField) {
-        const newProductDescription = productDescriptionField.value;
+      const newProductDescription = productDescriptionField.value;
 
-        // cache may be empty if editor was not used before sending event to app
-        const productDescriptionWithFallback = descriptionCache.current ?? product.description;
+      // cache may be empty if editor was not used before sending event to app
+      const productDescriptionWithFallback = descriptionCache.current ?? product.description;
 
-        try {
-          const parsedEditorJs = JSON.parse(newProductDescription) as OutputData;
+      try {
+        const parsedEditorJs = JSON.parse(newProductDescription) as OutputData;
 
-          // Only update if the value has changed
-          if (
-            JSON.stringify(parsedEditorJs.blocks) !==
-            JSON.stringify(productDescriptionWithFallback.blocks)
-          ) {
-            // Update the EditorJS content directly
-            if (richTextRef.current?.editorRef?.current) {
-              richTextRef.current.editorRef.current.render(parsedEditorJs).then(() => {
-                // Mark as dirty and trigger change after render completes
-                richTextRef.current.handleChange();
-              });
-            }
+        // Only update if the value has changed
+        if (
+          JSON.stringify(parsedEditorJs.blocks) !==
+          JSON.stringify(productDescriptionWithFallback.blocks)
+        ) {
+          // Update the EditorJS content directly
+          if (richTextRef.current?.editorRef?.current) {
+            richTextRef.current.editorRef.current.render(parsedEditorJs).then(() => {
+              // Mark as dirty and trigger change after render completes
+              richTextRef.current.handleChange();
+            });
           }
-        } catch (e) {
-          console.error(e);
-
-          console.warn("App returned invalid response for product description field, ignoring");
         }
+      } catch (e) {
+        console.error(e);
+
+        console.warn("App returned invalid response for product description field, ignoring");
       }
     }
   }, [formFramesFromApp]);

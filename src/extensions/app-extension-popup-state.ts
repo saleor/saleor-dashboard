@@ -96,7 +96,7 @@ export const useAppExtensionPopup = () => {
         }
       });
     }
-  }, [state.active, iframes]);
+  }, [state, iframes]);
 
   return {
     state,
