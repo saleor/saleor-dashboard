@@ -55,8 +55,8 @@ describe("WarehouseInfo", () => {
 
     const nameInput = screen.getByTestId("warehouse-name-input").querySelector("input");
 
-    expect(nameInput).toBeInTheDocument();
-    fireEvent.change(nameInput, { target: { value: "Updated Warehouse" } });
+    expect(nameInput).toBeInstanceOf(HTMLInputElement);
+    fireEvent.change(nameInput as HTMLInputElement, { target: { value: "Updated Warehouse" } });
     expect(mockOnChange).toHaveBeenCalled();
   });
 
@@ -69,8 +69,10 @@ describe("WarehouseInfo", () => {
 
     const emailInput = screen.getByTestId("company-email-input").querySelector("input");
 
-    expect(emailInput).toBeInTheDocument();
-    fireEvent.change(emailInput, { target: { value: "updated@warehouse.com" } });
+    expect(emailInput).toBeInstanceOf(HTMLInputElement);
+    fireEvent.change(emailInput as HTMLInputElement, {
+      target: { value: "updated@warehouse.com" },
+    });
     expect(mockOnChange).toHaveBeenCalled();
   });
 
