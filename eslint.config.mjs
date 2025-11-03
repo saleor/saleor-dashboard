@@ -191,7 +191,7 @@ export default tseslint.config(
     },
   },
 
-  // Disable rules for specific dfiles
+  // Disable rules for specific files
   {
     files: ["vite.config.js"],
     languageOptions: {
@@ -221,6 +221,13 @@ export default tseslint.config(
     files: ["src/**/*.test.*", "src/**/*.stories.*"],
     rules: {
       "react-refresh/only-export-components": "off",
+    },
+  },
+  {
+    files: ["scripts/**.cjs"],
+    rules: {
+      // cjs doesn't work with ES Import
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
 

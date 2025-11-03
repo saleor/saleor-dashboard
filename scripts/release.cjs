@@ -2,9 +2,9 @@
 
 // @ts-check
 
-import { execSync } from "child_process";
-import { readFileSync } from "fs";
-import { join } from "path";
+const { execSync } = require("child_process");
+const { readFileSync } = require("fs");
+const { join } = require("path");
 
 /**
  * Release script that creates a git tag from package.json version
