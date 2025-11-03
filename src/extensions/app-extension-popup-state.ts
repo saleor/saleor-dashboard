@@ -1,7 +1,7 @@
+import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { usePopupFrameReference } from "@dashboard/extensions/popup-frame-reference";
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 import { postToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
-import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import { AllFormPayloads, DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
@@ -11,7 +11,7 @@ type ActiveParams = {
   appToken: string;
   src: string;
   label: string;
-  target: AppExtensionTargetEnum;
+  targetName: AppExtensionManifestTarget;
   params?: AppDetailsUrlMountQueryParams;
   formState?: AllFormPayloads;
 };
@@ -38,7 +38,7 @@ class ExtensionActiveState {
 
   label: string;
 
-  target: AppExtensionTargetEnum;
+  targetName: AppExtensionManifestTarget;
 
   params?: AppDetailsUrlMountQueryParams;
 
@@ -49,7 +49,7 @@ class ExtensionActiveState {
     this.appToken = params.appToken;
     this.src = params.src;
     this.label = params.label;
-    this.target = params.target;
+    this.targetName = params.targetName;
     this.params = params.params;
     this.formState = params.formState;
   }
@@ -99,7 +99,7 @@ export const useAppExtensionPopup = () => {
           appToken: currentState.appToken,
           src: currentState.src,
           label: currentState.label,
-          target: currentState.target,
+          targetName: currentState.targetName,
           params: currentState.params,
           formState,
         });

@@ -29,6 +29,7 @@ import WarehouseSettings from "../WarehouseSettings";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
+  email: string;
   isPrivate: boolean;
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
@@ -66,6 +67,7 @@ const WarehouseDetailsPage = ({
       warehouse?.clickAndCollectOption || WarehouseClickAndCollectOptionEnum.DISABLED,
     countryArea: warehouse?.address.countryArea ?? "",
     name: warehouse?.name ?? "",
+    email: warehouse?.email ?? "",
     phone: warehouse?.address.phone ?? "",
     postalCode: warehouse?.address.postalCode ?? "",
     streetAddress1: warehouse?.address.streetAddress1 ?? "",

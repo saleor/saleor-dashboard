@@ -3,7 +3,6 @@ import { useExtensionFormPayloadUpdate } from "@dashboard/extensions/app-extensi
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppDialog } from "@dashboard/extensions/views/ViewManifestExtension/components/AppDialog/AppDialog";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
-import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
 import { PropsWithChildren } from "react";
@@ -48,7 +47,7 @@ export const useActiveAppExtension = () => {
   const { framesByFormType, attachFormResponseFrame } = useExtensionFormPayloadUpdate();
 
   const activate = (appData: AppExtensionActiveParams) => {
-    if (appData.target === AppExtensionTargetEnum.POPUP) {
+    if (appData.targetName === "POPUP") {
       setActive(appData);
     } else {
       navigate(ExtensionsUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params), {

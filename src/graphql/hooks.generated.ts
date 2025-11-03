@@ -3673,6 +3673,7 @@ export const WarehouseDetailsFragmentDoc = gql`
   address {
     ...Address
   }
+  email
 }
     ${WarehouseWithShippingFragmentDoc}
 ${AddressFragmentDoc}`;
@@ -9438,21 +9439,10 @@ export const ExtensionListDocument = gql`
         id
         label
         url
-        mount
-        target
+        mountName
+        targetName
+        settings
         accessToken
-        options {
-          ... on AppExtensionOptionsWidget {
-            widgetTarget {
-              method
-            }
-          }
-          ... on AppExtensionOptionsNewTab {
-            newTabTarget {
-              method
-            }
-          }
-        }
         permissions {
           code
         }

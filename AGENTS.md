@@ -192,3 +192,7 @@ PR descriptions should:
 - Reference related issues or discussions
 
 Once opening a pull request or working with GitHub directly, prefer to use `gh` cli to execute operations
+
+## Code review
+
+During code review, do not verify auto-generated files. Such files are suffixed with `.generated.ts`

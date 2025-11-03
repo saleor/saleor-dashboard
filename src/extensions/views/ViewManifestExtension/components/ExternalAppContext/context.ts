@@ -1,5 +1,5 @@
+import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
-import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import { createContext } from "react";
 
 export interface AppData {
@@ -7,7 +7,7 @@ export interface AppData {
   appToken: string;
   src: string;
   label: string;
-  target: AppExtensionTargetEnum;
+  target: AppExtensionManifestTarget;
   params?: AppDetailsUrlMountQueryParams;
 }
 
