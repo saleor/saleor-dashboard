@@ -22,6 +22,7 @@ import WarehouseInfo from "../WarehouseInfo";
 
 export interface WarehouseCreatePageFormData extends AddressTypeInput {
   name: string;
+  email: string;
 }
 interface WarehouseCreatePageProps {
   countries: CountryWithCodeFragment[];
@@ -37,6 +38,7 @@ const initialForm: WarehouseCreatePageFormData = {
   country: "",
   countryArea: "",
   name: "",
+  email: "",
   phone: "",
   postalCode: "",
   streetAddress1: "",

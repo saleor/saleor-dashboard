@@ -1,4 +1,5 @@
 import { appExtensionManifest } from "@dashboard/extensions/domain/app-extension-manifest";
+import { permissionSchema } from "@dashboard/extensions/domain/permission";
 import { z } from "zod";
 
 // For now contains only partial fields, because Saleor is validating manifest anyway.
@@ -6,14 +7,7 @@ import { z } from "zod";
 export const appManifestSchema = z
   .object({
     appUrl: z.string().optional(),
-    permissions: z
-      .array(
-        z.object({
-          code: z.string(),
-        }),
-      )
-      .optional()
-      .default([]),
+    permissions: z.array(permissionSchema).optional().default([]),
     extensions: z.array(appExtensionManifest).optional().default([]),
   })
   .refine(
@@ -36,7 +30,7 @@ export const appManifestSchema = z
       // Validate extension permissions are subset of app permissions
       return data.extensions.every(ext => {
         return ext.permissions.every(extPerm =>
-          data.permissions.find(perm => perm.code === extPerm),
+          data.permissions.find(perm => perm.code === extPerm.code),
         );
       });
     },

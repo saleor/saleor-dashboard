@@ -28,5 +28,6 @@ export const warehouseDetailsFragment = gql`
     address {
       ...Address
     }
+    email
   }
 `;

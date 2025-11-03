@@ -3673,6 +3673,7 @@ export const WarehouseDetailsFragmentDoc = gql`
   address {
     ...Address
   }
+  email
 }
     ${WarehouseWithShippingFragmentDoc}
 ${AddressFragmentDoc}`;
