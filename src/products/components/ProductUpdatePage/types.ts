@@ -90,10 +90,6 @@ export interface UseProductUpdateFormOutput
     RichTextProps {
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
-  setError: (name: keyof ProductUpdateSubmitData, error: string | React.ReactNode) => void;
-  clearErrors: (
-    name?: keyof ProductUpdateSubmitData | Array<keyof ProductUpdateSubmitData>,
-  ) => void;
 }
 
 type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;

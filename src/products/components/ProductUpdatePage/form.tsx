@@ -279,8 +279,6 @@ export function useProductUpdateForm(
     data,
     datagrid,
     formErrors: form.errors,
-    setError: form.setError,
-    clearErrors: form.clearErrors,
     handlers: {
       changeChannels: handleChannelChange,
       changeMetadata,

@@ -24,6 +24,7 @@ const _AppIFrame = forwardRef<HTMLIFrameElement, AppIFrameProps>(
     // Otherwise this will cause reload of entire iframe
     useEffect(() => {
       themeRef.current = themeType;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const iframeSrc = ExtensionsUrls.resolveAppIframeUrl(appId, src, {
