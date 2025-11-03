@@ -3,13 +3,11 @@ import { DashboardCard } from "@dashboard/components/Card";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { ProductErrorFragment } from "@dashboard/graphql";
-import { FormErrors } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { Box, Input } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductDetailsFormProps {
@@ -20,7 +18,6 @@ interface ProductDetailsFormProps {
   };
   disabled?: boolean;
   errors: ProductErrorFragment[];
-  formErrors?: FormErrors<any>;
   onDescriptionChange?: (data: OutputData) => void;
   onChange: (event: any) => any;
 }
@@ -29,42 +26,12 @@ export const ProductDetailsForm = ({
   data,
   onChange,
   errors,
-  formErrors: customFormErrors,
   disabled,
   onDescriptionChange,
 }: ProductDetailsFormProps) => {
   const intl = useIntl();
-  const graphqlFormErrors = getFormErrors(["name", "description", "rating"], errors);
+  const formErrors = getFormErrors(["name", "description", "rating"], errors);
   const { editorRef, defaultValue, isReadyForMount, handleChange } = useRichTextContext();
-
-  // Merge GraphQL errors with custom form errors (from app extensions)
-  const formErrors = {
-    name: customFormErrors?.name || graphqlFormErrors.name,
-    description: customFormErrors?.description || graphqlFormErrors.description,
-    rating: customFormErrors?.rating || graphqlFormErrors.rating,
-  };
-
-  // Helper to get error message, handling both custom errors (string/ReactNode) and GraphQL errors
-  const getErrorMessage = (error: any): string | React.ReactNode | undefined => {
-    if (!error) return undefined;
-
-    if (typeof error === "string") return error;
-
-    if (React.isValidElement(error)) return error;
-
-    return getProductErrorMessage(error, intl);
-  };
-
-  // Helper for description field that only returns string (RichTextEditor only accepts string)
-  const getDescriptionErrorMessage = (error: any): string | undefined => {
-    if (!error) return undefined;
-
-    if (typeof error === "string") return error;
-
-    if (React.isValidElement(error)) return undefined; // Can't render ReactNode in RichTextEditor
-
-    return getProductErrorMessage(error, intl);
-  };
 
   return (
     <DashboardCard>
@@ -86,7 +53,7 @@ export const ProductDetailsForm = ({
           error={!!formErrors.name}
           name="name"
           disabled={disabled}
-          helperText={getErrorMessage(formErrors.name)}
+          helperText={getProductErrorMessage(formErrors.name, intl)}
         />
 
         {isReadyForMount ? (
@@ -95,13 +62,15 @@ export const ProductDetailsForm = ({
             defaultValue={defaultValue}
             onChange={event => {
               // We need explicit handler so parent can access data real time
-              onDescriptionChange(event);
+              if (onDescriptionChange) {
+                onDescriptionChange(event);
+              }
 
               handleChange();
             }}
             disabled={disabled}
             error={!!formErrors.description}
-            helperText={getDescriptionErrorMessage(formErrors.description)}
+            helperText={getProductErrorMessage(formErrors.description, intl)}
             label={intl.formatMessage(commonMessages.description)}
             name="description"
           />
@@ -125,7 +94,7 @@ export const ProductDetailsForm = ({
             name="rating"
             type="number"
             disabled={disabled}
-            helperText={getErrorMessage(formErrors.rating)}
+            helperText={getProductErrorMessage(formErrors.rating, intl)}
           />
         </Box>
       </DashboardCard.Content>

@@ -56,6 +56,7 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { OutputData } from "@editorjs/editorjs";
 import { Box, Divider, Option } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -181,11 +182,11 @@ const ProductUpdatePage = ({
   // Cache inner form data so it can be passed into App when modal is opened
   const dataCache = useRef<ProductUpdateData | null>(null);
   // Description is not passed in root "data"
-  const descriptionCache = useRef<OutputData>(null);
+  const descriptionCache = useRef<OutputData | null>(null);
   // Store form change handler to allow updating form from outside render prop
   const changeHandlerRef = useRef<FormChange | null>(null);
   // Store richText ref to allow updating description from outside render prop
-  const richTextRef = useRef<any>(null);
+  const richTextRef = useRef<UseRichTextResult | null>(null);
 
   const intl = useIntl();
   const { user } = useUser();
