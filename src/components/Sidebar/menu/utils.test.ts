@@ -277,7 +277,7 @@ describe("getMenuItemExtension", () => {
   };
 
   const emptyExtensionsRecord: Record<AllAppExtensionMounts, Extension[]> = {
-    ["NAVIGATION_CATALOG"]: [mockExtension],
+    ["NAVIGATION_CATALOG"]: [],
     ["CUSTOMER_DETAILS_MORE_ACTIONS"]: [],
     ["CUSTOMER_OVERVIEW_CREATE"]: [],
     ["CUSTOMER_OVERVIEW_MORE_ACTIONS"]: [],
