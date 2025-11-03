@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.22.9
+
+### Patch Changes
+
+- [#6016](https://github.com/saleor/saleor-dashboard/pull/6016) [`595e1ee`](https://github.com/saleor/saleor-dashboard/commit/595e1ee42de0ebe71da0bc7a7ab4b47057044269) Thanks [@xseignard](https://github.com/xseignard)! - Add email field on warehouse details page
+
+- [#6015](https://github.com/saleor/saleor-dashboard/pull/6015) [`04b419a`](https://github.com/saleor/saleor-dashboard/commit/04b419af2c19bb50b5a8a25a170519a70d8aa007) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Switched to the new AppExtension fields introduced in 3.22 patch (mount -> mountName, target -> targetName, options -> settings). This does not introduce a functional change, but is a part of the larger extension logic overhaul.
+
 ## 3.22.8
 
 ### Patch Changes
