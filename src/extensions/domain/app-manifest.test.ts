@@ -1,3 +1,10 @@
+import {
+  AppExtensionMountEnum,
+  AppExtensionTargetEnum,
+  AppManifestFragment,
+  PermissionEnum,
+} from "@dashboard/graphql";
+
 import { appManifestSchema } from "./app-manifest";
 
 describe("App Manifest Schema", () => {
@@ -6,15 +13,49 @@ describe("App Manifest Schema", () => {
       // Arrange
       const validData = {
         appUrl: "https://example.com",
-        permissions: [{ code: "MANAGE_PRODUCTS" }, { code: "MANAGE_ORDERS" }],
+        permissions: [
+          {
+            code: PermissionEnum.MANAGE_PRODUCTS,
+            __typename: "Permission",
+            name: "Manage Products",
+          },
+          { code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission", name: "Manage Products" },
+        ],
         extensions: [
           {
             label: "My Extension",
             url: "https://example.com/extension",
-            mount: "PRODUCT_OVERVIEW_CREATE",
+            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+            target: AppExtensionTargetEnum.POPUP,
+            permissions: [
+              {
+                code: PermissionEnum.MANAGE_PRODUCTS,
+                __typename: "Permission",
+                name: "Manage Products",
+              },
+            ],
+            __typename: "AppManifestExtension",
           },
         ],
-      };
+        __typename: "Manifest",
+        identifier: "",
+        version: "",
+        about: "",
+        name: "",
+        configurationUrl: "",
+        tokenTargetUrl: "",
+        dataPrivacy: "",
+        dataPrivacyUrl: "",
+        homepageUrl: "",
+        supportUrl: "",
+        brand: {
+          __typename: "AppManifestBrand",
+          logo: {
+            __typename: "AppManifestBrandLogo",
+            default: "",
+          },
+        },
+      } satisfies AppManifestFragment;
 
       // Act
       const result = appManifestSchema.safeParse(validData);
@@ -163,7 +204,13 @@ describe("App Manifest Schema", () => {
             label: "Extension",
             url: "https://example.com/ext",
             mount: "PRODUCT_OVERVIEW_CREATE",
-            permissions: ["MANAGE_ORDERS"], // Not in app permissions
+            permissions: [
+              {
+                code: PermissionEnum.MANAGE_ORDERS,
+                __typename: "Permission",
+                name: "Manage Products",
+              },
+            ], // Not in app permissions
           },
         ],
       };
@@ -190,7 +237,13 @@ describe("App Manifest Schema", () => {
             label: "Extension",
             url: "https://example.com/ext",
             mount: "PRODUCT_OVERVIEW_CREATE",
-            permissions: ["MANAGE_PRODUCTS"],
+            permissions: [
+              {
+                code: PermissionEnum.MANAGE_PRODUCTS,
+                __typename: "Permission",
+                name: "Manage Products",
+              },
+            ],
           },
         ],
       };
@@ -232,7 +285,18 @@ describe("App Manifest Schema", () => {
             label: "Extension",
             url: "https://example.com/ext",
             mount: "PRODUCT_OVERVIEW_CREATE",
-            permissions: ["MANAGE_PRODUCTS", "MANAGE_STAFF"], // MANAGE_STAFF not in app
+            permissions: [
+              {
+                code: PermissionEnum.MANAGE_PRODUCTS,
+                __typename: "Permission",
+                name: "Manage Products",
+              },
+              {
+                code: PermissionEnum.MANAGE_STAFF,
+                __typename: "Permission",
+                name: "Manage Staff",
+              },
+            ], // MANAGE_STAFF not in app
           },
         ],
       };
@@ -256,14 +320,26 @@ describe("App Manifest Schema", () => {
       // Arrange
       const validData = {
         appUrl: "https://example.com",
-        permissions: [{ code: "MANAGE_PRODUCTS" }],
+        permissions: [
+          {
+            code: PermissionEnum.MANAGE_PRODUCTS,
+            __typename: "Permission",
+            name: "Manage Products",
+          },
+        ],
         extensions: [
           {
             label: "Product Extension",
             url: "https://example.com/product-ext",
             mount: "PRODUCT_OVERVIEW_CREATE",
             target: "POPUP",
-            permissions: ["MANAGE_PRODUCTS"],
+            permissions: [
+              {
+                code: PermissionEnum.MANAGE_PRODUCTS,
+                __typename: "Permission",
+                name: "Manage Products",
+              },
+            ],
           },
         ],
       };
