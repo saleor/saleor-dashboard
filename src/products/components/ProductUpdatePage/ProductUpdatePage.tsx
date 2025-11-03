@@ -378,16 +378,7 @@ const ProductUpdatePage = ({
       disabled={disabled}
       refetch={refetch}
     >
-      {({
-        change,
-        data,
-        handlers,
-        submit,
-        isSaveDisabled,
-        attributeRichTextGetters,
-        richText,
-        formErrors,
-      }) => {
+      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters, richText }) => {
         // Store change handler so it can be accessed from useEffect
         changeHandlerRef.current = change;
         // Store richText so it can be accessed from useEffect
@@ -454,7 +445,6 @@ const ProductUpdatePage = ({
                 data={data}
                 disabled={disabled}
                 errors={productErrors}
-                formErrors={formErrors}
                 onChange={change}
                 onDescriptionChange={value => {
                   descriptionCache.current = value;
