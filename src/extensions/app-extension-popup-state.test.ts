@@ -1,27 +1,27 @@
-import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import { AllFormPayloads, DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import { act, renderHook } from "@testing-library/react-hooks";
 
-import { useAppExtensionPopup } from "./app-extension-popup-state";
-import { usePopupFrameReference } from "./popup-frame-reference";
+import { AppExtensionActiveParams, useAppExtensionPopup } from "./app-extension-popup-state";
+import { useAppFrameReferences } from "./popup-frame-reference";
 import { postToExtension } from "./views/ViewManifestExtension/components/AppFrame/usePostToExtension";
 
 jest.mock("./popup-frame-reference");
 jest.mock("./views/ViewManifestExtension/components/AppFrame/usePostToExtension");
 
-const mockUsePopupFrameReference = usePopupFrameReference as jest.MockedFunction<
-  typeof usePopupFrameReference
+const mockUsePopupFrameReference = useAppFrameReferences as jest.MockedFunction<
+  typeof useAppFrameReferences
 >;
 const mockPostToExtension = postToExtension as jest.MockedFunction<typeof postToExtension>;
 
 describe("useAppExtensionPopup", () => {
   const mockIframe = document.createElement("iframe");
-  const mockActiveParams = {
+  const mockActiveParams: AppExtensionActiveParams = {
     id: "test-extension-id",
     appToken: "test-token",
     src: "https://example.com/extension",
     label: "Test Extension",
-    target: AppExtensionTargetEnum.POPUP,
+    targetName: "POPUP",
+    formState: {},
   };
 
   beforeEach(() => {
@@ -59,7 +59,7 @@ describe("useAppExtensionPopup", () => {
       expect(result.current.state.appToken).toBe(mockActiveParams.appToken);
       expect(result.current.state.src).toBe(mockActiveParams.src);
       expect(result.current.state.label).toBe(mockActiveParams.label);
-      expect(result.current.state.target).toBe(mockActiveParams.target);
+      expect(result.current.state.targetName).toBe(mockActiveParams.targetName);
     }
 
     // Cleanup
@@ -140,11 +140,12 @@ describe("useAppExtensionPopup", () => {
   it("should post to loaded iframes when state becomes active with form state", () => {
     const mockFormState = {
       domain: "saleor.cloud.example",
+      form: "product-edit",
       payload: {
         data: { name: "Test Product" },
       },
     } as unknown as AllFormPayloads;
-    const mockIframesMap = new Map([[mockIframe, { loaded: true }]]);
+    const mockIframesMap = new Map([[mockIframe, { loaded: true, target: "POPUP" as const }]]);
 
     mockUsePopupFrameReference.mockReturnValue({
       iframes: mockIframesMap,
@@ -158,7 +159,9 @@ describe("useAppExtensionPopup", () => {
     act(() => {
       result.current.setActive({
         ...mockActiveParams,
-        formState: mockFormState,
+        formState: {
+          [mockFormState.form]: mockFormState,
+        },
       });
     });
 
@@ -180,11 +183,12 @@ describe("useAppExtensionPopup", () => {
   it("should not post to iframes that are not loaded", () => {
     const mockFormState = {
       domain: "saleor.cloud.example",
+      form: "product-edit",
       payload: {
         data: { name: "Test Product" },
       },
     } as unknown as AllFormPayloads;
-    const mockIframesMap = new Map([[mockIframe, { loaded: false }]]);
+    const mockIframesMap = new Map([[mockIframe, { loaded: false, target: "POPUP" as const }]]);
 
     mockUsePopupFrameReference.mockReturnValue({
       iframes: mockIframesMap,
@@ -198,7 +202,9 @@ describe("useAppExtensionPopup", () => {
     act(() => {
       result.current.setActive({
         ...mockActiveParams,
-        formState: mockFormState,
+        formState: {
+          [mockFormState.form]: mockFormState,
+        },
       });
     });
 
@@ -214,7 +220,7 @@ describe("useAppExtensionPopup", () => {
 
   // Arrange
   it("should not post to iframes when state is inactive", () => {
-    const mockIframesMap = new Map([[mockIframe, { loaded: true }]]);
+    const mockIframesMap = new Map([[mockIframe, { loaded: true, target: "POPUP" as const }]]);
 
     mockUsePopupFrameReference.mockReturnValue({
       iframes: mockIframesMap,
@@ -261,60 +267,10 @@ describe("useAppExtensionPopup", () => {
       expect(result.current.state.appToken).toBe(initialParams.appToken);
       expect(result.current.state.src).toBe(initialParams.src);
       expect(result.current.state.label).toBe(initialParams.label);
-      expect(result.current.state.target).toBe(initialParams.target);
+      expect(result.current.state.targetName).toBe(initialParams.targetName);
       expect(result.current.state.params).toEqual(initialParams.params);
       expect(result.current.state.formState).toEqual(mockFormState);
     }
-
-    // Cleanup
-    act(() => {
-      result.current.setInactive();
-    });
-    unmount();
-  });
-
-  // Arrange
-  it("should handle multiple iframes when posting to extension", () => {
-    const anotherMockIframe = document.createElement("iframe");
-    const mockFormState = {
-      domain: "saleor.cloud.example",
-      payload: {
-        data: { name: "Test Product" },
-      },
-    } as unknown as AllFormPayloads;
-    const mockIframesMap = new Map([
-      [mockIframe, { loaded: true }],
-      [anotherMockIframe, { loaded: true }],
-    ]);
-
-    mockUsePopupFrameReference.mockReturnValue({
-      iframes: mockIframesMap,
-      setIframe: jest.fn(),
-      clearIframe: jest.fn(),
-    });
-
-    const { result, unmount } = renderHook(() => useAppExtensionPopup());
-
-    // Act
-    act(() => {
-      result.current.setActive({
-        ...mockActiveParams,
-        formState: mockFormState,
-      });
-    });
-
-    // Assert
-    expect(mockPostToExtension).toHaveBeenCalledTimes(2);
-    expect(mockPostToExtension).toHaveBeenCalledWith(
-      DashboardEventFactory.createFormEvent(mockFormState),
-      mockIframe,
-      "https://example.com",
-    );
-    expect(mockPostToExtension).toHaveBeenCalledWith(
-      DashboardEventFactory.createFormEvent(mockFormState),
-      anotherMockIframe,
-      "https://example.com",
-    );
 
     // Cleanup
     act(() => {

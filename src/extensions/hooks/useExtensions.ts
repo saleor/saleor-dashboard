@@ -101,6 +101,7 @@ const prepareExtensionsWithActions = ({
             label,
             targetName: AppExtensionManifestTarget.parse(targetName),
             params,
+            formState: {},
           });
         },
       };

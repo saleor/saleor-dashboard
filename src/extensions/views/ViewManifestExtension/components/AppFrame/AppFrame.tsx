@@ -1,4 +1,4 @@
-import { usePopupFrameReference } from "@dashboard/extensions/popup-frame-reference";
+import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
@@ -23,6 +23,7 @@ interface Props {
   dashboardVersion: string;
   coreVersion?: string;
   onError?: () => void;
+  target: "POPUP" | "WIDGET" | "APP_PAGE";
 }
 
 const getOrigin = (url: string) => new URL(url).origin;
@@ -37,12 +38,13 @@ export const AppFrame = ({
   refetch,
   dashboardVersion,
   coreVersion = "",
+  target,
 }: Props) => {
   const frameRef = useRef<HTMLIFrameElement | null>(null);
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
-  const { setIframe, clearIframe } = usePopupFrameReference();
+  const { setIframe, clearIframe } = useAppFrameReferences();
   /**
    * React on messages from App
    */
@@ -64,7 +66,7 @@ export const AppFrame = ({
   useTokenRefresh(appToken, refetch);
 
   const handleLoad = useCallback(() => {
-    setIframe(frameRef.current!, true);
+    setIframe(frameRef.current!, true, target);
 
     postToExtension(
       DashboardEventFactory.createHandshakeEvent(appToken, 1, {

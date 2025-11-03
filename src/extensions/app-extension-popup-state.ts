@@ -1,10 +1,20 @@
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
-import { usePopupFrameReference } from "@dashboard/extensions/popup-frame-reference";
+import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 import { postToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
-import { AllFormPayloads, DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
+import {
+  AllFormPayloads,
+  DashboardEventFactory,
+  FormPayloadProductEdit,
+  FormPayloadProductTranslate,
+} from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
+
+type FormState = {
+  "product-edit"?: FormPayloadProductEdit;
+  "product-translate"?: FormPayloadProductTranslate;
+};
 
 type ActiveParams = {
   id: string;
@@ -13,7 +23,7 @@ type ActiveParams = {
   label: string;
   targetName: AppExtensionManifestTarget;
   params?: AppDetailsUrlMountQueryParams;
-  formState?: AllFormPayloads;
+  formState: FormState;
 };
 
 /**
@@ -42,7 +52,7 @@ class ExtensionActiveState {
 
   params?: AppDetailsUrlMountQueryParams;
 
-  formState?: AllFormPayloads;
+  formState: FormState = {};
 
   constructor(params: ActiveParams) {
     this.id = params.id;
@@ -66,15 +76,23 @@ const stateAtom = atom<AppPopupExtensionPossibleStates>(inactiveState);
  */
 export const useAppExtensionPopup = () => {
   const [state, setState] = useAtom(stateAtom);
-  const { iframes } = usePopupFrameReference();
+  const { iframes } = useAppFrameReferences();
 
   useEffect(() => {
     if (state.active) {
-      iframes.entries().forEach(([iframe, { loaded }]) => {
+      iframes.entries().forEach(([iframe, { loaded, target }]) => {
+        // This hook only works for popup and assumes there is a singleton instance of popup frame. For Widgets separate logic must be added
+        if (target !== "POPUP") {
+          return;
+        }
+
         if (loaded) {
           const origin = new URL(state.src).origin;
 
-          postToExtension(DashboardEventFactory.createFormEvent(state.formState!), iframe, origin);
+          // Technically there may be 2 or more forms on the same screen, so we emit each of them
+          Object.values(state.formState).forEach(formState => {
+            postToExtension(DashboardEventFactory.createFormEvent(formState), iframe, origin);
+          });
         }
       });
     }
@@ -101,7 +119,10 @@ export const useAppExtensionPopup = () => {
           label: currentState.label,
           targetName: currentState.targetName,
           params: currentState.params,
-          formState,
+          formState: {
+            ...currentState.formState,
+            [formState.form]: formState,
+          },
         });
       });
     },

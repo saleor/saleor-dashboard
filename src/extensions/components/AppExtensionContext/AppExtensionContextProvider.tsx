@@ -27,6 +27,7 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
       >
         {state.active && (
           <AppFrame
+            target="POPUP"
             src={state.src}
             appToken={state.appToken}
             appId={state.id}

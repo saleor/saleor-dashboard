@@ -5,20 +5,22 @@ const popupIframeRef = atom<
     HTMLIFrameElement,
     {
       loaded: boolean;
+      target: "POPUP" | "WIDGET" | "APP_PAGE";
     }
   >
 >(new Map());
 
 // todo rename to multiple frames, not popup only
-export const usePopupFrameReference = () => {
+export const useAppFrameReferences = () => {
   const [iframes, setIframe] = useAtom(popupIframeRef);
 
   return {
     iframes,
-    setIframe(frame: HTMLIFrameElement, loaded: boolean) {
+    setIframe(frame: HTMLIFrameElement, loaded: boolean, target: "POPUP" | "WIDGET" | "APP_PAGE") {
       setIframe(prev => {
         prev.set(frame, {
           loaded: loaded,
+          target,
         });
 
         return new Map(prev);

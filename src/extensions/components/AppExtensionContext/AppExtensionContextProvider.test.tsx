@@ -120,6 +120,7 @@ describe("ExternalAppContext", () => {
         label: "Test App",
         targetName: "POPUP",
         params: { productId: "123" },
+        formState: {},
       };
 
       // Act
@@ -142,6 +143,7 @@ describe("ExternalAppContext", () => {
         label: "Test App",
         targetName: "APP_PAGE",
         params: { productId: "123" },
+        formState: {},
       };
 
       // Act
@@ -166,6 +168,7 @@ describe("ExternalAppContext", () => {
         src: "https://example.com",
         label: "Test App",
         targetName: "POPUP",
+        formState: {},
       };
 
       // Act
@@ -193,6 +196,7 @@ describe("ExternalAppContext", () => {
         label: "Test App",
         targetName: "POPUP",
         params: { productId: "123" },
+        formState: {},
       };
 
       return (
@@ -256,6 +260,7 @@ describe("ExternalAppContext", () => {
           src: "https://example.com/app",
           label: "Test App",
           targetName: "POPUP",
+          formState: {},
         };
 
         return (
@@ -302,6 +307,7 @@ describe("ExternalAppContext", () => {
         src: "https://example.com",
         label: "Test App",
         targetName: "POPUP",
+        formState: {},
       };
 
       // Act - Open the app
