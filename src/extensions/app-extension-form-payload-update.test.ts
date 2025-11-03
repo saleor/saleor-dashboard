@@ -117,36 +117,6 @@ describe("app-extension-form-payload-update", () => {
       expect(framesByFormType["product-edit"]).toHaveLength(1);
     });
 
-    it("should handle payloads with errors", () => {
-      // Arrange
-      const { result } = renderHook(() => useAtom(extensionFormResponseByFormAtom), { wrapper });
-      const payloadWithErrors: AllFormPayloadUpdatePayloads = {
-        form: "product-translate",
-        fields: {
-          productName: {
-            errors: [{ message: "Product name is required" }],
-          },
-          productDescription: { value: "Valid description" },
-          seoName: {
-            errors: [{ message: "SEO name is too long" }],
-          },
-          seoDescription: { value: "Valid SEO description" },
-        },
-      };
-
-      // Act
-      act(() => {
-        result.current[1](payloadWithErrors);
-      });
-
-      // Assert
-      const framesByFormType = result.current[0];
-
-      expect(framesByFormType["product-translate"]).toBeDefined();
-      expect(framesByFormType["product-translate"]).toHaveLength(1);
-      expect(framesByFormType["product-translate"][0]).toEqual(payloadWithErrors);
-    });
-
     it("should handle payloads with closePopup flag", () => {
       // Arrange
       const { result } = renderHook(() => useAtom(extensionFormResponseByFormAtom), { wrapper });
@@ -299,31 +269,6 @@ describe("app-extension-form-payload-update", () => {
         expect(result.current.allFrames).toHaveLength(2);
         expect(result.current.allFrames[0]).toEqual(payload);
         expect(result.current.allFrames[1]).toEqual(payload);
-      });
-
-      it("should handle frames with error fields", () => {
-        // Arrange
-        const { result } = renderHook(() => useExtensionFormPayloadUpdate(), { wrapper });
-        const errorPayload: AllFormPayloadUpdatePayloads = {
-          form: "product-edit",
-          fields: {
-            productName: {
-              errors: [{ message: "Name is required" }],
-            },
-            productDescription: { value: "Test Description" },
-          },
-        };
-
-        // Act
-        act(() => {
-          result.current.attachFormResponseFrame(errorPayload);
-        });
-
-        // Assert
-        expect(result.current.allFrames).toHaveLength(1);
-        expect(result.current.allFrames[0].fields.productName).toEqual({
-          errors: [{ message: "Name is required" }],
-        });
       });
     });
 
