@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// @ts-check
+
 import { execSync } from "child_process";
 import { readFileSync } from "fs";
 import { join } from "path";
@@ -29,14 +31,14 @@ function release() {
 
     const minorTag = `${major}.${minor}`;
 
-    execSync(`git tag ${minorTag}`, { stdio: "inherit" });
+    execSync(`git tag ${minorTag} -f`, { stdio: "inherit" });
 
     console.log(`Pushing tags to remote...`);
 
     // Push with --follow-tags
     execSync("git push --follow-tags", { stdio: "inherit" });
 
-    console.log(`Successfully released version ${version}`);
+    console.log(`Successfully created release tags: ${version}, ${minorTag}`);
   } catch (error) {
     console.error("Error during release:", error.message);
     process.exit(1);
