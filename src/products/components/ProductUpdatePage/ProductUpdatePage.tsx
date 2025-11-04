@@ -17,6 +17,7 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
+import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForProductDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -39,7 +40,7 @@ import {
   TaxClassBaseFragment,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
@@ -55,8 +56,10 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { productUrl as createTranslateProductUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { UseRichTextResult } from "@dashboard/utils/richText/useRichText";
+import { OutputData } from "@editorjs/editorjs";
 import { Box, Divider, Option } from "@saleor/macaw-ui-next";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
@@ -176,6 +179,15 @@ const ProductUpdatePage = ({
   onCloseDialog,
   onAttributeSelectBlur,
 }: ProductUpdatePageProps) => {
+  // Cache inner form data so it can be passed into App when modal is opened
+  const dataCache = useRef<ProductUpdateData | null>(null);
+  // Description is not passed in root "data"
+  const descriptionCache = useRef<OutputData | null>(null);
+  // Store form change handler to allow updating form from outside render prop
+  const changeHandlerRef = useRef<FormChange | null>(null);
+  // Store richText ref to allow updating description from outside render prop
+  const richTextRef = useRef<UseRichTextResult | null>(null);
+
   const intl = useIntl();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
@@ -246,6 +258,93 @@ const ProductUpdatePage = ({
     path: productListPath,
   });
 
+  const { attachFormState, active, framesByFormType } = useActiveAppExtension();
+
+  const formFramesFromApp = framesByFormType["product-edit"];
+
+  useEffect(() => {
+    if (!formFramesFromApp || !changeHandlerRef.current) {
+      return;
+    }
+
+    const lastFrame = formFramesFromApp[formFramesFromApp.length - 1];
+
+    // Handle productName field
+    if (lastFrame?.fields?.productName) {
+      const productNameField = lastFrame.fields.productName;
+
+      const newProductName = productNameField.value;
+      const currentProductName = dataCache.current?.name;
+
+      // Only update if the value has changed
+      if (newProductName !== currentProductName) {
+        changeHandlerRef.current({
+          target: {
+            name: "name",
+            value: newProductName,
+          },
+        });
+      }
+    }
+
+    // Handle productDescription field
+    if (lastFrame?.fields?.productDescription) {
+      const productDescriptionField = lastFrame.fields.productDescription;
+
+      const newProductDescription = productDescriptionField.value;
+
+      // cache may be empty if editor was not used before sending event to app
+      const productDescriptionWithFallback = descriptionCache.current ?? product.description;
+
+      try {
+        const parsedEditorJs = JSON.parse(newProductDescription) as OutputData;
+
+        // Only update if the value has changed
+        if (
+          JSON.stringify(parsedEditorJs.blocks) !==
+          JSON.stringify(productDescriptionWithFallback.blocks)
+        ) {
+          // Update the EditorJS content directly
+          if (richTextRef.current?.editorRef?.current) {
+            richTextRef.current.editorRef.current.render(parsedEditorJs).then(() => {
+              // Mark as dirty and trigger change after render completes
+              richTextRef.current.handleChange();
+            });
+          }
+        }
+      } catch (e) {
+        console.error(e);
+
+        console.warn("App returned invalid response for product description field, ignoring");
+      }
+    }
+  }, [formFramesFromApp]);
+
+  useEffect(() => {
+    if (active && product) {
+      attachFormState({
+        form: "product-edit",
+        productId: productId,
+        fields: {
+          productName: {
+            currentValue: dataCache.current?.name ?? product.name,
+            type: "short-text",
+            fieldName: "productName",
+            originalValue: product.name,
+          },
+          productDescription: {
+            currentValue: descriptionCache.current
+              ? JSON.stringify(descriptionCache.current)
+              : product.description,
+            type: "editorjs",
+            fieldName: "productDescription",
+            originalValue: product.description,
+          },
+        },
+      });
+    }
+  }, [active, product, productId]);
+
   return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
@@ -275,7 +374,12 @@ const ProductUpdatePage = ({
       disabled={disabled}
       refetch={refetch}
     >
-      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters }) => {
+      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters, richText }) => {
+        // Store change handler so it can be accessed from useEffect
+        changeHandlerRef.current = change;
+        // Store richText so it can be accessed from useEffect
+        richTextRef.current = richText;
+
         const availabilityCommonProps = {
           managePermissions: [PermissionEnum.MANAGE_PRODUCTS],
           messages: {
@@ -297,6 +401,8 @@ const ProductUpdatePage = ({
           onChange: handlers.changeChannels,
           openModal: () => setChannelPickerOpen(true),
         };
+
+        dataCache.current = data;
 
         const byChannel = mapByChannel(channels);
         const listings = data.channels.updateChannels?.map<ChannelData>(byChannel);
@@ -336,6 +442,9 @@ const ProductUpdatePage = ({
                 disabled={disabled}
                 errors={productErrors}
                 onChange={change}
+                onDescriptionChange={value => {
+                  descriptionCache.current = value;
+                }}
               />
               <ProductMedia
                 media={media}

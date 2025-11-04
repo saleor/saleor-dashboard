@@ -209,6 +209,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                       {ext.label}
                     </Text>
                     <AppFrame
+                      target="WIDGET"
                       src={GETappIframeUrl}
                       appToken={ext.accessToken}
                       appId={ext.app.id}

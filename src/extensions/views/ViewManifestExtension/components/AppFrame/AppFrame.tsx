@@ -1,9 +1,10 @@
+import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
@@ -22,6 +23,7 @@ interface Props {
   dashboardVersion: string;
   coreVersion?: string;
   onError?: () => void;
+  target: "POPUP" | "WIDGET" | "APP_PAGE";
 }
 
 const getOrigin = (url: string) => new URL(url).origin;
@@ -36,11 +38,13 @@ export const AppFrame = ({
   refetch,
   dashboardVersion,
   coreVersion = "",
+  target,
 }: Props) => {
   const frameRef = useRef<HTMLIFrameElement | null>(null);
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
+  const { setIframe, clearIframe } = useAppFrameReferences();
   /**
    * React on messages from App
    */
@@ -62,12 +66,8 @@ export const AppFrame = ({
   useTokenRefresh(appToken, refetch);
 
   const handleLoad = useCallback(() => {
-    /**
-     * @deprecated
-     *
-     * Move handshake to notifyReady, so app is requesting token after it's ready to receive it
-     * Currently handshake it 2 times, for compatibility
-     */
+    setIframe(frameRef.current!, true, target);
+
     postToExtension(
       DashboardEventFactory.createHandshakeEvent(appToken, 1, {
         core: coreVersion,
@@ -85,6 +85,14 @@ export const AppFrame = ({
      */
     enabled: handshakeDone,
   });
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current) {
+        clearIframe(frameRef?.current);
+      }
+    };
+  }, []);
 
   return (
     <>

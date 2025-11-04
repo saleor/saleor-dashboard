@@ -1,4 +1,5 @@
 import { APP_VERSION } from "@dashboard/config";
+import { useExtensionFormPayloadUpdate } from "@dashboard/extensions/app-extension-form-payload-update";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppDialog } from "@dashboard/extensions/views/ViewManifestExtension/components/AppDialog/AppDialog";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
@@ -6,7 +7,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useShop from "@dashboard/hooks/useShop";
 import { PropsWithChildren } from "react";
 
-import { AppExtensionActiveParams, useAppExtensionPopup } from "./app-extension-popup-state";
+import { AppExtensionActiveParams, useAppExtensionPopup } from "../../app-extension-popup-state";
 
 export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   const { setInactive, state } = useAppExtensionPopup();
@@ -26,6 +27,7 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
       >
         {state.active && (
           <AppFrame
+            target="POPUP"
             src={state.src}
             appToken={state.appToken}
             appId={state.id}
@@ -41,8 +43,9 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
 
 // todo extract modal from non-modal
 export const useActiveAppExtension = () => {
-  const { state, setActive, setInactive } = useAppExtensionPopup();
+  const { state, setActive, setInactive, attachFormState } = useAppExtensionPopup();
   const navigate = useNavigator();
+  const { framesByFormType, attachFormResponseFrame } = useExtensionFormPayloadUpdate();
 
   const activate = (appData: AppExtensionActiveParams) => {
     if (appData.targetName === "POPUP") {
@@ -55,5 +58,12 @@ export const useActiveAppExtension = () => {
   };
   const deactivate = setInactive;
 
-  return { active: state.active, activate, deactivate };
+  return {
+    active: state.active,
+    activate,
+    deactivate,
+    attachFormState,
+    attachFormResponseFrame,
+    framesByFormType,
+  };
 };

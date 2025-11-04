@@ -322,7 +322,9 @@ const ProductUpdateForm = ({
   return (
     <form onSubmit={props.submit} data-test-id="product-update-form">
       <DatagridChangeStateContext.Provider value={datagrid}>
-        <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
+        <RichTextContext.Provider value={richText}>
+          {children({ ...props, richText })}
+        </RichTextContext.Provider>
       </DatagridChangeStateContext.Provider>
     </form>
   );

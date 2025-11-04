@@ -1,4 +1,4 @@
-import { AppExtensionActiveParams } from "@dashboard/extensions/components/AppExtensionContext/app-extension-popup-state";
+import { AppExtensionActiveParams } from "@dashboard/extensions/app-extension-popup-state";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import {
   ALL_APP_EXTENSION_MOUNTS,
@@ -101,6 +101,7 @@ const prepareExtensionsWithActions = ({
             label,
             targetName: AppExtensionManifestTarget.parse(targetName),
             params,
+            formState: {},
           });
         },
       };

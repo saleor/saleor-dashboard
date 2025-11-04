@@ -399,6 +399,7 @@ describe("Extensions / hooks / useExtensions", () => {
       label: "Extension 1",
       targetName: "POPUP",
       params: mockParams,
+      formState: {},
     });
   });
 
@@ -423,6 +424,7 @@ describe("Extensions / hooks / useExtensions", () => {
       label: "Extension 3",
       targetName: "POPUP",
       params: {},
+      formState: {},
     });
   });
 
