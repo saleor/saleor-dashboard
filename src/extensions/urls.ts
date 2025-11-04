@@ -12,7 +12,6 @@ export const LegacyAppSections = {
 export const LegacyAppPaths = {
   appListPath: LegacyAppSections.appsSection,
   resolveAppPath: (id: string) => urlJoin(LegacyAppSections.appsSection, id, "app"),
-  appInstallPath: urlJoin(LegacyAppSections.appsSection, "install"),
 };
 
 export const extensionsSection = "/extensions";

@@ -18,7 +18,7 @@ interface ProductDetailsFormProps {
   };
   disabled?: boolean;
   errors: ProductErrorFragment[];
-
+  onDescriptionChange?: (data: OutputData) => void;
   onChange: (event: any) => any;
 }
 
@@ -27,6 +27,7 @@ export const ProductDetailsForm = ({
   onChange,
   errors,
   disabled,
+  onDescriptionChange,
 }: ProductDetailsFormProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
@@ -59,7 +60,14 @@ export const ProductDetailsForm = ({
           <RichTextEditor
             editorRef={editorRef}
             defaultValue={defaultValue}
-            onChange={handleChange}
+            onChange={event => {
+              // We need explicit handler so parent can access data real time
+              if (onDescriptionChange) {
+                onDescriptionChange(event);
+              }
+
+              handleChange();
+            }}
             disabled={disabled}
             error={!!formErrors.description}
             helperText={getProductErrorMessage(formErrors.description, intl)}

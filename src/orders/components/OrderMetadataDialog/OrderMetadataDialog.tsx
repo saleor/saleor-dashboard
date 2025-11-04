@@ -1,6 +1,7 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
-import { MetadataFormData, MetadataNoMemo } from "@dashboard/components/Metadata";
-import { MetadataHookForm } from "@dashboard/components/MetadataHookForm";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
+import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -15,8 +16,15 @@ import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 import { useMetadataValues } from "./useMetadataValues";
+import { useOrderMetadataFormControls } from "./useOrderMetadataFormControls";
+import { mapFieldArrayToMetadataInput } from "./utils";
 
 export type OrderMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
+
+export interface OrderAndVariantMetadataFormData {
+  orderLine: MetadataFormData;
+  variant: MetadataFormData;
+}
 
 interface OrderMetadataDialogProps {
   open: boolean;
@@ -38,18 +46,39 @@ export const OrderMetadataDialog = ({
   });
   const hasManageProducts = useHasManageProductsPermission();
 
-  const formMethods = useForm<MetadataFormData>({
+  const formMethods = useForm<OrderAndVariantMetadataFormData>({
     // Display last submitted data while re-fetching to avoid flicker on UI
     values: submitInProgress
       ? lastSubmittedData
       : {
           // Removes __typename from metadata item object
-          metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
-          privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+          orderLine: {
+            metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
+            privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+          },
+          variant: {
+            metadata: (data?.variant?.metadata ?? []).map(mapMetadataItemToInput),
+            privateMetadata: (data?.variant?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
+          },
         },
   });
 
   const { handleSubmit, control, getValues, formState, trigger, reset } = formMethods;
+
+  const {
+    orderLineMetadataFields,
+    orderLinePrivateMetadataFields,
+    variantMetadataFields,
+    variantPrivateMetadataFields,
+    handleOrderLineMetadataChange,
+    handleOrderLinePrivateMetadataChange,
+    handleVariantMetadataChange,
+    handleVariantPrivateMetadataChange,
+    orderLineMetadataErrors,
+    orderLinePrivateMetadataErrors,
+    variantMetadataErrors,
+    variantPrivateMetadataErrors,
+  } = useOrderMetadataFormControls({ control, trigger, getValues, formState });
 
   useEffect(() => {
     if (!open) {
@@ -97,14 +126,38 @@ export const OrderMetadataDialog = ({
                   </Text>
                 </Box>
 
-                <MetadataHookForm
-                  isLoading={loading && !data}
-                  disabled={loading || submitInProgress}
-                  control={control}
-                  getValues={getValues}
-                  trigger={trigger}
-                  formErrors={formState.errors}
-                />
+                {loading && !data ? (
+                  <Box display="grid" gap={2}>
+                    <MetadataLoadingCard />
+                    <MetadataLoadingCard isPrivate />
+                  </Box>
+                ) : (
+                  <Box display="grid" gap={2}>
+                    <MetadataCard
+                      data={mapFieldArrayToMetadataInput(orderLineMetadataFields)}
+                      isPrivate={false}
+                      disabled={loading || submitInProgress}
+                      onChange={handleOrderLineMetadataChange}
+                      error={
+                        orderLineMetadataErrors.length
+                          ? orderLineMetadataErrors.join(", ")
+                          : undefined
+                      }
+                    />
+
+                    <MetadataCard
+                      data={mapFieldArrayToMetadataInput(orderLinePrivateMetadataFields)}
+                      isPrivate={true}
+                      disabled={loading || submitInProgress}
+                      onChange={handleOrderLinePrivateMetadataChange}
+                      error={
+                        orderLinePrivateMetadataErrors.length
+                          ? orderLinePrivateMetadataErrors.join(", ")
+                          : undefined
+                      }
+                    />
+                  </Box>
+                )}
               </Box>
               <Divider />
 
@@ -117,31 +170,51 @@ export const OrderMetadataDialog = ({
                   <Text as="h2" size={5} fontWeight="bold">
                     <FormattedMessage
                       defaultMessage="Product variant metadata"
-                      description="modal header, read-only product variant metadata"
-                      id="PH4R7g"
+                      description="modal header, editable product variant metadata"
+                      id="hQDWIw"
                     />
                   </Text>
                   <Text>
                     <FormattedMessage
                       defaultMessage="This is a metadata of the variant that is being used in this ordered item"
-                      description="modal subheader, read-only product variant metadata"
-                      id="/mwSjm"
+                      description="modal subheader, editable product variant metadata"
+                      id="tquei9"
                     />
                   </Text>
                 </Box>
 
-                {/* We cannot use memo, because it won't show loading state correctly */}
-                <MetadataNoMemo
-                  onChange={() => undefined}
-                  readonly
-                  isLoading={loading && !data}
-                  data={{
-                    metadata: data?.variant?.metadata ?? [],
-                    privateMetadata: data?.variant?.privateMetadata ?? [],
-                  }}
-                  hidePrivateMetadata={!hasManageProducts}
-                  paddingBottom={0}
-                />
+                {loading && !data ? (
+                  <Box display="grid" gap={2}>
+                    <MetadataLoadingCard />
+                    {!hasManageProducts ? null : <MetadataLoadingCard isPrivate />}
+                  </Box>
+                ) : (
+                  <Box display="grid" gap={2}>
+                    <MetadataCard
+                      data={mapFieldArrayToMetadataInput(variantMetadataFields)}
+                      isPrivate={false}
+                      disabled={loading || submitInProgress || !hasManageProducts}
+                      onChange={handleVariantMetadataChange}
+                      error={
+                        variantMetadataErrors.length ? variantMetadataErrors.join(", ") : undefined
+                      }
+                    />
+
+                    {hasManageProducts && (
+                      <MetadataCard
+                        data={mapFieldArrayToMetadataInput(variantPrivateMetadataFields)}
+                        isPrivate={true}
+                        disabled={loading || submitInProgress || !hasManageProducts}
+                        onChange={handleVariantPrivateMetadataChange}
+                        error={
+                          variantPrivateMetadataErrors.length
+                            ? variantPrivateMetadataErrors.join(", ")
+                            : undefined
+                        }
+                      />
+                    )}
+                  </Box>
+                )}
               </Box>
             </Box>
           </Box>

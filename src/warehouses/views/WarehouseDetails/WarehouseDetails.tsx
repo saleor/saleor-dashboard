@@ -93,6 +93,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
               streetAddress2: data.streetAddress2,
             },
             name: data.name,
+            email: data.email,
             isPrivate: data.isPrivate,
             clickAndCollectOption: data.clickAndCollectOption,
           },

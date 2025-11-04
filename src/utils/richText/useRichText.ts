@@ -8,7 +8,7 @@ export interface UseRichTextOptions {
   triggerChange: () => void;
 }
 
-interface UseRichTextResult {
+export interface UseRichTextResult {
   editorRef: MutableRefObject<EditorCore | null>;
   handleChange: () => void;
   getValue: () => Promise<OutputData>;

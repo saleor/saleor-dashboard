@@ -48,6 +48,7 @@ export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
         >
           {url && data?.id && data?.accessToken && (
             <AppFrame
+              target="APP_PAGE"
               src={url}
               appToken={data?.accessToken ?? ""}
               onError={onError}

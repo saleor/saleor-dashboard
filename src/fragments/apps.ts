@@ -13,6 +13,16 @@ export const appManifestFragment = gql`
     dataPrivacyUrl
     homepageUrl
     supportUrl
+    extensions {
+      target
+      permissions {
+        code
+        name
+      }
+      mount
+      url
+      label
+    }
     permissions {
       code
       name
@@ -111,7 +121,11 @@ export const appAvatarFragment = gql`
   fragment AppAvatar on App {
     id
     name
-    # TODO: Add app image
+    brand {
+      logo {
+        default(format: WEBP, size: 64)
+      }
+    }
   }
 `;
 

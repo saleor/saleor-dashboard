@@ -1,7 +1,9 @@
 import { Savebar } from "@dashboard/components/Savebar";
+import { ExtensionManifestValidator } from "@dashboard/extensions/domain/extension-manifest-validator";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import { ExtensionInstallQueryParams } from "@dashboard/extensions/urls";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import {
   Control,
   UseFormGetValues,
@@ -20,6 +22,8 @@ import { ExtensionInstallFormData } from "../../types";
 import { InstallSectionData } from "../InstallSectionData/InstallSectionData";
 import { InstallTopNav } from "../InstallTopNav";
 import { ManifestErrorMessage } from "../ManifestErrorMessage/ManifestErrorMessage";
+
+const manifestValidator = new ExtensionManifestValidator();
 
 export const InstallCustomExtensionFromUrl = ({
   trigger,
@@ -56,6 +60,18 @@ export const InstallCustomExtensionFromUrl = ({
     manifest,
   });
 
+  const issues = useMemo(() => {
+    const manifestValidation = manifestValidator.validateAppManifest(manifest);
+
+    return "issues" in manifestValidation ? manifestValidation.issues : undefined;
+  }, [manifest]);
+
+  /**
+   * Prevent installation if validation fails. In the future we can change errors to warnings, but first we need to add special handling
+   * to Dashboard, e.g. render "warning" near widget that widget is broken.
+   */
+  const canInstall = !issues && manifest;
+
   return (
     <>
       <InstallTopNav
@@ -68,6 +84,7 @@ export const InstallCustomExtensionFromUrl = ({
           manifest={manifest}
           lastFetchedManifestUrl={lastFetchedManifestUrl}
           control={control}
+          issues={issues}
         />
         <ManifestErrorMessage error={errors.manifestUrl} />
       </Box>
@@ -75,7 +92,7 @@ export const InstallCustomExtensionFromUrl = ({
         <Savebar.Spacer />
         <Savebar.CancelButton href={previousPagePath} />
         <Savebar.ConfirmButton
-          disabled={!manifest}
+          disabled={!canInstall}
           transitionState={isSubmittingInstallation ? "loading" : "default"}
           onClick={() => submitInstallApp()}
         >

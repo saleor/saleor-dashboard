@@ -17,6 +17,16 @@ export const AppManifestFragmentDoc = gql`
   dataPrivacyUrl
   homepageUrl
   supportUrl
+  extensions {
+    target
+    permissions {
+      code
+      name
+    }
+    mount
+    url
+    label
+  }
   permissions {
     code
     name
@@ -1639,6 +1649,11 @@ export const AppAvatarFragmentDoc = gql`
     fragment AppAvatar on App {
   id
   name
+  brand {
+    logo {
+      default(format: WEBP, size: 64)
+    }
+  }
 }
     `;
 export const TransactionEventFragmentDoc = gql`
@@ -1790,6 +1805,11 @@ export const OrderGrantedRefundFragmentDoc = gql`
   app {
     id
     name
+    brand {
+      logo {
+        default(format: WEBP, size: 64)
+      }
+    }
   }
   lines {
     id
@@ -3653,6 +3673,7 @@ export const WarehouseDetailsFragmentDoc = gql`
   address {
     ...Address
   }
+  email
 }
     ${WarehouseWithShippingFragmentDoc}
 ${AddressFragmentDoc}`;
@@ -9418,21 +9439,10 @@ export const ExtensionListDocument = gql`
         id
         label
         url
-        mount
-        target
+        mountName
+        targetName
+        settings
         accessToken
-        options {
-          ... on AppExtensionOptionsWidget {
-            widgetTarget {
-              method
-            }
-          }
-          ... on AppExtensionOptionsNewTab {
-            newTabTarget {
-              method
-            }
-          }
-        }
         permissions {
           code
         }

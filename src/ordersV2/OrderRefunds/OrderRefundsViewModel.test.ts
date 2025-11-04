@@ -95,6 +95,7 @@ const createOrderRefundDisplay = (overrides: Partial<OrderRefundDisplay>): Order
       amount: 100,
       currency: "USD",
     },
+    creator: null,
     ...overrides,
   };
 };
@@ -445,6 +446,7 @@ Array [
       __typename: "App" as const,
       id: "app-1",
       name: "Test App",
+      brand: null,
     };
 
     it.each([
@@ -465,6 +467,177 @@ Array [
 
       // Assert
       expect(result).toStrictEqual(expected);
+    });
+  });
+
+  describe("getCreator", () => {
+    it("should return app creator with initials and logo", () => {
+      // Arrange
+      const appCreator = {
+        __typename: "App" as const,
+        id: "app-1",
+        name: "Payment App",
+        brand: {
+          __typename: "AppBrand" as const,
+          logo: {
+            __typename: "AppBrandLogo" as const,
+            default: "https://example.com/app-logo.webp",
+          },
+        },
+      };
+
+      // Act
+      const result = OrderRefundsViewModel["getCreator"](appCreator);
+
+      // Assert
+      expect(result).toStrictEqual({
+        initials: "PA",
+        logoUrl: "https://example.com/app-logo.webp",
+      });
+    });
+
+    it("should return app creator with initials when logo is missing", () => {
+      // Arrange
+      const appCreator = {
+        __typename: "App" as const,
+        id: "app-2",
+        name: "Another App",
+        brand: null,
+      };
+
+      // Act
+      const result = OrderRefundsViewModel["getCreator"](appCreator);
+
+      // Assert
+      expect(result).toStrictEqual({
+        initials: "AN",
+        logoUrl: null,
+      });
+    });
+
+    it("should return app creator with empty initials when name is null", () => {
+      // Arrange
+      const appCreator = {
+        __typename: "App" as const,
+        id: "app-3",
+        name: null,
+        brand: null,
+      };
+
+      // Act
+      const result = OrderRefundsViewModel["getCreator"](appCreator);
+
+      // Assert
+      expect(result).toStrictEqual({
+        initials: "",
+        logoUrl: null,
+      });
+    });
+
+    it("should return app creator with initials and handle nested null logo", () => {
+      // Arrange
+      const appCreator = {
+        __typename: "App" as const,
+        id: "app-4",
+        name: "Test App",
+        brand: {
+          __typename: "AppBrand" as const,
+          logo: {
+            __typename: "AppBrandLogo" as const,
+            default: null as any,
+          },
+        },
+      };
+
+      // Act
+      const result = OrderRefundsViewModel["getCreator"](appCreator);
+
+      // Assert
+      expect(result).toStrictEqual({
+        initials: "TE",
+        logoUrl: null,
+      });
+    });
+
+    it("should return user creator with initials and avatar", () => {
+      // Arrange
+      const userCreator = {
+        __typename: "User" as const,
+        id: "user-1",
+        email: "john.doe@example.com",
+        firstName: "John",
+        lastName: "Doe",
+        isActive: true,
+        avatar: {
+          __typename: "Image" as const,
+          url: "https://example.com/user-avatar.jpg",
+        },
+      };
+
+      // Act
+      const result = OrderRefundsViewModel["getCreator"](userCreator);
+
+      // Assert
+      expect(result).toStrictEqual({
+        initials: "JD",
+        logoUrl: "https://example.com/user-avatar.jpg",
+      });
+    });
+
+    it("should return user creator with initials when avatar is missing", () => {
+      // Arrange
+      const userCreator = {
+        __typename: "User" as const,
+        id: "user-2",
+        email: "jane.smith@example.com",
+        firstName: "Jane",
+        lastName: "Smith",
+        isActive: true,
+        avatar: null,
+      };
+
+      // Act
+      const result = OrderRefundsViewModel["getCreator"](userCreator);
+
+      // Assert
+      expect(result).toStrictEqual({
+        initials: "JS",
+        logoUrl: null,
+      });
+    });
+
+    it("should handle user with empty name by using email for initials", () => {
+      // Arrange
+      const userCreator = {
+        __typename: "User" as const,
+        id: "user-3",
+        email: "user@example.com",
+        firstName: "",
+        lastName: "",
+        isActive: true,
+        avatar: null,
+      };
+
+      // Act
+      const result = OrderRefundsViewModel["getCreator"](userCreator);
+
+      // Assert
+      // getUserInitials falls back to email when name is empty, generating "US" from "user@example.com"
+      expect(result).toStrictEqual({
+        initials: "US",
+        logoUrl: null,
+      });
+    });
+
+    it("should handle null creator", () => {
+      // Arrange
+      const creator = null;
+
+      // Act
+      const result = OrderRefundsViewModel["getCreator"](creator);
+
+      // Assert
+      expect(result).toBeNull();
     });
   });
 
@@ -498,7 +671,7 @@ Array [
   describe("findLatestEventWithUserAuthor", () => {
     const appEvent = createTransactionEvent({
       id: "app-event",
-      createdBy: { __typename: "App" as const, id: "app-1", name: "Test App" },
+      createdBy: { __typename: "App" as const, id: "app-1", name: "Test App", brand: null },
     });
 
     const userEvent = createTransactionEvent({
@@ -578,7 +751,7 @@ Array [
       const appEvent = createTransactionEvent({
         id: "app-event",
         createdAt: "2023-01-01T10:00:00Z",
-        createdBy: { __typename: "App" as const, id: "app-1", name: "Test App" },
+        createdBy: { __typename: "App" as const, id: "app-1", name: "Test App", brand: null },
       });
       const userEvent = createTransactionEvent({
         id: "user-event",

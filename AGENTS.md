@@ -32,6 +32,8 @@ Before completing changes make sure you run these commands:
 - Use `npm run test:debug <file_path>` when you need to see full React component output for debugging
 - Console output is suppressed in quiet command
 - Tests automatically run from the `src/` directory (configured in jest.config.js)
+- When writing new fixtures (e.g. any objects used as test inputs) try to figure out their types and explicitly declare them:
+  `cont fixture: FixtureType = {...}`
 
 ### GraphQL & Code Generation
 
@@ -192,3 +194,7 @@ PR descriptions should:
 - Reference related issues or discussions
 
 Once opening a pull request or working with GitHub directly, prefer to use `gh` cli to execute operations
+
+## Code review
+
+During code review, do not verify auto-generated files. Such files are suffixed with `.generated.ts`
