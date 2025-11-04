@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.10
+
+### Patch Changes
+
+- [#5990](https://github.com/saleor/saleor-dashboard/pull/5990) [`db8fc50`](https://github.com/saleor/saleor-dashboard/commit/db8fc508864b13702988dd4e3a209e6dedf57c67) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added new API for communication between App and Dashboard. Now Dashboard will send form state (only Product Update page) to opened app (only POPUP). App will be able to send form fields back to the Dashboard, which will update the form. See docs [todo]
+
 ## 3.22.9
 
 ### Patch Changes
