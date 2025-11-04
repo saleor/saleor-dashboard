@@ -80,7 +80,7 @@ export const useAppExtensionPopup = () => {
 
   useEffect(() => {
     if (state.active) {
-      iframes.entries().forEach(([iframe, { loaded, target }]) => {
+      iframes.forEach(({ loaded, target }, iframe) => {
         // This hook only works for popup and assumes there is a singleton instance of popup frame. For Widgets separate logic must be added
         if (target !== "POPUP") {
           return;
