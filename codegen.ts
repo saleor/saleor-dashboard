@@ -22,6 +22,23 @@ const config: CodegenConfig = {
     "./src/graphql/types.generated.ts": {
       plugins: ["typescript", "typescript-operations"],
       config: {
+        scalars: {
+          _Any: "unknown",
+          Date: "string",
+          DateTime: "string",
+          Decimal: "number",
+          Minute: "number",
+          GenericScalar: "JSONValue",
+          JSON: "JSONValue",
+          JSONString: "string",
+          Metadata: "Record<string, string>",
+          PositiveDecimal: "number",
+          Upload: "unknown",
+          UUID: "string",
+          WeightScalar: "number",
+          Day: "string",
+          Hour: "number",
+        },
         nonOptionalTypename: true,
         avoidOptionals: {
           field: true,
