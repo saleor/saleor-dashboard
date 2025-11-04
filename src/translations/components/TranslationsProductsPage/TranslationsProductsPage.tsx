@@ -53,7 +53,7 @@ const TranslationsProductsPage = ({
   const { TRANSLATION_DETAILS } = useExtensions("TRANSLATION_DETAILS");
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATION_DETAILS, {
     translationContext: "product",
-    productId: productId,
+    productId,
   });
 
   return (
@@ -81,7 +81,7 @@ const TranslationsProductsPage = ({
               onClick={extension => {
                 extension.onSelect({
                   translationContext: "product",
-                  productId: productId,
+                  productId,
                   // todo pass translation-specific params
                 });
               }}
