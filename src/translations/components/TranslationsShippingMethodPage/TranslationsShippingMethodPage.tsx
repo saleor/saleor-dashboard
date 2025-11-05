@@ -45,7 +45,7 @@ const TranslationsShippingMethodPage = ({
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "shipping-method",
     shippingMethodId: data?.shippingMethod?.id,
-    translationLanguage: data?.translation?.language?.code,
+    translationLanguage: languageCode,
   });
 
   return (
@@ -74,7 +74,7 @@ const TranslationsShippingMethodPage = ({
                 extension.onSelect({
                   translationContext: "shipping-method",
                   shippingMethodId: data?.shippingMethod?.id,
-                  translationLanguage: data?.translation?.language?.code,
+                  translationLanguage: dlanguageCode,
                 });
               }}
             />

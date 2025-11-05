@@ -73,7 +73,7 @@ const TranslationsMenuItemPage = ({
               extensions={menuItems}
               onClick={extension => {
                 extension.onSelect({
-                  translationContext: "product",
+                  translationContext: "structure",
                   structureId: data?.menuItem?.id,
                   translationLanguage: languageCode,
                 });
