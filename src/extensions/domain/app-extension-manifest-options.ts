@@ -27,7 +27,6 @@ export const appExtensionManifestOptionsSchema = z
     },
   );
 
-// todo test
 export const appExtensionManifestOptionsSchemaWithDefault =
   appExtensionManifestOptionsSchema.default({
     newTabTarget: {
