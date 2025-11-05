@@ -45,7 +45,8 @@ const TranslationsSalesPage = ({
   const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "sale",
-    // todo id
+    saleId: data?.sale?.id,
+    translationLanguage: languageCode,
   });
 
   return (
@@ -73,8 +74,8 @@ const TranslationsSalesPage = ({
               onClick={extension => {
                 extension.onSelect({
                   translationContext: "sale",
-                  // todo id
-                  // todo pass translation-specific params
+                  saleId: data?.sale?.id,
+                  translationLanguage: languageCode,
                 });
               }}
             />

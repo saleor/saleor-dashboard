@@ -45,6 +45,7 @@ const TranslationsCategoriesPage = ({
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "category",
     categoryId: data?.category?.id,
+    translationLanguage: languageCode,
   });
 
   const navigate = useNavigator();
@@ -74,7 +75,7 @@ const TranslationsCategoriesPage = ({
                 extension.onSelect({
                   translationContext: "category",
                   categoryId: data?.category?.id,
-                  // todo pass translation-specific params
+                  translationLanguage: languageCode,
                 });
               }}
             />

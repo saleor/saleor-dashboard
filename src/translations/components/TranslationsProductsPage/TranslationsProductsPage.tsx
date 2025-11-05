@@ -53,6 +53,7 @@ const TranslationsProductsPage = ({
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "product",
     productId,
+    translationLanguage: languageCode,
   });
 
   return (
@@ -81,7 +82,7 @@ const TranslationsProductsPage = ({
                 extension.onSelect({
                   translationContext: "product",
                   productId,
-                  // todo pass translation-specific params
+                  translationLanguage: languageCode,
                 });
               }}
             />

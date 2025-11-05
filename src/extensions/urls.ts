@@ -62,6 +62,8 @@ export type ExtensionsListUrlDialog = "app-installation-remove";
 export type ExtensionsListUrlQueryParams = Dialog<ExtensionsListUrlDialog> & SingleAction;
 export type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete";
 export interface AppDetailsUrlMountQueryParams {
+  attributeId?: string;
+  attributeIds?: string[];
   productId?: string;
   productIds?: string[];
   productSlug?: string;
@@ -86,6 +88,13 @@ export interface AppDetailsUrlMountQueryParams {
   menuId?: string;
   menuIds?: string[];
   translationContext?: TranslationContext;
+  saleId?: string;
+  saleIds?: string[];
+  structureId?: string;
+  structureIds?: string[];
+  shippingMethodId?: string;
+  shippingMethodIds?: string[];
+  translationLanguage?: string;
 }
 interface FeatureFlagsQueryParams {
   featureFlags?: FlagList;

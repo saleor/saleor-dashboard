@@ -49,6 +49,7 @@ const TranslationsPagesPage = ({
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "model",
     pageId: data?.page?.id,
+    translationLanguage: languageCode,
   });
 
   return (
@@ -77,7 +78,7 @@ const TranslationsPagesPage = ({
                 extension.onSelect({
                   translationContext: "model",
                   pageId: data?.page?.id,
-                  // todo pass translation-specific params
+                  translationLanguage: languageCode,
                 });
               }}
             />

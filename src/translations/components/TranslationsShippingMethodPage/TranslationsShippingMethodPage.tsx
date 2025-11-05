@@ -44,7 +44,8 @@ const TranslationsShippingMethodPage = ({
   const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "shipping-method",
-    // todo id,
+    shippingMethodId: data?.shippingMethod?.id,
+    translationLanguage: data?.translation?.language?.code,
   });
 
   return (
@@ -72,8 +73,8 @@ const TranslationsShippingMethodPage = ({
               onClick={extension => {
                 extension.onSelect({
                   translationContext: "shipping-method",
-                  // todo pass id
-                  // todo pass translation-specific params
+                  shippingMethodId: data?.shippingMethod?.id,
+                  translationLanguage: data?.translation?.language?.code,
                 });
               }}
             />

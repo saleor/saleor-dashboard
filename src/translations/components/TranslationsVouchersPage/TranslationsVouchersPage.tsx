@@ -46,6 +46,7 @@ const TranslationsVouchersPage = ({
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "voucher",
     voucherId: data?.voucher?.id,
+    translationLanguage: languageCode,
   });
 
   return (
@@ -74,7 +75,7 @@ const TranslationsVouchersPage = ({
                 extension.onSelect({
                   translationContext: "voucher",
                   voucherId: data?.voucher?.id,
-                  // todo pass translation-specific params
+                  translationLanguage: languageCode,
                 });
               }}
             />
