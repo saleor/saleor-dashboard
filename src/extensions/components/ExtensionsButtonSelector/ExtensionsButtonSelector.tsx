@@ -126,7 +126,7 @@ export const ExtensionsButtonSelector = ({
         options={dropdownExtensions.map(ext => ({
           label: (
             <Box display="flex" gap={2} alignItems="center">
-              {ext.avatar && <img width={"15px"} height="15px" src={firstExtension.avatar} />}
+              {ext.avatar && <img width={"15px"} height="15px" src={ext.avatar} />}
               {ext.label}
             </Box>
           ),
