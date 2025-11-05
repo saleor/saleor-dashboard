@@ -108,19 +108,19 @@ const TranslationsProductsPage = ({
     const { productName, productDescription, seoDescription, seoName } = lastFrame.fields;
     const dirtyFields: TranslationInputFieldName[] = [];
 
-    if (productName?.value !== (dataCache.current ?? data.product.name)) {
+    if (productName?.value !== (dataCache.current.productName ?? data.product.name)) {
       dirtyFields.push(TranslationInputFieldName.name);
     }
 
-    if (productDescription?.value !== (dataCache.current ?? data.product.description)) {
+    if (productDescription?.value !== (dataCache.current.productDescription ?? data.product.description)) {
       dirtyFields.push(TranslationInputFieldName.description);
     }
 
-    if (seoDescription?.value !== (dataCache.current ?? data.product.seoDescription)) {
+    if (seoDescription?.value !== (dataCache.current.seoDescription ?? data.product.seoDescription)) {
       dirtyFields.push(TranslationInputFieldName.seoDescription);
     }
 
-    if (seoName?.value !== (dataCache.current ?? data.product.seoTitle)) {
+    if (seoName?.value !== (dataCache.current.seoName ?? data.product.seoTitle)) {
       dirtyFields.push(TranslationInputFieldName.seoTitle);
     }
 
