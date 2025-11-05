@@ -74,7 +74,7 @@ const TranslationsShippingMethodPage = ({
                 extension.onSelect({
                   translationContext: "shipping-method",
                   shippingMethodId: data?.shippingMethod?.id,
-                  translationLanguage: dlanguageCode,
+                  translationLanguage: languageCode,
                 });
               }}
             />
