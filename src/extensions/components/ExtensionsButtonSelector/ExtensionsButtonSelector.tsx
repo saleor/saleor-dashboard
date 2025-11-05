@@ -9,6 +9,7 @@ import {
   List,
   Text,
 } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 
 type ExtensionsButtonSelectorProps = {
   extensions: Array<ExtensionMenuItem>;
@@ -18,7 +19,7 @@ type ExtensionsButtonSelectorProps = {
 interface ButtonGroupWithDropdownProps extends BoxProps {
   onClick?: () => void;
   options: Array<{
-    label: string;
+    label: string | ReactNode;
     testId?: string;
     onSelect: <T extends object>(params: T) => void;
   }>;
@@ -66,9 +67,7 @@ export const ButtonGroupWithDropdown = ({
             <Text lineHeight={2} color="default2" __fontSize="10px">
               Apps
             </Text>
-            <Text size={3} lineHeight={2}>
-              {children}
-            </Text>
+            {children}
           </Box>
         </Button>
 
@@ -125,11 +124,24 @@ export const ExtensionsButtonSelector = ({
         variant="secondary"
         onClick={() => onClick(firstExtension)}
         options={dropdownExtensions.map(ext => ({
-          label: ext.label,
+          label: (
+            <Box display="flex" gap={2} alignItems="center">
+              {ext.avatar && <img width={"15px"} height="15px" src={firstExtension.avatar} />}
+              {ext.label}
+            </Box>
+          ),
           onSelect: () => onClick(ext),
         }))}
       >
-        {firstExtension.label}
+        <Box display="flex" gap={2} alignItems="center">
+          {firstExtension.avatar && (
+            <img width={"15px"} height="15px" src={firstExtension.avatar} />
+          )}
+
+          <Text size={3} lineHeight={2}>
+            {firstExtension.label}
+          </Text>
+        </Box>
       </ButtonGroupWithDropdown>
     </Box>
   );
