@@ -65,7 +65,7 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
     );
   const onDiscard = (field?: string) => {
     if (!field) {
-      navigate("?", { replace: true });
+      return navigate("?", { replace: true });
     }
 
     const activeFields = getMultipleUrlValues(new URL(window.location.href).search, "activeField");

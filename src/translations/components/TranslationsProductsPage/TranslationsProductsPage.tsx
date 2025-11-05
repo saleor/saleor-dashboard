@@ -59,9 +59,13 @@ const TranslationsProductsPage = ({
   });
   const { attachFormState, active, framesByFormType } = useActiveAppExtension();
   // A hack to access field that are currently being edited in nested form.
-  const dataCache = useRef<Record<"productName" | "productDescription", string | null>>({
+  const dataCache = useRef<
+    Record<"productName" | "productDescription" | "seoDescription" | "seoName", string | null>
+  >({
     productName: null,
     productDescription: null,
+    seoDescription: null,
+    seoName: null,
   });
 
   // Emit data to app
@@ -73,7 +77,6 @@ const TranslationsProductsPage = ({
         form: "product-translate",
         productId: productId,
         fields: {
-          // todo we dont send seo fields
           productName: {
             type: "short-text",
             fieldName: "productName",
@@ -87,6 +90,20 @@ const TranslationsProductsPage = ({
             fieldName: "productDescription",
             originalValue: data.product.description,
             translatedValue: data.translation?.description ?? "",
+          },
+          seoName: {
+            type: "short-text",
+            fieldName: "seoName",
+            originalValue: data.product.seoTitle,
+            currentValue: dataCache.current.seoName ?? data.product.seoTitle ?? "",
+            translatedValue: data.translation?.seoTitle ?? "",
+          },
+          seoDescription: {
+            currentValue: dataCache.current.seoDescription ?? data.product.seoDescription ?? "",
+            type: "editorjs",
+            fieldName: "seoDescription",
+            originalValue: data.product.seoDescription,
+            translatedValue: data.translation?.seoDescription ?? "",
           },
         },
       });
@@ -112,11 +129,16 @@ const TranslationsProductsPage = ({
       dirtyFields.push(TranslationInputFieldName.name);
     }
 
-    if (productDescription?.value !== (dataCache.current.productDescription ?? data.product.description)) {
+    if (
+      productDescription?.value !==
+      (dataCache.current.productDescription ?? data.product.description)
+    ) {
       dirtyFields.push(TranslationInputFieldName.description);
     }
 
-    if (seoDescription?.value !== (dataCache.current.seoDescription ?? data.product.seoDescription)) {
+    if (
+      seoDescription?.value !== (dataCache.current.seoDescription ?? data.product.seoDescription)
+    ) {
       dirtyFields.push(TranslationInputFieldName.seoDescription);
     }
 
@@ -131,6 +153,8 @@ const TranslationsProductsPage = ({
     dataCache.current = {
       productName: null,
       productDescription: null,
+      seoName: null,
+      seoDescription: null,
     };
   }, [activeField]);
 
@@ -197,6 +221,14 @@ const TranslationsProductsPage = ({
             if (field.name === "description") {
               dataCache.current.productDescription = value;
             }
+
+            if (field.name === "seoDescription") {
+              dataCache.current.seoDescription = value;
+            }
+
+            if (field.name === "seoTitle") {
+              dataCache.current.seoName = value;
+            }
           }}
           activeField={activeField}
           disabled={disabled}
@@ -242,6 +274,14 @@ const TranslationsProductsPage = ({
 
             if (field.name === "description") {
               dataCache.current.productDescription = value;
+            }
+
+            if (field.name === "seoDescription") {
+              dataCache.current.seoDescription = value;
+            }
+
+            if (field.name === "seoTitle") {
+              dataCache.current.seoName = value;
             }
           }}
           activeField={activeField}
