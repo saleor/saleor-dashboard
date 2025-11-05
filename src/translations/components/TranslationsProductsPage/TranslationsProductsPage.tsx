@@ -73,6 +73,7 @@ const TranslationsProductsPage = ({
         form: "product-translate",
         productId: productId,
         fields: {
+          // todo we dont send seo fields
           productName: {
             type: "short-text",
             fieldName: "productName",
@@ -94,9 +95,37 @@ const TranslationsProductsPage = ({
 
   const extensionResponseFrames = framesByFormType["product-translate"];
 
+  const lastFrame = extensionResponseFrames
+    ? extensionResponseFrames[extensionResponseFrames.length - 1]
+    : null;
+
+  // todo maybe extract to hook and test
   useEffect(() => {
-    // todo inject data to form
-  }, [extensionResponseFrames]);
+    if (!lastFrame) {
+      return;
+    }
+
+    const { productName, productDescription, seoDescription, seoName } = lastFrame.fields;
+    const dirtyFields: TranslationInputFieldName[] = [];
+
+    if (productName?.value !== (dataCache.current ?? data.product.name)) {
+      dirtyFields.push(TranslationInputFieldName.name);
+    }
+
+    if (productDescription?.value !== (dataCache.current ?? data.product.description)) {
+      dirtyFields.push(TranslationInputFieldName.description);
+    }
+
+    if (seoDescription?.value !== (dataCache.current ?? data.product.seoDescription)) {
+      dirtyFields.push(TranslationInputFieldName.seoDescription);
+    }
+
+    if (seoName?.value !== (dataCache.current ?? data.product.seoTitle)) {
+      dirtyFields.push(TranslationInputFieldName.seoTitle);
+    }
+
+    onEdit(dirtyFields);
+  }, [lastFrame, data?.product]);
 
   useEffect(() => {
     dataCache.current = {
@@ -180,7 +209,8 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Product Name",
               }),
               name: TranslationInputFieldName.name,
-              translation: data?.translation?.name || null,
+              translation:
+                (lastFrame?.fields.productName?.value ?? data?.translation?.name) || null,
               type: "short",
               value: data?.product?.name,
             },
@@ -190,7 +220,9 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Description",
               }),
               name: TranslationInputFieldName.description,
-              translation: data?.translation?.description || null,
+              translation:
+                (lastFrame?.fields.productDescription?.value ?? data?.translation?.description) ||
+                null,
               type: "rich",
               value: data?.product?.description,
             },
@@ -226,7 +258,8 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Title",
               }),
               name: TranslationInputFieldName.seoTitle,
-              translation: data?.translation?.seoTitle || null,
+              translation:
+                (lastFrame?.fields.seoName?.value ?? data?.translation?.seoTitle) || null,
               type: "short",
               value: data?.product?.seoTitle,
             },
@@ -236,7 +269,9 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Description",
               }),
               name: TranslationInputFieldName.seoDescription,
-              translation: data?.translation?.seoDescription || null,
+              translation:
+                (lastFrame?.fields.seoDescription?.value ?? data?.translation?.seoDescription) ||
+                null,
               type: "long",
               value: data?.product?.seoDescription,
             },

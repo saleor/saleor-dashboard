@@ -23,7 +23,7 @@ import TranslationFieldsShort from "./TranslationFieldsShort";
 type Pagination = Pick<ListProps, Exclude<keyof ListProps, "getRowHref" | "disabled">>;
 
 interface TranslationFieldsProps {
-  activeField: string;
+  activeField: string | string[];
   disabled: boolean;
   title: string;
   fields: TranslationField[];
@@ -213,7 +213,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                     field.type === TranslationFieldType.SHORT ? (
                       <TranslationFieldsShort
                         disabled={disabled}
-                        edit={activeField === field.name}
+                        edit={
+                          Array.isArray(activeField)
+                            ? activeField.includes(field.name)
+                            : activeField === field.name
+                        }
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
@@ -227,7 +231,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                     ) : field.type === TranslationFieldType.LONG ? (
                       <TranslationFieldsLong
                         disabled={disabled}
-                        edit={activeField === field.name}
+                        edit={
+                          Array.isArray(activeField)
+                            ? activeField.includes(field.name)
+                            : activeField === field.name
+                        }
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
@@ -242,7 +250,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                       <TranslationFieldsRich
                         resetKey={richTextResetKey}
                         disabled={disabled}
-                        edit={activeField === field.name}
+                        edit={
+                          Array.isArray(activeField)
+                            ? activeField.includes(field.name)
+                            : activeField === field.name
+                        }
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
