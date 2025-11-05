@@ -2,6 +2,9 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
+import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { LanguageCodeEnum, MenuItemTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -15,6 +18,7 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
+import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
@@ -23,6 +27,7 @@ interface TranslationsMenuItemPageProps extends TranslationsEntitiesPageProps {
   data: MenuItemTranslationFragment | null;
 }
 
+// MenuItem is a structure - todo rename
 const TranslationsMenuItemPage = ({
   translationId,
   activeField,
@@ -37,6 +42,12 @@ const TranslationsMenuItemPage = ({
 }: TranslationsMenuItemPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
+    translationContext: "structure",
+    structureId: data?.menuItem?.id,
+    translationLanguage: languageCode,
+  });
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -56,13 +67,27 @@ const TranslationsMenuItemPage = ({
           },
         )}
       >
-        <LanguageSwitchWithCaching
-          currentLanguage={LanguageCodeEnum[languageCode]}
-          languages={languages}
-          onLanguageChange={lang =>
-            navigate(languageEntityUrl(lang, TranslatableEntities.menuItems, translationId))
-          }
-        />
+        <Box display="flex" gap={3}>
+          {menuItems.length > 0 && (
+            <ExtensionsButtonSelector
+              extensions={menuItems}
+              onClick={extension => {
+                extension.onSelect({
+                  translationContext: "structure",
+                  structureId: data?.menuItem?.id,
+                  translationLanguage: languageCode,
+                });
+              }}
+            />
+          )}
+          <LanguageSwitchWithCaching
+            currentLanguage={LanguageCodeEnum[languageCode]}
+            languages={languages}
+            onLanguageChange={lang =>
+              navigate(languageEntityUrl(lang, TranslatableEntities.menuItems, translationId))
+            }
+          />
+        </Box>
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields
