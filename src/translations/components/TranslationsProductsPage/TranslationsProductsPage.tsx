@@ -49,9 +49,8 @@ const TranslationsProductsPage = ({
 }: TranslationsProductsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  // @ts-expect-error - not yet in schema
-  const { TRANSLATION_DETAILS } = useExtensions("TRANSLATION_DETAILS");
-  const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATION_DETAILS, {
+  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "product",
     productId,
   });
