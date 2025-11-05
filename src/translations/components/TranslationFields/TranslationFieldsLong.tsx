@@ -14,6 +14,7 @@ interface TranslationFieldsLongProps {
   saveButtonState: ConfirmButtonTransitionState;
   onDiscard: () => void;
   onSubmit: (data: string) => SubmitPromise;
+  onValueChange?(newValue: string): void;
 }
 
 const TranslationFieldsLong = ({
@@ -23,6 +24,7 @@ const TranslationFieldsLong = ({
   saveButtonState,
   onDiscard,
   onSubmit,
+  onValueChange,
 }: TranslationFieldsLongProps) => {
   const intl = useIntl();
 
@@ -45,7 +47,13 @@ const TranslationFieldsLong = ({
             name="translation"
             value={data.translation || ""}
             data-test-id="translation-field"
-            onChange={change}
+            onChange={event => {
+              change(event);
+
+              if (onValueChange) {
+                onValueChange(event.target.value);
+              }
+            }}
           />
           <TranslationFieldsSave
             saveButtonState={saveButtonState}

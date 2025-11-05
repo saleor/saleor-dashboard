@@ -34,6 +34,7 @@ interface TranslationFieldsProps {
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onSubmit: (field: TranslationField, data: string | OutputData) => SubmitPromise;
+  onValueChange?(field: TranslationField, currentValue: string): void;
 }
 
 const useStyles = makeStyles(
@@ -114,6 +115,7 @@ const TranslationFields = (props: TranslationFieldsProps) => {
     onEdit,
     onDiscard,
     onSubmit,
+    onValueChange,
   } = props;
   const classes = useStyles(props);
   const [expanded, setExpandedState] = useState(initialState);
@@ -166,6 +168,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         saveButtonState="default"
                         onDiscard={onDiscard}
                         onSubmit={undefined}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     ) : field.type === TranslationFieldType.LONG ? (
                       <TranslationFieldsLong
@@ -175,6 +182,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         saveButtonState="default"
                         onDiscard={onDiscard}
                         onSubmit={undefined}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     ) : (
                       <TranslationFieldsRich
@@ -185,6 +197,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         saveButtonState="default"
                         onDiscard={onDiscard}
                         onSubmit={undefined}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     )
                   ) : (
@@ -201,6 +218,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     ) : field.type === TranslationFieldType.LONG ? (
                       <TranslationFieldsLong
@@ -210,6 +232,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     ) : (
                       <TranslationFieldsRich
@@ -220,6 +247,11 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     )
                   ) : (

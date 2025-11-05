@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -22,6 +23,7 @@ import {
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import { Box } from "@saleor/macaw-ui-next";
+import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
@@ -55,6 +57,53 @@ const TranslationsProductsPage = ({
     productId,
     translationLanguage: languageCode,
   });
+  const { attachFormState, active, framesByFormType } = useActiveAppExtension();
+  // A hack to access field that are currently being edited in nested form.
+  const dataCache = useRef<Record<"productName" | "productDescription", string | null>>({
+    productName: null,
+    productDescription: null,
+  });
+
+  // Emit data to app
+  useEffect(() => {
+    if (active && data?.product) {
+      attachFormState({
+        translationLanguage: languageCode,
+        currentLanguage: "TODO remove me",
+        form: "product-translate",
+        productId: productId,
+        fields: {
+          productName: {
+            type: "short-text",
+            fieldName: "productName",
+            originalValue: data.product.name,
+            currentValue: dataCache.current.productName ?? "",
+            translatedValue: data.translation?.name ?? "",
+          },
+          productDescription: {
+            currentValue: dataCache.current.productDescription ?? "",
+            type: "editorjs",
+            fieldName: "productDescription",
+            originalValue: data.product.description,
+            translatedValue: data.translation?.description ?? "",
+          },
+        },
+      });
+    }
+  }, [active, data?.product, productId]);
+
+  const extensionResponseFrames = framesByFormType["product-translate"];
+
+  useEffect(() => {
+    // todo
+  }, [extensionResponseFrames]);
+
+  useEffect(() => {
+    dataCache.current = {
+      productName: null,
+      productDescription: null,
+    };
+  }, [activeField]);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -111,6 +160,15 @@ const TranslationsProductsPage = ({
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields
+          onValueChange={(field, value) => {
+            if (field.name === "name") {
+              dataCache.current.productName = value;
+            }
+
+            if (field.name === "description") {
+              dataCache.current.productDescription = value;
+            }
+          }}
           activeField={activeField}
           disabled={disabled}
           initialState={true}
@@ -145,6 +203,15 @@ const TranslationsProductsPage = ({
         />
         <CardSpacer />
         <TranslationFields
+          onValueChange={(field, value) => {
+            if (field.name === "name") {
+              dataCache.current.productName = value;
+            }
+
+            if (field.name === "description") {
+              dataCache.current.productDescription = value;
+            }
+          }}
           activeField={activeField}
           disabled={disabled}
           initialState={true}
