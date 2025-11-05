@@ -44,7 +44,6 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      navigate("?", { replace: true });
     }
   };
   const [updateTranslations, updateTranslationsOpts] = useUpdateProductTranslationsMutation({
