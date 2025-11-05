@@ -77,11 +77,11 @@ const TranslationsProductsPage = ({
             type: "short-text",
             fieldName: "productName",
             originalValue: data.product.name,
-            currentValue: dataCache.current.productName ?? "",
+            currentValue: dataCache.current.productName ?? data.product.name ?? "",
             translatedValue: data.translation?.name ?? "",
           },
           productDescription: {
-            currentValue: dataCache.current.productDescription ?? "",
+            currentValue: dataCache.current.productDescription ?? data.product.description ?? "",
             type: "editorjs",
             fieldName: "productDescription",
             originalValue: data.product.description,
@@ -95,7 +95,7 @@ const TranslationsProductsPage = ({
   const extensionResponseFrames = framesByFormType["product-translate"];
 
   useEffect(() => {
-    // todo
+    // todo inject data to form
   }, [extensionResponseFrames]);
 
   useEffect(() => {
