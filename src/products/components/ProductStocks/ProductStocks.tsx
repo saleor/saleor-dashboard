@@ -10,8 +10,8 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Checkbox, Input, Text, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
-import { useMemo } from "react";
 import * as React from "react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
@@ -180,7 +180,10 @@ export const ProductStocks = ({
                 );
 
                 return (
-                  <TableRowLink data-test-id={stock.label} key={stock.id}>
+                  <TableRowLink
+                    data-test-id={stock.label}
+                    key={`product-stocks-${stock.id}-${index}`}
+                  >
                     <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                       <Text>{stock.label}</Text>
                     </TableCell>
