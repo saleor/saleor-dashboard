@@ -9,18 +9,18 @@
   "author": "Saleor Commerce",
   "main": "src/index.tsx",
   "scripts": {
-    "prebuild": "npm run generate",
+    "prebuild": "pnpm run generate",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "build-flags": "node scripts/build-flags.cjs",
     "build-storybook": "storybook build",
     "change:add": "changeset add",
     "change:status": "changeset status",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.cjs",
-    "check-types": "npm run check-types:src && npm run check-types:playwright",
+    "check-types": "pnpm run check-types:src && pnpm run check-types:playwright",
     "check-types:playwright": "tsc --noEmit --project playwright/tsconfig.json",
     "check-types:src": "tsc --noEmit && tsc-strict",
     "dep-status": "depcruise --config .dependency-cruiser.js src",
-    "predev": "npm run generate",
+    "predev": "pnpm run generate",
     "dev": "vite --host",
     "e2e": "npx playwright test --grep \"#e2e\"",
     "e2e:ui": "npx playwright test --ui",
@@ -42,7 +42,7 @@
     "release": "node scripts/release.cjs",
     "release:cleanup": "./scripts/release-cleanup.sh",
     "serve:lhci": "cross-env NODE_ENV=production npm run server",
-    "prestart": "npm run generate",
+    "prestart": "pnpm run generate",
     "storybook": "storybook dev -p 6006",
     "test": "jest",
     "test:ci": "CI=true jest --coverage --silent",
@@ -235,8 +235,8 @@
     "ts-jest": "^27.1.5"
   },
   "engines": {
-    "node": "^18 || ^20",
-    "npm": ">=7"
+    "node": "^18 || ^20 || ^22",
+    "pnpm": ">=8"
   },
   "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed"
 }

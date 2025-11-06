@@ -22,7 +22,7 @@ const config = {
   roots: ["<rootDir>/src/"],
   testRegex: ".*\\.test\\.tsx?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  transformIgnorePatterns: ["/node_modules/(?!(chroma-js|zod|popper.js)/.*)"],
+  transformIgnorePatterns: ["node_modules/(?!\\.pnpm|chroma-js|zod|popper\\.js)"],
   moduleNameMapper: {
     "\\.(css)$": "identity-obj-proxy",
     "^react-intl$": "<rootDir>/__mocks__/react-intl.ts",
