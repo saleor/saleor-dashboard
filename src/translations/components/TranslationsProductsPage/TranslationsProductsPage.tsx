@@ -73,7 +73,6 @@ const TranslationsProductsPage = ({
     if (active && data?.product) {
       attachFormState({
         translationLanguage: languageCode,
-        currentLanguage: "TODO remove me",
         form: "product-translate",
         productId: productId,
         fields: {
@@ -100,7 +99,7 @@ const TranslationsProductsPage = ({
           },
           seoDescription: {
             currentValue: dataCache.current.seoDescription ?? data.product.seoDescription ?? "",
-            type: "editorjs",
+            type: "long-text",
             fieldName: "seoDescription",
             originalValue: data.product.seoDescription,
             translatedValue: data.translation?.seoDescription ?? "",
