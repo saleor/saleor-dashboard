@@ -18,15 +18,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: |
           cd .github/workflows
-          npm ci
+          pnpm install --frozen-lockfile
 
       - name: get environment variables
         id: get-environment-variables
