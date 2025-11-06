@@ -234,7 +234,6 @@
     "setup-polly-jest": "^0.9.1",
     "ts-jest": "^27.1.5"
   },
-  "packageManager": "npm@10.8.2",
   "engines": {
     "node": "^18 || ^20",
     "npm": ">=7"
