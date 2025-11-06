@@ -106,7 +106,7 @@ export const ProductStocksAssignWarehouses = ({
                           checked={isChecked}
                           onChange={() =>
                             setWarehouses(prev => {
-                              if (prev.some(w => w.value === warehouse.id)) {
+                              if (isChecked) {
                                 return prev.filter(w => w.value !== warehouse.id);
                               }
 

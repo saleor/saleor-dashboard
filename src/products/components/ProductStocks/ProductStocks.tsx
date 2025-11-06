@@ -11,7 +11,6 @@ import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNe
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Checkbox, Input, Text, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
 import * as React from "react";
-import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
@@ -72,7 +71,7 @@ export const ProductStocks = ({
   const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
   const formErrors = getFormErrors(["sku"], errors);
 
-  const stocksIds = useMemo(() => stocks.map(stock => stock.id), [stocks]);
+  const stocksIds = React.useMemo(() => stocks.map(stock => stock.id), [stocks]);
 
   const warehousesToAssign =
     warehouses?.filter(warehouse => !stocksIds.includes(warehouse.id)) || [];
