@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.11
+
+### Patch Changes
+
+- [#6033](https://github.com/saleor/saleor-dashboard/pull/6033) [`b1a048a`](https://github.com/saleor/saleor-dashboard/commit/b1a048ab34fbae0b907dc8e86f82fac30c88017a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Dropped support for node 18. Migrated npm to pnpm
+
 ## 3.22.10
 
 ### Patch Changes
