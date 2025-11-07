@@ -119,10 +119,11 @@ export const OrderDetailsDatagrid = ({
             staticColumns={staticColumns}
             selectedColumns={selectedColumns}
             onToggle={handlers.onToggle}
+            align="end"
           />
         )}
         renderRowActions={renderRowActions}
-        rowActionBarWidth={88}
+        rowActionBarWidth={80}
       />
     </DatagridChangeStateContext.Provider>
   );

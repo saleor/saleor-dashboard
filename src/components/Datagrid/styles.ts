@@ -34,8 +34,9 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
       columnPicker: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-end",
         height: cellHeight,
+        width: "100%",
       },
       columnPickerBackground: {
         background: vars.colors.background.default1,
