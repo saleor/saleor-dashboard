@@ -46,7 +46,7 @@ When you're finished with the changes, create a pull request, also known as a PR
 
 ### Changesets
 
-Remember to add changeset file by running `npm run change:add` command.
+Remember to add changeset file by running `pnpm run change:add` command.
 The prompt will ask you what kind of change you have made. Please pick the one according to the following guide:
 
 - `minor` - any breaking changes, UI updates, new features, anything that changes behavior of the app, and can be considered as minor change
@@ -56,7 +56,7 @@ The prompt will ask you what kind of change you have made. Please pick the one a
 
 We run a series of automated checks on your PR to ensure that it meets our standards. If you are not sure why your PR is failing, please reach out to us. Common problems include:
 
-- Translations messages check is failing - run `npm run extract-messages` to update them
+- Translations messages check is failing - run `pnpm run extract-messages` to update them
 - UI tests are pending - reach out to maintainers to approve them
 - MacawUI migration check is failing - we are on the way to migrate to new MacawUI components, use imports from `@saleor/macaw-ui-next` instead of `@saleor/macaw-ui` in your changes
 
