@@ -36,10 +36,10 @@ function release() {
     console.log(`Pushing tags to remote...`);
 
     // Push new tag normally. Cherry-pick it only to avoid pushing minor
-    execSync(`git push origin ${version}`, { stdio: "inherit" });
+    execSync(`git push origin tag ${version}`, { stdio: "inherit" });
 
     // Push minor tag separately with force
-    execSync(`git push origin ${minorTag} -f`, { stdio: "inherit" });
+    execSync(`git push origin tag ${minorTag} -f`, { stdio: "inherit" });
 
     console.log(`Successfully created release tags: ${version}, ${minorTag}`);
   } catch (error) {
