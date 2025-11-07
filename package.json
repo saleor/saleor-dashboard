@@ -41,7 +41,7 @@
     "preview": "vite preview",
     "release": "node scripts/release.cjs",
     "release:cleanup": "./scripts/release-cleanup.sh",
-    "serve:lhci": "cross-env NODE_ENV=production npm run server",
+    "serve:lhci": "cross-env NODE_ENV=production pnpm run server",
     "prestart": "pnpm run generate",
     "storybook": "storybook dev -p 6006",
     "test": "jest",
