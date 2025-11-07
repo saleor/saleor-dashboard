@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.22.10
+
+### Patch Changes
+
+- [#5992](https://github.com/saleor/saleor-dashboard/pull/5992) [`7465a3a`](https://github.com/saleor/saleor-dashboard/commit/7465a3a707f5100c4133b498913ab8f81fc7369d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added a new extension mount point: TRANSLATIONS_MORE_ACTIONS that will render app extension on translation pages
+
+- [#6032](https://github.com/saleor/saleor-dashboard/pull/6032) [`ccdfdec`](https://github.com/saleor/saleor-dashboard/commit/ccdfdec1973adde8e1e4f7c633efdcbc618cefb4) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Fix warehouse assignment modal: prevent duplicates and enable proper deselection. Previously, when selecting warehouses in the assignment modal, deselecting an option would still add it to the list, resulting in duplicate entries on submit.
+
+- [#5990](https://github.com/saleor/saleor-dashboard/pull/5990) [`db8fc50`](https://github.com/saleor/saleor-dashboard/commit/db8fc508864b13702988dd4e3a209e6dedf57c67) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added new API for communication between App and Dashboard. Now Dashboard will send form state (only Product Update page) to opened app (only POPUP). App will be able to send form fields back to the Dashboard, which will update the form. See docs [todo]
+
 ## 3.22.9
 
 ### Patch Changes
