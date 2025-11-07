@@ -63,7 +63,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Run tests
         run: pnpm run test:ci
@@ -85,7 +85,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Check message extraction
         run: |

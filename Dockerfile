@@ -1,6 +1,6 @@
 FROM node:20-alpine as builder
 RUN apk --no-cache add bash
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10 --activate
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 ENV CI 1

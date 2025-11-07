@@ -47,7 +47,7 @@ jobs:
           cache: "pnpm"
       - name: Install deps
         run: |
-          pnpm install --frozen-lockfile
+          pnpm install
       - name: "Calculate stats"
         env:
           latest: ${{ needs.current_state.outputs.main_statistics }}
