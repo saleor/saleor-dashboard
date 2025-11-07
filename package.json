@@ -241,8 +241,8 @@
   },
   "packageManager": "pnpm@10.6.3",
   "engines": {
-    "node": "^18 || ^20 || ^22",
-    "pnpm": ">=8"
+    "node": "^20 || ^22",
+    "pnpm": ">=10"
   },
   "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed"
 }
