@@ -59,7 +59,7 @@ cd saleor-dashboard
 3. Install the dependencies:
 
 ```bash
-npm i
+pnpm install
 ```
 
 4. Configure the env vars as described in [docs/configuration.md](docs/configuration.md).
@@ -67,7 +67,7 @@ npm i
 5. Start the development server with:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 > Note:
