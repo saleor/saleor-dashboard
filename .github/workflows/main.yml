@@ -17,48 +17,56 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
 
-      - name: Validate lock file
-        run: npx lockfile-lint --path package-lock.json --allowed-hosts npm yarn
+      - name: Audit dependencies
+        run: pnpm audit --audit-level moderate
 
   tsc-and-linters:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install deps
-        run: npm ci
+        run: pnpm install
 
       - name: Run tsc
-        run: npm run check-types
+        run: pnpm run check-types
 
       - name: Run lint
+        # Use npm to run it, because for some reason "pnpm run" fails.
         run: npm run lint
 
       - name: Check for uncommitted lint changes
         run: git diff --exit-code ./src
 
       - name: Check Prettier formatting
-        run: npm run format:check
+        run: pnpm run format:check
 
   jest-tests:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install deps
-        run: npm ci
+        run: pnpm install
 
       - name: Run tests
-        run: npm run test:ci
+        run: pnpm run test:ci
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
@@ -70,15 +78,16 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install deps
-        run: npm ci
+        run: pnpm install
 
       - name: Check message extraction
         run: |
-          npm run extract-messages
+          pnpm run extract-messages
           git diff --exit-code ./locale

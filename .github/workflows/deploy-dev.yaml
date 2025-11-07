@@ -45,18 +45,20 @@ jobs:
           RELEASE="${CURRENT_VERSION}-${HASH}"
           echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
           echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
+          cache: "pnpm"
       - name: Package
         timeout-minutes: 15
         run: |
-          npm ci
+          pnpm install
 
       - name: Build
         run: |
-          npm run build
+          pnpm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4

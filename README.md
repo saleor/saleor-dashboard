@@ -36,11 +36,11 @@
 
 ## Prerequisites
 
-- Node.js v20
+- Node.js v22 (recommended)
 - A running instance of [Saleor](https://github.com/saleor/saleor/)
 
 > [!NOTE]
-> Currently both Node v20 and v18 are supported. We recommend using Node v20, since support for older versions will be dropped.
+> Currently both Node v22, v20 are supported. We recommend using Node v22, since support for older versions will be dropped.
 
 ## Development
 
