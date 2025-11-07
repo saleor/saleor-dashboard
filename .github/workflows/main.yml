@@ -17,9 +17,14 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
 
-      - name: Validate lock file
-        run: npx lockfile-lint --path pnpm-lock.yaml --allowed-hosts npm yarn
+      - name: Audit dependencies
+        run: pnpm audit --audit-level moderate
 
   tsc-and-linters:
     runs-on: ubuntu-22.04
