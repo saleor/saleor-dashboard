@@ -416,6 +416,9 @@ importers:
       globals:
         specifier: ^16.3.0
         version: 16.3.0
+      graphql-config:
+        specifier: ^5.1.5
+        version: 5.1.5(@types/node@20.19.9)(graphql@16.11.0)(typescript@5.8.3)
       html-to-react:
         specifier: ^1.7.0
         version: 1.7.0(react@18.3.1)
