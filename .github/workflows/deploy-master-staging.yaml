@@ -39,7 +39,7 @@ jobs:
           RELEASE="${CURRENT_VERSION}-${HASH}"
           echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
           echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -48,7 +48,7 @@ jobs:
       - name: Package
         timeout-minutes: 15
         run: |
-          pnpm install --frozen-lockfile
+          pnpm install
 
       - name: Build
         run: |

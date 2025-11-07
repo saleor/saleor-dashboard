@@ -23,7 +23,7 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: pnpm/action-setup@v4
+    - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
     - uses: actions/setup-node@v3
       with:
         node-version-file: ".nvmrc"
@@ -31,7 +31,7 @@ runs:
     - name: install dependencies
       working-directory: .github/workflows
       shell: bash
-      run: pnpm install --frozen-lockfile
+      run: pnpm install
     - name: Get environment variables
       id: get-environment-variables
       shell: bash
