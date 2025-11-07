@@ -7,7 +7,6 @@ import { BulkselectOperator, RightOperatorOption } from "./types";
 export interface BulkSelectProps {
   selected: BulkselectOperator;
   error: boolean;
-  helperText: string;
   disabled: boolean;
   dataTestId?: string;
   onFocus: () => void;
@@ -32,7 +31,6 @@ const BulkSelect = ({
   selected,
   dataTestId,
   error,
-  helperText,
   disabled,
   onFocus,
   onBlur,
@@ -121,7 +119,6 @@ const BulkSelect = ({
       onBlur={handleBlur}
       onKeyDown={onKeyDown}
       error={error}
-      helperText={helperText}
       disabled={disabled}
       ref={ref}
       onPaste={handlePaste}

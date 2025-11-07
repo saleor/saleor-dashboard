@@ -31,7 +31,6 @@ interface RightOperatorProps {
   selected: SelectedOperator;
   emitter: FilterEventEmitter;
   error: boolean;
-  helperText: string;
   disabled: boolean;
 }
 
@@ -41,7 +40,6 @@ export const RightOperator = ({
   emitter,
   error,
   disabled,
-  helperText,
 }: RightOperatorProps) => {
   if (isTextInput(selected)) {
     return (
@@ -58,7 +56,6 @@ export const RightOperator = ({
           emitter.blurRightOperator(index);
         }}
         error={error}
-        helperText={helperText}
         disabled={disabled}
       />
     );
@@ -80,7 +77,6 @@ export const RightOperator = ({
           emitter.blurRightOperator(index);
         }}
         error={error}
-        helperText={helperText}
         disabled={disabled}
       />
     );
@@ -91,7 +87,6 @@ export const RightOperator = ({
       <BulkSelect
         selected={selected}
         error={error}
-        helperText={helperText}
         disabled={disabled}
         dataTestId={`right-${index}`}
         onFocus={() => emitter.focusRightOperator(index)}
@@ -121,7 +116,6 @@ export const RightOperator = ({
           emitter.blurRightOperator(index);
         }}
         error={error}
-        helperText={helperText}
         disabled={disabled}
       />
     );
@@ -147,7 +141,6 @@ export const RightOperator = ({
           emitter.blurRightOperator(index);
         }}
         error={error}
-        helperText={helperText}
         disabled={disabled}
       />
     );
@@ -167,7 +160,6 @@ export const RightOperator = ({
           emitter.blurRightOperator(index);
         }}
         error={error}
-        helperText={helperText}
         disabled={disabled}
       />
     );
@@ -184,7 +176,6 @@ export const RightOperator = ({
           }}
           type="number"
           error={!!error}
-          helperText={helperText}
           disabled={disabled}
           width="100%"
         />
@@ -202,7 +193,6 @@ export const RightOperator = ({
           emitter.changeRightOperator(index, e.target.value);
         }}
         error={error}
-        helperText={helperText}
         disabled={disabled}
       />
     );
@@ -218,7 +208,6 @@ export const RightOperator = ({
           emitter.changeRightOperator(index, e.target.value);
         }}
         error={error}
-        helperText={helperText}
         disabled={disabled}
       />
     );
@@ -235,7 +224,6 @@ export const RightOperator = ({
           }}
           type="date"
           error={!!error}
-          helperText={helperText}
           disabled={disabled}
           width="100%"
         />
@@ -254,7 +242,6 @@ export const RightOperator = ({
           }}
           type="datetime-local"
           error={!!error}
-          helperText={helperText}
           disabled={disabled}
           width="100%"
         />
