@@ -1,9 +1,6 @@
-import {
-  AppExtensionMountEnum,
-  AppExtensionTargetEnum,
-  ExtensionListQuery,
-  PermissionEnum,
-} from "@dashboard/graphql";
+import { AllAppExtensionMounts } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
+import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { ExtensionListQuery, PermissionEnum } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { ReactNode } from "react";
 
@@ -74,11 +71,11 @@ export interface Extension {
   accessToken: string;
   permissions: PermissionEnum[];
   label: string;
-  mount: AppExtensionMountEnum;
+  mountName: AllAppExtensionMounts;
   url: string;
   open: () => void;
-  target: AppExtensionTargetEnum;
-  options: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["options"];
+  targetName: AppExtensionManifestTarget;
+  settings: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["settings"];
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {

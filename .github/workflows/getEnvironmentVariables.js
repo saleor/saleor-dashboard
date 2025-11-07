@@ -24,6 +24,8 @@ async function getBranch(token, version) {
   });
 
   try {
+    // todo switch to tags instead https://docs.github.com/en/rest/git/refs?apiVersion=2022-11-28#list-matching-references
+    // use tag as a preference, fallback to branch for older dashboard versions
     const response = await octokit.request(
       `GET /repos/{owner}/{repo}/branches/${formattedVersion}`,
       {

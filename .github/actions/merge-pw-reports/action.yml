@@ -9,13 +9,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v3
+    - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+    - uses: actions/setup-node@v4
       with:
         node-version-file: ".nvmrc"
+        cache: "pnpm"
 
     - name: Install dependencies
       shell: bash
-      run: npm ci
+      run: pnpm install
 
     - name: Download blob reports from GitHub Actions Artifacts
       uses: actions/download-artifact@v4

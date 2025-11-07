@@ -15,15 +15,17 @@ jobs:
     outputs:
       main_statistics: ${{ steps.store_import_stats.outputs.MAIN_STATISTICS }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.base_ref }}
-      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
+          cache: "pnpm"
       - name: Install deps
         run: |
-          npm ci
+          pnpm install
       - name: Store import stats
         id: store_import_stats
         run: |
@@ -37,13 +39,15 @@ jobs:
     needs: current_state
     if: ${{ !contains( github.event.pull_request.labels.*.name, 'skip macaw migration check') }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
+          cache: "pnpm"
       - name: Install deps
         run: |
-          npm ci
+          pnpm install
       - name: "Calculate stats"
         env:
           latest: ${{ needs.current_state.outputs.main_statistics }}

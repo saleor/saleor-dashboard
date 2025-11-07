@@ -1,10 +1,12 @@
 import { getAppMountUri } from "@dashboard/config";
+import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { ExtensionsUrls, LegacyAppPaths } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
   DashboardEventFactory,
   DispatchResponseEvent,
+  FormPayloadUpdate,
   NotificationAction,
   NotifyReady,
   RedirectAction,
@@ -212,6 +214,7 @@ const useNotifyReadyAction = (
     },
   };
 };
+
 const useHandlePermissionRequest = (appId: string) => {
   const navigate = useNavigator();
 
@@ -245,6 +248,25 @@ const useHandlePermissionRequest = (appId: string) => {
   };
 };
 
+const useHandleAppFormUpdate = () => {
+  const { attachFormResponseFrame, deactivate } = useActiveAppExtension();
+
+  return {
+    handle: (action: FormPayloadUpdate) => {
+      const { actionId, ...payload } = action.payload;
+      const shouldClosePopup = payload.closePopup ?? true;
+
+      attachFormResponseFrame(payload);
+
+      if (shouldClosePopup) {
+        deactivate();
+      }
+
+      return createResponseStatus(actionId, true);
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleUpdateRoutingAction,
@@ -252,4 +274,5 @@ export const AppActionsHandler = {
   useNotifyReadyAction,
   createResponseStatus,
   useHandlePermissionRequest,
+  useHandleAppFormUpdate,
 };

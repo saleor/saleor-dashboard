@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Extension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
-import { AppExtensionMountEnum } from "@dashboard/graphql";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { matchPath } from "react-router";
 
@@ -64,7 +63,15 @@ const getPureUrl = (url: string) => {
 const isMenuItemExtension = (menuItem: SidebarMenuItem) => menuItem.id.startsWith("extension-");
 
 export const getMenuItemExtension = (
-  extensions: Record<AppExtensionMountEnum, Extension[]>,
+  extensions: Record<
+    | "NAVIGATION_CATALOG"
+    | "NAVIGATION_ORDERS"
+    | "NAVIGATION_CUSTOMERS"
+    | "NAVIGATION_DISCOUNTS"
+    | "NAVIGATION_TRANSLATIONS"
+    | "NAVIGATION_PAGES",
+    Extension[]
+  >,
   id: string,
 ) => {
   const extensionsList = Object.values(extensions).reduce(

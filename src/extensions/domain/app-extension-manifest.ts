@@ -4,6 +4,7 @@ import {
 } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { permissionSchema } from "@dashboard/extensions/domain/permission";
 import { z } from "zod";
 
 export const appExtensionManifest = z
@@ -12,7 +13,7 @@ export const appExtensionManifest = z
     url: z.string().min(1),
     mount: ALL_APP_EXTENSION_MOUNTS,
     target: AppExtensionManifestTarget.default("POPUP"),
-    permissions: z.array(z.string()).optional().default([]),
+    permissions: z.array(permissionSchema).optional().default([]),
     options: appExtensionManifestOptionsSchema.optional(),
   })
   .refine(
@@ -60,21 +61,17 @@ export const appExtensionManifest = z
       const url = data.url;
       const target = data.target;
 
-      // Relative URL validation
-      if (url.startsWith("/")) {
-        // APP_PAGE can use relative URLs
-        return target === "APP_PAGE";
-      }
+      const isAppPage = target === "APP_PAGE";
+      const isRelativeUrl = url.startsWith("/");
 
-      // APP_PAGE cannot use absolute URLs
-      if (target === "APP_PAGE") {
+      if (isAppPage && !isRelativeUrl) {
         return false;
       }
 
       return true;
     },
     {
-      message: "Incorrect relation between extension target and URL fields.",
+      message: `APP_PAGE type of extension must start with "/"`,
     },
   );
 
