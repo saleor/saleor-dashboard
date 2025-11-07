@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.21.16
+
+### Patch Changes
+
+- 25fb9bf: Fixed cmd/ctrl + click on Datagrid rows. Now they will properly open row in the new tab as expected
+
+## 3.21.15
+
+### Patch Changes
+
+- 851c4d8: Regenerate 3.21 schema to add support for the new webhook event in webhook detail view.
+
 ## 3.21.14
 
 ### Patch Changes
