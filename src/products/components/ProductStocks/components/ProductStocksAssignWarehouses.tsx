@@ -97,15 +97,21 @@ export const ProductStocksAssignWarehouses = ({
                   </TableRow>
                 )}
                 {warehousesToAssign.map(warehouse => {
+                  const isChecked = warehouses.some(w => w.value === warehouse.id);
+
                   return (
                     <TableRowLink key={warehouse.id}>
                       <TableCell padding="checkbox">
                         <Checkbox
+                          checked={isChecked}
                           onChange={() =>
-                            setWarehouses(prev => [
-                              ...prev,
-                              { value: warehouse.id, label: warehouse.name },
-                            ])
+                            setWarehouses(prev => {
+                              if (isChecked) {
+                                return prev.filter(w => w.value !== warehouse.id);
+                              }
+
+                              return [...prev, { value: warehouse.id, label: warehouse.name }];
+                            })
                           }
                         />
                       </TableCell>
