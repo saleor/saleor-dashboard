@@ -44,6 +44,7 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
       ghostIcon: {
         color: vars.colors.text.default1,
         padding: vars.spacing[1],
+        margin: vars.spacing[1],
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {

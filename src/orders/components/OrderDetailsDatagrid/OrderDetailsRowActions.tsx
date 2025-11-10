@@ -1,5 +1,5 @@
 import { IconButton } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Divider } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 
 import { CardMenuItem } from "../../../components/CardMenu";
@@ -33,7 +33,7 @@ export const OrderDetailsRowActions = ({
       >
         <Code size={20} />
       </IconButton>
-      <Box />
+      <Divider />
       {firstMenuItem?.Icon && (
         <IconButton
           data-test-id="row-action-button"
