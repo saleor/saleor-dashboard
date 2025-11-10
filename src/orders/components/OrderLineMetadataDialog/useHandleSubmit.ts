@@ -10,7 +10,10 @@ import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdat
 import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { OrderAndVariantMetadataFormData, OrderMetadataDialogData } from "./OrderMetadataDialog";
+import {
+  OrderAndVariantMetadataFormData,
+  OrderMetadataDialogData,
+} from "./OrderLineMetadataDialog";
 
 export const useHandleOrderLineMetadataSubmit = ({
   initialData,

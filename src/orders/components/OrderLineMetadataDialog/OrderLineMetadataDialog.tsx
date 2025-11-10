@@ -33,7 +33,7 @@ interface OrderMetadataDialogProps {
   orderId: string;
 }
 
-export const OrderMetadataDialog = ({
+export const OrderLineMetadataDialog = ({
   onClose,
   open,
   lineId,

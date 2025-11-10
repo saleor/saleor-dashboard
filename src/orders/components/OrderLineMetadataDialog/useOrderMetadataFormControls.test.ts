@@ -3,7 +3,7 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
 
 import { EventDataAction, EventDataField } from "../../../components/Metadata/types";
-import { OrderAndVariantMetadataFormData } from "./OrderMetadataDialog";
+import { OrderAndVariantMetadataFormData } from "./OrderLineMetadataDialog";
 import { useOrderMetadataFormControls } from "./useOrderMetadataFormControls";
 
 describe("useOrderMetadataFormControls", () => {

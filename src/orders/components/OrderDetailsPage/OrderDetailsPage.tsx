@@ -25,7 +25,8 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Button, Divider } from "@saleor/macaw-ui-next";
+import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -194,6 +195,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
+              <Button icon={<Code />} variant="secondary" marginRight={3} title="Update metadata" />
               <TopNav.Menu
                 dataTestId="menu"
                 items={[

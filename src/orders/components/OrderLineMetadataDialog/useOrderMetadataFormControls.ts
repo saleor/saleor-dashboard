@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { FieldArrayPath, FieldError, useFieldArray, UseFormReturn } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { OrderAndVariantMetadataFormData } from "./OrderMetadataDialog";
+import { OrderAndVariantMetadataFormData } from "./OrderLineMetadataDialog";
 import { getValidateMetadata } from "./utils";
 
 type UseOrderMetadataFormControlsParams = Pick<
