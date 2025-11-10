@@ -5,7 +5,10 @@ import { useMemo } from "react";
 
 export const cellHeight = 40;
 
-const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
+const useStyles = makeStyles<{
+  actionButtonPosition?: "left" | "right";
+  showMetadataButton?: boolean;
+}>(
   () => {
     const rowActionSelected = {
       background: vars.colors.background.default1,
@@ -121,10 +124,12 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
         borderLeft: "none",
         borderRight: "none",
         color: vars.colors.text.default1,
-        marginLeft: -1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        display: "grid",
+        gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
+        // marginLeft: -1,
+        // display: "flex",
+        // alignItems: "center",
+        // justifyContent: "center",
         height: `calc(${cellHeight}px - 1px)`,
       },
       rowColumnGroup: {

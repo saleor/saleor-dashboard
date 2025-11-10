@@ -1,5 +1,5 @@
 import { IconButton } from "@saleor/macaw-ui";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 
 import { CardMenuItem } from "../../../components/CardMenu";
@@ -16,14 +16,11 @@ export const OrderDetailsRowActions = ({
   onShowMetadata,
   disabled,
 }: OrderDetailsRowActionsProps) => {
-  const classes = useStyles({});
+  const classes = useStyles({ showMetadataButton: true });
   const firstMenuItem = menuItems[0];
 
   return (
-    <div
-      className={classes.rowAction}
-      style={{ display: "flex", gap: "4px", width: "80px", justifyContent: "center" }}
-    >
+    <div className={classes.rowAction}>
       <IconButton
         data-test-id="show-metadata-button"
         disabled={disabled}
@@ -33,17 +30,19 @@ export const OrderDetailsRowActions = ({
       >
         <Code size={20} />
       </IconButton>
-      <Divider />
       {firstMenuItem?.Icon && (
-        <IconButton
-          data-test-id="row-action-button"
-          disabled={disabled || firstMenuItem.disabled}
-          onClick={() => firstMenuItem.onSelect()}
-          className={classes.ghostIcon}
-          variant="ghost"
-        >
-          {firstMenuItem.Icon}
-        </IconButton>
+        <>
+          <Box height="100%" __width={1} backgroundColor={"default3"} />
+          <IconButton
+            data-test-id="row-action-button"
+            disabled={disabled || firstMenuItem.disabled}
+            onClick={() => firstMenuItem.onSelect()}
+            className={classes.ghostIcon}
+            variant="ghost"
+          >
+            {firstMenuItem.Icon}
+          </IconButton>
+        </>
       )}
     </div>
   );
