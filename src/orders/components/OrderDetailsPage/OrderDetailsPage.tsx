@@ -24,7 +24,9 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
+import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderListUrl } from "@dashboard/orders/urls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Button, Divider } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
@@ -203,8 +205,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 marginRight={3}
                 onClick={onOrderShowMetadata}
                 data-test-id="update-metadata-button"
-                __ripple
               />
+              <Ripple model={rippleOrderMetadata} />
               <TopNav.Menu
                 dataTestId="menu"
                 items={[
