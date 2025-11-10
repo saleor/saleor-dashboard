@@ -27,6 +27,7 @@ export const OrderDetailsRowActions = ({
         onClick={onShowMetadata}
         className={classes.ghostIcon}
         variant="ghost"
+        title="Show metadata"
       >
         <Code size={20} />
       </IconButton>
@@ -39,6 +40,7 @@ export const OrderDetailsRowActions = ({
             onClick={() => firstMenuItem.onSelect()}
             className={classes.ghostIcon}
             variant="ghost"
+            title="Open product detail"
           >
             {firstMenuItem.Icon}
           </IconButton>
