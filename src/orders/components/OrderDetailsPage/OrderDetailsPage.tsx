@@ -67,6 +67,7 @@ interface OrderDetailsPageProps {
   onFulfillmentApprove: (id: string) => any;
   onFulfillmentCancel: (id: string) => any;
   onOrderLineShowMetadata: (id: string) => void;
+  onOrderShowMetadata: () => void;
   onFulfillmentTrackingNumberUpdate: (id: string) => any;
   onOrderFulfill: () => any;
   onProductClick?: (id: string) => any;
@@ -122,6 +123,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onTransactionAction,
     onAddManualTransaction,
     onOrderLineShowMetadata,
+    onOrderShowMetadata,
     onMarkAsPaid,
     onRefundAdd,
     onSubmit,
@@ -195,7 +197,15 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
-              <Button icon={<Code />} variant="secondary" marginRight={3} title="Update metadata" />
+              <Button
+                icon={<Code />}
+                variant="secondary"
+                marginRight={3}
+                onClick={onOrderShowMetadata}
+                data-test-id="update-metadata-button"
+              >
+                Update metadata
+              </Button>
               <TopNav.Menu
                 dataTestId="menu"
                 items={[
@@ -227,6 +237,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                     errors={errors}
                     loading={loading}
                     onOrderLineShowMetadata={onOrderLineShowMetadata}
+                    onOrderShowMetadata={onOrderShowMetadata}
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}

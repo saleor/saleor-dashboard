@@ -24,6 +24,7 @@ interface OrderDraftDetailsProductsProps {
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
   onOrderLineShowMetadata: (id: string) => void;
+  onOrderShowMetadata: () => void;
 }
 
 const OrderDraftDetailsProducts = ({
@@ -33,6 +34,7 @@ const OrderDraftDetailsProducts = ({
   onOrderLineChange,
   onOrderLineRemove,
   onOrderLineShowMetadata,
+  onOrderShowMetadata: _onOrderShowMetadata,
 }: OrderDraftDetailsProductsProps) => {
   const classes = useStyles();
   const lines = order?.lines ?? [];
