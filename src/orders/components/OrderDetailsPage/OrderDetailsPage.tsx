@@ -274,11 +274,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 onAddManualTransaction={onAddManualTransaction}
                 onRefundAdd={onRefundAdd}
               />
-              <Metadata
-                isLoading={loading}
-                data={data[order?.id]}
-                onChange={x => handleChangeMetadata(x, order?.id)}
-              />
               <OrderHistory
                 history={order?.events}
                 onNoteUpdateLoading={onNoteUpdateLoading}
