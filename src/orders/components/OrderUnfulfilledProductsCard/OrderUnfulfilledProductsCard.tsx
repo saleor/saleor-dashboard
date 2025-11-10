@@ -16,13 +16,13 @@ interface OrderUnfulfilledProductsCardProps {
   lines: OrderLineFragment[];
   onFulfill: () => void;
   loading: boolean;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
 const OrderUnfulfilledProductsCard = ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
-  onShowMetadata,
+  onOrderLineShowMetadata,
   lines,
   onFulfill,
   loading,
@@ -41,7 +41,7 @@ const OrderUnfulfilledProductsCard = ({
           <OrderDetailsDatagrid
             lines={toLineWithUnfulfilledQuantity(lines)}
             loading={loading}
-            onShowMetadata={onShowMetadata}
+            onOrderLineShowMetadata={onOrderLineShowMetadata}
           />
           {showFulfillmentAction && (
             <DashboardCard.BottomActions justifyContent="flex-end">

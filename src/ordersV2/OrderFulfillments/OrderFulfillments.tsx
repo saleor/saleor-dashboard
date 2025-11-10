@@ -140,7 +140,7 @@ export const OrderFulfillments = ({ fulfillments, ...props }: Props) => {
               fulfillment.lines?.map(line => line.orderLine).filter(line => line !== null) ?? []
             }
             loading={false}
-            onShowMetadata={() => {
+            onOrderLineShowMetadata={() => {
               alert("Metadata show");
             }}
             enableVerticalBorder={false}

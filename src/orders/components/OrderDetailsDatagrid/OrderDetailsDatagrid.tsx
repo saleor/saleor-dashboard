@@ -22,14 +22,14 @@ import { messages } from "./messages";
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
   enableVerticalBorder?: boolean;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
   loading,
-  onShowMetadata,
+  onOrderLineShowMetadata,
   enableVerticalBorder = true,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
@@ -56,7 +56,7 @@ export const OrderDetailsDatagrid = ({
       columns: visibleColumns,
       data: lines,
       loading,
-      onShowMetadata,
+      onShowMetadata: onOrderLineShowMetadata,
       intl,
     }),
     [intl, visibleColumns, loading],

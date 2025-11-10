@@ -37,7 +37,7 @@ export const OrderLines = ({ lines, status, ...props }: Props) => {
       <OrderDetailsDatagrid
         lines={lines}
         loading={false}
-        onShowMetadata={() => {
+        onOrderLineShowMetadata={() => {
           // TODO: implement show metadata functionality
           alert("Metadata show");
         }}

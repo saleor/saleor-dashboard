@@ -225,7 +225,7 @@ export const OrderNormalDetails = ({
         )}
         shippingMethods={data?.order?.shippingMethods || []}
         onOrderCancel={() => openModal("cancel")}
-        onShowMetadata={id => openModal("view-order-line-metadata", { id })}
+        onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
         onTransactionAction={(id, action) =>
           openModal("transaction-action", {
             type: action,
