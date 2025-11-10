@@ -10135,6 +10135,10 @@
     "context": "modal information under title",
     "string": "Select an address you want to use from the list below"
   },
+  "zsCVOL": {
+    "context": "dialog title, editing order metadata",
+    "string": "Order metadata"
+  },
   "zsz6LN": {
     "context": "onboarding step description",
     "string": "Review the central hub for managing all available extensions. Here, you can easily oversee your extensions and enhance Saleor with custom solutions using webhooks and APIs."
