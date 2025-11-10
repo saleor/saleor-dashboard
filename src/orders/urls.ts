@@ -206,7 +206,8 @@ export type OrderUrlDialog =
   | "transaction-action"
   | "invoice-send"
   | "add-manual-transaction"
-  | "view-order-line-metadata";
+  | "view-order-line-metadata"
+  | "view-order-metadata";
 
 interface TransactionAction {
   action: "transaction-action";

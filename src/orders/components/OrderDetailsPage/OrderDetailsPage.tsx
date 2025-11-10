@@ -203,9 +203,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 marginRight={3}
                 onClick={onOrderShowMetadata}
                 data-test-id="update-metadata-button"
-              >
-                Update metadata
-              </Button>
+              />
               <TopNav.Menu
                 dataTestId="menu"
                 items={[
