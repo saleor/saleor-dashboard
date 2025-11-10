@@ -27,7 +27,7 @@ import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Button, Divider } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -199,14 +199,17 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
-              <Button
-                icon={<Code />}
-                variant="secondary"
-                marginRight={3}
-                onClick={onOrderShowMetadata}
-                data-test-id="update-metadata-button"
-              />
-              <Ripple model={rippleOrderMetadata} />
+              <Box position="relative" marginRight={3}>
+                <Button
+                  icon={<Code />}
+                  variant="secondary"
+                  onClick={onOrderShowMetadata}
+                  data-test-id="update-metadata-button"
+                />
+                <Box position="absolute" __top="-4px" __right="-4px">
+                  <Ripple model={rippleOrderMetadata} />
+                </Box>
+              </Box>
               <TopNav.Menu
                 dataTestId="menu"
                 items={[
