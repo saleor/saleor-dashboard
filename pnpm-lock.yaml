@@ -464,7 +464,7 @@ importers:
         specifier: ^2.1.0
         version: 2.4.4
       vite:
-        specifier: ">=6.4.1"
+        specifier: ">=6.3.6"
         version: 7.2.2(@types/node@20.19.9)(jiti@2.6.1)(terser@5.43.1)
       vite-plugin-html:
         specifier: ^3.2.2
@@ -3001,7 +3001,7 @@ packages:
       }
     peerDependencies:
       typescript: ">= 4.3.x"
-      vite: ">=6.4.1"
+      vite: ">=6.3.6"
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -4731,7 +4731,7 @@ packages:
       }
     peerDependencies:
       storybook: ^9.0.18
-      vite: ">=6.4.1"
+      vite: ">=6.3.6"
 
   "@storybook/csf-plugin@9.0.18":
     resolution:
@@ -4767,7 +4767,7 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       storybook: ^9.0.18
-      vite: ">=6.4.1"
+      vite: ">=6.3.6"
 
   "@storybook/react@9.0.18":
     resolution:
@@ -5707,7 +5707,7 @@ packages:
         integrity: sha512-YTJCGFdNMHCMfjODYtxRNVAYmTWQ1Lb8PulP/2/f/oEEtglw8oKxKIZmmRkyXrVrHfsKOaVkAc3NT9/dMutO5w==,
       }
     peerDependencies:
-      vite: ">=6.4.1"
+      vite: ">=6.3.6"
 
   "@vitest/expect@3.2.4":
     resolution:
@@ -13242,7 +13242,7 @@ packages:
         integrity: sha512-vb9C9kcdzcIo/Oc3CLZVS03dL5pDlOFuhGlZYDCJ840BhWl/0nGeZWf3Qy7NlOayscY4Cm/QRgULCQkEZige5Q==,
       }
     peerDependencies:
-      vite: ">=6.4.1"
+      vite: ">=6.3.6"
 
   vite@7.2.2:
     resolution:
