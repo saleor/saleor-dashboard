@@ -36,7 +36,7 @@ import OrderChannelSectionCard from "../OrderChannelSectionCard";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
-import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
+import { OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
@@ -241,7 +241,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                     errors={errors}
                     loading={loading}
                     onOrderLineShowMetadata={onOrderLineShowMetadata}
-                    onOrderShowMetadata={onOrderShowMetadata}
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}

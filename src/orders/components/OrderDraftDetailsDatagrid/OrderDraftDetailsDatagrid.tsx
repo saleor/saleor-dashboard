@@ -17,7 +17,7 @@ import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
+import { OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { orderDraftDetailsStaticColumnsAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 
@@ -25,7 +25,7 @@ interface OrderDraftDetailsDatagridProps {
   loading: boolean;
   lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
-  onOrderLineChange: (id: string, data: FormData) => void;
+  onOrderLineChange: (id: string, data: OrderDraftDetailsProductsFormData) => void;
   onOrderLineRemove: (id: string) => void;
   onOrderLineShowMetadata: (id: string) => void;
 }

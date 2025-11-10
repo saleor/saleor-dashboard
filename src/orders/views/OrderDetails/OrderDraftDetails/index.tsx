@@ -229,7 +229,6 @@ export const OrderDraftDetails = ({
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
             onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
-            onOrderShowMetadata={() => openModal("view-order-metadata")}
             order={order}
             channelUsabilityData={channelUsabilityData}
             onProductClick={id => () => navigate(productUrl(encodeURIComponent(id)))}

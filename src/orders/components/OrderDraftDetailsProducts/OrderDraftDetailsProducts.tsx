@@ -4,7 +4,7 @@ import { Skeleton } from "@saleor/macaw-ui-next";
 
 import { OrderDraftDetailsDatagrid } from "../OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid";
 
-export interface FormData {
+export interface OrderDraftDetailsProductsFormData {
   quantity: number;
 }
 
@@ -21,20 +21,18 @@ interface OrderDraftDetailsProductsProps {
   order?: OrderDetailsFragment;
   errors: OrderErrorFragment[];
   loading: boolean;
-  onOrderLineChange: (id: string, data: FormData) => void;
+  onOrderLineChange: (id: string, data: OrderDraftDetailsProductsFormData) => void;
   onOrderLineRemove: (id: string) => void;
   onOrderLineShowMetadata: (id: string) => void;
-  onOrderShowMetadata: () => void;
 }
 
-const OrderDraftDetailsProducts = ({
+export const OrderDraftDetailsProducts = ({
   order,
   errors,
   loading,
   onOrderLineChange,
   onOrderLineRemove,
   onOrderLineShowMetadata,
-  onOrderShowMetadata: _onOrderShowMetadata,
 }: OrderDraftDetailsProductsProps) => {
   const classes = useStyles();
   const lines = order?.lines ?? [];
@@ -55,6 +53,3 @@ const OrderDraftDetailsProducts = ({
     />
   );
 };
-
-OrderDraftDetailsProducts.displayName = "OrderDraftDetailsProducts";
-export default OrderDraftDetailsProducts;

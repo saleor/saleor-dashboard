@@ -9,6 +9,5 @@ export const rippleOrderMetadata: Ripple = {
     global:
       "Order metadata editing has been moved from an inline card to a dedicated dialog for better organization and easier editing.",
   },
-  // Added in 3.22
-  dateAdded: new Date(2025, 10, 10),
+  dateAdded: new Date("2025-11-10"),
 };
