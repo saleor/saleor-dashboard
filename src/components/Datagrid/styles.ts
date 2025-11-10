@@ -126,10 +126,6 @@ const useStyles = makeStyles<{
         color: vars.colors.text.default1,
         display: "grid",
         gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
-        // marginLeft: -1,
-        // display: "flex",
-        // alignItems: "center",
-        // justifyContent: "center",
         height: `calc(${cellHeight}px - 1px)`,
       },
       rowColumnGroup: {

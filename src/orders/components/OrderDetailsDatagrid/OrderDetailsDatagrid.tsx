@@ -20,6 +20,8 @@ import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagr
 import { messages } from "./messages";
 import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
 
+const ROW_ACTION_BAR_WIDTH = 80;
+
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
@@ -60,7 +62,7 @@ export const OrderDetailsDatagrid = ({
       intl,
       onShowMetadata,
     }),
-    [visibleColumns, loading, lines],
+    [visibleColumns, loading, lines, intl, onShowMetadata],
   );
   const getMenuItems = useCallback(
     index => [
@@ -91,9 +93,10 @@ export const OrderDetailsDatagrid = ({
           }
         }}
         disabled={loading}
+        intl={intl}
       />
     ),
-    [getMenuItems, lines, onShowMetadata, loading],
+    [getMenuItems, lines, onShowMetadata, loading, intl],
   );
 
   return (
@@ -123,7 +126,7 @@ export const OrderDetailsDatagrid = ({
           />
         )}
         renderRowActions={renderRowActions}
-        rowActionBarWidth={80}
+        rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
       />
     </DatagridChangeStateContext.Provider>
   );
