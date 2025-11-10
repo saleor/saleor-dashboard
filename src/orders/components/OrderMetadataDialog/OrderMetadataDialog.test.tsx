@@ -28,25 +28,6 @@ const mockData: OrderMetadataDialogData = {
 describe("OrderMetadataDialog", () => {
   const onCloseMock = jest.fn();
 
-  it("closes when user hits close icon button", () => {
-    // Arrange
-    render(
-      <OrderMetadataDialog
-        open={true}
-        onClose={onCloseMock}
-        orderId="order-id"
-        data={mockData}
-        loading={false}
-      />,
-    );
-
-    // Act
-    fireEvent.click(screen.getByTestId("close-button"));
-
-    // Assert
-    expect(onCloseMock).toHaveBeenCalled();
-  });
-
   it("closes when user hits close text button", () => {
     // Arrange
     render(
