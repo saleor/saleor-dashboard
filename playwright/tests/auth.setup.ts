@@ -4,8 +4,6 @@ import { APIRequestContext, test as setup } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
-setup.describe.configure({ mode: "serial" });
-
 const authenticateAndSaveState = async (
   request: APIRequestContext,
   email: string,
@@ -48,20 +46,24 @@ const authSetup = async (
   }
 };
 
-setup("Authenticate as admin via API", async ({ request }) => {
-  await authSetup(
-    request,
-    process.env.E2E_USER_NAME!,
-    process.env.E2E_USER_PASSWORD!,
-    "admin.json",
-  );
-});
+setup.describe(() => {
+  setup.describe.configure({ mode: "serial" });
 
-const user: UserPermissionType = USER_PERMISSION;
-const password: string = process.env.E2E_PERMISSIONS_USERS_PASSWORD!;
-
-for (const permission of permissions) {
-  setup(`Authenticate as ${permission} user via API`, async ({ request }) => {
-    await authSetup(request, user[permission], password, `${permission}.json`);
+  setup("Authenticate as admin via API", async ({ request }) => {
+    await authSetup(
+      request,
+      process.env.E2E_USER_NAME!,
+      process.env.E2E_USER_PASSWORD!,
+      "admin.json",
+    );
   });
-}
+
+  const user: UserPermissionType = USER_PERMISSION;
+  const password: string = process.env.E2E_PERMISSIONS_USERS_PASSWORD!;
+
+  for (const permission of permissions) {
+    setup(`Authenticate as ${permission} user via API`, async ({ request }) => {
+      await authSetup(request, user[permission], password, `${permission}.json`);
+    });
+  }
+});
