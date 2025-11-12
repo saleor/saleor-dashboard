@@ -133,6 +133,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
     automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
+    allowLegacyGiftCardUse: checkoutSettings?.allowLegacyGiftCardUse,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
@@ -226,6 +227,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           });
         };
 
+        const handleAllowLegacyGiftCardUseChange = () => {
+          set({
+            allowLegacyGiftCardUse: !data.allowLegacyGiftCardUse,
+          });
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -255,6 +262,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
                 onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
                 onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
+                onAllowLegacyGiftCardUseChange={handleAllowLegacyGiftCardUseChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>
