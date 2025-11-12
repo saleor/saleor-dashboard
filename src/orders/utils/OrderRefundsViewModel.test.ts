@@ -5,8 +5,8 @@ import {
   TransactionEventFragment,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
+import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 
-import { OrderFixture } from "../fixtures/OrderFixture";
 import { OrderRefundDisplay, OrderRefundsViewModel } from "./OrderRefundsViewModel";
 
 const createTransactionEvent = (
