@@ -74,6 +74,7 @@ const ChannelCreateView = () => {
     warehousesIdsToAdd,
     warehousesToDisplay,
     automaticallyCompleteCheckouts,
+    allowLegacyGiftCardUse,
   }: FormData) => {
     const input: ChannelCreateInput = {
       name,
@@ -95,6 +96,7 @@ const ChannelCreateView = () => {
       },
       checkoutSettings: {
         automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+        allowLegacyGiftCardUse: allowLegacyGiftCardUse,
       },
     };
 

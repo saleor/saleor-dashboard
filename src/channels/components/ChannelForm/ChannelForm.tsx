@@ -1,3 +1,4 @@
+import { AllowLegacyGiftCardUse } from "@dashboard/channels/components/ChannelForm/AllowLegacyGiftCardUse";
 import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/AutomaticallyCompleteCheckouts";
 import {
   ChannelShippingZones,
@@ -42,6 +43,7 @@ export interface FormData extends StockSettingsInput {
   allowUnpaidOrders: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
   automaticallyCompleteCheckouts: boolean;
+  allowLegacyGiftCardUse: boolean;
 }
 
 interface ChannelFormProps {
@@ -58,6 +60,7 @@ interface ChannelFormProps {
   onMarkAsPaidStrategyChange: () => void;
   onTransactionFlowStrategyChange: () => void;
   onAutomaticallyCompleteCheckoutsChange: () => void;
+  onAllowLegacyGiftCardUseChange: () => void;
 }
 
 export const ChannelForm = ({
@@ -74,6 +77,7 @@ export const ChannelForm = ({
   onMarkAsPaidStrategyChange,
   onTransactionFlowStrategyChange,
   onAutomaticallyCompleteCheckoutsChange,
+  onAllowLegacyGiftCardUseChange,
 }: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
@@ -220,6 +224,13 @@ export const ChannelForm = ({
           onChange={onAutomaticallyCompleteCheckoutsChange}
           hasError={!!formErrors.automaticallyCompleteCheckouts}
           isChecked={data.automaticallyCompleteCheckouts}
+          disabled={disabled}
+        />
+        <Box />
+        <AllowLegacyGiftCardUse
+          onChange={onAllowLegacyGiftCardUseChange}
+          hasError={!!formErrors.allowLegacyGiftCardUse}
+          isChecked={data.allowLegacyGiftCardUse}
           disabled={disabled}
         />
       </Box>
