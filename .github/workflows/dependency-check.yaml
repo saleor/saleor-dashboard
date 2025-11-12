@@ -55,7 +55,7 @@ jobs:
           current=$(pnpm exec depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
           difference=$(( $current - $latest ))
           echo "Imports in main: ${latest}"
-          echo "Incomming imports: ${current}"
+          echo "Incoming imports: ${current}"
           echo "Difference: ${difference}"
           echo "IMPORT_DIFFERENCE=${difference}" >> $GITHUB_ENV
       - name: "MacawUI regression reported"
