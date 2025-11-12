@@ -52,7 +52,7 @@ jobs:
         env:
           latest: ${{ needs.current_state.outputs.main_statistics }}
         run: |
-          current=$(pnpx depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
+          current=$(pnpm exec depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
           difference=$(( $current - $latest ))
           echo "Imports in main: ${latest}"
           echo "Incomming imports: ${current}"
