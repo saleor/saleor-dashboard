@@ -3,7 +3,7 @@ import { IntlShape } from "react-intl";
 
 export const getValidateMetadata =
   (intl: IntlShape) =>
-  (metadata: MetadataInput[]): true | string => {
+  (metadata: MetadataInput[]): string | undefined => {
     const keys = metadata.map(entry => entry.key);
     const uniqueKeys = new Set(keys);
 
@@ -23,7 +23,7 @@ export const getValidateMetadata =
       });
     }
 
-    return true;
+    return undefined;
   };
 
 /**

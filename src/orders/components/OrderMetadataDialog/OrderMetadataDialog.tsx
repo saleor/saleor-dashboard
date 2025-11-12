@@ -5,7 +5,7 @@ import { OrderDetailsWithMetadataQuery } from "@dashboard/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { useHandleOrderMetadataSubmit } from "./useHandleSubmit";
 
@@ -26,6 +26,7 @@ export const OrderMetadataDialog = ({
   data,
   loading,
 }: OrderMetadataDialogProps) => {
+  const intl = useIntl();
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleOrderMetadataSubmit({
     initialData: data,
     onClose,
@@ -65,13 +66,11 @@ export const OrderMetadataDialog = ({
       open={open}
       onClose={onClose}
       onSubmit={handleSubmit(onSubmit)}
-      title={
-        <FormattedMessage
-          defaultMessage="Order metadata"
-          description="dialog title, editing order metadata"
-          id="zsCVOL"
-        />
-      }
+      title={intl.formatMessage({
+        defaultMessage: "Order metadata",
+        description: "dialog title, editing order metadata",
+        id: "zsCVOL",
+      })}
       loading={loading}
       submitInProgress={submitInProgress}
       isDirty={formState.isDirty}
