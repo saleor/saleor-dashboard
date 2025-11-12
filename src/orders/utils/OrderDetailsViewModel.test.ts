@@ -1,6 +1,6 @@
 import { GiftCardEventsEnum, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
-import { prepareMoney } from "@dashboard/orders/fixtures";
 
+import { prepareMoney } from "../fixtures";
 import { OrderDetailsViewModel, OrderTotalAmounts } from "./OrderDetailsViewModel";
 
 describe("OrderModel", () => {
