@@ -6,10 +6,8 @@ import { Divider } from "@saleor/macaw-ui-next";
 import { OrderApps } from "./OrderApps";
 import { OrderCustomer } from "./OrderCustomer/OrderCustomer";
 import { OrderDetailsViewModel } from "./OrderDetailsViewModel";
-import { OrderFulfillments } from "./OrderFulfillments/OrderFulfillments";
 import { OrderHeader } from "./OrderHeader";
 import { OrderInvoices } from "./OrderInvoices";
-import { OrderLines } from "./OrderLines";
 import { OrderCustomerNote } from "./OrderNotes";
 import { OrderRefunds } from "./OrderRefunds/OrderRefunds";
 import { OrderRefundsViewModel } from "./OrderRefunds/OrderRefundsViewModel";
@@ -47,10 +45,11 @@ export const OrderDetailsPage = ({ order }: { order: OrderDetailsFragment }) => 
           borderWidth={1}
           borderRightWidth={0}
         >
-          <OrderLines lines={order.lines} status={order.status} />
-          {OrderDetailsViewModel.shouldShowFulfillments(order.fulfillments) && (
+          {/* TODO: Restore OrderLines and OrderFulfillments components */}
+          {/* <OrderLines lines={order.lines} status={order.status} /> */}
+          {/* {OrderDetailsViewModel.shouldShowFulfillments(order.fulfillments) && (
             <OrderFulfillments fulfillments={order.fulfillments} />
-          )}
+          )} */}
           <OrderSummary
             orderSubtotal={order.subtotal}
             shippingMethodName={order.shippingMethodName}

@@ -1,4 +1,5 @@
 import { useApolloClient } from "@apollo/client";
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
   OrderDetailsWithMetadataDocument,
   useUpdateMetadataMutation,
@@ -10,7 +11,7 @@ import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdat
 import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { OrderMetadataDialogData, OrderMetadataFormData } from "./OrderMetadataDialog";
+import { OrderMetadataDialogData } from "./OrderMetadataDialog";
 
 export const useHandleOrderMetadataSubmit = ({
   initialData,
@@ -28,7 +29,7 @@ export const useHandleOrderMetadataSubmit = ({
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
 
   const [submitInProgress, setSubmitInProgress] = useState(false);
-  const submittedData = useRef<OrderMetadataFormData>();
+  const submittedData = useRef<MetadataFormData>();
 
   const orderSubmitHandler = useMemo(() => {
     if (!initialData) {
@@ -44,7 +45,7 @@ export const useHandleOrderMetadataSubmit = ({
     );
   }, [initialData, updateMetadata, updatePrivateMetadata]);
 
-  const onSubmit = async (data: OrderMetadataFormData) => {
+  const onSubmit = async (data: MetadataFormData) => {
     setSubmitInProgress(true);
     submittedData.current = data;
 

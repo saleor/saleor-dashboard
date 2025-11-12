@@ -1,3 +1,4 @@
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
@@ -6,34 +7,33 @@ import { useMemo } from "react";
 import { FieldArrayPath, FieldError, useFieldArray, UseFormReturn } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { OrderMetadataFormData } from "./OrderMetadataDialog";
 import { getValidateMetadata } from "./utils";
 
-type UseOrderMetadataFormControlsParams = Pick<
-  UseFormReturn<OrderMetadataFormData>,
+type UseMetadataFormControlsParams = Pick<
+  UseFormReturn<MetadataFormData>,
   "control" | "trigger" | "getValues" | "formState"
 >;
 
-export const useOrderMetadataFormControls = ({
+export const useMetadataFormControls = ({
   control,
   trigger,
   getValues,
   formState,
-}: UseOrderMetadataFormControlsParams) => {
+}: UseMetadataFormControlsParams) => {
   const intl = useIntl();
 
-  // Order metadata field arrays
-  const metadataControls = useFieldArray<OrderMetadataFormData>({
+  // Metadata field arrays
+  const metadataControls = useFieldArray<MetadataFormData>({
     control,
-    name: "metadata" as FieldArrayPath<OrderMetadataFormData>,
+    name: "metadata" as FieldArrayPath<MetadataFormData>,
     rules: {
       validate: getValidateMetadata(intl),
     },
   });
 
-  const privateMetadataControls = useFieldArray<OrderMetadataFormData>({
+  const privateMetadataControls = useFieldArray<MetadataFormData>({
     control,
-    name: "privateMetadata" as FieldArrayPath<OrderMetadataFormData>,
+    name: "privateMetadata" as FieldArrayPath<MetadataFormData>,
     rules: {
       validate: getValidateMetadata(intl),
     },
