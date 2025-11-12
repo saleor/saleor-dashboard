@@ -31,7 +31,7 @@ runs:
       env:
         PASSWORD_FOR_DECODING_ARTIFACT: ${{ inputs.PASSWORD_FOR_DECODING_ARTIFACT }}
       run: |
-        npx playwright merge-reports --reporter html ./all-blob-reports
+        pnpm exec playwright merge-reports --reporter html ./all-blob-reports
         zip -P "$PASSWORD_FOR_DECODING_ARTIFACT" secure-report.zip -r ./playwright-report
 
     - name: Upload HTML report

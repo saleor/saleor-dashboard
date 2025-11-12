@@ -77,7 +77,7 @@ runs:
 
     - name: Install Playwright Browsers
       shell: bash
-      run: npx playwright install --with-deps
+      run: pnpm exec playwright install --with-deps chromium
 
     - name: Run tests
       shell: bash
@@ -110,7 +110,7 @@ runs:
         done
         echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
         echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
-        npx playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
+        pnpm exec playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v4
