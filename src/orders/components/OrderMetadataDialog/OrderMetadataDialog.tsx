@@ -1,5 +1,5 @@
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import { MetadataDialog } from "@dashboard/components/MetadataDialog";
+import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
 import { useMetadataFormControls } from "@dashboard/components/MetadataDialog/useMetadataFormControls";
 import { OrderDetailsWithMetadataQuery } from "@dashboard/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";

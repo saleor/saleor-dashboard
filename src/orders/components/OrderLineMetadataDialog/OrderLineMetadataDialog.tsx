@@ -13,7 +13,6 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
-import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 import { useMetadataValues } from "./useMetadataValues";
 import { useOrderMetadataFormControls } from "./useOrderMetadataFormControls";
@@ -108,7 +107,7 @@ export const OrderLineMetadataDialog = ({
         >
           <Box as="form" onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDirection="column" gap={5}>
-              <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
+              <Box display="flex" flexDirection="column" data-test-id="order-line-metadata">
                 <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
                   <Text as="h2" size={5} fontWeight="bold">
                     <FormattedMessage
@@ -161,11 +160,7 @@ export const OrderLineMetadataDialog = ({
               </Box>
               <Divider />
 
-              <Box
-                display="flex"
-                flexDirection="column"
-                data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
-              >
+              <Box display="flex" flexDirection="column" data-test-id="product-variant-metadata">
                 <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
                   <Text as="h2" size={5} fontWeight="bold">
                     <FormattedMessage
