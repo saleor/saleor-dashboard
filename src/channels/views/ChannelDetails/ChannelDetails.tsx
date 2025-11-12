@@ -102,6 +102,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     warehousesIdsToRemove,
     warehousesToDisplay,
     automaticallyCompleteCheckouts,
+    allowLegacyGiftCardUse,
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {
@@ -110,6 +111,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
           name,
           checkoutSettings: {
             automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+            allowLegacyGiftCardUse: allowLegacyGiftCardUse,
           },
           slug,
           defaultCountry,
