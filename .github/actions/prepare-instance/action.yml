@@ -47,7 +47,7 @@ runs:
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
         set +o pipefail
-        INSTANCE_KEY=$(npx saleor env show "$INSTANCE_NAME" --json | jq .key)
+        INSTANCE_KEY=$(pnpx saleor env show "$INSTANCE_NAME" --json | jq .key)
         echo "INSTANCE_KEY=$INSTANCE_KEY" >> $GITHUB_OUTPUT
 
     - name: Reload snapshot
