@@ -2858,6 +2858,9 @@ export const ChannelListingProductVariantFragmentDoc = gql`
   costPrice {
     ...Money
   }
+  priorPrice {
+    ...Money
+  }
   preorderThreshold {
     quantity
     soldUnits

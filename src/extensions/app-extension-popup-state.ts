@@ -2,19 +2,37 @@ import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-ext
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
 import { postToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
-import {
-  AllFormPayloads,
-  DashboardEventFactory,
-  FormPayloadProductEdit,
-  FormPayloadProductTranslate,
-} from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
 import { useEffect } from "react";
+
+// Local type definitions for form payloads (removed from @saleor/app-sdk/app-bridge)
+export type FormPayloadProductEdit = {
+  id?: string;
+  productId?: string;
+  form?: string;
+  [key: string]: any;
+};
+
+export type FormPayloadProductTranslate = {
+  id?: string;
+  [key: string]: any;
+};
+
+export type AllFormPayloads =
+  | FormPayloadProductEdit
+  | FormPayloadProductTranslate
+  | Record<string, any>;
 
 type FormState = {
   "product-edit"?: FormPayloadProductEdit;
   "product-translate"?: FormPayloadProductTranslate;
 };
+
+// Helper to create form event (replaces removed DashboardEventFactory.createFormEvent)
+const createFormEvent = (formState: AllFormPayloads): any => ({
+  type: "form" as const,
+  payload: formState,
+});
 
 type ActiveParams = {
   id: string;
@@ -91,7 +109,7 @@ export const useAppExtensionPopup = () => {
 
           // Technically there may be 2 or more forms on the same screen, so we emit each of them
           Object.values(state.formState).forEach(formState => {
-            postToExtension(DashboardEventFactory.createFormEvent(formState), iframe, origin);
+            postToExtension(createFormEvent(formState), iframe, origin);
           });
         }
       });

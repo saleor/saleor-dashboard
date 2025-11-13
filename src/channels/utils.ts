@@ -27,6 +27,7 @@ export interface ChannelData {
   variantsIds?: string[];
   price?: string;
   costPrice?: string;
+  priorPrice?: string;
   availableForPurchaseAt?: string;
   isAvailableForPurchase?: boolean;
   visibleInListings?: boolean;
@@ -40,13 +41,18 @@ export interface ChannelPriceData {
   currency: string;
   price: string;
   costPrice?: string;
+  priorPrice?: string;
 }
 
 interface IChannelPriceArgs {
   price: string;
   costPrice: string;
+  priorPrice: string;
 }
-export type ChannelPriceArgs = RequireOnlyOne<IChannelPriceArgs, "price" | "costPrice">;
+export type ChannelPriceArgs = RequireOnlyOne<
+  IChannelPriceArgs,
+  "price" | "costPrice" | "priorPrice"
+>;
 
 export interface ChannelPriceAndPreorderData {
   id: string;
@@ -54,6 +60,7 @@ export interface ChannelPriceAndPreorderData {
   currency: string;
   price: string;
   costPrice?: string;
+  priorPrice?: string;
   preorderThreshold?: number | null;
   unitsSold?: number;
 }
@@ -61,6 +68,7 @@ export interface ChannelPriceAndPreorderData {
 export interface IChannelPriceAndPreorderArgs {
   price: string;
   costPrice: string;
+  priorPrice: string;
   preorderThreshold?: number | null;
   unitsSold?: number;
 }
@@ -111,6 +119,7 @@ export const createVariantChannels = (
       id: listing.channel.id,
       name: listing.channel.name,
       price: listing.price?.amount?.toString(),
+      priorPrice: listing.priorPrice?.amount.toString() || "",
     })) as ChannelPriceData[];
   }
 

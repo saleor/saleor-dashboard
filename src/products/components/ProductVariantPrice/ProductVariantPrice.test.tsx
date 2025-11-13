@@ -29,6 +29,7 @@ describe("ProductVariantPrice", () => {
         id: "1",
         currency: "USD",
         price: 0,
+        priorPrice: "",
         preorderThreshold: 0,
       },
     ] as unknown as ChannelData[];
@@ -49,6 +50,7 @@ describe("ProductVariantPrice", () => {
         id: "1",
         currency: "USD",
         price: "",
+        priorPrice: "",
         preorderThreshold: 0,
       },
     ] as unknown as ChannelData[];
@@ -72,8 +74,135 @@ describe("ProductVariantPrice", () => {
     // Assert
     expect(onChange).toHaveBeenCalledWith("1", {
       price: 0,
+      priorPrice: "",
       preorderThreshold: 0,
       costPrice: undefined,
+    });
+  });
+
+  it("should allow to set prior price value", () => {
+    // Arrange
+    const onChange = jest.fn();
+    const listing: ChannelData[] = [
+      {
+        id: "1",
+        name: "USD Channel",
+        currency: "USD",
+        price: "100",
+        priorPrice: "",
+        costPrice: "50",
+        preorderThreshold: 0,
+      },
+    ];
+
+    render(
+      <ProductVariantPrice
+        errors={[]}
+        productVariantChannelListings={listing}
+        onChange={onChange}
+      />,
+      {
+        wrapper,
+      },
+    );
+
+    const input = screen.getByTestId("prior-price-field");
+
+    // Act
+    fireEvent.change(input, { target: { value: "150" } });
+
+    // Assert
+    expect(onChange).toHaveBeenCalledWith("1", {
+      price: "100",
+      priorPrice: 150,
+      costPrice: "50",
+      preorderThreshold: 0,
+    });
+  });
+
+  it("should display prior price field with correct value", () => {
+    // Arrange
+    const listing: ChannelData[] = [
+      {
+        id: "1",
+        name: "USD Channel",
+        currency: "USD",
+        price: "100",
+        priorPrice: "150",
+        costPrice: "50",
+        preorderThreshold: 0,
+      },
+    ];
+
+    render(<ProductVariantPrice errors={[]} productVariantChannelListings={listing} />, {
+      wrapper,
+    });
+
+    // Assert
+    const priorPriceInput = screen.getByTestId("prior-price-field");
+
+    expect(priorPriceInput).toHaveValue(150);
+  });
+
+  it("should render Prior Price column header", () => {
+    // Arrange
+    const listing: ChannelData[] = [
+      {
+        id: "1",
+        name: "USD Channel",
+        currency: "USD",
+        price: "100",
+        priorPrice: "150",
+        costPrice: "50",
+        preorderThreshold: 0,
+      },
+    ];
+
+    render(<ProductVariantPrice errors={[]} productVariantChannelListings={listing} />, {
+      wrapper,
+    });
+
+    // Assert
+    expect(screen.getByText("Prior Price")).toBeInTheDocument();
+  });
+
+  it("should handle empty prior price value", () => {
+    // Arrange
+    const onChange = jest.fn();
+    const listing: ChannelData[] = [
+      {
+        id: "1",
+        name: "USD Channel",
+        currency: "USD",
+        price: "100",
+        priorPrice: "150",
+        costPrice: "50",
+        preorderThreshold: 0,
+      },
+    ];
+
+    render(
+      <ProductVariantPrice
+        errors={[]}
+        productVariantChannelListings={listing}
+        onChange={onChange}
+      />,
+      {
+        wrapper,
+      },
+    );
+
+    const input = screen.getByTestId("prior-price-field");
+
+    // Act - Clear the prior price
+    fireEvent.change(input, { target: { value: "" } });
+
+    // Assert
+    expect(onChange).toHaveBeenCalledWith("1", {
+      price: "100",
+      priorPrice: null,
+      costPrice: "50",
+      preorderThreshold: 0,
     });
   });
 });

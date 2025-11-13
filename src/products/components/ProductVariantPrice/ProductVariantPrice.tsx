@@ -25,7 +25,7 @@ interface ProductVariantPriceProps {
   disabledMessage?: MessageDescriptor;
 }
 
-const numberOfColumns = 2;
+const numberOfColumns = 4;
 
 const COMMON_CELL_STYLES = { verticalAlign: "baseline" };
 
@@ -43,7 +43,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
   const channelApiErrors = errors.filter(
     e => "channels" in e,
   ) as ProductChannelListingErrorFragment[];
-  const apiErrors = getFormChannelErrors(["price", "costPrice"], channelApiErrors);
+  const apiErrors = getFormChannelErrors(["price", "costPrice", "priorPrice"], channelApiErrors);
 
   if (disabled || !productVariantChannelListings.length) {
     return (
@@ -108,6 +108,15 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
             <TableCell style={{ width: 200, verticalAlign: "middle" }}>
               <Text size={2} color="default2">
                 <FormattedMessage
+                  id="YMkwA1"
+                  defaultMessage="Prior Price"
+                  description="tabel column header"
+                />
+              </Text>
+            </TableCell>
+            <TableCell style={{ width: 200, verticalAlign: "middle" }}>
+              <Text size={2} color="default2">
+                <FormattedMessage
                   id="2zCmiR"
                   defaultMessage="Cost price"
                   description="tabel column header"
@@ -126,6 +135,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
               const priceApiError =
                 getFormChannelError(apiErrors.price, listing.id) || formErrors[fieldName];
               const costPriceError = getFormChannelError(apiErrors.costPrice, listing.id);
+              const priorPriceError = getFormChannelError(apiErrors.priorPrice, listing.id);
 
               return (
                 <TableRowLink key={listing?.id || `skeleton-${index}`} data-test-id={listing?.name}>
@@ -153,12 +163,39 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                           onChange(listing.id, {
                             costPrice: listing.costPrice,
                             price: e.target.value,
+                            priorPrice: listing.priorPrice,
                             preorderThreshold: listing.preorderThreshold,
                           })
                         }
                         disabled={loading}
                         required
                         data-test-id="price-field"
+                      />
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell style={COMMON_CELL_STYLES}>
+                    {listing ? (
+                      <PriceField
+                        className={sprinkles({
+                          marginY: 2,
+                        })}
+                        error={!!priorPriceError}
+                        name={`${listing.id}-channel-priorPrice`}
+                        value={listing.priorPrice ?? ""}
+                        currencySymbol={listing.currency}
+                        onChange={e =>
+                          onChange(listing.id, {
+                            costPrice: listing.costPrice,
+                            price: listing.price,
+                            priorPrice: e.target.value,
+                            preorderThreshold: listing.preorderThreshold,
+                          })
+                        }
+                        disabled={loading}
+                        hint={priorPriceError ? getProductErrorMessage(priorPriceError, intl) : ""}
+                        data-test-id="prior-price-field"
                       />
                     ) : (
                       <Skeleton />
@@ -178,6 +215,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                           onChange(listing.id, {
                             costPrice: e.target.value,
                             price: listing.price,
+                            priorPrice: listing.priorPrice,
                             preorderThreshold: listing.preorderThreshold,
                           })
                         }

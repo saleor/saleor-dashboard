@@ -18,10 +18,14 @@ const isFormDataChanged = (data: Product, variant: Variant) =>
     const priceHasChanged = channel.value.price !== variantChannel?.price?.amount.toString();
     const costPriceHasChanged =
       channel.value.costPrice !== variantChannel?.costPrice?.amount.toString();
+    const priorPriceHasChanged =
+      channel.value.priorPrice !== variantChannel?.priorPrice?.amount.toString();
     const preorderThresholdHasChanged =
       channel.value?.preorderThreshold !== variantChannel?.preorderThreshold.quantity;
 
-    return priceHasChanged || costPriceHasChanged || preorderThresholdHasChanged;
+    return (
+      priceHasChanged || costPriceHasChanged || priorPriceHasChanged || preorderThresholdHasChanged
+    );
   });
 const hasRecordDeleted = (data: Product, variant: Variant) =>
   data.channelListings.length !== variant.channelListings.length;
@@ -38,6 +42,7 @@ const createVariantUpdateListingInput = (data: Product) =>
     channelId: listing.id,
     costPrice: listing.value.costPrice || null,
     price: listing.value.price,
+    priorPrice: listing.value.priorPrice || null,
     preorderThreshold: listing.value.preorderThreshold,
   }));
 

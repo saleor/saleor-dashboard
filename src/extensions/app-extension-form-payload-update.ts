@@ -1,5 +1,10 @@
-import { AllFormPayloadUpdatePayloads } from "@saleor/app-sdk/app-bridge";
 import { atom, useAtom } from "jotai";
+
+// Local type definition for form payload updates (removed from @saleor/app-sdk/app-bridge)
+type AllFormPayloadUpdatePayloads = {
+  form: string;
+  [key: string]: any;
+};
 
 const extensionFormResponseState = atom<AllFormPayloadUpdatePayloads[]>([]);
 

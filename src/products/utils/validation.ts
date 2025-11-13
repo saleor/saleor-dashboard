@@ -10,7 +10,19 @@ export const validatePrice = (price: string) => price === "" || parseInt(price, 
 
 export const validateCostPrice = (price: string) => price !== "" && parseInt(price, 10) < 0;
 
+export const validatePriorPrice = (priorPrice: string, sellingPrice: string) => {
+  if (priorPrice === "" || sellingPrice === "") {
+    return false;
+  }
+
+  const priorPriceNum = parseFloat(priorPrice);
+  const sellingPriceNum = parseFloat(sellingPrice);
+
+  return !isNaN(priorPriceNum) && !isNaN(sellingPriceNum) && priorPriceNum < sellingPriceNum;
+};
+
 const toChannelPriceField = (id: string) => `${id}-channelListing-price`;
+const toChannelPriorPriceField = (id: string) => `${id}-channel-priorPrice`;
 const createRequiredError = (
   field: string,
   message: string | null = null,
@@ -18,6 +30,16 @@ const createRequiredError = (
   __typename: "ProductError",
   code: ProductErrorCode.REQUIRED,
   field,
+  message,
+  attributes: [],
+});
+const createInvalidPriorPriceError = (
+  channelId: string,
+  message: string,
+): ProductErrorWithAttributesFragment => ({
+  __typename: "ProductError",
+  code: ProductErrorCode.INVALID,
+  field: toChannelPriorPriceField(channelId),
   message,
   attributes: [],
 });
@@ -101,7 +123,26 @@ export const validateProductVariant = (data: ProductVariantType, intl: IntlShape
     id: "8pVWve",
   });
 
-  return result.success === true
-    ? []
-    : result.error.issues.map(error => handleValidationError(error, data, defaultMessage));
+  const schemaErrors =
+    result.success === true
+      ? []
+      : result.error.issues.map(error => handleValidationError(error, data, defaultMessage));
+
+  // Validate prior price against selling price
+  const priorPriceErrors =
+    data.channelListings
+      ?.filter(channel =>
+        validatePriorPrice(channel.value.priorPrice || "", channel.value.price || ""),
+      )
+      .map(channel =>
+        createInvalidPriorPriceError(
+          channel.id,
+          intl.formatMessage({
+            defaultMessage: "Prior price must be greater than or equal to selling price",
+            id: "4tov2M",
+          }),
+        ),
+      ) || [];
+
+  return [...schemaErrors, ...priorPriceErrors];
 };

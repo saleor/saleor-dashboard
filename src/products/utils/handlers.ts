@@ -23,9 +23,9 @@ export function createChannelsPriceChangeHandler(
   triggerChange: () => void,
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
-    const { costPrice, price } = priceData;
+    const { costPrice, price, priorPrice } = priceData;
     const updatedChannels = channelListings.map(channel =>
-      channel.id === id ? { ...channel, costPrice, price } : channel,
+      channel.id === id ? { ...channel, costPrice, price, priorPrice } : channel,
     );
 
     updateChannels(updatedChannels);
@@ -75,6 +75,7 @@ export const getChannelsInput = (channels: ChannelPriceAndPreorderData[]) =>
     value: {
       costPrice: channel.costPrice || "",
       price: channel.price || "",
+      priorPrice: channel.priorPrice || "",
       preorderThreshold: channel.preorderThreshold || null,
     },
   }));

@@ -9,9 +9,12 @@ interface UserAvatarProps {
   scheme?: "accent1" | "transparent";
 }
 
-export const UserAvatar = ({ url, initials, scheme = "accent1", ...rest }: UserAvatarProps) =>
-  url ? (
-    <Avatar.User scheme={scheme} src={url} {...rest} />
+export const UserAvatar = ({ url, initials, scheme = "accent1", ...rest }: UserAvatarProps) => {
+  const avatarScheme = scheme === "transparent" ? "accent1" : scheme;
+
+  return url ? (
+    <Avatar.User scheme={avatarScheme} src={url} {...rest} />
   ) : (
-    <Avatar.User scheme={scheme} initials={initials} {...rest} />
+    <Avatar.User scheme={avatarScheme} initials={initials} {...rest} />
   );
+};

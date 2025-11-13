@@ -6,13 +6,17 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import {
   DashboardEventFactory,
   DispatchResponseEvent,
-  FormPayloadUpdate,
   NotificationAction,
   NotifyReady,
   RedirectAction,
   RequestPermissions,
   UpdateRouting,
 } from "@saleor/app-sdk/app-bridge";
+
+// Local type definition for form payload update (removed from @saleor/app-sdk/app-bridge)
+type FormPayloadUpdate = {
+  [key: string]: any;
+};
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 

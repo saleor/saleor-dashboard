@@ -718,6 +718,7 @@ export const product: (
             currency: "USD",
             __typename: "Money",
           },
+          priorPrice: null,
           preorderThreshold: {
             quantity: null,
             soldUnits: 0,
@@ -743,6 +744,7 @@ export const product: (
             currency: "PLN",
             __typename: "Money",
           },
+          priorPrice: null,
           preorderThreshold: {
             quantity: null,
             soldUnits: 0,
@@ -819,6 +821,7 @@ export const product: (
             currency: "USD",
             __typename: "Money",
           },
+          priorPrice: null,
           preorderThreshold: {
             quantity: null,
             soldUnits: 0,
@@ -844,6 +847,7 @@ export const product: (
             currency: "PLN",
             __typename: "Money",
           },
+          priorPrice: null,
           preorderThreshold: {
             quantity: null,
             soldUnits: 0,
@@ -987,6 +991,7 @@ export const product: (
             currency: "USD",
             __typename: "Money",
           },
+          priorPrice: null,
           preorderThreshold: {
             quantity: null,
             soldUnits: 0,
@@ -1012,6 +1017,7 @@ export const product: (
             currency: "PLN",
             __typename: "Money",
           },
+          priorPrice: null,
           preorderThreshold: {
             quantity: null,
             soldUnits: 0,
@@ -1100,6 +1106,7 @@ export const product: (
             currency: "EUR",
             __typename: "Money",
           },
+          priorPrice: null,
           preorderThreshold: {
             quantity: null,
             soldUnits: 0,
@@ -1188,6 +1195,7 @@ export const product: (
             currency: "GBP",
             __typename: "Money",
           },
+          priorPrice: null,
           preorderThreshold: {
             quantity: null,
             soldUnits: 0,
@@ -3562,6 +3570,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         amount: 10,
         currency: "USD",
       },
+      priorPrice: null,
       price: {
         __typename: "Money",
         amount: 10,
@@ -3587,6 +3596,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         amount: 10,
         currency: "USD",
       },
+      priorPrice: null,
       price: {
         __typename: "Money",
         amount: 20,

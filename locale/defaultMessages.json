@@ -1065,6 +1065,9 @@
     "context": "product stock, section header",
     "string": "Inventory"
   },
+  "4tov2M": {
+    "string": "Prior price must be greater than or equal to selling price"
+  },
   "4v5gfh": {
     "context": "account information, header",
     "string": "Account Information"
@@ -5737,6 +5740,10 @@
   },
   "YIT1XP": {
     "string": "Create voucher"
+  },
+  "YMkwA1": {
+    "context": "tabel column header",
+    "string": "Prior Price"
   },
   "YQ3EXR": {
     "context": "product types section name",
