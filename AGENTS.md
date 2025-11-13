@@ -8,28 +8,28 @@ Saleor Dashboard is a GraphQL-powered, single-page React application built with 
 
 ### Basic Development
 
-- `npm run dev` - Start development server on port 9000 with host binding, ALWAYS run this process in background, if you can't do that ask user
-- `npm run build` - Build production bundle
-- `npm run preview` - Preview production build locally
+- `pnpm run dev` - Start development server on port 9000 with host binding, ALWAYS run this process in background, if you can't do that ask user
+- `pnpm run build` - Build production bundle
+- `pnpm run preview` - Preview production build locally
 
 ### Code Quality & Testing
 
 Before completing changes make sure you run these commands:
 
-- `npm run lint` - Run ESLint with auto-fix on src/ and playwright/ directories
-- `npm run test:quiet <file_path>` - Run specific test file with console output suppressed
-- `npm run check-types` - Run TypeScript type checking
-- `npm run knip` - Check for unused files/dependencies/exports
+- `pnpm run lint` - Run ESLint with auto-fix on src/ and playwright/ directories
+- `pnpm run test:quiet <file_path>` - Run specific test file with console output suppressed
+- `pnpm run check-types` - Run TypeScript type checking
+- `pnpm run knip` - Check for unused files/dependencies/exports
 
 #### Test Scripts
 
-- `npm run test:quiet <file_path>` - RECOMMENDED: Run specific test with minimal output (--silent flag)
-- `npm run test:debug <file_path>` - Run specific test file with full console output and extended React Testing Library output (DEBUG_PRINT_LIMIT=20000)
+- `pnpm run test:quiet <file_path>` - RECOMMENDED: Run specific test with minimal output (--silent flag)
+- `pnpm run test:debug <file_path>` - Run specific test file with full console output and extended React Testing Library output (DEBUG_PRINT_LIMIT=20000)
 
 **Important for testing:**
 
-- Always use `npm run test:quiet <file_path>` for specific files
-- Use `npm run test:debug <file_path>` when you need to see full React component output for debugging
+- Always use `pnpm run test:quiet <file_path>` for specific files
+- Use `pnpm run test:debug <file_path>` when you need to see full React component output for debugging
 - Console output is suppressed in quiet command
 - Tests automatically run from the `src/` directory (configured in jest.config.js)
 - When writing new fixtures (e.g. any objects used as test inputs) try to figure out their types and explicitly declare them:
@@ -37,13 +37,13 @@ Before completing changes make sure you run these commands:
 
 ### GraphQL & Code Generation
 
-- `npm run generate` - Generate GraphQL types and hooks, after making changes in queries/mutations or updating schema
-- `npm run fetch-schema` - Download GraphQL schema from Saleor repository
-- `npm run fetch-local-schema` - Fetch schema from local Saleor instance
+- `pnpm run generate` - Generate GraphQL types and hooks, after making changes in queries/mutations or updating schema
+- `pnpm run fetch-schema` - Download GraphQL schema from Saleor repository
+- `pnpm run fetch-local-schema` - Fetch schema from local Saleor instance
 
 ### Internationalization
 
-- `npm run extract-messages` - Extract translatable messages from TypeScript files, run it after changing messages in `react-intl`
+- `pnpm run extract-messages` - Extract translatable messages from TypeScript files, run it after changing messages in `react-intl`
 
 ## Architecture Overview
 
@@ -106,8 +106,8 @@ The codebase follows a feature-based architecture with shared components:
 
 1. Ensure you have a running Saleor backend instance
 2. Configure environment variables as described in `docs/configuration.md`
-3. Run `npm run generate` to generate GraphQL types
-4. Install dependencies with `npm i`
+3. Run `pnpm run generate` to generate GraphQL types
+4. Install dependencies with `pnpm i`
 
 ### Adding New Features
 
@@ -140,11 +140,11 @@ Add // Arrange // Act // Assert comments in tests to clarify test structure
 
 These files should be regenerated after resolving source conflicts:
 
-- `package-lock.json` - Run `npm install` after resolving `package.json`
-- `src/graphql/hooks.generated.ts` - Run `npm run generate` after resolving GraphQL files
-- `src/graphql/typePolicies.generated.ts` - Run `npm run generate` after resolving GraphQL files
-- `src/graphql/fragmentTypes.generated.ts` - Run `npm run generate` after resolving GraphQL files
-- `src/graphql/types.generated.ts` - Run `npm run generate` after resolving GraphQL files
+- `pnpm-lock.yaml` - Run `pnpm install` after resolving `package.json`
+- `src/graphql/hooks.generated.ts` - Run `pnpm run generate` after resolving GraphQL files
+- `src/graphql/typePolicies.generated.ts` - Run `pnpm run generate` after resolving GraphQL files
+- `src/graphql/fragmentTypes.generated.ts` - Run `pnpm run generate` after resolving GraphQL files
+- `src/graphql/types.generated.ts` - Run `pnpm run generate` after resolving GraphQL files
 
 ### Package Version Conflicts
 
@@ -157,11 +157,11 @@ This frontend connects to a Saleor GraphQL backend:
 - Default backend URL: http://localhost:8000/graphql/
 - Configure via environment variables (see `docs/configuration.md`)
 - Default development credentials for local Saleor instance: `admin@example.com` / `admin`
-- Use `npm run fetch-local-schema` to sync GraphQL schema from local backend
+- Use `pnpm run fetch-local-schema` to sync GraphQL schema from local backend
 
 ## Package Updates
 
-When modifying `package.json`, always run `npm install` to update `package-lock.json` and node_modules.
+When modifying `package.json`, always run `pnpm install` to update `pnpm-lock.yaml` and node_modules.
 
 ## Contributing
 
