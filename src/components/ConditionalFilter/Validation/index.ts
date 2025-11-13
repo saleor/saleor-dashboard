@@ -1,13 +1,14 @@
 import { FilterContainer } from "../FilterElement";
 import { FilterElement } from "../FilterElement/FilterElement";
-import { metadata } from "./metadata";
-import { numeric } from "./numeric";
+import { validateMetadataFilterElement } from "./metadata";
+import { validateFilterElementToBeNumeric } from "./numeric";
 
 const VALIDATORS = {
-  NUMERIC: numeric,
-  price: numeric,
-  metadata,
+  NUMERIC: validateFilterElementToBeNumeric,
+  price: validateFilterElementToBeNumeric,
+  metadata: validateMetadataFilterElement,
 } as Record<string, ValidateFn>;
+
 const toValidated = (
   element: string | FilterElement | FilterContainer,
   index: number,
@@ -23,6 +24,7 @@ const toValidated = (
 
   return false;
 };
+
 const hasErrors = (element: RawValidateEntry): element is ErrorEntry => {
   return element !== false;
 };
