@@ -241,6 +241,15 @@
     "pnpm": ">=10"
   },
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "@sentry/cli",
+      "@swc/core",
+      "core-js",
+      "esbuild",
+      "fsevents",
+      "oxc-resolver",
+      "sharp"
+    ],
     "overrides": {
       "@babel/runtime@<7.26.10": ">=7.26.10",
       "dompurify@<3.2.4": ">=3.2.4",
