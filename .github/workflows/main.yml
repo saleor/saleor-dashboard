@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "pnpm"
+          # Don't cache in this job as we don't install dependencies
 
       - name: Audit dependencies
         run: pnpm audit --audit-level moderate
