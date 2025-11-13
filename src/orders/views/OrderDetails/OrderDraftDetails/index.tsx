@@ -41,7 +41,7 @@ import { extractMutationErrors, getStringOrPlaceholder } from "../../../../misc"
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
-import OrderDraftPage from "../../../components/OrderDraftPage";
+import OrderDraftPage from "../../../components/OrderDraftPage/OrderDraftPage";
 import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import { orderDraftListUrl, OrderUrlDialog, OrderUrlQueryParams } from "../../../urls";
@@ -227,7 +227,7 @@ export const OrderDraftDetails = ({
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
-            onShowMetadata={id => openModal("view-metadata", { id })}
+            onOrderLineShowMetadata={id => openModal("view-metadata", { id })}
             order={order}
             channelUsabilityData={channelUsabilityData}
             onProductClick={id => () => navigate(productUrl(encodeURIComponent(id)))}

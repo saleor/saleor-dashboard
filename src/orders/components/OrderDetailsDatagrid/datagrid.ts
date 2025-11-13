@@ -65,11 +65,11 @@ interface GetCellContentProps {
   data: OrderLineFragment[];
   loading: boolean;
   intl: IntlShape;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
 export const createGetCellContent =
-  ({ columns, data, loading, onShowMetadata, intl }: GetCellContentProps) =>
+  ({ columns, data, loading, onOrderLineShowMetadata, intl }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     if (loading) {
       return loadingCell();
@@ -115,7 +115,7 @@ export const createGetCellContent =
         });
       case "metadata":
         return buttonCell(intl.formatMessage(commonMessages.viewMetadata), () => {
-          onShowMetadata(rowData.id);
+          onOrderLineShowMetadata(rowData.id);
         });
 
       default:
