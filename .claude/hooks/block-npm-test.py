@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Hook to prevent running 'npm run test' or 'npm run test:*' commands without specific files,
+Hook to prevent running 'pnpm run test' or 'pnpm run test:*' commands without specific files,
 which runs all tests and can freeze the system.
 Allows these commands with file paths, but blocks them with only flags or no arguments.
 """
@@ -25,12 +25,12 @@ if tool_name != "Bash":
 
 command = tool_input.get("command", "")
 
-# Check if the command is trying to run npm run test or npm run test:* variants
-npm_test_match = re.search(r"\bnpm\s+run\s+(test(?:\:\w+)?)\b", command)
+# Check if the command is trying to run pnpm run test or pnpm run test:* variants
+npm_test_match = re.search(r"\bpnpm\s+run\s+(test(?:\:\w+)?)\b", command)
 if npm_test_match:
     test_command = npm_test_match.group(1)  # Captures "test" or "test:quiet" etc.
 
-    # Get everything after 'npm run test' or 'npm run test:*'
+    # Get everything after 'pnpm run test' or 'pnpm run test:*'
     after_test = command[npm_test_match.end() :].strip()
 
     # If there are arguments, parse them to check if any are file paths
@@ -69,13 +69,13 @@ if npm_test_match:
                         "hookEventName": "PreToolUse",
                         "permissionDecision": "deny",
                         "permissionDecisionReason": (
-                            f"BLOCKED: 'npm run {test_command}' with only flags (no file paths) runs ALL tests and can freeze your system! "
+                            f"BLOCKED: 'pnpm run {test_command}' with only flags (no file paths) runs ALL tests and can freeze your system! "
                             "You must specify test files or patterns.\n"
                             "Use one of these commands:\n"
-                            f"• npm run {test_command} <file_path> [flags] - Run specific test files\n"
-                            "• npm run test:quiet <file_path> - Run with minimal output\n"
-                            "• npm run test:debug <file_path> - Run with increased debug output\n"
-                            f"Example: npm run {test_command} src/products/components/ProductList.test.tsx --verbose"
+                            f"• pnpm run {test_command} <file_path> [flags] - Run specific test files\n"
+                            "• pnpm run test:quiet <file_path> - Run with minimal output\n"
+                            "• pnpm run test:debug <file_path> - Run with increased debug output\n"
+                            f"Example: pnpm run {test_command} src/products/components/ProductList.test.tsx --verbose"
                         ),
                     }
                 }
@@ -93,12 +93,12 @@ if npm_test_match:
                 "hookEventName": "PreToolUse",
                 "permissionDecision": "deny",
                 "permissionDecisionReason": (
-                    f"BLOCKED: 'npm run {test_command}' without specific files runs ALL tests and can freeze your system! "
+                    f"BLOCKED: 'pnpm run {test_command}' without specific files runs ALL tests and can freeze your system! "
                     "Instead use one of these commands:\n"
-                    f"• npm run {test_command} <file_path> - Run specific test files\n"
-                    "• npm run test:quiet <file_path> - Run with minimal output\n"
-                    "• npm run test:debug <file_path> - Run with increased debug output\n"
-                    f"Example: npm run {test_command} src/products/components/ProductList.test.tsx"
+                    f"• pnpm run {test_command} <file_path> - Run specific test files\n"
+                    "• pnpm run test:quiet <file_path> - Run with minimal output\n"
+                    "• pnpm run test:debug <file_path> - Run with increased debug output\n"
+                    f"Example: pnpm run {test_command} src/products/components/ProductList.test.tsx"
                 ),
             }
         }
