@@ -8,7 +8,7 @@ type Element = FilterContainer[number];
 
 const removeConstraint = (container: FilterContainer) => {
   return container.map(el => {
-    if (!FilterElement.isCompatible(el)) return el;
+    if (!FilterElement.isFilterElement(el)) return el;
 
     if (!el.constraint?.existIn(container)) {
       el.clearConstraint();
@@ -45,7 +45,7 @@ const removeEmptyElements = (
   provider: FilterValueProvider,
 ): FilterContainer => {
   const emptyIndex = container.findIndex(
-    el => FilterElement.isCompatible(el) && (!provider.isPersisted(el) || el.isEmpty()),
+    el => FilterElement.isFilterElement(el) && (!provider.isPersisted(el) || el.isEmpty()),
   );
 
   if (emptyIndex < 0) return container;
@@ -67,7 +67,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     index: number,
     el: Element,
   ): el is FilterElement => {
-    return elIndex === index && FilterElement.isCompatible(el);
+    return elIndex === index && FilterElement.isFilterElement(el);
   };
   const updateFilterElement =
     (index: number, cb: StateCallback) => (el: Element, elIndex: number) => {
@@ -90,7 +90,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   const updateBySlug = (slug: string, cb: StateCallback) => {
     setValue(v =>
       v.map(el => {
-        if (FilterElement.isCompatible(el) && el.value.value === slug) {
+        if (FilterElement.isFilterElement(el) && el.value.value === slug) {
           cb(el);
         }
 
@@ -133,7 +133,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   };
 
   const exist = (slug: string) => {
-    return value.some(entry => FilterElement.isCompatible(entry) && entry.value.value === slug);
+    return value.some(entry => FilterElement.isFilterElement(entry) && entry.value.value === slug);
   };
   const createEmpty = () => {
     create(FilterElement.createEmpty());

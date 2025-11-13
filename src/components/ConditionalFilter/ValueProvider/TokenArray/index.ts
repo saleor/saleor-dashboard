@@ -149,7 +149,7 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
 
       return FilterElement.fromUrlToken(el, response);
     }).map((element, _, container) => {
-      if (FilterElement.isCompatible(element) && !element.constraint?.existIn(container)) {
+      if (FilterElement.isFilterElement(element) && !element.constraint?.existIn(container)) {
         element.clearConstraint();
       }
 

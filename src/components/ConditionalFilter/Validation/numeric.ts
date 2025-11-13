@@ -11,7 +11,7 @@ const isTooLong = (value: string, row: number) => {
   return false;
 };
 
-export const numeric = (element: FilterElement, row: number) => {
+export const validateFilterElementToBeNumeric = (element: FilterElement, row: number) => {
   const { value } = element.condition.selected;
 
   if (Array.isArray(value) && value.length === 2) {

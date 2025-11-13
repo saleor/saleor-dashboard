@@ -141,7 +141,7 @@ export class FiltersQueryBuilder<
   private getValidElements(): FilterElement[] {
     return this.filterContainer.filter(
       (item): item is FilterElement =>
-        typeof item !== "string" && !Array.isArray(item) && FilterElement.isCompatible(item),
+        typeof item !== "string" && !Array.isArray(item) && FilterElement.isFilterElement(item),
     );
   }
 }

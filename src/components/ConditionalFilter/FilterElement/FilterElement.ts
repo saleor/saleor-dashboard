@@ -219,7 +219,7 @@ export class FilterElement {
     return this.value.value === element.value.value;
   }
 
-  public static isCompatible(element: unknown): element is FilterElement {
+  public static isFilterElement(element: unknown): element is FilterElement {
     return (
       typeof element === "object" &&
       !Array.isArray(element) &&
@@ -283,7 +283,7 @@ export class FilterElement {
 }
 
 export const hasEmptyRows = (container: FilterContainer) => {
-  return container.filter(FilterElement.isCompatible).some((e: FilterElement) => e.isEmpty());
+  return container.filter(FilterElement.isFilterElement).some((e: FilterElement) => e.isEmpty());
 };
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;
