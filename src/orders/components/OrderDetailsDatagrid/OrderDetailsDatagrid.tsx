@@ -23,14 +23,12 @@ interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
-  enableVerticalBorder?: boolean;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
   loading,
   onOrderLineShowMetadata,
-  enableVerticalBorder = true,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -87,7 +85,7 @@ export const OrderDetailsDatagrid = ({
         columnSelect="single"
         freezeColumns={1}
         availableColumns={visibleColumns}
-        verticalBorder={enableVerticalBorder}
+        verticalBorder={false}
         emptyText={intl.formatMessage(orderMessages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
