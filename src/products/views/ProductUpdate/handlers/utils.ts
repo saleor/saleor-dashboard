@@ -87,7 +87,12 @@ export function getProductUpdateVariables(
   }
 
   if (data.weight !== undefined && data.weight !== "") {
-    variables.input["weight"] = parseFloat(data.weight);
+    const parsedWeight = parseFloat(data.weight);
+
+    // Only include weight if it's a valid non-negative number
+    if (!isNaN(parsedWeight) && parsedWeight >= 0) {
+      variables.input["weight"] = parsedWeight;
+    }
   }
 
   return variables;

@@ -7,6 +7,7 @@ import { product, variantAttributes } from "../../../fixtures";
 import {
   getBulkVariantUpdateInputs,
   getCreateVariantInput,
+  getProductUpdateVariables,
   inferProductChannelsAfterUpdate,
 } from "./utils";
 
@@ -425,5 +426,121 @@ describe("getBulkVariantUpdateInputs", () => {
         channelListings: { create: [], remove: [], update: [] },
       },
     ]);
+  });
+});
+
+describe("getProductUpdateVariables", () => {
+  const baseProduct = product("http://google.com");
+  const baseData = {
+    attributes: [],
+    attributesWithNewFileValue: [],
+    category: null,
+    collections: [],
+    description: null,
+    name: "Test Product",
+    rating: null,
+    slug: "test-product",
+    taxClassId: null,
+    seoDescription: null,
+    seoTitle: null,
+  } as ProductUpdateSubmitData;
+
+  it("should include weight when valid number is provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      weight: "10.5",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.weight).toBe(10.5);
+  });
+
+  it("should include weight when zero is provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      weight: "0",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.weight).toBe(0);
+  });
+
+  it("should not include weight when empty string is provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      weight: "",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.weight).toBeUndefined();
+  });
+
+  it("should not include weight when undefined is provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      weight: undefined,
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.weight).toBeUndefined();
+  });
+
+  it("should handle decimal weight values", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      weight: "0.001",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.weight).toBe(0.001);
+  });
+
+  it("should not include weight when invalid non-numeric string is provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      weight: "invalid",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    // parseFloat("invalid") returns NaN, should not be included
+    expect(result.input.weight).toBeUndefined();
+  });
+
+  it("should not include weight when negative number is provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      weight: "-5",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.weight).toBeUndefined();
   });
 });
