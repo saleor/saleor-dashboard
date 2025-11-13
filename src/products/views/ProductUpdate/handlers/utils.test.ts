@@ -473,7 +473,7 @@ describe("getProductUpdateVariables", () => {
     expect(result.input.weight).toBe(0);
   });
 
-  it("should not include weight when empty string is provided", () => {
+  it("should include null when empty string is provided to clear weight", () => {
     // Arrange
     const data = {
       ...baseData,
@@ -484,7 +484,7 @@ describe("getProductUpdateVariables", () => {
     const result = getProductUpdateVariables(baseProduct, data, []);
 
     // Assert
-    expect(result.input.weight).toBeUndefined();
+    expect(result.input.weight).toBeNull();
   });
 
   it("should not include weight when undefined is provided", () => {
@@ -515,7 +515,7 @@ describe("getProductUpdateVariables", () => {
     expect(result.input.weight).toBe(0.001);
   });
 
-  it("should not include weight when invalid non-numeric string is provided", () => {
+  it("should include NaN when invalid non-numeric string is provided", () => {
     // Arrange
     const data = {
       ...baseData,
@@ -526,11 +526,11 @@ describe("getProductUpdateVariables", () => {
     const result = getProductUpdateVariables(baseProduct, data, []);
 
     // Assert
-    // parseFloat("invalid") returns NaN, should not be included
-    expect(result.input.weight).toBeUndefined();
+    // parseFloat("invalid") returns NaN, backend should validate
+    expect(result.input.weight).toBeNaN();
   });
 
-  it("should not include weight when negative number is provided", () => {
+  it("should include negative number when provided", () => {
     // Arrange
     const data = {
       ...baseData,
@@ -541,6 +541,7 @@ describe("getProductUpdateVariables", () => {
     const result = getProductUpdateVariables(baseProduct, data, []);
 
     // Assert
-    expect(result.input.weight).toBeUndefined();
+    // Backend should validate if negative weights are allowed
+    expect(result.input.weight).toBe(-5);
   });
 });
