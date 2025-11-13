@@ -30,8 +30,8 @@ import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/compon
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
 import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
-import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog";
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import {
@@ -313,7 +313,7 @@ export const OrderNormalDetails = ({
             .finally(() => closeModal())
         }
       />
-      <OrderMetadataDialog
+      <OrderLineMetadataDialog
         open={params.action === "view-metadata"}
         onClose={closeModal}
         lineId={params.id}

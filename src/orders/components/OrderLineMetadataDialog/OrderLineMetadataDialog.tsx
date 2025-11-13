@@ -16,29 +16,29 @@ import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 import { useMetadataValues } from "./useMetadataValues";
-import { useOrderMetadataFormControls } from "./useOrderMetadataFormControls";
+import { useOrderLineMetadataFormControls } from "./useOrderLineMetadataFormControls";
 import { mapFieldArrayToMetadataInput } from "./utils";
 
-export type OrderMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
+export type OrderLineMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
 
-export interface OrderAndVariantMetadataFormData {
+export interface OrderLineAndVariantMetadataFormData {
   orderLine: MetadataFormData;
   variant: MetadataFormData;
 }
 
-interface OrderMetadataDialogProps {
+interface OrderLineMetadataDialogProps {
   open: boolean;
   onClose: () => void;
   lineId: string;
   orderId: string;
 }
 
-export const OrderMetadataDialog = ({
+export const OrderLineMetadataDialog = ({
   onClose,
   open,
   lineId,
   orderId,
-}: OrderMetadataDialogProps) => {
+}: OrderLineMetadataDialogProps) => {
   const { data, loading } = useMetadataValues({ orderId, lineId, open });
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleOrderLineMetadataSubmit({
     initialData: data,
@@ -46,7 +46,7 @@ export const OrderMetadataDialog = ({
   });
   const hasManageProducts = useHasManageProductsPermission();
 
-  const formMethods = useForm<OrderAndVariantMetadataFormData>({
+  const formMethods = useForm<OrderLineAndVariantMetadataFormData>({
     // Display last submitted data while re-fetching to avoid flicker on UI
     values: submitInProgress
       ? lastSubmittedData
@@ -78,7 +78,7 @@ export const OrderMetadataDialog = ({
     orderLinePrivateMetadataErrors,
     variantMetadataErrors,
     variantPrivateMetadataErrors,
-  } = useOrderMetadataFormControls({ control, trigger, getValues, formState });
+  } = useOrderLineMetadataFormControls({ control, trigger, getValues, formState });
 
   useEffect(() => {
     if (!open) {

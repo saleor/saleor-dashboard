@@ -1,7 +1,7 @@
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 
-import { OrderMetadataDialog, OrderMetadataDialogData } from "./OrderMetadataDialog";
+import { OrderLineMetadataDialog, OrderLineMetadataDialogData } from "./OrderLineMetadataDialog";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 
 const mockOnSubmit = jest.fn();
@@ -45,7 +45,7 @@ const mockData = {
     __typename: "ProductVariant",
   },
   __typename: "OrderLine",
-} satisfies OrderMetadataDialogData;
+} satisfies OrderLineMetadataDialogData;
 
 jest.mock("./useMetadataValues", () => ({
   useMetadataValues: () => ({
@@ -53,13 +53,13 @@ jest.mock("./useMetadataValues", () => ({
     loading: false,
   }),
 }));
-describe("OrderMetadataDialog", () => {
+describe("OrderLineMetadataDialog", () => {
   const onCloseMock = jest.fn();
 
   it("closes when user hits close icon button", () => {
     // Arrange
     render(
-      <OrderMetadataDialog
+      <OrderLineMetadataDialog
         open={true}
         onClose={onCloseMock}
         orderId="order-id"
@@ -77,7 +77,7 @@ describe("OrderMetadataDialog", () => {
   it("closes when user hits close text button", () => {
     // Arrange
     render(
-      <OrderMetadataDialog
+      <OrderLineMetadataDialog
         open={true}
         onClose={onCloseMock}
         orderId="order-id"
@@ -95,7 +95,7 @@ describe("OrderMetadataDialog", () => {
   it("displays details about order line", () => {
     // Arrange
     render(
-      <OrderMetadataDialog
+      <OrderLineMetadataDialog
         open={true}
         onClose={onCloseMock}
         orderId="order-id"
@@ -112,7 +112,7 @@ describe("OrderMetadataDialog", () => {
   it("renders product thumbnail correctly", () => {
     // Arrange
     render(
-      <OrderMetadataDialog
+      <OrderLineMetadataDialog
         open={true}
         onClose={onCloseMock}
         orderId="order-id"
@@ -132,7 +132,7 @@ describe("OrderMetadataDialog", () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
       render(
-        <OrderMetadataDialog
+        <OrderLineMetadataDialog
           open={true}
           onClose={onCloseMock}
           orderId="order-id"
@@ -157,7 +157,7 @@ describe("OrderMetadataDialog", () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
       render(
-        <OrderMetadataDialog
+        <OrderLineMetadataDialog
           open={true}
           onClose={onCloseMock}
           orderId="order-id"
@@ -185,7 +185,7 @@ describe("OrderMetadataDialog", () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(false);
       render(
-        <OrderMetadataDialog
+        <OrderLineMetadataDialog
           open={true}
           onClose={onCloseMock}
           orderId="order-id"
@@ -220,7 +220,7 @@ describe("OrderMetadataDialog", () => {
     it("displays order line metadata", async () => {
       // Arrange
       render(
-        <OrderMetadataDialog
+        <OrderLineMetadataDialog
           open={true}
           onClose={onCloseMock}
           orderId="order-id"
@@ -249,7 +249,7 @@ describe("OrderMetadataDialog", () => {
     it("displays order line private metadata", () => {
       // Arrange
       render(
-        <OrderMetadataDialog
+        <OrderLineMetadataDialog
           open={true}
           onClose={onCloseMock}
           orderId="order-id"
