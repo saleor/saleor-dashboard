@@ -52,4 +52,8 @@ export const metadataInputMessages = defineMessages({
     id: "GufXy5",
     defaultMessage: "Value",
   },
+  noValuePlaceholder: {
+    id: "eVrDft",
+    defaultMessage: "No value",
+  },
 });

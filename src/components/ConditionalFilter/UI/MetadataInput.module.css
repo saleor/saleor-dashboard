@@ -1,0 +1,12 @@
+/* Make placeholder visible (override BaseInput's transparent default) */
+.visiblePlaceholder input::placeholder {
+  opacity: 0.5 !important;
+  color: currentColor !important;
+}
+
+/* Italic variant for "No value" placeholder */
+.visiblePlaceholderItalic input::placeholder {
+  opacity: 0.5 !important;
+  color: currentColor !important;
+  font-style: italic !important;
+}
