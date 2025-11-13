@@ -52,7 +52,7 @@ try:
         # Run codegen and capture stderr to check for syntax errors
         import subprocess
         process = subprocess.Popen(
-            "npm run generate 2>&1",
+            "pnpm run generate 2>&1",
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -83,7 +83,7 @@ try:
             # Use decision: block to prompt Claude about the error
             error_output = {
                 "decision": "block",
-                "reason": "❌ GraphQL codegen failed! Please run 'npm run generate' manually to fix the issue.",
+                "reason": "❌ GraphQL codegen failed! Please run 'pnpm run generate' manually to fix the issue.",
                 "hookSpecificOutput": {
                     "hookEventName": "PostToolUse",
                     "additionalContext": "GraphQL code generation failed. This may cause type errors in the code."

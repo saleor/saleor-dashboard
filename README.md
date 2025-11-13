@@ -36,11 +36,12 @@
 
 ## Prerequisites
 
-- Node.js v20
+- Node.js v22 (recommended)
 - A running instance of [Saleor](https://github.com/saleor/saleor/)
+- PNPM package manager - preferably installed via [corepack](https://pnpm.io/installation#using-corepack)
 
 > [!NOTE]
-> Currently both Node v20 and v18 are supported. We recommend using Node v20, since support for older versions will be dropped.
+> Currently both Node v22, v20 are supported. We recommend using Node v22, since support for older versions will be dropped.
 
 ## Development
 
@@ -59,7 +60,7 @@ cd saleor-dashboard
 3. Install the dependencies:
 
 ```bash
-npm i
+pnpm install
 ```
 
 4. Configure the env vars as described in [docs/configuration.md](docs/configuration.md).
@@ -67,7 +68,7 @@ npm i
 5. Start the development server with:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 > Note:

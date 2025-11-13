@@ -32,7 +32,7 @@ describe("App Extension Manifest Schema", () => {
         url: "/app/extension",
         mount: "NAVIGATION_CATALOG",
         target: "APP_PAGE" as const,
-        permissions: ["MANAGE_PRODUCTS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }],
       };
 
       // Act
@@ -632,26 +632,6 @@ describe("App Extension Manifest Schema", () => {
       }
     });
 
-    it("should accept permissions as array of strings", () => {
-      // Arrange
-      const validData = {
-        label: "My Extension",
-        url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        permissions: ["MANAGE_PRODUCTS", "MANAGE_ORDERS"],
-      };
-
-      // Act
-      const result = appExtensionManifest.safeParse(validData);
-
-      // Assert
-      expect(result.success).toBe(true);
-
-      if (result.success) {
-        expect(result.data.permissions).toEqual(["MANAGE_PRODUCTS", "MANAGE_ORDERS"]);
-      }
-    });
-
     it("should reject permissions as non-array", () => {
       // Arrange
       const invalidData = {
@@ -677,7 +657,7 @@ describe("App Extension Manifest Schema", () => {
         url: "https://example.com/widget",
         mount: "PRODUCT_DETAILS_WIDGETS",
         target: "WIDGET" as const,
-        permissions: ["MANAGE_PRODUCTS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }],
         options: {
           widgetTarget: {
             method: "POST" as const,
@@ -699,7 +679,7 @@ describe("App Extension Manifest Schema", () => {
         url: "https://example.com/extension",
         mount: "ORDER_OVERVIEW_MORE_ACTIONS",
         target: "NEW_TAB" as const,
-        permissions: ["MANAGE_ORDERS"],
+        permissions: [{ code: "MANAGE_ORDERS" }],
         options: {
           newTabTarget: {
             method: "GET" as const,
@@ -721,7 +701,7 @@ describe("App Extension Manifest Schema", () => {
         url: "/my-extension",
         mount: "NAVIGATION_CATALOG",
         target: "APP_PAGE" as const,
-        permissions: ["MANAGE_PRODUCTS", "MANAGE_ORDERS"],
+        permissions: [{ code: "MANAGE_PRODUCTS" }, { code: "MANAGE_ORDERS" }],
       };
 
       // Act

@@ -20,6 +20,7 @@ test("TC: SALEOR_30 Create basic warehouse #e2e #warehouse", async () => {
 test("TC: SALEOR_100 Edit warehouse #e2e #warehouse", async () => {
   await warehousePage.gotoExistingWarehousePage(WAREHOUSES.warehouseToBeEdited.id);
   await warehousePage.typeWarehouseName("edited warehouse");
+  await warehousePage.typeWarehouseEmail("edited@saleor.io");
   await warehousePage.typeCompanyName("Umbrella");
   await warehousePage.typeAddressLine1("edited warehouse address 1");
   await warehousePage.typeAddressLine2("edited warehouse address 2");

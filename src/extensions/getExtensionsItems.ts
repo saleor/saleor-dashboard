@@ -1,16 +1,18 @@
 import { ExtensionWithParams } from "./types";
 import { AppDetailsUrlMountQueryParams } from "./urls";
 
-interface ExtensionMenuItem {
+export interface ExtensionMenuItem {
   label: string;
   testId: string;
   onSelect: (params: AppDetailsUrlMountQueryParams) => void;
+  avatar?: string;
 }
 
-const mapToMenuItem = ({ label, id, open }: ExtensionWithParams): ExtensionMenuItem => ({
+const mapToMenuItem = ({ label, id, open, app }: ExtensionWithParams): ExtensionMenuItem => ({
   label,
   testId: `extension-${id}`,
   onSelect: open,
+  avatar: app.brand?.logo.default,
 });
 
 const getExtensionItemsWithoutParams = (extensions: ExtensionWithParams[]) =>
@@ -68,3 +70,4 @@ export const getExtensionsItemsForPageTypeOverviewActions =
 export const getExtensionsItemsForPageTypeDetails = getExtensionsItemsWithParam("pageTypeId");
 export const getExtensionsItemsForMenuOverviewActions = getExtensionsItemsWithParam("menuIds");
 export const getExtensionsItemsForMenuDetails = getExtensionsItemsWithParam("menuId");
+export const getExtensionsItemsForTranslationDetails = getExtensionsItemsWithManyParams;

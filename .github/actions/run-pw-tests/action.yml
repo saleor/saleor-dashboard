@@ -57,13 +57,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v3
+    - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+    - uses: actions/setup-node@v4
       with:
         node-version-file: ".nvmrc"
+        cache: "pnpm"
 
     - name: Install dependencies
       shell: bash
-      run: npm ci
+      run: pnpm install
 
     - name: Restore accounts
       uses: ./.github/actions/restore-accounts
@@ -75,7 +77,7 @@ runs:
 
     - name: Install Playwright Browsers
       shell: bash
-      run: npx playwright install --with-deps
+      run: pnpm exec playwright install --with-deps chromium
 
     - name: Run tests
       shell: bash
@@ -108,7 +110,7 @@ runs:
         done
         echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
         echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
-        npx playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
+        pnpm exec playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
       uses: actions/upload-artifact@v4

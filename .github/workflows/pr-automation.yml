@@ -98,10 +98,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
+          cache: "pnpm"
 
       - name: Start deployment
         uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3
@@ -112,20 +114,8 @@ jobs:
           env: ${{ needs.initialize-cloud.outputs.POOL_NAME }}
           ref: ${{ github.head_ref }}
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-qa-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-qa-${{ env.cache-name }}-
-            ${{ runner.os }}-qa-
-            ${{ runner.os }}-
-
       - name: Install deps
-        run: npm ci
+        run: pnpm install
 
       - name: Build dashboard
         id: build-dashboard
@@ -143,7 +133,7 @@ jobs:
           IS_CLOUD_INSTANCE: true
           ENABLED_SERVICE_NAME_HEADER: true
           ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
-        run: npm run build
+        run: pnpm run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

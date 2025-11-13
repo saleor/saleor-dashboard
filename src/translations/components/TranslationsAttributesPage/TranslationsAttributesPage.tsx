@@ -4,6 +4,9 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
+import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -15,6 +18,7 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { ListSettings } from "@dashboard/types";
+import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { getTranslationFields } from "../../utils";
@@ -50,6 +54,12 @@ const TranslationsAttributesPage = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const withChoices = data?.attribute?.withChoices;
+  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
+    translationContext: "attribute",
+    translationLanguage: languageCode,
+    attributeId: data?.attribute?.id,
+  });
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -69,13 +79,27 @@ const TranslationsAttributesPage = ({
           },
         )}
       >
-        <LanguageSwitchWithCaching
-          currentLanguage={LanguageCodeEnum[languageCode]}
-          languages={languages}
-          onLanguageChange={lang =>
-            navigate(languageEntityUrl(lang, TranslatableEntities.attributes, translationId))
-          }
-        />
+        <Box display="flex" gap={3}>
+          {menuItems.length > 0 && (
+            <ExtensionsButtonSelector
+              extensions={menuItems}
+              onClick={extension => {
+                extension.onSelect({
+                  translationContext: "attribute",
+                  translationLanguage: languageCode,
+                  attributeId: data?.attribute?.id,
+                });
+              }}
+            />
+          )}
+          <LanguageSwitchWithCaching
+            currentLanguage={LanguageCodeEnum[languageCode]}
+            languages={languages}
+            onLanguageChange={lang =>
+              navigate(languageEntityUrl(lang, TranslatableEntities.attributes, translationId))
+            }
+          />
+        </Box>
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields

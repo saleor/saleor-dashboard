@@ -108,7 +108,7 @@ export const InstalledExtensionsList = ({
                     <Text
                       size={4}
                       fontWeight="bold"
-                      __maxWidth="200px"
+                      __maxWidth="400px"
                       overflow="hidden"
                       textOverflow="ellipsis"
                       whiteSpace="nowrap"

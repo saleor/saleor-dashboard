@@ -1,5 +1,5 @@
 import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
-import { OrderRefundDisplay } from "@dashboard/ordersV2/OrderRefunds/OrderRefundsViewModel";
+import { OrderRefundDisplay } from "@dashboard/orders/utils/OrderRefundsViewModel";
 import { IntlShape } from "react-intl";
 
 import { refundGridMessages, refundStatuses } from "./messages";
