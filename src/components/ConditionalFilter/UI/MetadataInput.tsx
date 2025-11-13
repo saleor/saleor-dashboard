@@ -1,8 +1,12 @@
 import { Box, Input } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { useConditionalFilterContext } from "../context";
+import { QueryApiType } from "../FiltersQueryBuilder/types";
 import { metadataInputMessages } from "../intl";
 import { FilterEventEmitter } from "./EventEmitter";
+import styles from "./MetadataInput.module.css";
 import { DoubleTextOperator } from "./types";
 
 interface MetadataInputProps {
@@ -21,6 +25,66 @@ export const MetadataInput = ({
   disabled,
 }: MetadataInputProps) => {
   const intl = useIntl();
+  const { queryApiType } = useConditionalFilterContext();
+
+  const keyValue = selected.value[0] || "";
+  const valueInput = selected.value[1] || "";
+
+  const supportsOptionalValue = queryApiType === QueryApiType.WHERE;
+
+  // Initialize hasKeyBlurred to true if there's already a key present
+  // when reopening filters (only for WHERE API)
+  const [hasKeyBlurred, setHasKeyBlurred] = useState(() =>
+    supportsOptionalValue ? Boolean(keyValue) : false,
+  );
+
+  const hasKey = Boolean(keyValue);
+  const hasValue = Boolean(valueInput);
+
+  const handleKeyChange = (newKey: string) => {
+    emitter.changeRightOperator(index, [newKey, valueInput]);
+
+    if (!newKey) {
+      setHasKeyBlurred(false);
+    }
+  };
+
+  const handleKeyBlur = () => {
+    emitter.blurRightOperator(index);
+
+    // Only set hasKeyBlurred for WHERE API
+    if (supportsOptionalValue && hasKey) {
+      setHasKeyBlurred(true);
+    }
+  };
+
+  const handleValueChange = (newValue: string) => {
+    emitter.changeRightOperator(index, [keyValue, newValue]);
+  };
+
+  const getValuePlaceholder = () => {
+    // For WHERE API: Show "No value" when user intentionally leaves it empty after entering key
+    // -> this is because we make query for checking `key` existence only.
+    // For FILTER API: Always show "Value" (requires both key and value)
+    const shouldShowNoValue = supportsOptionalValue && hasKey && !hasValue && hasKeyBlurred;
+
+    return intl.formatMessage(
+      shouldShowNoValue
+        ? metadataInputMessages.noValuePlaceholder
+        : metadataInputMessages.valuePlaceholder,
+    );
+  };
+
+  const getValueClassName = () => {
+    if (hasValue) {
+      return undefined;
+    }
+
+    // Only show italic "No value" for WHERE API
+    const shouldShowNoValue = supportsOptionalValue && hasKey && hasKeyBlurred;
+
+    return shouldShowNoValue ? styles.visiblePlaceholderItalic : styles.visiblePlaceholder;
+  };
 
   return (
     <Box
@@ -36,36 +100,26 @@ export const MetadataInput = ({
     >
       <Input
         data-test-id={`right-${index}-1`}
-        value={selected.value[0] || ""}
-        onChange={e => {
-          emitter.changeRightOperator(index, [e.target.value, selected.value[1]]);
-        }}
-        onFocus={() => {
-          emitter.focusRightOperator(index);
-        }}
-        onBlur={() => {
-          emitter.blurRightOperator(index);
-        }}
+        value={keyValue}
+        onChange={e => handleKeyChange(e.target.value)}
+        onFocus={() => emitter.focusRightOperator(index)}
+        onBlur={handleKeyBlur}
         error={error}
         placeholder={intl.formatMessage(metadataInputMessages.keyPlaceholder)}
         disabled={disabled}
+        className={styles.visiblePlaceholder}
       />
       <Box borderLeftStyle="solid" borderLeftWidth={1} borderColor="default1" />
       <Input
         data-test-id={`right-${index}-2`}
-        value={selected.value[1] || ""}
-        onChange={e => {
-          emitter.changeRightOperator(index, [selected.value[0], e.target.value]);
-        }}
-        onFocus={() => {
-          emitter.focusRightOperator(index);
-        }}
-        onBlur={() => {
-          emitter.blurRightOperator(index);
-        }}
+        value={valueInput}
+        onChange={e => handleValueChange(e.target.value)}
+        onFocus={() => emitter.focusRightOperator(index)}
+        onBlur={() => emitter.blurRightOperator(index)}
         error={error}
-        placeholder={intl.formatMessage(metadataInputMessages.valuePlaceholder)}
+        placeholder={getValuePlaceholder()}
         disabled={disabled}
+        className={getValueClassName()}
       />
     </Box>
   );

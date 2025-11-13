@@ -1,10 +1,12 @@
 import { FilterContainer } from "../FilterElement";
 import { FilterElement } from "../FilterElement/FilterElement";
+import { metadata } from "./metadata";
 import { numeric } from "./numeric";
 
 const VALIDATORS = {
   NUMERIC: numeric,
   price: numeric,
+  metadata,
 } as Record<string, ValidateFn>;
 const toValidated = (
   element: string | FilterElement | FilterContainer,
