@@ -53,11 +53,6 @@ export const orderDetailsStaticColumnsAdapter = (intl: IntlShape): AvailableColu
     title: intl.formatMessage(columnsMessages.isGift),
     width: 150,
   },
-  {
-    id: "metadata",
-    title: intl.formatMessage(commonMessages.metadata),
-    width: 150,
-  },
 ];
 
 interface GetCellContentProps {

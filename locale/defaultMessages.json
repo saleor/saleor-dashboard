@@ -3278,6 +3278,9 @@
   "IoDlcd": {
     "string": "Slug"
   },
+  "IpOugE": {
+    "string": "Show metadata"
+  },
   "IqRBql": {
     "context": "variant name",
     "string": "New variant"
@@ -7871,6 +7874,9 @@
   "mLZMb6": {
     "context": "ChannelsSection select field label",
     "string": "Channel"
+  },
+  "mMOskm": {
+    "string": "Open product detail"
   },
   "mQtoRO": {
     "context": "taxes title",
