@@ -37,7 +37,7 @@ export class Constraint {
 
   public existIn(container: FilterContainer) {
     return container.some(s => {
-      if (!FilterElement.isCompatible(s)) return false;
+      if (!FilterElement.isFilterElement(s)) return false;
 
       return this.dependsOn.includes(s.value.value);
     });

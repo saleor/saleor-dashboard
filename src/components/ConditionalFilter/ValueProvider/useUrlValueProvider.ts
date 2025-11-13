@@ -143,7 +143,7 @@ export const useUrlValueProvider = (
   };
 
   const isPersisted = (element: FilterElement) => {
-    return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
+    return value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
   };
 
   const getTokenByName = (name: string) => {

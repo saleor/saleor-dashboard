@@ -24,7 +24,7 @@ export const useTranslate = () => {
       })),
     translateSelectedOperands: (container: FilterContainer) =>
       container.map(el => {
-        if (FilterElement.isCompatible(el)) {
+        if (FilterElement.isFilterElement(el)) {
           el.value.setLabel(formatLeftOperand(el.value.label as TranslationKeys));
         }
 
