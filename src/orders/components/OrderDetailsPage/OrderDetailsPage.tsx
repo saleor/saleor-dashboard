@@ -8,7 +8,6 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
-import { LucideIconsWrapper } from "@dashboard/components/Sidebar/LucideIconsWrapper";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForOrderDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -26,7 +25,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { Box, Button, Divider } from "@saleor/macaw-ui-next";
+import { Button, Divider } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -200,15 +199,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
               <Button
                 variant="secondary"
-                icon={
-                  <Box __width={20} __height={20}>
-                    <LucideIconsWrapper>
-                      <Code />
-                    </LucideIconsWrapper>
-                  </Box>
-                }
+                icon={<Code />}
                 onClick={onOrderShowMetadata}
                 data-test-id="show-order-metadata"
+                marginRight={3}
               />
               <TopNav.Menu
                 dataTestId="menu"

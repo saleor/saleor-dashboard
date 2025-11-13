@@ -3,9 +3,9 @@ import { MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderDetailsQuery } from "@dashboard/graphql";
-import { buttonMessages, commonMessages } from "@dashboard/intl";
+import { buttonMessages } from "@dashboard/intl";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -60,7 +60,12 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content size="md" overflowY="hidden">
-        <DashboardModal.Header>{intl.formatMessage(commonMessages.metadata)}</DashboardModal.Header>
+        <DashboardModal.Header paddingLeft={6}>
+          {intl.formatMessage({
+            defaultMessage: "Order Metadata",
+            id: "oL7VUz",
+          })}
+        </DashboardModal.Header>
 
         {/* This is scroll container so that Save and title are always visible */}
         <Box
@@ -77,16 +82,6 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
         >
           <Box as="form" onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDirection="column" gap={2}>
-              <Box display="flex" flexDirection="column" marginBottom={2}>
-                <Text>
-                  <FormattedMessage
-                    defaultMessage="Metadata associated with this order"
-                    description="dialog, editing order metadata"
-                    id="lF7y0e"
-                  />
-                </Text>
-              </Box>
-
               <MetadataCard
                 data={mapFieldArrayToMetadataInput(metadataFields)}
                 isPrivate={false}
