@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
 import { FilterAPIProvider } from "../API/FilterAPIProvider";
+import { QueryApiType } from "../FiltersQueryBuilder/types";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { LeftOperandsProvider } from "../LeftOperandsProvider";
 import { useContainerState } from "../useContainerState";
@@ -12,4 +13,5 @@ export const ConditionalFilterContext = createContext<{
   leftOperandsProvider: LeftOperandsProvider;
   containerState: ReturnType<typeof useContainerState>;
   filterWindow: FilterWindow;
+  queryApiType: QueryApiType;
 } | null>(null);
