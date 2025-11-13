@@ -23,5 +23,5 @@ MAILPITURL=
 You are ready to run Playwright commands like:
 
 ```shell
-npm run e2e
+pnpm run e2e
 ```

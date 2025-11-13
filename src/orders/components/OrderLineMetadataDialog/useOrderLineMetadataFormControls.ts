@@ -6,51 +6,51 @@ import { useMemo } from "react";
 import { FieldArrayPath, FieldError, useFieldArray, UseFormReturn } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { OrderAndVariantMetadataFormData } from "./OrderMetadataDialog";
+import { OrderLineAndVariantMetadataFormData } from "./OrderLineMetadataDialog";
 import { getValidateMetadata } from "./utils";
 
-type UseOrderMetadataFormControlsParams = Pick<
-  UseFormReturn<OrderAndVariantMetadataFormData>,
+type UseOrderLineMetadataFormControlsParams = Pick<
+  UseFormReturn<OrderLineAndVariantMetadataFormData>,
   "control" | "trigger" | "getValues" | "formState"
 >;
 
-export const useOrderMetadataFormControls = ({
+export const useOrderLineMetadataFormControls = ({
   control,
   trigger,
   getValues,
   formState,
-}: UseOrderMetadataFormControlsParams) => {
+}: UseOrderLineMetadataFormControlsParams) => {
   const intl = useIntl();
 
   // Order Line metadata field arrays
-  const orderLineMetadataControls = useFieldArray<OrderAndVariantMetadataFormData>({
+  const orderLineMetadataControls = useFieldArray<OrderLineAndVariantMetadataFormData>({
     control,
-    name: "orderLine.metadata" as FieldArrayPath<OrderAndVariantMetadataFormData>,
+    name: "orderLine.metadata" as FieldArrayPath<OrderLineAndVariantMetadataFormData>,
     rules: {
       validate: getValidateMetadata(intl),
     },
   });
 
-  const orderLinePrivateMetadataControls = useFieldArray<OrderAndVariantMetadataFormData>({
+  const orderLinePrivateMetadataControls = useFieldArray<OrderLineAndVariantMetadataFormData>({
     control,
-    name: "orderLine.privateMetadata" as FieldArrayPath<OrderAndVariantMetadataFormData>,
+    name: "orderLine.privateMetadata" as FieldArrayPath<OrderLineAndVariantMetadataFormData>,
     rules: {
       validate: getValidateMetadata(intl),
     },
   });
 
   // Variant metadata field arrays
-  const variantMetadataControls = useFieldArray<OrderAndVariantMetadataFormData>({
+  const variantMetadataControls = useFieldArray<OrderLineAndVariantMetadataFormData>({
     control,
-    name: "variant.metadata" as FieldArrayPath<OrderAndVariantMetadataFormData>,
+    name: "variant.metadata" as FieldArrayPath<OrderLineAndVariantMetadataFormData>,
     rules: {
       validate: getValidateMetadata(intl),
     },
   });
 
-  const variantPrivateMetadataControls = useFieldArray<OrderAndVariantMetadataFormData>({
+  const variantPrivateMetadataControls = useFieldArray<OrderLineAndVariantMetadataFormData>({
     control,
-    name: "variant.privateMetadata" as FieldArrayPath<OrderAndVariantMetadataFormData>,
+    name: "variant.privateMetadata" as FieldArrayPath<OrderLineAndVariantMetadataFormData>,
     rules: {
       validate: getValidateMetadata(intl),
     },
