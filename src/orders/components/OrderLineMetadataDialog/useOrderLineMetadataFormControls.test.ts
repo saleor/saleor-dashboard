@@ -3,14 +3,14 @@ import { act, renderHook } from "@testing-library/react-hooks";
 import { useForm } from "react-hook-form";
 
 import { EventDataAction, EventDataField } from "../../../components/Metadata/types";
-import { OrderAndVariantMetadataFormData } from "./OrderMetadataDialog";
-import { useOrderMetadataFormControls } from "./useOrderMetadataFormControls";
+import { OrderLineAndVariantMetadataFormData } from "./OrderLineMetadataDialog";
+import { useOrderLineMetadataFormControls } from "./useOrderLineMetadataFormControls";
 
-describe("useOrderMetadataFormControls", () => {
+describe("useOrderLineMetadataFormControls", () => {
   it("returns form values from hook form for both orderLine and variant", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [{ key: "order-key", value: "order-value" }],
@@ -26,7 +26,7 @@ describe("useOrderMetadataFormControls", () => {
 
     // Act
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -68,7 +68,7 @@ describe("useOrderMetadataFormControls", () => {
   it("handles update action for orderLine metadata keys", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [{ key: "old-key", value: "test-value" }],
@@ -83,7 +83,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -125,7 +125,7 @@ describe("useOrderMetadataFormControls", () => {
   it("handles update action for orderLine metadata values", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [{ key: "test-key", value: "old-value" }],
@@ -140,7 +140,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -182,7 +182,7 @@ describe("useOrderMetadataFormControls", () => {
   it("handles update action for variant metadata keys", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [],
@@ -197,7 +197,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -239,7 +239,7 @@ describe("useOrderMetadataFormControls", () => {
   it("handles update action for variant metadata values", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [],
@@ -254,7 +254,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -296,7 +296,7 @@ describe("useOrderMetadataFormControls", () => {
   it("handles add action for orderLine metadata and privateMetadata", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [],
@@ -311,7 +311,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -350,7 +350,7 @@ describe("useOrderMetadataFormControls", () => {
   it("handles add action for variant metadata and privateMetadata", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [],
@@ -365,7 +365,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -404,7 +404,7 @@ describe("useOrderMetadataFormControls", () => {
   it("handles delete action for orderLine metadata and privateMetadata", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [{ key: "test", value: "value" }],
@@ -419,7 +419,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -448,7 +448,7 @@ describe("useOrderMetadataFormControls", () => {
   it("handles delete action for variant metadata and privateMetadata", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [],
@@ -463,7 +463,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,
@@ -492,7 +492,7 @@ describe("useOrderMetadataFormControls", () => {
   it("validates and rejects duplicate keys in orderLine metadata", async () => {
     // Arrange
     const { result: reactHookForm } = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [{ key: "test", value: "value1" }],
@@ -507,7 +507,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result: metadataFormControls } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: reactHookForm.current.control,
         trigger: reactHookForm.current.trigger,
         getValues: reactHookForm.current.getValues,
@@ -565,7 +565,7 @@ describe("useOrderMetadataFormControls", () => {
   it("validates and rejects duplicate keys in variant metadata", async () => {
     // Arrange
     const { result: reactHookForm } = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [],
@@ -580,7 +580,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result: metadataFormControls } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: reactHookForm.current.control,
         trigger: reactHookForm.current.trigger,
         getValues: reactHookForm.current.getValues,
@@ -638,7 +638,7 @@ describe("useOrderMetadataFormControls", () => {
   it("validates and rejects empty keys in orderLine metadata", async () => {
     // Arrange
     const { result: reactHookForm } = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [{ key: "test", value: "value1" }],
@@ -655,7 +655,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result: metadataFormControls } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: reactHookForm.current.control,
         trigger: reactHookForm.current.trigger,
         getValues: reactHookForm.current.getValues,
@@ -694,7 +694,7 @@ describe("useOrderMetadataFormControls", () => {
   it("validates and rejects empty keys in variant metadata", async () => {
     // Arrange
     const { result: reactHookForm } = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [],
@@ -711,7 +711,7 @@ describe("useOrderMetadataFormControls", () => {
     );
 
     const { result: metadataFormControls } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: reactHookForm.current.control,
         trigger: reactHookForm.current.trigger,
         getValues: reactHookForm.current.getValues,
@@ -750,7 +750,7 @@ describe("useOrderMetadataFormControls", () => {
   it("returns empty error arrays when there are no errors", () => {
     // Arrange
     const formMethods = renderHook(() =>
-      useForm<OrderAndVariantMetadataFormData>({
+      useForm<OrderLineAndVariantMetadataFormData>({
         values: {
           orderLine: {
             metadata: [{ key: "valid-key", value: "value" }],
@@ -766,7 +766,7 @@ describe("useOrderMetadataFormControls", () => {
 
     // Act
     const { result } = renderHook(() =>
-      useOrderMetadataFormControls({
+      useOrderLineMetadataFormControls({
         control: formMethods.result.current.control,
         trigger: formMethods.result.current.trigger,
         getValues: formMethods.result.current.getValues,

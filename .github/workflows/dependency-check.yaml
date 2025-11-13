@@ -29,7 +29,7 @@ jobs:
       - name: Store import stats
         id: store_import_stats
         run: |
-          stats=$(npx depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
+          stats=$(pnpm exec depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
           echo "Statistics on main branch: ${stats}"
           echo "MAIN_STATISTICS=${stats}" >> $GITHUB_OUTPUT
 
@@ -52,10 +52,10 @@ jobs:
         env:
           latest: ${{ needs.current_state.outputs.main_statistics }}
         run: |
-          current=$(npx depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
+          current=$(pnpm exec depcruise --config .dependency-cruiser.js src --output-type json | jq ".summary.info")
           difference=$(( $current - $latest ))
           echo "Imports in main: ${latest}"
-          echo "Incomming imports: ${current}"
+          echo "Incoming imports: ${current}"
           echo "Difference: ${difference}"
           echo "IMPORT_DIFFERENCE=${difference}" >> $GITHUB_ENV
       - name: "MacawUI regression reported"

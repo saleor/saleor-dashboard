@@ -7,7 +7,7 @@ import { Box, Button, Divider, TrashBinIcon } from "@saleor/macaw-ui-next";
 import { PropsWithChildren } from "react";
 
 import OrderCardTitle from "../OrderCardTitle";
-import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid";
+import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
 
@@ -19,7 +19,7 @@ interface OrderFulfilledProductsCardProps {
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
   dataTestId?: string;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
 const statusesToMergeLines = [
@@ -46,7 +46,7 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
     onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
-    onShowMetadata,
+    onOrderLineShowMetadata,
     dataTestId,
   } = props;
 
@@ -94,7 +94,11 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
         }
       />
       <DashboardCard.Content paddingX={0}>
-        <OrderDetailsDatagrid lines={getLines()} loading={false} onShowMetadata={onShowMetadata} />
+        <OrderDetailsDatagrid
+          lines={getLines()}
+          loading={false}
+          onOrderLineShowMetadata={onOrderLineShowMetadata}
+        />
         <ExtraInfoLines fulfillment={fulfillment} />
       </DashboardCard.Content>
       {props.children}

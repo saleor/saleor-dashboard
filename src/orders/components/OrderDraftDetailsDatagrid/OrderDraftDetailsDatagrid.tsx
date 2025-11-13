@@ -27,7 +27,7 @@ interface OrderDraftDetailsDatagridProps {
   errors: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
 export const OrderDraftDetailsDatagrid = ({
@@ -35,7 +35,7 @@ export const OrderDraftDetailsDatagrid = ({
   errors,
   onOrderLineChange,
   onOrderLineRemove,
-  onShowMetadata,
+  onOrderLineShowMetadata,
 }: OrderDraftDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -64,7 +64,7 @@ export const OrderDraftDetailsDatagrid = ({
     columns: visibleColumns,
     lines,
     errors,
-    onShowMetadata,
+    onOrderLineShowMetadata,
   });
   const getMenuItems = useCallback(
     index => [

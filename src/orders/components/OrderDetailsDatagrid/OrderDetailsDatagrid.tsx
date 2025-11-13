@@ -25,13 +25,15 @@ const ROW_ACTION_BAR_WIDTH = 80;
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
+  enableVerticalBorder?: boolean;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
   loading,
-  onShowMetadata,
+  onOrderLineShowMetadata,
+  enableVerticalBorder = true,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -57,10 +59,10 @@ export const OrderDetailsDatagrid = ({
       columns: visibleColumns,
       data: lines,
       loading,
+      onOrderLineShowMetadata,
       intl,
-      onShowMetadata,
     }),
-    [visibleColumns, loading, lines, intl, onShowMetadata],
+    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata],
   );
   const getMenuItems = useCallback(
     index => [
@@ -87,14 +89,14 @@ export const OrderDetailsDatagrid = ({
         menuItems={getMenuItems(index)}
         onShowMetadata={() => {
           if (lines[index]) {
-            onShowMetadata(lines[index].id);
+            onOrderLineShowMetadata(lines[index].id);
           }
         }}
         disabled={loading}
         intl={intl}
       />
     ),
-    [getMenuItems, lines, onShowMetadata, loading, intl],
+    [getMenuItems, lines, onOrderLineShowMetadata, loading, intl],
   );
 
   return (
@@ -105,7 +107,7 @@ export const OrderDetailsDatagrid = ({
         columnSelect="single"
         freezeColumns={1}
         availableColumns={visibleColumns}
-        verticalBorder={false}
+        verticalBorder={enableVerticalBorder}
         emptyText={intl.formatMessage(orderMessages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}

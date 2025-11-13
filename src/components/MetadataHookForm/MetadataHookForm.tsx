@@ -25,7 +25,7 @@ interface MetadataProps
 
 /** Displays controls for `metadata` and `privateMetadata` fields used with react-hook-form useForm
  * Values must be named exactly `metadata` and `privateMetadata`
- * Example: see OrderMetadataDialog */
+ * Example: see OrderLineMetadataDialog */
 export const MetadataHookForm = ({
   isLoading,
   disabled,
