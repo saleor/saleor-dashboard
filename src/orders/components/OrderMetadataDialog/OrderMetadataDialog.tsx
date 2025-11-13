@@ -77,7 +77,7 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
         >
           <Box as="form" onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDirection="column" gap={2}>
-              <Box display="flex" flexDirection="column" marginLeft={6} marginBottom={2}>
+              <Box display="flex" flexDirection="column" marginBottom={2}>
                 <Text>
                   <FormattedMessage
                     defaultMessage="Metadata associated with this order"
