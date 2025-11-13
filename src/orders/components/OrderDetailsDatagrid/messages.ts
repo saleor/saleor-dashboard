@@ -42,4 +42,12 @@ export const messages = defineMessages({
     id: "VYK2nN",
     defaultMessage: "Product details",
   },
+  showMetadata: {
+    id: "IpOugE",
+    defaultMessage: "Show metadata",
+  },
+  openProductDetail: {
+    id: "mMOskm",
+    defaultMessage: "Open product detail",
+  },
 });
