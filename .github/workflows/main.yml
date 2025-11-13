@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "pnpm"
+          # Don't cache in this job as we don't install dependencies
 
       - name: Audit dependencies
         run: pnpm audit --audit-level moderate
@@ -43,8 +43,7 @@ jobs:
         run: pnpm run check-types
 
       - name: Run lint
-        # Use npm to run it, because for some reason "pnpm run" fails.
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Check for uncommitted lint changes
         run: git diff --exit-code ./src
