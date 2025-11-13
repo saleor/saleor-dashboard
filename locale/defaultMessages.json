@@ -8158,6 +8158,9 @@
   "oJkeS6": {
     "string": "Attribute Code"
   },
+  "oL7VUz": {
+    "string": "Order Metadata"
+  },
   "oLMXDv": {
     "context": "order status",
     "string": "Ready to fulfill"

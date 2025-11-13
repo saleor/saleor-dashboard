@@ -227,7 +227,8 @@ export const OrderUnconfirmedDetails = ({
             }
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
             onShippingMethodEdit={() => openModal("edit-shipping")}
-            onOrderLineShowMetadata={id => openModal("view-metadata", { id })}
+            onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
+            onOrderShowMetadata={() => openModal("view-order-metadata")}
             saveButtonBarState={getMutationState(
               updateMetadataOpts.called || updatePrivateMetadataOpts.called,
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
@@ -376,7 +377,7 @@ export const OrderUnconfirmedDetails = ({
         }
       />
       <OrderLineMetadataDialog
-        open={params.action === "view-metadata"}
+        open={params.action === "view-order-line-metadata"}
         onClose={closeModal}
         lineId={params.id}
         orderId={id}
