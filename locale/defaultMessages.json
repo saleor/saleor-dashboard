@@ -3278,6 +3278,9 @@
   "IoDlcd": {
     "string": "Slug"
   },
+  "IpOugE": {
+    "string": "Show metadata"
+  },
   "IqRBql": {
     "context": "variant name",
     "string": "New variant"
@@ -7872,6 +7875,9 @@
     "context": "ChannelsSection select field label",
     "string": "Channel"
   },
+  "mMOskm": {
+    "string": "Open product detail"
+  },
   "mQtoRO": {
     "context": "taxes title",
     "string": "Taxes (VAT included)"
@@ -8157,6 +8163,9 @@
   },
   "oJkeS6": {
     "string": "Attribute Code"
+  },
+  "oL7VUz": {
+    "string": "Order Metadata"
   },
   "oLMXDv": {
     "context": "order status",

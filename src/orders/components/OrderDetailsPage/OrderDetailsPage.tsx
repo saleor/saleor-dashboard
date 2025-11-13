@@ -24,8 +24,11 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
+import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { Box, Button, Divider } from "@saleor/macaw-ui-next";
+import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -66,6 +69,7 @@ interface OrderDetailsPageProps {
   onFulfillmentApprove: (id: string) => any;
   onFulfillmentCancel: (id: string) => any;
   onOrderLineShowMetadata: (id: string) => void;
+  onOrderShowMetadata: () => void;
   onFulfillmentTrackingNumberUpdate: (id: string) => any;
   onOrderFulfill: () => any;
   onProductClick?: (id: string) => any;
@@ -121,6 +125,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onTransactionAction,
     onAddManualTransaction,
     onOrderLineShowMetadata,
+    onOrderShowMetadata,
     onMarkAsPaid,
     onRefundAdd,
     onSubmit,
@@ -194,6 +199,18 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
+              <Box position="relative" marginRight={3}>
+                <Button
+                  variant="secondary"
+                  icon={<Code />}
+                  onClick={onOrderShowMetadata}
+                  data-test-id="show-order-metadata"
+                />
+                <Box position="absolute" __top="-4px" __right="-4px">
+                  <Ripple model={rippleOrderMetadata} />
+                </Box>
+              </Box>
+
               <TopNav.Menu
                 dataTestId="menu"
                 items={[
@@ -262,11 +279,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 onMarkAsPaid={onMarkAsPaid}
                 onAddManualTransaction={onAddManualTransaction}
                 onRefundAdd={onRefundAdd}
-              />
-              <Metadata
-                isLoading={loading}
-                data={data[order?.id]}
-                onChange={x => handleChangeMetadata(x, order?.id)}
               />
               <OrderHistory
                 history={order?.events}

@@ -5,7 +5,10 @@ import { useMemo } from "react";
 
 export const cellHeight = 40;
 
-const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
+const useStyles = makeStyles<{
+  actionButtonPosition?: "left" | "right";
+  showMetadataButton?: boolean;
+}>(
   () => {
     const rowActionSelected = {
       background: vars.colors.background.default1,
@@ -34,8 +37,9 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
       columnPicker: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-end",
         height: cellHeight,
+        width: "100%",
       },
       columnPickerBackground: {
         background: vars.colors.background.default1,
@@ -43,6 +47,7 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
       ghostIcon: {
         color: vars.colors.text.default1,
         padding: vars.spacing[1],
+        margin: vars.spacing[1],
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
@@ -119,10 +124,8 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
         borderLeft: "none",
         borderRight: "none",
         color: vars.colors.text.default1,
-        marginLeft: -1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        display: "grid",
+        gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
         height: `calc(${cellHeight}px - 1px)`,
       },
       rowColumnGroup: {

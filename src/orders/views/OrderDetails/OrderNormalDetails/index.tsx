@@ -32,6 +32,7 @@ import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderF
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
+import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import {
@@ -225,7 +226,8 @@ export const OrderNormalDetails = ({
         )}
         shippingMethods={data?.order?.shippingMethods || []}
         onOrderCancel={() => openModal("cancel")}
-        onOrderLineShowMetadata={id => openModal("view-metadata", { id })}
+        onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
+        onOrderShowMetadata={() => openModal("view-order-metadata")}
         onTransactionAction={(id, action) =>
           openModal("transaction-action", {
             type: action,
@@ -314,10 +316,15 @@ export const OrderNormalDetails = ({
         }
       />
       <OrderLineMetadataDialog
-        open={params.action === "view-metadata"}
+        open={params.action === "view-order-line-metadata"}
         onClose={closeModal}
         lineId={params.id}
         orderId={id}
+      />
+      <OrderMetadataDialog
+        open={params.action === "view-order-metadata"}
+        onClose={closeModal}
+        order={data?.order}
       />
       <OrderMarkAsPaidDialog
         confirmButtonState={orderPaymentMarkAsPaid.opts.status}

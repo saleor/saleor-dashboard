@@ -57,6 +57,7 @@ export const ColumnPicker = ({
           pointerEvents={pickerOpen ? "none" : undefined}
           __backgroundColor={pickerOpen ? vars.colors.background.default1Pressed : undefined}
           __borderColor={pickerOpen ? vars.colors.border.default2 : undefined}
+          title="Pick columns"
         />
       </Popover.Trigger>
       <Popover.Content
