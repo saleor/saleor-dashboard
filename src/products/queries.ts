@@ -269,3 +269,14 @@ export const defaultGraphiQLQuery = `query ProductDetails($id: ID!) {
     description
   }
 }`;
+
+export const productPoc322 = `query ProductVariants323 {
+    productVariants(channel: "default-channel", first: 1 ) {
+        edges {
+            node {
+                id
+                iAm323: metafield(key: "test")
+            }
+        }
+    }
+}`;
