@@ -7,6 +7,11 @@ declare module "*.svg" {
 }
 
 declare const FLAGS_SERVICE_ENABLED: boolean;
+/**
+ * Feature flags available in the application.
+ * Notable flags:
+ * - FF_USE_STAGING_SCHEMA: Enable staging schema instead of main schema
+ */
 declare const FLAGS: Record<string, string>;
 
 declare interface Window {
