@@ -49,10 +49,7 @@ interface IChannelPriceArgs {
   costPrice: string;
   priorPrice: string;
 }
-export type ChannelPriceArgs = RequireOnlyOne<
-  IChannelPriceArgs,
-  "price" | "costPrice" | "priorPrice"
->;
+export type ChannelPriceArgs = RequireOnlyOne<IChannelPriceArgs, "price" | "costPrice">;
 
 export interface ChannelPriceAndPreorderData {
   id: string;
@@ -119,7 +116,7 @@ export const createVariantChannels = (
       id: listing.channel.id,
       name: listing.channel.name,
       price: listing.price?.amount?.toString(),
-      priorPrice: listing.priorPrice?.amount.toString() || "",
+      priorPrice: listing.priorPrice?.amount?.toString(),
     })) as ChannelPriceData[];
   }
 
