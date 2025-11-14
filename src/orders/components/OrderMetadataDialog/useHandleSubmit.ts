@@ -1,6 +1,7 @@
 import { useApolloClient } from "@apollo/client";
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
-  OrderLinesMetadataDocument,
+  OrderDetailsDocument,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
@@ -10,9 +11,9 @@ import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdat
 import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { OrderAndVariantMetadataFormData, OrderMetadataDialogData } from "./OrderMetadataDialog";
+import { OrderMetadataDialogData } from "./OrderMetadataDialog";
 
-export const useHandleOrderLineMetadataSubmit = ({
+export const useHandleOrderMetadataSubmit = ({
   initialData,
   onClose,
 }: {
@@ -28,9 +29,9 @@ export const useHandleOrderLineMetadataSubmit = ({
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
 
   const [submitInProgress, setSubmitInProgress] = useState(false);
-  const submittedData = useRef<OrderAndVariantMetadataFormData>();
+  const submittedData = useRef<MetadataFormData>();
 
-  const orderLineSubmitHandler = useMemo(() => {
+  const orderSubmitHandler = useMemo(() => {
     if (!initialData) {
       return () => Promise.resolve([]);
     }
@@ -44,42 +45,17 @@ export const useHandleOrderLineMetadataSubmit = ({
     );
   }, [initialData, updateMetadata, updatePrivateMetadata]);
 
-  const variantSubmitHandler = useMemo(() => {
-    // Fallback handler: If there is no variant data to submit,
-    // return a promise resolving to an empty error array.
-    // This is appropriate because no submission occurs, so no errors are possible.
-    if (!initialData?.variant) {
-      return () => Promise.resolve([]);
-    }
-
-    // Ensure privateMetadata is always present for the handler
-    const variantWithMetadata = {
-      ...initialData.variant,
-      privateMetadata: initialData.variant.privateMetadata ?? [],
-    };
-
-    return createMetadataUpdateHandler(
-      variantWithMetadata,
-      () => Promise.resolve([]),
-      variables => updateMetadata({ variables }),
-      variables => updatePrivateMetadata({ variables }),
-    );
-  }, [initialData?.variant, updateMetadata, updatePrivateMetadata]);
-
-  const onSubmit = async (data: OrderAndVariantMetadataFormData) => {
+  const onSubmit = async (data: MetadataFormData) => {
     setSubmitInProgress(true);
     submittedData.current = data;
 
-    // Submit both order line and variant metadata
-    const orderLineErrors = await orderLineSubmitHandler(data.orderLine);
-    const variantErrors = await variantSubmitHandler(data.variant);
+    // Submit order metadata
+    const orderErrors = await orderSubmitHandler(data);
 
-    client.refetchQueries({ include: [OrderLinesMetadataDocument] });
+    client.refetchQueries({ include: [OrderDetailsDocument] });
 
-    // Check if both submissions succeeded
-    const allErrors = [...orderLineErrors, ...variantErrors];
-
-    if (allErrors.length === 0) {
+    // Check if submission succeeded
+    if (orderErrors.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),

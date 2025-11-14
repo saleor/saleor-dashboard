@@ -18,18 +18,21 @@ import { Link } from "react-router-dom";
 import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
+import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
+
+const ROW_ACTION_BAR_WIDTH = 80;
 
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
   enableVerticalBorder?: boolean;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
   loading,
-  onShowMetadata,
+  onOrderLineShowMetadata,
   enableVerticalBorder = true,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
@@ -56,10 +59,10 @@ export const OrderDetailsDatagrid = ({
       columns: visibleColumns,
       data: lines,
       loading,
-      onShowMetadata,
+      onOrderLineShowMetadata,
       intl,
     }),
-    [intl, visibleColumns, loading],
+    [visibleColumns, loading, lines, intl, onOrderLineShowMetadata],
   );
   const getMenuItems = useCallback(
     index => [
@@ -77,6 +80,23 @@ export const OrderDetailsDatagrid = ({
       },
     ],
     [intl, lines],
+  );
+
+  const renderRowActions = useCallback(
+    index => (
+      <OrderDetailsRowActions
+        key={`row-actions-${index}`}
+        menuItems={getMenuItems(index)}
+        onShowMetadata={() => {
+          if (lines[index]) {
+            onOrderLineShowMetadata(lines[index].id);
+          }
+        }}
+        disabled={loading}
+        intl={intl}
+      />
+    ),
+    [getMenuItems, lines, onOrderLineShowMetadata, loading, intl],
   );
 
   return (
@@ -102,8 +122,11 @@ export const OrderDetailsDatagrid = ({
             staticColumns={staticColumns}
             selectedColumns={selectedColumns}
             onToggle={handlers.onToggle}
+            align="end"
           />
         )}
+        renderRowActions={renderRowActions}
+        rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
       />
     </DatagridChangeStateContext.Provider>
   );

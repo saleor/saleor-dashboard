@@ -24,8 +24,11 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
+import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { Box, Button, Divider } from "@saleor/macaw-ui-next";
+import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -33,12 +36,12 @@ import OrderChannelSectionCard from "../OrderChannelSectionCard";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
-import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
-import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
+import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
+import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard/OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPaymentOrTransaction";
-import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
+import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import Title from "./Title";
 import {
@@ -65,7 +68,8 @@ interface OrderDetailsPageProps {
   onBillingAddressEdit: () => any;
   onFulfillmentApprove: (id: string) => any;
   onFulfillmentCancel: (id: string) => any;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
+  onOrderShowMetadata: () => void;
   onFulfillmentTrackingNumberUpdate: (id: string) => any;
   onOrderFulfill: () => any;
   onProductClick?: (id: string) => any;
@@ -120,7 +124,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onShippingMethodEdit,
     onTransactionAction,
     onAddManualTransaction,
-    onShowMetadata,
+    onOrderLineShowMetadata,
+    onOrderShowMetadata,
     onMarkAsPaid,
     onRefundAdd,
     onSubmit,
@@ -194,6 +199,18 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
+              <Box position="relative" marginRight={3}>
+                <Button
+                  variant="secondary"
+                  icon={<Code />}
+                  onClick={onOrderShowMetadata}
+                  data-test-id="show-order-metadata"
+                />
+                <Box position="absolute" __top="-4px" __right="-4px">
+                  <Ripple model={rippleOrderMetadata} />
+                </Box>
+              </Box>
+
               <TopNav.Menu
                 dataTestId="menu"
                 items={[
@@ -216,7 +233,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   lines={unfulfilled}
                   onFulfill={onOrderFulfill}
                   loading={loading}
-                  onShowMetadata={onShowMetadata}
+                  onOrderLineShowMetadata={onOrderLineShowMetadata}
                 />
               ) : (
                 <>
@@ -224,7 +241,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                     order={order}
                     errors={errors}
                     loading={loading}
-                    onShowMetadata={onShowMetadata}
+                    onOrderLineShowMetadata={onOrderLineShowMetadata}
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}
@@ -240,7 +257,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   fulfillment={fulfillment}
                   fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
                   order={order}
-                  onShowMetadata={onShowMetadata}
+                  onOrderLineShowMetadata={onOrderLineShowMetadata}
                   onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
                   onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
                   onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
@@ -262,11 +279,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 onMarkAsPaid={onMarkAsPaid}
                 onAddManualTransaction={onAddManualTransaction}
                 onRefundAdd={onRefundAdd}
-              />
-              <Metadata
-                isLoading={loading}
-                data={data[order?.id]}
-                onChange={x => handleChangeMetadata(x, order?.id)}
               />
               <OrderHistory
                 history={order?.events}
