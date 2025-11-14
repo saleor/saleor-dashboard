@@ -38,7 +38,7 @@ export interface TranslationField<T extends string = string> {
 
 export interface TranslationsEntitiesPageProps {
   translationId: string;
-  activeField: string;
+  activeField: string | string[];
   disabled: boolean;
   languageCode: string;
   languages: LanguageFragment[];
