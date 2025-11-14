@@ -6,13 +6,13 @@ import { createFetch, createSaleorClient } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
 
 import introspectionQueryResultData from "./fragmentTypes.generated";
-import introspectionQueryResultDataV323 from "./fragmentTypesV323.generated";
-import { isSchema323 } from "./schemaVersion";
+import introspectionQueryResultDataStaging from "./fragmentTypesStaging.generated";
+import { isStagingSchema } from "./schemaVersion";
 import { TypedTypePolicies } from "./typePolicies.generated";
 
 // Select the appropriate fragmentTypes and typePolicies based on schema version
-const introspectionData = isSchema323()
-  ? introspectionQueryResultDataV323
+const introspectionData = isStagingSchema()
+  ? introspectionQueryResultDataStaging
   : introspectionQueryResultData;
 
 const attachVariablesLink = new ApolloLink((operation, forward) => {

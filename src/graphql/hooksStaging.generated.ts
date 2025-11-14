@@ -1,4 +1,4 @@
-import * as Types from './types.generated';
+import * as Types from './typesStaging.generated';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -3692,7 +3692,7 @@ export const WebhookDetailsFragmentDoc = gql`
   customHeaders
 }
     ${WebhookFragmentDoc}`;
-export const AttributeBulkDeleteDocument = gql`
+export const AttributeBulkDeleteStaging = gql`
     mutation AttributeBulkDelete($ids: [ID!]!) {
   attributeBulkDelete(ids: $ids) {
     errors {
@@ -3722,12 +3722,12 @@ export type AttributeBulkDeleteMutationFn = Apollo.MutationFunction<Types.Attrib
  */
 export function useAttributeBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeBulkDeleteMutation, Types.AttributeBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AttributeBulkDeleteMutation, Types.AttributeBulkDeleteMutationVariables>(AttributeBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.AttributeBulkDeleteMutation, Types.AttributeBulkDeleteMutationVariables>(AttributeBulkDeleteStaging, options);
       }
 export type AttributeBulkDeleteMutationHookResult = ReturnType<typeof useAttributeBulkDeleteMutation>;
 export type AttributeBulkDeleteMutationResult = Apollo.MutationResult<Types.AttributeBulkDeleteMutation>;
 export type AttributeBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AttributeBulkDeleteMutation, Types.AttributeBulkDeleteMutationVariables>;
-export const AttributeDeleteDocument = gql`
+export const AttributeDeleteStaging = gql`
     mutation AttributeDelete($id: ID!) {
   attributeDelete(id: $id) {
     errors {
@@ -3757,12 +3757,12 @@ export type AttributeDeleteMutationFn = Apollo.MutationFunction<Types.AttributeD
  */
 export function useAttributeDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeDeleteMutation, Types.AttributeDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AttributeDeleteMutation, Types.AttributeDeleteMutationVariables>(AttributeDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.AttributeDeleteMutation, Types.AttributeDeleteMutationVariables>(AttributeDeleteStaging, options);
       }
 export type AttributeDeleteMutationHookResult = ReturnType<typeof useAttributeDeleteMutation>;
 export type AttributeDeleteMutationResult = Apollo.MutationResult<Types.AttributeDeleteMutation>;
 export type AttributeDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AttributeDeleteMutation, Types.AttributeDeleteMutationVariables>;
-export const AttributeUpdateDocument = gql`
+export const AttributeUpdateStaging = gql`
     mutation AttributeUpdate($id: ID!, $input: AttributeUpdateInput!) {
   attributeUpdate(id: $id, input: $input) {
     attribute {
@@ -3797,12 +3797,12 @@ export type AttributeUpdateMutationFn = Apollo.MutationFunction<Types.AttributeU
  */
 export function useAttributeUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeUpdateMutation, Types.AttributeUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AttributeUpdateMutation, Types.AttributeUpdateMutationVariables>(AttributeUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AttributeUpdateMutation, Types.AttributeUpdateMutationVariables>(AttributeUpdateStaging, options);
       }
 export type AttributeUpdateMutationHookResult = ReturnType<typeof useAttributeUpdateMutation>;
 export type AttributeUpdateMutationResult = Apollo.MutationResult<Types.AttributeUpdateMutation>;
 export type AttributeUpdateMutationOptions = Apollo.BaseMutationOptions<Types.AttributeUpdateMutation, Types.AttributeUpdateMutationVariables>;
-export const AttributeValueDeleteDocument = gql`
+export const AttributeValueDeleteStaging = gql`
     mutation AttributeValueDelete($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   attributeValueDelete(id: $id) {
     attribute {
@@ -3848,12 +3848,12 @@ export type AttributeValueDeleteMutationFn = Apollo.MutationFunction<Types.Attri
  */
 export function useAttributeValueDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeValueDeleteMutation, Types.AttributeValueDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AttributeValueDeleteMutation, Types.AttributeValueDeleteMutationVariables>(AttributeValueDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.AttributeValueDeleteMutation, Types.AttributeValueDeleteMutationVariables>(AttributeValueDeleteStaging, options);
       }
 export type AttributeValueDeleteMutationHookResult = ReturnType<typeof useAttributeValueDeleteMutation>;
 export type AttributeValueDeleteMutationResult = Apollo.MutationResult<Types.AttributeValueDeleteMutation>;
 export type AttributeValueDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AttributeValueDeleteMutation, Types.AttributeValueDeleteMutationVariables>;
-export const AttributeValueUpdateDocument = gql`
+export const AttributeValueUpdateStaging = gql`
     mutation AttributeValueUpdate($id: ID!, $input: AttributeValueUpdateInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   attributeValueUpdate(id: $id, input: $input) {
     attribute {
@@ -3900,12 +3900,12 @@ export type AttributeValueUpdateMutationFn = Apollo.MutationFunction<Types.Attri
  */
 export function useAttributeValueUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeValueUpdateMutation, Types.AttributeValueUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AttributeValueUpdateMutation, Types.AttributeValueUpdateMutationVariables>(AttributeValueUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AttributeValueUpdateMutation, Types.AttributeValueUpdateMutationVariables>(AttributeValueUpdateStaging, options);
       }
 export type AttributeValueUpdateMutationHookResult = ReturnType<typeof useAttributeValueUpdateMutation>;
 export type AttributeValueUpdateMutationResult = Apollo.MutationResult<Types.AttributeValueUpdateMutation>;
 export type AttributeValueUpdateMutationOptions = Apollo.BaseMutationOptions<Types.AttributeValueUpdateMutation, Types.AttributeValueUpdateMutationVariables>;
-export const AttributeValueCreateDocument = gql`
+export const AttributeValueCreateStaging = gql`
     mutation AttributeValueCreate($id: ID!, $input: AttributeValueCreateInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   attributeValueCreate(attribute: $id, input: $input) {
     attribute {
@@ -3952,12 +3952,12 @@ export type AttributeValueCreateMutationFn = Apollo.MutationFunction<Types.Attri
  */
 export function useAttributeValueCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeValueCreateMutation, Types.AttributeValueCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AttributeValueCreateMutation, Types.AttributeValueCreateMutationVariables>(AttributeValueCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AttributeValueCreateMutation, Types.AttributeValueCreateMutationVariables>(AttributeValueCreateStaging, options);
       }
 export type AttributeValueCreateMutationHookResult = ReturnType<typeof useAttributeValueCreateMutation>;
 export type AttributeValueCreateMutationResult = Apollo.MutationResult<Types.AttributeValueCreateMutation>;
 export type AttributeValueCreateMutationOptions = Apollo.BaseMutationOptions<Types.AttributeValueCreateMutation, Types.AttributeValueCreateMutationVariables>;
-export const AttributeCreateDocument = gql`
+export const AttributeCreateStaging = gql`
     mutation AttributeCreate($input: AttributeCreateInput!) {
   attributeCreate(input: $input) {
     attribute {
@@ -3990,12 +3990,12 @@ export type AttributeCreateMutationFn = Apollo.MutationFunction<Types.AttributeC
  */
 export function useAttributeCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeCreateMutation, Types.AttributeCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AttributeCreateMutation, Types.AttributeCreateMutationVariables>(AttributeCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AttributeCreateMutation, Types.AttributeCreateMutationVariables>(AttributeCreateStaging, options);
       }
 export type AttributeCreateMutationHookResult = ReturnType<typeof useAttributeCreateMutation>;
 export type AttributeCreateMutationResult = Apollo.MutationResult<Types.AttributeCreateMutation>;
 export type AttributeCreateMutationOptions = Apollo.BaseMutationOptions<Types.AttributeCreateMutation, Types.AttributeCreateMutationVariables>;
-export const AttributeValueReorderDocument = gql`
+export const AttributeValueReorderStaging = gql`
     mutation AttributeValueReorder($id: ID!, $move: ReorderInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   attributeReorderValues(attributeId: $id, moves: [$move]) {
     attribute {
@@ -4050,12 +4050,12 @@ export type AttributeValueReorderMutationFn = Apollo.MutationFunction<Types.Attr
  */
 export function useAttributeValueReorderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeValueReorderMutation, Types.AttributeValueReorderMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AttributeValueReorderMutation, Types.AttributeValueReorderMutationVariables>(AttributeValueReorderDocument, options);
+        return ApolloReactHooks.useMutation<Types.AttributeValueReorderMutation, Types.AttributeValueReorderMutationVariables>(AttributeValueReorderStaging, options);
       }
 export type AttributeValueReorderMutationHookResult = ReturnType<typeof useAttributeValueReorderMutation>;
 export type AttributeValueReorderMutationResult = Apollo.MutationResult<Types.AttributeValueReorderMutation>;
 export type AttributeValueReorderMutationOptions = Apollo.BaseMutationOptions<Types.AttributeValueReorderMutation, Types.AttributeValueReorderMutationVariables>;
-export const AttributeDetailsDocument = gql`
+export const AttributeDetailsStaging = gql`
     query AttributeDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   attribute(id: $id) {
     ...AttributeDetails
@@ -4094,16 +4094,16 @@ ${AttributeValueListFragmentDoc}`;
  */
 export function useAttributeDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>(AttributeDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>(AttributeDetailsStaging, options);
       }
 export function useAttributeDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>(AttributeDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>(AttributeDetailsStaging, options);
         }
 export type AttributeDetailsQueryHookResult = ReturnType<typeof useAttributeDetailsQuery>;
 export type AttributeDetailsLazyQueryHookResult = ReturnType<typeof useAttributeDetailsLazyQuery>;
 export type AttributeDetailsQueryResult = Apollo.QueryResult<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>;
-export const AttributeListDocument = gql`
+export const AttributeListStaging = gql`
     query AttributeList($filter: AttributeFilterInput, $before: String, $after: String, $first: Int, $last: Int, $sort: AttributeSortingInput) {
   attributes(
     filter: $filter
@@ -4149,16 +4149,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useAttributeListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AttributeListQuery, Types.AttributeListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AttributeListQuery, Types.AttributeListQueryVariables>(AttributeListDocument, options);
+        return ApolloReactHooks.useQuery<Types.AttributeListQuery, Types.AttributeListQueryVariables>(AttributeListStaging, options);
       }
 export function useAttributeListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AttributeListQuery, Types.AttributeListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AttributeListQuery, Types.AttributeListQueryVariables>(AttributeListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AttributeListQuery, Types.AttributeListQueryVariables>(AttributeListStaging, options);
         }
 export type AttributeListQueryHookResult = ReturnType<typeof useAttributeListQuery>;
 export type AttributeListLazyQueryHookResult = ReturnType<typeof useAttributeListLazyQuery>;
 export type AttributeListQueryResult = Apollo.QueryResult<Types.AttributeListQuery, Types.AttributeListQueryVariables>;
-export const RequestPasswordResetDocument = gql`
+export const RequestPasswordResetStaging = gql`
     mutation RequestPasswordReset($email: String!, $redirectUrl: String!) {
   requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {
     errors {
@@ -4189,12 +4189,12 @@ export type RequestPasswordResetMutationFn = Apollo.MutationFunction<Types.Reque
  */
 export function useRequestPasswordResetMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RequestPasswordResetMutation, Types.RequestPasswordResetMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.RequestPasswordResetMutation, Types.RequestPasswordResetMutationVariables>(RequestPasswordResetDocument, options);
+        return ApolloReactHooks.useMutation<Types.RequestPasswordResetMutation, Types.RequestPasswordResetMutationVariables>(RequestPasswordResetStaging, options);
       }
 export type RequestPasswordResetMutationHookResult = ReturnType<typeof useRequestPasswordResetMutation>;
 export type RequestPasswordResetMutationResult = Apollo.MutationResult<Types.RequestPasswordResetMutation>;
 export type RequestPasswordResetMutationOptions = Apollo.BaseMutationOptions<Types.RequestPasswordResetMutation, Types.RequestPasswordResetMutationVariables>;
-export const AvailableExternalAuthenticationsDocument = gql`
+export const AvailableExternalAuthenticationsStaging = gql`
     query AvailableExternalAuthentications {
   shop {
     availableExternalAuthentications {
@@ -4222,16 +4222,16 @@ export const AvailableExternalAuthenticationsDocument = gql`
  */
 export function useAvailableExternalAuthenticationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AvailableExternalAuthenticationsQuery, Types.AvailableExternalAuthenticationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AvailableExternalAuthenticationsQuery, Types.AvailableExternalAuthenticationsQueryVariables>(AvailableExternalAuthenticationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.AvailableExternalAuthenticationsQuery, Types.AvailableExternalAuthenticationsQueryVariables>(AvailableExternalAuthenticationsStaging, options);
       }
 export function useAvailableExternalAuthenticationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AvailableExternalAuthenticationsQuery, Types.AvailableExternalAuthenticationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AvailableExternalAuthenticationsQuery, Types.AvailableExternalAuthenticationsQueryVariables>(AvailableExternalAuthenticationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AvailableExternalAuthenticationsQuery, Types.AvailableExternalAuthenticationsQueryVariables>(AvailableExternalAuthenticationsStaging, options);
         }
 export type AvailableExternalAuthenticationsQueryHookResult = ReturnType<typeof useAvailableExternalAuthenticationsQuery>;
 export type AvailableExternalAuthenticationsLazyQueryHookResult = ReturnType<typeof useAvailableExternalAuthenticationsLazyQuery>;
 export type AvailableExternalAuthenticationsQueryResult = Apollo.QueryResult<Types.AvailableExternalAuthenticationsQuery, Types.AvailableExternalAuthenticationsQueryVariables>;
-export const UserDetailsDocument = gql`
+export const UserDetailsStaging = gql`
     query UserDetails {
   me {
     ...User
@@ -4256,16 +4256,16 @@ export const UserDetailsDocument = gql`
  */
 export function useUserDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.UserDetailsQuery, Types.UserDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.UserDetailsQuery, Types.UserDetailsQueryVariables>(UserDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.UserDetailsQuery, Types.UserDetailsQueryVariables>(UserDetailsStaging, options);
       }
 export function useUserDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.UserDetailsQuery, Types.UserDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.UserDetailsQuery, Types.UserDetailsQueryVariables>(UserDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.UserDetailsQuery, Types.UserDetailsQueryVariables>(UserDetailsStaging, options);
         }
 export type UserDetailsQueryHookResult = ReturnType<typeof useUserDetailsQuery>;
 export type UserDetailsLazyQueryHookResult = ReturnType<typeof useUserDetailsLazyQuery>;
 export type UserDetailsQueryResult = Apollo.QueryResult<Types.UserDetailsQuery, Types.UserDetailsQueryVariables>;
-export const CategoryDeleteDocument = gql`
+export const CategoryDeleteStaging = gql`
     mutation CategoryDelete($id: ID!) {
   categoryDelete(id: $id) {
     errors {
@@ -4295,12 +4295,12 @@ export type CategoryDeleteMutationFn = Apollo.MutationFunction<Types.CategoryDel
  */
 export function useCategoryDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CategoryDeleteMutation, Types.CategoryDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CategoryDeleteMutation, Types.CategoryDeleteMutationVariables>(CategoryDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.CategoryDeleteMutation, Types.CategoryDeleteMutationVariables>(CategoryDeleteStaging, options);
       }
 export type CategoryDeleteMutationHookResult = ReturnType<typeof useCategoryDeleteMutation>;
 export type CategoryDeleteMutationResult = Apollo.MutationResult<Types.CategoryDeleteMutation>;
 export type CategoryDeleteMutationOptions = Apollo.BaseMutationOptions<Types.CategoryDeleteMutation, Types.CategoryDeleteMutationVariables>;
-export const CategoryCreateDocument = gql`
+export const CategoryCreateStaging = gql`
     mutation CategoryCreate($parent: ID, $input: CategoryInput!) {
   categoryCreate(parent: $parent, input: $input) {
     category {
@@ -4335,12 +4335,12 @@ export type CategoryCreateMutationFn = Apollo.MutationFunction<Types.CategoryCre
  */
 export function useCategoryCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CategoryCreateMutation, Types.CategoryCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CategoryCreateMutation, Types.CategoryCreateMutationVariables>(CategoryCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.CategoryCreateMutation, Types.CategoryCreateMutationVariables>(CategoryCreateStaging, options);
       }
 export type CategoryCreateMutationHookResult = ReturnType<typeof useCategoryCreateMutation>;
 export type CategoryCreateMutationResult = Apollo.MutationResult<Types.CategoryCreateMutation>;
 export type CategoryCreateMutationOptions = Apollo.BaseMutationOptions<Types.CategoryCreateMutation, Types.CategoryCreateMutationVariables>;
-export const CategoryUpdateDocument = gql`
+export const CategoryUpdateStaging = gql`
     mutation CategoryUpdate($id: ID!, $input: CategoryInput!) {
   categoryUpdate(id: $id, input: $input) {
     category {
@@ -4375,12 +4375,12 @@ export type CategoryUpdateMutationFn = Apollo.MutationFunction<Types.CategoryUpd
  */
 export function useCategoryUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CategoryUpdateMutation, Types.CategoryUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CategoryUpdateMutation, Types.CategoryUpdateMutationVariables>(CategoryUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.CategoryUpdateMutation, Types.CategoryUpdateMutationVariables>(CategoryUpdateStaging, options);
       }
 export type CategoryUpdateMutationHookResult = ReturnType<typeof useCategoryUpdateMutation>;
 export type CategoryUpdateMutationResult = Apollo.MutationResult<Types.CategoryUpdateMutation>;
 export type CategoryUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CategoryUpdateMutation, Types.CategoryUpdateMutationVariables>;
-export const CategoryBulkDeleteDocument = gql`
+export const CategoryBulkDeleteStaging = gql`
     mutation CategoryBulkDelete($ids: [ID!]!) {
   categoryBulkDelete(ids: $ids) {
     errors {
@@ -4410,12 +4410,12 @@ export type CategoryBulkDeleteMutationFn = Apollo.MutationFunction<Types.Categor
  */
 export function useCategoryBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CategoryBulkDeleteMutation, Types.CategoryBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CategoryBulkDeleteMutation, Types.CategoryBulkDeleteMutationVariables>(CategoryBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.CategoryBulkDeleteMutation, Types.CategoryBulkDeleteMutationVariables>(CategoryBulkDeleteStaging, options);
       }
 export type CategoryBulkDeleteMutationHookResult = ReturnType<typeof useCategoryBulkDeleteMutation>;
 export type CategoryBulkDeleteMutationResult = Apollo.MutationResult<Types.CategoryBulkDeleteMutation>;
 export type CategoryBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.CategoryBulkDeleteMutation, Types.CategoryBulkDeleteMutationVariables>;
-export const RootCategoriesDocument = gql`
+export const RootCategoriesStaging = gql`
     query RootCategories($first: Int, $after: String, $last: Int, $before: String, $filter: CategoryFilterInput, $sort: CategorySortingInput) {
   categories(
     level: 0
@@ -4462,16 +4462,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useRootCategoriesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>(RootCategoriesDocument, options);
+        return ApolloReactHooks.useQuery<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>(RootCategoriesStaging, options);
       }
 export function useRootCategoriesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>(RootCategoriesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>(RootCategoriesStaging, options);
         }
 export type RootCategoriesQueryHookResult = ReturnType<typeof useRootCategoriesQuery>;
 export type RootCategoriesLazyQueryHookResult = ReturnType<typeof useRootCategoriesLazyQuery>;
 export type RootCategoriesQueryResult = Apollo.QueryResult<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>;
-export const CategoryDetailsDocument = gql`
+export const CategoryDetailsStaging = gql`
     query CategoryDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
   category(id: $id) {
     ...CategoryDetails
@@ -4528,16 +4528,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useCategoryDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>(CategoryDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>(CategoryDetailsStaging, options);
       }
 export function useCategoryDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>(CategoryDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>(CategoryDetailsStaging, options);
         }
 export type CategoryDetailsQueryHookResult = ReturnType<typeof useCategoryDetailsQuery>;
 export type CategoryDetailsLazyQueryHookResult = ReturnType<typeof useCategoryDetailsLazyQuery>;
 export type CategoryDetailsQueryResult = Apollo.QueryResult<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>;
-export const ChannelCreateDocument = gql`
+export const ChannelCreateStaging = gql`
     mutation ChannelCreate($input: ChannelCreateInput!) {
   channelCreate(input: $input) {
     channel {
@@ -4571,12 +4571,12 @@ export type ChannelCreateMutationFn = Apollo.MutationFunction<Types.ChannelCreat
  */
 export function useChannelCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelCreateMutation, Types.ChannelCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChannelCreateMutation, Types.ChannelCreateMutationVariables>(ChannelCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ChannelCreateMutation, Types.ChannelCreateMutationVariables>(ChannelCreateStaging, options);
       }
 export type ChannelCreateMutationHookResult = ReturnType<typeof useChannelCreateMutation>;
 export type ChannelCreateMutationResult = Apollo.MutationResult<Types.ChannelCreateMutation>;
 export type ChannelCreateMutationOptions = Apollo.BaseMutationOptions<Types.ChannelCreateMutation, Types.ChannelCreateMutationVariables>;
-export const ChannelUpdateDocument = gql`
+export const ChannelUpdateStaging = gql`
     mutation ChannelUpdate($id: ID!, $input: ChannelUpdateInput!) {
   channelUpdate(id: $id, input: $input) {
     channel {
@@ -4611,12 +4611,12 @@ export type ChannelUpdateMutationFn = Apollo.MutationFunction<Types.ChannelUpdat
  */
 export function useChannelUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelUpdateMutation, Types.ChannelUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChannelUpdateMutation, Types.ChannelUpdateMutationVariables>(ChannelUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ChannelUpdateMutation, Types.ChannelUpdateMutationVariables>(ChannelUpdateStaging, options);
       }
 export type ChannelUpdateMutationHookResult = ReturnType<typeof useChannelUpdateMutation>;
 export type ChannelUpdateMutationResult = Apollo.MutationResult<Types.ChannelUpdateMutation>;
 export type ChannelUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ChannelUpdateMutation, Types.ChannelUpdateMutationVariables>;
-export const ChannelDeleteDocument = gql`
+export const ChannelDeleteStaging = gql`
     mutation ChannelDelete($id: ID!, $input: ChannelDeleteInput) {
   channelDelete(id: $id, input: $input) {
     errors {
@@ -4647,12 +4647,12 @@ export type ChannelDeleteMutationFn = Apollo.MutationFunction<Types.ChannelDelet
  */
 export function useChannelDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelDeleteMutation, Types.ChannelDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChannelDeleteMutation, Types.ChannelDeleteMutationVariables>(ChannelDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.ChannelDeleteMutation, Types.ChannelDeleteMutationVariables>(ChannelDeleteStaging, options);
       }
 export type ChannelDeleteMutationHookResult = ReturnType<typeof useChannelDeleteMutation>;
 export type ChannelDeleteMutationResult = Apollo.MutationResult<Types.ChannelDeleteMutation>;
 export type ChannelDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ChannelDeleteMutation, Types.ChannelDeleteMutationVariables>;
-export const ChannelActivateDocument = gql`
+export const ChannelActivateStaging = gql`
     mutation ChannelActivate($id: ID!) {
   channelActivate(id: $id) {
     channel {
@@ -4686,12 +4686,12 @@ export type ChannelActivateMutationFn = Apollo.MutationFunction<Types.ChannelAct
  */
 export function useChannelActivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelActivateMutation, Types.ChannelActivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChannelActivateMutation, Types.ChannelActivateMutationVariables>(ChannelActivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ChannelActivateMutation, Types.ChannelActivateMutationVariables>(ChannelActivateStaging, options);
       }
 export type ChannelActivateMutationHookResult = ReturnType<typeof useChannelActivateMutation>;
 export type ChannelActivateMutationResult = Apollo.MutationResult<Types.ChannelActivateMutation>;
 export type ChannelActivateMutationOptions = Apollo.BaseMutationOptions<Types.ChannelActivateMutation, Types.ChannelActivateMutationVariables>;
-export const ChannelDeactivateDocument = gql`
+export const ChannelDeactivateStaging = gql`
     mutation ChannelDeactivate($id: ID!) {
   channelDeactivate(id: $id) {
     channel {
@@ -4725,12 +4725,12 @@ export type ChannelDeactivateMutationFn = Apollo.MutationFunction<Types.ChannelD
  */
 export function useChannelDeactivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelDeactivateMutation, Types.ChannelDeactivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChannelDeactivateMutation, Types.ChannelDeactivateMutationVariables>(ChannelDeactivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ChannelDeactivateMutation, Types.ChannelDeactivateMutationVariables>(ChannelDeactivateStaging, options);
       }
 export type ChannelDeactivateMutationHookResult = ReturnType<typeof useChannelDeactivateMutation>;
 export type ChannelDeactivateMutationResult = Apollo.MutationResult<Types.ChannelDeactivateMutation>;
 export type ChannelDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.ChannelDeactivateMutation, Types.ChannelDeactivateMutationVariables>;
-export const ChannelReorderWarehousesDocument = gql`
+export const ChannelReorderWarehousesStaging = gql`
     mutation ChannelReorderWarehouses($channelId: ID!, $moves: [ReorderInput!]!) {
   channelReorderWarehouses(channelId: $channelId, moves: $moves) {
     channel {
@@ -4765,12 +4765,12 @@ export type ChannelReorderWarehousesMutationFn = Apollo.MutationFunction<Types.C
  */
 export function useChannelReorderWarehousesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>(ChannelReorderWarehousesDocument, options);
+        return ApolloReactHooks.useMutation<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>(ChannelReorderWarehousesStaging, options);
       }
 export type ChannelReorderWarehousesMutationHookResult = ReturnType<typeof useChannelReorderWarehousesMutation>;
 export type ChannelReorderWarehousesMutationResult = Apollo.MutationResult<Types.ChannelReorderWarehousesMutation>;
 export type ChannelReorderWarehousesMutationOptions = Apollo.BaseMutationOptions<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>;
-export const BaseChannelsDocument = gql`
+export const BaseChannelsStaging = gql`
     query BaseChannels {
   channels {
     ...Channel
@@ -4795,16 +4795,16 @@ export const BaseChannelsDocument = gql`
  */
 export function useBaseChannelsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.BaseChannelsQuery, Types.BaseChannelsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.BaseChannelsQuery, Types.BaseChannelsQueryVariables>(BaseChannelsDocument, options);
+        return ApolloReactHooks.useQuery<Types.BaseChannelsQuery, Types.BaseChannelsQueryVariables>(BaseChannelsStaging, options);
       }
 export function useBaseChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.BaseChannelsQuery, Types.BaseChannelsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.BaseChannelsQuery, Types.BaseChannelsQueryVariables>(BaseChannelsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.BaseChannelsQuery, Types.BaseChannelsQueryVariables>(BaseChannelsStaging, options);
         }
 export type BaseChannelsQueryHookResult = ReturnType<typeof useBaseChannelsQuery>;
 export type BaseChannelsLazyQueryHookResult = ReturnType<typeof useBaseChannelsLazyQuery>;
 export type BaseChannelsQueryResult = Apollo.QueryResult<Types.BaseChannelsQuery, Types.BaseChannelsQueryVariables>;
-export const ChannelsDocument = gql`
+export const ChannelsStaging = gql`
     query Channels {
   channels {
     ...ChannelDetails
@@ -4829,16 +4829,16 @@ export const ChannelsDocument = gql`
  */
 export function useChannelsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelsQuery, Types.ChannelsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelsQuery, Types.ChannelsQueryVariables>(ChannelsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ChannelsQuery, Types.ChannelsQueryVariables>(ChannelsStaging, options);
       }
 export function useChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelsQuery, Types.ChannelsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelsQuery, Types.ChannelsQueryVariables>(ChannelsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ChannelsQuery, Types.ChannelsQueryVariables>(ChannelsStaging, options);
         }
 export type ChannelsQueryHookResult = ReturnType<typeof useChannelsQuery>;
 export type ChannelsLazyQueryHookResult = ReturnType<typeof useChannelsLazyQuery>;
 export type ChannelsQueryResult = Apollo.QueryResult<Types.ChannelsQuery, Types.ChannelsQueryVariables>;
-export const ChannelDocument = gql`
+export const ChannelStaging = gql`
     query Channel($id: ID!) {
   channel(id: $id) {
     ...ChannelDetails
@@ -4864,16 +4864,16 @@ export const ChannelDocument = gql`
  */
 export function useChannelQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelQuery, Types.ChannelQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelQuery, Types.ChannelQueryVariables>(ChannelDocument, options);
+        return ApolloReactHooks.useQuery<Types.ChannelQuery, Types.ChannelQueryVariables>(ChannelStaging, options);
       }
 export function useChannelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelQuery, Types.ChannelQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelQuery, Types.ChannelQueryVariables>(ChannelDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ChannelQuery, Types.ChannelQueryVariables>(ChannelStaging, options);
         }
 export type ChannelQueryHookResult = ReturnType<typeof useChannelQuery>;
 export type ChannelLazyQueryHookResult = ReturnType<typeof useChannelLazyQuery>;
 export type ChannelQueryResult = Apollo.QueryResult<Types.ChannelQuery, Types.ChannelQueryVariables>;
-export const CollectionUpdateDocument = gql`
+export const CollectionUpdateStaging = gql`
     mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
   collectionUpdate(id: $id, input: $input) {
     collection {
@@ -4908,12 +4908,12 @@ export type CollectionUpdateMutationFn = Apollo.MutationFunction<Types.Collectio
  */
 export function useCollectionUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CollectionUpdateMutation, Types.CollectionUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CollectionUpdateMutation, Types.CollectionUpdateMutationVariables>(CollectionUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.CollectionUpdateMutation, Types.CollectionUpdateMutationVariables>(CollectionUpdateStaging, options);
       }
 export type CollectionUpdateMutationHookResult = ReturnType<typeof useCollectionUpdateMutation>;
 export type CollectionUpdateMutationResult = Apollo.MutationResult<Types.CollectionUpdateMutation>;
 export type CollectionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionUpdateMutation, Types.CollectionUpdateMutationVariables>;
-export const CollectionAssignProductDocument = gql`
+export const CollectionAssignProductStaging = gql`
     mutation CollectionAssignProduct($collectionId: ID!, $productIds: [ID!]!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
   collectionAddProducts(collectionId: $collectionId, products: $productIds) {
     errors {
@@ -4977,12 +4977,12 @@ export type CollectionAssignProductMutationFn = Apollo.MutationFunction<Types.Co
  */
 export function useCollectionAssignProductMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CollectionAssignProductMutation, Types.CollectionAssignProductMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CollectionAssignProductMutation, Types.CollectionAssignProductMutationVariables>(CollectionAssignProductDocument, options);
+        return ApolloReactHooks.useMutation<Types.CollectionAssignProductMutation, Types.CollectionAssignProductMutationVariables>(CollectionAssignProductStaging, options);
       }
 export type CollectionAssignProductMutationHookResult = ReturnType<typeof useCollectionAssignProductMutation>;
 export type CollectionAssignProductMutationResult = Apollo.MutationResult<Types.CollectionAssignProductMutation>;
 export type CollectionAssignProductMutationOptions = Apollo.BaseMutationOptions<Types.CollectionAssignProductMutation, Types.CollectionAssignProductMutationVariables>;
-export const CreateCollectionDocument = gql`
+export const CreateCollectionStaging = gql`
     mutation CreateCollection($input: CollectionCreateInput!) {
   collectionCreate(input: $input) {
     collection {
@@ -5016,12 +5016,12 @@ export type CreateCollectionMutationFn = Apollo.MutationFunction<Types.CreateCol
  */
 export function useCreateCollectionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateCollectionMutation, Types.CreateCollectionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CreateCollectionMutation, Types.CreateCollectionMutationVariables>(CreateCollectionDocument, options);
+        return ApolloReactHooks.useMutation<Types.CreateCollectionMutation, Types.CreateCollectionMutationVariables>(CreateCollectionStaging, options);
       }
 export type CreateCollectionMutationHookResult = ReturnType<typeof useCreateCollectionMutation>;
 export type CreateCollectionMutationResult = Apollo.MutationResult<Types.CreateCollectionMutation>;
 export type CreateCollectionMutationOptions = Apollo.BaseMutationOptions<Types.CreateCollectionMutation, Types.CreateCollectionMutationVariables>;
-export const RemoveCollectionDocument = gql`
+export const RemoveCollectionStaging = gql`
     mutation RemoveCollection($id: ID!) {
   collectionDelete(id: $id) {
     errors {
@@ -5051,12 +5051,12 @@ export type RemoveCollectionMutationFn = Apollo.MutationFunction<Types.RemoveCol
  */
 export function useRemoveCollectionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RemoveCollectionMutation, Types.RemoveCollectionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.RemoveCollectionMutation, Types.RemoveCollectionMutationVariables>(RemoveCollectionDocument, options);
+        return ApolloReactHooks.useMutation<Types.RemoveCollectionMutation, Types.RemoveCollectionMutationVariables>(RemoveCollectionStaging, options);
       }
 export type RemoveCollectionMutationHookResult = ReturnType<typeof useRemoveCollectionMutation>;
 export type RemoveCollectionMutationResult = Apollo.MutationResult<Types.RemoveCollectionMutation>;
 export type RemoveCollectionMutationOptions = Apollo.BaseMutationOptions<Types.RemoveCollectionMutation, Types.RemoveCollectionMutationVariables>;
-export const UnassignCollectionProductDocument = gql`
+export const UnassignCollectionProductStaging = gql`
     mutation UnassignCollectionProduct($collectionId: ID!, $productIds: [ID!]!, $first: Int, $after: String, $last: Int, $before: String) {
   collectionRemoveProducts(collectionId: $collectionId, products: $productIds) {
     collection {
@@ -5114,12 +5114,12 @@ export type UnassignCollectionProductMutationFn = Apollo.MutationFunction<Types.
  */
 export function useUnassignCollectionProductMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UnassignCollectionProductMutation, Types.UnassignCollectionProductMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UnassignCollectionProductMutation, Types.UnassignCollectionProductMutationVariables>(UnassignCollectionProductDocument, options);
+        return ApolloReactHooks.useMutation<Types.UnassignCollectionProductMutation, Types.UnassignCollectionProductMutationVariables>(UnassignCollectionProductStaging, options);
       }
 export type UnassignCollectionProductMutationHookResult = ReturnType<typeof useUnassignCollectionProductMutation>;
 export type UnassignCollectionProductMutationResult = Apollo.MutationResult<Types.UnassignCollectionProductMutation>;
 export type UnassignCollectionProductMutationOptions = Apollo.BaseMutationOptions<Types.UnassignCollectionProductMutation, Types.UnassignCollectionProductMutationVariables>;
-export const CollectionBulkDeleteDocument = gql`
+export const CollectionBulkDeleteStaging = gql`
     mutation CollectionBulkDelete($ids: [ID!]!) {
   collectionBulkDelete(ids: $ids) {
     errors {
@@ -5149,12 +5149,12 @@ export type CollectionBulkDeleteMutationFn = Apollo.MutationFunction<Types.Colle
  */
 export function useCollectionBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CollectionBulkDeleteMutation, Types.CollectionBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CollectionBulkDeleteMutation, Types.CollectionBulkDeleteMutationVariables>(CollectionBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.CollectionBulkDeleteMutation, Types.CollectionBulkDeleteMutationVariables>(CollectionBulkDeleteStaging, options);
       }
 export type CollectionBulkDeleteMutationHookResult = ReturnType<typeof useCollectionBulkDeleteMutation>;
 export type CollectionBulkDeleteMutationResult = Apollo.MutationResult<Types.CollectionBulkDeleteMutation>;
 export type CollectionBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.CollectionBulkDeleteMutation, Types.CollectionBulkDeleteMutationVariables>;
-export const CollectionChannelListingUpdateDocument = gql`
+export const CollectionChannelListingUpdateStaging = gql`
     mutation CollectionChannelListingUpdate($id: ID!, $input: CollectionChannelListingUpdateInput!) {
   collectionChannelListingUpdate(id: $id, input: $input) {
     errors {
@@ -5185,12 +5185,12 @@ export type CollectionChannelListingUpdateMutationFn = Apollo.MutationFunction<T
  */
 export function useCollectionChannelListingUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>(CollectionChannelListingUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>(CollectionChannelListingUpdateStaging, options);
       }
 export type CollectionChannelListingUpdateMutationHookResult = ReturnType<typeof useCollectionChannelListingUpdateMutation>;
 export type CollectionChannelListingUpdateMutationResult = Apollo.MutationResult<Types.CollectionChannelListingUpdateMutation>;
 export type CollectionChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>;
-export const ReorderProductsInCollectionDocument = gql`
+export const ReorderProductsInCollectionStaging = gql`
     mutation ReorderProductsInCollection($collectionId: ID!, $moves: [MoveProductInput!]!, $first: Int, $after: String, $last: Int, $before: String) {
   collectionReorderProducts(collectionId: $collectionId, moves: $moves) {
     collection {
@@ -5247,12 +5247,12 @@ export type ReorderProductsInCollectionMutationFn = Apollo.MutationFunction<Type
  */
 export function useReorderProductsInCollectionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>(ReorderProductsInCollectionDocument, options);
+        return ApolloReactHooks.useMutation<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>(ReorderProductsInCollectionStaging, options);
       }
 export type ReorderProductsInCollectionMutationHookResult = ReturnType<typeof useReorderProductsInCollectionMutation>;
 export type ReorderProductsInCollectionMutationResult = Apollo.MutationResult<Types.ReorderProductsInCollectionMutation>;
 export type ReorderProductsInCollectionMutationOptions = Apollo.BaseMutationOptions<Types.ReorderProductsInCollectionMutation, Types.ReorderProductsInCollectionMutationVariables>;
-export const CollectionListDocument = gql`
+export const CollectionListStaging = gql`
     query CollectionList($first: Int, $after: String, $last: Int, $before: String, $filter: CollectionFilterInput, $sort: CollectionSortingInput, $channel: String) {
   collections(
     first: $first
@@ -5305,16 +5305,16 @@ export const CollectionListDocument = gql`
  */
 export function useCollectionListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CollectionListQuery, Types.CollectionListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CollectionListQuery, Types.CollectionListQueryVariables>(CollectionListDocument, options);
+        return ApolloReactHooks.useQuery<Types.CollectionListQuery, Types.CollectionListQueryVariables>(CollectionListStaging, options);
       }
 export function useCollectionListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionListQuery, Types.CollectionListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CollectionListQuery, Types.CollectionListQueryVariables>(CollectionListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CollectionListQuery, Types.CollectionListQueryVariables>(CollectionListStaging, options);
         }
 export type CollectionListQueryHookResult = ReturnType<typeof useCollectionListQuery>;
 export type CollectionListLazyQueryHookResult = ReturnType<typeof useCollectionListLazyQuery>;
 export type CollectionListQueryResult = Apollo.QueryResult<Types.CollectionListQuery, Types.CollectionListQueryVariables>;
-export const CollectionDetailsDocument = gql`
+export const CollectionDetailsStaging = gql`
     query CollectionDetails($id: ID) {
   collection(id: $id) {
     ...CollectionDetails
@@ -5340,16 +5340,16 @@ export const CollectionDetailsDocument = gql`
  */
 export function useCollectionDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsStaging, options);
       }
 export function useCollectionDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>(CollectionDetailsStaging, options);
         }
 export type CollectionDetailsQueryHookResult = ReturnType<typeof useCollectionDetailsQuery>;
 export type CollectionDetailsLazyQueryHookResult = ReturnType<typeof useCollectionDetailsLazyQuery>;
 export type CollectionDetailsQueryResult = Apollo.QueryResult<Types.CollectionDetailsQuery, Types.CollectionDetailsQueryVariables>;
-export const CollectionProductsDocument = gql`
+export const CollectionProductsStaging = gql`
     query CollectionProducts($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
   collection(id: $id) {
     id
@@ -5398,16 +5398,16 @@ export const CollectionProductsDocument = gql`
  */
 export function useCollectionProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>(CollectionProductsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>(CollectionProductsStaging, options);
       }
 export function useCollectionProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>(CollectionProductsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>(CollectionProductsStaging, options);
         }
 export type CollectionProductsQueryHookResult = ReturnType<typeof useCollectionProductsQuery>;
 export type CollectionProductsLazyQueryHookResult = ReturnType<typeof useCollectionProductsLazyQuery>;
 export type CollectionProductsQueryResult = Apollo.QueryResult<Types.CollectionProductsQuery, Types.CollectionProductsQueryVariables>;
-export const AddressValidationRulesDocument = gql`
+export const AddressValidationRulesStaging = gql`
     query addressValidationRules($countryCode: CountryCode!) {
   addressValidationRules(countryCode: $countryCode) {
     countryAreaChoices {
@@ -5437,16 +5437,16 @@ export const AddressValidationRulesDocument = gql`
  */
 export function useAddressValidationRulesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>(AddressValidationRulesDocument, options);
+        return ApolloReactHooks.useQuery<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>(AddressValidationRulesStaging, options);
       }
 export function useAddressValidationRulesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>(AddressValidationRulesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>(AddressValidationRulesStaging, options);
         }
 export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddressValidationRulesQuery>;
 export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
-export const _GetDynamicLeftOperandsDocument = gql`
+export const _GetDynamicLeftOperandsStaging = gql`
     query _GetDynamicLeftOperands($first: Int!, $query: String!) {
   attributes(
     first: $first
@@ -5488,16 +5488,16 @@ export const _GetDynamicLeftOperandsDocument = gql`
  */
 export function use_GetDynamicLeftOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>(_GetDynamicLeftOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>(_GetDynamicLeftOperandsStaging, options);
       }
 export function use_GetDynamicLeftOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>(_GetDynamicLeftOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>(_GetDynamicLeftOperandsStaging, options);
         }
 export type _GetDynamicLeftOperandsQueryHookResult = ReturnType<typeof use_GetDynamicLeftOperandsQuery>;
 export type _GetDynamicLeftOperandsLazyQueryHookResult = ReturnType<typeof use_GetDynamicLeftOperandsLazyQuery>;
 export type _GetDynamicLeftOperandsQueryResult = Apollo.QueryResult<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>;
-export const _GetChannelOperandsDocument = gql`
+export const _GetChannelOperandsStaging = gql`
     query _GetChannelOperands {
   channels {
     id: slug
@@ -5524,16 +5524,16 @@ export const _GetChannelOperandsDocument = gql`
  */
 export function use_GetChannelOperandsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>(_GetChannelOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>(_GetChannelOperandsStaging, options);
       }
 export function use_GetChannelOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>(_GetChannelOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>(_GetChannelOperandsStaging, options);
         }
 export type _GetChannelOperandsQueryHookResult = ReturnType<typeof use_GetChannelOperandsQuery>;
 export type _GetChannelOperandsLazyQueryHookResult = ReturnType<typeof use_GetChannelOperandsLazyQuery>;
 export type _GetChannelOperandsQueryResult = Apollo.QueryResult<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>;
-export const _GetLegacyChannelOperandsDocument = gql`
+export const _GetLegacyChannelOperandsStaging = gql`
     query _GetLegacyChannelOperands {
   channels {
     id
@@ -5560,16 +5560,16 @@ export const _GetLegacyChannelOperandsDocument = gql`
  */
 export function use_GetLegacyChannelOperandsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>(_GetLegacyChannelOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>(_GetLegacyChannelOperandsStaging, options);
       }
 export function use_GetLegacyChannelOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>(_GetLegacyChannelOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>(_GetLegacyChannelOperandsStaging, options);
         }
 export type _GetLegacyChannelOperandsQueryHookResult = ReturnType<typeof use_GetLegacyChannelOperandsQuery>;
 export type _GetLegacyChannelOperandsLazyQueryHookResult = ReturnType<typeof use_GetLegacyChannelOperandsLazyQuery>;
 export type _GetLegacyChannelOperandsQueryResult = Apollo.QueryResult<Types._GetLegacyChannelOperandsQuery, Types._GetLegacyChannelOperandsQueryVariables>;
-export const _SearchCollectionsOperandsDocument = gql`
+export const _SearchCollectionsOperandsStaging = gql`
     query _SearchCollectionsOperands($first: Int!, $collectionsSlugs: [String!]) {
   collections(first: $first, filter: {slugs: $collectionsSlugs}) {
     edges {
@@ -5602,16 +5602,16 @@ export const _SearchCollectionsOperandsDocument = gql`
  */
 export function use_SearchCollectionsOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchCollectionsOperandsQuery, Types._SearchCollectionsOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchCollectionsOperandsQuery, Types._SearchCollectionsOperandsQueryVariables>(_SearchCollectionsOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchCollectionsOperandsQuery, Types._SearchCollectionsOperandsQueryVariables>(_SearchCollectionsOperandsStaging, options);
       }
 export function use_SearchCollectionsOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchCollectionsOperandsQuery, Types._SearchCollectionsOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchCollectionsOperandsQuery, Types._SearchCollectionsOperandsQueryVariables>(_SearchCollectionsOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchCollectionsOperandsQuery, Types._SearchCollectionsOperandsQueryVariables>(_SearchCollectionsOperandsStaging, options);
         }
 export type _SearchCollectionsOperandsQueryHookResult = ReturnType<typeof use_SearchCollectionsOperandsQuery>;
 export type _SearchCollectionsOperandsLazyQueryHookResult = ReturnType<typeof use_SearchCollectionsOperandsLazyQuery>;
 export type _SearchCollectionsOperandsQueryResult = Apollo.QueryResult<Types._SearchCollectionsOperandsQuery, Types._SearchCollectionsOperandsQueryVariables>;
-export const _SearchCategoriesOperandsDocument = gql`
+export const _SearchCategoriesOperandsStaging = gql`
     query _SearchCategoriesOperands($after: String, $first: Int!, $categoriesSlugs: [String!]) {
   categories(after: $after, first: $first, filter: {slugs: $categoriesSlugs}) {
     edges {
@@ -5645,16 +5645,16 @@ export const _SearchCategoriesOperandsDocument = gql`
  */
 export function use_SearchCategoriesOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchCategoriesOperandsQuery, Types._SearchCategoriesOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchCategoriesOperandsQuery, Types._SearchCategoriesOperandsQueryVariables>(_SearchCategoriesOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchCategoriesOperandsQuery, Types._SearchCategoriesOperandsQueryVariables>(_SearchCategoriesOperandsStaging, options);
       }
 export function use_SearchCategoriesOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchCategoriesOperandsQuery, Types._SearchCategoriesOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchCategoriesOperandsQuery, Types._SearchCategoriesOperandsQueryVariables>(_SearchCategoriesOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchCategoriesOperandsQuery, Types._SearchCategoriesOperandsQueryVariables>(_SearchCategoriesOperandsStaging, options);
         }
 export type _SearchCategoriesOperandsQueryHookResult = ReturnType<typeof use_SearchCategoriesOperandsQuery>;
 export type _SearchCategoriesOperandsLazyQueryHookResult = ReturnType<typeof use_SearchCategoriesOperandsLazyQuery>;
 export type _SearchCategoriesOperandsQueryResult = Apollo.QueryResult<Types._SearchCategoriesOperandsQuery, Types._SearchCategoriesOperandsQueryVariables>;
-export const _SearchProductTypesOperandsDocument = gql`
+export const _SearchProductTypesOperandsStaging = gql`
     query _SearchProductTypesOperands($after: String, $first: Int!, $productTypesSlugs: [String!]) {
   productTypes(after: $after, first: $first, filter: {slugs: $productTypesSlugs}) {
     edges {
@@ -5688,16 +5688,16 @@ export const _SearchProductTypesOperandsDocument = gql`
  */
 export function use_SearchProductTypesOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchProductTypesOperandsQuery, Types._SearchProductTypesOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchProductTypesOperandsQuery, Types._SearchProductTypesOperandsQueryVariables>(_SearchProductTypesOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchProductTypesOperandsQuery, Types._SearchProductTypesOperandsQueryVariables>(_SearchProductTypesOperandsStaging, options);
       }
 export function use_SearchProductTypesOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchProductTypesOperandsQuery, Types._SearchProductTypesOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchProductTypesOperandsQuery, Types._SearchProductTypesOperandsQueryVariables>(_SearchProductTypesOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchProductTypesOperandsQuery, Types._SearchProductTypesOperandsQueryVariables>(_SearchProductTypesOperandsStaging, options);
         }
 export type _SearchProductTypesOperandsQueryHookResult = ReturnType<typeof use_SearchProductTypesOperandsQuery>;
 export type _SearchProductTypesOperandsLazyQueryHookResult = ReturnType<typeof use_SearchProductTypesOperandsLazyQuery>;
 export type _SearchProductTypesOperandsQueryResult = Apollo.QueryResult<Types._SearchProductTypesOperandsQuery, Types._SearchProductTypesOperandsQueryVariables>;
-export const _SearchPageTypesOperandsDocument = gql`
+export const _SearchPageTypesOperandsStaging = gql`
     query _SearchPageTypesOperands($first: Int!, $pageTypesSlugs: [String!]) {
   pageTypes(first: $first, filter: {slugs: $pageTypesSlugs}) {
     edges {
@@ -5730,16 +5730,16 @@ export const _SearchPageTypesOperandsDocument = gql`
  */
 export function use_SearchPageTypesOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchPageTypesOperandsQuery, Types._SearchPageTypesOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchPageTypesOperandsQuery, Types._SearchPageTypesOperandsQueryVariables>(_SearchPageTypesOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchPageTypesOperandsQuery, Types._SearchPageTypesOperandsQueryVariables>(_SearchPageTypesOperandsStaging, options);
       }
 export function use_SearchPageTypesOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchPageTypesOperandsQuery, Types._SearchPageTypesOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchPageTypesOperandsQuery, Types._SearchPageTypesOperandsQueryVariables>(_SearchPageTypesOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchPageTypesOperandsQuery, Types._SearchPageTypesOperandsQueryVariables>(_SearchPageTypesOperandsStaging, options);
         }
 export type _SearchPageTypesOperandsQueryHookResult = ReturnType<typeof use_SearchPageTypesOperandsQuery>;
 export type _SearchPageTypesOperandsLazyQueryHookResult = ReturnType<typeof use_SearchPageTypesOperandsLazyQuery>;
 export type _SearchPageTypesOperandsQueryResult = Apollo.QueryResult<Types._SearchPageTypesOperandsQuery, Types._SearchPageTypesOperandsQueryVariables>;
-export const _SearchAttributeOperandsDocument = gql`
+export const _SearchAttributeOperandsStaging = gql`
     query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!) {
   attributes(first: $first, filter: {slugs: $attributesSlugs}) {
     edges {
@@ -5785,16 +5785,16 @@ export const _SearchAttributeOperandsDocument = gql`
  */
 export function use_SearchAttributeOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>(_SearchAttributeOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>(_SearchAttributeOperandsStaging, options);
       }
 export function use_SearchAttributeOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>(_SearchAttributeOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>(_SearchAttributeOperandsStaging, options);
         }
 export type _SearchAttributeOperandsQueryHookResult = ReturnType<typeof use_SearchAttributeOperandsQuery>;
 export type _SearchAttributeOperandsLazyQueryHookResult = ReturnType<typeof use_SearchAttributeOperandsLazyQuery>;
 export type _SearchAttributeOperandsQueryResult = Apollo.QueryResult<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>;
-export const _GetAttributeChoicesDocument = gql`
+export const _GetAttributeChoicesStaging = gql`
     query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!) {
   attribute(slug: $slug) {
     choices(first: $first, filter: {search: $query}) {
@@ -5831,16 +5831,16 @@ export const _GetAttributeChoicesDocument = gql`
  */
 export function use_GetAttributeChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>(_GetAttributeChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>(_GetAttributeChoicesStaging, options);
       }
 export function use_GetAttributeChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>(_GetAttributeChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>(_GetAttributeChoicesStaging, options);
         }
 export type _GetAttributeChoicesQueryHookResult = ReturnType<typeof use_GetAttributeChoicesQuery>;
 export type _GetAttributeChoicesLazyQueryHookResult = ReturnType<typeof use_GetAttributeChoicesLazyQuery>;
 export type _GetAttributeChoicesQueryResult = Apollo.QueryResult<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>;
-export const _GetCollectionsChoicesDocument = gql`
+export const _GetCollectionsChoicesStaging = gql`
     query _GetCollectionsChoices($first: Int!, $query: String!) {
   collections(first: $first, filter: {search: $query}) {
     edges {
@@ -5873,16 +5873,16 @@ export const _GetCollectionsChoicesDocument = gql`
  */
 export function use_GetCollectionsChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>(_GetCollectionsChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>(_GetCollectionsChoicesStaging, options);
       }
 export function use_GetCollectionsChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>(_GetCollectionsChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>(_GetCollectionsChoicesStaging, options);
         }
 export type _GetCollectionsChoicesQueryHookResult = ReturnType<typeof use_GetCollectionsChoicesQuery>;
 export type _GetCollectionsChoicesLazyQueryHookResult = ReturnType<typeof use_GetCollectionsChoicesLazyQuery>;
 export type _GetCollectionsChoicesQueryResult = Apollo.QueryResult<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>;
-export const _GetCategoriesChoicesDocument = gql`
+export const _GetCategoriesChoicesStaging = gql`
     query _GetCategoriesChoices($first: Int!, $query: String!) {
   categories(first: $first, filter: {search: $query}) {
     edges {
@@ -5915,16 +5915,16 @@ export const _GetCategoriesChoicesDocument = gql`
  */
 export function use_GetCategoriesChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>(_GetCategoriesChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>(_GetCategoriesChoicesStaging, options);
       }
 export function use_GetCategoriesChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>(_GetCategoriesChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>(_GetCategoriesChoicesStaging, options);
         }
 export type _GetCategoriesChoicesQueryHookResult = ReturnType<typeof use_GetCategoriesChoicesQuery>;
 export type _GetCategoriesChoicesLazyQueryHookResult = ReturnType<typeof use_GetCategoriesChoicesLazyQuery>;
 export type _GetCategoriesChoicesQueryResult = Apollo.QueryResult<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>;
-export const _GetProductTypesChoicesDocument = gql`
+export const _GetProductTypesChoicesStaging = gql`
     query _GetProductTypesChoices($first: Int!, $query: String!) {
   productTypes(first: $first, filter: {search: $query}) {
     edges {
@@ -5957,16 +5957,16 @@ export const _GetProductTypesChoicesDocument = gql`
  */
 export function use_GetProductTypesChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>(_GetProductTypesChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>(_GetProductTypesChoicesStaging, options);
       }
 export function use_GetProductTypesChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>(_GetProductTypesChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>(_GetProductTypesChoicesStaging, options);
         }
 export type _GetProductTypesChoicesQueryHookResult = ReturnType<typeof use_GetProductTypesChoicesQuery>;
 export type _GetProductTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductTypesChoicesLazyQuery>;
 export type _GetProductTypesChoicesQueryResult = Apollo.QueryResult<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>;
-export const _GetPageTypesChoicesDocument = gql`
+export const _GetPageTypesChoicesStaging = gql`
     query _GetPageTypesChoices($first: Int!, $query: String!) {
   pageTypes(first: $first, filter: {search: $query}) {
     edges {
@@ -5999,16 +5999,16 @@ export const _GetPageTypesChoicesDocument = gql`
  */
 export function use_GetPageTypesChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>(_GetPageTypesChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>(_GetPageTypesChoicesStaging, options);
       }
 export function use_GetPageTypesChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>(_GetPageTypesChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>(_GetPageTypesChoicesStaging, options);
         }
 export type _GetPageTypesChoicesQueryHookResult = ReturnType<typeof use_GetPageTypesChoicesQuery>;
 export type _GetPageTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetPageTypesChoicesLazyQuery>;
 export type _GetPageTypesChoicesQueryResult = Apollo.QueryResult<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>;
-export const _GetPagesChoicesDocument = gql`
+export const _GetPagesChoicesStaging = gql`
     query _GetPagesChoices($first: Int!, $query: String!) {
   pages(first: $first, filter: {search: $query}) {
     edges {
@@ -6042,16 +6042,16 @@ export const _GetPagesChoicesDocument = gql`
  */
 export function use_GetPagesChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>(_GetPagesChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>(_GetPagesChoicesStaging, options);
       }
 export function use_GetPagesChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>(_GetPagesChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>(_GetPagesChoicesStaging, options);
         }
 export type _GetPagesChoicesQueryHookResult = ReturnType<typeof use_GetPagesChoicesQuery>;
 export type _GetPagesChoicesLazyQueryHookResult = ReturnType<typeof use_GetPagesChoicesLazyQuery>;
 export type _GetPagesChoicesQueryResult = Apollo.QueryResult<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>;
-export const _GetProductChoicesDocument = gql`
+export const _GetProductChoicesStaging = gql`
     query _GetProductChoices($first: Int!, $query: String!) {
   products(first: $first, filter: {search: $query}) {
     edges {
@@ -6084,16 +6084,16 @@ export const _GetProductChoicesDocument = gql`
  */
 export function use_GetProductChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>(_GetProductChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>(_GetProductChoicesStaging, options);
       }
 export function use_GetProductChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>(_GetProductChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>(_GetProductChoicesStaging, options);
         }
 export type _GetProductChoicesQueryHookResult = ReturnType<typeof use_GetProductChoicesQuery>;
 export type _GetProductChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductChoicesLazyQuery>;
 export type _GetProductChoicesQueryResult = Apollo.QueryResult<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>;
-export const _GetProductVariantChoicesDocument = gql`
+export const _GetProductVariantChoicesStaging = gql`
     query _GetProductVariantChoices($first: Int!, $query: String!) {
   productVariants(first: $first, filter: {search: $query}) {
     edges {
@@ -6130,16 +6130,16 @@ export const _GetProductVariantChoicesDocument = gql`
  */
 export function use_GetProductVariantChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>(_GetProductVariantChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>(_GetProductVariantChoicesStaging, options);
       }
 export function use_GetProductVariantChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>(_GetProductVariantChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>(_GetProductVariantChoicesStaging, options);
         }
 export type _GetProductVariantChoicesQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesQuery>;
 export type _GetProductVariantChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesLazyQuery>;
 export type _GetProductVariantChoicesQueryResult = Apollo.QueryResult<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>;
-export const _GetGiftCardTagsChoicesDocument = gql`
+export const _GetGiftCardTagsChoicesStaging = gql`
     query _GetGiftCardTagsChoices($first: Int!, $query: String!) {
   giftCardTags(first: $first, filter: {search: $query}) {
     edges {
@@ -6171,16 +6171,16 @@ export const _GetGiftCardTagsChoicesDocument = gql`
  */
 export function use_GetGiftCardTagsChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>(_GetGiftCardTagsChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>(_GetGiftCardTagsChoicesStaging, options);
       }
 export function use_GetGiftCardTagsChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>(_GetGiftCardTagsChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>(_GetGiftCardTagsChoicesStaging, options);
         }
 export type _GetGiftCardTagsChoicesQueryHookResult = ReturnType<typeof use_GetGiftCardTagsChoicesQuery>;
 export type _GetGiftCardTagsChoicesLazyQueryHookResult = ReturnType<typeof use_GetGiftCardTagsChoicesLazyQuery>;
 export type _GetGiftCardTagsChoicesQueryResult = Apollo.QueryResult<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>;
-export const _GetCustomersChoicesDocument = gql`
+export const _GetCustomersChoicesStaging = gql`
     query _GetCustomersChoices($first: Int!, $query: String!) {
   customers(first: $first, filter: {search: $query}) {
     edges {
@@ -6214,16 +6214,16 @@ export const _GetCustomersChoicesDocument = gql`
  */
 export function use_GetCustomersChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetCustomersChoicesQuery, Types._GetCustomersChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetCustomersChoicesQuery, Types._GetCustomersChoicesQueryVariables>(_GetCustomersChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetCustomersChoicesQuery, Types._GetCustomersChoicesQueryVariables>(_GetCustomersChoicesStaging, options);
       }
 export function use_GetCustomersChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetCustomersChoicesQuery, Types._GetCustomersChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetCustomersChoicesQuery, Types._GetCustomersChoicesQueryVariables>(_GetCustomersChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetCustomersChoicesQuery, Types._GetCustomersChoicesQueryVariables>(_GetCustomersChoicesStaging, options);
         }
 export type _GetCustomersChoicesQueryHookResult = ReturnType<typeof use_GetCustomersChoicesQuery>;
 export type _GetCustomersChoicesLazyQueryHookResult = ReturnType<typeof use_GetCustomersChoicesLazyQuery>;
 export type _GetCustomersChoicesQueryResult = Apollo.QueryResult<Types._GetCustomersChoicesQuery, Types._GetCustomersChoicesQueryVariables>;
-export const _SearchCustomersOperandsDocument = gql`
+export const _SearchCustomersOperandsStaging = gql`
     query _SearchCustomersOperands($first: Int!, $customersIds: [ID!]) {
   customers(first: $first, filter: {ids: $customersIds}) {
     edges {
@@ -6257,16 +6257,16 @@ export const _SearchCustomersOperandsDocument = gql`
  */
 export function use_SearchCustomersOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchCustomersOperandsQuery, Types._SearchCustomersOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchCustomersOperandsQuery, Types._SearchCustomersOperandsQueryVariables>(_SearchCustomersOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchCustomersOperandsQuery, Types._SearchCustomersOperandsQueryVariables>(_SearchCustomersOperandsStaging, options);
       }
 export function use_SearchCustomersOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchCustomersOperandsQuery, Types._SearchCustomersOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchCustomersOperandsQuery, Types._SearchCustomersOperandsQueryVariables>(_SearchCustomersOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchCustomersOperandsQuery, Types._SearchCustomersOperandsQueryVariables>(_SearchCustomersOperandsStaging, options);
         }
 export type _SearchCustomersOperandsQueryHookResult = ReturnType<typeof use_SearchCustomersOperandsQuery>;
 export type _SearchCustomersOperandsLazyQueryHookResult = ReturnType<typeof use_SearchCustomersOperandsLazyQuery>;
 export type _SearchCustomersOperandsQueryResult = Apollo.QueryResult<Types._SearchCustomersOperandsQuery, Types._SearchCustomersOperandsQueryVariables>;
-export const _SearchPageOperandsDocument = gql`
+export const _SearchPageOperandsStaging = gql`
     query _SearchPageOperands($first: Int!, $pageSlugs: [String!]) {
   pages(first: $first, filter: {slugs: $pageSlugs}) {
     edges {
@@ -6300,16 +6300,16 @@ export const _SearchPageOperandsDocument = gql`
  */
 export function use_SearchPageOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>(_SearchPageOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>(_SearchPageOperandsStaging, options);
       }
 export function use_SearchPageOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>(_SearchPageOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>(_SearchPageOperandsStaging, options);
         }
 export type _SearchPageOperandsQueryHookResult = ReturnType<typeof use_SearchPageOperandsQuery>;
 export type _SearchPageOperandsLazyQueryHookResult = ReturnType<typeof use_SearchPageOperandsLazyQuery>;
 export type _SearchPageOperandsQueryResult = Apollo.QueryResult<Types._SearchPageOperandsQuery, Types._SearchPageOperandsQueryVariables>;
-export const _SearchProductOperandsDocument = gql`
+export const _SearchProductOperandsStaging = gql`
     query _SearchProductOperands($first: Int!, $productSlugs: [String!]) {
   products(first: $first, where: {slug: {oneOf: $productSlugs}}) {
     edges {
@@ -6343,16 +6343,16 @@ export const _SearchProductOperandsDocument = gql`
  */
 export function use_SearchProductOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>(_SearchProductOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>(_SearchProductOperandsStaging, options);
       }
 export function use_SearchProductOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>(_SearchProductOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>(_SearchProductOperandsStaging, options);
         }
 export type _SearchProductOperandsQueryHookResult = ReturnType<typeof use_SearchProductOperandsQuery>;
 export type _SearchProductOperandsLazyQueryHookResult = ReturnType<typeof use_SearchProductOperandsLazyQuery>;
 export type _SearchProductOperandsQueryResult = Apollo.QueryResult<Types._SearchProductOperandsQuery, Types._SearchProductOperandsQueryVariables>;
-export const _SearchProductVariantOperandsDocument = gql`
+export const _SearchProductVariantOperandsStaging = gql`
     query _SearchProductVariantOperands($first: Int!, $ids: [ID!]) {
   productVariants(first: $first, where: {ids: $ids}) {
     edges {
@@ -6389,16 +6389,16 @@ export const _SearchProductVariantOperandsDocument = gql`
  */
 export function use_SearchProductVariantOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>(_SearchProductVariantOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>(_SearchProductVariantOperandsStaging, options);
       }
 export function use_SearchProductVariantOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>(_SearchProductVariantOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>(_SearchProductVariantOperandsStaging, options);
         }
 export type _SearchProductVariantOperandsQueryHookResult = ReturnType<typeof use_SearchProductVariantOperandsQuery>;
 export type _SearchProductVariantOperandsLazyQueryHookResult = ReturnType<typeof use_SearchProductVariantOperandsLazyQuery>;
 export type _SearchProductVariantOperandsQueryResult = Apollo.QueryResult<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>;
-export const _GetWarehouseChoicesDocument = gql`
+export const _GetWarehouseChoicesStaging = gql`
     query _GetWarehouseChoices($first: Int!, $query: String!) {
   warehouses(first: $first, filter: {search: $query}) {
     edges {
@@ -6431,16 +6431,16 @@ export const _GetWarehouseChoicesDocument = gql`
  */
 export function use_GetWarehouseChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetWarehouseChoicesQuery, Types._GetWarehouseChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetWarehouseChoicesQuery, Types._GetWarehouseChoicesQueryVariables>(_GetWarehouseChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetWarehouseChoicesQuery, Types._GetWarehouseChoicesQueryVariables>(_GetWarehouseChoicesStaging, options);
       }
 export function use_GetWarehouseChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetWarehouseChoicesQuery, Types._GetWarehouseChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetWarehouseChoicesQuery, Types._GetWarehouseChoicesQueryVariables>(_GetWarehouseChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetWarehouseChoicesQuery, Types._GetWarehouseChoicesQueryVariables>(_GetWarehouseChoicesStaging, options);
         }
 export type _GetWarehouseChoicesQueryHookResult = ReturnType<typeof use_GetWarehouseChoicesQuery>;
 export type _GetWarehouseChoicesLazyQueryHookResult = ReturnType<typeof use_GetWarehouseChoicesLazyQuery>;
 export type _GetWarehouseChoicesQueryResult = Apollo.QueryResult<Types._GetWarehouseChoicesQuery, Types._GetWarehouseChoicesQueryVariables>;
-export const _SearchWarehouseOperandsDocument = gql`
+export const _SearchWarehouseOperandsStaging = gql`
     query _SearchWarehouseOperands($first: Int!, $warehouseSlugs: [String!]) {
   warehouses(first: $first, filter: {slugs: $warehouseSlugs}) {
     edges {
@@ -6473,16 +6473,16 @@ export const _SearchWarehouseOperandsDocument = gql`
  */
 export function use_SearchWarehouseOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._SearchWarehouseOperandsQuery, Types._SearchWarehouseOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._SearchWarehouseOperandsQuery, Types._SearchWarehouseOperandsQueryVariables>(_SearchWarehouseOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._SearchWarehouseOperandsQuery, Types._SearchWarehouseOperandsQueryVariables>(_SearchWarehouseOperandsStaging, options);
       }
 export function use_SearchWarehouseOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._SearchWarehouseOperandsQuery, Types._SearchWarehouseOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._SearchWarehouseOperandsQuery, Types._SearchWarehouseOperandsQueryVariables>(_SearchWarehouseOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._SearchWarehouseOperandsQuery, Types._SearchWarehouseOperandsQueryVariables>(_SearchWarehouseOperandsStaging, options);
         }
 export type _SearchWarehouseOperandsQueryHookResult = ReturnType<typeof use_SearchWarehouseOperandsQuery>;
 export type _SearchWarehouseOperandsLazyQueryHookResult = ReturnType<typeof use_SearchWarehouseOperandsLazyQuery>;
 export type _SearchWarehouseOperandsQueryResult = Apollo.QueryResult<Types._SearchWarehouseOperandsQuery, Types._SearchWarehouseOperandsQueryVariables>;
-export const TriggerWebhookDryRunDocument = gql`
+export const TriggerWebhookDryRunStaging = gql`
     mutation TriggerWebhookDryRun($objectId: ID!, $query: String!) {
   webhookDryRun(objectId: $objectId, query: $query) {
     payload
@@ -6515,12 +6515,12 @@ export type TriggerWebhookDryRunMutationFn = Apollo.MutationFunction<Types.Trigg
  */
 export function useTriggerWebhookDryRunMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TriggerWebhookDryRunMutation, Types.TriggerWebhookDryRunMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.TriggerWebhookDryRunMutation, Types.TriggerWebhookDryRunMutationVariables>(TriggerWebhookDryRunDocument, options);
+        return ApolloReactHooks.useMutation<Types.TriggerWebhookDryRunMutation, Types.TriggerWebhookDryRunMutationVariables>(TriggerWebhookDryRunStaging, options);
       }
 export type TriggerWebhookDryRunMutationHookResult = ReturnType<typeof useTriggerWebhookDryRunMutation>;
 export type TriggerWebhookDryRunMutationResult = Apollo.MutationResult<Types.TriggerWebhookDryRunMutation>;
 export type TriggerWebhookDryRunMutationOptions = Apollo.BaseMutationOptions<Types.TriggerWebhookDryRunMutation, Types.TriggerWebhookDryRunMutationVariables>;
-export const CheckoutListDocument = gql`
+export const CheckoutListStaging = gql`
     query CheckoutList($first: Int, $after: String, $last: Int, $before: String) {
   checkouts(before: $before, after: $after, first: $first, last: $last) {
     edges {
@@ -6561,16 +6561,16 @@ export const CheckoutListDocument = gql`
  */
 export function useCheckoutListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>(CheckoutListDocument, options);
+        return ApolloReactHooks.useQuery<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>(CheckoutListStaging, options);
       }
 export function useCheckoutListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>(CheckoutListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>(CheckoutListStaging, options);
         }
 export type CheckoutListQueryHookResult = ReturnType<typeof useCheckoutListQuery>;
 export type CheckoutListLazyQueryHookResult = ReturnType<typeof useCheckoutListLazyQuery>;
 export type CheckoutListQueryResult = Apollo.QueryResult<Types.CheckoutListQuery, Types.CheckoutListQueryVariables>;
-export const ChannelListDocument = gql`
+export const ChannelListStaging = gql`
     query ChannelList {
   channels {
     id
@@ -6596,16 +6596,16 @@ export const ChannelListDocument = gql`
  */
 export function useChannelListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelListQuery, Types.ChannelListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelListQuery, Types.ChannelListQueryVariables>(ChannelListDocument, options);
+        return ApolloReactHooks.useQuery<Types.ChannelListQuery, Types.ChannelListQueryVariables>(ChannelListStaging, options);
       }
 export function useChannelListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelListQuery, Types.ChannelListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelListQuery, Types.ChannelListQueryVariables>(ChannelListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ChannelListQuery, Types.ChannelListQueryVariables>(ChannelListStaging, options);
         }
 export type ChannelListQueryHookResult = ReturnType<typeof useChannelListQuery>;
 export type ChannelListLazyQueryHookResult = ReturnType<typeof useChannelListLazyQuery>;
 export type ChannelListQueryResult = Apollo.QueryResult<Types.ChannelListQuery, Types.ChannelListQueryVariables>;
-export const NavigatorSearchDocument = gql`
+export const NavigatorSearchStaging = gql`
     query NavigatorSearch($query: String!) {
   orders(first: 2, filter: {search: $query}) {
     edges {
@@ -6747,16 +6747,16 @@ export const NavigatorSearchDocument = gql`
  */
 export function useNavigatorSearchQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>(NavigatorSearchDocument, options);
+        return ApolloReactHooks.useQuery<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>(NavigatorSearchStaging, options);
       }
 export function useNavigatorSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>(NavigatorSearchDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>(NavigatorSearchStaging, options);
         }
 export type NavigatorSearchQueryHookResult = ReturnType<typeof useNavigatorSearchQuery>;
 export type NavigatorSearchLazyQueryHookResult = ReturnType<typeof useNavigatorSearchLazyQuery>;
 export type NavigatorSearchQueryResult = Apollo.QueryResult<Types.NavigatorSearchQuery, Types.NavigatorSearchQueryVariables>;
-export const ShopInfoDocument = gql`
+export const ShopInfoStaging = gql`
     query ShopInfo {
   shop {
     countries {
@@ -6802,16 +6802,16 @@ ${PermissionFragmentDoc}`;
  */
 export function useShopInfoQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ShopInfoQuery, Types.ShopInfoQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ShopInfoQuery, Types.ShopInfoQueryVariables>(ShopInfoDocument, options);
+        return ApolloReactHooks.useQuery<Types.ShopInfoQuery, Types.ShopInfoQueryVariables>(ShopInfoStaging, options);
       }
 export function useShopInfoLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShopInfoQuery, Types.ShopInfoQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ShopInfoQuery, Types.ShopInfoQueryVariables>(ShopInfoDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ShopInfoQuery, Types.ShopInfoQueryVariables>(ShopInfoStaging, options);
         }
 export type ShopInfoQueryHookResult = ReturnType<typeof useShopInfoQuery>;
 export type ShopInfoLazyQueryHookResult = ReturnType<typeof useShopInfoLazyQuery>;
 export type ShopInfoQueryResult = Apollo.QueryResult<Types.ShopInfoQuery, Types.ShopInfoQueryVariables>;
-export const ShopCountriesDocument = gql`
+export const ShopCountriesStaging = gql`
     query ShopCountries($filter: CountryFilterInput) {
   shop {
     countries(filter: $filter) {
@@ -6840,16 +6840,16 @@ export const ShopCountriesDocument = gql`
  */
 export function useShopCountriesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ShopCountriesQuery, Types.ShopCountriesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ShopCountriesQuery, Types.ShopCountriesQueryVariables>(ShopCountriesDocument, options);
+        return ApolloReactHooks.useQuery<Types.ShopCountriesQuery, Types.ShopCountriesQueryVariables>(ShopCountriesStaging, options);
       }
 export function useShopCountriesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShopCountriesQuery, Types.ShopCountriesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ShopCountriesQuery, Types.ShopCountriesQueryVariables>(ShopCountriesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ShopCountriesQuery, Types.ShopCountriesQueryVariables>(ShopCountriesStaging, options);
         }
 export type ShopCountriesQueryHookResult = ReturnType<typeof useShopCountriesQuery>;
 export type ShopCountriesLazyQueryHookResult = ReturnType<typeof useShopCountriesLazyQuery>;
 export type ShopCountriesQueryResult = Apollo.QueryResult<Types.ShopCountriesQuery, Types.ShopCountriesQueryVariables>;
-export const RefreshLimitsDocument = gql`
+export const RefreshLimitsStaging = gql`
     query RefreshLimits($channels: Boolean!, $orders: Boolean!, $productVariants: Boolean!, $staffUsers: Boolean!, $warehouses: Boolean!) {
   shop {
     ...ShopLimit
@@ -6879,16 +6879,16 @@ export const RefreshLimitsDocument = gql`
  */
 export function useRefreshLimitsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>(RefreshLimitsDocument, options);
+        return ApolloReactHooks.useQuery<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>(RefreshLimitsStaging, options);
       }
 export function useRefreshLimitsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>(RefreshLimitsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>(RefreshLimitsStaging, options);
         }
 export type RefreshLimitsQueryHookResult = ReturnType<typeof useRefreshLimitsQuery>;
 export type RefreshLimitsLazyQueryHookResult = ReturnType<typeof useRefreshLimitsLazyQuery>;
 export type RefreshLimitsQueryResult = Apollo.QueryResult<Types.RefreshLimitsQuery, Types.RefreshLimitsQueryVariables>;
-export const CheckExportFileStatusDocument = gql`
+export const CheckExportFileStatusStaging = gql`
     query CheckExportFileStatus($id: ID!) {
   exportFile(id: $id) {
     id
@@ -6915,16 +6915,16 @@ export const CheckExportFileStatusDocument = gql`
  */
 export function useCheckExportFileStatusQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CheckExportFileStatusQuery, Types.CheckExportFileStatusQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CheckExportFileStatusQuery, Types.CheckExportFileStatusQueryVariables>(CheckExportFileStatusDocument, options);
+        return ApolloReactHooks.useQuery<Types.CheckExportFileStatusQuery, Types.CheckExportFileStatusQueryVariables>(CheckExportFileStatusStaging, options);
       }
 export function useCheckExportFileStatusLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CheckExportFileStatusQuery, Types.CheckExportFileStatusQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CheckExportFileStatusQuery, Types.CheckExportFileStatusQueryVariables>(CheckExportFileStatusDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CheckExportFileStatusQuery, Types.CheckExportFileStatusQueryVariables>(CheckExportFileStatusStaging, options);
         }
 export type CheckExportFileStatusQueryHookResult = ReturnType<typeof useCheckExportFileStatusQuery>;
 export type CheckExportFileStatusLazyQueryHookResult = ReturnType<typeof useCheckExportFileStatusLazyQuery>;
 export type CheckExportFileStatusQueryResult = Apollo.QueryResult<Types.CheckExportFileStatusQuery, Types.CheckExportFileStatusQueryVariables>;
-export const CheckOrderInvoicesStatusDocument = gql`
+export const CheckOrderInvoicesStatusStaging = gql`
     query CheckOrderInvoicesStatus($id: ID!) {
   order(id: $id) {
     id
@@ -6953,16 +6953,16 @@ export const CheckOrderInvoicesStatusDocument = gql`
  */
 export function useCheckOrderInvoicesStatusQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CheckOrderInvoicesStatusQuery, Types.CheckOrderInvoicesStatusQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CheckOrderInvoicesStatusQuery, Types.CheckOrderInvoicesStatusQueryVariables>(CheckOrderInvoicesStatusDocument, options);
+        return ApolloReactHooks.useQuery<Types.CheckOrderInvoicesStatusQuery, Types.CheckOrderInvoicesStatusQueryVariables>(CheckOrderInvoicesStatusStaging, options);
       }
 export function useCheckOrderInvoicesStatusLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CheckOrderInvoicesStatusQuery, Types.CheckOrderInvoicesStatusQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CheckOrderInvoicesStatusQuery, Types.CheckOrderInvoicesStatusQueryVariables>(CheckOrderInvoicesStatusDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CheckOrderInvoicesStatusQuery, Types.CheckOrderInvoicesStatusQueryVariables>(CheckOrderInvoicesStatusStaging, options);
         }
 export type CheckOrderInvoicesStatusQueryHookResult = ReturnType<typeof useCheckOrderInvoicesStatusQuery>;
 export type CheckOrderInvoicesStatusLazyQueryHookResult = ReturnType<typeof useCheckOrderInvoicesStatusLazyQuery>;
 export type CheckOrderInvoicesStatusQueryResult = Apollo.QueryResult<Types.CheckOrderInvoicesStatusQuery, Types.CheckOrderInvoicesStatusQueryVariables>;
-export const UpdateCustomerDocument = gql`
+export const UpdateCustomerStaging = gql`
     mutation UpdateCustomer($id: ID!, $input: CustomerInput!) {
   customerUpdate(id: $id, input: $input) {
     errors {
@@ -6997,12 +6997,12 @@ export type UpdateCustomerMutationFn = Apollo.MutationFunction<Types.UpdateCusto
  */
 export function useUpdateCustomerMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateCustomerMutation, Types.UpdateCustomerMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateCustomerMutation, Types.UpdateCustomerMutationVariables>(UpdateCustomerDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateCustomerMutation, Types.UpdateCustomerMutationVariables>(UpdateCustomerStaging, options);
       }
 export type UpdateCustomerMutationHookResult = ReturnType<typeof useUpdateCustomerMutation>;
 export type UpdateCustomerMutationResult = Apollo.MutationResult<Types.UpdateCustomerMutation>;
 export type UpdateCustomerMutationOptions = Apollo.BaseMutationOptions<Types.UpdateCustomerMutation, Types.UpdateCustomerMutationVariables>;
-export const CreateCustomerDocument = gql`
+export const CreateCustomerStaging = gql`
     mutation CreateCustomer($input: UserCreateInput!) {
   customerCreate(input: $input) {
     errors {
@@ -7035,12 +7035,12 @@ export type CreateCustomerMutationFn = Apollo.MutationFunction<Types.CreateCusto
  */
 export function useCreateCustomerMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateCustomerMutation, Types.CreateCustomerMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CreateCustomerMutation, Types.CreateCustomerMutationVariables>(CreateCustomerDocument, options);
+        return ApolloReactHooks.useMutation<Types.CreateCustomerMutation, Types.CreateCustomerMutationVariables>(CreateCustomerStaging, options);
       }
 export type CreateCustomerMutationHookResult = ReturnType<typeof useCreateCustomerMutation>;
 export type CreateCustomerMutationResult = Apollo.MutationResult<Types.CreateCustomerMutation>;
 export type CreateCustomerMutationOptions = Apollo.BaseMutationOptions<Types.CreateCustomerMutation, Types.CreateCustomerMutationVariables>;
-export const RemoveCustomerDocument = gql`
+export const RemoveCustomerStaging = gql`
     mutation RemoveCustomer($id: ID!) {
   customerDelete(id: $id) {
     errors {
@@ -7070,12 +7070,12 @@ export type RemoveCustomerMutationFn = Apollo.MutationFunction<Types.RemoveCusto
  */
 export function useRemoveCustomerMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RemoveCustomerMutation, Types.RemoveCustomerMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.RemoveCustomerMutation, Types.RemoveCustomerMutationVariables>(RemoveCustomerDocument, options);
+        return ApolloReactHooks.useMutation<Types.RemoveCustomerMutation, Types.RemoveCustomerMutationVariables>(RemoveCustomerStaging, options);
       }
 export type RemoveCustomerMutationHookResult = ReturnType<typeof useRemoveCustomerMutation>;
 export type RemoveCustomerMutationResult = Apollo.MutationResult<Types.RemoveCustomerMutation>;
 export type RemoveCustomerMutationOptions = Apollo.BaseMutationOptions<Types.RemoveCustomerMutation, Types.RemoveCustomerMutationVariables>;
-export const SetCustomerDefaultAddressDocument = gql`
+export const SetCustomerDefaultAddressStaging = gql`
     mutation SetCustomerDefaultAddress($addressId: ID!, $userId: ID!, $type: AddressTypeEnum!) {
   addressSetDefault(addressId: $addressId, userId: $userId, type: $type) {
     errors {
@@ -7111,12 +7111,12 @@ export type SetCustomerDefaultAddressMutationFn = Apollo.MutationFunction<Types.
  */
 export function useSetCustomerDefaultAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SetCustomerDefaultAddressMutation, Types.SetCustomerDefaultAddressMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.SetCustomerDefaultAddressMutation, Types.SetCustomerDefaultAddressMutationVariables>(SetCustomerDefaultAddressDocument, options);
+        return ApolloReactHooks.useMutation<Types.SetCustomerDefaultAddressMutation, Types.SetCustomerDefaultAddressMutationVariables>(SetCustomerDefaultAddressStaging, options);
       }
 export type SetCustomerDefaultAddressMutationHookResult = ReturnType<typeof useSetCustomerDefaultAddressMutation>;
 export type SetCustomerDefaultAddressMutationResult = Apollo.MutationResult<Types.SetCustomerDefaultAddressMutation>;
 export type SetCustomerDefaultAddressMutationOptions = Apollo.BaseMutationOptions<Types.SetCustomerDefaultAddressMutation, Types.SetCustomerDefaultAddressMutationVariables>;
-export const CreateCustomerAddressDocument = gql`
+export const CreateCustomerAddressStaging = gql`
     mutation CreateCustomerAddress($id: ID!, $input: AddressInput!) {
   addressCreate(userId: $id, input: $input) {
     errors {
@@ -7155,12 +7155,12 @@ export type CreateCustomerAddressMutationFn = Apollo.MutationFunction<Types.Crea
  */
 export function useCreateCustomerAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateCustomerAddressMutation, Types.CreateCustomerAddressMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CreateCustomerAddressMutation, Types.CreateCustomerAddressMutationVariables>(CreateCustomerAddressDocument, options);
+        return ApolloReactHooks.useMutation<Types.CreateCustomerAddressMutation, Types.CreateCustomerAddressMutationVariables>(CreateCustomerAddressStaging, options);
       }
 export type CreateCustomerAddressMutationHookResult = ReturnType<typeof useCreateCustomerAddressMutation>;
 export type CreateCustomerAddressMutationResult = Apollo.MutationResult<Types.CreateCustomerAddressMutation>;
 export type CreateCustomerAddressMutationOptions = Apollo.BaseMutationOptions<Types.CreateCustomerAddressMutation, Types.CreateCustomerAddressMutationVariables>;
-export const UpdateCustomerAddressDocument = gql`
+export const UpdateCustomerAddressStaging = gql`
     mutation UpdateCustomerAddress($id: ID!, $input: AddressInput!) {
   addressUpdate(id: $id, input: $input) {
     errors {
@@ -7195,12 +7195,12 @@ export type UpdateCustomerAddressMutationFn = Apollo.MutationFunction<Types.Upda
  */
 export function useUpdateCustomerAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateCustomerAddressMutation, Types.UpdateCustomerAddressMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateCustomerAddressMutation, Types.UpdateCustomerAddressMutationVariables>(UpdateCustomerAddressDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateCustomerAddressMutation, Types.UpdateCustomerAddressMutationVariables>(UpdateCustomerAddressStaging, options);
       }
 export type UpdateCustomerAddressMutationHookResult = ReturnType<typeof useUpdateCustomerAddressMutation>;
 export type UpdateCustomerAddressMutationResult = Apollo.MutationResult<Types.UpdateCustomerAddressMutation>;
 export type UpdateCustomerAddressMutationOptions = Apollo.BaseMutationOptions<Types.UpdateCustomerAddressMutation, Types.UpdateCustomerAddressMutationVariables>;
-export const RemoveCustomerAddressDocument = gql`
+export const RemoveCustomerAddressStaging = gql`
     mutation RemoveCustomerAddress($id: ID!) {
   addressDelete(id: $id) {
     errors {
@@ -7234,12 +7234,12 @@ export type RemoveCustomerAddressMutationFn = Apollo.MutationFunction<Types.Remo
  */
 export function useRemoveCustomerAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RemoveCustomerAddressMutation, Types.RemoveCustomerAddressMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.RemoveCustomerAddressMutation, Types.RemoveCustomerAddressMutationVariables>(RemoveCustomerAddressDocument, options);
+        return ApolloReactHooks.useMutation<Types.RemoveCustomerAddressMutation, Types.RemoveCustomerAddressMutationVariables>(RemoveCustomerAddressStaging, options);
       }
 export type RemoveCustomerAddressMutationHookResult = ReturnType<typeof useRemoveCustomerAddressMutation>;
 export type RemoveCustomerAddressMutationResult = Apollo.MutationResult<Types.RemoveCustomerAddressMutation>;
 export type RemoveCustomerAddressMutationOptions = Apollo.BaseMutationOptions<Types.RemoveCustomerAddressMutation, Types.RemoveCustomerAddressMutationVariables>;
-export const BulkRemoveCustomersDocument = gql`
+export const BulkRemoveCustomersStaging = gql`
     mutation BulkRemoveCustomers($ids: [ID!]!) {
   customerBulkDelete(ids: $ids) {
     errors {
@@ -7269,12 +7269,12 @@ export type BulkRemoveCustomersMutationFn = Apollo.MutationFunction<Types.BulkRe
  */
 export function useBulkRemoveCustomersMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.BulkRemoveCustomersMutation, Types.BulkRemoveCustomersMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.BulkRemoveCustomersMutation, Types.BulkRemoveCustomersMutationVariables>(BulkRemoveCustomersDocument, options);
+        return ApolloReactHooks.useMutation<Types.BulkRemoveCustomersMutation, Types.BulkRemoveCustomersMutationVariables>(BulkRemoveCustomersStaging, options);
       }
 export type BulkRemoveCustomersMutationHookResult = ReturnType<typeof useBulkRemoveCustomersMutation>;
 export type BulkRemoveCustomersMutationResult = Apollo.MutationResult<Types.BulkRemoveCustomersMutation>;
 export type BulkRemoveCustomersMutationOptions = Apollo.BaseMutationOptions<Types.BulkRemoveCustomersMutation, Types.BulkRemoveCustomersMutationVariables>;
-export const ListCustomersDocument = gql`
+export const ListCustomersStaging = gql`
     query ListCustomers($after: String, $before: String, $first: Int, $last: Int, $filter: CustomerFilterInput, $sort: UserSortingInput, $PERMISSION_MANAGE_ORDERS: Boolean!) {
   customers(
     after: $after
@@ -7326,16 +7326,16 @@ export const ListCustomersDocument = gql`
  */
 export function useListCustomersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>(ListCustomersDocument, options);
+        return ApolloReactHooks.useQuery<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>(ListCustomersStaging, options);
       }
 export function useListCustomersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>(ListCustomersDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>(ListCustomersStaging, options);
         }
 export type ListCustomersQueryHookResult = ReturnType<typeof useListCustomersQuery>;
 export type ListCustomersLazyQueryHookResult = ReturnType<typeof useListCustomersLazyQuery>;
 export type ListCustomersQueryResult = Apollo.QueryResult<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>;
-export const CustomerDetailsDocument = gql`
+export const CustomerDetailsStaging = gql`
     query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!) {
   user(id: $id) {
     ...CustomerDetails
@@ -7395,16 +7395,16 @@ ${MetadataItemFragmentDoc}`;
  */
 export function useCustomerDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CustomerDetailsQuery, Types.CustomerDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CustomerDetailsQuery, Types.CustomerDetailsQueryVariables>(CustomerDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CustomerDetailsQuery, Types.CustomerDetailsQueryVariables>(CustomerDetailsStaging, options);
       }
 export function useCustomerDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CustomerDetailsQuery, Types.CustomerDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CustomerDetailsQuery, Types.CustomerDetailsQueryVariables>(CustomerDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CustomerDetailsQuery, Types.CustomerDetailsQueryVariables>(CustomerDetailsStaging, options);
         }
 export type CustomerDetailsQueryHookResult = ReturnType<typeof useCustomerDetailsQuery>;
 export type CustomerDetailsLazyQueryHookResult = ReturnType<typeof useCustomerDetailsLazyQuery>;
 export type CustomerDetailsQueryResult = Apollo.QueryResult<Types.CustomerDetailsQuery, Types.CustomerDetailsQueryVariables>;
-export const CustomerAddressesDocument = gql`
+export const CustomerAddressesStaging = gql`
     query CustomerAddresses($id: ID!) {
   user(id: $id) {
     ...CustomerAddresses
@@ -7430,16 +7430,16 @@ export const CustomerAddressesDocument = gql`
  */
 export function useCustomerAddressesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CustomerAddressesQuery, Types.CustomerAddressesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CustomerAddressesQuery, Types.CustomerAddressesQueryVariables>(CustomerAddressesDocument, options);
+        return ApolloReactHooks.useQuery<Types.CustomerAddressesQuery, Types.CustomerAddressesQueryVariables>(CustomerAddressesStaging, options);
       }
 export function useCustomerAddressesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CustomerAddressesQuery, Types.CustomerAddressesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CustomerAddressesQuery, Types.CustomerAddressesQueryVariables>(CustomerAddressesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CustomerAddressesQuery, Types.CustomerAddressesQueryVariables>(CustomerAddressesStaging, options);
         }
 export type CustomerAddressesQueryHookResult = ReturnType<typeof useCustomerAddressesQuery>;
 export type CustomerAddressesLazyQueryHookResult = ReturnType<typeof useCustomerAddressesLazyQuery>;
 export type CustomerAddressesQueryResult = Apollo.QueryResult<Types.CustomerAddressesQuery, Types.CustomerAddressesQueryVariables>;
-export const CustomerCreateDataDocument = gql`
+export const CustomerCreateDataStaging = gql`
     query CustomerCreateData {
   shop {
     countries {
@@ -7467,16 +7467,16 @@ export const CustomerCreateDataDocument = gql`
  */
 export function useCustomerCreateDataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CustomerCreateDataQuery, Types.CustomerCreateDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CustomerCreateDataQuery, Types.CustomerCreateDataQueryVariables>(CustomerCreateDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.CustomerCreateDataQuery, Types.CustomerCreateDataQueryVariables>(CustomerCreateDataStaging, options);
       }
 export function useCustomerCreateDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CustomerCreateDataQuery, Types.CustomerCreateDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CustomerCreateDataQuery, Types.CustomerCreateDataQueryVariables>(CustomerCreateDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CustomerCreateDataQuery, Types.CustomerCreateDataQueryVariables>(CustomerCreateDataStaging, options);
         }
 export type CustomerCreateDataQueryHookResult = ReturnType<typeof useCustomerCreateDataQuery>;
 export type CustomerCreateDataLazyQueryHookResult = ReturnType<typeof useCustomerCreateDataLazyQuery>;
 export type CustomerCreateDataQueryResult = Apollo.QueryResult<Types.CustomerCreateDataQuery, Types.CustomerCreateDataQueryVariables>;
-export const VoucherChannelListingUpdateDocument = gql`
+export const VoucherChannelListingUpdateStaging = gql`
     mutation VoucherChannelListingUpdate($id: ID!, $input: VoucherChannelListingInput!) {
   voucherChannelListingUpdate(id: $id, input: $input) {
     errors {
@@ -7511,12 +7511,12 @@ export type VoucherChannelListingUpdateMutationFn = Apollo.MutationFunction<Type
  */
 export function useVoucherChannelListingUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherChannelListingUpdateMutation, Types.VoucherChannelListingUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VoucherChannelListingUpdateMutation, Types.VoucherChannelListingUpdateMutationVariables>(VoucherChannelListingUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.VoucherChannelListingUpdateMutation, Types.VoucherChannelListingUpdateMutationVariables>(VoucherChannelListingUpdateStaging, options);
       }
 export type VoucherChannelListingUpdateMutationHookResult = ReturnType<typeof useVoucherChannelListingUpdateMutation>;
 export type VoucherChannelListingUpdateMutationResult = Apollo.MutationResult<Types.VoucherChannelListingUpdateMutation>;
 export type VoucherChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherChannelListingUpdateMutation, Types.VoucherChannelListingUpdateMutationVariables>;
-export const VoucherUpdateDocument = gql`
+export const VoucherUpdateStaging = gql`
     mutation VoucherUpdate($input: VoucherInput!, $id: ID!) {
   voucherUpdate(id: $id, input: $input) {
     errors {
@@ -7552,12 +7552,12 @@ export type VoucherUpdateMutationFn = Apollo.MutationFunction<Types.VoucherUpdat
  */
 export function useVoucherUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>(VoucherUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>(VoucherUpdateStaging, options);
       }
 export type VoucherUpdateMutationHookResult = ReturnType<typeof useVoucherUpdateMutation>;
 export type VoucherUpdateMutationResult = Apollo.MutationResult<Types.VoucherUpdateMutation>;
 export type VoucherUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>;
-export const VoucherCataloguesAddDocument = gql`
+export const VoucherCataloguesAddStaging = gql`
     mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
   voucherCataloguesAdd(id: $id, input: $input) {
     errors {
@@ -7600,12 +7600,12 @@ export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.Vouch
  */
 export function useVoucherCataloguesAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>(VoucherCataloguesAddDocument, options);
+        return ApolloReactHooks.useMutation<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>(VoucherCataloguesAddStaging, options);
       }
 export type VoucherCataloguesAddMutationHookResult = ReturnType<typeof useVoucherCataloguesAddMutation>;
 export type VoucherCataloguesAddMutationResult = Apollo.MutationResult<Types.VoucherCataloguesAddMutation>;
 export type VoucherCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
-export const VoucherCataloguesRemoveDocument = gql`
+export const VoucherCataloguesRemoveStaging = gql`
     mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
   voucherCataloguesRemove(id: $id, input: $input) {
     errors {
@@ -7648,12 +7648,12 @@ export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.Vo
  */
 export function useVoucherCataloguesRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherCataloguesRemoveMutation, Types.VoucherCataloguesRemoveMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VoucherCataloguesRemoveMutation, Types.VoucherCataloguesRemoveMutationVariables>(VoucherCataloguesRemoveDocument, options);
+        return ApolloReactHooks.useMutation<Types.VoucherCataloguesRemoveMutation, Types.VoucherCataloguesRemoveMutationVariables>(VoucherCataloguesRemoveStaging, options);
       }
 export type VoucherCataloguesRemoveMutationHookResult = ReturnType<typeof useVoucherCataloguesRemoveMutation>;
 export type VoucherCataloguesRemoveMutationResult = Apollo.MutationResult<Types.VoucherCataloguesRemoveMutation>;
 export type VoucherCataloguesRemoveMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCataloguesRemoveMutation, Types.VoucherCataloguesRemoveMutationVariables>;
-export const VoucherCreateDocument = gql`
+export const VoucherCreateStaging = gql`
     mutation VoucherCreate($input: VoucherInput!) {
   voucherCreate(input: $input) {
     errors {
@@ -7688,12 +7688,12 @@ export type VoucherCreateMutationFn = Apollo.MutationFunction<Types.VoucherCreat
  */
 export function useVoucherCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherCreateMutation, Types.VoucherCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VoucherCreateMutation, Types.VoucherCreateMutationVariables>(VoucherCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.VoucherCreateMutation, Types.VoucherCreateMutationVariables>(VoucherCreateStaging, options);
       }
 export type VoucherCreateMutationHookResult = ReturnType<typeof useVoucherCreateMutation>;
 export type VoucherCreateMutationResult = Apollo.MutationResult<Types.VoucherCreateMutation>;
 export type VoucherCreateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCreateMutation, Types.VoucherCreateMutationVariables>;
-export const VoucherDeleteDocument = gql`
+export const VoucherDeleteStaging = gql`
     mutation VoucherDelete($id: ID!) {
   voucherDelete(id: $id) {
     errors {
@@ -7724,12 +7724,12 @@ export type VoucherDeleteMutationFn = Apollo.MutationFunction<Types.VoucherDelet
  */
 export function useVoucherDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherDeleteMutation, Types.VoucherDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VoucherDeleteMutation, Types.VoucherDeleteMutationVariables>(VoucherDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.VoucherDeleteMutation, Types.VoucherDeleteMutationVariables>(VoucherDeleteStaging, options);
       }
 export type VoucherDeleteMutationHookResult = ReturnType<typeof useVoucherDeleteMutation>;
 export type VoucherDeleteMutationResult = Apollo.MutationResult<Types.VoucherDeleteMutation>;
 export type VoucherDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VoucherDeleteMutation, Types.VoucherDeleteMutationVariables>;
-export const VoucherBulkDeleteDocument = gql`
+export const VoucherBulkDeleteStaging = gql`
     mutation VoucherBulkDelete($ids: [ID!]!) {
   voucherBulkDelete(ids: $ids) {
     errors {
@@ -7759,12 +7759,12 @@ export type VoucherBulkDeleteMutationFn = Apollo.MutationFunction<Types.VoucherB
  */
 export function useVoucherBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VoucherBulkDeleteMutation, Types.VoucherBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VoucherBulkDeleteMutation, Types.VoucherBulkDeleteMutationVariables>(VoucherBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.VoucherBulkDeleteMutation, Types.VoucherBulkDeleteMutationVariables>(VoucherBulkDeleteStaging, options);
       }
 export type VoucherBulkDeleteMutationHookResult = ReturnType<typeof useVoucherBulkDeleteMutation>;
 export type VoucherBulkDeleteMutationResult = Apollo.MutationResult<Types.VoucherBulkDeleteMutation>;
 export type VoucherBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VoucherBulkDeleteMutation, Types.VoucherBulkDeleteMutationVariables>;
-export const PromotionCreateDocument = gql`
+export const PromotionCreateStaging = gql`
     mutation PromotionCreate($input: PromotionCreateInput!) {
   promotionCreate(input: $input) {
     errors {
@@ -7798,12 +7798,12 @@ export type PromotionCreateMutationFn = Apollo.MutationFunction<Types.PromotionC
  */
 export function usePromotionCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>(PromotionCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>(PromotionCreateStaging, options);
       }
 export type PromotionCreateMutationHookResult = ReturnType<typeof usePromotionCreateMutation>;
 export type PromotionCreateMutationResult = Apollo.MutationResult<Types.PromotionCreateMutation>;
 export type PromotionCreateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionCreateMutation, Types.PromotionCreateMutationVariables>;
-export const PromotionUpdateDocument = gql`
+export const PromotionUpdateStaging = gql`
     mutation PromotionUpdate($id: ID!, $input: PromotionUpdateInput!) {
   promotionUpdate(id: $id, input: $input) {
     errors {
@@ -7838,12 +7838,12 @@ export type PromotionUpdateMutationFn = Apollo.MutationFunction<Types.PromotionU
  */
 export function usePromotionUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>(PromotionUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>(PromotionUpdateStaging, options);
       }
 export type PromotionUpdateMutationHookResult = ReturnType<typeof usePromotionUpdateMutation>;
 export type PromotionUpdateMutationResult = Apollo.MutationResult<Types.PromotionUpdateMutation>;
 export type PromotionUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionUpdateMutation, Types.PromotionUpdateMutationVariables>;
-export const PromotionDeleteDocument = gql`
+export const PromotionDeleteStaging = gql`
     mutation PromotionDelete($id: ID!) {
   promotionDelete(id: $id) {
     errors {
@@ -7873,12 +7873,12 @@ export type PromotionDeleteMutationFn = Apollo.MutationFunction<Types.PromotionD
  */
 export function usePromotionDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>(PromotionDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>(PromotionDeleteStaging, options);
       }
 export type PromotionDeleteMutationHookResult = ReturnType<typeof usePromotionDeleteMutation>;
 export type PromotionDeleteMutationResult = Apollo.MutationResult<Types.PromotionDeleteMutation>;
 export type PromotionDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PromotionDeleteMutation, Types.PromotionDeleteMutationVariables>;
-export const PromotionRuleUpdateDocument = gql`
+export const PromotionRuleUpdateStaging = gql`
     mutation PromotionRuleUpdate($id: ID!, $input: PromotionRuleUpdateInput!) {
   promotionRuleUpdate(id: $id, input: $input) {
     errors {
@@ -7913,12 +7913,12 @@ export type PromotionRuleUpdateMutationFn = Apollo.MutationFunction<Types.Promot
  */
 export function usePromotionRuleUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>(PromotionRuleUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>(PromotionRuleUpdateStaging, options);
       }
 export type PromotionRuleUpdateMutationHookResult = ReturnType<typeof usePromotionRuleUpdateMutation>;
 export type PromotionRuleUpdateMutationResult = Apollo.MutationResult<Types.PromotionRuleUpdateMutation>;
 export type PromotionRuleUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionRuleUpdateMutation, Types.PromotionRuleUpdateMutationVariables>;
-export const PromotionRuleCreateDocument = gql`
+export const PromotionRuleCreateStaging = gql`
     mutation PromotionRuleCreate($input: PromotionRuleCreateInput!) {
   promotionRuleCreate(input: $input) {
     errors {
@@ -7952,12 +7952,12 @@ export type PromotionRuleCreateMutationFn = Apollo.MutationFunction<Types.Promot
  */
 export function usePromotionRuleCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>(PromotionRuleCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>(PromotionRuleCreateStaging, options);
       }
 export type PromotionRuleCreateMutationHookResult = ReturnType<typeof usePromotionRuleCreateMutation>;
 export type PromotionRuleCreateMutationResult = Apollo.MutationResult<Types.PromotionRuleCreateMutation>;
 export type PromotionRuleCreateMutationOptions = Apollo.BaseMutationOptions<Types.PromotionRuleCreateMutation, Types.PromotionRuleCreateMutationVariables>;
-export const PromotionRuleDeleteDocument = gql`
+export const PromotionRuleDeleteStaging = gql`
     mutation PromotionRuleDelete($id: ID!) {
   promotionRuleDelete(id: $id) {
     errors {
@@ -7990,12 +7990,12 @@ export type PromotionRuleDeleteMutationFn = Apollo.MutationFunction<Types.Promot
  */
 export function usePromotionRuleDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PromotionRuleDeleteMutation, Types.PromotionRuleDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PromotionRuleDeleteMutation, Types.PromotionRuleDeleteMutationVariables>(PromotionRuleDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.PromotionRuleDeleteMutation, Types.PromotionRuleDeleteMutationVariables>(PromotionRuleDeleteStaging, options);
       }
 export type PromotionRuleDeleteMutationHookResult = ReturnType<typeof usePromotionRuleDeleteMutation>;
 export type PromotionRuleDeleteMutationResult = Apollo.MutationResult<Types.PromotionRuleDeleteMutation>;
 export type PromotionRuleDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PromotionRuleDeleteMutation, Types.PromotionRuleDeleteMutationVariables>;
-export const SaleListDocument = gql`
+export const SaleListStaging = gql`
     query SaleList($after: String, $before: String, $first: Int, $last: Int, $filter: SaleFilterInput, $sort: SaleSortingInput, $channel: String) {
   sales(
     after: $after
@@ -8043,16 +8043,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSaleListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.SaleListQuery, Types.SaleListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SaleListQuery, Types.SaleListQueryVariables>(SaleListDocument, options);
+        return ApolloReactHooks.useQuery<Types.SaleListQuery, Types.SaleListQueryVariables>(SaleListStaging, options);
       }
 export function useSaleListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SaleListQuery, Types.SaleListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SaleListQuery, Types.SaleListQueryVariables>(SaleListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SaleListQuery, Types.SaleListQueryVariables>(SaleListStaging, options);
         }
 export type SaleListQueryHookResult = ReturnType<typeof useSaleListQuery>;
 export type SaleListLazyQueryHookResult = ReturnType<typeof useSaleListLazyQuery>;
 export type SaleListQueryResult = Apollo.QueryResult<Types.SaleListQuery, Types.SaleListQueryVariables>;
-export const PromotionsListDocument = gql`
+export const PromotionsListStaging = gql`
     query PromotionsList($after: String, $before: String, $first: Int, $last: Int, $where: PromotionWhereInput, $sort: PromotionSortingInput) {
   promotions(
     after: $after
@@ -8098,16 +8098,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function usePromotionsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>(PromotionsListDocument, options);
+        return ApolloReactHooks.useQuery<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>(PromotionsListStaging, options);
       }
 export function usePromotionsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>(PromotionsListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>(PromotionsListStaging, options);
         }
 export type PromotionsListQueryHookResult = ReturnType<typeof usePromotionsListQuery>;
 export type PromotionsListLazyQueryHookResult = ReturnType<typeof usePromotionsListLazyQuery>;
 export type PromotionsListQueryResult = Apollo.QueryResult<Types.PromotionsListQuery, Types.PromotionsListQueryVariables>;
-export const VoucherListDocument = gql`
+export const VoucherListStaging = gql`
     query VoucherList($after: String, $before: String, $first: Int, $last: Int, $filter: VoucherFilterInput, $sort: VoucherSortingInput, $channel: String) {
   vouchers(
     after: $after
@@ -8155,16 +8155,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useVoucherListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.VoucherListQuery, Types.VoucherListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.VoucherListQuery, Types.VoucherListQueryVariables>(VoucherListDocument, options);
+        return ApolloReactHooks.useQuery<Types.VoucherListQuery, Types.VoucherListQueryVariables>(VoucherListStaging, options);
       }
 export function useVoucherListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherListQuery, Types.VoucherListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.VoucherListQuery, Types.VoucherListQueryVariables>(VoucherListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.VoucherListQuery, Types.VoucherListQueryVariables>(VoucherListStaging, options);
         }
 export type VoucherListQueryHookResult = ReturnType<typeof useVoucherListQuery>;
 export type VoucherListLazyQueryHookResult = ReturnType<typeof useVoucherListLazyQuery>;
 export type VoucherListQueryResult = Apollo.QueryResult<Types.VoucherListQuery, Types.VoucherListQueryVariables>;
-export const SaleDetailsDocument = gql`
+export const SaleDetailsStaging = gql`
     query SaleDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeVariants: Boolean!, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!) {
   sale(id: $id) {
     ...SaleDetails
@@ -8198,16 +8198,16 @@ export const SaleDetailsDocument = gql`
  */
 export function useSaleDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>(SaleDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>(SaleDetailsStaging, options);
       }
 export function useSaleDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>(SaleDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>(SaleDetailsStaging, options);
         }
 export type SaleDetailsQueryHookResult = ReturnType<typeof useSaleDetailsQuery>;
 export type SaleDetailsLazyQueryHookResult = ReturnType<typeof useSaleDetailsLazyQuery>;
 export type SaleDetailsQueryResult = Apollo.QueryResult<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>;
-export const VoucherDetailsDocument = gql`
+export const VoucherDetailsStaging = gql`
     query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
   voucher(id: $id) {
     ...VoucherDetails
@@ -8241,16 +8241,16 @@ export const VoucherDetailsDocument = gql`
  */
 export function useVoucherDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>(VoucherDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>(VoucherDetailsStaging, options);
       }
 export function useVoucherDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>(VoucherDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>(VoucherDetailsStaging, options);
         }
 export type VoucherDetailsQueryHookResult = ReturnType<typeof useVoucherDetailsQuery>;
 export type VoucherDetailsLazyQueryHookResult = ReturnType<typeof useVoucherDetailsLazyQuery>;
 export type VoucherDetailsQueryResult = Apollo.QueryResult<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>;
-export const VoucherCodesDocument = gql`
+export const VoucherCodesStaging = gql`
     query VoucherCodes($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
   voucher(id: $id) {
     codes(first: $first, last: $last, before: $before, after: $after) {
@@ -8290,16 +8290,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useVoucherCodesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>(VoucherCodesDocument, options);
+        return ApolloReactHooks.useQuery<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>(VoucherCodesStaging, options);
       }
 export function useVoucherCodesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>(VoucherCodesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>(VoucherCodesStaging, options);
         }
 export type VoucherCodesQueryHookResult = ReturnType<typeof useVoucherCodesQuery>;
 export type VoucherCodesLazyQueryHookResult = ReturnType<typeof useVoucherCodesLazyQuery>;
 export type VoucherCodesQueryResult = Apollo.QueryResult<Types.VoucherCodesQuery, Types.VoucherCodesQueryVariables>;
-export const PromotionDetailsDocument = gql`
+export const PromotionDetailsStaging = gql`
     query PromotionDetails($id: ID!) {
   promotion(id: $id) {
     ...PromotionDetails
@@ -8325,16 +8325,16 @@ export const PromotionDetailsDocument = gql`
  */
 export function usePromotionDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>(PromotionDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>(PromotionDetailsStaging, options);
       }
 export function usePromotionDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>(PromotionDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>(PromotionDetailsStaging, options);
         }
 export type PromotionDetailsQueryHookResult = ReturnType<typeof usePromotionDetailsQuery>;
 export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotionDetailsLazyQuery>;
 export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
-export const RuleConditionsSelectedOptionsDetailsDocument = gql`
+export const RuleConditionsSelectedOptionsDetailsStaging = gql`
     query RuleConditionsSelectedOptionsDetails($categoriesIds: [ID!], $collectionsIds: [ID!], $productsIds: [ID!], $variantsIds: [ID!]) {
   categories(first: 100, where: {ids: $categoriesIds}) {
     edges {
@@ -8395,16 +8395,16 @@ export const RuleConditionsSelectedOptionsDetailsDocument = gql`
  */
 export function useRuleConditionsSelectedOptionsDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>(RuleConditionsSelectedOptionsDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>(RuleConditionsSelectedOptionsDetailsStaging, options);
       }
 export function useRuleConditionsSelectedOptionsDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>(RuleConditionsSelectedOptionsDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>(RuleConditionsSelectedOptionsDetailsStaging, options);
         }
 export type RuleConditionsSelectedOptionsDetailsQueryHookResult = ReturnType<typeof useRuleConditionsSelectedOptionsDetailsQuery>;
 export type RuleConditionsSelectedOptionsDetailsLazyQueryHookResult = ReturnType<typeof useRuleConditionsSelectedOptionsDetailsLazyQuery>;
 export type RuleConditionsSelectedOptionsDetailsQueryResult = Apollo.QueryResult<Types.RuleConditionsSelectedOptionsDetailsQuery, Types.RuleConditionsSelectedOptionsDetailsQueryVariables>;
-export const GiftLabelsDocument = gql`
+export const GiftLabelsStaging = gql`
     query GiftLabels($ids: [ID!]) {
   productVariants(first: 100, where: {ids: $ids}) {
     edges {
@@ -8438,16 +8438,16 @@ export const GiftLabelsDocument = gql`
  */
 export function useGiftLabelsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>(GiftLabelsDocument, options);
+        return ApolloReactHooks.useQuery<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>(GiftLabelsStaging, options);
       }
 export function useGiftLabelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>(GiftLabelsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>(GiftLabelsStaging, options);
         }
 export type GiftLabelsQueryHookResult = ReturnType<typeof useGiftLabelsQuery>;
 export type GiftLabelsLazyQueryHookResult = ReturnType<typeof useGiftLabelsLazyQuery>;
 export type GiftLabelsQueryResult = Apollo.QueryResult<Types.GiftLabelsQuery, Types.GiftLabelsQueryVariables>;
-export const PromotionDetailsQueryDocument = gql`
+export const PromotionDetailsQueryStaging = gql`
     query PromotionDetailsQuery($id: ID!) {
   promotion(id: $id) {
     id
@@ -8492,16 +8492,16 @@ export const PromotionDetailsQueryDocument = gql`
  */
 export function usePromotionDetailsQueryQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>(PromotionDetailsQueryDocument, options);
+        return ApolloReactHooks.useQuery<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>(PromotionDetailsQueryStaging, options);
       }
 export function usePromotionDetailsQueryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>(PromotionDetailsQueryDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>(PromotionDetailsQueryStaging, options);
         }
 export type PromotionDetailsQueryQueryHookResult = ReturnType<typeof usePromotionDetailsQueryQuery>;
 export type PromotionDetailsQueryLazyQueryHookResult = ReturnType<typeof usePromotionDetailsQueryLazyQuery>;
 export type PromotionDetailsQueryQueryResult = Apollo.QueryResult<Types.PromotionDetailsQueryQuery, Types.PromotionDetailsQueryQueryVariables>;
-export const AppFailedPendingWebhooksDocument = gql`
+export const AppFailedPendingWebhooksStaging = gql`
     query AppFailedPendingWebhooks($canFetchAppEvents: Boolean!) {
   apps(first: 50, filter: {type: THIRDPARTY}) {
     edges {
@@ -8532,16 +8532,16 @@ export const AppFailedPendingWebhooksDocument = gql`
  */
 export function useAppFailedPendingWebhooksQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>(AppFailedPendingWebhooksDocument, options);
+        return ApolloReactHooks.useQuery<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>(AppFailedPendingWebhooksStaging, options);
       }
 export function useAppFailedPendingWebhooksLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>(AppFailedPendingWebhooksDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>(AppFailedPendingWebhooksStaging, options);
         }
 export type AppFailedPendingWebhooksQueryHookResult = ReturnType<typeof useAppFailedPendingWebhooksQuery>;
 export type AppFailedPendingWebhooksLazyQueryHookResult = ReturnType<typeof useAppFailedPendingWebhooksLazyQuery>;
 export type AppFailedPendingWebhooksQueryResult = Apollo.QueryResult<Types.AppFailedPendingWebhooksQuery, Types.AppFailedPendingWebhooksQueryVariables>;
-export const AppDeleteFailedInstallationDocument = gql`
+export const AppDeleteFailedInstallationStaging = gql`
     mutation AppDeleteFailedInstallation($id: ID!) {
   appDeleteFailedInstallation(id: $id) {
     appInstallation {
@@ -8577,12 +8577,12 @@ export type AppDeleteFailedInstallationMutationFn = Apollo.MutationFunction<Type
  */
 export function useAppDeleteFailedInstallationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>(AppDeleteFailedInstallationDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>(AppDeleteFailedInstallationStaging, options);
       }
 export type AppDeleteFailedInstallationMutationHookResult = ReturnType<typeof useAppDeleteFailedInstallationMutation>;
 export type AppDeleteFailedInstallationMutationResult = Apollo.MutationResult<Types.AppDeleteFailedInstallationMutation>;
 export type AppDeleteFailedInstallationMutationOptions = Apollo.BaseMutationOptions<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>;
-export const WebhookCreateDocument = gql`
+export const WebhookCreateStaging = gql`
     mutation WebhookCreate($input: WebhookCreateInput!) {
   webhookCreate(input: $input) {
     errors {
@@ -8616,12 +8616,12 @@ export type WebhookCreateMutationFn = Apollo.MutationFunction<Types.WebhookCreat
  */
 export function useWebhookCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>(WebhookCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>(WebhookCreateStaging, options);
       }
 export type WebhookCreateMutationHookResult = ReturnType<typeof useWebhookCreateMutation>;
 export type WebhookCreateMutationResult = Apollo.MutationResult<Types.WebhookCreateMutation>;
 export type WebhookCreateMutationOptions = Apollo.BaseMutationOptions<Types.WebhookCreateMutation, Types.WebhookCreateMutationVariables>;
-export const WebhookUpdateDocument = gql`
+export const WebhookUpdateStaging = gql`
     mutation WebhookUpdate($id: ID!, $input: WebhookUpdateInput!) {
   webhookUpdate(id: $id, input: $input) {
     errors {
@@ -8656,12 +8656,12 @@ export type WebhookUpdateMutationFn = Apollo.MutationFunction<Types.WebhookUpdat
  */
 export function useWebhookUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>(WebhookUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>(WebhookUpdateStaging, options);
       }
 export type WebhookUpdateMutationHookResult = ReturnType<typeof useWebhookUpdateMutation>;
 export type WebhookUpdateMutationResult = Apollo.MutationResult<Types.WebhookUpdateMutation>;
 export type WebhookUpdateMutationOptions = Apollo.BaseMutationOptions<Types.WebhookUpdateMutation, Types.WebhookUpdateMutationVariables>;
-export const WebhookDeleteDocument = gql`
+export const WebhookDeleteStaging = gql`
     mutation WebhookDelete($id: ID!) {
   webhookDelete(id: $id) {
     errors {
@@ -8691,12 +8691,12 @@ export type WebhookDeleteMutationFn = Apollo.MutationFunction<Types.WebhookDelet
  */
 export function useWebhookDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WebhookDeleteMutation, Types.WebhookDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.WebhookDeleteMutation, Types.WebhookDeleteMutationVariables>(WebhookDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.WebhookDeleteMutation, Types.WebhookDeleteMutationVariables>(WebhookDeleteStaging, options);
       }
 export type WebhookDeleteMutationHookResult = ReturnType<typeof useWebhookDeleteMutation>;
 export type WebhookDeleteMutationResult = Apollo.MutationResult<Types.WebhookDeleteMutation>;
 export type WebhookDeleteMutationOptions = Apollo.BaseMutationOptions<Types.WebhookDeleteMutation, Types.WebhookDeleteMutationVariables>;
-export const PluginUpdateDocument = gql`
+export const PluginUpdateStaging = gql`
     mutation PluginUpdate($channelId: ID, $id: ID!, $input: PluginUpdateInput!) {
   pluginUpdate(channelId: $channelId, id: $id, input: $input) {
     errors {
@@ -8732,12 +8732,12 @@ export type PluginUpdateMutationFn = Apollo.MutationFunction<Types.PluginUpdateM
  */
 export function usePluginUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>(PluginUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>(PluginUpdateStaging, options);
       }
 export type PluginUpdateMutationHookResult = ReturnType<typeof usePluginUpdateMutation>;
 export type PluginUpdateMutationResult = Apollo.MutationResult<Types.PluginUpdateMutation>;
 export type PluginUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>;
-export const AppCreateDocument = gql`
+export const AppCreateStaging = gql`
     mutation AppCreate($input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
   appCreate(input: $input) {
     authToken
@@ -8773,12 +8773,12 @@ export type AppCreateMutationFn = Apollo.MutationFunction<Types.AppCreateMutatio
  */
 export function useAppCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppCreateMutation, Types.AppCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppCreateMutation, Types.AppCreateMutationVariables>(AppCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppCreateMutation, Types.AppCreateMutationVariables>(AppCreateStaging, options);
       }
 export type AppCreateMutationHookResult = ReturnType<typeof useAppCreateMutation>;
 export type AppCreateMutationResult = Apollo.MutationResult<Types.AppCreateMutation>;
 export type AppCreateMutationOptions = Apollo.BaseMutationOptions<Types.AppCreateMutation, Types.AppCreateMutationVariables>;
-export const AppDeleteDocument = gql`
+export const AppDeleteStaging = gql`
     mutation AppDelete($id: ID!, $hasManagedAppsPermission: Boolean = true) {
   appDelete(id: $id) {
     app {
@@ -8813,12 +8813,12 @@ export type AppDeleteMutationFn = Apollo.MutationFunction<Types.AppDeleteMutatio
  */
 export function useAppDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>(AppDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>(AppDeleteStaging, options);
       }
 export type AppDeleteMutationHookResult = ReturnType<typeof useAppDeleteMutation>;
 export type AppDeleteMutationResult = Apollo.MutationResult<Types.AppDeleteMutation>;
 export type AppDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>;
-export const AppFetchDocument = gql`
+export const AppFetchStaging = gql`
     mutation AppFetch($manifestUrl: String!) {
   appFetchManifest(manifestUrl: $manifestUrl) {
     manifest {
@@ -8852,12 +8852,12 @@ export type AppFetchMutationFn = Apollo.MutationFunction<Types.AppFetchMutation,
  */
 export function useAppFetchMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppFetchMutation, Types.AppFetchMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppFetchMutation, Types.AppFetchMutationVariables>(AppFetchDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppFetchMutation, Types.AppFetchMutationVariables>(AppFetchStaging, options);
       }
 export type AppFetchMutationHookResult = ReturnType<typeof useAppFetchMutation>;
 export type AppFetchMutationResult = Apollo.MutationResult<Types.AppFetchMutation>;
 export type AppFetchMutationOptions = Apollo.BaseMutationOptions<Types.AppFetchMutation, Types.AppFetchMutationVariables>;
-export const AppInstallDocument = gql`
+export const AppInstallStaging = gql`
     mutation AppInstall($input: AppInstallInput!) {
   appInstall(input: $input) {
     appInstallation {
@@ -8893,12 +8893,12 @@ export type AppInstallMutationFn = Apollo.MutationFunction<Types.AppInstallMutat
  */
 export function useAppInstallMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppInstallMutation, Types.AppInstallMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppInstallMutation, Types.AppInstallMutationVariables>(AppInstallDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppInstallMutation, Types.AppInstallMutationVariables>(AppInstallStaging, options);
       }
 export type AppInstallMutationHookResult = ReturnType<typeof useAppInstallMutation>;
 export type AppInstallMutationResult = Apollo.MutationResult<Types.AppInstallMutation>;
 export type AppInstallMutationOptions = Apollo.BaseMutationOptions<Types.AppInstallMutation, Types.AppInstallMutationVariables>;
-export const AppRetryInstallDocument = gql`
+export const AppRetryInstallStaging = gql`
     mutation AppRetryInstall($id: ID!) {
   appRetryInstall(id: $id) {
     appInstallation {
@@ -8934,12 +8934,12 @@ export type AppRetryInstallMutationFn = Apollo.MutationFunction<Types.AppRetryIn
  */
 export function useAppRetryInstallMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>(AppRetryInstallDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>(AppRetryInstallStaging, options);
       }
 export type AppRetryInstallMutationHookResult = ReturnType<typeof useAppRetryInstallMutation>;
 export type AppRetryInstallMutationResult = Apollo.MutationResult<Types.AppRetryInstallMutation>;
 export type AppRetryInstallMutationOptions = Apollo.BaseMutationOptions<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>;
-export const AppUpdateDocument = gql`
+export const AppUpdateStaging = gql`
     mutation AppUpdate($id: ID!, $input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
   appUpdate(id: $id, input: $input) {
     app {
@@ -8981,12 +8981,12 @@ export type AppUpdateMutationFn = Apollo.MutationFunction<Types.AppUpdateMutatio
  */
 export function useAppUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>(AppUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>(AppUpdateStaging, options);
       }
 export type AppUpdateMutationHookResult = ReturnType<typeof useAppUpdateMutation>;
 export type AppUpdateMutationResult = Apollo.MutationResult<Types.AppUpdateMutation>;
 export type AppUpdateMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>;
-export const AppTokenCreateDocument = gql`
+export const AppTokenCreateStaging = gql`
     mutation AppTokenCreate($input: AppTokenInput!) {
   appTokenCreate(input: $input) {
     appToken {
@@ -9022,12 +9022,12 @@ export type AppTokenCreateMutationFn = Apollo.MutationFunction<Types.AppTokenCre
  */
 export function useAppTokenCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>(AppTokenCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>(AppTokenCreateStaging, options);
       }
 export type AppTokenCreateMutationHookResult = ReturnType<typeof useAppTokenCreateMutation>;
 export type AppTokenCreateMutationResult = Apollo.MutationResult<Types.AppTokenCreateMutation>;
 export type AppTokenCreateMutationOptions = Apollo.BaseMutationOptions<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>;
-export const AppTokenDeleteDocument = gql`
+export const AppTokenDeleteStaging = gql`
     mutation AppTokenDelete($id: ID!) {
   appTokenDelete(id: $id) {
     appToken {
@@ -9062,12 +9062,12 @@ export type AppTokenDeleteMutationFn = Apollo.MutationFunction<Types.AppTokenDel
  */
 export function useAppTokenDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>(AppTokenDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>(AppTokenDeleteStaging, options);
       }
 export type AppTokenDeleteMutationHookResult = ReturnType<typeof useAppTokenDeleteMutation>;
 export type AppTokenDeleteMutationResult = Apollo.MutationResult<Types.AppTokenDeleteMutation>;
 export type AppTokenDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>;
-export const AppActivateDocument = gql`
+export const AppActivateStaging = gql`
     mutation AppActivate($id: ID!) {
   appActivate(id: $id) {
     errors {
@@ -9097,12 +9097,12 @@ export type AppActivateMutationFn = Apollo.MutationFunction<Types.AppActivateMut
  */
 export function useAppActivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppActivateMutation, Types.AppActivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppActivateMutation, Types.AppActivateMutationVariables>(AppActivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppActivateMutation, Types.AppActivateMutationVariables>(AppActivateStaging, options);
       }
 export type AppActivateMutationHookResult = ReturnType<typeof useAppActivateMutation>;
 export type AppActivateMutationResult = Apollo.MutationResult<Types.AppActivateMutation>;
 export type AppActivateMutationOptions = Apollo.BaseMutationOptions<Types.AppActivateMutation, Types.AppActivateMutationVariables>;
-export const AppDeactivateDocument = gql`
+export const AppDeactivateStaging = gql`
     mutation AppDeactivate($id: ID!) {
   appDeactivate(id: $id) {
     errors {
@@ -9132,12 +9132,12 @@ export type AppDeactivateMutationFn = Apollo.MutationFunction<Types.AppDeactivat
  */
 export function useAppDeactivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>(AppDeactivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>(AppDeactivateStaging, options);
       }
 export type AppDeactivateMutationHookResult = ReturnType<typeof useAppDeactivateMutation>;
 export type AppDeactivateMutationResult = Apollo.MutationResult<Types.AppDeactivateMutation>;
 export type AppDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
-export const AppUpdatePermissionsDocument = gql`
+export const AppUpdatePermissionsStaging = gql`
     mutation AppUpdatePermissions($id: ID!, $permissions: [PermissionEnum!]!) {
   appUpdate(id: $id, input: {permissions: $permissions}) {
     app {
@@ -9174,12 +9174,12 @@ export type AppUpdatePermissionsMutationFn = Apollo.MutationFunction<Types.AppUp
  */
 export function useAppUpdatePermissionsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>(AppUpdatePermissionsDocument, options);
+        return ApolloReactHooks.useMutation<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>(AppUpdatePermissionsStaging, options);
       }
 export type AppUpdatePermissionsMutationHookResult = ReturnType<typeof useAppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationResult = Apollo.MutationResult<Types.AppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>;
-export const InstalledAppsDocument = gql`
+export const InstalledAppsStaging = gql`
     query InstalledApps($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput) {
   apps(
     before: $before
@@ -9226,16 +9226,16 @@ export const InstalledAppsDocument = gql`
  */
 export function useInstalledAppsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.InstalledAppsQuery, Types.InstalledAppsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.InstalledAppsQuery, Types.InstalledAppsQueryVariables>(InstalledAppsDocument, options);
+        return ApolloReactHooks.useQuery<Types.InstalledAppsQuery, Types.InstalledAppsQueryVariables>(InstalledAppsStaging, options);
       }
 export function useInstalledAppsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.InstalledAppsQuery, Types.InstalledAppsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.InstalledAppsQuery, Types.InstalledAppsQueryVariables>(InstalledAppsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.InstalledAppsQuery, Types.InstalledAppsQueryVariables>(InstalledAppsStaging, options);
         }
 export type InstalledAppsQueryHookResult = ReturnType<typeof useInstalledAppsQuery>;
 export type InstalledAppsLazyQueryHookResult = ReturnType<typeof useInstalledAppsLazyQuery>;
 export type InstalledAppsQueryResult = Apollo.QueryResult<Types.InstalledAppsQuery, Types.InstalledAppsQueryVariables>;
-export const InstalledAppsListDocument = gql`
+export const InstalledAppsListStaging = gql`
     query InstalledAppsList($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput) {
   apps(
     before: $before
@@ -9282,16 +9282,16 @@ export const InstalledAppsListDocument = gql`
  */
 export function useInstalledAppsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>(InstalledAppsListDocument, options);
+        return ApolloReactHooks.useQuery<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>(InstalledAppsListStaging, options);
       }
 export function useInstalledAppsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>(InstalledAppsListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>(InstalledAppsListStaging, options);
         }
 export type InstalledAppsListQueryHookResult = ReturnType<typeof useInstalledAppsListQuery>;
 export type InstalledAppsListLazyQueryHookResult = ReturnType<typeof useInstalledAppsListLazyQuery>;
 export type InstalledAppsListQueryResult = Apollo.QueryResult<Types.InstalledAppsListQuery, Types.InstalledAppsListQueryVariables>;
-export const EventDeliveryDocument = gql`
+export const EventDeliveryStaging = gql`
     query EventDelivery($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput, $canFetchAppEvents: Boolean!) {
   apps(
     before: $before
@@ -9339,16 +9339,16 @@ export const EventDeliveryDocument = gql`
  */
 export function useEventDeliveryQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>(EventDeliveryDocument, options);
+        return ApolloReactHooks.useQuery<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>(EventDeliveryStaging, options);
       }
 export function useEventDeliveryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>(EventDeliveryDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>(EventDeliveryStaging, options);
         }
 export type EventDeliveryQueryHookResult = ReturnType<typeof useEventDeliveryQuery>;
 export type EventDeliveryLazyQueryHookResult = ReturnType<typeof useEventDeliveryLazyQuery>;
 export type EventDeliveryQueryResult = Apollo.QueryResult<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>;
-export const AppsInstallationsDocument = gql`
+export const AppsInstallationsStaging = gql`
     query AppsInstallations {
   appsInstallations {
     ...AppInstallation
@@ -9373,16 +9373,16 @@ export const AppsInstallationsDocument = gql`
  */
 export function useAppsInstallationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>(AppsInstallationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>(AppsInstallationsStaging, options);
       }
 export function useAppsInstallationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>(AppsInstallationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>(AppsInstallationsStaging, options);
         }
 export type AppsInstallationsQueryHookResult = ReturnType<typeof useAppsInstallationsQuery>;
 export type AppsInstallationsLazyQueryHookResult = ReturnType<typeof useAppsInstallationsLazyQuery>;
 export type AppsInstallationsQueryResult = Apollo.QueryResult<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>;
-export const AppDocument = gql`
+export const AppStaging = gql`
     query App($id: ID!, $hasManagedAppsPermission: Boolean!) {
   app(id: $id) {
     ...App
@@ -9422,16 +9422,16 @@ export const AppDocument = gql`
  */
 export function useAppQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppQuery, Types.AppQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppQuery, Types.AppQueryVariables>(AppDocument, options);
+        return ApolloReactHooks.useQuery<Types.AppQuery, Types.AppQueryVariables>(AppStaging, options);
       }
 export function useAppLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppQuery, Types.AppQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppQuery, Types.AppQueryVariables>(AppDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AppQuery, Types.AppQueryVariables>(AppStaging, options);
         }
 export type AppQueryHookResult = ReturnType<typeof useAppQuery>;
 export type AppLazyQueryHookResult = ReturnType<typeof useAppLazyQuery>;
 export type AppQueryResult = Apollo.QueryResult<Types.AppQuery, Types.AppQueryVariables>;
-export const ExtensionListDocument = gql`
+export const ExtensionListStaging = gql`
     query ExtensionList($filter: AppExtensionFilterInput!) {
   appExtensions(filter: $filter, first: 100) {
     edges {
@@ -9480,16 +9480,16 @@ export const ExtensionListDocument = gql`
  */
 export function useExtensionListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
+        return ApolloReactHooks.useQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListStaging, options);
       }
 export function useExtensionListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListStaging, options);
         }
 export type ExtensionListQueryHookResult = ReturnType<typeof useExtensionListQuery>;
 export type ExtensionListLazyQueryHookResult = ReturnType<typeof useExtensionListLazyQuery>;
 export type ExtensionListQueryResult = Apollo.QueryResult<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>;
-export const AppWebhookDeliveriesDocument = gql`
+export const AppWebhookDeliveriesStaging = gql`
     query AppWebhookDeliveries($appId: ID!) {
   app(id: $appId) {
     webhooks {
@@ -9542,16 +9542,16 @@ export const AppWebhookDeliveriesDocument = gql`
  */
 export function useAppWebhookDeliveriesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>(AppWebhookDeliveriesDocument, options);
+        return ApolloReactHooks.useQuery<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>(AppWebhookDeliveriesStaging, options);
       }
 export function useAppWebhookDeliveriesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>(AppWebhookDeliveriesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>(AppWebhookDeliveriesStaging, options);
         }
 export type AppWebhookDeliveriesQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesQuery>;
 export type AppWebhookDeliveriesLazyQueryHookResult = ReturnType<typeof useAppWebhookDeliveriesLazyQuery>;
 export type AppWebhookDeliveriesQueryResult = Apollo.QueryResult<Types.AppWebhookDeliveriesQuery, Types.AppWebhookDeliveriesQueryVariables>;
-export const WebhookDetailsDocument = gql`
+export const WebhookDetailsStaging = gql`
     query WebhookDetails($id: ID!) {
   webhook(id: $id) {
     ...WebhookDetails
@@ -9577,16 +9577,16 @@ export const WebhookDetailsDocument = gql`
  */
 export function useWebhookDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsStaging, options);
       }
 export function useWebhookDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>(WebhookDetailsStaging, options);
         }
 export type WebhookDetailsQueryHookResult = ReturnType<typeof useWebhookDetailsQuery>;
 export type WebhookDetailsLazyQueryHookResult = ReturnType<typeof useWebhookDetailsLazyQuery>;
 export type WebhookDetailsQueryResult = Apollo.QueryResult<Types.WebhookDetailsQuery, Types.WebhookDetailsQueryVariables>;
-export const PluginsDocument = gql`
+export const PluginsStaging = gql`
     query Plugins($first: Int, $after: String, $last: Int, $before: String, $filter: PluginFilterInput, $sort: PluginSortingInput) {
   plugins(
     before: $before
@@ -9634,16 +9634,16 @@ export const PluginsDocument = gql`
  */
 export function usePluginsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PluginsQuery, Types.PluginsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PluginsQuery, Types.PluginsQueryVariables>(PluginsDocument, options);
+        return ApolloReactHooks.useQuery<Types.PluginsQuery, Types.PluginsQueryVariables>(PluginsStaging, options);
       }
 export function usePluginsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PluginsQuery, Types.PluginsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PluginsQuery, Types.PluginsQueryVariables>(PluginsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PluginsQuery, Types.PluginsQueryVariables>(PluginsStaging, options);
         }
 export type PluginsQueryHookResult = ReturnType<typeof usePluginsQuery>;
 export type PluginsLazyQueryHookResult = ReturnType<typeof usePluginsLazyQuery>;
 export type PluginsQueryResult = Apollo.QueryResult<Types.PluginsQuery, Types.PluginsQueryVariables>;
-export const PluginDocument = gql`
+export const PluginStaging = gql`
     query Plugin($id: ID!) {
   plugin(id: $id) {
     ...PluginsDetails
@@ -9669,16 +9669,16 @@ export const PluginDocument = gql`
  */
 export function usePluginQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PluginQuery, Types.PluginQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PluginQuery, Types.PluginQueryVariables>(PluginDocument, options);
+        return ApolloReactHooks.useQuery<Types.PluginQuery, Types.PluginQueryVariables>(PluginStaging, options);
       }
 export function usePluginLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PluginQuery, Types.PluginQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PluginQuery, Types.PluginQueryVariables>(PluginDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PluginQuery, Types.PluginQueryVariables>(PluginStaging, options);
         }
 export type PluginQueryHookResult = ReturnType<typeof usePluginQuery>;
 export type PluginLazyQueryHookResult = ReturnType<typeof usePluginLazyQuery>;
 export type PluginQueryResult = Apollo.QueryResult<Types.PluginQuery, Types.PluginQueryVariables>;
-export const AppsListDocument = gql`
+export const AppsListStaging = gql`
     query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput, $canFetchAppEvents: Boolean!) {
   apps(
     before: $before
@@ -9728,16 +9728,16 @@ export const AppsListDocument = gql`
  */
 export function useAppsListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
+        return ApolloReactHooks.useQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListStaging, options);
       }
 export function useAppsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListStaging, options);
         }
 export type AppsListQueryHookResult = ReturnType<typeof useAppsListQuery>;
 export type AppsListLazyQueryHookResult = ReturnType<typeof useAppsListLazyQuery>;
 export type AppsListQueryResult = Apollo.QueryResult<Types.AppsListQuery, Types.AppsListQueryVariables>;
-export const FileUploadDocument = gql`
+export const FileUploadStaging = gql`
     mutation FileUpload($file: Upload!) {
   fileUpload(file: $file) {
     uploadedFile {
@@ -9771,12 +9771,12 @@ export type FileUploadMutationFn = Apollo.MutationFunction<Types.FileUploadMutat
  */
 export function useFileUploadMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.FileUploadMutation, Types.FileUploadMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.FileUploadMutation, Types.FileUploadMutationVariables>(FileUploadDocument, options);
+        return ApolloReactHooks.useMutation<Types.FileUploadMutation, Types.FileUploadMutationVariables>(FileUploadStaging, options);
       }
 export type FileUploadMutationHookResult = ReturnType<typeof useFileUploadMutation>;
 export type FileUploadMutationResult = Apollo.MutationResult<Types.FileUploadMutation>;
 export type FileUploadMutationOptions = Apollo.BaseMutationOptions<Types.FileUploadMutation, Types.FileUploadMutationVariables>;
-export const GiftCardBulkCreateDocument = gql`
+export const GiftCardBulkCreateStaging = gql`
     mutation GiftCardBulkCreate($input: GiftCardBulkCreateInput!) {
   giftCardBulkCreate(input: $input) {
     giftCards {
@@ -9809,12 +9809,12 @@ export type GiftCardBulkCreateMutationFn = Apollo.MutationFunction<Types.GiftCar
  */
 export function useGiftCardBulkCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardBulkCreateMutation, Types.GiftCardBulkCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardBulkCreateMutation, Types.GiftCardBulkCreateMutationVariables>(GiftCardBulkCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardBulkCreateMutation, Types.GiftCardBulkCreateMutationVariables>(GiftCardBulkCreateStaging, options);
       }
 export type GiftCardBulkCreateMutationHookResult = ReturnType<typeof useGiftCardBulkCreateMutation>;
 export type GiftCardBulkCreateMutationResult = Apollo.MutationResult<Types.GiftCardBulkCreateMutation>;
 export type GiftCardBulkCreateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardBulkCreateMutation, Types.GiftCardBulkCreateMutationVariables>;
-export const GiftCardCreateDocument = gql`
+export const GiftCardCreateStaging = gql`
     mutation GiftCardCreate($input: GiftCardCreateInput!) {
   giftCardCreate(input: $input) {
     giftCard {
@@ -9847,12 +9847,12 @@ export type GiftCardCreateMutationFn = Apollo.MutationFunction<Types.GiftCardCre
  */
 export function useGiftCardCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardCreateMutation, Types.GiftCardCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardCreateMutation, Types.GiftCardCreateMutationVariables>(GiftCardCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardCreateMutation, Types.GiftCardCreateMutationVariables>(GiftCardCreateStaging, options);
       }
 export type GiftCardCreateMutationHookResult = ReturnType<typeof useGiftCardCreateMutation>;
 export type GiftCardCreateMutationResult = Apollo.MutationResult<Types.GiftCardCreateMutation>;
 export type GiftCardCreateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardCreateMutation, Types.GiftCardCreateMutationVariables>;
-export const ChannelCurrenciesDocument = gql`
+export const ChannelCurrenciesStaging = gql`
     query ChannelCurrencies {
   shop {
     channelCurrencies
@@ -9877,16 +9877,16 @@ export const ChannelCurrenciesDocument = gql`
  */
 export function useChannelCurrenciesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>(ChannelCurrenciesDocument, options);
+        return ApolloReactHooks.useQuery<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>(ChannelCurrenciesStaging, options);
       }
 export function useChannelCurrenciesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>(ChannelCurrenciesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>(ChannelCurrenciesStaging, options);
         }
 export type ChannelCurrenciesQueryHookResult = ReturnType<typeof useChannelCurrenciesQuery>;
 export type ChannelCurrenciesLazyQueryHookResult = ReturnType<typeof useChannelCurrenciesLazyQuery>;
 export type ChannelCurrenciesQueryResult = Apollo.QueryResult<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>;
-export const ExportGiftCardsDocument = gql`
+export const ExportGiftCardsStaging = gql`
     mutation ExportGiftCards($input: ExportGiftCardsInput!) {
   exportGiftCards(input: $input) {
     errors {
@@ -9919,12 +9919,12 @@ export type ExportGiftCardsMutationFn = Apollo.MutationFunction<Types.ExportGift
  */
 export function useExportGiftCardsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>(ExportGiftCardsDocument, options);
+        return ApolloReactHooks.useMutation<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>(ExportGiftCardsStaging, options);
       }
 export type ExportGiftCardsMutationHookResult = ReturnType<typeof useExportGiftCardsMutation>;
 export type ExportGiftCardsMutationResult = Apollo.MutationResult<Types.ExportGiftCardsMutation>;
 export type ExportGiftCardsMutationOptions = Apollo.BaseMutationOptions<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>;
-export const GiftCardSettingsUpdateDocument = gql`
+export const GiftCardSettingsUpdateStaging = gql`
     mutation GiftCardSettingsUpdate($input: GiftCardSettingsUpdateInput!) {
   giftCardSettingsUpdate(input: $input) {
     errors {
@@ -9958,12 +9958,12 @@ export type GiftCardSettingsUpdateMutationFn = Apollo.MutationFunction<Types.Gif
  */
 export function useGiftCardSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardSettingsUpdateMutation, Types.GiftCardSettingsUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardSettingsUpdateMutation, Types.GiftCardSettingsUpdateMutationVariables>(GiftCardSettingsUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardSettingsUpdateMutation, Types.GiftCardSettingsUpdateMutationVariables>(GiftCardSettingsUpdateStaging, options);
       }
 export type GiftCardSettingsUpdateMutationHookResult = ReturnType<typeof useGiftCardSettingsUpdateMutation>;
 export type GiftCardSettingsUpdateMutationResult = Apollo.MutationResult<Types.GiftCardSettingsUpdateMutation>;
 export type GiftCardSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardSettingsUpdateMutation, Types.GiftCardSettingsUpdateMutationVariables>;
-export const GiftCardSettingsDocument = gql`
+export const GiftCardSettingsStaging = gql`
     query GiftCardSettings {
   giftCardSettings {
     ...GiftCardsSettings
@@ -9988,16 +9988,16 @@ export const GiftCardSettingsDocument = gql`
  */
 export function useGiftCardSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>(GiftCardSettingsDocument, options);
+        return ApolloReactHooks.useQuery<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>(GiftCardSettingsStaging, options);
       }
 export function useGiftCardSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>(GiftCardSettingsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>(GiftCardSettingsStaging, options);
         }
 export type GiftCardSettingsQueryHookResult = ReturnType<typeof useGiftCardSettingsQuery>;
 export type GiftCardSettingsLazyQueryHookResult = ReturnType<typeof useGiftCardSettingsLazyQuery>;
 export type GiftCardSettingsQueryResult = Apollo.QueryResult<Types.GiftCardSettingsQuery, Types.GiftCardSettingsQueryVariables>;
-export const GiftCardResendDocument = gql`
+export const GiftCardResendStaging = gql`
     mutation GiftCardResend($input: GiftCardResendInput!) {
   giftCardResend(input: $input) {
     errors {
@@ -10031,12 +10031,12 @@ export type GiftCardResendMutationFn = Apollo.MutationFunction<Types.GiftCardRes
  */
 export function useGiftCardResendMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardResendMutation, Types.GiftCardResendMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardResendMutation, Types.GiftCardResendMutationVariables>(GiftCardResendDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardResendMutation, Types.GiftCardResendMutationVariables>(GiftCardResendStaging, options);
       }
 export type GiftCardResendMutationHookResult = ReturnType<typeof useGiftCardResendMutation>;
 export type GiftCardResendMutationResult = Apollo.MutationResult<Types.GiftCardResendMutation>;
 export type GiftCardResendMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardResendMutation, Types.GiftCardResendMutationVariables>;
-export const GiftCardActivateDocument = gql`
+export const GiftCardActivateStaging = gql`
     mutation GiftCardActivate($id: ID!) {
   giftCardActivate(id: $id) {
     errors {
@@ -10070,12 +10070,12 @@ export type GiftCardActivateMutationFn = Apollo.MutationFunction<Types.GiftCardA
  */
 export function useGiftCardActivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardActivateMutation, Types.GiftCardActivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardActivateMutation, Types.GiftCardActivateMutationVariables>(GiftCardActivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardActivateMutation, Types.GiftCardActivateMutationVariables>(GiftCardActivateStaging, options);
       }
 export type GiftCardActivateMutationHookResult = ReturnType<typeof useGiftCardActivateMutation>;
 export type GiftCardActivateMutationResult = Apollo.MutationResult<Types.GiftCardActivateMutation>;
 export type GiftCardActivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardActivateMutation, Types.GiftCardActivateMutationVariables>;
-export const GiftCardDeactivateDocument = gql`
+export const GiftCardDeactivateStaging = gql`
     mutation GiftCardDeactivate($id: ID!) {
   giftCardDeactivate(id: $id) {
     errors {
@@ -10109,12 +10109,12 @@ export type GiftCardDeactivateMutationFn = Apollo.MutationFunction<Types.GiftCar
  */
 export function useGiftCardDeactivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardDeactivateMutation, Types.GiftCardDeactivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardDeactivateMutation, Types.GiftCardDeactivateMutationVariables>(GiftCardDeactivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardDeactivateMutation, Types.GiftCardDeactivateMutationVariables>(GiftCardDeactivateStaging, options);
       }
 export type GiftCardDeactivateMutationHookResult = ReturnType<typeof useGiftCardDeactivateMutation>;
 export type GiftCardDeactivateMutationResult = Apollo.MutationResult<Types.GiftCardDeactivateMutation>;
 export type GiftCardDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardDeactivateMutation, Types.GiftCardDeactivateMutationVariables>;
-export const GiftCardUpdateDocument = gql`
+export const GiftCardUpdateStaging = gql`
     mutation GiftCardUpdate($id: ID!, $input: GiftCardUpdateInput!, $showCreatedBy: Boolean!) {
   giftCardUpdate(id: $id, input: $input) {
     errors {
@@ -10158,12 +10158,12 @@ export type GiftCardUpdateMutationFn = Apollo.MutationFunction<Types.GiftCardUpd
  */
 export function useGiftCardUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardUpdateMutation, Types.GiftCardUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardUpdateMutation, Types.GiftCardUpdateMutationVariables>(GiftCardUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardUpdateMutation, Types.GiftCardUpdateMutationVariables>(GiftCardUpdateStaging, options);
       }
 export type GiftCardUpdateMutationHookResult = ReturnType<typeof useGiftCardUpdateMutation>;
 export type GiftCardUpdateMutationResult = Apollo.MutationResult<Types.GiftCardUpdateMutation>;
 export type GiftCardUpdateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardUpdateMutation, Types.GiftCardUpdateMutationVariables>;
-export const GiftCardAddNoteDocument = gql`
+export const GiftCardAddNoteStaging = gql`
     mutation GiftCardAddNote($id: ID!, $input: GiftCardAddNoteInput!) {
   giftCardAddNote(id: $id, input: $input) {
     errors {
@@ -10202,12 +10202,12 @@ export type GiftCardAddNoteMutationFn = Apollo.MutationFunction<Types.GiftCardAd
  */
 export function useGiftCardAddNoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardAddNoteMutation, Types.GiftCardAddNoteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardAddNoteMutation, Types.GiftCardAddNoteMutationVariables>(GiftCardAddNoteDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardAddNoteMutation, Types.GiftCardAddNoteMutationVariables>(GiftCardAddNoteStaging, options);
       }
 export type GiftCardAddNoteMutationHookResult = ReturnType<typeof useGiftCardAddNoteMutation>;
 export type GiftCardAddNoteMutationResult = Apollo.MutationResult<Types.GiftCardAddNoteMutation>;
 export type GiftCardAddNoteMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardAddNoteMutation, Types.GiftCardAddNoteMutationVariables>;
-export const GiftCardBulkActivateDocument = gql`
+export const GiftCardBulkActivateStaging = gql`
     mutation GiftCardBulkActivate($ids: [ID!]!) {
   giftCardBulkActivate(ids: $ids) {
     errors {
@@ -10238,12 +10238,12 @@ export type GiftCardBulkActivateMutationFn = Apollo.MutationFunction<Types.GiftC
  */
 export function useGiftCardBulkActivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardBulkActivateMutation, Types.GiftCardBulkActivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardBulkActivateMutation, Types.GiftCardBulkActivateMutationVariables>(GiftCardBulkActivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardBulkActivateMutation, Types.GiftCardBulkActivateMutationVariables>(GiftCardBulkActivateStaging, options);
       }
 export type GiftCardBulkActivateMutationHookResult = ReturnType<typeof useGiftCardBulkActivateMutation>;
 export type GiftCardBulkActivateMutationResult = Apollo.MutationResult<Types.GiftCardBulkActivateMutation>;
 export type GiftCardBulkActivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardBulkActivateMutation, Types.GiftCardBulkActivateMutationVariables>;
-export const GiftCardBulkDeactivateDocument = gql`
+export const GiftCardBulkDeactivateStaging = gql`
     mutation GiftCardBulkDeactivate($ids: [ID!]!) {
   giftCardBulkDeactivate(ids: $ids) {
     errors {
@@ -10274,12 +10274,12 @@ export type GiftCardBulkDeactivateMutationFn = Apollo.MutationFunction<Types.Gif
  */
 export function useGiftCardBulkDeactivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.GiftCardBulkDeactivateMutation, Types.GiftCardBulkDeactivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.GiftCardBulkDeactivateMutation, Types.GiftCardBulkDeactivateMutationVariables>(GiftCardBulkDeactivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.GiftCardBulkDeactivateMutation, Types.GiftCardBulkDeactivateMutationVariables>(GiftCardBulkDeactivateStaging, options);
       }
 export type GiftCardBulkDeactivateMutationHookResult = ReturnType<typeof useGiftCardBulkDeactivateMutation>;
 export type GiftCardBulkDeactivateMutationResult = Apollo.MutationResult<Types.GiftCardBulkDeactivateMutation>;
 export type GiftCardBulkDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardBulkDeactivateMutation, Types.GiftCardBulkDeactivateMutationVariables>;
-export const GiftCardDetailsDocument = gql`
+export const GiftCardDetailsStaging = gql`
     query GiftCardDetails($id: ID!, $canSeeApp: Boolean!, $canSeeUser: Boolean!) {
   giftCard(id: $id) {
     ...GiftCardData
@@ -10328,16 +10328,16 @@ ${UserBaseFragmentDoc}`;
  */
 export function useGiftCardDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>(GiftCardDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>(GiftCardDetailsStaging, options);
       }
 export function useGiftCardDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>(GiftCardDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>(GiftCardDetailsStaging, options);
         }
 export type GiftCardDetailsQueryHookResult = ReturnType<typeof useGiftCardDetailsQuery>;
 export type GiftCardDetailsLazyQueryHookResult = ReturnType<typeof useGiftCardDetailsLazyQuery>;
 export type GiftCardDetailsQueryResult = Apollo.QueryResult<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>;
-export const GiftCardCurrenciesDocument = gql`
+export const GiftCardCurrenciesStaging = gql`
     query GiftCardCurrencies {
   giftCardCurrencies
 }
@@ -10360,16 +10360,16 @@ export const GiftCardCurrenciesDocument = gql`
  */
 export function useGiftCardCurrenciesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
+        return ApolloReactHooks.useQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesStaging, options);
       }
 export function useGiftCardCurrenciesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesStaging, options);
         }
 export type GiftCardCurrenciesQueryHookResult = ReturnType<typeof useGiftCardCurrenciesQuery>;
 export type GiftCardCurrenciesLazyQueryHookResult = ReturnType<typeof useGiftCardCurrenciesLazyQuery>;
 export type GiftCardCurrenciesQueryResult = Apollo.QueryResult<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>;
-export const DeleteGiftCardDocument = gql`
+export const DeleteGiftCardStaging = gql`
     mutation DeleteGiftCard($id: ID!) {
   giftCardDelete(id: $id) {
     errors {
@@ -10399,12 +10399,12 @@ export type DeleteGiftCardMutationFn = Apollo.MutationFunction<Types.DeleteGiftC
  */
 export function useDeleteGiftCardMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.DeleteGiftCardMutation, Types.DeleteGiftCardMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.DeleteGiftCardMutation, Types.DeleteGiftCardMutationVariables>(DeleteGiftCardDocument, options);
+        return ApolloReactHooks.useMutation<Types.DeleteGiftCardMutation, Types.DeleteGiftCardMutationVariables>(DeleteGiftCardStaging, options);
       }
 export type DeleteGiftCardMutationHookResult = ReturnType<typeof useDeleteGiftCardMutation>;
 export type DeleteGiftCardMutationResult = Apollo.MutationResult<Types.DeleteGiftCardMutation>;
 export type DeleteGiftCardMutationOptions = Apollo.BaseMutationOptions<Types.DeleteGiftCardMutation, Types.DeleteGiftCardMutationVariables>;
-export const BulkDeleteGiftCardDocument = gql`
+export const BulkDeleteGiftCardStaging = gql`
     mutation BulkDeleteGiftCard($ids: [ID!]!) {
   giftCardBulkDelete(ids: $ids) {
     errors {
@@ -10434,12 +10434,12 @@ export type BulkDeleteGiftCardMutationFn = Apollo.MutationFunction<Types.BulkDel
  */
 export function useBulkDeleteGiftCardMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.BulkDeleteGiftCardMutation, Types.BulkDeleteGiftCardMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.BulkDeleteGiftCardMutation, Types.BulkDeleteGiftCardMutationVariables>(BulkDeleteGiftCardDocument, options);
+        return ApolloReactHooks.useMutation<Types.BulkDeleteGiftCardMutation, Types.BulkDeleteGiftCardMutationVariables>(BulkDeleteGiftCardStaging, options);
       }
 export type BulkDeleteGiftCardMutationHookResult = ReturnType<typeof useBulkDeleteGiftCardMutation>;
 export type BulkDeleteGiftCardMutationResult = Apollo.MutationResult<Types.BulkDeleteGiftCardMutation>;
 export type BulkDeleteGiftCardMutationOptions = Apollo.BaseMutationOptions<Types.BulkDeleteGiftCardMutation, Types.BulkDeleteGiftCardMutationVariables>;
-export const GiftCardListDocument = gql`
+export const GiftCardListStaging = gql`
     query GiftCardList($first: Int, $after: String, $last: Int, $before: String, $filter: GiftCardFilterInput, $sort: GiftCardSortingInput) {
   giftCards(
     first: $first
@@ -10506,16 +10506,16 @@ ${MoneyFragmentDoc}`;
  */
 export function useGiftCardListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>(GiftCardListDocument, options);
+        return ApolloReactHooks.useQuery<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>(GiftCardListStaging, options);
       }
 export function useGiftCardListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>(GiftCardListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>(GiftCardListStaging, options);
         }
 export type GiftCardListQueryHookResult = ReturnType<typeof useGiftCardListQuery>;
 export type GiftCardListLazyQueryHookResult = ReturnType<typeof useGiftCardListLazyQuery>;
 export type GiftCardListQueryResult = Apollo.QueryResult<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>;
-export const GiftCardTotalCountDocument = gql`
+export const GiftCardTotalCountStaging = gql`
     query GiftCardTotalCount {
   giftCards {
     totalCount
@@ -10540,16 +10540,16 @@ export const GiftCardTotalCountDocument = gql`
  */
 export function useGiftCardTotalCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>(GiftCardTotalCountDocument, options);
+        return ApolloReactHooks.useQuery<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>(GiftCardTotalCountStaging, options);
       }
 export function useGiftCardTotalCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>(GiftCardTotalCountDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>(GiftCardTotalCountStaging, options);
         }
 export type GiftCardTotalCountQueryHookResult = ReturnType<typeof useGiftCardTotalCountQuery>;
 export type GiftCardTotalCountLazyQueryHookResult = ReturnType<typeof useGiftCardTotalCountLazyQuery>;
 export type GiftCardTotalCountQueryResult = Apollo.QueryResult<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>;
-export const GiftCardProductsCountDocument = gql`
+export const GiftCardProductsCountStaging = gql`
     query GiftCardProductsCount($channel: String!) {
   giftCardProductTypes: productTypes(filter: {kind: GIFT_CARD}) {
     totalCount
@@ -10578,16 +10578,16 @@ export const GiftCardProductsCountDocument = gql`
  */
 export function useGiftCardProductsCountQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>(GiftCardProductsCountDocument, options);
+        return ApolloReactHooks.useQuery<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>(GiftCardProductsCountStaging, options);
       }
 export function useGiftCardProductsCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>(GiftCardProductsCountDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>(GiftCardProductsCountStaging, options);
         }
 export type GiftCardProductsCountQueryHookResult = ReturnType<typeof useGiftCardProductsCountQuery>;
 export type GiftCardProductsCountLazyQueryHookResult = ReturnType<typeof useGiftCardProductsCountLazyQuery>;
 export type GiftCardProductsCountQueryResult = Apollo.QueryResult<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>;
-export const CustomerGiftCardListDocument = gql`
+export const CustomerGiftCardListStaging = gql`
     query CustomerGiftCardList($first: Int, $filter: GiftCardFilterInput) {
   giftCards(first: $first, filter: $filter) {
     edges {
@@ -10618,16 +10618,16 @@ export const CustomerGiftCardListDocument = gql`
  */
 export function useCustomerGiftCardListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>(CustomerGiftCardListDocument, options);
+        return ApolloReactHooks.useQuery<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>(CustomerGiftCardListStaging, options);
       }
 export function useCustomerGiftCardListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>(CustomerGiftCardListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>(CustomerGiftCardListStaging, options);
         }
 export type CustomerGiftCardListQueryHookResult = ReturnType<typeof useCustomerGiftCardListQuery>;
 export type CustomerGiftCardListLazyQueryHookResult = ReturnType<typeof useCustomerGiftCardListLazyQuery>;
 export type CustomerGiftCardListQueryResult = Apollo.QueryResult<Types.CustomerGiftCardListQuery, Types.CustomerGiftCardListQueryVariables>;
-export const PageTypeUpdateDocument = gql`
+export const PageTypeUpdateStaging = gql`
     mutation PageTypeUpdate($id: ID!, $input: PageTypeUpdateInput!) {
   pageTypeUpdate(id: $id, input: $input) {
     errors {
@@ -10662,12 +10662,12 @@ export type PageTypeUpdateMutationFn = Apollo.MutationFunction<Types.PageTypeUpd
  */
 export function usePageTypeUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>(PageTypeUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>(PageTypeUpdateStaging, options);
       }
 export type PageTypeUpdateMutationHookResult = ReturnType<typeof usePageTypeUpdateMutation>;
 export type PageTypeUpdateMutationResult = Apollo.MutationResult<Types.PageTypeUpdateMutation>;
 export type PageTypeUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeUpdateMutation, Types.PageTypeUpdateMutationVariables>;
-export const PageTypeCreateDocument = gql`
+export const PageTypeCreateStaging = gql`
     mutation PageTypeCreate($input: PageTypeCreateInput!) {
   pageTypeCreate(input: $input) {
     errors {
@@ -10701,12 +10701,12 @@ export type PageTypeCreateMutationFn = Apollo.MutationFunction<Types.PageTypeCre
  */
 export function usePageTypeCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>(PageTypeCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>(PageTypeCreateStaging, options);
       }
 export type PageTypeCreateMutationHookResult = ReturnType<typeof usePageTypeCreateMutation>;
 export type PageTypeCreateMutationResult = Apollo.MutationResult<Types.PageTypeCreateMutation>;
 export type PageTypeCreateMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeCreateMutation, Types.PageTypeCreateMutationVariables>;
-export const AssignPageAttributeDocument = gql`
+export const AssignPageAttributeStaging = gql`
     mutation AssignPageAttribute($id: ID!, $ids: [ID!]!) {
   pageAttributeAssign(pageTypeId: $id, attributeIds: $ids) {
     errors {
@@ -10741,12 +10741,12 @@ export type AssignPageAttributeMutationFn = Apollo.MutationFunction<Types.Assign
  */
 export function useAssignPageAttributeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>(AssignPageAttributeDocument, options);
+        return ApolloReactHooks.useMutation<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>(AssignPageAttributeStaging, options);
       }
 export type AssignPageAttributeMutationHookResult = ReturnType<typeof useAssignPageAttributeMutation>;
 export type AssignPageAttributeMutationResult = Apollo.MutationResult<Types.AssignPageAttributeMutation>;
 export type AssignPageAttributeMutationOptions = Apollo.BaseMutationOptions<Types.AssignPageAttributeMutation, Types.AssignPageAttributeMutationVariables>;
-export const UnassignPageAttributeDocument = gql`
+export const UnassignPageAttributeStaging = gql`
     mutation UnassignPageAttribute($id: ID!, $ids: [ID!]!) {
   pageAttributeUnassign(pageTypeId: $id, attributeIds: $ids) {
     errors {
@@ -10781,12 +10781,12 @@ export type UnassignPageAttributeMutationFn = Apollo.MutationFunction<Types.Unas
  */
 export function useUnassignPageAttributeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>(UnassignPageAttributeDocument, options);
+        return ApolloReactHooks.useMutation<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>(UnassignPageAttributeStaging, options);
       }
 export type UnassignPageAttributeMutationHookResult = ReturnType<typeof useUnassignPageAttributeMutation>;
 export type UnassignPageAttributeMutationResult = Apollo.MutationResult<Types.UnassignPageAttributeMutation>;
 export type UnassignPageAttributeMutationOptions = Apollo.BaseMutationOptions<Types.UnassignPageAttributeMutation, Types.UnassignPageAttributeMutationVariables>;
-export const PageTypeDeleteDocument = gql`
+export const PageTypeDeleteStaging = gql`
     mutation PageTypeDelete($id: ID!) {
   pageTypeDelete(id: $id) {
     errors {
@@ -10819,12 +10819,12 @@ export type PageTypeDeleteMutationFn = Apollo.MutationFunction<Types.PageTypeDel
  */
 export function usePageTypeDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>(PageTypeDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>(PageTypeDeleteStaging, options);
       }
 export type PageTypeDeleteMutationHookResult = ReturnType<typeof usePageTypeDeleteMutation>;
 export type PageTypeDeleteMutationResult = Apollo.MutationResult<Types.PageTypeDeleteMutation>;
 export type PageTypeDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeDeleteMutation, Types.PageTypeDeleteMutationVariables>;
-export const PageTypeBulkDeleteDocument = gql`
+export const PageTypeBulkDeleteStaging = gql`
     mutation PageTypeBulkDelete($ids: [ID!]!) {
   pageTypeBulkDelete(ids: $ids) {
     errors {
@@ -10854,12 +10854,12 @@ export type PageTypeBulkDeleteMutationFn = Apollo.MutationFunction<Types.PageTyp
  */
 export function usePageTypeBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>(PageTypeBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>(PageTypeBulkDeleteStaging, options);
       }
 export type PageTypeBulkDeleteMutationHookResult = ReturnType<typeof usePageTypeBulkDeleteMutation>;
 export type PageTypeBulkDeleteMutationResult = Apollo.MutationResult<Types.PageTypeBulkDeleteMutation>;
 export type PageTypeBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeBulkDeleteMutation, Types.PageTypeBulkDeleteMutationVariables>;
-export const PageTypeAttributeReorderDocument = gql`
+export const PageTypeAttributeReorderStaging = gql`
     mutation PageTypeAttributeReorder($move: ReorderInput!, $pageTypeId: ID!) {
   pageTypeReorderAttributes(moves: [$move], pageTypeId: $pageTypeId) {
     errors {
@@ -10894,12 +10894,12 @@ export type PageTypeAttributeReorderMutationFn = Apollo.MutationFunction<Types.P
  */
 export function usePageTypeAttributeReorderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>(PageTypeAttributeReorderDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>(PageTypeAttributeReorderStaging, options);
       }
 export type PageTypeAttributeReorderMutationHookResult = ReturnType<typeof usePageTypeAttributeReorderMutation>;
 export type PageTypeAttributeReorderMutationResult = Apollo.MutationResult<Types.PageTypeAttributeReorderMutation>;
 export type PageTypeAttributeReorderMutationOptions = Apollo.BaseMutationOptions<Types.PageTypeAttributeReorderMutation, Types.PageTypeAttributeReorderMutationVariables>;
-export const PageTypeListDocument = gql`
+export const PageTypeListStaging = gql`
     query PageTypeList($after: String, $before: String, $first: Int, $last: Int, $filter: PageTypeFilterInput, $sort: PageTypeSortingInput) {
   pageTypes(
     after: $after
@@ -10945,16 +10945,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function usePageTypeListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>(PageTypeListDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>(PageTypeListStaging, options);
       }
 export function usePageTypeListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>(PageTypeListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>(PageTypeListStaging, options);
         }
 export type PageTypeListQueryHookResult = ReturnType<typeof usePageTypeListQuery>;
 export type PageTypeListLazyQueryHookResult = ReturnType<typeof usePageTypeListLazyQuery>;
 export type PageTypeListQueryResult = Apollo.QueryResult<Types.PageTypeListQuery, Types.PageTypeListQueryVariables>;
-export const PageTypeDetailsDocument = gql`
+export const PageTypeDetailsStaging = gql`
     query PageTypeDetails($id: ID!) {
   pageType(id: $id) {
     ...PageTypeDetails
@@ -10980,16 +10980,16 @@ export const PageTypeDetailsDocument = gql`
  */
 export function usePageTypeDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>(PageTypeDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>(PageTypeDetailsStaging, options);
       }
 export function usePageTypeDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>(PageTypeDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>(PageTypeDetailsStaging, options);
         }
 export type PageTypeDetailsQueryHookResult = ReturnType<typeof usePageTypeDetailsQuery>;
 export type PageTypeDetailsLazyQueryHookResult = ReturnType<typeof usePageTypeDetailsLazyQuery>;
 export type PageTypeDetailsQueryResult = Apollo.QueryResult<Types.PageTypeDetailsQuery, Types.PageTypeDetailsQueryVariables>;
-export const PageCreateDocument = gql`
+export const PageCreateStaging = gql`
     mutation PageCreate($input: PageCreateInput!) {
   pageCreate(input: $input) {
     errors {
@@ -11022,12 +11022,12 @@ export type PageCreateMutationFn = Apollo.MutationFunction<Types.PageCreateMutat
  */
 export function usePageCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageCreateMutation, Types.PageCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageCreateMutation, Types.PageCreateMutationVariables>(PageCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageCreateMutation, Types.PageCreateMutationVariables>(PageCreateStaging, options);
       }
 export type PageCreateMutationHookResult = ReturnType<typeof usePageCreateMutation>;
 export type PageCreateMutationResult = Apollo.MutationResult<Types.PageCreateMutation>;
 export type PageCreateMutationOptions = Apollo.BaseMutationOptions<Types.PageCreateMutation, Types.PageCreateMutationVariables>;
-export const PageUpdateDocument = gql`
+export const PageUpdateStaging = gql`
     mutation PageUpdate($id: ID!, $input: PageInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   pageUpdate(id: $id, input: $input) {
     errors {
@@ -11066,12 +11066,12 @@ export type PageUpdateMutationFn = Apollo.MutationFunction<Types.PageUpdateMutat
  */
 export function usePageUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>(PageUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>(PageUpdateStaging, options);
       }
 export type PageUpdateMutationHookResult = ReturnType<typeof usePageUpdateMutation>;
 export type PageUpdateMutationResult = Apollo.MutationResult<Types.PageUpdateMutation>;
 export type PageUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PageUpdateMutation, Types.PageUpdateMutationVariables>;
-export const PageRemoveDocument = gql`
+export const PageRemoveStaging = gql`
     mutation PageRemove($id: ID!) {
   pageDelete(id: $id) {
     errors {
@@ -11101,12 +11101,12 @@ export type PageRemoveMutationFn = Apollo.MutationFunction<Types.PageRemoveMutat
  */
 export function usePageRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>(PageRemoveDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>(PageRemoveStaging, options);
       }
 export type PageRemoveMutationHookResult = ReturnType<typeof usePageRemoveMutation>;
 export type PageRemoveMutationResult = Apollo.MutationResult<Types.PageRemoveMutation>;
 export type PageRemoveMutationOptions = Apollo.BaseMutationOptions<Types.PageRemoveMutation, Types.PageRemoveMutationVariables>;
-export const PageBulkPublishDocument = gql`
+export const PageBulkPublishStaging = gql`
     mutation PageBulkPublish($ids: [ID!]!, $isPublished: Boolean!) {
   pageBulkPublish(ids: $ids, isPublished: $isPublished) {
     errors {
@@ -11137,12 +11137,12 @@ export type PageBulkPublishMutationFn = Apollo.MutationFunction<Types.PageBulkPu
  */
 export function usePageBulkPublishMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>(PageBulkPublishDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>(PageBulkPublishStaging, options);
       }
 export type PageBulkPublishMutationHookResult = ReturnType<typeof usePageBulkPublishMutation>;
 export type PageBulkPublishMutationResult = Apollo.MutationResult<Types.PageBulkPublishMutation>;
 export type PageBulkPublishMutationOptions = Apollo.BaseMutationOptions<Types.PageBulkPublishMutation, Types.PageBulkPublishMutationVariables>;
-export const PageBulkRemoveDocument = gql`
+export const PageBulkRemoveStaging = gql`
     mutation PageBulkRemove($ids: [ID!]!) {
   pageBulkDelete(ids: $ids) {
     errors {
@@ -11172,12 +11172,12 @@ export type PageBulkRemoveMutationFn = Apollo.MutationFunction<Types.PageBulkRem
  */
 export function usePageBulkRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>(PageBulkRemoveDocument, options);
+        return ApolloReactHooks.useMutation<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>(PageBulkRemoveStaging, options);
       }
 export type PageBulkRemoveMutationHookResult = ReturnType<typeof usePageBulkRemoveMutation>;
 export type PageBulkRemoveMutationResult = Apollo.MutationResult<Types.PageBulkRemoveMutation>;
 export type PageBulkRemoveMutationOptions = Apollo.BaseMutationOptions<Types.PageBulkRemoveMutation, Types.PageBulkRemoveMutationVariables>;
-export const PageListDocument = gql`
+export const PageListStaging = gql`
     query PageList($first: Int, $after: String, $last: Int, $before: String, $sort: PageSortingInput, $filter: PageFilterInput) {
   pages(
     before: $before
@@ -11225,16 +11225,16 @@ export const PageListDocument = gql`
  */
 export function usePageListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageListQuery, Types.PageListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageListQuery, Types.PageListQueryVariables>(PageListDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageListQuery, Types.PageListQueryVariables>(PageListStaging, options);
       }
 export function usePageListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageListQuery, Types.PageListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageListQuery, Types.PageListQueryVariables>(PageListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageListQuery, Types.PageListQueryVariables>(PageListStaging, options);
         }
 export type PageListQueryHookResult = ReturnType<typeof usePageListQuery>;
 export type PageListLazyQueryHookResult = ReturnType<typeof usePageListLazyQuery>;
 export type PageListQueryResult = Apollo.QueryResult<Types.PageListQuery, Types.PageListQueryVariables>;
-export const PageDetailsDocument = gql`
+export const PageDetailsStaging = gql`
     query PageDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   page(id: $id) {
     ...PageDetails
@@ -11264,16 +11264,16 @@ export const PageDetailsDocument = gql`
  */
 export function usePageDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>(PageDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>(PageDetailsStaging, options);
       }
 export function usePageDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>(PageDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>(PageDetailsStaging, options);
         }
 export type PageDetailsQueryHookResult = ReturnType<typeof usePageDetailsQuery>;
 export type PageDetailsLazyQueryHookResult = ReturnType<typeof usePageDetailsLazyQuery>;
 export type PageDetailsQueryResult = Apollo.QueryResult<Types.PageDetailsQuery, Types.PageDetailsQueryVariables>;
-export const PageTypeDocument = gql`
+export const PageTypeStaging = gql`
     query PageType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   pageType(id: $id) {
     id
@@ -11307,16 +11307,16 @@ export const PageTypeDocument = gql`
  */
 export function usePageTypeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTypeQuery, Types.PageTypeQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageTypeQuery, Types.PageTypeQueryVariables>(PageTypeDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageTypeQuery, Types.PageTypeQueryVariables>(PageTypeStaging, options);
       }
 export function usePageTypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeQuery, Types.PageTypeQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageTypeQuery, Types.PageTypeQueryVariables>(PageTypeDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageTypeQuery, Types.PageTypeQueryVariables>(PageTypeStaging, options);
         }
 export type PageTypeQueryHookResult = ReturnType<typeof usePageTypeQuery>;
 export type PageTypeLazyQueryHookResult = ReturnType<typeof usePageTypeLazyQuery>;
 export type PageTypeQueryResult = Apollo.QueryResult<Types.PageTypeQuery, Types.PageTypeQueryVariables>;
-export const PageCountDocument = gql`
+export const PageCountStaging = gql`
     query PageCount($filter: PageFilterInput) {
   pages(filter: $filter) {
     totalCount
@@ -11342,16 +11342,16 @@ export const PageCountDocument = gql`
  */
 export function usePageCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageCountQuery, Types.PageCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageCountQuery, Types.PageCountQueryVariables>(PageCountDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageCountQuery, Types.PageCountQueryVariables>(PageCountStaging, options);
       }
 export function usePageCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageCountQuery, Types.PageCountQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageCountQuery, Types.PageCountQueryVariables>(PageCountDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageCountQuery, Types.PageCountQueryVariables>(PageCountStaging, options);
         }
 export type PageCountQueryHookResult = ReturnType<typeof usePageCountQuery>;
 export type PageCountLazyQueryHookResult = ReturnType<typeof usePageCountLazyQuery>;
 export type PageCountQueryResult = Apollo.QueryResult<Types.PageCountQuery, Types.PageCountQueryVariables>;
-export const ModelsOfTypeDocument = gql`
+export const ModelsOfTypeStaging = gql`
     query ModelsOfType($pageTypeId: ID!) {
   pages(first: 100, where: {pageType: {eq: $pageTypeId}}) {
     edges {
@@ -11382,16 +11382,16 @@ export const ModelsOfTypeDocument = gql`
  */
 export function useModelsOfTypeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>(ModelsOfTypeDocument, options);
+        return ApolloReactHooks.useQuery<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>(ModelsOfTypeStaging, options);
       }
 export function useModelsOfTypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>(ModelsOfTypeDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>(ModelsOfTypeStaging, options);
         }
 export type ModelsOfTypeQueryHookResult = ReturnType<typeof useModelsOfTypeQuery>;
 export type ModelsOfTypeLazyQueryHookResult = ReturnType<typeof useModelsOfTypeLazyQuery>;
 export type ModelsOfTypeQueryResult = Apollo.QueryResult<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>;
-export const OrderCancelDocument = gql`
+export const OrderCancelStaging = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {
     errors {
@@ -11425,12 +11425,12 @@ export type OrderCancelMutationFn = Apollo.MutationFunction<Types.OrderCancelMut
  */
 export function useOrderCancelMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderCancelMutation, Types.OrderCancelMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderCancelMutation, Types.OrderCancelMutationVariables>(OrderCancelDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderCancelMutation, Types.OrderCancelMutationVariables>(OrderCancelStaging, options);
       }
 export type OrderCancelMutationHookResult = ReturnType<typeof useOrderCancelMutation>;
 export type OrderCancelMutationResult = Apollo.MutationResult<Types.OrderCancelMutation>;
 export type OrderCancelMutationOptions = Apollo.BaseMutationOptions<Types.OrderCancelMutation, Types.OrderCancelMutationVariables>;
-export const OrderDiscountAddDocument = gql`
+export const OrderDiscountAddStaging = gql`
     mutation OrderDiscountAdd($input: OrderDiscountCommonInput!, $orderId: ID!) {
   orderDiscountAdd(input: $input, orderId: $orderId) {
     errors {
@@ -11465,12 +11465,12 @@ export type OrderDiscountAddMutationFn = Apollo.MutationFunction<Types.OrderDisc
  */
 export function useOrderDiscountAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderDiscountAddMutation, Types.OrderDiscountAddMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderDiscountAddMutation, Types.OrderDiscountAddMutationVariables>(OrderDiscountAddDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderDiscountAddMutation, Types.OrderDiscountAddMutationVariables>(OrderDiscountAddStaging, options);
       }
 export type OrderDiscountAddMutationHookResult = ReturnType<typeof useOrderDiscountAddMutation>;
 export type OrderDiscountAddMutationResult = Apollo.MutationResult<Types.OrderDiscountAddMutation>;
 export type OrderDiscountAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderDiscountAddMutation, Types.OrderDiscountAddMutationVariables>;
-export const OrderDiscountDeleteDocument = gql`
+export const OrderDiscountDeleteStaging = gql`
     mutation OrderDiscountDelete($discountId: ID!) {
   orderDiscountDelete(discountId: $discountId) {
     errors {
@@ -11504,12 +11504,12 @@ export type OrderDiscountDeleteMutationFn = Apollo.MutationFunction<Types.OrderD
  */
 export function useOrderDiscountDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderDiscountDeleteMutation, Types.OrderDiscountDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderDiscountDeleteMutation, Types.OrderDiscountDeleteMutationVariables>(OrderDiscountDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderDiscountDeleteMutation, Types.OrderDiscountDeleteMutationVariables>(OrderDiscountDeleteStaging, options);
       }
 export type OrderDiscountDeleteMutationHookResult = ReturnType<typeof useOrderDiscountDeleteMutation>;
 export type OrderDiscountDeleteMutationResult = Apollo.MutationResult<Types.OrderDiscountDeleteMutation>;
 export type OrderDiscountDeleteMutationOptions = Apollo.BaseMutationOptions<Types.OrderDiscountDeleteMutation, Types.OrderDiscountDeleteMutationVariables>;
-export const OrderLineDiscountRemoveDocument = gql`
+export const OrderLineDiscountRemoveStaging = gql`
     mutation OrderLineDiscountRemove($orderLineId: ID!) {
   orderLineDiscountRemove(orderLineId: $orderLineId) {
     errors {
@@ -11543,12 +11543,12 @@ export type OrderLineDiscountRemoveMutationFn = Apollo.MutationFunction<Types.Or
  */
 export function useOrderLineDiscountRemoveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderLineDiscountRemoveMutation, Types.OrderLineDiscountRemoveMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderLineDiscountRemoveMutation, Types.OrderLineDiscountRemoveMutationVariables>(OrderLineDiscountRemoveDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderLineDiscountRemoveMutation, Types.OrderLineDiscountRemoveMutationVariables>(OrderLineDiscountRemoveStaging, options);
       }
 export type OrderLineDiscountRemoveMutationHookResult = ReturnType<typeof useOrderLineDiscountRemoveMutation>;
 export type OrderLineDiscountRemoveMutationResult = Apollo.MutationResult<Types.OrderLineDiscountRemoveMutation>;
 export type OrderLineDiscountRemoveMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineDiscountRemoveMutation, Types.OrderLineDiscountRemoveMutationVariables>;
-export const OrderLineDiscountUpdateDocument = gql`
+export const OrderLineDiscountUpdateStaging = gql`
     mutation OrderLineDiscountUpdate($input: OrderDiscountCommonInput!, $orderLineId: ID!) {
   orderLineDiscountUpdate(input: $input, orderLineId: $orderLineId) {
     errors {
@@ -11583,12 +11583,12 @@ export type OrderLineDiscountUpdateMutationFn = Apollo.MutationFunction<Types.Or
  */
 export function useOrderLineDiscountUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderLineDiscountUpdateMutation, Types.OrderLineDiscountUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderLineDiscountUpdateMutation, Types.OrderLineDiscountUpdateMutationVariables>(OrderLineDiscountUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderLineDiscountUpdateMutation, Types.OrderLineDiscountUpdateMutationVariables>(OrderLineDiscountUpdateStaging, options);
       }
 export type OrderLineDiscountUpdateMutationHookResult = ReturnType<typeof useOrderLineDiscountUpdateMutation>;
 export type OrderLineDiscountUpdateMutationResult = Apollo.MutationResult<Types.OrderLineDiscountUpdateMutation>;
 export type OrderLineDiscountUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineDiscountUpdateMutation, Types.OrderLineDiscountUpdateMutationVariables>;
-export const OrderDiscountUpdateDocument = gql`
+export const OrderDiscountUpdateStaging = gql`
     mutation OrderDiscountUpdate($input: OrderDiscountCommonInput!, $discountId: ID!) {
   orderDiscountUpdate(input: $input, discountId: $discountId) {
     errors {
@@ -11623,12 +11623,12 @@ export type OrderDiscountUpdateMutationFn = Apollo.MutationFunction<Types.OrderD
  */
 export function useOrderDiscountUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderDiscountUpdateMutation, Types.OrderDiscountUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderDiscountUpdateMutation, Types.OrderDiscountUpdateMutationVariables>(OrderDiscountUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderDiscountUpdateMutation, Types.OrderDiscountUpdateMutationVariables>(OrderDiscountUpdateStaging, options);
       }
 export type OrderDiscountUpdateMutationHookResult = ReturnType<typeof useOrderDiscountUpdateMutation>;
 export type OrderDiscountUpdateMutationResult = Apollo.MutationResult<Types.OrderDiscountUpdateMutation>;
 export type OrderDiscountUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderDiscountUpdateMutation, Types.OrderDiscountUpdateMutationVariables>;
-export const OrderDraftCancelDocument = gql`
+export const OrderDraftCancelStaging = gql`
     mutation OrderDraftCancel($id: ID!) {
   draftOrderDelete(id: $id) {
     errors {
@@ -11662,12 +11662,12 @@ export type OrderDraftCancelMutationFn = Apollo.MutationFunction<Types.OrderDraf
  */
 export function useOrderDraftCancelMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderDraftCancelMutation, Types.OrderDraftCancelMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderDraftCancelMutation, Types.OrderDraftCancelMutationVariables>(OrderDraftCancelDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderDraftCancelMutation, Types.OrderDraftCancelMutationVariables>(OrderDraftCancelStaging, options);
       }
 export type OrderDraftCancelMutationHookResult = ReturnType<typeof useOrderDraftCancelMutation>;
 export type OrderDraftCancelMutationResult = Apollo.MutationResult<Types.OrderDraftCancelMutation>;
 export type OrderDraftCancelMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftCancelMutation, Types.OrderDraftCancelMutationVariables>;
-export const OrderDraftBulkCancelDocument = gql`
+export const OrderDraftBulkCancelStaging = gql`
     mutation OrderDraftBulkCancel($ids: [ID!]!) {
   draftOrderBulkDelete(ids: $ids) {
     errors {
@@ -11697,12 +11697,12 @@ export type OrderDraftBulkCancelMutationFn = Apollo.MutationFunction<Types.Order
  */
 export function useOrderDraftBulkCancelMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderDraftBulkCancelMutation, Types.OrderDraftBulkCancelMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderDraftBulkCancelMutation, Types.OrderDraftBulkCancelMutationVariables>(OrderDraftBulkCancelDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderDraftBulkCancelMutation, Types.OrderDraftBulkCancelMutationVariables>(OrderDraftBulkCancelStaging, options);
       }
 export type OrderDraftBulkCancelMutationHookResult = ReturnType<typeof useOrderDraftBulkCancelMutation>;
 export type OrderDraftBulkCancelMutationResult = Apollo.MutationResult<Types.OrderDraftBulkCancelMutation>;
 export type OrderDraftBulkCancelMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftBulkCancelMutation, Types.OrderDraftBulkCancelMutationVariables>;
-export const OrderConfirmDocument = gql`
+export const OrderConfirmStaging = gql`
     mutation OrderConfirm($id: ID!) {
   orderConfirm(id: $id) {
     errors {
@@ -11736,12 +11736,12 @@ export type OrderConfirmMutationFn = Apollo.MutationFunction<Types.OrderConfirmM
  */
 export function useOrderConfirmMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderConfirmMutation, Types.OrderConfirmMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderConfirmMutation, Types.OrderConfirmMutationVariables>(OrderConfirmDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderConfirmMutation, Types.OrderConfirmMutationVariables>(OrderConfirmStaging, options);
       }
 export type OrderConfirmMutationHookResult = ReturnType<typeof useOrderConfirmMutation>;
 export type OrderConfirmMutationResult = Apollo.MutationResult<Types.OrderConfirmMutation>;
 export type OrderConfirmMutationOptions = Apollo.BaseMutationOptions<Types.OrderConfirmMutation, Types.OrderConfirmMutationVariables>;
-export const OrderDraftFinalizeDocument = gql`
+export const OrderDraftFinalizeStaging = gql`
     mutation OrderDraftFinalize($id: ID!) {
   draftOrderComplete(id: $id) {
     errors {
@@ -11775,12 +11775,12 @@ export type OrderDraftFinalizeMutationFn = Apollo.MutationFunction<Types.OrderDr
  */
 export function useOrderDraftFinalizeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderDraftFinalizeMutation, Types.OrderDraftFinalizeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderDraftFinalizeMutation, Types.OrderDraftFinalizeMutationVariables>(OrderDraftFinalizeDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderDraftFinalizeMutation, Types.OrderDraftFinalizeMutationVariables>(OrderDraftFinalizeStaging, options);
       }
 export type OrderDraftFinalizeMutationHookResult = ReturnType<typeof useOrderDraftFinalizeMutation>;
 export type OrderDraftFinalizeMutationResult = Apollo.MutationResult<Types.OrderDraftFinalizeMutation>;
 export type OrderDraftFinalizeMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftFinalizeMutation, Types.OrderDraftFinalizeMutationVariables>;
-export const FulfillmentReturnProductsDocument = gql`
+export const FulfillmentReturnProductsStaging = gql`
     mutation FulfillmentReturnProducts($id: ID!, $input: OrderReturnProductsInput!) {
   orderFulfillmentReturnProducts(input: $input, order: $id) {
     errors {
@@ -11818,12 +11818,12 @@ export type FulfillmentReturnProductsMutationFn = Apollo.MutationFunction<Types.
  */
 export function useFulfillmentReturnProductsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.FulfillmentReturnProductsMutation, Types.FulfillmentReturnProductsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.FulfillmentReturnProductsMutation, Types.FulfillmentReturnProductsMutationVariables>(FulfillmentReturnProductsDocument, options);
+        return ApolloReactHooks.useMutation<Types.FulfillmentReturnProductsMutation, Types.FulfillmentReturnProductsMutationVariables>(FulfillmentReturnProductsStaging, options);
       }
 export type FulfillmentReturnProductsMutationHookResult = ReturnType<typeof useFulfillmentReturnProductsMutation>;
 export type FulfillmentReturnProductsMutationResult = Apollo.MutationResult<Types.FulfillmentReturnProductsMutation>;
 export type FulfillmentReturnProductsMutationOptions = Apollo.BaseMutationOptions<Types.FulfillmentReturnProductsMutation, Types.FulfillmentReturnProductsMutationVariables>;
-export const OrderRefundDocument = gql`
+export const OrderRefundStaging = gql`
     mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
   orderRefund(id: $id, amount: $amount) {
     errors {
@@ -11858,12 +11858,12 @@ export type OrderRefundMutationFn = Apollo.MutationFunction<Types.OrderRefundMut
  */
 export function useOrderRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderRefundMutation, Types.OrderRefundMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderRefundMutation, Types.OrderRefundMutationVariables>(OrderRefundDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderRefundMutation, Types.OrderRefundMutationVariables>(OrderRefundStaging, options);
       }
 export type OrderRefundMutationHookResult = ReturnType<typeof useOrderRefundMutation>;
 export type OrderRefundMutationResult = Apollo.MutationResult<Types.OrderRefundMutation>;
 export type OrderRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderRefundMutation, Types.OrderRefundMutationVariables>;
-export const OrderFulfillmentRefundProductsDocument = gql`
+export const OrderFulfillmentRefundProductsStaging = gql`
     mutation OrderFulfillmentRefundProducts($input: OrderRefundProductsInput!, $order: ID!) {
   orderFulfillmentRefundProducts(input: $input, order: $order) {
     errors {
@@ -11902,12 +11902,12 @@ export type OrderFulfillmentRefundProductsMutationFn = Apollo.MutationFunction<T
  */
 export function useOrderFulfillmentRefundProductsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderFulfillmentRefundProductsMutation, Types.OrderFulfillmentRefundProductsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderFulfillmentRefundProductsMutation, Types.OrderFulfillmentRefundProductsMutationVariables>(OrderFulfillmentRefundProductsDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderFulfillmentRefundProductsMutation, Types.OrderFulfillmentRefundProductsMutationVariables>(OrderFulfillmentRefundProductsStaging, options);
       }
 export type OrderFulfillmentRefundProductsMutationHookResult = ReturnType<typeof useOrderFulfillmentRefundProductsMutation>;
 export type OrderFulfillmentRefundProductsMutationResult = Apollo.MutationResult<Types.OrderFulfillmentRefundProductsMutation>;
 export type OrderFulfillmentRefundProductsMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentRefundProductsMutation, Types.OrderFulfillmentRefundProductsMutationVariables>;
-export const OrderVoidDocument = gql`
+export const OrderVoidStaging = gql`
     mutation OrderVoid($id: ID!) {
   orderVoid(id: $id) {
     errors {
@@ -11941,12 +11941,12 @@ export type OrderVoidMutationFn = Apollo.MutationFunction<Types.OrderVoidMutatio
  */
 export function useOrderVoidMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderVoidMutation, Types.OrderVoidMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderVoidMutation, Types.OrderVoidMutationVariables>(OrderVoidDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderVoidMutation, Types.OrderVoidMutationVariables>(OrderVoidStaging, options);
       }
 export type OrderVoidMutationHookResult = ReturnType<typeof useOrderVoidMutation>;
 export type OrderVoidMutationResult = Apollo.MutationResult<Types.OrderVoidMutation>;
 export type OrderVoidMutationOptions = Apollo.BaseMutationOptions<Types.OrderVoidMutation, Types.OrderVoidMutationVariables>;
-export const OrderMarkAsPaidDocument = gql`
+export const OrderMarkAsPaidStaging = gql`
     mutation OrderMarkAsPaid($id: ID!, $transactionReference: String) {
   orderMarkAsPaid(id: $id, transactionReference: $transactionReference) {
     errors {
@@ -11981,12 +11981,12 @@ export type OrderMarkAsPaidMutationFn = Apollo.MutationFunction<Types.OrderMarkA
  */
 export function useOrderMarkAsPaidMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderMarkAsPaidMutation, Types.OrderMarkAsPaidMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderMarkAsPaidMutation, Types.OrderMarkAsPaidMutationVariables>(OrderMarkAsPaidDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderMarkAsPaidMutation, Types.OrderMarkAsPaidMutationVariables>(OrderMarkAsPaidStaging, options);
       }
 export type OrderMarkAsPaidMutationHookResult = ReturnType<typeof useOrderMarkAsPaidMutation>;
 export type OrderMarkAsPaidMutationResult = Apollo.MutationResult<Types.OrderMarkAsPaidMutation>;
 export type OrderMarkAsPaidMutationOptions = Apollo.BaseMutationOptions<Types.OrderMarkAsPaidMutation, Types.OrderMarkAsPaidMutationVariables>;
-export const OrderCaptureDocument = gql`
+export const OrderCaptureStaging = gql`
     mutation OrderCapture($id: ID!, $amount: PositiveDecimal!) {
   orderCapture(id: $id, amount: $amount) {
     errors {
@@ -12021,12 +12021,12 @@ export type OrderCaptureMutationFn = Apollo.MutationFunction<Types.OrderCaptureM
  */
 export function useOrderCaptureMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderCaptureMutation, Types.OrderCaptureMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderCaptureMutation, Types.OrderCaptureMutationVariables>(OrderCaptureDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderCaptureMutation, Types.OrderCaptureMutationVariables>(OrderCaptureStaging, options);
       }
 export type OrderCaptureMutationHookResult = ReturnType<typeof useOrderCaptureMutation>;
 export type OrderCaptureMutationResult = Apollo.MutationResult<Types.OrderCaptureMutation>;
 export type OrderCaptureMutationOptions = Apollo.BaseMutationOptions<Types.OrderCaptureMutation, Types.OrderCaptureMutationVariables>;
-export const OrderFulfillmentUpdateTrackingDocument = gql`
+export const OrderFulfillmentUpdateTrackingStaging = gql`
     mutation OrderFulfillmentUpdateTracking($id: ID!, $input: FulfillmentUpdateTrackingInput!) {
   orderFulfillmentUpdateTracking(id: $id, input: $input) {
     errors {
@@ -12061,12 +12061,12 @@ export type OrderFulfillmentUpdateTrackingMutationFn = Apollo.MutationFunction<T
  */
 export function useOrderFulfillmentUpdateTrackingMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderFulfillmentUpdateTrackingMutation, Types.OrderFulfillmentUpdateTrackingMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderFulfillmentUpdateTrackingMutation, Types.OrderFulfillmentUpdateTrackingMutationVariables>(OrderFulfillmentUpdateTrackingDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderFulfillmentUpdateTrackingMutation, Types.OrderFulfillmentUpdateTrackingMutationVariables>(OrderFulfillmentUpdateTrackingStaging, options);
       }
 export type OrderFulfillmentUpdateTrackingMutationHookResult = ReturnType<typeof useOrderFulfillmentUpdateTrackingMutation>;
 export type OrderFulfillmentUpdateTrackingMutationResult = Apollo.MutationResult<Types.OrderFulfillmentUpdateTrackingMutation>;
 export type OrderFulfillmentUpdateTrackingMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentUpdateTrackingMutation, Types.OrderFulfillmentUpdateTrackingMutationVariables>;
-export const OrderFulfillmentApproveDocument = gql`
+export const OrderFulfillmentApproveStaging = gql`
     mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!, $allowStockToBeExceeded: Boolean) {
   orderFulfillmentApprove(
     id: $id
@@ -12106,12 +12106,12 @@ export type OrderFulfillmentApproveMutationFn = Apollo.MutationFunction<Types.Or
  */
 export function useOrderFulfillmentApproveMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderFulfillmentApproveMutation, Types.OrderFulfillmentApproveMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderFulfillmentApproveMutation, Types.OrderFulfillmentApproveMutationVariables>(OrderFulfillmentApproveDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderFulfillmentApproveMutation, Types.OrderFulfillmentApproveMutationVariables>(OrderFulfillmentApproveStaging, options);
       }
 export type OrderFulfillmentApproveMutationHookResult = ReturnType<typeof useOrderFulfillmentApproveMutation>;
 export type OrderFulfillmentApproveMutationResult = Apollo.MutationResult<Types.OrderFulfillmentApproveMutation>;
 export type OrderFulfillmentApproveMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentApproveMutation, Types.OrderFulfillmentApproveMutationVariables>;
-export const OrderFulfillmentCancelDocument = gql`
+export const OrderFulfillmentCancelStaging = gql`
     mutation OrderFulfillmentCancel($id: ID!, $input: FulfillmentCancelInput!) {
   orderFulfillmentCancel(id: $id, input: $input) {
     errors {
@@ -12146,12 +12146,12 @@ export type OrderFulfillmentCancelMutationFn = Apollo.MutationFunction<Types.Ord
  */
 export function useOrderFulfillmentCancelMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderFulfillmentCancelMutation, Types.OrderFulfillmentCancelMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderFulfillmentCancelMutation, Types.OrderFulfillmentCancelMutationVariables>(OrderFulfillmentCancelDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderFulfillmentCancelMutation, Types.OrderFulfillmentCancelMutationVariables>(OrderFulfillmentCancelStaging, options);
       }
 export type OrderFulfillmentCancelMutationHookResult = ReturnType<typeof useOrderFulfillmentCancelMutation>;
 export type OrderFulfillmentCancelMutationResult = Apollo.MutationResult<Types.OrderFulfillmentCancelMutation>;
 export type OrderFulfillmentCancelMutationOptions = Apollo.BaseMutationOptions<Types.OrderFulfillmentCancelMutation, Types.OrderFulfillmentCancelMutationVariables>;
-export const OrderNoteAddDocument = gql`
+export const OrderNoteAddStaging = gql`
     mutation OrderNoteAdd($order: ID!, $input: OrderNoteInput!) {
   orderNoteAdd(order: $order, input: $input) {
     errors {
@@ -12190,12 +12190,12 @@ export type OrderNoteAddMutationFn = Apollo.MutationFunction<Types.OrderNoteAddM
  */
 export function useOrderNoteAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderNoteAddMutation, Types.OrderNoteAddMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderNoteAddMutation, Types.OrderNoteAddMutationVariables>(OrderNoteAddDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderNoteAddMutation, Types.OrderNoteAddMutationVariables>(OrderNoteAddStaging, options);
       }
 export type OrderNoteAddMutationHookResult = ReturnType<typeof useOrderNoteAddMutation>;
 export type OrderNoteAddMutationResult = Apollo.MutationResult<Types.OrderNoteAddMutation>;
 export type OrderNoteAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderNoteAddMutation, Types.OrderNoteAddMutationVariables>;
-export const OrderNoteUpdateDocument = gql`
+export const OrderNoteUpdateStaging = gql`
     mutation OrderNoteUpdate($order: ID!, $input: OrderNoteInput!) {
   orderNoteUpdate(note: $order, input: $input) {
     errors {
@@ -12234,12 +12234,12 @@ export type OrderNoteUpdateMutationFn = Apollo.MutationFunction<Types.OrderNoteU
  */
 export function useOrderNoteUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderNoteUpdateMutation, Types.OrderNoteUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderNoteUpdateMutation, Types.OrderNoteUpdateMutationVariables>(OrderNoteUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderNoteUpdateMutation, Types.OrderNoteUpdateMutationVariables>(OrderNoteUpdateStaging, options);
       }
 export type OrderNoteUpdateMutationHookResult = ReturnType<typeof useOrderNoteUpdateMutation>;
 export type OrderNoteUpdateMutationResult = Apollo.MutationResult<Types.OrderNoteUpdateMutation>;
 export type OrderNoteUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderNoteUpdateMutation, Types.OrderNoteUpdateMutationVariables>;
-export const OrderUpdateDocument = gql`
+export const OrderUpdateStaging = gql`
     mutation OrderUpdate($id: ID!, $input: OrderUpdateInput!) {
   orderUpdate(id: $id, input: $input) {
     errors {
@@ -12274,12 +12274,12 @@ export type OrderUpdateMutationFn = Apollo.MutationFunction<Types.OrderUpdateMut
  */
 export function useOrderUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderUpdateMutation, Types.OrderUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderUpdateMutation, Types.OrderUpdateMutationVariables>(OrderUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderUpdateMutation, Types.OrderUpdateMutationVariables>(OrderUpdateStaging, options);
       }
 export type OrderUpdateMutationHookResult = ReturnType<typeof useOrderUpdateMutation>;
 export type OrderUpdateMutationResult = Apollo.MutationResult<Types.OrderUpdateMutation>;
 export type OrderUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderUpdateMutation, Types.OrderUpdateMutationVariables>;
-export const OrderDraftUpdateDocument = gql`
+export const OrderDraftUpdateStaging = gql`
     mutation OrderDraftUpdate($id: ID!, $input: DraftOrderInput!) {
   draftOrderUpdate(id: $id, input: $input) {
     errors {
@@ -12314,12 +12314,12 @@ export type OrderDraftUpdateMutationFn = Apollo.MutationFunction<Types.OrderDraf
  */
 export function useOrderDraftUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderDraftUpdateMutation, Types.OrderDraftUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderDraftUpdateMutation, Types.OrderDraftUpdateMutationVariables>(OrderDraftUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderDraftUpdateMutation, Types.OrderDraftUpdateMutationVariables>(OrderDraftUpdateStaging, options);
       }
 export type OrderDraftUpdateMutationHookResult = ReturnType<typeof useOrderDraftUpdateMutation>;
 export type OrderDraftUpdateMutationResult = Apollo.MutationResult<Types.OrderDraftUpdateMutation>;
 export type OrderDraftUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftUpdateMutation, Types.OrderDraftUpdateMutationVariables>;
-export const OrderShippingMethodUpdateDocument = gql`
+export const OrderShippingMethodUpdateStaging = gql`
     mutation OrderShippingMethodUpdate($id: ID!, $input: OrderUpdateShippingInput!) {
   orderUpdateShipping(order: $id, input: $input) {
     errors {
@@ -12384,12 +12384,12 @@ export type OrderShippingMethodUpdateMutationFn = Apollo.MutationFunction<Types.
  */
 export function useOrderShippingMethodUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderShippingMethodUpdateMutation, Types.OrderShippingMethodUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderShippingMethodUpdateMutation, Types.OrderShippingMethodUpdateMutationVariables>(OrderShippingMethodUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderShippingMethodUpdateMutation, Types.OrderShippingMethodUpdateMutationVariables>(OrderShippingMethodUpdateStaging, options);
       }
 export type OrderShippingMethodUpdateMutationHookResult = ReturnType<typeof useOrderShippingMethodUpdateMutation>;
 export type OrderShippingMethodUpdateMutationResult = Apollo.MutationResult<Types.OrderShippingMethodUpdateMutation>;
 export type OrderShippingMethodUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderShippingMethodUpdateMutation, Types.OrderShippingMethodUpdateMutationVariables>;
-export const OrderDraftCreateDocument = gql`
+export const OrderDraftCreateStaging = gql`
     mutation OrderDraftCreate($input: DraftOrderCreateInput!) {
   draftOrderCreate(input: $input) {
     errors {
@@ -12422,12 +12422,12 @@ export type OrderDraftCreateMutationFn = Apollo.MutationFunction<Types.OrderDraf
  */
 export function useOrderDraftCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderDraftCreateMutation, Types.OrderDraftCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderDraftCreateMutation, Types.OrderDraftCreateMutationVariables>(OrderDraftCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderDraftCreateMutation, Types.OrderDraftCreateMutationVariables>(OrderDraftCreateStaging, options);
       }
 export type OrderDraftCreateMutationHookResult = ReturnType<typeof useOrderDraftCreateMutation>;
 export type OrderDraftCreateMutationResult = Apollo.MutationResult<Types.OrderDraftCreateMutation>;
 export type OrderDraftCreateMutationOptions = Apollo.BaseMutationOptions<Types.OrderDraftCreateMutation, Types.OrderDraftCreateMutationVariables>;
-export const OrderLineDeleteDocument = gql`
+export const OrderLineDeleteStaging = gql`
     mutation OrderLineDelete($id: ID!) {
   orderLineDelete(id: $id) {
     errors {
@@ -12464,12 +12464,12 @@ export type OrderLineDeleteMutationFn = Apollo.MutationFunction<Types.OrderLineD
  */
 export function useOrderLineDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>(OrderLineDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>(OrderLineDeleteStaging, options);
       }
 export type OrderLineDeleteMutationHookResult = ReturnType<typeof useOrderLineDeleteMutation>;
 export type OrderLineDeleteMutationResult = Apollo.MutationResult<Types.OrderLineDeleteMutation>;
 export type OrderLineDeleteMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineDeleteMutation, Types.OrderLineDeleteMutationVariables>;
-export const OrderLinesAddDocument = gql`
+export const OrderLinesAddStaging = gql`
     mutation OrderLinesAdd($id: ID!, $input: [OrderLineCreateInput!]!) {
   orderLinesCreate(id: $id, input: $input) {
     errors {
@@ -12507,12 +12507,12 @@ export type OrderLinesAddMutationFn = Apollo.MutationFunction<Types.OrderLinesAd
  */
 export function useOrderLinesAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>(OrderLinesAddDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>(OrderLinesAddStaging, options);
       }
 export type OrderLinesAddMutationHookResult = ReturnType<typeof useOrderLinesAddMutation>;
 export type OrderLinesAddMutationResult = Apollo.MutationResult<Types.OrderLinesAddMutation>;
 export type OrderLinesAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderLinesAddMutation, Types.OrderLinesAddMutationVariables>;
-export const OrderLineUpdateDocument = gql`
+export const OrderLineUpdateStaging = gql`
     mutation OrderLineUpdate($id: ID!, $input: OrderLineInput!) {
   orderLineUpdate(id: $id, input: $input) {
     errors {
@@ -12547,12 +12547,12 @@ export type OrderLineUpdateMutationFn = Apollo.MutationFunction<Types.OrderLineU
  */
 export function useOrderLineUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>(OrderLineUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>(OrderLineUpdateStaging, options);
       }
 export type OrderLineUpdateMutationHookResult = ReturnType<typeof useOrderLineUpdateMutation>;
 export type OrderLineUpdateMutationResult = Apollo.MutationResult<Types.OrderLineUpdateMutation>;
 export type OrderLineUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderLineUpdateMutation, Types.OrderLineUpdateMutationVariables>;
-export const FulfillOrderDocument = gql`
+export const FulfillOrderStaging = gql`
     mutation FulfillOrder($orderId: ID!, $input: OrderFulfillInput!) {
   orderFulfill(order: $orderId, input: $input) {
     errors {
@@ -12588,12 +12588,12 @@ export type FulfillOrderMutationFn = Apollo.MutationFunction<Types.FulfillOrderM
  */
 export function useFulfillOrderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.FulfillOrderMutation, Types.FulfillOrderMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.FulfillOrderMutation, Types.FulfillOrderMutationVariables>(FulfillOrderDocument, options);
+        return ApolloReactHooks.useMutation<Types.FulfillOrderMutation, Types.FulfillOrderMutationVariables>(FulfillOrderStaging, options);
       }
 export type FulfillOrderMutationHookResult = ReturnType<typeof useFulfillOrderMutation>;
 export type FulfillOrderMutationResult = Apollo.MutationResult<Types.FulfillOrderMutation>;
 export type FulfillOrderMutationOptions = Apollo.BaseMutationOptions<Types.FulfillOrderMutation, Types.FulfillOrderMutationVariables>;
-export const InvoiceRequestDocument = gql`
+export const InvoiceRequestStaging = gql`
     mutation InvoiceRequest($orderId: ID!) {
   invoiceRequest(orderId: $orderId) {
     errors {
@@ -12633,12 +12633,12 @@ export type InvoiceRequestMutationFn = Apollo.MutationFunction<Types.InvoiceRequ
  */
 export function useInvoiceRequestMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.InvoiceRequestMutation, Types.InvoiceRequestMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.InvoiceRequestMutation, Types.InvoiceRequestMutationVariables>(InvoiceRequestDocument, options);
+        return ApolloReactHooks.useMutation<Types.InvoiceRequestMutation, Types.InvoiceRequestMutationVariables>(InvoiceRequestStaging, options);
       }
 export type InvoiceRequestMutationHookResult = ReturnType<typeof useInvoiceRequestMutation>;
 export type InvoiceRequestMutationResult = Apollo.MutationResult<Types.InvoiceRequestMutation>;
 export type InvoiceRequestMutationOptions = Apollo.BaseMutationOptions<Types.InvoiceRequestMutation, Types.InvoiceRequestMutationVariables>;
-export const InvoiceEmailSendDocument = gql`
+export const InvoiceEmailSendStaging = gql`
     mutation InvoiceEmailSend($id: ID!) {
   invoiceSendNotification(id: $id) {
     errors {
@@ -12672,12 +12672,12 @@ export type InvoiceEmailSendMutationFn = Apollo.MutationFunction<Types.InvoiceEm
  */
 export function useInvoiceEmailSendMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.InvoiceEmailSendMutation, Types.InvoiceEmailSendMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.InvoiceEmailSendMutation, Types.InvoiceEmailSendMutationVariables>(InvoiceEmailSendDocument, options);
+        return ApolloReactHooks.useMutation<Types.InvoiceEmailSendMutation, Types.InvoiceEmailSendMutationVariables>(InvoiceEmailSendStaging, options);
       }
 export type InvoiceEmailSendMutationHookResult = ReturnType<typeof useInvoiceEmailSendMutation>;
 export type InvoiceEmailSendMutationResult = Apollo.MutationResult<Types.InvoiceEmailSendMutation>;
 export type InvoiceEmailSendMutationOptions = Apollo.BaseMutationOptions<Types.InvoiceEmailSendMutation, Types.InvoiceEmailSendMutationVariables>;
-export const OrderSettingsUpdateDocument = gql`
+export const OrderSettingsUpdateStaging = gql`
     mutation OrderSettingsUpdate($orderSettingsInput: OrderSettingsUpdateInput!, $shopSettingsInput: ShopSettingsInput!) {
   orderSettingsUpdate(input: $orderSettingsInput) {
     errors {
@@ -12722,12 +12722,12 @@ export type OrderSettingsUpdateMutationFn = Apollo.MutationFunction<Types.OrderS
  */
 export function useOrderSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>(OrderSettingsUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>(OrderSettingsUpdateStaging, options);
       }
 export type OrderSettingsUpdateMutationHookResult = ReturnType<typeof useOrderSettingsUpdateMutation>;
 export type OrderSettingsUpdateMutationResult = Apollo.MutationResult<Types.OrderSettingsUpdateMutation>;
 export type OrderSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>;
-export const OrderTransactionRequestActionDocument = gql`
+export const OrderTransactionRequestActionStaging = gql`
     mutation OrderTransactionRequestAction($action: TransactionActionEnum!, $transactionId: ID!, $amount: PositiveDecimal, $reason: String, $reasonReferenceId: ID) {
   transactionRequestAction(
     actionType: $action
@@ -12767,12 +12767,12 @@ export type OrderTransactionRequestActionMutationFn = Apollo.MutationFunction<Ty
  */
 export function useOrderTransactionRequestActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>(OrderTransactionRequestActionDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>(OrderTransactionRequestActionStaging, options);
       }
 export type OrderTransactionRequestActionMutationHookResult = ReturnType<typeof useOrderTransactionRequestActionMutation>;
 export type OrderTransactionRequestActionMutationResult = Apollo.MutationResult<Types.OrderTransactionRequestActionMutation>;
 export type OrderTransactionRequestActionMutationOptions = Apollo.BaseMutationOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
-export const OrderGrantRefundAddDocument = gql`
+export const OrderGrantRefundAddStaging = gql`
     mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal, $reason: String, $reasonReferenceId: ID, $lines: [OrderGrantRefundCreateLineInput!], $grantRefundForShipping: Boolean, $transactionId: ID!) {
   orderGrantRefundCreate(
     id: $orderId
@@ -12814,12 +12814,12 @@ export type OrderGrantRefundAddMutationFn = Apollo.MutationFunction<Types.OrderG
  */
 export function useOrderGrantRefundAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>(OrderGrantRefundAddDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>(OrderGrantRefundAddStaging, options);
       }
 export type OrderGrantRefundAddMutationHookResult = ReturnType<typeof useOrderGrantRefundAddMutation>;
 export type OrderGrantRefundAddMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddMutation>;
 export type OrderGrantRefundAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
-export const OrderGrantRefundAddWithOrderDocument = gql`
+export const OrderGrantRefundAddWithOrderStaging = gql`
     mutation OrderGrantRefundAddWithOrder($orderId: ID!, $amount: Decimal, $reason: String, $lines: [OrderGrantRefundCreateLineInput!], $grantRefundForShipping: Boolean, $transactionId: ID!) {
   orderGrantRefundCreate(
     id: $orderId
@@ -12864,12 +12864,12 @@ export type OrderGrantRefundAddWithOrderMutationFn = Apollo.MutationFunction<Typ
  */
 export function useOrderGrantRefundAddWithOrderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderGrantRefundAddWithOrderMutation, Types.OrderGrantRefundAddWithOrderMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderGrantRefundAddWithOrderMutation, Types.OrderGrantRefundAddWithOrderMutationVariables>(OrderGrantRefundAddWithOrderDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderGrantRefundAddWithOrderMutation, Types.OrderGrantRefundAddWithOrderMutationVariables>(OrderGrantRefundAddWithOrderStaging, options);
       }
 export type OrderGrantRefundAddWithOrderMutationHookResult = ReturnType<typeof useOrderGrantRefundAddWithOrderMutation>;
 export type OrderGrantRefundAddWithOrderMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddWithOrderMutation>;
 export type OrderGrantRefundAddWithOrderMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddWithOrderMutation, Types.OrderGrantRefundAddWithOrderMutationVariables>;
-export const OrderGrantRefundEditDocument = gql`
+export const OrderGrantRefundEditStaging = gql`
     mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal, $reason: String, $addLines: [OrderGrantRefundUpdateLineAddInput!], $removeLines: [ID!], $grantRefundForShipping: Boolean, $transactionId: ID, $reasonReferenceId: ID) {
   orderGrantRefundUpdate(
     id: $refundId
@@ -12913,12 +12913,12 @@ export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.Order
  */
 export function useOrderGrantRefundEditMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>(OrderGrantRefundEditDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>(OrderGrantRefundEditStaging, options);
       }
 export type OrderGrantRefundEditMutationHookResult = ReturnType<typeof useOrderGrantRefundEditMutation>;
 export type OrderGrantRefundEditMutationResult = Apollo.MutationResult<Types.OrderGrantRefundEditMutation>;
 export type OrderGrantRefundEditMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>;
-export const OrderSendRefundDocument = gql`
+export const OrderSendRefundStaging = gql`
     mutation OrderSendRefund($amount: PositiveDecimal!, $transactionId: ID!) {
   transactionRequestAction(
     actionType: REFUND
@@ -12957,12 +12957,12 @@ export type OrderSendRefundMutationFn = Apollo.MutationFunction<Types.OrderSendR
  */
 export function useOrderSendRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>(OrderSendRefundDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>(OrderSendRefundStaging, options);
       }
 export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRefundMutation>;
 export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
 export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
-export const OrderSendRefundForGrantedRefundDocument = gql`
+export const OrderSendRefundForGrantedRefundStaging = gql`
     mutation OrderSendRefundForGrantedRefund($grantedRefundId: ID!, $transactionId: ID!) {
   transactionRequestRefundForGrantedRefund(
     grantedRefundId: $grantedRefundId
@@ -13000,12 +13000,12 @@ export type OrderSendRefundForGrantedRefundMutationFn = Apollo.MutationFunction<
  */
 export function useOrderSendRefundForGrantedRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderSendRefundForGrantedRefundMutation, Types.OrderSendRefundForGrantedRefundMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.OrderSendRefundForGrantedRefundMutation, Types.OrderSendRefundForGrantedRefundMutationVariables>(OrderSendRefundForGrantedRefundDocument, options);
+        return ApolloReactHooks.useMutation<Types.OrderSendRefundForGrantedRefundMutation, Types.OrderSendRefundForGrantedRefundMutationVariables>(OrderSendRefundForGrantedRefundStaging, options);
       }
 export type OrderSendRefundForGrantedRefundMutationHookResult = ReturnType<typeof useOrderSendRefundForGrantedRefundMutation>;
 export type OrderSendRefundForGrantedRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundForGrantedRefundMutation>;
 export type OrderSendRefundForGrantedRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundForGrantedRefundMutation, Types.OrderSendRefundForGrantedRefundMutationVariables>;
-export const CreateManualTransactionCaptureDocument = gql`
+export const CreateManualTransactionCaptureStaging = gql`
     mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(
     id: $orderId
@@ -13047,12 +13047,12 @@ export type CreateManualTransactionCaptureMutationFn = Apollo.MutationFunction<T
  */
 export function useCreateManualTransactionCaptureMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>(CreateManualTransactionCaptureDocument, options);
+        return ApolloReactHooks.useMutation<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>(CreateManualTransactionCaptureStaging, options);
       }
 export type CreateManualTransactionCaptureMutationHookResult = ReturnType<typeof useCreateManualTransactionCaptureMutation>;
 export type CreateManualTransactionCaptureMutationResult = Apollo.MutationResult<Types.CreateManualTransactionCaptureMutation>;
 export type CreateManualTransactionCaptureMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>;
-export const CreateManualTransactionRefundDocument = gql`
+export const CreateManualTransactionRefundStaging = gql`
     mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(
     id: $orderId
@@ -13094,12 +13094,12 @@ export type CreateManualTransactionRefundMutationFn = Apollo.MutationFunction<Ty
  */
 export function useCreateManualTransactionRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>(CreateManualTransactionRefundDocument, options);
+        return ApolloReactHooks.useMutation<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>(CreateManualTransactionRefundStaging, options);
       }
 export type CreateManualTransactionRefundMutationHookResult = ReturnType<typeof useCreateManualTransactionRefundMutation>;
 export type CreateManualTransactionRefundMutationResult = Apollo.MutationResult<Types.CreateManualTransactionRefundMutation>;
 export type CreateManualTransactionRefundMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>;
-export const OrderListDocument = gql`
+export const OrderListStaging = gql`
     query OrderList($first: Int, $after: String, $last: Int, $before: String, $where: OrderWhereInput, $search: String, $sort: OrderSortingInput) {
   orders(
     before: $before
@@ -13171,16 +13171,16 @@ export const OrderListDocument = gql`
  */
 export function useOrderListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.OrderListQuery, Types.OrderListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderListQuery, Types.OrderListQueryVariables>(OrderListDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderListQuery, Types.OrderListQueryVariables>(OrderListStaging, options);
       }
 export function useOrderListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderListQuery, Types.OrderListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderListQuery, Types.OrderListQueryVariables>(OrderListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderListQuery, Types.OrderListQueryVariables>(OrderListStaging, options);
         }
 export type OrderListQueryHookResult = ReturnType<typeof useOrderListQuery>;
 export type OrderListLazyQueryHookResult = ReturnType<typeof useOrderListLazyQuery>;
 export type OrderListQueryResult = Apollo.QueryResult<Types.OrderListQuery, Types.OrderListQueryVariables>;
-export const OrderDraftListDocument = gql`
+export const OrderDraftListStaging = gql`
     query OrderDraftList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderDraftFilterInput, $sort: OrderSortingInput) {
   draftOrders(
     before: $before
@@ -13249,16 +13249,16 @@ export const OrderDraftListDocument = gql`
  */
 export function useOrderDraftListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.OrderDraftListQuery, Types.OrderDraftListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderDraftListQuery, Types.OrderDraftListQueryVariables>(OrderDraftListDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderDraftListQuery, Types.OrderDraftListQueryVariables>(OrderDraftListStaging, options);
       }
 export function useOrderDraftListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDraftListQuery, Types.OrderDraftListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderDraftListQuery, Types.OrderDraftListQueryVariables>(OrderDraftListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderDraftListQuery, Types.OrderDraftListQueryVariables>(OrderDraftListStaging, options);
         }
 export type OrderDraftListQueryHookResult = ReturnType<typeof useOrderDraftListQuery>;
 export type OrderDraftListLazyQueryHookResult = ReturnType<typeof useOrderDraftListLazyQuery>;
 export type OrderDraftListQueryResult = Apollo.QueryResult<Types.OrderDraftListQuery, Types.OrderDraftListQueryVariables>;
-export const OrderDetailsDocument = gql`
+export const OrderDetailsStaging = gql`
     query OrderDetails($id: ID!) {
   order(id: $id) {
     ...OrderDetails
@@ -13297,16 +13297,16 @@ ${PaymentGatewayFragmentDoc}`;
  */
 export function useOrderDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>(OrderDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>(OrderDetailsStaging, options);
       }
 export function useOrderDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>(OrderDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>(OrderDetailsStaging, options);
         }
 export type OrderDetailsQueryHookResult = ReturnType<typeof useOrderDetailsQuery>;
 export type OrderDetailsLazyQueryHookResult = ReturnType<typeof useOrderDetailsLazyQuery>;
 export type OrderDetailsQueryResult = Apollo.QueryResult<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>;
-export const OrderDetailsWithMetadataDocument = gql`
+export const OrderDetailsWithMetadataStaging = gql`
     query OrderDetailsWithMetadata($id: ID!, $hasManageProducts: Boolean!) {
   order(id: $id) {
     ...OrderDetailsWithMetadata
@@ -13346,16 +13346,16 @@ ${PaymentGatewayFragmentDoc}`;
  */
 export function useOrderDetailsWithMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>(OrderDetailsWithMetadataDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>(OrderDetailsWithMetadataStaging, options);
       }
 export function useOrderDetailsWithMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>(OrderDetailsWithMetadataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>(OrderDetailsWithMetadataStaging, options);
         }
 export type OrderDetailsWithMetadataQueryHookResult = ReturnType<typeof useOrderDetailsWithMetadataQuery>;
 export type OrderDetailsWithMetadataLazyQueryHookResult = ReturnType<typeof useOrderDetailsWithMetadataLazyQuery>;
 export type OrderDetailsWithMetadataQueryResult = Apollo.QueryResult<Types.OrderDetailsWithMetadataQuery, Types.OrderDetailsWithMetadataQueryVariables>;
-export const OrderLinesMetadataDocument = gql`
+export const OrderLinesMetadataStaging = gql`
     query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
   order(id: $id) {
     lines {
@@ -13384,16 +13384,16 @@ export const OrderLinesMetadataDocument = gql`
  */
 export function useOrderLinesMetadataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>(OrderLinesMetadataDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>(OrderLinesMetadataStaging, options);
       }
 export function useOrderLinesMetadataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>(OrderLinesMetadataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>(OrderLinesMetadataStaging, options);
         }
 export type OrderLinesMetadataQueryHookResult = ReturnType<typeof useOrderLinesMetadataQuery>;
 export type OrderLinesMetadataLazyQueryHookResult = ReturnType<typeof useOrderLinesMetadataLazyQuery>;
 export type OrderLinesMetadataQueryResult = Apollo.QueryResult<Types.OrderLinesMetadataQuery, Types.OrderLinesMetadataQueryVariables>;
-export const OrderDetailsGrantRefundDocument = gql`
+export const OrderDetailsGrantRefundStaging = gql`
     query OrderDetailsGrantRefund($id: ID!) {
   order(id: $id) {
     ...OrderDetailsGrantRefund
@@ -13419,16 +13419,16 @@ export const OrderDetailsGrantRefundDocument = gql`
  */
 export function useOrderDetailsGrantRefundQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>(OrderDetailsGrantRefundDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>(OrderDetailsGrantRefundStaging, options);
       }
 export function useOrderDetailsGrantRefundLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>(OrderDetailsGrantRefundDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>(OrderDetailsGrantRefundStaging, options);
         }
 export type OrderDetailsGrantRefundQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundQuery>;
 export type OrderDetailsGrantRefundLazyQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundLazyQuery>;
 export type OrderDetailsGrantRefundQueryResult = Apollo.QueryResult<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>;
-export const OrderDetailsGrantRefundEditDocument = gql`
+export const OrderDetailsGrantRefundEditStaging = gql`
     query OrderDetailsGrantRefundEdit($id: ID!) {
   order(id: $id) {
     ...OrderDetailsGrantRefund
@@ -13454,16 +13454,16 @@ export const OrderDetailsGrantRefundEditDocument = gql`
  */
 export function useOrderDetailsGrantRefundEditQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>(OrderDetailsGrantRefundEditDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>(OrderDetailsGrantRefundEditStaging, options);
       }
 export function useOrderDetailsGrantRefundEditLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>(OrderDetailsGrantRefundEditDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>(OrderDetailsGrantRefundEditStaging, options);
         }
 export type OrderDetailsGrantRefundEditQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundEditQuery>;
 export type OrderDetailsGrantRefundEditLazyQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundEditLazyQuery>;
 export type OrderDetailsGrantRefundEditQueryResult = Apollo.QueryResult<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>;
-export const OrderFulfillDataDocument = gql`
+export const OrderFulfillDataStaging = gql`
     query OrderFulfillData($orderId: ID!) {
   order(id: $orderId) {
     id
@@ -13504,16 +13504,16 @@ export const OrderFulfillDataDocument = gql`
  */
 export function useOrderFulfillDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderFulfillDataQuery, Types.OrderFulfillDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderFulfillDataQuery, Types.OrderFulfillDataQueryVariables>(OrderFulfillDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderFulfillDataQuery, Types.OrderFulfillDataQueryVariables>(OrderFulfillDataStaging, options);
       }
 export function useOrderFulfillDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderFulfillDataQuery, Types.OrderFulfillDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderFulfillDataQuery, Types.OrderFulfillDataQueryVariables>(OrderFulfillDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderFulfillDataQuery, Types.OrderFulfillDataQueryVariables>(OrderFulfillDataStaging, options);
         }
 export type OrderFulfillDataQueryHookResult = ReturnType<typeof useOrderFulfillDataQuery>;
 export type OrderFulfillDataLazyQueryHookResult = ReturnType<typeof useOrderFulfillDataLazyQuery>;
 export type OrderFulfillDataQueryResult = Apollo.QueryResult<Types.OrderFulfillDataQuery, Types.OrderFulfillDataQueryVariables>;
-export const OrderFulfillSettingsDocument = gql`
+export const OrderFulfillSettingsStaging = gql`
     query OrderFulfillSettings {
   shop {
     ...ShopOrderSettings
@@ -13538,16 +13538,16 @@ export const OrderFulfillSettingsDocument = gql`
  */
 export function useOrderFulfillSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>(OrderFulfillSettingsDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>(OrderFulfillSettingsStaging, options);
       }
 export function useOrderFulfillSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>(OrderFulfillSettingsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>(OrderFulfillSettingsStaging, options);
         }
 export type OrderFulfillSettingsQueryHookResult = ReturnType<typeof useOrderFulfillSettingsQuery>;
 export type OrderFulfillSettingsLazyQueryHookResult = ReturnType<typeof useOrderFulfillSettingsLazyQuery>;
 export type OrderFulfillSettingsQueryResult = Apollo.QueryResult<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>;
-export const OrderSettingsDocument = gql`
+export const OrderSettingsStaging = gql`
     query OrderSettings {
   orderSettings {
     ...OrderSettings
@@ -13576,16 +13576,16 @@ ${ShopOrderSettingsFragmentDoc}`;
  */
 export function useOrderSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>(OrderSettingsDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>(OrderSettingsStaging, options);
       }
 export function useOrderSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>(OrderSettingsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>(OrderSettingsStaging, options);
         }
 export type OrderSettingsQueryHookResult = ReturnType<typeof useOrderSettingsQuery>;
 export type OrderSettingsLazyQueryHookResult = ReturnType<typeof useOrderSettingsLazyQuery>;
 export type OrderSettingsQueryResult = Apollo.QueryResult<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>;
-export const OrderRefundDataDocument = gql`
+export const OrderRefundDataStaging = gql`
     query OrderRefundData($orderId: ID!) {
   order(id: $orderId) {
     id
@@ -13642,16 +13642,16 @@ ${RefundOrderLineFragmentDoc}`;
  */
 export function useOrderRefundDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>(OrderRefundDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>(OrderRefundDataStaging, options);
       }
 export function useOrderRefundDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>(OrderRefundDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>(OrderRefundDataStaging, options);
         }
 export type OrderRefundDataQueryHookResult = ReturnType<typeof useOrderRefundDataQuery>;
 export type OrderRefundDataLazyQueryHookResult = ReturnType<typeof useOrderRefundDataLazyQuery>;
 export type OrderRefundDataQueryResult = Apollo.QueryResult<Types.OrderRefundDataQuery, Types.OrderRefundDataQueryVariables>;
-export const OrderTransactionsDataDocument = gql`
+export const OrderTransactionsDataStaging = gql`
     query OrderTransactionsData($orderId: ID!) {
   order(id: $orderId) {
     id
@@ -13686,16 +13686,16 @@ ${MoneyFragmentDoc}`;
  */
 export function useOrderTransactionsDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>(OrderTransactionsDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>(OrderTransactionsDataStaging, options);
       }
 export function useOrderTransactionsDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>(OrderTransactionsDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>(OrderTransactionsDataStaging, options);
         }
 export type OrderTransactionsDataQueryHookResult = ReturnType<typeof useOrderTransactionsDataQuery>;
 export type OrderTransactionsDataLazyQueryHookResult = ReturnType<typeof useOrderTransactionsDataLazyQuery>;
 export type OrderTransactionsDataQueryResult = Apollo.QueryResult<Types.OrderTransactionsDataQuery, Types.OrderTransactionsDataQueryVariables>;
-export const ChannelUsabilityDataDocument = gql`
+export const ChannelUsabilityDataStaging = gql`
     query ChannelUsabilityData($channel: String!) {
   products(channel: $channel) {
     totalCount
@@ -13721,16 +13721,16 @@ export const ChannelUsabilityDataDocument = gql`
  */
 export function useChannelUsabilityDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelUsabilityDataQuery, Types.ChannelUsabilityDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelUsabilityDataQuery, Types.ChannelUsabilityDataQueryVariables>(ChannelUsabilityDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.ChannelUsabilityDataQuery, Types.ChannelUsabilityDataQueryVariables>(ChannelUsabilityDataStaging, options);
       }
 export function useChannelUsabilityDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelUsabilityDataQuery, Types.ChannelUsabilityDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelUsabilityDataQuery, Types.ChannelUsabilityDataQueryVariables>(ChannelUsabilityDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ChannelUsabilityDataQuery, Types.ChannelUsabilityDataQueryVariables>(ChannelUsabilityDataStaging, options);
         }
 export type ChannelUsabilityDataQueryHookResult = ReturnType<typeof useChannelUsabilityDataQuery>;
 export type ChannelUsabilityDataLazyQueryHookResult = ReturnType<typeof useChannelUsabilityDataLazyQuery>;
 export type ChannelUsabilityDataQueryResult = Apollo.QueryResult<Types.ChannelUsabilityDataQuery, Types.ChannelUsabilityDataQueryVariables>;
-export const OrderDetailsGraphiQlDocument = gql`
+export const OrderDetailsGraphiQlStaging = gql`
     query OrderDetailsGraphiQL($id: ID!) {
   order(id: $id) {
     id
@@ -13765,16 +13765,16 @@ export const OrderDetailsGraphiQlDocument = gql`
  */
 export function useOrderDetailsGraphiQlQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsGraphiQlQuery, Types.OrderDetailsGraphiQlQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderDetailsGraphiQlQuery, Types.OrderDetailsGraphiQlQueryVariables>(OrderDetailsGraphiQlDocument, options);
+        return ApolloReactHooks.useQuery<Types.OrderDetailsGraphiQlQuery, Types.OrderDetailsGraphiQlQueryVariables>(OrderDetailsGraphiQlStaging, options);
       }
 export function useOrderDetailsGraphiQlLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsGraphiQlQuery, Types.OrderDetailsGraphiQlQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGraphiQlQuery, Types.OrderDetailsGraphiQlQueryVariables>(OrderDetailsGraphiQlDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGraphiQlQuery, Types.OrderDetailsGraphiQlQueryVariables>(OrderDetailsGraphiQlStaging, options);
         }
 export type OrderDetailsGraphiQlQueryHookResult = ReturnType<typeof useOrderDetailsGraphiQlQuery>;
 export type OrderDetailsGraphiQlLazyQueryHookResult = ReturnType<typeof useOrderDetailsGraphiQlLazyQuery>;
 export type OrderDetailsGraphiQlQueryResult = Apollo.QueryResult<Types.OrderDetailsGraphiQlQuery, Types.OrderDetailsGraphiQlQueryVariables>;
-export const DevModeRunDocument = gql`
+export const DevModeRunStaging = gql`
     query DevModeRun($filter: OrderFilterInput, $sortBy: OrderSortingInput) {
   orders(first: 10, filter: $filter, sortBy: $sortBy) {
     edges {
@@ -13814,16 +13814,16 @@ export const DevModeRunDocument = gql`
  */
 export function useDevModeRunQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>(DevModeRunDocument, options);
+        return ApolloReactHooks.useQuery<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>(DevModeRunStaging, options);
       }
 export function useDevModeRunLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>(DevModeRunDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>(DevModeRunStaging, options);
         }
 export type DevModeRunQueryHookResult = ReturnType<typeof useDevModeRunQuery>;
 export type DevModeRunLazyQueryHookResult = ReturnType<typeof useDevModeRunLazyQuery>;
 export type DevModeRunQueryResult = Apollo.QueryResult<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>;
-export const RefundSettingsDocument = gql`
+export const RefundSettingsStaging = gql`
     query RefundSettings {
   refundSettings {
     reasonReferenceType {
@@ -13851,16 +13851,16 @@ export const RefundSettingsDocument = gql`
  */
 export function useRefundSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>(RefundSettingsDocument, options);
+        return ApolloReactHooks.useQuery<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>(RefundSettingsStaging, options);
       }
 export function useRefundSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>(RefundSettingsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>(RefundSettingsStaging, options);
         }
 export type RefundSettingsQueryHookResult = ReturnType<typeof useRefundSettingsQuery>;
 export type RefundSettingsLazyQueryHookResult = ReturnType<typeof useRefundSettingsLazyQuery>;
 export type RefundSettingsQueryResult = Apollo.QueryResult<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>;
-export const PermissionGroupDeleteDocument = gql`
+export const PermissionGroupDeleteStaging = gql`
     mutation PermissionGroupDelete($id: ID!) {
   permissionGroupDelete(id: $id) {
     errors {
@@ -13890,12 +13890,12 @@ export type PermissionGroupDeleteMutationFn = Apollo.MutationFunction<Types.Perm
  */
 export function usePermissionGroupDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PermissionGroupDeleteMutation, Types.PermissionGroupDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PermissionGroupDeleteMutation, Types.PermissionGroupDeleteMutationVariables>(PermissionGroupDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.PermissionGroupDeleteMutation, Types.PermissionGroupDeleteMutationVariables>(PermissionGroupDeleteStaging, options);
       }
 export type PermissionGroupDeleteMutationHookResult = ReturnType<typeof usePermissionGroupDeleteMutation>;
 export type PermissionGroupDeleteMutationResult = Apollo.MutationResult<Types.PermissionGroupDeleteMutation>;
 export type PermissionGroupDeleteMutationOptions = Apollo.BaseMutationOptions<Types.PermissionGroupDeleteMutation, Types.PermissionGroupDeleteMutationVariables>;
-export const PermissionGroupCreateDocument = gql`
+export const PermissionGroupCreateStaging = gql`
     mutation PermissionGroupCreate($input: PermissionGroupCreateInput!) {
   permissionGroupCreate(input: $input) {
     errors {
@@ -13929,12 +13929,12 @@ export type PermissionGroupCreateMutationFn = Apollo.MutationFunction<Types.Perm
  */
 export function usePermissionGroupCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PermissionGroupCreateMutation, Types.PermissionGroupCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PermissionGroupCreateMutation, Types.PermissionGroupCreateMutationVariables>(PermissionGroupCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PermissionGroupCreateMutation, Types.PermissionGroupCreateMutationVariables>(PermissionGroupCreateStaging, options);
       }
 export type PermissionGroupCreateMutationHookResult = ReturnType<typeof usePermissionGroupCreateMutation>;
 export type PermissionGroupCreateMutationResult = Apollo.MutationResult<Types.PermissionGroupCreateMutation>;
 export type PermissionGroupCreateMutationOptions = Apollo.BaseMutationOptions<Types.PermissionGroupCreateMutation, Types.PermissionGroupCreateMutationVariables>;
-export const PermissionGroupUpdateDocument = gql`
+export const PermissionGroupUpdateStaging = gql`
     mutation PermissionGroupUpdate($id: ID!, $input: PermissionGroupUpdateInput!) {
   permissionGroupUpdate(id: $id, input: $input) {
     errors {
@@ -13969,12 +13969,12 @@ export type PermissionGroupUpdateMutationFn = Apollo.MutationFunction<Types.Perm
  */
 export function usePermissionGroupUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.PermissionGroupUpdateMutation, Types.PermissionGroupUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.PermissionGroupUpdateMutation, Types.PermissionGroupUpdateMutationVariables>(PermissionGroupUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.PermissionGroupUpdateMutation, Types.PermissionGroupUpdateMutationVariables>(PermissionGroupUpdateStaging, options);
       }
 export type PermissionGroupUpdateMutationHookResult = ReturnType<typeof usePermissionGroupUpdateMutation>;
 export type PermissionGroupUpdateMutationResult = Apollo.MutationResult<Types.PermissionGroupUpdateMutation>;
 export type PermissionGroupUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PermissionGroupUpdateMutation, Types.PermissionGroupUpdateMutationVariables>;
-export const PermissionGroupListDocument = gql`
+export const PermissionGroupListStaging = gql`
     query PermissionGroupList($after: String, $before: String, $first: Int, $last: Int, $filter: PermissionGroupFilterInput, $sort: PermissionGroupSortingInput) {
   permissionGroups(
     after: $after
@@ -14020,16 +14020,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function usePermissionGroupListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PermissionGroupListQuery, Types.PermissionGroupListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PermissionGroupListQuery, Types.PermissionGroupListQueryVariables>(PermissionGroupListDocument, options);
+        return ApolloReactHooks.useQuery<Types.PermissionGroupListQuery, Types.PermissionGroupListQueryVariables>(PermissionGroupListStaging, options);
       }
 export function usePermissionGroupListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PermissionGroupListQuery, Types.PermissionGroupListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PermissionGroupListQuery, Types.PermissionGroupListQueryVariables>(PermissionGroupListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PermissionGroupListQuery, Types.PermissionGroupListQueryVariables>(PermissionGroupListStaging, options);
         }
 export type PermissionGroupListQueryHookResult = ReturnType<typeof usePermissionGroupListQuery>;
 export type PermissionGroupListLazyQueryHookResult = ReturnType<typeof usePermissionGroupListLazyQuery>;
 export type PermissionGroupListQueryResult = Apollo.QueryResult<Types.PermissionGroupListQuery, Types.PermissionGroupListQueryVariables>;
-export const PermissionGroupDetailsDocument = gql`
+export const PermissionGroupDetailsStaging = gql`
     query PermissionGroupDetails($id: ID!, $userId: ID!) {
   permissionGroup(id: $id) {
     ...PermissionGroupDetails
@@ -14067,16 +14067,16 @@ export const PermissionGroupDetailsDocument = gql`
  */
 export function usePermissionGroupDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PermissionGroupDetailsQuery, Types.PermissionGroupDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PermissionGroupDetailsQuery, Types.PermissionGroupDetailsQueryVariables>(PermissionGroupDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.PermissionGroupDetailsQuery, Types.PermissionGroupDetailsQueryVariables>(PermissionGroupDetailsStaging, options);
       }
 export function usePermissionGroupDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PermissionGroupDetailsQuery, Types.PermissionGroupDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PermissionGroupDetailsQuery, Types.PermissionGroupDetailsQueryVariables>(PermissionGroupDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PermissionGroupDetailsQuery, Types.PermissionGroupDetailsQueryVariables>(PermissionGroupDetailsStaging, options);
         }
 export type PermissionGroupDetailsQueryHookResult = ReturnType<typeof usePermissionGroupDetailsQuery>;
 export type PermissionGroupDetailsLazyQueryHookResult = ReturnType<typeof usePermissionGroupDetailsLazyQuery>;
 export type PermissionGroupDetailsQueryResult = Apollo.QueryResult<Types.PermissionGroupDetailsQuery, Types.PermissionGroupDetailsQueryVariables>;
-export const ProductTypeDeleteDocument = gql`
+export const ProductTypeDeleteStaging = gql`
     mutation ProductTypeDelete($id: ID!) {
   productTypeDelete(id: $id) {
     errors {
@@ -14109,12 +14109,12 @@ export type ProductTypeDeleteMutationFn = Apollo.MutationFunction<Types.ProductT
  */
 export function useProductTypeDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductTypeDeleteMutation, Types.ProductTypeDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductTypeDeleteMutation, Types.ProductTypeDeleteMutationVariables>(ProductTypeDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductTypeDeleteMutation, Types.ProductTypeDeleteMutationVariables>(ProductTypeDeleteStaging, options);
       }
 export type ProductTypeDeleteMutationHookResult = ReturnType<typeof useProductTypeDeleteMutation>;
 export type ProductTypeDeleteMutationResult = Apollo.MutationResult<Types.ProductTypeDeleteMutation>;
 export type ProductTypeDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductTypeDeleteMutation, Types.ProductTypeDeleteMutationVariables>;
-export const ProductTypeBulkDeleteDocument = gql`
+export const ProductTypeBulkDeleteStaging = gql`
     mutation ProductTypeBulkDelete($ids: [ID!]!) {
   productTypeBulkDelete(ids: $ids) {
     errors {
@@ -14144,12 +14144,12 @@ export type ProductTypeBulkDeleteMutationFn = Apollo.MutationFunction<Types.Prod
  */
 export function useProductTypeBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductTypeBulkDeleteMutation, Types.ProductTypeBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductTypeBulkDeleteMutation, Types.ProductTypeBulkDeleteMutationVariables>(ProductTypeBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductTypeBulkDeleteMutation, Types.ProductTypeBulkDeleteMutationVariables>(ProductTypeBulkDeleteStaging, options);
       }
 export type ProductTypeBulkDeleteMutationHookResult = ReturnType<typeof useProductTypeBulkDeleteMutation>;
 export type ProductTypeBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductTypeBulkDeleteMutation>;
 export type ProductTypeBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductTypeBulkDeleteMutation, Types.ProductTypeBulkDeleteMutationVariables>;
-export const ProductTypeUpdateDocument = gql`
+export const ProductTypeUpdateStaging = gql`
     mutation ProductTypeUpdate($id: ID!, $input: ProductTypeInput!) {
   productTypeUpdate(id: $id, input: $input) {
     errors {
@@ -14184,12 +14184,12 @@ export type ProductTypeUpdateMutationFn = Apollo.MutationFunction<Types.ProductT
  */
 export function useProductTypeUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductTypeUpdateMutation, Types.ProductTypeUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductTypeUpdateMutation, Types.ProductTypeUpdateMutationVariables>(ProductTypeUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductTypeUpdateMutation, Types.ProductTypeUpdateMutationVariables>(ProductTypeUpdateStaging, options);
       }
 export type ProductTypeUpdateMutationHookResult = ReturnType<typeof useProductTypeUpdateMutation>;
 export type ProductTypeUpdateMutationResult = Apollo.MutationResult<Types.ProductTypeUpdateMutation>;
 export type ProductTypeUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductTypeUpdateMutation, Types.ProductTypeUpdateMutationVariables>;
-export const AssignProductAttributeDocument = gql`
+export const AssignProductAttributeStaging = gql`
     mutation AssignProductAttribute($id: ID!, $operations: [ProductAttributeAssignInput!]!) {
   productAttributeAssign(productTypeId: $id, operations: $operations) {
     errors {
@@ -14224,12 +14224,12 @@ export type AssignProductAttributeMutationFn = Apollo.MutationFunction<Types.Ass
  */
 export function useAssignProductAttributeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AssignProductAttributeMutation, Types.AssignProductAttributeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AssignProductAttributeMutation, Types.AssignProductAttributeMutationVariables>(AssignProductAttributeDocument, options);
+        return ApolloReactHooks.useMutation<Types.AssignProductAttributeMutation, Types.AssignProductAttributeMutationVariables>(AssignProductAttributeStaging, options);
       }
 export type AssignProductAttributeMutationHookResult = ReturnType<typeof useAssignProductAttributeMutation>;
 export type AssignProductAttributeMutationResult = Apollo.MutationResult<Types.AssignProductAttributeMutation>;
 export type AssignProductAttributeMutationOptions = Apollo.BaseMutationOptions<Types.AssignProductAttributeMutation, Types.AssignProductAttributeMutationVariables>;
-export const UnassignProductAttributeDocument = gql`
+export const UnassignProductAttributeStaging = gql`
     mutation UnassignProductAttribute($id: ID!, $ids: [ID!]!) {
   productAttributeUnassign(productTypeId: $id, attributeIds: $ids) {
     errors {
@@ -14264,12 +14264,12 @@ export type UnassignProductAttributeMutationFn = Apollo.MutationFunction<Types.U
  */
 export function useUnassignProductAttributeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UnassignProductAttributeMutation, Types.UnassignProductAttributeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UnassignProductAttributeMutation, Types.UnassignProductAttributeMutationVariables>(UnassignProductAttributeDocument, options);
+        return ApolloReactHooks.useMutation<Types.UnassignProductAttributeMutation, Types.UnassignProductAttributeMutationVariables>(UnassignProductAttributeStaging, options);
       }
 export type UnassignProductAttributeMutationHookResult = ReturnType<typeof useUnassignProductAttributeMutation>;
 export type UnassignProductAttributeMutationResult = Apollo.MutationResult<Types.UnassignProductAttributeMutation>;
 export type UnassignProductAttributeMutationOptions = Apollo.BaseMutationOptions<Types.UnassignProductAttributeMutation, Types.UnassignProductAttributeMutationVariables>;
-export const ProductTypeCreateDocument = gql`
+export const ProductTypeCreateStaging = gql`
     mutation ProductTypeCreate($input: ProductTypeInput!) {
   productTypeCreate(input: $input) {
     errors {
@@ -14303,12 +14303,12 @@ export type ProductTypeCreateMutationFn = Apollo.MutationFunction<Types.ProductT
  */
 export function useProductTypeCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductTypeCreateMutation, Types.ProductTypeCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductTypeCreateMutation, Types.ProductTypeCreateMutationVariables>(ProductTypeCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductTypeCreateMutation, Types.ProductTypeCreateMutationVariables>(ProductTypeCreateStaging, options);
       }
 export type ProductTypeCreateMutationHookResult = ReturnType<typeof useProductTypeCreateMutation>;
 export type ProductTypeCreateMutationResult = Apollo.MutationResult<Types.ProductTypeCreateMutation>;
 export type ProductTypeCreateMutationOptions = Apollo.BaseMutationOptions<Types.ProductTypeCreateMutation, Types.ProductTypeCreateMutationVariables>;
-export const ProductTypeAttributeReorderDocument = gql`
+export const ProductTypeAttributeReorderStaging = gql`
     mutation ProductTypeAttributeReorder($move: ReorderInput!, $productTypeId: ID!, $type: ProductAttributeType!) {
   productTypeReorderAttributes(
     moves: [$move]
@@ -14348,12 +14348,12 @@ export type ProductTypeAttributeReorderMutationFn = Apollo.MutationFunction<Type
  */
 export function useProductTypeAttributeReorderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductTypeAttributeReorderMutation, Types.ProductTypeAttributeReorderMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductTypeAttributeReorderMutation, Types.ProductTypeAttributeReorderMutationVariables>(ProductTypeAttributeReorderDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductTypeAttributeReorderMutation, Types.ProductTypeAttributeReorderMutationVariables>(ProductTypeAttributeReorderStaging, options);
       }
 export type ProductTypeAttributeReorderMutationHookResult = ReturnType<typeof useProductTypeAttributeReorderMutation>;
 export type ProductTypeAttributeReorderMutationResult = Apollo.MutationResult<Types.ProductTypeAttributeReorderMutation>;
 export type ProductTypeAttributeReorderMutationOptions = Apollo.BaseMutationOptions<Types.ProductTypeAttributeReorderMutation, Types.ProductTypeAttributeReorderMutationVariables>;
-export const ProductAttributeAssignmentUpdateDocument = gql`
+export const ProductAttributeAssignmentUpdateStaging = gql`
     mutation ProductAttributeAssignmentUpdate($operations: [ProductAttributeAssignmentUpdateInput!]!, $productTypeId: ID!) {
   productAttributeAssignmentUpdate(
     operations: $operations
@@ -14391,12 +14391,12 @@ export type ProductAttributeAssignmentUpdateMutationFn = Apollo.MutationFunction
  */
 export function useProductAttributeAssignmentUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductAttributeAssignmentUpdateMutation, Types.ProductAttributeAssignmentUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductAttributeAssignmentUpdateMutation, Types.ProductAttributeAssignmentUpdateMutationVariables>(ProductAttributeAssignmentUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductAttributeAssignmentUpdateMutation, Types.ProductAttributeAssignmentUpdateMutationVariables>(ProductAttributeAssignmentUpdateStaging, options);
       }
 export type ProductAttributeAssignmentUpdateMutationHookResult = ReturnType<typeof useProductAttributeAssignmentUpdateMutation>;
 export type ProductAttributeAssignmentUpdateMutationResult = Apollo.MutationResult<Types.ProductAttributeAssignmentUpdateMutation>;
 export type ProductAttributeAssignmentUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductAttributeAssignmentUpdateMutation, Types.ProductAttributeAssignmentUpdateMutationVariables>;
-export const ProductTypeListDocument = gql`
+export const ProductTypeListStaging = gql`
     query ProductTypeList($after: String, $before: String, $first: Int, $last: Int, $filter: ProductTypeFilterInput, $sort: ProductTypeSortingInput) {
   productTypes(
     after: $after
@@ -14442,16 +14442,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useProductTypeListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ProductTypeListQuery, Types.ProductTypeListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductTypeListQuery, Types.ProductTypeListQueryVariables>(ProductTypeListDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductTypeListQuery, Types.ProductTypeListQueryVariables>(ProductTypeListStaging, options);
       }
 export function useProductTypeListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTypeListQuery, Types.ProductTypeListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductTypeListQuery, Types.ProductTypeListQueryVariables>(ProductTypeListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductTypeListQuery, Types.ProductTypeListQueryVariables>(ProductTypeListStaging, options);
         }
 export type ProductTypeListQueryHookResult = ReturnType<typeof useProductTypeListQuery>;
 export type ProductTypeListLazyQueryHookResult = ReturnType<typeof useProductTypeListLazyQuery>;
 export type ProductTypeListQueryResult = Apollo.QueryResult<Types.ProductTypeListQuery, Types.ProductTypeListQueryVariables>;
-export const ProductTypeDetailsDocument = gql`
+export const ProductTypeDetailsStaging = gql`
     query ProductTypeDetails($id: ID!) {
   productType(id: $id) {
     ...ProductTypeDetails
@@ -14480,16 +14480,16 @@ export const ProductTypeDetailsDocument = gql`
  */
 export function useProductTypeDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>(ProductTypeDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>(ProductTypeDetailsStaging, options);
       }
 export function useProductTypeDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>(ProductTypeDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>(ProductTypeDetailsStaging, options);
         }
 export type ProductTypeDetailsQueryHookResult = ReturnType<typeof useProductTypeDetailsQuery>;
 export type ProductTypeDetailsLazyQueryHookResult = ReturnType<typeof useProductTypeDetailsLazyQuery>;
 export type ProductTypeDetailsQueryResult = Apollo.QueryResult<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>;
-export const ProductTypeCreateDataDocument = gql`
+export const ProductTypeCreateDataStaging = gql`
     query ProductTypeCreateData {
   shop {
     defaultWeightUnit
@@ -14514,16 +14514,16 @@ export const ProductTypeCreateDataDocument = gql`
  */
 export function useProductTypeCreateDataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>(ProductTypeCreateDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>(ProductTypeCreateDataStaging, options);
       }
 export function useProductTypeCreateDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>(ProductTypeCreateDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>(ProductTypeCreateDataStaging, options);
         }
 export type ProductTypeCreateDataQueryHookResult = ReturnType<typeof useProductTypeCreateDataQuery>;
 export type ProductTypeCreateDataLazyQueryHookResult = ReturnType<typeof useProductTypeCreateDataLazyQuery>;
 export type ProductTypeCreateDataQueryResult = Apollo.QueryResult<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>;
-export const ProductMediaCreateDocument = gql`
+export const ProductMediaCreateStaging = gql`
     mutation ProductMediaCreate($product: ID!, $image: Upload, $alt: String, $mediaUrl: String) {
   productMediaCreate(
     input: {alt: $alt, image: $image, product: $product, mediaUrl: $mediaUrl}
@@ -14565,12 +14565,12 @@ export type ProductMediaCreateMutationFn = Apollo.MutationFunction<Types.Product
  */
 export function useProductMediaCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductMediaCreateMutation, Types.ProductMediaCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductMediaCreateMutation, Types.ProductMediaCreateMutationVariables>(ProductMediaCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductMediaCreateMutation, Types.ProductMediaCreateMutationVariables>(ProductMediaCreateStaging, options);
       }
 export type ProductMediaCreateMutationHookResult = ReturnType<typeof useProductMediaCreateMutation>;
 export type ProductMediaCreateMutationResult = Apollo.MutationResult<Types.ProductMediaCreateMutation>;
 export type ProductMediaCreateMutationOptions = Apollo.BaseMutationOptions<Types.ProductMediaCreateMutation, Types.ProductMediaCreateMutationVariables>;
-export const ProductDeleteDocument = gql`
+export const ProductDeleteStaging = gql`
     mutation ProductDelete($id: ID!) {
   productDelete(id: $id) {
     errors {
@@ -14603,12 +14603,12 @@ export type ProductDeleteMutationFn = Apollo.MutationFunction<Types.ProductDelet
  */
 export function useProductDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductDeleteMutation, Types.ProductDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductDeleteMutation, Types.ProductDeleteMutationVariables>(ProductDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductDeleteMutation, Types.ProductDeleteMutationVariables>(ProductDeleteStaging, options);
       }
 export type ProductDeleteMutationHookResult = ReturnType<typeof useProductDeleteMutation>;
 export type ProductDeleteMutationResult = Apollo.MutationResult<Types.ProductDeleteMutation>;
 export type ProductDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductDeleteMutation, Types.ProductDeleteMutationVariables>;
-export const ProductMediaReorderDocument = gql`
+export const ProductMediaReorderStaging = gql`
     mutation ProductMediaReorder($productId: ID!, $mediaIds: [ID!]!) {
   productMediaReorder(productId: $productId, mediaIds: $mediaIds) {
     errors {
@@ -14648,12 +14648,12 @@ export type ProductMediaReorderMutationFn = Apollo.MutationFunction<Types.Produc
  */
 export function useProductMediaReorderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductMediaReorderMutation, Types.ProductMediaReorderMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductMediaReorderMutation, Types.ProductMediaReorderMutationVariables>(ProductMediaReorderDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductMediaReorderMutation, Types.ProductMediaReorderMutationVariables>(ProductMediaReorderStaging, options);
       }
 export type ProductMediaReorderMutationHookResult = ReturnType<typeof useProductMediaReorderMutation>;
 export type ProductMediaReorderMutationResult = Apollo.MutationResult<Types.ProductMediaReorderMutation>;
 export type ProductMediaReorderMutationOptions = Apollo.BaseMutationOptions<Types.ProductMediaReorderMutation, Types.ProductMediaReorderMutationVariables>;
-export const ProductVariantSetDefaultDocument = gql`
+export const ProductVariantSetDefaultStaging = gql`
     mutation ProductVariantSetDefault($productId: ID!, $variantId: ID!) {
   productVariantSetDefault(productId: $productId, variantId: $variantId) {
     errors {
@@ -14695,12 +14695,12 @@ export type ProductVariantSetDefaultMutationFn = Apollo.MutationFunction<Types.P
  */
 export function useProductVariantSetDefaultMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantSetDefaultMutation, Types.ProductVariantSetDefaultMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantSetDefaultMutation, Types.ProductVariantSetDefaultMutationVariables>(ProductVariantSetDefaultDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductVariantSetDefaultMutation, Types.ProductVariantSetDefaultMutationVariables>(ProductVariantSetDefaultStaging, options);
       }
 export type ProductVariantSetDefaultMutationHookResult = ReturnType<typeof useProductVariantSetDefaultMutation>;
 export type ProductVariantSetDefaultMutationResult = Apollo.MutationResult<Types.ProductVariantSetDefaultMutation>;
 export type ProductVariantSetDefaultMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantSetDefaultMutation, Types.ProductVariantSetDefaultMutationVariables>;
-export const ProductUpdateDocument = gql`
+export const ProductUpdateStaging = gql`
     mutation ProductUpdate($id: ID!, $input: ProductInput!) {
   productUpdate(id: $id, input: $input) {
     errors {
@@ -14731,12 +14731,12 @@ export type ProductUpdateMutationFn = Apollo.MutationFunction<Types.ProductUpdat
  */
 export function useProductUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductUpdateMutation, Types.ProductUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductUpdateMutation, Types.ProductUpdateMutationVariables>(ProductUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductUpdateMutation, Types.ProductUpdateMutationVariables>(ProductUpdateStaging, options);
       }
 export type ProductUpdateMutationHookResult = ReturnType<typeof useProductUpdateMutation>;
 export type ProductUpdateMutationResult = Apollo.MutationResult<Types.ProductUpdateMutation>;
 export type ProductUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductUpdateMutation, Types.ProductUpdateMutationVariables>;
-export const ProductCreateDocument = gql`
+export const ProductCreateStaging = gql`
     mutation ProductCreate($input: ProductCreateInput!) {
   productCreate(input: $input) {
     errors {
@@ -14769,12 +14769,12 @@ export type ProductCreateMutationFn = Apollo.MutationFunction<Types.ProductCreat
  */
 export function useProductCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductCreateMutation, Types.ProductCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductCreateMutation, Types.ProductCreateMutationVariables>(ProductCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductCreateMutation, Types.ProductCreateMutationVariables>(ProductCreateStaging, options);
       }
 export type ProductCreateMutationHookResult = ReturnType<typeof useProductCreateMutation>;
 export type ProductCreateMutationResult = Apollo.MutationResult<Types.ProductCreateMutation>;
 export type ProductCreateMutationOptions = Apollo.BaseMutationOptions<Types.ProductCreateMutation, Types.ProductCreateMutationVariables>;
-export const VariantDeleteDocument = gql`
+export const VariantDeleteStaging = gql`
     mutation VariantDelete($id: ID!) {
   productVariantDelete(id: $id) {
     errors {
@@ -14807,12 +14807,12 @@ export type VariantDeleteMutationFn = Apollo.MutationFunction<Types.VariantDelet
  */
 export function useVariantDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VariantDeleteMutation, Types.VariantDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VariantDeleteMutation, Types.VariantDeleteMutationVariables>(VariantDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.VariantDeleteMutation, Types.VariantDeleteMutationVariables>(VariantDeleteStaging, options);
       }
 export type VariantDeleteMutationHookResult = ReturnType<typeof useVariantDeleteMutation>;
 export type VariantDeleteMutationResult = Apollo.MutationResult<Types.VariantDeleteMutation>;
 export type VariantDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VariantDeleteMutation, Types.VariantDeleteMutationVariables>;
-export const VariantUpdateDocument = gql`
+export const VariantUpdateStaging = gql`
     mutation VariantUpdate($addStocks: [StockInput!]!, $removeStocks: [ID!]!, $id: ID!, $attributes: [AttributeValueInput!], $sku: String, $quantityLimitPerCustomer: Int, $trackInventory: Boolean!, $stocks: [StockInput!]!, $preorder: PreorderSettingsInput, $weight: WeightScalar, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $name: String!) {
   productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
     errors {
@@ -14896,12 +14896,12 @@ export type VariantUpdateMutationFn = Apollo.MutationFunction<Types.VariantUpdat
  */
 export function useVariantUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VariantUpdateMutation, Types.VariantUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VariantUpdateMutation, Types.VariantUpdateMutationVariables>(VariantUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.VariantUpdateMutation, Types.VariantUpdateMutationVariables>(VariantUpdateStaging, options);
       }
 export type VariantUpdateMutationHookResult = ReturnType<typeof useVariantUpdateMutation>;
 export type VariantUpdateMutationResult = Apollo.MutationResult<Types.VariantUpdateMutation>;
 export type VariantUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VariantUpdateMutation, Types.VariantUpdateMutationVariables>;
-export const VariantCreateDocument = gql`
+export const VariantCreateStaging = gql`
     mutation VariantCreate($input: ProductVariantCreateInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   productVariantCreate(input: $input) {
     errors {
@@ -14939,12 +14939,12 @@ export type VariantCreateMutationFn = Apollo.MutationFunction<Types.VariantCreat
  */
 export function useVariantCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VariantCreateMutation, Types.VariantCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VariantCreateMutation, Types.VariantCreateMutationVariables>(VariantCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.VariantCreateMutation, Types.VariantCreateMutationVariables>(VariantCreateStaging, options);
       }
 export type VariantCreateMutationHookResult = ReturnType<typeof useVariantCreateMutation>;
 export type VariantCreateMutationResult = Apollo.MutationResult<Types.VariantCreateMutation>;
 export type VariantCreateMutationOptions = Apollo.BaseMutationOptions<Types.VariantCreateMutation, Types.VariantCreateMutationVariables>;
-export const ProductMediaDeleteDocument = gql`
+export const ProductMediaDeleteStaging = gql`
     mutation ProductMediaDelete($id: ID!) {
   productMediaDelete(id: $id) {
     errors {
@@ -14980,12 +14980,12 @@ export type ProductMediaDeleteMutationFn = Apollo.MutationFunction<Types.Product
  */
 export function useProductMediaDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductMediaDeleteMutation, Types.ProductMediaDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductMediaDeleteMutation, Types.ProductMediaDeleteMutationVariables>(ProductMediaDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductMediaDeleteMutation, Types.ProductMediaDeleteMutationVariables>(ProductMediaDeleteStaging, options);
       }
 export type ProductMediaDeleteMutationHookResult = ReturnType<typeof useProductMediaDeleteMutation>;
 export type ProductMediaDeleteMutationResult = Apollo.MutationResult<Types.ProductMediaDeleteMutation>;
 export type ProductMediaDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductMediaDeleteMutation, Types.ProductMediaDeleteMutationVariables>;
-export const ProductMediaUpdateDocument = gql`
+export const ProductMediaUpdateStaging = gql`
     mutation ProductMediaUpdate($id: ID!, $alt: String!) {
   productMediaUpdate(id: $id, input: {alt: $alt}) {
     errors {
@@ -15023,12 +15023,12 @@ export type ProductMediaUpdateMutationFn = Apollo.MutationFunction<Types.Product
  */
 export function useProductMediaUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductMediaUpdateMutation, Types.ProductMediaUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductMediaUpdateMutation, Types.ProductMediaUpdateMutationVariables>(ProductMediaUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductMediaUpdateMutation, Types.ProductMediaUpdateMutationVariables>(ProductMediaUpdateStaging, options);
       }
 export type ProductMediaUpdateMutationHookResult = ReturnType<typeof useProductMediaUpdateMutation>;
 export type ProductMediaUpdateMutationResult = Apollo.MutationResult<Types.ProductMediaUpdateMutation>;
 export type ProductMediaUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductMediaUpdateMutation, Types.ProductMediaUpdateMutationVariables>;
-export const VariantMediaAssignDocument = gql`
+export const VariantMediaAssignStaging = gql`
     mutation VariantMediaAssign($variantId: ID!, $mediaId: ID!) {
   variantMediaAssign(variantId: $variantId, mediaId: $mediaId) {
     errors {
@@ -15080,12 +15080,12 @@ export type VariantMediaAssignMutationFn = Apollo.MutationFunction<Types.Variant
  */
 export function useVariantMediaAssignMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VariantMediaAssignMutation, Types.VariantMediaAssignMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VariantMediaAssignMutation, Types.VariantMediaAssignMutationVariables>(VariantMediaAssignDocument, options);
+        return ApolloReactHooks.useMutation<Types.VariantMediaAssignMutation, Types.VariantMediaAssignMutationVariables>(VariantMediaAssignStaging, options);
       }
 export type VariantMediaAssignMutationHookResult = ReturnType<typeof useVariantMediaAssignMutation>;
 export type VariantMediaAssignMutationResult = Apollo.MutationResult<Types.VariantMediaAssignMutation>;
 export type VariantMediaAssignMutationOptions = Apollo.BaseMutationOptions<Types.VariantMediaAssignMutation, Types.VariantMediaAssignMutationVariables>;
-export const VariantMediaUnassignDocument = gql`
+export const VariantMediaUnassignStaging = gql`
     mutation VariantMediaUnassign($variantId: ID!, $mediaId: ID!) {
   variantMediaUnassign(variantId: $variantId, mediaId: $mediaId) {
     errors {
@@ -15137,12 +15137,12 @@ export type VariantMediaUnassignMutationFn = Apollo.MutationFunction<Types.Varia
  */
 export function useVariantMediaUnassignMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.VariantMediaUnassignMutation, Types.VariantMediaUnassignMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.VariantMediaUnassignMutation, Types.VariantMediaUnassignMutationVariables>(VariantMediaUnassignDocument, options);
+        return ApolloReactHooks.useMutation<Types.VariantMediaUnassignMutation, Types.VariantMediaUnassignMutationVariables>(VariantMediaUnassignStaging, options);
       }
 export type VariantMediaUnassignMutationHookResult = ReturnType<typeof useVariantMediaUnassignMutation>;
 export type VariantMediaUnassignMutationResult = Apollo.MutationResult<Types.VariantMediaUnassignMutation>;
 export type VariantMediaUnassignMutationOptions = Apollo.BaseMutationOptions<Types.VariantMediaUnassignMutation, Types.VariantMediaUnassignMutationVariables>;
-export const ProductBulkDeleteDocument = gql`
+export const ProductBulkDeleteStaging = gql`
     mutation productBulkDelete($ids: [ID!]!) {
   productBulkDelete(ids: $ids) {
     errors {
@@ -15172,12 +15172,12 @@ export type ProductBulkDeleteMutationFn = Apollo.MutationFunction<Types.ProductB
  */
 export function useProductBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>(ProductBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>(ProductBulkDeleteStaging, options);
       }
 export type ProductBulkDeleteMutationHookResult = ReturnType<typeof useProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductBulkDeleteMutation>;
 export type ProductBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductBulkDeleteMutation, Types.ProductBulkDeleteMutationVariables>;
-export const ProductVariantBulkCreateDocument = gql`
+export const ProductVariantBulkCreateStaging = gql`
     mutation ProductVariantBulkCreate($id: ID!, $inputs: [ProductVariantBulkCreateInput!]!) {
   productVariantBulkCreate(product: $id, variants: $inputs) {
     errors {
@@ -15211,12 +15211,12 @@ export type ProductVariantBulkCreateMutationFn = Apollo.MutationFunction<Types.P
  */
 export function useProductVariantBulkCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>(ProductVariantBulkCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>(ProductVariantBulkCreateStaging, options);
       }
 export type ProductVariantBulkCreateMutationHookResult = ReturnType<typeof useProductVariantBulkCreateMutation>;
 export type ProductVariantBulkCreateMutationResult = Apollo.MutationResult<Types.ProductVariantBulkCreateMutation>;
 export type ProductVariantBulkCreateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantBulkCreateMutation, Types.ProductVariantBulkCreateMutationVariables>;
-export const ProductVariantBulkDeleteDocument = gql`
+export const ProductVariantBulkDeleteStaging = gql`
     mutation ProductVariantBulkDelete($ids: [ID!]!) {
   productVariantBulkDelete(ids: $ids) {
     errors {
@@ -15246,12 +15246,12 @@ export type ProductVariantBulkDeleteMutationFn = Apollo.MutationFunction<Types.P
  */
 export function useProductVariantBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantBulkDeleteMutation, Types.ProductVariantBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantBulkDeleteMutation, Types.ProductVariantBulkDeleteMutationVariables>(ProductVariantBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductVariantBulkDeleteMutation, Types.ProductVariantBulkDeleteMutationVariables>(ProductVariantBulkDeleteStaging, options);
       }
 export type ProductVariantBulkDeleteMutationHookResult = ReturnType<typeof useProductVariantBulkDeleteMutation>;
 export type ProductVariantBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductVariantBulkDeleteMutation>;
 export type ProductVariantBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantBulkDeleteMutation, Types.ProductVariantBulkDeleteMutationVariables>;
-export const ProductExportDocument = gql`
+export const ProductExportStaging = gql`
     mutation ProductExport($input: ExportProductsInput!) {
   exportProducts(input: $input) {
     exportFile {
@@ -15285,12 +15285,12 @@ export type ProductExportMutationFn = Apollo.MutationFunction<Types.ProductExpor
  */
 export function useProductExportMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductExportMutation, Types.ProductExportMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductExportMutation, Types.ProductExportMutationVariables>(ProductExportDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductExportMutation, Types.ProductExportMutationVariables>(ProductExportStaging, options);
       }
 export type ProductExportMutationHookResult = ReturnType<typeof useProductExportMutation>;
 export type ProductExportMutationResult = Apollo.MutationResult<Types.ProductExportMutation>;
 export type ProductExportMutationOptions = Apollo.BaseMutationOptions<Types.ProductExportMutation, Types.ProductExportMutationVariables>;
-export const ProductChannelListingUpdateDocument = gql`
+export const ProductChannelListingUpdateStaging = gql`
     mutation ProductChannelListingUpdate($id: ID!, $input: ProductChannelListingUpdateInput!) {
   productChannelListingUpdate(id: $id, input: $input) {
     errors {
@@ -15321,12 +15321,12 @@ export type ProductChannelListingUpdateMutationFn = Apollo.MutationFunction<Type
  */
 export function useProductChannelListingUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>(ProductChannelListingUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>(ProductChannelListingUpdateStaging, options);
       }
 export type ProductChannelListingUpdateMutationHookResult = ReturnType<typeof useProductChannelListingUpdateMutation>;
 export type ProductChannelListingUpdateMutationResult = Apollo.MutationResult<Types.ProductChannelListingUpdateMutation>;
 export type ProductChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductChannelListingUpdateMutation, Types.ProductChannelListingUpdateMutationVariables>;
-export const ProductVariantReorderDocument = gql`
+export const ProductVariantReorderStaging = gql`
     mutation ProductVariantReorder($move: ReorderInput!, $productId: ID!) {
   productVariantReorder(moves: [$move], productId: $productId) {
     errors {
@@ -15363,12 +15363,12 @@ export type ProductVariantReorderMutationFn = Apollo.MutationFunction<Types.Prod
  */
 export function useProductVariantReorderMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantReorderMutation, Types.ProductVariantReorderMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantReorderMutation, Types.ProductVariantReorderMutationVariables>(ProductVariantReorderDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductVariantReorderMutation, Types.ProductVariantReorderMutationVariables>(ProductVariantReorderStaging, options);
       }
 export type ProductVariantReorderMutationHookResult = ReturnType<typeof useProductVariantReorderMutation>;
 export type ProductVariantReorderMutationResult = Apollo.MutationResult<Types.ProductVariantReorderMutation>;
 export type ProductVariantReorderMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantReorderMutation, Types.ProductVariantReorderMutationVariables>;
-export const ProductVariantChannelListingUpdateDocument = gql`
+export const ProductVariantChannelListingUpdateStaging = gql`
     mutation ProductVariantChannelListingUpdate($id: ID!, $input: [ProductVariantChannelListingAddInput!]!) {
   productVariantChannelListingUpdate(id: $id, input: $input) {
     variant {
@@ -15413,12 +15413,12 @@ export type ProductVariantChannelListingUpdateMutationFn = Apollo.MutationFuncti
  */
 export function useProductVariantChannelListingUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantChannelListingUpdateMutation, Types.ProductVariantChannelListingUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantChannelListingUpdateMutation, Types.ProductVariantChannelListingUpdateMutationVariables>(ProductVariantChannelListingUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductVariantChannelListingUpdateMutation, Types.ProductVariantChannelListingUpdateMutationVariables>(ProductVariantChannelListingUpdateStaging, options);
       }
 export type ProductVariantChannelListingUpdateMutationHookResult = ReturnType<typeof useProductVariantChannelListingUpdateMutation>;
 export type ProductVariantChannelListingUpdateMutationResult = Apollo.MutationResult<Types.ProductVariantChannelListingUpdateMutation>;
 export type ProductVariantChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantChannelListingUpdateMutation, Types.ProductVariantChannelListingUpdateMutationVariables>;
-export const ProductVariantPreorderDeactivateDocument = gql`
+export const ProductVariantPreorderDeactivateStaging = gql`
     mutation ProductVariantPreorderDeactivate($id: ID!) {
   productVariantPreorderDeactivate(id: $id) {
     productVariant {
@@ -15455,12 +15455,12 @@ export type ProductVariantPreorderDeactivateMutationFn = Apollo.MutationFunction
  */
 export function useProductVariantPreorderDeactivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>(ProductVariantPreorderDeactivateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>(ProductVariantPreorderDeactivateStaging, options);
       }
 export type ProductVariantPreorderDeactivateMutationHookResult = ReturnType<typeof useProductVariantPreorderDeactivateMutation>;
 export type ProductVariantPreorderDeactivateMutationResult = Apollo.MutationResult<Types.ProductVariantPreorderDeactivateMutation>;
 export type ProductVariantPreorderDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
-export const ProductVariantBulkUpdateDocument = gql`
+export const ProductVariantBulkUpdateStaging = gql`
     mutation ProductVariantBulkUpdate($product: ID!, $input: [ProductVariantBulkUpdateInput!]!, $errorPolicy: ErrorPolicyEnum) {
   productVariantBulkUpdate(
     errorPolicy: $errorPolicy
@@ -15501,12 +15501,12 @@ export type ProductVariantBulkUpdateMutationFn = Apollo.MutationFunction<Types.P
  */
 export function useProductVariantBulkUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>(ProductVariantBulkUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>(ProductVariantBulkUpdateStaging, options);
       }
 export type ProductVariantBulkUpdateMutationHookResult = ReturnType<typeof useProductVariantBulkUpdateMutation>;
 export type ProductVariantBulkUpdateMutationResult = Apollo.MutationResult<Types.ProductVariantBulkUpdateMutation>;
 export type ProductVariantBulkUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantBulkUpdateMutation, Types.ProductVariantBulkUpdateMutationVariables>;
-export const ProductListDocument = gql`
+export const ProductListStaging = gql`
     query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $search: String, $where: ProductWhereInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!, $includeCategories: Boolean!, $includeCollections: Boolean!) {
   products(
     before: $before
@@ -15571,16 +15571,16 @@ ${ProductListAttributeFragmentDoc}`;
  */
 export function useProductListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductListQuery, Types.ProductListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductListQuery, Types.ProductListQueryVariables>(ProductListDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductListQuery, Types.ProductListQueryVariables>(ProductListStaging, options);
       }
 export function useProductListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductListQuery, Types.ProductListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductListQuery, Types.ProductListQueryVariables>(ProductListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductListQuery, Types.ProductListQueryVariables>(ProductListStaging, options);
         }
 export type ProductListQueryHookResult = ReturnType<typeof useProductListQuery>;
 export type ProductListLazyQueryHookResult = ReturnType<typeof useProductListLazyQuery>;
 export type ProductListQueryResult = Apollo.QueryResult<Types.ProductListQuery, Types.ProductListQueryVariables>;
-export const ProductCountDocument = gql`
+export const ProductCountStaging = gql`
     query ProductCount($filter: ProductFilterInput, $channel: String) {
   products(filter: $filter, channel: $channel) {
     totalCount
@@ -15607,16 +15607,16 @@ export const ProductCountDocument = gql`
  */
 export function useProductCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ProductCountQuery, Types.ProductCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductCountQuery, Types.ProductCountQueryVariables>(ProductCountDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductCountQuery, Types.ProductCountQueryVariables>(ProductCountStaging, options);
       }
 export function useProductCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductCountQuery, Types.ProductCountQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductCountQuery, Types.ProductCountQueryVariables>(ProductCountDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductCountQuery, Types.ProductCountQueryVariables>(ProductCountStaging, options);
         }
 export type ProductCountQueryHookResult = ReturnType<typeof useProductCountQuery>;
 export type ProductCountLazyQueryHookResult = ReturnType<typeof useProductCountLazyQuery>;
 export type ProductCountQueryResult = Apollo.QueryResult<Types.ProductCountQuery, Types.ProductCountQueryVariables>;
-export const ProductDetailsDocument = gql`
+export const ProductDetailsStaging = gql`
     query ProductDetails($id: ID!, $channel: String, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   product(id: $id, channel: $channel) {
     ...Product
@@ -15651,16 +15651,16 @@ ${CategoryWithAncestorsFragmentDoc}`;
  */
 export function useProductDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductDetailsQuery, Types.ProductDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductDetailsQuery, Types.ProductDetailsQueryVariables>(ProductDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductDetailsQuery, Types.ProductDetailsQueryVariables>(ProductDetailsStaging, options);
       }
 export function useProductDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductDetailsQuery, Types.ProductDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductDetailsQuery, Types.ProductDetailsQueryVariables>(ProductDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductDetailsQuery, Types.ProductDetailsQueryVariables>(ProductDetailsStaging, options);
         }
 export type ProductDetailsQueryHookResult = ReturnType<typeof useProductDetailsQuery>;
 export type ProductDetailsLazyQueryHookResult = ReturnType<typeof useProductDetailsLazyQuery>;
 export type ProductDetailsQueryResult = Apollo.QueryResult<Types.ProductDetailsQuery, Types.ProductDetailsQueryVariables>;
-export const ProductTypeDocument = gql`
+export const ProductTypeStaging = gql`
     query ProductType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   productType(id: $id) {
     id
@@ -15699,16 +15699,16 @@ export const ProductTypeDocument = gql`
  */
 export function useProductTypeQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductTypeQuery, Types.ProductTypeQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductTypeQuery, Types.ProductTypeQueryVariables>(ProductTypeDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductTypeQuery, Types.ProductTypeQueryVariables>(ProductTypeStaging, options);
       }
 export function useProductTypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTypeQuery, Types.ProductTypeQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductTypeQuery, Types.ProductTypeQueryVariables>(ProductTypeDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductTypeQuery, Types.ProductTypeQueryVariables>(ProductTypeStaging, options);
         }
 export type ProductTypeQueryHookResult = ReturnType<typeof useProductTypeQuery>;
 export type ProductTypeLazyQueryHookResult = ReturnType<typeof useProductTypeLazyQuery>;
 export type ProductTypeQueryResult = Apollo.QueryResult<Types.ProductTypeQuery, Types.ProductTypeQueryVariables>;
-export const ProductVariantDetailsDocument = gql`
+export const ProductVariantDetailsStaging = gql`
     query ProductVariantDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   productVariant(id: $id) {
     ...ProductVariant
@@ -15738,16 +15738,16 @@ export const ProductVariantDetailsDocument = gql`
  */
 export function useProductVariantDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantDetailsQuery, Types.ProductVariantDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductVariantDetailsQuery, Types.ProductVariantDetailsQueryVariables>(ProductVariantDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductVariantDetailsQuery, Types.ProductVariantDetailsQueryVariables>(ProductVariantDetailsStaging, options);
       }
 export function useProductVariantDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantDetailsQuery, Types.ProductVariantDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductVariantDetailsQuery, Types.ProductVariantDetailsQueryVariables>(ProductVariantDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantDetailsQuery, Types.ProductVariantDetailsQueryVariables>(ProductVariantDetailsStaging, options);
         }
 export type ProductVariantDetailsQueryHookResult = ReturnType<typeof useProductVariantDetailsQuery>;
 export type ProductVariantDetailsLazyQueryHookResult = ReturnType<typeof useProductVariantDetailsLazyQuery>;
 export type ProductVariantDetailsQueryResult = Apollo.QueryResult<Types.ProductVariantDetailsQuery, Types.ProductVariantDetailsQueryVariables>;
-export const ProductVariantCreateDataDocument = gql`
+export const ProductVariantCreateDataStaging = gql`
     query ProductVariantCreateData($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   product(id: $id) {
     id
@@ -15821,16 +15821,16 @@ export const ProductVariantCreateDataDocument = gql`
  */
 export function useProductVariantCreateDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantCreateDataQuery, Types.ProductVariantCreateDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductVariantCreateDataQuery, Types.ProductVariantCreateDataQueryVariables>(ProductVariantCreateDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductVariantCreateDataQuery, Types.ProductVariantCreateDataQueryVariables>(ProductVariantCreateDataStaging, options);
       }
 export function useProductVariantCreateDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantCreateDataQuery, Types.ProductVariantCreateDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductVariantCreateDataQuery, Types.ProductVariantCreateDataQueryVariables>(ProductVariantCreateDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantCreateDataQuery, Types.ProductVariantCreateDataQueryVariables>(ProductVariantCreateDataStaging, options);
         }
 export type ProductVariantCreateDataQueryHookResult = ReturnType<typeof useProductVariantCreateDataQuery>;
 export type ProductVariantCreateDataLazyQueryHookResult = ReturnType<typeof useProductVariantCreateDataLazyQuery>;
 export type ProductVariantCreateDataQueryResult = Apollo.QueryResult<Types.ProductVariantCreateDataQuery, Types.ProductVariantCreateDataQueryVariables>;
-export const ProductMediaByIdDocument = gql`
+export const ProductMediaByIdStaging = gql`
     query ProductMediaById($productId: ID!, $mediaId: ID!) {
   product(id: $productId) {
     id
@@ -15872,16 +15872,16 @@ export const ProductMediaByIdDocument = gql`
  */
 export function useProductMediaByIdQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>(ProductMediaByIdDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>(ProductMediaByIdStaging, options);
       }
 export function useProductMediaByIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>(ProductMediaByIdDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>(ProductMediaByIdStaging, options);
         }
 export type ProductMediaByIdQueryHookResult = ReturnType<typeof useProductMediaByIdQuery>;
 export type ProductMediaByIdLazyQueryHookResult = ReturnType<typeof useProductMediaByIdLazyQuery>;
 export type ProductMediaByIdQueryResult = Apollo.QueryResult<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>;
-export const GridAttributesDocument = gql`
+export const GridAttributesStaging = gql`
     query GridAttributes($ids: [ID!]!, $hasAttributes: Boolean!, $type: AttributeTypeEnum!) {
   availableAttributes: attributes(first: 10, filter: {type: $type}) {
     edges {
@@ -15925,16 +15925,16 @@ export const GridAttributesDocument = gql`
  */
 export function useGridAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>(GridAttributesDocument, options);
+        return ApolloReactHooks.useQuery<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>(GridAttributesStaging, options);
       }
 export function useGridAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>(GridAttributesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>(GridAttributesStaging, options);
         }
 export type GridAttributesQueryHookResult = ReturnType<typeof useGridAttributesQuery>;
 export type GridAttributesLazyQueryHookResult = ReturnType<typeof useGridAttributesLazyQuery>;
 export type GridAttributesQueryResult = Apollo.QueryResult<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>;
-export const AvailableColumnAttributesDocument = gql`
+export const AvailableColumnAttributesStaging = gql`
     query AvailableColumnAttributes($search: String!, $type: AttributeTypeEnum!, $before: String, $after: String, $first: Int, $last: Int) {
   attributes(
     filter: {search: $search, type: $type}
@@ -15979,16 +15979,16 @@ export const AvailableColumnAttributesDocument = gql`
  */
 export function useAvailableColumnAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>(AvailableColumnAttributesDocument, options);
+        return ApolloReactHooks.useQuery<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>(AvailableColumnAttributesStaging, options);
       }
 export function useAvailableColumnAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>(AvailableColumnAttributesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>(AvailableColumnAttributesStaging, options);
         }
 export type AvailableColumnAttributesQueryHookResult = ReturnType<typeof useAvailableColumnAttributesQuery>;
 export type AvailableColumnAttributesLazyQueryHookResult = ReturnType<typeof useAvailableColumnAttributesLazyQuery>;
 export type AvailableColumnAttributesQueryResult = Apollo.QueryResult<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>;
-export const GridWarehousesDocument = gql`
+export const GridWarehousesStaging = gql`
     query GridWarehouses($ids: [ID!]!, $hasWarehouses: Boolean!) {
   availableWarehouses: warehouses(first: 10) {
     edges {
@@ -16030,16 +16030,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useGridWarehousesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>(GridWarehousesDocument, options);
+        return ApolloReactHooks.useQuery<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>(GridWarehousesStaging, options);
       }
 export function useGridWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>(GridWarehousesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>(GridWarehousesStaging, options);
         }
 export type GridWarehousesQueryHookResult = ReturnType<typeof useGridWarehousesQuery>;
 export type GridWarehousesLazyQueryHookResult = ReturnType<typeof useGridWarehousesLazyQuery>;
 export type GridWarehousesQueryResult = Apollo.QueryResult<Types.GridWarehousesQuery, Types.GridWarehousesQueryVariables>;
-export const SetRefundReasonTypeDocument = gql`
+export const SetRefundReasonTypeStaging = gql`
     mutation SetRefundReasonType($modelTypeId: ID!) {
   refundSettingsUpdate(input: {refundReasonReferenceType: $modelTypeId}) {
     refundSettings {
@@ -16076,12 +16076,12 @@ export type SetRefundReasonTypeMutationFn = Apollo.MutationFunction<Types.SetRef
  */
 export function useSetRefundReasonTypeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SetRefundReasonTypeMutation, Types.SetRefundReasonTypeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.SetRefundReasonTypeMutation, Types.SetRefundReasonTypeMutationVariables>(SetRefundReasonTypeDocument, options);
+        return ApolloReactHooks.useMutation<Types.SetRefundReasonTypeMutation, Types.SetRefundReasonTypeMutationVariables>(SetRefundReasonTypeStaging, options);
       }
 export type SetRefundReasonTypeMutationHookResult = ReturnType<typeof useSetRefundReasonTypeMutation>;
 export type SetRefundReasonTypeMutationResult = Apollo.MutationResult<Types.SetRefundReasonTypeMutation>;
 export type SetRefundReasonTypeMutationOptions = Apollo.BaseMutationOptions<Types.SetRefundReasonTypeMutation, Types.SetRefundReasonTypeMutationVariables>;
-export const ClearRefundReasonTypeDocument = gql`
+export const ClearRefundReasonTypeStaging = gql`
     mutation ClearRefundReasonType {
   refundReasonReferenceClear {
     errors {
@@ -16117,12 +16117,12 @@ export type ClearRefundReasonTypeMutationFn = Apollo.MutationFunction<Types.Clea
  */
 export function useClearRefundReasonTypeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ClearRefundReasonTypeMutation, Types.ClearRefundReasonTypeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ClearRefundReasonTypeMutation, Types.ClearRefundReasonTypeMutationVariables>(ClearRefundReasonTypeDocument, options);
+        return ApolloReactHooks.useMutation<Types.ClearRefundReasonTypeMutation, Types.ClearRefundReasonTypeMutationVariables>(ClearRefundReasonTypeStaging, options);
       }
 export type ClearRefundReasonTypeMutationHookResult = ReturnType<typeof useClearRefundReasonTypeMutation>;
 export type ClearRefundReasonTypeMutationResult = Apollo.MutationResult<Types.ClearRefundReasonTypeMutation>;
 export type ClearRefundReasonTypeMutationOptions = Apollo.BaseMutationOptions<Types.ClearRefundReasonTypeMutation, Types.ClearRefundReasonTypeMutationVariables>;
-export const RefundsSettingsDocument = gql`
+export const RefundsSettingsStaging = gql`
     query RefundsSettings {
   refundSettings {
     reasonReferenceType {
@@ -16150,16 +16150,16 @@ export const RefundsSettingsDocument = gql`
  */
 export function useRefundsSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>(RefundsSettingsDocument, options);
+        return ApolloReactHooks.useQuery<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>(RefundsSettingsStaging, options);
       }
 export function useRefundsSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>(RefundsSettingsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>(RefundsSettingsStaging, options);
         }
 export type RefundsSettingsQueryHookResult = ReturnType<typeof useRefundsSettingsQuery>;
 export type RefundsSettingsLazyQueryHookResult = ReturnType<typeof useRefundsSettingsLazyQuery>;
 export type RefundsSettingsQueryResult = Apollo.QueryResult<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>;
-export const ModelTypesDocument = gql`
+export const ModelTypesStaging = gql`
     query ModelTypes {
   pageTypes(first: 100, sortBy: {field: NAME, direction: ASC}) {
     edges {
@@ -16189,16 +16189,16 @@ export const ModelTypesDocument = gql`
  */
 export function useModelTypesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>(ModelTypesDocument, options);
+        return ApolloReactHooks.useQuery<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>(ModelTypesStaging, options);
       }
 export function useModelTypesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>(ModelTypesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>(ModelTypesStaging, options);
         }
 export type ModelTypesQueryHookResult = ReturnType<typeof useModelTypesQuery>;
 export type ModelTypesLazyQueryHookResult = ReturnType<typeof useModelTypesLazyQuery>;
 export type ModelTypesQueryResult = Apollo.QueryResult<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>;
-export const ProductVariantsStagingDocument = gql`
+export const ProductVariantsStagingStaging = gql`
     query ProductVariantsStaging {
   productVariants(channel: "default-channel", first: 1) {
     edges {
@@ -16228,16 +16228,16 @@ export const ProductVariantsStagingDocument = gql`
  */
 export function useProductVariantsStagingQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>(ProductVariantsStagingDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>(ProductVariantsStagingStaging, options);
       }
 export function useProductVariantsStagingLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>(ProductVariantsStagingDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>(ProductVariantsStagingStaging, options);
         }
 export type ProductVariantsStagingQueryHookResult = ReturnType<typeof useProductVariantsStagingQuery>;
 export type ProductVariantsStagingLazyQueryHookResult = ReturnType<typeof useProductVariantsStagingLazyQuery>;
 export type ProductVariantsStagingQueryResult = Apollo.QueryResult<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>;
-export const GlobalSearchDocument = gql`
+export const GlobalSearchStaging = gql`
     query GlobalSearch($query: String!, $includeOrders: Boolean!, $includeCategories: Boolean!, $includeCollections: Boolean!, $includeProducts: Boolean!, $includeVariants: Boolean!, $includeModels: Boolean!, $includeModelTypes: Boolean!) {
   orders(first: 10, filter: {search: $query}) @include(if: $includeOrders) {
     edges {
@@ -16386,16 +16386,16 @@ export const GlobalSearchDocument = gql`
  */
 export function useGlobalSearchQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>(GlobalSearchDocument, options);
+        return ApolloReactHooks.useQuery<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>(GlobalSearchStaging, options);
       }
 export function useGlobalSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>(GlobalSearchDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>(GlobalSearchStaging, options);
         }
 export type GlobalSearchQueryHookResult = ReturnType<typeof useGlobalSearchQuery>;
 export type GlobalSearchLazyQueryHookResult = ReturnType<typeof useGlobalSearchLazyQuery>;
 export type GlobalSearchQueryResult = Apollo.QueryResult<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>;
-export const SearchAttributesDocument = gql`
+export const SearchAttributesStaging = gql`
     query SearchAttributes($after: String, $first: Int!, $query: String!) {
   search: attributes(after: $after, first: $first, filter: {search: $query}) {
     edges {
@@ -16431,16 +16431,16 @@ export const SearchAttributesDocument = gql`
  */
 export function useSearchAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchAttributesQuery, Types.SearchAttributesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchAttributesQuery, Types.SearchAttributesQueryVariables>(SearchAttributesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchAttributesQuery, Types.SearchAttributesQueryVariables>(SearchAttributesStaging, options);
       }
 export function useSearchAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchAttributesQuery, Types.SearchAttributesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchAttributesQuery, Types.SearchAttributesQueryVariables>(SearchAttributesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchAttributesQuery, Types.SearchAttributesQueryVariables>(SearchAttributesStaging, options);
         }
 export type SearchAttributesQueryHookResult = ReturnType<typeof useSearchAttributesQuery>;
 export type SearchAttributesLazyQueryHookResult = ReturnType<typeof useSearchAttributesLazyQuery>;
 export type SearchAttributesQueryResult = Apollo.QueryResult<Types.SearchAttributesQuery, Types.SearchAttributesQueryVariables>;
-export const SearchAttributeValuesDocument = gql`
+export const SearchAttributeValuesStaging = gql`
     query SearchAttributeValues($id: ID, $after: String, $first: Int!, $query: String!) {
   attribute(id: $id) {
     id
@@ -16480,16 +16480,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSearchAttributeValuesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchAttributeValuesQuery, Types.SearchAttributeValuesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchAttributeValuesQuery, Types.SearchAttributeValuesQueryVariables>(SearchAttributeValuesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchAttributeValuesQuery, Types.SearchAttributeValuesQueryVariables>(SearchAttributeValuesStaging, options);
       }
 export function useSearchAttributeValuesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchAttributeValuesQuery, Types.SearchAttributeValuesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchAttributeValuesQuery, Types.SearchAttributeValuesQueryVariables>(SearchAttributeValuesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchAttributeValuesQuery, Types.SearchAttributeValuesQueryVariables>(SearchAttributeValuesStaging, options);
         }
 export type SearchAttributeValuesQueryHookResult = ReturnType<typeof useSearchAttributeValuesQuery>;
 export type SearchAttributeValuesLazyQueryHookResult = ReturnType<typeof useSearchAttributeValuesLazyQuery>;
 export type SearchAttributeValuesQueryResult = Apollo.QueryResult<Types.SearchAttributeValuesQuery, Types.SearchAttributeValuesQueryVariables>;
-export const SearchAvailableInGridAttributesDocument = gql`
+export const SearchAvailableInGridAttributesStaging = gql`
     query SearchAvailableInGridAttributes($first: Int!, $after: String, $query: String!) {
   availableInGrid: attributes(
     first: $first
@@ -16530,16 +16530,16 @@ export const SearchAvailableInGridAttributesDocument = gql`
  */
 export function useSearchAvailableInGridAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>(SearchAvailableInGridAttributesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>(SearchAvailableInGridAttributesStaging, options);
       }
 export function useSearchAvailableInGridAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>(SearchAvailableInGridAttributesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>(SearchAvailableInGridAttributesStaging, options);
         }
 export type SearchAvailableInGridAttributesQueryHookResult = ReturnType<typeof useSearchAvailableInGridAttributesQuery>;
 export type SearchAvailableInGridAttributesLazyQueryHookResult = ReturnType<typeof useSearchAvailableInGridAttributesLazyQuery>;
 export type SearchAvailableInGridAttributesQueryResult = Apollo.QueryResult<Types.SearchAvailableInGridAttributesQuery, Types.SearchAvailableInGridAttributesQueryVariables>;
-export const SearchAvailablePageAttributesDocument = gql`
+export const SearchAvailablePageAttributesStaging = gql`
     query SearchAvailablePageAttributes($id: ID!, $after: String, $first: Int!, $query: String!) {
   pageType(id: $id) {
     id
@@ -16579,16 +16579,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSearchAvailablePageAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchAvailablePageAttributesQuery, Types.SearchAvailablePageAttributesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchAvailablePageAttributesQuery, Types.SearchAvailablePageAttributesQueryVariables>(SearchAvailablePageAttributesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchAvailablePageAttributesQuery, Types.SearchAvailablePageAttributesQueryVariables>(SearchAvailablePageAttributesStaging, options);
       }
 export function useSearchAvailablePageAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchAvailablePageAttributesQuery, Types.SearchAvailablePageAttributesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchAvailablePageAttributesQuery, Types.SearchAvailablePageAttributesQueryVariables>(SearchAvailablePageAttributesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchAvailablePageAttributesQuery, Types.SearchAvailablePageAttributesQueryVariables>(SearchAvailablePageAttributesStaging, options);
         }
 export type SearchAvailablePageAttributesQueryHookResult = ReturnType<typeof useSearchAvailablePageAttributesQuery>;
 export type SearchAvailablePageAttributesLazyQueryHookResult = ReturnType<typeof useSearchAvailablePageAttributesLazyQuery>;
 export type SearchAvailablePageAttributesQueryResult = Apollo.QueryResult<Types.SearchAvailablePageAttributesQuery, Types.SearchAvailablePageAttributesQueryVariables>;
-export const SearchAvailableProductAttributesDocument = gql`
+export const SearchAvailableProductAttributesStaging = gql`
     query SearchAvailableProductAttributes($id: ID!, $after: String, $first: Int!, $query: String!) {
   productType(id: $id) {
     id
@@ -16628,16 +16628,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSearchAvailableProductAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>(SearchAvailableProductAttributesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>(SearchAvailableProductAttributesStaging, options);
       }
 export function useSearchAvailableProductAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>(SearchAvailableProductAttributesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>(SearchAvailableProductAttributesStaging, options);
         }
 export type SearchAvailableProductAttributesQueryHookResult = ReturnType<typeof useSearchAvailableProductAttributesQuery>;
 export type SearchAvailableProductAttributesLazyQueryHookResult = ReturnType<typeof useSearchAvailableProductAttributesLazyQuery>;
 export type SearchAvailableProductAttributesQueryResult = Apollo.QueryResult<Types.SearchAvailableProductAttributesQuery, Types.SearchAvailableProductAttributesQueryVariables>;
-export const SearchCategoriesDocument = gql`
+export const SearchCategoriesStaging = gql`
     query SearchCategories($after: String, $first: Int!, $query: String!) {
   search: categories(after: $after, first: $first, filter: {search: $query}) {
     edges {
@@ -16673,16 +16673,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSearchCategoriesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>(SearchCategoriesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>(SearchCategoriesStaging, options);
       }
 export function useSearchCategoriesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>(SearchCategoriesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>(SearchCategoriesStaging, options);
         }
 export type SearchCategoriesQueryHookResult = ReturnType<typeof useSearchCategoriesQuery>;
 export type SearchCategoriesLazyQueryHookResult = ReturnType<typeof useSearchCategoriesLazyQuery>;
 export type SearchCategoriesQueryResult = Apollo.QueryResult<Types.SearchCategoriesQuery, Types.SearchCategoriesQueryVariables>;
-export const SearchCategoriesWithTotalProductsDocument = gql`
+export const SearchCategoriesWithTotalProductsStaging = gql`
     query SearchCategoriesWithTotalProducts($after: String, $first: Int!, $query: String!) {
   search: categories(after: $after, first: $first, filter: {search: $query}) {
     edges {
@@ -16718,16 +16718,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSearchCategoriesWithTotalProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>(SearchCategoriesWithTotalProductsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>(SearchCategoriesWithTotalProductsStaging, options);
       }
 export function useSearchCategoriesWithTotalProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>(SearchCategoriesWithTotalProductsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>(SearchCategoriesWithTotalProductsStaging, options);
         }
 export type SearchCategoriesWithTotalProductsQueryHookResult = ReturnType<typeof useSearchCategoriesWithTotalProductsQuery>;
 export type SearchCategoriesWithTotalProductsLazyQueryHookResult = ReturnType<typeof useSearchCategoriesWithTotalProductsLazyQuery>;
 export type SearchCategoriesWithTotalProductsQueryResult = Apollo.QueryResult<Types.SearchCategoriesWithTotalProductsQuery, Types.SearchCategoriesWithTotalProductsQueryVariables>;
-export const SearchCollectionsDocument = gql`
+export const SearchCollectionsStaging = gql`
     query SearchCollections($after: String, $first: Int!, $query: String!, $channel: String) {
   search: collections(
     after: $after
@@ -16769,16 +16769,16 @@ export const SearchCollectionsDocument = gql`
  */
 export function useSearchCollectionsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>(SearchCollectionsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>(SearchCollectionsStaging, options);
       }
 export function useSearchCollectionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>(SearchCollectionsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>(SearchCollectionsStaging, options);
         }
 export type SearchCollectionsQueryHookResult = ReturnType<typeof useSearchCollectionsQuery>;
 export type SearchCollectionsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsLazyQuery>;
 export type SearchCollectionsQueryResult = Apollo.QueryResult<Types.SearchCollectionsQuery, Types.SearchCollectionsQueryVariables>;
-export const SearchCollectionsWithTotalProductsDocument = gql`
+export const SearchCollectionsWithTotalProductsStaging = gql`
     query SearchCollectionsWithTotalProducts($after: String, $first: Int!, $query: String!, $channel: String) {
   search: collections(
     after: $after
@@ -16820,16 +16820,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSearchCollectionsWithTotalProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>(SearchCollectionsWithTotalProductsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>(SearchCollectionsWithTotalProductsStaging, options);
       }
 export function useSearchCollectionsWithTotalProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>(SearchCollectionsWithTotalProductsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>(SearchCollectionsWithTotalProductsStaging, options);
         }
 export type SearchCollectionsWithTotalProductsQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsQuery>;
 export type SearchCollectionsWithTotalProductsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsLazyQuery>;
 export type SearchCollectionsWithTotalProductsQueryResult = Apollo.QueryResult<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>;
-export const SearchCustomersDocument = gql`
+export const SearchCustomersStaging = gql`
     query SearchCustomers($after: String, $first: Int!, $query: String!) {
   search: customers(after: $after, first: $first, filter: {search: $query}) {
     edges {
@@ -16867,16 +16867,16 @@ export const SearchCustomersDocument = gql`
  */
 export function useSearchCustomersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchCustomersQuery, Types.SearchCustomersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchCustomersQuery, Types.SearchCustomersQueryVariables>(SearchCustomersDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchCustomersQuery, Types.SearchCustomersQueryVariables>(SearchCustomersStaging, options);
       }
 export function useSearchCustomersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchCustomersQuery, Types.SearchCustomersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchCustomersQuery, Types.SearchCustomersQueryVariables>(SearchCustomersDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchCustomersQuery, Types.SearchCustomersQueryVariables>(SearchCustomersStaging, options);
         }
 export type SearchCustomersQueryHookResult = ReturnType<typeof useSearchCustomersQuery>;
 export type SearchCustomersLazyQueryHookResult = ReturnType<typeof useSearchCustomersLazyQuery>;
 export type SearchCustomersQueryResult = Apollo.QueryResult<Types.SearchCustomersQuery, Types.SearchCustomersQueryVariables>;
-export const SearchGiftCardTagsDocument = gql`
+export const SearchGiftCardTagsStaging = gql`
     query SearchGiftCardTags($query: String!, $first: Int!, $after: String, $last: Int, $before: String) {
   search: giftCardTags(
     filter: {search: $query}
@@ -16921,16 +16921,16 @@ export const SearchGiftCardTagsDocument = gql`
  */
 export function useSearchGiftCardTagsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>(SearchGiftCardTagsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>(SearchGiftCardTagsStaging, options);
       }
 export function useSearchGiftCardTagsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>(SearchGiftCardTagsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>(SearchGiftCardTagsStaging, options);
         }
 export type SearchGiftCardTagsQueryHookResult = ReturnType<typeof useSearchGiftCardTagsQuery>;
 export type SearchGiftCardTagsLazyQueryHookResult = ReturnType<typeof useSearchGiftCardTagsLazyQuery>;
 export type SearchGiftCardTagsQueryResult = Apollo.QueryResult<Types.SearchGiftCardTagsQuery, Types.SearchGiftCardTagsQueryVariables>;
-export const SearchOrderVariantDocument = gql`
+export const SearchOrderVariantStaging = gql`
     query SearchOrderVariant($channel: String!, $first: Int!, $query: String!, $after: String, $address: AddressInput, $isPublished: Boolean, $stockAvailability: StockAvailability) {
   search: products(
     first: $first
@@ -16999,16 +16999,16 @@ export const SearchOrderVariantDocument = gql`
  */
 export function useSearchOrderVariantQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>(SearchOrderVariantDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>(SearchOrderVariantStaging, options);
       }
 export function useSearchOrderVariantLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>(SearchOrderVariantDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>(SearchOrderVariantStaging, options);
         }
 export type SearchOrderVariantQueryHookResult = ReturnType<typeof useSearchOrderVariantQuery>;
 export type SearchOrderVariantLazyQueryHookResult = ReturnType<typeof useSearchOrderVariantLazyQuery>;
 export type SearchOrderVariantQueryResult = Apollo.QueryResult<Types.SearchOrderVariantQuery, Types.SearchOrderVariantQueryVariables>;
-export const SearchPagesDocument = gql`
+export const SearchPagesStaging = gql`
     query SearchPages($after: String, $first: Int!, $query: String!, $where: PageWhereInput) {
   search: pages(after: $after, first: $first, search: $query, where: $where) {
     edges {
@@ -17045,16 +17045,16 @@ export const SearchPagesDocument = gql`
  */
 export function useSearchPagesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchPagesQuery, Types.SearchPagesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchPagesQuery, Types.SearchPagesQueryVariables>(SearchPagesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchPagesQuery, Types.SearchPagesQueryVariables>(SearchPagesStaging, options);
       }
 export function useSearchPagesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchPagesQuery, Types.SearchPagesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchPagesQuery, Types.SearchPagesQueryVariables>(SearchPagesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchPagesQuery, Types.SearchPagesQueryVariables>(SearchPagesStaging, options);
         }
 export type SearchPagesQueryHookResult = ReturnType<typeof useSearchPagesQuery>;
 export type SearchPagesLazyQueryHookResult = ReturnType<typeof useSearchPagesLazyQuery>;
 export type SearchPagesQueryResult = Apollo.QueryResult<Types.SearchPagesQuery, Types.SearchPagesQueryVariables>;
-export const SearchPageTypesDocument = gql`
+export const SearchPageTypesStaging = gql`
     query SearchPageTypes($after: String, $first: Int!, $query: String!) {
   search: pageTypes(after: $after, first: $first, filter: {search: $query}) {
     edges {
@@ -17090,16 +17090,16 @@ export const SearchPageTypesDocument = gql`
  */
 export function useSearchPageTypesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchPageTypesQuery, Types.SearchPageTypesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchPageTypesQuery, Types.SearchPageTypesQueryVariables>(SearchPageTypesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchPageTypesQuery, Types.SearchPageTypesQueryVariables>(SearchPageTypesStaging, options);
       }
 export function useSearchPageTypesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchPageTypesQuery, Types.SearchPageTypesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchPageTypesQuery, Types.SearchPageTypesQueryVariables>(SearchPageTypesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchPageTypesQuery, Types.SearchPageTypesQueryVariables>(SearchPageTypesStaging, options);
         }
 export type SearchPageTypesQueryHookResult = ReturnType<typeof useSearchPageTypesQuery>;
 export type SearchPageTypesLazyQueryHookResult = ReturnType<typeof useSearchPageTypesLazyQuery>;
 export type SearchPageTypesQueryResult = Apollo.QueryResult<Types.SearchPageTypesQuery, Types.SearchPageTypesQueryVariables>;
-export const SearchPermissionGroupsDocument = gql`
+export const SearchPermissionGroupsStaging = gql`
     query SearchPermissionGroups($after: String, $first: Int!, $query: String!) {
   search: permissionGroups(after: $after, first: $first, filter: {search: $query}) {
     edges {
@@ -17136,16 +17136,16 @@ export const SearchPermissionGroupsDocument = gql`
  */
 export function useSearchPermissionGroupsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>(SearchPermissionGroupsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>(SearchPermissionGroupsStaging, options);
       }
 export function useSearchPermissionGroupsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>(SearchPermissionGroupsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>(SearchPermissionGroupsStaging, options);
         }
 export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchPermissionGroupsQuery>;
 export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
 export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>;
-export const SearchProductsDocument = gql`
+export const SearchProductsStaging = gql`
     query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput) {
   search: products(
     after: $after
@@ -17189,16 +17189,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSearchProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchProductsQuery, Types.SearchProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchProductsQuery, Types.SearchProductsQueryVariables>(SearchProductsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchProductsQuery, Types.SearchProductsQueryVariables>(SearchProductsStaging, options);
       }
 export function useSearchProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchProductsQuery, Types.SearchProductsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchProductsQuery, Types.SearchProductsQueryVariables>(SearchProductsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchProductsQuery, Types.SearchProductsQueryVariables>(SearchProductsStaging, options);
         }
 export type SearchProductsQueryHookResult = ReturnType<typeof useSearchProductsQuery>;
 export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
 export type SearchProductsQueryResult = Apollo.QueryResult<Types.SearchProductsQuery, Types.SearchProductsQueryVariables>;
-export const SearchProductTypesDocument = gql`
+export const SearchProductTypesStaging = gql`
     query SearchProductTypes($after: String, $first: Int!, $query: String!) {
   search: productTypes(after: $after, first: $first, filter: {search: $query}) {
     edges {
@@ -17234,16 +17234,16 @@ export const SearchProductTypesDocument = gql`
  */
 export function useSearchProductTypesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchProductTypesQuery, Types.SearchProductTypesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchProductTypesQuery, Types.SearchProductTypesQueryVariables>(SearchProductTypesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchProductTypesQuery, Types.SearchProductTypesQueryVariables>(SearchProductTypesStaging, options);
       }
 export function useSearchProductTypesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchProductTypesQuery, Types.SearchProductTypesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchProductTypesQuery, Types.SearchProductTypesQueryVariables>(SearchProductTypesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchProductTypesQuery, Types.SearchProductTypesQueryVariables>(SearchProductTypesStaging, options);
         }
 export type SearchProductTypesQueryHookResult = ReturnType<typeof useSearchProductTypesQuery>;
 export type SearchProductTypesLazyQueryHookResult = ReturnType<typeof useSearchProductTypesLazyQuery>;
 export type SearchProductTypesQueryResult = Apollo.QueryResult<Types.SearchProductTypesQuery, Types.SearchProductTypesQueryVariables>;
-export const SearchShippingZonesDocument = gql`
+export const SearchShippingZonesStaging = gql`
     query SearchShippingZones($query: String!, $first: Int!, $after: String, $last: Int, $before: String) {
   search: shippingZones(
     filter: {search: $query}
@@ -17288,16 +17288,16 @@ export const SearchShippingZonesDocument = gql`
  */
 export function useSearchShippingZonesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchShippingZonesQuery, Types.SearchShippingZonesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchShippingZonesQuery, Types.SearchShippingZonesQueryVariables>(SearchShippingZonesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchShippingZonesQuery, Types.SearchShippingZonesQueryVariables>(SearchShippingZonesStaging, options);
       }
 export function useSearchShippingZonesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchShippingZonesQuery, Types.SearchShippingZonesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchShippingZonesQuery, Types.SearchShippingZonesQueryVariables>(SearchShippingZonesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchShippingZonesQuery, Types.SearchShippingZonesQueryVariables>(SearchShippingZonesStaging, options);
         }
 export type SearchShippingZonesQueryHookResult = ReturnType<typeof useSearchShippingZonesQuery>;
 export type SearchShippingZonesLazyQueryHookResult = ReturnType<typeof useSearchShippingZonesLazyQuery>;
 export type SearchShippingZonesQueryResult = Apollo.QueryResult<Types.SearchShippingZonesQuery, Types.SearchShippingZonesQueryVariables>;
-export const SearchStaffMembersDocument = gql`
+export const SearchStaffMembersStaging = gql`
     query SearchStaffMembers($after: String, $first: Int!, $query: String!) {
   search: staffUsers(after: $after, first: $first, filter: {search: $query}) {
     edges {
@@ -17340,16 +17340,16 @@ export const SearchStaffMembersDocument = gql`
  */
 export function useSearchStaffMembersQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>(SearchStaffMembersDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>(SearchStaffMembersStaging, options);
       }
 export function useSearchStaffMembersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>(SearchStaffMembersDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>(SearchStaffMembersStaging, options);
         }
 export type SearchStaffMembersQueryHookResult = ReturnType<typeof useSearchStaffMembersQuery>;
 export type SearchStaffMembersLazyQueryHookResult = ReturnType<typeof useSearchStaffMembersLazyQuery>;
 export type SearchStaffMembersQueryResult = Apollo.QueryResult<Types.SearchStaffMembersQuery, Types.SearchStaffMembersQueryVariables>;
-export const SearchVariantsDocument = gql`
+export const SearchVariantsStaging = gql`
     query SearchVariants($after: String, $first: Int!, $query: String!, $channel: String) {
   search: productVariants(
     after: $after
@@ -17391,16 +17391,16 @@ export const SearchVariantsDocument = gql`
  */
 export function useSearchVariantsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>(SearchVariantsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>(SearchVariantsStaging, options);
       }
 export function useSearchVariantsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>(SearchVariantsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>(SearchVariantsStaging, options);
         }
 export type SearchVariantsQueryHookResult = ReturnType<typeof useSearchVariantsQuery>;
 export type SearchVariantsLazyQueryHookResult = ReturnType<typeof useSearchVariantsLazyQuery>;
 export type SearchVariantsQueryResult = Apollo.QueryResult<Types.SearchVariantsQuery, Types.SearchVariantsQueryVariables>;
-export const SearchVariantsWithProductDataDocument = gql`
+export const SearchVariantsWithProductDataStaging = gql`
     query SearchVariantsWithProductData($after: String, $first: Int!, $query: String!, $channel: String) {
   search: productVariants(
     after: $after
@@ -17445,16 +17445,16 @@ export const SearchVariantsWithProductDataDocument = gql`
  */
 export function useSearchVariantsWithProductDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>(SearchVariantsWithProductDataDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>(SearchVariantsWithProductDataStaging, options);
       }
 export function useSearchVariantsWithProductDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>(SearchVariantsWithProductDataDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>(SearchVariantsWithProductDataStaging, options);
         }
 export type SearchVariantsWithProductDataQueryHookResult = ReturnType<typeof useSearchVariantsWithProductDataQuery>;
 export type SearchVariantsWithProductDataLazyQueryHookResult = ReturnType<typeof useSearchVariantsWithProductDataLazyQuery>;
 export type SearchVariantsWithProductDataQueryResult = Apollo.QueryResult<Types.SearchVariantsWithProductDataQuery, Types.SearchVariantsWithProductDataQueryVariables>;
-export const SearchWarehousesDocument = gql`
+export const SearchWarehousesStaging = gql`
     query SearchWarehouses($after: String, $first: Int!, $query: String!, $channnelsId: [ID!]) {
   search: warehouses(
     after: $after
@@ -17497,16 +17497,16 @@ export const SearchWarehousesDocument = gql`
  */
 export function useSearchWarehousesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchWarehousesQuery, Types.SearchWarehousesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SearchWarehousesQuery, Types.SearchWarehousesQueryVariables>(SearchWarehousesDocument, options);
+        return ApolloReactHooks.useQuery<Types.SearchWarehousesQuery, Types.SearchWarehousesQueryVariables>(SearchWarehousesStaging, options);
       }
 export function useSearchWarehousesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchWarehousesQuery, Types.SearchWarehousesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SearchWarehousesQuery, Types.SearchWarehousesQueryVariables>(SearchWarehousesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SearchWarehousesQuery, Types.SearchWarehousesQueryVariables>(SearchWarehousesStaging, options);
         }
 export type SearchWarehousesQueryHookResult = ReturnType<typeof useSearchWarehousesQuery>;
 export type SearchWarehousesLazyQueryHookResult = ReturnType<typeof useSearchWarehousesLazyQuery>;
 export type SearchWarehousesQueryResult = Apollo.QueryResult<Types.SearchWarehousesQuery, Types.SearchWarehousesQueryVariables>;
-export const DeleteShippingZoneDocument = gql`
+export const DeleteShippingZoneStaging = gql`
     mutation DeleteShippingZone($id: ID!) {
   shippingZoneDelete(id: $id) {
     errors {
@@ -17536,12 +17536,12 @@ export type DeleteShippingZoneMutationFn = Apollo.MutationFunction<Types.DeleteS
  */
 export function useDeleteShippingZoneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.DeleteShippingZoneMutation, Types.DeleteShippingZoneMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.DeleteShippingZoneMutation, Types.DeleteShippingZoneMutationVariables>(DeleteShippingZoneDocument, options);
+        return ApolloReactHooks.useMutation<Types.DeleteShippingZoneMutation, Types.DeleteShippingZoneMutationVariables>(DeleteShippingZoneStaging, options);
       }
 export type DeleteShippingZoneMutationHookResult = ReturnType<typeof useDeleteShippingZoneMutation>;
 export type DeleteShippingZoneMutationResult = Apollo.MutationResult<Types.DeleteShippingZoneMutation>;
 export type DeleteShippingZoneMutationOptions = Apollo.BaseMutationOptions<Types.DeleteShippingZoneMutation, Types.DeleteShippingZoneMutationVariables>;
-export const BulkDeleteShippingZoneDocument = gql`
+export const BulkDeleteShippingZoneStaging = gql`
     mutation BulkDeleteShippingZone($ids: [ID!]!) {
   shippingZoneBulkDelete(ids: $ids) {
     errors {
@@ -17571,12 +17571,12 @@ export type BulkDeleteShippingZoneMutationFn = Apollo.MutationFunction<Types.Bul
  */
 export function useBulkDeleteShippingZoneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.BulkDeleteShippingZoneMutation, Types.BulkDeleteShippingZoneMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.BulkDeleteShippingZoneMutation, Types.BulkDeleteShippingZoneMutationVariables>(BulkDeleteShippingZoneDocument, options);
+        return ApolloReactHooks.useMutation<Types.BulkDeleteShippingZoneMutation, Types.BulkDeleteShippingZoneMutationVariables>(BulkDeleteShippingZoneStaging, options);
       }
 export type BulkDeleteShippingZoneMutationHookResult = ReturnType<typeof useBulkDeleteShippingZoneMutation>;
 export type BulkDeleteShippingZoneMutationResult = Apollo.MutationResult<Types.BulkDeleteShippingZoneMutation>;
 export type BulkDeleteShippingZoneMutationOptions = Apollo.BaseMutationOptions<Types.BulkDeleteShippingZoneMutation, Types.BulkDeleteShippingZoneMutationVariables>;
-export const UpdateDefaultWeightUnitDocument = gql`
+export const UpdateDefaultWeightUnitStaging = gql`
     mutation UpdateDefaultWeightUnit($unit: WeightUnitsEnum) {
   shopSettingsUpdate(input: {defaultWeightUnit: $unit}) {
     errors {
@@ -17609,12 +17609,12 @@ export type UpdateDefaultWeightUnitMutationFn = Apollo.MutationFunction<Types.Up
  */
 export function useUpdateDefaultWeightUnitMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateDefaultWeightUnitMutation, Types.UpdateDefaultWeightUnitMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateDefaultWeightUnitMutation, Types.UpdateDefaultWeightUnitMutationVariables>(UpdateDefaultWeightUnitDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateDefaultWeightUnitMutation, Types.UpdateDefaultWeightUnitMutationVariables>(UpdateDefaultWeightUnitStaging, options);
       }
 export type UpdateDefaultWeightUnitMutationHookResult = ReturnType<typeof useUpdateDefaultWeightUnitMutation>;
 export type UpdateDefaultWeightUnitMutationResult = Apollo.MutationResult<Types.UpdateDefaultWeightUnitMutation>;
 export type UpdateDefaultWeightUnitMutationOptions = Apollo.BaseMutationOptions<Types.UpdateDefaultWeightUnitMutation, Types.UpdateDefaultWeightUnitMutationVariables>;
-export const CreateShippingZoneDocument = gql`
+export const CreateShippingZoneStaging = gql`
     mutation CreateShippingZone($input: ShippingZoneCreateInput!) {
   shippingZoneCreate(input: $input) {
     errors {
@@ -17648,12 +17648,12 @@ export type CreateShippingZoneMutationFn = Apollo.MutationFunction<Types.CreateS
  */
 export function useCreateShippingZoneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateShippingZoneMutation, Types.CreateShippingZoneMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CreateShippingZoneMutation, Types.CreateShippingZoneMutationVariables>(CreateShippingZoneDocument, options);
+        return ApolloReactHooks.useMutation<Types.CreateShippingZoneMutation, Types.CreateShippingZoneMutationVariables>(CreateShippingZoneStaging, options);
       }
 export type CreateShippingZoneMutationHookResult = ReturnType<typeof useCreateShippingZoneMutation>;
 export type CreateShippingZoneMutationResult = Apollo.MutationResult<Types.CreateShippingZoneMutation>;
 export type CreateShippingZoneMutationOptions = Apollo.BaseMutationOptions<Types.CreateShippingZoneMutation, Types.CreateShippingZoneMutationVariables>;
-export const UpdateShippingZoneDocument = gql`
+export const UpdateShippingZoneStaging = gql`
     mutation UpdateShippingZone($id: ID!, $input: ShippingZoneUpdateInput!) {
   shippingZoneUpdate(id: $id, input: $input) {
     errors {
@@ -17697,12 +17697,12 @@ export type UpdateShippingZoneMutationFn = Apollo.MutationFunction<Types.UpdateS
  */
 export function useUpdateShippingZoneMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateShippingZoneMutation, Types.UpdateShippingZoneMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateShippingZoneMutation, Types.UpdateShippingZoneMutationVariables>(UpdateShippingZoneDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateShippingZoneMutation, Types.UpdateShippingZoneMutationVariables>(UpdateShippingZoneStaging, options);
       }
 export type UpdateShippingZoneMutationHookResult = ReturnType<typeof useUpdateShippingZoneMutation>;
 export type UpdateShippingZoneMutationResult = Apollo.MutationResult<Types.UpdateShippingZoneMutation>;
 export type UpdateShippingZoneMutationOptions = Apollo.BaseMutationOptions<Types.UpdateShippingZoneMutation, Types.UpdateShippingZoneMutationVariables>;
-export const UpdateShippingRateDocument = gql`
+export const UpdateShippingRateStaging = gql`
     mutation UpdateShippingRate($id: ID!, $input: ShippingPriceInput!) {
   shippingPriceUpdate(id: $id, input: $input) {
     errors {
@@ -17737,12 +17737,12 @@ export type UpdateShippingRateMutationFn = Apollo.MutationFunction<Types.UpdateS
  */
 export function useUpdateShippingRateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateShippingRateMutation, Types.UpdateShippingRateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateShippingRateMutation, Types.UpdateShippingRateMutationVariables>(UpdateShippingRateDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateShippingRateMutation, Types.UpdateShippingRateMutationVariables>(UpdateShippingRateStaging, options);
       }
 export type UpdateShippingRateMutationHookResult = ReturnType<typeof useUpdateShippingRateMutation>;
 export type UpdateShippingRateMutationResult = Apollo.MutationResult<Types.UpdateShippingRateMutation>;
 export type UpdateShippingRateMutationOptions = Apollo.BaseMutationOptions<Types.UpdateShippingRateMutation, Types.UpdateShippingRateMutationVariables>;
-export const CreateShippingRateDocument = gql`
+export const CreateShippingRateStaging = gql`
     mutation CreateShippingRate($input: ShippingPriceInput!) {
   shippingPriceCreate(input: $input) {
     errors {
@@ -17780,12 +17780,12 @@ export type CreateShippingRateMutationFn = Apollo.MutationFunction<Types.CreateS
  */
 export function useCreateShippingRateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateShippingRateMutation, Types.CreateShippingRateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.CreateShippingRateMutation, Types.CreateShippingRateMutationVariables>(CreateShippingRateDocument, options);
+        return ApolloReactHooks.useMutation<Types.CreateShippingRateMutation, Types.CreateShippingRateMutationVariables>(CreateShippingRateStaging, options);
       }
 export type CreateShippingRateMutationHookResult = ReturnType<typeof useCreateShippingRateMutation>;
 export type CreateShippingRateMutationResult = Apollo.MutationResult<Types.CreateShippingRateMutation>;
 export type CreateShippingRateMutationOptions = Apollo.BaseMutationOptions<Types.CreateShippingRateMutation, Types.CreateShippingRateMutationVariables>;
-export const DeleteShippingRateDocument = gql`
+export const DeleteShippingRateStaging = gql`
     mutation DeleteShippingRate($id: ID!) {
   shippingPriceDelete(id: $id) {
     errors {
@@ -17819,12 +17819,12 @@ export type DeleteShippingRateMutationFn = Apollo.MutationFunction<Types.DeleteS
  */
 export function useDeleteShippingRateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.DeleteShippingRateMutation, Types.DeleteShippingRateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.DeleteShippingRateMutation, Types.DeleteShippingRateMutationVariables>(DeleteShippingRateDocument, options);
+        return ApolloReactHooks.useMutation<Types.DeleteShippingRateMutation, Types.DeleteShippingRateMutationVariables>(DeleteShippingRateStaging, options);
       }
 export type DeleteShippingRateMutationHookResult = ReturnType<typeof useDeleteShippingRateMutation>;
 export type DeleteShippingRateMutationResult = Apollo.MutationResult<Types.DeleteShippingRateMutation>;
 export type DeleteShippingRateMutationOptions = Apollo.BaseMutationOptions<Types.DeleteShippingRateMutation, Types.DeleteShippingRateMutationVariables>;
-export const BulkDeleteShippingRateDocument = gql`
+export const BulkDeleteShippingRateStaging = gql`
     mutation BulkDeleteShippingRate($ids: [ID!]!) {
   shippingPriceBulkDelete(ids: $ids) {
     errors {
@@ -17854,12 +17854,12 @@ export type BulkDeleteShippingRateMutationFn = Apollo.MutationFunction<Types.Bul
  */
 export function useBulkDeleteShippingRateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.BulkDeleteShippingRateMutation, Types.BulkDeleteShippingRateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.BulkDeleteShippingRateMutation, Types.BulkDeleteShippingRateMutationVariables>(BulkDeleteShippingRateDocument, options);
+        return ApolloReactHooks.useMutation<Types.BulkDeleteShippingRateMutation, Types.BulkDeleteShippingRateMutationVariables>(BulkDeleteShippingRateStaging, options);
       }
 export type BulkDeleteShippingRateMutationHookResult = ReturnType<typeof useBulkDeleteShippingRateMutation>;
 export type BulkDeleteShippingRateMutationResult = Apollo.MutationResult<Types.BulkDeleteShippingRateMutation>;
 export type BulkDeleteShippingRateMutationOptions = Apollo.BaseMutationOptions<Types.BulkDeleteShippingRateMutation, Types.BulkDeleteShippingRateMutationVariables>;
-export const ShippingMethodChannelListingUpdateDocument = gql`
+export const ShippingMethodChannelListingUpdateStaging = gql`
     mutation ShippingMethodChannelListingUpdate($id: ID!, $input: ShippingMethodChannelListingInput!) {
   shippingMethodChannelListingUpdate(id: $id, input: $input) {
     shippingMethod {
@@ -17894,12 +17894,12 @@ export type ShippingMethodChannelListingUpdateMutationFn = Apollo.MutationFuncti
  */
 export function useShippingMethodChannelListingUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ShippingMethodChannelListingUpdateMutation, Types.ShippingMethodChannelListingUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ShippingMethodChannelListingUpdateMutation, Types.ShippingMethodChannelListingUpdateMutationVariables>(ShippingMethodChannelListingUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ShippingMethodChannelListingUpdateMutation, Types.ShippingMethodChannelListingUpdateMutationVariables>(ShippingMethodChannelListingUpdateStaging, options);
       }
 export type ShippingMethodChannelListingUpdateMutationHookResult = ReturnType<typeof useShippingMethodChannelListingUpdateMutation>;
 export type ShippingMethodChannelListingUpdateMutationResult = Apollo.MutationResult<Types.ShippingMethodChannelListingUpdateMutation>;
 export type ShippingMethodChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ShippingMethodChannelListingUpdateMutation, Types.ShippingMethodChannelListingUpdateMutationVariables>;
-export const ShippingPriceExcludeProductDocument = gql`
+export const ShippingPriceExcludeProductStaging = gql`
     mutation ShippingPriceExcludeProduct($id: ID!, $input: ShippingPriceExcludeProductsInput!) {
   shippingPriceExcludeProducts(id: $id, input: $input) {
     errors {
@@ -17930,12 +17930,12 @@ export type ShippingPriceExcludeProductMutationFn = Apollo.MutationFunction<Type
  */
 export function useShippingPriceExcludeProductMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ShippingPriceExcludeProductMutation, Types.ShippingPriceExcludeProductMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ShippingPriceExcludeProductMutation, Types.ShippingPriceExcludeProductMutationVariables>(ShippingPriceExcludeProductDocument, options);
+        return ApolloReactHooks.useMutation<Types.ShippingPriceExcludeProductMutation, Types.ShippingPriceExcludeProductMutationVariables>(ShippingPriceExcludeProductStaging, options);
       }
 export type ShippingPriceExcludeProductMutationHookResult = ReturnType<typeof useShippingPriceExcludeProductMutation>;
 export type ShippingPriceExcludeProductMutationResult = Apollo.MutationResult<Types.ShippingPriceExcludeProductMutation>;
 export type ShippingPriceExcludeProductMutationOptions = Apollo.BaseMutationOptions<Types.ShippingPriceExcludeProductMutation, Types.ShippingPriceExcludeProductMutationVariables>;
-export const ShippingPriceRemoveProductFromExcludeDocument = gql`
+export const ShippingPriceRemoveProductFromExcludeStaging = gql`
     mutation ShippingPriceRemoveProductFromExclude($id: ID!, $products: [ID!]!) {
   shippingPriceRemoveProductFromExclude(id: $id, products: $products) {
     errors {
@@ -17966,12 +17966,12 @@ export type ShippingPriceRemoveProductFromExcludeMutationFn = Apollo.MutationFun
  */
 export function useShippingPriceRemoveProductFromExcludeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ShippingPriceRemoveProductFromExcludeMutation, Types.ShippingPriceRemoveProductFromExcludeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ShippingPriceRemoveProductFromExcludeMutation, Types.ShippingPriceRemoveProductFromExcludeMutationVariables>(ShippingPriceRemoveProductFromExcludeDocument, options);
+        return ApolloReactHooks.useMutation<Types.ShippingPriceRemoveProductFromExcludeMutation, Types.ShippingPriceRemoveProductFromExcludeMutationVariables>(ShippingPriceRemoveProductFromExcludeStaging, options);
       }
 export type ShippingPriceRemoveProductFromExcludeMutationHookResult = ReturnType<typeof useShippingPriceRemoveProductFromExcludeMutation>;
 export type ShippingPriceRemoveProductFromExcludeMutationResult = Apollo.MutationResult<Types.ShippingPriceRemoveProductFromExcludeMutation>;
 export type ShippingPriceRemoveProductFromExcludeMutationOptions = Apollo.BaseMutationOptions<Types.ShippingPriceRemoveProductFromExcludeMutation, Types.ShippingPriceRemoveProductFromExcludeMutationVariables>;
-export const ShippingZonesDocument = gql`
+export const ShippingZonesStaging = gql`
     query ShippingZones($first: Int, $after: String, $last: Int, $before: String, $filter: ShippingZoneFilterInput) {
   shippingZones(
     first: $first
@@ -18015,16 +18015,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useShippingZonesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ShippingZonesQuery, Types.ShippingZonesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ShippingZonesQuery, Types.ShippingZonesQueryVariables>(ShippingZonesDocument, options);
+        return ApolloReactHooks.useQuery<Types.ShippingZonesQuery, Types.ShippingZonesQueryVariables>(ShippingZonesStaging, options);
       }
 export function useShippingZonesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShippingZonesQuery, Types.ShippingZonesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ShippingZonesQuery, Types.ShippingZonesQueryVariables>(ShippingZonesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ShippingZonesQuery, Types.ShippingZonesQueryVariables>(ShippingZonesStaging, options);
         }
 export type ShippingZonesQueryHookResult = ReturnType<typeof useShippingZonesQuery>;
 export type ShippingZonesLazyQueryHookResult = ReturnType<typeof useShippingZonesLazyQuery>;
 export type ShippingZonesQueryResult = Apollo.QueryResult<Types.ShippingZonesQuery, Types.ShippingZonesQueryVariables>;
-export const ShippingZoneDocument = gql`
+export const ShippingZoneStaging = gql`
     query ShippingZone($id: ID!, $before: String, $after: String, $first: Int, $last: Int) {
   shippingZone(id: $id) {
     ...ShippingZone
@@ -18068,16 +18068,16 @@ ${ShippingMethodWithExcludedProductsFragmentDoc}`;
  */
 export function useShippingZoneQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ShippingZoneQuery, Types.ShippingZoneQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ShippingZoneQuery, Types.ShippingZoneQueryVariables>(ShippingZoneDocument, options);
+        return ApolloReactHooks.useQuery<Types.ShippingZoneQuery, Types.ShippingZoneQueryVariables>(ShippingZoneStaging, options);
       }
 export function useShippingZoneLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShippingZoneQuery, Types.ShippingZoneQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ShippingZoneQuery, Types.ShippingZoneQueryVariables>(ShippingZoneDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ShippingZoneQuery, Types.ShippingZoneQueryVariables>(ShippingZoneStaging, options);
         }
 export type ShippingZoneQueryHookResult = ReturnType<typeof useShippingZoneQuery>;
 export type ShippingZoneLazyQueryHookResult = ReturnType<typeof useShippingZoneLazyQuery>;
 export type ShippingZoneQueryResult = Apollo.QueryResult<Types.ShippingZoneQuery, Types.ShippingZoneQueryVariables>;
-export const ShippingZoneChannelsDocument = gql`
+export const ShippingZoneChannelsStaging = gql`
     query ShippingZoneChannels($id: ID!) {
   shippingZone(id: $id) {
     id
@@ -18108,16 +18108,16 @@ export const ShippingZoneChannelsDocument = gql`
  */
 export function useShippingZoneChannelsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ShippingZoneChannelsQuery, Types.ShippingZoneChannelsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ShippingZoneChannelsQuery, Types.ShippingZoneChannelsQueryVariables>(ShippingZoneChannelsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ShippingZoneChannelsQuery, Types.ShippingZoneChannelsQueryVariables>(ShippingZoneChannelsStaging, options);
       }
 export function useShippingZoneChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShippingZoneChannelsQuery, Types.ShippingZoneChannelsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ShippingZoneChannelsQuery, Types.ShippingZoneChannelsQueryVariables>(ShippingZoneChannelsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ShippingZoneChannelsQuery, Types.ShippingZoneChannelsQueryVariables>(ShippingZoneChannelsStaging, options);
         }
 export type ShippingZoneChannelsQueryHookResult = ReturnType<typeof useShippingZoneChannelsQuery>;
 export type ShippingZoneChannelsLazyQueryHookResult = ReturnType<typeof useShippingZoneChannelsLazyQuery>;
 export type ShippingZoneChannelsQueryResult = Apollo.QueryResult<Types.ShippingZoneChannelsQuery, Types.ShippingZoneChannelsQueryVariables>;
-export const ChannelShippingZonesDocument = gql`
+export const ChannelShippingZonesStaging = gql`
     query ChannelShippingZones($filter: ShippingZoneFilterInput) {
   shippingZones(filter: $filter, first: 100) {
     edges {
@@ -18148,16 +18148,16 @@ export const ChannelShippingZonesDocument = gql`
  */
 export function useChannelShippingZonesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>(ChannelShippingZonesDocument, options);
+        return ApolloReactHooks.useQuery<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>(ChannelShippingZonesStaging, options);
       }
 export function useChannelShippingZonesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>(ChannelShippingZonesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>(ChannelShippingZonesStaging, options);
         }
 export type ChannelShippingZonesQueryHookResult = ReturnType<typeof useChannelShippingZonesQuery>;
 export type ChannelShippingZonesLazyQueryHookResult = ReturnType<typeof useChannelShippingZonesLazyQuery>;
 export type ChannelShippingZonesQueryResult = Apollo.QueryResult<Types.ChannelShippingZonesQuery, Types.ChannelShippingZonesQueryVariables>;
-export const ShippingZonesCountDocument = gql`
+export const ShippingZonesCountStaging = gql`
     query ShippingZonesCount {
   shippingZones {
     totalCount
@@ -18182,16 +18182,16 @@ export const ShippingZonesCountDocument = gql`
  */
 export function useShippingZonesCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>(ShippingZonesCountDocument, options);
+        return ApolloReactHooks.useQuery<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>(ShippingZonesCountStaging, options);
       }
 export function useShippingZonesCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>(ShippingZonesCountDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>(ShippingZonesCountStaging, options);
         }
 export type ShippingZonesCountQueryHookResult = ReturnType<typeof useShippingZonesCountQuery>;
 export type ShippingZonesCountLazyQueryHookResult = ReturnType<typeof useShippingZonesCountLazyQuery>;
 export type ShippingZonesCountQueryResult = Apollo.QueryResult<Types.ShippingZonesCountQuery, Types.ShippingZonesCountQueryVariables>;
-export const ShopSettingsUpdateDocument = gql`
+export const ShopSettingsUpdateStaging = gql`
     mutation ShopSettingsUpdate($shopSettingsInput: ShopSettingsInput!, $addressInput: AddressInput) {
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
@@ -18237,12 +18237,12 @@ export type ShopSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ShopSet
  */
 export function useShopSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ShopSettingsUpdateMutation, Types.ShopSettingsUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ShopSettingsUpdateMutation, Types.ShopSettingsUpdateMutationVariables>(ShopSettingsUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.ShopSettingsUpdateMutation, Types.ShopSettingsUpdateMutationVariables>(ShopSettingsUpdateStaging, options);
       }
 export type ShopSettingsUpdateMutationHookResult = ReturnType<typeof useShopSettingsUpdateMutation>;
 export type ShopSettingsUpdateMutationResult = Apollo.MutationResult<Types.ShopSettingsUpdateMutation>;
 export type ShopSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ShopSettingsUpdateMutation, Types.ShopSettingsUpdateMutationVariables>;
-export const RefundSettingsUpdateDocument = gql`
+export const RefundSettingsUpdateStaging = gql`
     mutation RefundSettingsUpdate($refundSettingsInput: RefundSettingsUpdateInput!) {
   refundSettingsUpdate(input: $refundSettingsInput) {
     errors {
@@ -18279,12 +18279,12 @@ export type RefundSettingsUpdateMutationFn = Apollo.MutationFunction<Types.Refun
  */
 export function useRefundSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>(RefundSettingsUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>(RefundSettingsUpdateStaging, options);
       }
 export type RefundSettingsUpdateMutationHookResult = ReturnType<typeof useRefundSettingsUpdateMutation>;
 export type RefundSettingsUpdateMutationResult = Apollo.MutationResult<Types.RefundSettingsUpdateMutation>;
 export type RefundSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>;
-export const RefundReasonReferenceClearDocument = gql`
+export const RefundReasonReferenceClearStaging = gql`
     mutation RefundReasonReferenceClear {
   refundReasonReferenceClear {
     refundSettings {
@@ -18320,12 +18320,12 @@ export type RefundReasonReferenceClearMutationFn = Apollo.MutationFunction<Types
  */
 export function useRefundReasonReferenceClearMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>(RefundReasonReferenceClearDocument, options);
+        return ApolloReactHooks.useMutation<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>(RefundReasonReferenceClearStaging, options);
       }
 export type RefundReasonReferenceClearMutationHookResult = ReturnType<typeof useRefundReasonReferenceClearMutation>;
 export type RefundReasonReferenceClearMutationResult = Apollo.MutationResult<Types.RefundReasonReferenceClearMutation>;
 export type RefundReasonReferenceClearMutationOptions = Apollo.BaseMutationOptions<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>;
-export const SiteSettingsDocument = gql`
+export const SiteSettingsStaging = gql`
     query SiteSettings {
   shop {
     ...Shop
@@ -18350,16 +18350,16 @@ export const SiteSettingsDocument = gql`
  */
 export function useSiteSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>(SiteSettingsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>(SiteSettingsStaging, options);
       }
 export function useSiteSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>(SiteSettingsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>(SiteSettingsStaging, options);
         }
 export type SiteSettingsQueryHookResult = ReturnType<typeof useSiteSettingsQuery>;
 export type SiteSettingsLazyQueryHookResult = ReturnType<typeof useSiteSettingsLazyQuery>;
 export type SiteSettingsQueryResult = Apollo.QueryResult<Types.SiteSettingsQuery, Types.SiteSettingsQueryVariables>;
-export const StaffMemberAddDocument = gql`
+export const StaffMemberAddStaging = gql`
     mutation StaffMemberAdd($input: StaffCreateInput!) {
   staffCreate(input: $input) {
     errors {
@@ -18393,12 +18393,12 @@ export type StaffMemberAddMutationFn = Apollo.MutationFunction<Types.StaffMember
  */
 export function useStaffMemberAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.StaffMemberAddMutation, Types.StaffMemberAddMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.StaffMemberAddMutation, Types.StaffMemberAddMutationVariables>(StaffMemberAddDocument, options);
+        return ApolloReactHooks.useMutation<Types.StaffMemberAddMutation, Types.StaffMemberAddMutationVariables>(StaffMemberAddStaging, options);
       }
 export type StaffMemberAddMutationHookResult = ReturnType<typeof useStaffMemberAddMutation>;
 export type StaffMemberAddMutationResult = Apollo.MutationResult<Types.StaffMemberAddMutation>;
 export type StaffMemberAddMutationOptions = Apollo.BaseMutationOptions<Types.StaffMemberAddMutation, Types.StaffMemberAddMutationVariables>;
-export const StaffMemberUpdateDocument = gql`
+export const StaffMemberUpdateStaging = gql`
     mutation StaffMemberUpdate($id: ID!, $input: StaffUpdateInput!) {
   staffUpdate(id: $id, input: $input) {
     errors {
@@ -18433,12 +18433,12 @@ export type StaffMemberUpdateMutationFn = Apollo.MutationFunction<Types.StaffMem
  */
 export function useStaffMemberUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.StaffMemberUpdateMutation, Types.StaffMemberUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.StaffMemberUpdateMutation, Types.StaffMemberUpdateMutationVariables>(StaffMemberUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.StaffMemberUpdateMutation, Types.StaffMemberUpdateMutationVariables>(StaffMemberUpdateStaging, options);
       }
 export type StaffMemberUpdateMutationHookResult = ReturnType<typeof useStaffMemberUpdateMutation>;
 export type StaffMemberUpdateMutationResult = Apollo.MutationResult<Types.StaffMemberUpdateMutation>;
 export type StaffMemberUpdateMutationOptions = Apollo.BaseMutationOptions<Types.StaffMemberUpdateMutation, Types.StaffMemberUpdateMutationVariables>;
-export const UserPassowrdChangeDocument = gql`
+export const UserPassowrdChangeStaging = gql`
     mutation UserPassowrdChange($newPassword: String!, $oldPassword: String!) {
   passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
     errors {
@@ -18469,12 +18469,12 @@ export type UserPassowrdChangeMutationFn = Apollo.MutationFunction<Types.UserPas
  */
 export function useUserPassowrdChangeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UserPassowrdChangeMutation, Types.UserPassowrdChangeMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UserPassowrdChangeMutation, Types.UserPassowrdChangeMutationVariables>(UserPassowrdChangeDocument, options);
+        return ApolloReactHooks.useMutation<Types.UserPassowrdChangeMutation, Types.UserPassowrdChangeMutationVariables>(UserPassowrdChangeStaging, options);
       }
 export type UserPassowrdChangeMutationHookResult = ReturnType<typeof useUserPassowrdChangeMutation>;
 export type UserPassowrdChangeMutationResult = Apollo.MutationResult<Types.UserPassowrdChangeMutation>;
 export type UserPassowrdChangeMutationOptions = Apollo.BaseMutationOptions<Types.UserPassowrdChangeMutation, Types.UserPassowrdChangeMutationVariables>;
-export const UserAccountUpdateDocument = gql`
+export const UserAccountUpdateStaging = gql`
     mutation UserAccountUpdate($input: AccountInput!) {
   accountUpdate(input: $input) {
     user {
@@ -18510,12 +18510,12 @@ export type UserAccountUpdateMutationFn = Apollo.MutationFunction<Types.UserAcco
  */
 export function useUserAccountUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UserAccountUpdateMutation, Types.UserAccountUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UserAccountUpdateMutation, Types.UserAccountUpdateMutationVariables>(UserAccountUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.UserAccountUpdateMutation, Types.UserAccountUpdateMutationVariables>(UserAccountUpdateStaging, options);
       }
 export type UserAccountUpdateMutationHookResult = ReturnType<typeof useUserAccountUpdateMutation>;
 export type UserAccountUpdateMutationResult = Apollo.MutationResult<Types.UserAccountUpdateMutation>;
 export type UserAccountUpdateMutationOptions = Apollo.BaseMutationOptions<Types.UserAccountUpdateMutation, Types.UserAccountUpdateMutationVariables>;
-export const StaffMemberDeleteDocument = gql`
+export const StaffMemberDeleteStaging = gql`
     mutation StaffMemberDelete($id: ID!) {
   staffDelete(id: $id) {
     errors {
@@ -18545,12 +18545,12 @@ export type StaffMemberDeleteMutationFn = Apollo.MutationFunction<Types.StaffMem
  */
 export function useStaffMemberDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.StaffMemberDeleteMutation, Types.StaffMemberDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.StaffMemberDeleteMutation, Types.StaffMemberDeleteMutationVariables>(StaffMemberDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.StaffMemberDeleteMutation, Types.StaffMemberDeleteMutationVariables>(StaffMemberDeleteStaging, options);
       }
 export type StaffMemberDeleteMutationHookResult = ReturnType<typeof useStaffMemberDeleteMutation>;
 export type StaffMemberDeleteMutationResult = Apollo.MutationResult<Types.StaffMemberDeleteMutation>;
 export type StaffMemberDeleteMutationOptions = Apollo.BaseMutationOptions<Types.StaffMemberDeleteMutation, Types.StaffMemberDeleteMutationVariables>;
-export const UserAvatarUpdateDocument = gql`
+export const UserAvatarUpdateStaging = gql`
     mutation UserAvatarUpdate($image: Upload!) {
   userAvatarUpdate(image: $image) {
     errors {
@@ -18586,12 +18586,12 @@ export type UserAvatarUpdateMutationFn = Apollo.MutationFunction<Types.UserAvata
  */
 export function useUserAvatarUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UserAvatarUpdateMutation, Types.UserAvatarUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UserAvatarUpdateMutation, Types.UserAvatarUpdateMutationVariables>(UserAvatarUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.UserAvatarUpdateMutation, Types.UserAvatarUpdateMutationVariables>(UserAvatarUpdateStaging, options);
       }
 export type UserAvatarUpdateMutationHookResult = ReturnType<typeof useUserAvatarUpdateMutation>;
 export type UserAvatarUpdateMutationResult = Apollo.MutationResult<Types.UserAvatarUpdateMutation>;
 export type UserAvatarUpdateMutationOptions = Apollo.BaseMutationOptions<Types.UserAvatarUpdateMutation, Types.UserAvatarUpdateMutationVariables>;
-export const UserAvatarDeleteDocument = gql`
+export const UserAvatarDeleteStaging = gql`
     mutation UserAvatarDelete {
   userAvatarDelete {
     errors {
@@ -18626,12 +18626,12 @@ export type UserAvatarDeleteMutationFn = Apollo.MutationFunction<Types.UserAvata
  */
 export function useUserAvatarDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UserAvatarDeleteMutation, Types.UserAvatarDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UserAvatarDeleteMutation, Types.UserAvatarDeleteMutationVariables>(UserAvatarDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.UserAvatarDeleteMutation, Types.UserAvatarDeleteMutationVariables>(UserAvatarDeleteStaging, options);
       }
 export type UserAvatarDeleteMutationHookResult = ReturnType<typeof useUserAvatarDeleteMutation>;
 export type UserAvatarDeleteMutationResult = Apollo.MutationResult<Types.UserAvatarDeleteMutation>;
 export type UserAvatarDeleteMutationOptions = Apollo.BaseMutationOptions<Types.UserAvatarDeleteMutation, Types.UserAvatarDeleteMutationVariables>;
-export const ChangeUserPasswordDocument = gql`
+export const ChangeUserPasswordStaging = gql`
     mutation ChangeUserPassword($newPassword: String!, $oldPassword: String!) {
   passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
     errors {
@@ -18662,12 +18662,12 @@ export type ChangeUserPasswordMutationFn = Apollo.MutationFunction<Types.ChangeU
  */
 export function useChangeUserPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChangeUserPasswordMutation, Types.ChangeUserPasswordMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChangeUserPasswordMutation, Types.ChangeUserPasswordMutationVariables>(ChangeUserPasswordDocument, options);
+        return ApolloReactHooks.useMutation<Types.ChangeUserPasswordMutation, Types.ChangeUserPasswordMutationVariables>(ChangeUserPasswordStaging, options);
       }
 export type ChangeUserPasswordMutationHookResult = ReturnType<typeof useChangeUserPasswordMutation>;
 export type ChangeUserPasswordMutationResult = Apollo.MutationResult<Types.ChangeUserPasswordMutation>;
 export type ChangeUserPasswordMutationOptions = Apollo.BaseMutationOptions<Types.ChangeUserPasswordMutation, Types.ChangeUserPasswordMutationVariables>;
-export const StaffListDocument = gql`
+export const StaffListStaging = gql`
     query StaffList($first: Int, $after: String, $last: Int, $before: String, $filter: StaffUserInput, $sort: UserSortingInput) {
   staffUsers(
     before: $before
@@ -18719,16 +18719,16 @@ export const StaffListDocument = gql`
  */
 export function useStaffListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.StaffListQuery, Types.StaffListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.StaffListQuery, Types.StaffListQueryVariables>(StaffListDocument, options);
+        return ApolloReactHooks.useQuery<Types.StaffListQuery, Types.StaffListQueryVariables>(StaffListStaging, options);
       }
 export function useStaffListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.StaffListQuery, Types.StaffListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.StaffListQuery, Types.StaffListQueryVariables>(StaffListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.StaffListQuery, Types.StaffListQueryVariables>(StaffListStaging, options);
         }
 export type StaffListQueryHookResult = ReturnType<typeof useStaffListQuery>;
 export type StaffListLazyQueryHookResult = ReturnType<typeof useStaffListLazyQuery>;
 export type StaffListQueryResult = Apollo.QueryResult<Types.StaffListQuery, Types.StaffListQueryVariables>;
-export const StaffMemberDetailsDocument = gql`
+export const StaffMemberDetailsStaging = gql`
     query StaffMemberDetails($id: ID!) {
   user(id: $id) {
     ...StaffMemberDetails
@@ -18754,16 +18754,16 @@ export const StaffMemberDetailsDocument = gql`
  */
 export function useStaffMemberDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>(StaffMemberDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>(StaffMemberDetailsStaging, options);
       }
 export function useStaffMemberDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>(StaffMemberDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>(StaffMemberDetailsStaging, options);
         }
 export type StaffMemberDetailsQueryHookResult = ReturnType<typeof useStaffMemberDetailsQuery>;
 export type StaffMemberDetailsLazyQueryHookResult = ReturnType<typeof useStaffMemberDetailsLazyQuery>;
 export type StaffMemberDetailsQueryResult = Apollo.QueryResult<Types.StaffMemberDetailsQuery, Types.StaffMemberDetailsQueryVariables>;
-export const MenuCreateDocument = gql`
+export const MenuCreateStaging = gql`
     mutation MenuCreate($input: MenuCreateInput!) {
   menuCreate(input: $input) {
     errors {
@@ -18796,12 +18796,12 @@ export type MenuCreateMutationFn = Apollo.MutationFunction<Types.MenuCreateMutat
  */
 export function useMenuCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>(MenuCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>(MenuCreateStaging, options);
       }
 export type MenuCreateMutationHookResult = ReturnType<typeof useMenuCreateMutation>;
 export type MenuCreateMutationResult = Apollo.MutationResult<Types.MenuCreateMutation>;
 export type MenuCreateMutationOptions = Apollo.BaseMutationOptions<Types.MenuCreateMutation, Types.MenuCreateMutationVariables>;
-export const MenuBulkDeleteDocument = gql`
+export const MenuBulkDeleteStaging = gql`
     mutation MenuBulkDelete($ids: [ID!]!) {
   menuBulkDelete(ids: $ids) {
     errors {
@@ -18831,12 +18831,12 @@ export type MenuBulkDeleteMutationFn = Apollo.MutationFunction<Types.MenuBulkDel
  */
 export function useMenuBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>(MenuBulkDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>(MenuBulkDeleteStaging, options);
       }
 export type MenuBulkDeleteMutationHookResult = ReturnType<typeof useMenuBulkDeleteMutation>;
 export type MenuBulkDeleteMutationResult = Apollo.MutationResult<Types.MenuBulkDeleteMutation>;
 export type MenuBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.MenuBulkDeleteMutation, Types.MenuBulkDeleteMutationVariables>;
-export const MenuDeleteDocument = gql`
+export const MenuDeleteStaging = gql`
     mutation MenuDelete($id: ID!) {
   menuDelete(id: $id) {
     errors {
@@ -18866,12 +18866,12 @@ export type MenuDeleteMutationFn = Apollo.MutationFunction<Types.MenuDeleteMutat
  */
 export function useMenuDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>(MenuDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>(MenuDeleteStaging, options);
       }
 export type MenuDeleteMutationHookResult = ReturnType<typeof useMenuDeleteMutation>;
 export type MenuDeleteMutationResult = Apollo.MutationResult<Types.MenuDeleteMutation>;
 export type MenuDeleteMutationOptions = Apollo.BaseMutationOptions<Types.MenuDeleteMutation, Types.MenuDeleteMutationVariables>;
-export const MenuItemCreateDocument = gql`
+export const MenuItemCreateStaging = gql`
     mutation MenuItemCreate($input: MenuItemCreateInput!) {
   menuItemCreate(input: $input) {
     errors {
@@ -18910,12 +18910,12 @@ export type MenuItemCreateMutationFn = Apollo.MutationFunction<Types.MenuItemCre
  */
 export function useMenuItemCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>(MenuItemCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>(MenuItemCreateStaging, options);
       }
 export type MenuItemCreateMutationHookResult = ReturnType<typeof useMenuItemCreateMutation>;
 export type MenuItemCreateMutationResult = Apollo.MutationResult<Types.MenuItemCreateMutation>;
 export type MenuItemCreateMutationOptions = Apollo.BaseMutationOptions<Types.MenuItemCreateMutation, Types.MenuItemCreateMutationVariables>;
-export const MenuUpdateDocument = gql`
+export const MenuUpdateStaging = gql`
     mutation MenuUpdate($id: ID!, $name: String!, $moves: [MenuItemMoveInput!]!, $removeIds: [ID!]!) {
   menuUpdate(id: $id, input: {name: $name}) {
     errors {
@@ -18958,12 +18958,12 @@ export type MenuUpdateMutationFn = Apollo.MutationFunction<Types.MenuUpdateMutat
  */
 export function useMenuUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>(MenuUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>(MenuUpdateStaging, options);
       }
 export type MenuUpdateMutationHookResult = ReturnType<typeof useMenuUpdateMutation>;
 export type MenuUpdateMutationResult = Apollo.MutationResult<Types.MenuUpdateMutation>;
 export type MenuUpdateMutationOptions = Apollo.BaseMutationOptions<Types.MenuUpdateMutation, Types.MenuUpdateMutationVariables>;
-export const MenuItemUpdateDocument = gql`
+export const MenuItemUpdateStaging = gql`
     mutation MenuItemUpdate($id: ID!, $input: MenuItemInput!) {
   menuItemUpdate(id: $id, input: $input) {
     errors {
@@ -18998,12 +18998,12 @@ export type MenuItemUpdateMutationFn = Apollo.MutationFunction<Types.MenuItemUpd
  */
 export function useMenuItemUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>(MenuItemUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>(MenuItemUpdateStaging, options);
       }
 export type MenuItemUpdateMutationHookResult = ReturnType<typeof useMenuItemUpdateMutation>;
 export type MenuItemUpdateMutationResult = Apollo.MutationResult<Types.MenuItemUpdateMutation>;
 export type MenuItemUpdateMutationOptions = Apollo.BaseMutationOptions<Types.MenuItemUpdateMutation, Types.MenuItemUpdateMutationVariables>;
-export const MenuListDocument = gql`
+export const MenuListStaging = gql`
     query MenuList($first: Int, $after: String, $last: Int, $before: String, $sort: MenuSortingInput) {
   menus(first: $first, after: $after, before: $before, last: $last, sortBy: $sort) {
     edges {
@@ -19041,16 +19041,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useMenuListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.MenuListQuery, Types.MenuListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.MenuListQuery, Types.MenuListQueryVariables>(MenuListDocument, options);
+        return ApolloReactHooks.useQuery<Types.MenuListQuery, Types.MenuListQueryVariables>(MenuListStaging, options);
       }
 export function useMenuListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuListQuery, Types.MenuListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.MenuListQuery, Types.MenuListQueryVariables>(MenuListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.MenuListQuery, Types.MenuListQueryVariables>(MenuListStaging, options);
         }
 export type MenuListQueryHookResult = ReturnType<typeof useMenuListQuery>;
 export type MenuListLazyQueryHookResult = ReturnType<typeof useMenuListLazyQuery>;
 export type MenuListQueryResult = Apollo.QueryResult<Types.MenuListQuery, Types.MenuListQueryVariables>;
-export const MenuDetailsDocument = gql`
+export const MenuDetailsStaging = gql`
     query MenuDetails($id: ID!) {
   menu(id: $id) {
     ...MenuDetails
@@ -19076,16 +19076,16 @@ export const MenuDetailsDocument = gql`
  */
 export function useMenuDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>(MenuDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>(MenuDetailsStaging, options);
       }
 export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>(MenuDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>(MenuDetailsStaging, options);
         }
 export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
 export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
 export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
-export const TaxConfigurationUpdateDocument = gql`
+export const TaxConfigurationUpdateStaging = gql`
     mutation TaxConfigurationUpdate($id: ID!, $input: TaxConfigurationUpdateInput!) {
   taxConfigurationUpdate(id: $id, input: $input) {
     errors {
@@ -19120,12 +19120,12 @@ export type TaxConfigurationUpdateMutationFn = Apollo.MutationFunction<Types.Tax
  */
 export function useTaxConfigurationUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxConfigurationUpdateMutation, Types.TaxConfigurationUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.TaxConfigurationUpdateMutation, Types.TaxConfigurationUpdateMutationVariables>(TaxConfigurationUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.TaxConfigurationUpdateMutation, Types.TaxConfigurationUpdateMutationVariables>(TaxConfigurationUpdateStaging, options);
       }
 export type TaxConfigurationUpdateMutationHookResult = ReturnType<typeof useTaxConfigurationUpdateMutation>;
 export type TaxConfigurationUpdateMutationResult = Apollo.MutationResult<Types.TaxConfigurationUpdateMutation>;
 export type TaxConfigurationUpdateMutationOptions = Apollo.BaseMutationOptions<Types.TaxConfigurationUpdateMutation, Types.TaxConfigurationUpdateMutationVariables>;
-export const TaxCountryConfigurationUpdateDocument = gql`
+export const TaxCountryConfigurationUpdateStaging = gql`
     mutation TaxCountryConfigurationUpdate($countryCode: CountryCode!, $updateTaxClassRates: [TaxClassRateInput!]!) {
   taxCountryConfigurationUpdate(
     countryCode: $countryCode
@@ -19163,12 +19163,12 @@ export type TaxCountryConfigurationUpdateMutationFn = Apollo.MutationFunction<Ty
  */
 export function useTaxCountryConfigurationUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>(TaxCountryConfigurationUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>(TaxCountryConfigurationUpdateStaging, options);
       }
 export type TaxCountryConfigurationUpdateMutationHookResult = ReturnType<typeof useTaxCountryConfigurationUpdateMutation>;
 export type TaxCountryConfigurationUpdateMutationResult = Apollo.MutationResult<Types.TaxCountryConfigurationUpdateMutation>;
 export type TaxCountryConfigurationUpdateMutationOptions = Apollo.BaseMutationOptions<Types.TaxCountryConfigurationUpdateMutation, Types.TaxCountryConfigurationUpdateMutationVariables>;
-export const TaxCountryConfigurationDeleteDocument = gql`
+export const TaxCountryConfigurationDeleteStaging = gql`
     mutation TaxCountryConfigurationDelete($countryCode: CountryCode!) {
   taxCountryConfigurationDelete(countryCode: $countryCode) {
     errors {
@@ -19202,12 +19202,12 @@ export type TaxCountryConfigurationDeleteMutationFn = Apollo.MutationFunction<Ty
  */
 export function useTaxCountryConfigurationDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>(TaxCountryConfigurationDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>(TaxCountryConfigurationDeleteStaging, options);
       }
 export type TaxCountryConfigurationDeleteMutationHookResult = ReturnType<typeof useTaxCountryConfigurationDeleteMutation>;
 export type TaxCountryConfigurationDeleteMutationResult = Apollo.MutationResult<Types.TaxCountryConfigurationDeleteMutation>;
 export type TaxCountryConfigurationDeleteMutationOptions = Apollo.BaseMutationOptions<Types.TaxCountryConfigurationDeleteMutation, Types.TaxCountryConfigurationDeleteMutationVariables>;
-export const TaxClassUpdateDocument = gql`
+export const TaxClassUpdateStaging = gql`
     mutation TaxClassUpdate($id: ID!, $input: TaxClassUpdateInput!) {
   taxClassUpdate(id: $id, input: $input) {
     errors {
@@ -19242,12 +19242,12 @@ export type TaxClassUpdateMutationFn = Apollo.MutationFunction<Types.TaxClassUpd
  */
 export function useTaxClassUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>(TaxClassUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>(TaxClassUpdateStaging, options);
       }
 export type TaxClassUpdateMutationHookResult = ReturnType<typeof useTaxClassUpdateMutation>;
 export type TaxClassUpdateMutationResult = Apollo.MutationResult<Types.TaxClassUpdateMutation>;
 export type TaxClassUpdateMutationOptions = Apollo.BaseMutationOptions<Types.TaxClassUpdateMutation, Types.TaxClassUpdateMutationVariables>;
-export const TaxClassCreateDocument = gql`
+export const TaxClassCreateStaging = gql`
     mutation TaxClassCreate($input: TaxClassCreateInput!) {
   taxClassCreate(input: $input) {
     errors {
@@ -19281,12 +19281,12 @@ export type TaxClassCreateMutationFn = Apollo.MutationFunction<Types.TaxClassCre
  */
 export function useTaxClassCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>(TaxClassCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>(TaxClassCreateStaging, options);
       }
 export type TaxClassCreateMutationHookResult = ReturnType<typeof useTaxClassCreateMutation>;
 export type TaxClassCreateMutationResult = Apollo.MutationResult<Types.TaxClassCreateMutation>;
 export type TaxClassCreateMutationOptions = Apollo.BaseMutationOptions<Types.TaxClassCreateMutation, Types.TaxClassCreateMutationVariables>;
-export const TaxClassDeleteDocument = gql`
+export const TaxClassDeleteStaging = gql`
     mutation TaxClassDelete($id: ID!) {
   taxClassDelete(id: $id) {
     errors {
@@ -19316,12 +19316,12 @@ export type TaxClassDeleteMutationFn = Apollo.MutationFunction<Types.TaxClassDel
  */
 export function useTaxClassDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>(TaxClassDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>(TaxClassDeleteStaging, options);
       }
 export type TaxClassDeleteMutationHookResult = ReturnType<typeof useTaxClassDeleteMutation>;
 export type TaxClassDeleteMutationResult = Apollo.MutationResult<Types.TaxClassDeleteMutation>;
 export type TaxClassDeleteMutationOptions = Apollo.BaseMutationOptions<Types.TaxClassDeleteMutation, Types.TaxClassDeleteMutationVariables>;
-export const TaxConfigurationsListDocument = gql`
+export const TaxConfigurationsListStaging = gql`
     query TaxConfigurationsList($before: String, $after: String, $first: Int, $last: Int, $filter: TaxConfigurationFilterInput) {
   taxConfigurations(
     before: $before
@@ -19361,16 +19361,16 @@ export const TaxConfigurationsListDocument = gql`
  */
 export function useTaxConfigurationsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>(TaxConfigurationsListDocument, options);
+        return ApolloReactHooks.useQuery<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>(TaxConfigurationsListStaging, options);
       }
 export function useTaxConfigurationsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>(TaxConfigurationsListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>(TaxConfigurationsListStaging, options);
         }
 export type TaxConfigurationsListQueryHookResult = ReturnType<typeof useTaxConfigurationsListQuery>;
 export type TaxConfigurationsListLazyQueryHookResult = ReturnType<typeof useTaxConfigurationsListLazyQuery>;
 export type TaxConfigurationsListQueryResult = Apollo.QueryResult<Types.TaxConfigurationsListQuery, Types.TaxConfigurationsListQueryVariables>;
-export const TaxCountriesListDocument = gql`
+export const TaxCountriesListStaging = gql`
     query TaxCountriesList {
   taxCountryConfigurations {
     ...TaxCountryConfiguration
@@ -19395,16 +19395,16 @@ export const TaxCountriesListDocument = gql`
  */
 export function useTaxCountriesListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>(TaxCountriesListDocument, options);
+        return ApolloReactHooks.useQuery<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>(TaxCountriesListStaging, options);
       }
 export function useTaxCountriesListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>(TaxCountriesListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>(TaxCountriesListStaging, options);
         }
 export type TaxCountriesListQueryHookResult = ReturnType<typeof useTaxCountriesListQuery>;
 export type TaxCountriesListLazyQueryHookResult = ReturnType<typeof useTaxCountriesListLazyQuery>;
 export type TaxCountriesListQueryResult = Apollo.QueryResult<Types.TaxCountriesListQuery, Types.TaxCountriesListQueryVariables>;
-export const TaxClassesListDocument = gql`
+export const TaxClassesListStaging = gql`
     query TaxClassesList($before: String, $after: String, $first: Int, $last: Int, $filter: TaxClassFilterInput, $sortBy: TaxClassSortingInput) {
   taxClasses(
     before: $before
@@ -19446,16 +19446,16 @@ export const TaxClassesListDocument = gql`
  */
 export function useTaxClassesListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxClassesListQuery, Types.TaxClassesListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.TaxClassesListQuery, Types.TaxClassesListQueryVariables>(TaxClassesListDocument, options);
+        return ApolloReactHooks.useQuery<Types.TaxClassesListQuery, Types.TaxClassesListQueryVariables>(TaxClassesListStaging, options);
       }
 export function useTaxClassesListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxClassesListQuery, Types.TaxClassesListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.TaxClassesListQuery, Types.TaxClassesListQueryVariables>(TaxClassesListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.TaxClassesListQuery, Types.TaxClassesListQueryVariables>(TaxClassesListStaging, options);
         }
 export type TaxClassesListQueryHookResult = ReturnType<typeof useTaxClassesListQuery>;
 export type TaxClassesListLazyQueryHookResult = ReturnType<typeof useTaxClassesListLazyQuery>;
 export type TaxClassesListQueryResult = Apollo.QueryResult<Types.TaxClassesListQuery, Types.TaxClassesListQueryVariables>;
-export const TaxClassAssignDocument = gql`
+export const TaxClassAssignStaging = gql`
     query TaxClassAssign($first: Int, $after: String) {
   taxClasses(first: $first, after: $after) {
     edges {
@@ -19491,16 +19491,16 @@ export const TaxClassAssignDocument = gql`
  */
 export function useTaxClassAssignQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>(TaxClassAssignDocument, options);
+        return ApolloReactHooks.useQuery<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>(TaxClassAssignStaging, options);
       }
 export function useTaxClassAssignLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>(TaxClassAssignDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>(TaxClassAssignStaging, options);
         }
 export type TaxClassAssignQueryHookResult = ReturnType<typeof useTaxClassAssignQuery>;
 export type TaxClassAssignLazyQueryHookResult = ReturnType<typeof useTaxClassAssignLazyQuery>;
 export type TaxClassAssignQueryResult = Apollo.QueryResult<Types.TaxClassAssignQuery, Types.TaxClassAssignQueryVariables>;
-export const TaxStrategyChoicesDocument = gql`
+export const TaxStrategyChoicesStaging = gql`
     query TaxStrategyChoices {
   shop {
     availableTaxApps {
@@ -19536,16 +19536,16 @@ export const TaxStrategyChoicesDocument = gql`
  */
 export function useTaxStrategyChoicesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>(TaxStrategyChoicesDocument, options);
+        return ApolloReactHooks.useQuery<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>(TaxStrategyChoicesStaging, options);
       }
 export function useTaxStrategyChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>(TaxStrategyChoicesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>(TaxStrategyChoicesStaging, options);
         }
 export type TaxStrategyChoicesQueryHookResult = ReturnType<typeof useTaxStrategyChoicesQuery>;
 export type TaxStrategyChoicesLazyQueryHookResult = ReturnType<typeof useTaxStrategyChoicesLazyQuery>;
 export type TaxStrategyChoicesQueryResult = Apollo.QueryResult<Types.TaxStrategyChoicesQuery, Types.TaxStrategyChoicesQueryVariables>;
-export const UpdateProductTranslationsDocument = gql`
+export const UpdateProductTranslationsStaging = gql`
     mutation UpdateProductTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
   productTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19595,12 +19595,12 @@ export type UpdateProductTranslationsMutationFn = Apollo.MutationFunction<Types.
  */
 export function useUpdateProductTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateProductTranslationsMutation, Types.UpdateProductTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateProductTranslationsMutation, Types.UpdateProductTranslationsMutationVariables>(UpdateProductTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateProductTranslationsMutation, Types.UpdateProductTranslationsMutationVariables>(UpdateProductTranslationsStaging, options);
       }
 export type UpdateProductTranslationsMutationHookResult = ReturnType<typeof useUpdateProductTranslationsMutation>;
 export type UpdateProductTranslationsMutationResult = Apollo.MutationResult<Types.UpdateProductTranslationsMutation>;
 export type UpdateProductTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateProductTranslationsMutation, Types.UpdateProductTranslationsMutationVariables>;
-export const UpdateProductVariantTranslationsDocument = gql`
+export const UpdateProductVariantTranslationsStaging = gql`
     mutation UpdateProductVariantTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
   productVariantTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19644,12 +19644,12 @@ export type UpdateProductVariantTranslationsMutationFn = Apollo.MutationFunction
  */
 export function useUpdateProductVariantTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateProductVariantTranslationsMutation, Types.UpdateProductVariantTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateProductVariantTranslationsMutation, Types.UpdateProductVariantTranslationsMutationVariables>(UpdateProductVariantTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateProductVariantTranslationsMutation, Types.UpdateProductVariantTranslationsMutationVariables>(UpdateProductVariantTranslationsStaging, options);
       }
 export type UpdateProductVariantTranslationsMutationHookResult = ReturnType<typeof useUpdateProductVariantTranslationsMutation>;
 export type UpdateProductVariantTranslationsMutationResult = Apollo.MutationResult<Types.UpdateProductVariantTranslationsMutation>;
 export type UpdateProductVariantTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateProductVariantTranslationsMutation, Types.UpdateProductVariantTranslationsMutationVariables>;
-export const UpdateCategoryTranslationsDocument = gql`
+export const UpdateCategoryTranslationsStaging = gql`
     mutation UpdateCategoryTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
   categoryTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19698,12 +19698,12 @@ export type UpdateCategoryTranslationsMutationFn = Apollo.MutationFunction<Types
  */
 export function useUpdateCategoryTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateCategoryTranslationsMutation, Types.UpdateCategoryTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateCategoryTranslationsMutation, Types.UpdateCategoryTranslationsMutationVariables>(UpdateCategoryTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateCategoryTranslationsMutation, Types.UpdateCategoryTranslationsMutationVariables>(UpdateCategoryTranslationsStaging, options);
       }
 export type UpdateCategoryTranslationsMutationHookResult = ReturnType<typeof useUpdateCategoryTranslationsMutation>;
 export type UpdateCategoryTranslationsMutationResult = Apollo.MutationResult<Types.UpdateCategoryTranslationsMutation>;
 export type UpdateCategoryTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateCategoryTranslationsMutation, Types.UpdateCategoryTranslationsMutationVariables>;
-export const UpdateCollectionTranslationsDocument = gql`
+export const UpdateCollectionTranslationsStaging = gql`
     mutation UpdateCollectionTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
   collectionTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19752,12 +19752,12 @@ export type UpdateCollectionTranslationsMutationFn = Apollo.MutationFunction<Typ
  */
 export function useUpdateCollectionTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateCollectionTranslationsMutation, Types.UpdateCollectionTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateCollectionTranslationsMutation, Types.UpdateCollectionTranslationsMutationVariables>(UpdateCollectionTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateCollectionTranslationsMutation, Types.UpdateCollectionTranslationsMutationVariables>(UpdateCollectionTranslationsStaging, options);
       }
 export type UpdateCollectionTranslationsMutationHookResult = ReturnType<typeof useUpdateCollectionTranslationsMutation>;
 export type UpdateCollectionTranslationsMutationResult = Apollo.MutationResult<Types.UpdateCollectionTranslationsMutation>;
 export type UpdateCollectionTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateCollectionTranslationsMutation, Types.UpdateCollectionTranslationsMutationVariables>;
-export const UpdatePageTranslationsDocument = gql`
+export const UpdatePageTranslationsStaging = gql`
     mutation UpdatePageTranslations($id: ID!, $input: PageTranslationInput!, $language: LanguageCodeEnum!) {
   pageTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19793,12 +19793,12 @@ export type UpdatePageTranslationsMutationFn = Apollo.MutationFunction<Types.Upd
  */
 export function useUpdatePageTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdatePageTranslationsMutation, Types.UpdatePageTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdatePageTranslationsMutation, Types.UpdatePageTranslationsMutationVariables>(UpdatePageTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdatePageTranslationsMutation, Types.UpdatePageTranslationsMutationVariables>(UpdatePageTranslationsStaging, options);
       }
 export type UpdatePageTranslationsMutationHookResult = ReturnType<typeof useUpdatePageTranslationsMutation>;
 export type UpdatePageTranslationsMutationResult = Apollo.MutationResult<Types.UpdatePageTranslationsMutation>;
 export type UpdatePageTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdatePageTranslationsMutation, Types.UpdatePageTranslationsMutationVariables>;
-export const UpdateVoucherTranslationsDocument = gql`
+export const UpdateVoucherTranslationsStaging = gql`
     mutation UpdateVoucherTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
   voucherTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19842,12 +19842,12 @@ export type UpdateVoucherTranslationsMutationFn = Apollo.MutationFunction<Types.
  */
 export function useUpdateVoucherTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateVoucherTranslationsMutation, Types.UpdateVoucherTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateVoucherTranslationsMutation, Types.UpdateVoucherTranslationsMutationVariables>(UpdateVoucherTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateVoucherTranslationsMutation, Types.UpdateVoucherTranslationsMutationVariables>(UpdateVoucherTranslationsStaging, options);
       }
 export type UpdateVoucherTranslationsMutationHookResult = ReturnType<typeof useUpdateVoucherTranslationsMutation>;
 export type UpdateVoucherTranslationsMutationResult = Apollo.MutationResult<Types.UpdateVoucherTranslationsMutation>;
 export type UpdateVoucherTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateVoucherTranslationsMutation, Types.UpdateVoucherTranslationsMutationVariables>;
-export const UpdateSaleTranslationsDocument = gql`
+export const UpdateSaleTranslationsStaging = gql`
     mutation UpdateSaleTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
   saleTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19891,12 +19891,12 @@ export type UpdateSaleTranslationsMutationFn = Apollo.MutationFunction<Types.Upd
  */
 export function useUpdateSaleTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateSaleTranslationsMutation, Types.UpdateSaleTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateSaleTranslationsMutation, Types.UpdateSaleTranslationsMutationVariables>(UpdateSaleTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateSaleTranslationsMutation, Types.UpdateSaleTranslationsMutationVariables>(UpdateSaleTranslationsStaging, options);
       }
 export type UpdateSaleTranslationsMutationHookResult = ReturnType<typeof useUpdateSaleTranslationsMutation>;
 export type UpdateSaleTranslationsMutationResult = Apollo.MutationResult<Types.UpdateSaleTranslationsMutation>;
 export type UpdateSaleTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateSaleTranslationsMutation, Types.UpdateSaleTranslationsMutationVariables>;
-export const UpdateAttributeTranslationsDocument = gql`
+export const UpdateAttributeTranslationsStaging = gql`
     mutation UpdateAttributeTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
   attributeTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19936,12 +19936,12 @@ export type UpdateAttributeTranslationsMutationFn = Apollo.MutationFunction<Type
  */
 export function useUpdateAttributeTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateAttributeTranslationsMutation, Types.UpdateAttributeTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateAttributeTranslationsMutation, Types.UpdateAttributeTranslationsMutationVariables>(UpdateAttributeTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateAttributeTranslationsMutation, Types.UpdateAttributeTranslationsMutationVariables>(UpdateAttributeTranslationsStaging, options);
       }
 export type UpdateAttributeTranslationsMutationHookResult = ReturnType<typeof useUpdateAttributeTranslationsMutation>;
 export type UpdateAttributeTranslationsMutationResult = Apollo.MutationResult<Types.UpdateAttributeTranslationsMutation>;
 export type UpdateAttributeTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateAttributeTranslationsMutation, Types.UpdateAttributeTranslationsMutationVariables>;
-export const UpdateAttributeValueTranslationsDocument = gql`
+export const UpdateAttributeValueTranslationsStaging = gql`
     mutation UpdateAttributeValueTranslations($id: ID!, $input: AttributeValueTranslationInput!, $language: LanguageCodeEnum!) {
   attributeValueTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -19983,12 +19983,12 @@ export type UpdateAttributeValueTranslationsMutationFn = Apollo.MutationFunction
  */
 export function useUpdateAttributeValueTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateAttributeValueTranslationsMutation, Types.UpdateAttributeValueTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateAttributeValueTranslationsMutation, Types.UpdateAttributeValueTranslationsMutationVariables>(UpdateAttributeValueTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateAttributeValueTranslationsMutation, Types.UpdateAttributeValueTranslationsMutationVariables>(UpdateAttributeValueTranslationsStaging, options);
       }
 export type UpdateAttributeValueTranslationsMutationHookResult = ReturnType<typeof useUpdateAttributeValueTranslationsMutation>;
 export type UpdateAttributeValueTranslationsMutationResult = Apollo.MutationResult<Types.UpdateAttributeValueTranslationsMutation>;
 export type UpdateAttributeValueTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateAttributeValueTranslationsMutation, Types.UpdateAttributeValueTranslationsMutationVariables>;
-export const UpdateShippingMethodTranslationsDocument = gql`
+export const UpdateShippingMethodTranslationsStaging = gql`
     mutation UpdateShippingMethodTranslations($id: ID!, $input: ShippingPriceTranslationInput!, $language: LanguageCodeEnum!) {
   shippingPriceTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -20033,12 +20033,12 @@ export type UpdateShippingMethodTranslationsMutationFn = Apollo.MutationFunction
  */
 export function useUpdateShippingMethodTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateShippingMethodTranslationsMutation, Types.UpdateShippingMethodTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateShippingMethodTranslationsMutation, Types.UpdateShippingMethodTranslationsMutationVariables>(UpdateShippingMethodTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateShippingMethodTranslationsMutation, Types.UpdateShippingMethodTranslationsMutationVariables>(UpdateShippingMethodTranslationsStaging, options);
       }
 export type UpdateShippingMethodTranslationsMutationHookResult = ReturnType<typeof useUpdateShippingMethodTranslationsMutation>;
 export type UpdateShippingMethodTranslationsMutationResult = Apollo.MutationResult<Types.UpdateShippingMethodTranslationsMutation>;
 export type UpdateShippingMethodTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateShippingMethodTranslationsMutation, Types.UpdateShippingMethodTranslationsMutationVariables>;
-export const UpdateMenuItemTranslationsDocument = gql`
+export const UpdateMenuItemTranslationsStaging = gql`
     mutation UpdateMenuItemTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
   menuItemTranslate(id: $id, input: $input, languageCode: $language) {
     errors {
@@ -20082,12 +20082,12 @@ export type UpdateMenuItemTranslationsMutationFn = Apollo.MutationFunction<Types
  */
 export function useUpdateMenuItemTranslationsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateMenuItemTranslationsMutation, Types.UpdateMenuItemTranslationsMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateMenuItemTranslationsMutation, Types.UpdateMenuItemTranslationsMutationVariables>(UpdateMenuItemTranslationsDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateMenuItemTranslationsMutation, Types.UpdateMenuItemTranslationsMutationVariables>(UpdateMenuItemTranslationsStaging, options);
       }
 export type UpdateMenuItemTranslationsMutationHookResult = ReturnType<typeof useUpdateMenuItemTranslationsMutation>;
 export type UpdateMenuItemTranslationsMutationResult = Apollo.MutationResult<Types.UpdateMenuItemTranslationsMutation>;
 export type UpdateMenuItemTranslationsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateMenuItemTranslationsMutation, Types.UpdateMenuItemTranslationsMutationVariables>;
-export const CategoryTranslationsDocument = gql`
+export const CategoryTranslationsStaging = gql`
     query CategoryTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: CATEGORY
@@ -20131,16 +20131,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useCategoryTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CategoryTranslationsQuery, Types.CategoryTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CategoryTranslationsQuery, Types.CategoryTranslationsQueryVariables>(CategoryTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CategoryTranslationsQuery, Types.CategoryTranslationsQueryVariables>(CategoryTranslationsStaging, options);
       }
 export function useCategoryTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CategoryTranslationsQuery, Types.CategoryTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CategoryTranslationsQuery, Types.CategoryTranslationsQueryVariables>(CategoryTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CategoryTranslationsQuery, Types.CategoryTranslationsQueryVariables>(CategoryTranslationsStaging, options);
         }
 export type CategoryTranslationsQueryHookResult = ReturnType<typeof useCategoryTranslationsQuery>;
 export type CategoryTranslationsLazyQueryHookResult = ReturnType<typeof useCategoryTranslationsLazyQuery>;
 export type CategoryTranslationsQueryResult = Apollo.QueryResult<Types.CategoryTranslationsQuery, Types.CategoryTranslationsQueryVariables>;
-export const CollectionTranslationsDocument = gql`
+export const CollectionTranslationsStaging = gql`
     query CollectionTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: COLLECTION
@@ -20184,16 +20184,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useCollectionTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CollectionTranslationsQuery, Types.CollectionTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CollectionTranslationsQuery, Types.CollectionTranslationsQueryVariables>(CollectionTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CollectionTranslationsQuery, Types.CollectionTranslationsQueryVariables>(CollectionTranslationsStaging, options);
       }
 export function useCollectionTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionTranslationsQuery, Types.CollectionTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CollectionTranslationsQuery, Types.CollectionTranslationsQueryVariables>(CollectionTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CollectionTranslationsQuery, Types.CollectionTranslationsQueryVariables>(CollectionTranslationsStaging, options);
         }
 export type CollectionTranslationsQueryHookResult = ReturnType<typeof useCollectionTranslationsQuery>;
 export type CollectionTranslationsLazyQueryHookResult = ReturnType<typeof useCollectionTranslationsLazyQuery>;
 export type CollectionTranslationsQueryResult = Apollo.QueryResult<Types.CollectionTranslationsQuery, Types.CollectionTranslationsQueryVariables>;
-export const ProductTranslationsDocument = gql`
+export const ProductTranslationsStaging = gql`
     query ProductTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: PRODUCT
@@ -20237,16 +20237,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useProductTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductTranslationsQuery, Types.ProductTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductTranslationsQuery, Types.ProductTranslationsQueryVariables>(ProductTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductTranslationsQuery, Types.ProductTranslationsQueryVariables>(ProductTranslationsStaging, options);
       }
 export function useProductTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTranslationsQuery, Types.ProductTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductTranslationsQuery, Types.ProductTranslationsQueryVariables>(ProductTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductTranslationsQuery, Types.ProductTranslationsQueryVariables>(ProductTranslationsStaging, options);
         }
 export type ProductTranslationsQueryHookResult = ReturnType<typeof useProductTranslationsQuery>;
 export type ProductTranslationsLazyQueryHookResult = ReturnType<typeof useProductTranslationsLazyQuery>;
 export type ProductTranslationsQueryResult = Apollo.QueryResult<Types.ProductTranslationsQuery, Types.ProductTranslationsQueryVariables>;
-export const PageTranslationsDocument = gql`
+export const PageTranslationsStaging = gql`
     query PageTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: PAGE
@@ -20290,16 +20290,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function usePageTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTranslationsQuery, Types.PageTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageTranslationsQuery, Types.PageTranslationsQueryVariables>(PageTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageTranslationsQuery, Types.PageTranslationsQueryVariables>(PageTranslationsStaging, options);
       }
 export function usePageTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTranslationsQuery, Types.PageTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageTranslationsQuery, Types.PageTranslationsQueryVariables>(PageTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageTranslationsQuery, Types.PageTranslationsQueryVariables>(PageTranslationsStaging, options);
         }
 export type PageTranslationsQueryHookResult = ReturnType<typeof usePageTranslationsQuery>;
 export type PageTranslationsLazyQueryHookResult = ReturnType<typeof usePageTranslationsLazyQuery>;
 export type PageTranslationsQueryResult = Apollo.QueryResult<Types.PageTranslationsQuery, Types.PageTranslationsQueryVariables>;
-export const VoucherTranslationsDocument = gql`
+export const VoucherTranslationsStaging = gql`
     query VoucherTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: VOUCHER
@@ -20343,16 +20343,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useVoucherTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherTranslationsQuery, Types.VoucherTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.VoucherTranslationsQuery, Types.VoucherTranslationsQueryVariables>(VoucherTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.VoucherTranslationsQuery, Types.VoucherTranslationsQueryVariables>(VoucherTranslationsStaging, options);
       }
 export function useVoucherTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherTranslationsQuery, Types.VoucherTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.VoucherTranslationsQuery, Types.VoucherTranslationsQueryVariables>(VoucherTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.VoucherTranslationsQuery, Types.VoucherTranslationsQueryVariables>(VoucherTranslationsStaging, options);
         }
 export type VoucherTranslationsQueryHookResult = ReturnType<typeof useVoucherTranslationsQuery>;
 export type VoucherTranslationsLazyQueryHookResult = ReturnType<typeof useVoucherTranslationsLazyQuery>;
 export type VoucherTranslationsQueryResult = Apollo.QueryResult<Types.VoucherTranslationsQuery, Types.VoucherTranslationsQueryVariables>;
-export const SaleTranslationsDocument = gql`
+export const SaleTranslationsStaging = gql`
     query SaleTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: SALE
@@ -20396,16 +20396,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useSaleTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SaleTranslationsQuery, Types.SaleTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SaleTranslationsQuery, Types.SaleTranslationsQueryVariables>(SaleTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SaleTranslationsQuery, Types.SaleTranslationsQueryVariables>(SaleTranslationsStaging, options);
       }
 export function useSaleTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SaleTranslationsQuery, Types.SaleTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SaleTranslationsQuery, Types.SaleTranslationsQueryVariables>(SaleTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SaleTranslationsQuery, Types.SaleTranslationsQueryVariables>(SaleTranslationsStaging, options);
         }
 export type SaleTranslationsQueryHookResult = ReturnType<typeof useSaleTranslationsQuery>;
 export type SaleTranslationsLazyQueryHookResult = ReturnType<typeof useSaleTranslationsLazyQuery>;
 export type SaleTranslationsQueryResult = Apollo.QueryResult<Types.SaleTranslationsQuery, Types.SaleTranslationsQueryVariables>;
-export const AttributeTranslationsDocument = gql`
+export const AttributeTranslationsStaging = gql`
     query AttributeTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: ATTRIBUTE
@@ -20449,16 +20449,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useAttributeTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AttributeTranslationsQuery, Types.AttributeTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AttributeTranslationsQuery, Types.AttributeTranslationsQueryVariables>(AttributeTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.AttributeTranslationsQuery, Types.AttributeTranslationsQueryVariables>(AttributeTranslationsStaging, options);
       }
 export function useAttributeTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AttributeTranslationsQuery, Types.AttributeTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AttributeTranslationsQuery, Types.AttributeTranslationsQueryVariables>(AttributeTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AttributeTranslationsQuery, Types.AttributeTranslationsQueryVariables>(AttributeTranslationsStaging, options);
         }
 export type AttributeTranslationsQueryHookResult = ReturnType<typeof useAttributeTranslationsQuery>;
 export type AttributeTranslationsLazyQueryHookResult = ReturnType<typeof useAttributeTranslationsLazyQuery>;
 export type AttributeTranslationsQueryResult = Apollo.QueryResult<Types.AttributeTranslationsQuery, Types.AttributeTranslationsQueryVariables>;
-export const ShippingMethodTranslationsDocument = gql`
+export const ShippingMethodTranslationsStaging = gql`
     query ShippingMethodTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: SHIPPING_METHOD
@@ -20502,16 +20502,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useShippingMethodTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ShippingMethodTranslationsQuery, Types.ShippingMethodTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ShippingMethodTranslationsQuery, Types.ShippingMethodTranslationsQueryVariables>(ShippingMethodTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ShippingMethodTranslationsQuery, Types.ShippingMethodTranslationsQueryVariables>(ShippingMethodTranslationsStaging, options);
       }
 export function useShippingMethodTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShippingMethodTranslationsQuery, Types.ShippingMethodTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ShippingMethodTranslationsQuery, Types.ShippingMethodTranslationsQueryVariables>(ShippingMethodTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ShippingMethodTranslationsQuery, Types.ShippingMethodTranslationsQueryVariables>(ShippingMethodTranslationsStaging, options);
         }
 export type ShippingMethodTranslationsQueryHookResult = ReturnType<typeof useShippingMethodTranslationsQuery>;
 export type ShippingMethodTranslationsLazyQueryHookResult = ReturnType<typeof useShippingMethodTranslationsLazyQuery>;
 export type ShippingMethodTranslationsQueryResult = Apollo.QueryResult<Types.ShippingMethodTranslationsQuery, Types.ShippingMethodTranslationsQueryVariables>;
-export const MenuItemTranslationsDocument = gql`
+export const MenuItemTranslationsStaging = gql`
     query MenuItemTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
   translations(
     kind: MENU_ITEM
@@ -20555,16 +20555,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useMenuItemTranslationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>(MenuItemTranslationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>(MenuItemTranslationsStaging, options);
       }
 export function useMenuItemTranslationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>(MenuItemTranslationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>(MenuItemTranslationsStaging, options);
         }
 export type MenuItemTranslationsQueryHookResult = ReturnType<typeof useMenuItemTranslationsQuery>;
 export type MenuItemTranslationsLazyQueryHookResult = ReturnType<typeof useMenuItemTranslationsLazyQuery>;
 export type MenuItemTranslationsQueryResult = Apollo.QueryResult<Types.MenuItemTranslationsQuery, Types.MenuItemTranslationsQueryVariables>;
-export const ProductTranslationDetailsDocument = gql`
+export const ProductTranslationDetailsStaging = gql`
     query ProductTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: PRODUCT, id: $id) {
     ...ProductTranslation
@@ -20591,16 +20591,16 @@ export const ProductTranslationDetailsDocument = gql`
  */
 export function useProductTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductTranslationDetailsQuery, Types.ProductTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductTranslationDetailsQuery, Types.ProductTranslationDetailsQueryVariables>(ProductTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductTranslationDetailsQuery, Types.ProductTranslationDetailsQueryVariables>(ProductTranslationDetailsStaging, options);
       }
 export function useProductTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTranslationDetailsQuery, Types.ProductTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductTranslationDetailsQuery, Types.ProductTranslationDetailsQueryVariables>(ProductTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductTranslationDetailsQuery, Types.ProductTranslationDetailsQueryVariables>(ProductTranslationDetailsStaging, options);
         }
 export type ProductTranslationDetailsQueryHookResult = ReturnType<typeof useProductTranslationDetailsQuery>;
 export type ProductTranslationDetailsLazyQueryHookResult = ReturnType<typeof useProductTranslationDetailsLazyQuery>;
 export type ProductTranslationDetailsQueryResult = Apollo.QueryResult<Types.ProductTranslationDetailsQuery, Types.ProductTranslationDetailsQueryVariables>;
-export const ProductVariantListDocument = gql`
+export const ProductVariantListStaging = gql`
     query ProductVariantList($id: ID!) {
   product(id: $id) {
     id
@@ -20631,16 +20631,16 @@ export const ProductVariantListDocument = gql`
  */
 export function useProductVariantListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>(ProductVariantListDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>(ProductVariantListStaging, options);
       }
 export function useProductVariantListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>(ProductVariantListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>(ProductVariantListStaging, options);
         }
 export type ProductVariantListQueryHookResult = ReturnType<typeof useProductVariantListQuery>;
 export type ProductVariantListLazyQueryHookResult = ReturnType<typeof useProductVariantListLazyQuery>;
 export type ProductVariantListQueryResult = Apollo.QueryResult<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>;
-export const ProductVariantTranslationDetailsDocument = gql`
+export const ProductVariantTranslationDetailsStaging = gql`
     query ProductVariantTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: VARIANT, id: $id) {
     ...ProductVariantTranslation
@@ -20667,16 +20667,16 @@ export const ProductVariantTranslationDetailsDocument = gql`
  */
 export function useProductVariantTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>(ProductVariantTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>(ProductVariantTranslationDetailsStaging, options);
       }
 export function useProductVariantTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>(ProductVariantTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>(ProductVariantTranslationDetailsStaging, options);
         }
 export type ProductVariantTranslationDetailsQueryHookResult = ReturnType<typeof useProductVariantTranslationDetailsQuery>;
 export type ProductVariantTranslationDetailsLazyQueryHookResult = ReturnType<typeof useProductVariantTranslationDetailsLazyQuery>;
 export type ProductVariantTranslationDetailsQueryResult = Apollo.QueryResult<Types.ProductVariantTranslationDetailsQuery, Types.ProductVariantTranslationDetailsQueryVariables>;
-export const CategoryTranslationDetailsDocument = gql`
+export const CategoryTranslationDetailsStaging = gql`
     query CategoryTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: CATEGORY, id: $id) {
     ...CategoryTranslation
@@ -20703,16 +20703,16 @@ export const CategoryTranslationDetailsDocument = gql`
  */
 export function useCategoryTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CategoryTranslationDetailsQuery, Types.CategoryTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CategoryTranslationDetailsQuery, Types.CategoryTranslationDetailsQueryVariables>(CategoryTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CategoryTranslationDetailsQuery, Types.CategoryTranslationDetailsQueryVariables>(CategoryTranslationDetailsStaging, options);
       }
 export function useCategoryTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CategoryTranslationDetailsQuery, Types.CategoryTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CategoryTranslationDetailsQuery, Types.CategoryTranslationDetailsQueryVariables>(CategoryTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CategoryTranslationDetailsQuery, Types.CategoryTranslationDetailsQueryVariables>(CategoryTranslationDetailsStaging, options);
         }
 export type CategoryTranslationDetailsQueryHookResult = ReturnType<typeof useCategoryTranslationDetailsQuery>;
 export type CategoryTranslationDetailsLazyQueryHookResult = ReturnType<typeof useCategoryTranslationDetailsLazyQuery>;
 export type CategoryTranslationDetailsQueryResult = Apollo.QueryResult<Types.CategoryTranslationDetailsQuery, Types.CategoryTranslationDetailsQueryVariables>;
-export const CollectionTranslationDetailsDocument = gql`
+export const CollectionTranslationDetailsStaging = gql`
     query CollectionTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(id: $id, kind: COLLECTION) {
     ...CollectionTranslation
@@ -20739,16 +20739,16 @@ export const CollectionTranslationDetailsDocument = gql`
  */
 export function useCollectionTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CollectionTranslationDetailsQuery, Types.CollectionTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.CollectionTranslationDetailsQuery, Types.CollectionTranslationDetailsQueryVariables>(CollectionTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.CollectionTranslationDetailsQuery, Types.CollectionTranslationDetailsQueryVariables>(CollectionTranslationDetailsStaging, options);
       }
 export function useCollectionTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CollectionTranslationDetailsQuery, Types.CollectionTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.CollectionTranslationDetailsQuery, Types.CollectionTranslationDetailsQueryVariables>(CollectionTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.CollectionTranslationDetailsQuery, Types.CollectionTranslationDetailsQueryVariables>(CollectionTranslationDetailsStaging, options);
         }
 export type CollectionTranslationDetailsQueryHookResult = ReturnType<typeof useCollectionTranslationDetailsQuery>;
 export type CollectionTranslationDetailsLazyQueryHookResult = ReturnType<typeof useCollectionTranslationDetailsLazyQuery>;
 export type CollectionTranslationDetailsQueryResult = Apollo.QueryResult<Types.CollectionTranslationDetailsQuery, Types.CollectionTranslationDetailsQueryVariables>;
-export const PageTranslationDetailsDocument = gql`
+export const PageTranslationDetailsStaging = gql`
     query PageTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(id: $id, kind: PAGE) {
     ...PageTranslation
@@ -20775,16 +20775,16 @@ export const PageTranslationDetailsDocument = gql`
  */
 export function usePageTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTranslationDetailsQuery, Types.PageTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.PageTranslationDetailsQuery, Types.PageTranslationDetailsQueryVariables>(PageTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.PageTranslationDetailsQuery, Types.PageTranslationDetailsQueryVariables>(PageTranslationDetailsStaging, options);
       }
 export function usePageTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTranslationDetailsQuery, Types.PageTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.PageTranslationDetailsQuery, Types.PageTranslationDetailsQueryVariables>(PageTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.PageTranslationDetailsQuery, Types.PageTranslationDetailsQueryVariables>(PageTranslationDetailsStaging, options);
         }
 export type PageTranslationDetailsQueryHookResult = ReturnType<typeof usePageTranslationDetailsQuery>;
 export type PageTranslationDetailsLazyQueryHookResult = ReturnType<typeof usePageTranslationDetailsLazyQuery>;
 export type PageTranslationDetailsQueryResult = Apollo.QueryResult<Types.PageTranslationDetailsQuery, Types.PageTranslationDetailsQueryVariables>;
-export const SaleTranslationDetailsDocument = gql`
+export const SaleTranslationDetailsStaging = gql`
     query SaleTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: SALE, id: $id) {
     ...SaleTranslation
@@ -20811,16 +20811,16 @@ export const SaleTranslationDetailsDocument = gql`
  */
 export function useSaleTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SaleTranslationDetailsQuery, Types.SaleTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.SaleTranslationDetailsQuery, Types.SaleTranslationDetailsQueryVariables>(SaleTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.SaleTranslationDetailsQuery, Types.SaleTranslationDetailsQueryVariables>(SaleTranslationDetailsStaging, options);
       }
 export function useSaleTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SaleTranslationDetailsQuery, Types.SaleTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.SaleTranslationDetailsQuery, Types.SaleTranslationDetailsQueryVariables>(SaleTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.SaleTranslationDetailsQuery, Types.SaleTranslationDetailsQueryVariables>(SaleTranslationDetailsStaging, options);
         }
 export type SaleTranslationDetailsQueryHookResult = ReturnType<typeof useSaleTranslationDetailsQuery>;
 export type SaleTranslationDetailsLazyQueryHookResult = ReturnType<typeof useSaleTranslationDetailsLazyQuery>;
 export type SaleTranslationDetailsQueryResult = Apollo.QueryResult<Types.SaleTranslationDetailsQuery, Types.SaleTranslationDetailsQueryVariables>;
-export const VoucherTranslationDetailsDocument = gql`
+export const VoucherTranslationDetailsStaging = gql`
     query VoucherTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: VOUCHER, id: $id) {
     ...VoucherTranslation
@@ -20847,16 +20847,16 @@ export const VoucherTranslationDetailsDocument = gql`
  */
 export function useVoucherTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherTranslationDetailsQuery, Types.VoucherTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.VoucherTranslationDetailsQuery, Types.VoucherTranslationDetailsQueryVariables>(VoucherTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.VoucherTranslationDetailsQuery, Types.VoucherTranslationDetailsQueryVariables>(VoucherTranslationDetailsStaging, options);
       }
 export function useVoucherTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherTranslationDetailsQuery, Types.VoucherTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.VoucherTranslationDetailsQuery, Types.VoucherTranslationDetailsQueryVariables>(VoucherTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.VoucherTranslationDetailsQuery, Types.VoucherTranslationDetailsQueryVariables>(VoucherTranslationDetailsStaging, options);
         }
 export type VoucherTranslationDetailsQueryHookResult = ReturnType<typeof useVoucherTranslationDetailsQuery>;
 export type VoucherTranslationDetailsLazyQueryHookResult = ReturnType<typeof useVoucherTranslationDetailsLazyQuery>;
 export type VoucherTranslationDetailsQueryResult = Apollo.QueryResult<Types.VoucherTranslationDetailsQuery, Types.VoucherTranslationDetailsQueryVariables>;
-export const AttributeTranslationDetailsDocument = gql`
+export const AttributeTranslationDetailsStaging = gql`
     query AttributeTranslationDetails($id: ID!, $language: LanguageCodeEnum!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   translation(kind: ATTRIBUTE, id: $id) {
     ...AttributeTranslationDetails
@@ -20887,16 +20887,16 @@ export const AttributeTranslationDetailsDocument = gql`
  */
 export function useAttributeTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AttributeTranslationDetailsQuery, Types.AttributeTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AttributeTranslationDetailsQuery, Types.AttributeTranslationDetailsQueryVariables>(AttributeTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.AttributeTranslationDetailsQuery, Types.AttributeTranslationDetailsQueryVariables>(AttributeTranslationDetailsStaging, options);
       }
 export function useAttributeTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AttributeTranslationDetailsQuery, Types.AttributeTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AttributeTranslationDetailsQuery, Types.AttributeTranslationDetailsQueryVariables>(AttributeTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.AttributeTranslationDetailsQuery, Types.AttributeTranslationDetailsQueryVariables>(AttributeTranslationDetailsStaging, options);
         }
 export type AttributeTranslationDetailsQueryHookResult = ReturnType<typeof useAttributeTranslationDetailsQuery>;
 export type AttributeTranslationDetailsLazyQueryHookResult = ReturnType<typeof useAttributeTranslationDetailsLazyQuery>;
 export type AttributeTranslationDetailsQueryResult = Apollo.QueryResult<Types.AttributeTranslationDetailsQuery, Types.AttributeTranslationDetailsQueryVariables>;
-export const ShippingMethodTranslationDetailsDocument = gql`
+export const ShippingMethodTranslationDetailsStaging = gql`
     query ShippingMethodTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: SHIPPING_METHOD, id: $id) {
     ...ShippingMethodTranslation
@@ -20923,16 +20923,16 @@ export const ShippingMethodTranslationDetailsDocument = gql`
  */
 export function useShippingMethodTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ShippingMethodTranslationDetailsQuery, Types.ShippingMethodTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ShippingMethodTranslationDetailsQuery, Types.ShippingMethodTranslationDetailsQueryVariables>(ShippingMethodTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.ShippingMethodTranslationDetailsQuery, Types.ShippingMethodTranslationDetailsQueryVariables>(ShippingMethodTranslationDetailsStaging, options);
       }
 export function useShippingMethodTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShippingMethodTranslationDetailsQuery, Types.ShippingMethodTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ShippingMethodTranslationDetailsQuery, Types.ShippingMethodTranslationDetailsQueryVariables>(ShippingMethodTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.ShippingMethodTranslationDetailsQuery, Types.ShippingMethodTranslationDetailsQueryVariables>(ShippingMethodTranslationDetailsStaging, options);
         }
 export type ShippingMethodTranslationDetailsQueryHookResult = ReturnType<typeof useShippingMethodTranslationDetailsQuery>;
 export type ShippingMethodTranslationDetailsLazyQueryHookResult = ReturnType<typeof useShippingMethodTranslationDetailsLazyQuery>;
 export type ShippingMethodTranslationDetailsQueryResult = Apollo.QueryResult<Types.ShippingMethodTranslationDetailsQuery, Types.ShippingMethodTranslationDetailsQueryVariables>;
-export const MenuItemTranslationDetailsDocument = gql`
+export const MenuItemTranslationDetailsStaging = gql`
     query MenuItemTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: MENU_ITEM, id: $id) {
     ...MenuItemTranslation
@@ -20959,16 +20959,16 @@ export const MenuItemTranslationDetailsDocument = gql`
  */
 export function useMenuItemTranslationDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>(MenuItemTranslationDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>(MenuItemTranslationDetailsStaging, options);
       }
 export function useMenuItemTranslationDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>(MenuItemTranslationDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>(MenuItemTranslationDetailsStaging, options);
         }
 export type MenuItemTranslationDetailsQueryHookResult = ReturnType<typeof useMenuItemTranslationDetailsQuery>;
 export type MenuItemTranslationDetailsLazyQueryHookResult = ReturnType<typeof useMenuItemTranslationDetailsLazyQuery>;
 export type MenuItemTranslationDetailsQueryResult = Apollo.QueryResult<Types.MenuItemTranslationDetailsQuery, Types.MenuItemTranslationDetailsQueryVariables>;
-export const UpdateMetadataDocument = gql`
+export const UpdateMetadataStaging = gql`
     mutation UpdateMetadata($id: ID!, $input: [MetadataInput!]!, $keysToDelete: [String!]!) {
   updateMetadata(id: $id, input: $input) {
     errors {
@@ -21018,12 +21018,12 @@ export type UpdateMetadataMutationFn = Apollo.MutationFunction<Types.UpdateMetad
  */
 export function useUpdateMetadataMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateMetadataMutation, Types.UpdateMetadataMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdateMetadataMutation, Types.UpdateMetadataMutationVariables>(UpdateMetadataDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdateMetadataMutation, Types.UpdateMetadataMutationVariables>(UpdateMetadataStaging, options);
       }
 export type UpdateMetadataMutationHookResult = ReturnType<typeof useUpdateMetadataMutation>;
 export type UpdateMetadataMutationResult = Apollo.MutationResult<Types.UpdateMetadataMutation>;
 export type UpdateMetadataMutationOptions = Apollo.BaseMutationOptions<Types.UpdateMetadataMutation, Types.UpdateMetadataMutationVariables>;
-export const UpdatePrivateMetadataDocument = gql`
+export const UpdatePrivateMetadataStaging = gql`
     mutation UpdatePrivateMetadata($id: ID!, $input: [MetadataInput!]!, $keysToDelete: [String!]!) {
   updatePrivateMetadata(id: $id, input: $input) {
     errors {
@@ -21073,12 +21073,12 @@ export type UpdatePrivateMetadataMutationFn = Apollo.MutationFunction<Types.Upda
  */
 export function useUpdatePrivateMetadataMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdatePrivateMetadataMutation, Types.UpdatePrivateMetadataMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.UpdatePrivateMetadataMutation, Types.UpdatePrivateMetadataMutationVariables>(UpdatePrivateMetadataDocument, options);
+        return ApolloReactHooks.useMutation<Types.UpdatePrivateMetadataMutation, Types.UpdatePrivateMetadataMutationVariables>(UpdatePrivateMetadataStaging, options);
       }
 export type UpdatePrivateMetadataMutationHookResult = ReturnType<typeof useUpdatePrivateMetadataMutation>;
 export type UpdatePrivateMetadataMutationResult = Apollo.MutationResult<Types.UpdatePrivateMetadataMutation>;
 export type UpdatePrivateMetadataMutationOptions = Apollo.BaseMutationOptions<Types.UpdatePrivateMetadataMutation, Types.UpdatePrivateMetadataMutationVariables>;
-export const WarehouseDeleteDocument = gql`
+export const WarehouseDeleteStaging = gql`
     mutation WarehouseDelete($id: ID!) {
   deleteWarehouse(id: $id) {
     errors {
@@ -21108,12 +21108,12 @@ export type WarehouseDeleteMutationFn = Apollo.MutationFunction<Types.WarehouseD
  */
 export function useWarehouseDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WarehouseDeleteMutation, Types.WarehouseDeleteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.WarehouseDeleteMutation, Types.WarehouseDeleteMutationVariables>(WarehouseDeleteDocument, options);
+        return ApolloReactHooks.useMutation<Types.WarehouseDeleteMutation, Types.WarehouseDeleteMutationVariables>(WarehouseDeleteStaging, options);
       }
 export type WarehouseDeleteMutationHookResult = ReturnType<typeof useWarehouseDeleteMutation>;
 export type WarehouseDeleteMutationResult = Apollo.MutationResult<Types.WarehouseDeleteMutation>;
 export type WarehouseDeleteMutationOptions = Apollo.BaseMutationOptions<Types.WarehouseDeleteMutation, Types.WarehouseDeleteMutationVariables>;
-export const WarehouseCreateDocument = gql`
+export const WarehouseCreateStaging = gql`
     mutation WarehouseCreate($input: WarehouseCreateInput!) {
   createWarehouse(input: $input) {
     errors {
@@ -21147,12 +21147,12 @@ export type WarehouseCreateMutationFn = Apollo.MutationFunction<Types.WarehouseC
  */
 export function useWarehouseCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WarehouseCreateMutation, Types.WarehouseCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.WarehouseCreateMutation, Types.WarehouseCreateMutationVariables>(WarehouseCreateDocument, options);
+        return ApolloReactHooks.useMutation<Types.WarehouseCreateMutation, Types.WarehouseCreateMutationVariables>(WarehouseCreateStaging, options);
       }
 export type WarehouseCreateMutationHookResult = ReturnType<typeof useWarehouseCreateMutation>;
 export type WarehouseCreateMutationResult = Apollo.MutationResult<Types.WarehouseCreateMutation>;
 export type WarehouseCreateMutationOptions = Apollo.BaseMutationOptions<Types.WarehouseCreateMutation, Types.WarehouseCreateMutationVariables>;
-export const WarehouseUpdateDocument = gql`
+export const WarehouseUpdateStaging = gql`
     mutation WarehouseUpdate($id: ID!, $input: WarehouseUpdateInput!) {
   updateWarehouse(id: $id, input: $input) {
     errors {
@@ -21187,12 +21187,12 @@ export type WarehouseUpdateMutationFn = Apollo.MutationFunction<Types.WarehouseU
  */
 export function useWarehouseUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.WarehouseUpdateMutation, Types.WarehouseUpdateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.WarehouseUpdateMutation, Types.WarehouseUpdateMutationVariables>(WarehouseUpdateDocument, options);
+        return ApolloReactHooks.useMutation<Types.WarehouseUpdateMutation, Types.WarehouseUpdateMutationVariables>(WarehouseUpdateStaging, options);
       }
 export type WarehouseUpdateMutationHookResult = ReturnType<typeof useWarehouseUpdateMutation>;
 export type WarehouseUpdateMutationResult = Apollo.MutationResult<Types.WarehouseUpdateMutation>;
 export type WarehouseUpdateMutationOptions = Apollo.BaseMutationOptions<Types.WarehouseUpdateMutation, Types.WarehouseUpdateMutationVariables>;
-export const WarehouseListDocument = gql`
+export const WarehouseListStaging = gql`
     query WarehouseList($first: Int, $after: String, $last: Int, $before: String, $filter: WarehouseFilterInput, $sort: WarehouseSortingInput) {
   warehouses(
     before: $before
@@ -21238,16 +21238,16 @@ ${PageInfoFragmentDoc}`;
  */
 export function useWarehouseListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.WarehouseListQuery, Types.WarehouseListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WarehouseListQuery, Types.WarehouseListQueryVariables>(WarehouseListDocument, options);
+        return ApolloReactHooks.useQuery<Types.WarehouseListQuery, Types.WarehouseListQueryVariables>(WarehouseListStaging, options);
       }
 export function useWarehouseListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseListQuery, Types.WarehouseListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WarehouseListQuery, Types.WarehouseListQueryVariables>(WarehouseListDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseListQuery, Types.WarehouseListQueryVariables>(WarehouseListStaging, options);
         }
 export type WarehouseListQueryHookResult = ReturnType<typeof useWarehouseListQuery>;
 export type WarehouseListLazyQueryHookResult = ReturnType<typeof useWarehouseListLazyQuery>;
 export type WarehouseListQueryResult = Apollo.QueryResult<Types.WarehouseListQuery, Types.WarehouseListQueryVariables>;
-export const WarehouseDetailsDocument = gql`
+export const WarehouseDetailsStaging = gql`
     query WarehouseDetails($id: ID!) {
   warehouse(id: $id) {
     ...WarehouseDetails
@@ -21273,16 +21273,16 @@ export const WarehouseDetailsDocument = gql`
  */
 export function useWarehouseDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>(WarehouseDetailsDocument, options);
+        return ApolloReactHooks.useQuery<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>(WarehouseDetailsStaging, options);
       }
 export function useWarehouseDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>(WarehouseDetailsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>(WarehouseDetailsStaging, options);
         }
 export type WarehouseDetailsQueryHookResult = ReturnType<typeof useWarehouseDetailsQuery>;
 export type WarehouseDetailsLazyQueryHookResult = ReturnType<typeof useWarehouseDetailsLazyQuery>;
 export type WarehouseDetailsQueryResult = Apollo.QueryResult<Types.WarehouseDetailsQuery, Types.WarehouseDetailsQueryVariables>;
-export const WarehousesCountDocument = gql`
+export const WarehousesCountStaging = gql`
     query WarehousesCount {
   warehouses {
     totalCount
@@ -21307,16 +21307,16 @@ export const WarehousesCountDocument = gql`
  */
 export function useWarehousesCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>(WarehousesCountDocument, options);
+        return ApolloReactHooks.useQuery<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>(WarehousesCountStaging, options);
       }
 export function useWarehousesCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>(WarehousesCountDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>(WarehousesCountStaging, options);
         }
 export type WarehousesCountQueryHookResult = ReturnType<typeof useWarehousesCountQuery>;
 export type WarehousesCountLazyQueryHookResult = ReturnType<typeof useWarehousesCountLazyQuery>;
 export type WarehousesCountQueryResult = Apollo.QueryResult<Types.WarehousesCountQuery, Types.WarehousesCountQueryVariables>;
-export const SaveOnBoardingStateDocument = gql`
+export const SaveOnBoardingStateStaging = gql`
     mutation SaveOnBoardingState($id: ID!, $input: [MetadataInput!]!) {
   updateMetadata(id: $id, input: $input) {
     errors {
@@ -21347,12 +21347,12 @@ export type SaveOnBoardingStateMutationFn = Apollo.MutationFunction<Types.SaveOn
  */
 export function useSaveOnBoardingStateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SaveOnBoardingStateMutation, Types.SaveOnBoardingStateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.SaveOnBoardingStateMutation, Types.SaveOnBoardingStateMutationVariables>(SaveOnBoardingStateDocument, options);
+        return ApolloReactHooks.useMutation<Types.SaveOnBoardingStateMutation, Types.SaveOnBoardingStateMutationVariables>(SaveOnBoardingStateStaging, options);
       }
 export type SaveOnBoardingStateMutationHookResult = ReturnType<typeof useSaveOnBoardingStateMutation>;
 export type SaveOnBoardingStateMutationResult = Apollo.MutationResult<Types.SaveOnBoardingStateMutation>;
 export type SaveOnBoardingStateMutationOptions = Apollo.BaseMutationOptions<Types.SaveOnBoardingStateMutation, Types.SaveOnBoardingStateMutationVariables>;
-export const WelcomePageActivitiesDocument = gql`
+export const WelcomePageActivitiesStaging = gql`
     query WelcomePageActivities($hasPermissionToManageOrders: Boolean!) {
   activities: homepageEvents(last: 10) @include(if: $hasPermissionToManageOrders) {
     edges {
@@ -21382,16 +21382,16 @@ export const WelcomePageActivitiesDocument = gql`
  */
 export function useWelcomePageActivitiesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>(WelcomePageActivitiesDocument, options);
+        return ApolloReactHooks.useQuery<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>(WelcomePageActivitiesStaging, options);
       }
 export function useWelcomePageActivitiesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>(WelcomePageActivitiesDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>(WelcomePageActivitiesStaging, options);
         }
 export type WelcomePageActivitiesQueryHookResult = ReturnType<typeof useWelcomePageActivitiesQuery>;
 export type WelcomePageActivitiesLazyQueryHookResult = ReturnType<typeof useWelcomePageActivitiesLazyQuery>;
 export type WelcomePageActivitiesQueryResult = Apollo.QueryResult<Types.WelcomePageActivitiesQuery, Types.WelcomePageActivitiesQueryVariables>;
-export const WelcomePageAnalyticsDocument = gql`
+export const WelcomePageAnalyticsStaging = gql`
     query WelcomePageAnalytics($channel: String!, $hasPermissionToManageOrders: Boolean!) {
   salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $hasPermissionToManageOrders) {
     gross {
@@ -21421,16 +21421,16 @@ export const WelcomePageAnalyticsDocument = gql`
  */
 export function useWelcomePageAnalyticsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>(WelcomePageAnalyticsDocument, options);
+        return ApolloReactHooks.useQuery<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>(WelcomePageAnalyticsStaging, options);
       }
 export function useWelcomePageAnalyticsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>(WelcomePageAnalyticsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>(WelcomePageAnalyticsStaging, options);
         }
 export type WelcomePageAnalyticsQueryHookResult = ReturnType<typeof useWelcomePageAnalyticsQuery>;
 export type WelcomePageAnalyticsLazyQueryHookResult = ReturnType<typeof useWelcomePageAnalyticsLazyQuery>;
 export type WelcomePageAnalyticsQueryResult = Apollo.QueryResult<Types.WelcomePageAnalyticsQuery, Types.WelcomePageAnalyticsQueryVariables>;
-export const WelcomePageNotificationsDocument = gql`
+export const WelcomePageNotificationsStaging = gql`
     query welcomePageNotifications($channel: String!) {
   productsOutOfStock: products(
     filter: {stockAvailability: OUT_OF_STOCK}
@@ -21459,11 +21459,11 @@ export const WelcomePageNotificationsDocument = gql`
  */
 export function useWelcomePageNotificationsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>(WelcomePageNotificationsDocument, options);
+        return ApolloReactHooks.useQuery<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>(WelcomePageNotificationsStaging, options);
       }
 export function useWelcomePageNotificationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>(WelcomePageNotificationsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.WelcomePageNotificationsQuery, Types.WelcomePageNotificationsQueryVariables>(WelcomePageNotificationsStaging, options);
         }
 export type WelcomePageNotificationsQueryHookResult = ReturnType<typeof useWelcomePageNotificationsQuery>;
 export type WelcomePageNotificationsLazyQueryHookResult = ReturnType<typeof useWelcomePageNotificationsLazyQuery>;

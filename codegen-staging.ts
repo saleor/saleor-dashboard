@@ -1,20 +1,25 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "./schema-3.23.graphql",
-  documents: ["src/staging-operations/*.graphql"],
+  schema: "./schema-staging.graphql",
+  documents: [
+    "./src/**/queries.ts",
+    "./src/**/mutations.ts",
+    "./src/**/fragments/*.ts",
+    "./src/searches/*.ts",
+  ],
   generates: {
-    "./src/graphql/fragmentTypesV323.generated.ts": {
+    "./src/graphql/fragmentTypesStaging.generated.ts": {
       plugins: ["fragment-matcher"],
       config: {
         minify: false,
         apolloClientVersion: 3,
       },
     },
-    "./src/graphql/typePoliciesV323.generated.ts": {
+    "./src/graphql/typePoliciesStaging.generated.ts": {
       plugins: ["typescript-apollo-client-helpers"],
     },
-    "./src/graphql/typesV323.generated.ts": {
+    "./src/graphql/typesStaging.generated.ts": {
       plugins: ["typescript", "typescript-operations"],
       config: {
         nonOptionalTypename: true,
@@ -28,20 +33,20 @@ const config: CodegenConfig = {
           enumValues: "change-case-all#upperCase",
         },
         onlyOperationTypes: true,
-        typeSuffix: "V323",
+        typeSuffix: "Staging",
       },
     },
-    "./src/graphql/hooksV323.generated.ts": {
+    "./src/graphql/hooksStaging.generated.ts": {
       plugins: ["typescript-react-apollo"],
       config: {
         withHooks: true,
         apolloReactHooksImportFrom: "@dashboard/hooks/graphql",
-        documentVariableSuffix: "V323",
+        documentVariableSuffix: "Staging",
         reactApolloVersion: 3,
       },
       preset: "import-types",
       presetConfig: {
-        typesPath: "./typesV323.generated",
+        typesPath: "./typesStaging.generated",
       },
     },
   },

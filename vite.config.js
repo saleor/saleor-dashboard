@@ -59,8 +59,8 @@ export default defineConfig(({ command, mode }) => {
     ENABLED_SERVICE_NAME_HEADER,
     ONBOARDING_USER_JOINED_DATE_THRESHOLD,
     // Multi-schema support
-    FF_USE_SCHEMA_323,
-    // eslint-disable-next-line camelcase
+    FF_USE_STAGING_SCHEMA,
+
     npm_package_version,
   } = env;
 
@@ -157,8 +157,8 @@ export default defineConfig(({ command, mode }) => {
         ENABLED_SERVICE_NAME_HEADER,
         ONBOARDING_USER_JOINED_DATE_THRESHOLD,
         // Multi-schema support
-        FF_USE_SCHEMA_323,
-        // eslint-disable-next-line camelcase
+        FF_USE_STAGING_SCHEMA,
+
         RELEASE_NAME: npm_package_version,
       },
     },

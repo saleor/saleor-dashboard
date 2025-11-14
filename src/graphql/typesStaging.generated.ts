@@ -244,8 +244,28 @@ export enum AppErrorCode {
 }
 
 export type AppExtensionFilterInput = {
+  /**
+   * DEPRECATED: Use `mountName` instead.
+   * @deprecated Field no longer supported
+   */
   mount?: InputMaybe<Array<AppExtensionMountEnum>>;
+  /**
+   * Plain-text mount name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  mountName?: InputMaybe<Scalars['String']>;
+  /**
+   * DEPRECATED: Use `targetName` instead.
+   * @deprecated Field no longer supported
+   */
   target?: InputMaybe<AppExtensionTargetEnum>;
+  /**
+   * Plain-text target name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  targetName?: InputMaybe<Scalars['String']>;
 };
 
 /** All places where app extension can be mounted. */
@@ -5030,7 +5050,7 @@ export type PageTypeUpdateInput = {
   addAttributes?: InputMaybe<Array<Scalars['ID']>>;
   /** Name of the page type. */
   name?: InputMaybe<Scalars['String']>;
-  /** List of attribute IDs to be assigned to the page type. */
+  /** List of attribute IDs to be unassigned from the page type. */
   removeAttributes?: InputMaybe<Array<Scalars['ID']>>;
   /** Page type slug. */
   slug?: InputMaybe<Scalars['String']>;

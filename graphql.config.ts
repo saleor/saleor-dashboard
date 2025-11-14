@@ -7,13 +7,13 @@ import type { IGraphQLConfig } from "graphql-config";
  * https://the-guild.dev/graphql/config
  *
  * Multi-schema support:
- * - production: Schema 3.22 (production API)
- * - staging: Schema 3.23 (staging API)
+ * - main: Main/production schema
+ * - staging: Staging/preview schema
  */
 const config: IGraphQLConfig = {
   projects: {
-    production: {
-      schema: "schema-3.22.graphql",
+    main: {
+      schema: "schema-main.graphql",
       documents: [
         "./src/**/queries.ts",
         "./src/**/mutations.ts",
@@ -22,7 +22,7 @@ const config: IGraphQLConfig = {
       ],
     },
     staging: {
-      schema: "schema-3.23.graphql",
+      schema: "schema-staging.graphql",
       documents: [
         "./src/**/queries.ts",
         "./src/**/mutations.ts",
