@@ -41,15 +41,14 @@ src/graphql/
 
 ### Environment Configuration
 
-Add these variables to your `.env` file:
+Add this variable to your `.env` file:
 
 ```env
 # Enable staging schema (default: false)
 FF_USE_SCHEMA_323=false
-
-# Staging API URL (required when FF_USE_SCHEMA_323=true)
-STAGING_API_URL=https://staging-api.example.com/graphql/
 ```
+
+The same `API_URL` is used for both schema versions. The FF_USE_SCHEMA_323 flag controls which schema types and hooks are used in the application.
 
 ### Importing GraphQL Hooks
 
@@ -178,21 +177,22 @@ import { useProductListQuery } from "@dashboard/graphql/hooksV323.generated"; //
 
 ### Single Apollo Client
 
-The application uses a single Apollo Client instance that connects to either production or staging API based on the feature flag. You cannot connect to both APIs simultaneously.
+The application uses a single Apollo Client instance that connects to the configured API_URL. The same API endpoint is used for both schema versions - only the client-side schema types and fragmentTypes differ based on the FF_USE_SCHEMA_323 flag.
 
 ### Schema Compatibility
 
 When `FF_USE_SCHEMA_323=false` (default):
 
 - Uses production schema (3.22)
-- Connects to production API
+- Apollo Client uses 3.22 fragmentTypes
 - All imports from `@dashboard/graphql` use production types
 
 When `FF_USE_SCHEMA_323=true`:
 
 - Uses staging schema (3.23)
-- Connects to staging API (if `STAGING_API_URL` is set)
+- Apollo Client uses 3.23 fragmentTypes
 - Must explicitly import from V323 generated files for schema-specific features
+- Connects to the same API_URL (the API should support both schema versions)
 
 ## Adding New Queries/Mutations
 
@@ -215,14 +215,15 @@ When adding new GraphQL operations:
 
 1. Set `FF_USE_SCHEMA_323=false` in your `.env`
 2. Start the dev server: `pnpm run dev`
-3. Test production schema behavior
+3. Test production schema (3.22) behavior
 
 Then:
 
 1. Set `FF_USE_SCHEMA_323=true` in your `.env`
-2. Set `STAGING_API_URL` to your staging API
-3. Restart the dev server
-4. Test staging schema behavior
+2. Restart the dev server
+3. Test staging schema (3.23) behavior
+
+Note: Your API must support both schema versions for this to work correctly.
 
 ### CI/CD Considerations
 
@@ -252,9 +253,9 @@ Then:
 
 ---
 
-**Error**: API connection fails with staging flag enabled
+**Error**: API returns unexpected data or errors with staging flag enabled
 
-**Solution**: Verify `STAGING_API_URL` is set correctly in your `.env` file.
+**Solution**: Verify your API supports the schema version you're trying to use (3.23). The API must be compatible with the schema version selected by FF_USE_SCHEMA_323.
 
 ### Type Errors
 

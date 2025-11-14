@@ -6,19 +6,12 @@ export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
 
 /**
- * Get the API URL based on schema version feature flag.
- * When FF_USE_SCHEMA_323 is enabled and STAGING_API_URL is set, use staging API.
- * Otherwise, use the default API_URL from window config.
+ * Get the API URL.
+ * The same API URL is used regardless of schema version (3.22 or 3.23).
+ * The schema version is controlled by the FF_USE_SCHEMA_323 feature flag.
  * May be a relative path (e.g., '/graphql/'); use getAbsoluteApiUrl() when a fully qualified URL is required.
  */
-export const getApiUrl = () => {
-  // Check if staging schema is enabled and staging URL is configured
-  if (FLAGS["FF_USE_SCHEMA_323"] === "true" && process.env.STAGING_API_URL) {
-    return process.env.STAGING_API_URL;
-  }
-
-  return window.__SALEOR_CONFIG__.API_URL;
-};
+export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
 
 /**
  * Resolves full API URL.
