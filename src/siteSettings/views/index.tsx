@@ -4,6 +4,7 @@ import {
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
+import { useProductVariantsStagingQuery } from "@dashboard/graphql/hooksV323.generated";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
@@ -15,6 +16,10 @@ import SiteSettingsPage, {
 } from "../components/SiteSettingsPage";
 
 const SiteSettings = () => {
+  const { data } = useProductVariantsStagingQuery();
+
+  console.log(data);
+
   const notify = useNotifier();
   const intl = useIntl();
   const siteSettings = useSiteSettingsQuery({
