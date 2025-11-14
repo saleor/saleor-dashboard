@@ -18,12 +18,14 @@ import { useIntl } from "react-intl";
 type AppWidgetsProps = {
   extensions: ExtensionWithParams[];
   params: AppDetailsUrlMountQueryParams;
+  condensed?: boolean;
 };
 
 const hiddenStyle = { visibility: "hidden" } as const;
 
 // TODO We will add size negotiations after render
 const defaultIframeSize = 200;
+const defaultIframeSizeCondensed = 24;
 
 /**
  * Renders a form and iframe, the form is automatically submitted with POST action and <iframe> content is replaced
@@ -34,12 +36,14 @@ const IframePost = ({
   appId,
   accessToken,
   params,
+  condensed,
 }: {
   extensionUrl: string;
   extensionId: string;
   accessToken: string;
   appId: string;
   params?: AppDetailsUrlMountQueryParams;
+  condensed?: boolean;
 }) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const iframeRef = useRef<HTMLFormElement | null>(null);
@@ -93,15 +97,19 @@ const IframePost = ({
             ))}
         </>
       </form>
-      <Box ref={loadingRef} width={"100%"} __height={defaultIframeSize}>
-        <Skeleton __height={defaultIframeSize} />
+      <Box
+        ref={loadingRef}
+        width={"100%"}
+        __height={condensed ? defaultIframeSizeCondensed : defaultIframeSize}
+      >
+        <Skeleton __height={condensed ? defaultIframeSizeCondensed : defaultIframeSize} />
       </Box>
       <Box
         style={hiddenStyle}
         ref={iframeRef}
         as="iframe"
         borderWidth={0}
-        __height={defaultIframeSize}
+        __height={condensed ? defaultIframeSizeCondensed : defaultIframeSize}
         sandbox="allow-same-origin allow-forms allow-scripts allow-downloads"
         name={`ext-frame-${extensionId}`}
         width={"100%"}
@@ -110,7 +118,7 @@ const IframePost = ({
   );
 };
 
-export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
+export const AppWidgets = ({ extensions, params, condensed = false }: AppWidgetsProps) => {
   const navigate = useNavigator();
   const themeRef = useRef<ThemeType>();
   const intl = useIntl();
@@ -141,9 +149,11 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title>Apps</DashboardCard.Title>
-      </DashboardCard.Header>
+      {!condensed && (
+        <DashboardCard.Header>
+          <DashboardCard.Title>Apps</DashboardCard.Title>
+        </DashboardCard.Header>
+      )}
       <DashboardCard.Content>
         {sortedByAppName.map(([appId, appWithExtensions]) => {
           const logo = appWithExtensions.app.brand?.logo.default;
@@ -153,23 +163,25 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
           );
 
           return (
-            <Box marginBottom={8} key={appId}>
-              <Box display="flex" alignItems="center" marginBottom={2}>
-                <AppAvatar size={6} logo={logo ? { source: logo } : undefined} marginRight={2} />
-                <Text
-                  onClick={e => {
-                    navigate(appPageUrl);
+            <Box marginBottom={condensed ? 4 : 8} key={appId}>
+              {!condensed && (
+                <Box display="flex" alignItems="center" marginBottom={2}>
+                  <AppAvatar size={6} logo={logo ? { source: logo } : undefined} marginRight={2} />
+                  <Text
+                    onClick={e => {
+                      navigate(appPageUrl);
 
-                    e.preventDefault();
-                  }}
-                  as="a"
-                  size={3}
-                  color="default2"
-                  href={appPageUrl}
-                >
-                  {appWithExtensions.app.name}
-                </Text>
-              </Box>
+                      e.preventDefault();
+                    }}
+                    as="a"
+                    size={3}
+                    color="default2"
+                    href={appPageUrl}
+                  >
+                    {appWithExtensions.app.name}
+                  </Text>
+                </Box>
+              )}
               {appWithExtensions.extensions.map(ext => {
                 const settingsValidation = appExtensionManifestOptionsSchema.safeParse(
                   ext.settings,
@@ -204,10 +216,12 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 );
 
                 const renderIframeGETvariant = () => (
-                  <Box __height={defaultIframeSize}>
-                    <Text size={3} color="default2" href={appPageUrl}>
-                      {ext.label}
-                    </Text>
+                  <Box __height={condensed ? defaultIframeSizeCondensed : defaultIframeSize}>
+                    {!condensed && (
+                      <Text size={3} color="default2" href={appPageUrl}>
+                        {ext.label}
+                      </Text>
+                    )}
                     <AppFrame
                       target="WIDGET"
                       src={GETappIframeUrl}
@@ -221,15 +235,18 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
 
                 const renderIframePOSTvariant = () => (
                   <Box>
-                    <Text size={3} color="default2" href={appPageUrl}>
-                      {ext.label}
-                    </Text>
+                    {!condensed && (
+                      <Text size={3} color="default2" href={appPageUrl}>
+                        {ext.label}
+                      </Text>
+                    )}
                     <IframePost
                       appId={ext.app.id}
                       accessToken={ext.accessToken}
                       extensionId={ext.id}
                       extensionUrl={extensionUrl}
                       params={params}
+                      condensed={condensed}
                     />
                   </Box>
                 );
@@ -284,7 +301,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                 const renderNonIframe = !isIframeType;
 
                 return (
-                  <Box marginBottom={4} key={ext.id}>
+                  <Box marginBottom={condensed ? 2 : 4} key={ext.id}>
                     {renderGETiframe && renderIframeGETvariant()}
                     {renderPOSTiframe && renderIframePOSTvariant()}
                     {renderNonIframe && renderNonIframeExtension()}

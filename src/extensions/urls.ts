@@ -68,6 +68,7 @@ export interface AppDetailsUrlMountQueryParams {
   productIds?: string[];
   productSlug?: string;
   orderId?: string;
+  fulfillmentId?: string;
   customerId?: string;
   customerIds?: string[];
   categoryIds?: string[];
