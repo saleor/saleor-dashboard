@@ -316,7 +316,7 @@ const TranslationsProductsPage = ({
             },
           ]}
           saveButtonState={saveButtonState}
-          richTextResetKey={languageCode}
+          richTextResetKey={languageCode + JSON.stringify(lastFrame)}
           onEdit={onEdit}
           onDiscard={onDiscard}
           onSubmit={onSubmit}
@@ -331,7 +331,7 @@ const TranslationsProductsPage = ({
               title={intl.formatMessage(commonMessages.translationAttributes)}
               fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
               saveButtonState={saveButtonState}
-              richTextResetKey={languageCode}
+              richTextResetKey={languageCode + JSON.stringify(lastFrame)}
               onEdit={onEdit}
               onDiscard={onDiscard}
               onSubmit={onAttributeValueSubmit}
