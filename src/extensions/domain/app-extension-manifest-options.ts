@@ -4,12 +4,17 @@ const httpMethodSchema = z
   .enum(["GET", "POST"], { message: "Method must be either GET or POST" })
   .default("GET");
 
+const widgetTargetDisplaySchema = z
+  .enum(["BLOCK", "INLINE"], { message: "Style must be either INLINE or BLOCK" })
+  .default("BLOCK");
+
 const newTabTargetOptionsSchema = z.object({
   method: httpMethodSchema.optional().nullable(),
 });
 
 const widgetTargetOptionsSchema = z.object({
   method: httpMethodSchema.optional().nullable(),
+  display: widgetTargetDisplaySchema.optional().nullable(),
 });
 
 export const appExtensionManifestOptionsSchema = z
@@ -34,6 +39,7 @@ export const appExtensionManifestOptionsSchemaWithDefault =
     },
     widgetTarget: {
       method: "POST",
+      display: "BLOCK",
     },
   });
 
