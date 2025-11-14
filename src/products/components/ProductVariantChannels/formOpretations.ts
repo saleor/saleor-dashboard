@@ -16,6 +16,7 @@ export const createChannelsWithPreorderInfo = (
         ...listing.channel,
         currency: listing.channel.currencyCode,
         price: "",
+        priorPrice: "",
       }))
     : [];
 
@@ -35,10 +36,11 @@ export const concatChannelsBySelection = (
 export const extractChannelPricesFromVariantChannel = (
   variantChannel: VariantChannelListing[number],
 ) => {
-  const { costPrice, price } = variantChannel;
+  const { costPrice, price, priorPrice } = variantChannel;
 
   return {
     costPrice: costPrice ? costPrice.amount.toString() : null,
     price: price ? price.amount.toString() : null,
+    priorPrice: priorPrice ? priorPrice.amount.toString() : null,
   };
 };

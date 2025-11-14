@@ -167,6 +167,7 @@ function useProductVariantUpdateForm(
 
     return {
       ...channel,
+      priorPrice: channel.priorPrice,
       preorderThreshold: variantChannel?.preorderThreshold?.quantity,
       soldUnits: variantChannel?.preorderThreshold?.soldUnits,
     };
@@ -292,7 +293,8 @@ function useProductVariantUpdateForm(
       );
 
       if (variantChannel) {
-        const { costPrice, price } = extractChannelPricesFromVariantChannel(variantChannel);
+        const { costPrice, price, priorPrice } =
+          extractChannelPricesFromVariantChannel(variantChannel);
 
         return {
           ...variantChannel.channel,
@@ -301,6 +303,7 @@ function useProductVariantUpdateForm(
           soldUnits: variantChannel?.preorderThreshold?.soldUnits,
           price,
           costPrice,
+          priorPrice,
         };
       }
 
@@ -308,6 +311,7 @@ function useProductVariantUpdateForm(
         ...listing.channel,
         currency: listing.channel.currencyCode,
         price: "",
+        priorPrice: "",
         preorderThreshold: null,
         soldUnits: null,
       };

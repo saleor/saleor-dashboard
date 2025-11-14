@@ -1,4 +1,8 @@
-import { AllFormPayloadUpdatePayloads } from "@saleor/app-sdk/app-bridge";
+// Local type definition for form payload updates (removed from @saleor/app-sdk/app-bridge)
+type AllFormPayloadUpdatePayloads = {
+  form: string;
+  [key: string]: any;
+};
 import { act, renderHook } from "@testing-library/react-hooks";
 import { Provider as JotaiProvider, useAtom } from "jotai";
 import React from "react";

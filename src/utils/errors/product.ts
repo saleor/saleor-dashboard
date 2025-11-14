@@ -99,6 +99,11 @@ function getProductErrorMessage(
       case ProductErrorCode.PRODUCT_WITHOUT_CATEGORY:
         return intl.formatMessage(messages.noCategorySet);
       case ProductErrorCode.INVALID:
+        // Prioritize custom error message from backend/validation
+        if (err.message) {
+          return err.message;
+        }
+
         if (err.field === "price") {
           return intl.formatMessage(messages.priceInvalid);
         }

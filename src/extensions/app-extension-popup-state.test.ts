@@ -1,9 +1,22 @@
-import { AllFormPayloads, DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { AppExtensionActiveParams, useAppExtensionPopup } from "./app-extension-popup-state";
 import { useAppFrameReferences } from "./popup-frame-reference";
 import { postToExtension } from "./views/ViewManifestExtension/components/AppFrame/usePostToExtension";
+
+// Local type definitions for form payloads (removed from @saleor/app-sdk/app-bridge)
+type FormPayloadProductEdit = {
+  id: string;
+  [key: string]: any;
+};
+
+type AllFormPayloads = FormPayloadProductEdit | any;
+
+// Helper to create form event (replaces removed DashboardEventFactory.createFormEvent)
+const createFormEvent = (formState: AllFormPayloads) => ({
+  type: "form" as const,
+  payload: formState,
+});
 
 jest.mock("./popup-frame-reference");
 jest.mock("./views/ViewManifestExtension/components/AppFrame/usePostToExtension");
@@ -179,7 +192,7 @@ describe("useAppExtensionPopup", () => {
 
     // Assert
     expect(mockPostToExtension).toHaveBeenCalledWith(
-      DashboardEventFactory.createFormEvent(mockFormState),
+      createFormEvent(mockFormState),
       mockIframe,
       "https://example.com",
     );
