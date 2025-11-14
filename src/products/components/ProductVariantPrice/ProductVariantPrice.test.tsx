@@ -1,4 +1,5 @@
 import { ChannelData } from "@dashboard/channels/utils";
+import { ProductErrorCode } from "@dashboard/graphql";
 import { ThemeWrapper } from "@test/themeWrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
 import * as React from "react";
@@ -204,5 +205,39 @@ describe("ProductVariantPrice", () => {
       costPrice: "50",
       preorderThreshold: 0,
     });
+  });
+
+  it("should display validation error for invalid prior price (field-based error)", () => {
+    // Arrange
+    const listing: ChannelData[] = [
+      {
+        id: "channel-123",
+        name: "USD Channel",
+        currency: "USD",
+        price: "100",
+        priorPrice: "50",
+        costPrice: "30",
+        preorderThreshold: 0,
+      },
+    ];
+
+    const errors = [
+      {
+        __typename: "ProductError" as const,
+        code: ProductErrorCode.INVALID,
+        field: "channel-123-channel-priorPrice",
+        message: "Prior price must be greater than or equal to selling price",
+        attributes: [],
+      },
+    ];
+
+    render(<ProductVariantPrice errors={errors} productVariantChannelListings={listing} />, {
+      wrapper,
+    });
+
+    // Assert
+    expect(
+      screen.getByText("Prior price must be greater than or equal to selling price"),
+    ).toBeInTheDocument();
   });
 });

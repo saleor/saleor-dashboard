@@ -10,7 +10,12 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductChannelListingErrorFragment, ProductErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
-import { getFormChannelError, getFormChannelErrors, getFormErrors } from "@dashboard/utils/errors";
+import {
+  getFieldError,
+  getFormChannelError,
+  getFormChannelErrors,
+  getFormErrors,
+} from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Skeleton, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
@@ -44,6 +49,9 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
     e => "channels" in e,
   ) as ProductChannelListingErrorFragment[];
   const apiErrors = getFormChannelErrors(["price", "costPrice", "priorPrice"], channelApiErrors);
+
+  // Handle validation errors that use field-based error identification (e.g., "{channelId}-channel-priorPrice")
+  const fieldBasedErrors = errors.filter(e => !("channels" in e)) as ProductErrorFragment[];
 
   if (disabled || !productVariantChannelListings.length) {
     return (
@@ -134,8 +142,12 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
 
               const priceApiError =
                 getFormChannelError(apiErrors.price, listing.id) || formErrors[fieldName];
-              const costPriceError = getFormChannelError(apiErrors.costPrice, listing.id);
-              const priorPriceError = getFormChannelError(apiErrors.priorPrice, listing.id);
+              const costPriceError =
+                getFormChannelError(apiErrors.costPrice, listing.id) ||
+                getFieldError(fieldBasedErrors, `${listing.id}-channel-costPrice`);
+              const priorPriceError =
+                getFormChannelError(apiErrors.priorPrice, listing.id) ||
+                getFieldError(fieldBasedErrors, `${listing.id}-channel-priorPrice`);
 
               return (
                 <TableRowLink key={listing?.id || `skeleton-${index}`} data-test-id={listing?.name}>
