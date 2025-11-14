@@ -19,6 +19,7 @@ interface TranslationFieldsRichProps {
   resetKey: string;
   onDiscard: () => void;
   onSubmit: (data: OutputData) => SubmitPromise;
+  onValueChange?(newValue: string): void;
 }
 
 const TranslationFieldsRich = ({
@@ -29,6 +30,7 @@ const TranslationFieldsRich = ({
   resetKey,
   onDiscard,
   onSubmit,
+  onValueChange,
 }: TranslationFieldsRichProps) => {
   const intl = useIntl();
   const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } =
@@ -40,7 +42,13 @@ const TranslationFieldsRich = ({
         <RichTextEditor
           defaultValue={defaultValue}
           editorRef={editorRef}
-          onChange={handleChange}
+          onChange={changeEvent => {
+            handleChange();
+
+            if (onValueChange) {
+              onValueChange(JSON.stringify(changeEvent));
+            }
+          }}
           disabled={disabled}
           error={undefined}
           helperText={undefined}
@@ -72,7 +80,11 @@ const TranslationFieldsRich = ({
       <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
     </Text>
   ) : (
-    <Text>{isReadyForMount && <RichTextEditorContent key={resetKey} value={defaultValue} />}</Text>
+    <Text>
+      {isReadyForMount && (
+        <RichTextEditorContent key={resetKey + "_" + defaultValue?.time} value={defaultValue} />
+      )}
+    </Text>
   );
 };
 

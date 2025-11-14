@@ -39,6 +39,40 @@ export const ButtonGroupWithDropdown = ({
   variant,
   ...boxProps
 }: ButtonGroupWithDropdownProps) => {
+  const shouldRenderDropdown = options.length > 0;
+
+  if (!shouldRenderDropdown) {
+    return (
+      <Box {...boxProps}>
+        <Button
+          __height="50px"
+          variant={variant}
+          onClick={onClick}
+          data-test-id={testId}
+          __minWidth="80px"
+          disabled={disabled}
+          // TODO: fix this in Macaw UI - allow overriding border radius
+          boxShadow="none"
+          display="flex"
+          justifyContent="start"
+        >
+          <Box
+            justifySelf="start"
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="flex-start"
+          >
+            <Text lineHeight={2} color="default2" __fontSize="10px">
+              Apps
+            </Text>
+            {children}
+          </Box>
+        </Button>
+      </Box>
+    );
+  }
+
   return (
     <Dropdown>
       <Box display="flex" {...boxProps}>
@@ -112,6 +146,7 @@ export const ButtonGroupWithDropdown = ({
 };
 
 // todo implement "pin" functionality to keep selected extension on first position
+// todo use it instead of "cog"
 export const ExtensionsButtonSelector = ({
   extensions,
   onClick,
