@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -112,7 +111,7 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
                     <span data-test-id="name">{channel?.name || <Skeleton />}</span>
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    {channelsList?.length > 1 && (
+                    {channelsList && channelsList.length > 1 && (
                       <TableButtonWrapper>
                         <Button
                           variant="secondary"
