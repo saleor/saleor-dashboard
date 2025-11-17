@@ -7,6 +7,7 @@ import DataEditor, {
   CellClickedEventArgs,
   DataEditorProps,
   DataEditorRef,
+  DrawHeaderCallback,
   EditableGridCell,
   GridCell,
   GridColumn,
@@ -347,6 +348,20 @@ const Datagrid = ({
     },
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
+  const drawHeader: DrawHeaderCallback = useCallback(args => {
+    const { ctx, rect, isSelected, spriteManager, theme } = args;
+
+    if (isSelected) {
+      const iconSize = 16;
+      const padding = 8;
+      const x = rect.x + rect.width - iconSize - padding;
+      const y = rect.y + (rect.height - iconSize) / 2;
+
+      spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
+    }
+
+    return false;
+  }, []);
   const handleRemoveRows = useCallback(
     (rows: number[]) => {
       if (selection?.rows) {
@@ -460,6 +475,7 @@ const Datagrid = ({
                     customRenderers={customRenderers}
                     verticalBorder={verticalBorder}
                     headerIcons={headerIcons}
+                    drawHeader={drawHeader}
                     theme={datagridTheme}
                     className={classes.datagrid}
                     getCellContent={handleGetCellContent}
