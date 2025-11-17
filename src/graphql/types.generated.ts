@@ -11722,6 +11722,11 @@ export type GridWarehousesQueryVariables = Exact<{
 
 export type GridWarehousesQuery = { __typename: 'Query', availableWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
 
+export type ProductVariantsPocQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductVariantsPocQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string } }> } | null };
+
 export type SetRefundReasonTypeMutationVariables = Exact<{
   modelTypeId: Scalars['ID'];
 }>;

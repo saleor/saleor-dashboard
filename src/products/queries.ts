@@ -271,7 +271,7 @@ export const defaultGraphiQLQuery = `query ProductDetails($id: ID!) {
 }`;
 
 export const productPoc322 = gql`
-  query ProductVariants {
+  query ProductVariantsPoc {
     productVariants(channel: "default-channel", first: 1) {
       edges {
         node {

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const productPoc323 = gql`
-  query ProductVariants {
+  query ProductVariantsPoc {
     productVariants(channel: "default-channel", first: 1) {
       edges {
         node {
