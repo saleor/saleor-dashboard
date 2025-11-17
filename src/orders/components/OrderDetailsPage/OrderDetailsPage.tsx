@@ -37,7 +37,7 @@ import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
-import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard/OrderFulfilledProductsCard";
+import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPaymentOrTransaction";
@@ -251,7 +251,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 </>
               )}
               {order?.fulfillments?.map(fulfillment => (
-                <OrderFulfilledProductsCard
+                <OrderFulfillmentCard
                   dataTestId="fulfilled-order-section"
                   key={fulfillment.id}
                   fulfillment={fulfillment}
@@ -267,7 +267,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                     data={data[fulfillment.id]}
                     onChange={x => handleChangeMetadata(x, fulfillment.id)}
                   />
-                </OrderFulfilledProductsCard>
+                </OrderFulfillmentCard>
               ))}
               <OrderPaymentOrTransaction
                 order={order}
