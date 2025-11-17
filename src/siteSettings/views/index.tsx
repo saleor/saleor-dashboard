@@ -4,7 +4,6 @@ import {
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
-import { useProductVariantsStagingQuery } from "@dashboard/graphql/hooksV323.generated";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";

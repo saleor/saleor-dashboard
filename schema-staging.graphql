@@ -7723,6 +7723,9 @@ type ProductVariant implements Node & ObjectWithMetadata & ObjectWithAttributes 
 
   """External ID of this product."""
   externalReference: String
+
+  """Breaking field of the product variant. Added in 3.23"""
+  breakingField: String
 }
 
 """Represents product variant channel listing."""
