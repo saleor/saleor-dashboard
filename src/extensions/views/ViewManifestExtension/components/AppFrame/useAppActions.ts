@@ -28,7 +28,8 @@ export const useAppActions = (
     versions,
   );
   const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
-  const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate();
+  // Note: handleAppFormUpdate removed as formPayloadUpdate action is no longer in @saleor/app-sdk/app-bridge
+  // const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
@@ -57,9 +58,10 @@ export const useAppActions = (
       case "requestPermissions": {
         return handlePermissionRequest(action);
       }
-      case "formPayloadUpdate": {
-        return handleAppFormUpdate(action);
-      }
+      // Note: "formPayloadUpdate" action type removed from @saleor/app-sdk/app-bridge
+      // case "formPayloadUpdate": {
+      //   return handleAppFormUpdate(action);
+      // }
       default: {
         throw new Error("Unknown action type");
       }
