@@ -8849,3 +8849,8 @@ export enum WeightUnitsEnum {
   OZ = 'OZ',
   TONNE = 'TONNE'
 }
+
+export type ProductVariantsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductVariantsQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, breakingField: string | null } }> } | null };
