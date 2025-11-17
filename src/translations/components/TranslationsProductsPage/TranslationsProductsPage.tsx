@@ -35,7 +35,7 @@ interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsProductsPage = ({
+export const TranslationsProductsPage = ({
   translationId,
   productId,
   activeField,
@@ -345,4 +345,3 @@ const TranslationsProductsPage = ({
 };
 
 TranslationsProductsPage.displayName = "TranslationsProductsPage";
-export default TranslationsProductsPage;
