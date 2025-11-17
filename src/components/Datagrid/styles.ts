@@ -11,9 +11,10 @@ const useStyles = makeStyles<{
 }>(
   () => {
     const rowActionSelected = {
-      background: "transparent",
+      background: vars.colors.background.default1,
       color: vars.colors.border.default1,
     };
+    const activeBorderColor = vars.colors.border.default1;
 
     return {
       actionBtnBar: {
@@ -105,7 +106,10 @@ const useStyles = makeStyles<{
         height: "100%",
         width: 36,
       },
-      rowActionvBarWithItems: {},
+      rowActionvBarWithItems: {
+        borderLeft: `1px solid ${activeBorderColor}`,
+        background: vars.colors.background.default1,
+      },
       rowActionBarScrolledToRight: {
         borderLeftColor: vars.colors.border.default1,
       },
@@ -116,9 +120,8 @@ const useStyles = makeStyles<{
         "&:not(:last-child)": {
           marginBottom: -1,
         },
-        borderTop: `1px solid ${vars.colors.border.default1}`,
-        borderBottom: `1px solid ${vars.colors.border.default1}`,
-        borderLeft: `1px solid ${vars.colors.border.default1}`,
+        border: `1px solid ${vars.colors.border.default1}`,
+        borderLeft: "none",
         borderRight: "none",
         color: vars.colors.text.default1,
         display: "grid",
