@@ -105,13 +105,14 @@ const prepareExtensionsWithActions = ({
   );
 
 export const useExtensions = <T extends AllAppExtensionMounts>(
-  mountList: T[],
+  mountList: readonly T[],
 ): Record<T, Extension[]> => {
   const { activate } = useActiveAppExtension();
   const { data } = useExtensionListQuery({
     fetchPolicy: "cache-first",
     variables: {
       filter: {
+        // @ts-expect-error - type is fine, but generated type is mutable instead of readonly. We must fix codegen
         mountName: mountList,
       },
     },
