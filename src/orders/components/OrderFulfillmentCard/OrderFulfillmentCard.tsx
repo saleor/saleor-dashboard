@@ -39,7 +39,7 @@ const fulfillmentLineToLine = ({
   quantity,
 });
 
-const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCardProps>) => {
+export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCardProps>) => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,
@@ -107,5 +107,3 @@ const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCardProps
     </Box>
   );
 };
-
-export { OrderFulfillmentCard };
