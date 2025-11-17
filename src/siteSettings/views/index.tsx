@@ -5,6 +5,7 @@ import {
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
+import {} from "@dashboard/graphql/staging";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
