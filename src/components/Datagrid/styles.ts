@@ -154,7 +154,7 @@ const useStyles = makeStyles<{
         boxShadow: "-1px 0px 12px transparent",
       },
       rowActionBarShadowActive: {
-        boxShadow: "-1px 0px 12px rgba(0, 0, 0, 0.80)",
+        boxShadow: "none",
       },
       rowActionSelected,
     };
