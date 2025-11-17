@@ -127,6 +127,7 @@ const useStyles = makeStyles<{
         display: "grid",
         gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
         height: `calc(${cellHeight}px - 1px)`,
+        background: vars.colors.background.default1,
       },
       rowColumnGroup: {
         height: cellHeight,
@@ -156,7 +157,7 @@ const useStyles = makeStyles<{
         boxShadow: "-1px 0px 12px transparent",
       },
       rowActionBarShadowActive: {
-        boxShadow: "-1px 0px 12px rgba(0, 0, 0, 0.80)",
+        boxShadow: "none",
       },
       rowActionSelected,
     };
