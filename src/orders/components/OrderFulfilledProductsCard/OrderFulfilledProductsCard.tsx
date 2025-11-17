@@ -1,5 +1,8 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
@@ -50,6 +53,8 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
     dataTestId,
   } = props;
 
+  const { ORDER_FULFILLMENTS_WIDGETS } = useExtensions(extensionMountPoints.ORDER_DETAILS);
+
   if (!fulfillment) {
     return null;
   }
@@ -93,6 +98,13 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
           </Box>
         }
       />
+      {ORDER_FULFILLMENTS_WIDGETS.length > 0 && (
+        <AppWidgets
+          extensions={ORDER_FULFILLMENTS_WIDGETS}
+          params={{ orderId: order.id, fulfillmentId: fulfillment.id }}
+          condensed
+        />
+      )}
       <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid
           lines={getLines()}

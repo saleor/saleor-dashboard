@@ -136,6 +136,7 @@ describe("App Extension Manifest Schema", () => {
       // Arrange
       const mounts = [
         "ORDER_DETAILS_WIDGETS",
+        "ORDER_FULFILLMENTS_WIDGETS",
         "PRODUCT_DETAILS_WIDGETS",
         "VOUCHER_DETAILS_WIDGETS",
         "DRAFT_ORDER_DETAILS_WIDGETS",
