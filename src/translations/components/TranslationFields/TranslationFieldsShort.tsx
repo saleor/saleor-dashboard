@@ -14,6 +14,8 @@ interface TranslationFieldsShortProps {
   saveButtonState: ConfirmButtonTransitionState;
   onDiscard: () => void;
   onSubmit: (data: string) => SubmitPromise<any[]>;
+  // todo add to every field
+  onValueChange?(newValue: string): void;
 }
 
 const TranslationFieldsShort = ({
@@ -23,6 +25,7 @@ const TranslationFieldsShort = ({
   saveButtonState,
   onDiscard,
   onSubmit,
+  onValueChange,
 }: TranslationFieldsShortProps) => {
   const intl = useIntl();
 
@@ -44,7 +47,13 @@ const TranslationFieldsShort = ({
             name="translation"
             data-test-id="translation-field"
             value={data.translation || ""}
-            onChange={change}
+            onChange={event => {
+              change(event);
+
+              if (onValueChange) {
+                onValueChange(event.target.value);
+              }
+            }}
           />
           <TranslationFieldsSave
             saveButtonState={saveButtonState}
