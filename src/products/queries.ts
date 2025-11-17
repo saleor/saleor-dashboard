@@ -270,12 +270,14 @@ export const defaultGraphiQLQuery = `query ProductDetails($id: ID!) {
   }
 }`;
 
-export const productPoc322 = `query ProductVariants {
-    productVariants(channel: "default-channel", first: 1 ) {
-        edges {
-            node {
-                id                
-            }
+export const productPoc322 = gql`
+  query ProductVariants {
+    productVariants(channel: "default-channel", first: 1) {
+      edges {
+        node {
+          id
         }
+      }
     }
-}`;
+  }
+`;
