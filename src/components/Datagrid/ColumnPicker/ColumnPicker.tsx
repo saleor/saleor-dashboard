@@ -55,8 +55,8 @@ export const ColumnPicker = ({
           variant="tertiary"
           icon={<TableEditIcon />}
           pointerEvents={pickerOpen ? "none" : undefined}
-          __backgroundColor={pickerOpen ? vars.colors.background.default1Pressed : undefined}
-          __borderColor={pickerOpen ? vars.colors.border.default2 : undefined}
+          __backgroundColor={vars.colors.background.default1}
+          __borderColor={vars.colors.border.default1}
           title="Pick columns"
         />
       </Popover.Trigger>
