@@ -85,7 +85,10 @@ const PAGE_TYPE_MOUNTS = [
   "PAGE_TYPE_OVERVIEW_MORE_ACTIONS",
 ] as const;
 
-export const ALL_APP_EXTENSION_MOUNTS = z.enum([
+const TRANSLATIONS_MOUNTS = ["TRANSLATIONS_MORE_ACTIONS"] as const;
+
+// Create a const array with all mounts to preserve literal types
+const ALL_MOUNTS_ARRAY = [
   ...CATEGORY_MOUNTS,
   ...COLLECTION_MOUNTS,
   ...CUSTOMER_MOUNTS,
@@ -98,7 +101,11 @@ export const ALL_APP_EXTENSION_MOUNTS = z.enum([
   ...PAGE_TYPE_MOUNTS,
   ...PRODUCT_MOUNTS,
   ...VOUCHER_MOUNTS,
-] as const);
+  ...TRANSLATIONS_MOUNTS,
+] as const;
+
+// Create the zod enum from the tuple, ensuring proper type inference
+export const ALL_APP_EXTENSION_MOUNTS = z.enum(ALL_MOUNTS_ARRAY);
 
 export type AllAppExtensionMounts = z.infer<typeof ALL_APP_EXTENSION_MOUNTS>;
 

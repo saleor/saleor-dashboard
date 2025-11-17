@@ -43,11 +43,16 @@ export class MetadataFilterInputQueryVarsBuilder
 
     const [key, value] = selectedValue;
 
+    // If value is empty, omit the value field from the query
     const newMetadataEntry = {
-      metadata: {
-        key,
-        value: { eq: value },
-      },
+      metadata: value
+        ? {
+            key,
+            value: { eq: value },
+          }
+        : {
+            key,
+          },
     };
 
     const existingAnd = query.AND || [];

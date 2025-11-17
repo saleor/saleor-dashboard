@@ -4,7 +4,7 @@ import {
   ALL_APP_EXTENSION_MOUNTS,
   AllAppExtensionMounts,
 } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
-import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
+import { appExtensionManifestOptionsSchemaWithDefault } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
@@ -32,7 +32,7 @@ const prepareExtensionsWithActions = ({
       const isWidget = targetName === "WIDGET";
       const appUrl = app.appUrl;
 
-      const settingsValidation = appExtensionManifestOptionsSchema.safeParse(settings);
+      const settingsValidation = appExtensionManifestOptionsSchemaWithDefault.safeParse(settings);
 
       /**
        * Options are not required so fall back to safe GET
@@ -125,7 +125,7 @@ export const useExtensions = <T extends AllAppExtensionMounts>(
     extensions: mapEdgesToItems(data?.appExtensions ?? undefined) || [],
     openAppInContext: activate,
   });
-  const extensionsMap = mountList.reduce(
+  const extensionsMap: Record<AllAppExtensionMounts, Extension[]> = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
     {} as Record<AllAppExtensionMounts, Extension[]>,
   );

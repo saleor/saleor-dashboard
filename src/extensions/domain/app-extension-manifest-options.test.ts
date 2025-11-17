@@ -1,4 +1,7 @@
-import { appExtensionManifestOptionsSchema } from "./app-extension-manifest-options";
+import {
+  appExtensionManifestOptionsSchema,
+  appExtensionManifestOptionsSchemaWithDefault,
+} from "./app-extension-manifest-options";
 
 describe("App Extension Manifest Options Schema", () => {
   describe("Valid cases", () => {
@@ -152,30 +155,38 @@ describe("App Extension Manifest Options Schema", () => {
       }
     });
 
-    it("should reject missing method in newTabTarget", () => {
+    it("should accept missing method in newTabTarget since method is optional", () => {
       // Arrange
-      const invalidData = {
+      const validData = {
         newTabTarget: {},
       };
 
       // Act
-      const result = appExtensionManifestOptionsSchema.safeParse(invalidData);
+      const result = appExtensionManifestOptionsSchema.safeParse(validData);
 
       // Assert
-      expect(result.success).toBe(false);
+      expect(result.success).toBe(true);
+
+      if (result.success) {
+        expect(result.data).toEqual(validData);
+      }
     });
 
-    it("should reject missing method in widgetTarget", () => {
+    it("should accept missing method in widgetTarget since method is optional", () => {
       // Arrange
-      const invalidData = {
+      const validData = {
         widgetTarget: {},
       };
 
       // Act
-      const result = appExtensionManifestOptionsSchema.safeParse(invalidData);
+      const result = appExtensionManifestOptionsSchema.safeParse(validData);
 
       // Assert
-      expect(result.success).toBe(false);
+      expect(result.success).toBe(true);
+
+      if (result.success) {
+        expect(result.data).toEqual(validData);
+      }
     });
   });
 
@@ -291,6 +302,139 @@ describe("App Extension Manifest Options Schema", () => {
 
       if (result.success) {
         expect(result.data).toEqual({ newTabTarget: { method: "GET" } });
+      }
+    });
+  });
+});
+
+describe("App Extension Manifest Options Schema With Default", () => {
+  describe("Default value behavior", () => {
+    it("should apply default value when undefined is provided", () => {
+      // Arrange
+      const undefinedInput = undefined;
+
+      // Act
+      const result = appExtensionManifestOptionsSchemaWithDefault.safeParse(undefinedInput);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        // The default value violates the exclusive target validation
+        expect(result.error.issues[0].message).toBe(
+          "Only one of 'newTabTarget' or 'widgetTarget' can be set.",
+        );
+      }
+    });
+
+    it("should not apply default when empty object is provided", () => {
+      // Arrange
+      const emptyObject = {};
+
+      // Act
+      const result = appExtensionManifestOptionsSchemaWithDefault.safeParse(emptyObject);
+
+      // Assert
+      expect(result.success).toBe(true);
+
+      if (result.success) {
+        expect(result.data).toEqual({});
+      }
+    });
+
+    it("should not apply default when null is provided", () => {
+      // Arrange
+      const nullInput = null;
+
+      // Act
+      const result = appExtensionManifestOptionsSchemaWithDefault.safeParse(nullInput);
+
+      // Assert
+      expect(result.success).toBe(false);
+    });
+  });
+
+  describe("Valid cases - default does not override explicit values", () => {
+    it("should accept explicit newTabTarget with GET method", () => {
+      // Arrange
+      const validData = {
+        newTabTarget: {
+          method: "GET",
+        },
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchemaWithDefault.safeParse(validData);
+
+      // Assert
+      expect(result.success).toBe(true);
+
+      if (result.success) {
+        expect(result.data).toEqual(validData);
+      }
+    });
+
+    it("should accept explicit widgetTarget with POST method", () => {
+      // Arrange
+      const validData = {
+        widgetTarget: {
+          method: "POST",
+        },
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchemaWithDefault.safeParse(validData);
+
+      // Assert
+      expect(result.success).toBe(true);
+
+      if (result.success) {
+        expect(result.data).toEqual(validData);
+      }
+    });
+  });
+
+  describe("Invalid cases - validation still applies", () => {
+    it("should reject when both targets are explicitly set", () => {
+      // Arrange
+      const invalidData = {
+        newTabTarget: {
+          method: "GET",
+        },
+        widgetTarget: {
+          method: "POST",
+        },
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchemaWithDefault.safeParse(invalidData);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe(
+          "Only one of 'newTabTarget' or 'widgetTarget' can be set.",
+        );
+      }
+    });
+
+    it("should reject invalid HTTP methods even with default", () => {
+      // Arrange
+      const invalidData = {
+        newTabTarget: {
+          method: "PATCH",
+        },
+      };
+
+      // Act
+      const result = appExtensionManifestOptionsSchemaWithDefault.safeParse(invalidData);
+
+      // Assert
+      expect(result.success).toBe(false);
+
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe("Method must be either GET or POST");
       }
     });
   });

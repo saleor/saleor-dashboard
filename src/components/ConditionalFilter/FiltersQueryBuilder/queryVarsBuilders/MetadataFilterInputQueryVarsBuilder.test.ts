@@ -249,5 +249,24 @@ describe("MetadataAdvancedFilterQueryVarsBuilder", () => {
         AND: [{ someOtherField: "value" }, { metadata: { key: "color", value: { eq: "red" } } }],
       });
     });
+
+    it("includes key with empty value when both key and value are provided but value is empty", () => {
+      // Arrange
+      const element = createElement(["mykey", ""]);
+
+      // Act
+      const result = builder.updateWhereQueryVariables({}, element);
+
+      // Assert
+      expect(result).toEqual({
+        AND: [
+          {
+            metadata: {
+              key: "mykey",
+            },
+          },
+        ],
+      });
+    });
   });
 });

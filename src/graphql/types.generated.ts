@@ -244,8 +244,28 @@ export enum AppErrorCode {
 }
 
 export type AppExtensionFilterInput = {
+  /**
+   * DEPRECATED: Use `mountName` instead.
+   * @deprecated Field no longer supported
+   */
   mount?: InputMaybe<Array<AppExtensionMountEnum>>;
+  /**
+   * Plain-text mount name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  mountName?: InputMaybe<Scalars['String']>;
+  /**
+   * DEPRECATED: Use `targetName` instead.
+   * @deprecated Field no longer supported
+   */
   target?: InputMaybe<AppExtensionTargetEnum>;
+  /**
+   * Plain-text target name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  targetName?: InputMaybe<Scalars['String']>;
 };
 
 /** All places where app extension can be mounted. */
@@ -295,6 +315,7 @@ export enum AppExtensionMountEnum {
   PRODUCT_DETAILS_WIDGETS = 'PRODUCT_DETAILS_WIDGETS',
   PRODUCT_OVERVIEW_CREATE = 'PRODUCT_OVERVIEW_CREATE',
   PRODUCT_OVERVIEW_MORE_ACTIONS = 'PRODUCT_OVERVIEW_MORE_ACTIONS',
+  TRANSLATIONS_MORE_ACTIONS = 'TRANSLATIONS_MORE_ACTIONS',
   VOUCHER_DETAILS_MORE_ACTIONS = 'VOUCHER_DETAILS_MORE_ACTIONS',
   VOUCHER_DETAILS_WIDGETS = 'VOUCHER_DETAILS_WIDGETS',
   VOUCHER_OVERVIEW_CREATE = 'VOUCHER_OVERVIEW_CREATE',

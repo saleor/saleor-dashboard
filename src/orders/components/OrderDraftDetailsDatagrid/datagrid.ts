@@ -80,14 +80,14 @@ interface GetCellContentProps {
   columns: AvailableColumn[];
   lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
 export const useGetCellContent = ({
   columns,
   lines,
   errors,
-  onShowMetadata,
+  onOrderLineShowMetadata,
 }: GetCellContentProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
@@ -162,7 +162,7 @@ export const useGetCellContent = ({
         });
       case "metadata":
         return buttonCell(intl.formatMessage(commonMessages.viewMetadata), () => {
-          onShowMetadata(rowData.id);
+          onOrderLineShowMetadata(rowData.id);
         });
 
       default:

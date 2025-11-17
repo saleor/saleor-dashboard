@@ -35,6 +35,7 @@ import {
   STATIC_PRODUCT_TYPES_OPTIONS,
   STATIC_VOUCHER_OPTIONS,
 } from "../constants";
+import { QUERY_API_TYPES } from "../queryVariables";
 import { useContainerState } from "../useContainerState";
 import { useFilterLeftOperandsProvider } from "../useFilterLeftOperands";
 import { useFilterWindow } from "../useFilterWindow";
@@ -60,6 +61,7 @@ export const ConditionalProductFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.PRODUCT,
       }}
     >
       {children}
@@ -85,6 +87,7 @@ export const ConditionalDiscountFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.DISCOUNT,
       }}
     >
       {children}
@@ -112,6 +115,7 @@ export const ConditionalOrderFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.ORDER,
       }}
     >
       {children}
@@ -139,6 +143,7 @@ export const ConditionalVoucherFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.VOUCHER,
       }}
     >
       {children}
@@ -166,6 +171,7 @@ export const ConditionalPageFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.PAGE,
       }}
     >
       {children}
@@ -192,6 +198,7 @@ export const ConditionalDraftOrderFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.DRAFT_ORDER,
       }}
     >
       {children}
@@ -218,6 +225,7 @@ export const ConditionalGiftCardsFilterProver: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.GIFT_CARD,
       }}
     >
       {children}
@@ -244,6 +252,7 @@ export const ConditionalCustomerFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.CUSTOMER,
       }}
     >
       {children}
@@ -272,6 +281,7 @@ export const ConditionalCollectionFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.COLLECTION,
       }}
     >
       {children}
@@ -299,6 +309,7 @@ export const ConditionalProductTypesFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.PRODUCT_TYPE,
       }}
     >
       {children}
@@ -326,6 +337,7 @@ export const ConditionalStaffMembersFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.STAFF_MEMBER,
       }}
     >
       {children}
@@ -353,6 +365,7 @@ export const ConditionalAttributesFilterProvider: FC<{
         leftOperandsProvider,
         containerState,
         filterWindow,
+        queryApiType: QUERY_API_TYPES.ATTRIBUTE,
       }}
     >
       {children}

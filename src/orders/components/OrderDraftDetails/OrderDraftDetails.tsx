@@ -14,7 +14,7 @@ import { Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts";
+import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
@@ -26,7 +26,7 @@ interface OrderDraftDetailsProps {
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
   onShippingMethodEdit: () => void;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
 const OrderDraftDetails = ({
@@ -38,7 +38,7 @@ const OrderDraftDetails = ({
   onOrderLineChange,
   onOrderLineRemove,
   onShippingMethodEdit,
-  onShowMetadata,
+  onOrderLineShowMetadata,
 }: OrderDraftDetailsProps) => {
   const intl = useIntl();
   const isChannelActive = order?.channel.isActive;
@@ -68,7 +68,7 @@ const OrderDraftDetails = ({
         loading={loading}
         onOrderLineChange={onOrderLineChange}
         onOrderLineRemove={onOrderLineRemove}
-        onShowMetadata={onShowMetadata}
+        onOrderLineShowMetadata={onOrderLineShowMetadata}
       />
       {maybe(() => order.lines.length) !== 0 && (
         <DashboardCard.Content>

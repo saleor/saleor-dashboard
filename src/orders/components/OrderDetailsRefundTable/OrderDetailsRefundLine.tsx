@@ -7,7 +7,7 @@ import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import {
   OrderRefundDisplay,
   OrderRefundsViewModel,
-} from "@dashboard/ordersV2/OrderRefunds/OrderRefundsViewModel";
+} from "@dashboard/orders/utils/OrderRefundsViewModel";
 import { Box, Button, EditIcon, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";

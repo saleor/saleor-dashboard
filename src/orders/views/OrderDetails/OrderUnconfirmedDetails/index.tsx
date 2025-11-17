@@ -22,8 +22,9 @@ import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCann
 import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
-import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog";
+import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
@@ -45,7 +46,7 @@ import {
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";
-import OrderDetailsPage from "../../../components/OrderDetailsPage";
+import OrderDetailsPage from "../../../components/OrderDetailsPage/OrderDetailsPage";
 import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
 import OrderFulfillmentTrackingDialog from "../../../components/OrderFulfillmentTrackingDialog";
 import OrderMarkAsPaidDialog from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
@@ -227,7 +228,8 @@ export const OrderUnconfirmedDetails = ({
             }
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
             onShippingMethodEdit={() => openModal("edit-shipping")}
-            onShowMetadata={id => openModal("view-metadata", { id })}
+            onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
+            onOrderShowMetadata={() => openModal("view-order-metadata")}
             saveButtonBarState={getMutationState(
               updateMetadataOpts.called || updatePrivateMetadataOpts.called,
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
@@ -375,13 +377,17 @@ export const OrderUnconfirmedDetails = ({
             .finally(() => closeModal())
         }
       />
-      <OrderMetadataDialog
-        open={params.action === "view-metadata"}
+      <OrderLineMetadataDialog
+        open={params.action === "view-order-line-metadata"}
         onClose={closeModal}
         lineId={params.id}
         orderId={id}
       />
-
+      <OrderMetadataDialog
+        open={params.action === "view-order-metadata"}
+        onClose={closeModal}
+        order={data?.order}
+      />
       <OrderPaymentVoidDialog
         confirmButtonState={orderVoid.opts.status}
         errors={orderVoid.opts.data?.orderVoid.errors || []}

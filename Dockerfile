@@ -1,9 +1,10 @@
-FROM node:20-alpine as builder
+FROM node:22-alpine as builder
 RUN apk --no-cache add bash
+RUN corepack enable && corepack prepare pnpm@10 --activate
 WORKDIR /app
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 ENV CI 1
-RUN npm ci --legacy-peer-deps
+RUN pnpm install --frozen-lockfile
 
 COPY nginx/ nginx/
 COPY assets/ assets/
@@ -35,7 +36,7 @@ ENV APPS_TUNNEL_URL_KEYWORDS ${APPS_TUNNEL_URL_KEYWORDS}
 ENV STATIC_URL ${STATIC_URL:-/dashboard/}
 ENV SKIP_SOURCEMAPS ${SKIP_SOURCEMAPS:-true}
 ENV LOCALE_CODE ${LOCALE_CODE:-EN}
-RUN npm run build
+RUN pnpm run build
 
 FROM nginx:stable-alpine as runner
 WORKDIR /app

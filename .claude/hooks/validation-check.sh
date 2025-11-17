@@ -9,13 +9,13 @@ fi
 echo '🔍 Running final validation...' >&2
 
 # Run type checking
-if ! npm run check-types; then
+if ! pnpm run check-types; then
     echo '❌ TypeScript validation failed - please fix type errors before completing the task' >&2
     exit 2
 fi
 
 # Run linting
-if ! npm run lint; then
+if ! pnpm run lint; then
     echo '❌ ESLint validation failed - please fix linting errors before completing the task' >&2
     exit 2
 fi

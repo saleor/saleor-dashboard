@@ -82,6 +82,8 @@ interface DatagridProps {
   onChange?: OnDatagridChange;
   onHeaderClicked?: (colIndex: number, event: HeaderClickedEventArgs) => void;
   renderColumnPicker?: () => ReactElement;
+  renderRowActions?: (index: number) => ReactElement;
+  rowActionBarWidth?: number;
   onRowClick?: (item: Item) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
@@ -113,6 +115,8 @@ const Datagrid = ({
   onHeaderClicked,
   onChange,
   renderColumnPicker,
+  renderRowActions,
+  rowActionBarWidth = 36,
   onRowClick,
   getColumnTooltipContent,
   readonly = false,
@@ -491,6 +495,7 @@ const Datagrid = ({
                           [classes.rowActionBarScrolledToRight]: scrolledToRight,
                           [classes.rowActionvBarWithItems]: hasMenuItem,
                         })}
+                        style={{ width: rowActionBarWidth }}
                       >
                         <div
                           className={clsx(classes.rowActionBarShadow, {
@@ -514,13 +519,17 @@ const Datagrid = ({
                         {hasMenuItem &&
                           Array(rowsTotal)
                             .fill(0)
-                            .map((_, index) => (
-                              <RowActions
-                                key={`row-actions-${index}`}
-                                menuItems={menuItems(index)}
-                                disabled={index >= rowsTotal - added.length}
-                              />
-                            ))}
+                            .map((_, index) =>
+                              renderRowActions ? (
+                                renderRowActions(index)
+                              ) : (
+                                <RowActions
+                                  key={`row-actions-${index}`}
+                                  menuItems={menuItems(index)}
+                                  disabled={index >= rowsTotal - added.length}
+                                />
+                              ),
+                            )}
                       </div>
                     }
                     rowMarkerWidth={48}
