@@ -207,6 +207,7 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
       textLight: themeValues.colors.text.default2,
       textHeader: themeValues.colors.text.default1,
       textHeaderSelected: themeValues.colors.text.default1,
+      fgIconHeader: themeValues.colors.text.default1,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
