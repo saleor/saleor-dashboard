@@ -24,10 +24,10 @@ const config: IGraphQLConfig = {
     staging: {
       schema: "schema-staging.graphql",
       documents: [
-        "./src/**/queries.ts",
-        "./src/**/mutations.ts",
-        "./src/**/fragments/*.ts",
-        "./src/searches/*.ts",
+        "./src/**/queries.staging.ts",
+        "./src/**/mutations.staging.ts",
+        "./src/**/fragments/*.staging.ts",
+        "./src/searches/*.staging.ts",
       ],
     },
   },
