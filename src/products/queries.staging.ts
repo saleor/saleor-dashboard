@@ -1,4 +1,4 @@
-export const productPoc323 = `query ProductVariantsStaging {
+export const productPoc323 = `query ProductVariants {
     productVariants(channel: "default-channel", first: 1 ) {
         edges {
             node {
