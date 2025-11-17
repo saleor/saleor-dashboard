@@ -25,8 +25,8 @@ const config: CodegenConfig = {
         scalars: {
           Day: "number",
           Hour: "number",
-          // TODO Enable and fix types one by one
           Date: "string",
+          // TODO Enable and fix types one by one
           // _Any: "unknown",
           // DateTime: "string",
           // Decimal: "number",
