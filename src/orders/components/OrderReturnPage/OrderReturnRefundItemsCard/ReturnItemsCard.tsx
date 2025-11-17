@@ -14,7 +14,7 @@ import { CSSProperties } from "react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-import OrderCardTitle from "../../OrderCardTitle";
+import { OrderCardTitle } from "../../OrderCardTitle";
 import { MaximalButton } from "../components/MaximalButton";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";

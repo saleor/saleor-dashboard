@@ -35,7 +35,7 @@ export type OrderCardTitleProps =
   | OrderCardTitleWithWarehouseProps
   | OrderCardTitleWithoutWarehouseProps;
 
-const OrderCardTitle = ({
+export const OrderCardTitle = ({
   status,
   warehouseName,
   withStatus = false,
@@ -75,5 +75,3 @@ const OrderCardTitle = ({
     />
   );
 };
-
-export default OrderCardTitle;
