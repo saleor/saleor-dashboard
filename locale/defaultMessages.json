@@ -340,10 +340,6 @@
     "context": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
     "string": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history."
   },
-  "/xXvjF": {
-    "context": "section header",
-    "string": "Unfulfilled"
-  },
   "/yJJvI": {
     "context": "dialog header",
     "string": "Select a product type"
@@ -4573,6 +4569,10 @@
   "REVk27": {
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
+  },
+  "RHctec": {
+    "context": "section header",
+    "string": "Unfulfilled order lines"
   },
   "RK6l3Z": {
     "context": "radio button label",
