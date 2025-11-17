@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(),
     },
   }),
-  { name: "OrderFulfilledProductsCard" },
+  { name: "OrderFulfillmentCard" },
 );
 
 export default useStyles;
