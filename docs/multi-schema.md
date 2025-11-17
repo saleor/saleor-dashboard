@@ -27,14 +27,16 @@ Each schema generates its own set of TypeScript files:
 
 ```
 src/graphql/
-├── hooks.generated.ts              # Hooks from main schema
-├── types.generated.ts              # Types from main schema
-├── typePolicies.generated.ts       # Type policies from main schema
-├── fragmentTypes.generated.ts      # Fragment types from main schema
-├── hooksStaging.generated.ts          # Hooks from staging schema
-├── typesStaging.generated.ts          # Types from staging schema
-├── typePoliciesStaging.generated.ts   # Type policies from staging schema
-└── fragmentTypesStaging.generated.ts  # Fragment types from staging schema
+├── hooks.generated.ts                   # Hooks from main schema
+├── types.generated.ts                   # Types from main schema
+├── typePolicies.generated.ts            # Type policies from main schema
+├── fragmentTypes.generated.ts           # Fragment types from main schema
+├── hooksStaging.generated.ts            # Hooks from staging schema
+├── typesStaging.generated.ts            # Types from staging schema
+├── typePoliciesStaging.generated.ts     # Type policies from staging schema
+├── fragmentTypesStaging.generated.ts    # Fragment types from staging schema
+└── staging/
+    └── index.ts                         # Convenience export for all staging files
 ```
 
 ## Usage
@@ -59,10 +61,19 @@ By default, the application imports from the production schema:
 import { useProductListQuery } from "@dashboard/graphql";
 ```
 
-To explicitly use the staging schema, import directly from the generated file:
+To explicitly use the staging schema, you have two options:
+
+**Option 1: Import from the staging directory (recommended for multiple imports)**
 
 ```typescript
-// Explicitly use staging schema (staging)
+// Import from staging directory - includes all staging types, hooks, and helpers
+import { useProductListQuery, ProductListQuery, isStagingSchema } from "@dashboard/graphql/staging";
+```
+
+**Option 2: Import directly from generated files**
+
+```typescript
+// Import directly from specific generated files
 import { useProductListQuery } from "@dashboard/graphql/hooksStaging.generated";
 import type { ProductListQuery } from "@dashboard/graphql/typesStaging.generated";
 ```
@@ -87,12 +98,36 @@ function MyComponent() {
 
 ### Conditional Feature Implementation
 
-For features that differ between schemas:
+For features that differ between schemas, you can conditionally use different hooks:
+
+**Example 1: Skip-based approach (recommended)**
+
+```typescript
+import { isMainSchema, isStagingSchema, useProductListQuery } from "@dashboard/graphql";
+import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/staging";
+
+function ProductList() {
+  // Execute only the relevant query based on schema version
+  const { data: dataMain } = useProductListQuery({
+    skip: isStagingSchema()
+  });
+  const { data: dataStaging } = useProductListQueryStaging({
+    skip: isMainSchema()
+  });
+
+  // Use whichever data is available
+  const data = dataStaging ?? dataMain;
+
+  return <div>{/* Use data */}</div>;
+}
+```
+
+**Example 2: Dynamic hook selection**
 
 ```typescript
 import { isStagingSchema } from "@dashboard/graphql";
-import { useProductListQuery as useProductListQueryMain } from "@dashboard/graphql/hooks.generated";
-import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/hooksStaging.generated";
+import { useProductListQuery as useProductListQueryMain } from "@dashboard/graphql";
+import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/staging";
 
 function ProductList() {
   // Choose the appropriate hook based on schema version
@@ -105,6 +140,22 @@ function ProductList() {
   return <div>{/* ... */}</div>;
 }
 ```
+
+### Organizing Schema-Specific Queries
+
+For queries that only exist in one schema version, you can organize them in separate files:
+
+```
+src/products/
+├── queries.ts          # Main schema queries
+└── queries.staging.ts  # Staging-specific queries
+```
+
+This pattern is demonstrated in the codebase:
+
+- `src/products/queries.ts` - Contains `productPoc322` query for main schema
+- `src/products/queries.staging.ts` - Contains `productPoc323` query with staging-specific fields
+- `src/siteSettings/views/index.tsx` - Shows practical usage of both schemas with conditional execution
 
 ## Development
 
@@ -166,14 +217,41 @@ pnpm run check-types
 This means you cannot import both versions in the same file without aliasing:
 
 ```typescript
-// This works - import with aliases
+// This works - import with aliases (recommended: use staging directory)
+import { useProductListQuery as useProductListQueryMain } from "@dashboard/graphql";
+import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/staging";
+
+// This also works - import directly from generated files
 import { useProductListQuery as useProductListQueryMain } from "@dashboard/graphql/hooks.generated";
 import { useProductListQuery as useProductListQueryStaging } from "@dashboard/graphql/hooksStaging.generated";
 
 // This doesn't work - naming conflict
-import { useProductListQuery } from "@dashboard/graphql/hooks.generated";
-import { useProductListQuery } from "@dashboard/graphql/hooksStaging.generated"; // ERROR!
+import { useProductListQuery } from "@dashboard/graphql";
+import { useProductListQuery } from "@dashboard/graphql/staging"; // ERROR!
 ```
+
+### Staging Directory Convenience Export
+
+The `src/graphql/staging/index.ts` file provides a convenient way to import all staging-related exports:
+
+```typescript
+// Instead of importing from multiple files...
+import { useProductListQuery } from "@dashboard/graphql/hooksStaging.generated";
+import type { ProductListQuery } from "@dashboard/graphql/typesStaging.generated";
+import { isStagingSchema } from "@dashboard/graphql/schemaVersion";
+
+// You can import everything from one place
+import { useProductListQuery, ProductListQuery, isStagingSchema } from "@dashboard/graphql/staging";
+```
+
+This export includes:
+
+- All staging hooks (`hooksStaging.generated.ts`)
+- All staging types (`typesStaging.generated.ts`)
+- Type policies (`typePoliciesStaging.generated.ts`)
+- Fragment types (`fragmentTypesStaging.generated.ts`)
+- Schema version helpers (`schemaVersion.ts`)
+- Extended types (`extendedTypes.ts`)
 
 ### Single Apollo Client
 
@@ -196,7 +274,7 @@ When `FF_USE_STAGING_SCHEMA=true`:
 
 ## Adding New Queries/Mutations
 
-When adding new GraphQL operations:
+### For Queries/Mutations That Work with Both Schemas
 
 1. Add your query/mutation to the appropriate file (e.g., `src/products/queries.ts`)
 2. Run `pnpm run generate` to generate hooks for both schemas
@@ -204,10 +282,24 @@ When adding new GraphQL operations:
    ```typescript
    import { useMyNewQuery } from "@dashboard/graphql";
    ```
-4. For staging-specific features, import explicitly:
+4. For staging-specific features, import from the staging directory:
    ```typescript
-   import { useMyNewQuery } from "@dashboard/graphql/hooksStaging.generated";
+   import { useMyNewQuery } from "@dashboard/graphql/staging";
    ```
+
+### For Staging-Only Queries
+
+If a query uses fields that only exist in the staging schema:
+
+1. Create a separate file (e.g., `src/products/queries.staging.ts`)
+2. Define your staging-specific query there
+3. Run `pnpm run generate:staging` to generate hooks
+4. Import from the staging directory:
+   ```typescript
+   import { useMyNewQuery } from "@dashboard/graphql/staging";
+   ```
+
+This keeps schema-specific code organized and prevents type errors when generating main schema types.
 
 ## Testing
 
@@ -284,9 +376,21 @@ As new schema versions are released:
 
 ## Related Documentation
 
-- [GraphQL Codegen Configuration](./codegen-main.ts)
-- [Environment Variables](./.env.template)
-- [GraphQL Schema Configuration](./graphql.config.ts)
+### Configuration Files
+
+- [Main Schema Codegen Configuration](../codegen-main.ts)
+- [Staging Schema Codegen Configuration](../codegen-staging.ts)
+- [Environment Variables](../.env.template)
+- [GraphQL Schema Configuration](../graphql.config.ts)
+
+### Example Implementations
+
+- `src/graphql/schemaVersion.ts` - Schema version helper functions
+- `src/graphql/index.ts` - Main schema exports and documentation
+- `src/graphql/staging/index.ts` - Staging schema convenience exports
+- `src/products/queries.ts` - Example main schema query
+- `src/products/queries.staging.ts` - Example staging-specific query
+- `src/siteSettings/views/index.tsx` - Practical usage example with conditional execution
 
 ## Questions?
 
@@ -295,3 +399,5 @@ If you have questions about the multi-schema setup, please refer to:
 - This documentation
 - Code comments in `src/graphql/schemaVersion.ts`
 - Code comments in `src/graphql/index.ts`
+- Code comments in `src/graphql/staging/index.ts`
+- Example implementations listed above
