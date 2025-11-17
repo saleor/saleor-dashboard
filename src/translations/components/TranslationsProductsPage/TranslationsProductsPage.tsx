@@ -11,6 +11,7 @@ import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { createProductTranslateFormPayloadEvent } from "@dashboard/translations/components/TranslationsProductsPage/create-product-translate-form-payload-event";
 import {
   TranslationField,
   TranslationInputFieldName,
@@ -24,49 +25,18 @@ import {
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import { Box } from "@saleor/macaw-ui-next";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
+import { useTranslationsProductsDataCache } from "./use-translations-products-data-cache";
 
 interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
   productId: string;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
-
-type DataCacheFields = "productName" | "productDescription" | "seoDescription" | "seoName";
-
-// A hack to access field that are currently being edited in nested form.
-export const useTranslationsProductsDataCache = () => {
-  const dataCache = useRef<Record<DataCacheFields, string | null>>({
-    productName: null,
-    productDescription: null,
-    seoDescription: null,
-    seoName: null,
-  });
-
-  const resetCache = () => {
-    dataCache.current = {
-      productName: null,
-      productDescription: null,
-      seoName: null,
-      seoDescription: null,
-    };
-  };
-
-  return {
-    resetCache,
-    cachedProductName: dataCache.current.productName,
-    cachedProductDescription: dataCache.current.productDescription,
-    cachedProductSeoName: dataCache.current.seoName,
-    cachedProductSeoDescription: dataCache.current.seoDescription,
-    setCachedFormField(key: DataCacheFields, value: string): void {
-      dataCache.current[key] = value;
-    },
-  };
-};
 
 export const TranslationsProductsPage = ({
   translationId,
@@ -120,42 +90,19 @@ export const TranslationsProductsPage = ({
 
   // Emit data to app
   useEffect(() => {
-    if (active && data?.product) {
-      attachFormState({
-        translationLanguage: languageCode,
-        form: "product-translate",
-        productId: productId,
-        fields: {
-          productName: {
-            type: "short-text",
-            fieldName: "productName",
-            originalValue: data.product.name,
-            currentValue: cachedProductName ?? data.product.name ?? "",
-            translatedValue: data.translation?.name ?? "",
-          },
-          productDescription: {
-            currentValue: cachedProductDescription ?? data.product.description ?? "",
-            type: "editorjs",
-            fieldName: "productDescription",
-            originalValue: data.product.description,
-            translatedValue: data.translation?.description ?? "",
-          },
-          seoName: {
-            type: "short-text",
-            fieldName: "seoName",
-            originalValue: data.product.seoTitle,
-            currentValue: cachedProductSeoName ?? data.product.seoTitle ?? "",
-            translatedValue: data.translation?.seoTitle ?? "",
-          },
-          seoDescription: {
-            currentValue: cachedProductSeoDescription ?? data.product.seoDescription ?? "",
-            type: "long-text",
-            fieldName: "seoDescription",
-            originalValue: data.product.seoDescription,
-            translatedValue: data.translation?.seoDescription ?? "",
-          },
-        },
-      });
+    if (active && data?.product && data.translation) {
+      attachFormState(
+        createProductTranslateFormPayloadEvent({
+          translationData: data.translation,
+          productData: data.product,
+          cachedProductDescription,
+          cachedProductName,
+          cachedProductSeoName,
+          cachedProductSeoDescription,
+          productId,
+          languageCode,
+        }),
+      );
     }
   }, [active, data?.product, productId]);
 
