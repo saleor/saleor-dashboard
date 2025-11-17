@@ -3,10 +3,10 @@ import { CodegenConfig } from "@graphql-codegen/cli";
 const config: CodegenConfig = {
   schema: "./schema-staging.graphql",
   documents: [
-    "./src/**/queries.ts",
-    "./src/**/mutations.ts",
-    "./src/**/fragments/*.ts",
-    "./src/searches/*.ts",
+    "./src/**/queries.staging.ts",
+    "./src/**/mutations.staging.ts",
+    "./src/**/fragments/*.staging.ts",
+    "./src/searches/*.staging.ts",
   ],
   generates: {
     "./src/graphql/fragmentTypesStaging.generated.ts": {

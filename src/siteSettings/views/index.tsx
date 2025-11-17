@@ -1,6 +1,7 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
+  useProductVariantsStagingQuery,
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
@@ -15,6 +16,7 @@ import SiteSettingsPage, {
 } from "../components/SiteSettingsPage";
 
 const SiteSettings = () => {
+  // todo add main/322
   const { data } = useProductVariantsStagingQuery();
 
   console.log(data);
