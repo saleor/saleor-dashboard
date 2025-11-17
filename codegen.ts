@@ -26,8 +26,8 @@ const config: CodegenConfig = {
           Day: "number",
           Hour: "number",
           // TODO Enable and fix types one by one
+          Date: "string",
           // _Any: "unknown",
-          // Date: "string",
           // DateTime: "string",
           // Decimal: "number",
           // Minute: "number",
