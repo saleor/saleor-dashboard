@@ -16,9 +16,9 @@ Both schemas are generated at build time, and runtime selection is controlled by
 ### Schema Files
 
 ```
-schema-main.graphql     # Production schema (Saleor main)
-schema-staging.graphql     # Staging schema (Saleor staging)
-schema.graphql          # Copy of schema-main.graphql (for tooling compatibility)
+schema-main.graphql     # Production schema (Saleor stable tags like 3.22, 3.23)
+schema-staging.graphql     # Staging schema (Saleor staging - main branch)
+schema.graphql          # Symlink to schema-main.graphql (for tooling compatibility)
 ```
 
 ### Generated Files
@@ -151,12 +151,6 @@ src/products/
 └── queries.staging.ts  # Staging-specific queries
 ```
 
-This pattern is demonstrated in the codebase:
-
-- `src/products/queries.ts` - Contains `productPoc322` query for main schema
-- `src/products/queries.staging.ts` - Contains `productPoc323` query with staging-specific fields
-- `src/siteSettings/views/index.tsx` - Shows practical usage of both schemas with conditional execution
-
 ## Development
 
 ### Fetching Schemas
@@ -270,7 +264,7 @@ When `FF_USE_STAGING_SCHEMA=true`:
 - Uses staging schema (staging)
 - Apollo Client uses staging fragmentTypes
 - Must explicitly import from Staging generated files for schema-specific features
-- Connects to the same API_URL (the API should support both schema versions)
+- Connects to the same API_URL (you must know what schema version is provided by this endpoint)
 
 ## Adding New Queries/Mutations
 
@@ -323,43 +317,11 @@ Note: Your API must support both schema versions for this to work correctly.
 - Type checking validates both schema versions
 - Consider running E2E tests against both schemas
 
-## Troubleshooting
-
-### Build Failures
-
-**Error**: `Module not found: Can't resolve './hooksStaging.generated'`
-
-**Solution**: Run `pnpm run generate` to create all generated files.
-
----
-
-**Error**: TypeScript duplicate export errors
-
-**Solution**: Don't re-export Staging types from `src/graphql/index.ts`. Import them directly from the generated files.
-
-### Runtime Errors
-
-**Error**: `Cannot read property 'possibleTypes' of undefined`
-
-**Solution**: Ensure `fragmentTypesStaging.generated.ts` exists and is properly generated.
-
----
-
-**Error**: API returns unexpected data or errors with staging flag enabled
-
-**Solution**: Verify your API supports the schema version you're trying to use (staging). The API must be compatible with the schema version selected by FF_USE_STAGING_SCHEMA.
-
-### Type Errors
-
-**Error**: Type mismatch between production and staging types
-
-**Solution**: This is expected if the schemas differ. Use type guards or conditional logic to handle schema-specific differences.
-
 ## Future Improvements
 
 ### Potential Optimizations
 
-1. **Differential Generation**: Generate only changed types for Staging to reduce bundle size
+1. **Differential Generation**: Generate only changed types for Staging to reduce bundle size (this should not be a huge deal if we migrate from enums to type literals)
 2. **Automatic Schema Switching**: Detect API version from response headers
 3. **Schema Compatibility Checker**: Tool to validate backward compatibility
 4. **Runtime Type Validation**: Validate API responses match the active schema
@@ -382,22 +344,3 @@ As new schema versions are released:
 - [Staging Schema Codegen Configuration](../codegen-staging.ts)
 - [Environment Variables](../.env.template)
 - [GraphQL Schema Configuration](../graphql.config.ts)
-
-### Example Implementations
-
-- `src/graphql/schemaVersion.ts` - Schema version helper functions
-- `src/graphql/index.ts` - Main schema exports and documentation
-- `src/graphql/staging/index.ts` - Staging schema convenience exports
-- `src/products/queries.ts` - Example main schema query
-- `src/products/queries.staging.ts` - Example staging-specific query
-- `src/siteSettings/views/index.tsx` - Practical usage example with conditional execution
-
-## Questions?
-
-If you have questions about the multi-schema setup, please refer to:
-
-- This documentation
-- Code comments in `src/graphql/schemaVersion.ts`
-- Code comments in `src/graphql/index.ts`
-- Code comments in `src/graphql/staging/index.ts`
-- Example implementations listed above
