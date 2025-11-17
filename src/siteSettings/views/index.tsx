@@ -1,11 +1,13 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CountryCode,
-  useProductVariantsStagingQuery,
+  isMainSchema,
+  isStagingSchema,
+  useProductVariantsPocQuery,
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
-import {} from "@dashboard/graphql/staging";
+import { useProductVariantsPocQuery as useProductVariantsPocQueryStaging } from "@dashboard/graphql/staging";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
@@ -17,9 +19,12 @@ import SiteSettingsPage, {
 } from "../components/SiteSettingsPage";
 
 const SiteSettings = () => {
-  // todo add main/322
-  const { data } = useProductVariantsStagingQuery();
+  const { data: dataStaging } = useProductVariantsPocQueryStaging({ skip: isMainSchema() });
+  const { data: dataMain } = useProductVariantsPocQuery({ skip: isStagingSchema() });
 
+  const data = dataStaging ?? dataMain;
+
+  // eslint-disable-next-line
   console.log(data);
 
   const notify = useNotifier();

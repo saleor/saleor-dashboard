@@ -11749,11 +11749,6 @@ export type ModelTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ModelTypesQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string } }> } | null };
 
-export type ProductVariantsStagingQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ProductVariantsStagingQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, iAmStaging: string | null } }> } | null };
-
 export type GlobalSearchQueryVariables = Exact<{
   query: Scalars['String'];
   includeOrders: Scalars['Boolean'];

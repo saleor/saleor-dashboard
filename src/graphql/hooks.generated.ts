@@ -16236,45 +16236,6 @@ export function useModelTypesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type ModelTypesQueryHookResult = ReturnType<typeof useModelTypesQuery>;
 export type ModelTypesLazyQueryHookResult = ReturnType<typeof useModelTypesLazyQuery>;
 export type ModelTypesQueryResult = Apollo.QueryResult<Types.ModelTypesQuery, Types.ModelTypesQueryVariables>;
-export const ProductVariantsStagingDocument = gql`
-    query ProductVariantsStaging {
-  productVariants(channel: "default-channel", first: 1) {
-    edges {
-      node {
-        id
-        iAmStaging: metafield(key: "test")
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useProductVariantsStagingQuery__
- *
- * To run a query within a React component, call `useProductVariantsStagingQuery` and pass it any options that fit your needs.
- * When your component renders, `useProductVariantsStagingQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProductVariantsStagingQuery({
- *   variables: {
- *   },
- * });
- */
-export function useProductVariantsStagingQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>(ProductVariantsStagingDocument, options);
-      }
-export function useProductVariantsStagingLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>(ProductVariantsStagingDocument, options);
-        }
-export type ProductVariantsStagingQueryHookResult = ReturnType<typeof useProductVariantsStagingQuery>;
-export type ProductVariantsStagingLazyQueryHookResult = ReturnType<typeof useProductVariantsStagingLazyQuery>;
-export type ProductVariantsStagingQueryResult = Apollo.QueryResult<Types.ProductVariantsStagingQuery, Types.ProductVariantsStagingQueryVariables>;
 export const GlobalSearchDocument = gql`
     query GlobalSearch($query: String!, $includeOrders: Boolean!, $includeCategories: Boolean!, $includeCollections: Boolean!, $includeProducts: Boolean!, $includeVariants: Boolean!, $includeModels: Boolean!, $includeModelTypes: Boolean!) {
   orders(first: 10, filter: {search: $query}) @include(if: $includeOrders) {

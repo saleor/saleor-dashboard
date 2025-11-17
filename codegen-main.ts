@@ -7,6 +7,11 @@ const config: CodegenConfig = {
     "./src/**/mutations.ts",
     "./src/**/fragments/*.ts",
     "./src/searches/*.ts",
+    // covered by codegen-staging
+    "!./src/**/queries.staging.ts",
+    "!./src/**/mutations.staging.ts",
+    "!./src/**/fragments/*.staging.ts",
+    "!./src/searches/*.staging.ts",
   ],
   generates: {
     "./src/graphql/fragmentTypes.generated.ts": {

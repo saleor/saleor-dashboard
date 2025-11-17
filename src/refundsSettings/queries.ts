@@ -23,17 +23,3 @@ export const modelTypes = gql`
     }
   }
 `;
-
-// POC
-export const productVariantStaging = gql`
-  query ProductVariantsStaging {
-    productVariants(channel: "default-channel", first: 1) {
-      edges {
-        node {
-          id
-          iAmStaging: metafield(key: "test")
-        }
-      }
-    }
-  }
-`;
