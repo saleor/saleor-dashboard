@@ -188,8 +188,8 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const { themeValues } = useTheme();
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: themeValues.colors.background.accent1,
-      accentLight: themeValues.colors.background.accent1Hovered,
+      accentColor: "hsla(207, 13%, 87%, 1)",
+      accentLight: "hsla(60, 9%, 98%, 1)",
       accentFg: "transparent",
       bgCell: themeValues.colors.background.default1,
       bgHeader: themeValues.colors.background.default1,
@@ -209,7 +209,7 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
       textDark: themeValues.colors.text.default1,
       textLight: themeValues.colors.text.default2,
       textHeader: themeValues.colors.text.default1,
-      textHeaderSelected: themeValues.colors.background.default1,
+      textHeaderSelected: themeValues.colors.text.default1,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
@@ -219,8 +219,8 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
-      accentColor: themeValues.colors.background.accent1,
-      accentLight: themeValues.colors.background.default1Hovered,
+      accentColor: "hsla(207, 13%, 87%, 1)",
+      accentLight: "hsla(60, 9%, 98%, 1)",
     }),
     [themeValues, datagridTheme],
   );
