@@ -1,2 +1,2 @@
-export { default } from "./OrderCardTitle";
-export * from "./OrderCardTitle";
+export type { CardTitleStatus, OrderCardTitleProps } from "./OrderCardTitle";
+export { default as default } from "./OrderCardTitle";

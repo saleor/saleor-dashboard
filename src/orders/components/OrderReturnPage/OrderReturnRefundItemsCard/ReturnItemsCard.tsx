@@ -92,11 +92,7 @@ const ItemsCard = ({
 
   return (
     <DashboardCard>
-      <OrderCardTitle
-        orderNumber={order?.number}
-        fulfillmentOrder={fulfillment?.fulfillmentOrder}
-        status={fulfillment?.status}
-      />
+      <OrderCardTitle status={fulfillment?.status} />
       <DashboardCard.Content className={classes.cartContent}>
         <MaximalButton onClick={onSetMaxQuantity} />
       </DashboardCard.Content>

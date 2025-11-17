@@ -66,10 +66,8 @@ export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCa
     <Box data-test-id={dataTestId}>
       <OrderCardTitle
         withStatus
-        fulfillmentOrder={fulfillment?.fulfillmentOrder}
         status={fulfillment?.status}
         warehouseName={fulfillment?.warehouse?.name}
-        orderNumber={order?.number}
         createdDate={fulfillment?.created}
         trackingNumber={fulfillment.trackingNumber}
         warehouseId={fulfillment.warehouse.id}
