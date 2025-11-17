@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Refactored OrderCardTitle component for improved maintainability and type safety. Split monolithic component into focused modules (StatusIndicator, WarehouseInfo, TrackingNumberDisplay), eliminated duplicate code, removed @ts-strict-ignore, and implemented discriminated unions for props. Added accessibility improvements with aria-labels for status indicators and copy button.
+Improved accessibility of order fulfillment cards by adding proper aria-labels to status indicators and copy button for tracking numbers. This enhancement makes order status information more accessible to screen reader users.
