@@ -11,7 +11,7 @@ import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagr
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
 
-interface OrderFulfilledProductsCardProps {
+interface OrderFulfillmentCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
   fulfillmentAllowUnpaid: boolean;
   order?: OrderDetailsFragment;
@@ -38,7 +38,8 @@ const fulfillmentLineToLine = ({
   // 'orderLine.quantity' has the total number of items in the order
   quantity,
 });
-const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProductsCardProps>) => {
+
+const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCardProps>) => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,
@@ -107,4 +108,4 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
   );
 };
 
-export default OrderFulfilledProductsCard;
+export { OrderFulfillmentCard };
