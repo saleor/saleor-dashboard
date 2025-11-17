@@ -2,6 +2,7 @@ import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   schema: "./schema-staging.graphql",
+  ignoreNoDocuments: true,
   documents: [
     "./src/**/queries.staging.ts",
     "./src/**/mutations.staging.ts",
