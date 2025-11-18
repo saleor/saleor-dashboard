@@ -121,7 +121,7 @@ export const TranslationsProductsPage = ({
 
   useEffect(() => {
     resetCache();
-  }, [activeField, resetCache]);
+  }, [activeField]);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -246,7 +246,7 @@ export const TranslationsProductsPage = ({
             },
           ]}
           saveButtonState={saveButtonState}
-          richTextResetKey={languageCode + resetKey}
+          richTextResetKey={languageCode + resetKey.current}
           onEdit={onEdit}
           onDiscard={onDiscard}
           onSubmit={onSubmit}
@@ -261,7 +261,7 @@ export const TranslationsProductsPage = ({
               title={intl.formatMessage(commonMessages.translationAttributes)}
               fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
               saveButtonState={saveButtonState}
-              richTextResetKey={languageCode + resetKey}
+              richTextResetKey={languageCode + resetKey.current}
               onEdit={onEdit}
               onDiscard={onDiscard}
               onSubmit={onAttributeValueSubmit}
