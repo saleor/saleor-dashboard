@@ -8,6 +8,7 @@ import { Button, Text } from "@saleor/macaw-ui-next";
 import { TruckIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
+import { RefundedIcon } from "../OrderCardTitle/RefundedIcon";
 import { actionButtonsMessages } from "./messages";
 import useStyles from "./styles";
 
@@ -70,6 +71,7 @@ const ActionButtons = ({
     return (
       <CardActions>
         <Button onClick={handleRefundClick} variant="primary">
+          <RefundedIcon size={17} />
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>

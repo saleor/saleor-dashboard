@@ -15,5 +15,5 @@ const STATUS_MESSAGE_MAP: Record<CardTitleStatus, MessageDescriptor> = {
   unfulfilled: orderTitleMessages.unfulfilled,
 };
 
-export const getOrderTitleMessage = (status: CardTitleStatus): MessageDescriptor =>
-  STATUS_MESSAGE_MAP[status];
+export const getOrderTitleMessage = (status?: CardTitleStatus): MessageDescriptor =>
+  status ? STATUS_MESSAGE_MAP[status] : orderTitleMessages.unfulfilled;

@@ -4577,10 +4577,6 @@
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
   },
-  "RHctec": {
-    "context": "section header",
-    "string": "Unfulfilled order lines"
-  },
   "RK6l3Z": {
     "context": "radio button label",
     "string": "Refund with manual amount"
@@ -9323,6 +9319,10 @@
   },
   "vbop3G": {
     "string": "Create new model"
+  },
+  "vcMnX2": {
+    "context": "unfulfilled fulfillment, section header",
+    "string": "Unfulfilled order lines"
   },
   "vcwrgW": {
     "string": "No translatable entities found"

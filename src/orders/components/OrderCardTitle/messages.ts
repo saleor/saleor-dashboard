@@ -38,8 +38,8 @@ export const orderTitleMessages = defineMessages({
   },
   unfulfilled: {
     defaultMessage: "Unfulfilled order lines",
-    id: "RHctec",
-    description: "section header",
+    id: "vcMnX2",
+    description: "unfulfilled fulfillment, section header",
   },
   fulfilledFrom: {
     id: "JbHdDi",
