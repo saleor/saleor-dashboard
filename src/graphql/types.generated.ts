@@ -244,28 +244,8 @@ export enum AppErrorCode {
 }
 
 export type AppExtensionFilterInput = {
-  /**
-   * DEPRECATED: Use `mountName` instead.
-   * @deprecated Field no longer supported
-   */
   mount?: InputMaybe<Array<AppExtensionMountEnum>>;
-  /**
-   * Plain-text mount name (case insensitive)
-   *
-   * Added in Saleor 3.22.
-   */
-  mountName?: InputMaybe<Scalars['String']>;
-  /**
-   * DEPRECATED: Use `targetName` instead.
-   * @deprecated Field no longer supported
-   */
   target?: InputMaybe<AppExtensionTargetEnum>;
-  /**
-   * Plain-text target name (case insensitive)
-   *
-   * Added in Saleor 3.22.
-   */
-  targetName?: InputMaybe<Scalars['String']>;
 };
 
 /** All places where app extension can be mounted. */
@@ -11741,11 +11721,6 @@ export type GridWarehousesQueryVariables = Exact<{
 
 
 export type GridWarehousesQuery = { __typename: 'Query', availableWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, selectedWarehouses: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
-
-export type ProductVariantsPocQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ProductVariantsPocQuery = { __typename: 'Query', productVariants: { __typename: 'ProductVariantCountableConnection', edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string } }> } | null };
 
 export type SetRefundReasonTypeMutationVariables = Exact<{
   modelTypeId: Scalars['ID'];
