@@ -330,6 +330,9 @@ importers:
       "@types/debug":
         specifier: ^4.1.12
         version: 4.1.12
+      "@types/history":
+        specifier: "4"
+        version: 4.7.11
       "@types/is-url":
         specifier: ^1.2.32
         version: 1.2.32
