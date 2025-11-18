@@ -75,6 +75,24 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
         warehouseId={fulfillment?.warehouse?.id}
         toolbar={
           <Box display="flex" alignItems="center" gap={2}>
+            {onFulfillmentShowMetadata && (
+              <Button
+                variant="secondary"
+                onClick={onFulfillmentShowMetadata}
+                data-test-id="show-fulfillment-metadata"
+                icon={<Code />}
+              />
+            )}
+            <ActionButtons
+              orderId={order?.id}
+              status={fulfillment?.status}
+              trackingNumber={fulfillment?.trackingNumber}
+              orderIsPaid={order?.isPaid}
+              fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
+              onTrackingCodeAdd={onTrackingCodeAdd}
+              onApprove={onOrderFulfillmentApprove}
+              hasTransactions={orderHasTransactions(order)}
+            />
             {cancelableStatuses.includes(fulfillment?.status) && (
               <Dropdown>
                 <Dropdown.Trigger>
@@ -108,24 +126,6 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                 </Dropdown.Content>
               </Dropdown>
             )}
-            {onFulfillmentShowMetadata && (
-              <Button
-                variant="secondary"
-                onClick={onFulfillmentShowMetadata}
-                data-test-id="show-fulfillment-metadata"
-                icon={<Code />}
-              />
-            )}
-            <ActionButtons
-              orderId={order?.id}
-              status={fulfillment?.status}
-              trackingNumber={fulfillment?.trackingNumber}
-              orderIsPaid={order?.isPaid}
-              fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
-              onTrackingCodeAdd={onTrackingCodeAdd}
-              onApprove={onOrderFulfillmentApprove}
-              hasTransactions={orderHasTransactions(order)}
-            />
           </Box>
         }
       />
