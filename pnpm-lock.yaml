@@ -7,6 +7,7 @@ settings:
 overrides:
   "@babel/runtime@<7.26.10": ">=7.26.10"
   dompurify@<3.2.4: ">=3.2.4"
+  glob@>=10.3.7 <=11.0.3: ">=11.1.0"
   tmp@<0.2.4: ">=0.2.4"
   vite@>=6.0.0 <6.4.1: ">=6.4.1"
   ws@>=8.0.0 <8.17.1: ">=8.17.1"
@@ -2856,6 +2857,20 @@ packages:
       "@types/node":
         optional: true
 
+  "@isaacs/balanced-match@4.0.1":
+    resolution:
+      {
+        integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==,
+      }
+    engines: { node: 20 || >=22 }
+
+  "@isaacs/brace-expansion@5.0.0":
+    resolution:
+      {
+        integrity: sha512-ZT55BDLV0yv0RBm2czMiZ+SqCGO7AvmOM3G/w2xhVPH+te0aKgFjmBvGlL1dH+ql2tgGO3MVrbb3jCKyvpgnxA==,
+      }
+    engines: { node: 20 || >=22 }
+
   "@isaacs/cliui@8.0.2":
     resolution:
       {
@@ -3483,13 +3498,6 @@ packages:
         integrity: sha512-BRs5XUAwiyCDQMsVA9IDvDa7UBR9gAvPHgugOeGng3YN6vJ9JYonyDc0lNczErgtCWtucjR5N7VtaonboD/ezg==,
       }
     engines: { node: ">=10.12.0" }
-
-  "@pkgjs/parseargs@0.11.0":
-    resolution:
-      {
-        integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==,
-      }
-    engines: { node: ">=14" }
 
   "@playwright/test@1.56.1":
     resolution:
@@ -8505,11 +8513,12 @@ packages:
       }
     engines: { node: ">=10.13.0" }
 
-  glob@10.4.5:
+  glob@12.0.0:
     resolution:
       {
-        integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==,
+        integrity: sha512-5Qcll1z7IKgHr5g485ePDdHcNQY0k2dtv/bjYy0iuyGxQw2qSOiiXUXJ+AYQpg3HNoUMHqAruX478Jeev7UULw==,
       }
+    engines: { node: 20 || >=22 }
     hasBin: true
 
   glob@7.2.0:
@@ -9517,11 +9526,12 @@ packages:
       }
     engines: { node: ">= 0.4" }
 
-  jackspeak@3.4.3:
+  jackspeak@4.1.1:
     resolution:
       {
-        integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==,
+        integrity: sha512-zptv57P3GpL+O0I7VdMJNBZCu+BPHVQUk55Ft8/QCJjTVxrnJHuVuX/0Bl2A6/+2oyR/ZMEuFKwmzqqZ/U5nPQ==,
       }
+    engines: { node: 20 || >=22 }
 
   jake@10.9.4:
     resolution:
@@ -10250,6 +10260,13 @@ packages:
         integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==,
       }
 
+  lru-cache@11.2.2:
+    resolution:
+      {
+        integrity: sha512-F9ODfyqML2coTIsQpSkRHnLSZMtkU8Q+mSfcaIyKwy58u+8k5nvAYeiNhsyMARvzNcXJ9QfWVrcPsC9e9rAxtg==,
+      }
+    engines: { node: 20 || >=22 }
+
   lru-cache@5.1.1:
     resolution:
       {
@@ -10409,6 +10426,13 @@ packages:
         integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==,
       }
     engines: { node: ">=4" }
+
+  minimatch@10.1.1:
+    resolution:
+      {
+        integrity: sha512-enIvLvRAFZYXJzkCYG5RKmPfrFArdLv+R+lbQ53BmIMLIry74bjKzX6iHAm8WYamJkhSSEabrWN5D97XnKObjQ==,
+      }
+    engines: { node: 20 || >=22 }
 
   minimatch@3.1.2:
     resolution:
@@ -10968,6 +10992,13 @@ packages:
         integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==,
       }
     engines: { node: ">=16 || 14 >=14.18" }
+
+  path-scurry@2.0.1:
+    resolution:
+      {
+        integrity: sha512-oWyT4gICAu+kaA7QWk/jvCHWarMKNs6pXOGWKDTr7cw4IGcUbW+PeTfbaQiLGheFRpjo6O9J0PmyMfQPjH71oA==,
+      }
+    engines: { node: 20 || >=22 }
 
   path-to-regexp@1.9.0:
     resolution:
@@ -15594,6 +15625,12 @@ snapshots:
     optionalDependencies:
       "@types/node": 20.19.25
 
+  "@isaacs/balanced-match@4.0.1": {}
+
+  "@isaacs/brace-expansion@5.0.0":
+    dependencies:
+      "@isaacs/balanced-match": 4.0.1
+
   "@isaacs/cliui@8.0.2":
     dependencies:
       string-width: 5.1.2
@@ -15808,7 +15845,7 @@ snapshots:
 
   "@joshwooding/vite-plugin-react-docgen-typescript@0.6.1(typescript@5.8.3)(vite@6.4.1(@types/node@20.19.25)(jiti@2.6.1)(terser@5.44.1))":
     dependencies:
-      glob: 10.4.5
+      glob: 12.0.0
       magic-string: 0.30.21
       react-docgen-typescript: 2.4.0(typescript@5.8.3)
       vite: 6.4.1(@types/node@20.19.25)(jiti@2.6.1)(terser@5.44.1)
@@ -16086,9 +16123,6 @@ snapshots:
       pvtsutils: 1.3.6
       tslib: 2.8.1
       webcrypto-core: 1.8.1
-
-  "@pkgjs/parseargs@0.11.0":
-    optional: true
 
   "@playwright/test@1.56.1":
     dependencies:
@@ -19616,14 +19650,14 @@ snapshots:
     dependencies:
       is-glob: 4.0.3
 
-  glob@10.4.5:
+  glob@12.0.0:
     dependencies:
       foreground-child: 3.3.1
-      jackspeak: 3.4.3
-      minimatch: 9.0.5
+      jackspeak: 4.1.1
+      minimatch: 10.1.1
       minipass: 7.1.2
       package-json-from-dist: 1.0.1
-      path-scurry: 1.11.1
+      path-scurry: 2.0.1
 
   glob@7.2.0:
     dependencies:
@@ -20272,11 +20306,9 @@ snapshots:
       has-symbols: 1.1.0
       set-function-name: 2.0.2
 
-  jackspeak@3.4.3:
+  jackspeak@4.1.1:
     dependencies:
       "@isaacs/cliui": 8.0.2
-    optionalDependencies:
-      "@pkgjs/parseargs": 0.11.0
 
   jake@10.9.4:
     dependencies:
@@ -21012,6 +21044,8 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
+  lru-cache@11.2.2: {}
+
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
@@ -21088,6 +21122,10 @@ snapshots:
   mimic-fn@2.1.0: {}
 
   min-indent@1.0.1: {}
+
+  minimatch@10.1.1:
+    dependencies:
+      "@isaacs/brace-expansion": 5.0.0
 
   minimatch@3.1.2:
     dependencies:
@@ -21437,6 +21475,11 @@ snapshots:
   path-scurry@1.11.1:
     dependencies:
       lru-cache: 10.4.3
+      minipass: 7.1.2
+
+  path-scurry@2.0.1:
+    dependencies:
+      lru-cache: 11.2.2
       minipass: 7.1.2
 
   path-to-regexp@1.9.0:
