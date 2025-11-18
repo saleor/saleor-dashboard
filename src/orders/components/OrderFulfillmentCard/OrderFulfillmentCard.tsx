@@ -6,7 +6,7 @@ import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Box, Button, Divider, TrashBinIcon } from "@saleor/macaw-ui-next";
 import { PropsWithChildren } from "react";
 
-import { OrderCardTitle } from "../OrderCardTitle";
+import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import ActionButtons from "./ActionButtons";
 
