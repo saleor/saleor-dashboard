@@ -1,5 +1,5 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -43,19 +43,18 @@ export const TrackingNumberDisplay = ({
           },
         )}
       </Text>
-      <Button
-        variant="tertiary"
-        size="small"
-        icon={<ClipboardCopyIcon hasBeenClicked={copied} />}
-        onClick={() => copy(trackingNumber)}
-        aria-label={intl.formatMessage({
-          defaultMessage: "Copy tracking number",
-          id: "0KVj6r",
-        })}
-        className={sprinkles({
-          display: showCopyButton ? "block" : "none",
-        })}
-      />
+      {showCopyButton && (
+        <Button
+          variant="tertiary"
+          size="small"
+          icon={<ClipboardCopyIcon hasBeenClicked={copied} />}
+          onClick={() => copy(trackingNumber)}
+          aria-label={intl.formatMessage({
+            defaultMessage: "Copy tracking number",
+            id: "0KVj6r",
+          })}
+        />
+      )}
     </>
   );
 };
