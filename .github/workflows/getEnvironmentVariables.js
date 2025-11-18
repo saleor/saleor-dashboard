@@ -10,8 +10,12 @@ program
   .option("--custom_version <custom_version>", "version of a project")
   .option("--repo_token <repo_token>", "github token")
   .action(async options => {
-    console.log("Setting output: ", options.custom_version);
+    // Ensure we cut x.yy from x.yy-HASH
+    const regex = /^\d+\.\d+/;
+    const formattedVersion = version.match(regex)[0];
+
+    console.log("Setting output: ", formattedVersion);
     // TODO Maybe eagerly kill the script if this branch doesn't exist
-    core.setOutput("version", options.custom_version);
+    core.setOutput("version", formattedVersion);
   })
   .parse();
