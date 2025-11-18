@@ -1,57 +1,51 @@
 import DefaultCardTitle from "@dashboard/components/CardTitle";
-import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { FulfillmentStatus } from "@dashboard/graphql";
-import { StatusType } from "@dashboard/types";
-import { CircleIndicator } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { useIntl } from "react-intl";
 
-import { orderTitleMessages } from "./messages";
-import { useStyles } from "./styles";
+import { StatusIndicator } from "./StatusIndicator";
+import { TrackingNumberDisplay } from "./TrackingNumberDisplay";
 import { getOrderTitleMessage } from "./utils";
+import { WarehouseInfo } from "./WarehouseInfo";
 
 export type CardTitleStatus = FulfillmentStatus | "unfulfilled";
 
-interface OrderCardTitleProps {
-  fulfillmentOrder?: number;
+type BaseOrderCardTitleProps = {
   status: CardTitleStatus;
   toolbar?: React.ReactNode;
-  orderNumber?: string;
-  warehouseName?: string;
   withStatus?: boolean;
   className?: string;
-}
-
-const selectStatus = (status: CardTitleStatus) => {
-  switch (status) {
-    case FulfillmentStatus.FULFILLED:
-      return StatusType.SUCCESS;
-    case FulfillmentStatus.REFUNDED:
-      return StatusType.INFO;
-    case FulfillmentStatus.RETURNED:
-      return StatusType.INFO;
-    case FulfillmentStatus.REPLACED:
-      return StatusType.INFO;
-    case FulfillmentStatus.REFUNDED_AND_RETURNED:
-      return StatusType.INFO;
-    case FulfillmentStatus.WAITING_FOR_APPROVAL:
-      return StatusType.WARNING;
-    case FulfillmentStatus.CANCELED:
-      return StatusType.ERROR;
-    default:
-      return StatusType.ERROR;
-  }
 };
-const OrderCardTitle = ({
+
+type OrderCardTitleWithWarehouseProps = BaseOrderCardTitleProps & {
+  warehouseName: string;
+  warehouseId: string;
+  createdDate: string;
+  trackingNumber?: string;
+};
+
+type OrderCardTitleWithoutWarehouseProps = BaseOrderCardTitleProps & {
+  warehouseName?: never;
+  warehouseId?: never;
+  createdDate?: never;
+  trackingNumber?: string;
+};
+
+export type OrderCardTitleProps =
+  | OrderCardTitleWithWarehouseProps
+  | OrderCardTitleWithoutWarehouseProps;
+
+export const OrderCardTitle = ({
   status,
   warehouseName,
   withStatus = false,
   toolbar,
+  createdDate,
   className,
-}: OrderCardTitleProps) => {
+  trackingNumber,
+  warehouseId,
+}: OrderCardTitleProps): JSX.Element => {
   const intl = useIntl();
-  const classes = useStyles({});
   const messageForStatus = getOrderTitleMessage(status);
 
   return (
@@ -59,31 +53,25 @@ const OrderCardTitle = ({
       toolbar={toolbar}
       className={className}
       title={
-        <div className={classes.title}>
-          {withStatus && (
-            <>
-              <div className={classes.indicator}>
-                <CircleIndicator color={selectStatus(status)} />
-              </div>
-              <HorizontalSpacer spacing={2} />
-            </>
-          )}
-          <Text className={classes.cardHeader}>{intl.formatMessage(messageForStatus)}</Text>
-          {!!warehouseName && (
-            <Text className={classes.warehouseName} size={2} fontWeight="light">
-              <FormattedMessage
-                {...orderTitleMessages.fulfilledFrom}
-                values={{
-                  warehouseName,
-                }}
+        <Box>
+          <Box display="flex" alignItems="center">
+            {warehouseName && warehouseId && createdDate && (
+              <WarehouseInfo
+                warehouseName={warehouseName}
+                warehouseId={warehouseId}
+                createdDate={createdDate}
               />
+            )}
+            {trackingNumber && <TrackingNumberDisplay trackingNumber={trackingNumber} />}
+          </Box>
+          <Box display="flex" alignItems="center">
+            <Text size={6} fontWeight="medium">
+              {intl.formatMessage(messageForStatus)}
             </Text>
-          )}
-        </div>
+            {withStatus && <StatusIndicator status={status} />}
+          </Box>
+        </Box>
       }
     />
   );
 };
-
-OrderCardTitle.displayName = "OrderCardTitle";
-export default OrderCardTitle;

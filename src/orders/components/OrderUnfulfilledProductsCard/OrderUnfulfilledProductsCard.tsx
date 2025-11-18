@@ -6,7 +6,7 @@ import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { PackageIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
-import OrderCardTitle from "../OrderCardTitle";
+import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import { useStyles } from "./styles";
 import { toLineWithUnfulfilledQuantity } from "./utils";
