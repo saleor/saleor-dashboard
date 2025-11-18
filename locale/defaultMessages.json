@@ -401,6 +401,9 @@
   "0HBlkO": {
     "string": "Search channels"
   },
+  "0KVj6r": {
+    "string": "Copy tracking number"
+  },
   "0MetrR": {
     "context": "webhook input help text",
     "string": "This URL will receive webhook POST requests"
@@ -3406,6 +3409,10 @@
     "context": "add shipping carrier button",
     "string": "Add shipping carrier"
   },
+  "JbHdDi": {
+    "context": "fulfilled fulfillment, section header",
+    "string": "From {warehouseName}: {fulfillmentDate}"
+  },
   "JbUg2b": {
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
@@ -5900,10 +5907,6 @@
   "ZOamBQ": {
     "context": "charge status overcharged",
     "string": "Overcharged"
-  },
-  "ZPOyI1": {
-    "context": "fulfilled fulfillment, section header",
-    "string": "Fulfilled from {warehouseName}"
   },
   "ZRz3hM": {
     "string": "Export Product Stock Quantity to CSV"
@@ -9249,6 +9252,9 @@
   "vGfmv8": {
     "context": "card title, app install page, about privacy",
     "string": "Info"
+  },
+  "vMo6/3": {
+    "string": "Tracking: {trackingNumber}"
   },
   "vN3qdA": {
     "context": "button",

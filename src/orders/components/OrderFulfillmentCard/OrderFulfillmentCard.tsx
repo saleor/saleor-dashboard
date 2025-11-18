@@ -6,10 +6,9 @@ import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Box, Button, Divider, TrashBinIcon } from "@saleor/macaw-ui-next";
 import { PropsWithChildren } from "react";
 
-import OrderCardTitle from "../OrderCardTitle";
+import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import ActionButtons from "./ActionButtons";
-import ExtraInfoLines from "./ExtraInfoLines";
 
 interface OrderFulfillmentCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
@@ -67,10 +66,11 @@ export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCa
     <Box data-test-id={dataTestId}>
       <OrderCardTitle
         withStatus
-        fulfillmentOrder={fulfillment?.fulfillmentOrder}
         status={fulfillment?.status}
         warehouseName={fulfillment?.warehouse?.name}
-        orderNumber={order?.number}
+        createdDate={fulfillment?.created}
+        trackingNumber={fulfillment.trackingNumber}
+        warehouseId={fulfillment?.warehouse?.id}
         toolbar={
           <Box display="flex" alignItems="center" gap={6}>
             {cancelableStatuses.includes(fulfillment?.status) && (
@@ -100,7 +100,6 @@ export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCa
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
-        <ExtraInfoLines fulfillment={fulfillment} />
       </DashboardCard.Content>
       {props.children}
       <Divider />

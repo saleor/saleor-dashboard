@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.22.12
+
+### Patch Changes
+
+- [#6042](https://github.com/saleor/saleor-dashboard/pull/6042) [`e78b4a1`](https://github.com/saleor/saleor-dashboard/commit/e78b4a14b1ceb4282431300a6f06b30184f8e0f5) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Metadata filters will now omit `value` if none is provided for filters that are using `WHERE` API (Products, Orders, etc.). This way users can filter for metadata key existence instead of key:value pairs.
+
+- [#6074](https://github.com/saleor/saleor-dashboard/pull/6074) [`2aa042d`](https://github.com/saleor/saleor-dashboard/commit/2aa042ddab5f26e8b11e0b73dc473ee0f2927638) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improve datagrid UI styling:
+  - Add drag indicator icon to selected column headers
+  - Change header icons (sorting arrows and grip) to black for better visibility
+  - Add white background to row action sections
+  - Add left border to row actions and column picker
+  - Remove shadow from row action bar
+  - Make backgrounds transparent where needed for cleaner appearance
+
+- [#6065](https://github.com/saleor/saleor-dashboard/pull/6065) [`c1cb87f`](https://github.com/saleor/saleor-dashboard/commit/c1cb87fce895707756859afe668ca4e7804ec0ca) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Increase extension name display width in InstalledExtensionsList from 200px to 400px to improve readability for extensions with longer names
+
+- [#6083](https://github.com/saleor/saleor-dashboard/pull/6083) [`fa7aab9`](https://github.com/saleor/saleor-dashboard/commit/fa7aab97244388967cbe77c7bea13d32002321cc) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Updated dependencies to fix security vulnerabilities in js-yaml (GHSA-mh29-5h37-fv8m, moderate severity) and glob (GHSA-5j98-mcp5-4vw2, high severity). Added pnpm overrides for defense-in-depth protection against these vulnerabilities.
+
+- [#6042](https://github.com/saleor/saleor-dashboard/pull/6042) [`e78b4a1`](https://github.com/saleor/saleor-dashboard/commit/e78b4a14b1ceb4282431300a6f06b30184f8e0f5) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Metadata filter fields will now validate if `key` is provided. Previously users were able to enter data without `key` which resulted in an error. `value` is optional.
+
+- [#6009](https://github.com/saleor/saleor-dashboard/pull/6009) [`f519aa3`](https://github.com/saleor/saleor-dashboard/commit/f519aa3f61f8a1d03c19fc3cd19a7f43e587d4cf) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Add metadata button to order line datagrid for quick access to line item metadata
+
+- [#6066](https://github.com/saleor/saleor-dashboard/pull/6066) [`0c83a47`](https://github.com/saleor/saleor-dashboard/commit/0c83a477cc08cebdd9c2d473adade22165d16e6d) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Add order metadata dialog with Code icon button in order details page. Users can now view and edit order metadata (public and private) directly from the order page by clicking the new Code icon button in the top navigation bar next to the settings menu.
+
+- [#6030](https://github.com/saleor/saleor-dashboard/pull/6030) [`ccc854d`](https://github.com/saleor/saleor-dashboard/commit/ccc854d9bdb81d17497c0c65e85317731c9047dd) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Add support for Translation extensions (popup only) to establish bi-directional communication to update form state.
+
+- [#6079](https://github.com/saleor/saleor-dashboard/pull/6079) [`7834e01`](https://github.com/saleor/saleor-dashboard/commit/7834e01c6d3c5011dbcde7f78c33e020e1b1b417) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Update unfulfilled order card title and move fulfill button to toolbar for better UX
+
 ## 3.22.11
 
 ### Patch Changes
