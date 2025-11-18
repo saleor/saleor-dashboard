@@ -103,26 +103,24 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                   />
                 </Dropdown.Trigger>
                 <Dropdown.Content align="end">
-                  <Box>
-                    <List
-                      padding={2}
-                      borderRadius={4}
-                      boxShadow="defaultOverlay"
-                      backgroundColor="default1"
-                    >
-                      <Dropdown.Item>
-                        <List.Item
-                          borderRadius={4}
-                          paddingX={1.5}
-                          paddingY={2}
-                          onClick={onOrderFulfillmentCancel}
-                          data-test-id="cancel-fulfillment"
-                        >
-                          <Text>Cancel fulfillment</Text>
-                        </List.Item>
-                      </Dropdown.Item>
-                    </List>
-                  </Box>
+                  <List
+                    padding={2}
+                    borderRadius={4}
+                    boxShadow="defaultOverlay"
+                    backgroundColor="default1"
+                  >
+                    <Dropdown.Item>
+                      <List.Item
+                        borderRadius={4}
+                        paddingX={1.5}
+                        paddingY={2}
+                        onClick={onOrderFulfillmentCancel}
+                        data-test-id="cancel-fulfillment"
+                      >
+                        <Text>Cancel fulfillment</Text>
+                      </List.Item>
+                    </Dropdown.Item>
+                  </List>
                 </Dropdown.Content>
               </Dropdown>
             )}
