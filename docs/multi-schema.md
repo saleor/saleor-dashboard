@@ -160,8 +160,8 @@ src/products/
 pnpm run fetch-schema
 
 # Fetch individual schemas
-pnpm run fetch-schema-main
-pnpm run fetch-schema-staging
+pnpm run fetch-schema:main
+pnpm run fetch-schema:staging
 ```
 
 ### Generating Types

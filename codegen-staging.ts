@@ -43,7 +43,6 @@ const config: CodegenConfig = {
         withHooks: true,
         apolloReactHooksImportFrom: "@dashboard/hooks/graphql",
         documentVariableSuffix: "Staging",
-        reactApolloVersion: 3,
       },
       preset: "import-types",
       presetConfig: {
