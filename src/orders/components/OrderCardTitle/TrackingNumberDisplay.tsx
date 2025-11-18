@@ -1,5 +1,5 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -43,7 +43,7 @@ export const TrackingNumberDisplay = ({
           },
         )}
       </Text>
-      {showCopyButton && (
+      <Box __opacity={showCopyButton ? 1 : 0} pointerEvents={showCopyButton ? "auto" : "none"}>
         <Button
           variant="tertiary"
           size="small"
@@ -54,7 +54,7 @@ export const TrackingNumberDisplay = ({
             id: "0KVj6r",
           })}
         />
-      )}
+      </Box>
     </>
   );
 };
