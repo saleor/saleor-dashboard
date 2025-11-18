@@ -11,10 +11,9 @@ const useStyles = makeStyles<{
 }>(
   () => {
     const rowActionSelected = {
-      background: vars.colors.background.default1,
+      background: "transparent",
       color: vars.colors.border.default1,
     };
-    const activeBorderColor = vars.colors.border.default1;
 
     return {
       actionBtnBar: {
@@ -106,10 +105,7 @@ const useStyles = makeStyles<{
         height: "100%",
         width: 36,
       },
-      rowActionvBarWithItems: {
-        borderLeft: `1px solid ${activeBorderColor}`,
-        background: vars.colors.background.default1,
-      },
+      rowActionvBarWithItems: {},
       rowActionBarScrolledToRight: {
         borderLeftColor: vars.colors.border.default1,
       },
@@ -120,13 +116,15 @@ const useStyles = makeStyles<{
         "&:not(:last-child)": {
           marginBottom: -1,
         },
-        border: `1px solid ${vars.colors.border.default1}`,
-        borderLeft: "none",
+        borderTop: `1px solid ${vars.colors.border.default1}`,
+        borderBottom: `1px solid ${vars.colors.border.default1}`,
+        borderLeft: `1px solid ${vars.colors.border.default1}`,
         borderRight: "none",
         color: vars.colors.text.default1,
         display: "grid",
         gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
         height: `calc(${cellHeight}px - 1px)`,
+        background: vars.colors.background.default1,
       },
       rowColumnGroup: {
         height: cellHeight,
@@ -156,7 +154,7 @@ const useStyles = makeStyles<{
         boxShadow: "-1px 0px 12px transparent",
       },
       rowActionBarShadowActive: {
-        boxShadow: "-1px 0px 12px rgba(0, 0, 0, 0.80)",
+        boxShadow: "none",
       },
       rowActionSelected,
     };
@@ -187,8 +185,8 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const { themeValues } = useTheme();
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: themeValues.colors.background.accent1,
-      accentLight: themeValues.colors.background.accent1Hovered,
+      accentColor: themeValues.colors.background.default2,
+      accentLight: themeValues.colors.background.default1Hovered,
       accentFg: "transparent",
       bgCell: themeValues.colors.background.default1,
       bgHeader: themeValues.colors.background.default1,
@@ -208,7 +206,8 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
       textDark: themeValues.colors.text.default1,
       textLight: themeValues.colors.text.default2,
       textHeader: themeValues.colors.text.default1,
-      textHeaderSelected: themeValues.colors.background.default1,
+      textHeaderSelected: themeValues.colors.text.default1,
+      fgIconHeader: themeValues.colors.text.default1,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
@@ -218,7 +217,7 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
-      accentColor: themeValues.colors.background.accent1,
+      accentColor: themeValues.colors.background.default2,
       accentLight: themeValues.colors.background.default1Hovered,
     }),
     [themeValues, datagridTheme],

@@ -3,5 +3,5 @@ export type ExtendedGiftCard<T extends GiftCardBase> = T & {
 };
 
 export interface GiftCardBase {
-  expiryDate: string | undefined;
+  expiryDate: string | null;
 }
