@@ -1,5 +1,5 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, sprinkles } from "@saleor/macaw-ui-next";
 import { EraserIcon, PackageIcon, ReplaceIcon, SignatureIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -31,7 +31,7 @@ const getStatusIcon = (status?: CardTitleStatus): JSX.Element | null => {
     case FulfillmentStatus.REFUNDED_AND_RETURNED:
       return (
         <>
-          <RefundedIcon size={17} />
+          <RefundedIcon size={17} className={sprinkles({ marginRight: 1 })} />
           <ReplaceIcon size={17} />
         </>
       );
