@@ -9,32 +9,22 @@ import { getOrderTitleMessage } from "./utils";
 
 const ICON_SIZE = 17;
 
-interface StatusIcon {
-  icon: JSX.Element;
-  color?: string;
-}
-
-const getStatusIcon = (status: CardTitleStatus): StatusIcon | null => {
+const getStatusIcon = (status: CardTitleStatus): JSX.Element | null => {
   switch (status) {
     case FulfillmentStatus.FULFILLED:
-      return { icon: <PackageIcon size={ICON_SIZE} />, color: "iconSuccess" };
+      return <PackageIcon color="hsla(152, 98%, 44%, 1)" size={ICON_SIZE} />;
     case FulfillmentStatus.REFUNDED:
     case FulfillmentStatus.RETURNED:
-      return { icon: <RefundReturnIcon />, color: "default1" };
+      return <RefundReturnIcon />;
     case FulfillmentStatus.CANCELED:
-      return { icon: <EraserIcon size={ICON_SIZE} />, color: "iconCritical" };
+      return <EraserIcon color="hsla(3, 90%, 64%, 1)" size={ICON_SIZE} />;
     case FulfillmentStatus.REFUNDED_AND_RETURNED:
     case FulfillmentStatus.REPLACED:
-      return { icon: <ReplaceIcon size={ICON_SIZE} />, color: "default1" };
+      return <ReplaceIcon size={ICON_SIZE} />;
     case FulfillmentStatus.WAITING_FOR_APPROVAL:
-      return { icon: <SignatureIcon size={ICON_SIZE} />, color: "default1" };
-    case "unfulfilled":
-      return null;
+      return <SignatureIcon size={ICON_SIZE} />;
     default:
-      // Exhaustive check
-      const _exhaustive: never = status;
-
-      return _exhaustive;
+      return null;
   }
 };
 
@@ -54,14 +44,8 @@ export const StatusIndicator = ({ status }: StatusIndicatorProps): JSX.Element |
   const ariaLabel = intl.formatMessage(messageForStatus);
 
   return (
-    <Box
-      marginLeft={2}
-      display="flex"
-      placeItems="center"
-      __color={statusIcon.color}
-      aria-label={ariaLabel}
-    >
-      {statusIcon.icon}
+    <Box marginLeft={2} display="flex" placeItems="center" aria-label={ariaLabel}>
+      {statusIcon}
     </Box>
   );
 };
