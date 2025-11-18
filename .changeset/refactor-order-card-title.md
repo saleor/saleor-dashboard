@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Improved accessibility of order fulfillment cards by adding proper aria-labels to status indicators and copy button for tracking numbers. This enhancement makes order status information more accessible to screen reader users.
+Refactored OrderCardTitle component structure by extracting subcomponents (StatusIndicator, WarehouseInfo, TrackingNumberDisplay) for better maintainability and code organization. Improved accessibility with proper aria-labels and keyboard navigation support for copy buttons.
