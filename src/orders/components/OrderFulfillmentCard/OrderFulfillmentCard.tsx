@@ -3,7 +3,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Box, Button, Divider, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Dropdown, List, MoreOptionsIcon, Text } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
@@ -76,12 +76,37 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
         toolbar={
           <Box display="flex" alignItems="center" gap={2}>
             {cancelableStatuses.includes(fulfillment?.status) && (
-              <Button
-                variant="secondary"
-                onClick={onOrderFulfillmentCancel}
-                data-test-id="cancel-fulfillment-button"
-                icon={<TrashBinIcon />}
-              />
+              <Dropdown>
+                <Dropdown.Trigger>
+                  <Button
+                    variant="tertiary"
+                    icon={<MoreOptionsIcon />}
+                    data-test-id="fulfillment-menu-button"
+                  />
+                </Dropdown.Trigger>
+                <Dropdown.Content align="end">
+                  <Box>
+                    <List
+                      padding={2}
+                      borderRadius={4}
+                      boxShadow="defaultOverlay"
+                      backgroundColor="default1"
+                    >
+                      <Dropdown.Item>
+                        <List.Item
+                          borderRadius={4}
+                          paddingX={1.5}
+                          paddingY={2}
+                          onClick={onOrderFulfillmentCancel}
+                          data-test-id="cancel-fulfillment"
+                        >
+                          <Text>Cancel fulfillment</Text>
+                        </List.Item>
+                      </Dropdown.Item>
+                    </List>
+                  </Box>
+                </Dropdown.Content>
+              </Dropdown>
             )}
             {onFulfillmentShowMetadata && (
               <Button
