@@ -12,7 +12,7 @@ program
   .action(async options => {
     // Ensure we cut x.yy from x.yy-HASH
     const regex = /^\d+\.\d+/;
-    const formattedVersion = version.match(regex)[0];
+    const formattedVersion = options.custom_version.match(regex)[0];
 
     console.log("Setting output: ", formattedVersion);
     // TODO Maybe eagerly kill the script if this branch doesn't exist
