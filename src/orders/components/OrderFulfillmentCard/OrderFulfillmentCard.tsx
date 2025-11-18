@@ -4,7 +4,7 @@ import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Box, Button, Divider, TrashBinIcon } from "@saleor/macaw-ui-next";
-import { PropsWithChildren } from "react";
+import { Code } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
@@ -19,6 +19,7 @@ interface OrderFulfillmentCardProps {
   onTrackingCodeAdd: () => void;
   dataTestId?: string;
   onOrderLineShowMetadata: (id: string) => void;
+  onFulfillmentShowMetadata?: () => void;
 }
 
 const statusesToMergeLines = [
@@ -38,7 +39,7 @@ const fulfillmentLineToLine = ({
   quantity,
 });
 
-export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCardProps>) => {
+export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,
@@ -47,6 +48,7 @@ export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCa
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
     onOrderLineShowMetadata,
+    onFulfillmentShowMetadata,
     dataTestId,
   } = props;
 
@@ -72,13 +74,21 @@ export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCa
         trackingNumber={fulfillment.trackingNumber}
         warehouseId={fulfillment?.warehouse?.id}
         toolbar={
-          <Box display="flex" alignItems="center" gap={6}>
+          <Box display="flex" alignItems="center" gap={2}>
             {cancelableStatuses.includes(fulfillment?.status) && (
               <Button
                 variant="secondary"
                 onClick={onOrderFulfillmentCancel}
                 data-test-id="cancel-fulfillment-button"
                 icon={<TrashBinIcon />}
+              />
+            )}
+            {onFulfillmentShowMetadata && (
+              <Button
+                variant="secondary"
+                onClick={onFulfillmentShowMetadata}
+                data-test-id="show-fulfillment-metadata"
+                icon={<Code />}
               />
             )}
             <ActionButtons
@@ -101,7 +111,6 @@ export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCa
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
       </DashboardCard.Content>
-      {props.children}
       <Divider />
     </Box>
   );

@@ -230,6 +230,7 @@ export const OrderUnconfirmedDetails = ({
             onShippingMethodEdit={() => openModal("edit-shipping")}
             onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
             onOrderShowMetadata={() => openModal("view-order-metadata")}
+            onFulfillmentShowMetadata={id => openModal("view-fulfillment-metadata", { id })}
             saveButtonBarState={getMutationState(
               updateMetadataOpts.called || updatePrivateMetadataOpts.called,
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
