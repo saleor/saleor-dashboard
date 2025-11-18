@@ -37,7 +37,13 @@
   "storybook": true,
   "typescript": true,
   "prettier": true,
-  "ignore": ["playwright/**", "**/*.generated.ts", "apollo.config.js"],
+  "ignore": [
+    "playwright/**",
+    "**/*.generated.ts",
+    "apollo.config.js",
+    "codegen*",
+    "src/graphql/staging/index.ts"
+  ],
   "ignoreDependencies": [
     "keycode",
     "tslib",
@@ -50,6 +56,13 @@
     "@sentry/cli",
     "@react-editor-js/core",
     "playwright-ctrf-json-reporter",
-    "downshift"
+    "downshift",
+    "@graphql-codegen/cli",
+    "@graphql-codegen/fragment-matcher",
+    "@graphql-codegen/import-types-preset",
+    "@graphql-codegen/typescript",
+    "@graphql-codegen/typescript-apollo-client-helpers",
+    "@graphql-codegen/typescript-operations",
+    "@graphql-codegen/typescript-react-apollo"
   ]
 }
