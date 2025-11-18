@@ -70,7 +70,7 @@ export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCa
         warehouseName={fulfillment?.warehouse?.name}
         createdDate={fulfillment?.created}
         trackingNumber={fulfillment.trackingNumber}
-        warehouseId={fulfillment.warehouse.id}
+        warehouseId={fulfillment?.warehouse?.id}
         toolbar={
           <Box display="flex" alignItems="center" gap={6}>
             {cancelableStatuses.includes(fulfillment?.status) && (
@@ -100,7 +100,6 @@ export const OrderFulfillmentCard = (props: PropsWithChildren<OrderFulfillmentCa
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
-        {/* <ExtraInfoLines fulfillment={fulfillment} /> */}
       </DashboardCard.Content>
       {props.children}
       <Divider />

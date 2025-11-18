@@ -26,6 +26,8 @@ export const TrackingNumberDisplay = ({
         size={2}
         onMouseEnter={() => setShowCopyButton(true)}
         onMouseLeave={() => setShowCopyButton(false)}
+        onFocus={() => setShowCopyButton(true)}
+        onBlur={() => setShowCopyButton(false)}
       >
         {intl.formatMessage(
           {
