@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Refactored OrderCardTitle component structure by extracting subcomponents (StatusIndicator, WarehouseInfo, TrackingNumberDisplay) for better maintainability and code organization. Improved accessibility with proper aria-labels and keyboard navigation support for copy buttons.
+Improved order fulfillment cards with better keyboard accessibility - tracking number copy buttons now work with keyboard navigation. Enhanced screen reader support with proper labels for order status indicators.
