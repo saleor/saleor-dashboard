@@ -4,8 +4,15 @@ import { ListSettings, ListViews, Pagination } from "./types";
 
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
-// May be a relative path (e.g., '/graphql/'); use getAbsoluteApiUrl() when a fully qualified URL is required.
+
+/**
+ * Get the API URL.
+ * The same API URL is used regardless of schema version (eg 3.22 or 3.23).
+ * The schema version is controlled by the FF_USE_STAGING_SCHEMA feature flag.
+ * May be a relative path (e.g., '/graphql/'); use getAbsoluteApiUrl() when a fully qualified URL is required.
+ */
 export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
+
 /**
  * Resolves full API URL.
  * If the config provides an absolute URL, it will be used directly.
