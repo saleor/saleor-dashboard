@@ -44,7 +44,6 @@ export const useMetadataForm = ({
 }: UseMetadataFormConfig): MetadataFormReturn => {
   const intl = useIntl();
 
-  // Setup form
   const formMethods = useForm<MetadataFormData>({
     values: submitInProgress
       ? lastSubmittedData
