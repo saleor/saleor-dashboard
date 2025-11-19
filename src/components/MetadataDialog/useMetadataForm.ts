@@ -1,75 +1,82 @@
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useMemo } from "react";
 import {
-  Control,
-  FieldArray,
-  FieldArrayPath,
   FieldError,
-  FieldPath,
-  FieldValues,
-  FormState,
   useFieldArray,
+  useForm,
   UseFormGetValues,
-  UseFormTrigger,
+  UseFormReset,
 } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { getValidateMetadata } from "./validation";
 
-interface UseMetadataFormControlsConfig<TFormData extends FieldValues> {
-  control: Control<TFormData>;
-  trigger: UseFormTrigger<TFormData>;
-  getValues: UseFormGetValues<TFormData>;
-  formState: FormState<TFormData>;
+interface UseMetadataFormConfig {
+  entityData: { metadata: any; privateMetadata: any } | undefined;
+  submitInProgress: boolean;
+  lastSubmittedData: MetadataFormData | undefined;
 }
 
 type MetadataFieldArray = Array<{ id: string; key: string; value: string }>;
 
-interface MetadataFormControlsReturn {
+interface MetadataFormReturn {
   metadataFields: MetadataFieldArray;
   privateMetadataFields: MetadataFieldArray;
   handleMetadataChange: (event: ChangeEvent) => void;
   handlePrivateMetadataChange: (event: ChangeEvent) => void;
   metadataErrors: string[];
   privateMetadataErrors: string[];
+  reset: UseFormReset<MetadataFormData>;
+  getValues: UseFormGetValues<MetadataFormData>;
+  formIsDirty: boolean;
 }
 
-export const useMetadataFormControls = <TFormData extends FieldValues>({
-  control,
-  trigger,
-  getValues,
-  formState,
-}: UseMetadataFormControlsConfig<TFormData>): MetadataFormControlsReturn => {
+export const useMetadataForm = ({
+  entityData,
+  submitInProgress,
+  lastSubmittedData,
+}: UseMetadataFormConfig): MetadataFormReturn => {
   const intl = useIntl();
 
-  // Metadata field arrays
+  // Setup form
+  const formMethods = useForm<MetadataFormData>({
+    values: submitInProgress
+      ? lastSubmittedData
+      : {
+          metadata: (entityData?.metadata ?? []).map(mapMetadataItemToInput),
+          privateMetadata: (entityData?.privateMetadata ?? []).map(mapMetadataItemToInput),
+        },
+  });
+
+  const { control, getValues, formState, trigger, reset } = formMethods;
+
   const metadataControls = useFieldArray({
     control,
-    name: "metadata" as FieldArrayPath<TFormData>,
+    name: "metadata",
     rules: {
-      validate: (value: unknown) => getValidateMetadata(intl)(value as MetadataInput[]),
+      validate: value => getValidateMetadata(intl)(value),
     },
   });
 
   const privateMetadataControls = useFieldArray({
     control,
-    name: "privateMetadata" as FieldArrayPath<TFormData>,
+    name: "privateMetadata",
     rules: {
-      validate: (value: unknown) => getValidateMetadata(intl)(value as MetadataInput[]),
+      validate: value => getValidateMetadata(intl)(value),
     },
   });
 
-  // Map field controls for easy lookup
   const controlsMap = {
     metadata: metadataControls,
     privateMetadata: privateMetadataControls,
   };
 
-  // Create change handler factory
   const getHandleChange = (type: "metadata" | "privateMetadata") => {
     return (event: ChangeEvent) => {
       const { action, field, fieldIndex, value } = parseEventData(event);
@@ -81,20 +88,20 @@ export const useMetadataFormControls = <TFormData extends FieldValues>({
       if (action === EventDataAction.update && typeof fieldIndex === "number") {
         // Note: form.setValue cannot be used, because it doesn't trigger a re-render
         // Get the existing value at the specific index in the field array
-        const existingValue = getValues(`${metadataType}.${fieldIndex}` as FieldPath<TFormData>);
+        const existingValue = getValues(`${metadataType}.${fieldIndex}`);
 
         // Update the field with the new value while preserving other properties
         calledMetadataControls.update(fieldIndex, {
           ...(existingValue as MetadataInput),
           [fieldObjKey]: value,
-        } as FieldArray<TFormData>);
+        });
 
         // Trigger re-validation of data at the parent path
-        trigger(metadataType as FieldPath<TFormData>);
+        trigger(metadataType);
       }
 
       if (action === EventDataAction.add) {
-        calledMetadataControls.append({ key: "", value: "" } as FieldArray<TFormData>);
+        calledMetadataControls.append({ key: "", value: "" });
       }
 
       if (action === EventDataAction.delete && typeof fieldIndex === "number") {
@@ -119,11 +126,14 @@ export const useMetadataFormControls = <TFormData extends FieldValues>({
   );
 
   return {
-    metadataFields: metadataControls.fields as unknown as MetadataFieldArray,
-    privateMetadataFields: privateMetadataControls.fields as unknown as MetadataFieldArray,
+    metadataFields: metadataControls.fields,
+    privateMetadataFields: privateMetadataControls.fields,
     handleMetadataChange,
     handlePrivateMetadataChange,
     metadataErrors,
     privateMetadataErrors,
+    reset,
+    getValues,
+    formIsDirty: formState.isDirty,
   };
 };

@@ -1,13 +1,10 @@
-import { MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
 import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
-import { useMetadataFormControls } from "@dashboard/components/MetadataDialog/useMetadataFormControls";
+import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
 import { OrderDetailsDocument, OrderDetailsFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 export type FulfillmentMetadataDialogData = OrderDetailsFragment["fulfillments"][0];
@@ -30,19 +27,6 @@ export const OrderFulfillmentMetadataDialog = ({
     refetchDocument: OrderDetailsDocument,
   });
 
-  const formMethods = useForm<MetadataFormData>({
-    // Display last submitted data while re-fetching to avoid flicker on UI
-    values: submitInProgress
-      ? lastSubmittedData
-      : {
-          // Removes __typename from metadata item object
-          metadata: (fulfillment?.metadata ?? []).map(mapMetadataItemToInput),
-          privateMetadata: (fulfillment?.privateMetadata ?? []).map(mapMetadataItemToInput),
-        },
-  });
-
-  const { control, getValues, formState, trigger, reset } = formMethods;
-
   const {
     metadataFields,
     privateMetadataFields,
@@ -50,11 +34,13 @@ export const OrderFulfillmentMetadataDialog = ({
     handlePrivateMetadataChange,
     metadataErrors,
     privateMetadataErrors,
-  } = useMetadataFormControls({
-    control,
-    trigger,
+    reset,
     getValues,
-    formState,
+    formIsDirty,
+  } = useMetadataForm({
+    entityData: fulfillment,
+    submitInProgress,
+    lastSubmittedData,
   });
 
   // Unified change handler for MetadataDialog component
@@ -99,7 +85,7 @@ export const OrderFulfillmentMetadataDialog = ({
           ? privateMetadataErrors.join(", ")
           : undefined,
       }}
-      formIsDirty={formState.isDirty}
+      formIsDirty={formIsDirty}
     />
   );
 };

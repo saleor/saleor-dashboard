@@ -1,12 +1,9 @@
-import { MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataDialog, useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog";
-import { useMetadataFormControls } from "@dashboard/components/MetadataDialog/useMetadataFormControls";
+import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
 import { OrderDetailsDocument, OrderDetailsQuery } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 export type OrderMetadataDialogData = NonNullable<OrderDetailsQuery["order"]>;
@@ -25,19 +22,6 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
     refetchDocument: OrderDetailsDocument,
   });
 
-  const formMethods = useForm<MetadataFormData>({
-    // Display last submitted data while re-fetching to avoid flicker on UI
-    values: submitInProgress
-      ? lastSubmittedData
-      : {
-          // Removes __typename from metadata item object
-          metadata: (order?.metadata ?? []).map(mapMetadataItemToInput),
-          privateMetadata: (order?.privateMetadata ?? []).map(mapMetadataItemToInput),
-        },
-  });
-
-  const { control, getValues, formState, trigger, reset } = formMethods;
-
   const {
     metadataFields,
     privateMetadataFields,
@@ -45,11 +29,13 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
     handlePrivateMetadataChange,
     metadataErrors,
     privateMetadataErrors,
-  } = useMetadataFormControls({
-    control,
-    trigger,
+    reset,
     getValues,
-    formState,
+    formIsDirty,
+  } = useMetadataForm({
+    entityData: order,
+    submitInProgress,
+    lastSubmittedData,
   });
 
   // Unified change handler for MetadataDialog component
@@ -94,7 +80,7 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
           ? privateMetadataErrors.join(", ")
           : undefined,
       }}
-      formIsDirty={formState.isDirty}
+      formIsDirty={formIsDirty}
     />
   );
 };
