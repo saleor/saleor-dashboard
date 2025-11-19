@@ -10,11 +10,11 @@ import { getById, renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import { Checkbox, Skeleton } from "@saleor/macaw-ui-next";
-import { CSSProperties } from "react";
 import * as React from "react";
+import { CSSProperties } from "react";
 import { FormattedMessage } from "react-intl";
 
-import OrderCardTitle from "../../OrderCardTitle";
+import { OrderCardTitle } from "../../OrderCardTitle/OrderCardTitle";
 import { MaximalButton } from "../components/MaximalButton";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
@@ -92,11 +92,7 @@ const ItemsCard = ({
 
   return (
     <DashboardCard>
-      <OrderCardTitle
-        orderNumber={order?.number}
-        fulfillmentOrder={fulfillment?.fulfillmentOrder}
-        status={fulfillment?.status}
-      />
+      <OrderCardTitle status={fulfillment?.status} />
       <DashboardCard.Content className={classes.cartContent}>
         <MaximalButton onClick={onSetMaxQuantity} />
       </DashboardCard.Content>

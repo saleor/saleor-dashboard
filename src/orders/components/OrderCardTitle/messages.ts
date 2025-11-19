@@ -37,13 +37,13 @@ export const orderTitleMessages = defineMessages({
     description: "unapproved fulfillment, section header",
   },
   unfulfilled: {
-    defaultMessage: "Unfulfilled",
-    id: "/xXvjF",
+    defaultMessage: "Unfulfilled order lines",
+    id: "RHctec",
     description: "section header",
   },
   fulfilledFrom: {
-    id: "ZPOyI1",
-    defaultMessage: "Fulfilled from {warehouseName}",
+    id: "JbHdDi",
+    defaultMessage: "From {warehouseName}: {fulfillmentDate}",
     description: "fulfilled fulfillment, section header",
   },
 });

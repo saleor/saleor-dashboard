@@ -5,6 +5,7 @@ import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { CardActions } from "@material-ui/core";
 import { Button, Text } from "@saleor/macaw-ui-next";
+import { TruckIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { actionButtonsMessages } from "./messages";
@@ -78,12 +79,14 @@ const ActionButtons = ({
   return hasTrackingNumber ? (
     <CardActions className={classes.actions}>
       <Button data-test-id="edit-tracking-button" variant="primary" onClick={onTrackingCodeAdd}>
+        <TruckIcon size={17} />
         <FormattedMessage {...actionButtonsMessages.editTracking} />
       </Button>
     </CardActions>
   ) : (
     <CardActions className={classes.actions}>
       <Button variant="primary" onClick={onTrackingCodeAdd} data-test-id="add-tracking-button">
+        <TruckIcon size={17} />
         <FormattedMessage {...actionButtonsMessages.addTracking} />
       </Button>
     </CardActions>

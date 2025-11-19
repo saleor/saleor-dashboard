@@ -14,7 +14,7 @@ import { OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
-import TranslationsProductsPage from "../components/TranslationsProductsPage";
+import { TranslationsProductsPage } from "../components/TranslationsProductsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from "../utils";
 
