@@ -1,16 +1,15 @@
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
-import { MetadataDialog } from "@dashboard/components/MetadataDialog";
-import { MetadataInput, OrderDetailsFragment } from "@dashboard/graphql";
+import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
+import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
+import { MetadataInput, OrderDetailsDocument, OrderDetailsFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useEffect, useMemo } from "react";
 import { FieldArrayPath, FieldError, useFieldArray, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
-
-import { useHandleFulfillmentMetadataSubmit } from "./useHandleSubmit";
 
 export type FulfillmentMetadataDialogData = OrderDetailsFragment["fulfillments"][0];
 
@@ -60,9 +59,10 @@ export const OrderFulfillmentMetadataDialog = ({
   fulfillment,
 }: OrderFulfillmentMetadataDialogProps) => {
   const intl = useIntl();
-  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleFulfillmentMetadataSubmit({
+  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
     initialData: fulfillment,
     onClose,
+    refetchDocument: OrderDetailsDocument,
   });
 
   const formMethods = useForm<MetadataFormData>({

@@ -1,69 +1,71 @@
-import { useApolloClient } from "@apollo/client";
+import { DocumentNode, useApolloClient } from "@apollo/client";
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import {
-  OrderDetailsDocument,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
-} from "@dashboard/graphql";
+import { useUpdateMetadataMutation, useUpdatePrivateMetadataMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import { FulfillmentMetadataDialogData } from "./OrderFulfillmentMetadataDialog";
-
-export const useHandleFulfillmentMetadataSubmit = ({
+export const useHandleMetadataSubmit = <
+  T extends { id: string; metadata: any; privateMetadata: any },
+>({
   initialData,
   onClose,
+  refetchDocument,
 }: {
-  initialData: FulfillmentMetadataDialogData | undefined;
+  initialData: T | undefined;
   onClose: () => void;
-}) => {
+  refetchDocument: DocumentNode;
+}): {
+  onSubmit: (data: MetadataFormData) => Promise<void>;
+  lastSubmittedData: MetadataFormData | undefined;
+  submitInProgress: boolean;
+} => {
   const notify = useNotifier();
   const intl = useIntl();
 
   const client = useApolloClient();
 
-  const [updateMetadata] = useUpdateMetadataMutation();
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation();
+  const [updateMetadata, { loading: metadataLoading }] = useUpdateMetadataMutation();
+  const [updatePrivateMetadata, { loading: privateMetadataLoading }] =
+    useUpdatePrivateMetadataMutation();
 
-  const [submitInProgress, setSubmitInProgress] = useState(false);
+  const submitInProgress = metadataLoading || privateMetadataLoading;
   const submittedData = useRef<MetadataFormData>();
 
   const fulfillmentSubmitHandler = useMemo(() => {
     if (!initialData) {
-      return () => Promise.resolve([]);
+      return (): Promise<any[]> => Promise.resolve([]);
     }
 
     return createMetadataUpdateHandler(
       initialData,
       // Placeholder to keep backward compatibility - we now use react-hook-form for form state management
-      () => Promise.resolve([]),
+      (): Promise<any[]> => Promise.resolve([]),
       variables => updateMetadata({ variables }),
       variables => updatePrivateMetadata({ variables }),
     );
   }, [initialData, updateMetadata, updatePrivateMetadata]);
 
-  const onSubmit = async (data: MetadataFormData) => {
-    setSubmitInProgress(true);
+  const onSubmit = async (data: MetadataFormData): Promise<void> => {
     submittedData.current = data;
 
-    // Submit fulfillment metadata
-    const fulfillmentErrors = await fulfillmentSubmitHandler(data);
+    // Submit metadata
+    const errors = await fulfillmentSubmitHandler(data);
 
-    client.refetchQueries({ include: [OrderDetailsDocument] });
+    const result = client.refetchQueries({ include: [refetchDocument] });
+
+    await Promise.all(result.queries.map(q => q.refetch()));
 
     // Check if submission succeeded
-    if (fulfillmentErrors.length === 0) {
+    if (errors.length === 0) {
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
       onClose();
     }
-
-    setSubmitInProgress(false);
   };
 
   return {

@@ -8,7 +8,7 @@ import { Button, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon, TruckIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
-import { RefundedIcon } from "../OrderCardTitle/RefundedIcon";
+import { RefundedIcon } from "../../../icons/RefundedIcon";
 import { actionButtonsMessages } from "./messages";
 import useStyles from "./styles";
 

@@ -1,5 +1,5 @@
 /**
- *  Based on `lucide-react/Banknote` icon
+ *  Based on `lucide-react/Package` icon
  */
 export const ReturnedIcon = ({
   size = 17,
