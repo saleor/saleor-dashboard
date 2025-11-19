@@ -1,8 +1,10 @@
+import { DEFAULT_ICON_SIZE } from "./utils";
+
 /**
  *  Based on `lucide-react/Package` icon
  */
 export const ReturnedIcon = ({
-  size = 17,
+  size = DEFAULT_ICON_SIZE,
   className,
   color = "currentColor",
 }: {
