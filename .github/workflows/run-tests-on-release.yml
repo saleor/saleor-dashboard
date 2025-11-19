@@ -144,7 +144,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ref/tags/${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
+          ref: refs/tags/${{ needs.add-check-and-prepare-instance.outputs.VERSION }}
           fetch-tags: true
 
       - name: Run playwright tests
