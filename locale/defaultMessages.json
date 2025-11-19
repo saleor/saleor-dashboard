@@ -994,10 +994,6 @@
   "4LRapg": {
     "string": "Discount removed"
   },
-  "4PlW0w": {
-    "context": "tracking number",
-    "string": "Tracking Number: {trackingNumber}"
-  },
   "4Rj36Y": {
     "string": "Create new Model Type"
   },
@@ -6717,10 +6713,6 @@
     "context": "order history message",
     "string": "Transaction cancel requested"
   },
-  "f/R1Ln": {
-    "context": "restocked group",
-    "string": "Restocked from:"
-  },
   "f0hXz4": {
     "context": "dialog header",
     "string": "Search Collection"
@@ -7734,10 +7726,6 @@
   },
   "lNZuWl": {
     "string": "All orders"
-  },
-  "lOMgms": {
-    "context": "fulfillment group",
-    "string": "Fulfilled from:"
   },
   "lQRnYK": {
     "context": "selectt all options",

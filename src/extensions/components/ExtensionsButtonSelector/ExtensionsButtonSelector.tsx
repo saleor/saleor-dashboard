@@ -30,7 +30,7 @@ interface ButtonGroupWithDropdownProps extends BoxProps {
 
 // TODO: consider moving this to Macaw UI
 // TODO: This is a clone of ButtonGroupWithDropdown component but adjusted for secondary style - for apps. We can unify them (probably in Macaw)
-export const ButtonGroupWithDropdown = ({
+const ButtonGroupWithDropdown = ({
   children,
   options,
   onClick,

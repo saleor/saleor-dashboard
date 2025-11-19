@@ -11,7 +11,9 @@ import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { createProductTranslateFormPayloadEvent } from "@dashboard/translations/components/TranslationsProductsPage/create-product-translate-form-payload-event";
 import {
+  TranslationField,
   TranslationInputFieldName,
   TranslationsEntitiesPageProps,
 } from "@dashboard/translations/types";
@@ -23,11 +25,13 @@ import {
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import { Box } from "@saleor/macaw-ui-next";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
+import { useTranslationProductFormAppResponse } from "./use-translation-product-form-app-response";
+import { useTranslationsProductsDataCache } from "./use-translations-products-data-cache";
 
 interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
@@ -35,7 +39,7 @@ interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsProductsPage = ({
+export const TranslationsProductsPage = ({
   translationId,
   productId,
   activeField,
@@ -57,104 +61,66 @@ const TranslationsProductsPage = ({
     productId,
     translationLanguage: languageCode,
   });
-  const { attachFormState, active, framesByFormType } = useActiveAppExtension();
-  // A hack to access field that are currently being edited in nested form.
-  const dataCache = useRef<
-    Record<"productName" | "productDescription" | "seoDescription" | "seoName", string | null>
-  >({
-    productName: null,
-    productDescription: null,
-    seoDescription: null,
-    seoName: null,
+  const { attachFormState, active } = useActiveAppExtension();
+  const {
+    resetCache,
+    cachedProductName,
+    cachedProductDescription,
+    cachedProductSeoDescription,
+    cachedProductSeoName,
+    setCachedFormField,
+  } = useTranslationsProductsDataCache();
+
+  /**
+   * Handle app response and trigger onEdit for dirty fields
+   */
+  const { appResponseFields, resetKey } = useTranslationProductFormAppResponse({
+    productData: data?.product,
+    cachedProductDescription,
+    cachedProductSeoName,
+    cachedProductSeoDescription,
+    cachedProductName,
+    onEdit,
   });
+
+  function handleValueChange(field: TranslationField, value: string): void {
+    if (field.name === "name") {
+      setCachedFormField("productName", value);
+    }
+
+    if (field.name === "description") {
+      setCachedFormField("productDescription", value);
+    }
+
+    if (field.name === "seoDescription") {
+      setCachedFormField("seoDescription", value);
+    }
+
+    if (field.name === "seoTitle") {
+      setCachedFormField("seoName", value);
+    }
+  }
 
   // Emit data to app
   useEffect(() => {
-    if (active && data?.product) {
-      attachFormState({
-        translationLanguage: languageCode,
-        form: "product-translate",
-        productId: productId,
-        fields: {
-          productName: {
-            type: "short-text",
-            fieldName: "productName",
-            originalValue: data.product.name,
-            currentValue: dataCache.current.productName ?? data.product.name ?? "",
-            translatedValue: data.translation?.name ?? "",
-          },
-          productDescription: {
-            currentValue: dataCache.current.productDescription ?? data.product.description ?? "",
-            type: "editorjs",
-            fieldName: "productDescription",
-            originalValue: data.product.description,
-            translatedValue: data.translation?.description ?? "",
-          },
-          seoName: {
-            type: "short-text",
-            fieldName: "seoName",
-            originalValue: data.product.seoTitle,
-            currentValue: dataCache.current.seoName ?? data.product.seoTitle ?? "",
-            translatedValue: data.translation?.seoTitle ?? "",
-          },
-          seoDescription: {
-            currentValue: dataCache.current.seoDescription ?? data.product.seoDescription ?? "",
-            type: "long-text",
-            fieldName: "seoDescription",
-            originalValue: data.product.seoDescription,
-            translatedValue: data.translation?.seoDescription ?? "",
-          },
-        },
-      });
+    if (active && data?.product && data.translation) {
+      attachFormState(
+        createProductTranslateFormPayloadEvent({
+          translationData: data.translation,
+          productData: data.product,
+          cachedProductDescription,
+          cachedProductName,
+          cachedProductSeoName,
+          cachedProductSeoDescription,
+          productId,
+          languageCode,
+        }),
+      );
     }
   }, [active, data?.product, productId]);
 
-  const extensionResponseFrames = framesByFormType["product-translate"];
-
-  const lastFrame = extensionResponseFrames
-    ? extensionResponseFrames[extensionResponseFrames.length - 1]
-    : null;
-
-  // todo maybe extract to hook and test
   useEffect(() => {
-    if (!lastFrame) {
-      return;
-    }
-
-    const { productName, productDescription, seoDescription, seoName } = lastFrame.fields;
-    const dirtyFields: TranslationInputFieldName[] = [];
-
-    if (productName?.value !== (dataCache.current.productName ?? data?.product?.name)) {
-      dirtyFields.push(TranslationInputFieldName.name);
-    }
-
-    if (
-      productDescription?.value !==
-      (dataCache.current.productDescription ?? data?.product?.description)
-    ) {
-      dirtyFields.push(TranslationInputFieldName.description);
-    }
-
-    if (
-      seoDescription?.value !== (dataCache.current?.seoDescription ?? data?.product?.seoDescription)
-    ) {
-      dirtyFields.push(TranslationInputFieldName.seoDescription);
-    }
-
-    if (seoName?.value !== (dataCache.current.seoName ?? data?.product?.seoTitle)) {
-      dirtyFields.push(TranslationInputFieldName.seoTitle);
-    }
-
-    onEdit(dirtyFields);
-  }, [lastFrame, data?.product]);
-
-  useEffect(() => {
-    dataCache.current = {
-      productName: null,
-      productDescription: null,
-      seoName: null,
-      seoDescription: null,
-    };
+    resetCache();
   }, [activeField]);
 
   return (
@@ -212,23 +178,7 @@ const TranslationsProductsPage = ({
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields
-          onValueChange={(field, value) => {
-            if (field.name === "name") {
-              dataCache.current.productName = value;
-            }
-
-            if (field.name === "description") {
-              dataCache.current.productDescription = value;
-            }
-
-            if (field.name === "seoDescription") {
-              dataCache.current.seoDescription = value;
-            }
-
-            if (field.name === "seoTitle") {
-              dataCache.current.seoName = value;
-            }
-          }}
+          onValueChange={handleValueChange}
           activeField={activeField}
           disabled={disabled}
           initialState={true}
@@ -240,8 +190,7 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Product Name",
               }),
               name: TranslationInputFieldName.name,
-              translation:
-                (lastFrame?.fields.productName?.value ?? data?.translation?.name) || null,
+              translation: (appResponseFields.productName ?? data?.translation?.name) || null,
               type: "short",
               value: data?.product?.name,
             },
@@ -252,8 +201,7 @@ const TranslationsProductsPage = ({
               }),
               name: TranslationInputFieldName.description,
               translation:
-                (lastFrame?.fields.productDescription?.value ?? data?.translation?.description) ||
-                null,
+                (appResponseFields.productDescription ?? data?.translation?.description) || null,
               type: "rich",
               value: data?.product?.description,
             },
@@ -266,23 +214,7 @@ const TranslationsProductsPage = ({
         />
         <CardSpacer />
         <TranslationFields
-          onValueChange={(field, value) => {
-            if (field.name === "name") {
-              dataCache.current.productName = value;
-            }
-
-            if (field.name === "description") {
-              dataCache.current.productDescription = value;
-            }
-
-            if (field.name === "seoDescription") {
-              dataCache.current.seoDescription = value;
-            }
-
-            if (field.name === "seoTitle") {
-              dataCache.current.seoName = value;
-            }
-          }}
+          onValueChange={handleValueChange}
           activeField={activeField}
           disabled={disabled}
           initialState={true}
@@ -297,8 +229,7 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Title",
               }),
               name: TranslationInputFieldName.seoTitle,
-              translation:
-                (lastFrame?.fields.seoName?.value ?? data?.translation?.seoTitle) || null,
+              translation: (appResponseFields.seoName ?? data?.translation?.seoTitle) || null,
               type: "short",
               value: data?.product?.seoTitle,
             },
@@ -309,14 +240,13 @@ const TranslationsProductsPage = ({
               }),
               name: TranslationInputFieldName.seoDescription,
               translation:
-                (lastFrame?.fields.seoDescription?.value ?? data?.translation?.seoDescription) ||
-                null,
+                (appResponseFields.seoDescription ?? data?.translation?.seoDescription) || null,
               type: "long",
               value: data?.product?.seoDescription,
             },
           ]}
           saveButtonState={saveButtonState}
-          richTextResetKey={languageCode + JSON.stringify(lastFrame)}
+          richTextResetKey={languageCode + resetKey.current}
           onEdit={onEdit}
           onDiscard={onDiscard}
           onSubmit={onSubmit}
@@ -331,7 +261,7 @@ const TranslationsProductsPage = ({
               title={intl.formatMessage(commonMessages.translationAttributes)}
               fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
               saveButtonState={saveButtonState}
-              richTextResetKey={languageCode + JSON.stringify(lastFrame)}
+              richTextResetKey={languageCode + resetKey.current}
               onEdit={onEdit}
               onDiscard={onDiscard}
               onSubmit={onAttributeValueSubmit}
@@ -345,4 +275,3 @@ const TranslationsProductsPage = ({
 };
 
 TranslationsProductsPage.displayName = "TranslationsProductsPage";
-export default TranslationsProductsPage;
