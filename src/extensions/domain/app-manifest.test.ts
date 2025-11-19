@@ -1,9 +1,4 @@
-import {
-  AppExtensionMountEnum,
-  AppExtensionTargetEnum,
-  AppManifestFragment,
-  PermissionEnum,
-} from "@dashboard/graphql";
+import { AppManifestFragment, PermissionEnum } from "@dashboard/graphql";
 
 import { appManifestSchema } from "./app-manifest";
 
@@ -25,8 +20,8 @@ describe("App Manifest Schema", () => {
           {
             label: "My Extension",
             url: "https://example.com/extension",
-            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-            target: AppExtensionTargetEnum.POPUP,
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "POPUP",
             permissions: [
               {
                 code: PermissionEnum.MANAGE_PRODUCTS,
