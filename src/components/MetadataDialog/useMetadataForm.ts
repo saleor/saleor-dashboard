@@ -6,13 +6,7 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useMemo } from "react";
-import {
-  FieldError,
-  useFieldArray,
-  useForm,
-  UseFormGetValues,
-  UseFormReset,
-} from "react-hook-form";
+import { FieldError, useFieldArray, useForm, UseFormReset } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { getValidateMetadata } from "./validation";
@@ -28,13 +22,12 @@ type MetadataFieldArray = Array<{ id: string; key: string; value: string }>;
 interface MetadataFormReturn {
   metadataFields: MetadataFieldArray;
   privateMetadataFields: MetadataFieldArray;
-  handleMetadataChange: (event: ChangeEvent) => void;
-  handlePrivateMetadataChange: (event: ChangeEvent) => void;
   metadataErrors: string[];
   privateMetadataErrors: string[];
   reset: UseFormReset<MetadataFormData>;
-  getValues: UseFormGetValues<MetadataFormData>;
   formIsDirty: boolean;
+  handleChange: (event: ChangeEvent, isPrivate: boolean) => void;
+  formData: MetadataFormData;
 }
 
 export const useMetadataForm = ({
@@ -109,11 +102,9 @@ export const useMetadataForm = ({
     };
   };
 
-  // Change handlers
   const handleMetadataChange = getHandleChange("metadata");
   const handlePrivateMetadataChange = getHandleChange("privateMetadata");
 
-  // Error handling
   const metadataErrors = useMemo(
     () => flattenErrors(formState.errors.metadata as FieldError),
     [formState.errors.metadata],
@@ -124,15 +115,22 @@ export const useMetadataForm = ({
     [formState.errors.privateMetadata],
   );
 
+  const handleChange = (event: ChangeEvent, isPrivate: boolean) => {
+    if (isPrivate) {
+      handlePrivateMetadataChange(event);
+    } else {
+      handleMetadataChange(event);
+    }
+  };
+
   return {
     metadataFields: metadataControls.fields,
     privateMetadataFields: privateMetadataControls.fields,
-    handleMetadataChange,
-    handlePrivateMetadataChange,
     metadataErrors,
     privateMetadataErrors,
     reset,
-    getValues,
     formIsDirty: formState.isDirty,
+    handleChange,
+    formData: getValues(),
   };
 };

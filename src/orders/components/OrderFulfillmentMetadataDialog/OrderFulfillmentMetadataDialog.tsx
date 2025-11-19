@@ -3,7 +3,6 @@ import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/us
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
 import { OrderDetailsDocument, OrderDetailsFragment } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
@@ -30,27 +29,17 @@ export const OrderFulfillmentMetadataDialog = ({
   const {
     metadataFields,
     privateMetadataFields,
-    handleMetadataChange,
-    handlePrivateMetadataChange,
     metadataErrors,
     privateMetadataErrors,
     reset,
-    getValues,
     formIsDirty,
+    handleChange,
+    formData,
   } = useMetadataForm({
     entityData: fulfillment,
     submitInProgress,
     lastSubmittedData,
   });
-
-  // Unified change handler for MetadataDialog component
-  const handleChange = (event: ChangeEvent, isPrivate: boolean): void => {
-    if (isPrivate) {
-      handlePrivateMetadataChange(event);
-    } else {
-      handleMetadataChange(event);
-    }
-  };
 
   useEffect(() => {
     if (!open) {
@@ -58,17 +47,13 @@ export const OrderFulfillmentMetadataDialog = ({
     }
   }, [open, reset]);
 
-  const handleSave = async () => {
-    const formData = getValues();
-
-    await onSubmit(formData);
-  };
-
   return (
     <MetadataDialog
       open={open}
       onClose={onClose}
-      onSave={handleSave}
+      onSave={async () => {
+        await onSubmit(formData);
+      }}
       title={intl.formatMessage({
         defaultMessage: "Fulfillment Metadata",
         id: "lDdWo9",
