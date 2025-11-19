@@ -1,4 +1,5 @@
-import { MetadataDialog, useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog";
+import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
+import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
 import { OrderDetailsDocument, OrderDetailsQuery } from "@dashboard/graphql";
