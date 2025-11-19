@@ -143,6 +143,12 @@ const Datagrid = ({
   const classes = useStyles({ actionButtonPosition });
   const { themeValues, theme } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
+  const rowMarkerTheme = useMemo(
+    () => ({
+      accentColor: themeValues.colors.text.default1,
+    }),
+    [themeValues],
+  );
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
   const { scrolledToRight } = useScrollRight();
@@ -477,6 +483,7 @@ const Datagrid = ({
                     headerIcons={headerIcons}
                     drawHeader={drawHeader}
                     theme={datagridTheme}
+                    rowMarkerTheme={rowMarkerTheme}
                     className={classes.datagrid}
                     getCellContent={handleGetCellContent}
                     onCellEdited={handleOnCellEdited}
