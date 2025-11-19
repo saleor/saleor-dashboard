@@ -11,7 +11,7 @@ import { WarehouseInfo } from "./WarehouseInfo";
 export type CardTitleStatus = FulfillmentStatus | "unfulfilled";
 
 type BaseOrderCardTitleProps = {
-  status: CardTitleStatus;
+  status?: CardTitleStatus;
   toolbar?: React.ReactNode;
   withStatus?: boolean;
   className?: string;
@@ -46,7 +46,6 @@ export const OrderCardTitle = ({
   warehouseId,
 }: OrderCardTitleProps): JSX.Element => {
   const intl = useIntl();
-  const messageForStatus = getOrderTitleMessage(status);
 
   return (
     <DefaultCardTitle
@@ -66,7 +65,7 @@ export const OrderCardTitle = ({
           </Box>
           <Box display="flex" alignItems="center">
             <Text size={6} fontWeight="medium">
-              {intl.formatMessage(messageForStatus)}
+              {intl.formatMessage(getOrderTitleMessage(status))}
             </Text>
             {withStatus && <StatusIndicator status={status} />}
           </Box>

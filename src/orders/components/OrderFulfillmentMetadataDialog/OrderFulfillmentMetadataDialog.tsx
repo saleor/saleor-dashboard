@@ -1,8 +1,9 @@
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
-import { MetadataDialog, useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog";
-import { MetadataInput, OrderDetailsDocument, OrderDetailsQuery } from "@dashboard/graphql";
+import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
+import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
+import { MetadataInput, OrderDetailsDocument, OrderDetailsFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -10,12 +11,12 @@ import { useEffect, useMemo } from "react";
 import { FieldArrayPath, FieldError, useFieldArray, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-export type OrderMetadataDialogData = NonNullable<OrderDetailsQuery["order"]>;
+export type FulfillmentMetadataDialogData = OrderDetailsFragment["fulfillments"][0];
 
-interface OrderMetadataDialogProps {
+interface OrderFulfillmentMetadataDialogProps {
   open: boolean;
   onClose: () => void;
-  order: OrderMetadataDialogData | undefined;
+  fulfillment: FulfillmentMetadataDialogData | undefined;
 }
 
 const getValidateMetadata =
@@ -52,10 +53,14 @@ const mapFieldArrayToMetadataInput = (
   }));
 };
 
-export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialogProps) => {
+export const OrderFulfillmentMetadataDialog = ({
+  onClose,
+  open,
+  fulfillment,
+}: OrderFulfillmentMetadataDialogProps) => {
   const intl = useIntl();
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
-    initialData: order,
+    initialData: fulfillment,
     onClose,
     refetchDocument: OrderDetailsDocument,
   });
@@ -66,8 +71,8 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
       ? lastSubmittedData
       : {
           // Removes __typename from metadata item object
-          metadata: (order?.metadata ?? []).map(mapMetadataItemToInput),
-          privateMetadata: (order?.privateMetadata ?? []).map(mapMetadataItemToInput),
+          metadata: (fulfillment?.metadata ?? []).map(mapMetadataItemToInput),
+          privateMetadata: (fulfillment?.privateMetadata ?? []).map(mapMetadataItemToInput),
         },
   });
 
@@ -165,8 +170,8 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
       onClose={onClose}
       onSave={handleSave}
       title={intl.formatMessage({
-        defaultMessage: "Order Metadata",
-        id: "oL7VUz",
+        defaultMessage: "Fulfillment Metadata",
+        id: "lDdWo9",
       })}
       data={{
         metadata: mapFieldArrayToMetadataInput(metadataControls.fields),

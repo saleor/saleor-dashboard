@@ -5,9 +5,10 @@ import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { CardActions } from "@material-ui/core";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import { TruckIcon } from "lucide-react";
+import { CheckIcon, TruckIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
+import { RefundedIcon } from "../../../icons/RefundedIcon";
 import { actionButtonsMessages } from "./messages";
 import useStyles from "./styles";
 
@@ -55,6 +56,7 @@ const ActionButtons = ({
     return (
       <CardActions className={classes.actions}>
         <Button variant="primary" onClick={onApprove} disabled={cannotFulfill}>
+          <CheckIcon size={17} />
           <FormattedMessage {...buttonMessages.approve} />
         </Button>
         {cannotFulfill && (
@@ -70,6 +72,7 @@ const ActionButtons = ({
     return (
       <CardActions>
         <Button onClick={handleRefundClick} variant="primary">
+          <RefundedIcon size={17} />
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>
