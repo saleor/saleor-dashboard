@@ -2,6 +2,8 @@ import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonW
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
+import { useMetadataFormControls } from "@dashboard/components/MetadataDialog/useMetadataFormControls";
+import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -16,8 +18,6 @@ import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
 import { useHandleOrderLineMetadataSubmit } from "./useHandleSubmit";
 import { useMetadataValues } from "./useMetadataValues";
-import { useOrderLineMetadataFormControls } from "./useOrderLineMetadataFormControls";
-import { mapFieldArrayToMetadataInput } from "./utils";
 
 export type OrderLineMetadataDialogData = NonNullable<OrderLinesMetadataQuery["order"]>["lines"][0];
 
@@ -65,20 +65,37 @@ export const OrderLineMetadataDialog = ({
 
   const { handleSubmit, control, getValues, formState, trigger, reset } = formMethods;
 
+  // Order Line metadata controls
   const {
-    orderLineMetadataFields,
-    orderLinePrivateMetadataFields,
-    variantMetadataFields,
-    variantPrivateMetadataFields,
-    handleOrderLineMetadataChange,
-    handleOrderLinePrivateMetadataChange,
-    handleVariantMetadataChange,
-    handleVariantPrivateMetadataChange,
-    orderLineMetadataErrors,
-    orderLinePrivateMetadataErrors,
-    variantMetadataErrors,
-    variantPrivateMetadataErrors,
-  } = useOrderLineMetadataFormControls({ control, trigger, getValues, formState });
+    metadataFields: orderLineMetadataFields,
+    privateMetadataFields: orderLinePrivateMetadataFields,
+    handleMetadataChange: handleOrderLineMetadataChange,
+    handlePrivateMetadataChange: handleOrderLinePrivateMetadataChange,
+    metadataErrors: orderLineMetadataErrors,
+    privateMetadataErrors: orderLinePrivateMetadataErrors,
+  } = useMetadataFormControls({
+    control,
+    trigger,
+    getValues,
+    formState,
+    pathPrefix: "orderLine",
+  });
+
+  // Variant metadata controls
+  const {
+    metadataFields: variantMetadataFields,
+    privateMetadataFields: variantPrivateMetadataFields,
+    handleMetadataChange: handleVariantMetadataChange,
+    handlePrivateMetadataChange: handleVariantPrivateMetadataChange,
+    metadataErrors: variantMetadataErrors,
+    privateMetadataErrors: variantPrivateMetadataErrors,
+  } = useMetadataFormControls({
+    control,
+    trigger,
+    getValues,
+    formState,
+    pathPrefix: "variant",
+  });
 
   useEffect(() => {
     if (!open) {
