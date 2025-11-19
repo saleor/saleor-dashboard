@@ -8,7 +8,6 @@ import {
   Control,
   FieldArray,
   FieldArrayPath,
-  FieldError,
   FieldPath,
   FieldValues,
   FormState,
@@ -239,27 +238,16 @@ export const useMetadataFormControls = <TFormData extends FieldValues>({
 
   // Error handling - navigate through nested errors if pathPrefix exists
   const metadataErrorsRaw = pathPrefix
-    ? (
-        formState.errors[pathPrefix as keyof typeof formState.errors] as
-          | Record<string, FieldError>
-          | undefined
-      )?.metadata
+    ? (formState.errors as Record<string, any>)?.[pathPrefix]?.metadata
     : formState.errors.metadata;
   const privateMetadataErrorsRaw = pathPrefix
-    ? (
-        formState.errors[pathPrefix as keyof typeof formState.errors] as
-          | Record<string, FieldError>
-          | undefined
-      )?.privateMetadata
+    ? (formState.errors as Record<string, any>)?.[pathPrefix]?.privateMetadata
     : formState.errors.privateMetadata;
 
-  const metadataErrors = useMemo(
-    () => flattenErrors(metadataErrorsRaw as FieldError | undefined),
-    [metadataErrorsRaw],
-  );
+  const metadataErrors = useMemo(() => flattenErrors(metadataErrorsRaw), [metadataErrorsRaw]);
 
   const privateMetadataErrors = useMemo(
-    () => flattenErrors(privateMetadataErrorsRaw as FieldError | undefined),
+    () => flattenErrors(privateMetadataErrorsRaw),
     [privateMetadataErrorsRaw],
   );
 
