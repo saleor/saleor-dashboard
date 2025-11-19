@@ -14,12 +14,12 @@ export const appManifestFragment = gql`
     homepageUrl
     supportUrl
     extensions {
-      target
+      targetName
       permissions {
         code
         name
       }
-      mount
+      mountName
       url
       label
     }
