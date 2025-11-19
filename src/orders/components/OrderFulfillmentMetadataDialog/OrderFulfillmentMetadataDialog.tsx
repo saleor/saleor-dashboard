@@ -4,6 +4,7 @@ import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/us
 import { useMetadataFormControls } from "@dashboard/components/MetadataDialog/useMetadataFormControls";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
 import { OrderDetailsDocument, OrderDetailsFragment } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -56,8 +57,8 @@ export const OrderFulfillmentMetadataDialog = ({
     formState,
   });
 
-  // Change handlers
-  const handleChange = (event: any, isPrivate: boolean) => {
+  // Unified change handler for MetadataDialog component
+  const handleChange = (event: ChangeEvent, isPrivate: boolean): void => {
     if (isPrivate) {
       handlePrivateMetadataChange(event);
     } else {
