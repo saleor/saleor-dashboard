@@ -2,8 +2,21 @@ import { MetadataInput } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
 /**
- * Validates metadata entries for uniqueness and non-empty keys.
- * Used by metadata form dialogs to ensure data integrity.
+ * Creates a validation function for metadata entries.
+ * Ensures all metadata keys are unique and non-empty.
+ *
+ * @param intl - React Intl instance for i18n error messages
+ * @returns Validation function compatible with react-hook-form
+ *
+ * @example
+ * ```ts
+ * const validate = getValidateMetadata(intl);
+ * const result = validate([
+ *   { key: "color", value: "blue" },
+ *   { key: "size", value: "large" }
+ * ]);
+ * // Returns true if valid, or error message string if invalid
+ * ```
  */
 export const getValidateMetadata =
   (intl: IntlShape) =>
@@ -31,9 +44,22 @@ export const getValidateMetadata =
   };
 
 /**
- * Maps FieldArrayWithId to MetadataInput by extracting only key and value properties.
- * FieldArrayWithId includes an 'id' field used by react-hook-form for tracking,
- * but MetadataInput only needs key and value.
+ * Converts react-hook-form field array entries to MetadataInput format.
+ * Removes the 'id' field that react-hook-form adds for internal tracking.
+ *
+ * @param fields - Field array from useFieldArray (includes 'id' property)
+ * @returns Clean MetadataInput array with only key and value
+ *
+ * @example
+ * ```ts
+ * const fields = [
+ *   { id: "auto-generated-id", key: "color", value: "blue" },
+ *   { id: "another-id", key: "size", value: "large" }
+ * ];
+ *
+ * const metadata = mapFieldArrayToMetadataInput(fields);
+ * // Returns: [{ key: "color", value: "blue" }, { key: "size", value: "large" }]
+ * ```
  */
 export const mapFieldArrayToMetadataInput = (
   fields: Array<Record<"id", string> & MetadataInput>,
