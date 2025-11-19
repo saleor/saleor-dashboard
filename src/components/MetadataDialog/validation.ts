@@ -1,9 +1,13 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
+/**
+ * Validates metadata entries for uniqueness and non-empty keys.
+ * Used by metadata form dialogs to ensure data integrity.
+ */
 export const getValidateMetadata =
   (intl: IntlShape) =>
-  (metadata: MetadataInput[]): true | string => {
+  (metadata: Array<{ key: string; value: string }>): true | string => {
     const keys = metadata.map(entry => entry.key);
     const uniqueKeys = new Set(keys);
 
