@@ -1,5 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
+// TODO: remove
 const useStyles = makeStyles(
   theme => ({
     actions: {

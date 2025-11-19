@@ -65,7 +65,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   };
 
   return (
-    <Box data-test-id={dataTestId}>
+    <Box data-test-id={dataTestId} marginBottom={5}>
       <OrderCardTitle
         withStatus
         status={fulfillment?.status}
@@ -127,7 +127,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           </Box>
         }
       />
-      <DashboardCard.Content paddingX={0}>
+      <DashboardCard.Content paddingX={0} __backgroundColor={"red"}>
         <OrderDetailsDatagrid
           lines={getLines()}
           loading={false}
