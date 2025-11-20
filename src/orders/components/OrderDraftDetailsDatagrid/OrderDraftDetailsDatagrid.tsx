@@ -20,6 +20,9 @@ import { Link } from "react-router-dom";
 import { FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { orderDraftDetailsStaticColumnsAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
+import { OrderDraftDetailsRowActions } from "./OrderDraftDetailsRowActions";
+
+const ROW_ACTION_BAR_WIDTH = 80;
 
 interface OrderDraftDetailsDatagridProps {
   loading: boolean;
@@ -64,7 +67,6 @@ export const OrderDraftDetailsDatagrid = ({
     columns: visibleColumns,
     lines,
     errors,
-    onOrderLineShowMetadata,
   });
   const getMenuItems = useCallback(
     index => [
@@ -136,6 +138,17 @@ export const OrderDraftDetailsDatagrid = ({
     [datagrid.changes, lines, onOrderLineChange],
   );
 
+  const renderRowActions = useCallback(
+    (index: number) => (
+      <OrderDraftDetailsRowActions
+        menuItems={getMenuItems(index)}
+        onShowMetadata={() => onOrderLineShowMetadata(lines[index].id)}
+        intl={intl}
+      />
+    ),
+    [getMenuItems, intl, lines, onOrderLineShowMetadata],
+  );
+
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
@@ -161,6 +174,8 @@ export const OrderDraftDetailsDatagrid = ({
           />
         )}
         onChange={handleDatagridChange}
+        renderRowActions={renderRowActions}
+        rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
       />
     </DatagridChangeStateContext.Provider>
   );

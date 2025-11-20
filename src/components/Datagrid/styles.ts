@@ -124,10 +124,12 @@ const useStyles = makeStyles<{
         display: "grid",
         gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
         height: `calc(${cellHeight}px - 1px)`,
+        // aligns row action with column picker
         background: vars.colors.background.default1,
       },
       rowColumnGroup: {
         height: cellHeight,
+        marginLeft: "-4px",
       },
       rowActionScrolledToRight: {
         borderLeftColor: vars.colors.border.default1,
