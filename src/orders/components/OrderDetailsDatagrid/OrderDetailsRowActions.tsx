@@ -24,7 +24,12 @@ export const OrderDetailsRowActions = ({
   const firstMenuItem = menuItems[0];
 
   return (
-    <div className={classes.rowAction}>
+    <div
+      className={classes.rowAction}
+      style={{
+        boxShadow: "-8px 0px 8px -4px rgba(0, 0, 0, 0.12)",
+      }}
+    >
       <IconButton
         data-test-id="show-metadata-button"
         disabled={disabled}
