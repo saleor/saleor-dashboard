@@ -21,7 +21,7 @@ export class OccurrenceLimiter {
 
   private countOccurrences(container: FilterContainer): number {
     return container.filter(element => {
-      if (!FilterElement.isCompatible(element)) return false;
+      if (!FilterElement.isFilterElement(element)) return false;
 
       return element.value.value === this.fieldName;
     }).length;
