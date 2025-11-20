@@ -3,12 +3,12 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Box, Button, Divider, Dropdown, List, MoreOptionsIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, MoreOptionsIcon, Text } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
-import ActionButtons from "./ActionButtons";
+import { ActionButtons } from "./ActionButtons";
 
 interface OrderFulfillmentCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
@@ -65,7 +65,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   };
 
   return (
-    <Box data-test-id={dataTestId}>
+    <Box data-test-id={dataTestId} marginBottom={5}>
       <OrderCardTitle
         withStatus
         status={fulfillment?.status}
@@ -100,6 +100,8 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                     variant="tertiary"
                     icon={<MoreOptionsIcon />}
                     data-test-id="fulfillment-menu-button"
+                    // optical alignment
+                    __marginRight={"-16px"}
                   />
                 </Dropdown.Trigger>
                 <Dropdown.Content align="end">
@@ -134,7 +136,6 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
       </DashboardCard.Content>
-      <Divider />
     </Box>
   );
 };

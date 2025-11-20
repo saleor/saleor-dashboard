@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import {
   booleanCell,
-  buttonCell,
   moneyCell,
   moneyDiscountedCell,
   numberCell,
@@ -13,7 +12,6 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex, getStatusColor, isFirstColumn } from "@dashboard/misc";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
@@ -65,11 +63,6 @@ export const orderDraftDetailsStaticColumnsAdapter = (
     width: 150,
   },
   {
-    id: "metadata",
-    title: intl.formatMessage(commonMessages.metadata),
-    width: 150,
-  },
-  {
     id: "status",
     title: intl.formatMessage(columnsMessages.status),
     width: 250,
@@ -80,15 +73,9 @@ interface GetCellContentProps {
   columns: AvailableColumn[];
   lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
-  onOrderLineShowMetadata: (id: string) => void;
 }
 
-export const useGetCellContent = ({
-  columns,
-  lines,
-  errors,
-  onOrderLineShowMetadata,
-}: GetCellContentProps) => {
+export const useGetCellContent = ({ columns, lines, errors }: GetCellContentProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
   const { locale } = useLocale();
@@ -159,10 +146,6 @@ export const useGetCellContent = ({
         return booleanCell(rowData?.isGift, {
           allowOverlay: false,
           readonly: true,
-        });
-      case "metadata":
-        return buttonCell(intl.formatMessage(commonMessages.viewMetadata), () => {
-          onOrderLineShowMetadata(rowData.id);
         });
 
       default:

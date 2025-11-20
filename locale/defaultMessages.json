@@ -508,6 +508,10 @@
     "context": "grant refund table, column header",
     "string": "Qty to refund"
   },
+  "11ep0q": {
+    "context": "button",
+    "string": "Show metadata"
+  },
   "11lR5V": {
     "context": "avatar delete button",
     "string": "Delete"
