@@ -63,7 +63,7 @@ export const OrderCardTitle = ({
             )}
             {trackingNumber && <TrackingNumberDisplay trackingNumber={trackingNumber} />}
           </Box>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" marginTop={1}>
             <Text size={6} fontWeight="medium">
               {intl.formatMessage(getOrderTitleMessage(status))}
             </Text>

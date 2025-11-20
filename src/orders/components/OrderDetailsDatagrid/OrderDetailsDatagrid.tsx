@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import { ROW_ACTION_BAR_WIDTH } from "@dashboard/components/Datagrid/const";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
@@ -19,8 +20,6 @@ import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
-
-const ROW_ACTION_BAR_WIDTH = 80;
 
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];

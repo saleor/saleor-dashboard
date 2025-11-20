@@ -52,4 +52,9 @@ export const messages = defineMessages({
     id: "DhFqJF",
     defaultMessage: "Edit discount",
   },
+  showMetadata: {
+    id: "11ep0q",
+    defaultMessage: "Show metadata",
+    description: "button",
+  },
 });

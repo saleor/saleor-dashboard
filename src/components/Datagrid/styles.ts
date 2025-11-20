@@ -128,6 +128,8 @@ const useStyles = makeStyles<{
       },
       rowColumnGroup: {
         height: cellHeight,
+        // aligns row action with column picker
+        marginLeft: "-4px",
       },
       rowActionScrolledToRight: {
         borderLeftColor: vars.colors.border.default1,
