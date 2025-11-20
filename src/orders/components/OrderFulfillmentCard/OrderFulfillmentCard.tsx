@@ -100,7 +100,8 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                     variant="tertiary"
                     icon={<MoreOptionsIcon />}
                     data-test-id="fulfillment-menu-button"
-                    __marginRight={-16}
+                    // optical alignment
+                    __marginRight={"-16px"}
                   />
                 </Dropdown.Trigger>
                 <Dropdown.Content align="end">
@@ -135,7 +136,6 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
       </DashboardCard.Content>
-      {/* <Divider /> */}
     </Box>
   );
 };
