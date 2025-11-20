@@ -1,6 +1,6 @@
 import { FilterElement } from "../FilterElement";
 
-export const metadata = (element: FilterElement, row: number) => {
+export const validateMetadataFilterElement = (element: FilterElement, row: number) => {
   const { value } = element.condition.selected;
 
   // Metadata value should be a tuple [key, value]

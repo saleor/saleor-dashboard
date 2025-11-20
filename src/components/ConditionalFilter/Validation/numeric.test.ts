@@ -2,7 +2,7 @@ import { Condition, FilterElement } from "../FilterElement";
 import { ConditionOptions } from "../FilterElement/ConditionOptions";
 import { ConditionSelected } from "../FilterElement/ConditionSelected";
 import { ExpressionValue } from "../FilterElement/FilterElement";
-import { numeric } from "./numeric";
+import { validateFilterElementToBeNumeric } from "./numeric";
 
 describe("ConditionalFilter / validation / numeric", () => {
   it.each([
@@ -31,7 +31,7 @@ describe("ConditionalFilter / validation / numeric", () => {
       false,
     );
     // Act
-    const result = numeric(element, 0);
+    const result = validateFilterElementToBeNumeric(element, 0);
 
     // Assert
     expect(result).toEqual(expected);

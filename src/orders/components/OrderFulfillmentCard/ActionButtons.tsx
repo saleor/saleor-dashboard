@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { FulfillmentStatus } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { DEFAULT_ICON_SIZE } from "@dashboard/icons/utils";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -54,7 +55,7 @@ export const ActionButtons = ({
     return (
       <Box>
         <Button variant="primary" onClick={onApprove} disabled={cannotFulfill}>
-          <CheckIcon size={17} />
+          <CheckIcon size={DEFAULT_ICON_SIZE} />
           <FormattedMessage {...buttonMessages.approve} />
         </Button>
         {cannotFulfill && (
@@ -70,7 +71,7 @@ export const ActionButtons = ({
     return (
       <Box>
         <Button onClick={handleRefundClick} variant="primary">
-          <RefundedIcon size={17} />
+          <RefundedIcon size={DEFAULT_ICON_SIZE} />
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </Box>
@@ -80,14 +81,14 @@ export const ActionButtons = ({
   return hasTrackingNumber ? (
     <Box>
       <Button data-test-id="edit-tracking-button" variant="primary" onClick={onTrackingCodeAdd}>
-        <TruckIcon size={17} />
+        <TruckIcon size={DEFAULT_ICON_SIZE} />
         <FormattedMessage {...actionButtonsMessages.editTracking} />
       </Button>
     </Box>
   ) : (
     <Box>
       <Button variant="primary" onClick={onTrackingCodeAdd} data-test-id="add-tracking-button">
-        <TruckIcon size={17} />
+        <TruckIcon size={DEFAULT_ICON_SIZE} />
         <FormattedMessage {...actionButtonsMessages.addTracking} />
       </Button>
     </Box>
