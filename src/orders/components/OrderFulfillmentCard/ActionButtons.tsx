@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { FulfillmentStatus } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { DEFAULT_ICON_SIZE } from "@dashboard/icons/utils";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { CardActions } from "@material-ui/core";
@@ -56,7 +57,7 @@ const ActionButtons = ({
     return (
       <CardActions className={classes.actions}>
         <Button variant="primary" onClick={onApprove} disabled={cannotFulfill}>
-          <CheckIcon size={17} />
+          <CheckIcon size={DEFAULT_ICON_SIZE} />
           <FormattedMessage {...buttonMessages.approve} />
         </Button>
         {cannotFulfill && (
@@ -72,7 +73,7 @@ const ActionButtons = ({
     return (
       <CardActions>
         <Button onClick={handleRefundClick} variant="primary">
-          <RefundedIcon size={17} />
+          <RefundedIcon size={DEFAULT_ICON_SIZE} />
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>
@@ -82,14 +83,14 @@ const ActionButtons = ({
   return hasTrackingNumber ? (
     <CardActions className={classes.actions}>
       <Button data-test-id="edit-tracking-button" variant="primary" onClick={onTrackingCodeAdd}>
-        <TruckIcon size={17} />
+        <TruckIcon size={DEFAULT_ICON_SIZE} />
         <FormattedMessage {...actionButtonsMessages.editTracking} />
       </Button>
     </CardActions>
   ) : (
     <CardActions className={classes.actions}>
       <Button variant="primary" onClick={onTrackingCodeAdd} data-test-id="add-tracking-button">
-        <TruckIcon size={17} />
+        <TruckIcon size={DEFAULT_ICON_SIZE} />
         <FormattedMessage {...actionButtonsMessages.addTracking} />
       </Button>
     </CardActions>

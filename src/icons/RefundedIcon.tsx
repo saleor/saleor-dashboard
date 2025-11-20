@@ -1,8 +1,10 @@
+import { DEFAULT_ICON_SIZE } from "./utils";
+
 /**
  *  Based on `lucide-react/Banknote` icon
  */
 export const RefundedIcon = ({
-  size = 19,
+  size = DEFAULT_ICON_SIZE,
   className,
   color = "currentColor",
 }: {
