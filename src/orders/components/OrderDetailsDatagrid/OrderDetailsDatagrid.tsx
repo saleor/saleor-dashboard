@@ -6,6 +6,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productPath } from "@dashboard/products/urls";
@@ -36,7 +37,11 @@ export const OrderDetailsDatagrid = ({
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
-  const orderDetailsStaticColumns = useMemo(() => orderDetailsStaticColumnsAdapter(intl), [intl]);
+  const emptyColumn = useEmptyColumn();
+  const orderDetailsStaticColumns = useMemo(
+    () => orderDetailsStaticColumnsAdapter(intl, emptyColumn),
+    [intl, emptyColumn],
+  );
   const handleColumnChange = useCallback(
     picked => {
       if (updateListSettings) {
@@ -103,7 +108,7 @@ export const OrderDetailsDatagrid = ({
         showEmptyDatagrid
         rowMarkers="none"
         columnSelect="single"
-        freezeColumns={1}
+        freezeColumns={2}
         availableColumns={visibleColumns}
         verticalBorder={false}
         emptyText={intl.formatMessage(orderMessages.emptyText)}
