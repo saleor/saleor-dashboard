@@ -32,7 +32,7 @@ export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialo
     handleChange,
     formData,
   } = useMetadataForm({
-    entityData: order,
+    graphqlData: order,
     submitInProgress,
     lastSubmittedData,
   });

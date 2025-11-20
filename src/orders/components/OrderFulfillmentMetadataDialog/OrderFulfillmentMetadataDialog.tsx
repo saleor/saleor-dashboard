@@ -36,7 +36,7 @@ export const OrderFulfillmentMetadataDialog = ({
     handleChange,
     formData,
   } = useMetadataForm({
-    entityData: fulfillment,
+    graphqlData: fulfillment,
     submitInProgress,
     lastSubmittedData,
   });

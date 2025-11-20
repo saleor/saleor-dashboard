@@ -1,7 +1,7 @@
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { EventDataAction, EventDataField } from "@dashboard/components/Metadata/types";
 import { getDataKey, parseEventData } from "@dashboard/components/Metadata/utils";
-import { MetadataInput } from "@dashboard/graphql";
+import { MetadataInput, MetadataItemFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { flattenErrors } from "@dashboard/utils/hook-form/errors";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
@@ -12,7 +12,12 @@ import { useIntl } from "react-intl";
 import { getValidateMetadata } from "./validation";
 
 interface UseMetadataFormConfig {
-  entityData: { metadata: any; privateMetadata: any } | undefined;
+  graphqlData:
+    | {
+        metadata: MetadataItemFragment[];
+        privateMetadata: MetadataItemFragment[];
+      }
+    | undefined;
   submitInProgress: boolean;
   lastSubmittedData: MetadataFormData | undefined;
 }
@@ -31,7 +36,7 @@ interface MetadataFormReturn {
 }
 
 export const useMetadataForm = ({
-  entityData,
+  graphqlData,
   submitInProgress,
   lastSubmittedData,
 }: UseMetadataFormConfig): MetadataFormReturn => {
@@ -41,8 +46,8 @@ export const useMetadataForm = ({
     values: submitInProgress
       ? lastSubmittedData
       : {
-          metadata: (entityData?.metadata ?? []).map(mapMetadataItemToInput),
-          privateMetadata: (entityData?.privateMetadata ?? []).map(mapMetadataItemToInput),
+          metadata: (graphqlData?.metadata ?? []).map(mapMetadataItemToInput),
+          privateMetadata: (graphqlData?.privateMetadata ?? []).map(mapMetadataItemToInput),
         },
   });
 

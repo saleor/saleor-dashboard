@@ -7,15 +7,17 @@ import { useMetadataForm } from "./useMetadataForm";
 describe("useMetadataForm", () => {
   it("returns form values from hook form for metadata and privateMetadata", () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "test-key", value: "test-value" }],
-      privateMetadata: [{ key: "private-key", value: "private-value" }],
+    const graphqlData = {
+      metadata: [{ key: "test-key", value: "test-value", __typename: "MetadataItem" as const }],
+      privateMetadata: [
+        { key: "private-key", value: "private-value", __typename: "MetadataItem" as const },
+      ],
     };
 
     // Act
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -40,14 +42,20 @@ describe("useMetadataForm", () => {
 
   it("handles update action for metadata keys", () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "old-key", value: "test-value" }],
-      privateMetadata: [{ key: "old-private-key", value: "private-test-value" }],
+    const graphqlData = {
+      metadata: [{ key: "old-key", value: "test-value", __typename: "MetadataItem" as const }],
+      privateMetadata: [
+        {
+          key: "old-private-key",
+          value: "private-test-value",
+          __typename: "MetadataItem" as const,
+        },
+      ],
     };
 
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -86,14 +94,20 @@ describe("useMetadataForm", () => {
 
   it("handles update action for metadata values", () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "test-key", value: "old-value" }],
-      privateMetadata: [{ key: "private-test-key", value: "old-private-value" }],
+    const graphqlData = {
+      metadata: [{ key: "test-key", value: "old-value", __typename: "MetadataItem" as const }],
+      privateMetadata: [
+        {
+          key: "private-test-key",
+          value: "old-private-value",
+          __typename: "MetadataItem" as const,
+        },
+      ],
     };
 
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -132,14 +146,14 @@ describe("useMetadataForm", () => {
 
   it("handles add action for metadata and privateMetadata", () => {
     // Arrange
-    const entityData = {
+    const graphqlData = {
       metadata: [],
       privateMetadata: [],
     };
 
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -175,14 +189,16 @@ describe("useMetadataForm", () => {
 
   it("handles delete action for metadata and privateMetadata", () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "test", value: "value" }],
-      privateMetadata: [{ key: "private-test", value: "private-value" }],
+    const graphqlData = {
+      metadata: [{ key: "test", value: "value", __typename: "MetadataItem" as const }],
+      privateMetadata: [
+        { key: "private-test", value: "private-value", __typename: "MetadataItem" as const },
+      ],
     };
 
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -208,14 +224,16 @@ describe("useMetadataForm", () => {
 
   it("validates and rejects duplicate keys in metadata", async () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "test", value: "value1" }],
-      privateMetadata: [{ key: "private-test", value: "private-value1" }],
+    const graphqlData = {
+      metadata: [{ key: "test", value: "value1", __typename: "MetadataItem" as const }],
+      privateMetadata: [
+        { key: "private-test", value: "private-value1", __typename: "MetadataItem" as const },
+      ],
     };
 
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -264,14 +282,16 @@ describe("useMetadataForm", () => {
 
   it("validates and rejects empty keys in metadata", async () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "test", value: "value1" }],
-      privateMetadata: [{ key: "private-test", value: "private-value1" }],
+    const graphqlData = {
+      metadata: [{ key: "test", value: "value1", __typename: "MetadataItem" as const }],
+      privateMetadata: [
+        { key: "private-test", value: "private-value1", __typename: "MetadataItem" as const },
+      ],
     };
 
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -316,15 +336,17 @@ describe("useMetadataForm", () => {
 
   it("returns empty error arrays when there are no errors", () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "valid-key", value: "value" }],
-      privateMetadata: [{ key: "valid-private-key", value: "private-value" }],
+    const graphqlData = {
+      metadata: [{ key: "valid-key", value: "value", __typename: "MetadataItem" as const }],
+      privateMetadata: [
+        { key: "valid-private-key", value: "private-value", __typename: "MetadataItem" as const },
+      ],
     };
 
     // Act
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -337,9 +359,11 @@ describe("useMetadataForm", () => {
 
   it("uses lastSubmittedData when submitInProgress is true", () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "old-key", value: "old-value" }],
-      privateMetadata: [{ key: "old-private-key", value: "old-private-value" }],
+    const graphqlData = {
+      metadata: [{ key: "old-key", value: "old-value", __typename: "MetadataItem" as const }],
+      privateMetadata: [
+        { key: "old-private-key", value: "old-private-value", __typename: "MetadataItem" as const },
+      ],
     };
 
     const lastSubmittedData = {
@@ -350,7 +374,7 @@ describe("useMetadataForm", () => {
     // Act
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: true,
         lastSubmittedData,
       }),
@@ -367,14 +391,22 @@ describe("useMetadataForm", () => {
 
   it("resets form to initial values when reset is called", () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "initial-key", value: "initial-value" }],
-      privateMetadata: [{ key: "initial-private-key", value: "initial-private-value" }],
+    const graphqlData = {
+      metadata: [
+        { key: "initial-key", value: "initial-value", __typename: "MetadataItem" as const },
+      ],
+      privateMetadata: [
+        {
+          key: "initial-private-key",
+          value: "initial-private-value",
+          __typename: "MetadataItem" as const,
+        },
+      ],
     };
 
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -406,14 +438,14 @@ describe("useMetadataForm", () => {
 
   it("tracks formIsDirty state when form is modified", () => {
     // Arrange
-    const entityData = {
-      metadata: [{ key: "test-key", value: "test-value" }],
+    const graphqlData = {
+      metadata: [{ key: "test-key", value: "test-value", __typename: "MetadataItem" as const }],
       privateMetadata: [],
     };
 
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -438,11 +470,11 @@ describe("useMetadataForm", () => {
     expect(result.current.formIsDirty).toBe(true);
   });
 
-  it("handles undefined entityData gracefully", () => {
+  it("handles undefined graphqlData gracefully", () => {
     // Arrange & Act
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData: undefined,
+        graphqlData: undefined,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
@@ -457,7 +489,7 @@ describe("useMetadataForm", () => {
 
   it("handles empty metadata arrays", () => {
     // Arrange
-    const entityData = {
+    const graphqlData = {
       metadata: [],
       privateMetadata: [],
     };
@@ -465,7 +497,7 @@ describe("useMetadataForm", () => {
     // Act
     const { result } = renderHook(() =>
       useMetadataForm({
-        entityData,
+        graphqlData,
         submitInProgress: false,
         lastSubmittedData: undefined,
       }),
