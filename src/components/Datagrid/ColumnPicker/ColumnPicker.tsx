@@ -50,15 +50,23 @@ export const ColumnPicker = ({
       }}
     >
       <Popover.Trigger>
-        <Button
-          data-test-id="open-column-picker-button"
-          variant="tertiary"
-          icon={<TableEditIcon />}
-          pointerEvents={pickerOpen ? "none" : undefined}
-          __backgroundColor={pickerOpen ? vars.colors.background.default1Pressed : undefined}
-          __borderColor={pickerOpen ? vars.colors.border.default2 : undefined}
-          title="Pick columns"
-        />
+        <Box
+          __margin={-1}
+          backgroundColor="default1"
+          borderLeftStyle="solid"
+          borderLeftWidth={1}
+          borderColor="default1"
+        >
+          <Button
+            data-test-id="open-column-picker-button"
+            variant="tertiary"
+            icon={<TableEditIcon />}
+            pointerEvents={pickerOpen ? "none" : undefined}
+            __backgroundColor={pickerOpen ? vars.colors.background.default1Pressed : undefined}
+            __borderColor={pickerOpen ? vars.colors.border.default2 : undefined}
+            title="Pick columns"
+          />
+        </Box>
       </Popover.Trigger>
       <Popover.Content
         className={sprinkles({ margin: 1.5, zIndex: "1" })}

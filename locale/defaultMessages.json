@@ -340,10 +340,6 @@
     "context": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
     "string": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history."
   },
-  "/xXvjF": {
-    "context": "section header",
-    "string": "Unfulfilled"
-  },
   "/yJJvI": {
     "context": "dialog header",
     "string": "Select a product type"
@@ -404,6 +400,9 @@
   },
   "0HBlkO": {
     "string": "Search channels"
+  },
+  "0KVj6r": {
+    "string": "Copy tracking number"
   },
   "0MetrR": {
     "context": "webhook input help text",
@@ -994,10 +993,6 @@
   },
   "4LRapg": {
     "string": "Discount removed"
-  },
-  "4PlW0w": {
-    "context": "tracking number",
-    "string": "Tracking Number: {trackingNumber}"
   },
   "4Rj36Y": {
     "string": "Create new Model Type"
@@ -3409,6 +3404,10 @@
   "Jb1/3V": {
     "context": "add shipping carrier button",
     "string": "Add shipping carrier"
+  },
+  "JbHdDi": {
+    "context": "fulfilled fulfillment, section header",
+    "string": "From {warehouseName}: {fulfillmentDate}"
   },
   "JbUg2b": {
     "context": "activate app",
@@ -5901,10 +5900,6 @@
     "context": "charge status overcharged",
     "string": "Overcharged"
   },
-  "ZPOyI1": {
-    "context": "fulfilled fulfillment, section header",
-    "string": "Fulfilled from {warehouseName}"
-  },
   "ZRz3hM": {
     "string": "Export Product Stock Quantity to CSV"
   },
@@ -6717,10 +6712,6 @@
   "f/Drvo": {
     "context": "order history message",
     "string": "Transaction cancel requested"
-  },
-  "f/R1Ln": {
-    "context": "restocked group",
-    "string": "Restocked from:"
   },
   "f0hXz4": {
     "context": "dialog header",
@@ -7689,6 +7680,9 @@
     "context": "attribute properties regarding dashboard",
     "string": "Dashboard Properties"
   },
+  "lDdWo9": {
+    "string": "Fulfillment Metadata"
+  },
   "lDdj6f": {
     "context": "page header",
     "string": "Create model"
@@ -7732,10 +7726,6 @@
   },
   "lNZuWl": {
     "string": "All orders"
-  },
-  "lOMgms": {
-    "context": "fulfillment group",
-    "string": "Fulfilled from:"
   },
   "lQRnYK": {
     "context": "selectt all options",
@@ -9250,6 +9240,9 @@
     "context": "card title, app install page, about privacy",
     "string": "Info"
   },
+  "vMo6/3": {
+    "string": "Tracking: {trackingNumber}"
+  },
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
@@ -9314,6 +9307,10 @@
   },
   "vbop3G": {
     "string": "Create new model"
+  },
+  "vcMnX2": {
+    "context": "unfulfilled fulfillment, section header",
+    "string": "Unfulfilled order lines"
   },
   "vcwrgW": {
     "string": "No translatable entities found"

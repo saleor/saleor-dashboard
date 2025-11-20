@@ -10,34 +10,12 @@ program
   .option("--custom_version <custom_version>", "version of a project")
   .option("--repo_token <repo_token>", "github token")
   .action(async options => {
-    const version = await getBranch(options.repo_token, options.custom_version);
-    core.setOutput("version", version);
+    // Ensure we cut x.yy from x.yy-HASH
+    const regex = /^\d+\.\d+/;
+    const formattedVersion = options.custom_version.match(regex)[0];
+
+    console.log("Setting output: ", formattedVersion);
+    // TODO Maybe eagerly kill the script if this branch doesn't exist
+    core.setOutput("version", formattedVersion);
   })
   .parse();
-
-async function getBranch(token, version) {
-  const regex = /^\d+\.\d+/;
-  const formattedVersion = version.match(regex)[0];
-
-  const octokit = new Octokit({
-    auth: token,
-  });
-
-  try {
-    // todo switch to tags instead https://docs.github.com/en/rest/git/refs?apiVersion=2022-11-28#list-matching-references
-    // use tag as a preference, fallback to branch for older dashboard versions
-    const response = await octokit.request(
-      `GET /repos/{owner}/{repo}/branches/${formattedVersion}`,
-      {
-        owner: "saleor",
-        repo: "saleor-dashboard",
-        headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
-        },
-      },
-    );
-    return response.status == 200 ? response.data.name : "main";
-  } catch (error) {
-    return "main";
-  }
-}

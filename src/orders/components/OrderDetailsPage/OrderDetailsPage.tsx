@@ -6,7 +6,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
+import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -37,7 +37,7 @@ import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
-import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard/OrderFulfilledProductsCard";
+import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPaymentOrTransaction";
@@ -45,7 +45,6 @@ import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard/OrderU
 import { messages } from "./messages";
 import Title from "./Title";
 import {
-  createMetadataHandler,
   createOrderMetadataIdSchema,
   filteredConditionalItems,
   hasAnyItemsReplaceable,
@@ -70,6 +69,7 @@ interface OrderDetailsPageProps {
   onFulfillmentCancel: (id: string) => any;
   onOrderLineShowMetadata: (id: string) => void;
   onOrderShowMetadata: () => void;
+  onFulfillmentShowMetadata: (id: string) => void;
   onFulfillmentTrackingNumberUpdate: (id: string) => any;
   onOrderFulfill: () => any;
   onProductClick?: (id: string) => any;
@@ -126,6 +126,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onAddManualTransaction,
     onOrderLineShowMetadata,
     onOrderShowMetadata,
+    onFulfillmentShowMetadata,
     onMarkAsPaid,
     onRefundAdd,
     onSubmit,
@@ -193,9 +194,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
 
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit} mergeData={false}>
-      {({ set, triggerChange, data, submit }) => {
-        const handleChangeMetadata = createMetadataHandler(data, set, triggerChange);
-
+      {({ submit }) => {
         return (
           <DetailPageLayout>
             <TopNav href={backLinkUrl} title={<Title order={order} />}>
@@ -251,23 +250,18 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 </>
               )}
               {order?.fulfillments?.map(fulfillment => (
-                <OrderFulfilledProductsCard
+                <OrderFulfillmentCard
                   dataTestId="fulfilled-order-section"
                   key={fulfillment.id}
                   fulfillment={fulfillment}
                   fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
                   order={order}
                   onOrderLineShowMetadata={onOrderLineShowMetadata}
+                  onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
                   onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
                   onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
                   onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
-                >
-                  <Metadata
-                    isLoading={loading}
-                    data={data[fulfillment.id]}
-                    onChange={x => handleChangeMetadata(x, fulfillment.id)}
-                  />
-                </OrderFulfilledProductsCard>
+                />
               ))}
               <OrderPaymentOrTransaction
                 order={order}

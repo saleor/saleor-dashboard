@@ -8,7 +8,6 @@ type FramesByFormType = Record<
   AllFormPayloadUpdatePayloads[]
 >;
 
-// todo test
 export const extensionFormResponseByFormAtom = atom(
   get => {
     const states = get(extensionFormResponseState);

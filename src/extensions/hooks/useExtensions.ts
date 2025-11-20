@@ -8,11 +8,7 @@ import { appExtensionManifestOptionsSchemaWithDefault } from "@dashboard/extensi
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
-import {
-  AppExtensionMountEnum,
-  ExtensionListQuery,
-  useExtensionListQuery,
-} from "@dashboard/graphql";
+import { ExtensionListQuery, useExtensionListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
@@ -116,8 +112,8 @@ export const useExtensions = <T extends AllAppExtensionMounts>(
     fetchPolicy: "cache-first",
     variables: {
       filter: {
-        // TODO: Remove casting once API removes the enum
-        mount: mountList as unknown as AppExtensionMountEnum[],
+        // @ts-expect-error - type is fine, but generated type is mutable instead of readonly. We must fix codegen
+        mountName: mountList,
       },
     },
   });

@@ -7,6 +7,7 @@ import DataEditor, {
   CellClickedEventArgs,
   DataEditorProps,
   DataEditorRef,
+  DrawHeaderCallback,
   EditableGridCell,
   GridCell,
   GridColumn,
@@ -142,6 +143,12 @@ const Datagrid = ({
   const classes = useStyles({ actionButtonPosition });
   const { themeValues, theme } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
+  const rowMarkerTheme = useMemo(
+    () => ({
+      accentColor: themeValues.colors.text.default1,
+    }),
+    [themeValues],
+  );
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
   const { scrolledToRight } = useScrollRight();
@@ -347,6 +354,20 @@ const Datagrid = ({
     },
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
+  const drawHeader: DrawHeaderCallback = useCallback(args => {
+    const { ctx, rect, isSelected, spriteManager, theme } = args;
+
+    if (isSelected) {
+      const iconSize = 16;
+      const padding = 8;
+      const x = rect.x + rect.width - iconSize - padding;
+      const y = rect.y + (rect.height - iconSize) / 2;
+
+      spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
+    }
+
+    return false;
+  }, []);
   const handleRemoveRows = useCallback(
     (rows: number[]) => {
       if (selection?.rows) {
@@ -460,7 +481,9 @@ const Datagrid = ({
                     customRenderers={customRenderers}
                     verticalBorder={verticalBorder}
                     headerIcons={headerIcons}
+                    drawHeader={drawHeader}
                     theme={datagridTheme}
+                    rowMarkerTheme={rowMarkerTheme}
                     className={classes.datagrid}
                     getCellContent={handleGetCellContent}
                     onCellEdited={handleOnCellEdited}

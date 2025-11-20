@@ -82,3 +82,4 @@ pnpm run dev
 - [Usage with Docker 🐳](docs/docker.md)
 - [Sentry adapter 🗼](docs/sentry-adapter.md)
 - [Deployment 🌐](docs/deployment.md)
+- [Developing with stable and staging Saleor graphql.schema](docs/multi-schema.md)

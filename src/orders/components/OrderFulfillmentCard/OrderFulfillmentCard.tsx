@@ -3,15 +3,14 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Box, Button, Divider, TrashBinIcon } from "@saleor/macaw-ui-next";
-import { PropsWithChildren } from "react";
+import { Box, Button, Divider, Dropdown, List, MoreOptionsIcon, Text } from "@saleor/macaw-ui-next";
+import { Code } from "lucide-react";
 
-import OrderCardTitle from "../OrderCardTitle";
+import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import ActionButtons from "./ActionButtons";
-import ExtraInfoLines from "./ExtraInfoLines";
 
-interface OrderFulfilledProductsCardProps {
+interface OrderFulfillmentCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
   fulfillmentAllowUnpaid: boolean;
   order?: OrderDetailsFragment;
@@ -20,6 +19,7 @@ interface OrderFulfilledProductsCardProps {
   onTrackingCodeAdd: () => void;
   dataTestId?: string;
   onOrderLineShowMetadata: (id: string) => void;
+  onFulfillmentShowMetadata?: () => void;
 }
 
 const statusesToMergeLines = [
@@ -38,7 +38,8 @@ const fulfillmentLineToLine = ({
   // 'orderLine.quantity' has the total number of items in the order
   quantity,
 });
-const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProductsCardProps>) => {
+
+export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   const {
     fulfillment,
     fulfillmentAllowUnpaid,
@@ -47,6 +48,7 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
     onOrderLineShowMetadata,
+    onFulfillmentShowMetadata,
     dataTestId,
   } = props;
 
@@ -66,18 +68,19 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
     <Box data-test-id={dataTestId}>
       <OrderCardTitle
         withStatus
-        fulfillmentOrder={fulfillment?.fulfillmentOrder}
         status={fulfillment?.status}
         warehouseName={fulfillment?.warehouse?.name}
-        orderNumber={order?.number}
+        createdDate={fulfillment?.created}
+        trackingNumber={fulfillment.trackingNumber}
+        warehouseId={fulfillment?.warehouse?.id}
         toolbar={
-          <Box display="flex" alignItems="center" gap={6}>
-            {cancelableStatuses.includes(fulfillment?.status) && (
+          <Box display="flex" alignItems="center" gap={2}>
+            {onFulfillmentShowMetadata && (
               <Button
                 variant="secondary"
-                onClick={onOrderFulfillmentCancel}
-                data-test-id="cancel-fulfillment-button"
-                icon={<TrashBinIcon />}
+                onClick={onFulfillmentShowMetadata}
+                data-test-id="show-fulfillment-metadata"
+                icon={<Code />}
               />
             )}
             <ActionButtons
@@ -90,6 +93,37 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
               onApprove={onOrderFulfillmentApprove}
               hasTransactions={orderHasTransactions(order)}
             />
+            {cancelableStatuses.includes(fulfillment?.status) && (
+              <Dropdown>
+                <Dropdown.Trigger>
+                  <Button
+                    variant="tertiary"
+                    icon={<MoreOptionsIcon />}
+                    data-test-id="fulfillment-menu-button"
+                  />
+                </Dropdown.Trigger>
+                <Dropdown.Content align="end">
+                  <List
+                    padding={2}
+                    borderRadius={4}
+                    boxShadow="defaultOverlay"
+                    backgroundColor="default1"
+                  >
+                    <Dropdown.Item>
+                      <List.Item
+                        borderRadius={4}
+                        paddingX={1.5}
+                        paddingY={2}
+                        onClick={onOrderFulfillmentCancel}
+                        data-test-id="cancel-fulfillment"
+                      >
+                        <Text>Cancel fulfillment</Text>
+                      </List.Item>
+                    </Dropdown.Item>
+                  </List>
+                </Dropdown.Content>
+              </Dropdown>
+            )}
           </Box>
         }
       />
@@ -99,12 +133,8 @@ const OrderFulfilledProductsCard = (props: PropsWithChildren<OrderFulfilledProdu
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
-        <ExtraInfoLines fulfillment={fulfillment} />
       </DashboardCard.Content>
-      {props.children}
       <Divider />
     </Box>
   );
 };
-
-export default OrderFulfilledProductsCard;

@@ -28,9 +28,10 @@ import {
 import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
+import { OrderFulfillmentMetadataDialog } from "@dashboard/orders/components/OrderFulfillmentMetadataDialog/OrderFulfillmentMetadataDialog";
 import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
-import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog";
+import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
 import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
@@ -228,6 +229,7 @@ export const OrderNormalDetails = ({
         onOrderCancel={() => openModal("cancel")}
         onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
         onOrderShowMetadata={() => openModal("view-order-metadata")}
+        onFulfillmentShowMetadata={id => openModal("view-fulfillment-metadata", { id })}
         onTransactionAction={(id, action) =>
           openModal("transaction-action", {
             type: action,
@@ -325,6 +327,11 @@ export const OrderNormalDetails = ({
         open={params.action === "view-order-metadata"}
         onClose={closeModal}
         order={data?.order}
+      />
+      <OrderFulfillmentMetadataDialog
+        open={params.action === "view-fulfillment-metadata"}
+        onClose={closeModal}
+        fulfillment={data?.order?.fulfillments?.find(f => f.id === params.id)}
       />
       <OrderMarkAsPaidDialog
         confirmButtonState={orderPaymentMarkAsPaid.opts.status}

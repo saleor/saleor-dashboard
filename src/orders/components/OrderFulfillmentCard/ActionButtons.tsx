@@ -1,12 +1,15 @@
 // @ts-strict-ignore
 import { FulfillmentStatus } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { DEFAULT_ICON_SIZE } from "@dashboard/icons/utils";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { CardActions } from "@material-ui/core";
 import { Button, Text } from "@saleor/macaw-ui-next";
+import { CheckIcon, TruckIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
+import { RefundedIcon } from "../../../icons/RefundedIcon";
 import { actionButtonsMessages } from "./messages";
 import useStyles from "./styles";
 
@@ -54,6 +57,7 @@ const ActionButtons = ({
     return (
       <CardActions className={classes.actions}>
         <Button variant="primary" onClick={onApprove} disabled={cannotFulfill}>
+          <CheckIcon size={DEFAULT_ICON_SIZE} />
           <FormattedMessage {...buttonMessages.approve} />
         </Button>
         {cannotFulfill && (
@@ -69,6 +73,7 @@ const ActionButtons = ({
     return (
       <CardActions>
         <Button onClick={handleRefundClick} variant="primary">
+          <RefundedIcon size={DEFAULT_ICON_SIZE} />
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>
@@ -78,12 +83,14 @@ const ActionButtons = ({
   return hasTrackingNumber ? (
     <CardActions className={classes.actions}>
       <Button data-test-id="edit-tracking-button" variant="primary" onClick={onTrackingCodeAdd}>
+        <TruckIcon size={DEFAULT_ICON_SIZE} />
         <FormattedMessage {...actionButtonsMessages.editTracking} />
       </Button>
     </CardActions>
   ) : (
     <CardActions className={classes.actions}>
       <Button variant="primary" onClick={onTrackingCodeAdd} data-test-id="add-tracking-button">
+        <TruckIcon size={DEFAULT_ICON_SIZE} />
         <FormattedMessage {...actionButtonsMessages.addTracking} />
       </Button>
     </CardActions>
