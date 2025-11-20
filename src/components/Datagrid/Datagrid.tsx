@@ -103,6 +103,7 @@ interface DatagridProps {
   onClearRecentlyAddedColumn?: () => void;
   renderHeader?: (props: DatagridRenderHeaderProps) => ReactNode;
   navigatorOpts?: NavigatorOpts;
+  showTopBorder?: boolean;
 }
 
 const Datagrid = ({
@@ -138,6 +139,7 @@ const Datagrid = ({
   rowHeight = cellHeight,
   renderHeader,
   navigatorOpts,
+  showTopBorder = true,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -472,7 +474,7 @@ const Datagrid = ({
                 <div className={classes.editorContainer}>
                   <Box
                     backgroundColor="default1"
-                    borderTopWidth={1}
+                    borderTopWidth={showTopBorder ? 1 : 0}
                     borderTopStyle="solid"
                     borderColor="default1"
                   />

@@ -111,6 +111,7 @@ export const OrderDetailsDatagrid = ({
         freezeColumns={2}
         availableColumns={visibleColumns}
         verticalBorder={false}
+        showTopBorder={false}
         emptyText={intl.formatMessage(orderMessages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
