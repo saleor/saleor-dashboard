@@ -1,5 +1,4 @@
 import { CardHeader } from "@material-ui/core";
-import { vars } from "@saleor/macaw-ui-next";
 import * as React from "react";
 
 interface CardTitleProps {
@@ -13,19 +12,10 @@ interface CardTitleProps {
 }
 
 const CardTitle = ({ className, children, title, subtitle, toolbar, ...rest }: CardTitleProps) => (
-  <CardHeader
-    action={toolbar}
-    className={className}
-    title={title}
-    subheader={subtitle}
-    {...rest}
-    // TODO: don't add this color if status is unfulfilled
-    style={{ backgroundColor: vars.colors.background.default2 }}
-  >
+  <CardHeader action={toolbar} className={className} title={title} subheader={subtitle} {...rest}>
     {children}
   </CardHeader>
 );
 
-// TODO: remove
 CardTitle.displayName = "CardTitle";
 export default CardTitle;

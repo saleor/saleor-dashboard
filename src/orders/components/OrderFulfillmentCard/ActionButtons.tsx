@@ -10,7 +10,7 @@ import { FormattedMessage } from "react-intl";
 import { RefundedIcon } from "../../../icons/RefundedIcon";
 import { actionButtonsMessages } from "./messages";
 
-interface AcionButtonsProps {
+interface ActionButtonsProps {
   orderId: string;
   status: FulfillmentStatus;
   trackingNumber?: string;
@@ -26,7 +26,8 @@ const statusesToShow = [
   FulfillmentStatus.RETURNED,
   FulfillmentStatus.WAITING_FOR_APPROVAL,
 ];
-const ActionButtons = ({
+
+export const ActionButtons = ({
   orderId,
   status,
   trackingNumber,
@@ -35,7 +36,7 @@ const ActionButtons = ({
   hasTransactions,
   onTrackingCodeAdd,
   onApprove,
-}: AcionButtonsProps) => {
+}: ActionButtonsProps) => {
   const navigate = useNavigator();
   const hasTrackingNumber = !!trackingNumber;
 
@@ -92,6 +93,3 @@ const ActionButtons = ({
     </Box>
   );
 };
-
-// TODO: remove
-export default ActionButtons;

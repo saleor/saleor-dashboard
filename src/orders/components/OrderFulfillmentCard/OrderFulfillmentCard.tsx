@@ -8,7 +8,7 @@ import { Code } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
-import ActionButtons from "./ActionButtons";
+import { ActionButtons } from "./ActionButtons";
 
 interface OrderFulfillmentCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
@@ -127,7 +127,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           </Box>
         }
       />
-      <DashboardCard.Content paddingX={0} __backgroundColor={"red"}>
+      <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid
           lines={getLines()}
           loading={false}
