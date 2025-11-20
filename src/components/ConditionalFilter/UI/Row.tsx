@@ -1,11 +1,11 @@
-import { Box, Button, DynamicCombobox, RemoveIcon, Select } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 
-import { getItemConstraint } from "./constrains";
 import { ErrorLookup } from "./errors";
 import { FilterEventEmitter } from "./EventEmitter";
-import { RightOperator } from "./RightOperator";
+import { FilterErrors } from "./FilterErrors";
+import { FilterInputs } from "./FilterInputs";
 import { ExperimentalFiltersProps } from "./Root";
-import { LeftOperatorOption, Row } from "./types";
+import { Row } from "./types";
 
 interface RowProps {
   item: Row;
@@ -13,105 +13,52 @@ interface RowProps {
   leftOptions: ExperimentalFiltersProps["leftOptions"];
   emitter: FilterEventEmitter;
   error: ErrorLookup[number];
+  label: string;
 }
 
-export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowProps) => {
-  const constrain = getItemConstraint(item.constraint);
+/**
+ * FilterRow - Main wrapper component for a filter row
+ *
+ * Structure:
+ * - Grid with 2 rows:
+ *   - Row 1: Label (where / and) + Input fields
+ *   - Row 2: Empty label cell + Error messages (conditionally rendered)
+ */
+export const RowComponent = ({ item, index, leftOptions, emitter, error, label }: RowProps) => {
   const isAttribute = item.isAttribute;
+  const hasErrorText = error.left.text || error.condition.text || error.right.text;
+
+  // Define grid columns: label + input columns
+  const gridColumns = isAttribute
+    ? "60px 200px 200px 120px 200px 1fr" // label + attribute columns
+    : "60px 200px 120px 200px 1fr"; // label + no attribute
 
   return (
     <Box
       display="grid"
-      gap={0.5}
-      __gridTemplateColumns={isAttribute ? "200px 200px 120px 200px 1fr" : "200px 120px 200px 1fr"}
+      columnGap={0.5}
+      rowGap={0.5}
+      __gridTemplateColumns={gridColumns}
+      __gridTemplateRows={hasErrorText ? "auto auto" : "auto"}
       placeItems="flex-start"
       alignItems="center"
     >
-      <DynamicCombobox
-        data-test-id={`left-${index}`}
-        value={item.value}
-        options={leftOptions}
-        loading={item.loading}
-        onChange={value => {
-          if (!value) return;
+      {/* Row 1: Label (Where/And) - spans only first row */}
+      <Text __gridRow="1" alignSelf="center">
+        {label}
+      </Text>
 
-          emitter.changeLeftOperator(
-            index,
-            value,
-            leftOptions.find(option => option.value === value.value)?.type,
-          );
-        }}
-        onInputValueChange={value => {
-          emitter.inputChangeLeftOperator(index, value);
-        }}
-        onFocus={() => {
-          emitter.focusLeftOperator(index);
-        }}
-        onBlur={() => {
-          emitter.blurLeftOperator(index);
-        }}
-        error={error.left.show}
-        helperText={error.left.text}
-        disabled={constrain.disableLeftOperator}
-      />
-
-      {isAttribute && (
-        <DynamicCombobox
-          data-test-id={`attribute-value-${index}`}
-          value={item.selectedAttribute ?? null}
-          options={item.availableAttributesList ?? []}
-          loading={item.attributeLoading}
-          onChange={value => {
-            if (!value) return;
-
-            emitter.changeAttribute(index, value as LeftOperatorOption);
-          }}
-          onInputValueChange={value => {
-            emitter.inputChangeAttribute(index, value);
-          }}
-          onFocus={() => {
-            emitter.focusAttribute(index);
-          }}
-          onBlur={() => {
-            emitter.blurAttribute(index);
-          }}
-        />
-      )}
-
-      <Select
-        data-test-id={`condition-${index}`}
-        value={item.condition.selected.conditionValue}
-        options={item.condition.options}
-        disabled={constrain.disableCondition}
-        onChange={value => {
-          emitter.changeCondition(index, value);
-        }}
-        onFocus={() => {
-          emitter.focusCondition(index);
-        }}
-        onBlur={() => {
-          emitter.blurCondition(index);
-        }}
-        error={error.condition.show}
-        helperText={error.condition.text}
-      />
-
-      <RightOperator
-        selected={item.condition?.selected}
+      {/* Row 1: Input fields */}
+      <FilterInputs
+        item={item}
         index={index}
+        leftOptions={leftOptions}
         emitter={emitter}
-        error={error.right.show}
-        helperText={error.right.text}
-        disabled={constrain.disableRightOperator}
+        error={error}
       />
 
-      <Button
-        marginLeft="auto"
-        variant="tertiary"
-        icon={<RemoveIcon />}
-        onClick={() => emitter.removeRow(index)}
-        disabled={constrain.disableRemoveButton}
-      />
+      {/* Row 2: Error messages (conditionally rendered) */}
+      <FilterErrors error={error} isAttribute={isAttribute} hasLabel />
     </Box>
   );
 };
