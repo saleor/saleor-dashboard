@@ -357,9 +357,9 @@ const Datagrid = ({
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
   const drawHeader: DrawHeaderCallback = useCallback(args => {
-    const { ctx, rect, isSelected, spriteManager, theme } = args;
+    const { ctx, rect, isSelected, spriteManager, theme, column } = args;
 
-    if (isSelected) {
+    if (isSelected && column.id !== "empty") {
       const iconSize = 16;
       const padding = 8;
       const x = rect.x + rect.width - iconSize - padding;
