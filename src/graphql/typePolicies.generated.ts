@@ -1448,9 +1448,8 @@ export type CheckoutRemovePromoCodeFieldPolicy = {
 	checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CheckoutSettingsKeySpecifier = ('allowLegacyGiftCardUse' | 'automaticallyCompleteFullyPaidCheckouts' | 'useLegacyErrorFlow' | CheckoutSettingsKeySpecifier)[];
+export type CheckoutSettingsKeySpecifier = ('automaticallyCompleteFullyPaidCheckouts' | 'useLegacyErrorFlow' | CheckoutSettingsKeySpecifier)[];
 export type CheckoutSettingsFieldPolicy = {
-	allowLegacyGiftCardUse?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticallyCompleteFullyPaidCheckouts?: FieldPolicy<any> | FieldReadFunction<any>,
 	useLegacyErrorFlow?: FieldPolicy<any> | FieldReadFunction<any>
 };
