@@ -371,7 +371,6 @@ export const ChannelDetailsFragmentDoc = gql`
   }
   checkoutSettings {
     automaticallyCompleteFullyPaidCheckouts
-    allowLegacyGiftCardUse
   }
 }
     ${ChannelFragmentDoc}

@@ -5446,6 +5446,13 @@ type CheckoutSettings {
   Added in Saleor 3.20.
   """
   automaticallyCompleteFullyPaidCheckouts: Boolean!
+
+  """
+  Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+  
+  Added in Saleor 3.23.
+  """
+  allowLegacyGiftCardUse: Boolean!
 }
 
 """Represents the channel-specific payment settings."""
@@ -7723,9 +7730,6 @@ type ProductVariant implements Node & ObjectWithMetadata & ObjectWithAttributes 
 
   """External ID of this product."""
   externalReference: String
-
-  """Breaking field of the product variant. Added in 3.23"""
-  breakingField: String
 }
 
 """Represents product variant channel listing."""
@@ -14846,25 +14850,8 @@ type AppExtensionCountableEdge @doc(category: "Apps") {
 }
 
 input AppExtensionFilterInput @doc(category: "Apps") {
-  """DEPRECATED: Use `mountName` instead."""
-  mount: [AppExtensionMountEnum!] @deprecated
-
-  """DEPRECATED: Use `targetName` instead."""
-  target: AppExtensionTargetEnum @deprecated
-
-  """
-  Plain-text mount name (case insensitive)
-  
-  Added in Saleor 3.22.
-  """
-  mountName: String
-
-  """
-  Plain-text target name (case insensitive)
-  
-  Added in Saleor 3.22.
-  """
-  targetName: String
+  mount: [AppExtensionMountEnum!]
+  target: AppExtensionTargetEnum
 }
 
 """Represents address validation rules for a country."""
@@ -28857,6 +28844,13 @@ input CheckoutSettingsInput @doc(category: "Checkout") {
   Added in Saleor 3.20.
   """
   automaticallyCompleteFullyPaidCheckouts: Boolean
+
+  """
+  Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+  
+  Added in Saleor 3.23.
+  """
+  allowLegacyGiftCardUse: Boolean
 }
 
 input PaymentSettingsInput @doc(category: "Payments") {
