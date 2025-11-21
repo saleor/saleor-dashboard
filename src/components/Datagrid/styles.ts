@@ -191,7 +191,7 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
       accentLight: themeValues.colors.background.default1Hovered,
       accentFg: "transparent",
       bgCell: themeValues.colors.background.default1,
-      bgHeader: themeValues.colors.background.default1,
+      bgHeader: themeValues.colors.background.default2,
       bgHeaderHasFocus: themeValues.colors.background.default1Hovered,
       bgHeaderHovered: hasHeaderClickable
         ? themeValues.colors.background.default1Hovered
@@ -200,7 +200,7 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
       borderColor: themeValues.colors.border.default1,
       fontFamily: "'Inter var', sans-serif",
       baseFontStyle: `${themeValues.fontWeight.regular} ${themeValues.fontSize[3]}`,
-      headerFontStyle: `${themeValues.fontWeight.medium} ${themeValues.fontSize[3]}`,
+      headerFontStyle: `${themeValues.fontWeight.medium} ${themeValues.fontSize[1]}`,
       editorFontSize: themeValues.fontSize[3],
       textMedium: themeValues.colors.text.default1,
       textGroupHeader: themeValues.colors.text.default1,

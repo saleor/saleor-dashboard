@@ -20,6 +20,7 @@ interface OrderFulfillmentCardProps {
   dataTestId?: string;
   onOrderLineShowMetadata: (id: string) => void;
   onFulfillmentShowMetadata?: () => void;
+  isLast?: boolean;
 }
 
 const statusesToMergeLines = [
@@ -50,6 +51,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     onOrderLineShowMetadata,
     onFulfillmentShowMetadata,
     dataTestId,
+    isLast,
   } = props;
 
   if (!fulfillment) {
@@ -82,6 +84,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                 onClick={onFulfillmentShowMetadata}
                 data-test-id="show-fulfillment-metadata"
                 icon={<Code />}
+                marginRight={2}
               />
             )}
             <ActionButtons
@@ -136,6 +139,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
+        <Box backgroundColor={isLast ? "default1" : "default2"} width="100%" height={4} />
       </DashboardCard.Content>
     </Box>
   );

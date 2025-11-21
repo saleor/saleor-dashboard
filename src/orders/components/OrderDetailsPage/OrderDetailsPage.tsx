@@ -249,7 +249,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   <CardSpacer />
                 </>
               )}
-              {order?.fulfillments?.map(fulfillment => (
+              {order?.fulfillments?.map((fulfillment, index, array) => (
                 <OrderFulfillmentCard
                   dataTestId="fulfilled-order-section"
                   key={fulfillment.id}
@@ -261,6 +261,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
                   onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
                   onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
+                  isLast={index === array.length - 1}
                 />
               ))}
               <OrderPaymentOrTransaction
