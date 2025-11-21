@@ -4,7 +4,7 @@ import { OrderDetailsFragment, OrderDetailsQuery, TransactionActionEnum } from "
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { Divider } from "@saleor/macaw-ui-next";
 
-import OrderPayment from "../OrderPayment/OrderPayment";
+import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 
 export interface OrderPaymentOrTransactionProps {
@@ -50,13 +50,14 @@ export const OrderPaymentOrTransaction = ({
 
   return (
     <>
-      <OrderPayment
+      {/* <OrderPayment
         order={order}
         onCapture={onPaymentCapture}
         onMarkAsPaid={onMarkAsPaid}
         onRefund={onPaymentRefund}
         onVoid={onPaymentVoid}
-      />
+      /> */}
+      {order ? <OrderSummary order={order} onMarkAsPaid={onMarkAsPaid} /> : null}
       <CardSpacer />
     </>
   );
