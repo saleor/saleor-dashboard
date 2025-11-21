@@ -28,8 +28,6 @@ export const OrderSummary = ({ order, ...props }: Props) => {
   const hasNoPayment =
     !canAnyRefund && !shouldDisplay.charged && !shouldDisplay.authorized && !hasGiftCards;
 
-  console.log("ORDER SUMMARY", canMarkAsPaid, hasNoPayment);
-
   return (
     <Box padding={6} display="grid" gap={6} {...props}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -63,6 +61,7 @@ export const OrderSummary = ({ order, ...props }: Props) => {
           usedGiftCards={usedGiftCards}
         />
         <PaymentsSummary
+          hasNoPayment={hasNoPayment}
           orderAmounts={{
             totalAuthorized: order.totalAuthorized,
             totalCaptured: order.totalCaptured,

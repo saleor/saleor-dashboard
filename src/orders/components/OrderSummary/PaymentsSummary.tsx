@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { OrderPaymentStatusPill } from "../OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
+import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
 
 const getPaymentStatusPillData = (
@@ -109,12 +110,55 @@ type Props = PropsWithBox<{
   };
   paymentStatus: PaymentChargeStatusEnum;
   order: OrderDetailsFragment;
+  hasNoPayment: boolean;
 }>;
 
-export const PaymentsSummary = ({ orderAmounts, paymentStatus, order, ...props }: Props) => {
+export const PaymentsSummary = ({
+  orderAmounts,
+  paymentStatus,
+  order,
+  hasNoPayment,
+  ...props
+}: Props) => {
   const intl = useIntl();
 
   const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(orderAmounts);
+
+  if (hasNoPayment) {
+    return (
+      <Box
+        backgroundColor="default2"
+        padding={5}
+        borderRadius={4}
+        borderStyle="solid"
+        borderColor="default1"
+        {...props}
+      >
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
+          <Box display="flex" flexDirection="column">
+            <Text fontWeight="medium" fontSize={6}>
+              {intl.formatMessage({
+                defaultMessage: "Payments summary",
+                id: "q7bXR4",
+              })}
+            </Text>
+            <Text color="default2" size={3}>
+              {intl.formatMessage({
+                defaultMessage: "This order has no payment yet",
+                id: "Fcxl/G",
+              })}
+            </Text>
+          </Box>
+          <OrderPaymentStatusPill order={order} />
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -197,6 +241,36 @@ export const PaymentsSummary = ({ orderAmounts, paymentStatus, order, ...props }
             id: "Gs86nL",
           })}
         </OrderSummaryListItem>
+      </Box>
+
+      <Box display="grid" placeItems="end">
+        <Box
+          borderStyle="solid"
+          borderColor="default2"
+          borderBottomWidth={0}
+          borderLeftWidth={0}
+          borderRightWidth={0}
+        >
+          {intl.formatMessage(
+            {
+              defaultMessage: "{currency} {totalAmount}",
+              id: "V21v8h",
+            },
+            {
+              currency: (
+                <Text fontWeight="medium" color="default2">
+                  {orderAmounts.total.gross.currency}
+                </Text>
+              ),
+              totalAmount: (
+                <OrderSummaryListAmount
+                  amount={orderAmounts.total.gross.amount}
+                  fontWeight="bold"
+                />
+              ),
+            },
+          )}
+        </Box>
       </Box>
     </Box>
   );
