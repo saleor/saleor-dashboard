@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { Box, Button, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon } from "lucide-react";
@@ -17,6 +17,18 @@ export const OrderSummary = ({ order, ...props }: Props) => {
   const intl = useIntl();
   const giftCardsAmount = extractOrderGiftCardUsedAmount(order);
   const usedGiftCards = OrderDetailsViewModel.getUsedGiftCards(order?.giftCards);
+  const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
+  const canGrantRefund = order?.transactions?.length > 0 || order?.payments?.length > 0;
+  const canSendRefund = order?.grantedRefunds?.length > 0;
+  const canAnyRefund = canGrantRefund || canSendRefund;
+  const hasGiftCards = giftCardsAmount > 0;
+  const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(order);
+
+  // TODO: implement logic for showing transaction icon
+  const hasNoPayment =
+    !canAnyRefund && !shouldDisplay.charged && !shouldDisplay.authorized && !hasGiftCards;
+
+  console.log("ORDER SUMMARY", canMarkAsPaid, hasNoPayment);
 
   return (
     <Box padding={6} display="grid" gap={6} {...props}>
@@ -28,13 +40,15 @@ export const OrderSummary = ({ order, ...props }: Props) => {
           })}
         </Text>
 
-        <Button variant="secondary">
-          <CheckIcon size={16} />
-          {intl.formatMessage({
-            defaultMessage: "Mark as Paid",
-            id: "RsLoDB",
-          })}
-        </Button>
+        {hasNoPayment && canMarkAsPaid && (
+          <Button variant="secondary">
+            <CheckIcon size={16} />
+            {intl.formatMessage({
+              defaultMessage: "Mark as Paid",
+              id: "RsLoDB",
+            })}
+          </Button>
+        )}
       </Box>
 
       <Box display="grid" __gridTemplateColumns="1fr 1fr" gap={3}>
