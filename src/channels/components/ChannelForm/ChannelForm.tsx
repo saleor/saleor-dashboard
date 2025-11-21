@@ -10,6 +10,7 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import {
   ChannelErrorFragment,
   CountryCode,
+  isStagingSchema,
   MarkAsPaidStrategyEnum,
   StockSettingsInput,
   TransactionFlowStrategyEnum,
@@ -43,7 +44,7 @@ export interface FormData extends StockSettingsInput {
   allowUnpaidOrders: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
   automaticallyCompleteCheckouts: boolean;
-  allowLegacyGiftCardUse: boolean;
+  allowLegacyGiftCardUse?: boolean;
 }
 
 interface ChannelFormProps {
@@ -60,7 +61,7 @@ interface ChannelFormProps {
   onMarkAsPaidStrategyChange: () => void;
   onTransactionFlowStrategyChange: () => void;
   onAutomaticallyCompleteCheckoutsChange: () => void;
-  onAllowLegacyGiftCardUseChange: () => void;
+  onAllowLegacyGiftCardUseChange?: () => void;
 }
 
 export const ChannelForm = ({
@@ -227,12 +228,14 @@ export const ChannelForm = ({
           disabled={disabled}
         />
         <Box />
-        <AllowLegacyGiftCardUse
-          onChange={onAllowLegacyGiftCardUseChange}
-          hasError={!!formErrors.allowLegacyGiftCardUse}
-          isChecked={data.allowLegacyGiftCardUse}
-          disabled={disabled}
-        />
+        {isStagingSchema() && (
+          <AllowLegacyGiftCardUse
+            onChange={onAllowLegacyGiftCardUseChange ? onAllowLegacyGiftCardUseChange : () => {}}
+            hasError={!!formErrors.allowLegacyGiftCardUse}
+            isChecked={data.allowLegacyGiftCardUse!}
+            disabled={disabled}
+          />
+        )}
       </Box>
     </>
   );
