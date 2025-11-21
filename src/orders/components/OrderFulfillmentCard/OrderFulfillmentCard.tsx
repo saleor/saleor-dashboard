@@ -28,7 +28,6 @@ interface OrderFulfillmentCardProps {
   dataTestId?: string;
   onOrderLineShowMetadata: (id: string) => void;
   onFulfillmentShowMetadata?: () => void;
-  isLast?: boolean;
 }
 
 const statusesToMergeLines = [
@@ -59,7 +58,6 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     onOrderLineShowMetadata,
     onFulfillmentShowMetadata,
     dataTestId,
-    isLast,
   } = props;
   const { themeValues } = useTheme();
 
@@ -150,7 +148,14 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
             bgHeader: themeValues.colors.background.default2,
           }}
         />
-        <Box backgroundColor={isLast ? "default1" : "default2"} width="100%" height={4} />
+        <Box
+          backgroundColor={"default1"}
+          width="100%"
+          height={6}
+          borderBottomStyle={"solid"}
+          borderBottomWidth={1}
+          borderColor={"default1"}
+        />
       </DashboardCard.Content>
     </Box>
   );

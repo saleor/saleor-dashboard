@@ -66,6 +66,14 @@ const OrderUnfulfilledProductsCard = ({
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
           />
+          <Box
+            backgroundColor={"default1"}
+            width="100%"
+            height={6}
+            borderBottomStyle={"solid"}
+            borderBottomWidth={1}
+            borderColor={"default1"}
+          />
         </DashboardCard.Content>
       </DashboardCard>
     </>

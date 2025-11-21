@@ -2,7 +2,6 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderDetailsFragment, OrderDetailsQuery, TransactionActionEnum } from "@dashboard/graphql";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
-import { Box } from "@saleor/macaw-ui-next";
 
 import OrderPayment from "../OrderPayment/OrderPayment";
 import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
@@ -33,7 +32,7 @@ export const OrderPaymentOrTransaction = ({
   if (orderShouldUseTransactions(order)) {
     return (
       // This section will be unified in the next PR
-      <Box borderTopStyle={"solid"} borderWidth={1} borderColor={"default1"}>
+      <>
         <OrderTransactionsWrapper
           order={order}
           shop={shop}
@@ -44,13 +43,13 @@ export const OrderPaymentOrTransaction = ({
           onAddManualTransaction={onAddManualTransaction}
           onRefundAdd={onRefundAdd}
         />
-      </Box>
+      </>
     );
   }
 
   return (
     // This section will be unified in the next PR
-    <Box borderTopStyle={"solid"} borderWidth={1} borderColor={"default1"}>
+    <>
       <OrderPayment
         order={order}
         onCapture={onPaymentCapture}
@@ -59,6 +58,6 @@ export const OrderPaymentOrTransaction = ({
         onVoid={onPaymentVoid}
       />
       <CardSpacer />
-    </Box>
+    </>
   );
 };
