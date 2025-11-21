@@ -17,6 +17,7 @@ import { ColumnPickerDynamicColumns } from "./ColumnPickerDynamicColumns";
 import { ColumnPickerStaticColumns } from "./ColumnPickerStaticColumns";
 import messages from "./messages";
 import { ColumnCategory } from "./useColumns";
+import { rightColumnBoxShadow } from "./utils";
 
 interface ColumnPickerProps {
   staticColumns: AvailableColumn[];
@@ -56,7 +57,7 @@ export const ColumnPicker = ({
           borderLeftStyle="solid"
           borderLeftWidth={1}
           borderColor="default1"
-          __boxShadow={"-8px 0px 8px -4px rgba(0, 0, 0, 0.12)"}
+          __boxShadow={rightColumnBoxShadow}
         >
           <Button
             data-test-id="open-column-picker-button"

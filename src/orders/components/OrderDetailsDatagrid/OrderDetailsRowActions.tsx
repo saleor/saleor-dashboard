@@ -1,3 +1,4 @@
+import { rightColumnBoxShadow } from "@dashboard/components/Datagrid/ColumnPicker/utils";
 import { IconButton } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
@@ -27,7 +28,7 @@ export const OrderDetailsRowActions = ({
     <div
       className={classes.rowAction}
       style={{
-        boxShadow: "-8px 0px 8px -4px rgba(0, 0, 0, 0.12)",
+        boxShadow: rightColumnBoxShadow,
       }}
     >
       <IconButton

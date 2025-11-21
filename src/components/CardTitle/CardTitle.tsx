@@ -13,7 +13,7 @@ interface CardTitleProps {
   backgroundColor?: keyof typeof vars.colors.background;
 }
 
-const CardTitle = ({
+export const CardTitle = ({
   className,
   children,
   title,
@@ -35,7 +35,3 @@ const CardTitle = ({
     {children}
   </CardHeader>
 );
-
-CardTitle.displayName = "CardTitle";
-// TODO: remove
-export default CardTitle;

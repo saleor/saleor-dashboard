@@ -1,4 +1,4 @@
-import DefaultCardTitle from "@dashboard/components/CardTitle";
+import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -50,7 +50,7 @@ export const OrderCardTitle = ({
   const intl = useIntl();
 
   return (
-    <DefaultCardTitle
+    <CardTitle
       toolbar={toolbar}
       className={className}
       backgroundColor={backgroundColor}

@@ -3,6 +3,8 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 
+import { rightColumnBoxShadow } from "./ColumnPicker/utils";
+
 export const cellHeight = 40;
 
 const useStyles = makeStyles<{
@@ -125,6 +127,7 @@ const useStyles = makeStyles<{
         gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
         height: `calc(${cellHeight}px - 1px)`,
         background: vars.colors.background.default1,
+        boxShadow: rightColumnBoxShadow,
       },
       rowColumnGroup: {
         height: cellHeight,
