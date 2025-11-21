@@ -86,14 +86,13 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
         trackingNumber={fulfillment.trackingNumber}
         warehouseId={fulfillment?.warehouse?.id}
         toolbar={
-          <Box display="flex" alignItems="center" gap={2}>
+          <Box display="flex" alignItems="center" gap={3}>
             {onFulfillmentShowMetadata && (
               <Button
                 variant="secondary"
                 onClick={onFulfillmentShowMetadata}
                 data-test-id="show-fulfillment-metadata"
                 icon={<Code />}
-                marginRight={2}
               />
             )}
             <ActionButtons
