@@ -3,7 +3,15 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Box, Button, Dropdown, List, MoreOptionsIcon, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Button,
+  Dropdown,
+  List,
+  MoreOptionsIcon,
+  Text,
+  useTheme,
+} from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
@@ -51,6 +59,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     onFulfillmentShowMetadata,
     dataTestId,
   } = props;
+  const { themeValues } = useTheme();
 
   if (!fulfillment) {
     return null;
@@ -65,16 +74,17 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   };
 
   return (
-    <Box data-test-id={dataTestId} marginBottom={5}>
+    <Box data-test-id={dataTestId} backgroundColor={"default2"}>
       <OrderCardTitle
         withStatus
         status={fulfillment?.status}
         warehouseName={fulfillment?.warehouse?.name}
+        backgroundColor={"default2"}
         createdDate={fulfillment?.created}
         trackingNumber={fulfillment.trackingNumber}
         warehouseId={fulfillment?.warehouse?.id}
         toolbar={
-          <Box display="flex" alignItems="center" gap={2}>
+          <Box display="flex" alignItems="center" gap={3}>
             {onFulfillmentShowMetadata && (
               <Button
                 variant="secondary"
@@ -134,6 +144,17 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           lines={getLines()}
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
+          datagridCustomTheme={{
+            bgHeader: themeValues.colors.background.default2,
+          }}
+        />
+        <Box
+          backgroundColor={"default1"}
+          width="100%"
+          height={6}
+          borderBottomStyle={"solid"}
+          borderBottomWidth={1}
+          borderColor={"default1"}
         />
       </DashboardCard.Content>
     </Box>

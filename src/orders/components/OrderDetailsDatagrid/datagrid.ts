@@ -11,13 +11,17 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { getDatagridRowDataIndex } from "@dashboard/misc";
+import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const orderDetailsStaticColumnsAdapter = (intl: IntlShape): AvailableColumn[] => [
+export const orderDetailsStaticColumnsAdapter = (
+  intl: IntlShape,
+  emptyColumn: AvailableColumn,
+): AvailableColumn[] => [
+  emptyColumn,
   {
     id: "product",
     title: intl.formatMessage(columnsMessages.product),
@@ -74,6 +78,10 @@ export const createGetCellContent =
     const rowData = added.includes(row) ? undefined : data[getDatagridRowDataIndex(row, removed)];
 
     if (!rowData || !columnId) {
+      return readonlyTextCell("", false);
+    }
+
+    if (isFirstColumn(column)) {
       return readonlyTextCell("", false);
     }
 

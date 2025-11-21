@@ -1,6 +1,6 @@
-import DefaultCardTitle from "@dashboard/components/CardTitle";
+import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { FulfillmentStatus } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { StatusIndicator } from "./StatusIndicator";
@@ -15,6 +15,7 @@ type BaseOrderCardTitleProps = {
   toolbar?: React.ReactNode;
   withStatus?: boolean;
   className?: string;
+  backgroundColor?: keyof typeof vars.colors.background;
 };
 
 type OrderCardTitleWithWarehouseProps = BaseOrderCardTitleProps & {
@@ -44,13 +45,15 @@ export const OrderCardTitle = ({
   className,
   trackingNumber,
   warehouseId,
+  backgroundColor,
 }: OrderCardTitleProps): JSX.Element => {
   const intl = useIntl();
 
   return (
-    <DefaultCardTitle
+    <CardTitle
       toolbar={toolbar}
       className={className}
+      backgroundColor={backgroundColor}
       title={
         <Box>
           <Box display="flex" alignItems="center">

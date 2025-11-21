@@ -3,6 +3,8 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 
+import { rightColumnBoxShadow } from "./ColumnPicker/utils";
+
 export const cellHeight = 40;
 
 const useStyles = makeStyles<{
@@ -125,6 +127,7 @@ const useStyles = makeStyles<{
         gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
         height: `calc(${cellHeight}px - 1px)`,
         background: vars.colors.background.default1,
+        boxShadow: rightColumnBoxShadow,
       },
       rowColumnGroup: {
         height: cellHeight,
@@ -187,7 +190,7 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const { themeValues } = useTheme();
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: themeValues.colors.background.default2,
+      accentColor: themeValues.colors.background.default1Hovered,
       accentLight: themeValues.colors.background.default1Hovered,
       accentFg: "transparent",
       bgCell: themeValues.colors.background.default1,
@@ -199,8 +202,8 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
       bgBubbleSelected: themeValues.colors.background.default1,
       borderColor: themeValues.colors.border.default1,
       fontFamily: "'Inter var', sans-serif",
-      baseFontStyle: `${themeValues.fontWeight.medium} ${themeValues.fontSize[3]}`,
-      headerFontStyle: `${themeValues.fontWeight.bold} ${themeValues.fontSize[3]}`,
+      baseFontStyle: `${themeValues.fontWeight.regular} ${themeValues.fontSize[3]}`,
+      headerFontStyle: `${themeValues.fontWeight.medium} ${themeValues.fontSize[1]}`,
       editorFontSize: themeValues.fontSize[3],
       textMedium: themeValues.colors.text.default1,
       textGroupHeader: themeValues.colors.text.default1,

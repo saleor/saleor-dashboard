@@ -7,10 +7,12 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
+import { Theme } from "@glideapps/glide-data-grid";
 import { ExternalLinkIcon } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -25,17 +27,24 @@ interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
+  datagridCustomTheme?: Partial<Theme>;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
   loading,
   onOrderLineShowMetadata,
+  datagridCustomTheme = {},
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
+
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
-  const orderDetailsStaticColumns = useMemo(() => orderDetailsStaticColumnsAdapter(intl), [intl]);
+  const emptyColumn = useEmptyColumn();
+  const orderDetailsStaticColumns = useMemo(
+    () => orderDetailsStaticColumnsAdapter(intl, emptyColumn),
+    [intl, emptyColumn],
+  );
   const handleColumnChange = useCallback(
     picked => {
       if (updateListSettings) {
@@ -100,11 +109,13 @@ export const OrderDetailsDatagrid = ({
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
         showEmptyDatagrid
+        themeOverride={datagridCustomTheme}
         rowMarkers="none"
         columnSelect="single"
-        freezeColumns={1}
+        freezeColumns={2}
         availableColumns={visibleColumns}
         verticalBorder={false}
+        showTopBorder={false}
         emptyText={intl.formatMessage(orderMessages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
