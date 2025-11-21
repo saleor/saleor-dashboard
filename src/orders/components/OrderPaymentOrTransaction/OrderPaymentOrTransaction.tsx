@@ -3,7 +3,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderDetailsFragment, OrderDetailsQuery, TransactionActionEnum } from "@dashboard/graphql";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 
-import OrderPayment from "../OrderPayment/OrderPayment";
+import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 
 export interface OrderPaymentOrTransactionProps {
@@ -50,13 +50,14 @@ export const OrderPaymentOrTransaction = ({
   return (
     // This section will be unified in the next PR
     <>
-      <OrderPayment
+      {/* <OrderPayment
         order={order}
         onCapture={onPaymentCapture}
         onMarkAsPaid={onMarkAsPaid}
         onRefund={onPaymentRefund}
         onVoid={onPaymentVoid}
-      />
+      /> */}
+      {order ? <OrderSummary order={order} onMarkAsPaid={onMarkAsPaid} /> : null}
       <CardSpacer />
     </>
   );
