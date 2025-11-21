@@ -1,5 +1,4 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -36,7 +35,7 @@ const OrderUnfulfilledProductsCard = ({
 
   return (
     <>
-      <DashboardCard>
+      <DashboardCard gap={0}>
         <OrderCardTitle
           status="unfulfilled"
           className={classes.cardTitle}
@@ -69,7 +68,6 @@ const OrderUnfulfilledProductsCard = ({
           />
         </DashboardCard.Content>
       </DashboardCard>
-      <CardSpacer />
     </>
   );
 };

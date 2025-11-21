@@ -65,11 +65,12 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   };
 
   return (
-    <Box data-test-id={dataTestId} marginBottom={5}>
+    <Box data-test-id={dataTestId} backgroundColor={"default2"}>
       <OrderCardTitle
         withStatus
         status={fulfillment?.status}
         warehouseName={fulfillment?.warehouse?.name}
+        backgroundColor={"default2"}
         createdDate={fulfillment?.created}
         trackingNumber={fulfillment.trackingNumber}
         warehouseId={fulfillment?.warehouse?.id}

@@ -2,7 +2,6 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderDetailsFragment, OrderDetailsQuery, TransactionActionEnum } from "@dashboard/graphql";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
-import { Divider } from "@saleor/macaw-ui-next";
 
 import OrderPayment from "../OrderPayment/OrderPayment";
 import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
@@ -33,7 +32,6 @@ export const OrderPaymentOrTransaction = ({
   if (orderShouldUseTransactions(order)) {
     return (
       <>
-        <Divider />
         <OrderTransactionsWrapper
           order={order}
           shop={shop}
