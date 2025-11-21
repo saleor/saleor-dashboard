@@ -12,6 +12,7 @@ import { OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
+import { Theme } from "@glideapps/glide-data-grid";
 import { ExternalLinkIcon } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -26,14 +27,17 @@ interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
+  datagridCustomTheme?: Partial<Theme>;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
   loading,
   onOrderLineShowMetadata,
+  datagridCustomTheme = {},
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
+
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
   const emptyColumn = useEmptyColumn();
@@ -105,6 +109,7 @@ export const OrderDetailsDatagrid = ({
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
         showEmptyDatagrid
+        themeOverride={datagridCustomTheme}
         rowMarkers="none"
         columnSelect="single"
         freezeColumns={2}

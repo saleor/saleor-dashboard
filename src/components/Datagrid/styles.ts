@@ -191,7 +191,7 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
       accentLight: themeValues.colors.background.default1Hovered,
       accentFg: "transparent",
       bgCell: themeValues.colors.background.default1,
-      bgHeader: themeValues.colors.background.default2,
+      bgHeader: themeValues.colors.background.default1,
       bgHeaderHasFocus: themeValues.colors.background.default1Hovered,
       bgHeaderHovered: hasHeaderClickable
         ? themeValues.colors.background.default1Hovered

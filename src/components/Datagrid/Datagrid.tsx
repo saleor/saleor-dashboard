@@ -104,6 +104,7 @@ interface DatagridProps {
   renderHeader?: (props: DatagridRenderHeaderProps) => ReactNode;
   navigatorOpts?: NavigatorOpts;
   showTopBorder?: boolean;
+  themeOverride?: Partial<Theme>;
 }
 
 const Datagrid = ({
@@ -140,11 +141,16 @@ const Datagrid = ({
   renderHeader,
   navigatorOpts,
   showTopBorder = true,
+  themeOverride,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
   const { themeValues, theme } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
+  const finalTheme = useMemo(
+    () => ({ ...datagridTheme, ...themeOverride }),
+    [datagridTheme, themeOverride],
+  );
   const rowMarkerTheme = useMemo(
     () => ({
       accentColor: themeValues.colors.text.default1,
@@ -484,7 +490,7 @@ const Datagrid = ({
                     verticalBorder={verticalBorder}
                     headerIcons={headerIcons}
                     drawHeader={drawHeader}
-                    theme={datagridTheme}
+                    theme={finalTheme}
                     rowMarkerTheme={rowMarkerTheme}
                     className={classes.datagrid}
                     getCellContent={handleGetCellContent}
