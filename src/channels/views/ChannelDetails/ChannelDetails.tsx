@@ -8,13 +8,19 @@ import {
   ChannelDeleteMutation,
   ChannelErrorFragment,
   ChannelUpdateMutation,
+  isMainSchema,
+  isStagingSchema,
   useChannelActivateMutation,
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
   useChannelQuery,
   useChannelsQuery,
-  useChannelUpdateMutation,
 } from "@dashboard/graphql";
+import {
+  useChannelQuery as useChannelQueryStaging,
+  useChannelsQuery as useChannelsQueryStaging,
+  useChannelUpdateMutation,
+} from "@dashboard/graphql/staging";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -41,7 +47,15 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const channelsListData = useChannelsQuery({ displayLoader: true });
+  const channelsListDataMain = useChannelsQuery({
+    displayLoader: true,
+    skip: isStagingSchema(),
+  });
+  const channelsListDataStaging = useChannelsQueryStaging({
+    displayLoader: true,
+    skip: isMainSchema(),
+  });
+  const channelsListData = channelsListDataStaging ?? channelsListDataMain;
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelUrlDialog,
@@ -53,10 +67,20 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
 
-  const { data, loading } = useChannelQuery({
+  const { data: dataMain, loading: loadingMain } = useChannelQuery({
     displayLoader: true,
     variables: { id },
+    skip: isStagingSchema(),
   });
+
+  const { data: dataStaging, loading: loadingStaging } = useChannelQueryStaging({
+    displayLoader: true,
+    variables: { id },
+    skip: isMainSchema(),
+  });
+
+  const data = dataStaging ?? dataMain;
+  const loading = loadingMain ?? loadingStaging;
 
   const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
 
@@ -102,6 +126,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     warehousesIdsToRemove,
     warehousesToDisplay,
     automaticallyCompleteCheckouts,
+    allowLegacyGiftCardUse,
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {
@@ -110,6 +135,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
           name,
           checkoutSettings: {
             automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+            allowLegacyGiftCardUse: isStagingSchema() ? allowLegacyGiftCardUse : undefined,
           },
           slug,
           defaultCountry,
