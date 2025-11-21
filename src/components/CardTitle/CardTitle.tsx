@@ -19,7 +19,7 @@ const CardTitle = ({
   title,
   subtitle,
   toolbar,
-  backgroundColor = "default2",
+  backgroundColor = "default1",
   ...rest
 }: CardTitleProps) => (
   <CardHeader
