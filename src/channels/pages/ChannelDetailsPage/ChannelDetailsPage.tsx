@@ -134,10 +134,11 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
     automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
-    allowLegacyGiftCardUse:
-      "allowLegacyGiftCardUse" in checkoutSettings
+    allowLegacyGiftCardUse: checkoutSettings
+      ? "allowLegacyGiftCardUse" in checkoutSettings
         ? checkoutSettings.allowLegacyGiftCardUse
-        : undefined,
+        : undefined
+      : undefined,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,

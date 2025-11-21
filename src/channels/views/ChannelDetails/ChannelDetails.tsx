@@ -17,6 +17,7 @@ import {
   useChannelsQuery,
 } from "@dashboard/graphql";
 import {
+  useChannelQuery as useChannelQueryStaging,
   useChannelsQuery as useChannelsQueryStaging,
   useChannelUpdateMutation,
 } from "@dashboard/graphql/staging";
@@ -66,10 +67,20 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
 
-  const { data, loading } = useChannelQuery({
+  const { dataMain, loadingMain } = useChannelQuery({
     displayLoader: true,
     variables: { id },
+    skip: isStagingSchema(),
   });
+
+  const { dataStaging, loadingStaging } = useChannelQueryStaging({
+    displayLoader: true,
+    variables: { id },
+    skip: isMainSchema(),
+  });
+
+  const data = dataStaging ?? dataMain;
+  const loading = loadingStaging ?? loadingMain;
 
   const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
 
