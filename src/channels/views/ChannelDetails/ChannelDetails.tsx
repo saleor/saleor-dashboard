@@ -8,13 +8,18 @@ import {
   ChannelDeleteMutation,
   ChannelErrorFragment,
   ChannelUpdateMutation,
+  isMainSchema,
+  isStagingSchema,
   useChannelActivateMutation,
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
   useChannelQuery,
   useChannelsQuery,
-  useChannelUpdateMutation,
 } from "@dashboard/graphql";
+import {
+  useChannelsQuery as useChannelsQueryStaging,
+  useChannelUpdateMutation,
+} from "@dashboard/graphql/staging";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -41,7 +46,15 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const channelsListData = useChannelsQuery({ displayLoader: true });
+  const channelsListDataMain = useChannelsQuery({
+    displayLoader: true,
+    skip: isStagingSchema(),
+  });
+  const channelsListDataStaging = useChannelsQueryStaging({
+    displayLoader: true,
+    skip: isMainSchema(),
+  });
+  const channelsListData = channelsListDataStaging ?? channelsListDataMain;
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelUrlDialog,
@@ -111,7 +124,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
           name,
           checkoutSettings: {
             automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
-            allowLegacyGiftCardUse: allowLegacyGiftCardUse,
+            allowLegacyGiftCardUse: isStagingSchema() ? allowLegacyGiftCardUse : undefined,
           },
           slug,
           defaultCountry,

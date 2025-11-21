@@ -22,6 +22,7 @@ import {
   SearchWarehousesQuery,
   StockSettingsInput,
 } from "@dashboard/graphql";
+import { ChannelDetailsFragment as ChannelDetailsFragmentWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
 import {
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
@@ -109,7 +110,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     paymentSettings,
     checkoutSettings,
     ...formData
-  } = channel || ({} as ChannelDetailsFragment);
+  } = channel || ({} as ChannelDetailsFragment | ChannelDetailsFragmentWithAllowLegacyGiftCardUse);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
@@ -133,7 +134,10 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
     automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
-    allowLegacyGiftCardUse: checkoutSettings?.allowLegacyGiftCardUse,
+    allowLegacyGiftCardUse:
+      "allowLegacyGiftCardUse" in checkoutSettings
+        ? checkoutSettings.allowLegacyGiftCardUse
+        : undefined,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
