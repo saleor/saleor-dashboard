@@ -67,20 +67,20 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
 
-  const { dataMain, loadingMain } = useChannelQuery({
+  const { data: dataMain, loading: loadingMain } = useChannelQuery({
     displayLoader: true,
     variables: { id },
     skip: isStagingSchema(),
   });
 
-  const { dataStaging, loadingStaging } = useChannelQueryStaging({
+  const { data: dataStaging, loading: loadingStaging } = useChannelQueryStaging({
     displayLoader: true,
     variables: { id },
     skip: isMainSchema(),
   });
 
   const data = dataStaging ?? dataMain;
-  const loading = loadingStaging ?? loadingMain;
+  const loading = loadingMain ?? loadingStaging;
 
   const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
 
