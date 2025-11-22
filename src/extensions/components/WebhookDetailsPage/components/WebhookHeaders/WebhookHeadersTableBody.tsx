@@ -25,19 +25,20 @@ export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTab
   const intl = useIntl();
   const updateWebhookItem = (target: EventTarget & HTMLTextAreaElement) => {
     const { name, value } = target;
-    const [field, index] = name.split(nameSeparator);
-    const item: Header = headers[index];
+    const [field, indexStr] = name.split(nameSeparator);
+    const index = parseInt(indexStr, 10);
+    const item: Header = { ...headers[index] };
 
     // lowercase header name
     if (field === nameInputPrefix) {
-      item[field] = value.toLowerCase();
-    } else {
-      item[field] = value;
+      item.name = value.toLowerCase();
+    } else if (field === valueInputPrefix) {
+      item.value = value;
     }
 
     return {
       item,
-      index: parseInt(index, 10),
+      index,
     };
   };
   const change = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
