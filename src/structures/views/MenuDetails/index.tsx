@@ -122,10 +122,10 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
       ? getNode(normalizedItems, findNode(normalizedItems, params.id))
       : undefined;
   const initialMenuItemUpdateFormData: MenuItemDialogFormData = {
-    id: menuItem ? getItemId(menuItem) : "",
+    id: menuItem ? getItemId(menuItem as MenuItemFragment) : "",
     name: menuItem?.name ?? "...",
-    linkType: menuItem ? getItemType(menuItem) : "category",
-    linkValue: getInitialMenuItemValue(menuItem),
+    linkType: menuItem ? getItemType(menuItem as MenuItemFragment) : "category",
+    linkValue: getInitialMenuItemValue(menuItem as MenuItemFragment | undefined),
   };
   // This is a workaround to let know <MenuDetailsPage />
   // that it should clean operation stack if mutations
@@ -231,7 +231,7 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
         open={params.action === "edit-item"}
         errors={menuItemUpdateOpts.data?.menuItemUpdate?.errors ?? []}
         initial={initialMenuItemUpdateFormData}
-        initialDisplayValue={getInitialMenuItemLabel(menuItem)}
+        initialDisplayValue={getInitialMenuItemLabel(menuItem as MenuItemFragment | undefined)}
         confirmButtonState={menuItemUpdateOpts.status}
         disabled={menuItemUpdateOpts.loading}
         onClose={closeModal}
