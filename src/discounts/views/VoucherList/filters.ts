@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import {
   VoucherFilterKeys,

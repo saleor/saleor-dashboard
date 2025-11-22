@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelVoucherData, validateVoucherPrice } from "@dashboard/channels/utils";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";

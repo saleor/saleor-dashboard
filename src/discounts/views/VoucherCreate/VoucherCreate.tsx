@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelVoucherData, createSortedVoucherData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";

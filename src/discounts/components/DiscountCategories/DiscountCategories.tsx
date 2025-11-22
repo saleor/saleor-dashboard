@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { categoryUrl } from "@dashboard/categories/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";

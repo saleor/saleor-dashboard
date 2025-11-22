@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelVoucherData } from "@dashboard/channels/utils";
