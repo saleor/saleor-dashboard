@@ -63,7 +63,9 @@ const CustomerInfo = (props: CustomerInfoProps) => {
             disabled={disabled}
             error={!!formErrors.firstName}
             fullWidth
-            helperText={getAccountErrorMessage(formErrors.firstName, intl)}
+            helperText={
+              formErrors.firstName ? getAccountErrorMessage(formErrors.firstName, intl) : undefined
+            }
             name="firstName"
             type="text"
             label={intl.formatMessage(commonMessages.firstName)}
@@ -78,7 +80,9 @@ const CustomerInfo = (props: CustomerInfoProps) => {
             disabled={disabled}
             error={!!formErrors.lastName}
             fullWidth
-            helperText={getAccountErrorMessage(formErrors.lastName, intl)}
+            helperText={
+              formErrors.lastName ? getAccountErrorMessage(formErrors.lastName, intl) : undefined
+            }
             name="lastName"
             type="text"
             label={intl.formatMessage(commonMessages.lastName)}
@@ -102,7 +106,7 @@ const CustomerInfo = (props: CustomerInfoProps) => {
           disabled={disabled}
           error={!!formErrors.email}
           fullWidth
-          helperText={getAccountErrorMessage(formErrors.email, intl)}
+          helperText={formErrors.email ? getAccountErrorMessage(formErrors.email, intl) : undefined}
           name="email"
           type="email"
           label={intl.formatMessage(commonMessages.email)}

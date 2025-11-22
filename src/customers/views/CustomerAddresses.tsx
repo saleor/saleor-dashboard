@@ -41,7 +41,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
 
   const [setCustomerDefaultAddress] = useSetCustomerDefaultAddressMutation({
     onCompleted: data => {
-      if (data.addressSetDefault.errors.length === 0) {
+      if (data.addressSetDefault?.errors.length === 0) {
         closeModal();
         notify({
           status: "success",
@@ -53,7 +53,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
 
   const [createCustomerAddress, createCustomerAddressOpts] = useCreateCustomerAddressMutation({
     onCompleted: data => {
-      if (data.addressCreate.errors.length === 0) {
+      if (data.addressCreate?.errors.length === 0) {
         closeModal();
       }
     },
@@ -61,7 +61,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
 
   const [updateCustomerAddress, updateCustomerAddressOpts] = useUpdateCustomerAddressMutation({
     onCompleted: data => {
-      if (data.addressUpdate.errors.length === 0) {
+      if (data.addressUpdate?.errors.length === 0) {
         closeModal();
         notify({
           status: "success",
@@ -73,7 +73,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
 
   const [removeCustomerAddress, removeCustomerAddressOpts] = useRemoveCustomerAddressMutation({
     onCompleted: data => {
-      if (data.addressDelete.errors.length === 0) {
+      if (data.addressDelete?.errors.length === 0) {
         closeModal();
         notify({
           status: "success",
@@ -94,10 +94,10 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
 
   return (
     <>
-      <WindowTitle title={customerData?.data?.user.email} />
+      <WindowTitle title={customerData?.data?.user?.email ?? ""} />
       <CustomerAddressListPage
-        customer={customerData?.data?.user}
-        disabled={customerData?.loading}
+        customer={customerData?.data?.user as any}
+        disabled={customerData?.loading ?? false}
         onAdd={() => openModal("add")}
         onEdit={id =>
           openModal("edit", {
@@ -116,10 +116,10 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
         }
       />
       <CustomerAddressDialog
-        address={undefined}
+        address={undefined as any}
         confirmButtonState={createCustomerAddressOpts.status}
         countries={countryChoices}
-        errors={createCustomerAddressOpts?.data?.addressCreate.errors || []}
+        errors={createCustomerAddressOpts?.data?.addressCreate?.errors || []}
         open={params.action === "add"}
         variant="create"
         onClose={closeModal}
@@ -133,17 +133,17 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
         }
       />
       <CustomerAddressDialog
-        address={customerData?.data?.user.addresses.find(addr => addr.id === params.id)}
+        address={customerData?.data?.user?.addresses.find(addr => addr.id === params.id) as any}
         confirmButtonState={updateCustomerAddressOpts.status}
         countries={countryChoices}
-        errors={updateCustomerAddressOpts?.data?.addressUpdate.errors || []}
+        errors={updateCustomerAddressOpts?.data?.addressUpdate?.errors || []}
         open={params.action === "edit"}
         variant="edit"
         onClose={closeModal}
         onConfirm={input =>
           updateCustomerAddress({
             variables: {
-              id: params.id,
+              id: params.id!,
               input,
             },
           })
@@ -162,7 +162,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
         onConfirm={() =>
           removeCustomerAddress({
             variables: {
-              id: params.id,
+              id: params.id!,
             },
           })
         }

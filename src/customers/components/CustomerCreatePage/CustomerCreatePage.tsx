@@ -28,7 +28,7 @@ export interface CustomerCreatePageFormData {
   note: string;
 }
 export interface CustomerCreatePageSubmitData extends CustomerCreatePageFormData {
-  address: AddressInput;
+  address: AddressInput | null;
 }
 
 const initialForm: CustomerCreatePageFormData & AddressTypeInput = {

@@ -48,7 +48,7 @@ const CustomerCreateNote = ({ data, disabled, errors, onChange }: CustomerCreate
           fullWidth
           multiline
           name="note"
-          helperText={getAccountErrorMessage(formErrors.note, intl)}
+          helperText={formErrors.note ? getAccountErrorMessage(formErrors.note, intl) : undefined}
           label={intl.formatMessage({
             id: "uUQ+Al",
             defaultMessage: "Note",

@@ -66,7 +66,7 @@ const CustomerDetailsPage = ({
     firstName: customer?.firstName || "",
     isActive: customer?.isActive || false,
     lastName: customer?.lastName || "",
-    metadata: customer?.metadata.map(mapMetadataItemToInput),
+    metadata: customer?.metadata?.map(mapMetadataItemToInput) || [],
     note: customer?.note || "",
     privateMetadata: customer?.privateMetadata
       ? customer?.privateMetadata.map(mapMetadataItemToInput)
@@ -113,7 +113,7 @@ const CustomerDetailsPage = ({
               <CardSpacer />
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                 <CustomerOrders
-                  orders={mapEdgesToItems(customer?.orders)}
+                  orders={mapEdgesToItems(customer?.orders) ?? []}
                   viewAllHref={orderListUrl({
                     customer: customer?.email,
                   })}
@@ -124,7 +124,7 @@ const CustomerDetailsPage = ({
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <CustomerAddresses
-                customer={customer}
+                customer={customer as any}
                 disabled={disabled}
                 manageAddressHref={customerAddressesUrl(customerId)}
               />

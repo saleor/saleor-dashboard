@@ -57,7 +57,7 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
           gap={2}
         >
           <>
-            {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
+            {maybe<React.ReactNode>(() => customer?.email, <Skeleton />)}
             {customer && customer.dateJoined ? (
               <Text className={classes.subtitle} size={2} fontWeight="light">
                 <FormattedMessage
@@ -105,7 +105,7 @@ const CustomerDetails = (props: CustomerDetailsProps) => {
           error={!!formErrors.note}
           fullWidth
           multiline
-          helperText={getAccountErrorMessage(formErrors.note, intl)}
+          helperText={formErrors.note ? getAccountErrorMessage(formErrors.note, intl) : undefined}
           name="note"
           label={intl.formatMessage({
             id: "uUQ+Al",

@@ -131,7 +131,7 @@ const CustomerAddress = (props: CustomerAddressProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <AddressFormatter address={address} />
+        <AddressFormatter address={address as any} />
       </DashboardCard.Content>
     </DashboardCard>
   );
