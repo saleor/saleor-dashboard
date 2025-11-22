@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ShippingErrorCode, ShippingErrorFragment } from "@dashboard/graphql";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { defineMessages, IntlShape } from "react-intl";
@@ -22,15 +21,19 @@ const messages = defineMessages({
 });
 
 export function getShippingWeightRateErrorMessage(
-  err: ShippingErrorFragment,
+  err: ShippingErrorFragment | undefined,
   intl: IntlShape,
 ): string {
-  switch (err?.code) {
+  if (!err) {
+    return "";
+  }
+
+  switch (err.code) {
     case ShippingErrorCode.MAX_LESS_THAN_MIN:
       return intl.formatMessage(messages.weight);
     case ShippingErrorCode.INVALID:
       return intl.formatMessage(messages.invalid);
     default:
-      getShippingErrorMessage(err, intl);
+      return getShippingErrorMessage(err, intl) || "";
   }
 }

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { createSortedShippingChannels } from "@dashboard/channels/utils";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
