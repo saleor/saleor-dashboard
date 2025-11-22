@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
@@ -66,14 +65,14 @@ const PageOrganizeContent = (props: PageOrganizeContentProps) => {
               defaultMessage: "Select model type",
             })}
             options={pageTypes}
-            fetchOptions={fetchPageTypes}
+            fetchOptions={fetchPageTypes ?? (() => {})}
             fetchMore={fetchMorePageTypes}
             name="pageType"
             value={{
-              label: pageTypeInputDisplayValue,
+              label: pageTypeInputDisplayValue ?? "",
               value: data.pageType?.id,
             }}
-            onChange={onPageTypeChange}
+            onChange={onPageTypeChange ?? (() => {})}
           />
         ) : (
           <Box display="flex" flexDirection="column">

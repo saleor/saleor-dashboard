@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FilterElement } from "@dashboard/components/Filter/types";
 import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
 import { SearchPageTypesQuery } from "@dashboard/graphql";
@@ -17,9 +16,11 @@ export interface PageListFilterOpts {
   pageType: FilterOpts<string[]> & AutocompleteFilterOpts;
 }
 
+type PageTypeNode = NonNullable<SearchPageTypesQuery["search"]>["edges"][0]["node"];
+
 interface PageListFilterOptsProps {
   params: PageListUrlFilters;
-  pageTypes: Array<SearchPageTypesQuery["search"]["edges"][0]["node"]>;
+  pageTypes: PageTypeNode[];
   pageTypesProps: SearchWithFetchMoreProps;
 }
 
@@ -30,7 +31,7 @@ export const getFilterOpts = ({
 }: PageListFilterOptsProps): PageListFilterOpts => ({
   pageType: {
     active: !!params?.pageTypes,
-    value: params?.pageTypes,
+    value: params?.pageTypes ?? [],
     choices: mapNodeToChoice(pageTypes),
     displayValues: mapSingleValueNodeToChoice(pageTypes),
     initialSearch: "",

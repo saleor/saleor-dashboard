@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createPageQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";

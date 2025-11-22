@@ -1,9 +1,8 @@
-// @ts-strict-ignore
 import { PageSortField } from "@dashboard/graphql";
 import { PageListUrlSortField } from "@dashboard/modeling/urls";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
-function getSortQueryField(sort: PageListUrlSortField): PageSortField {
+function getSortQueryField(sort: PageListUrlSortField): PageSortField | undefined {
   switch (sort) {
     case PageListUrlSortField.title:
       return PageSortField.TITLE;
