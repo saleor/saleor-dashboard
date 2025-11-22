@@ -1,7 +1,7 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { Button } from "@dashboard/components/Button";
 import {
+  MenuFragment,
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
   useMenuDeleteMutation,
@@ -187,7 +187,7 @@ const MenuList = ({ params }: MenuListProps) => {
           defaultMessage="Are you sure you want to delete {menuName}?"
           values={{
             menuName: getStringOrPlaceholder(
-              mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name,
+              (mapEdgesToItems(data?.menus)?.find(getById(params.id)) as MenuFragment | undefined)?.name,
             ),
           }}
         />

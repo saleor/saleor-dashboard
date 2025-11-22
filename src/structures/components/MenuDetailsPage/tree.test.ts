@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { RecursiveMenuItem } from "@dashboard/structures/types";
 
 import { menu } from "../../fixtures";
@@ -1228,5 +1227,33 @@ describe("Properly computes relative trees", () => {
     const computedTree = computeRelativeTree(menu.items, secondTestTable[10]);
 
     expect(computedTree).toEqual(relativeOutput[10]);
+  });
+});
+describe("Error handling for invalid paths", () => {
+  it("throws error when trying to move non-existent node", () => {
+    // Arrange
+    const invalidOperation: TreeOperation = {
+      id: "non-existent-id",
+      type: "move",
+      sortOrder: 0,
+    };
+
+    // Act & Assert
+    expect(() => {
+      computeRelativeTree(menu.items, [invalidOperation]);
+    }).toThrow("Cannot get node with null path");
+  });
+
+  it("throws error when trying to remove non-existent node", () => {
+    // Arrange
+    const invalidOperation: TreeOperation = {
+      id: "non-existent-id",
+      type: "remove",
+    };
+
+    // Act & Assert
+    expect(() => {
+      computeRelativeTree(menu.items, [invalidOperation]);
+    }).toThrow("Cannot get node with null path");
   });
 });
