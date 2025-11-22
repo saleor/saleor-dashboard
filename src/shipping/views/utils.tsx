@@ -1,12 +1,10 @@
-import { PostalCodeRuleInclusionTypeEnum } from "@dashboard/graphql";
+import {
+  PostalCodeRuleInclusionTypeEnum,
+  ShippingMethodWithPostalCodesFragment,
+} from "@dashboard/graphql";
 import { MinMax } from "@dashboard/types";
 
-interface PostalCodeRule {
-  start: string | null;
-  end: string | null;
-  id?: string;
-  inclusionType?: PostalCodeRuleInclusionTypeEnum | null;
-}
+type PostalCodeRule = NonNullable<ShippingMethodWithPostalCodesFragment["postalCodeRules"]>[number];
 
 export const filterPostalCodes = (
   postalCodes: PostalCodeRule[],
@@ -21,10 +19,13 @@ export const getPostalCodeRuleByMinMax =
   ({ start, end }: PostalCodeRule): boolean =>
     start === min && end === max;
 
-export const getRuleObject = (rule: MinMax, inclusionType: PostalCodeRuleInclusionTypeEnum) => ({
-  __typename: undefined,
+export const getRuleObject = (
+  rule: MinMax,
+  inclusionType: PostalCodeRuleInclusionTypeEnum,
+): PostalCodeRule => ({
+  __typename: "ShippingMethodPostalCodeRule" as const,
   end: rule.max,
-  id: undefined,
+  id: "0",
   inclusionType,
   start: rule.min,
 });
