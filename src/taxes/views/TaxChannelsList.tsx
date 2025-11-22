@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   useTaxConfigurationsListQuery,
   useTaxConfigurationUpdateMutation,
@@ -38,7 +37,7 @@ const TaxChannelsList = ({ id, params }: TaxChannelsListProps) => {
       onCompleted: data => {
         const errors = data?.taxConfigurationUpdate?.errors;
 
-        if (errors.length === 0) {
+        if (errors && errors.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
@@ -50,7 +49,7 @@ const TaxChannelsList = ({ id, params }: TaxChannelsListProps) => {
   const [openDialog, closeDialog] = createDialogActionHandlers<TaxesUrlDialog, TaxesUrlQueryParams>(
     navigate,
     params => taxConfigurationListUrl(id, params),
-    params,
+    params ?? {},
   );
   const { data } = useTaxConfigurationsListQuery({ variables: { first: 100 } });
   const taxConfigurations = mapEdgesToItems(data?.taxConfigurations);
@@ -69,16 +68,16 @@ const TaxChannelsList = ({ id, params }: TaxChannelsListProps) => {
   return (
     <TaxChannelsPage
       taxConfigurations={taxConfigurations}
-      selectedConfigurationId={id!}
-      handleTabChange={handleTabChange}
+      selectedConfigurationId={id ?? ""}
+      handleTabChange={(tab: string) => handleTabChange(tab as TaxTab)}
       allCountries={shop?.countries}
       isDialogOpen={params?.action === "add-country"}
-      openDialog={openDialog}
+      openDialog={(action?: string) => openDialog(action as TaxesUrlDialog)}
       closeDialog={closeDialog}
       onSubmit={input =>
         taxConfigurationUpdateMutation({
           variables: {
-            id,
+            id: id ?? "",
             input,
           },
         })

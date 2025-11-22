@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CountryFragment,
   TaxClassFragment,
@@ -29,7 +28,7 @@ export const mapUndefinedTaxRatesToCountries = (
             ...config.taxClassCountryRates,
             ...taxClasses.map(taxClass => ({
               taxClass,
-              rate: undefined,
+              rate: null,
               __typename: "TaxClassCountryRate" as const,
             })),
           ],
@@ -39,16 +38,16 @@ export const mapUndefinedTaxRatesToCountries = (
         const parsedCountryRates = taxClassCountryRates.filter(rate => rate.taxClass !== null);
 
         parsedCountryRates.unshift(
-          defaultRate ?? {
-            rate: undefined,
+          (defaultRate ?? {
+            rate: null,
             taxClass: null,
             __typename: "TaxClassCountryRate" as const,
-          },
+          }) as any,
         );
 
         return {
           ...config,
-          taxClassCountryRates: parsedCountryRates,
+          taxClassCountryRates: parsedCountryRates as typeof config.taxClassCountryRates,
         };
       }
     })
@@ -65,12 +64,12 @@ export const mapUndefinedCountriesToTaxClasses = (
         ...taxClass.countries,
         ...taxConfigurations.map(({ country }) => ({
           __typename: "TaxClassCountryRate" as const,
-          rate: undefined,
+          rate: null,
           country,
         })),
       ],
       "country.code",
-    ),
+    ) as typeof taxClass.countries,
   }));
 
 export const isLastElement = (arr: any[], index: number): boolean => index === arr.length - 1;

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { Select } from "@dashboard/components/Select";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
@@ -29,6 +28,10 @@ const TaxCountryExceptionListItem = ({
   strategyChoicesLoading,
 }: TaxCountryExceptionListItemProps) => {
   const classes = useStyles();
+
+  if (!country) {
+    return null;
+  }
 
   return (
     <>
