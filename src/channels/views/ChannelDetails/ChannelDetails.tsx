@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
@@ -15,6 +14,7 @@ import {
   useChannelsQuery,
   useChannelUpdateMutation,
 } from "@dashboard/graphql";
+import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -49,8 +49,11 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   >(navigate, params => channelUrl(id, params), params);
 
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
-    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
-      notify(getDefaultNotifierSuccessErrorData(errors, intl)),
+    onCompleted: ({ channelUpdate }: ChannelUpdateMutation) => {
+      if (channelUpdate) {
+        notify(getDefaultNotifierSuccessErrorData(channelUpdate.errors, intl));
+      }
+    },
   });
 
   const { data, loading } = useChannelQuery({
@@ -69,6 +72,10 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
 
   const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
     onCompleted: data => {
+      if (!data.channelActivate) {
+        return;
+      }
+
       const errors = data.channelActivate.errors;
 
       if (errors.length) {
@@ -79,6 +86,10 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
 
   const [deactivateChannel, deactivateChannelOpts] = useChannelDeactivateMutation({
     onCompleted: data => {
+      if (!data.channelDeactivate) {
+        return;
+      }
+
       const errors = data.channelDeactivate.errors;
 
       if (errors.length) {
@@ -105,7 +116,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   }: FormData) => {
     const updateChannelMutation = updateChannel({
       variables: {
-        id: data?.channel.id,
+        id: data?.channel?.id ?? "",
         input: {
           name,
           checkoutSettings: {
@@ -139,7 +150,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       await reorderChannelWarehouses({
         channelId: id,
         warehousesToDisplay,
-        warehouses: resultChannel.data?.channelUpdate.channel?.warehouses,
+        warehouses: resultChannel.data?.channelUpdate?.channel?.warehouses ?? [],
       });
     }
 
@@ -147,6 +158,10 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   };
 
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
+    if (!data.channelDelete) {
+      return;
+    }
+
     const errors = data.channelDelete.errors;
 
     if (errors.length === 0) {
@@ -175,8 +190,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
 
   const channelsChoices = getChannelsCurrencyChoices(
     id,
-    data?.channel,
-    channelsListData?.data?.channels,
+    data?.channel as any,
+    channelsListData?.data?.channels as any,
   );
 
   const handleRemoveConfirm = (channelId?: string) => {
@@ -216,19 +231,22 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       />
       <ChannelDetailsPage
         channelShippingZones={channelShippingZones}
-        allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
+        allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount ?? 0}
         searchShippingZones={searchShippingZones}
-        searchShippingZonesData={searchShippingZonesResult.data}
+        searchShippingZonesData={searchShippingZonesResult.data as SearchData | undefined}
         fetchMoreShippingZones={getSearchFetchMoreProps(
-          searchShippingZonesResult,
+          searchShippingZonesResult as any,
           fetchMoreShippingZones,
         )}
         channelWarehouses={channelWarehouses}
-        allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
+        allWarehousesCount={warehousesCountData?.warehouses?.totalCount ?? 0}
         searchWarehouses={searchWarehouses}
-        searchWarehousesData={searchWarehousesResult.data}
-        fetchMoreWarehouses={getSearchFetchMoreProps(searchWarehousesResult, fetchMoreWarehouses)}
-        channel={data?.channel}
+        searchWarehousesData={searchWarehousesResult.data as SearchData | undefined}
+        fetchMoreWarehouses={getSearchFetchMoreProps(
+          searchWarehousesResult as any,
+          fetchMoreWarehouses,
+        )}
+        channel={data?.channel as any}
         disabled={
           updateChannelOpts.loading ||
           reorderChannelWarehousesOpts.loading ||
@@ -250,10 +268,10 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         countries={shop?.countries || []}
       />
       <ChannelDeleteDialog
-        channelSlug={data?.channel?.slug}
-        currency={data?.channel?.currencyCode}
+        channelSlug={data?.channel?.slug ?? ""}
+        currency={data?.channel?.currencyCode ?? ""}
         channelsChoices={channelsChoices}
-        hasOrders={data?.channel?.hasOrders}
+        hasOrders={data?.channel?.hasOrders ?? false}
         open={params.action === "remove"}
         confirmButtonState={deleteChannelOpts.status}
         onBack={() => navigate(channelsListUrl())}

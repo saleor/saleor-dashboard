@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
 import ShippingZones from "@dashboard/channels/components/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
@@ -111,39 +110,42 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     ...formData
   } = channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
-    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
+    allocationStrategy:
+      stockSettings?.allocationStrategy ?? AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
   };
   const initialData: FormData = {
-    currencyCode: "",
-    name: "",
-    slug: "",
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
     warehousesIdsToAdd: [],
     warehousesIdsToRemove: [],
-    defaultCountry: (defaultCountry?.code || "") as CountryCode,
     ...formData,
+    currencyCode: formData.currencyCode || "",
+    name: formData.name || "",
+    slug: formData.slug || "",
+    defaultCountry: (defaultCountry?.code || "") as CountryCode,
     ...initialStockSettings,
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
     markAsPaidStrategy:
       orderSettings?.markAsPaidStrategy ?? MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-    deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
-    allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
-    defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
-    automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
+    deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter ?? 0,
+    allowUnpaidOrders: orderSettings?.allowUnpaidOrders ?? false,
+    defaultTransactionFlowStrategy:
+      paymentSettings?.defaultTransactionFlowStrategy ?? TransactionFlowStrategyEnum.AUTHORIZATION,
+    automaticallyCompleteCheckouts:
+      checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
   ): RelayToFlat<SearchShippingZonesQuery["search"]> =>
-    getParsedSearchData({ data: searchShippingZonesData }).filter(
-      ({ id: searchedZoneId }) => !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
+    getParsedSearchData({ data: searchShippingZonesData as SearchData }).filter(
+      ({ id: searchedZoneId }) => !shippingZonesToDisplay?.some(({ id }) => id === searchedZoneId),
     );
   const getFilteredWarehousesChoices = (
     warehousesToDisplay: ChannelWarehouses,
   ): RelayToFlat<SearchWarehousesQuery["search"]> =>
-    getParsedSearchData({ data: searchWarehousesData }).filter(
+    getParsedSearchData({ data: searchWarehousesData as SearchData }).filter(
       ({ id: searchedWarehouseId }) =>
         !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
     );
@@ -165,7 +167,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
           setSelectedCurrencyCode,
-          currencyCodes,
+          currencyCodes ?? [],
         );
         const handleDefaultCountrySelect = createSingleAutocompleteSelectHandler(
           change,
@@ -174,14 +176,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         );
         const addShippingZone = createShippingZoneAddHandler(
           data,
-          searchShippingZonesData,
+          searchShippingZonesData as SearchData,
           set,
           triggerChange,
         );
         const removeShippingZone = createShippingZoneRemoveHandler(data, set, triggerChange);
         const addWarehouse = createWarehouseAddHandler(
           data,
-          searchWarehousesData,
+          searchWarehousesData as SearchData,
           set,
           triggerChange,
         );
@@ -262,8 +264,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               {!!updateChannelStatus && (
                 <>
                   <ChannelStatus
-                    isActive={channel?.isActive}
-                    disabled={disabledStatus}
+                    isActive={channel?.isActive ?? false}
+                    disabled={disabledStatus ?? false}
                     updateChannelStatus={updateChannelStatus}
                   />
                   <CardSpacer />
