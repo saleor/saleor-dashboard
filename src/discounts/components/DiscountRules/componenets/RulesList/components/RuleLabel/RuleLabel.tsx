@@ -19,7 +19,7 @@ export const RuleLabel = ({ ruleName }: RuleLabelProps) => {
     return "";
   };
   const ruleTypeLabel = useMemo(() => {
-    if (discountType === PromotionTypeEnum.CATALOGUE) {
+    if (discountType === "CATALOGUE") {
       return intl.formatMessage(messages.catalogRule);
     }
 

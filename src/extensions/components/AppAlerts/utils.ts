@@ -46,7 +46,7 @@ const getLatestFailedAttemptFromWebhook = (
 
   const fromPendingDelivers = toWebhookDeliveryWithMoment(
     webhook.pendingDelivers?.edges?.[0]?.node.attempts?.edges.find(
-      ({ node: { status } }) => status === EventDeliveryStatusEnum.FAILED,
+      ({ node: { status } }) => status === "FAILED",
     )?.node,
   );
 

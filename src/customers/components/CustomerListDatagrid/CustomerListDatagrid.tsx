@@ -48,7 +48,7 @@ export const CustomerListDatagrid = ({
   const datagrid = useDatagridChangeState();
   const userPermissions = useUserPermissions();
   const hasManageOrdersPermission =
-    userPermissions?.some(perm => perm.code === PermissionEnum.MANAGE_ORDERS) ?? false;
+    userPermissions?.some(perm => perm.code === "MANAGE_ORDERS") ?? false;
   const customerListStaticColumns = useMemo(
     () => customerListStaticColumnsAdapter(intl, sort, hasManageOrdersPermission),
     [intl, sort, hasManageOrdersPermission],

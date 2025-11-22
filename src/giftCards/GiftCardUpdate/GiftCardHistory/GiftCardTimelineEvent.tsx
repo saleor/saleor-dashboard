@@ -45,49 +45,49 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
   const userUrl = getUserOrAppUrl(event);
 
   switch (event.type) {
-    case GiftCardEventsEnum.ACTIVATED:
+    case "ACTIVATED":
       return user
         ? intl.formatMessage(timelineMessages.activated, {
             activatedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.activatedAnonymous);
-    case GiftCardEventsEnum.BALANCE_RESET:
+    case "BALANCE_RESET":
       return user
         ? intl.formatMessage(timelineMessages.balanceReset, {
             resetBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.balanceResetAnonymous);
-    case GiftCardEventsEnum.BOUGHT:
+    case "BOUGHT":
       return intl.formatMessage(timelineMessages.bought, {
         orderNumber: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
       });
-    case GiftCardEventsEnum.DEACTIVATED:
+    case "DEACTIVATED":
       return user
         ? intl.formatMessage(timelineMessages.deactivated, {
             deactivatedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.deactivatedAnonymous);
-    case GiftCardEventsEnum.EXPIRY_DATE_UPDATED:
+    case "EXPIRY_DATE_UPDATED":
       return user
         ? intl.formatMessage(timelineMessages.expiryDateUpdate, {
             expiryUpdatedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.expiryDateUpdateAnonymous);
-    case GiftCardEventsEnum.ISSUED:
+    case "ISSUED":
       return user
         ? intl.formatMessage(timelineMessages.issued, {
             issuedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.issuedAnonymous);
-    case GiftCardEventsEnum.RESENT:
+    case "RESENT":
       return intl.formatMessage(timelineMessages.resent);
-    case GiftCardEventsEnum.SENT_TO_CUSTOMER:
+    case "SENT_TO_CUSTOMER":
       return intl.formatMessage(timelineMessages.sentToCustomer);
-    case GiftCardEventsEnum.TAGS_UPDATED:
+    case "TAGS_UPDATED":
       return intl.formatMessage(timelineMessages.tagsUpdated);
-    case GiftCardEventsEnum.UPDATED:
+    case "UPDATED":
       return intl.formatMessage(timelineMessages.tagsUpdated);
-    case GiftCardEventsEnum.USED_IN_ORDER:
+    case "USED_IN_ORDER":
       return user
         ? intl.formatMessage(timelineMessages.usedInOrder, {
             orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,

@@ -17,7 +17,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     displayGrossPrices: true,
     pricesEnteredWithTax: false,
     chargeTaxes: true,
-    taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    taxCalculationStrategy: "FLAT_RATES",
     taxAppId: null,
     countries: [
       {
@@ -40,7 +40,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
           country: "Åland Islands",
         },
         chargeTaxes: true,
-        taxCalculationStrategy: TaxCalculationStrategy.TAX_APP,
+        taxCalculationStrategy: "TAX_APP",
         displayGrossPrices: true,
         taxAppId: "42",
       },
@@ -57,7 +57,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
     displayGrossPrices: false,
     pricesEnteredWithTax: true,
     chargeTaxes: true,
-    taxCalculationStrategy: TaxCalculationStrategy.TAX_APP,
+    taxCalculationStrategy: "TAX_APP",
     taxAppId: "42",
     countries: [
       {
@@ -68,7 +68,7 @@ export const taxConfigurations: TaxConfigurationFragment[] = [
           country: "Albania",
         },
         chargeTaxes: true,
-        taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+        taxCalculationStrategy: "FLAT_RATES",
         displayGrossPrices: true,
         taxAppId: null,
       },

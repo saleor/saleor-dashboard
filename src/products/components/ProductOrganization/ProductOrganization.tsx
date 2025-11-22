@@ -84,7 +84,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
   const hideInput = !categoryInputActive && data.category && !disabled;
 
   const noCategoryError =
-    formErrors.isPublished?.code === ProductErrorCode.PRODUCT_WITHOUT_CATEGORY
+    formErrors.isPublished?.code === "PRODUCT_WITHOUT_CATEGORY"
       ? formErrors.isPublished
       : null;
 

@@ -21,7 +21,7 @@ function renderBackgroundTasks() {
             exportFile: {
               __typename: "ExportFile",
               id: "123",
-              status: JobStatusEnum.SUCCESS,
+              status: "SUCCESS",
             },
           },
         },

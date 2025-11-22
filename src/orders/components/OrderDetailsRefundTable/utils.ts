@@ -9,13 +9,13 @@ export const getGrantedRefundStatusMessage = (
   intl: IntlShape,
 ): string => {
   switch (status) {
-    case OrderGrantedRefundStatusEnum.FAILURE:
+    case "FAILURE":
       return intl.formatMessage(refundStatuses.failure);
-    case OrderGrantedRefundStatusEnum.SUCCESS:
+    case "SUCCESS":
       return intl.formatMessage(refundStatuses.success);
-    case OrderGrantedRefundStatusEnum.PENDING:
+    case "PENDING":
       return intl.formatMessage(refundStatuses.pending);
-    case OrderGrantedRefundStatusEnum.NONE:
+    case "NONE":
       return intl.formatMessage(refundStatuses.draft);
     default:
       const _exhaustiveCheck: never = status;
@@ -37,7 +37,7 @@ const isRefundSuccessful = (refund?: OrderRefundDisplay) => {
     return false;
   }
 
-  return refund.status === OrderGrantedRefundStatusEnum.SUCCESS;
+  return refund.status === "SUCCESS";
 };
 
 export const getNotEditableRefundMessage = (refund?: OrderRefundDisplay) => {

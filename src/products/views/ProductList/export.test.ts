@@ -9,12 +9,12 @@ const exportParams = {
     attributes: [],
     warehouses: ["warehouse1"],
     channels: ["Q2hhbm5lbDoyMjQ0"],
-    fields: [ProductFieldEnum.CHARGE_TAXES],
+    fields: ["CHARGE_TAXES"],
   } satisfies ExportInfoInput,
-  fileType: FileTypesEnum.CSV,
+  fileType: "CSV",
   filter: undefined,
   ids: [],
-  scope: ExportScope.ALL,
+  scope: "ALL",
 };
 
 const mock = {

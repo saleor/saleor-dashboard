@@ -79,7 +79,7 @@ const OrderTransactionRefund = ({ orderId, refundId }: OrderTransactionRefundPro
     if (submitData.amount === 0) {
       setLinesErrors([
         {
-          code: OrderGrantRefundUpdateErrorCode.REQUIRED,
+          code: "REQUIRED",
           field: "amount",
           message: intl.formatMessage(transactionRefundEditMessages.noAmountError),
           lines: [],

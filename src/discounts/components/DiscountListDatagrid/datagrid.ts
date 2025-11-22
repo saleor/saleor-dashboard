@@ -82,9 +82,9 @@ export const createGetCellContent =
 
 function getDiscountType(promotion: PromotionFragment, intl: IntlShape) {
   switch (promotion.type) {
-    case PromotionTypeEnum.CATALOGUE:
+    case "CATALOGUE":
       return intl.formatMessage({ defaultMessage: "Catalog", id: "GOdq5V" });
-    case PromotionTypeEnum.ORDER:
+    case "ORDER":
       return intl.formatMessage({ defaultMessage: "Order", id: "XPruqs" });
     default:
       throw new Error(`Unhandled type for item: ${promotion.type}`);

@@ -22,7 +22,7 @@ export function getSortUrlVariables<TSortKey extends string>(
 }
 
 export function getOrderDirection(asc: boolean): OrderDirection {
-  return asc ? OrderDirection.ASC : OrderDirection.DESC;
+  return asc ? "ASC" : "DESC";
 }
 
 export function getArrowDirection(asc: boolean): TableCellHeaderArrowDirection {

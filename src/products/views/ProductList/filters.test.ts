@@ -15,7 +15,7 @@ describe("Get attribute values from URL params", () => {
     const params: GetAttributeValuesFromParams[0] = {};
     const attribute: GetAttributeValuesFromParams[1] = {
       slug: "test",
-      inputType: AttributeInputTypeEnum.DROPDOWN,
+      inputType: "DROPDOWN",
     };
     // Act
     const attributeValues = getAttributeValuesFromParams(params, attribute);
@@ -32,7 +32,7 @@ describe("Get attribute values from URL params", () => {
     };
     const attribute: GetAttributeValuesFromParams[1] = {
       slug: "test",
-      inputType: AttributeInputTypeEnum.DROPDOWN,
+      inputType: "DROPDOWN",
     };
     // Act
     const attributeValues = getAttributeValuesFromParams(params, attribute);

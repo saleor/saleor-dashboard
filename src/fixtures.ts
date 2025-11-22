@@ -370,7 +370,7 @@ export const channels: ChannelFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
       __typename: "StockSettings",
     },
     __typename: "Channel",
@@ -387,7 +387,7 @@ export const channels: ChannelFragment[] = [
       __typename: "CountryDisplay",
     },
     stockSettings: {
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
       __typename: "StockSettings",
     },
     __typename: "Channel",
@@ -396,55 +396,55 @@ export const channels: ChannelFragment[] = [
 
 export const permissions: ShopInfoQuery["shop"]["permissions"] = [
   {
-    code: PermissionEnum.MANAGE_DISCOUNTS,
+    code: "MANAGE_DISCOUNTS",
     name: "Manage sales and vouchers.",
   },
   {
-    code: PermissionEnum.MANAGE_MENUS,
+    code: "MANAGE_MENUS",
     name: "Manage navigation.",
   },
   {
-    code: PermissionEnum.MANAGE_ORDERS,
+    code: "MANAGE_ORDERS",
     name: "Manage orders.",
   },
   {
-    code: PermissionEnum.MANAGE_PAGES,
+    code: "MANAGE_PAGES",
     name: "Manage pages.",
   },
   {
-    code: PermissionEnum.MANAGE_PRODUCTS,
+    code: "MANAGE_PRODUCTS",
     name: "Manage products.",
   },
   {
-    code: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+    code: "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
     name: "Manage product types and attributes.",
   },
   {
-    code: PermissionEnum.MANAGE_SETTINGS,
+    code: "MANAGE_SETTINGS",
     name: "Manage settings.",
   },
   {
-    code: PermissionEnum.MANAGE_SHIPPING,
+    code: "MANAGE_SHIPPING",
     name: "Manage shipping.",
   },
   {
-    code: PermissionEnum.MANAGE_STAFF,
+    code: "MANAGE_STAFF",
     name: "Manage staff.",
   },
   {
-    code: PermissionEnum.MANAGE_USERS,
+    code: "MANAGE_USERS",
     name: "Manage customers.",
   },
   {
-    code: PermissionEnum.MANAGE_PLUGINS,
+    code: "MANAGE_PLUGINS",
     name: "Manage plugins.",
   },
   {
-    code: PermissionEnum.MANAGE_APPS,
+    code: "MANAGE_APPS",
     name: "Manage apps.",
   },
   {
-    code: PermissionEnum.MANAGE_APPS,
+    code: "MANAGE_APPS",
     name: "Manage webhooks.",
   },
 ].map(perm => ({
@@ -462,97 +462,97 @@ export const adminUserPermissions: NonNullable<
 > = [
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_CHECKOUTS,
+    code: "MANAGE_CHECKOUTS",
     name: "Manage checkouts",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_CHECKOUTS,
+    code: "MANAGE_CHECKOUTS",
     name: "Manage checkouts",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_DISCOUNTS,
+    code: "MANAGE_DISCOUNTS",
     name: "Manage sales and vouchers.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_GIFT_CARD,
+    code: "MANAGE_GIFT_CARD",
     name: "Manage gift cards.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_GIFT_CARD,
+    code: "MANAGE_GIFT_CARD",
     name: "Manage gift cards.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_MENUS,
+    code: "MANAGE_MENUS",
     name: "Manage navigation.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_ORDERS,
+    code: "MANAGE_ORDERS",
     name: "Manage orders.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_ORDERS,
+    code: "MANAGE_ORDERS",
     name: "Manage orders.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_PAGES,
+    code: "MANAGE_PAGES",
     name: "Manage pages.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_PLUGINS,
+    code: "MANAGE_PLUGINS",
     name: "Manage plugins",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_PRODUCTS,
+    code: "MANAGE_PRODUCTS",
     name: "Manage products.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+    code: "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
     name: "Manage product types and attributes.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_SETTINGS,
+    code: "MANAGE_SETTINGS",
     name: "Manage settings.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_SHIPPING,
+    code: "MANAGE_SHIPPING",
     name: "Manage shipping.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_STAFF,
+    code: "MANAGE_STAFF",
     name: "Manage staff.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_STAFF,
+    code: "MANAGE_STAFF",
     name: "Manage staff.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_TRANSLATIONS,
+    code: "MANAGE_TRANSLATIONS",
     name: "Manage translations.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_USERS,
+    code: "MANAGE_USERS",
     name: "Manage customers.",
   },
   {
     __typename: "UserPermission",
-    code: PermissionEnum.MANAGE_USERS,
+    code: "MANAGE_USERS",
     name: "Manage customers.",
   },
 ];

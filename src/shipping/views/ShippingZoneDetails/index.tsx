@@ -185,7 +185,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
         }
         onDelete={() => openModal("remove")}
         onPriceRateAdd={() =>
-          navigate(shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.PRICE }))
+          navigate(shippingRateCreateUrl(id, { type: "PRICE" }))
         }
         getPriceRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
         onRateRemove={rateId =>
@@ -197,7 +197,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
         allChannels={availableChannels}
         onWarehouseAdd={() => openModal("add-warehouse")}
         onWeightRateAdd={() =>
-          navigate(shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.WEIGHT }))
+          navigate(shippingRateCreateUrl(id, { type: "WEIGHT" }))
         }
         getWeightRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
         saveButtonBarState={updateShippingZoneOpts.status}

@@ -5,11 +5,11 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: CategoryListUrlSortField): CategorySortField | undefined {
   switch (sort) {
     case CategoryListUrlSortField.name:
-      return CategorySortField.NAME;
+      return "NAME";
     case CategoryListUrlSortField.productCount:
-      return CategorySortField.PRODUCT_COUNT;
+      return "PRODUCT_COUNT";
     case CategoryListUrlSortField.subcategoryCount:
-      return CategorySortField.SUBCATEGORY_COUNT;
+      return "SUBCATEGORY_COUNT";
     default:
       return undefined;
   }

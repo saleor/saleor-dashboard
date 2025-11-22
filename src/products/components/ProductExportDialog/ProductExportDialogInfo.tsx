@@ -25,10 +25,10 @@ export const warehouseNamePrefix = "warehouse-";
 
 const maxChips = 4;
 const inventoryFields = [
-  ProductFieldEnum.PRODUCT_WEIGHT,
-  ProductFieldEnum.VARIANT_ID,
-  ProductFieldEnum.VARIANT_SKU,
-  ProductFieldEnum.VARIANT_WEIGHT,
+  "PRODUCT_WEIGHT",
+  "VARIANT_ID",
+  "VARIANT_SKU",
+  "VARIANT_WEIGHT",
 ];
 const useStyles = makeStyles(
   theme => ({
@@ -345,9 +345,9 @@ const ProductExportDialogInfo = ({
           })}
           data={data}
           fields={[
-            ProductFieldEnum.CATEGORY,
-            ProductFieldEnum.COLLECTIONS,
-            ProductFieldEnum.PRODUCT_TYPE,
+            "CATEGORY",
+            "COLLECTIONS",
+            "PRODUCT_TYPE",
           ]}
           onChange={handleFieldChange}
           onToggleAll={handleToggleAllFields}
@@ -441,7 +441,7 @@ const ProductExportDialogInfo = ({
             description: "informations about product prices etc, header",
           })}
           data={data}
-          fields={[ProductFieldEnum.CHARGE_TAXES]}
+          fields={["CHARGE_TAXES"]}
           onChange={handleFieldChange}
           onToggleAll={handleToggleAllFields}
           data-test-id="financial"
@@ -577,10 +577,10 @@ const ProductExportDialogInfo = ({
           })}
           data={data}
           fields={[
-            ProductFieldEnum.DESCRIPTION,
-            ProductFieldEnum.NAME,
-            ProductFieldEnum.PRODUCT_MEDIA,
-            ProductFieldEnum.VARIANT_MEDIA,
+            "DESCRIPTION",
+            "NAME",
+            "PRODUCT_MEDIA",
+            "VARIANT_MEDIA",
           ]}
           onChange={handleFieldChange}
           onToggleAll={handleToggleAllFields}

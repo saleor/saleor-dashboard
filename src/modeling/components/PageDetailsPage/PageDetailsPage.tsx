@@ -116,7 +116,7 @@ const PageDetailsPage = ({
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();
   const pageExists = page !== null;

@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { FilterAPIProvider } from "../../API/FilterAPIProvider";
 import { EnumValuesHandler } from "../../API/Handler";
 import { FilterContainer, FilterElement } from "../../FilterElement";
+import { StaffMemberStatusValues } from "@dashboard/graphql/enumConstants";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
@@ -29,7 +30,7 @@ export const useStaffMembersFilterAPIProvider = (): FilterAPIProvider => {
     }
 
     if (rowType === "staffMemberStatus") {
-      return new EnumValuesHandler(StaffMemberStatus, "staffMemberStatus", intl).fetch();
+      return new EnumValuesHandler(StaffMemberStatusValues, "staffMemberStatus", intl).fetch();
     }
 
     return [];

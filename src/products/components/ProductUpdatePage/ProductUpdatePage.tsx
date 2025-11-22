@@ -190,7 +190,7 @@ const ProductUpdatePage = ({
 
   const intl = useIntl();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const [channelPickerOpen, setChannelPickerOpen] = useState(false);
@@ -381,7 +381,7 @@ const ProductUpdatePage = ({
         richTextRef.current = richText;
 
         const availabilityCommonProps = {
-          managePermissions: [PermissionEnum.MANAGE_PRODUCTS],
+          managePermissions: ["MANAGE_PRODUCTS"],
           messages: {
             hiddenLabel: intl.formatMessage({
               id: "saKXY3",

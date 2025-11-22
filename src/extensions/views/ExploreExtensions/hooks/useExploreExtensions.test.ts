@@ -345,7 +345,7 @@ describe("Extension / hooks / useExploreExtensions", () => {
   it("should not fetch plugins if user does not have MANAGE_PLUGINS permission", () => {
     // Arrange
     (useUserPermissions as jest.Mock).mockReturnValue([
-      { __typename: "UserPermission", code: PermissionEnum.MANAGE_USERS, name: "Manage users" },
+      { __typename: "UserPermission", code: "MANAGE_USERS", name: "Manage users" },
     ]);
     (useAppStoreExtensions as jest.Mock).mockReturnValue({
       data: mockedAppStoreExtensionsWithPlugins,

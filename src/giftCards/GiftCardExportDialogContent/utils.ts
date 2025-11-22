@@ -9,7 +9,7 @@ interface ExportGiftCardsInputProps {
 export const getExportGiftCardsInput = ({ data, ids }: ExportGiftCardsInputProps) => {
   const { scope, fileType } = data;
 
-  if (scope === ExportScope.IDS) {
+  if (scope === "IDS") {
     return {
       fileType,
       scope,

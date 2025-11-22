@@ -51,7 +51,7 @@ export const DiscountDetailsForm = ({
   const methods = useForm<DiscoutFormData>({
     mode: "onBlur",
     values: {
-      type: data?.type ?? PromotionTypeEnum.CATALOGUE,
+      type: data?.type ?? "CATALOGUE",
       dates: {
         startDate: splitDateTime(data?.startDate ?? "").date,
         startTime: splitDateTime(data?.startDate ?? "").time,

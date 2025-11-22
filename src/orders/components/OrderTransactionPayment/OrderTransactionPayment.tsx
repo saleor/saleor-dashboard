@@ -57,11 +57,11 @@ const OrderTransactionPayment = ({
     __typename: "FakeTransaction",
   };
   const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (_, action) => {
-    if (action === TransactionActionEnum.CHARGE) {
+    if (action === "CHARGE") {
       onCapture();
     }
 
-    if (action === TransactionActionEnum.CANCEL) {
+    if (action === "CANCEL") {
       onVoid();
     }
   };

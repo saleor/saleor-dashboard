@@ -14,9 +14,9 @@ const mockUseShop = useShop as jest.MockedFunction<typeof useShop>;
 
 describe("useUserAppCreationPermissions", () => {
   const allPermissions: PermissionFragment[] = [
-    { __typename: "Permission", code: PermissionEnum.MANAGE_APPS, name: "Manage apps" },
-    { __typename: "Permission", code: PermissionEnum.MANAGE_ORDERS, name: "Manage orders" },
-    { __typename: "Permission", code: PermissionEnum.MANAGE_PRODUCTS, name: "Manage products" },
+    { __typename: "Permission", code: "MANAGE_APPS", name: "Manage apps" },
+    { __typename: "Permission", code: "MANAGE_ORDERS", name: "Manage orders" },
+    { __typename: "Permission", code: "MANAGE_PRODUCTS", name: "Manage products" },
   ];
 
   const defaultUserMock = {

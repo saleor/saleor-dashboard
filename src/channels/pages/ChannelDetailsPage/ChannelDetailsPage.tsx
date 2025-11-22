@@ -111,7 +111,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     ...formData
   } = channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
-    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
+    allocationStrategy: "PRIORITIZE_SORTING_ORDER",
     ...stockSettings,
   };
   const initialData: FormData = {
@@ -128,7 +128,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
     markAsPaidStrategy:
-      orderSettings?.markAsPaidStrategy ?? MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      orderSettings?.markAsPaidStrategy ?? "TRANSACTION_FLOW",
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
@@ -190,7 +190,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         const handleMarkAsPaidStrategyChange = () => {
           if (!data.markAsPaidStrategy) {
             set({
-              markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+              markAsPaidStrategy: "TRANSACTION_FLOW",
             });
 
             return;
@@ -198,15 +198,15 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 
           set({
             markAsPaidStrategy:
-              data.markAsPaidStrategy === MarkAsPaidStrategyEnum.PAYMENT_FLOW
-                ? MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-                : MarkAsPaidStrategyEnum.PAYMENT_FLOW,
+              data.markAsPaidStrategy === "PAYMENT_FLOW"
+                ? "TRANSACTION_FLOW"
+                : "PAYMENT_FLOW",
           });
         };
         const handleTransactionFlowStrategyChange = () => {
           if (!data.defaultTransactionFlowStrategy) {
             set({
-              defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.AUTHORIZATION,
+              defaultTransactionFlowStrategy: "AUTHORIZATION",
             });
 
             return;
@@ -214,9 +214,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 
           set({
             defaultTransactionFlowStrategy:
-              data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.CHARGE
-                ? TransactionFlowStrategyEnum.AUTHORIZATION
-                : TransactionFlowStrategyEnum.CHARGE,
+              data.defaultTransactionFlowStrategy === "CHARGE"
+                ? "AUTHORIZATION"
+                : "CHARGE",
           });
         };
 
@@ -269,7 +269,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                   <CardSpacer />
                 </>
               )}
-              <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}>
+              <RequirePermissions requiredPermissions={["MANAGE_SHIPPING"]}>
                 <ShippingZones
                   shippingZonesChoices={getFilteredShippingZonesChoices(
                     data.shippingZonesToDisplay,
@@ -286,9 +286,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               </RequirePermissions>
               <RequirePermissions
                 oneOfPermissions={[
-                  PermissionEnum.MANAGE_SHIPPING,
-                  PermissionEnum.MANAGE_ORDERS,
-                  PermissionEnum.MANAGE_PRODUCTS,
+                  "MANAGE_SHIPPING",
+                  "MANAGE_ORDERS",
+                  "MANAGE_PRODUCTS",
                 ]}
               >
                 <Warehouses

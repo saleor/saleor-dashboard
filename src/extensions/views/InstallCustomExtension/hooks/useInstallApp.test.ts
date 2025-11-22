@@ -38,12 +38,12 @@ describe("useInstallApp", () => {
     permissions: [
       {
         __typename: "Permission" as const,
-        code: PermissionEnum.MANAGE_APPS,
+        code: "MANAGE_APPS",
         name: "Permission 1",
       },
       {
         __typename: "Permission" as const,
-        code: PermissionEnum.MANAGE_ORDERS,
+        code: "MANAGE_ORDERS",
         name: "Permission 2",
       },
     ],
@@ -119,7 +119,7 @@ describe("useInstallApp", () => {
         input: {
           appName: mockManifest.name,
           manifestUrl: "https://example.com/manifest",
-          permissions: [PermissionEnum.MANAGE_APPS, PermissionEnum.MANAGE_ORDERS],
+          permissions: ["MANAGE_APPS", "MANAGE_ORDERS"],
         },
       },
     });

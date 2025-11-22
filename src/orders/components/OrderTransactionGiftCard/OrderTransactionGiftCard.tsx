@@ -38,7 +38,7 @@ const OrderTransactionGiftCard = ({ order, giftCard }: OrderTransactionGiftCardP
     message: intl.formatMessage(transactionGiftCardMessages.usedInOrder),
     id: event.id,
     pspReference: event.id,
-    type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+    type: "CHARGE_SUCCESS",
     reasonReference: null,
     createdAt: event.date,
     amount: {

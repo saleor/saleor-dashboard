@@ -186,7 +186,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     formData: ShippingZoneRateUpdateFormData,
   ): Promise<unknown[] | undefined> => {
     const getUpdateVariables =
-      rate?.type === ShippingMethodTypeEnum.PRICE
+      rate?.type === "PRICE"
         ? getUpdateShippingPriceRateVariables
         : getUpdateShippingWeightRateVariables;
     const response = await updateShippingRate({

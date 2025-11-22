@@ -43,11 +43,11 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.published),
-            value: CollectionPublished.PUBLISHED,
+            value: "PUBLISHED",
           },
           {
             label: intl.formatMessage(messages.hidden),
-            value: CollectionPublished.HIDDEN,
+            value: "HIDDEN",
           },
         ],
       ),

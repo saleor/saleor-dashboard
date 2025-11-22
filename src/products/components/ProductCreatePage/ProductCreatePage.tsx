@@ -339,7 +339,7 @@ const ProductCreatePage = ({
               />
               {isSimpleProduct ? (
                 <ChannelsAvailabilityCard
-                  managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  managePermissions={["MANAGE_PRODUCTS"]}
                   messages={{
                     hiddenLabel: intl.formatMessage({
                       id: "saKXY3",

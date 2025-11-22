@@ -11,11 +11,11 @@ export interface ExportSettingsFormData {
 }
 
 export const exportSettingsInitialFormData = {
-  fileType: FileTypesEnum.CSV,
-  scope: ExportScope.ALL,
+  fileType: "CSV",
+  scope: "ALL",
 };
 
 export const exportSettingsInitialFormDataWithIds = {
-  fileType: FileTypesEnum.CSV,
-  scope: ExportScope.IDS,
+  fileType: "CSV",
+  scope: "IDS",
 };

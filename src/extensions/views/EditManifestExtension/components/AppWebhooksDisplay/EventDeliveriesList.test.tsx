@@ -10,9 +10,9 @@ describe("EventDeliveriesList", () => {
       node: {
         __typename: "EventDelivery",
         id: "event-deliver-1",
-        eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+        eventType: "ORDER_CONFIRMED",
         createdAt: "2023-01-02T00:00:00Z",
-        status: EventDeliveryStatusEnum.FAILED,
+        status: "FAILED",
         attempts: {
           edges: [
             {
@@ -22,7 +22,7 @@ describe("EventDeliveriesList", () => {
                 id: "id-1",
                 response: '{"message":"Failed to send email"}',
                 responseStatusCode: 400,
-                status: EventDeliveryStatusEnum.FAILED,
+                status: "FAILED",
                 __typename: "EventDeliveryAttempt",
               },
             },
@@ -39,9 +39,9 @@ describe("EventDeliveriesList", () => {
       node: {
         __typename: "EventDelivery",
         id: "event-deliver-1",
-        eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+        eventType: "ORDER_CONFIRMED",
         createdAt: "2023-01-02T00:00:00Z",
-        status: EventDeliveryStatusEnum.FAILED,
+        status: "FAILED",
         attempts: {
           edges: [
             {
@@ -51,7 +51,7 @@ describe("EventDeliveriesList", () => {
                 id: "id-1",
                 response: '{"message":"Failed to send email"}',
                 responseStatusCode: 400,
-                status: EventDeliveryStatusEnum.FAILED,
+                status: "FAILED",
                 __typename: "EventDeliveryAttempt",
               },
             },
@@ -62,7 +62,7 @@ describe("EventDeliveriesList", () => {
                 id: "id-2",
                 response: '{"message":"Failed to send email"}',
                 responseStatusCode: 400,
-                status: EventDeliveryStatusEnum.FAILED,
+                status: "FAILED",
                 __typename: "EventDeliveryAttempt",
               },
             },
@@ -76,9 +76,9 @@ describe("EventDeliveriesList", () => {
       node: {
         __typename: "EventDelivery",
         id: "event-deliver-2",
-        eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+        eventType: "ORDER_CONFIRMED",
         createdAt: "2023-01-02T00:00:00Z",
-        status: EventDeliveryStatusEnum.SUCCESS,
+        status: "SUCCESS",
         attempts: {
           edges: [
             {
@@ -88,7 +88,7 @@ describe("EventDeliveriesList", () => {
                 id: "id-2",
                 response: '{"message":"Failed to connect"}',
                 responseStatusCode: 400,
-                status: EventDeliveryStatusEnum.FAILED,
+                status: "FAILED",
                 __typename: "EventDeliveryAttempt",
               },
             },
@@ -140,9 +140,9 @@ describe("EventDeliveriesList", () => {
         node: {
           __typename: "EventDelivery",
           id: "event-deliver-1",
-          eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+          eventType: "ORDER_CONFIRMED",
           createdAt: "2023-01-02T00:00:00Z",
-          status: EventDeliveryStatusEnum.FAILED,
+          status: "FAILED",
           attempts: {
             edges: [],
             __typename: "EventDeliveryAttemptCountableConnection",
@@ -154,9 +154,9 @@ describe("EventDeliveriesList", () => {
         node: {
           __typename: "EventDelivery",
           id: "event-deliver-2",
-          eventType: WebhookEventTypeEnum.ORDER_CONFIRMED,
+          eventType: "ORDER_CONFIRMED",
           createdAt: "2023-01-03T00:00:00Z",
-          status: EventDeliveryStatusEnum.FAILED,
+          status: "FAILED",
           attempts: {
             edges: [],
             __typename: "EventDeliveryAttemptCountableConnection",

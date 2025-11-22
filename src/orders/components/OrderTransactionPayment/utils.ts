@@ -36,37 +36,37 @@ const mapPaymentKindToTransaction = (
   const status: TransactionEventStatus = isSuccess ? "SUCCESS" : "FAILED";
 
   switch (kind) {
-    case TransactionKind.REFUND:
+    case "REFUND":
       return {
         type: "REFUND",
         status,
       };
-    case TransactionKind.REFUND_ONGOING:
+    case "REFUND_ONGOING":
       return {
         type: "REFUND",
         status: "PENDING",
       };
-    case TransactionKind.CANCEL:
+    case "CANCEL":
       return {
         type: "CANCEL",
         status,
       };
-    case TransactionKind.VOID:
+    case "VOID":
       return {
         type: "CANCEL",
         status,
       };
-    case TransactionKind.AUTH:
+    case "AUTH":
       return {
         type: "AUTHORIZATION",
         status,
       };
-    case TransactionKind.CAPTURE:
+    case "CAPTURE":
       return {
         type: "CHARGE",
         status,
       };
-    case TransactionKind.PENDING:
+    case "PENDING":
       return {
         type: "CHARGE",
         status: "PENDING",
@@ -130,12 +130,12 @@ export const mapOrderActionsToTransactionActions = (
   orderActions
     .map(action => {
       switch (action) {
-        case OrderAction.VOID:
-          return TransactionActionEnum.CANCEL;
-        case OrderAction.CAPTURE:
-          return TransactionActionEnum.CHARGE;
-        case OrderAction.REFUND:
-          return TransactionActionEnum.REFUND;
+        case "VOID":
+          return "CANCEL";
+        case "CAPTURE":
+          return "CHARGE";
+        case "REFUND":
+          return "REFUND";
         default:
           return null;
       }

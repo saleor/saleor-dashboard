@@ -50,8 +50,8 @@ export const EditCustomExtensionWebhook = ({ id }: EditCustomExtensionWebhookPro
           id,
           input: {
             syncEvents: data.syncEvents,
-            asyncEvents: data.asyncEvents.includes(WebhookEventTypeAsyncEnum.ANY_EVENTS)
-              ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
+            asyncEvents: data.asyncEvents.includes("ANY_EVENTS")
+              ? ["ANY_EVENTS"]
               : data.asyncEvents,
             isActive: data.isActive,
             name: data.name,

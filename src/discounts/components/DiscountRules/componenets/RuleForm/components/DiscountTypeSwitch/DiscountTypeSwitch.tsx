@@ -30,7 +30,7 @@ export const DiscountTypeSwitch = ({
         <Switch.Item
           id="fixed"
           disabled={disabled}
-          value={RewardValueTypeEnum.FIXED}
+          value={"FIXED"}
           name="fixed"
           marginLeft={0.5}
           data-test-id="fixed-reward-value-type"
@@ -44,7 +44,7 @@ export const DiscountTypeSwitch = ({
         id="percentage"
         disabled={disabled}
         name="percentage"
-        value={RewardValueTypeEnum.PERCENTAGE}
+        value={"PERCENTAGE"}
         marginRight={0.5}
         data-test-id="percentage-reward-value-type"
       >

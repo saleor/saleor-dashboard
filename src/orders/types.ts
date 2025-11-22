@@ -24,7 +24,7 @@ export const orderShouldUseTransactions = (order: OrderDetailsFragment): boolean
   }
 
   return (
-    order?.channel?.orderSettings?.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+    order?.channel?.orderSettings?.markAsPaidStrategy === "TRANSACTION_FLOW"
   );
 };
 

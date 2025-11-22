@@ -18,12 +18,12 @@ export type ChannelInput = RequireOnlyOne<ChannelArgs, "discountValue" | "minSpe
 
 export function createDiscountTypeChangeHandler(change: FormChange) {
   return (formData: VoucherDetailsPageFormData, event: ChangeEvent) => {
-    if (formData.type === VoucherTypeEnum.SHIPPING) {
+    if (formData.type === "SHIPPING") {
       // if previously type was shipping
       change({
         target: {
           name: "type",
-          value: VoucherTypeEnum.ENTIRE_ORDER,
+          value: "ENTIRE_ORDER",
         },
       });
     } else if (event.target.value === DiscountTypeEnum.SHIPPING) {
@@ -31,7 +31,7 @@ export function createDiscountTypeChangeHandler(change: FormChange) {
       change({
         target: {
           name: "type",
-          value: VoucherTypeEnum.ENTIRE_ORDER,
+          value: "ENTIRE_ORDER",
         },
       });
     }
@@ -101,7 +101,7 @@ export function createVoucherUpdateHandler(
       ? [
           {
             __typename: "DiscountError",
-            code: DiscountErrorCode.INVALID,
+            code: "INVALID",
             field: "discountValue",
             channels: invalidChannels,
             message: "Invalid discount value",

@@ -104,7 +104,7 @@ const ShippingZoneDetailsPage = ({
 }: ShippingZoneDetailsPageProps) => {
   const intl = useIntl();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const initialForm = getInitialFormData(shippingZone);
@@ -157,7 +157,7 @@ const ShippingZoneDetailsPage = ({
                 getRateEditHref={getPriceRateEditHref}
                 onRateRemove={onRateRemove}
                 rates={shippingZone?.shippingMethods?.filter(
-                  method => method.type === ShippingMethodTypeEnum.PRICE,
+                  method => method.type === "PRICE",
                 )}
                 variant="price"
                 selectedChannelId={selectedChannelId}
@@ -170,7 +170,7 @@ const ShippingZoneDetailsPage = ({
                 getRateEditHref={getWeightRateEditHref}
                 onRateRemove={onRateRemove}
                 rates={shippingZone?.shippingMethods?.filter(
-                  method => method.type === ShippingMethodTypeEnum.WEIGHT,
+                  method => method.type === "WEIGHT",
                 )}
                 variant="weight"
                 selectedChannelId={selectedChannelId}

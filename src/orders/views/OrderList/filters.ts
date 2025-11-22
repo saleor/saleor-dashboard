@@ -1,4 +1,13 @@
-import { OrderAuthorizeStatusEnum, OrderChargeStatusEnum, OrderStatus } from "@dashboard/graphql";
+import {
+  OrderAuthorizeStatusEnum,
+  OrderChargeStatusEnum,
+  OrderStatus,
+} from "@dashboard/graphql";
+import {
+  OrderAuthorizeStatusEnumValues,
+  OrderChargeStatusEnumValues,
+  OrderStatusValues,
+} from "@dashboard/graphql/enumConstants";
 import { OrderFilterKeys } from "@dashboard/orders/components/OrderListPage/filters";
 
 import {
@@ -41,14 +50,14 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<OrderFilterKeys.status>,
         OrderListUrlFiltersWithMultipleValues.status,
-        OrderStatus,
+        OrderStatusValues,
       );
 
     case OrderFilterKeys.chargeStatus:
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<OrderFilterKeys.chargeStatus>,
         OrderListUrlFiltersWithMultipleValues.chargeStatus,
-        OrderChargeStatusEnum,
+        OrderChargeStatusEnumValues,
       );
 
     case OrderFilterKeys.channelId:
@@ -80,7 +89,7 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<OrderFilterKeys.authorizeStatus>,
         OrderListUrlFiltersWithMultipleValues.authorizeStatus,
-        OrderAuthorizeStatusEnum,
+        OrderAuthorizeStatusEnumValues,
       );
 
     case OrderFilterKeys.metadata:

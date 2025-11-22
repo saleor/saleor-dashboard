@@ -138,7 +138,7 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
                 </DashboardCard.Header>
                 <DashboardCard.Content>
                   {mediaObj ? (
-                    mediaObj?.type === ProductMediaType.IMAGE ? (
+                    mediaObj?.type === "IMAGE" ? (
                       <div className={classes.imageContainer}>
                         <img className={classes.image} src={mediaObj.url} alt={mediaObj.alt} />
                       </div>

@@ -31,12 +31,12 @@ export class OrderFixture {
     canFinalize: false,
     customerNote: "",
     isPaid: true,
-    paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    paymentStatus: "FULLY_CHARGED",
     shippingMethodName: "DB Schenker",
     collectionPointName: null,
     actions: [],
     userEmail: "customer@example.com",
-    chargeStatus: OrderChargeStatusEnum.FULL,
+    chargeStatus: "FULL",
     transactions: [],
     payments: [],
     giftCards: [],
@@ -203,7 +203,7 @@ export class OrderFixture {
     },
     orderSettings: {
       __typename: "OrderSettings",
-      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      markAsPaidStrategy: "TRANSACTION_FLOW",
     },
   } satisfies OrderDetailsFragment["channel"];
 
@@ -305,7 +305,7 @@ export class OrderFixture {
   private static baseFulfillment = {
     __typename: "Fulfillment",
     id: "fulfillment-id-1",
-    status: FulfillmentStatus.FULFILLED,
+    status: "FULFILLED",
     fulfillmentOrder: 1,
     trackingNumber: "1234",
     created: "2023-10-01T12:00:00Z",
@@ -326,7 +326,7 @@ export class OrderFixture {
           quantityToFulfill: 0,
           unitDiscountValue: undefined,
           unitDiscountReason: "",
-          unitDiscountType: DiscountValueTypeEnum.FIXED,
+          unitDiscountType: "FIXED",
           allocations: [],
           variant: {
             __typename: "ProductVariant",
@@ -412,7 +412,7 @@ export class OrderFixture {
       last4CodeChars: "4321",
       events: [
         {
-          type: GiftCardEventsEnum.USED_IN_ORDER,
+          type: "USED_IN_ORDER",
           __typename: "GiftCardEvent",
           id: "",
           orderId: "",
@@ -449,7 +449,7 @@ export class OrderFixture {
       last4CodeChars: "2345",
       events: [
         {
-          type: GiftCardEventsEnum.USED_IN_ORDER,
+          type: "USED_IN_ORDER",
           __typename: "GiftCardEvent",
           id: "",
           orderId: "",
@@ -542,7 +542,7 @@ export class OrderFixture {
   static fulfilled(): OrderFixture {
     const fulfilledOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
       id: "fulfilled-order-id",
-      status: OrderStatus.FULFILLED,
+      status: "FULFILLED",
       billingAddress: OrderFixture.address,
       shippingAddress: OrderFixture.address,
       channel: OrderFixture.channel,
@@ -556,10 +556,10 @@ export class OrderFixture {
   static unconfirmed(): OrderFixture {
     const unconfirmedOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
       id: "unconfirmed-order-id",
-      status: OrderStatus.UNCONFIRMED,
+      status: "UNCONFIRMED",
       isPaid: false,
-      paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
-      chargeStatus: OrderChargeStatusEnum.NONE,
+      paymentStatus: "NOT_CHARGED",
+      chargeStatus: "NONE",
       fulfillments: [],
       billingAddress: OrderFixture.address,
       shippingAddress: OrderFixture.address,
@@ -583,7 +583,7 @@ export class OrderFixture {
   static unfulfilled(): OrderFixture {
     const unfulfilledOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
       id: "unfulfilled-order-id",
-      status: OrderStatus.UNFULFILLED,
+      status: "UNFULFILLED",
       billingAddress: OrderFixture.address,
       shippingAddress: OrderFixture.address,
       channel: OrderFixture.channel,
@@ -645,7 +645,7 @@ export class OrderFixture {
   withReturnedFulfillment(): OrderFixture {
     const returnedFulfillment: FulfillmentFragment = {
       ...OrderFixture.baseFulfillment,
-      status: FulfillmentStatus.RETURNED,
+      status: "RETURNED",
     };
 
     this.order = {
@@ -659,7 +659,7 @@ export class OrderFixture {
   withReplacedFulfillment(): OrderFixture {
     const replacedFulfillment: FulfillmentFragment = {
       ...OrderFixture.baseFulfillment,
-      status: FulfillmentStatus.REPLACED,
+      status: "REPLACED",
     };
 
     this.order = {
@@ -673,7 +673,7 @@ export class OrderFixture {
   withRefundedFulfillment(): OrderFixture {
     const refundedFulfillment: FulfillmentFragment = {
       ...OrderFixture.baseFulfillment,
-      status: FulfillmentStatus.REFUNDED,
+      status: "REFUNDED",
     };
 
     this.order = {
@@ -687,7 +687,7 @@ export class OrderFixture {
   withCanceledFulfillment(): OrderFixture {
     const canceledFulfillment: FulfillmentFragment = {
       ...OrderFixture.baseFulfillment,
-      status: FulfillmentStatus.CANCELED,
+      status: "CANCELED",
     };
 
     this.order = {
@@ -701,7 +701,7 @@ export class OrderFixture {
   withWaitingForApprovalFulfillment(): OrderFixture {
     const waitingForApprovalFulfillment: FulfillmentFragment = {
       ...OrderFixture.baseFulfillment,
-      status: FulfillmentStatus.WAITING_FOR_APPROVAL,
+      status: "WAITING_FOR_APPROVAL",
     };
 
     this.order = {
@@ -715,7 +715,7 @@ export class OrderFixture {
   withRefundedAndReturnedFulfillment(): OrderFixture {
     const refundedAndReturnedFulfillment: FulfillmentFragment = {
       ...OrderFixture.baseFulfillment,
-      status: FulfillmentStatus.REFUNDED_AND_RETURNED,
+      status: "REFUNDED_AND_RETURNED",
     };
 
     this.order = {
@@ -744,7 +744,7 @@ export class OrderFixture {
   }
 
   withManualRefund(
-    refundStatus: TransactionEventTypeEnum = TransactionEventTypeEnum.REFUND_SUCCESS,
+    refundStatus: TransactionEventTypeEnum = "REFUND_SUCCESS",
   ): OrderFixture {
     this.order = {
       ...this.order,
@@ -795,7 +795,7 @@ export class OrderFixture {
                 __typename: "User",
               },
               pspReference: "manual-refund-psp-ref",
-              type: TransactionEventTypeEnum.REFUND_REQUEST,
+              type: "REFUND_REQUEST",
               message: "Manual refund processed successfully.",
             },
           ],
@@ -822,7 +822,7 @@ export class OrderFixture {
         {
           __typename: "OrderGrantedRefund",
           id: "granted-refund-id-1",
-          status: OrderGrantedRefundStatusEnum.SUCCESS,
+          status: "SUCCESS",
           amount: {
             __typename: "Money",
             amount: 10,

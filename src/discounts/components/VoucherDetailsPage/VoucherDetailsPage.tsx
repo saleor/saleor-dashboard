@@ -188,7 +188,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const hasMinimalOrderValueRequirement = voucher?.channelListings?.some(
@@ -206,9 +206,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   }
 
   const discountType =
-    voucher?.type === VoucherTypeEnum.SHIPPING
+    voucher?.type === "SHIPPING"
       ? DiscountTypeEnum.SHIPPING
-      : voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE
+      : voucher?.discountValueType === "PERCENTAGE"
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
   const initialForm: VoucherDetailsPageFormData = {
@@ -227,7 +227,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     requirementsPicker: requirementsPickerInitValue,
     startDate: splitDateTime(voucher?.startDate ?? "").date,
     startTime: splitDateTime(voucher?.startDate ?? "").time,
-    type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
+    type: voucher?.type ?? "ENTIRE_ORDER",
     usageLimit: voucher?.usageLimit ?? 1,
     used: voucher?.used ?? 0,
     singleUse: voucher?.singleUse ?? false,
@@ -318,7 +318,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   onChannelChange={handleChannelChange}
                 />
               ) : null}
-              {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
+              {data.type === "SPECIFIC_PRODUCT" &&
               data.discountType.toString() !== "SHIPPING" ? (
                 <>
                   <TabContainer>
@@ -462,7 +462,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
             <DetailPageLayout.RightSidebar>
               <VoucherSummary voucher={voucher} selectedChannelId={selectedChannelId} />
               <ChannelsAvailabilityCard
-                managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                managePermissions={["MANAGE_DISCOUNTS"]}
                 allChannelsCount={allChannelsCount}
                 channelsList={data.channelListings.map(channel => ({
                   id: channel.id,

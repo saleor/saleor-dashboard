@@ -15,7 +15,7 @@ const validateField = (
   value,
   key: keyof GiftCardBulkCreateFormData,
 ): Pick<GiftCardErrorFragment, "field" | "code"> | null => {
-  const error = { code: GiftCardErrorCode.INVALID, field: key };
+  const error = { code: "INVALID", field: key };
   const expiryDateSelected = expirySelected && expiryType === "EXPIRY_DATE";
   const expiryPeriodSelected = expirySelected && expiryType === "EXPIRY_PERIOD";
 

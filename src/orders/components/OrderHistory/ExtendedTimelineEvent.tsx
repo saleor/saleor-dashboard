@@ -162,7 +162,7 @@ const ExtendedTimelineEvent = ({
     return titles[eventTypeInCamelCase];
   };
   const getTitleProps = () => {
-    if (type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED) {
+    if (type === "ORDER_LINE_DISCOUNT_UPDATED") {
       return { productName: lines[0]?.itemName };
     }
 
@@ -180,10 +180,10 @@ const ExtendedTimelineEvent = ({
     const { title, by, employeeName, orderNumber } = titleElements;
 
     switch (type) {
-      case OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE: {
+      case "DRAFT_CREATED_FROM_REPLACE": {
         return [title, orderNumber, by, employeeName];
       }
-      case OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED: {
+      case "ORDER_DISCOUNT_AUTOMATICALLY_UPDATED": {
         return [title];
       }
       default: {

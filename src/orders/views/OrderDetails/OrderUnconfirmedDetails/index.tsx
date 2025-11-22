@@ -170,7 +170,7 @@ export const OrderUnconfirmedDetails = ({
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
 
   const hasOrderFulfillmentsFulFilled = order?.fulfillments.some(
-    fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
+    fulfillment => fulfillment.status === "FULFILLED",
   );
 
   return (

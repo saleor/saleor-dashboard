@@ -108,7 +108,7 @@ const OrderDraftDetailsSummary = (props: OrderDraftDetailsSummaryProps) => {
     const { value: discountValue, calculationMode, amount: discountAmount } = orderDiscountData;
     const currency = total.gross.currency;
 
-    if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
+    if (calculationMode === "PERCENTAGE") {
       return (
         <div className={classes.percentDiscountLabelContainer}>
           <Text className={classes.subtitle}>{`(${discountValue}%)`}</Text>

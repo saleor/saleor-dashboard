@@ -111,7 +111,7 @@ const ProductTypeDetailsPage = ({
         : false,
     metadata: productType?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => productType.name) !== undefined ? productType.name : "",
-    kind: productType?.kind || ProductTypeKindEnum.NORMAL,
+    kind: productType?.kind || "NORMAL",
     privateMetadata: productType?.privateMetadata?.map(mapMetadataItemToInput),
     productAttributes:
       maybe(() => productType.productAttributes) !== undefined
@@ -173,10 +173,10 @@ const ProductTypeDetailsPage = ({
                 testId="assign-products-attributes"
                 attributes={maybe(() => productType.productAttributes)}
                 disabled={disabled}
-                type={ProductAttributeType.PRODUCT}
+                type={"PRODUCT"}
                 onAttributeAssign={onAttributeAdd}
                 onAttributeReorder={(event: ReorderEvent) =>
-                  onAttributeReorder(event, ProductAttributeType.PRODUCT)
+                  onAttributeReorder(event, "PRODUCT")
                 }
                 onAttributeUnassign={onAttributeUnassign}
                 {...productAttributeList}
@@ -206,10 +206,10 @@ const ProductTypeDetailsPage = ({
                     testId="assign-variants-attributes"
                     assignedVariantAttributes={productType?.assignedVariantAttributes}
                     disabled={disabled}
-                    type={ProductAttributeType.VARIANT}
+                    type={"VARIANT"}
                     onAttributeAssign={onAttributeAdd}
                     onAttributeReorder={(event: ReorderEvent) =>
-                      onAttributeReorder(event, ProductAttributeType.VARIANT)
+                      onAttributeReorder(event, "VARIANT")
                     }
                     onAttributeUnassign={onAttributeUnassign}
                     setSelectedVariantAttributes={setSelectedVariantAttributes}

@@ -37,6 +37,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductTypeDetailsPage, { ProductTypeForm } from "../../components/ProductTypeDetailsPage";
 import { productTypeListUrl, productTypeUrl, ProductTypeUrlQueryParams } from "../../urls";
+import { ProductAttributeTypeValues } from "@dashboard/graphql/enumConstants";
 
 interface ProductTypeUpdateProps {
   id: string;
@@ -246,7 +247,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     updateProductTypeOpts.loading || updateProductAttributesOpts.loading || dataLoading;
   const handleAttributeReorder = (event: ReorderEvent, type: ProductAttributeType) => {
     const attributes =
-      type === ProductAttributeType.PRODUCT
+      type === "PRODUCT"
         ? data.productType.productAttributes
         : data.productType.variantAttributes;
 
@@ -353,7 +354,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       />
       {!dataLoading && (
         <>
-          {Object.keys(ProductAttributeType).map(key => (
+          {ProductAttributeTypeValues.map(key => (
             <AssignAttributeDialog
               attributes={mapEdgesToItems(result?.data?.productType?.availableAttributes)}
               confirmButtonState={assignAttribute.opts.status}

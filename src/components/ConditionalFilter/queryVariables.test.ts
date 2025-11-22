@@ -115,8 +115,8 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
         new ExpressionValue(
           "ref-attr", // slug
           "Reference Attribute", // label
-          AttributeInputTypeEnum.REFERENCE,
-          AttributeEntityTypeEnum.PAGE,
+          "REFERENCE",
+          "PAGE",
         ),
       ),
     ];
@@ -168,8 +168,8 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
         new ExpressionValue(
           "ref-attr", // slug
           "Reference Attribute", // label
-          AttributeInputTypeEnum.REFERENCE,
-          AttributeEntityTypeEnum.PAGE,
+          "REFERENCE",
+          "PAGE",
         ),
       ),
     ];
@@ -220,8 +220,8 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
         new ExpressionValue(
           "variant-ref",
           "Variant Attribute",
-          AttributeInputTypeEnum.SINGLE_REFERENCE,
-          AttributeEntityTypeEnum.PRODUCT_VARIANT,
+          "SINGLE_REFERENCE",
+          "PRODUCT_VARIANT",
         ),
       ),
     ];
@@ -727,7 +727,7 @@ describe("ConditionalFilter / queryVariables / createProductTypesQueryVariables"
         new Condition(
           ConditionOptions.fromStaticElementName("typeOfProduct"),
           new ConditionSelected(
-            ProductTypeEnum.DIGITAL,
+            "DIGITAL",
             { type: "select", label: "is", value: "input-1" },
             [],
             false,
@@ -742,7 +742,7 @@ describe("ConditionalFilter / queryVariables / createProductTypesQueryVariables"
         new Condition(
           ConditionOptions.fromStaticElementName("configurable"),
           new ConditionSelected(
-            ProductTypeConfigurable.SIMPLE,
+            "SIMPLE",
             { type: "select", label: "is", value: "input-1" },
             [],
             false,

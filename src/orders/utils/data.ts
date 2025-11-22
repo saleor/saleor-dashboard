@@ -2,7 +2,7 @@ import { subtractMoney } from "@dashboard/components/Money";
 import {
   AddressFragment,
   AddressInput,
-  CountryCode,
+  CountryCodeValues,
   FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsFragment,
@@ -28,6 +28,7 @@ import {
 } from "../components/OrderReturnPage/utils";
 import { orderDiscountTypeLabelMessages } from "../messages";
 import { OrderRefundSharedType } from "../types";
+import { CountryCodeValues } from "@dashboard/graphql/enumConstants";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
   NonNullable<OrderRefundDataQuery["order"]>,
@@ -115,7 +116,7 @@ const selectItemPriceAndQuantity = (
 ) => {
   const fulfillment = getFulfillmentByFulfillmentLineId(order, id);
 
-  if (fulfillment?.status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
+  if (fulfillment?.status === "WAITING_FOR_APPROVAL") {
     return getItemPriceAndQuantity({
       id,
       itemsQuantities: waitingItemsQuantities ?? [],
@@ -441,19 +442,19 @@ const getDiscountNameLabel = (name: string) => {
 
 export const getDiscountTypeLabel = (discount: OrderDiscountFragment, intl: IntlShape) => {
   switch (discount.type) {
-    case OrderDiscountType.MANUAL:
+    case "MANUAL":
       return intl.formatMessage(orderDiscountTypeLabelMessages.staffAdded);
-    case OrderDiscountType.ORDER_PROMOTION:
+    case "ORDER_PROMOTION":
       return getDiscountNameLabel(discount.name ?? "");
-    case OrderDiscountType.VOUCHER:
+    case "VOUCHER":
       return intl.formatMessage(orderDiscountTypeLabelMessages.voucher, {
         voucherName: discount.name,
       });
 
-    case OrderDiscountType.PROMOTION:
+    case "PROMOTION":
       return intl.formatMessage(orderDiscountTypeLabelMessages.promotion);
 
-    case OrderDiscountType.SALE:
+    case "SALE":
       return intl.formatMessage(orderDiscountTypeLabelMessages.sale);
   }
 };

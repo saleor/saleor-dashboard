@@ -8,11 +8,11 @@ export const useConditionNames = (discountType: PromotionTypeEnum): Option[] => 
   const catalogOptions = useCatalogConditionNames();
   const orderOptions = useOrderConditionNames();
 
-  if (discountType === PromotionTypeEnum.CATALOGUE) {
+  if (discountType === "CATALOGUE") {
     return catalogOptions;
   }
 
-  if (discountType === PromotionTypeEnum.ORDER) {
+  if (discountType === "ORDER") {
     return orderOptions;
   }
 

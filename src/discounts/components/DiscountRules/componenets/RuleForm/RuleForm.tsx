@@ -57,7 +57,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
   useEffect(() => {
     // Restart reward type to percentage if  no currency
     if (!currencySymbol) {
-      setValue("rewardValueType", RewardValueTypeEnum.PERCENTAGE);
+      setValue("rewardValueType", "PERCENTAGE");
     }
   }, [currencySymbol]);
 
@@ -72,7 +72,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
     setValue("rewardGifts", []);
 
     // Restart conditions when catalog promotion
-    if (discountType === PromotionTypeEnum.CATALOGUE) {
+    if (discountType === "CATALOGUE") {
       if (conditions.length > 0) {
         setValue("conditions", [createEmptyCodition()]);
       }

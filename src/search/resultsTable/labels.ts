@@ -14,7 +14,7 @@ export const getPaymentLabel = (
   chargeStatus: OrderChargeStatusEnum,
   paymentStatus: PaymentChargeStatusEnum,
 ) => {
-  if (chargeStatus === OrderChargeStatusEnum.OVERCHARGED) {
+  if (chargeStatus === "OVERCHARGED") {
     const { localized, status } = transformChargedStatus(chargeStatus, intl);
 
     const color = getStatusColor({

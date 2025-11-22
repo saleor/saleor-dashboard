@@ -168,7 +168,7 @@ export const ProductVariantPage = ({
 }: ProductVariantPageProps) => {
   const intl = useIntl();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
@@ -243,10 +243,10 @@ export const ProductVariantPage = ({
             attributeRichTextGetters,
           }) => {
             const nonSelectionAttributes = data.attributes.filter(
-              byAttributeScope(VariantAttributeScope.NOT_VARIANT_SELECTION),
+              byAttributeScope("NOT_VARIANT_SELECTION"),
             );
             const selectionAttributes = data.attributes.filter(
-              byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
+              byAttributeScope("VARIANT_SELECTION"),
             );
             const media = getSelectedMedia(productMedia, data.media);
             const errors = [...apiErrors, ...validationErrors];

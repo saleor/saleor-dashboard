@@ -69,7 +69,7 @@ export const orderToRefund = (placeholder: string): OrderRefundDataQuery["order"
     {
       __typename: "Fulfillment",
       id: "f12345qwertyu",
-      status: FulfillmentStatus.FULFILLED,
+      status: "FULFILLED",
       fulfillmentOrder: 1,
       lines: [
         {
@@ -123,7 +123,7 @@ export const orderToRefund = (placeholder: string): OrderRefundDataQuery["order"
     {
       __typename: "Fulfillment",
       id: "876543jhgfdfd",
-      status: FulfillmentStatus.FULFILLED,
+      status: "FULFILLED",
       fulfillmentOrder: 2,
       lines: [
         {

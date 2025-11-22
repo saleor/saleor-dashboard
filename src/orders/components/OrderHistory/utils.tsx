@@ -7,7 +7,7 @@ import { IntlShape, MessageDescriptor } from "react-intl";
 
 export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescriptor, any?] => {
   switch (event.type) {
-    case OrderEventsEnum.ORDER_MARKED_AS_PAID: {
+    case "ORDER_MARKED_AS_PAID": {
       return [
         {
           defaultMessage: "Transaction Reference {transactionReference}",
@@ -22,35 +22,35 @@ export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescr
 
 const timelineEventTypes = {
   discount: [
-    OrderEventsEnum.ORDER_DISCOUNT_ADDED,
-    OrderEventsEnum.ORDER_DISCOUNT_UPDATED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
-    OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED,
+    "ORDER_DISCOUNT_ADDED",
+    "ORDER_DISCOUNT_UPDATED",
+    "ORDER_LINE_DISCOUNT_UPDATED",
+    "ORDER_DISCOUNT_AUTOMATICALLY_UPDATED",
   ],
   extendable: [
-    OrderEventsEnum.FULFILLMENT_REFUNDED,
-    OrderEventsEnum.FULFILLMENT_REPLACED,
-    OrderEventsEnum.FULFILLMENT_RETURNED,
-    OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE,
-    OrderEventsEnum.ORDER_MARKED_AS_PAID,
-    OrderEventsEnum.ORDER_DISCOUNT_ADDED,
-    OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED,
-    OrderEventsEnum.ORDER_DISCOUNT_UPDATED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
+    "FULFILLMENT_REFUNDED",
+    "FULFILLMENT_REPLACED",
+    "FULFILLMENT_RETURNED",
+    "DRAFT_CREATED_FROM_REPLACE",
+    "ORDER_MARKED_AS_PAID",
+    "ORDER_DISCOUNT_ADDED",
+    "ORDER_DISCOUNT_AUTOMATICALLY_UPDATED",
+    "ORDER_DISCOUNT_UPDATED",
+    "ORDER_LINE_DISCOUNT_UPDATED",
   ],
   linked: [
-    OrderEventsEnum.ORDER_REPLACEMENT_CREATED,
-    OrderEventsEnum.ORDER_DISCOUNT_DELETED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED,
+    "ORDER_REPLACEMENT_CREATED",
+    "ORDER_DISCOUNT_DELETED",
+    "ORDER_LINE_DISCOUNT_REMOVED",
   ],
-  note: [OrderEventsEnum.NOTE_ADDED],
-  note_updated: [OrderEventsEnum.NOTE_UPDATED],
+  note: ["NOTE_ADDED"],
+  note_updated: ["NOTE_UPDATED"],
   rawMessage: [
-    OrderEventsEnum.OTHER,
-    OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
-    OrderEventsEnum.TRANSACTION_EVENT,
+    "OTHER",
+    "EXTERNAL_SERVICE_NOTIFICATION",
+    "TRANSACTION_EVENT",
   ],
-  secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID],
+  secondaryTitle: ["ORDER_MARKED_AS_PAID"],
 };
 
 export const isTimelineEventOfType = (
@@ -96,7 +96,7 @@ export const getEmployeeNameLink = (event: OrderEventFragment, intl: IntlShape) 
 };
 
 export const hasOrderLineDiscountWithNoPreviousValue = ({ type, lines }: OrderEventFragment) =>
-  type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED &&
+  type === "ORDER_LINE_DISCOUNT_UPDATED" &&
   lines?.[0]?.discount &&
   !lines?.[0].discount?.oldValue;
 

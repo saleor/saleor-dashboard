@@ -43,7 +43,7 @@ afterEach(() => {
 describe("WelcomePageSidebar", () => {
   it("should render chanel select, analytics and activities when user has permission to manage orders ", async () => {
     // Arrange
-    (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_ORDERS }]);
+    (useUserPermissions as jest.Mock).mockReturnValue([{ code: "MANAGE_ORDERS" }]);
 
     const channel = channelsList[0] as ChannelFragment;
     const setChannel = jest.fn();

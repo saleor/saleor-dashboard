@@ -1,11 +1,12 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
+import { DiscountStatusEnumValues, VoucherDiscountType } from "@dashboard/graphql";
 import { IntlShape, useIntl } from "react-intl";
 
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
 import { ChannelHandler, EnumValuesHandler, Handler } from "../Handler";
 import { getFilterElement } from "../utils";
+import { VoucherDiscountTypeValues, DiscountStatusEnumValues } from "@dashboard/graphql/enumConstants";
 
 const createAPIHandler = (
   selectedRow: FilterElement,
@@ -20,11 +21,11 @@ const createAPIHandler = (
   }
 
   if (rowType === "discountType") {
-    return new EnumValuesHandler(VoucherDiscountType, "discountType", intl);
+    return new EnumValuesHandler(VoucherDiscountTypeValues, "discountType", intl);
   }
 
   if (rowType === "voucherStatus") {
-    return new EnumValuesHandler(DiscountStatusEnum, "voucherStatus", intl);
+    return new EnumValuesHandler(DiscountStatusEnumValues, "voucherStatus", intl);
   }
 
   throw new Error(`Unknown filter element: "${rowType}"`);

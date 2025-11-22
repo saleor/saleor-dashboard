@@ -49,7 +49,7 @@ export function createFilterStructure(
         opts.numberOfOrders.value,
       ),
       active: opts.numberOfOrders.active,
-      permissions: [PermissionEnum.MANAGE_ORDERS],
+      permissions: ["MANAGE_ORDERS"],
     },
   ].filter(filter => hasPermissions(userPermissions ?? [], filter.permissions ?? []));
 }

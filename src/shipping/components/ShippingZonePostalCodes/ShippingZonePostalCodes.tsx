@@ -67,14 +67,14 @@ const ShippingZonePostalCodes = ({
       return inclusionType;
     }
 
-    return postalCodes[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE;
+    return postalCodes[0]?.inclusionType || "EXCLUDE";
   };
   const onInclusionRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const postalType =
       value === "EXCLUDE"
-        ? PostalCodeRuleInclusionTypeEnum.EXCLUDE
-        : PostalCodeRuleInclusionTypeEnum.INCLUDE;
+        ? "EXCLUDE"
+        : "INCLUDE";
 
     setInclusionType(value);
     onPostalCodeInclusionChange(postalType);
@@ -135,7 +135,7 @@ const ShippingZonePostalCodes = ({
                   </Text>
                 </div>
               ),
-              value: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+              value: "EXCLUDE",
             },
             {
               label: (
@@ -155,7 +155,7 @@ const ShippingZonePostalCodes = ({
                   </Text>
                 </div>
               ),
-              value: PostalCodeRuleInclusionTypeEnum.INCLUDE,
+              value: "INCLUDE",
             },
           ]}
           name="includePostalCodes"

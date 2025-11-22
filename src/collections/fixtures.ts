@@ -19,7 +19,7 @@ export const collectionListFilterOpts: CollectionListFilterOpts = {
   },
   status: {
     active: false,
-    value: CollectionPublished.PUBLISHED,
+    value: "PUBLISHED",
   },
 };
 

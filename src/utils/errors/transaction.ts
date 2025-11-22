@@ -30,9 +30,9 @@ export function getOrderTransactionErrorMessage(
 ): string {
   if (err) {
     switch (err.code) {
-      case TransactionRequestActionErrorCode.MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK:
+      case "MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK":
         return intl.formatMessage(transactionRequestMessages.missingWebhook);
-      case TransactionRequestActionErrorCode.NOT_FOUND:
+      case "NOT_FOUND":
         return intl.formatMessage(transactionRequestMessages.notFound);
     }
 
@@ -67,11 +67,11 @@ export function getTransactionCreateErrorMessage(
 ): string {
   if (err) {
     switch (err.code) {
-      case TransactionCreateErrorCode.NOT_FOUND:
+      case "NOT_FOUND":
         return intl.formatMessage(transactionCreateMessages.notFound);
-      case TransactionCreateErrorCode.UNIQUE:
+      case "UNIQUE":
         return intl.formatMessage(transactionCreateMessages.unique);
-      case TransactionCreateErrorCode.INCORRECT_CURRENCY:
+      case "INCORRECT_CURRENCY":
         return intl.formatMessage(transactionCreateMessages.incorrectCurrency);
     }
 

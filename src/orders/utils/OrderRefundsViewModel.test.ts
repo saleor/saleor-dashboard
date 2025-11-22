@@ -16,7 +16,7 @@ const createTransactionEvent = (
     __typename: "TransactionEvent",
     id: "event-1",
     pspReference: "psp-ref-1",
-    type: TransactionEventTypeEnum.REFUND_SUCCESS,
+    type: "REFUND_SUCCESS",
     amount: {
       __typename: "Money",
       amount: 100,
@@ -55,7 +55,7 @@ const createGrantedRefund = (
     },
     reason: "Customer return",
     createdAt: "2023-01-02T10:00:00Z",
-    status: OrderGrantedRefundStatusEnum.SUCCESS,
+    status: "SUCCESS",
     user: {
       __typename: "User",
       id: "user-2",
@@ -82,7 +82,7 @@ const createOrderRefundDisplay = (overrides: Partial<OrderRefundDisplay>): Order
   return {
     reasonType: null,
     createdAt: "2023-01-02T10:00:00Z",
-    status: OrderGrantedRefundStatusEnum.SUCCESS,
+    status: "SUCCESS",
     type: "manual",
     id: "refund-1",
     reasonNote: null,
@@ -104,7 +104,7 @@ describe("OrderRefundsViewModel", () => {
   const mockTransactionEvent = createTransactionEvent({
     id: "event-1",
     pspReference: "psp-ref-1",
-    type: TransactionEventTypeEnum.REFUND_SUCCESS,
+    type: "REFUND_SUCCESS",
     amount: {
       __typename: "Money",
       amount: 100,
@@ -134,7 +134,7 @@ describe("OrderRefundsViewModel", () => {
     },
     reason: "Customer return",
     createdAt: "2023-01-02T10:00:00Z",
-    status: OrderGrantedRefundStatusEnum.SUCCESS,
+    status: "SUCCESS",
     user: {
       __typename: "User",
       id: "user-2",
@@ -181,7 +181,7 @@ describe("OrderRefundsViewModel", () => {
         expect.objectContaining({
           id: "granted-1",
           type: "standard",
-          status: OrderGrantedRefundStatusEnum.SUCCESS,
+          status: "SUCCESS",
           amount: {
             __typename: "Money",
             amount: 50,
@@ -209,7 +209,7 @@ describe("OrderRefundsViewModel", () => {
         expect.objectContaining({
           id: "event-1",
           type: "manual",
-          status: OrderGrantedRefundStatusEnum.SUCCESS,
+          status: "SUCCESS",
           amount: expect.objectContaining({
             amount: 100,
             currency: "USD",
@@ -250,7 +250,7 @@ describe("OrderRefundsViewModel", () => {
         expect.objectContaining({
           id: "event-1",
           type: "manual",
-          status: OrderGrantedRefundStatusEnum.SUCCESS,
+          status: "SUCCESS",
         }),
       ]);
     });
@@ -297,23 +297,23 @@ describe("OrderRefundsViewModel", () => {
       // Arrange
       const unsupportedEvent = createTransactionEvent({
         id: "unsupported",
-        type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+        type: "AUTHORIZATION_SUCCESS",
       });
       const supportedEvents = [
         createTransactionEvent({
           id: "success",
           pspReference: "psp-success",
-          type: TransactionEventTypeEnum.REFUND_SUCCESS,
+          type: "REFUND_SUCCESS",
         }),
         createTransactionEvent({
           id: "failure",
           pspReference: "psp-failure",
-          type: TransactionEventTypeEnum.REFUND_FAILURE,
+          type: "REFUND_FAILURE",
         }),
         createTransactionEvent({
           id: "request",
           pspReference: "psp-request",
-          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          type: "REFUND_REQUEST",
         }),
       ];
 
@@ -334,21 +334,21 @@ describe("OrderRefundsViewModel", () => {
         createTransactionEvent({
           id: "request-1",
           pspReference: "psp-request-1",
-          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          type: "REFUND_REQUEST",
           reasonReference: null,
           message: "Reason manual note without type",
         }),
         createTransactionEvent({
           id: "request-2",
           pspReference: "psp-request-2",
-          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          type: "REFUND_REQUEST",
           reasonReference: { __typename: "Page", id: "ref-1", title: "Broken in shipping" },
           message: "Reason manual note with type",
         }),
         createTransactionEvent({
           id: "request-3",
           pspReference: "psp-request-3",
-          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          type: "REFUND_REQUEST",
           reasonReference: {
             __typename: "Page",
             id: "ref-1",
@@ -423,10 +423,10 @@ Array [
 
   describe("mapEventToRefundStatus", () => {
     it.each([
-      [TransactionEventTypeEnum.REFUND_SUCCESS, OrderGrantedRefundStatusEnum.SUCCESS],
-      [TransactionEventTypeEnum.REFUND_FAILURE, OrderGrantedRefundStatusEnum.FAILURE],
-      [TransactionEventTypeEnum.REFUND_REQUEST, OrderGrantedRefundStatusEnum.PENDING],
-      [TransactionEventTypeEnum.AUTHORIZATION_SUCCESS, OrderGrantedRefundStatusEnum.NONE],
+      ["REFUND_SUCCESS", "SUCCESS"],
+      ["REFUND_FAILURE", "FAILURE"],
+      ["REFUND_REQUEST", "PENDING"],
+      ["AUTHORIZATION_SUCCESS", "NONE"],
     ])("should map %s to %s status", (eventType, expectedStatus) => {
       // Arrange
       const event = createTransactionEvent({ type: eventType });
@@ -729,7 +729,7 @@ Array [
         expect.objectContaining({
           id: "newer",
           type: "manual",
-          status: OrderGrantedRefundStatusEnum.SUCCESS,
+          status: "SUCCESS",
           reasonNote: null,
           reasonType: null,
           amount: expect.objectContaining({
@@ -794,7 +794,7 @@ Array [
     it("should return true for editable refunds (not successful, not pending, not manual)", () => {
       // Arrange
       const editableRefund = createOrderRefundDisplay({
-        status: OrderGrantedRefundStatusEnum.FAILURE,
+        status: "FAILURE",
         type: "standard",
       });
 
@@ -808,7 +808,7 @@ Array [
     it("should return false for successful refunds", () => {
       // Arrange
       const successfulRefund = createOrderRefundDisplay({
-        status: OrderGrantedRefundStatusEnum.SUCCESS,
+        status: "SUCCESS",
         type: "standard",
       });
 
@@ -822,7 +822,7 @@ Array [
     it("should return false for pending refunds", () => {
       // Arrange
       const pendingRefund = createOrderRefundDisplay({
-        status: OrderGrantedRefundStatusEnum.PENDING,
+        status: "PENDING",
         type: "standard",
       });
 
@@ -838,7 +838,7 @@ Array [
       const manualRefund = createOrderRefundDisplay({
         id: "manual-1",
         type: "manual" as const,
-        status: OrderGrantedRefundStatusEnum.FAILURE,
+        status: "FAILURE",
         amount: { amount: 50, currency: "USD" },
         createdAt: "2023-01-01T10:00:00Z",
         user: null,
@@ -856,7 +856,7 @@ Array [
       const successfulManualRefund = createOrderRefundDisplay({
         id: "manual-success-1",
         type: "manual" as const,
-        status: OrderGrantedRefundStatusEnum.SUCCESS,
+        status: "SUCCESS",
         amount: { amount: 50, currency: "USD" },
         createdAt: "2023-01-01T10:00:00Z",
         user: null,
@@ -874,7 +874,7 @@ Array [
       const pendingManualRefund = createOrderRefundDisplay({
         id: "manual-pending-1",
         type: "manual" as const,
-        status: OrderGrantedRefundStatusEnum.PENDING,
+        status: "PENDING",
         amount: { amount: 50, currency: "USD" },
         createdAt: "2023-01-01T10:00:00Z",
         user: null,
@@ -890,7 +890,7 @@ Array [
     it("should return true for NONE status standard refunds", () => {
       // Arrange
       const noneStatusRefund = createOrderRefundDisplay({
-        status: OrderGrantedRefundStatusEnum.NONE,
+        status: "NONE",
         type: "standard",
       });
 
@@ -922,12 +922,12 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: [TransactionActionEnum.CHARGE, TransactionActionEnum.CANCEL],
+          actions: ["CHARGE", "CANCEL"],
         },
         {
           ...baseTransactions[0],
           id: "tx-2",
-          actions: [TransactionActionEnum.CHARGE],
+          actions: ["CHARGE"],
         },
       ];
 
@@ -944,12 +944,12 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: [TransactionActionEnum.CHARGE, TransactionActionEnum.CANCEL],
+          actions: ["CHARGE", "CANCEL"],
         },
         {
           ...baseTransactions[0],
           id: "tx-2",
-          actions: [TransactionActionEnum.REFUND, TransactionActionEnum.CHARGE],
+          actions: ["REFUND", "CHARGE"],
         },
       ];
 
@@ -966,12 +966,12 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: [TransactionActionEnum.REFUND, TransactionActionEnum.CHARGE],
+          actions: ["REFUND", "CHARGE"],
         },
         {
           ...baseTransactions[0],
           id: "tx-2",
-          actions: [TransactionActionEnum.REFUND],
+          actions: ["REFUND"],
         },
       ];
 
@@ -1010,7 +1010,7 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: [TransactionActionEnum.CHARGE, TransactionActionEnum.CANCEL],
+          actions: ["CHARGE", "CANCEL"],
         },
       ];
 
@@ -1027,7 +1027,7 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: [TransactionActionEnum.REFUND],
+          actions: ["REFUND"],
         },
       ];
 

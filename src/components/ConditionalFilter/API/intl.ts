@@ -36,11 +36,11 @@ const getOrderStatusLabel = (status: OrderStatusFilter, intl: IntlShape) => {
 
 const getAuthorizeStatusLabel = (status: OrderAuthorizeStatusEnum, intl: IntlShape) => {
   switch (status) {
-    case OrderAuthorizeStatusEnum.FULL:
+    case "FULL":
       return intl.formatMessage(authorizeStatusMessages.full);
-    case OrderAuthorizeStatusEnum.PARTIAL:
+    case "PARTIAL":
       return intl.formatMessage(authorizeStatusMessages.partial);
-    case OrderAuthorizeStatusEnum.NONE:
+    case "NONE":
       return intl.formatMessage(authorizeStatusMessages.none);
     default:
       return status;
@@ -49,13 +49,13 @@ const getAuthorizeStatusLabel = (status: OrderAuthorizeStatusEnum, intl: IntlSha
 
 const getChargeStatusLabel = (status: OrderChargeStatusEnum, intl: IntlShape) => {
   switch (status) {
-    case OrderChargeStatusEnum.FULL:
+    case "FULL":
       return intl.formatMessage(chargeStatusMessages.full);
-    case OrderChargeStatusEnum.PARTIAL:
+    case "PARTIAL":
       return intl.formatMessage(chargeStatusMessages.partial);
-    case OrderChargeStatusEnum.OVERCHARGED:
+    case "OVERCHARGED":
       return intl.formatMessage(chargeStatusMessages.overcharged);
-    case OrderChargeStatusEnum.NONE:
+    case "NONE":
       return intl.formatMessage(chargeStatusMessages.none);
     default:
       return status;
@@ -64,22 +64,22 @@ const getChargeStatusLabel = (status: OrderChargeStatusEnum, intl: IntlShape) =>
 
 const getDiscountTypeLabel = (type: VoucherDiscountType, intl: IntlShape) => {
   switch (type) {
-    case VoucherDiscountType.FIXED:
+    case "FIXED":
       return intl.formatMessage(discountTypeMessages.fixed);
-    case VoucherDiscountType.PERCENTAGE:
+    case "PERCENTAGE":
       return intl.formatMessage(discountTypeMessages.percentage);
-    case VoucherDiscountType.SHIPPING:
+    case "SHIPPING":
       return intl.formatMessage(discountTypeMessages.shipping);
   }
 };
 
 const getVoucherStatusLabel = (status: DiscountStatusEnum, intl: IntlShape) => {
   switch (status) {
-    case DiscountStatusEnum.ACTIVE:
+    case "ACTIVE":
       return intl.formatMessage(voucherStatusMessages.active);
-    case DiscountStatusEnum.EXPIRED:
+    case "EXPIRED":
       return intl.formatMessage(voucherStatusMessages.expired);
-    case DiscountStatusEnum.SCHEDULED:
+    case "SCHEDULED":
       return intl.formatMessage(voucherStatusMessages.scheduled);
     default:
       return status;
@@ -88,9 +88,9 @@ const getVoucherStatusLabel = (status: DiscountStatusEnum, intl: IntlShape) => {
 
 const getPublishedLabel = (status: CollectionPublished, intl: IntlShape) => {
   switch (status) {
-    case CollectionPublished.PUBLISHED:
+    case "PUBLISHED":
       return intl.formatMessage(collectionFilterMessages.published);
-    case CollectionPublished.HIDDEN:
+    case "HIDDEN":
       return intl.formatMessage(collectionFilterMessages.hidden);
     default:
       return status;
@@ -99,9 +99,9 @@ const getPublishedLabel = (status: CollectionPublished, intl: IntlShape) => {
 
 const getProductTypeLabel = (type: ProductTypeEnum, intl: IntlShape) => {
   switch (type) {
-    case ProductTypeEnum.DIGITAL:
+    case "DIGITAL":
       return intl.formatMessage(productTypeMessages.digital);
-    case ProductTypeEnum.SHIPPABLE:
+    case "SHIPPABLE":
       return intl.formatMessage(productTypeMessages.shippable);
     default:
       return type;
@@ -110,9 +110,9 @@ const getProductTypeLabel = (type: ProductTypeEnum, intl: IntlShape) => {
 
 const getStaffMemberStatusLabel = (status: StaffMemberStatus, intl: IntlShape) => {
   switch (status) {
-    case StaffMemberStatus.ACTIVE:
+    case "ACTIVE":
       return intl.formatMessage(staffMembersStatusMessages.active);
-    case StaffMemberStatus.DEACTIVATED:
+    case "DEACTIVATED":
       return intl.formatMessage(staffMembersStatusMessages.deactivated);
     default:
       return status;
@@ -121,9 +121,9 @@ const getStaffMemberStatusLabel = (status: StaffMemberStatus, intl: IntlShape) =
 
 const getAttributeTypeLabel = (type: AttributeTypeEnum, intl: IntlShape) => {
   switch (type) {
-    case AttributeTypeEnum.PAGE_TYPE:
+    case "PAGE_TYPE":
       return intl.formatMessage(attributeTypesMessages.pageType);
-    case AttributeTypeEnum.PRODUCT_TYPE:
+    case "PRODUCT_TYPE":
       return intl.formatMessage(attributeTypesMessages.productType);
     default:
       return type;
@@ -132,9 +132,9 @@ const getAttributeTypeLabel = (type: AttributeTypeEnum, intl: IntlShape) => {
 
 const getPaymentMethodTypeLabel = (type: PaymentMethodTypeEnum, intl: IntlShape) => {
   switch (type) {
-    case PaymentMethodTypeEnum.CARD:
+    case "CARD":
       return intl.formatMessage(paymentMethodTypeMessages.card);
-    case PaymentMethodTypeEnum.OTHER:
+    case "OTHER":
       return intl.formatMessage(paymentMethodTypeMessages.other);
     default:
       return type;
@@ -143,19 +143,19 @@ const getPaymentMethodTypeLabel = (type: PaymentMethodTypeEnum, intl: IntlShape)
 
 const getFulfillmentStatusLabel = (status: FulfillmentStatus, intl: IntlShape) => {
   switch (status) {
-    case FulfillmentStatus.CANCELED:
+    case "CANCELED":
       return intl.formatMessage(fulfillmentStatusMessages.canceled);
-    case FulfillmentStatus.FULFILLED:
+    case "FULFILLED":
       return intl.formatMessage(fulfillmentStatusMessages.fulfilled);
-    case FulfillmentStatus.REFUNDED:
+    case "REFUNDED":
       return intl.formatMessage(fulfillmentStatusMessages.refunded);
-    case FulfillmentStatus.REFUNDED_AND_RETURNED:
+    case "REFUNDED_AND_RETURNED":
       return intl.formatMessage(fulfillmentStatusMessages.refundedAndReturned);
-    case FulfillmentStatus.REPLACED:
+    case "REPLACED":
       return intl.formatMessage(fulfillmentStatusMessages.replaced);
-    case FulfillmentStatus.RETURNED:
+    case "RETURNED":
       return intl.formatMessage(fulfillmentStatusMessages.returned);
-    case FulfillmentStatus.WAITING_FOR_APPROVAL:
+    case "WAITING_FOR_APPROVAL":
       return intl.formatMessage(fulfillmentStatusMessages.waitingForApproval);
     default:
       return status;

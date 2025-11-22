@@ -53,9 +53,9 @@ const WarehouseSettings = ({
   setData,
 }: WarehouseSettingsProps) => {
   useEffect(() => {
-    if (data.isPrivate && data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL) {
+    if (data.isPrivate && data.clickAndCollectOption === "LOCAL") {
       setData({
-        clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
+        clickAndCollectOption: "DISABLED",
       });
     }
   }, [data.isPrivate]);
@@ -98,7 +98,7 @@ const WarehouseSettings = ({
           </WarehouseRadioSubtitle>
         </>
       ),
-      value: WarehouseClickAndCollectOptionEnum.DISABLED,
+      value: "DISABLED",
     },
     {
       label: (
@@ -112,7 +112,7 @@ const WarehouseSettings = ({
           </WarehouseRadioSubtitle>
         </>
       ),
-      value: WarehouseClickAndCollectOptionEnum.LOCAL,
+      value: "LOCAL",
     },
     {
       label: (
@@ -126,11 +126,11 @@ const WarehouseSettings = ({
           </WarehouseRadioSubtitle>
         </>
       ),
-      value: WarehouseClickAndCollectOptionEnum.ALL,
+      value: "ALL",
     },
   ];
   const clickAndCollectChoices = clickAndCollectChoicesPublic.filter(
-    choice => choice.value !== WarehouseClickAndCollectOptionEnum.LOCAL,
+    choice => choice.value !== "LOCAL",
   );
 
   return (

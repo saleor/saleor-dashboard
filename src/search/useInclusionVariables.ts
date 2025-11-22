@@ -4,11 +4,11 @@ import { useHasPermission } from "./useHasPermission";
 
 export const useInclusionVariables = (scope: string) => {
   const hasPermission = useHasPermission();
-  const hasManageOrdersPermission = hasPermission(PermissionEnum.MANAGE_ORDERS);
-  const hasManageProductsPermission = hasPermission(PermissionEnum.MANAGE_PRODUCTS);
-  const hasManagePagesPermission = hasPermission(PermissionEnum.MANAGE_PAGES);
+  const hasManageOrdersPermission = hasPermission("MANAGE_ORDERS");
+  const hasManageProductsPermission = hasPermission("MANAGE_PRODUCTS");
+  const hasManagePagesPermission = hasPermission("MANAGE_PAGES");
   const hasManagePageTypesAndAttributesPermission = hasPermission(
-    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+    "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
   );
 
   return {

@@ -41,7 +41,7 @@ export const initialData: GiftCardCreateFormData = {
   expirySelected: false,
   expiryType: "EXPIRY_PERIOD",
   expiryDate: "",
-  expiryPeriodType: TimePeriodTypeEnum.MONTH,
+  expiryPeriodType: "MONTH",
   expiryPeriodAmount: 12,
   requiresActivation: true,
 };
@@ -75,7 +75,7 @@ const GiftCardCreateDialogForm = ({
 
     const { expiryType, expiryPeriod } = settingsData?.giftCardSettings ?? {};
 
-    if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
+    if (expiryType === "NEVER_EXPIRE") {
       return {};
     }
 

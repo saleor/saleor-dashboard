@@ -113,7 +113,7 @@ export const OrderDraftDetails = ({
       channel: order.channel.slug,
       address: getVariantSearchAddress(order),
       isPublished: true,
-      stockAvailability: StockAvailability.IN_STOCK,
+      stockAvailability: "IN_STOCK",
     },
   });
   const {

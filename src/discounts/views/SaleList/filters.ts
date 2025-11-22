@@ -2,6 +2,10 @@
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import { SaleFilterKeys } from "@dashboard/discounts/components/SaleListPage";
 import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from "@dashboard/graphql";
+import {
+  DiscountStatusEnumValues,
+  DiscountValueTypeEnumValues,
+} from "@dashboard/graphql/enumConstants";
 import { findValueInEnum, joinDateTime } from "@dashboard/misc";
 
 import {
@@ -19,14 +23,14 @@ import {
 
 export function getFilterVariables(params: SaleListUrlFilters): SaleFilterInput {
   return {
-    saleType: params.type && findValueInEnum(params.type, DiscountValueTypeEnum),
+    saleType: params.type && findValueInEnum(params.type, DiscountValueTypeEnumValues),
     search: params.query,
     started: getGteLteVariables({
       gte: joinDateTime(params.startedFrom),
       lte: joinDateTime(params.startedTo),
     }),
     status:
-      params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
+      params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnumValues)),
   };
 }
 
@@ -38,7 +42,7 @@ export function getFilterQueryParam(filter: FilterElement<SaleFilterKeys>): Sale
       return getSingleEnumValueQueryParam(
         filter as FilterElementRegular<SaleFilterKeys.saleType>,
         SaleListUrlFiltersEnum.type,
-        DiscountValueTypeEnum,
+        DiscountValueTypeEnumValues,
       );
 
     case SaleFilterKeys.started:
@@ -52,7 +56,7 @@ export function getFilterQueryParam(filter: FilterElement<SaleFilterKeys>): Sale
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<SaleFilterKeys.status>,
         SaleListUrlFiltersWithMultipleValues.status,
-        DiscountStatusEnum,
+        DiscountStatusEnumValues,
       );
 
     case SaleFilterKeys.channel:

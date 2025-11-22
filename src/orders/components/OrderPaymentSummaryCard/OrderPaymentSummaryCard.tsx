@@ -24,7 +24,7 @@ export const OrderPaymentSummaryCard = ({ order, onMarkAsPaid }: OrderPaymementP
   const canSendRefund = order?.grantedRefunds?.length > 0;
   const canAnyRefund = canGrantRefund || canSendRefund;
   const hasGiftCards = giftCardAmount > 0;
-  const canMarkAsPaid = order?.actions?.includes(OrderAction.MARK_AS_PAID);
+  const canMarkAsPaid = order?.actions?.includes("MARK_AS_PAID");
   const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(order);
 
   const showHasNoPayment =

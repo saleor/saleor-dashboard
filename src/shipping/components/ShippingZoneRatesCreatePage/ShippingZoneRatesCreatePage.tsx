@@ -80,7 +80,7 @@ const ShippingZoneRatesCreatePage = ({
 }: ShippingZoneRatesCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
+  const isPriceVariant = variant === "PRICE";
   const initialForm: ShippingZoneRateCommonFormData = {
     channelListings: shippingChannels,
     maxDays: "",
@@ -191,7 +191,7 @@ const ShippingZoneRatesCreatePage = ({
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
-              managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
+              managePermissions={["MANAGE_SHIPPING"]}
               allChannelsCount={allChannelsCount}
               channelsList={data.channelListings}
               openModal={openChannelsModal}

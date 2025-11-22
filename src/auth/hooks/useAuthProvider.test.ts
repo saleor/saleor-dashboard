@@ -131,7 +131,7 @@ describe("useAuthProvider", () => {
       mockLogin.mockResolvedValueOnce({
         data: {
           tokenCreate: {
-            errors: [{ code: AccountErrorCode.INVALID_CREDENTIALS }],
+            errors: [{ code: "INVALID_CREDENTIALS" }],
             user: null,
           },
         },
@@ -161,7 +161,7 @@ describe("useAuthProvider", () => {
       mockLogin.mockResolvedValueOnce({
         data: {
           tokenCreate: {
-            errors: [{ code: AccountErrorCode.LOGIN_ATTEMPT_DELAYED }],
+            errors: [{ code: "LOGIN_ATTEMPT_DELAYED" }],
             user: null,
           },
         },
@@ -214,7 +214,7 @@ describe("useAuthProvider", () => {
       mockLogin.mockResolvedValueOnce({
         data: {
           tokenCreate: {
-            errors: [{ code: AccountErrorCode.ACCOUNT_NOT_CONFIRMED }],
+            errors: [{ code: "ACCOUNT_NOT_CONFIRMED" }],
             user: null,
           },
         },

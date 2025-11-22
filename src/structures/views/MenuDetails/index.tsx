@@ -51,7 +51,7 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const intl = useIntl();
   const { data, loading, refetch } = useMenuDetailsQuery({

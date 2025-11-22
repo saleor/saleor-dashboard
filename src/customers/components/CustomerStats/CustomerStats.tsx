@@ -36,7 +36,7 @@ const CustomerStats = (props: CustomerStatsProps) => {
           <Skeleton />
         )}
       </DashboardCard.Content>
-      <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+      <RequirePermissions requiredPermissions={["MANAGE_ORDERS"]}>
         <Divider />
         <DashboardCard.Content display="flex" flexDirection="column">
           <Text size={2}>

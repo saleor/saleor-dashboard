@@ -68,7 +68,7 @@ const getOrderRewardSubtotalValidation = (intl: IntlShape) => {
   return z.object({
     rewardValue: rewardValueRequired(intl),
     rewardValueType: z.string(),
-    rewardType: z.literal(RewardTypeEnum.SUBTOTAL_DISCOUNT),
+    rewardType: z.literal("SUBTOTAL_DISCOUNT"),
     rewardGifts: z.array(option).optional(),
   });
 };
@@ -76,7 +76,7 @@ const getOrderRewardGiftsValidation = (intl: IntlShape) =>
   z.object({
     rewardValue: z.null(),
     rewardValueType: z.string(),
-    rewardType: z.literal(RewardTypeEnum.GIFT),
+    rewardType: z.literal("GIFT"),
     rewardGifts: z.array(option).nonempty({
       message: intl.formatMessage(validationMessages.rewardGiftRequired),
     }),
@@ -93,7 +93,7 @@ export const getValidationSchema = (intl: IntlShape) => {
     ({ rewardValue, rewardValueType, channel }) => {
       if (
         channel &&
-        rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
+        rewardValueType === "PERCENTAGE" &&
         Number(rewardValue) > 100
       ) {
         return false;

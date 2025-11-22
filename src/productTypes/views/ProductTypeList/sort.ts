@@ -6,9 +6,9 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: ProductTypeListUrlSortField): ProductTypeSortField {
   switch (sort) {
     case ProductTypeListUrlSortField.name:
-      return ProductTypeSortField.NAME;
+      return "NAME";
     case ProductTypeListUrlSortField.digital:
-      return ProductTypeSortField.DIGITAL;
+      return "DIGITAL";
     default:
       return undefined;
   }

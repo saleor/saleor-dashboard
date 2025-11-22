@@ -26,10 +26,10 @@ const OrderPayment = (props: OrderPaymentProps) => {
   const { order, onCapture, onMarkAsPaid, onRefund, onVoid } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const canCapture = (order?.actions ?? []).includes(OrderAction.CAPTURE);
-  const canVoid = (order?.actions ?? []).includes(OrderAction.VOID);
-  const canRefund = (order?.actions ?? []).includes(OrderAction.REFUND);
-  const canMarkAsPaid = (order?.actions ?? []).includes(OrderAction.MARK_AS_PAID);
+  const canCapture = (order?.actions ?? []).includes("CAPTURE");
+  const canVoid = (order?.actions ?? []).includes("VOID");
+  const canRefund = (order?.actions ?? []).includes("REFUND");
+  const canMarkAsPaid = (order?.actions ?? []).includes("MARK_AS_PAID");
   const refundedAmount = extractRefundedAmount(order);
   const usedGiftCardAmount = order ? OrderDetailsViewModel.getGiftCardsAmountUsed(order) : null;
   const usedGiftCards = order?.giftCards
@@ -76,7 +76,7 @@ const OrderPayment = (props: OrderPaymentProps) => {
             <Skeleton />
           ) : (
             <div className={classes.titleContainer}>
-              {order?.status !== OrderStatus.CANCELED &&
+              {order?.status !== "CANCELED" &&
                 (canCapture || canRefund || canVoid || canMarkAsPaid) && (
                   <div className={classes.actions}>
                     {canCapture && (

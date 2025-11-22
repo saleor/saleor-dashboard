@@ -65,7 +65,7 @@ describe("OrderPaymentOrTransaction", () => {
           channel: {
             ...order.channel,
             orderSettings: {
-              markAsPaidStrategy: MarkAsPaidStrategyEnum.PAYMENT_FLOW,
+              markAsPaidStrategy: "PAYMENT_FLOW",
               __typename: "OrderSettings",
             },
           },

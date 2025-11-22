@@ -53,8 +53,8 @@ export const handleRefundCreateComplete = ({
     errors.forEach((err: OrderGrantRefundCreateErrorFragment) => {
       if (
         ![
-          OrderGrantRefundCreateErrorCode.REQUIRED,
-          OrderGrantRefundCreateErrorCode.AMOUNT_GREATER_THAN_AVAILABLE,
+          "REQUIRED",
+          "AMOUNT_GREATER_THAN_AVAILABLE",
         ].includes(err.code)
       ) {
         notify({

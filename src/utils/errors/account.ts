@@ -61,25 +61,25 @@ function getAccountErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case AccountErrorCode.INVALID_PASSWORD:
+      case "INVALID_PASSWORD":
         return intl.formatMessage(messages.invalidPassword);
-      case AccountErrorCode.OUT_OF_SCOPE_USER:
+      case "OUT_OF_SCOPE_USER":
         return intl.formatMessage(messages.outOfScopeUser);
-      case AccountErrorCode.OUT_OF_SCOPE_GROUP:
+      case "OUT_OF_SCOPE_GROUP":
         return intl.formatMessage(messages.outOfScopeGroup);
-      case AccountErrorCode.PASSWORD_ENTIRELY_NUMERIC:
+      case "PASSWORD_ENTIRELY_NUMERIC":
         return intl.formatMessage(messages.passwordNumeric);
-      case AccountErrorCode.PASSWORD_TOO_COMMON:
+      case "PASSWORD_TOO_COMMON":
         return intl.formatMessage(messages.tooCommon);
-      case AccountErrorCode.PASSWORD_TOO_SHORT:
+      case "PASSWORD_TOO_SHORT":
         return intl.formatMessage(messages.tooShort);
-      case AccountErrorCode.PASSWORD_TOO_SIMILAR:
+      case "PASSWORD_TOO_SIMILAR":
         return intl.formatMessage(messages.tooSimilar);
-      case AccountErrorCode.UNIQUE:
+      case "UNIQUE":
         return intl.formatMessage(messages.unique);
-      case AccountErrorCode.INVALID:
+      case "INVALID":
         return intl.formatMessage(messages.invalidToken);
-      case AccountErrorCode.NOT_FOUND:
+      case "NOT_FOUND":
         return intl.formatMessage(messages.userNotFound);
     }
   }

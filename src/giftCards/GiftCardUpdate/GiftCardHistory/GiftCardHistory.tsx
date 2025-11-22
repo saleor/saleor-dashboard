@@ -73,7 +73,7 @@ const GiftCardHistory = () => {
               .map(event => {
                 const { id, message, type, date, user, app } = event;
 
-                if (type === GiftCardEventsEnum.NOTE_ADDED) {
+                if (type === "NOTE_ADDED") {
                   return (
                     <TimelineNote
                       date={date}

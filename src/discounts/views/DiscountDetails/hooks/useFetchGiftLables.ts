@@ -37,7 +37,7 @@ function getAllGiftsIdsToFetch(data: PromotionDetailsQuery | undefined): string[
   }
 
   const allGiftsIds = data.promotion.rules
-    .filter(rule => rule.rewardType === RewardTypeEnum.GIFT && !!rule?.giftIds?.length)
+    .filter(rule => rule.rewardType === "GIFT" && !!rule?.giftIds?.length)
     .flatMap(rule => rule.giftIds);
 
   return Array.from(new Set(allGiftsIds)) as string[];

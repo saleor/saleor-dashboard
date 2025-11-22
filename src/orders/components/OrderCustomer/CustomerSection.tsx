@@ -44,7 +44,7 @@ const RegisteredCustomer = ({ user, className, onProfileView }: RegisteredCustom
     <Text className={className} data-test-id="customer-email">
       {user.email}
     </Text>
-    <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_USERS]}>
+    <RequirePermissions requiredPermissions={["MANAGE_USERS"]}>
       <div>
         <Link underline={false} href={customerUrl(user.id)} onClick={onProfileView}>
           <FormattedMessage id="VCzrEZ" defaultMessage="View Profile" description="link" />

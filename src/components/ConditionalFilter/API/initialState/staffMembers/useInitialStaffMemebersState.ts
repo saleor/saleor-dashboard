@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import { StaffMembersFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
 import { EnumValuesHandler } from "../../Handler";
 import { InitialStaffMembersStateResponse } from "./InitialStaffMembersState";
+import { StaffMemberStatusValues } from "@dashboard/graphql/enumConstants";
 
 export interface InitialStaffMembersAPIState {
   data: InitialStaffMembersStateResponse;
@@ -21,7 +22,7 @@ export const useInitialStaffMembersState = (): InitialStaffMembersAPIState => {
 
   const fetchQueries = async ({ staffMemberStatus }: StaffMembersFetchingParams) => {
     const staffMemberStatusInit = new EnumValuesHandler(
-      StaffMemberStatus,
+      StaffMemberStatusValues,
       "staffMemberStatus",
       intl,
       staffMemberStatus,

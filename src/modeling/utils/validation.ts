@@ -4,7 +4,7 @@ import { PageData } from "../components/PageDetailsPage/form";
 
 const createEmptyRequiredError = (field: string): PageErrorWithAttributesFragment => ({
   __typename: "PageError",
-  code: PageErrorCode.REQUIRED,
+  code: "REQUIRED",
   field,
   message: null,
   attributes: [],

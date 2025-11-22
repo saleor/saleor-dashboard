@@ -44,7 +44,7 @@ const ShippingZonesListPage = ({
         withoutBorder
       >
         <Box display="flex" alignItems="end" gap={2}>
-          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}>
+          <RequirePermissions requiredPermissions={["MANAGE_SETTINGS"]}>
             <TopNav.Menu
               dataTestId="shipping-zones-menu"
               items={[

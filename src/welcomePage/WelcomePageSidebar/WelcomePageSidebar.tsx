@@ -39,7 +39,7 @@ export const WelcomePageSidebar = (props: HomeSidebarProps) => {
           />
         </DashboardCard.Header>
         <DashboardCard.Content>
-          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+          <RequirePermissions requiredPermissions={["MANAGE_ORDERS"]}>
             <Box display="grid" gap={5} marginBottom={7}>
               <WelcomePageSalesAnalytics />
               <WelcomePageStocksAnalytics />

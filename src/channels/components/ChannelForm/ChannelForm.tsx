@@ -194,7 +194,7 @@ export const ChannelForm = ({
           />
         </Box>
         <MarkAsPaid
-          isChecked={data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW}
+          isChecked={data.markAsPaidStrategy === "TRANSACTION_FLOW"}
           onCheckedChange={onMarkAsPaidStrategyChange}
           hasError={!!formErrors.markAsPaidStrategy}
           disabled={disabled}
@@ -210,7 +210,7 @@ export const ChannelForm = ({
         <DefaultTransactionFlowStrategy
           onChange={onTransactionFlowStrategyChange}
           isChecked={
-            data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.AUTHORIZATION
+            data.defaultTransactionFlowStrategy === "AUTHORIZATION"
           }
           hasError={!!formErrors.defaultTransactionFlowStrategy}
           disabled={disabled}

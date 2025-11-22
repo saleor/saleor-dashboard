@@ -20,8 +20,8 @@ describe("Filtering query params", () => {
     const params: SaleListUrlFilters = {
       startedFrom: date.from,
       startedTo: date.to,
-      status: [DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED],
-      type: DiscountValueTypeEnum.FIXED,
+      status: ["ACTIVE", "EXPIRED"],
+      type: "FIXED",
     };
     const filterVariables = getFilterVariables(params);
 
@@ -42,7 +42,7 @@ describe("Filtering URL params", () => {
     },
     saleType: {
       active: false,
-      value: DiscountValueTypeEnum.FIXED,
+      value: "FIXED",
     },
     started: {
       active: false,
@@ -53,7 +53,7 @@ describe("Filtering URL params", () => {
     },
     status: {
       active: false,
-      value: [DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED],
+      value: ["ACTIVE", "EXPIRED"],
     },
   });
 

@@ -108,7 +108,7 @@ describe("attributes/utils/data", () => {
           value: ["old-value"],
           label: "Test Attribute",
           data: {
-            inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
+            inputType: "SINGLE_REFERENCE",
             isRequired: false,
             values: [],
           },
@@ -143,7 +143,7 @@ describe("attributes/utils/data", () => {
           value: ["existing-1", "existing-2"],
           label: "Test Attribute",
           data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
+            inputType: "REFERENCE",
             isRequired: false,
             values: [],
           },
@@ -181,7 +181,7 @@ describe("attributes/utils/data", () => {
           value: [],
           label: "Test Attribute",
           data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
+            inputType: "REFERENCE",
             isRequired: false,
             values: [],
           },
@@ -227,7 +227,7 @@ describe("attributes/utils/data", () => {
           value: ["old-value"],
           label: "Test Attribute",
           data: {
-            inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
+            inputType: "SINGLE_REFERENCE",
             isRequired: false,
             values: [],
           },
@@ -262,7 +262,7 @@ describe("attributes/utils/data", () => {
           value: ["existing-1", "existing-2"],
           label: "Test Attribute",
           data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
+            inputType: "REFERENCE",
             isRequired: false,
             values: [],
           },
@@ -300,7 +300,7 @@ describe("attributes/utils/data", () => {
           value: ["existing-1"],
           label: "Test Attribute",
           data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
+            inputType: "REFERENCE",
             isRequired: false,
             values: [],
           },
@@ -336,8 +336,8 @@ describe("attributes/utils/data", () => {
         value: ["meta-ref-1", "meta-ref-2"],
         label: "Test",
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT,
+          inputType: "REFERENCE",
+          entityType: "PRODUCT",
           isRequired: false,
           values: [],
           references: [],
@@ -368,8 +368,8 @@ describe("attributes/utils/data", () => {
         value: ["fallback-ref-1", "fallback-ref-2"],
         label: "Test",
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT,
+          inputType: "REFERENCE",
+          entityType: "PRODUCT",
           isRequired: false,
           values: [],
           references: [],
@@ -399,8 +399,8 @@ describe("attributes/utils/data", () => {
         value: ["test-page-1"],
         label: "Test",
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PAGE,
+          inputType: "REFERENCE",
+          entityType: "PAGE",
           isRequired: false,
           values: [],
           references: [],
@@ -424,8 +424,8 @@ describe("attributes/utils/data", () => {
         value: ["test-variant-1"],
         label: "Test",
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+          inputType: "REFERENCE",
+          entityType: "PRODUCT_VARIANT",
           isRequired: false,
           values: [],
           references: [],
@@ -460,8 +460,8 @@ describe("attributes/utils/data", () => {
         value: ["test-unknown-ref"],
         label: "Test",
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT,
+          inputType: "REFERENCE",
+          entityType: "PRODUCT",
           isRequired: false,
           values: [],
           references: [],
@@ -505,8 +505,8 @@ describe("attributes/utils/data", () => {
         value: ["v3", "non-existent"],
         label: "Test",
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+          inputType: "REFERENCE",
+          entityType: "PRODUCT_VARIANT",
           isRequired: false,
           values: [],
           references: [],
@@ -555,8 +555,8 @@ describe("attributes/utils/data", () => {
           value: ["cache-variant-1"],
           label: "Test 1",
           data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
-            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            inputType: "REFERENCE",
+            entityType: "PRODUCT_VARIANT",
             isRequired: false,
             values: [],
             references: [],
@@ -568,8 +568,8 @@ describe("attributes/utils/data", () => {
           value: ["cache-variant-2"],
           label: "Test 2",
           data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
-            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            inputType: "REFERENCE",
+            entityType: "PRODUCT_VARIANT",
             isRequired: false,
             values: [],
             references: [],
@@ -581,8 +581,8 @@ describe("attributes/utils/data", () => {
           value: ["cache-variant-3", "cache-variant-1"],
           label: "Test 3",
           data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
-            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            inputType: "REFERENCE",
+            entityType: "PRODUCT_VARIANT",
             isRequired: false,
             values: [],
             references: [],
@@ -651,8 +651,8 @@ describe("attributes/utils/data", () => {
           value: ["sep-p1-v1", "sep-p2-v1", "sep-p1-v2", "sep-p2-v2"],
           label: "Test",
           data: {
-            inputType: AttributeInputTypeEnum.REFERENCE,
-            entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+            inputType: "REFERENCE",
+            entityType: "PRODUCT_VARIANT",
             isRequired: false,
             values: [],
             references: [],
@@ -687,7 +687,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for REFERENCE attribute with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.REFERENCE, []);
+      const attribute = createTestAttribute("REFERENCE", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -698,7 +698,7 @@ describe("attributes/utils/data", () => {
 
     it("should return reference IDs for REFERENCE attribute with values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.REFERENCE, [
+      const attribute = createTestAttribute("REFERENCE", [
         { reference: "ref-1" },
         { reference: "ref-2" },
       ]);
@@ -712,7 +712,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for SINGLE_REFERENCE attribute with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.SINGLE_REFERENCE, []);
+      const attribute = createTestAttribute("SINGLE_REFERENCE", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -723,7 +723,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with reference ID for SINGLE_REFERENCE attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.SINGLE_REFERENCE, [
+      const attribute = createTestAttribute("SINGLE_REFERENCE", [
         { reference: "ref-1" },
       ]);
 
@@ -736,7 +736,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for PLAIN_TEXT attribute with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.PLAIN_TEXT, []);
+      const attribute = createTestAttribute("PLAIN_TEXT", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -747,7 +747,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with text for PLAIN_TEXT attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.PLAIN_TEXT, [
+      const attribute = createTestAttribute("PLAIN_TEXT", [
         { plainText: "Some text" },
       ]);
 
@@ -760,7 +760,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for RICH_TEXT attribute with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.RICH_TEXT, []);
+      const attribute = createTestAttribute("RICH_TEXT", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -771,7 +771,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with rich text for RICH_TEXT attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.RICH_TEXT, [
+      const attribute = createTestAttribute("RICH_TEXT", [
         { richText: "<p>Rich text</p>" },
       ]);
 
@@ -784,7 +784,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for NUMERIC attribute with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.NUMERIC, []);
+      const attribute = createTestAttribute("NUMERIC", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -795,7 +795,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with name for NUMERIC attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.NUMERIC, [{ name: "123" }]);
+      const attribute = createTestAttribute("NUMERIC", [{ name: "123" }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -806,7 +806,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for BOOLEAN attribute with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.BOOLEAN, []);
+      const attribute = createTestAttribute("BOOLEAN", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -817,7 +817,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with false for BOOLEAN attribute with false value", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.BOOLEAN, [{ boolean: false }]);
+      const attribute = createTestAttribute("BOOLEAN", [{ boolean: false }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -828,7 +828,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with true for BOOLEAN attribute with true value", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.BOOLEAN, [{ boolean: true }]);
+      const attribute = createTestAttribute("BOOLEAN", [{ boolean: true }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -839,7 +839,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for DATE attribute with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.DATE, []);
+      const attribute = createTestAttribute("DATE", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -850,7 +850,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with date for DATE attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.DATE, [{ date: "2024-01-15" }]);
+      const attribute = createTestAttribute("DATE", [{ date: "2024-01-15" }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -861,7 +861,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for DATE_TIME attribute with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.DATE_TIME, []);
+      const attribute = createTestAttribute("DATE_TIME", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -872,7 +872,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with datetime for DATE_TIME attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.DATE_TIME, [
+      const attribute = createTestAttribute("DATE_TIME", [
         { dateTime: "2024-01-15T10:30:00Z" },
       ]);
 
@@ -885,7 +885,7 @@ describe("attributes/utils/data", () => {
 
     it("should return slugs for default attribute type (DROPDOWN/MULTISELECT) with values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.DROPDOWN, [
+      const attribute = createTestAttribute("DROPDOWN", [
         { slug: "option-1" },
         { slug: "option-2" },
       ]);
@@ -899,7 +899,7 @@ describe("attributes/utils/data", () => {
 
     it("should return empty array for default attribute type with empty values", () => {
       // Arrange
-      const attribute = createTestAttribute(AttributeInputTypeEnum.MULTISELECT, []);
+      const attribute = createTestAttribute("MULTISELECT", []);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -911,11 +911,11 @@ describe("attributes/utils/data", () => {
     it("should handle null/undefined fields gracefully", () => {
       // Arrange
       const attributeWithNullReference = createTestAttribute(
-        AttributeInputTypeEnum.SINGLE_REFERENCE,
+        "SINGLE_REFERENCE",
         [{ reference: null }],
       );
       const attributeWithUndefinedPlainText = createTestAttribute(
-        AttributeInputTypeEnum.PLAIN_TEXT,
+        "PLAIN_TEXT",
         [{ plainText: undefined }],
       );
 

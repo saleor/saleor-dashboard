@@ -24,19 +24,19 @@ export function canBeSorted(sort: VoucherListUrlSortField, isChannelSelected: bo
 function getSortQueryField(sort: VoucherListUrlSortField): VoucherSortField {
   switch (sort) {
     case VoucherListUrlSortField.code:
-      return VoucherSortField.CODE;
+      return "CODE";
     case VoucherListUrlSortField.endDate:
-      return VoucherSortField.END_DATE;
+      return "END_DATE";
     case VoucherListUrlSortField.minSpent:
-      return VoucherSortField.MINIMUM_SPENT_AMOUNT;
+      return "MINIMUM_SPENT_AMOUNT";
     case VoucherListUrlSortField.limit:
-      return VoucherSortField.USAGE_LIMIT;
+      return "USAGE_LIMIT";
     case VoucherListUrlSortField.startDate:
-      return VoucherSortField.START_DATE;
+      return "START_DATE";
     case VoucherListUrlSortField.type:
-      return VoucherSortField.TYPE;
+      return "TYPE";
     case VoucherListUrlSortField.value:
-      return VoucherSortField.VALUE;
+      return "VALUE";
     default:
       return undefined;
   }

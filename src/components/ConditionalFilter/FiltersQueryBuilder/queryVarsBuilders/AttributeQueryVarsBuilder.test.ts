@@ -62,8 +62,8 @@ describe("AttributeQueryVarsBuilder", () => {
         new ExpressionValue(
           "attr-slug",
           "Attr",
-          AttributeInputTypeEnum.REFERENCE,
-          AttributeEntityTypeEnum.PAGE,
+          "REFERENCE",
+          "PAGE",
         ),
       );
       const def = new AttributeQueryVarsBuilder();
@@ -84,8 +84,8 @@ describe("AttributeQueryVarsBuilder", () => {
         new ExpressionValue(
           "attr-slug",
           "Attr",
-          AttributeInputTypeEnum.REFERENCE,
-          AttributeEntityTypeEnum.PRODUCT,
+          "REFERENCE",
+          "PRODUCT",
         ),
       );
       const def = new AttributeQueryVarsBuilder();
@@ -106,8 +106,8 @@ describe("AttributeQueryVarsBuilder", () => {
         new ExpressionValue(
           "attr-slug",
           "Attr",
-          AttributeInputTypeEnum.REFERENCE,
-          AttributeEntityTypeEnum.PRODUCT_VARIANT,
+          "REFERENCE",
+          "PRODUCT_VARIANT",
         ),
       );
       const def = new AttributeQueryVarsBuilder();
@@ -125,7 +125,7 @@ describe("AttributeQueryVarsBuilder", () => {
         baseElement.condition,
         false,
         undefined,
-        new ExpressionValue("attr-slug", "Attr", AttributeInputTypeEnum.DROPDOWN),
+        new ExpressionValue("attr-slug", "Attr", "DROPDOWN"),
       );
       const def = new AttributeQueryVarsBuilder();
       // Act
@@ -159,7 +159,7 @@ describe("AttributeQueryVarsBuilder", () => {
     const baseConditionItem: ConditionItem = { type: "multiselect", label: "in", value: "input-2" };
     const baseSelected = ConditionSelected.fromConditionItem(baseConditionItem);
     const baseCondition = new Condition(
-      ConditionOptions.fromName(AttributeInputTypeEnum.DROPDOWN),
+      ConditionOptions.fromName("DROPDOWN"),
       baseSelected,
       false,
     );
@@ -171,8 +171,8 @@ describe("AttributeQueryVarsBuilder", () => {
       const selectedAttribute = new ExpressionValue(
         attributeSlug,
         "RefAttr",
-        AttributeInputTypeEnum.REFERENCE,
-        AttributeEntityTypeEnum.PAGE,
+        "REFERENCE",
+        "PAGE",
       );
       const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, [
         {
@@ -182,7 +182,7 @@ describe("AttributeQueryVarsBuilder", () => {
         },
       ]);
       const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.REFERENCE),
+        ConditionOptions.fromName("REFERENCE"),
         selected,
         false,
       );
@@ -213,8 +213,8 @@ describe("AttributeQueryVarsBuilder", () => {
       const selectedAttribute = new ExpressionValue(
         attributeSlug,
         "Product Ref",
-        AttributeInputTypeEnum.REFERENCE,
-        AttributeEntityTypeEnum.PRODUCT,
+        "REFERENCE",
+        "PRODUCT",
       );
       const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, [
         {
@@ -224,7 +224,7 @@ describe("AttributeQueryVarsBuilder", () => {
         },
       ]);
       const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.REFERENCE),
+        ConditionOptions.fromName("REFERENCE"),
         selected,
         false,
       );
@@ -256,8 +256,8 @@ describe("AttributeQueryVarsBuilder", () => {
       const selectedAttribute = new ExpressionValue(
         attributeSlug,
         "Variant Ref",
-        AttributeInputTypeEnum.SINGLE_REFERENCE,
-        AttributeEntityTypeEnum.PRODUCT_VARIANT,
+        "SINGLE_REFERENCE",
+        "PRODUCT_VARIANT",
       );
       const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, [
         {
@@ -268,7 +268,7 @@ describe("AttributeQueryVarsBuilder", () => {
         },
       ]);
       const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.SINGLE_REFERENCE),
+        ConditionOptions.fromName("SINGLE_REFERENCE"),
         selected,
         false,
       );
@@ -301,7 +301,7 @@ describe("AttributeQueryVarsBuilder", () => {
       const selectedAttribute = new ExpressionValue(
         attributeSlug,
         "DropdownAttr",
-        AttributeInputTypeEnum.DROPDOWN,
+        "DROPDOWN",
       );
       const selected = ConditionSelected.fromConditionItemAndValue(baseConditionItem, {
         label: "Option 1",
@@ -309,7 +309,7 @@ describe("AttributeQueryVarsBuilder", () => {
         slug: optionValue,
       });
       const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.DROPDOWN),
+        ConditionOptions.fromName("DROPDOWN"),
         selected,
         false,
       );
@@ -327,7 +327,7 @@ describe("AttributeQueryVarsBuilder", () => {
       const selectedAttribute = new ExpressionValue(
         attributeSlug,
         "NumericAttr",
-        AttributeInputTypeEnum.NUMERIC,
+        "NUMERIC",
       );
       const rangeConditionItem: ConditionItem = {
         type: "number.range",
@@ -339,7 +339,7 @@ describe("AttributeQueryVarsBuilder", () => {
         "20",
       ]);
       const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.NUMERIC),
+        ConditionOptions.fromName("NUMERIC"),
         selected,
         false,
       );
@@ -361,7 +361,7 @@ describe("AttributeQueryVarsBuilder", () => {
       const selectedAttribute = new ExpressionValue(
         attributeSlug,
         "DateAttr",
-        AttributeInputTypeEnum.DATE,
+        "DATE",
       );
       const rangeConditionItem: ConditionItem = {
         type: "date.range",
@@ -373,7 +373,7 @@ describe("AttributeQueryVarsBuilder", () => {
         endDate,
       ]);
       const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.DATE),
+        ConditionOptions.fromName("DATE"),
         selected,
         false,
       );
@@ -395,7 +395,7 @@ describe("AttributeQueryVarsBuilder", () => {
       const selectedAttribute = new ExpressionValue(
         attributeSlug,
         "DatetimeAttr",
-        AttributeInputTypeEnum.DATE_TIME,
+        "DATE_TIME",
       );
       const rangeConditionItem: ConditionItem = {
         type: "datetime.range",
@@ -407,7 +407,7 @@ describe("AttributeQueryVarsBuilder", () => {
         endDateTime,
       ]);
       const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.DATE_TIME),
+        ConditionOptions.fromName("DATE_TIME"),
         selected,
         false,
       );
@@ -428,7 +428,7 @@ describe("AttributeQueryVarsBuilder", () => {
       const selectedAttribute = new ExpressionValue(
         attributeSlug,
         "BoolAttr",
-        AttributeInputTypeEnum.BOOLEAN,
+        "BOOLEAN",
       );
       const boolConditionItem: ConditionItem = { type: "select", label: "is", value: "input-5" };
       const selected = ConditionSelected.fromConditionItemAndValue(boolConditionItem, {
@@ -437,7 +437,7 @@ describe("AttributeQueryVarsBuilder", () => {
         slug: boolValue.toString(),
       });
       const condition = new Condition(
-        ConditionOptions.fromName(AttributeInputTypeEnum.BOOLEAN),
+        ConditionOptions.fromName("BOOLEAN"),
         selected,
         false,
       );

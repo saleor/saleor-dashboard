@@ -129,7 +129,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   };
 
   useEffect(() => {
-    if (errors && errors.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)) {
+    if (errors && errors.every(err => err.code === "INSUFFICIENT_STOCK")) {
       setDisplayStockExceededDialog(true);
     }
   }, [errors]);

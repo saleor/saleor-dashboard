@@ -288,7 +288,7 @@ const VoucherCreatePage = ({
                 onChange={change}
               />
             ) : null}
-            {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
+            {data.type === "SPECIFIC_PRODUCT" &&
             data.discountType.toString() !== "SHIPPING" ? (
               <>
                 <TabContainer>
@@ -435,7 +435,7 @@ const VoucherCreatePage = ({
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
-              managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+              managePermissions={["MANAGE_DISCOUNTS"]}
               allChannelsCount={allChannelsCount}
               channelsList={data.channelListings.map(channel => ({
                 id: channel.id,

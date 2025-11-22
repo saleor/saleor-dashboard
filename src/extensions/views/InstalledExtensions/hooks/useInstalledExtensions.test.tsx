@@ -211,7 +211,7 @@ describe("InstalledExtensions / hooks / useInstalledExtensions / getExtensionInf
       loading: false,
       lastFailedAttempt: {
         id: "1",
-        status: EventDeliveryStatusEnum.FAILED,
+        status: "FAILED",
         createdAt: moment("2023-10-03T00:00:00Z"),
       } as LatestWebhookDeliveryWithMoment,
     };
