@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { GiftCardErrorCode, GiftCardErrorFragment } from "@dashboard/graphql";
 import commonErrorMessages, {
   getCommonFormFieldErrorMessage,

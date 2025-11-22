@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import GiftCardUpdatePageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardUpdatePageDeleteDialog";
 import { giftCardsListPath, giftCardUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";

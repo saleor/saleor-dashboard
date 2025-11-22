@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Combobox } from "@dashboard/components/Combobox";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { commonMessages } from "@dashboard/intl";

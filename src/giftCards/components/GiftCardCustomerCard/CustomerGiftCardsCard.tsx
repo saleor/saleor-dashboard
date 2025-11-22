@@ -1,11 +1,13 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import { DashboardModal } from "@dashboard/components/Modal";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
-import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
+import {
+  getExtendedGiftCard,
+  isDefinedExtendedGiftCard,
+} from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useCustomerGiftCardListQuery } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
@@ -38,7 +40,7 @@ const CustomerGiftCardsCard = () => {
 
   const closeCreateDialog = () => setOpenCreateDialog(false);
 
-  const giftCards = mapEdgesToItems(data?.giftCards);
+  const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard).filter(isDefinedExtendedGiftCard);
 
   const viewAllGiftCardsUrl = giftCardListUrl({
     usedBy: [id],
@@ -76,9 +78,7 @@ const CustomerGiftCardsCard = () => {
         {!loading && giftCards ? (
           <CollectionWithDividers
             collection={giftCards}
-            renderItem={giftCard => (
-              <CustomerGiftCardsCardListItem giftCard={getExtendedGiftCard(giftCard)} />
-            )}
+            renderItem={giftCard => <CustomerGiftCardsCardListItem giftCard={giftCard} />}
             withOuterDividers
           />
         ) : (

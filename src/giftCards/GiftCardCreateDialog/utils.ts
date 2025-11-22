@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { IMessage } from "@dashboard/components/messages";
 import { GiftCardCreateMutation, TimePeriodTypeEnum } from "@dashboard/graphql";
 import commonErrorMessages from "@dashboard/utils/errors/common";
