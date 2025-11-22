@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import Money from "@dashboard/components/Money";
 import { IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderFulfillLineFragment } from "@dashboard/graphql";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import Debounce from "@dashboard/components/Debounce";
 import { DashboardModal } from "@dashboard/components/Modal";
 import TableRowLink from "@dashboard/components/TableRowLink";

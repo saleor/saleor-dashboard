@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { DashboardCard } from "@dashboard/components/Card";
 import Hr from "@dashboard/components/Hr";

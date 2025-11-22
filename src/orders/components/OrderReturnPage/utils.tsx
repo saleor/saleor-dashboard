@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getCurrencyDecimalPoints } from "@dashboard/components/PriceField/utils";
 import { FulfillmentStatus, OrderDetailsFragment, TransactionActionEnum } from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";

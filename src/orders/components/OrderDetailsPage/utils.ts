@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import PriceField from "@dashboard/components/PriceField";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TransactionEventFragment } from "@dashboard/graphql";
 import { TransactionFakeEvent, TransactionMappingResult } from "@dashboard/orders/types";
 

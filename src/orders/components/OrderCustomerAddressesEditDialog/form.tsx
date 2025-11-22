@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { AddressFragment, CountryWithCodeFragment, Node } from "@dashboard/graphql";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
