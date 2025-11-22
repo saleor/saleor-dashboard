@@ -18,7 +18,9 @@ interface ShippingZonePostalCodesProps {
   initialExpanded?: boolean;
   postalCodes: ShippingMethodTypeFragment["postalCodeRules"] | undefined;
   onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
-  onPostalCodeDelete: (code: ShippingMethodTypeFragment["postalCodeRules"][0]) => void;
+  onPostalCodeDelete: (
+    code: NonNullable<ShippingMethodTypeFragment["postalCodeRules"]>[number],
+  ) => void;
   onPostalCodeRangeAdd: () => void;
 }
 
@@ -218,7 +220,7 @@ const ShippingZonePostalCodes = ({
                       disabled={disabled}
                       color="primary"
                       variant="secondary"
-                      onClick={() => onPostalCodeDelete(postalCodeRange)}
+                      onClick={() => postalCodeRange && onPostalCodeDelete(postalCodeRange)}
                       data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >
                       <DeleteIcon
