@@ -15,7 +15,7 @@ import { useState } from "react";
 import { MenuItemType } from "../MenuItemDialog";
 import MenuItems, { TreeOperation } from "../MenuItems";
 import MenuProperties from "../MenuProperties";
-import { computeRelativeTree } from "./tree";
+import { computeRelativeTree, normalizeMenuItems } from "./tree";
 
 export interface MenuDetailsFormData {
   name: string;
@@ -95,7 +95,11 @@ const MenuDetailsPage = ({
           <DetailPageLayout.Content>
             <MenuItems
               canUndo={treeOperations.length > 0}
-              items={menu?.items ? computeRelativeTree(menu.items, treeOperations) : []}
+              items={
+                menu?.items
+                  ? computeRelativeTree(normalizeMenuItems(menu.items), treeOperations)
+                  : []
+              }
               onChange={handleChange}
               onItemAdd={onItemAdd}
               onItemClick={onItemClick}

@@ -17,7 +17,7 @@ export function handleItemCreate(
   closeModal: () => void,
   intl: IntlShape,
 ) {
-  if (data.menuItemCreate.errors.length === 0) {
+  if (data.menuItemCreate?.errors.length === 0) {
     closeModal();
     notify({
       status: "success",
@@ -33,7 +33,7 @@ export function handleItemUpdate(
   notify: UseNotifierResult,
   intl: IntlShape,
 ) {
-  if (data.menuItemUpdate.errors.length === 0) {
+  if (data.menuItemUpdate?.errors.length === 0) {
     notify({
       status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
@@ -53,7 +53,7 @@ export function handleDelete(
   notify: UseNotifierResult,
   intl: IntlShape,
 ) {
-  if (data.menuDelete.errors.length === 0) {
+  if (data.menuDelete?.errors.length === 0) {
     notify({
       status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
@@ -69,9 +69,9 @@ export function handleUpdate(
   intl: IntlShape,
 ) {
   if (
-    data.menuItemBulkDelete.errors.length === 0 &&
-    data.menuItemMove.errors.length === 0 &&
-    data.menuUpdate.errors.length === 0
+    data.menuItemBulkDelete?.errors.length === 0 &&
+    data.menuItemMove?.errors.length === 0 &&
+    data.menuUpdate?.errors.length === 0
   ) {
     notify({
       status: "success",

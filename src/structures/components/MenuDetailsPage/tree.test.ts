@@ -2,7 +2,10 @@ import { RecursiveMenuItem } from "@dashboard/structures/types";
 
 import { menu } from "../../fixtures";
 import { TreeOperation } from "../MenuItems";
-import { computeRelativeTree } from "./tree";
+import { computeRelativeTree, normalizeMenuItems } from "./tree";
+
+// Normalize menu items for testing
+const normalizedMenuItems = normalizeMenuItems(menu.items);
 
 const relativeOutput: RecursiveMenuItem[][] = [
   // no moves
@@ -1166,7 +1169,7 @@ function treeToString(tree: RecursiveMenuItem[]): string {
 describe("Properly computes trees", () => {
   testTable.forEach(testData =>
     it("#", () => {
-      const computedTree = computeRelativeTree(menu.items, testData);
+      const computedTree = computeRelativeTree(normalizedMenuItems, testData);
 
       expect(treeToString(computedTree)).toMatchSnapshot();
     }),
@@ -1174,57 +1177,57 @@ describe("Properly computes trees", () => {
 });
 describe("Properly computes relative trees", () => {
   it("doesn't move anything", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[0]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[0]);
 
     expect(computedTree).toEqual(relativeOutput[0]);
   });
   it("moves one root element", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[1]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[1]);
 
     expect(computedTree).toEqual(relativeOutput[1]);
   });
   it("moves two root element", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[2]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[2]);
 
     expect(computedTree).toEqual(relativeOutput[2]);
   });
   it("empty moves", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[3]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[3]);
 
     expect(computedTree).toEqual(relativeOutput[3]);
   });
   it("moves every element", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[4]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[4]);
 
     expect(computedTree).toEqual(relativeOutput[4]);
   });
   it("moves children", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[5]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[5]);
 
     expect(computedTree).toEqual(relativeOutput[5]);
   });
   it("moves child outside", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[6]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[6]);
 
     expect(computedTree).toEqual(relativeOutput[6]);
   });
   it("moves child outside and puts it in a location", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[7]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[7]);
 
     expect(computedTree).toEqual(relativeOutput[7]);
   });
   it("moves child inside", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[8]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[8]);
 
     expect(computedTree).toEqual(relativeOutput[8]);
   });
   it("moves child inside then outside then changes index", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[9]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[9]);
 
     expect(computedTree).toEqual(relativeOutput[9]);
   });
   it("moves item as last child and moves it up", () => {
-    const computedTree = computeRelativeTree(menu.items, secondTestTable[10]);
+    const computedTree = computeRelativeTree(normalizedMenuItems, secondTestTable[10]);
 
     expect(computedTree).toEqual(relativeOutput[10]);
   });
@@ -1240,7 +1243,7 @@ describe("Error handling for invalid paths", () => {
 
     // Act & Assert
     expect(() => {
-      computeRelativeTree(menu.items, [invalidOperation]);
+      computeRelativeTree(normalizedMenuItems, [invalidOperation]);
     }).toThrow("Cannot get node with null path");
   });
 
@@ -1253,7 +1256,7 @@ describe("Error handling for invalid paths", () => {
 
     // Act & Assert
     expect(() => {
-      computeRelativeTree(menu.items, [invalidOperation]);
+      computeRelativeTree(normalizedMenuItems, [invalidOperation]);
     }).toThrow("Cannot get node with null path");
   });
 });

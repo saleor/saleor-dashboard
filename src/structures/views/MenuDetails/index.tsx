@@ -18,9 +18,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
-import { extractMutationErrors, maybe } from "../../../misc";
+import { extractMutationErrors } from "../../../misc";
 import MenuDetailsPage, { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
-import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
+import { findNode, getNode, normalizeMenuItems } from "../../components/MenuDetailsPage/tree";
 import MenuItemDialog, {
   MenuItemDialogFormData,
   MenuItemType,
@@ -116,11 +116,15 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
         },
       }),
     );
-  const menuItem = maybe(() => getNode(data.menu.items, findNode(data.menu.items, params.id)));
+  const normalizedItems = data?.menu?.items ? normalizeMenuItems(data.menu.items) : [];
+  const menuItem =
+    normalizedItems.length > 0 && params.id
+      ? getNode(normalizedItems, findNode(normalizedItems, params.id))
+      : undefined;
   const initialMenuItemUpdateFormData: MenuItemDialogFormData = {
-    id: maybe(() => getItemId(menuItem)),
-    name: maybe(() => menuItem.name, "..."),
-    linkType: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
+    id: menuItem ? getItemId(menuItem) : "",
+    name: menuItem?.name ?? "...",
+    linkType: menuItem ? getItemType(menuItem) : "category",
     linkValue: getInitialMenuItemValue(menuItem),
   };
   // This is a workaround to let know <MenuDetailsPage />
@@ -136,10 +140,14 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
       },
     });
 
+    if (!result.data) {
+      return [];
+    }
+
     return [
-      ...result.data.menuItemBulkDelete.errors,
-      ...result.data.menuItemMove.errors,
-      ...result.data.menuUpdate.errors,
+      ...(result.data.menuItemBulkDelete?.errors ?? []),
+      ...(result.data.menuItemMove?.errors ?? []),
+      ...(result.data.menuUpdate?.errors ?? []),
     ];
   };
 
@@ -148,11 +156,10 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
       <MenuDetailsPage
         disabled={loading}
         errors={[
-          ...(menuUpdateOpts.data?.menuUpdate.errors || []),
-          ...(menuUpdateOpts.data?.menuItemMove.errors || []),
-          ...(menuUpdateOpts.data?.menuUpdate.errors || []),
+          ...(menuUpdateOpts.data?.menuUpdate?.errors ?? []),
+          ...(menuUpdateOpts.data?.menuItemMove?.errors ?? []),
         ]}
-        menu={maybe(() => data.menu)}
+        menu={data?.menu ?? undefined}
         onDelete={() =>
           navigate(
             menuUrl(id, {
@@ -207,14 +214,14 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
           id="U2DyeR"
           defaultMessage="Are you sure you want to delete structure {menuName}?"
           values={{
-            menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
+            menuName: <strong>{data?.menu?.name ?? "..."}</strong>,
           }}
         />
       </ActionDialog>
 
       <MenuItemDialog
         open={params.action === "add-item"}
-        errors={maybe(() => menuItemCreateOpts.data.menuItemCreate.errors, [])}
+        errors={menuItemCreateOpts.data?.menuItemCreate?.errors ?? []}
         confirmButtonState={menuItemCreateOpts.status}
         disabled={menuItemCreateOpts.loading}
         onClose={closeModal}
@@ -222,7 +229,7 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
       />
       <MenuItemDialog
         open={params.action === "edit-item"}
-        errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
+        errors={menuItemUpdateOpts.data?.menuItemUpdate?.errors ?? []}
         initial={initialMenuItemUpdateFormData}
         initialDisplayValue={getInitialMenuItemLabel(menuItem)}
         confirmButtonState={menuItemUpdateOpts.status}

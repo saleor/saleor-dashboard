@@ -1,6 +1,17 @@
+import { MenuDetailsFragment } from "@dashboard/graphql";
 import { RecursiveMenuItem } from "@dashboard/structures/types";
 
 import { TreeOperation } from "../MenuItems";
+
+// Normalizes GraphQL menu items to ensure children is always an array
+export function normalizeMenuItems(items: MenuDetailsFragment["items"]): RecursiveMenuItem[] {
+  if (!items) return [];
+
+  return items.map(item => ({
+    ...item,
+    children: normalizeMenuItems(item.children),
+  }));
+}
 
 export function findNode(tree: RecursiveMenuItem[], id: string): (number | null)[] {
   const foundNodeIndex = tree.findIndex(node => node.id === id);
@@ -13,13 +24,14 @@ export function findNode(tree: RecursiveMenuItem[], id: string): (number | null)
     return [foundNodeIndex];
   }
 
-  const nodeMap = tree.map((node, nodeIndex) => [nodeIndex, ...findNode(node.children, id)]);
+  const nodeMap = tree.map((node, nodeIndex) => [nodeIndex, ...findNode(node.children ?? [], id)]);
 
   return nodeMap.find(path => path[path.length - 1] !== null) || [null];
 }
 
 export function getNode(tree: RecursiveMenuItem[], path: (number | null)[]): RecursiveMenuItem {
   const index = path[0];
+
   if (index === null) {
     throw new Error("Cannot get node with null path");
   }
@@ -28,11 +40,12 @@ export function getNode(tree: RecursiveMenuItem[], path: (number | null)[]): Rec
     return tree[index];
   }
 
-  return getNode([...tree[index].children], path.slice(1));
+  return getNode(tree[index].children ?? [], path.slice(1));
 }
 
 function removeNode(tree: RecursiveMenuItem[], path: (number | null)[]): RecursiveMenuItem[] {
   const removeIndex = path[0];
+
   if (removeIndex === null) {
     throw new Error("Cannot remove node with null path");
   }
@@ -45,7 +58,7 @@ function removeNode(tree: RecursiveMenuItem[], path: (number | null)[]): Recursi
 
   newTree[removeIndex] = {
     ...tree[removeIndex],
-    children: removeNode(tree[removeIndex].children, path.slice(1)),
+    children: removeNode(tree[removeIndex].children ?? [], path.slice(1)),
   };
 
   return newTree;
@@ -64,13 +77,14 @@ function insertNode({ tree, path, node, position }: InsertNodeInput): RecursiveM
   }
 
   const index = path[0];
+
   if (index === null) {
     throw new Error("Cannot insert node with null path");
   }
 
   if (index in tree) {
     tree[index].children = insertNode({
-      tree: tree[index].children,
+      tree: tree[index].children ?? [],
       path: path.slice(1),
       node,
       position,
@@ -111,7 +125,7 @@ function permuteRelativeNode(
   const node = getNode(tree, sourcePath);
   const hasParent = !!permutation.parentId;
   const treeAfterRemoval = removeNode(tree, sourcePath);
-  const targetPath = hasParent ? findNode(treeAfterRemoval, permutation.parentId) : [];
+  const targetPath = hasParent ? findNode(treeAfterRemoval, permutation.parentId ?? "") : [];
   const position = sourcePath[sourcePath.length - 1];
 
   if (position === null) {
