@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
 import { AddressFragment } from "@dashboard/graphql";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { CustomerDetailsQuery, useCustomerDetailsQuery } from "@dashboard/graphql";
 import { createContext } from "react";
 import * as React from "react";

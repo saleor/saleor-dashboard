@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { IFilter } from "@dashboard/components/Filter/types";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum, UserFragment } from "@dashboard/graphql";
