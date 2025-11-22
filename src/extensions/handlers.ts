@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
 import { filterSelectedAsyncEvents, IntrospectionNode } from "@dashboard/extensions/utils";
 import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";

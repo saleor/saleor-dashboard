@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import "graphiql/graphiql.min.css";
 
 import { DashboardCard } from "@dashboard/components/Card";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { ExtensionsUrls, PluginUrlDialog, PluginUrlQueryParams } from "@dashboard/extensions/urls";

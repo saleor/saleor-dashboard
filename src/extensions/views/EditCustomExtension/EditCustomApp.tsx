@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
