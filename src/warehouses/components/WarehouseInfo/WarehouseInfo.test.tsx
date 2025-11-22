@@ -10,7 +10,7 @@ const mockOnChange = jest.fn();
 const invalidNameError = [
   {
     __typename: "WarehouseError" as const,
-    code: "INVALID",
+    code: "INVALID" as WarehouseErrorCode,
     field: "name",
     message: "Name is required",
   },
@@ -19,7 +19,7 @@ const invalidNameError = [
 const invalidEmailError = [
   {
     __typename: "WarehouseError" as const,
-    code: "INVALID",
+    code: "INVALID" as WarehouseErrorCode,
     field: "email",
     message: "Invalid email format",
   },

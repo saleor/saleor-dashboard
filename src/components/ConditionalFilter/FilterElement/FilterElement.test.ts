@@ -71,7 +71,7 @@ describe("ConditionalFilter / FilterElement / FilterElement", () => {
 
     // User selects a specific attribute to search for
     const attributeOperand = {
-      type: "DROPDOWN",
+      type: "DROPDOWN" as AttributeInputTypeEnum,
       label: "Color",
       value: "color",
       slug: "color",
@@ -114,7 +114,7 @@ describe("ConditionalFilter / FilterElement / FilterElement", () => {
     // User opens attribute filter and the app loads available attributes
     const element = FilterElement.createStaticBySlug("category");
     const attributeOperand = {
-      type: "DROPDOWN",
+      type: "DROPDOWN" as AttributeInputTypeEnum,
       label: "Color",
       value: "color",
       slug: "color",

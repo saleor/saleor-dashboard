@@ -16,7 +16,7 @@ describe("OrderModel", () => {
       ["PARTIALLY_RETURNED", true],
       ["EXPIRED", true],
     ])("should return %s when order status is %s", (status, expected) => {
-      const result = OrderDetailsViewModel.shouldShowInvoiceList(status);
+      const result = OrderDetailsViewModel.shouldShowInvoiceList(status as OrderStatus);
 
       expect(result).toBe(expected);
     });
@@ -227,7 +227,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-1",
-              type: "ACTIVATED",
+              type: "ACTIVATED" as GiftCardEventsEnum,
               orderId: null,
               date: "2024-01-01",
               balance: giftCardBalance,
@@ -258,7 +258,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-1",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId: "different-order-456",
               date: "2024-01-01",
               balance: giftCardBalance,
@@ -297,7 +297,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-1",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId,
               date: "2024-01-01",
               balance,
@@ -342,7 +342,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-1",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId,
               date: "2024-01-01",
               balance: firstCardBalance,
@@ -357,7 +357,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-2",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId,
               date: "2024-01-01",
               balance: secondCardBalance,
@@ -395,7 +395,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-1",
-              type: "ACTIVATED",
+              type: "ACTIVATED" as GiftCardEventsEnum,
               orderId: null,
               date: "2024-01-01",
               balance: giftCardBalance,
@@ -403,7 +403,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-2",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId,
               date: "2024-01-02",
               balance: usedBalance,
@@ -411,7 +411,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-3",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId: "different-order-456",
               date: "2024-01-03",
               balance: giftCardBalance,
@@ -442,7 +442,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-1",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId,
               date: "2024-01-01",
               balance: null,
@@ -473,7 +473,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent",
               id: "event-1",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId: orderId,
               date: "2024-01-01",
               balance: incompleteBalance,
@@ -511,7 +511,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent",
               id: "event-1",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId: orderId,
               date: "2024-01-01",
               balance: incompleteBalance,
@@ -548,7 +548,7 @@ describe("OrderModel", () => {
             {
               __typename: "GiftCardEvent" as const,
               id: "event-1",
-              type: "USED_IN_ORDER",
+              type: "USED_IN_ORDER" as GiftCardEventsEnum,
               orderId,
               date: "2024-01-01",
               balance: unchangedBalance,

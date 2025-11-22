@@ -161,7 +161,7 @@ describe("canSendRefundDuringReturn", () => {
     // Arrange
     const transactionMock = {
       ...orderTransactions[0],
-      actions: ["REFUND"],
+      actions: ["REFUND" as TransactionActionEnum],
     };
     const autoGrantRefund = true;
     const result = canSendRefundDuringReturn({

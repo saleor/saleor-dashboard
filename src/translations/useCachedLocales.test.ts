@@ -68,7 +68,7 @@ describe("CachedLocalesStack", () => {
 
     it("should remove oldest member when exceeding max capacity", () => {
       // Arrange
-      const languages = [
+      const languages: LanguageCodeEnum[] = [
         "EN",
         "PL",
         "DE",
@@ -150,13 +150,7 @@ describe("useCachedLocales", () => {
     // Arrange
     const { result } = renderHook(() => useCachedLocales());
 
-    const languages = [
-      "EN",
-      "PL",
-      "DE",
-      "FR",
-      "ES",
-    ];
+    const languages: LanguageCodeEnum[] = ["EN", "PL", "DE", "FR", "ES"];
 
     // Act
     act(() => {

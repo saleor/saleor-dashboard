@@ -108,7 +108,7 @@ describe("attributes/utils/data", () => {
           value: ["old-value"],
           label: "Test Attribute",
           data: {
-            inputType: "SINGLE_REFERENCE",
+            inputType: "SINGLE_REFERENCE" as AttributeInputTypeEnum,
             isRequired: false,
             values: [],
           },
@@ -143,7 +143,7 @@ describe("attributes/utils/data", () => {
           value: ["existing-1", "existing-2"],
           label: "Test Attribute",
           data: {
-            inputType: "REFERENCE",
+            inputType: "REFERENCE" as AttributeInputTypeEnum,
             isRequired: false,
             values: [],
           },
@@ -181,7 +181,7 @@ describe("attributes/utils/data", () => {
           value: [],
           label: "Test Attribute",
           data: {
-            inputType: "REFERENCE",
+            inputType: "REFERENCE" as AttributeInputTypeEnum,
             isRequired: false,
             values: [],
           },
@@ -227,7 +227,7 @@ describe("attributes/utils/data", () => {
           value: ["old-value"],
           label: "Test Attribute",
           data: {
-            inputType: "SINGLE_REFERENCE",
+            inputType: "SINGLE_REFERENCE" as AttributeInputTypeEnum,
             isRequired: false,
             values: [],
           },
@@ -262,7 +262,7 @@ describe("attributes/utils/data", () => {
           value: ["existing-1", "existing-2"],
           label: "Test Attribute",
           data: {
-            inputType: "REFERENCE",
+            inputType: "REFERENCE" as AttributeInputTypeEnum,
             isRequired: false,
             values: [],
           },
@@ -300,7 +300,7 @@ describe("attributes/utils/data", () => {
           value: ["existing-1"],
           label: "Test Attribute",
           data: {
-            inputType: "REFERENCE",
+            inputType: "REFERENCE" as AttributeInputTypeEnum,
             isRequired: false,
             values: [],
           },
@@ -336,8 +336,8 @@ describe("attributes/utils/data", () => {
         value: ["meta-ref-1", "meta-ref-2"],
         label: "Test",
         data: {
-          inputType: "REFERENCE",
-          entityType: "PRODUCT",
+          inputType: "REFERENCE" as AttributeInputTypeEnum,
+          entityType: "PRODUCT" as AttributeEntityTypeEnum,
           isRequired: false,
           values: [],
           references: [],
@@ -368,8 +368,8 @@ describe("attributes/utils/data", () => {
         value: ["fallback-ref-1", "fallback-ref-2"],
         label: "Test",
         data: {
-          inputType: "REFERENCE",
-          entityType: "PRODUCT",
+          inputType: "REFERENCE" as AttributeInputTypeEnum,
+          entityType: "PRODUCT" as AttributeEntityTypeEnum,
           isRequired: false,
           values: [],
           references: [],
@@ -399,8 +399,8 @@ describe("attributes/utils/data", () => {
         value: ["test-page-1"],
         label: "Test",
         data: {
-          inputType: "REFERENCE",
-          entityType: "PAGE",
+          inputType: "REFERENCE" as AttributeInputTypeEnum,
+          entityType: "PAGE" as AttributeEntityTypeEnum,
           isRequired: false,
           values: [],
           references: [],
@@ -424,8 +424,8 @@ describe("attributes/utils/data", () => {
         value: ["test-variant-1"],
         label: "Test",
         data: {
-          inputType: "REFERENCE",
-          entityType: "PRODUCT_VARIANT",
+          inputType: "REFERENCE" as AttributeInputTypeEnum,
+          entityType: "PRODUCT_VARIANT" as AttributeEntityTypeEnum,
           isRequired: false,
           values: [],
           references: [],
@@ -460,8 +460,8 @@ describe("attributes/utils/data", () => {
         value: ["test-unknown-ref"],
         label: "Test",
         data: {
-          inputType: "REFERENCE",
-          entityType: "PRODUCT",
+          inputType: "REFERENCE" as AttributeInputTypeEnum,
+          entityType: "PRODUCT" as AttributeEntityTypeEnum,
           isRequired: false,
           values: [],
           references: [],
@@ -505,8 +505,8 @@ describe("attributes/utils/data", () => {
         value: ["v3", "non-existent"],
         label: "Test",
         data: {
-          inputType: "REFERENCE",
-          entityType: "PRODUCT_VARIANT",
+          inputType: "REFERENCE" as AttributeInputTypeEnum,
+          entityType: "PRODUCT_VARIANT" as AttributeEntityTypeEnum,
           isRequired: false,
           values: [],
           references: [],
@@ -555,8 +555,8 @@ describe("attributes/utils/data", () => {
           value: ["cache-variant-1"],
           label: "Test 1",
           data: {
-            inputType: "REFERENCE",
-            entityType: "PRODUCT_VARIANT",
+            inputType: "REFERENCE" as AttributeInputTypeEnum,
+            entityType: "PRODUCT_VARIANT" as AttributeEntityTypeEnum,
             isRequired: false,
             values: [],
             references: [],
@@ -568,8 +568,8 @@ describe("attributes/utils/data", () => {
           value: ["cache-variant-2"],
           label: "Test 2",
           data: {
-            inputType: "REFERENCE",
-            entityType: "PRODUCT_VARIANT",
+            inputType: "REFERENCE" as AttributeInputTypeEnum,
+            entityType: "PRODUCT_VARIANT" as AttributeEntityTypeEnum,
             isRequired: false,
             values: [],
             references: [],
@@ -581,8 +581,8 @@ describe("attributes/utils/data", () => {
           value: ["cache-variant-3", "cache-variant-1"],
           label: "Test 3",
           data: {
-            inputType: "REFERENCE",
-            entityType: "PRODUCT_VARIANT",
+            inputType: "REFERENCE" as AttributeInputTypeEnum,
+            entityType: "PRODUCT_VARIANT" as AttributeEntityTypeEnum,
             isRequired: false,
             values: [],
             references: [],
@@ -651,8 +651,8 @@ describe("attributes/utils/data", () => {
           value: ["sep-p1-v1", "sep-p2-v1", "sep-p1-v2", "sep-p2-v2"],
           label: "Test",
           data: {
-            inputType: "REFERENCE",
-            entityType: "PRODUCT_VARIANT",
+            inputType: "REFERENCE" as AttributeInputTypeEnum,
+            entityType: "PRODUCT_VARIANT" as AttributeEntityTypeEnum,
             isRequired: false,
             values: [],
             references: [],
@@ -723,9 +723,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with reference ID for SINGLE_REFERENCE attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute("SINGLE_REFERENCE", [
-        { reference: "ref-1" },
-      ]);
+      const attribute = createTestAttribute("SINGLE_REFERENCE", [{ reference: "ref-1" }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -747,9 +745,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with text for PLAIN_TEXT attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute("PLAIN_TEXT", [
-        { plainText: "Some text" },
-      ]);
+      const attribute = createTestAttribute("PLAIN_TEXT", [{ plainText: "Some text" }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -771,9 +767,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with rich text for RICH_TEXT attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute("RICH_TEXT", [
-        { richText: "<p>Rich text</p>" },
-      ]);
+      const attribute = createTestAttribute("RICH_TEXT", [{ richText: "<p>Rich text</p>" }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -872,9 +866,7 @@ describe("attributes/utils/data", () => {
 
     it("should return array with datetime for DATE_TIME attribute with value", () => {
       // Arrange
-      const attribute = createTestAttribute("DATE_TIME", [
-        { dateTime: "2024-01-15T10:30:00Z" },
-      ]);
+      const attribute = createTestAttribute("DATE_TIME", [{ dateTime: "2024-01-15T10:30:00Z" }]);
 
       // Act
       const result = getSelectedAttributeValues(attribute);
@@ -910,14 +902,12 @@ describe("attributes/utils/data", () => {
 
     it("should handle null/undefined fields gracefully", () => {
       // Arrange
-      const attributeWithNullReference = createTestAttribute(
-        "SINGLE_REFERENCE",
-        [{ reference: null }],
-      );
-      const attributeWithUndefinedPlainText = createTestAttribute(
-        "PLAIN_TEXT",
-        [{ plainText: undefined }],
-      );
+      const attributeWithNullReference = createTestAttribute("SINGLE_REFERENCE", [
+        { reference: null },
+      ]);
+      const attributeWithUndefinedPlainText = createTestAttribute("PLAIN_TEXT", [
+        { plainText: undefined },
+      ]);
 
       // Act
       const result1 = getSelectedAttributeValues(attributeWithNullReference);

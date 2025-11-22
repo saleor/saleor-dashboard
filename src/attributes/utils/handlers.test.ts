@@ -17,7 +17,7 @@ import { FormsetData, UseFormsetOutput } from "@dashboard/hooks/useFormset";
 const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
   {
     data: {
-      inputType: "DROPDOWN",
+      inputType: "DROPDOWN" as AttributeInputTypeEnum,
       isRequired: false,
       values: [
         {
@@ -42,7 +42,7 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
   },
   {
     data: {
-      inputType: "MULTISELECT",
+      inputType: "MULTISELECT" as AttributeInputTypeEnum,
       isRequired: false,
       values: [
         {
@@ -153,20 +153,20 @@ const createAttribute = ({
 });
 const createSelectAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({
-    inputType: "DROPDOWN",
+    inputType: "DROPDOWN" as AttributeInputTypeEnum,
     value,
     isRequired,
   });
 const createReferenceAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({
-    inputType: "REFERENCE",
+    inputType: "REFERENCE" as AttributeInputTypeEnum,
     value,
     isRequired,
   });
 const createBooleanAttribute = (value: string, isRequired = false) => ({
   data: {
     entityType: undefined,
-    inputType: "BOOLEAN",
+    inputType: "BOOLEAN" as AttributeInputTypeEnum,
     isRequired,
     // those values don't matter
     selectedValues: [],
@@ -192,7 +192,7 @@ const createNumericAttribute = (value: string, isRequired?: boolean) =>
 const createFileAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({ inputType: "FILE", value, isRequired });
 const createDropdownAttribute = (value: string | null, isRequired?: boolean) =>
-  createAttribute({ inputType: "DROPDOWN", value, isRequired });
+  createAttribute({ inputType: "DROPDOWN" as AttributeInputTypeEnum, value, isRequired });
 
 describe("Multiple select change handler", () => {
   it("is able to select value", () => {
@@ -952,7 +952,7 @@ describe("createAttributeReferenceChangeHandler", () => {
           id: "attr-1",
           value: ["ref-1", "ref-2"],
           label: "Test",
-          data: { inputType: "REFERENCE" },
+          data: { inputType: "REFERENCE" as AttributeInputTypeEnum },
           additionalData: [
             { value: "ref-1", label: "Reference 1" },
             { value: "ref-2", label: "Reference 2" },
@@ -987,7 +987,7 @@ describe("createAttributeReferenceChangeHandler", () => {
           id: "attr-1",
           value: ["ref-1"],
           label: "Test",
-          data: { inputType: "REFERENCE" },
+          data: { inputType: "REFERENCE" as AttributeInputTypeEnum },
           additionalData: [{ value: "ref-1", label: "Reference 1" }],
         },
       ],
@@ -1018,7 +1018,7 @@ describe("createAttributeReferenceMetadataHandler", () => {
           id: "attr-1",
           value: ["ref-1"],
           label: "Test",
-          data: { inputType: "REFERENCE" },
+          data: { inputType: "REFERENCE" as AttributeInputTypeEnum },
         },
       ],
       setAdditionalData: setAdditionalDataMock,

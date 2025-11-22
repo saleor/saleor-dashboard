@@ -1,4 +1,4 @@
-import { ExportScope, FileTypesEnum, ProductFieldEnum } from "@dashboard/graphql";
+import { ExportScope, FileTypesEnum } from "@dashboard/graphql";
 import { ExportInfoInput } from "@saleor/sdk/dist/apollo/types";
 
 import { ProductsExportParameters } from "./export";
@@ -11,10 +11,10 @@ const exportParams = {
     channels: ["Q2hhbm5lbDoyMjQ0"],
     fields: ["CHARGE_TAXES"],
   } satisfies ExportInfoInput,
-  fileType: "CSV",
+  fileType: "CSV" as FileTypesEnum,
   filter: undefined,
   ids: [],
-  scope: "ALL",
+  scope: "ALL" as ExportScope,
 };
 
 const mock = {

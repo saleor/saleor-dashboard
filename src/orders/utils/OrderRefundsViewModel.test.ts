@@ -1,6 +1,5 @@
 import {
   OrderGrantedRefundFragment,
-  OrderGrantedRefundStatusEnum,
   TransactionActionEnum,
   TransactionEventFragment,
   TransactionEventTypeEnum,
@@ -16,7 +15,7 @@ const createTransactionEvent = (
     __typename: "TransactionEvent",
     id: "event-1",
     pspReference: "psp-ref-1",
-    type: "REFUND_SUCCESS",
+    type: "REFUND_SUCCESS" as TransactionEventTypeEnum,
     amount: {
       __typename: "Money",
       amount: 100,
@@ -429,7 +428,7 @@ Array [
       ["AUTHORIZATION_SUCCESS", "NONE"],
     ])("should map %s to %s status", (eventType, expectedStatus) => {
       // Arrange
-      const event = createTransactionEvent({ type: eventType });
+      const event = createTransactionEvent({ type: eventType as TransactionEventTypeEnum });
 
       // Act
       const result = OrderRefundsViewModel["mapEventToRefundStatus"](event);
@@ -922,12 +921,12 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: ["CHARGE", "CANCEL"],
+          actions: ["CHARGE", "CANCEL"] as TransactionActionEnum[],
         },
         {
           ...baseTransactions[0],
           id: "tx-2",
-          actions: ["CHARGE"],
+          actions: ["CHARGE"] as TransactionActionEnum[],
         },
       ];
 
@@ -944,12 +943,12 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: ["CHARGE", "CANCEL"],
+          actions: ["CHARGE", "CANCEL"] as TransactionActionEnum[],
         },
         {
           ...baseTransactions[0],
           id: "tx-2",
-          actions: ["REFUND", "CHARGE"],
+          actions: ["REFUND", "CHARGE"] as TransactionActionEnum[],
         },
       ];
 
@@ -966,12 +965,12 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: ["REFUND", "CHARGE"],
+          actions: ["REFUND", "CHARGE"] as TransactionActionEnum[],
         },
         {
           ...baseTransactions[0],
           id: "tx-2",
-          actions: ["REFUND"],
+          actions: ["REFUND"] as TransactionActionEnum[],
         },
       ];
 
@@ -988,12 +987,12 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: [],
+          actions: [] as TransactionActionEnum[],
         },
         {
           ...baseTransactions[0],
           id: "tx-2",
-          actions: [],
+          actions: [] as TransactionActionEnum[],
         },
       ];
 
@@ -1010,7 +1009,7 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: ["CHARGE", "CANCEL"],
+          actions: ["CHARGE", "CANCEL"] as TransactionActionEnum[],
         },
       ];
 
@@ -1027,7 +1026,7 @@ Array [
         {
           ...baseTransactions[0],
           id: "tx-1",
-          actions: ["REFUND"],
+          actions: ["REFUND"] as TransactionActionEnum[],
         },
       ];
 

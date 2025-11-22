@@ -1,5 +1,4 @@
 import {
-  AllocationStrategyEnum,
   ChannelFragment,
   PermissionEnum,
   ShopInfoQuery,
@@ -396,55 +395,55 @@ export const channels: ChannelFragment[] = [
 
 export const permissions: ShopInfoQuery["shop"]["permissions"] = [
   {
-    code: "MANAGE_DISCOUNTS",
+    code: "MANAGE_DISCOUNTS" as PermissionEnum,
     name: "Manage sales and vouchers.",
   },
   {
-    code: "MANAGE_MENUS",
+    code: "MANAGE_MENUS" as PermissionEnum,
     name: "Manage navigation.",
   },
   {
-    code: "MANAGE_ORDERS",
+    code: "MANAGE_ORDERS" as PermissionEnum,
     name: "Manage orders.",
   },
   {
-    code: "MANAGE_PAGES",
+    code: "MANAGE_PAGES" as PermissionEnum,
     name: "Manage pages.",
   },
   {
-    code: "MANAGE_PRODUCTS",
+    code: "MANAGE_PRODUCTS" as PermissionEnum,
     name: "Manage products.",
   },
   {
-    code: "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
+    code: "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES" as PermissionEnum,
     name: "Manage product types and attributes.",
   },
   {
-    code: "MANAGE_SETTINGS",
+    code: "MANAGE_SETTINGS" as PermissionEnum,
     name: "Manage settings.",
   },
   {
-    code: "MANAGE_SHIPPING",
+    code: "MANAGE_SHIPPING" as PermissionEnum,
     name: "Manage shipping.",
   },
   {
-    code: "MANAGE_STAFF",
+    code: "MANAGE_STAFF" as PermissionEnum,
     name: "Manage staff.",
   },
   {
-    code: "MANAGE_USERS",
+    code: "MANAGE_USERS" as PermissionEnum,
     name: "Manage customers.",
   },
   {
-    code: "MANAGE_PLUGINS",
+    code: "MANAGE_PLUGINS" as PermissionEnum,
     name: "Manage plugins.",
   },
   {
-    code: "MANAGE_APPS",
+    code: "MANAGE_APPS" as PermissionEnum,
     name: "Manage apps.",
   },
   {
-    code: "MANAGE_APPS",
+    code: "MANAGE_APPS" as PermissionEnum,
     name: "Manage webhooks.",
   },
 ].map(perm => ({
@@ -462,97 +461,97 @@ export const adminUserPermissions: NonNullable<
 > = [
   {
     __typename: "UserPermission",
-    code: "MANAGE_CHECKOUTS",
+    code: "MANAGE_CHECKOUTS" as PermissionEnum,
     name: "Manage checkouts",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_CHECKOUTS",
+    code: "MANAGE_CHECKOUTS" as PermissionEnum,
     name: "Manage checkouts",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_DISCOUNTS",
+    code: "MANAGE_DISCOUNTS" as PermissionEnum,
     name: "Manage sales and vouchers.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_GIFT_CARD",
+    code: "MANAGE_GIFT_CARD" as PermissionEnum,
     name: "Manage gift cards.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_GIFT_CARD",
+    code: "MANAGE_GIFT_CARD" as PermissionEnum,
     name: "Manage gift cards.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_MENUS",
+    code: "MANAGE_MENUS" as PermissionEnum,
     name: "Manage navigation.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_ORDERS",
+    code: "MANAGE_ORDERS" as PermissionEnum,
     name: "Manage orders.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_ORDERS",
+    code: "MANAGE_ORDERS" as PermissionEnum,
     name: "Manage orders.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_PAGES",
+    code: "MANAGE_PAGES" as PermissionEnum,
     name: "Manage pages.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_PLUGINS",
+    code: "MANAGE_PLUGINS" as PermissionEnum,
     name: "Manage plugins",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_PRODUCTS",
+    code: "MANAGE_PRODUCTS" as PermissionEnum,
     name: "Manage products.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
+    code: "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES" as PermissionEnum,
     name: "Manage product types and attributes.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_SETTINGS",
+    code: "MANAGE_SETTINGS" as PermissionEnum,
     name: "Manage settings.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_SHIPPING",
+    code: "MANAGE_SHIPPING" as PermissionEnum,
     name: "Manage shipping.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_STAFF",
+    code: "MANAGE_STAFF" as PermissionEnum,
     name: "Manage staff.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_STAFF",
+    code: "MANAGE_STAFF" as PermissionEnum,
     name: "Manage staff.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_TRANSLATIONS",
+    code: "MANAGE_TRANSLATIONS" as PermissionEnum,
     name: "Manage translations.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_USERS",
+    code: "MANAGE_USERS" as PermissionEnum,
     name: "Manage customers.",
   },
   {
     __typename: "UserPermission",
-    code: "MANAGE_USERS",
+    code: "MANAGE_USERS" as PermissionEnum,
     name: "Manage customers.",
   },
 ];
