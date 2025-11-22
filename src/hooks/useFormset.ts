@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { removeAtIndex } from "@dashboard/utils/lists";
 
 import useStateFromProps from "./useStateFromProps";
@@ -56,7 +55,13 @@ function useFormset<TData = {}, TValue = any, TAdditionalData = any>(
   }
 
   function getItem(id: string): FormsetAtomicData<TData, TValue, TAdditionalData> {
-    return data.find(item => item.id === id);
+    const item = data.find(item => item.id === id);
+
+    if (!item) {
+      throw new Error(`Item with id "${id}" not found in formset`);
+    }
+
+    return item;
   }
 
   function removeItem(id: string) {
@@ -86,14 +91,17 @@ function useFormset<TData = {}, TValue = any, TAdditionalData = any>(
   const setItemMetadata: FormsetAdditionalDataChange = (
     id: string,
     additionalData: TAdditionalData,
-    merge?: (prev, next) => TAdditionalData,
+    merge?: (prev: TAdditionalData, next: TAdditionalData) => TAdditionalData,
   ) => {
     setData(data =>
       data.map(item =>
         item.id === id
           ? {
               ...item,
-              additionalData: merge ? merge(item.additionalData, additionalData) : additionalData,
+              additionalData:
+                merge && item.additionalData !== undefined
+                  ? merge(item.additionalData, additionalData)
+                  : additionalData,
             }
           : item,
       ),

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { PageInfoFragment } from "@dashboard/graphql";
 import { DocumentNode } from "graphql";
 
@@ -40,7 +39,7 @@ function makeTopLevelSearch<TData extends SearchData, TVariables extends SearchV
         {
           ...result.variables,
           after: result.data.search.pageInfo.endCursor,
-        },
+        } as Partial<TVariables>,
       );
     }
   });
