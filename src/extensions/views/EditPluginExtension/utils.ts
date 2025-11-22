@@ -17,9 +17,9 @@ export const getConfigByChannelId =
 
 export function isSecretField(config: ConfigurationItemFragment[], field: string) {
   return [
-    ConfigurationTypeFieldEnum.PASSWORD,
-    ConfigurationTypeFieldEnum.SECRET,
-    ConfigurationTypeFieldEnum.SECRETMULTILINE,
+    "PASSWORD",
+    "SECRET",
+    "SECRETMULTILINE",
   ].includes(
     config.find(configField => configField.name === field)?.type as ConfigurationTypeFieldEnum,
   );

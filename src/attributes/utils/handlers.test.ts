@@ -17,7 +17,7 @@ import { FormsetData, UseFormsetOutput } from "@dashboard/hooks/useFormset";
 const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
   {
     data: {
-      inputType: AttributeInputTypeEnum.DROPDOWN,
+      inputType: "DROPDOWN" as AttributeInputTypeEnum,
       isRequired: false,
       values: [
         {
@@ -42,7 +42,7 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
   },
   {
     data: {
-      inputType: AttributeInputTypeEnum.MULTISELECT,
+      inputType: "MULTISELECT" as AttributeInputTypeEnum,
       isRequired: false,
       values: [
         {
@@ -95,7 +95,7 @@ const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
   },
   {
     data: {
-      inputType: AttributeInputTypeEnum.FILE,
+      inputType: "FILE",
       isRequired: false,
       values: [
         {
@@ -153,20 +153,20 @@ const createAttribute = ({
 });
 const createSelectAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({
-    inputType: AttributeInputTypeEnum.DROPDOWN,
+    inputType: "DROPDOWN" as AttributeInputTypeEnum,
     value,
     isRequired,
   });
 const createReferenceAttribute = (value: string, isRequired?: boolean) =>
   createAttribute({
-    inputType: AttributeInputTypeEnum.REFERENCE,
+    inputType: "REFERENCE" as AttributeInputTypeEnum,
     value,
     isRequired,
   });
 const createBooleanAttribute = (value: string, isRequired = false) => ({
   data: {
     entityType: undefined,
-    inputType: AttributeInputTypeEnum.BOOLEAN,
+    inputType: "BOOLEAN" as AttributeInputTypeEnum,
     isRequired,
     // those values don't matter
     selectedValues: [],
@@ -178,21 +178,21 @@ const createBooleanAttribute = (value: string, isRequired = false) => ({
   value: [value],
 });
 const createPlainTextAttribute = (value: string, isRequired?: boolean) =>
-  createAttribute({ inputType: AttributeInputTypeEnum.PLAIN_TEXT, value, isRequired });
+  createAttribute({ inputType: "PLAIN_TEXT", value, isRequired });
 const createRichTextAttribute = (value: string, isRequired?: boolean) =>
-  createAttribute({ inputType: AttributeInputTypeEnum.RICH_TEXT, value, isRequired });
+  createAttribute({ inputType: "RICH_TEXT", value, isRequired });
 const createDateAttribute = (value: string, isRequired?: boolean) =>
-  createAttribute({ inputType: AttributeInputTypeEnum.DATE, value, isRequired });
+  createAttribute({ inputType: "DATE", value, isRequired });
 const createDateTimeAttribute = (value: string, isRequired?: boolean) =>
-  createAttribute({ inputType: AttributeInputTypeEnum.DATE_TIME, value, isRequired });
+  createAttribute({ inputType: "DATE_TIME", value, isRequired });
 const createSwatchAttribute = (value: string, isRequired?: boolean) =>
-  createAttribute({ inputType: AttributeInputTypeEnum.SWATCH, value, isRequired });
+  createAttribute({ inputType: "SWATCH", value, isRequired });
 const createNumericAttribute = (value: string, isRequired?: boolean) =>
-  createAttribute({ inputType: AttributeInputTypeEnum.NUMERIC, value, isRequired });
+  createAttribute({ inputType: "NUMERIC", value, isRequired });
 const createFileAttribute = (value: string, isRequired?: boolean) =>
-  createAttribute({ inputType: AttributeInputTypeEnum.FILE, value, isRequired });
+  createAttribute({ inputType: "FILE", value, isRequired });
 const createDropdownAttribute = (value: string | null, isRequired?: boolean) =>
-  createAttribute({ inputType: AttributeInputTypeEnum.DROPDOWN, value, isRequired });
+  createAttribute({ inputType: "DROPDOWN" as AttributeInputTypeEnum, value, isRequired });
 
 describe("Multiple select change handler", () => {
   it("is able to select value", () => {
@@ -767,7 +767,7 @@ describe("createAttributeChangeHandler", () => {
       data: [],
       get: () => ({
         data: {
-          inputType: AttributeInputTypeEnum.BOOLEAN,
+          inputType: "BOOLEAN",
         },
       }),
     } as unknown as UseFormsetOutput<AttributeInputData>;
@@ -790,7 +790,7 @@ describe("createAttributeChangeHandler", () => {
       data: [],
       get: () => ({
         data: {
-          inputType: AttributeInputTypeEnum.BOOLEAN,
+          inputType: "BOOLEAN",
         },
       }),
     } as unknown as UseFormsetOutput<AttributeInputData>;
@@ -890,7 +890,7 @@ describe("handleDeleteMultipleAttributeValues", () => {
       {
         attribute: {
           id: "attr-1",
-          inputType: AttributeInputTypeEnum.FILE,
+          inputType: "FILE",
         },
         values: [
           {
@@ -952,7 +952,7 @@ describe("createAttributeReferenceChangeHandler", () => {
           id: "attr-1",
           value: ["ref-1", "ref-2"],
           label: "Test",
-          data: { inputType: AttributeInputTypeEnum.REFERENCE },
+          data: { inputType: "REFERENCE" as AttributeInputTypeEnum },
           additionalData: [
             { value: "ref-1", label: "Reference 1" },
             { value: "ref-2", label: "Reference 2" },
@@ -987,7 +987,7 @@ describe("createAttributeReferenceChangeHandler", () => {
           id: "attr-1",
           value: ["ref-1"],
           label: "Test",
-          data: { inputType: AttributeInputTypeEnum.REFERENCE },
+          data: { inputType: "REFERENCE" as AttributeInputTypeEnum },
           additionalData: [{ value: "ref-1", label: "Reference 1" }],
         },
       ],
@@ -1018,7 +1018,7 @@ describe("createAttributeReferenceMetadataHandler", () => {
           id: "attr-1",
           value: ["ref-1"],
           label: "Test",
-          data: { inputType: AttributeInputTypeEnum.REFERENCE },
+          data: { inputType: "REFERENCE" as AttributeInputTypeEnum },
         },
       ],
       setAdditionalData: setAdditionalDataMock,

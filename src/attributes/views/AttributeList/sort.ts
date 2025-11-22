@@ -5,15 +5,15 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: AttributeListUrlSortField): AttributeSortField {
   switch (sort) {
     case AttributeListUrlSortField.name:
-      return AttributeSortField.NAME;
+      return "NAME";
     case AttributeListUrlSortField.slug:
-      return AttributeSortField.SLUG;
+      return "SLUG";
     case AttributeListUrlSortField.useInFacetedSearch:
-      return AttributeSortField.FILTERABLE_IN_STOREFRONT;
+      return "FILTERABLE_IN_STOREFRONT";
     case AttributeListUrlSortField.visible:
-      return AttributeSortField.VISIBLE_IN_STOREFRONT;
+      return "VISIBLE_IN_STOREFRONT";
     default:
-      return AttributeSortField.NAME;
+      return "NAME";
   }
 }
 

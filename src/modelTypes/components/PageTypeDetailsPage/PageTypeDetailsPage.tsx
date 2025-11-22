@@ -107,10 +107,10 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
               <PageTypeAttributes
                 attributes={pageType?.attributes}
                 disabled={disabled}
-                type={AttributeTypeEnum.PAGE_TYPE}
+                type={"PAGE_TYPE"}
                 onAttributeAssign={onAttributeAdd}
                 onAttributeReorder={(event: ReorderEvent) =>
-                  onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
+                  onAttributeReorder(event, "PAGE_TYPE")
                 }
                 onAttributeUnassign={onAttributeUnassign}
                 {...attributeList}

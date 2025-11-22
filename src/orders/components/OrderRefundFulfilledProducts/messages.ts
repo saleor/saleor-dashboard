@@ -21,9 +21,9 @@ const messages = defineMessages({
 
 export const getTitle = (fulfillmentStatus: FulfillmentStatus, intl: IntlShape) => {
   switch (fulfillmentStatus) {
-    case FulfillmentStatus.RETURNED:
+    case "RETURNED":
       return intl.formatMessage(messages.fulfillmentReturned);
-    case FulfillmentStatus.WAITING_FOR_APPROVAL:
+    case "WAITING_FOR_APPROVAL":
       return intl.formatMessage(messages.fulfillmentWaitingForApproval);
     default:
       return intl.formatMessage(messages.fulfillment);

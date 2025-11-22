@@ -463,12 +463,13 @@ export class EnumValuesHandler implements Handler {
   public query?: string[];
 
   constructor(
-    enumObject: Record<string, string>,
+    enumObject: Record<string, string> | readonly string[] | string[],
     type: LeftOperand["type"],
     intl: IntlShape,
     query?: string[],
   ) {
-    this.options = Object.values(enumObject).map(value => ({
+    const values = Array.isArray(enumObject) ? enumObject : Object.values(enumObject);
+    this.options = values.map(value => ({
       value,
       slug: value,
       type,

@@ -177,8 +177,8 @@ const OrderTransactionRefundPage = ({
   });
 
   const permissions = useUserPermissions();
-  const canHandlePayments = hasPermissions(permissions ?? [], [PermissionEnum.HANDLE_PAYMENTS]);
-  const canManageSettings = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SETTINGS]);
+  const canHandlePayments = hasPermissions(permissions ?? [], ["HANDLE_PAYMENTS"]);
+  const canManageSettings = hasPermissions(permissions ?? [], ["MANAGE_SETTINGS"]);
 
   const handleTransferFunds = (data: OrderTransactionRefundPageFormData) => {
     if (!data.amount) {

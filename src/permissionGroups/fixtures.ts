@@ -115,7 +115,7 @@ export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
 
   permissions: [
     {
-      code: PermissionEnum.MANAGE_PAGES,
+      code: "MANAGE_PAGES",
       name: "Manage pages.",
       __typename: "Permission",
     },
@@ -127,13 +127,13 @@ export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
 export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
   {
     field: "name",
-    code: PermissionGroupErrorCode.UNIQUE,
+    code: "UNIQUE",
     message: "Group name has to be uniqe",
     __typename: "PermissionGroupError",
   },
   {
     field: "permissions",
-    code: PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION,
+    code: "OUT_OF_SCOPE_PERMISSION",
     message: "Permissions out of scope",
     __typename: "PermissionGroupError",
   },
@@ -168,7 +168,7 @@ export const permissionGroup: PermissionGroupDetailsFragment = {
   __typename: "Group",
   permissions: [
     {
-      code: PermissionEnum.MANAGE_PAGES,
+      code: "MANAGE_PAGES",
       name: "Manage pages.",
       __typename: "Permission",
     },
@@ -204,7 +204,7 @@ export const permissionGroupWithChannels: NonNullable<PermissionGroupDetailsFrag
   __typename: "Group",
   permissions: [
     {
-      code: PermissionEnum.MANAGE_PAGES,
+      code: "MANAGE_PAGES",
       name: "Manage pages.",
       __typename: "Permission",
     },

@@ -58,8 +58,8 @@ const orderBase: OrderDetailsFragment = {
   created: "2018-09-11T09:37:30.124154+00:00",
   id: "T3JkZXI6MTk=",
   number: "19",
-  paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-  status: OrderStatus.FULFILLED,
+  paymentStatus: "FULLY_CHARGED",
+  status: "FULFILLED",
   // @ts-expect-error error
   total: {
     __typename: "TaxedMoney",
@@ -293,7 +293,7 @@ describe("Get get all fulfillment lines price sum", () => {
           quantity: 1,
         },
       ],
-      status: FulfillmentStatus.FULFILLED,
+      status: "FULFILLED",
     },
     {
       __typename: "Fulfillment",
@@ -341,7 +341,7 @@ describe("Get get all fulfillment lines price sum", () => {
           quantity: 1,
         },
       ],
-      status: FulfillmentStatus.FULFILLED,
+      status: "FULFILLED",
     },
     {
       __typename: "Fulfillment",
@@ -409,7 +409,7 @@ describe("Get get all fulfillment lines price sum", () => {
           quantity: 1,
         },
       ],
-      status: FulfillmentStatus.FULFILLED,
+      status: "FULFILLED",
     },
   ];
 
@@ -1567,7 +1567,7 @@ describe("Get the total value of all replaced products", () => {
           {
             id: "#1",
             fulfillmentOrder: 1,
-            status: FulfillmentStatus.FULFILLED,
+            status: "FULFILLED",
             warehouse: null,
             trackingNumber: "",
             lines: fulfilledLines,
@@ -2395,7 +2395,7 @@ describe("Get the total value of all selected products", () => {
           {
             id: "#1",
             fulfillmentOrder: 1,
-            status: FulfillmentStatus.FULFILLED,
+            status: "FULFILLED",
             warehouse: null,
             trackingNumber: "",
             lines: fulfilledLines,
@@ -2791,7 +2791,7 @@ describe("Get discount type label", () => {
   it("should return Staff added for manual discount", () => {
     // Arrange
     const discount = {
-      type: OrderDiscountType.MANUAL,
+      type: "MANUAL",
     } as OrderDiscountFragment;
     // Act
     const result = getDiscountTypeLabel(discount, testIntlInstance);
@@ -2802,7 +2802,7 @@ describe("Get discount type label", () => {
   it("should return discount name when exists", () => {
     // Arrange
     const discount = {
-      type: OrderDiscountType.ORDER_PROMOTION,
+      type: "ORDER_PROMOTION",
       name: "Subtotal discount: Test promotion",
     } as OrderDiscountFragment;
     // Act
@@ -2814,7 +2814,7 @@ describe("Get discount type label", () => {
   it("should return  - when no discount name", () => {
     // Arrange
     const discount = {
-      type: OrderDiscountType.ORDER_PROMOTION,
+      type: "ORDER_PROMOTION",
       name: " :Test promotion",
     } as OrderDiscountFragment;
     // Act
@@ -2826,7 +2826,7 @@ describe("Get discount type label", () => {
   it("should return voucher name formatting when voucher discount type", () => {
     // Arrange
     const discount = {
-      type: OrderDiscountType.VOUCHER,
+      type: "VOUCHER",
       name: "Big sale",
     } as OrderDiscountFragment;
     // Act
@@ -2838,7 +2838,7 @@ describe("Get discount type label", () => {
   it("should return Sale discount for sale discount type", () => {
     // Arrange
     const discount = {
-      type: OrderDiscountType.SALE,
+      type: "SALE",
     } as OrderDiscountFragment;
     // Act
     const result = getDiscountTypeLabel(discount, testIntlInstance);
@@ -2849,7 +2849,7 @@ describe("Get discount type label", () => {
   it("should return Promotion when promotion discount type", () => {
     // Arrange
     const discount = {
-      type: OrderDiscountType.PROMOTION,
+      type: "PROMOTION",
     } as OrderDiscountFragment;
     // Act
     const result = getDiscountTypeLabel(discount, testIntlInstance);

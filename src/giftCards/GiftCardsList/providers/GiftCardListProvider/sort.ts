@@ -7,11 +7,11 @@ import { GiftCardUrlSortField } from "../../types";
 const getSortQueryField = (sort: GiftCardUrlSortField): GiftCardSortField => {
   switch (sort) {
     case GiftCardUrlSortField.balance:
-      return GiftCardSortField.CURRENT_BALANCE;
+      return "CURRENT_BALANCE";
     case GiftCardUrlSortField.product:
-      return GiftCardSortField.PRODUCT;
+      return "PRODUCT";
     case GiftCardUrlSortField.usedBy:
-      return GiftCardSortField.USED_BY;
+      return "USED_BY";
     default:
       return undefined;
   }

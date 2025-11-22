@@ -98,8 +98,8 @@ export function getSingleValueQueryParam<TKey extends string, TUrlKey extends st
 export function getSingleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
-  TEnum extends {},
->(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
+  T extends string,
+>(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: readonly T[] | T[]) {
   const { active, value } = param;
 
   if (!active) {
@@ -116,8 +116,8 @@ export function getSingleEnumValueQueryParam<
 export function getMultipleEnumValueQueryParam<
   TKey extends string,
   TUrlKey extends string,
-  TEnum extends {},
->(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
+  T extends string,
+>(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: readonly T[] | T[]) {
   const { active, value } = param;
 
   if (!active) {

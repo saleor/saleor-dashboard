@@ -138,7 +138,7 @@ const CollectionCreatePage = ({
                   description: "collection label",
                 }),
               }}
-              managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
+              managePermissions={["MANAGE_PRODUCTS"]}
               errors={channelsErrors}
               allChannelsCount={channelsCount}
               channels={data.channelListings}

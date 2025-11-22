@@ -86,9 +86,9 @@ const useStyles = makeStyles(
   { name: "OrderTransactionEvents-EventItem" },
 );
 const eventsWithoutAmount = new Set([
-  TransactionEventTypeEnum.CANCEL_SUCCESS,
-  TransactionEventTypeEnum.CANCEL_REQUEST,
-  TransactionEventTypeEnum.CANCEL_FAILURE,
+  "CANCEL_SUCCESS",
+  "CANCEL_REQUEST",
+  "CANCEL_FAILURE",
 ]);
 const shouldShowAmount = (event: TransactionEventFragment | TransactionFakeEvent) => {
   if (!event || !event.amount?.currency) {

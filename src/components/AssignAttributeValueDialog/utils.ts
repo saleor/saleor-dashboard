@@ -15,7 +15,7 @@ type CollectionsToFilter = RelayToFlat<SearchCollectionsQuery["search"]>;
 type CategoriesToFilter = RelayToFlat<SearchCategoriesQuery["search"]>;
 
 const isSingleAttribute = (attribute: AttributeInput) =>
-  attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+  attribute.data.inputType === "SINGLE_REFERENCE";
 
 export const filterProductsByAttributeValues = (
   products: ProductsToFilter,

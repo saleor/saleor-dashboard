@@ -16,7 +16,7 @@ const createRequiredError = (
   message: string | null = null,
 ): ProductErrorWithAttributesFragment => ({
   __typename: "ProductError",
-  code: ProductErrorCode.REQUIRED,
+  code: "REQUIRED",
   field,
   message,
   attributes: [],

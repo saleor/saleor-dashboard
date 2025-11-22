@@ -64,7 +64,7 @@ const WarehouseDetailsPage = ({
     country: warehouse?.address.country.code ?? "",
     isPrivate: !!warehouse?.isPrivate,
     clickAndCollectOption:
-      warehouse?.clickAndCollectOption || WarehouseClickAndCollectOptionEnum.DISABLED,
+      warehouse?.clickAndCollectOption || "DISABLED",
     countryArea: warehouse?.address.countryArea ?? "",
     name: warehouse?.name ?? "",
     email: warehouse?.email ?? "",

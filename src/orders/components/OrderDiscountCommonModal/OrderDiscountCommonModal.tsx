@@ -99,14 +99,14 @@ const OrderDiscountCommonModal = ({
 
     const stringifiedValue = existingDiscount.value.toString();
 
-    if (calculationMode === DiscountValueTypeEnum.FIXED) {
+    if (calculationMode === "FIXED") {
       return parseFloat(stringifiedValue).toString();
     }
 
     return stringifiedValue;
   };
   const getInitialData = () => {
-    const calculationMode = existingDiscount?.calculationMode || DiscountValueTypeEnum.PERCENTAGE;
+    const calculationMode = existingDiscount?.calculationMode || "PERCENTAGE";
 
     return {
       calculationMode,
@@ -126,14 +126,14 @@ const OrderDiscountCommonModal = ({
   const discountTypeChoices = [
     {
       label: intl.formatMessage(messages.percentageOption),
-      value: DiscountValueTypeEnum.PERCENTAGE,
+      value: "PERCENTAGE",
     },
     {
       label: intl.formatMessage(messages.fixedAmountOption),
-      value: DiscountValueTypeEnum.FIXED,
+      value: "FIXED",
     },
   ];
-  const isDiscountTypePercentage = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
+  const isDiscountTypePercentage = calculationMode === "PERCENTAGE";
   const handleSetDiscountValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
@@ -152,7 +152,7 @@ const OrderDiscountCommonModal = ({
   };
   const getErrorMessage = (value: string): GetErrorMessageReturn => {
     if (isAmountTooLarge(value)) {
-      if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
+      if (calculationMode === "PERCENTAGE") {
         return intl.formatMessage(messages.valueBiggerThat100);
       }
 
@@ -187,8 +187,8 @@ const OrderDiscountCommonModal = ({
     }
 
     const changedFromPercentageToFixed =
-      previousCalculationMode.current === DiscountValueTypeEnum.PERCENTAGE &&
-      calculationMode === DiscountValueTypeEnum.FIXED;
+      previousCalculationMode.current === "PERCENTAGE" &&
+      calculationMode === "FIXED";
     const recalculatedValueFromPercentageToFixed = (
       (getParsedDiscountValue() * maxPrice.amount) /
       100
@@ -210,7 +210,7 @@ const OrderDiscountCommonModal = ({
 
   const dialogTitle =
     modalType === ORDER_LINE_DISCOUNT ? messages.itemDiscountTitle : messages.orderDiscountTitle;
-  const valueFieldSymbol = calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
+  const valueFieldSymbol = calculationMode === "FIXED" ? currency : "%";
   const isSubmitDisabled = !getParsedDiscountValue() || !!valueErrorMsg || isAmountTooLarge();
 
   return (

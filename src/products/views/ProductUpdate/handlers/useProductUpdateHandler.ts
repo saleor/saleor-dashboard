@@ -167,7 +167,7 @@ export function useProductUpdateHandler(
           variables: {
             product: product.id,
             input: updateInputdData,
-            errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
+            errorPolicy: "REJECT_FAILED_ROWS",
           },
         });
         const updateVariantsErrors = getVariantUpdateMutationErrors(

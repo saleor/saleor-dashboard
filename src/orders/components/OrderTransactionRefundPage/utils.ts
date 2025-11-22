@@ -192,11 +192,11 @@ export const getRefundViewTitle = (
 
 export const getRefundStatusColor = (status: OrderGrantedRefundStatusEnum) => {
   switch (status) {
-    case OrderGrantedRefundStatusEnum.SUCCESS:
+    case "SUCCESS":
       return "success";
-    case OrderGrantedRefundStatusEnum.FAILURE:
+    case "FAILURE":
       return "error";
-    case OrderGrantedRefundStatusEnum.PENDING:
+    case "PENDING":
       return "warning";
     default:
       return "generic";
@@ -205,11 +205,11 @@ export const getRefundStatusColor = (status: OrderGrantedRefundStatusEnum) => {
 
 export const getRefundStatusLabel = (status: OrderGrantedRefundStatusEnum, intl: IntlShape) => {
   switch (status) {
-    case OrderGrantedRefundStatusEnum.SUCCESS:
+    case "SUCCESS":
       return intl.formatMessage(refundStatusMessages.success);
-    case OrderGrantedRefundStatusEnum.FAILURE:
+    case "FAILURE":
       return intl.formatMessage(refundStatusMessages.failure);
-    case OrderGrantedRefundStatusEnum.PENDING:
+    case "PENDING":
       return intl.formatMessage(refundStatusMessages.pending);
     default:
       return intl.formatMessage(refundStatusMessages.draft);

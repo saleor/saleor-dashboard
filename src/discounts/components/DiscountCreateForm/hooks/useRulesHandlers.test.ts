@@ -9,14 +9,14 @@ const rule = {
   description: "",
   channel: { label: "Channel 1", value: "channel-1" },
   rewardValue: 10,
-  rewardValueType: RewardValueTypeEnum.FIXED,
+  rewardValueType: "FIXED",
   conditions: [],
 } as unknown as Rule;
 
 describe("DiscountCreateForm useRulesHandlers", () => {
   it("should allow to add new rule ", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers(PromotionTypeEnum.CATALOGUE));
+    const { result } = renderHook(() => useRulesHandlers("CATALOGUE"));
 
     // Act
     act(() => {
@@ -27,13 +27,13 @@ describe("DiscountCreateForm useRulesHandlers", () => {
   });
   it("should allow to edit rule at index", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers(PromotionTypeEnum.CATALOGUE));
+    const { result } = renderHook(() => useRulesHandlers("CATALOGUE"));
     const rule = {
       name: "Rule 1",
       description: "",
       channel: { label: "Channel 1", value: "channel-1" },
       rewardValue: 10,
-      rewardValueType: RewardValueTypeEnum.FIXED,
+      rewardValueType: "FIXED",
       conditions: [],
     } as unknown as Rule;
 
@@ -49,13 +49,13 @@ describe("DiscountCreateForm useRulesHandlers", () => {
   });
   it("should allow to delete rule at index", () => {
     // Arrange
-    const { result } = renderHook(() => useRulesHandlers(PromotionTypeEnum.CATALOGUE));
+    const { result } = renderHook(() => useRulesHandlers("CATALOGUE"));
     const rule = {
       name: "Rule 1",
       description: "",
       channel: { label: "Channel 1", value: "channel-1" },
       rewardValue: 10,
-      rewardValueType: RewardValueTypeEnum.FIXED,
+      rewardValueType: "FIXED",
       conditions: [],
     } as unknown as Rule;
 

@@ -6,11 +6,11 @@ const mapDeliveryStatusToTextColor = (
   status: EventDeliveryStatusEnum,
 ): keyof ThemeTokensValues["colors"]["text"] => {
   switch (status) {
-    case EventDeliveryStatusEnum.FAILED:
+    case "FAILED":
       return "critical1";
-    case EventDeliveryStatusEnum.PENDING:
+    case "PENDING":
       return "accent1";
-    case EventDeliveryStatusEnum.SUCCESS:
+    case "SUCCESS":
       return "success1";
   }
 };
@@ -19,11 +19,11 @@ const mapDeliveryStatusToBorderColor = (
   status: EventDeliveryStatusEnum,
 ): keyof ThemeTokensValues["colors"]["border"] => {
   switch (status) {
-    case EventDeliveryStatusEnum.FAILED:
+    case "FAILED":
       return "critical1";
-    case EventDeliveryStatusEnum.PENDING:
+    case "PENDING":
       return "accent1";
-    case EventDeliveryStatusEnum.SUCCESS:
+    case "SUCCESS":
       return "success1";
   }
 };
@@ -32,11 +32,11 @@ const mapDeliveryStatusToBackgroundColor = (
   status: EventDeliveryStatusEnum,
 ): keyof ThemeTokensValues["colors"]["background"] => {
   switch (status) {
-    case EventDeliveryStatusEnum.FAILED:
+    case "FAILED":
       return "critical1";
-    case EventDeliveryStatusEnum.PENDING:
+    case "PENDING":
       return "default1";
-    case EventDeliveryStatusEnum.SUCCESS:
+    case "SUCCESS":
       return "accent1";
   }
 };
@@ -45,11 +45,11 @@ const DeliveryStatusDisplay = ({ status }: { status: EventDeliveryStatusEnum }) 
   const { formatMessage } = useIntl();
 
   switch (status) {
-    case EventDeliveryStatusEnum.FAILED:
+    case "FAILED":
       return <>{formatMessage({ defaultMessage: "Failed", id: "vXCeIi" })}</>;
-    case EventDeliveryStatusEnum.PENDING:
+    case "PENDING":
       return <>{formatMessage({ defaultMessage: "Pending", id: "eKEL/g" })}</>;
-    case EventDeliveryStatusEnum.SUCCESS:
+    case "SUCCESS":
       return <>{formatMessage({ defaultMessage: "Success", id: "xrKHS6" })} </>;
     default:
       throw new Error("Invalid EventDeliveryStatusEnum value");

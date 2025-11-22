@@ -123,15 +123,15 @@ export function getEntityUrl({
   }
 
   switch (entityType) {
-    case AttributeEntityTypeEnum.CATEGORY:
+    case "CATEGORY":
       return categoryUrl(entityId);
-    case AttributeEntityTypeEnum.COLLECTION:
+    case "COLLECTION":
       return collectionUrl(entityId);
-    case AttributeEntityTypeEnum.PAGE:
+    case "PAGE":
       return pageUrl(entityId);
-    case AttributeEntityTypeEnum.PRODUCT:
+    case "PRODUCT":
       return productUrl(entityId);
-    case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+    case "PRODUCT_VARIANT":
       // Note: we don't know product.id here, redirect will fetch data as usual ProductVariant page
       // and update URL with replace
       return productVariantEditUrl(entityId);

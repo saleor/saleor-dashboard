@@ -24,11 +24,11 @@ function getAttributeErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case AttributeErrorCode.ALREADY_EXISTS:
+      case "ALREADY_EXISTS":
         return intl.formatMessage(messages.alreadyExists);
-      case AttributeErrorCode.UNIQUE:
+      case "UNIQUE":
         return intl.formatMessage(messages.nameAlreadyTaken);
-      case AttributeErrorCode.NOT_FOUND:
+      case "NOT_FOUND":
         return intl.formatMessage(messages.notFound);
     }
   }

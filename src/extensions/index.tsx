@@ -132,7 +132,7 @@ export const ExtensionsSection = () => {
         />
         <SectionRoute
           exact
-          permissions={[PermissionEnum.MANAGE_APPS]}
+          permissions={["MANAGE_APPS"]}
           path={ExtensionsPaths.installCustomExtension}
           component={InstallCustomExtensionView}
         />
@@ -183,13 +183,13 @@ export const ExtensionsSection = () => {
           exact
           path={ExtensionsPaths.resolveAddCustomExtensionWebhook(":appId")}
           component={AddCustomExtensionWebhookView}
-          permissions={[PermissionEnum.MANAGE_APPS]}
+          permissions={["MANAGE_APPS"]}
         />
         <SectionRoute
           exact
           path={ExtensionsPaths.resolveEditCustomExtensionWebhook(":appId", ":id")}
           component={EditCustomExtensionWebhookView}
-          permissions={[PermissionEnum.MANAGE_APPS]}
+          permissions={["MANAGE_APPS"]}
         />
         <Route component={NotFound} />
       </Switch>

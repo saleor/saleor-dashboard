@@ -16,25 +16,25 @@ const config: ConfigurationItemFragment[] = [
   {
     ...baseConfig,
     name: "field-1",
-    type: ConfigurationTypeFieldEnum.STRING,
+    type: "STRING",
     value: "val1",
   },
   {
     ...baseConfig,
     name: "field-2",
-    type: ConfigurationTypeFieldEnum.STRING,
+    type: "STRING",
     value: "val2",
   },
   {
     ...baseConfig,
     name: "field-3",
-    type: ConfigurationTypeFieldEnum.PASSWORD,
+    type: "PASSWORD",
     value: "",
   },
   {
     ...baseConfig,
     name: "field-4",
-    type: ConfigurationTypeFieldEnum.SECRET,
+    type: "SECRET",
     value: "val4",
   },
 ];
@@ -65,14 +65,14 @@ test("Ensure that no secret is sent in input", () => {
     output.find(
       field =>
         config.find(configField => configField.name === field.name).type ===
-        ConfigurationTypeFieldEnum.PASSWORD,
+        "PASSWORD",
     ),
   ).toBeFalsy();
   expect(
     output.find(
       field =>
         config.find(configField => configField.name === field.name).type ===
-        ConfigurationTypeFieldEnum.SECRET,
+        "SECRET",
     ),
   ).toBeFalsy();
 });

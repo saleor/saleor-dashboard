@@ -30,7 +30,7 @@ export const AssignReferenceTypesDialog = ({
   );
 
   const title =
-    entityType === AttributeEntityTypeEnum.PAGE
+    entityType === "PAGE"
       ? intl.formatMessage(messages.titleModelTypes)
       : intl.formatMessage(messages.titleProductTypes);
 

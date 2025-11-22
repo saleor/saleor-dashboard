@@ -109,12 +109,12 @@ const CustomerAddress = (props: CustomerAddressProps) => {
             menuItems={[
               {
                 label: intl.formatMessage(messages.setDefaultShipping),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
+                onSelect: () => onSetAsDefault("SHIPPING"),
                 testId: "set-default-shipping-address",
               },
               {
                 label: intl.formatMessage(messages.setDefaultBilling),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
+                onSelect: () => onSetAsDefault("BILLING"),
                 testId: "set-default-billing-address",
               },
               {

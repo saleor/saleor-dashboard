@@ -39,17 +39,17 @@ const messages = defineMessages({
 function getInvoiceErrorMessage(err: InvoiceErrorFragment, intl: IntlShape): string | undefined {
   if (err) {
     switch (err.code) {
-      case InvoiceErrorCode.EMAIL_NOT_SET:
+      case "EMAIL_NOT_SET":
         return intl.formatMessage(messages.emailNotSet);
-      case InvoiceErrorCode.INVALID_STATUS:
+      case "INVALID_STATUS":
         return intl.formatMessage(messages.invalidStatus);
-      case InvoiceErrorCode.NOT_FOUND:
+      case "NOT_FOUND":
         return intl.formatMessage(messages.notFound);
-      case InvoiceErrorCode.NOT_READY:
+      case "NOT_READY":
         return intl.formatMessage(messages.notReady);
-      case InvoiceErrorCode.NUMBER_NOT_SET:
+      case "NUMBER_NOT_SET":
         return intl.formatMessage(messages.numberNotSet);
-      case InvoiceErrorCode.URL_NOT_SET:
+      case "URL_NOT_SET":
         return intl.formatMessage(messages.urlNotSet);
     }
   }

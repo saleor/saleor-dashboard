@@ -58,13 +58,13 @@ export const PluginSecretFieldDialog = ({
               </DashboardModal.Header>
 
               <TextField
-                multiline={field?.type === ConfigurationTypeFieldEnum.SECRETMULTILINE}
+                multiline={field?.type === "SECRETMULTILINE"}
                 autoComplete="off"
                 fullWidth
                 label={field && field.label}
                 name="value"
                 type={
-                  maybe(() => field.type) === ConfigurationTypeFieldEnum.PASSWORD
+                  maybe(() => field.type) === "PASSWORD"
                     ? "password"
                     : "text"
                 }

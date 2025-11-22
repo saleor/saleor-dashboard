@@ -19,11 +19,11 @@ export function canBeSorted(sort: CollectionListUrlSortField, isChannelSelected:
 function getSortQueryField(sort: CollectionListUrlSortField): CollectionSortField | undefined {
   switch (sort) {
     case CollectionListUrlSortField.name:
-      return CollectionSortField.NAME;
+      return "NAME";
     case CollectionListUrlSortField.availability:
-      return CollectionSortField.AVAILABILITY;
+      return "AVAILABILITY";
     case CollectionListUrlSortField.productCount:
-      return CollectionSortField.PRODUCT_COUNT;
+      return "PRODUCT_COUNT";
     default:
       return undefined;
   }

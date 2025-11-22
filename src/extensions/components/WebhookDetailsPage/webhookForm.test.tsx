@@ -18,10 +18,10 @@ const webhookMock: WebhookDetailsFragment = {
   name: "Test Webhook",
   isActive: true,
   syncEvents: [
-    { __typename: "WebhookEventSync", eventType: WebhookEventTypeSyncEnum.PAYMENT_CAPTURE },
+    { __typename: "WebhookEventSync", eventType: "PAYMENT_CAPTURE" },
   ],
   asyncEvents: [
-    { __typename: "WebhookEventAsync", eventType: WebhookEventTypeAsyncEnum.ANY_EVENTS },
+    { __typename: "WebhookEventAsync", eventType: "ANY_EVENTS" },
   ],
   app: { __typename: "App", id: "1", name: "Test App" },
 };

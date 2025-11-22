@@ -28,19 +28,19 @@ const TimePeriodField = ({
   const options = [
     {
       label: intl.formatMessage(messages.yearLabel),
-      value: TimePeriodTypeEnum.YEAR,
+      value: "YEAR",
     },
     {
       label: intl.formatMessage(messages.monthLabel),
-      value: TimePeriodTypeEnum.MONTH,
+      value: "MONTH",
     },
     {
       label: intl.formatMessage(messages.weekLabel),
-      value: TimePeriodTypeEnum.WEEK,
+      value: "WEEK",
     },
     {
       label: intl.formatMessage(messages.dayLabel),
-      value: TimePeriodTypeEnum.DAY,
+      value: "DAY",
     },
   ];
 

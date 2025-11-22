@@ -47,7 +47,7 @@ const formInitialData: ProductTypeForm = {
   isShippingRequired: false,
   metadata: [],
   name: "",
-  kind: ProductTypeKindEnum.NORMAL,
+  kind: "NORMAL",
   privateMetadata: [],
   taxClassId: "",
   weight: 0,

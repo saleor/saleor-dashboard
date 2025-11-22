@@ -119,7 +119,7 @@ it("should include reference attributes even when choices are not returned", () 
               name: "Reference Attribute",
               slug: "ref-attr",
               inputType: "SINGLE_REFERENCE",
-              entityType: AttributeEntityTypeEnum.PRODUCT,
+              entityType: "PRODUCT",
               choices: null,
             },
           },
@@ -138,6 +138,6 @@ it("should include reference attributes even when choices are not returned", () 
     value: "ref-id",
     label: "Reference Attribute",
     inputType: "SINGLE_REFERENCE",
-    entityType: AttributeEntityTypeEnum.PRODUCT,
+    entityType: "PRODUCT",
   });
 });

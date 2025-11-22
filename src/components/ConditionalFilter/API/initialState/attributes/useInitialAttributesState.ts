@@ -3,8 +3,8 @@ import {
   _GetChannelOperandsDocument,
   _GetChannelOperandsQuery,
   _GetChannelOperandsQueryVariables,
-  AttributeTypeEnum,
 } from "@dashboard/graphql";
+import { AttributeTypeEnumValues } from "@dashboard/graphql/enumConstants";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -40,7 +40,7 @@ export const useInitialAttributesState = (): InitialAttributesAPIState => {
     }
 
     const attributeTypeInit = new EnumValuesHandler(
-      AttributeTypeEnum,
+      AttributeTypeEnumValues,
       "attributeType",
       intl,
       attributeType,

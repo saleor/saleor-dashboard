@@ -260,7 +260,7 @@ const ProductList = ({ params }: ProductListProps) => {
       variables: {
         ids: filteredColumnIds,
         hasAttributes: !!filteredColumnIds.length,
-        type: AttributeTypeEnum.PRODUCT_TYPE,
+        type: "PRODUCT_TYPE",
       },
     });
   }, []);

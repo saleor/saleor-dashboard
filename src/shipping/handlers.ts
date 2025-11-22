@@ -76,7 +76,7 @@ function getCreateShippingPriceRateVariables(
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.PRICE,
+      type: "PRICE",
       description: getParsedDataForJsonStringField(data.description),
       taxClass: data.taxClassId,
     },
@@ -106,7 +106,7 @@ function getCreateShippingWeightRateVariables(
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.WEIGHT,
+      type: "WEIGHT",
       description: getParsedDataForJsonStringField(data.description),
       taxClass: data.taxClassId,
     },
@@ -130,12 +130,12 @@ export function getUpdateShippingPriceRateVariables(
       addPostalCodeRules: postalCodeRules,
       deletePostalCodeRules,
       inclusionType:
-        addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+        addPostalCodeRules[0]?.inclusionType || "EXCLUDE",
       maximumDeliveryDays: parsedMaxDays,
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.PRICE,
+      type: "PRICE",
       description: getParsedDataForJsonStringField(data.description),
       taxClass: data.taxClassId,
     },
@@ -162,14 +162,14 @@ export function getUpdateShippingWeightRateVariables(
       addPostalCodeRules: postalCodeRules,
       deletePostalCodeRules,
       inclusionType:
-        addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+        addPostalCodeRules[0]?.inclusionType || "EXCLUDE",
       maximumDeliveryDays: parsedMaxDays,
       maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
       minimumDeliveryDays: parsedMinDays,
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.WEIGHT,
+      type: "WEIGHT",
       description: getParsedDataForJsonStringField(data.description),
       taxClass: data.taxClassId,
     },
@@ -214,7 +214,7 @@ export function useShippingRateCreator(
     useShippingMethodChannelListingUpdateMutation({});
   const [deleteShippingRate] = useDeleteShippingRateMutation({});
   const getVariables =
-    type === ShippingMethodTypeEnum.PRICE
+    type === "PRICE"
       ? getCreateShippingPriceRateVariables
       : getCreateShippingWeightRateVariables;
   const createShippingRate = async (data: ShippingZoneRateCommonFormData) => {

@@ -21,9 +21,9 @@ import {
 import OrderRefundForm, { OrderRefundSubmitData, OrderRefundType } from "./form";
 
 export const refundFulfilledStatuses = [
-  FulfillmentStatus.FULFILLED,
-  FulfillmentStatus.RETURNED,
-  FulfillmentStatus.WAITING_FOR_APPROVAL,
+  "FULFILLED",
+  "RETURNED",
+  "WAITING_FOR_APPROVAL",
 ];
 
 interface OrderRefundPageProps {

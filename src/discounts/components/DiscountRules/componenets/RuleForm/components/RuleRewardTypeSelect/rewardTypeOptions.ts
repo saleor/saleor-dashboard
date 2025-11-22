@@ -8,10 +8,10 @@ export const getRewardTypeOptions = (intl: IntlShape): Option[] => [
       defaultMessage: "Subtotal discount",
       id: "BVDaKx",
     }),
-    value: RewardTypeEnum.SUBTOTAL_DISCOUNT,
+    value: "SUBTOTAL_DISCOUNT",
   },
   {
     label: intl.formatMessage({ defaultMessage: "Gift", id: "ZBs2Pb" }),
-    value: RewardTypeEnum.GIFT,
+    value: "GIFT",
   },
 ];

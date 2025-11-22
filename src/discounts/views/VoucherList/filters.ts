@@ -4,7 +4,15 @@ import {
   VoucherFilterKeys,
   VoucherListFilterOpts,
 } from "@dashboard/discounts/components/VoucherListPage";
-import { DiscountStatusEnum, VoucherDiscountType, VoucherFilterInput } from "@dashboard/graphql";
+import {
+  DiscountStatusEnum,
+  VoucherDiscountType,
+  VoucherFilterInput,
+} from "@dashboard/graphql";
+import {
+  DiscountStatusEnumValues,
+  VoucherDiscountTypeValues,
+} from "@dashboard/graphql/enumConstants";
 import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
 import { Option } from "@saleor/macaw-ui-next";
 
@@ -37,7 +45,7 @@ export function getFilterOpts(
     saleType: {
       active: !!maybe(() => params.type),
       value: dedupeFilter(
-        params.type?.map(type => findValueInEnum(type, VoucherDiscountType)) || [],
+        params.type?.map(type => findValueInEnum(type, VoucherDiscountTypeValues)) || [],
       ),
     },
     started: {
@@ -53,7 +61,7 @@ export function getFilterOpts(
     status: {
       active: !!maybe(() => params.status),
       value: dedupeFilter(
-        params.status?.map(status => findValueInEnum(status, DiscountStatusEnum)) || [],
+        params.status?.map(status => findValueInEnum(status, DiscountStatusEnumValues)) || [],
       ),
     },
     timesUsed: {
@@ -72,14 +80,14 @@ export function getFilterOpts(
 export function getFilterVariables(params: VoucherListUrlFilters): VoucherFilterInput {
   return {
     discountType:
-      params.type && params.type.map(type => findValueInEnum(type, VoucherDiscountType)),
+      params.type && params.type.map(type => findValueInEnum(type, VoucherDiscountTypeValues)),
     search: params.query,
     started: getGteLteVariables({
       gte: joinDateTime(params.startedFrom),
       lte: joinDateTime(params.startedTo),
     }),
     status:
-      params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
+      params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnumValues)),
     timesUsed: getGteLteVariables({
       gte: parseInt(params.timesUsedFrom, 10),
       lte: parseInt(params.timesUsedTo, 10),
@@ -97,7 +105,7 @@ export function getFilterQueryParam(
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<VoucherFilterKeys.saleType>,
         VoucherListUrlFiltersWithMultipleValues.type,
-        VoucherDiscountType,
+        VoucherDiscountTypeValues,
       );
 
     case VoucherFilterKeys.started:
@@ -118,7 +126,7 @@ export function getFilterQueryParam(
       return getMultipleEnumValueQueryParam(
         filter as FilterElementRegular<VoucherFilterKeys.status>,
         VoucherListUrlFiltersWithMultipleValues.status,
-        DiscountStatusEnum,
+        DiscountStatusEnumValues,
       );
 
     case VoucherFilterKeys.channel:

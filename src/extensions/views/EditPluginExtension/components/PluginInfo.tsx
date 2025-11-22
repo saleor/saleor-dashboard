@@ -26,7 +26,7 @@ export const PluginInfo = ({
   disabled,
 }: PluginInfoProps) => {
   const intl = useIntl();
-  const misconfiguredError = errors.find(err => err.code === PluginErrorCode.PLUGIN_MISCONFIGURED);
+  const misconfiguredError = errors.find(err => err.code === "PLUGIN_MISCONFIGURED");
 
   return (
     <DashboardCard>

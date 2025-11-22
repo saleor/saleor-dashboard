@@ -1,4 +1,4 @@
-import { ExportScope } from "@dashboard/graphql";
+import { ExportScope, FileTypesEnum } from "@dashboard/graphql";
 import { ExportSettingsFormData } from "@dashboard/products/components/ProductExportDialog/types";
 
 interface ExportGiftCardsInputProps {
@@ -9,16 +9,16 @@ interface ExportGiftCardsInputProps {
 export const getExportGiftCardsInput = ({ data, ids }: ExportGiftCardsInputProps) => {
   const { scope, fileType } = data;
 
-  if (scope === ExportScope.IDS) {
+  if (scope === "IDS") {
     return {
-      fileType,
-      scope,
+      fileType: fileType as FileTypesEnum,
+      scope: scope as ExportScope,
       ids,
     };
   }
 
   return {
-    fileType,
-    scope,
+    fileType: fileType as FileTypesEnum,
+    scope: scope as ExportScope,
   };
 };

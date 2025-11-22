@@ -38,7 +38,7 @@ interface AttributeDetailsProps {
 
 const attributeValueAlreadyExistsError: AttributeErrorFragment = {
   __typename: "AttributeError",
-  code: AttributeErrorCode.ALREADY_EXISTS,
+  code: "ALREADY_EXISTS",
   field: "name",
   message: "",
 };

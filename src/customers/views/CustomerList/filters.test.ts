@@ -48,12 +48,12 @@ describe("Filtering URL params", () => {
     },
     [
       {
-        code: PermissionEnum.MANAGE_USERS,
+        code: "MANAGE_USERS",
         name: "Manage customers.",
         __typename: "UserPermission",
       },
       {
-        code: PermissionEnum.MANAGE_ORDERS,
+        code: "MANAGE_ORDERS",
         name: "Manage orders..",
         __typename: "UserPermission",
       },

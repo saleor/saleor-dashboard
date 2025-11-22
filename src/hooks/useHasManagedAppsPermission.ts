@@ -4,7 +4,7 @@ import { PermissionEnum } from "@dashboard/graphql";
 export const useHasManagedAppsPermission = () => {
   const permissions = useUserPermissions();
   const hasManagedAppsPermission = !!permissions?.find(
-    ({ code }) => code === PermissionEnum.MANAGE_APPS,
+    ({ code }) => code === "MANAGE_APPS",
   );
 
   return {

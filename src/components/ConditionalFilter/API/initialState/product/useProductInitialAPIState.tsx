@@ -146,7 +146,7 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
         if (!attributeDef) continue;
 
         switch (attributeDef.entityType) {
-          case AttributeEntityTypeEnum.PAGE:
+          case "PAGE":
             referenceChoicePromises.push(
               client
                 .query<_SearchPageOperandsQuery, _SearchPageOperandsQueryVariables>({
@@ -162,7 +162,7 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
                 })),
             );
             break;
-          case AttributeEntityTypeEnum.PRODUCT:
+          case "PRODUCT":
             referenceChoicePromises.push(
               client
                 .query<_SearchProductOperandsQuery, _SearchProductOperandsQueryVariables>({
@@ -178,7 +178,7 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
                 })),
             );
             break;
-          case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+          case "PRODUCT_VARIANT":
             referenceChoicePromises.push(
               client
                 .query<

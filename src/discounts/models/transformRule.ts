@@ -34,7 +34,7 @@ export const mapAPIRuleToForm = (
     };
   }
 
-  if (type === PromotionTypeEnum.CATALOGUE) {
+  if (type === "CATALOGUE") {
     const catalogueConditions = prepareCatalogueRuleConditions(
       rule.cataloguePredicate,
       labelMaps.conditionsValues,
@@ -47,7 +47,7 @@ export const mapAPIRuleToForm = (
     };
   }
 
-  if (type === PromotionTypeEnum.ORDER) {
+  if (type === "ORDER") {
     const orderconditions = prepareOrderConditions(
       rule.orderPredicate?.discountedObjectPredicate ?? {},
     );
@@ -76,11 +76,11 @@ export const toAPI =
     }
 
     const orderPredicate =
-      discountType === PromotionTypeEnum.ORDER && !rule.hasPredicateNestedConditions
+      discountType === "ORDER" && !rule.hasPredicateNestedConditions
         ? prepareOrderPredicate(rule.conditions)
         : undefined;
     const cataloguePredicate =
-      discountType === PromotionTypeEnum.CATALOGUE && !rule.hasPredicateNestedConditions
+      discountType === "CATALOGUE" && !rule.hasPredicateNestedConditions
         ? prepareCataloguePredicate(rule.conditions)
         : undefined;
 
@@ -93,7 +93,7 @@ export const toAPI =
   };
 
 function getRewardProperties(rule: Rule, discountType: PromotionTypeEnum | null | undefined) {
-  const isOrderDiscount = discountType === PromotionTypeEnum.ORDER;
+  const isOrderDiscount = discountType === "ORDER";
 
   if (isOrderDiscount) {
     return getOrderReward(rule);
@@ -108,7 +108,7 @@ function getRewardProperties(rule: Rule, discountType: PromotionTypeEnum | null 
 }
 
 function getOrderReward(rule: Rule) {
-  const isGiftReward = rule.rewardType === RewardTypeEnum.GIFT;
+  const isGiftReward = rule.rewardType === "GIFT";
 
   if (isGiftReward) {
     return {

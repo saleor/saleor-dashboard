@@ -17,7 +17,7 @@ function getShopErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case ShopErrorCode.ALREADY_EXISTS:
+      case "ALREADY_EXISTS":
         return intl.formatMessage(messages.alreadyExists);
     }
   }

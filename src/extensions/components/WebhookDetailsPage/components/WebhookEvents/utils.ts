@@ -1,4 +1,5 @@
 import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
+import { WebhookEventTypeAsyncEnumValues, WebhookEventTypeSyncEnumValues } from "@dashboard/graphql/enumConstants";
 
 type Actions = string[];
 
@@ -22,11 +23,11 @@ export const getWebhookTypes = (webhookEvents: string[]) => {
 };
 
 const AsyncWebhookTypes: Record<string, Actions> = getWebhookTypes(
-  Object.keys(WebhookEventTypeAsyncEnum),
+  WebhookEventTypeAsyncEnumValues,
 );
 
 const SyncWebhookTypes: Record<string, Actions> = getWebhookTypes(
-  Object.keys(WebhookEventTypeSyncEnum),
+  WebhookEventTypeSyncEnumValues,
 );
 
 export const EventTypes = {

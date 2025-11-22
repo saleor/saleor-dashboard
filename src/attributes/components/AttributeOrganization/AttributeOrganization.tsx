@@ -75,17 +75,17 @@ const AttributeOrganization = (props: AttributeOrganizationProps) => {
           >
             <Box marginTop={2}>
               <RadioGroup.Item
-                id={AttributeTypeEnum.PRODUCT_TYPE}
-                value={AttributeTypeEnum.PRODUCT_TYPE}
-                data-test-id={AttributeTypeEnum.PRODUCT_TYPE}
+                id={"PRODUCT_TYPE"}
+                value={"PRODUCT_TYPE"}
+                data-test-id={"PRODUCT_TYPE"}
                 marginBottom={2}
               >
                 <Text size={2}>{intl.formatMessage(messages.productAttribute)}</Text>
               </RadioGroup.Item>
               <RadioGroup.Item
-                id={AttributeTypeEnum.PAGE_TYPE}
-                value={AttributeTypeEnum.PAGE_TYPE}
-                data-test-id={AttributeTypeEnum.PAGE_TYPE}
+                id={"PAGE_TYPE"}
+                value={"PAGE_TYPE"}
+                data-test-id={"PAGE_TYPE"}
               >
                 <Text size={2}>{intl.formatMessage(messages.contentAttribute)}</Text>
               </RadioGroup.Item>
@@ -97,7 +97,7 @@ const AttributeOrganization = (props: AttributeOrganizationProps) => {
               <FormattedMessage id="v1pNHW" defaultMessage="Attribute Class" />
             </Text>
             <Text>
-              {data.type === AttributeTypeEnum.PRODUCT_TYPE
+              {data.type === "PRODUCT_TYPE"
                 ? intl.formatMessage(messages.productAttribute)
                 : intl.formatMessage(messages.contentAttribute)}
             </Text>

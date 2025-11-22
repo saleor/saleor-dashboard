@@ -37,13 +37,13 @@ export class StaticBooleanQueryVarsBuilder
       {
         label: "Yes",
         value: "true",
-        type: AttributeInputTypeEnum.BOOLEAN,
+        type: "BOOLEAN",
         slug: "true",
       },
       {
         label: "No",
         value: "false",
-        type: AttributeInputTypeEnum.BOOLEAN,
+        type: "BOOLEAN",
         slug: "false",
       },
     ]);

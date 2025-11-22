@@ -70,7 +70,7 @@ export const usePendingInstallation = ({
   ]);
   const pendingInstallations: InstalledExtension[] = filteredPendingInstallations.map(
     ({ status, id, appName, brand }) => {
-      const isFailed = status === JobStatusEnum.FAILED;
+      const isFailed = status === "FAILED";
 
       return {
         id: id,

@@ -74,4 +74,4 @@ const getRefundCreateOrderLinesToRefund = (
 const getDefaultTransaction = (
   transactions: OrderDetailsGrantRefundFragment["transactions"] | undefined,
 ) =>
-  transactions?.find(transaction => transaction.actions.includes(TransactionActionEnum.REFUND))?.id;
+  transactions?.find(transaction => transaction.actions.includes("REFUND"))?.id;

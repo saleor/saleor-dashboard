@@ -24,11 +24,11 @@ function getChannelsErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case ChannelErrorCode.ALREADY_EXISTS:
+      case "ALREADY_EXISTS":
         return intl.formatMessage(messages.channelAlreadyExist);
-      case ChannelErrorCode.UNIQUE:
+      case "UNIQUE":
         return intl.formatMessage(messages.channelUnique);
-      case ChannelErrorCode.CHANNELS_CURRENCY_MUST_BE_THE_SAME:
+      case "CHANNELS_CURRENCY_MUST_BE_THE_SAME":
         return intl.formatMessage(messages.channelSameCurrency);
     }
   }

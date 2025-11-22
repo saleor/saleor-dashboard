@@ -82,29 +82,29 @@ function getProductErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case ProductErrorCode.ATTRIBUTE_ALREADY_ASSIGNED:
+      case "ATTRIBUTE_ALREADY_ASSIGNED":
         return intl.formatMessage(messages.attributeAlreadyAssigned);
-      case ProductErrorCode.ALREADY_EXISTS:
+      case "ALREADY_EXISTS":
         return intl.formatMessage(messages.alreadyExists);
-      case ProductErrorCode.ATTRIBUTE_CANNOT_BE_ASSIGNED:
+      case "ATTRIBUTE_CANNOT_BE_ASSIGNED":
         return intl.formatMessage(messages.attributeCannotBeAssigned);
-      case ProductErrorCode.ATTRIBUTE_VARIANTS_DISABLED:
+      case "ATTRIBUTE_VARIANTS_DISABLED":
         return intl.formatMessage(messages.attributeVariantsDisabled);
-      case ProductErrorCode.DUPLICATED_INPUT_ITEM:
+      case "DUPLICATED_INPUT_ITEM":
         return intl.formatMessage(messages.duplicatedInputItem);
-      case ProductErrorCode.VARIANT_NO_DIGITAL_CONTENT:
+      case "VARIANT_NO_DIGITAL_CONTENT":
         return intl.formatMessage(messages.variantNoDigitalContent);
-      case ProductErrorCode.UNSUPPORTED_MEDIA_PROVIDER:
+      case "UNSUPPORTED_MEDIA_PROVIDER":
         return intl.formatMessage(messages.unsupportedMediaProvider);
-      case ProductErrorCode.PRODUCT_WITHOUT_CATEGORY:
+      case "PRODUCT_WITHOUT_CATEGORY":
         return intl.formatMessage(messages.noCategorySet);
-      case ProductErrorCode.INVALID:
+      case "INVALID":
         if (err.field === "price") {
           return intl.formatMessage(messages.priceInvalid);
         }
 
         return intl.formatMessage(commonErrorMessages.invalid);
-      case ProductErrorCode.UNIQUE:
+      case "UNIQUE":
         if (err.field === "sku") {
           return intl.formatMessage(messages.skuUnique);
         }

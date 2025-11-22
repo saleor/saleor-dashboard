@@ -15,7 +15,7 @@ export const WelcomePage = () => {
   const channels = user?.accessibleChannels ?? [];
   const userPermissions = user?.userPermissions || [];
   const hasPermissionToManageOrders = hasPermissions(userPermissions, [
-    PermissionEnum.MANAGE_ORDERS,
+    "MANAGE_ORDERS",
   ]);
 
   return (

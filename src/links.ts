@@ -59,21 +59,21 @@ export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): strin
   }
 
   const codeToLinkMap: Record<AppErrorCode, string> = {
-    [AppErrorCode.INVALID_URL_FORMAT]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_url_format`,
-    [AppErrorCode.INVALID_PERMISSION]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_permission`,
-    [AppErrorCode.OUT_OF_SCOPE_PERMISSION]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeout_of_scope_permission`,
-    [AppErrorCode.MANIFEST_URL_CANT_CONNECT]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodemanifest_url_cant_connect`,
-    [AppErrorCode.INVALID_MANIFEST_FORMAT]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_manifest_format`,
-    [AppErrorCode.REQUIRED]: `${EXTENSION_MANIFEST_DOCS}#apperrorcoderequired`,
-    [AppErrorCode.UNIQUE]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeunique`,
-    [AppErrorCode.UNSUPPORTED_SALEOR_VERSION]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeunsupported_saleor_version`,
-    [AppErrorCode.INVALID_CUSTOM_HEADERS]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_custom_headers`,
-    [AppErrorCode.GRAPHQL_ERROR]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodegraphql_error`,
-    [AppErrorCode.INVALID]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid`,
-    [AppErrorCode.INVALID_STATUS]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_status`,
-    [AppErrorCode.NOT_FOUND]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodenot_found`,
-    [AppErrorCode.FORBIDDEN]: EXTENSION_MANIFEST_DOCS, // No docs section
-    [AppErrorCode.OUT_OF_SCOPE_APP]: EXTENSION_MANIFEST_DOCS, // No docs sect
+    ["INVALID_URL_FORMAT"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_url_format`,
+    ["INVALID_PERMISSION"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_permission`,
+    ["OUT_OF_SCOPE_PERMISSION"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeout_of_scope_permission`,
+    ["MANIFEST_URL_CANT_CONNECT"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodemanifest_url_cant_connect`,
+    ["INVALID_MANIFEST_FORMAT"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_manifest_format`,
+    ["REQUIRED"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcoderequired`,
+    ["UNIQUE"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeunique`,
+    ["UNSUPPORTED_SALEOR_VERSION"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeunsupported_saleor_version`,
+    ["INVALID_CUSTOM_HEADERS"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_custom_headers`,
+    ["GRAPHQL_ERROR"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodegraphql_error`,
+    ["INVALID"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid`,
+    ["INVALID_STATUS"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodeinvalid_status`,
+    ["NOT_FOUND"]: `${EXTENSION_MANIFEST_DOCS}#apperrorcodenot_found`,
+    ["FORBIDDEN"]: EXTENSION_MANIFEST_DOCS, // No docs section
+    ["OUT_OF_SCOPE_APP"]: EXTENSION_MANIFEST_DOCS, // No docs sect
   };
 
   return codeToLinkMap[errorCode] || "";

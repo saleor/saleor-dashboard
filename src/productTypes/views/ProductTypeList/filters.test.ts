@@ -17,8 +17,8 @@ describe("Filtering query params", () => {
   });
   it("should not be empty object if params given", () => {
     const params: ProductTypeListUrlFilters = {
-      configurable: ProductTypeConfigurable.CONFIGURABLE,
-      type: ProductTypeEnum.DIGITAL,
+      configurable: "CONFIGURABLE",
+      type: "DIGITAL",
     };
     const filterVariables = getFilterVariables(params);
 
@@ -30,11 +30,11 @@ describe("Filtering URL params", () => {
   const filters = createFilterStructure(intl, {
     configurable: {
       active: false,
-      value: ProductTypeConfigurable.CONFIGURABLE,
+      value: "CONFIGURABLE",
     },
     type: {
       active: false,
-      value: ProductTypeEnum.DIGITAL,
+      value: "DIGITAL",
     },
   });
 

@@ -90,7 +90,7 @@ export const WebhookDetailsPage = ({
       setLocalErrors([
         {
           __typename: "WebhookError",
-          code: WebhookErrorCode.REQUIRED,
+          code: "REQUIRED",
           field: "subscriptionQuery",
           message: intl.formatMessage(messages.subscriptionQueryBlankError),
         },

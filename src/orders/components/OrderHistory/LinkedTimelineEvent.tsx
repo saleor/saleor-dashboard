@@ -44,7 +44,7 @@ const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) 
     const { type, relatedOrder, lines } = event;
 
     switch (type) {
-      case OrderEventsEnum.ORDER_REPLACEMENT_CREATED: {
+      case "ORDER_REPLACEMENT_CREATED": {
         return [
           {
             link: orderUrl(relatedOrder?.id),
@@ -55,7 +55,7 @@ const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) 
           { text: intl.formatMessage(replacementCreatedMessages.description) },
         ];
       }
-      case OrderEventsEnum.ORDER_DISCOUNT_DELETED: {
+      case "ORDER_DISCOUNT_DELETED": {
         return [
           {
             text: intl.formatMessage(discountRemovedMessages.orderDiscountRemoved),
@@ -63,7 +63,7 @@ const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) 
           getEmployeeNameLink(event, intl),
         ];
       }
-      case OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED: {
+      case "ORDER_LINE_DISCOUNT_REMOVED": {
         return [
           {
             text: intl.formatMessage(discountRemovedMessages.productDiscountRemoved, {

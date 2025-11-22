@@ -6,7 +6,7 @@ export const activities = [
     email: null,
     message: null,
     orderNumber: "3268",
-    type: OrderEventsEnum.PLACED_FROM_DRAFT,
+    type: "PLACED_FROM_DRAFT",
     user: {
       email: "renata.gajzlerowicz@saleor.io",
     },
@@ -16,7 +16,7 @@ export const activities = [
     email: null,
     message: null,
     orderNumber: "3268",
-    type: OrderEventsEnum.ORDER_FULLY_PAID,
+    type: "ORDER_FULLY_PAID",
     user: null,
   },
 ] as ActivitiesFragment[];

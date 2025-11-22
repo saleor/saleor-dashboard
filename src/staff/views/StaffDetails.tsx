@@ -54,7 +54,7 @@ export const StaffDetailsView: React.FC<OrderListProps> = ({ id, params }) => {
   } = useProfileOperations({ closeModal, id, refetch });
   const staffMember = isUserSameAsViewer ? user.user : data?.user;
   const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [
-    PermissionEnum.MANAGE_STAFF,
+    "MANAGE_STAFF",
   ]);
   const {
     loadMore: loadMorePermissionGroups,

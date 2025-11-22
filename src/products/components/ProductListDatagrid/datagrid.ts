@@ -536,7 +536,7 @@ export const getAttributesFetchMoreProps = ({
     queryAvailableColumnsAttributes({
       variables: {
         search: query,
-        type: AttributeTypeEnum.PRODUCT_TYPE,
+        type: "PRODUCT_TYPE",
         after:
           availableColumnsAttributesData.data?.attributes?.pageInfo.endCursor ??
           gridAttributesOpts.data?.availableAttributes?.pageInfo.endCursor,
@@ -549,7 +549,7 @@ export const getAttributesFetchMoreProps = ({
     queryAvailableColumnsAttributes({
       variables: {
         search: query,
-        type: AttributeTypeEnum.PRODUCT_TYPE,
+        type: "PRODUCT_TYPE",
         before: availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor,
         last: 10,
         first: null,

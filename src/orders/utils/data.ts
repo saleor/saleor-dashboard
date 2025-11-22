@@ -16,6 +16,7 @@ import {
   StockFragment,
   WarehouseFragment,
 } from "@dashboard/graphql";
+import { CountryCodeValues } from "@dashboard/graphql/enumConstants";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { findInEnum, getById } from "@dashboard/misc";
 import { IMoney } from "@dashboard/utils/intl";
@@ -115,7 +116,7 @@ const selectItemPriceAndQuantity = (
 ) => {
   const fulfillment = getFulfillmentByFulfillmentLineId(order, id);
 
-  if (fulfillment?.status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
+  if (fulfillment?.status === "WAITING_FOR_APPROVAL") {
     return getItemPriceAndQuantity({
       id,
       itemsQuantities: waitingItemsQuantities ?? [],
@@ -297,7 +298,7 @@ function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
 
   return {
     ...rest,
-    country: findInEnum(address.country.code, CountryCode),
+    country: findInEnum(address.country.code, CountryCodeValues),
   };
 }
 
@@ -441,19 +442,19 @@ const getDiscountNameLabel = (name: string) => {
 
 export const getDiscountTypeLabel = (discount: OrderDiscountFragment, intl: IntlShape) => {
   switch (discount.type) {
-    case OrderDiscountType.MANUAL:
+    case "MANUAL":
       return intl.formatMessage(orderDiscountTypeLabelMessages.staffAdded);
-    case OrderDiscountType.ORDER_PROMOTION:
+    case "ORDER_PROMOTION":
       return getDiscountNameLabel(discount.name ?? "");
-    case OrderDiscountType.VOUCHER:
+    case "VOUCHER":
       return intl.formatMessage(orderDiscountTypeLabelMessages.voucher, {
         voucherName: discount.name,
       });
 
-    case OrderDiscountType.PROMOTION:
+    case "PROMOTION":
       return intl.formatMessage(orderDiscountTypeLabelMessages.promotion);
 
-    case OrderDiscountType.SALE:
+    case "SALE":
       return intl.formatMessage(orderDiscountTypeLabelMessages.sale);
   }
 };

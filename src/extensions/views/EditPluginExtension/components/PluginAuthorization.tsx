@@ -52,8 +52,8 @@ export const PluginAuthorization = (props: PluginAuthorizationProps) => {
         {secretFields.map((field, fieldIndex) => (
           <Fragment key={field.name}>
             <div className={classes.item} key={field.name}>
-              {field.type === ConfigurationTypeFieldEnum.SECRET ||
-              field.type === ConfigurationTypeFieldEnum.SECRETMULTILINE ? (
+              {field.type === "SECRET" ||
+              field.type === "SECRETMULTILINE" ? (
                 <div>
                   <Text size={4} fontWeight="regular">
                     {field.label}

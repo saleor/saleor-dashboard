@@ -125,7 +125,7 @@ const AttributePage = ({
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const initialForm: AttributePageFormData = !attribute
@@ -134,13 +134,13 @@ const AttributePage = ({
         entityType: null,
         filterableInDashboard: true,
         filterableInStorefront: true,
-        inputType: AttributeInputTypeEnum.DROPDOWN,
+        inputType: "DROPDOWN",
         metadata: [],
         name: "",
         privateMetadata: [],
         slug: "",
         storefrontSearchPosition: "",
-        type: AttributeTypeEnum.PRODUCT_TYPE,
+        type: "PRODUCT_TYPE",
         valueRequired: true,
         visibleInStorefront: true,
         unit: undefined,
@@ -151,13 +151,13 @@ const AttributePage = ({
         entityType: attribute.entityType,
         filterableInDashboard: attribute.filterableInDashboard,
         filterableInStorefront: attribute.filterableInStorefront,
-        inputType: attribute?.inputType ?? AttributeInputTypeEnum.DROPDOWN,
+        inputType: attribute?.inputType ?? "DROPDOWN",
         metadata: attribute.metadata.map(mapMetadataItemToInput),
         name: attribute?.name ?? "",
         privateMetadata: attribute.privateMetadata.map(mapMetadataItemToInput),
         slug: attribute?.slug ?? "",
         storefrontSearchPosition: attribute.storefrontSearchPosition.toString(),
-        type: attribute?.type ?? AttributeTypeEnum.PRODUCT_TYPE,
+        type: attribute?.type ?? "PRODUCT_TYPE",
         valueRequired: !!attribute.valueRequired,
         visibleInStorefront: attribute.visibleInStorefront,
         unit: attribute?.unit ?? null,
@@ -185,7 +185,7 @@ const AttributePage = ({
       {({ change, set, data, isSaveDisabled, submit, errors, setError, clearErrors }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
         const activeRefSearch =
-          data.entityType === AttributeEntityTypeEnum.PAGE ? pageRefSearch : productRefSearch;
+          data.entityType === "PAGE" ? pageRefSearch : productRefSearch;
 
         const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
           activeRefSearch.result.data?.search,

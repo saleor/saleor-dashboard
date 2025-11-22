@@ -7,8 +7,8 @@ import { useFullAccessToggle } from "./useIsFullAccessSelected";
 
 describe("useFullAccessToggle", () => {
   const mockPermissions: PermissionFragment[] = [
-    { code: PermissionEnum.MANAGE_APPS, name: "Manage Apps", __typename: "Permission" },
-    { code: PermissionEnum.MANAGE_ORDERS, name: "Manage Orders", __typename: "Permission" },
+    { code: "MANAGE_APPS", name: "Manage Apps", __typename: "Permission" },
+    { code: "MANAGE_ORDERS", name: "Manage Orders", __typename: "Permission" },
   ];
 
   it("should return false when permissions haven't been fetched", () => {
@@ -41,8 +41,8 @@ describe("useFullAccessToggle", () => {
         defaultValues: {
           appName: "",
           permissions: {
-            [PermissionEnum.MANAGE_APPS]: false,
-            [PermissionEnum.MANAGE_ORDERS]: false,
+            ["MANAGE_APPS"]: false,
+            ["MANAGE_ORDERS"]: false,
           },
         },
       }),
@@ -67,8 +67,8 @@ describe("useFullAccessToggle", () => {
         defaultValues: {
           appName: "",
           permissions: {
-            [PermissionEnum.MANAGE_APPS]: true,
-            [PermissionEnum.MANAGE_ORDERS]: true,
+            ["MANAGE_APPS"]: true,
+            ["MANAGE_ORDERS"]: true,
           },
         },
       }),
@@ -93,8 +93,8 @@ describe("useFullAccessToggle", () => {
         defaultValues: {
           appName: "",
           permissions: {
-            [PermissionEnum.MANAGE_APPS]: true,
-            [PermissionEnum.MANAGE_ORDERS]: true,
+            ["MANAGE_APPS"]: true,
+            ["MANAGE_ORDERS"]: true,
           },
         },
       }),
@@ -113,8 +113,8 @@ describe("useFullAccessToggle", () => {
 
     // Assert
     expect(formResult.current.getValues("permissions")).toEqual({
-      [PermissionEnum.MANAGE_APPS]: false,
-      [PermissionEnum.MANAGE_ORDERS]: false,
+      ["MANAGE_APPS"]: false,
+      ["MANAGE_ORDERS"]: false,
     });
   });
 
@@ -125,8 +125,8 @@ describe("useFullAccessToggle", () => {
         defaultValues: {
           appName: "",
           permissions: {
-            [PermissionEnum.MANAGE_APPS]: false,
-            [PermissionEnum.MANAGE_ORDERS]: false,
+            ["MANAGE_APPS"]: false,
+            ["MANAGE_ORDERS"]: false,
           },
         },
       }),
@@ -145,8 +145,8 @@ describe("useFullAccessToggle", () => {
 
     // Assert
     expect(formResult.current.getValues("permissions")).toEqual({
-      [PermissionEnum.MANAGE_APPS]: true,
-      [PermissionEnum.MANAGE_ORDERS]: true,
+      ["MANAGE_APPS"]: true,
+      ["MANAGE_ORDERS"]: true,
     });
   });
 });

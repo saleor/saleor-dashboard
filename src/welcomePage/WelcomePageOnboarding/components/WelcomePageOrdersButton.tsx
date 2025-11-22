@@ -13,7 +13,7 @@ export const WelcomePageOrdersButton = ({ onClick }: PrimaryActionProps) => {
   const { user } = useUser();
   const userPermissions = user?.userPermissions || [];
   const hasPermissionToManageOrders = hasPermissions(userPermissions, [
-    PermissionEnum.MANAGE_ORDERS,
+    "MANAGE_ORDERS",
   ]);
 
   if (!hasPermissionToManageOrders) {

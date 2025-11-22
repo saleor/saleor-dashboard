@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { FilterContainer } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
 import { getFilterElement } from "../utils";
+import { ProductTypeEnumValues } from "@dashboard/graphql/enumConstants";
 
 export const useProductTypesFilterAPIProvider = (): FilterAPIProvider => {
   const intl = useIntl();
@@ -35,7 +36,7 @@ export const useProductTypesFilterAPIProvider = (): FilterAPIProvider => {
     }
 
     if (rowType === "typeOfProduct") {
-      return await new EnumValuesHandler(ProductTypeEnum, "typeOfProduct", intl).fetch();
+      return await new EnumValuesHandler(ProductTypeEnumValues, "typeOfProduct", intl).fetch();
     }
 
     return [];

@@ -81,7 +81,7 @@ const TranslationsProductsPage = ({
             selectedId={variantId}
           />
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={languageCode as LanguageCodeEnum}
             languages={languages}
             onLanguageChange={lang => navigate(productVariantUrl(lang, productId, translationId))}
           />

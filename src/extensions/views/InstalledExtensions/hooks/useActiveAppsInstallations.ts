@@ -86,7 +86,7 @@ export const useActiveAppsInstallations = ({
   useEffect(
     () =>
       appsInProgressData?.appsInstallations?.forEach(app => {
-        if (app.status === JobStatusEnum.PENDING) {
+        if (app.status === "PENDING") {
           const item = activeInstallations.find(installation => installation.id === app.id);
 
           if (!item) {
@@ -145,12 +145,12 @@ export const useActiveAppsInstallations = ({
           appsInProgressRefetch();
           appsRefetch();
           newAppInstalled = true;
-        } else if (item.status === JobStatusEnum.SUCCESS) {
+        } else if (item.status === "SUCCESS") {
           removeInstallation(installation.id);
           installedAppNotify(item.appName);
           onInstallSuccess();
           newAppInstalled = true;
-        } else if (item.status === JobStatusEnum.FAILED) {
+        } else if (item.status === "FAILED") {
           removeInstallation(installation.id);
           onInstallError(item);
         }

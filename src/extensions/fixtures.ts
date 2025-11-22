@@ -19,19 +19,19 @@ export const appDetails: NonNullable<AppQuery["app"]> = {
   permissions: [
     {
       __typename: "Permission",
-      code: PermissionEnum.MANAGE_ORDERS,
+      code: "MANAGE_ORDERS",
       name: "Manage orders.",
     },
     {
       __typename: "Permission",
-      code: PermissionEnum.MANAGE_USERS,
+      code: "MANAGE_USERS",
       name: "Manage customers.",
     },
   ],
   privateMetadata: [],
   supportUrl: "http://localhost:8888/support",
   tokens: [],
-  type: AppTypeEnum.THIRDPARTY,
+  type: "THIRDPARTY",
   version: "1.0.0",
   webhooks: [],
   brand: null,

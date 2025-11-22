@@ -16,7 +16,7 @@ export const PickupAnnotation = ({ order }: PickupAnnotationProps) => {
         <FormSpacer />
         <Text size={2} fontWeight="light" color="default2">
           {order?.deliveryMethod?.clickAndCollectOption ===
-          WarehouseClickAndCollectOptionEnum.LOCAL ? (
+          "LOCAL" ? (
             <FormattedMessage {...messages.orderCustomerFulfillmentLocal} />
           ) : (
             <FormattedMessage {...messages.orderCustomerFulfillmentAll} />

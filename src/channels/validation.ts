@@ -4,7 +4,7 @@ import { FormData } from "./components/ChannelForm";
 
 const createEmptyRequiredError = (field: string): ChannelErrorFragment => ({
   __typename: "ChannelError",
-  code: ChannelErrorCode.REQUIRED,
+  code: "REQUIRED",
   field,
   message: null,
 });

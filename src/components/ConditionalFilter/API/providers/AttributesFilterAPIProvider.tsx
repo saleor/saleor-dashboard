@@ -5,6 +5,7 @@ import { IntlShape, useIntl } from "react-intl";
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
 import { BooleanValuesHandler, ChannelHandler, EnumValuesHandler, Handler } from "../Handler";
+import { AttributeTypeEnumValues } from "@dashboard/graphql/enumConstants";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
   const possibleFilterElement = value[index];
@@ -36,7 +37,7 @@ const createAPIHandler = (
   }
 
   if (rowType === "attributeType") {
-    return new EnumValuesHandler(AttributeTypeEnum, "attributeType", intl);
+    return new EnumValuesHandler(AttributeTypeEnumValues, "attributeType", intl);
   }
 
   if (rowType && booleanTypes.includes(rowType) && rowType !== "attribute") {

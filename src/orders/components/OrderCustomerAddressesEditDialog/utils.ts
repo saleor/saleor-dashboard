@@ -76,11 +76,11 @@ export const getAddressEditProps = (
     return {
       ...addressEditCommonProps,
       addressInputName: "shippingAddressInputOption",
-      formErrors: filterAddressErrors(dialogErrors, AddressTypeEnum.SHIPPING),
+      formErrors: filterAddressErrors(dialogErrors, "SHIPPING"),
       onEdit: () =>
         setAddressSearchState({
           open: true,
-          type: AddressTypeEnum.SHIPPING,
+          type: "SHIPPING",
         }),
       onChangeAddressInputOption: change,
       addressInputOption: data.shippingAddressInputOption,
@@ -95,11 +95,11 @@ export const getAddressEditProps = (
   return {
     ...addressEditCommonProps,
     addressInputName: "billingAddressInputOption",
-    formErrors: filterAddressErrors(dialogErrors, AddressTypeEnum.BILLING),
+    formErrors: filterAddressErrors(dialogErrors, "BILLING"),
     onEdit: () =>
       setAddressSearchState({
         open: true,
-        type: AddressTypeEnum.BILLING,
+        type: "BILLING",
       }),
     onChangeAddressInputOption: change,
     addressInputOption: data.billingAddressInputOption,

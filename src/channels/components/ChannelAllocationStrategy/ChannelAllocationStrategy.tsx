@@ -13,12 +13,12 @@ const strategyOptions = [
   {
     title: messages.prioritizeBySortOrder,
     subtitle: messages.prioritizeBySortOrderDescription,
-    type: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
+    type: "PRIORITIZE_SORTING_ORDER",
   },
   {
     title: messages.prioritizeByHighestStock,
     subtitle: messages.prioritizeByHighestStockDescription,
-    type: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    type: "PRIORITIZE_HIGH_STOCK",
   },
 ];
 

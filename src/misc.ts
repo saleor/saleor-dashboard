@@ -67,42 +67,42 @@ export const transformPaymentStatus = (
   intl: IntlShape,
 ): { localized: string; status: StatusType } => {
   switch (status) {
-    case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
+    case "PARTIALLY_CHARGED":
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
         status: StatusType.ERROR,
       };
-    case PaymentChargeStatusEnum.FULLY_CHARGED:
+    case "FULLY_CHARGED":
       return {
         localized: intl.formatMessage(paymentStatusMessages.paid),
         status: StatusType.SUCCESS,
       };
-    case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
+    case "PARTIALLY_REFUNDED":
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
         status: StatusType.INFO,
       };
-    case PaymentChargeStatusEnum.FULLY_REFUNDED:
+    case "FULLY_REFUNDED":
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
         status: StatusType.INFO,
       };
-    case PaymentChargeStatusEnum.PENDING:
+    case "PENDING":
       return {
         localized: intl.formatMessage(paymentStatusMessages.pending),
         status: StatusType.WARNING,
       };
-    case PaymentChargeStatusEnum.REFUSED:
+    case "REFUSED":
       return {
         localized: intl.formatMessage(paymentStatusMessages.refused),
         status: StatusType.ERROR,
       };
-    case PaymentChargeStatusEnum.CANCELLED:
+    case "CANCELLED":
       return {
         localized: intl.formatMessage(commonStatusMessages.cancelled),
         status: StatusType.ERROR,
       };
-    case PaymentChargeStatusEnum.NOT_CHARGED:
+    case "NOT_CHARGED":
       return {
         localized: intl.formatMessage(paymentStatusMessages.unpaid),
         status: StatusType.ERROR,
@@ -117,7 +117,7 @@ export const transformPaymentStatus = (
 
 export const transformChargedStatus = (status: OrderChargeStatusEnum, intl: IntlShape) => {
   switch (status) {
-    case OrderChargeStatusEnum.OVERCHARGED:
+    case "OVERCHARGED":
       return {
         localized: intl.formatMessage({
           defaultMessage: "Overcharged",
@@ -139,57 +139,57 @@ export const transformOrderStatus = (
   intl: IntlShape,
 ): { localized: string; status: StatusType } => {
   switch (status) {
-    case OrderStatus.FULFILLED:
+    case "FULFILLED":
       return {
         localized: intl.formatMessage(orderStatusMessages.fulfilled),
         status: StatusType.SUCCESS,
       };
-    case OrderStatus.PARTIALLY_FULFILLED:
+    case "PARTIALLY_FULFILLED":
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyFulfilled),
         status: StatusType.INFO,
       };
-    case OrderStatus.UNFULFILLED:
+    case "UNFULFILLED":
       return {
         localized: intl.formatMessage(orderStatusMessages.unfulfilled),
         status: StatusType.ERROR,
       };
-    case OrderStatus.CANCELED:
+    case "CANCELED":
       return {
         localized: intl.formatMessage(commonStatusMessages.cancelled),
         status: StatusType.ERROR,
       };
-    case OrderStatus.DRAFT:
+    case "DRAFT":
       return {
         localized: intl.formatMessage(orderStatusMessages.draft),
         status: StatusType.INFO,
       };
-    case OrderStatus.UNCONFIRMED:
+    case "UNCONFIRMED":
       return {
         localized: intl.formatMessage(orderStatusMessages.unconfirmed),
         status: StatusType.ERROR,
       };
-    case OrderStatus.PARTIALLY_RETURNED:
+    case "PARTIALLY_RETURNED":
       return {
         localized: intl.formatMessage(orderStatusMessages.partiallyReturned),
         status: StatusType.INFO,
       };
-    case OrderStatus.RETURNED:
+    case "RETURNED":
       return {
         localized: intl.formatMessage(orderStatusMessages.returned),
         status: StatusType.INFO,
       };
-    case OrderStatusFilter.READY_TO_CAPTURE:
+    case "READY_TO_CAPTURE":
       return {
         localized: intl.formatMessage(orderStatusMessages.readyToCapture),
         status: StatusType.INFO,
       };
-    case OrderStatusFilter.READY_TO_FULFILL:
+    case "READY_TO_FULFILL":
       return {
         localized: intl.formatMessage(orderStatusMessages.readyToFulfill),
         status: StatusType.INFO,
       };
-    case OrderStatus.EXPIRED:
+    case "EXPIRED":
       return {
         localized: intl.formatMessage(orderStatusMessages.expired),
         status: StatusType.ERROR,
@@ -408,27 +408,27 @@ export function splitDateTime(dateTime: string) {
   };
 }
 
-export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
-  const match = Object.keys(haystack).find(key => key === needle);
+export function findInEnum<T extends string>(needle: string, haystack: readonly T[] | T[]): T {
+  const match = haystack.find(value => value === needle);
 
   if (match) {
-    return haystack[needle as keyof TEnum];
+    return match;
   }
 
   throw new Error(`Key ${needle} not found in enum`);
 }
 
-export function findValueInEnum<TEnum extends {}>(
+export function findValueInEnum<T extends string>(
   needle: string,
-  haystack: TEnum,
-): TEnum[keyof TEnum] {
-  const match = Object.entries(haystack).find(([_, value]) => value === needle);
+  haystack: readonly T[] | T[],
+): T {
+  const match = haystack.find(value => value === needle);
 
   if (!match) {
     throw new Error(`Value ${needle} not found in enum`);
   }
 
-  return needle as unknown as TEnum[keyof TEnum];
+  return match;
 }
 
 export function parseBoolean(a: string | undefined, defaultValue: boolean): boolean {
@@ -446,7 +446,7 @@ export function capitalize(s: string) {
 export function transformFormToAddressInput<T>(address: T & AddressTypeInput): T & AddressInput {
   return {
     ...address,
-    country: findInEnum(address.country, CountryCode),
+    country: address.country as CountryCode,
   };
 }
 
@@ -458,7 +458,7 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
   city: data?.city || "",
   cityArea: data?.cityArea || "",
   companyName: data?.companyName || "",
-  country: findInEnum(data?.country?.code || "", CountryCode),
+  country: (data?.country?.code || "") as CountryCode,
   countryArea: data?.countryArea || "",
   firstName: data?.firstName || "",
   lastName: data?.lastName || "",

@@ -151,10 +151,10 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
 
         errorList?.forEach(error => {
           switch (error) {
-            case AccountErrorCode.LOGIN_ATTEMPT_DELAYED:
+            case "LOGIN_ATTEMPT_DELAYED":
               userContextErrorList.push("loginAttemptDelay");
               break;
-            case AccountErrorCode.INVALID_CREDENTIALS:
+            case "INVALID_CREDENTIALS":
               userContextErrorList.push("invalidCredentials");
               break;
             default:

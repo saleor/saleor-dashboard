@@ -81,7 +81,7 @@ const TranslationsCollectionsPage = ({
             />
           )}
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={languageCode as LanguageCodeEnum}
             languages={languages}
             onLanguageChange={lang =>
               navigate(languageEntityUrl(lang, TranslatableEntities.collections, translationId))

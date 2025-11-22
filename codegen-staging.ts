@@ -23,6 +23,7 @@ const config: CodegenConfig = {
     "./src/graphql/typesStaging.generated.ts": {
       plugins: ["typescript", "typescript-operations"],
       config: {
+        enumsAsTypes: true,
         nonOptionalTypename: true,
         avoidOptionals: {
           field: true,

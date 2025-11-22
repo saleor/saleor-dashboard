@@ -47,8 +47,8 @@ describe("AssignAttributeValueDialog/utils", () => {
         label: "Test Attribute",
         value: ["prod-1"],
         data: {
-          inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT,
+          inputType: "SINGLE_REFERENCE",
+          entityType: "PRODUCT",
           isRequired: false,
           values: [],
         },
@@ -69,8 +69,8 @@ describe("AssignAttributeValueDialog/utils", () => {
         label: "Test Attribute",
         value: ["prod-1", "prod-3"],
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT,
+          inputType: "REFERENCE",
+          entityType: "PRODUCT",
           isRequired: false,
           values: [],
         },
@@ -91,8 +91,8 @@ describe("AssignAttributeValueDialog/utils", () => {
         label: "Test Attribute",
         value: [],
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT,
+          inputType: "REFERENCE",
+          entityType: "PRODUCT",
           isRequired: false,
           values: [],
         },
@@ -162,8 +162,8 @@ describe("AssignAttributeValueDialog/utils", () => {
         label: "Test Attribute",
         value: ["var-1", "var-3"],
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
-          entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+          inputType: "REFERENCE",
+          entityType: "PRODUCT_VARIANT",
           isRequired: false,
           values: [],
         },
@@ -211,7 +211,7 @@ describe("AssignAttributeValueDialog/utils", () => {
         label: "Test Attribute",
         value: ["page-1"],
         data: {
-          inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
+          inputType: "SINGLE_REFERENCE",
           isRequired: false,
           values: [],
         },
@@ -232,7 +232,7 @@ describe("AssignAttributeValueDialog/utils", () => {
         label: "Test Attribute",
         value: ["page-2"],
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
+          inputType: "REFERENCE",
           isRequired: false,
           values: [],
         },
@@ -256,7 +256,7 @@ describe("AssignAttributeValueDialog/utils", () => {
         label: "Test Attribute",
         value: ["page-1"],
         data: {
-          inputType: AttributeInputTypeEnum.REFERENCE,
+          inputType: "REFERENCE",
           isRequired: false,
           values: [],
         },

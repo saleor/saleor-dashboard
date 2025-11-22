@@ -190,7 +190,7 @@ describe("useFetchManifest", () => {
       mockOnCompleted({
         appFetchManifest: {
           manifest: null,
-          errors: [{ code: AppErrorCode.INVALID_MANIFEST_FORMAT, message: errorMessage }],
+          errors: [{ code: "INVALID_MANIFEST_FORMAT", message: errorMessage }],
         },
       });
     });
@@ -198,7 +198,7 @@ describe("useFetchManifest", () => {
     // Assert
     expect(mockSetError).toHaveBeenCalledWith("manifestUrl", {
       message: errorMessage,
-      type: AppErrorCode.INVALID_MANIFEST_FORMAT,
+      type: "INVALID_MANIFEST_FORMAT",
     });
   });
 
@@ -206,8 +206,8 @@ describe("useFetchManifest", () => {
     // Arrange
     const manifestUrl = "https://example.com/manifest.json";
     const errorMessages = [
-      { code: AppErrorCode.INVALID_MANIFEST_FORMAT, message: "First error" },
-      { code: AppErrorCode.INVALID_PERMISSION, message: "Second error" },
+      { code: "INVALID_MANIFEST_FORMAT", message: "First error" },
+      { code: "INVALID_PERMISSION", message: "Second error" },
     ];
 
     mockGetValues.mockReturnValue(manifestUrl);

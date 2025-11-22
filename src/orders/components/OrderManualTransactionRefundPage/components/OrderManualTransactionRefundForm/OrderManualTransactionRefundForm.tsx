@@ -64,7 +64,7 @@ export const OrderManualTransactionRefundForm = ({
   const handleSubmit = (data: ManualRefundForm) => {
     manualRefund({
       variables: {
-        action: TransactionActionEnum.REFUND,
+        action: "REFUND",
         transactionId: data.transationId,
         amount: data.amount,
         reason: data.reason,

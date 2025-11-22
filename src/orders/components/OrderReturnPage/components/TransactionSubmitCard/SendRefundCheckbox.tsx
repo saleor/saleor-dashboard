@@ -24,7 +24,7 @@ export const SendRefundCheckbox = ({
   sendRefundErrors,
   onChange,
 }: SendRefundCheckboxProps) => (
-  <RequirePermissions requiredPermissions={[PermissionEnum.HANDLE_PAYMENTS]}>
+  <RequirePermissions requiredPermissions={["HANDLE_PAYMENTS"]}>
     {canSendRefund.value ? (
       <Checkbox
         data-test-id={"auto-send-refund-checkbox"}

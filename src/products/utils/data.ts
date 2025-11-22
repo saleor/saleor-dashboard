@@ -135,11 +135,11 @@ function getAttributeInputFromSelectedAttributes(
 export function getAttributeInputFromVariant(variant: ProductVariantFragment): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromSelectedAttributes(
     variant?.selectionAttributes,
-    VariantAttributeScope.VARIANT_SELECTION,
+    "VARIANT_SELECTION" as VariantAttributeScope,
   );
   const nonSelectionAttributeInput = getAttributeInputFromSelectedAttributes(
     variant?.nonSelectionAttributes,
-    VariantAttributeScope.NOT_VARIANT_SELECTION,
+    "NOT_VARIANT_SELECTION" as VariantAttributeScope,
   );
 
   return selectionAttributeInput?.concat(nonSelectionAttributeInput ?? []) ?? [];
@@ -150,11 +150,11 @@ export function getVariantAttributeInputFromProduct(
 ): AttributeInput[] {
   const selectionAttributeInput = getAttributeInputFromAttributes(
     product?.productType?.selectionVariantAttributes,
-    VariantAttributeScope.VARIANT_SELECTION,
+    "VARIANT_SELECTION" as VariantAttributeScope,
   );
   const nonSelectionAttributeInput = getAttributeInputFromAttributes(
     product?.productType?.nonSelectionVariantAttributes,
-    VariantAttributeScope.NOT_VARIANT_SELECTION,
+    "NOT_VARIANT_SELECTION" as VariantAttributeScope,
   );
 
   return selectionAttributeInput?.concat(nonSelectionAttributeInput ?? []) ?? [];
