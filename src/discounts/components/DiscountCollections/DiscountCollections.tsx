@@ -103,14 +103,14 @@ const DiscountCollections = (props: DiscountCollectionsProps) => {
                       checked={isSelected}
                       disabled={disabled}
                       disableClickPropagation
-                      onChange={() => toggle(collection.id)}
+                      onChange={() => collection && toggle(collection.id)}
                     />
                   </TableCell>
                   <TableCell className={classes.colName}>
                     {collection ? collection.name : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colProducts}>
-                    {collection ? collection?.products.totalCount : <Skeleton />}
+                    {collection ? collection.products?.totalCount : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>
@@ -119,7 +119,10 @@ const DiscountCollections = (props: DiscountCollectionsProps) => {
                         disabled={!collection || disabled}
                         onClick={event => {
                           event.stopPropagation();
-                          onCollectionUnassign(collection.id);
+
+                          if (collection) {
+                            onCollectionUnassign(collection.id);
+                          }
                         }}
                       >
                         <DeleteIcon

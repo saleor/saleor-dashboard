@@ -37,7 +37,7 @@ function getSortQueryField(sort: VoucherListUrlSortField): VoucherSortField {
     case VoucherListUrlSortField.value:
       return VoucherSortField.VALUE;
     default:
-      return undefined;
+      return VoucherSortField.CODE;
   }
 }
 

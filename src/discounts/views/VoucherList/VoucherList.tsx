@@ -105,7 +105,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
   });
 
   useEffect(() => {
-    if (!canBeSorted(params.sort, !!selectedChannel)) {
+    if (!canBeSorted(params.sort ?? DEFAULT_SORT_KEY, !!selectedChannel)) {
       navigate(
         voucherListUrl({
           ...params,
@@ -122,7 +122,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
   });
   const [voucherBulkDelete, voucherBulkDeleteOpts] = useVoucherBulkDeleteMutation({
     onCompleted: data => {
-      if (data.voucherBulkDelete.errors.length === 0) {
+      if (data.voucherBulkDelete?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -166,7 +166,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <VoucherListPage
         onSelectVouchersIds={handleSelectVouchersIds}
-        filterOpts={getFilterOpts(params, channelOpts)}
+        filterOpts={getFilterOpts(params, channelOpts ?? [])}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onFilterChange={filter => changeFilters(filter)}
@@ -182,7 +182,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
         onVoucherDelete={() => openModal("remove")}
         selectedFilterPreset={selectedPreset}
         selectedVouchersIds={selectedRowIds}
-        currencySymbol={selectedChannel?.currencyCode}
+        currencySymbol={selectedChannel?.currencyCode ?? undefined}
         filterPresets={presets.map(tab => tab.name)}
         settings={settings}
         vouchers={vouchers}
@@ -190,7 +190,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
         sort={getSortParams(params)}
-        selectedChannelId={selectedChannel?.id}
+        selectedChannelId={selectedChannel?.id ?? ""}
       />
       <ActionDialog
         confirmButtonState={voucherBulkDeleteOpts.status}

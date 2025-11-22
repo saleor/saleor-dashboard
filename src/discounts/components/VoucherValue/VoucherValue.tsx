@@ -79,7 +79,9 @@ const VoucherValue = (props: VoucherValueProps) => {
               {renderCollection(
                 data.channelListings,
                 (listing, index) => {
-                  const error = formErrors.discountValue?.channels?.find(id => id === listing.id);
+                  const error = listing
+                    ? formErrors.discountValue?.channels?.find(id => id === listing.id)
+                    : undefined;
 
                   return (
                     <TableRowLink

@@ -71,7 +71,7 @@ const DiscountProducts = (props: SaleProductsProps) => {
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            <span className={products?.length > 0 && classes.colNameLabel}>
+            <span className={products?.length > 0 ? classes.colNameLabel : undefined}>
               <FormattedMessage {...messages.discountProductsTableProductHeader} />
             </span>
           </TableCell>
@@ -108,17 +108,25 @@ const DiscountProducts = (props: SaleProductsProps) => {
                       checked={isSelected}
                       disabled={disabled}
                       disableClickPropagation
-                      onChange={() => toggle(product.id)}
+                      onChange={() => product && toggle(product.id)}
                     />
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colName}
-                    thumbnail={maybe(() => product.thumbnail?.url)}
+                    thumbnail={product ? maybe(() => product.thumbnail?.url) : undefined}
                   >
-                    {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
+                    {product ? (
+                      maybe<React.ReactNode>(() => product.name, <Skeleton />)
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
-                    {maybe<React.ReactNode>(() => product.productType.name, <Skeleton />)}
+                    {product ? (
+                      maybe<React.ReactNode>(() => product.productType.name, <Skeleton />)
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCell>
                   <TableCell className={classes.colType}>
                     {product && !product?.channelListings?.length ? (
@@ -136,7 +144,10 @@ const DiscountProducts = (props: SaleProductsProps) => {
                         disabled={!product || disabled}
                         onClick={event => {
                           event.stopPropagation();
-                          onProductUnassign(product.id);
+
+                          if (product) {
+                            onProductUnassign(product.id);
+                          }
                         }}
                       >
                         <DeleteIcon
