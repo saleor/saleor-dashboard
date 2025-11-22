@@ -15,7 +15,7 @@ const giftCardErrorMessages = defineMessages({
 export function getGiftCardErrorMessage(
   error: Omit<GiftCardErrorFragment, "__typename" | "message"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (error) {
     switch (error.code) {
       case GiftCardErrorCode.NOT_FOUND:

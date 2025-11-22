@@ -34,7 +34,7 @@ const GiftCardCustomerSelectField = ({
     const value = event.target.value;
     const label = choices?.find(category => category.value === value)?.label;
 
-    setSelectedCustomer({ email: value, name: label });
+    setSelectedCustomer({ email: value, name: label ?? "" });
   };
   const label = `${intl.formatMessage(
     messages.customerLabel,
@@ -49,15 +49,15 @@ const GiftCardCustomerSelectField = ({
       fetchOptions={search}
       fetchMore={{
         onFetchMore: loadMore,
-        hasMore: result?.data?.search?.pageInfo?.hasNextPage,
-        loading: result?.loading,
+        hasMore: result?.data?.search?.pageInfo?.hasNextPage ?? false,
+        loading: result?.loading ?? false,
       }}
       name="customer"
       value={{
         label: selectedCustomer.name,
         value: selectedCustomer.email,
       }}
-      onChange={handleSelect}
+      onChange={handleSelect as any}
     />
   );
 };
