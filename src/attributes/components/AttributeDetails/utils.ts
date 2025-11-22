@@ -86,7 +86,11 @@ export const unitTypeChoices = [
   },
 ];
 
-const unitMapping = {
+const unitMapping: {
+  [key in UnitSystem]: {
+    [key in UnitType]: MeasurementUnitsEnum[];
+  };
+} = {
   imperial: {
     volume: [
       "CUBIC_FOOT",

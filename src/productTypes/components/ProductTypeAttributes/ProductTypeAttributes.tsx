@@ -85,7 +85,7 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
             disabled={disabled}
             data-test-id={testId}
             variant="secondary"
-            onClick={() => onAttributeAssign(ProductAttributeType[type])}
+            onClick={() => onAttributeAssign(type as ProductAttributeType)}
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>

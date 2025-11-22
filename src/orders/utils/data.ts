@@ -2,7 +2,7 @@ import { subtractMoney } from "@dashboard/components/Money";
 import {
   AddressFragment,
   AddressInput,
-  CountryCodeValues,
+  CountryCode,
   FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsFragment,
@@ -16,6 +16,7 @@ import {
   StockFragment,
   WarehouseFragment,
 } from "@dashboard/graphql";
+import { CountryCodeValues } from "@dashboard/graphql/enumConstants";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { findInEnum, getById } from "@dashboard/misc";
 import { IMoney } from "@dashboard/utils/intl";
@@ -28,7 +29,6 @@ import {
 } from "../components/OrderReturnPage/utils";
 import { orderDiscountTypeLabelMessages } from "../messages";
 import { OrderRefundSharedType } from "../types";
-import { CountryCodeValues } from "@dashboard/graphql/enumConstants";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
   NonNullable<OrderRefundDataQuery["order"]>,

@@ -1,12 +1,11 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import { DiscountStatusEnumValues, VoucherDiscountType } from "@dashboard/graphql";
+import { VoucherDiscountTypeValues, DiscountStatusEnumValues } from "@dashboard/graphql/enumConstants";
 import { IntlShape, useIntl } from "react-intl";
 
 import { FilterContainer, FilterElement } from "../../FilterElement";
 import { FilterAPIProvider } from "../FilterAPIProvider";
 import { ChannelHandler, EnumValuesHandler, Handler } from "../Handler";
 import { getFilterElement } from "../utils";
-import { VoucherDiscountTypeValues, DiscountStatusEnumValues } from "@dashboard/graphql/enumConstants";
 
 const createAPIHandler = (
   selectedRow: FilterElement,

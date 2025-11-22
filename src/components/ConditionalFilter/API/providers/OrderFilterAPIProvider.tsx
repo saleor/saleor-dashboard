@@ -1,12 +1,5 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import {
-  CountryCodeValues,
-  FulfillmentStatusValues,
-  OrderAuthorizeStatusEnumValues,
-  OrderChargeStatusEnumValues,
-  OrderStatusValues,
-  PaymentMethodTypeEnumValues,
-} from "@dashboard/graphql";
+import { OrderStatusValues, OrderAuthorizeStatusEnumValues, OrderChargeStatusEnumValues, FulfillmentStatusValues, PaymentMethodTypeEnumValues, CountryCodeValues } from "@dashboard/graphql/enumConstants";
 import { IntlShape, useIntl } from "react-intl";
 
 import { RowType } from "../../constants";
@@ -22,7 +15,6 @@ import {
   WarehouseHandler,
 } from "../Handler";
 import { getFilterElement } from "../utils";
-import { OrderStatusValues, OrderAuthorizeStatusEnumValues, OrderChargeStatusEnumValues, FulfillmentStatusValues, PaymentMethodTypeEnumValues, CountryCodeValues } from "@dashboard/graphql/enumConstants";
 
 const isStaticBoolean = (rowType: RowType) => {
   return [

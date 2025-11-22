@@ -7,7 +7,8 @@ import { SortableTableBody, SortableTableRow } from "@dashboard/components/Sorta
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { ProductAttributeTypeValues, ProductTypeDetailsQuery } from "@dashboard/graphql";
+import { ProductTypeDetailsQuery } from "@dashboard/graphql";
+import { ProductAttributeTypeValues } from "@dashboard/graphql/enumConstants";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
@@ -17,7 +18,6 @@ import { Button, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
 import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ProductAttributeTypeValues } from "@dashboard/graphql/enumConstants";
 
 const useStyles = makeStyles(
   theme => ({
