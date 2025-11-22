@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   AttributeTranslationDetailsFragment,
   AttributeValueTranslatableFragment,
@@ -40,29 +39,41 @@ export const getParsedTranslationInputData = ({
 };
 
 export const getTranslationFields = (
-  fields: AttributeTranslationDetailsFragment["attribute"]["choices"],
+  fields: NonNullable<AttributeTranslationDetailsFragment["attribute"]>["choices"],
   intl: IntlShape,
-) =>
-  mapEdgesToItems(fields).map(({ id, name, translation }, attributeValueIndex) => {
-    const displayName = intl.formatMessage(messages.valueNumber, {
-      number: attributeValueIndex + 1,
-    });
+) => {
+  if (!fields) {
+    return [];
+  }
 
-    return {
-      displayName,
-      name: `${fieldNames.value}:${id}`,
-      translation: translation?.name || null,
-      type: "short" as TranslationField["type"],
-      value: name,
-    };
-  }) || [];
+  return (
+    mapEdgesToItems(fields)?.map((item, attributeValueIndex) => {
+      const { id, name, translation } = item as {
+        id: string;
+        name: string | null;
+        translation: { name: string } | null;
+      };
+      const displayName = intl.formatMessage(messages.valueNumber, {
+        number: attributeValueIndex + 1,
+      });
+
+      return {
+        displayName,
+        name: `${fieldNames.value}:${id}`,
+        translation: translation?.name ?? "",
+        type: "short" as TranslationField["type"],
+        value: name ?? "",
+      };
+    }) || []
+  );
+};
 
 export const mapAttributeValuesToTranslationFields = (
   attributeValues: AttributeValueTranslatableFragment[],
   intl: IntlShape,
 ) =>
   attributeValues.map<TranslationField>(attrVal => ({
-    id: attrVal.attributeValue.id,
+    id: attrVal.attributeValue?.id || "",
     displayName: intl.formatMessage(
       {
         id: "zgqPGF",
@@ -70,7 +81,7 @@ export const mapAttributeValuesToTranslationFields = (
         description: "attribute list",
       },
       {
-        name: attrVal.attribute.name,
+        name: attrVal.attribute?.name || "",
       },
     ),
     name: attrVal.name,

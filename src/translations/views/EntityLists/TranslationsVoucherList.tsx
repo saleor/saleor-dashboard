@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useVoucherTranslationsQuery } from "@dashboard/graphql";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
@@ -23,17 +22,21 @@ const TranslationsVoucherList = ({ params, variables }: TranslationsEntityListPr
     <PaginatorContext.Provider value={paginationValues}>
       <TranslationsEntitiesList
         disabled={loading}
-        entities={mapEdgesToItems(data?.translations)?.map(
-          node =>
-            node.__typename === "VoucherTranslatableContent" && {
-              completion: {
-                current: sumCompleted([node.translation?.name]),
-                max: 1,
-              },
-              id: node.voucher?.id,
-              name: node.voucher?.name || "-",
-            },
-        )}
+        entities={
+          mapEdgesToItems(data?.translations)
+            ?.map(
+              node =>
+                node.__typename === "VoucherTranslatableContent" && {
+                  completion: {
+                    current: sumCompleted([node.translation?.name]),
+                    max: 1,
+                  },
+                  id: node.voucher?.id ?? "",
+                  name: node.voucher?.name ?? "-",
+                },
+            )
+            .filter(Boolean) as any
+        }
         getRowHref={id => languageEntityUrl(variables.language, TranslatableEntities.vouchers, id)}
       />
     </PaginatorContext.Provider>

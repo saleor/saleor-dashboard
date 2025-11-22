@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { createPaginationState } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
@@ -28,7 +27,7 @@ const TranslationsEntities = ({ language, params }: TranslationsEntitiesProps) =
   const navigate = useNavigator();
   const shop = useShop();
 
-  if (!Object.keys(TranslatableEntities).includes(params.tab)) {
+  if (!params.tab || !Object.keys(TranslatableEntities).includes(params.tab)) {
     navigate(
       "?" +
         stringifyQs({
@@ -118,10 +117,10 @@ const TranslationsEntities = ({ language, params }: TranslationsEntitiesProps) =
   return (
     <TranslationsEntitiesListPage
       filters={{
-        current: params.tab,
+        current: params.tab as any,
         ...filterCallbacks,
       }}
-      language={lang}
+      language={lang!}
     >
       {params.tab === "categories" ? (
         <TranslationsCategoryList params={params} variables={queryVariables} />

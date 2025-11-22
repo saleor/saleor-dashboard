@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -80,7 +79,7 @@ const TranslationsShippingMethodPage = ({
             />
           )}
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={LanguageCodeEnum[languageCode as keyof typeof LanguageCodeEnum]}
             languages={languages}
             onLanguageChange={lang =>
               navigate(languageEntityUrl(lang, TranslatableEntities.shippingMethods, translationId))
@@ -102,9 +101,9 @@ const TranslationsShippingMethodPage = ({
                 description: "shipping method name",
               }),
               name: TranslationInputFieldName.name,
-              translation: data?.translation?.name || null,
+              translation: data?.translation?.name ?? "",
               type: "short" as const,
-              value: data?.name,
+              value: data?.name ?? "",
             },
             {
               displayName: intl.formatMessage({
@@ -113,9 +112,9 @@ const TranslationsShippingMethodPage = ({
                 description: "shipping method description",
               }),
               name: TranslationInputFieldName.description,
-              translation: data?.translation?.description || null,
+              translation: data?.translation?.description ?? "",
               type: "rich",
-              value: data?.description,
+              value: data?.description ?? "",
             },
           ]}
           saveButtonState={saveButtonState}

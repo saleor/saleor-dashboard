@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
@@ -167,7 +166,7 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         initial={field.value}
                         saveButtonState="default"
                         onDiscard={onDiscard}
-                        onSubmit={undefined}
+                        onSubmit={() => Promise.resolve([])}
                         onValueChange={v => {
                           if (onValueChange) {
                             onValueChange(field, v);
@@ -181,7 +180,7 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         initial={field.value}
                         saveButtonState="default"
                         onDiscard={onDiscard}
-                        onSubmit={undefined}
+                        onSubmit={() => Promise.resolve(undefined)}
                         onValueChange={v => {
                           if (onValueChange) {
                             onValueChange(field, v);
@@ -196,7 +195,7 @@ const TranslationFields = (props: TranslationFieldsProps) => {
                         initial={field.value}
                         saveButtonState="default"
                         onDiscard={onDiscard}
-                        onSubmit={undefined}
+                        onSubmit={() => Promise.resolve(undefined)}
                         onValueChange={v => {
                           if (onValueChange) {
                             onValueChange(field, v);

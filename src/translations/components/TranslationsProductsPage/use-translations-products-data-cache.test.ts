@@ -3,15 +3,15 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useTranslationsProductsDataCache } from "./use-translations-products-data-cache";
 
 describe("useTranslationsProductsDataCache", () => {
-  it("should initialize all cached values as null", () => {
+  it("should initialize all cached values as undefined", () => {
     // Arrange & Act
     const { result } = renderHook(() => useTranslationsProductsDataCache());
 
     // Assert
-    expect(result.current.cachedProductName).toBeNull();
-    expect(result.current.cachedProductDescription).toBeNull();
-    expect(result.current.cachedProductSeoName).toBeNull();
-    expect(result.current.cachedProductSeoDescription).toBeNull();
+    expect(result.current.cachedProductName).toBeUndefined();
+    expect(result.current.cachedProductDescription).toBeUndefined();
+    expect(result.current.cachedProductSeoName).toBeUndefined();
+    expect(result.current.cachedProductSeoDescription).toBeUndefined();
   });
 
   it("should cache product name", () => {
@@ -76,7 +76,7 @@ describe("useTranslationsProductsDataCache", () => {
     expect(result.current.cachedProductName).toBe("Product A");
     expect(result.current.cachedProductSeoName).toBe("product-a");
     expect(result.current.cachedProductDescription).toBe("Description A");
-    expect(result.current.cachedProductSeoDescription).toBeNull();
+    expect(result.current.cachedProductSeoDescription).toBeUndefined();
   });
 
   it("should overwrite existing cached value", () => {
@@ -93,7 +93,7 @@ describe("useTranslationsProductsDataCache", () => {
     expect(result.current.cachedProductName).toBe("Second Value");
   });
 
-  it("should reset all cached values to null", () => {
+  it("should reset all cached values to undefined", () => {
     // Arrange
     const { result, rerender } = renderHook(() => useTranslationsProductsDataCache());
 
@@ -107,10 +107,10 @@ describe("useTranslationsProductsDataCache", () => {
     rerender();
 
     // Assert
-    expect(result.current.cachedProductName).toBeNull();
-    expect(result.current.cachedProductDescription).toBeNull();
-    expect(result.current.cachedProductSeoName).toBeNull();
-    expect(result.current.cachedProductSeoDescription).toBeNull();
+    expect(result.current.cachedProductName).toBeUndefined();
+    expect(result.current.cachedProductDescription).toBeUndefined();
+    expect(result.current.cachedProductSeoName).toBeUndefined();
+    expect(result.current.cachedProductSeoDescription).toBeUndefined();
   });
 
   it("should allow setting values after reset", () => {

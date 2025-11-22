@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useCategoryTranslationsQuery } from "@dashboard/graphql";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
@@ -23,22 +22,26 @@ const TranslationsCategoryList = ({ params, variables }: TranslationsEntityListP
     <PaginatorContext.Provider value={paginationValues}>
       <TranslationsEntitiesList
         disabled={loading}
-        entities={mapEdgesToItems(data?.translations)?.map(
-          node =>
-            node.__typename === "CategoryTranslatableContent" && {
-              completion: {
-                current: sumCompleted([
-                  node.translation?.description,
-                  node.translation?.name,
-                  node.translation?.seoDescription,
-                  node.translation?.seoTitle,
-                ]),
-                max: 4,
-              },
-              id: node?.category?.id,
-              name: node?.category?.name,
-            },
-        )}
+        entities={
+          mapEdgesToItems(data?.translations)
+            ?.map(
+              node =>
+                node.__typename === "CategoryTranslatableContent" && {
+                  completion: {
+                    current: sumCompleted([
+                      node.translation?.description,
+                      node.translation?.name,
+                      node.translation?.seoDescription,
+                      node.translation?.seoTitle,
+                    ]),
+                    max: 4,
+                  },
+                  id: node?.category?.id ?? "",
+                  name: node?.category?.name ?? "",
+                },
+            )
+            .filter(Boolean) as any
+        }
         getRowHref={id =>
           languageEntityUrl(variables.language, TranslatableEntities.categories, id)
         }

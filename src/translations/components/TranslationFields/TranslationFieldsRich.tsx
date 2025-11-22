@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import RichTextEditorContent from "@dashboard/components/RichTextEditor/RichTextEditorContent";
@@ -50,8 +49,8 @@ const TranslationFieldsRich = ({
             }
           }}
           disabled={disabled}
-          error={undefined}
-          helperText={undefined}
+          error={false}
+          helperText=""
           label={intl.formatMessage({
             id: "/vCXIP",
             defaultMessage: "Translation",
