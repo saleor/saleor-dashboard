@@ -180,15 +180,31 @@ const PageList = ({ params }: PageListProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const fetchMoreDialogPageTypes = {
-    hasMore: searchDialogPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchDialogPageTypesOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchDialogPageTypesOpts.loading,
     onFetchMore: loadMoreDialogPageTypes,
   };
   const filterOpts = getFilterOpts({
     params,
-    pageTypes: mapEdgesToItems(searchDialogPageTypesOpts?.data?.search),
+    pageTypes: mapEdgesToItems(searchDialogPageTypesOpts?.data?.search) ?? [],
     pageTypesProps: {
-      ...getSearchFetchMoreProps(searchDialogPageTypesOpts, loadMoreDialogPageTypes),
+      ...getSearchFetchMoreProps(
+        {
+          data: searchDialogPageTypesOpts.data
+            ? {
+                search: {
+                  pageInfo: searchDialogPageTypesOpts.data.search?.pageInfo
+                    ? {
+                        hasNextPage: searchDialogPageTypesOpts.data.search.pageInfo.hasNextPage,
+                      }
+                    : undefined,
+                },
+              }
+            : undefined,
+          loading: searchDialogPageTypesOpts.loading,
+        },
+        loadMoreDialogPageTypes,
+      ),
       onSearchChange: searchDialogPageTypes,
     },
   });
@@ -315,7 +331,7 @@ const PageList = ({ params }: PageListProps) => {
       <PageTypePickerDialog
         confirmButtonState="success"
         open={params.action === "create-page"}
-        pageTypes={mapNodeToChoice(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search))}
+        pageTypes={mapNodeToChoice(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search) ?? [])}
         fetchPageTypes={searchDialogPageTypes}
         fetchMorePageTypes={fetchMoreDialogPageTypes}
         onClose={closeModal}
