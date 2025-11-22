@@ -7,9 +7,9 @@ import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 export const useWarehouses = () => {
   const userPermissions = useUserPermissions();
   const canLoadWarehouses = hasOneOfPermissions(userPermissions!, [
-    PermissionEnum.MANAGE_SHIPPING,
-    PermissionEnum.MANAGE_ORDERS,
-    PermissionEnum.MANAGE_PRODUCTS,
+    "MANAGE_SHIPPING",
+    "MANAGE_ORDERS",
+    "MANAGE_PRODUCTS",
   ]);
   const { data: warehousesCountData, loading: warehousesCountLoading } = useWarehousesCountQuery({
     skip: !canLoadWarehouses,

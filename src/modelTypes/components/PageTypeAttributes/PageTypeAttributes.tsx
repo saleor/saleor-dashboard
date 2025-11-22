@@ -80,7 +80,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
         <DashboardCard.Toolbar>
           <Button
             variant="secondary"
-            onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
+            onClick={() => onAttributeAssign(type as AttributeTypeEnum)}
             data-test-id="assign-attributes"
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />

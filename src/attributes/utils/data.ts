@@ -35,30 +35,30 @@ export interface RichTextProps {
 }
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
-  AttributeInputTypeEnum.DROPDOWN,
-  AttributeInputTypeEnum.MULTISELECT,
-  AttributeInputTypeEnum.SWATCH,
+  "DROPDOWN",
+  "MULTISELECT",
+  "SWATCH",
 ];
 
 export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
-  AttributeInputTypeEnum.DROPDOWN,
-  AttributeInputTypeEnum.MULTISELECT,
-  AttributeInputTypeEnum.BOOLEAN,
-  AttributeInputTypeEnum.DATE,
-  AttributeInputTypeEnum.DATE_TIME,
-  AttributeInputTypeEnum.NUMERIC,
-  AttributeInputTypeEnum.SWATCH,
+  "DROPDOWN",
+  "MULTISELECT",
+  "BOOLEAN",
+  "DATE",
+  "DATE_TIME",
+  "NUMERIC",
+  "SWATCH",
 ];
 
 export const REFERENCE_ATTRIBUTE_TYPES = [
-  AttributeInputTypeEnum.REFERENCE,
-  AttributeInputTypeEnum.SINGLE_REFERENCE,
+  "REFERENCE",
+  "SINGLE_REFERENCE",
 ];
 
 export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
-  AttributeEntityTypeEnum.PRODUCT,
-  AttributeEntityTypeEnum.PRODUCT_VARIANT,
-  AttributeEntityTypeEnum.PAGE,
+  "PRODUCT",
+  "PRODUCT_VARIANT",
+  "PAGE",
 ];
 
 export interface AttributeReference {
@@ -142,7 +142,7 @@ export function getAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[],
 ) {
-  if (data.inputType === AttributeInputTypeEnum.SWATCH) {
+  if (data.inputType === "SWATCH") {
     return getSwatchAttributeData(data, values);
   } else if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
     return getSimpleAttributeData(data, values);
@@ -164,27 +164,27 @@ export function getSelectedAttributeValues(
     | SelectedVariantAttributeFragment,
 ) {
   switch (attribute.attribute.inputType) {
-    case AttributeInputTypeEnum.REFERENCE:
+    case "REFERENCE":
       return attribute.values.map(value => value.reference);
-    case AttributeInputTypeEnum.SINGLE_REFERENCE:
+    case "SINGLE_REFERENCE":
       return getFirstValueAsArray(attribute.values, "reference");
 
-    case AttributeInputTypeEnum.PLAIN_TEXT:
+    case "PLAIN_TEXT":
       return getFirstValueAsArray(attribute.values, "plainText");
 
-    case AttributeInputTypeEnum.RICH_TEXT:
+    case "RICH_TEXT":
       return getFirstValueAsArray(attribute.values, "richText");
 
-    case AttributeInputTypeEnum.NUMERIC:
+    case "NUMERIC":
       return getFirstValueAsArray(attribute.values, "name");
 
-    case AttributeInputTypeEnum.BOOLEAN:
+    case "BOOLEAN":
       return getFirstValueAsArray(attribute.values, "boolean");
 
-    case AttributeInputTypeEnum.DATE:
+    case "DATE":
       return getFirstValueAsArray(attribute.values, "date");
 
-    case AttributeInputTypeEnum.DATE_TIME:
+    case "DATE_TIME":
       return getFirstValueAsArray(attribute.values, "dateTime");
 
     default:
@@ -199,7 +199,7 @@ export const isFileValueUnused = (
     | ProductFragment["attributes"][0]
     | SelectedVariantAttributeFragment,
 ) => {
-  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
+  if (existingAttribute.attribute.inputType !== "FILE") {
     return false;
   }
 
@@ -288,7 +288,7 @@ export function handleContainerReferenceAssignment(
   },
 ): void {
   const attribute = attributes.find(({ id }) => id === assignReferencesAttributeId);
-  const isSingle = attribute?.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+  const isSingle = attribute?.data.inputType === "SINGLE_REFERENCE";
 
   if (isSingle) {
     const firstValue = attributeValues[0];
@@ -332,7 +332,7 @@ export function handleMetadataReferenceAssignment(
   },
 ): void {
   const attribute = attributes.find(({ id }) => id === assignReferencesAttributeId);
-  const isSingle = attribute?.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+  const isSingle = attribute?.data.inputType === "SINGLE_REFERENCE";
 
   if (isSingle) {
     const firstValue = attributeValues[0];
@@ -381,7 +381,7 @@ export function getRichTextAttributesFromMap(
   values: GetRichTextValues,
 ): AttributeInput[] {
   return attributes
-    .filter(({ data }) => data.inputType === AttributeInputTypeEnum.RICH_TEXT)
+    .filter(({ data }) => data.inputType === "RICH_TEXT")
     .map(attribute => ({
       ...attribute,
       value: [JSON.stringify(values[attribute.id])],
@@ -392,7 +392,7 @@ export function getRichTextDataFromAttributes(
   attributes: AttributeInput[] = [],
 ): Record<string, string> {
   const keyValuePairs = attributes
-    .filter(attribute => attribute.data.inputType === AttributeInputTypeEnum.RICH_TEXT)
+    .filter(attribute => attribute.data.inputType === "RICH_TEXT")
     .map(attribute => [attribute.id, attribute.value[0]]);
 
   return Object.fromEntries(keyValuePairs);
@@ -569,15 +569,15 @@ const findReferenceByEntityType = (
   referencesEntitiesSearchResult: ReferenceEntitiesSearch,
 ): AttributeReference | null => {
   switch (entityType) {
-    case AttributeEntityTypeEnum.PAGE:
+    case "PAGE":
       return findPageReference(valueId, referencesEntitiesSearchResult);
-    case AttributeEntityTypeEnum.PRODUCT:
+    case "PRODUCT":
       return findProductReference(valueId, referencesEntitiesSearchResult);
-    case AttributeEntityTypeEnum.COLLECTION:
+    case "COLLECTION":
       return findCollectionReference(valueId, referencesEntitiesSearchResult);
-    case AttributeEntityTypeEnum.CATEGORY:
+    case "CATEGORY":
       return findCategoryReference(valueId, referencesEntitiesSearchResult);
-    case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+    case "PRODUCT_VARIANT":
       return findProductVariantReference(valueId, referencesEntitiesSearchResult);
     default:
       return null;
@@ -639,13 +639,13 @@ export const getAttributesDisplayData = (
 ) =>
   attributes.map(attribute => {
     if (
-      attribute.data.inputType === AttributeInputTypeEnum.REFERENCE ||
-      attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE
+      attribute.data.inputType === "REFERENCE" ||
+      attribute.data.inputType === "SINGLE_REFERENCE"
     ) {
       return getReferenceAttributeDisplayData(attribute, references);
     }
 
-    if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
+    if (attribute.data.inputType === "FILE") {
       return getFileAttributeDisplayData(attribute, attributesWithNewFileValue);
     }
 

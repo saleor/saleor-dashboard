@@ -5,9 +5,9 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: StaffListUrlSortField): UserSortField | undefined {
   switch (sort) {
     case StaffListUrlSortField.name:
-      return UserSortField.LAST_NAME;
+      return "LAST_NAME";
     case StaffListUrlSortField.email:
-      return UserSortField.EMAIL;
+      return "EMAIL";
     default:
       return undefined;
   }

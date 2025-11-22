@@ -47,7 +47,7 @@ const OrderCustomerAddressesSearch = (props: OrderCustomerAddressesSearchProps) 
   const [query, setQuery] = React.useState("");
   const [temporarySelectedAddress, setTemporarySelectedAddress] = React.useState(initialAddress);
   const handleSelect = () => {
-    if (type === AddressTypeEnum.SHIPPING) {
+    if (type === "SHIPPING") {
       onChangeCustomerShippingAddress(temporarySelectedAddress);
     } else {
       onChangeCustomerBillingAddress(temporarySelectedAddress);
@@ -117,7 +117,7 @@ const OrderCustomerAddressesSearch = (props: OrderCustomerAddressesSearchProps) 
             />
           }
           label={intl.formatMessage(
-            type === AddressTypeEnum.SHIPPING
+            type === "SHIPPING"
               ? messages.billingSameAsShipping
               : messages.shippingSameAsBilling,
           )}

@@ -16,6 +16,7 @@ import {
   useUpdateShippingZoneMutation,
   useWarehouseCreateMutation,
 } from "@dashboard/graphql";
+import { CountryCodeValues } from "@dashboard/graphql/enumConstants";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -185,7 +186,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
         }
         onDelete={() => openModal("remove")}
         onPriceRateAdd={() =>
-          navigate(shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.PRICE }))
+          navigate(shippingRateCreateUrl(id, { type: "PRICE" }))
         }
         getPriceRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
         onRateRemove={rateId =>
@@ -197,7 +198,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
         allChannels={availableChannels}
         onWarehouseAdd={() => openModal("add-warehouse")}
         onWeightRateAdd={() =>
-          navigate(shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.WEIGHT }))
+          navigate(shippingRateCreateUrl(id, { type: "WEIGHT" }))
         }
         getWeightRateEditHref={rateId => shippingRateEditUrl(id, rateId)}
         saveButtonBarState={updateShippingZoneOpts.status}
@@ -326,7 +327,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
                   companyName: data.companyName,
                   city: data.city,
                   cityArea: data.cityArea,
-                  country: findValueInEnum(data.country, CountryCode),
+                  country: findValueInEnum(data.country, CountryCodeValues),
                   countryArea: data.countryArea,
                   phone: data.phone,
                   postalCode: data.postalCode,

@@ -8,7 +8,7 @@ export const useSortedConfiguration = (configuration: ConfigurationItemFragment[
     const booleanConfigFields = [];
 
     for (const field of configuration) {
-      if (field.type === ConfigurationTypeFieldEnum.BOOLEAN) {
+      if (field.type === "BOOLEAN") {
         booleanConfigFields.push(field);
       } else {
         textConfigFields.push(field);

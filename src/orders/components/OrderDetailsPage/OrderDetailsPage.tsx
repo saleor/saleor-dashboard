@@ -133,10 +133,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
-  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
-  const canCancel = order?.status !== OrderStatus.CANCELED;
-  const canEditAddresses = order?.status !== OrderStatus.CANCELED;
-  const canFulfill = order?.status !== OrderStatus.CANCELED;
+  const isOrderUnconfirmed = order?.status === "UNCONFIRMED";
+  const canCancel = order?.status !== "CANCELED";
+  const canEditAddresses = order?.status !== "CANCELED";
+  const canFulfill = order?.status !== "CANCELED";
   const notAllowedToFulfillUnpaid =
     shop?.fulfillmentAutoApprove && !shop?.fulfillmentAllowUnpaid && !order?.isPaid;
   const unfulfilled = (order?.lines || []).filter(line => line.quantityToFulfill > 0);

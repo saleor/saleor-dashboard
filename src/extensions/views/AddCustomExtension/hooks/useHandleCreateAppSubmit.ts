@@ -45,9 +45,9 @@ export const useHandleCreateAppSubmit = ({
       } else if (data?.appCreate?.errors) {
         data.appCreate.errors.forEach(error => {
           switch (error.code) {
-            case AppErrorCode.INVALID:
-            case AppErrorCode.REQUIRED:
-            case AppErrorCode.UNIQUE:
+            case "INVALID":
+            case "REQUIRED":
+            case "UNIQUE":
               if (error.field === "name") {
                 setError("appName", {
                   message: error.message || intl.formatMessage(commonMessages.requiredField),
@@ -56,7 +56,7 @@ export const useHandleCreateAppSubmit = ({
 
               break;
 
-            case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
+            case "OUT_OF_SCOPE_PERMISSION":
               if (error.permissions) {
                 error.permissions.forEach(permission => {
                   setError(`permissions.${permission}`, {
@@ -70,7 +70,7 @@ export const useHandleCreateAppSubmit = ({
 
               break;
 
-            case AppErrorCode.FORBIDDEN:
+            case "FORBIDDEN":
               notify({
                 status: "error",
                 text: error.message || intl.formatMessage(commonMessages.insufficientPermissions),

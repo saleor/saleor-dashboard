@@ -1,5 +1,6 @@
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import { StaffMemberStatus, StaffUserInput } from "@dashboard/graphql";
+import { StaffMemberStatusValues } from "@dashboard/graphql/enumConstants";
 import { findValueInEnum } from "@dashboard/misc";
 import { StaffFilterKeys, StaffListFilterOpts } from "@dashboard/staff/components/StaffListPage";
 
@@ -12,7 +13,7 @@ export function getFilterOpts(params: StaffListUrlFilters): StaffListFilterOpts 
   return {
     status: {
       active: params?.status !== undefined,
-      value: params?.status ? findValueInEnum(params.status, StaffMemberStatus) : null,
+      value: params?.status ? findValueInEnum(params.status, StaffMemberStatusValues) : null,
     },
   };
 }
@@ -20,7 +21,7 @@ export function getFilterOpts(params: StaffListUrlFilters): StaffListFilterOpts 
 export function getFilterVariables(params: StaffListUrlFilters): StaffUserInput {
   return {
     search: params.query,
-    status: params.status ? findValueInEnum(params.status, StaffMemberStatus) : null,
+    status: params.status ? findValueInEnum(params.status, StaffMemberStatusValues) : null,
   };
 }
 
@@ -32,7 +33,7 @@ export function getFilterQueryParam(filter: FilterElement<StaffFilterKeys>): Sta
       return getSingleEnumValueQueryParam(
         filter as FilterElementRegular<StaffFilterKeys.status>,
         StaffListUrlFiltersEnum.status,
-        StaffMemberStatus,
+        StaffMemberStatusValues,
       );
   }
 }

@@ -23,7 +23,7 @@ export const RuleValueChips = ({ currencySymbol, rule }: RuleValueChipsProps) =>
       color="default1"
       data-test-id="rule-value-chip"
     >
-      {rule.rewardType === RewardTypeEnum.GIFT
+      {rule.rewardType === "GIFT"
         ? intl.formatMessage({ defaultMessage: "Gift", id: "ZBs2Pb" })
         : renderRuleValue(rule, currencySymbol, locale)}
     </Chip>
@@ -40,7 +40,7 @@ function renderRuleValue(rule: Rule, currencySymbol: string, locale: Locale) {
   );
   const rewardValueWithPercentage = formatPercantage(rule.rewardValue ?? 0, locale);
 
-  return rule.rewardValueType === RewardValueTypeEnum.FIXED
+  return rule.rewardValueType === "FIXED"
     ? rewardValueWithCurrency
     : rewardValueWithPercentage;
 }

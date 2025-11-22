@@ -5,6 +5,10 @@ import {
   ProductTypeEnum,
   ProductTypeFilterInput,
 } from "@dashboard/graphql";
+import {
+  ProductTypeConfigurableValues,
+  ProductTypeEnumValues,
+} from "@dashboard/graphql/enumConstants";
 import { findValueInEnum, maybe } from "@dashboard/misc";
 import {
   ProductTypeFilterKeys,
@@ -20,11 +24,11 @@ export function getFilterOpts(params: ProductTypeListUrlFilters): ProductTypeLis
   return {
     configurable: {
       active: !!maybe(() => params.configurable),
-      value: maybe(() => findValueInEnum(params.configurable, ProductTypeConfigurable)),
+      value: maybe(() => findValueInEnum(params.configurable, ProductTypeConfigurableValues)),
     },
     type: {
       active: !!maybe(() => params.type),
-      value: maybe(() => findValueInEnum(params.type, ProductTypeEnum)),
+      value: maybe(() => findValueInEnum(params.type, ProductTypeEnumValues)),
     },
   };
 }
@@ -32,9 +36,9 @@ export function getFilterOpts(params: ProductTypeListUrlFilters): ProductTypeLis
 export function getFilterVariables(params: ProductTypeListUrlFilters): ProductTypeFilterInput {
   return {
     configurable: params.configurable
-      ? findValueInEnum(params.configurable, ProductTypeConfigurable)
+      ? findValueInEnum(params.configurable, ProductTypeConfigurableValues)
       : undefined,
-    productType: params.type ? findValueInEnum(params.type, ProductTypeEnum) : undefined,
+    productType: params.type ? findValueInEnum(params.type, ProductTypeEnumValues) : undefined,
     search: params.query,
   };
 }

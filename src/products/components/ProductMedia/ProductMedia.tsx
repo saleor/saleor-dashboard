@@ -93,7 +93,7 @@ const ProductMedia = (props: ProductMediaProps) => {
               alt: "",
               id: "",
               sortOrder: fileIndex,
-              type: ProductMediaType.IMAGE,
+              type: "IMAGE",
               url: event.target.result as string,
               oembedData: null,
             },

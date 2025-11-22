@@ -41,7 +41,7 @@ export const createBaseRuleInputFromAPI = (
         value: id,
         label: giftsLabels[id],
       })) ?? [],
-    rewardValueType: data.rewardValueType ?? RewardValueTypeEnum.FIXED,
+    rewardValueType: data.rewardValueType ?? "FIXED",
   };
 };
 

@@ -13,7 +13,7 @@ export const WelcomePageCreateProductButton = ({ onClick }: PrimaryActionProps) 
   const { user } = useUser();
   const userPermissions = user?.userPermissions || [];
   const hasPermissionToManageProducts = hasPermissions(userPermissions, [
-    PermissionEnum.MANAGE_PRODUCTS,
+    "MANAGE_PRODUCTS",
   ]);
 
   if (!hasPermissionToManageProducts) {

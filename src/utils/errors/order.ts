@@ -81,33 +81,33 @@ function getOrderErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case OrderErrorCode.BILLING_ADDRESS_NOT_SET:
+      case "BILLING_ADDRESS_NOT_SET":
         return intl.formatMessage(messages.billingNotSet);
-      case OrderErrorCode.CANNOT_CANCEL_FULFILLMENT:
+      case "CANNOT_CANCEL_FULFILLMENT":
         return intl.formatMessage(messages.cannotCancelFulfillment);
-      case OrderErrorCode.CANNOT_CANCEL_ORDER:
+      case "CANNOT_CANCEL_ORDER":
         return intl.formatMessage(messages.cannotCancelOrder);
-      case OrderErrorCode.CANNOT_REFUND:
+      case "CANNOT_REFUND":
         return intl.formatMessage(messages.cannotRefund);
-      case OrderErrorCode.CAPTURE_INACTIVE_PAYMENT:
+      case "CAPTURE_INACTIVE_PAYMENT":
         return intl.formatMessage(messages.captureInactive);
-      case OrderErrorCode.FULFILL_ORDER_LINE:
+      case "FULFILL_ORDER_LINE":
         return intl.formatMessage(messages.cannotFulfillLine);
-      case OrderErrorCode.INSUFFICIENT_STOCK:
+      case "INSUFFICIENT_STOCK":
         return intl.formatMessage(messages.insufficientStock);
-      case OrderErrorCode.NOT_EDITABLE:
+      case "NOT_EDITABLE":
         return intl.formatMessage(messages.notEditable);
-      case OrderErrorCode.ORDER_NO_SHIPPING_ADDRESS:
+      case "ORDER_NO_SHIPPING_ADDRESS":
         return intl.formatMessage(messages.noShippingAddress);
-      case OrderErrorCode.PAYMENT_MISSING:
+      case "PAYMENT_MISSING":
         return intl.formatMessage(messages.paymentMissing);
-      case OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE:
+      case "SHIPPING_METHOD_NOT_APPLICABLE":
         return intl.formatMessage(messages.shippingNotApplicable);
-      case OrderErrorCode.SHIPPING_METHOD_REQUIRED:
+      case "SHIPPING_METHOD_REQUIRED":
         return intl.formatMessage(messages.shippingRequired);
-      case OrderErrorCode.VOID_INACTIVE_PAYMENT:
+      case "VOID_INACTIVE_PAYMENT":
         return intl.formatMessage(messages.cannotVoid);
-      case OrderErrorCode.ZERO_QUANTITY:
+      case "ZERO_QUANTITY":
         return intl.formatMessage(messages.noZeroValue);
     }
   }

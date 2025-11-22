@@ -62,7 +62,7 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
   const [state, dispatch] = useReducer(postalCodesReducer, {
     codesToDelete: [],
     havePostalCodesChanged: false,
-    inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+    inclusionType: "EXCLUDE",
     originalCodes: [],
     postalCodeRules: [],
   });

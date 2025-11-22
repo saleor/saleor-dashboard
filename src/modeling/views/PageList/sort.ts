@@ -6,11 +6,11 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: PageListUrlSortField): PageSortField {
   switch (sort) {
     case PageListUrlSortField.title:
-      return PageSortField.TITLE;
+      return "TITLE";
     case PageListUrlSortField.visible:
-      return PageSortField.VISIBILITY;
+      return "VISIBILITY";
     case PageListUrlSortField.slug:
-      return PageSortField.SLUG;
+      return "SLUG";
     case PageListUrlSortField.contentType:
       // Content type sorting is not supported by the GraphQL API
       return undefined;

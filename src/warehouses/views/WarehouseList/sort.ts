@@ -5,7 +5,7 @@ import { WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
 function getSortQueryField(sort: WarehouseListUrlSortField): WarehouseSortField {
   switch (sort) {
     case WarehouseListUrlSortField.name:
-      return WarehouseSortField.NAME;
+      return "NAME";
     default:
       throw new Error("Invalid sort field");
   }

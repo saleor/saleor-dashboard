@@ -80,7 +80,7 @@ describe("OrderManualTransactionRefundPage", () => {
         id: "1",
         name: "Transaction 1",
         events: [],
-        actions: [TransactionActionEnum.REFUND],
+        actions: ["REFUND"],
         chargedAmount: {
           amount: 20,
         },
@@ -89,7 +89,7 @@ describe("OrderManualTransactionRefundPage", () => {
         id: "2",
         name: "Transaction 2",
         events: [],
-        actions: [TransactionActionEnum.REFUND],
+        actions: ["REFUND"],
         chargedAmount: {
           amount: 40,
         },
@@ -123,7 +123,7 @@ describe("OrderManualTransactionRefundPage", () => {
         id: "1",
         name: "Transaction 1",
         events: [],
-        actions: [TransactionActionEnum.REFUND],
+        actions: ["REFUND"],
         chargedAmount: {
           amount: 20,
         },

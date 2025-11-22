@@ -23,12 +23,12 @@ interface OrderFulfillmentCardProps {
 }
 
 const statusesToMergeLines = [
-  FulfillmentStatus.REFUNDED,
-  FulfillmentStatus.REFUNDED_AND_RETURNED,
-  FulfillmentStatus.RETURNED,
-  FulfillmentStatus.REPLACED,
+  "REFUNDED",
+  "REFUNDED_AND_RETURNED",
+  "RETURNED",
+  "REPLACED",
 ];
-const cancelableStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.WAITING_FOR_APPROVAL];
+const cancelableStatuses = ["FULFILLED", "WAITING_FOR_APPROVAL"];
 const fulfillmentLineToLine = ({
   quantity,
   orderLine,

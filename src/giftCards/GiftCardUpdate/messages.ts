@@ -19,9 +19,9 @@ export function getGiftCardErrorMessage(
 ): string {
   if (error) {
     switch (error.code) {
-      case GiftCardErrorCode.NOT_FOUND:
+      case "NOT_FOUND":
         return intl.formatMessage(giftCardErrorMessages.notFound);
-      case GiftCardErrorCode.INVALID:
+      case "INVALID":
         return intl.formatMessage(commonErrorMessages.invalid);
     }
   }

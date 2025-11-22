@@ -77,7 +77,7 @@ const AttributeProperties = ({ data, errors, disabled, onChange }: AttributeProp
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
   const storefrontFacetedNavigationProperties =
     ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(data.inputType) &&
-    data.type === AttributeTypeEnum.PRODUCT_TYPE;
+    data.type === "PRODUCT_TYPE";
 
   return (
     <DashboardCard>

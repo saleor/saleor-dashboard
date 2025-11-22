@@ -32,15 +32,15 @@ function getPermissionGroupErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case PermissionGroupErrorCode.ASSIGN_NON_STAFF_MEMBER:
+      case "ASSIGN_NON_STAFF_MEMBER":
         return intl.formatMessage(messages.assignNonStaffMember);
-      case PermissionGroupErrorCode.DUPLICATED_INPUT_ITEM:
+      case "DUPLICATED_INPUT_ITEM":
         return intl.formatMessage(messages.duplicatedInputItem);
-      case PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION:
+      case "OUT_OF_SCOPE_PERMISSION":
         return intl.formatMessage(messages.permissionOutOfScope);
-      case PermissionGroupErrorCode.CANNOT_REMOVE_FROM_LAST_GROUP:
+      case "CANNOT_REMOVE_FROM_LAST_GROUP":
         return intl.formatMessage(messages.cannotRemoveFromLastGroup);
-      case PermissionGroupErrorCode.UNIQUE:
+      case "UNIQUE":
         return intl.formatMessage(messages.unique);
     }
   }

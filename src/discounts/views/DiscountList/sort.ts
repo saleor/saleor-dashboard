@@ -22,11 +22,11 @@ export function canBeSorted(sort: DiscountListUrlSortField | undefined) {
 function getSortQueryField(sort: DiscountListUrlSortField): PromotionSortField | undefined {
   switch (sort) {
     case DiscountListUrlSortField.name:
-      return PromotionSortField.NAME;
+      return "NAME";
     case DiscountListUrlSortField.startDate:
-      return PromotionSortField.START_DATE;
+      return "START_DATE";
     case DiscountListUrlSortField.endDate:
-      return PromotionSortField.END_DATE;
+      return "END_DATE";
     default:
       return undefined;
   }

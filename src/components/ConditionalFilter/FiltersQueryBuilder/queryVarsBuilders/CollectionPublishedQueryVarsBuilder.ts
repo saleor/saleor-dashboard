@@ -25,7 +25,7 @@ export class CollectionPublishedQueryVarsBuilder
 
     return {
       ...query,
-      published: booleanValue ? CollectionPublished.PUBLISHED : CollectionPublished.HIDDEN,
+      published: booleanValue ? "PUBLISHED" : "HIDDEN",
     };
   }
 }

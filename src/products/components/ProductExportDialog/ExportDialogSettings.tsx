@@ -48,7 +48,7 @@ const ExportDialogSettings = ({
         defaultMessage: "Spreadsheet for Excel, Numbers etc.",
         description: "export items as spreadsheet",
       }),
-      value: FileTypesEnum.XLSX,
+      value: "XLSX",
     },
     {
       label: intl.formatMessage({
@@ -56,18 +56,18 @@ const ExportDialogSettings = ({
         defaultMessage: "Plain CSV file",
         description: "export items as csv file",
       }),
-      value: FileTypesEnum.CSV,
+      value: "CSV",
     },
   ];
   const exportScopeChoices = [
     {
       label: exportScopeLabels.allItems,
-      value: ExportScope.ALL,
+      value: "ALL",
     },
     {
       disabled: selectedItems === 0,
       label: exportScopeLabels.selectedItems,
-      value: ExportScope.IDS,
+      value: "IDS",
     },
     {
       label: intl.formatMessage(
@@ -80,7 +80,7 @@ const ExportDialogSettings = ({
           number: itemsQuantity.filter || "...",
         },
       ),
-      value: ExportScope.FILTER,
+      value: "FILTER",
     },
   ];
 

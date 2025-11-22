@@ -15,7 +15,7 @@ interface PluginActionsProps {
 export const PluginActions = ({ isInstalled, id }: PluginActionsProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const canManagePlugins = useUserHasPermissions([PermissionEnum.MANAGE_PLUGINS]);
+  const canManagePlugins = useUserHasPermissions(["MANAGE_PLUGINS"]);
 
   const openPlugin = () => {
     navigate(ExtensionsUrls.resolveEditPluginExtensionUrl(id));

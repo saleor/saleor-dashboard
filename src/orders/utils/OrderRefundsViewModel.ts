@@ -46,7 +46,7 @@ export abstract class OrderRefundsViewModel {
     }
 
     if (
-      transactions.every(transaction => !transaction.actions.includes(TransactionActionEnum.REFUND))
+      transactions.every(transaction => !transaction.actions.includes("REFUND"))
     ) {
       return "allTransactionsNonRefundable";
     }
@@ -55,8 +55,8 @@ export abstract class OrderRefundsViewModel {
   }
 
   static canEditRefund(refund: OrderRefundDisplay): boolean {
-    const isSuccessful = refund.status === OrderGrantedRefundStatusEnum.SUCCESS;
-    const isPending = refund.status === OrderGrantedRefundStatusEnum.PENDING;
+    const isSuccessful = refund.status === "SUCCESS";
+    const isPending = refund.status === "PENDING";
     const isManual = refund.type === "manual";
 
     // Can only edit refunds that are not successful, not pending, and not manual
@@ -87,14 +87,14 @@ export abstract class OrderRefundsViewModel {
     event: TransactionEventFragment,
   ): OrderGrantedRefundStatusEnum => {
     switch (event.type) {
-      case TransactionEventTypeEnum.REFUND_SUCCESS:
-        return OrderGrantedRefundStatusEnum.SUCCESS;
-      case TransactionEventTypeEnum.REFUND_FAILURE:
-        return OrderGrantedRefundStatusEnum.FAILURE;
-      case TransactionEventTypeEnum.REFUND_REQUEST:
-        return OrderGrantedRefundStatusEnum.PENDING;
+      case "REFUND_SUCCESS":
+        return "SUCCESS";
+      case "REFUND_FAILURE":
+        return "FAILURE";
+      case "REFUND_REQUEST":
+        return "PENDING";
       default:
-        return OrderGrantedRefundStatusEnum.NONE;
+        return "NONE";
     }
   };
 
@@ -178,9 +178,9 @@ export abstract class OrderRefundsViewModel {
     grantedRefunds: OrderGrantedRefundFragment[],
   ): OrderRefundDisplay[] {
     const supportedRefunds = new Set([
-      TransactionEventTypeEnum.REFUND_SUCCESS,
-      TransactionEventTypeEnum.REFUND_FAILURE,
-      TransactionEventTypeEnum.REFUND_REQUEST,
+      "REFUND_SUCCESS",
+      "REFUND_FAILURE",
+      "REFUND_REQUEST",
     ]);
     const refundEvents = transactionsEvents.filter(
       event => event.type && supportedRefunds.has(event.type),

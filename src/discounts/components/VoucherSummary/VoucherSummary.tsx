@@ -43,7 +43,7 @@ const VoucherSummary = ({ selectedChannelId, voucher }: VoucherSummaryProps) => 
         </Text>
         <Text display="block">
           {voucher ? (
-            voucher.discountValueType === DiscountValueTypeEnum.FIXED && channel?.discountValue ? (
+            voucher.discountValueType === "FIXED" && channel?.discountValue ? (
               <Money
                 money={{
                   amount: channel?.discountValue,

@@ -91,7 +91,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.CATALOGUE}
+        discountType={"CATALOGUE"}
         channels={[]}
         rules={[]}
         errors={[]}
@@ -111,7 +111,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.CATALOGUE}
+        discountType={"CATALOGUE"}
         channels={[]}
         rules={catalogRules}
         errors={[]}
@@ -140,7 +140,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.ORDER}
+        discountType={"ORDER"}
         channels={[]}
         rules={orderRules}
         errors={[]}
@@ -171,7 +171,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.CATALOGUE}
+        discountType={"CATALOGUE"}
         channels={channels}
         rules={[]}
         errors={[]}
@@ -243,7 +243,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.ORDER}
+        discountType={"ORDER"}
         channels={channels}
         rules={[]}
         errors={[]}
@@ -312,7 +312,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.CATALOGUE}
+        discountType={"CATALOGUE"}
         channels={channels}
         rules={catalogRules}
         errors={[]}
@@ -412,7 +412,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.ORDER}
+        discountType={"ORDER"}
         channels={channels}
         rules={orderRules}
         errors={[]}
@@ -517,7 +517,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.CATALOGUE}
+        discountType={"CATALOGUE"}
         channels={[]}
         rules={catalogRules}
         errors={[]}
@@ -546,7 +546,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId="1"
-        discountType={PromotionTypeEnum.CATALOGUE}
+        discountType={"CATALOGUE"}
         channels={[]}
         rules={catalogComplexRules}
         errors={[]}
@@ -577,7 +577,7 @@ describe("DiscountRules", () => {
     render(
       <DiscountRules
         promotionId={null}
-        discountType={PromotionTypeEnum.CATALOGUE}
+        discountType={"CATALOGUE"}
         channels={[]}
         rules={catalogRules}
         errors={[

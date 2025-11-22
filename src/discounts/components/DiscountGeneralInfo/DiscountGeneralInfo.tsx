@@ -29,7 +29,7 @@ export const DiscountGeneralInfo = ({ disabled, typeDisabled, error }: DiscountN
           id: "0khVBN",
           description: "discount type",
         }),
-        value: PromotionTypeEnum.CATALOGUE,
+        value: "CATALOGUE",
       },
       {
         label: intl.formatMessage({
@@ -37,7 +37,7 @@ export const DiscountGeneralInfo = ({ disabled, typeDisabled, error }: DiscountN
           id: "onUvP+",
           description: "discount type",
         }),
-        value: PromotionTypeEnum.ORDER,
+        value: "ORDER",
       },
     ],
     [intl],

@@ -21,7 +21,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
     warehouses: [
       {
@@ -36,14 +36,14 @@ export const channelsList: ChannelDetailsFragment[] = [
       },
     ],
     orderSettings: {
-      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      markAsPaidStrategy: "TRANSACTION_FLOW",
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
     },
     paymentSettings: {
       __typename: "PaymentSettings",
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      defaultTransactionFlowStrategy: "CHARGE",
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -65,7 +65,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
     warehouses: [
       {
@@ -80,14 +80,14 @@ export const channelsList: ChannelDetailsFragment[] = [
       },
     ],
     orderSettings: {
-      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      markAsPaidStrategy: "TRANSACTION_FLOW",
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
     },
     paymentSettings: {
       __typename: "PaymentSettings",
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      defaultTransactionFlowStrategy: "CHARGE",
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -109,7 +109,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
     warehouses: [
       {
@@ -124,14 +124,14 @@ export const channelsList: ChannelDetailsFragment[] = [
       },
     ],
     orderSettings: {
-      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      markAsPaidStrategy: "TRANSACTION_FLOW",
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
     },
     paymentSettings: {
       __typename: "PaymentSettings",
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      defaultTransactionFlowStrategy: "CHARGE",
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -153,7 +153,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
     warehouses: [
       {
@@ -168,14 +168,14 @@ export const channelsList: ChannelDetailsFragment[] = [
       },
     ],
     orderSettings: {
-      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      markAsPaidStrategy: "TRANSACTION_FLOW",
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
     },
     paymentSettings: {
       __typename: "PaymentSettings",
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      defaultTransactionFlowStrategy: "CHARGE",
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -197,7 +197,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
     warehouses: [
       {
@@ -212,14 +212,14 @@ export const channelsList: ChannelDetailsFragment[] = [
       },
     ],
     orderSettings: {
-      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      markAsPaidStrategy: "TRANSACTION_FLOW",
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
     },
     paymentSettings: {
       __typename: "PaymentSettings",
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      defaultTransactionFlowStrategy: "CHARGE",
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -241,7 +241,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
     warehouses: [
       {
@@ -256,14 +256,14 @@ export const channelsList: ChannelDetailsFragment[] = [
       },
     ],
     orderSettings: {
-      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      markAsPaidStrategy: "TRANSACTION_FLOW",
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
     },
     paymentSettings: {
       __typename: "PaymentSettings",
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      defaultTransactionFlowStrategy: "CHARGE",
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -285,7 +285,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
     warehouses: [
       {
@@ -300,14 +300,14 @@ export const channelsList: ChannelDetailsFragment[] = [
       },
     ],
     orderSettings: {
-      markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      markAsPaidStrategy: "TRANSACTION_FLOW",
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       __typename: "OrderSettings",
     },
     paymentSettings: {
       __typename: "PaymentSettings",
-      defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      defaultTransactionFlowStrategy: "CHARGE",
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -331,7 +331,7 @@ export const channel: ChannelDetailsFragment = {
   },
   stockSettings: {
     __typename: "StockSettings",
-    allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    allocationStrategy: "PRIORITIZE_HIGH_STOCK",
   },
   warehouses: [
     {
@@ -346,14 +346,14 @@ export const channel: ChannelDetailsFragment = {
     },
   ],
   orderSettings: {
-    markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+    markAsPaidStrategy: "TRANSACTION_FLOW",
     deleteExpiredOrdersAfter: 60,
     allowUnpaidOrders: false,
     __typename: "OrderSettings",
   },
   paymentSettings: {
     __typename: "PaymentSettings",
-    defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+    defaultTransactionFlowStrategy: "CHARGE",
   },
   checkoutSettings: {
     automaticallyCompleteFullyPaidCheckouts: true,

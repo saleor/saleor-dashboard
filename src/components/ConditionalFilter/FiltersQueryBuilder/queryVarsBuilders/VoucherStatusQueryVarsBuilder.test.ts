@@ -70,7 +70,7 @@ describe("VoucherStatusQueryVarsBuilder", () => {
       // Arrange
       const itemOption: ItemOption = {
         label: "Active",
-        value: DiscountStatusEnum.ACTIVE,
+        value: "ACTIVE",
         slug: "ACTIVE",
       };
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, itemOption);
@@ -80,18 +80,18 @@ describe("VoucherStatusQueryVarsBuilder", () => {
       const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
-      expect(result.status).toEqual([DiscountStatusEnum.ACTIVE]);
+      expect(result.status).toEqual(["ACTIVE"]);
     });
     it("should correctly map multiple status values into an array of enums", () => {
       // Arrange
       const itemOption1: ItemOption = {
         label: "Active",
-        value: DiscountStatusEnum.ACTIVE,
+        value: "ACTIVE",
         slug: "ACTIVE",
       };
       const itemOption2: ItemOption = {
         label: "Expired",
-        value: DiscountStatusEnum.EXPIRED,
+        value: "EXPIRED",
         slug: "EXPIRED",
       };
       const selected = ConditionSelected.fromConditionItemAndValue(conditionItem, [
@@ -104,7 +104,7 @@ describe("VoucherStatusQueryVarsBuilder", () => {
       const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
-      expect(result.status).toEqual([DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED]);
+      expect(result.status).toEqual(["ACTIVE", "EXPIRED"]);
     });
     it("should return undefined if the value is not a valid selection", () => {
       // Arrange

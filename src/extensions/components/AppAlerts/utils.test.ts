@@ -29,7 +29,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
                   {
                     node: {
                       id: "id2",
-                      status: EventDeliveryStatusEnum.FAILED,
+                      status: "FAILED",
                       createdAt: "2023-09-02T10:00:00Z",
                       __typename: "EventDeliveryAttempt",
                     },
@@ -82,7 +82,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
                   {
                     node: {
                       id: "id2",
-                      status: EventDeliveryStatusEnum.FAILED,
+                      status: "FAILED",
                       createdAt: "2023-10-01T10:00:00Z",
                       __typename: "EventDeliveryAttempt",
                     },
@@ -155,7 +155,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
                 edges: [
                   {
                     node: {
-                      status: EventDeliveryStatusEnum.FAILED,
+                      status: "FAILED",
                       createdAt: "2023-10-02T10:00:00Z",
                       id: "new",
                       __typename: "EventDeliveryAttempt",
@@ -197,7 +197,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
                 edges: [
                   {
                     node: {
-                      status: EventDeliveryStatusEnum.FAILED,
+                      status: "FAILED",
                       createdAt: "2023-10-02T11:00:00Z",
                       id: "newer",
                       __typename: "EventDeliveryAttempt",
@@ -221,7 +221,7 @@ describe("getLatestFailedAttemptFromWebhook", () => {
                 edges: [
                   {
                     node: {
-                      status: EventDeliveryStatusEnum.FAILED,
+                      status: "FAILED",
                       createdAt: "2023-10-02T10:00:00Z",
                       id: "new",
                       __typename: "EventDeliveryAttempt",

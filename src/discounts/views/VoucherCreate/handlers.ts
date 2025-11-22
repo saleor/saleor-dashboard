@@ -36,10 +36,10 @@ export function createHandler(
         addCodes: formData.codes.map(({ code }) => code).reverse(),
         discountValueType:
           formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
-            ? DiscountValueTypeEnum.PERCENTAGE
+            ? "PERCENTAGE"
             : formData.discountType === DiscountTypeEnum.VALUE_FIXED
-              ? DiscountValueTypeEnum.FIXED
-              : DiscountValueTypeEnum.PERCENTAGE,
+              ? "FIXED"
+              : "PERCENTAGE",
         endDate: formData.hasEndDate ? joinDateTime(formData.endDate, formData.endTime) : null,
         minCheckoutItemsQuantity:
           formData.requirementsPicker !== RequirementsPicker.ITEM
@@ -48,7 +48,7 @@ export function createHandler(
         startDate: joinDateTime(formData.startDate, formData.startTime),
         type:
           formData.discountType === DiscountTypeEnum.SHIPPING
-            ? VoucherTypeEnum.SHIPPING
+            ? "SHIPPING"
             : formData.type,
         usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
         singleUse: formData.singleUse,

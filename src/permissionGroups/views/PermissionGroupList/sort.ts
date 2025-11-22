@@ -5,7 +5,7 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: PermissionGroupListUrlSortField): PermissionGroupSortField {
   switch (sort) {
     case PermissionGroupListUrlSortField.name:
-      return PermissionGroupSortField.NAME;
+      return "NAME";
     default:
       return "" as PermissionGroupSortField;
   }

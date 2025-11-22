@@ -21,13 +21,13 @@ export const getExpiryPeriodTerminationDate = (
   expiryPeriodAmount = 0,
 ): moment.Moment | null => {
   switch (expiryPeriodType) {
-    case TimePeriodTypeEnum.DAY:
+    case "DAY":
       return addToCurrentDate(currentDate, expiryPeriodAmount, "d");
-    case TimePeriodTypeEnum.WEEK:
+    case "WEEK":
       return addToCurrentDate(currentDate, expiryPeriodAmount, "w");
-    case TimePeriodTypeEnum.MONTH:
+    case "MONTH":
       return addToCurrentDate(currentDate, expiryPeriodAmount, "M");
-    case TimePeriodTypeEnum.YEAR:
+    case "YEAR":
       return addToCurrentDate(currentDate, expiryPeriodAmount, "y");
     default:
       return null;

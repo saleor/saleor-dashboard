@@ -52,7 +52,7 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
     label: warehouse.name,
     value: warehouse.id,
   }));
-  const waitingForApproval = fulfillmentStatus === FulfillmentStatus.WAITING_FOR_APPROVAL;
+  const waitingForApproval = fulfillmentStatus === "WAITING_FOR_APPROVAL";
 
   return (
     <DashboardModal onChange={onClose} open={open}>

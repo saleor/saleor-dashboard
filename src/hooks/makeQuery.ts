@@ -18,12 +18,13 @@ import { useIntl } from "react-intl";
 
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";
+import { PermissionEnumValues } from "@dashboard/graphql/enumConstants";
 
 export { useLazyQuery } from "@apollo/client";
 
 const getPermissionKey = (permission: string) => `PERMISSION_${permission}` as PrefixedPermissions;
 
-const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(PermissionEnum).reduce(
+const allPermissions: Record<PrefixedPermissions, boolean> = PermissionEnumValues.reduce(
   (prev, code) => ({
     ...prev,
     [getPermissionKey(code)]: false,

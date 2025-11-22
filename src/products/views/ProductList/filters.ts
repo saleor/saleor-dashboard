@@ -2,6 +2,7 @@
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { AttributeFragment, AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
+import { StockAvailabilityValues } from "@dashboard/graphql/enumConstants";
 import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
 
 import {
@@ -31,13 +32,13 @@ const PRODUCT_FILTERS_KEY = "productPresets";
 
 function getAttributeFilterParamType(inputType: AttributeInputTypeEnum) {
   switch (inputType) {
-    case AttributeInputTypeEnum.DATE:
+    case "DATE":
       return ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes;
-    case AttributeInputTypeEnum.DATE_TIME:
+    case "DATE_TIME":
       return ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes;
-    case AttributeInputTypeEnum.NUMERIC:
+    case "NUMERIC":
       return ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes;
-    case AttributeInputTypeEnum.BOOLEAN:
+    case "BOOLEAN":
       return ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes;
     default:
       return ProductListUrlFiltersAsDictWithMultipleValues.stringAttributes;
@@ -166,7 +167,7 @@ export function getFilterQueryParam(
       return getSingleEnumValueQueryParam(
         filter as FilterElementRegular<ProductFilterKeys>,
         ProductListUrlFiltersEnum.stockStatus,
-        StockAvailability,
+        StockAvailabilityValues,
       );
 
     case ProductFilterKeys.channel:

@@ -43,23 +43,23 @@ describe("ConditionalFilter / API / Page / InitialCollectionStateResponse", () =
 
     initialCollectionState.published = [
       {
-        label: CollectionPublished.PUBLISHED,
-        value: CollectionPublished.PUBLISHED,
-        slug: CollectionPublished.PUBLISHED,
+        label: "PUBLISHED",
+        value: "PUBLISHED",
+        slug: "PUBLISHED",
       },
       {
-        label: CollectionPublished.HIDDEN,
-        value: CollectionPublished.HIDDEN,
-        slug: CollectionPublished.HIDDEN,
+        label: "HIDDEN",
+        value: "HIDDEN",
+        slug: "HIDDEN",
       },
     ];
 
     const token = UrlToken.fromUrlEntry(new UrlEntry("s0.published", "HIDDEN"));
     const expectedOutput = [
       {
-        label: CollectionPublished.HIDDEN,
-        value: CollectionPublished.HIDDEN,
-        slug: CollectionPublished.HIDDEN,
+        label: "HIDDEN",
+        value: "HIDDEN",
+        slug: "HIDDEN",
       },
     ];
 

@@ -63,7 +63,7 @@ const getExtensionLogo = ({
   name: string;
   type: AppTypeEnum | null;
 }) => {
-  if (type === AppTypeEnum.LOCAL) {
+  if (type === "LOCAL") {
     return <WebhookIcon />;
   }
 
@@ -87,7 +87,7 @@ const resolveExtensionHref = ({
     return undefined;
   }
 
-  if (type === AppTypeEnum.LOCAL) {
+  if (type === "LOCAL") {
     return ExtensionsUrls.editCustomExtensionUrl(id);
   }
 
@@ -102,7 +102,7 @@ export const useInstalledExtensions = () => {
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const userPermissions = useUserPermissions();
   const hasManagePluginsPermission = !!userPermissions?.find(
-    ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
+    ({ code }) => code === "MANAGE_PLUGINS",
   );
 
   const { data, refetch } = useInstalledAppsListQuery({

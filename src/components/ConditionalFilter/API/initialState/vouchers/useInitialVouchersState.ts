@@ -3,9 +3,8 @@ import {
   _GetLegacyChannelOperandsDocument,
   _GetLegacyChannelOperandsQuery,
   _GetLegacyChannelOperandsQueryVariables,
-  DiscountStatusEnum,
-  VoucherDiscountType,
 } from "@dashboard/graphql";
+import { VoucherDiscountTypeValues, DiscountStatusEnumValues } from "@dashboard/graphql/enumConstants";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -40,14 +39,14 @@ export const useInitialVouchersState = (): InitialVoucherAPIState => {
     }
 
     const discountTypeInit = new EnumValuesHandler(
-      VoucherDiscountType,
+      VoucherDiscountTypeValues,
       "discountType",
       intl,
       discountType,
     );
 
     const voucherStatusInit = new EnumValuesHandler(
-      DiscountStatusEnum,
+      DiscountStatusEnumValues,
       "voucherStatus",
       intl,
       voucherStatus,

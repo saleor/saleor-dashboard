@@ -80,7 +80,7 @@ export const useExploreExtensions = () => {
   });
   const userPermissions = useUserPermissions();
   const hasManagePluginsPermission = !!userPermissions?.find(
-    ({ code }) => code === PermissionEnum.MANAGE_PLUGINS,
+    ({ code }) => code === "MANAGE_PLUGINS",
   );
 
   const { data: pluginsQuery } = usePluginsQuery({

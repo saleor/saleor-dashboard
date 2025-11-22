@@ -5,11 +5,11 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: CustomerListUrlSortField): UserSortField | undefined {
   switch (sort) {
     case CustomerListUrlSortField.email:
-      return UserSortField.EMAIL;
+      return "EMAIL";
     case CustomerListUrlSortField.name:
-      return UserSortField.LAST_NAME;
+      return "LAST_NAME";
     case CustomerListUrlSortField.orders:
-      return UserSortField.ORDER_COUNT;
+      return "ORDER_COUNT";
     default:
       return undefined;
   }

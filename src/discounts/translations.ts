@@ -43,7 +43,7 @@ export const itemsQuantityMessages = defineMessages({
 });
 
 export const translateVoucherTypes = (intl: IntlShape) => ({
-  [VoucherTypeEnum.SHIPPING]: intl.formatMessage(messages.shipment),
-  [VoucherTypeEnum.ENTIRE_ORDER]: intl.formatMessage(messages.order),
-  [VoucherTypeEnum.SPECIFIC_PRODUCT]: intl.formatMessage(messages.productsAndVariants),
+  ["SHIPPING"]: intl.formatMessage(messages.shipment),
+  ["ENTIRE_ORDER"]: intl.formatMessage(messages.order),
+  ["SPECIFIC_PRODUCT"]: intl.formatMessage(messages.productsAndVariants),
 });

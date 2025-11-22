@@ -206,17 +206,17 @@ describe("Permission group utils", () => {
       // Arrange
       const permissionGroup = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
-          { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-          { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+          { code: "HANDLE_TAXES", name: "Handle taxes" },
+          { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+          { code: "MANAGE_APPS", name: "Handle apps" },
         ],
       } as PermissionGroupDetailsFragment;
       const shopPermissions = [
-        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
-        { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-        { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-        { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+        { code: "HANDLE_TAXES", name: "Handle taxes" },
+        { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+        { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+        { code: "MANAGE_APPS", name: "Handle apps" },
       ] as Array<Omit<PermissionFragment, "__typename">>;
 
       // Act & Assert
@@ -226,16 +226,16 @@ describe("Permission group utils", () => {
       // Arrange
       const permissionGroup = {
         permissions: [
-          { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-          { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+          { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+          { code: "MANAGE_APPS", name: "Handle apps" },
         ],
       } as PermissionGroupDetailsFragment;
       const shopPermissions = [
-        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
-        { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-        { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-        { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+        { code: "HANDLE_TAXES", name: "Handle taxes" },
+        { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+        { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+        { code: "MANAGE_APPS", name: "Handle apps" },
       ] as Array<Omit<PermissionFragment, "__typename">>;
 
       // Act & Assert
@@ -245,18 +245,18 @@ describe("Permission group utils", () => {
       // Arrange
       const permissionGroup = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
-          { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-          { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+          { code: "HANDLE_TAXES", name: "Handle taxes" },
+          { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+          { code: "MANAGE_APPS", name: "Handle apps" },
         ],
       } as PermissionGroupDetailsFragment;
       const shopPermissions = [
-        { code: PermissionEnum.MANAGE_ORDERS, name: "Handle order" },
-        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
-        { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-        { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-        { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+        { code: "MANAGE_ORDERS", name: "Handle order" },
+        { code: "HANDLE_TAXES", name: "Handle taxes" },
+        { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+        { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+        { code: "MANAGE_APPS", name: "Handle apps" },
       ] as Array<Omit<PermissionFragment, "__typename">>;
 
       // Act & Assert
@@ -268,19 +268,19 @@ describe("Permission group utils", () => {
       // Arrange
       const permissions = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
-          { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-          { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+          { code: "HANDLE_TAXES", name: "Handle taxes" },
+          { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+          { code: "MANAGE_APPS", name: "Handle apps" },
         ],
       } as PermissionGroupDetailsFragment;
 
       // Act & Assert
       expect(extractPermissionCodes(permissions)).toEqual([
-        PermissionEnum.HANDLE_TAXES,
-        PermissionEnum.HANDLE_CHECKOUTS,
-        PermissionEnum.HANDLE_PAYMENTS,
-        PermissionEnum.MANAGE_APPS,
+        "HANDLE_TAXES",
+        "HANDLE_CHECKOUTS",
+        "HANDLE_PAYMENTS",
+        "MANAGE_APPS",
       ]);
     });
   });
@@ -288,7 +288,7 @@ describe("Permission group utils", () => {
     it("should return  added permissions and no removed permissions when user had no permissions", () => {
       // Arrange
       const formData = {
-        permissions: [PermissionEnum.HANDLE_TAXES],
+        permissions: ["HANDLE_TAXES"],
       } as PermissionGroupDetailsPageFormData;
       const permissionGroup = {
         permissions: [],
@@ -297,26 +297,26 @@ describe("Permission group utils", () => {
       const { addPermissions, removePermissions } = permissionsDiff(permissionGroup, formData);
 
       // Assert
-      expect(addPermissions).toEqual([PermissionEnum.HANDLE_TAXES]);
+      expect(addPermissions).toEqual(["HANDLE_TAXES"]);
       expect(removePermissions).toEqual([]);
     });
     it("should return all added and removed permissions", () => {
       // Arrange
       const formData = {
-        permissions: [PermissionEnum.HANDLE_TAXES, PermissionEnum.HANDLE_CHECKOUTS],
+        permissions: ["HANDLE_TAXES", "HANDLE_CHECKOUTS"],
       } as PermissionGroupDetailsPageFormData;
       const permissionGroup = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
+          { code: "HANDLE_TAXES", name: "Handle taxes" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
         ],
       } as PermissionGroupDetailsFragment;
       // Act
       const { addPermissions, removePermissions } = permissionsDiff(permissionGroup, formData);
 
       // Assert
-      expect(addPermissions).toEqual([PermissionEnum.HANDLE_CHECKOUTS]);
-      expect(removePermissions).toEqual([PermissionEnum.HANDLE_PAYMENTS]);
+      expect(addPermissions).toEqual(["HANDLE_CHECKOUTS"]);
+      expect(removePermissions).toEqual(["HANDLE_PAYMENTS"]);
     });
   });
   describe("usersDiff", () => {
@@ -362,18 +362,18 @@ describe("Permission group utils", () => {
       // Arrange
       const permissions = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
-          { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-          { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+          { code: "HANDLE_TAXES", name: "Handle taxes" },
+          { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+          { code: "MANAGE_APPS", name: "Handle apps" },
         ],
       } as PermissionGroupDetailsFragment;
       const user = {
         userPermissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
-          { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-          { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+          { code: "HANDLE_TAXES", name: "Handle taxe" },
+          { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+          { code: "MANAGE_APPS", name: "Handle apps" },
         ],
       } as UserFragment;
       // Act
@@ -386,17 +386,17 @@ describe("Permission group utils", () => {
       // Arrange
       const permissions = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
-          { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-          { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+          { code: "HANDLE_TAXES", name: "Handle taxe" },
+          { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+          { code: "MANAGE_APPS", name: "Handle apps" },
         ],
       } as PermissionGroupDetailsFragment;
       const user = {
         userPermissions: [
-          { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
-          { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
-          { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
+          { code: "HANDLE_CHECKOUTS", name: "Handle checkouts" },
+          { code: "HANDLE_PAYMENTS", name: "Handle payments" },
+          { code: "MANAGE_APPS", name: "Handle apps" },
         ],
       } as UserFragment;
       // Act

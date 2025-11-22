@@ -9,13 +9,13 @@ interface OrderTransactionRefundStatusPillProps {
 
 const getStatusColor = (status: OrderGrantedRefundStatusEnum) => {
   switch (status) {
-    case OrderGrantedRefundStatusEnum.SUCCESS:
+    case "SUCCESS":
       return "success";
-    case OrderGrantedRefundStatusEnum.FAILURE:
+    case "FAILURE":
       return "error";
-    case OrderGrantedRefundStatusEnum.NONE:
+    case "NONE":
       return "generic";
-    case OrderGrantedRefundStatusEnum.PENDING:
+    case "PENDING":
       return "info";
     default:
       return "generic";

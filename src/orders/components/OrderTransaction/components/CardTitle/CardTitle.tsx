@@ -67,7 +67,7 @@ export const OrderTransactionCardTitle = ({
     index = 0,
   } = transaction;
 
-  const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
+  const actions = transaction.actions.filter(action => action !== "REFUND");
   const showActionButtons = showActions && actions.length > 0;
 
   return (

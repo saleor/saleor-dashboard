@@ -12,7 +12,7 @@ import { WelcomePageFakeDisabledButton } from "./WelcomePageFakeDisabledButton";
 export const WelcomePageInviteStaffButton = ({ onClick }: PrimaryActionProps) => {
   const { user } = useUser();
   const userPermissions = user?.userPermissions || [];
-  const hasPermissionToManageStaff = hasPermissions(userPermissions, [PermissionEnum.MANAGE_STAFF]);
+  const hasPermissionToManageStaff = hasPermissions(userPermissions, ["MANAGE_STAFF"]);
 
   if (!hasPermissionToManageStaff) {
     return (

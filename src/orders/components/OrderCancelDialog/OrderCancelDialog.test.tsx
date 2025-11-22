@@ -34,8 +34,8 @@ describe("OrderCancelDialog", () => {
   it("displays error messages when provided", () => {
     // Arrange
     const errors = [
-      { code: OrderErrorCode.CANNOT_CANCEL_ORDER },
-      { code: OrderErrorCode.GRAPHQL_ERROR },
+      { code: "CANNOT_CANCEL_ORDER" },
+      { code: "GRAPHQL_ERROR" },
     ] as unknown as OrderErrorFragment[];
 
     // Act

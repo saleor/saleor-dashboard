@@ -279,7 +279,7 @@ export const OrderDetailsMessages = ({ children, id, params }: OrderDetailsMessa
       });
       closeModal();
     } else {
-      if (!errs.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)) {
+      if (!errs.every(err => err.code === "INSUFFICIENT_STOCK")) {
         handleNestedMutationErrors({ data, intl, notify });
       }
     }

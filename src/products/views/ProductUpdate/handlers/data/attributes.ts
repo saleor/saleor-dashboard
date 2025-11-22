@@ -55,7 +55,7 @@ function getDatagridAttributeInput(
   inputType: AttributeInputTypeEnum,
   value = "",
 ): BulkAttributeValueInput {
-  if (inputType === AttributeInputTypeEnum.DROPDOWN) {
+  if (inputType === "DROPDOWN") {
     return {
       dropdown: {
         value,
@@ -63,7 +63,7 @@ function getDatagridAttributeInput(
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
+  if (inputType === "PLAIN_TEXT") {
     return {
       plainText: value,
     };
@@ -79,19 +79,19 @@ export function getAttributeInput(
   inputType: AttributeInputTypeEnum,
   values: AttributeValueDetailsFragment[],
 ): BulkAttributeValueInput {
-  if (inputType === AttributeInputTypeEnum.FILE) {
+  if (inputType === "FILE") {
     return {
       file: values[0]?.file?.url ?? null,
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.NUMERIC) {
+  if (inputType === "NUMERIC") {
     return {
       numeric: getAttributeValueOrNull(values[0], "name"),
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.DROPDOWN) {
+  if (inputType === "DROPDOWN") {
     return {
       dropdown: {
         value: getAttributeValueOrNull(values[0], "name"),
@@ -99,13 +99,13 @@ export function getAttributeInput(
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.MULTISELECT) {
+  if (inputType === "MULTISELECT") {
     return {
       multiselect: values.map(({ id }) => ({ id })),
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.SWATCH) {
+  if (inputType === "SWATCH") {
     return {
       swatch: {
         value: getAttributeValueOrNull(values[0], "name"),
@@ -113,43 +113,43 @@ export function getAttributeInput(
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.BOOLEAN) {
+  if (inputType === "BOOLEAN") {
     return {
       boolean: getBooleanValue(values[0]),
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
+  if (inputType === "PLAIN_TEXT") {
     return {
       plainText: getAttributeValueOrNull(values[0], "name"),
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.RICH_TEXT) {
+  if (inputType === "RICH_TEXT") {
     return {
       richText: getAttributeValueOrNull(values[0], "richText"),
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.REFERENCE) {
+  if (inputType === "REFERENCE") {
     return {
       references: values.map(({ reference }) => reference).filter(byAttributeName),
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
+  if (inputType === "SINGLE_REFERENCE") {
     return {
       reference: values?.[0]?.reference || null,
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.DATE) {
+  if (inputType === "DATE") {
     return {
       date: getAttributeValueOrNull(values[0], "date"),
     };
   }
 
-  if (inputType === AttributeInputTypeEnum.DATE_TIME) {
+  if (inputType === "DATE_TIME") {
     return {
       dateTime: getAttributeValueOrNull(values[0], "dateTime"),
     };

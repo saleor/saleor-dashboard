@@ -11,7 +11,7 @@ const validationMessages = defineMessages({
 
 export const getValidationSchema = (intl: IntlShape) => {
   return z.object({
-    type: z.enum([PromotionTypeEnum.CATALOGUE, PromotionTypeEnum.ORDER]),
+    type: z.enum(["CATALOGUE", "ORDER"]),
     name: z.string().min(1, intl.formatMessage(validationMessages.nameRequired)),
     description: z.string().optional(),
     dates: z

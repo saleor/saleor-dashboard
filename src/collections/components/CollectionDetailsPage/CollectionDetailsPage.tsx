@@ -72,7 +72,7 @@ const CollectionDetailsPage = ({
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
 
   const collectionListBackLink = useBackLinkWithState({
     path: collectionListPath,
@@ -152,7 +152,7 @@ const CollectionDetailsPage = ({
           <DetailPageLayout.RightSidebar>
             <div>
               <ChannelsAvailabilityCard
-                managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                managePermissions={["MANAGE_PRODUCTS"]}
                 messages={{
                   hiddenLabel: intl.formatMessage({
                     id: "V8FhTt",

@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 
 import { ProductTypesFetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
 import { EnumValuesHandler } from "../../Handler";
+import { ProductTypeEnumValues } from "@dashboard/graphql/enumConstants";
 
 export interface InitialProductTypesAPIState {
   data: InitialProductTypesStateResponse;
@@ -22,7 +23,7 @@ export const useInitialProductTypesState = (): InitialProductTypesAPIState => {
 
   const fetchQueries = async ({ typeOfProduct }: ProductTypesFetchingParams) => {
     const typeOfProductInit = new EnumValuesHandler(
-      ProductTypeEnum,
+      ProductTypeEnumValues,
       "typeOfProduct",
       intl,
       typeOfProduct,

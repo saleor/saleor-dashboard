@@ -19,7 +19,7 @@ describe("Filtering query params", () => {
   });
   it("should not be empty object if params given", () => {
     const params: CollectionListUrlFilters = {
-      status: CollectionPublished.PUBLISHED,
+      status: "PUBLISHED",
     };
     const filterVariables = getFilterVariables(params);
 
@@ -31,7 +31,7 @@ describe("Filtering URL params", () => {
   const filters = createFilterStructure(intl, {
     status: {
       active: false,
-      value: CollectionPublished.PUBLISHED,
+      value: "PUBLISHED",
     },
     channel: undefined as unknown as FilterOpts<string> & {
       choices: Option[];
@@ -47,7 +47,7 @@ describe("Filtering URL params", () => {
     const filters = createFilterStructure(intl, {
       status: {
         active: true,
-        value: CollectionPublished.PUBLISHED,
+        value: "PUBLISHED",
       },
       channel: undefined as unknown as FilterOpts<string> & {
         choices: Option[];

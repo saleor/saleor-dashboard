@@ -66,73 +66,73 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
   const inputTypeChoices = [
     {
       label: intl.formatMessage(inputTypeMessages.dropdown),
-      value: AttributeInputTypeEnum.DROPDOWN,
+      value: "DROPDOWN",
     },
     {
       label: intl.formatMessage(inputTypeMessages.multiselect),
-      value: AttributeInputTypeEnum.MULTISELECT,
+      value: "MULTISELECT",
     },
     {
       label: intl.formatMessage(inputTypeMessages.file),
-      value: AttributeInputTypeEnum.FILE,
+      value: "FILE",
     },
     {
       label: intl.formatMessage(inputTypeMessages.references),
-      value: AttributeInputTypeEnum.REFERENCE,
+      value: "REFERENCE",
     },
     {
       label: intl.formatMessage(inputTypeMessages.singleReference),
-      value: AttributeInputTypeEnum.SINGLE_REFERENCE,
+      value: "SINGLE_REFERENCE",
     },
     {
       label: intl.formatMessage(inputTypeMessages.plainText),
-      value: AttributeInputTypeEnum.PLAIN_TEXT,
+      value: "PLAIN_TEXT",
     },
     {
       label: intl.formatMessage(inputTypeMessages.richText),
-      value: AttributeInputTypeEnum.RICH_TEXT,
+      value: "RICH_TEXT",
     },
     {
       label: intl.formatMessage(inputTypeMessages.numeric),
-      value: AttributeInputTypeEnum.NUMERIC,
+      value: "NUMERIC",
     },
     {
       label: intl.formatMessage(inputTypeMessages.boolean),
-      value: AttributeInputTypeEnum.BOOLEAN,
+      value: "BOOLEAN",
     },
     {
       label: intl.formatMessage(inputTypeMessages.date),
-      value: AttributeInputTypeEnum.DATE,
+      value: "DATE",
     },
     {
       label: intl.formatMessage(inputTypeMessages.dateTime),
-      value: AttributeInputTypeEnum.DATE_TIME,
+      value: "DATE_TIME",
     },
     {
       label: intl.formatMessage(inputTypeMessages.swatch),
-      value: AttributeInputTypeEnum.SWATCH,
+      value: "SWATCH",
     },
   ];
   const entityTypeChoices = [
     {
       label: intl.formatMessage(entityTypeMessages.page),
-      value: AttributeEntityTypeEnum.PAGE,
+      value: "PAGE",
     },
     {
       label: intl.formatMessage(entityTypeMessages.product),
-      value: AttributeEntityTypeEnum.PRODUCT,
+      value: "PRODUCT",
     },
     {
       label: intl.formatMessage(entityTypeMessages.productVariant),
-      value: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+      value: "PRODUCT_VARIANT",
     },
     {
       label: intl.formatMessage(entityTypeMessages.category),
-      value: AttributeEntityTypeEnum.CATEGORY,
+      value: "CATEGORY",
     },
     {
       label: intl.formatMessage(entityTypeMessages.collection),
-      value: AttributeEntityTypeEnum.COLLECTION,
+      value: "COLLECTION",
     },
   ];
   const formApiErrors = getFormErrors(
@@ -192,8 +192,8 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
               options={inputTypeChoices}
             />
           </Box>
-          {(data.inputType === AttributeInputTypeEnum.REFERENCE ||
-            data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) && (
+          {(data.inputType === "REFERENCE" ||
+            data.inputType === "SINGLE_REFERENCE") && (
             <Box width="100%">
               <Select
                 aria-disabled={disabled || !canChangeType}
@@ -222,7 +222,7 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
         >
           <Text fontSize={3}>{intl.formatMessage(messages.valueRequired)}</Text>
         </Checkbox>
-        {data.inputType === AttributeInputTypeEnum.NUMERIC && (
+        {data.inputType === "NUMERIC" && (
           <NumericUnits
             data={data}
             errors={errors}

@@ -10,11 +10,11 @@ describe("App Manifest Schema", () => {
         appUrl: "https://example.com",
         permissions: [
           {
-            code: PermissionEnum.MANAGE_PRODUCTS,
+            code: "MANAGE_PRODUCTS",
             __typename: "Permission",
             name: "Manage Products",
           },
-          { code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission", name: "Manage Products" },
+          { code: "MANAGE_ORDERS", __typename: "Permission", name: "Manage Products" },
         ],
         extensions: [
           {
@@ -24,7 +24,7 @@ describe("App Manifest Schema", () => {
             target: "POPUP",
             permissions: [
               {
-                code: PermissionEnum.MANAGE_PRODUCTS,
+                code: "MANAGE_PRODUCTS",
                 __typename: "Permission",
                 name: "Manage Products",
               },
@@ -201,7 +201,7 @@ describe("App Manifest Schema", () => {
             mount: "PRODUCT_OVERVIEW_CREATE",
             permissions: [
               {
-                code: PermissionEnum.MANAGE_ORDERS,
+                code: "MANAGE_ORDERS",
                 __typename: "Permission",
                 name: "Manage Products",
               },
@@ -234,7 +234,7 @@ describe("App Manifest Schema", () => {
             mount: "PRODUCT_OVERVIEW_CREATE",
             permissions: [
               {
-                code: PermissionEnum.MANAGE_PRODUCTS,
+                code: "MANAGE_PRODUCTS",
                 __typename: "Permission",
                 name: "Manage Products",
               },
@@ -282,12 +282,12 @@ describe("App Manifest Schema", () => {
             mount: "PRODUCT_OVERVIEW_CREATE",
             permissions: [
               {
-                code: PermissionEnum.MANAGE_PRODUCTS,
+                code: "MANAGE_PRODUCTS",
                 __typename: "Permission",
                 name: "Manage Products",
               },
               {
-                code: PermissionEnum.MANAGE_STAFF,
+                code: "MANAGE_STAFF",
                 __typename: "Permission",
                 name: "Manage Staff",
               },
@@ -317,7 +317,7 @@ describe("App Manifest Schema", () => {
         appUrl: "https://example.com",
         permissions: [
           {
-            code: PermissionEnum.MANAGE_PRODUCTS,
+            code: "MANAGE_PRODUCTS",
             __typename: "Permission",
             name: "Manage Products",
           },
@@ -330,7 +330,7 @@ describe("App Manifest Schema", () => {
             target: "POPUP",
             permissions: [
               {
-                code: PermissionEnum.MANAGE_PRODUCTS,
+                code: "MANAGE_PRODUCTS",
                 __typename: "Permission",
                 name: "Manage Products",
               },

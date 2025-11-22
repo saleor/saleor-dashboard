@@ -52,11 +52,11 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(commonMessages.yes),
-            value: ProductTypeConfigurable.CONFIGURABLE,
+            value: "CONFIGURABLE",
           },
           {
             label: intl.formatMessage(commonMessages.no),
-            value: ProductTypeConfigurable.SIMPLE,
+            value: "SIMPLE",
           },
         ],
       ),
@@ -71,11 +71,11 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.digital),
-            value: ProductTypeEnum.DIGITAL,
+            value: "DIGITAL",
           },
           {
             label: intl.formatMessage(messages.shippable),
-            value: ProductTypeEnum.SHIPPABLE,
+            value: "SHIPPABLE",
           },
         ],
       ),

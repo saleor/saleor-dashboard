@@ -20,7 +20,7 @@ export const extractOrderGiftCardUsedAmount = (
   const usedInOrderEvents = compact(
     giftCards.map(({ events }) =>
       events.find(
-        ({ orderId, type }) => type === GiftCardEventsEnum.USED_IN_ORDER && orderId === id,
+        ({ orderId, type }) => type === "USED_IN_ORDER" && orderId === id,
       ),
     ),
   );

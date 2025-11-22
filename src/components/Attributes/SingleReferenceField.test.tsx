@@ -34,9 +34,9 @@ describe("SingleReferenceField", () => {
       label: "Test Attribute",
       value: [],
       data: {
-        inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
+        inputType: "SINGLE_REFERENCE",
         references: [],
-        entityType: AttributeEntityTypeEnum.PRODUCT,
+        entityType: "PRODUCT",
         isRequired: false,
         values: [],
       },
@@ -177,7 +177,7 @@ describe("SingleReferenceField", () => {
       ...defaultProps,
       error: {
         __typename: "ProductError" as const,
-        code: ProductErrorCode.INVALID,
+        code: "INVALID",
         field: "attribute",
         message: "Test error message",
         attributes: [],

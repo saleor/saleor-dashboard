@@ -18,7 +18,7 @@ export function getAttributeSlugErrorMessage(
   intl: IntlShape,
 ): string | undefined {
   switch (err?.code) {
-    case AttributeErrorCode.UNIQUE:
+    case "UNIQUE":
       return intl.formatMessage(messages.attributeSlugUnique);
     default:
       return getAttributeErrorMessage(err, intl);
@@ -30,7 +30,7 @@ export function getAttributeValueErrorMessage(
   intl: IntlShape,
 ): string | undefined {
   switch (err?.code) {
-    case AttributeErrorCode.ALREADY_EXISTS:
+    case "ALREADY_EXISTS":
       return intl.formatMessage(messages.attributeValueAlreadyExists);
     default:
       return getAttributeErrorMessage(err, intl);

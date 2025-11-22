@@ -18,7 +18,7 @@ describe("useOrderSendRefund", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({
       user: {
-        userPermissions: [{ code: PermissionEnum.MANAGE_PRODUCTS }],
+        userPermissions: [{ code: "MANAGE_PRODUCTS" }],
       },
     });
 
@@ -51,7 +51,7 @@ describe("useOrderSendRefund", () => {
     // Arrange
     (useUser as jest.Mock).mockReturnValue({
       user: {
-        userPermissions: [{ code: PermissionEnum.MANAGE_ORDERS }],
+        userPermissions: [{ code: "MANAGE_ORDERS" }],
       },
     });
 

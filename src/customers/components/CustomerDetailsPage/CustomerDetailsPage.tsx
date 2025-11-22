@@ -112,7 +112,7 @@ const CustomerDetailsPage = ({
               <CardSpacer />
               <CustomerInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
-              <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+              <RequirePermissions requiredPermissions={["MANAGE_ORDERS"]}>
                 <CustomerOrders
                   orders={mapEdgesToItems(customer?.orders)}
                   viewAllHref={orderListUrl({
@@ -132,7 +132,7 @@ const CustomerDetailsPage = ({
               <CardSpacer />
               <CustomerStats customer={customer} />
               <CardSpacer />
-              <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
+              <RequirePermissions requiredPermissions={["MANAGE_GIFT_CARD"]}>
                 <CustomerGiftCardsCard />
               </RequirePermissions>
               {CUSTOMER_DETAILS_WIDGETS.length > 0 && customer?.id && (

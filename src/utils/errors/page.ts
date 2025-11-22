@@ -32,13 +32,13 @@ function getPageErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case PageErrorCode.UNIQUE:
+      case "UNIQUE":
         return intl.formatMessage(messages.nameAlreadyTaken);
-      case PageErrorCode.ATTRIBUTE_ALREADY_ASSIGNED:
+      case "ATTRIBUTE_ALREADY_ASSIGNED":
         return intl.formatMessage(messages.attributeAlreadyAssigned);
-      case PageErrorCode.DUPLICATED_INPUT_ITEM:
+      case "DUPLICATED_INPUT_ITEM":
         return intl.formatMessage(messages.duplicatedInputItem);
-      case PageErrorCode.NOT_FOUND:
+      case "NOT_FOUND":
         return intl.formatMessage(messages.notFound);
     }
   }

@@ -28,8 +28,8 @@ const GiftCardSettingsPage = () => {
   const { data, loading } = useGiftCardSettingsQuery();
   const settingsData = data?.giftCardSettings;
   const initialData: GiftCardSettingsFormData = {
-    expiryPeriodActive: settingsData?.expiryType === GiftCardSettingsExpiryTypeEnum.EXPIRY_PERIOD,
-    expiryPeriodType: settingsData?.expiryPeriod?.type || TimePeriodTypeEnum.YEAR,
+    expiryPeriodActive: settingsData?.expiryType === "EXPIRY_PERIOD",
+    expiryPeriodType: settingsData?.expiryPeriod?.type || "YEAR",
     expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1,
   };
   const [updateGiftCardSettings, updateGiftCardSettingsOpts] = useGiftCardSettingsUpdateMutation(

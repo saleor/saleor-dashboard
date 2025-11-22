@@ -78,11 +78,11 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
   const hasCustomerChanged = variant === AddressEditDialogVariant.CHANGE_CUSTOMER;
   const { errors: shippingValidationErrors, submit: handleShippingSubmit } = useAddressValidation(
     address => address,
-    AddressTypeEnum.SHIPPING,
+    "SHIPPING",
   );
   const { errors: billingValidationErrors, submit: handleBillingSubmit } = useAddressValidation(
     address => address,
-    AddressTypeEnum.BILLING,
+    "BILLING",
   );
   const dialogErrors = useModalDialogErrors(
     [...errors, ...shippingValidationErrors, ...billingValidationErrors],
@@ -175,8 +175,8 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
         open: true,
         type:
           variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS
-            ? AddressTypeEnum.SHIPPING
-            : AddressTypeEnum.BILLING,
+            ? "SHIPPING"
+            : "BILLING",
       });
 
       return;
@@ -266,7 +266,7 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
                     transitionState={confirmButtonState}
                     customerAddresses={customerAddresses}
                     selectedCustomerAddressId={
-                      addressSearchState.type === AddressTypeEnum.SHIPPING
+                      addressSearchState.type === "SHIPPING"
                         ? data.customerShippingAddress?.id
                         : data.customerBillingAddress?.id
                     }

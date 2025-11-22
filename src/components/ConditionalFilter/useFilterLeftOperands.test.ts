@@ -15,7 +15,7 @@ describe("ConditionalFilter / useFilterLeftOperandsProvider", () => {
         {
           label: "SKU",
           value: "sku",
-          type: AttributeInputTypeEnum.DROPDOWN,
+          type: "DROPDOWN",
           slug: "sku",
         },
       ]);
@@ -31,7 +31,7 @@ describe("ConditionalFilter / useFilterLeftOperandsProvider", () => {
         {
           label: "SKU",
           value: "sku",
-          type: AttributeInputTypeEnum.DROPDOWN,
+          type: "DROPDOWN",
           slug: "sku",
         },
       ]);

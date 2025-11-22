@@ -97,7 +97,7 @@ const ShippingZoneRatesPage = ({
   ...listProps
 }: ShippingZoneRatesPageProps) => {
   const navigate = useNavigator();
-  const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
+  const isPriceVariant = variant === "PRICE";
   const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = useMemo(
     () => ({
       channelListings: shippingChannels,
@@ -211,7 +211,7 @@ const ShippingZoneRatesPage = ({
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
-              managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
+              managePermissions={["MANAGE_SHIPPING"]}
               allChannelsCount={allChannelsCount!}
               channelsList={data.channelListings.map(channel => ({
                 id: channel.id,

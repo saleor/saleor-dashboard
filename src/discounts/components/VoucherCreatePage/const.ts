@@ -18,7 +18,7 @@ export const initialForm: FormData = {
   requirementsPicker: RequirementsPicker.NONE,
   startDate: "",
   startTime: "",
-  type: VoucherTypeEnum.ENTIRE_ORDER,
+  type: "ENTIRE_ORDER",
   used: 1,
   usageLimit: 1,
   singleUse: false,

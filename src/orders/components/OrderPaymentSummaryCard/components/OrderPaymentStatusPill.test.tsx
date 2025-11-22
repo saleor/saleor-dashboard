@@ -30,8 +30,8 @@ describe("OrderPaymentStatusPill", () => {
   it("displays overcharged status when order is overcharged", () => {
     // Arrange
     const order = {
-      paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-      chargeStatus: OrderChargeStatusEnum.OVERCHARGED,
+      paymentStatus: "FULLY_CHARGED",
+      chargeStatus: "OVERCHARGED",
     } satisfies OrderPaymentStatusPillProps["order"];
 
     // Act
@@ -44,8 +44,8 @@ describe("OrderPaymentStatusPill", () => {
   it("displays regular payment status when order is not overcharged", () => {
     // Arrange
     const order = {
-      paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-      chargeStatus: OrderChargeStatusEnum.FULL,
+      paymentStatus: "FULLY_CHARGED",
+      chargeStatus: "FULL",
     } satisfies OrderPaymentStatusPillProps["order"];
 
     // Act

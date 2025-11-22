@@ -17,7 +17,7 @@ function getDiscountErrorMessage(
 ): string | undefined {
   if (err) {
     switch (err.code) {
-      case DiscountErrorCode.ALREADY_EXISTS:
+      case "ALREADY_EXISTS":
         return intl.formatMessage(messages.alreadyExists);
     }
   }

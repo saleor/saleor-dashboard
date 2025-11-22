@@ -8,6 +8,7 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductAttributeType, ProductTypeDetailsQuery } from "@dashboard/graphql";
+import { ProductAttributeTypeValues } from "@dashboard/graphql/enumConstants";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
@@ -130,7 +131,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
           <Button
             data-test-id={testId}
             variant="secondary"
-            onClick={() => onAttributeAssign(ProductAttributeType[type])}
+            onClick={() => onAttributeAssign(type as ProductAttributeType)}
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>

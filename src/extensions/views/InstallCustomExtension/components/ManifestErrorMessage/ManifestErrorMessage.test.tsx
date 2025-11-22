@@ -58,7 +58,7 @@ describe("ManifestErrorMessage", () => {
   it("renders backend error with specific documentation link", () => {
     // Arrange
     const error: FieldError = {
-      type: AppErrorCode.INVALID_MANIFEST_FORMAT, // Uses ID "FuIgAe"
+      type: "INVALID_MANIFEST_FORMAT", // Uses ID "FuIgAe"
       message: "",
     };
 
@@ -73,7 +73,7 @@ describe("ManifestErrorMessage", () => {
   it("renders backend error without specific documentation link", () => {
     // Arrange
     const error: FieldError = {
-      type: AppErrorCode.FORBIDDEN,
+      type: "FORBIDDEN",
       message: "",
     };
 

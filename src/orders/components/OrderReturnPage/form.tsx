@@ -118,17 +118,17 @@ function useOrderReturnForm(
     );
     const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
       order,
-      FulfillmentStatus.REFUNDED,
+      "REFUNDED",
       { initialValue: false, isFulfillment: true },
     );
     const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
       order,
-      FulfillmentStatus.FULFILLED,
+      "FULFILLED",
       { initialValue: false, isFulfillment: true },
     );
     const waitingFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
       order,
-      FulfillmentStatus.WAITING_FOR_APPROVAL,
+      "WAITING_FOR_APPROVAL",
       { initialValue: false, isFulfillment: true },
     );
 
@@ -154,7 +154,7 @@ function useOrderReturnForm(
   const handleSetMaximalItemsQuantities = (fulfillmentId: string) => () => {
     const fulfillment = order.fulfillments.find(getById(fulfillmentId));
     const quantities =
-      fulfillment.status === FulfillmentStatus.WAITING_FOR_APPROVAL
+      fulfillment.status === "WAITING_FOR_APPROVAL"
         ? waitingItemsQuantities
         : fulfiledItemsQuatities;
     const newQuantities: FormsetQuantityData = quantities.data.map(item => {

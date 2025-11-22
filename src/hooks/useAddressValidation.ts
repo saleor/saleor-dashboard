@@ -22,7 +22,7 @@ function useAddressValidation<TInput, TOutput>(
   const [validationErrors, setValidationErrors] = useState<AccountErrorFragment[]>([]);
   const countryRequiredError: AccountErrorFragment = {
     __typename: "AccountError",
-    code: AccountErrorCode.REQUIRED,
+    code: "REQUIRED",
     field: "country",
     addressType,
     message: "Country required",

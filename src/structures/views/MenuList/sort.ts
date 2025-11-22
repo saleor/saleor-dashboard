@@ -6,9 +6,9 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: MenuListUrlSortField): MenuSortField {
   switch (sort) {
     case MenuListUrlSortField.name:
-      return MenuSortField.NAME;
+      return "NAME";
     case MenuListUrlSortField.items:
-      return MenuSortField.ITEMS_COUNT;
+      return "ITEMS_COUNT";
     default:
       return undefined;
   }

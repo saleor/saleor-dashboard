@@ -5,13 +5,13 @@ import { orderTitleMessages } from "./messages";
 import { CardTitleStatus } from "./OrderCardTitle";
 
 const STATUS_MESSAGE_MAP: Record<CardTitleStatus, MessageDescriptor> = {
-  [FulfillmentStatus.CANCELED]: orderTitleMessages.canceled,
-  [FulfillmentStatus.FULFILLED]: orderTitleMessages.fulfilled,
-  [FulfillmentStatus.REFUNDED]: orderTitleMessages.refunded,
-  [FulfillmentStatus.REFUNDED_AND_RETURNED]: orderTitleMessages.refundedAndReturned,
-  [FulfillmentStatus.REPLACED]: orderTitleMessages.replaced,
-  [FulfillmentStatus.RETURNED]: orderTitleMessages.returned,
-  [FulfillmentStatus.WAITING_FOR_APPROVAL]: orderTitleMessages.waitingForApproval,
+  ["CANCELED"]: orderTitleMessages.canceled,
+  ["FULFILLED"]: orderTitleMessages.fulfilled,
+  ["REFUNDED"]: orderTitleMessages.refunded,
+  ["REFUNDED_AND_RETURNED"]: orderTitleMessages.refundedAndReturned,
+  ["REPLACED"]: orderTitleMessages.replaced,
+  ["RETURNED"]: orderTitleMessages.returned,
+  ["WAITING_FOR_APPROVAL"]: orderTitleMessages.waitingForApproval,
   unfulfilled: orderTitleMessages.unfulfilled,
 };
 

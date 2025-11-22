@@ -187,105 +187,105 @@ const Routes = () => {
                 <SectionRoute exact path="/" component={WelcomePage} />
                 <SectionRoute
                   permissions={[
-                    PermissionEnum.MANAGE_PRODUCTS,
-                    PermissionEnum.MANAGE_ORDERS,
-                    PermissionEnum.MANAGE_PAGES,
-                    PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                    "MANAGE_PRODUCTS",
+                    "MANAGE_ORDERS",
+                    "MANAGE_PAGES",
+                    "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
                   ]}
                   matchPermission="any"
                   path="/search"
                   component={SearchSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  permissions={["MANAGE_PRODUCTS"]}
                   path="/categories"
                   component={CategorySection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  permissions={["MANAGE_PRODUCTS"]}
                   path="/collections"
                   component={CollectionSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_USERS]}
+                  permissions={["MANAGE_USERS"]}
                   path="/customers"
                   component={CustomerSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_GIFT_CARD]}
+                  permissions={["MANAGE_GIFT_CARD"]}
                   path={giftCardsSectionUrlName}
                   component={GiftCardSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                  permissions={["MANAGE_DISCOUNTS"]}
                   path="/discounts"
                   component={DiscountSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PAGES]}
+                  permissions={["MANAGE_PAGES"]}
                   path={pageListPath}
                   component={PageSection}
                 />
                 <SectionRoute
                   permissions={[
-                    PermissionEnum.MANAGE_PAGES,
-                    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                    "MANAGE_PAGES",
+                    "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
                   ]}
                   path={modelTypesPath}
                   component={PageTypesSection}
                   matchPermission="any"
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_ORDERS]}
+                  permissions={["MANAGE_ORDERS"]}
                   path="/orders"
                   component={OrdersSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  permissions={["MANAGE_PRODUCTS"]}
                   path="/products"
                   component={ProductSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES]}
+                  permissions={["MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES"]}
                   path="/product-types"
                   component={ProductTypesSection}
                 />
                 <SectionRoute path="/staff" component={StaffSection} />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_STAFF]}
+                  permissions={["MANAGE_STAFF"]}
                   path="/permission-groups"
                   component={PermissionGroupSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                  permissions={["MANAGE_SETTINGS"]}
                   path="/site-settings"
                   component={SiteSettingsSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                  permissions={["MANAGE_SETTINGS"]}
                   path={refundsSettingsPath}
                   component={RefundsSettingsRoute}
                 />
                 <SectionRoute path="/taxes" component={TaxesSection} />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_SHIPPING]}
+                  permissions={["MANAGE_SHIPPING"]}
                   path="/shipping"
                   component={ShippingSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
+                  permissions={["MANAGE_TRANSLATIONS"]}
                   path="/translations"
                   component={TranslationsSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_MENUS]}
+                  permissions={["MANAGE_MENUS"]}
                   path={structuresListPath}
                   component={NavigationSection}
                 />
                 <SectionRoute
                   permissions={[
-                    PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-                    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                    "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
+                    "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
                   ]}
                   path={attributeSection}
                   component={AttributeSection}
@@ -297,12 +297,12 @@ const Routes = () => {
                   component={ExtensionsSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  permissions={["MANAGE_PRODUCTS"]}
                   path={warehouseSection}
                   component={WarehouseSection}
                 />
                 <SectionRoute
-                  permissions={[PermissionEnum.MANAGE_CHANNELS]}
+                  permissions={["MANAGE_CHANNELS"]}
                   path={channelsSection}
                   component={ChannelsSection}
                 />

@@ -13,14 +13,14 @@ export const useGiftCardPermissions = (): GiftCardPermissions => {
   const userPermissions = useUserPermissions();
 
   const canManageChannels = hasOneOfPermissions(userPermissions ?? [], [
-    PermissionEnum.MANAGE_CHANNELS,
+    "MANAGE_CHANNELS",
   ]);
-  const canSeeCreatedBy = hasOneOfPermissions(userPermissions ?? [], [PermissionEnum.MANAGE_USERS]);
+  const canSeeCreatedBy = hasOneOfPermissions(userPermissions ?? [], ["MANAGE_USERS"]);
   const canSeeUser = hasOneOfPermissions(userPermissions ?? [], [
-    PermissionEnum.MANAGE_USERS,
-    PermissionEnum.MANAGE_STAFF,
+    "MANAGE_USERS",
+    "MANAGE_STAFF",
   ]);
-  const canSeeApp = hasOneOfPermissions(userPermissions ?? [], [PermissionEnum.MANAGE_APPS]);
+  const canSeeApp = hasOneOfPermissions(userPermissions ?? [], ["MANAGE_APPS"]);
 
   return {
     canManageChannels,

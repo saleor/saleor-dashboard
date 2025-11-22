@@ -46,7 +46,7 @@ const AttributeRow = ({
   const intl = useIntl();
 
   switch (attribute.data.inputType) {
-    case AttributeInputTypeEnum.SINGLE_REFERENCE:
+    case "SINGLE_REFERENCE":
       return (
         <SingleReferenceField
           attribute={attribute}
@@ -57,7 +57,7 @@ const AttributeRow = ({
           onReferencesRemove={onReferencesRemove}
         />
       );
-    case AttributeInputTypeEnum.REFERENCE:
+    case "REFERENCE":
       return (
         <BasicAttributeRow label={attribute.label}>
           <SortableChipsField
@@ -77,7 +77,7 @@ const AttributeRow = ({
           />
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.FILE:
+    case "FILE":
       return (
         <BasicAttributeRow label={attribute.label}>
           <FileUploadField
@@ -94,7 +94,7 @@ const AttributeRow = ({
           />
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.DROPDOWN:
+    case "DROPDOWN":
       return (
         <BasicAttributeRow label={attribute.label}>
           <Combobox
@@ -125,7 +125,7 @@ const AttributeRow = ({
           />
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.SWATCH:
+    case "SWATCH":
       return (
         <SwatchRow
           attribute={attribute}
@@ -137,7 +137,7 @@ const AttributeRow = ({
           fetchMoreAttributeValues={fetchMoreAttributeValues}
         />
       );
-    case AttributeInputTypeEnum.PLAIN_TEXT: {
+    case "PLAIN_TEXT": {
       // Since the API doesn't enforce a limit for plain text attribute length, we need to set one here. If we don't, the dashboard will freeze when the user tries to display a product with a long attribute value.
       const MAX_LENGTH = 10000; // This is an arbitrary number. Dashboard will still work with a higher number, but it gets significantly slower.
       const attributeValue = attribute.value[0];
@@ -171,7 +171,7 @@ const AttributeRow = ({
         </BasicAttributeRow>
       );
     }
-    case AttributeInputTypeEnum.RICH_TEXT: {
+    case "RICH_TEXT": {
       const { getShouldMount, getDefaultValue, getMountEditor, getHandleChange } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);
 
@@ -198,7 +198,7 @@ const AttributeRow = ({
         </BasicAttributeRow>
       );
     }
-    case AttributeInputTypeEnum.NUMERIC:
+    case "NUMERIC":
       return (
         <BasicAttributeRow label={attribute.label}>
           <Input
@@ -215,7 +215,7 @@ const AttributeRow = ({
           />
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.BOOLEAN:
+    case "BOOLEAN":
       return (
         <BasicAttributeRow label={attribute.label}>
           <Box
@@ -246,7 +246,7 @@ const AttributeRow = ({
           </Box>
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.DATE:
+    case "DATE":
       return (
         <BasicAttributeRow label={attribute.label}>
           <Input
@@ -262,7 +262,7 @@ const AttributeRow = ({
           />
         </BasicAttributeRow>
       );
-    case AttributeInputTypeEnum.DATE_TIME:
+    case "DATE_TIME":
       return (
         <BasicAttributeRow label={attribute.label}>
           <DateTimeField

@@ -23,9 +23,9 @@ interface ActionButtonsProps {
 }
 
 const statusesToShow = [
-  FulfillmentStatus.FULFILLED,
-  FulfillmentStatus.RETURNED,
-  FulfillmentStatus.WAITING_FOR_APPROVAL,
+  "FULFILLED",
+  "RETURNED",
+  "WAITING_FOR_APPROVAL",
 ];
 
 export const ActionButtons = ({
@@ -49,7 +49,7 @@ export const ActionButtons = ({
     return null;
   }
 
-  if (status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
+  if (status === "WAITING_FOR_APPROVAL") {
     const cannotFulfill = !orderIsPaid && !fulfillmentAllowUnpaid;
 
     return (
@@ -67,7 +67,7 @@ export const ActionButtons = ({
     );
   }
 
-  if (status === FulfillmentStatus.RETURNED && !hasTransactions) {
+  if (status === "RETURNED" && !hasTransactions) {
     return (
       <Box>
         <Button onClick={handleRefundClick} variant="primary">

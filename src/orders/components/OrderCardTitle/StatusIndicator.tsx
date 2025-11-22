@@ -15,19 +15,19 @@ const getStatusIcon = (status?: CardTitleStatus): JSX.Element | null => {
   }
 
   switch (status) {
-    case FulfillmentStatus.FULFILLED:
+    case "FULFILLED":
       return <PackageIcon color="hsla(152, 98%, 44%, 1)" size={DEFAULT_ICON_SIZE} />;
-    case FulfillmentStatus.REFUNDED:
+    case "REFUNDED":
       return <RefundedIcon size={DEFAULT_ICON_SIZE} color="hsla(214, 100%, 55%, 1)" />;
-    case FulfillmentStatus.RETURNED:
+    case "RETURNED":
       return <ReturnedIcon size={DEFAULT_ICON_SIZE} color="hsla(214, 100%, 63.1%, 1)" />;
-    case FulfillmentStatus.CANCELED:
+    case "CANCELED":
       return <EraserIcon color="hsla(3, 90%, 64%, 1)" size={DEFAULT_ICON_SIZE} />;
-    case FulfillmentStatus.REPLACED:
+    case "REPLACED":
       return <ReplaceIcon size={DEFAULT_ICON_SIZE} />;
-    case FulfillmentStatus.WAITING_FOR_APPROVAL:
+    case "WAITING_FOR_APPROVAL":
       return <SignatureIcon size={DEFAULT_ICON_SIZE} />;
-    case FulfillmentStatus.REFUNDED_AND_RETURNED:
+    case "REFUNDED_AND_RETURNED":
       return (
         <>
           <RefundedIcon size={DEFAULT_ICON_SIZE} className={sprinkles({ marginRight: 1 })} />

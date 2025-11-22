@@ -35,7 +35,7 @@ export function createAttributeChangeHandler(
     triggerChange();
 
     const isBoolean =
-      attributesFormData.get(attributeId)?.data.inputType === AttributeInputTypeEnum.BOOLEAN;
+      attributesFormData.get(attributeId)?.data.inputType === "BOOLEAN";
 
     if (isBoolean) {
       attributesFormData.change(attributeId, [value]);
@@ -137,21 +137,21 @@ export function createFetchReferencesHandler(
       return;
     }
 
-    if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE && fetchReferencePages) {
+    if (attribute.data.entityType === "PAGE" && fetchReferencePages) {
       fetchReferencePages(value);
     } else if (
-      attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION &&
+      attribute.data.entityType === "COLLECTION" &&
       fetchReferenceCollections
     ) {
       fetchReferenceCollections(value);
     } else if (
-      attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY &&
+      attribute.data.entityType === "CATEGORY" &&
       fetchReferenceCategories
     ) {
       fetchReferenceCategories(value);
     } else if (
       attribute.data?.entityType &&
-      [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
+      ["PRODUCT", "PRODUCT_VARIANT"].includes(
         attribute.data.entityType,
       ) &&
       fetchReferenceProducts
@@ -175,15 +175,15 @@ export function createFetchMoreReferencesHandler(
     return;
   }
 
-  if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
+  if (attribute.data.entityType === "PAGE") {
     return fetchMoreReferencePages;
-  } else if (attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION) {
+  } else if (attribute.data.entityType === "COLLECTION") {
     return fetchMoreReferenceCollections;
-  } else if (attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY) {
+  } else if (attribute.data.entityType === "CATEGORY") {
     return fetchMoreReferenceCategories;
   } else if (
     attribute.data?.entityType &&
-    [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
+    ["PRODUCT", "PRODUCT_VARIANT"].includes(
       attribute.data.entityType,
     )
   ) {
@@ -297,7 +297,7 @@ export const prepareAttributesInput = ({
 
     const inputType = attr.data.inputType;
 
-    if (inputType === AttributeInputTypeEnum.FILE) {
+    if (inputType === "FILE") {
       const fileInput = getFileInput(attr, updatedFileAttributes);
 
       if (fileInput.file || attr.data.isRequired) {
@@ -307,7 +307,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.BOOLEAN) {
+    if (inputType === "BOOLEAN") {
       const booleanInput = getBooleanInput(attr);
 
       // previous comparison doesn't work because value was string
@@ -320,7 +320,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
+    if (inputType === "PLAIN_TEXT") {
       attrInput.push({
         id: attr.id,
         plainText: attr.value[0],
@@ -329,7 +329,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.RICH_TEXT) {
+    if (inputType === "RICH_TEXT") {
       attrInput.push({
         id: attr.id,
         richText: attr.value[0],
@@ -338,7 +338,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.REFERENCE) {
+    if (inputType === "REFERENCE") {
       attrInput.push({
         id: attr.id,
         references: attr.value,
@@ -347,7 +347,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
+    if (inputType === "SINGLE_REFERENCE") {
       attrInput.push({
         id: attr.id,
         reference: attr.value?.[0] ?? null,
@@ -356,7 +356,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.DATE) {
+    if (inputType === "DATE") {
       attrInput.push({
         id: attr.id,
         date: attr.value[0],
@@ -365,7 +365,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.DATE_TIME) {
+    if (inputType === "DATE_TIME") {
       attrInput.push({
         id: attr.id,
         dateTime: attr.value[0],
@@ -374,7 +374,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.SWATCH) {
+    if (inputType === "SWATCH") {
       attrInput.push({
         id: attr.id,
         swatch: {
@@ -385,7 +385,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.NUMERIC) {
+    if (inputType === "NUMERIC") {
       const isEmpty = attr.value[0] === undefined || attr.value[0] === null;
 
       attrInput.push({
@@ -396,7 +396,7 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
-    if (inputType === AttributeInputTypeEnum.DROPDOWN) {
+    if (inputType === "DROPDOWN") {
       attrInput.push({
         id: attr.id,
         values: attr.value.filter(value => value !== null),

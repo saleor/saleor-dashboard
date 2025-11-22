@@ -5,6 +5,7 @@ import {
 } from "@dashboard/collections/components/CollectionListPage";
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import { CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
+import { CollectionPublishedValues } from "@dashboard/graphql/enumConstants";
 import { findValueInEnum, maybe } from "@dashboard/misc";
 import { Option } from "@saleor/macaw-ui-next";
 
@@ -29,14 +30,14 @@ export function getFilterOpts(
     },
     status: {
       active: maybe(() => params.status !== undefined, false),
-      value: maybe(() => findValueInEnum(status, CollectionPublished)),
+      value: maybe(() => params.status as CollectionPublished),
     },
   };
 }
 
 export function getFilterVariables(params: CollectionListUrlFilters): CollectionFilterInput {
   return {
-    published: params.status ? findValueInEnum(params.status, CollectionPublished) : undefined,
+    published: params.status ? params.status as CollectionPublished : undefined,
     search: params.query,
   };
 }
@@ -51,7 +52,7 @@ export function getFilterQueryParam(
       return getSingleEnumValueQueryParam(
         filter as FilterElementRegular<CollectionFilterKeys.status>,
         CollectionListUrlFiltersEnum.status,
-        CollectionPublished,
+        CollectionPublishedValues,
       );
     case CollectionFilterKeys.channel:
       return getSingleValueQueryParam(filter, CollectionListUrlFiltersEnum.channel);

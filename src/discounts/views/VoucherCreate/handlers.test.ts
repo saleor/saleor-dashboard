@@ -20,7 +20,7 @@ const formData: FormData = {
   requirementsPicker: RequirementsPicker.NONE,
   startDate: "2021-02-01",
   startTime: "00:00",
-  type: VoucherTypeEnum.ENTIRE_ORDER,
+  type: "ENTIRE_ORDER",
   codes: [],
   usageLimit: 1,
   used: 1,

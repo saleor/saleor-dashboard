@@ -71,10 +71,10 @@ const OrderCustomer = (props: OrderCustomerProps) => {
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);
   const noBillingAddressError = errors.find(
-    error => error.code === OrderErrorCode.BILLING_ADDRESS_NOT_SET,
+    error => error.code === "BILLING_ADDRESS_NOT_SET",
   );
   const noShippingAddressError = errors.find(
-    error => error.code === OrderErrorCode.ORDER_NO_SHIPPING_ADDRESS,
+    error => error.code === "ORDER_NO_SHIPPING_ADDRESS",
   );
 
   return (
@@ -89,7 +89,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
           {!!canEditCustomer && (
-            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+            <RequirePermissions requiredPermissions={["MANAGE_ORDERS"]}>
               <Button
                 data-test-id="edit-customer"
                 variant="secondary"

@@ -7,7 +7,7 @@ import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";
 
 const flatTaxRateChoice = {
   label: <FlatTaxRateLabel />,
-  value: TaxCalculationStrategy.FLAT_RATES,
+  value: "FLAT_RATES",
 };
 // Keep this choice for backward compatibility with Avalara plugin - remove after migration to AvaTax app
 const legacyPluginTaxChoice = {

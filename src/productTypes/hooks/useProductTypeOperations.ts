@@ -67,11 +67,11 @@ function useProductTypeOperations({
         productType: {
           ...productType,
           productAttributes:
-            variables.type === ProductAttributeType.PRODUCT
+            variables.type === "PRODUCT"
               ? moveAttribute(productType.productAttributes, variables.move)
               : productType.productAttributes,
           variantAttributes:
-            variables.type === ProductAttributeType.VARIANT
+            variables.type === "VARIANT"
               ? moveAttribute(productType.variantAttributes, variables.move)
               : productType.variantAttributes,
         },

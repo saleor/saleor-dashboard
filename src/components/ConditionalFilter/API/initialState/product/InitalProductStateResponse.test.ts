@@ -108,7 +108,7 @@ describe("ConditionalFilter / API / InitialProductStateResponse", () => {
         value: "1",
         label: "Reference Attribute",
         inputType: "REFERENCE",
-        entityType: AttributeEntityTypeEnum.PAGE,
+        entityType: "PAGE",
       },
     };
 
@@ -135,7 +135,7 @@ describe("ConditionalFilter / API / InitialProductStateResponse", () => {
         value: "1",
         label: "Reference Attribute",
         inputType: "REFERENCE",
-        entityType: AttributeEntityTypeEnum.PAGE,
+        entityType: "PAGE",
       },
     };
 
@@ -185,7 +185,7 @@ describe("ConditionalFilter / API / InitialProductStateResponse", () => {
         value: "1",
         label: "Reference Attribute",
         inputType: "REFERENCE",
-        entityType: AttributeEntityTypeEnum.PAGE,
+        entityType: "PAGE",
       },
     };
 
@@ -211,7 +211,7 @@ describe("ConditionalFilter / API / InitialProductStateResponse", () => {
         value: "1",
         label: "Reference Attribute",
         inputType: "REFERENCE",
-        entityType: AttributeEntityTypeEnum.PAGE,
+        entityType: "PAGE",
       },
     };
 

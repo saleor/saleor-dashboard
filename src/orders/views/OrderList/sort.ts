@@ -7,15 +7,15 @@ export const DEFAULT_SORT_KEY = OrderListUrlSortField.number;
 function getSortQueryField(sort: OrderListUrlSortField): OrderSortField | undefined {
   switch (sort) {
     case OrderListUrlSortField.number:
-      return OrderSortField.NUMBER;
+      return "NUMBER";
     case OrderListUrlSortField.date:
-      return OrderSortField.CREATION_DATE;
+      return "CREATION_DATE";
     case OrderListUrlSortField.customer:
-      return OrderSortField.CUSTOMER;
+      return "CUSTOMER";
     case OrderListUrlSortField.fulfillment:
-      return OrderSortField.FULFILLMENT_STATUS;
+      return "FULFILLMENT_STATUS";
     case OrderListUrlSortField.payment:
-      return OrderSortField.PAYMENT;
+      return "PAYMENT";
     default:
       return undefined;
   }

@@ -73,7 +73,7 @@ const OrderReturn = ({ orderId }: OrderReturnProps) => {
     const { grantRefundErrors, sendRefundErrors } = await sendMutations(formData);
     const errors = [...returnErrors, ...grantRefundErrors, ...sendRefundErrors];
 
-    if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
+    if (errors.some(err => err.code === "CANNOT_REFUND")) {
       notify({
         autohide: 5000,
         status: "error",

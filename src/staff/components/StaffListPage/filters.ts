@@ -44,11 +44,11 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.active),
-            value: StaffMemberStatus.ACTIVE,
+            value: "ACTIVE",
           },
           {
             label: intl.formatMessage(messages.deactivated),
-            value: StaffMemberStatus.DEACTIVATED,
+            value: "DEACTIVATED",
           },
         ],
       ),

@@ -26,9 +26,9 @@ export function getShippingWeightRateErrorMessage(
   intl: IntlShape,
 ): string {
   switch (err?.code) {
-    case ShippingErrorCode.MAX_LESS_THAN_MIN:
+    case "MAX_LESS_THAN_MIN":
       return intl.formatMessage(messages.weight);
-    case ShippingErrorCode.INVALID:
+    case "INVALID":
       return intl.formatMessage(messages.invalid);
     default:
       getShippingErrorMessage(err, intl);

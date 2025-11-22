@@ -52,7 +52,7 @@ export const SearchForm = ({
           <SwitchItem id="all" value="all">
             <FormattedMessage id="zQvVDJ" defaultMessage="All" />
           </SwitchItem>
-          {hasPermission(PermissionEnum.MANAGE_PRODUCTS) && (
+          {hasPermission("MANAGE_PRODUCTS") && (
             <>
               <SwitchItem id="products" value="products">
                 <FormattedMessage id="7NFfmz" defaultMessage="Products" />
@@ -68,17 +68,17 @@ export const SearchForm = ({
               </SwitchItem>
             </>
           )}
-          {hasPermission(PermissionEnum.MANAGE_ORDERS) && (
+          {hasPermission("MANAGE_ORDERS") && (
             <SwitchItem id="orders" value="orders">
               <FormattedMessage id="X7jl6w" defaultMessage="Orders" />
             </SwitchItem>
           )}
-          {hasPermission(PermissionEnum.MANAGE_PAGES) && (
+          {hasPermission("MANAGE_PAGES") && (
             <SwitchItem id="models" value="models">
               <FormattedMessage id="blWvag" defaultMessage="Models" />
             </SwitchItem>
           )}
-          {hasPermission(PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES) && (
+          {hasPermission("MANAGE_PAGE_TYPES_AND_ATTRIBUTES") && (
             <SwitchItem id="model-types" value="model-types">
               <FormattedMessage id="GgvbdW" defaultMessage="Model types" />
             </SwitchItem>

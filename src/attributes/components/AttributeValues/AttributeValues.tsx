@@ -85,7 +85,7 @@ const AttributeValues = ({
 }: AttributeValuesProps) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
+  const isSwatch = inputType === "SWATCH";
   const numberOfColumns = isSwatch ? 5 : 4;
 
   return (

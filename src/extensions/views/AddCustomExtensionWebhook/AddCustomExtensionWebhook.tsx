@@ -49,8 +49,8 @@ export const AddCustomExtensionWebhook = ({ appId }: CustomAppWebhookCreateProps
           input: {
             app: appId,
             syncEvents: data.syncEvents,
-            asyncEvents: data.asyncEvents.includes(WebhookEventTypeAsyncEnum.ANY_EVENTS)
-              ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
+            asyncEvents: data.asyncEvents.includes("ANY_EVENTS")
+              ? ["ANY_EVENTS"]
               : data.asyncEvents,
             isActive: data.isActive,
             name: data.name,

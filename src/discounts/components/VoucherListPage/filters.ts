@@ -117,15 +117,15 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.active),
-            value: DiscountStatusEnum.ACTIVE,
+            value: "ACTIVE",
           },
           {
             label: intl.formatMessage(messages.expired),
-            value: DiscountStatusEnum.EXPIRED,
+            value: "EXPIRED",
           },
           {
             label: intl.formatMessage(messages.scheduled),
-            value: DiscountStatusEnum.SCHEDULED,
+            value: "SCHEDULED",
           },
         ],
       ),
@@ -140,15 +140,15 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.fixed),
-            value: VoucherDiscountType.FIXED,
+            value: "FIXED",
           },
           {
             label: intl.formatMessage(messages.percentage),
-            value: VoucherDiscountType.PERCENTAGE,
+            value: "PERCENTAGE",
           },
           {
             label: intl.formatMessage(messages.percentage),
-            value: VoucherDiscountType.SHIPPING,
+            value: "SHIPPING",
           },
         ],
       ),

@@ -45,7 +45,7 @@ export const OrderTransactionTiles = ({ transactions, control }: OrderTransactio
           gap={4}
         >
           {transactions.map(transaction => {
-            const isDisabled = !transaction.actions.includes(TransactionActionEnum.REFUND);
+            const isDisabled = !transaction.actions.includes("REFUND");
 
             return (
               <Box

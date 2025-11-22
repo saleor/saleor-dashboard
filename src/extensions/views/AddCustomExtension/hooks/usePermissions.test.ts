@@ -12,9 +12,9 @@ describe("usePermissions", () => {
   it("should sort permissions from shop context by name", () => {
     // Arrange
     const mockPermissions: PermissionFragment[] = [
-      { __typename: "Permission", name: "Manage Products", code: PermissionEnum.MANAGE_PRODUCTS },
-      { __typename: "Permission", name: "Manage Orders", code: PermissionEnum.MANAGE_ORDERS },
-      { __typename: "Permission", name: "Manage Settings", code: PermissionEnum.MANAGE_SETTINGS },
+      { __typename: "Permission", name: "Manage Products", code: "MANAGE_PRODUCTS" },
+      { __typename: "Permission", name: "Manage Orders", code: "MANAGE_ORDERS" },
+      { __typename: "Permission", name: "Manage Settings", code: "MANAGE_SETTINGS" },
     ];
 
     mockUseShop.mockReturnValue({
@@ -26,9 +26,9 @@ describe("usePermissions", () => {
 
     // Assert
     expect(result.current).toEqual([
-      { __typename: "Permission", name: "Manage Orders", code: PermissionEnum.MANAGE_ORDERS },
-      { __typename: "Permission", name: "Manage Products", code: PermissionEnum.MANAGE_PRODUCTS },
-      { __typename: "Permission", name: "Manage Settings", code: PermissionEnum.MANAGE_SETTINGS },
+      { __typename: "Permission", name: "Manage Orders", code: "MANAGE_ORDERS" },
+      { __typename: "Permission", name: "Manage Products", code: "MANAGE_PRODUCTS" },
+      { __typename: "Permission", name: "Manage Settings", code: "MANAGE_SETTINGS" },
     ]);
   });
 

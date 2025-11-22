@@ -86,7 +86,7 @@ export class InitialProductStateResponse implements InitialProductState {
       const attr = this.attribute[token.name];
 
       return attr.inputType === "BOOLEAN"
-        ? createBooleanOption(token.value === "true", AttributeInputTypeEnum.BOOLEAN)
+        ? createBooleanOption(token.value === "true", "BOOLEAN")
         : token.value;
     }
 

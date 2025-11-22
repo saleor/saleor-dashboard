@@ -19,7 +19,7 @@ export const OrderPaymentStatusPill = ({ order, className }: OrderPaymentStatusP
 
   const payment = transformPaymentStatus(order.paymentStatus, intl);
 
-  if (order.chargeStatus === OrderChargeStatusEnum.OVERCHARGED) {
+  if (order.chargeStatus === "OVERCHARGED") {
     return (
       <Pill
         key="overcharged"

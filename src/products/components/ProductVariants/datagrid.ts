@@ -127,7 +127,7 @@ export const useAttributesAdapter = ({
       return false;
     }
 
-    return [AttributeInputTypeEnum.DROPDOWN, AttributeInputTypeEnum.PLAIN_TEXT].includes(
+    return ["DROPDOWN", "PLAIN_TEXT"].includes(
       attribute.inputType,
     );
   });

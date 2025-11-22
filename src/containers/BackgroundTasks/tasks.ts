@@ -14,9 +14,9 @@ import { InvoiceGenerateParams, QueuedTask, TaskData, TaskStatus } from "./types
 
 function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
   switch (jobStatus) {
-    case JobStatusEnum.SUCCESS:
+    case "SUCCESS":
       return TaskStatus.SUCCESS;
-    case JobStatusEnum.PENDING:
+    case "PENDING":
       return TaskStatus.PENDING;
     default:
       return TaskStatus.FAILURE;

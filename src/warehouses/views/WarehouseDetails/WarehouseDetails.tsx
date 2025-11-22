@@ -6,6 +6,7 @@ import {
   useWarehouseDetailsQuery,
   useWarehouseUpdateMutation,
 } from "@dashboard/graphql";
+import { CountryCodeValues } from "@dashboard/graphql/enumConstants";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
@@ -85,7 +86,7 @@ const WarehouseDetails = ({ id, params }: WarehouseDetailsProps) => {
               companyName: data.companyName,
               city: data.city,
               cityArea: data.cityArea,
-              country: findValueInEnum(data.country, CountryCode),
+              country: findValueInEnum(data.country, CountryCodeValues),
               countryArea: data.countryArea,
               phone: data.phone,
               postalCode: data.postalCode,

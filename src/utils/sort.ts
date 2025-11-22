@@ -22,7 +22,7 @@ export function getSortUrlVariables<TSortKey extends string>(
 }
 
 export function getOrderDirection(asc: boolean): OrderDirection {
-  return asc ? OrderDirection.ASC : OrderDirection.DESC;
+  return asc ? "ASC" : "DESC";
 }
 
 export function getArrowDirection(asc: boolean): TableCellHeaderArrowDirection {
@@ -42,17 +42,20 @@ export function getSortParams<TParams extends Sort<TFields>, TFields extends str
 // Appends Sort object to the querystring params
 export function asSortParams<
   TParams extends Record<any, string>,
-  TFields extends Record<any, string>,
+  TFields extends Record<any, string> | readonly string[] | string[],
 >(
   params: TParams,
   fields: TFields,
-  defaultField?: keyof TFields,
+  defaultField?: TFields extends readonly string[] | string[] ? string : keyof TFields,
   defaultOrder?: boolean,
 ): TParams & Sort {
+  // Support both enum objects and string arrays
+  const fieldsArray = Array.isArray(fields) ? fields : Object.values(fields);
+
   return {
     ...params,
     asc: parseBoolean(params.asc, defaultOrder === undefined ? true : defaultOrder),
-    sort: params.sort ? findValueInEnum(params.sort, fields) : defaultField?.toString() || "name",
+    sort: params.sort ? findValueInEnum(params.sort, fieldsArray) : defaultField?.toString() || "name",
   };
 }
 

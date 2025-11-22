@@ -60,8 +60,8 @@ describe("useHandleCreateAppSubmit", () => {
     const formData = {
       appName: "Test App",
       permissions: {
-        [PermissionEnum.MANAGE_APPS]: true,
-        [PermissionEnum.MANAGE_ORDERS]: false,
+        ["MANAGE_APPS"]: true,
+        ["MANAGE_ORDERS"]: false,
       },
     };
 
@@ -75,7 +75,7 @@ describe("useHandleCreateAppSubmit", () => {
       variables: {
         input: {
           name: "Test App",
-          permissions: [PermissionEnum.MANAGE_APPS],
+          permissions: ["MANAGE_APPS"],
         },
       },
     });
@@ -105,7 +105,7 @@ describe("useHandleCreateAppSubmit", () => {
     const formData = {
       appName: "Test App",
       permissions: {
-        [PermissionEnum.MANAGE_APPS]: true,
+        ["MANAGE_APPS"]: true,
       },
     };
 
@@ -140,7 +140,7 @@ describe("useHandleCreateAppSubmit", () => {
     const formData = {
       appName: "Duplicate App",
       permissions: {
-        [PermissionEnum.MANAGE_APPS]: true,
+        ["MANAGE_APPS"]: true,
       },
     };
 
@@ -151,7 +151,7 @@ describe("useHandleCreateAppSubmit", () => {
         appCreate: {
           errors: [
             {
-              code: AppErrorCode.UNIQUE,
+              code: "UNIQUE",
               field: "name",
               message: errorMessage,
             },
@@ -180,8 +180,8 @@ describe("useHandleCreateAppSubmit", () => {
     const formData = {
       appName: "Test App",
       permissions: {
-        [PermissionEnum.MANAGE_APPS]: true,
-        [PermissionEnum.MANAGE_ORDERS]: true,
+        ["MANAGE_APPS"]: true,
+        ["MANAGE_ORDERS"]: true,
       },
     };
 
@@ -192,10 +192,10 @@ describe("useHandleCreateAppSubmit", () => {
         appCreate: {
           errors: [
             {
-              code: AppErrorCode.OUT_OF_SCOPE_PERMISSION,
+              code: "OUT_OF_SCOPE_PERMISSION",
               field: null,
               message: "You don't have access to these permissions",
-              permissions: [PermissionEnum.MANAGE_ORDERS],
+              permissions: ["MANAGE_ORDERS"],
             },
           ],
           app: null,
@@ -205,7 +205,7 @@ describe("useHandleCreateAppSubmit", () => {
     });
 
     // Assert
-    expect(mockSetError).toHaveBeenCalledWith(`permissions.${PermissionEnum.MANAGE_ORDERS}`, {
+    expect(mockSetError).toHaveBeenCalledWith(`permissions.${"MANAGE_ORDERS"}`, {
       message: "You don't have access to this permission",
     });
     expect(mockSetToken).not.toHaveBeenCalled();
@@ -224,7 +224,7 @@ describe("useHandleCreateAppSubmit", () => {
     const formData = {
       appName: "Test App",
       permissions: {
-        [PermissionEnum.MANAGE_APPS]: true,
+        ["MANAGE_APPS"]: true,
       },
     };
 
@@ -235,7 +235,7 @@ describe("useHandleCreateAppSubmit", () => {
         appCreate: {
           errors: [
             {
-              code: AppErrorCode.FORBIDDEN,
+              code: "FORBIDDEN",
               field: null,
               message: errorMessage,
             },

@@ -13,7 +13,7 @@ export const useDiscountDialog = () => {
   return { closeDialog, isDialogOpen, openDialog };
 };
 export const getManualOrderDiscount = (order: OrderDetailsFragment) =>
-  order ? getOrderDiscount(order, OrderDiscountType.MANUAL) : null;
+  order ? getOrderDiscount(order, "MANUAL") : null;
 
 const getOrderDiscount = (
   order: OrderDetailsFragment,

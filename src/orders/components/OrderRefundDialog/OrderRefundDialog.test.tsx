@@ -7,7 +7,7 @@ import { OrderRefundDialog } from "./OrderRefundDialog";
 const order = orderMock("");
 
 jest.mock("@dashboard/auth/hooks/useUserPermissions", () => ({
-  useUserPermissions: jest.fn(() => [{ code: PermissionEnum.HANDLE_PAYMENTS }]),
+  useUserPermissions: jest.fn(() => [{ code: "HANDLE_PAYMENTS" }]),
 }));
 
 describe("OrderRefundDialog", () => {

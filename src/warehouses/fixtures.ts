@@ -63,7 +63,7 @@ const email = "test@saleor.io";
 export const warehouse: WarehouseDetailsFragment = {
   ...warehouseList[0],
   isPrivate: true,
-  clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
+  clickAndCollectOption: "DISABLED",
   address,
   email,
 };
@@ -71,7 +71,7 @@ export const warehouse: WarehouseDetailsFragment = {
 export const warehouseForPickup: WarehouseDetailsFragment = {
   ...warehouseList[0],
   isPrivate: false,
-  clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
+  clickAndCollectOption: "ALL",
   address,
   email,
 };

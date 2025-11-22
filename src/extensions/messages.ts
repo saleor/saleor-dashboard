@@ -340,102 +340,102 @@ export const messages = defineMessages({
 
 export const appManifestErrorMessages = defineMessages({
   invalidManifest: {
-    // AppErrorCode.INVALID
+    // "INVALID"
     id: "ZXOpCJ",
     defaultMessage:
       "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})",
   },
   invalidPermission: {
-    // AppErrorCode.INVALID_PERMISSION
+    // "INVALID_PERMISSION"
     id: "DRaREj",
     defaultMessage:
       "The extension's manifest requests invalid or unrecognized permissions. {docsLink} ({errorCode})",
   },
   invalidUrlFormat: {
-    // AppErrorCode.INVALID_URL_FORMAT
+    // "INVALID_URL_FORMAT"
     id: "FXtMVc",
     defaultMessage:
       "A URL field within the extension's manifest has an invalid format. {docsLink} ({errorCode})",
   },
   invalidUrlFormatSimple: {
-    // AppErrorCode.INVALID_URL_FORMAT
+    // "INVALID_URL_FORMAT"
     id: "+vzDH4",
     defaultMessage: "Invalid manifest URL",
     description:
       "error message used when manifest URL is incorrect (before any further validation)",
   },
   invalidManifestFormat: {
-    // AppErrorCode.INVALID_MANIFEST_FORMAT
+    // "INVALID_MANIFEST_FORMAT"
     defaultMessage: "The extension's manifest has an invalid format. {docsLink} ({errorCode})",
     id: "FuIgAe",
   },
   invalidCustomHeaders: {
-    // AppErrorCode.INVALID_CUSTOM_HEADERS
+    // "INVALID_CUSTOM_HEADERS"
     defaultMessage:
       "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})",
     id: "CPPACf",
   },
   invalidManifestUrlCannotConnect: {
-    // AppErrorCode.MANIFEST_URL_CANT_CONNECT
+    // "MANIFEST_URL_CANT_CONNECT"
     defaultMessage:
       // TODO: Add docs link when we have docs page with explanation
       "Saleor could not connect to the provided manifest URL. ({errorCode})",
     id: "DbNXK5",
   },
   notFound: {
-    // AppErrorCode.NOT_FOUND
+    // "NOT_FOUND"
     // TODO: Add docs link when we have docs page with explanation
     defaultMessage: "The extension manifest was not found. ({errorCode})",
     id: "eY+BKQ",
   },
   outOfScopeApp: {
-    // AppErrorCode.OUT_OF_SCOPE_APP
+    // "OUT_OF_SCOPE_APP"
     id: "D2u4pg",
     // TODO: Add docs link when we have docs page with explanation
     defaultMessage:
       "You don't have permission to manage this extension. Please contact your administrator for assistance. ({errorCode})",
   },
   outOfScopePermission: {
-    // AppErrorCode.OUT_OF_SCOPE_PERMISSION
+    // "OUT_OF_SCOPE_PERMISSION"
     id: "hYWxeg",
     defaultMessage:
       "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})",
   },
   unique: {
-    // AppErrorCode.UNIQUE
+    // "UNIQUE"
     id: "MS86iy",
     // TODO: Add docs link when we have docs page with explanation
     defaultMessage: "The extension identifier is already in use. ({errorCode})",
   },
   forbidden: {
-    // AppErrorCode.FORBIDDEN
+    // "FORBIDDEN"
     defaultMessage: "You are not allowed to perform this action. ({errorCode})",
     id: "B0XvpR",
   },
   genericError: {
-    // AppErrorCode.INVALID
+    // "INVALID"
     defaultMessage: "An unexpected error occurred. ({errorCode})",
     id: "qACBaj",
   },
   invalidStatus: {
-    // AppErrorCode.INVALID_STATUS
+    // "INVALID_STATUS"
     id: "tLM9Jr",
     defaultMessage:
       "The operation cannot be performed right now. This might be due to a pending installation with the same identifier. {docsLink} ({errorCode})",
   },
   required: {
-    // AppErrorCode.REQUIRED
+    // "REQUIRED"
     id: "aXytBR",
     defaultMessage:
       "A required field is missing in the extension's manifest. {docsLink} ({errorCode})",
   },
   graphqlError: {
-    // AppErrorCode.GRAPHQL_ERROR
+    // "GRAPHQL_ERROR"
     id: "q5I8Ac",
     defaultMessage: "An unexpected GraphQL error occurred. ({errorCode})",
   },
   unsupportedSaleorVersion: {
-    // AppErrorCode.UNSUPPORTED_SALEOR_VERSION
+    // "UNSUPPORTED_SALEOR_VERSION"
     id: "fWaj1M",
     defaultMessage:
       "The Saleor version your extension is trying to use is newer than your current Saleor version. {docsLink} ({errorCode})",

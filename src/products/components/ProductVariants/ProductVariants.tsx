@@ -83,8 +83,8 @@ const ProductVariants = ({
             ...(variantAttributes
               ?.filter(
                 attribute =>
-                  attribute.inputType === AttributeInputTypeEnum.DROPDOWN ||
-                  attribute.inputType === AttributeInputTypeEnum.PLAIN_TEXT,
+                  attribute.inputType === "DROPDOWN" ||
+                  attribute.inputType === "PLAIN_TEXT",
               )
               .map(attribute => `attribute:${attribute.id}`) ?? []),
           ]

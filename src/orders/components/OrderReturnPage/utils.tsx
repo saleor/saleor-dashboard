@@ -13,7 +13,7 @@ type OrderLine = OrderDetailsFragment["lines"][0];
 type FulfillmentLine = OrderDetailsFragment["fulfillments"][0]["lines"][0];
 type ParsedFulfillmentLine = OrderLine & { orderLineId: string };
 
-const fulfiledStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.REFUNDED];
+const fulfiledStatuses = ["FULFILLED", "REFUNDED"];
 
 export const getOrderUnfulfilledLines = (order: OrderDetailsFragment) =>
   order?.lines.filter(line => line.quantityToFulfill > 0) || [];
@@ -25,7 +25,7 @@ export const getFulfilledFulfillemnts = (order?: OrderDetailsFragment) =>
   order?.fulfillments.filter(getFulfilledFulfillment) || [];
 
 export const getWaitingFulfillments = (order: OrderDetailsFragment) =>
-  order?.fulfillments.filter(f => f.status === FulfillmentStatus.WAITING_FOR_APPROVAL) || [];
+  order?.fulfillments.filter(f => f.status === "WAITING_FOR_APPROVAL") || [];
 
 export const getUnfulfilledLines = (order?: OrderDetailsFragment) =>
   order?.lines.filter(line => line.quantityToFulfill > 0) || [];
@@ -182,7 +182,7 @@ export const canSendRefundDuringReturn = ({
     };
   }
 
-  if (!transactions[0].actions.includes(TransactionActionEnum.REFUND)) {
+  if (!transactions[0].actions.includes("REFUND")) {
     return {
       value: false,
       reason: submitCardMessages.cantSendRefundNonRefundable,
@@ -228,12 +228,12 @@ export const getItemsFulfilled = (order: OrderDetailsFragment) => {
   };
   const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
     order,
-    FulfillmentStatus.REFUNDED,
+    "REFUNDED",
     { ...commonOptions, isRefunded: true },
   );
   const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
     order,
-    FulfillmentStatus.FULFILLED,
+    "FULFILLED",
     commonOptions,
   );
 
@@ -248,7 +248,7 @@ export const getItemsWaiting = (order: OrderDetailsFragment) => {
 
   return getParsedLineDataForFulfillmentStatus(
     order,
-    FulfillmentStatus.WAITING_FOR_APPROVAL,
+    "WAITING_FOR_APPROVAL",
     commonOptions,
   );
 };

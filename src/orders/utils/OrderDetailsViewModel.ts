@@ -43,7 +43,7 @@ export abstract class OrderDetailsViewModel {
   }
 
   static canOrderBeMarkedAsPaid(orderActions: OrderAction[]): boolean {
-    return orderActions.includes(OrderAction.MARK_AS_PAID);
+    return orderActions.includes("MARK_AS_PAID");
   }
 
   static getGiftCardsAmountUsed(args: {
@@ -57,7 +57,7 @@ export abstract class OrderDetailsViewModel {
     const usedInOrderEvents = compact(
       args.giftCards.map(({ events }) =>
         events.find(
-          ({ orderId, type }) => type === GiftCardEventsEnum.USED_IN_ORDER && orderId === args.id,
+          ({ orderId, type }) => type === "USED_IN_ORDER" && orderId === args.id,
         ),
       ),
     );

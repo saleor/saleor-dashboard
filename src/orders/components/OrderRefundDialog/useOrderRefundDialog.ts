@@ -10,7 +10,7 @@ export const useOrderRefundDialog = () => {
 
   const userPermissions = useUserPermissions();
   const canCreateManualRefund = hasPermissions(userPermissions ?? [], [
-    PermissionEnum.HANDLE_PAYMENTS,
+    "HANDLE_PAYMENTS",
   ]);
   const handleChangeRefundType = (val: string) => {
     if (val === "standard") {

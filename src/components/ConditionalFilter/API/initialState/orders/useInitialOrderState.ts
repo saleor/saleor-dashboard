@@ -7,13 +7,8 @@ import {
   _SearchWarehouseOperandsDocument,
   _SearchWarehouseOperandsQuery,
   _SearchWarehouseOperandsQueryVariables,
-  CountryCode,
-  FulfillmentStatus,
-  OrderAuthorizeStatusEnum,
-  OrderChargeStatusEnum,
-  OrderStatus,
-  PaymentMethodTypeEnum,
 } from "@dashboard/graphql";
+import { OrderChargeStatusEnumValues, OrderStatusValues, FulfillmentStatusValues, OrderAuthorizeStatusEnumValues, PaymentMethodTypeEnumValues, CountryCodeValues } from "@dashboard/graphql/enumConstants";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -97,42 +92,42 @@ export const useInitialOrderState = (): InitialOrderAPIState => {
     }
 
     const chargeStatusInit = new EnumValuesHandler(
-      OrderChargeStatusEnum,
+      OrderChargeStatusEnumValues,
       "chargeStatus",
       intl,
       chargeStatus,
     );
 
-    const statusInit = new EnumValuesHandler(OrderStatus, "status", intl, status);
+    const statusInit = new EnumValuesHandler(OrderStatusValues, "status", intl, status);
     const fulfillmentStatusInit = new EnumValuesHandler(
-      FulfillmentStatus,
+      FulfillmentStatusValues,
       "fulfillmentStatus",
       intl,
       fulfillmentStatus,
     );
     const authorizeStatusInit = new EnumValuesHandler(
-      OrderAuthorizeStatusEnum,
+      OrderAuthorizeStatusEnumValues,
       "authorizeStatus",
       intl,
       authorizeStatus,
     );
 
     const transactionsPaymentTypeInit = new EnumValuesHandler(
-      PaymentMethodTypeEnum,
+      PaymentMethodTypeEnumValues,
       "transactionsPaymentType",
       intl,
       transactionsPaymentType,
     );
 
     const billingCountryInit = new EnumValuesHandler(
-      CountryCode,
+      CountryCodeValues,
       "billingCountry",
       intl,
       billingCountry,
     );
 
     const shippingCountryInit = new EnumValuesHandler(
-      CountryCode,
+      CountryCodeValues,
       "shippingCountry",
       intl,
       shippingCountry,

@@ -1,5 +1,6 @@
 import Form from "@dashboard/components/Form";
 import { WeightUnitsEnum } from "@dashboard/graphql";
+import { WeightUnitsEnumValues } from "@dashboard/graphql/enumConstants";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Option, Select } from "@saleor/macaw-ui-next";
@@ -32,11 +33,11 @@ const ShippingWeightUnitForm = ({
   };
   const unitOptions: Option[] = useMemo(
     () =>
-      Object.values(WeightUnitsEnum).map(unit => ({
+      WeightUnitsEnumValues.map(unit => ({
         label: unit,
         value: unit,
       })),
-    [WeightUnitsEnum],
+    [],
   );
 
   return (

@@ -33,15 +33,15 @@ describe("CachedLocalesStack", () => {
 
     it("should return members in right order", () => {
       // Arrange
-      stack.appendMember(LanguageCodeEnum.EN);
-      stack.appendMember(LanguageCodeEnum.PL);
-      stack.appendMember(LanguageCodeEnum.DE);
+      stack.appendMember("EN");
+      stack.appendMember("PL");
+      stack.appendMember("DE");
 
       // Act
       const members = stack.getMembers();
 
       // Assert
-      expect(members).toEqual([LanguageCodeEnum.EN, LanguageCodeEnum.PL, LanguageCodeEnum.DE]);
+      expect(members).toEqual(["EN", "PL", "DE"]);
     });
   });
 
@@ -49,36 +49,36 @@ describe("CachedLocalesStack", () => {
     it("should add new member to the stack", () => {
       // Arrange
       // Act
-      stack.appendMember(LanguageCodeEnum.EN);
+      stack.appendMember("EN");
 
       // Assert
-      expect(stack.getMembers()).toContain(LanguageCodeEnum.EN);
+      expect(stack.getMembers()).toContain("EN");
     });
 
     it("should not add duplicate members", () => {
       // Arrange
-      stack.appendMember(LanguageCodeEnum.EN);
+      stack.appendMember("EN");
 
       // Act
-      stack.appendMember(LanguageCodeEnum.EN);
+      stack.appendMember("EN");
 
       // Assert
-      expect(stack.getMembers()).toEqual([LanguageCodeEnum.EN]);
+      expect(stack.getMembers()).toEqual(["EN"]);
     });
 
     it("should remove oldest member when exceeding max capacity", () => {
       // Arrange
       const languages = [
-        LanguageCodeEnum.EN,
-        LanguageCodeEnum.PL,
-        LanguageCodeEnum.DE,
-        LanguageCodeEnum.FR,
-        LanguageCodeEnum.ES,
-        LanguageCodeEnum.IT,
-        LanguageCodeEnum.RU,
-        LanguageCodeEnum.JA,
-        LanguageCodeEnum.KO,
-        LanguageCodeEnum.ZH,
+        "EN",
+        "PL",
+        "DE",
+        "FR",
+        "ES",
+        "IT",
+        "RU",
+        "JA",
+        "KO",
+        "ZH",
       ];
 
       expect(languages.length).toBe(10);
@@ -86,24 +86,24 @@ describe("CachedLocalesStack", () => {
       languages.forEach(lang => stack.appendMember(lang));
 
       // Act
-      stack.appendMember(LanguageCodeEnum.AR);
+      stack.appendMember("AR");
 
       // Assert
       const members = stack.getMembers();
 
-      expect(members).not.toContain(LanguageCodeEnum.EN);
-      expect(members).toContain(LanguageCodeEnum.AR);
+      expect(members).not.toContain("EN");
+      expect(members).toContain("AR");
       expect(members.length).toBe(10);
     });
 
     it("should return the updated members set", () => {
       // Arrange
       // Act
-      const result = stack.appendMember(LanguageCodeEnum.EN);
+      const result = stack.appendMember("EN");
 
       // Assert
       expect(result).toBeInstanceOf(Set);
-      expect(result.has(LanguageCodeEnum.EN)).toBe(true);
+      expect(result.has("EN")).toBe(true);
     });
   });
 });
@@ -139,11 +139,11 @@ describe("useCachedLocales", () => {
 
     // Act
     act(() => {
-      result.current.pushValue(LanguageCodeEnum.EN);
+      result.current.pushValue("EN");
     });
 
     // Assert
-    expect(result.current.cachedValues).toContain(LanguageCodeEnum.EN);
+    expect(result.current.cachedValues).toContain("EN");
   });
 
   it("Values are reversed", () => {
@@ -151,11 +151,11 @@ describe("useCachedLocales", () => {
     const { result } = renderHook(() => useCachedLocales());
 
     const languages = [
-      LanguageCodeEnum.EN,
-      LanguageCodeEnum.PL,
-      LanguageCodeEnum.DE,
-      LanguageCodeEnum.FR,
-      LanguageCodeEnum.ES,
+      "EN",
+      "PL",
+      "DE",
+      "FR",
+      "ES",
     ];
 
     // Act

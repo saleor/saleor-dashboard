@@ -6,11 +6,11 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: OrderDraftListUrlSortField): OrderSortField {
   switch (sort) {
     case OrderDraftListUrlSortField.number:
-      return OrderSortField.NUMBER;
+      return "NUMBER";
     case OrderDraftListUrlSortField.date:
-      return OrderSortField.CREATION_DATE;
+      return "CREATION_DATE";
     case OrderDraftListUrlSortField.customer:
-      return OrderSortField.CUSTOMER;
+      return "CUSTOMER";
     default:
       return undefined;
   }

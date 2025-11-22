@@ -6,7 +6,7 @@ import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 function getSortQueryField(sort: PageTypeListUrlSortField): PageTypeSortField {
   switch (sort) {
     case PageTypeListUrlSortField.name:
-      return PageTypeSortField.NAME;
+      return "NAME";
     default:
       return undefined;
   }

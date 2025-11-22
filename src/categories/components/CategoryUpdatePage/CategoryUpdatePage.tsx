@@ -85,7 +85,7 @@ export const CategoryUpdatePage = ({
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canTranslate = user && hasPermission("MANAGE_TRANSLATIONS", user);
 
   const categoryBackListUrl = useBackLinkWithState({
     path: categoryListPath,

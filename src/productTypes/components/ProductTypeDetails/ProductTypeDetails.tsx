@@ -25,12 +25,12 @@ interface ProductTypeDetailsProps {
 const kindOptions = [
   {
     title: messages.optionNormalTitle,
-    type: ProductTypeKindEnum.NORMAL,
+    type: "NORMAL",
   },
   {
     title: messages.optionGiftCardTitle,
     subtitle: messages.optionGiftCardDescription,
-    type: ProductTypeKindEnum.GIFT_CARD,
+    type: "GIFT_CARD",
   },
 ];
 const ProductTypeDetails = (props: ProductTypeDetailsProps) => {

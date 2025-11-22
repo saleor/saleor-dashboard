@@ -38,11 +38,11 @@ export class AttributeQueryVarsBuilder
     const { entityType, value: id } = element.selectedAttribute || element.value;
 
     switch (entityType) {
-      case AttributeEntityTypeEnum.PAGE:
+      case "PAGE":
         return new PageHandler(client, inputValue);
-      case AttributeEntityTypeEnum.PRODUCT:
+      case "PRODUCT":
         return new ProductsHandler(client, inputValue);
-      case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+      case "PRODUCT_VARIANT":
         return new ProductVariantHandler(client, inputValue);
       default:
         return new AttributeChoicesHandler(client, id, inputValue);
@@ -83,13 +83,13 @@ export class AttributeQueryVarsBuilder
     }
 
     if (
-      inputType === AttributeInputTypeEnum.REFERENCE ||
-      inputType === AttributeInputTypeEnum.SINGLE_REFERENCE
+      inputType === "REFERENCE" ||
+      inputType === "SINGLE_REFERENCE"
     ) {
       return this.buildReferenceAttribute(baseAttribute, value);
     }
 
-    if (inputType === AttributeInputTypeEnum.BOOLEAN) {
+    if (inputType === "BOOLEAN") {
       return {
         ...baseAttribute,
         boolean: QueryVarsBuilderUtils.getBooleanValueFromElement(element),

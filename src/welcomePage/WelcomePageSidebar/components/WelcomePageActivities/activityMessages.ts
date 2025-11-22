@@ -25,15 +25,15 @@ export const getActivityMessage = (
   intl: IntlShape,
 ) => {
   switch (activity.type) {
-    case OrderEventsEnum.ORDER_FULLY_PAID:
+    case "ORDER_FULLY_PAID":
       return intl.formatMessage(messages.paid, {
         orderId: activity.orderNumber,
       });
-    case OrderEventsEnum.PLACED:
+    case "PLACED":
       return intl.formatMessage(messages.placed, {
         orderId: activity.orderNumber,
       });
-    case OrderEventsEnum.PLACED_FROM_DRAFT:
+    case "PLACED_FROM_DRAFT":
       if (activity.user?.email) {
         return intl.formatMessage(messages.draft, {
           orderId: activity.orderNumber,

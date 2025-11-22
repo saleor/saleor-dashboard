@@ -96,7 +96,7 @@ export const OrderManualTransactionRefundPage = ({
   const hasTransactionsToRefund = transactions.length > 0;
 
   const permissions = useUserPermissions();
-  const canManageSettings = hasPermissions(permissions ?? [], [PermissionEnum.MANAGE_SETTINGS]);
+  const canManageSettings = hasPermissions(permissions ?? [], ["MANAGE_SETTINGS"]);
 
   return (
     <OrderManualTransactionRefundForm

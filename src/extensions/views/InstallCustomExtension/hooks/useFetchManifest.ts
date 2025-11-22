@@ -38,7 +38,7 @@ export const useFetchManifest = ({
       ) {
         // This is an edge case and shouldn't happen
         setError("manifestUrl", {
-          type: AppErrorCode.GRAPHQL_ERROR,
+          type: "GRAPHQL_ERROR",
           message: "Manifest URL is valid but manifest is empty or invalid.",
         });
 

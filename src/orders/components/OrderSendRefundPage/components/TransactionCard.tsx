@@ -82,7 +82,7 @@ export const TransactionCard = ({
   const inputId = `refund-amount-${id}`;
   const errorId = `refund-error-${id}`;
   const submitError = error || data?.transactionRequestAction?.errors?.[0];
-  const canBeRefunded = transaction.actions.includes(TransactionActionEnum.REFUND);
+  const canBeRefunded = transaction.actions.includes("REFUND");
 
   return (
     <OrderTransaction

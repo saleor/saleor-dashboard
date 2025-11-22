@@ -43,19 +43,19 @@ const appErrorMessages = defineMessages({
 function getAppErrorMessage(err: AppErrorFragment, intl: IntlShape): string | undefined {
   if (err) {
     switch (err.code) {
-      case AppErrorCode.INVALID_MANIFEST_FORMAT:
+      case "INVALID_MANIFEST_FORMAT":
         return intl.formatMessage(appErrorMessages.invalidManifestFormat);
-      case AppErrorCode.OUT_OF_SCOPE_APP:
+      case "OUT_OF_SCOPE_APP":
         return intl.formatMessage(appErrorMessages.outOfScopeApp);
-      case AppErrorCode.OUT_OF_SCOPE_PERMISSION:
+      case "OUT_OF_SCOPE_PERMISSION":
         return intl.formatMessage(appErrorMessages.outOfScopePermission);
-      case AppErrorCode.INVALID_PERMISSION:
+      case "INVALID_PERMISSION":
         return intl.formatMessage(appErrorMessages.invalidPermission);
-      case AppErrorCode.INVALID_STATUS:
+      case "INVALID_STATUS":
         return intl.formatMessage(appErrorMessages.invalidStatus);
-      case AppErrorCode.INVALID_URL_FORMAT:
+      case "INVALID_URL_FORMAT":
         return intl.formatMessage(appErrorMessages.invalidUrlFormat);
-      case AppErrorCode.UNIQUE:
+      case "UNIQUE":
         return intl.formatMessage(appErrorMessages.unique);
     }
   }

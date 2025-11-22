@@ -16,7 +16,7 @@ describe("useAppPermissionsDialogState", () => {
     const {
       result: { current },
     } = renderHook(() =>
-      useAppPermissionsDialogState([PermissionEnum.MANAGE_CHANNELS, PermissionEnum.MANAGE_ORDERS]),
+      useAppPermissionsDialogState(["MANAGE_CHANNELS", "MANAGE_ORDERS"]),
     );
 
     expect(current.state.type).toEqual("pick-permissions");
@@ -29,15 +29,15 @@ describe("useAppPermissionsDialogState", () => {
         waitFor,
       } = renderHook(() =>
         useAppPermissionsDialogState([
-          PermissionEnum.MANAGE_CHANNELS,
-          PermissionEnum.MANAGE_ORDERS,
+          "MANAGE_CHANNELS",
+          "MANAGE_ORDERS",
         ]),
       );
 
       current.updateSelected([
-        PermissionEnum.MANAGE_CHANNELS,
-        PermissionEnum.MANAGE_ORDERS,
-        PermissionEnum.HANDLE_CHECKOUTS,
+        "MANAGE_CHANNELS",
+        "MANAGE_ORDERS",
+        "HANDLE_CHECKOUTS",
       ]);
       current.onConfirmSelection();
       waitFor(() => {
@@ -57,12 +57,12 @@ describe("useAppPermissionsDialogState", () => {
         waitFor,
       } = renderHook(() =>
         useAppPermissionsDialogState([
-          PermissionEnum.MANAGE_CHANNELS,
-          PermissionEnum.MANAGE_ORDERS,
+          "MANAGE_CHANNELS",
+          "MANAGE_ORDERS",
         ]),
       );
 
-      current.updateSelected([PermissionEnum.MANAGE_CHANNELS]);
+      current.updateSelected(["MANAGE_CHANNELS"]);
       current.onConfirmSelection();
       waitFor(() => {
         expect(current.state.type).toEqual("confirm-permissions");
@@ -81,12 +81,12 @@ describe("useAppPermissionsDialogState", () => {
         waitFor,
       } = renderHook(() =>
         useAppPermissionsDialogState([
-          PermissionEnum.MANAGE_CHANNELS,
-          PermissionEnum.MANAGE_ORDERS,
+          "MANAGE_CHANNELS",
+          "MANAGE_ORDERS",
         ]),
       );
 
-      current.updateSelected([PermissionEnum.MANAGE_CHANNELS, PermissionEnum.MANAGE_CHECKOUTS]);
+      current.updateSelected(["MANAGE_CHANNELS", "MANAGE_CHECKOUTS"]);
       current.onConfirmSelection();
       waitFor(() => {
         expect(current.state.type).toEqual("confirm-permissions");

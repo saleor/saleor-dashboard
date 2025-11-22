@@ -1060,8 +1060,8 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
           created: "2018-05-07T09:37:30.124154+00:00",
           id: "T3JkZXI6MTk=",
           number: "8234",
-          paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-          chargeStatus: OrderChargeStatusEnum.FULL,
+          paymentStatus: "FULLY_CHARGED",
+          chargeStatus: "FULL",
           total: {
             __typename: "TaxedMoney",
             gross: {

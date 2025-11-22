@@ -98,15 +98,15 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.active),
-            value: DiscountStatusEnum.ACTIVE,
+            value: "ACTIVE",
           },
           {
             label: intl.formatMessage(messages.expired),
-            value: DiscountStatusEnum.EXPIRED,
+            value: "EXPIRED",
           },
           {
             label: intl.formatMessage(messages.scheduled),
-            value: DiscountStatusEnum.SCHEDULED,
+            value: "SCHEDULED",
           },
         ],
       ),
@@ -121,11 +121,11 @@ export function createFilterStructure(
         [
           {
             label: intl.formatMessage(messages.fixed),
-            value: DiscountValueTypeEnum.FIXED,
+            value: "FIXED",
           },
           {
             label: intl.formatMessage(messages.percentage),
-            value: DiscountValueTypeEnum.PERCENTAGE,
+            value: "PERCENTAGE",
           },
         ],
       ),

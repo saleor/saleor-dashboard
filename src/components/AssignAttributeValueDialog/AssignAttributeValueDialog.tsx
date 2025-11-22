@@ -58,7 +58,7 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
 };
 
 const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
-  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+  const isSingle = attribute.data.inputType === "SINGLE_REFERENCE";
 
   if (!isSingle) {
     return { selectionMode: "multiple" as const };
@@ -86,7 +86,7 @@ const AssignAttributeValueDialog = ({
   const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
 
   switch (entityType) {
-    case AttributeEntityTypeEnum.PAGE:
+    case "PAGE":
       return (
         <AssignContainerDialog
           containers={
@@ -107,7 +107,7 @@ const AssignAttributeValueDialog = ({
           {...rest}
         />
       );
-    case AttributeEntityTypeEnum.PRODUCT:
+    case "PRODUCT":
       return (
         <AssignProductDialog
           products={filteredProducts ?? []}
@@ -115,7 +115,7 @@ const AssignAttributeValueDialog = ({
           {...rest}
         />
       );
-    case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+    case "PRODUCT_VARIANT":
       return (
         <AssignVariantDialog
           products={filteredProducts}
@@ -123,7 +123,7 @@ const AssignAttributeValueDialog = ({
           {...rest}
         />
       );
-    case AttributeEntityTypeEnum.COLLECTION:
+    case "COLLECTION":
       return (
         <AssignCollectionDialog
           collections={filteredCollections}
@@ -131,7 +131,7 @@ const AssignAttributeValueDialog = ({
           {...rest}
         />
       );
-    case AttributeEntityTypeEnum.CATEGORY:
+    case "CATEGORY":
       return (
         <AssignCategoryDialog
           categories={filteredCategories}

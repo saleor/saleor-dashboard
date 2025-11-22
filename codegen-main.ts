@@ -27,6 +27,7 @@ const config: CodegenConfig = {
     "./src/graphql/types.generated.ts": {
       plugins: ["typescript", "typescript-operations"],
       config: {
+        enumsAsTypes: true,
         scalars: {
           Day: "number",
           Hour: "number",

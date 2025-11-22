@@ -23,8 +23,8 @@ const GiftCardUpdateInfoCardContent = () => {
   const localizeDate = useDateLocalize();
   const { giftCard } = useGiftCardDetails();
   const { created, createdByEmail, createdBy, usedByEmail, usedBy, product } = giftCard;
-  const cardIssuedEvent = giftCard?.events?.find(getByType(GiftCardEventsEnum.ISSUED));
-  const cardBoughtEvent = giftCard?.events?.find(getByType(GiftCardEventsEnum.BOUGHT));
+  const cardIssuedEvent = giftCard?.events?.find(getByType("ISSUED"));
+  const cardBoughtEvent = giftCard?.events?.find(getByType("BOUGHT"));
 
   const getBuyerFieldData = (): {
     label: MessageDescriptor;

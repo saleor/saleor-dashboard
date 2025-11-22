@@ -9,17 +9,17 @@ const defaultFormValues: Rule = {
   rewardType: null,
   rewardGifts: [],
   rewardValue: 0,
-  rewardValueType: RewardValueTypeEnum.FIXED,
+  rewardValueType: "FIXED",
   conditions: [],
 };
 
 export const getDefaultValue = (discountType: PromotionTypeEnum): Rule => {
-  if (discountType === PromotionTypeEnum.CATALOGUE) {
+  if (discountType === "CATALOGUE") {
     return defaultFormValues;
   }
 
   return {
     ...defaultFormValues,
-    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
+    rewardType: "SUBTOTAL_DISCOUNT",
   };
 };

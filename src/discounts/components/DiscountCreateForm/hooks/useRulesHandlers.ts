@@ -3,7 +3,7 @@ import { sortRules } from "@dashboard/discounts/utils";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 import { useEffect, useState } from "react";
 
-export const useRulesHandlers = (discountType: PromotionTypeEnum = PromotionTypeEnum.CATALOGUE) => {
+export const useRulesHandlers = (discountType: PromotionTypeEnum = "CATALOGUE") => {
   const [rules, setRules] = useState<Rule[]>([]);
 
   useEffect(() => {

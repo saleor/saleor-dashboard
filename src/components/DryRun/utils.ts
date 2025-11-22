@@ -4,6 +4,7 @@ import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 import { InlineFragmentNode, ObjectFieldNode, parse, visit } from "graphql";
 
 import { DocumentMap, ExcludedDocumentKeys } from "../DryRunItemsList/utils";
+import { WebhookEventTypeAsyncEnumValues } from "@dashboard/graphql/enumConstants";
 
 const getEventsFromQuery = (query: string) => {
   if (query.length === 0) {
@@ -50,7 +51,7 @@ export const getUnavailableObjects = (query: string) => {
 };
 
 const checkEventPresence = (event: string) => {
-  const webhookTypes = getWebhookTypes(Object.keys(WebhookEventTypeAsyncEnum));
+  const webhookTypes = getWebhookTypes(WebhookEventTypeAsyncEnumValues);
   const availableObjects = Object.keys(DocumentMap);
   const excludedObjects = Object.keys(webhookTypes).filter(
     object => !availableObjects.includes(object),

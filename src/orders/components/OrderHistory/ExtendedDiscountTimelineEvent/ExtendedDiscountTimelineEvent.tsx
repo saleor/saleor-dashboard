@@ -42,7 +42,7 @@ const ExtendedDiscountTimelineEvent = ({ event, titleElements }: ExtendedTimelin
   const intl = useIntl();
   const { lines, date, type } = event;
   const parsedDiscount =
-    type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED ? lines[0].discount : event.discount;
+    type === "ORDER_LINE_DISCOUNT_UPDATED" ? lines[0].discount : event.discount;
   const {
     valueType: calculationMode,
     value,

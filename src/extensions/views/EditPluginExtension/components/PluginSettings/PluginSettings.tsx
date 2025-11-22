@@ -52,13 +52,13 @@ export const PluginSettings = ({ data, disabled, errors, onChange }: PluginSetti
                 helperText={field.helpText}
                 label={field.label}
                 name={field.name}
-                multiline={field.type === ConfigurationTypeFieldEnum.MULTILINE}
+                multiline={field.type === "MULTILINE"}
                 InputProps={{
                   rowsMax: 6,
-                  readOnly: field.type === ConfigurationTypeFieldEnum.OUTPUT,
+                  readOnly: field.type === "OUTPUT",
                 }}
                 onFocus={event => {
-                  if (field.type === ConfigurationTypeFieldEnum.OUTPUT) {
+                  if (field.type === "OUTPUT") {
                     event.target.select();
                   }
                 }}

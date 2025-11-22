@@ -20,10 +20,10 @@ describe("Filtering query params", () => {
     const params: VoucherListUrlFilters = {
       startedFrom: date.from,
       startedTo: date.to,
-      status: [DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED],
+      status: ["ACTIVE", "EXPIRED"],
       timesUsedFrom: date.from,
       timesUsedTo: date.to,
-      type: [VoucherDiscountType.FIXED, VoucherDiscountType.SHIPPING],
+      type: ["FIXED", "SHIPPING"],
     };
     const filterVariables = getFilterVariables(params);
 
@@ -45,7 +45,7 @@ describe("Filtering URL params", () => {
     },
     saleType: {
       active: false,
-      value: [VoucherDiscountType.FIXED, VoucherDiscountType.SHIPPING],
+      value: ["FIXED", "SHIPPING"],
     },
     started: {
       active: false,
@@ -56,7 +56,7 @@ describe("Filtering URL params", () => {
     },
     status: {
       active: false,
-      value: [DiscountStatusEnum.ACTIVE, DiscountStatusEnum.EXPIRED],
+      value: ["ACTIVE", "EXPIRED"],
     },
     timesUsed: {
       active: false,

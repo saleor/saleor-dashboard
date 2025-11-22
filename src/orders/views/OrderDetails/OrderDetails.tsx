@@ -68,10 +68,10 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
     return <NotFoundPage onBack={handleBack} />;
   }
 
-  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
-  const isOrderDraft = order?.status === OrderStatus.DRAFT;
+  const isOrderUnconfirmed = order?.status === "UNCONFIRMED";
+  const isOrderDraft = order?.status === "DRAFT";
   const handleSubmit = async (data: MetadataIdSchema) => {
-    if (order?.status === OrderStatus.UNCONFIRMED) {
+    if (order?.status === "UNCONFIRMED") {
       await orderConfirm({ variables: { id: order?.id } });
     }
 
@@ -125,7 +125,7 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
           onDraftCancel={orderMessages.handleDraftCancel}
           onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
           onInvoiceRequest={data => {
-            if (data.invoiceRequest.invoice.status === JobStatusEnum.SUCCESS) {
+            if (data.invoiceRequest.invoice.status === "SUCCESS") {
               orderMessages.handleInvoiceGenerateFinished(data);
             } else {
               orderMessages.handleInvoiceGeneratePending(data);

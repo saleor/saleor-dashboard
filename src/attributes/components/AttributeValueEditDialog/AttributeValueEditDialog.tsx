@@ -36,7 +36,7 @@ const AttributeValueEditDialog = ({
   inputType,
 }: AttributeValueEditDialogProps) => {
   const intl = useIntl();
-  const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
+  const isSwatch = inputType === "SWATCH";
   const attributeValueFields = getAttributeValueFields(attributeValue, isSwatch);
   const initialForm: AttributeValueEditDialogFormData = {
     name: attributeValue?.name ?? "",

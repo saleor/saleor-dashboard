@@ -65,7 +65,7 @@ describe("CollectionPublishedQueryVarsBuilder", () => {
       const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
-      expect(result.published).toBe(CollectionPublished.PUBLISHED);
+      expect(result.published).toBe("PUBLISHED");
     });
     it("should correctly handle ItemOption with 'false' value", () => {
       // Arrange
@@ -77,7 +77,7 @@ describe("CollectionPublishedQueryVarsBuilder", () => {
       const result = def.updateFilterQueryVariables({}, element);
 
       // Assert
-      expect(result.published).toBe(CollectionPublished.HIDDEN);
+      expect(result.published).toBe("HIDDEN");
     });
   });
 });

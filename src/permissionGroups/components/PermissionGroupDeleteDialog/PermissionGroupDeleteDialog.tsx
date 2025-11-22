@@ -26,7 +26,7 @@ const PermissionGroupDeleteDialog = ({
 
   let errorMessage;
 
-  if (error?.code === PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION) {
+  if (error?.code === "OUT_OF_SCOPE_PERMISSION") {
     errorMessage = intl.formatMessage({
       id: "O22NIZ",
       defaultMessage: "Cant's delete group which is out of your permission scope",

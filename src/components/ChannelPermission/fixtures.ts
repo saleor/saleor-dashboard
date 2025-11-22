@@ -15,7 +15,7 @@ export const allChannels: ChannelFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
   },
   {
@@ -32,7 +32,7 @@ export const allChannels: ChannelFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
   },
   {
@@ -49,7 +49,7 @@ export const allChannels: ChannelFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
   },
   {
@@ -66,7 +66,7 @@ export const allChannels: ChannelFragment[] = [
     },
     stockSettings: {
       __typename: "StockSettings",
-      allocationStrategy: AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+      allocationStrategy: "PRIORITIZE_HIGH_STOCK",
     },
   },
 ];

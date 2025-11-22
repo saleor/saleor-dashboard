@@ -22,9 +22,9 @@ type ShippingError = Omit<ShippingErrorFragment, "__typename"> | ChannelError | 
 function getShippingErrorMessage(err: ShippingError, intl: IntlShape): string | undefined {
   if (err && "code" in err) {
     switch (err.code) {
-      case ShippingErrorCode.ALREADY_EXISTS:
+      case "ALREADY_EXISTS":
         return intl.formatMessage(messages.alreadyExists);
-      case ShippingErrorCode.MAX_LESS_THAN_MIN:
+      case "MAX_LESS_THAN_MIN":
         return intl.formatMessage(messages.lessThanMin);
     }
   }

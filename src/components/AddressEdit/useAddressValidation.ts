@@ -5,6 +5,7 @@ import {
   useAddressValidationRulesQuery,
 } from "@dashboard/graphql";
 import { ChoiceValue } from "@saleor/sdk/dist/apollo/types";
+import { CountryCodeValues } from "@dashboard/graphql/enumConstants";
 
 interface AreaChoices {
   label: string;
@@ -28,7 +29,7 @@ export const selectRules = (data: AddressValidationRulesQuery | null | undefined
 };
 
 const useValidationRules = (country?: string) => {
-  const countryCode = CountryCode[country];
+  const countryCode = CountryCodeValues.includes(country as CountryCode) ? (country as CountryCode) : undefined;
   const { data, loading } = useAddressValidationRulesQuery({
     variables: { countryCode },
     skip: !countryCode,

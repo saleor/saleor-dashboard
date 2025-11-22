@@ -37,7 +37,7 @@ export const catalogRules = [
     rewardGifts: [],
     rewardValue: 12,
     rewardType: null,
-    rewardValueType: RewardValueTypeEnum.FIXED,
+    rewardValueType: "FIXED",
   },
   {
     id: "cat-2",
@@ -54,7 +54,7 @@ export const catalogRules = [
     rewardGifts: [],
     rewardValue: 34,
     rewardType: null,
-    rewardValueType: RewardValueTypeEnum.PERCENTAGE,
+    rewardValueType: "PERCENTAGE",
   },
 ] as Rule[];
 
@@ -84,7 +84,7 @@ export const catalogComplexRules = [
     rewardGifts: [],
     rewardValue: 12,
     rewardType: null,
-    rewardValueType: RewardValueTypeEnum.FIXED,
+    rewardValueType: "FIXED",
   },
 ] as Rule[];
 
@@ -108,8 +108,8 @@ export const orderRules = [
     ],
     rewardGifts: [],
     rewardValue: 12,
-    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
-    rewardValueType: RewardValueTypeEnum.FIXED,
+    rewardType: "SUBTOTAL_DISCOUNT",
+    rewardValueType: "FIXED",
   },
   {
     id: "order-2",
@@ -129,8 +129,8 @@ export const orderRules = [
       },
     ],
     rewardGifts: [],
-    rewardType: RewardTypeEnum.SUBTOTAL_DISCOUNT,
+    rewardType: "SUBTOTAL_DISCOUNT",
     rewardValue: 34,
-    rewardValueType: RewardValueTypeEnum.PERCENTAGE,
+    rewardValueType: "PERCENTAGE",
   },
 ] as Rule[];

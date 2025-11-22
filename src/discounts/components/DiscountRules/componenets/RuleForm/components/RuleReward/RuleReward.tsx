@@ -21,13 +21,13 @@ export const RuleReward = ({ currencySymbol, error }: RuleRewardProps) => {
   const { watch } = useFormContext<Rule>();
   const rewardType = watch("rewardType");
 
-  if (discountType === PromotionTypeEnum.ORDER) {
+  if (discountType === "ORDER") {
     return (
       <RuleRewardWrapper>
         <Box display="grid" __gridTemplateColumns="200px 1fr" gap={2}>
           <RuleRewardTypeSelect />
-          {rewardType === RewardTypeEnum.GIFT && <RuleRewardGifts />}
-          {rewardType === RewardTypeEnum.SUBTOTAL_DISCOUNT && (
+          {rewardType === "GIFT" && <RuleRewardGifts />}
+          {rewardType === "SUBTOTAL_DISCOUNT" && (
             <RuleRewardValue currencySymbol={currencySymbol} error={error} />
           )}
         </Box>

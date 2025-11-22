@@ -4,11 +4,13 @@ import { GraphQLError } from "graphql";
 
 import { UserContextError } from "./types";
 
-enum JWTError {
-  invalid = "InvalidTokenError",
-  invalidSignature = "InvalidSignatureError",
-  expired = "ExpiredSignatureError",
-}
+const JWTError = {
+  invalid: "InvalidTokenError",
+  invalidSignature: "InvalidSignatureError",
+  expired: "ExpiredSignatureError",
+} as const;
+
+const JWTErrorValues = Object.values(JWTError);
 
 const AuthError = {
   PermissionDenied: "PermissionDenied",
@@ -28,7 +30,7 @@ export function isJwtError(error: GraphQLError): boolean {
   let jwtError: boolean;
 
   try {
-    jwtError = !!findValueInEnum((error.extensions?.exception as ExceptionWithCode).code, JWTError);
+    jwtError = !!findValueInEnum((error.extensions?.exception as ExceptionWithCode).code, JWTErrorValues);
   } catch (e) {
     jwtError = false;
   }

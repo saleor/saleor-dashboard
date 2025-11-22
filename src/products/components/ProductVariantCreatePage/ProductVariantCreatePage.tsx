@@ -233,7 +233,7 @@ export const ProductVariantCreatePage = ({
                     attributes={data.attributes.filter(
                       attribute =>
                         attribute.data.variantAttributeScope ===
-                        VariantAttributeScope.NOT_VARIANT_SELECTION,
+                        "NOT_VARIANT_SELECTION",
                     )}
                     attributeValues={attributeValues}
                     loading={disabled}
@@ -256,7 +256,7 @@ export const ProductVariantCreatePage = ({
                     attributes={data.attributes.filter(
                       attribute =>
                         attribute.data.variantAttributeScope ===
-                        VariantAttributeScope.VARIANT_SELECTION,
+                        "VARIANT_SELECTION",
                     )}
                     attributeValues={attributeValues}
                     loading={disabled}

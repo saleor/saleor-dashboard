@@ -32,7 +32,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
                     node: {
                       slug: "page-ref-attr",
                       inputType: "REFERENCE",
-                      entityType: AttributeEntityTypeEnum.PAGE,
+                      entityType: "PAGE",
                       id: "page-attr-id",
                       name: "Page Reference Attribute",
                       choices: { edges: [] },
@@ -110,7 +110,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
       // Check that the attribute was properly processed
       expect(result.current.data.attribute["page-ref-attr"]).toBeDefined();
       expect(result.current.data.attribute["page-ref-attr"].entityType).toBe(
-        AttributeEntityTypeEnum.PAGE,
+        "PAGE",
       );
     });
   });
@@ -129,7 +129,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
                     node: {
                       slug: "product-ref-attr",
                       inputType: "REFERENCE",
-                      entityType: AttributeEntityTypeEnum.PRODUCT,
+                      entityType: "PRODUCT",
                       id: "product-attr-id",
                       name: "Product Reference Attribute",
                       choices: { edges: [] },
@@ -195,7 +195,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
       // Check that the attribute was properly processed
       expect(result.current.data.attribute["product-ref-attr"]).toBeDefined();
       expect(result.current.data.attribute["product-ref-attr"].entityType).toBe(
-        AttributeEntityTypeEnum.PRODUCT,
+        "PRODUCT",
       );
     });
   });
@@ -214,7 +214,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
                     node: {
                       slug: "variant-ref-attr",
                       inputType: "REFERENCE",
-                      entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+                      entityType: "PRODUCT_VARIANT",
                       id: "variant-attr-id",
                       name: "Product Variant Reference Attribute",
                       choices: { edges: [] },
@@ -283,7 +283,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
       // Check that the attribute was properly processed
       expect(result.current.data.attribute["variant-ref-attr"]).toBeDefined();
       expect(result.current.data.attribute["variant-ref-attr"].entityType).toBe(
-        AttributeEntityTypeEnum.PRODUCT_VARIANT,
+        "PRODUCT_VARIANT",
       );
     });
   });
@@ -356,7 +356,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
                     node: {
                       slug: "page-ref-attr",
                       inputType: "REFERENCE",
-                      entityType: AttributeEntityTypeEnum.PAGE,
+                      entityType: "PAGE",
                       id: "page-attr-id",
                       name: "Page Reference Attribute",
                       choices: { edges: [] },
@@ -366,7 +366,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
                     node: {
                       slug: "product-ref-attr",
                       inputType: "REFERENCE",
-                      entityType: AttributeEntityTypeEnum.PRODUCT,
+                      entityType: "PRODUCT",
                       id: "product-attr-id",
                       name: "Product Reference Attribute",
                       choices: { edges: [] },
@@ -444,12 +444,12 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
       // Check that both attributes were processed
       expect(result.current.data.attribute["page-ref-attr"]).toBeDefined();
       expect(result.current.data.attribute["page-ref-attr"].entityType).toBe(
-        AttributeEntityTypeEnum.PAGE,
+        "PAGE",
       );
 
       expect(result.current.data.attribute["product-ref-attr"]).toBeDefined();
       expect(result.current.data.attribute["product-ref-attr"].entityType).toBe(
-        AttributeEntityTypeEnum.PRODUCT,
+        "PRODUCT",
       );
     });
   });

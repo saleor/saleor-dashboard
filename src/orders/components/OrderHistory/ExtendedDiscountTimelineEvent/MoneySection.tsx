@@ -76,7 +76,7 @@ const MoneySection = ({
   }
 
   const getDiscountSubtitle = () => {
-    const isDiscountedByPercent = calculationMode === DiscountValueTypeEnum.PERCENTAGE;
+    const isDiscountedByPercent = calculationMode === "PERCENTAGE";
 
     if (isDiscountedByPercent) {
       return `${value}% ${intl.formatMessage(messages.discount)}`;
