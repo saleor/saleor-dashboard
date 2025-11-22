@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql } from "@apollo/client";
 import {
   SearchAvailableProductAttributesDocument,
@@ -28,33 +27,40 @@ export const searchProductAttributes = gql`
 export default makeSearch<
   SearchAvailableProductAttributesQuery,
   SearchAvailableProductAttributesQueryVariables
->(SearchAvailableProductAttributesDocument, result =>
-  result.loadMore(
-    (prev, next) => {
-      if (
-        prev.productType.availableAttributes.pageInfo.endCursor ===
-        next.productType.availableAttributes.pageInfo.endCursor
-      ) {
-        return prev;
-      }
+>(SearchAvailableProductAttributesDocument, result => {
+  if (result.data?.productType?.availableAttributes?.pageInfo?.hasNextPage) {
+    result.loadMore(
+      (prev, next) => {
+        if (
+          prev.productType?.availableAttributes?.pageInfo?.endCursor ===
+          next.productType?.availableAttributes?.pageInfo?.endCursor
+        ) {
+          return prev;
+        }
 
-      return {
-        ...prev,
-        productType: {
-          ...prev.productType,
-          availableAttributes: {
-            ...prev.productType.availableAttributes,
-            edges: [
-              ...prev.productType.availableAttributes.edges,
-              ...next.productType.availableAttributes.edges,
-            ],
-            pageInfo: next.productType.availableAttributes.pageInfo,
+        if (!next.productType || !next.productType.availableAttributes || !prev.productType) {
+          return prev;
+        }
+
+        return {
+          ...prev,
+          productType: {
+            ...prev.productType,
+            availableAttributes: {
+              ...(prev.productType.availableAttributes ?? next.productType.availableAttributes),
+              edges: [
+                ...(prev.productType.availableAttributes?.edges ?? []),
+                ...(next.productType.availableAttributes.edges ?? []),
+              ],
+              pageInfo: next.productType.availableAttributes.pageInfo,
+            },
           },
-        },
-      };
-    },
-    {
-      after: result.data.productType.availableAttributes.pageInfo.endCursor,
-    },
-  ),
-);
+        };
+      },
+      {
+        ...result.variables,
+        after: result.data.productType.availableAttributes.pageInfo.endCursor,
+      } as Partial<SearchAvailableProductAttributesQueryVariables>,
+    );
+  }
+});
