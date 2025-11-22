@@ -1,16 +1,18 @@
-import { MenuDetailsFragment } from "@dashboard/graphql";
 import { RecursiveMenuItem } from "@dashboard/structures/types";
 
 import { TreeOperation } from "../MenuItems";
 
 // Normalizes GraphQL menu items to ensure children is always an array
-export function normalizeMenuItems(items: MenuDetailsFragment["items"]): RecursiveMenuItem[] {
+
+export function normalizeMenuItems(items: any): RecursiveMenuItem[] {
   if (!items) return [];
 
-  return items.map(item => ({
-    ...item,
-    children: normalizeMenuItems(item.children),
-  }));
+  return items.map(
+    (item: any): RecursiveMenuItem => ({
+      ...item,
+      children: normalizeMenuItems(item.children),
+    }),
+  );
 }
 
 export function findNode(tree: RecursiveMenuItem[], id: string): (number | null)[] {
