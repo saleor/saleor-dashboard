@@ -66,7 +66,7 @@ const TranslationsCategories = ({ location, match }: TranslationsEntityRouteProp
   return (
     <TranslationsCategoriesComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -80,7 +80,7 @@ const TranslationsCollections = ({ location, match }: TranslationsEntityRoutePro
   return (
     <TranslationsCollectionsComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -94,7 +94,7 @@ const TranslationsProducts = ({ location, match }: TranslationsEntityRouteProps)
   return (
     <TranslationsProductsComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -116,7 +116,7 @@ const TranslationsProductVariants = ({ location, match }: TranslationsProductVar
     <TranslationsProductVariantsComponent
       id={decodeURIComponent(match.params.id)}
       productId={decodeURIComponent(match.params.productId)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -130,7 +130,7 @@ const TranslationsSales = ({ location, match }: TranslationsEntityRouteProps) =>
   return (
     <TranslationsSaleComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -144,7 +144,7 @@ const TranslationsVouchers = ({ location, match }: TranslationsEntityRouteProps)
   return (
     <TranslationsVouchersComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -158,7 +158,7 @@ const TranslationsPages = ({ location, match }: TranslationsEntityRouteProps) =>
   return (
     <TranslationsPagesComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -172,7 +172,7 @@ const TranslationsAttributes = ({ location, match }: TranslationsEntityRouteProp
   return (
     <TranslationsAttributesComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -186,7 +186,7 @@ const TranslationsShippingMethod = ({ location, match }: TranslationsEntityRoute
   return (
     <TranslationsShippingMethodComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );
@@ -200,7 +200,7 @@ const TranslationsMenuItem = ({ location, match }: TranslationsEntityRouteProps)
   return (
     <TranslationsMenuItemComponent
       id={decodeURIComponent(match.params.id)}
-      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      languageCode={match.params.languageCode as LanguageCodeEnum}
       params={params}
     />
   );

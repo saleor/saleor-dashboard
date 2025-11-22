@@ -222,7 +222,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       id,
       operations: assignAttributesActions.selectedItems.map(id => ({
         id,
-        type: ProductAttributeType[params.type],
+        type: params.type as ProductAttributeType,
       })),
     });
 
@@ -377,7 +377,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
                 false,
               )}
               open={
-                params.action === "assign-attribute" && params.type === ProductAttributeType[key]
+                params.action === "assign-attribute" && params.type === key
               }
               selected={assignAttributesActions.selectedItems}
               onToggle={assignAttributesActions.toggleSelectItem}

@@ -243,10 +243,10 @@ export const ProductVariantPage = ({
             attributeRichTextGetters,
           }) => {
             const nonSelectionAttributes = data.attributes.filter(
-              byAttributeScope("NOT_VARIANT_SELECTION"),
+              byAttributeScope("NOT_VARIANT_SELECTION" as VariantAttributeScope),
             );
             const selectionAttributes = data.attributes.filter(
-              byAttributeScope("VARIANT_SELECTION"),
+              byAttributeScope("VARIANT_SELECTION" as VariantAttributeScope),
             );
             const media = getSelectedMedia(productMedia, data.media);
             const errors = [...apiErrors, ...validationErrors];

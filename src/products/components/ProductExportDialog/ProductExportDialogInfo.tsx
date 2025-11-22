@@ -24,7 +24,7 @@ export const attributeNamePrefix = "attribute-";
 export const warehouseNamePrefix = "warehouse-";
 
 const maxChips = 4;
-const inventoryFields = [
+const inventoryFields: ProductFieldEnum[] = [
   "PRODUCT_WEIGHT",
   "VARIANT_ID",
   "VARIANT_SKU",

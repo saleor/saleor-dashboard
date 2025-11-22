@@ -4,6 +4,7 @@ import {
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
+import { CountryCodeValues } from "@dashboard/graphql/enumConstants";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
@@ -43,7 +44,7 @@ const SiteSettings = () => {
       ? {
           city: data.city,
           companyName: data.companyName,
-          country: findInEnum(data.country, CountryCode),
+          country: findInEnum(data.country, CountryCodeValues),
           countryArea: data.countryArea,
           phone: data.phone,
           postalCode: data.postalCode,

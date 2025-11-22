@@ -23,7 +23,7 @@ import {
 
 export function getFilterVariables(params: SaleListUrlFilters): SaleFilterInput {
   return {
-    saleType: params.type && findValueInEnum(params.type, DiscountValueTypeEnumValues),
+    saleType: params.type ? findValueInEnum(params.type, DiscountValueTypeEnumValues) : undefined,
     search: params.query,
     started: getGteLteVariables({
       gte: joinDateTime(params.startedFrom),

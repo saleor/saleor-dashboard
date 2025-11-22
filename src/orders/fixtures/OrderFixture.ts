@@ -540,7 +540,7 @@ export class OrderFixture {
   }
 
   static fulfilled(): OrderFixture {
-    const fulfilledOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
+    const fulfilledOrder = merge(cloneDeep(OrderFixture.baseOrder), {
       id: "fulfilled-order-id",
       status: "FULFILLED",
       billingAddress: OrderFixture.address,
@@ -548,13 +548,13 @@ export class OrderFixture {
       channel: OrderFixture.channel,
       lines: OrderFixture.lines,
       fulfillments: [OrderFixture.baseFulfillment],
-    });
+    }) as OrderDetailsFragment;
 
     return new OrderFixture(fulfilledOrder);
   }
 
   static unconfirmed(): OrderFixture {
-    const unconfirmedOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
+    const unconfirmedOrder = merge(cloneDeep(OrderFixture.baseOrder), {
       id: "unconfirmed-order-id",
       status: "UNCONFIRMED",
       isPaid: false,
@@ -575,13 +575,13 @@ export class OrderFixture {
         amount: 0,
         currency: "USD",
       },
-    });
+    }) as OrderDetailsFragment;
 
     return new OrderFixture(unconfirmedOrder);
   }
 
   static unfulfilled(): OrderFixture {
-    const unfulfilledOrder: OrderDetailsFragment = merge(cloneDeep(OrderFixture.baseOrder), {
+    const unfulfilledOrder = merge(cloneDeep(OrderFixture.baseOrder), {
       id: "unfulfilled-order-id",
       status: "UNFULFILLED",
       billingAddress: OrderFixture.address,
@@ -589,7 +589,7 @@ export class OrderFixture {
       channel: OrderFixture.channel,
       lines: OrderFixture.lines,
       fulfillments: [],
-    });
+    }) as OrderDetailsFragment;
 
     return new OrderFixture(unfulfilledOrder);
   }

@@ -298,7 +298,7 @@ function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
 
   return {
     ...rest,
-    country: findInEnum(address.country.code, CountryCode),
+    country: findInEnum(address.country.code, CountryCodeValues),
   };
 }
 

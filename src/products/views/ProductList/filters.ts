@@ -2,6 +2,7 @@
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { AttributeFragment, AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
+import { StockAvailabilityValues } from "@dashboard/graphql/enumConstants";
 import { ProductFilterKeys } from "@dashboard/products/components/ProductListPage";
 
 import {
@@ -166,7 +167,7 @@ export function getFilterQueryParam(
       return getSingleEnumValueQueryParam(
         filter as FilterElementRegular<ProductFilterKeys>,
         ProductListUrlFiltersEnum.stockStatus,
-        StockAvailability,
+        StockAvailabilityValues,
       );
 
     case ProductFilterKeys.channel:

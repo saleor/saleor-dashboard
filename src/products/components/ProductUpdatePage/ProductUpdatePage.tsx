@@ -381,7 +381,7 @@ const ProductUpdatePage = ({
         richTextRef.current = richText;
 
         const availabilityCommonProps = {
-          managePermissions: ["MANAGE_PRODUCTS"],
+          managePermissions: ["MANAGE_PRODUCTS" as PermissionEnum],
           messages: {
             hiddenLabel: intl.formatMessage({
               id: "saKXY3",

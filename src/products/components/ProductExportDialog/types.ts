@@ -10,12 +10,12 @@ export interface ExportSettingsFormData {
   scope: ExportScope;
 }
 
-export const exportSettingsInitialFormData = {
-  fileType: "CSV",
-  scope: "ALL",
+export const exportSettingsInitialFormData: ExportSettingsFormData = {
+  fileType: "CSV" as FileTypesEnum,
+  scope: "ALL" as ExportScope,
 };
 
-export const exportSettingsInitialFormDataWithIds = {
-  fileType: "CSV",
-  scope: "IDS",
+export const exportSettingsInitialFormDataWithIds: ExportSettingsFormData = {
+  fileType: "CSV" as FileTypesEnum,
+  scope: "IDS" as ExportScope,
 };

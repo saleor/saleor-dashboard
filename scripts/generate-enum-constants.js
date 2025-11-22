@@ -49,6 +49,11 @@ const enumsToExtract = [
   'PermissionEnum',
   'ProductAttributeType',
   'AttributeInputTypeEnum',
+  'StockAvailability',
+  'WeightUnitsEnum',
+  'LanguageCodeEnum',
+  'ProductTypeConfigurable',
+  'VariantAttributeScope',
 ];
 
 const enums = {};
@@ -70,15 +75,20 @@ import type {
   DiscountStatusEnum,
   DiscountValueTypeEnum,
   FulfillmentStatus,
+  LanguageCodeEnum,
   OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
   OrderStatus,
   PaymentMethodTypeEnum,
   PermissionEnum,
   ProductAttributeType,
+  ProductTypeConfigurable,
   ProductTypeEnum,
   StaffMemberStatus,
+  StockAvailability,
+  VariantAttributeScope,
   VoucherDiscountType,
+  WeightUnitsEnum,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
 } from "./types.generated";
@@ -112,7 +122,12 @@ output += `// Webhook Event Type Async\nexport const WebhookEventTypeAsyncEnumVa
 output += `// Webhook Event Type Sync\nexport const WebhookEventTypeSyncEnumValues: WebhookEventTypeSyncEnum[] = [\n  ${formatArray(enums.WebhookEventTypeSyncEnum, 1)}\n];\n\n`;
 output += `// Permission Enum\nexport const PermissionEnumValues: PermissionEnum[] = [\n  ${formatArray(enums.PermissionEnum, 3)}\n];\n\n`;
 output += `// Product Attribute Type\nexport const ProductAttributeTypeValues: ProductAttributeType[] = [\n  ${formatArray(enums.ProductAttributeType)}\n];\n\n`;
-output += `// Attribute Input Type\nexport const AttributeInputTypeEnumValues: AttributeInputTypeEnum[] = [\n  ${formatArray(enums.AttributeInputTypeEnum)}\n];\n`;
+output += `// Attribute Input Type\nexport const AttributeInputTypeEnumValues: AttributeInputTypeEnum[] = [\n  ${formatArray(enums.AttributeInputTypeEnum)}\n];\n\n`;
+output += `// Stock Availability\nexport const StockAvailabilityValues: StockAvailability[] = [\n  ${formatArray(enums.StockAvailability)}\n];\n\n`;
+output += `// Weight Units\nexport const WeightUnitsEnumValues: WeightUnitsEnum[] = [\n  ${formatArray(enums.WeightUnitsEnum)}\n];\n\n`;
+output += `// Language Codes\nexport const LanguageCodeEnumValues: LanguageCodeEnum[] = [\n  ${formatArray(enums.LanguageCodeEnum, 10)}\n];\n\n`;
+output += `// Product Type Configurable\nexport const ProductTypeConfigurableValues: ProductTypeConfigurable[] = [\n  ${formatArray(enums.ProductTypeConfigurable)}\n];\n\n`;
+output += `// Variant Attribute Scope\nexport const VariantAttributeScopeValues: VariantAttributeScope[] = [\n  ${formatArray(enums.VariantAttributeScope)}\n];\n`;
 
 fs.writeFileSync('/home/user/saleor-dashboard/src/graphql/enumConstants.ts', output);
 console.log('Generated enumConstants.ts successfully!');
