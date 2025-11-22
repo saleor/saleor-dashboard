@@ -19,6 +19,7 @@ interface TableHeadProps extends MuiTableHeadProps {
   items: Node[];
   toolbar?: React.ReactNode | React.ReactNodeArray;
   toggleAll?: (items: Node[], selected: number) => void;
+  children?: React.ReactNode;
 }
 
 const useStyles = makeStyles(

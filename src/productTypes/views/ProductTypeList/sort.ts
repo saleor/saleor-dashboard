@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ProductTypeSortField } from "@dashboard/graphql";
 import { ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";

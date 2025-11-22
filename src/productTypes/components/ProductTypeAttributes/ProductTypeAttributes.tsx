@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
@@ -9,7 +8,7 @@ import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { AttributeFragment, ProductAttributeType } from "@dashboard/graphql";
 import { maybe, renderCollection } from "@dashboard/misc";
-import { ListActions, ReorderAction } from "@dashboard/types";
+import { ListActions, Node, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
@@ -106,7 +105,7 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
               disabled={disabled}
               dragRows
               selected={selected}
-              items={attributes}
+              items={attributes as Node[]}
               toggleAll={toggleAll}
               toolbar={toolbar}
             >

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
@@ -9,7 +8,7 @@ import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductAttributeType, ProductTypeDetailsQuery } from "@dashboard/graphql";
 import { maybe, renderCollection } from "@dashboard/misc";
-import { ListActions, ReorderAction } from "@dashboard/types";
+import { ListActions, Node, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -154,7 +153,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
               selected={selected}
               items={assignedVariantAttributes?.map(
                 selectedAttribute => selectedAttribute.attribute,
-              )}
+              ) as Node[]}
               toggleAll={toggleAll}
               toolbar={toolbar}
             >
