@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { SearchPermissionGroupsQuery, StaffErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
@@ -32,11 +31,12 @@ const AccountPermissionGroups = (props: AccountPermissionGroupsProps) => {
     onSearchChange,
   } = props;
   const intl = useIntl();
-  const choices = availablePermissionGroups?.map(pg => ({
-    disabled: !pg.userCanManage,
-    label: pg.name,
-    value: pg.id,
-  }));
+  const choices =
+    availablePermissionGroups?.map(pg => ({
+      disabled: !pg.userCanManage,
+      label: pg.name,
+      value: pg.id,
+    })) ?? [];
   const formErrors = getFormErrors(["addGroups", "removeGroups"], errors);
 
   return (
@@ -58,7 +58,7 @@ const AccountPermissionGroups = (props: AccountPermissionGroupsProps) => {
         }}
         data-test-id="permission-groups"
         error={!!formErrors.addGroups}
-        helperText={getStaffErrorMessage(formErrors.addGroups, intl)}
+        helperText={formErrors.addGroups ? getStaffErrorMessage(formErrors.addGroups, intl) : ""}
       />
       {!!formErrors.addGroups && (
         <Text color="critical1">{getStaffErrorMessage(formErrors.addGroups, intl)}</Text>

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getWebhookTypes } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/utils";
 import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 import { InlineFragmentNode, ObjectFieldNode, parse, visit } from "graphql";
@@ -18,7 +17,7 @@ const getEventsFromQuery = (query: string) => {
       SelectionSet(node, _key, parent) {
         if ((parent as ObjectFieldNode).name?.value === "event") {
           const queryEvents = node.selections.map(
-            selection => (selection as InlineFragmentNode).typeCondition.name.value,
+            selection => (selection as InlineFragmentNode).typeCondition?.name?.value ?? "",
           );
 
           queryEvents.map(event => events.push(event));
@@ -46,7 +45,7 @@ export const getUnavailableObjects = (query: string) => {
     }
 
     return acc;
-  }, []);
+  }, [] as string[]);
 };
 
 const checkEventPresence = (event: string) => {

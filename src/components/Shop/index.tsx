@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import appleTouchIcon from "@assets/favicons/apple-touch-icon.png";
 import favicon16 from "@assets/favicons/favicon-16x16.png";
 import favicon32 from "@assets/favicons/favicon-32x32.png";
@@ -11,7 +10,7 @@ import Helmet from "react-helmet";
 import { useAnalytics } from "../ProductAnalytics/useAnalytics";
 import { extractEmailDomain } from "../ProductAnalytics/utils";
 
-type ShopContext = ShopInfoQuery["shop"];
+type ShopContext = ShopInfoQuery["shop"] | undefined;
 
 export const ShopContext = createContext<ShopContext>(undefined);
 
@@ -23,7 +22,7 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    if (data) {
+    if (data && user) {
       const { shop } = data;
 
       analytics.initialize({

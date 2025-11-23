@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import Grid from "@dashboard/components/Grid";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useStyles } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/styles";
@@ -41,11 +40,18 @@ const DryRun = ({ setResult, showDialog, setShowDialog, query, syncEvents }: Dry
   const unavailableObjects = getUnavailableObjects(query);
   const [object, setObject] = useState<string | null>(null);
   const dryRun = async () => {
+    if (!objectId) {
+      return;
+    }
+
     const { data } = await triggerWebhookDryRun({
       variables: { objectId, query },
     });
 
-    setResult(JSON.stringify(JSON.parse(data.webhookDryRun.payload), null, 2));
+    if (data?.webhookDryRun?.payload) {
+      setResult(JSON.stringify(JSON.parse(data.webhookDryRun.payload), null, 2));
+    }
+
     closeDialog();
   };
   const closeDialog = () => {
@@ -120,7 +126,11 @@ const DryRun = ({ setResult, showDialog, setShowDialog, query, syncEvents }: Dry
           </div>
           <div className={classes.eventsWrapper}>
             {object ? (
-              <DryRunItemsList setObjectId={setObjectId} objectId={objectId} object={object} />
+              <DryRunItemsList
+                setObjectId={setObjectId}
+                objectId={objectId ?? ""}
+                object={object}
+              />
             ) : (
               <>
                 <ListHeader>

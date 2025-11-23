@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import moment from "moment";
@@ -50,7 +49,7 @@ export const DateTimeTimezoneField = ({
   );
 
   useEffect(() => {
-    onChange(value === "" ? null : value);
+    onChange(value === "" ? "" : value);
   }, [value]);
 
   return (

@@ -1,10 +1,9 @@
-// @ts-strict-ignore
 import { useState } from "react";
 
 import { DevModeContext } from "./hooks";
 import { useDevModeKeyTrigger } from "./useDevModeKeyTrigger";
 
-export function DevModeProvider({ children }) {
+export function DevModeProvider({ children }: { children: React.ReactNode }) {
   // stringified variables (as key/value) passed along with the query
   const [variables, setVariables] = useState("");
   // stringified GraphQL query; queries can be constructed anywhere in the

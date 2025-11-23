@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useHistory } from "react-router";
@@ -10,7 +9,7 @@ import { useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
 jest.mock("../../hooks/useNotifier", () => undefined);
 
-const MockExitFormDialogProvider = ({ children }) => {
+const MockExitFormDialogProvider = ({ children }: { children: React.ReactNode }) => {
   const { providerData } = useExitFormDialogProvider();
 
   return (
@@ -33,7 +32,7 @@ const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
       };
     },
     {
-      wrapper: ({ children }) => (
+      wrapper: ({ children }: { children: React.ReactNode }) => (
         <MemoryRouter initialEntries={[{ pathname: "/" }]}>
           <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
         </MemoryRouter>

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { render, screen } from "@testing-library/react";
 
@@ -45,8 +44,15 @@ describe("Date", () => {
         </TimezoneProvider>
       </ThemeProvider>,
     );
+
     // Assert
-    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(testDate);
+    const dateTimeElement = screen.queryByTestId<HTMLTimeElement>("dateTime");
+
+    if (!dateTimeElement) {
+      throw new Error("dateTime element not found");
+    }
+
+    expect(dateTimeElement.dateTime).toEqual(testDate);
   });
   it("Render humanized date with timezone GMT+13", () => {
     // Arrange & Act
@@ -58,7 +64,14 @@ describe("Date", () => {
         </TimezoneProvider>
       </ThemeProvider>,
     );
+
     // Assert
-    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(testDate);
+    const dateTimeElement = screen.queryByTestId<HTMLTimeElement>("dateTime");
+
+    if (!dateTimeElement) {
+      throw new Error("dateTime element not found");
+    }
+
+    expect(dateTimeElement.dateTime).toEqual(testDate);
   });
 });

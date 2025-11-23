@@ -1,13 +1,12 @@
-// @ts-strict-ignore
 import { ReorderAction } from "@dashboard/types";
 import { TableBody } from "@material-ui/core";
 import { TableBodyProps } from "@material-ui/core/TableBody";
 import { makeStyles } from "@saleor/macaw-ui";
 import { SortableContainer } from "react-sortable-hoc";
 
-const InnerSortableTableBody = SortableContainer<TableBodyProps>(({ children, ...props }) => (
-  <TableBody {...props}>{children}</TableBody>
-));
+const InnerSortableTableBody = SortableContainer<TableBodyProps>(
+  ({ children, ...props }: TableBodyProps) => <TableBody {...props}>{children}</TableBody>,
+);
 
 interface SortableTableBodyProps {
   onSortEnd: ReorderAction;

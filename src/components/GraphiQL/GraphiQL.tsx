@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
 import {
   CopyIcon,
@@ -119,7 +118,7 @@ function GraphiQL({
       <DryRun
         showDialog={showDialog}
         setShowDialog={setShowDialog}
-        query={query}
+        query={query ?? ""}
         setResult={setResult}
         syncEvents={props.data.syncEvents}
       />
@@ -165,7 +164,7 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   const toolbar = children.find(child => isChildComponentType(child, GraphiQL.Toolbar)) || (
     <>
       <ToolbarButton
-        onClick={() => props.setShowDialog(true)}
+        onClick={() => props.setShowDialog?.(true)}
         label={intl.formatMessage(messages.toolbarButonLabel)}
       >
         <PlayIcon className="graphiql-toolbar-icon" aria-hidden="true" />
@@ -185,15 +184,16 @@ function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       pluginResize.setHiddenElement(null);
     }
   };
+  const styleWithCustomProps = rootStyle as React.CSSProperties & Record<string, string>;
   const overwriteCodeMirrorCSSVariables = {
     __html: `
       .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
-        --font-size-hint: ${rootStyle["--font-size-hint"]} !important;
-        --font-size-inline-code: ${rootStyle["--font-size-inline-code"]} !important;
-        --font-size-body: ${rootStyle["--font-size-body"]} !important;
-        --font-size-h4: ${rootStyle["--font-size-h4"]} !important;
-        --font-size-h3: ${rootStyle["--font-size-h3"]} !important;
-        --font-size-h2: ${rootStyle["--font-size-h2"]} !important;
+        --font-size-hint: ${styleWithCustomProps["--font-size-hint"]} !important;
+        --font-size-inline-code: ${styleWithCustomProps["--font-size-inline-code"]} !important;
+        --font-size-body: ${styleWithCustomProps["--font-size-body"]} !important;
+        --font-size-h4: ${styleWithCustomProps["--font-size-h4"]} !important;
+        --font-size-h3: ${styleWithCustomProps["--font-size-h3"]} !important;
+        --font-size-h2: ${styleWithCustomProps["--font-size-h2"]} !important;
     `,
   };
 

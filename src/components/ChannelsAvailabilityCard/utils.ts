@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { LocalizeDate } from "@dashboard/hooks/useDateLocalize";
 import { IntlShape } from "react-intl";
@@ -36,10 +35,10 @@ export const getChannelsAvailabilityMessages = ({
                 : intl.formatMessage(publicationMessages.notPublished),
         availableLabel: intl.formatMessage(publicationMessages.availableForPurchase),
         availableSecondLabel: intl.formatMessage(publicationMessages.willBecomeAvailableOn, {
-          date: localizeDate(currVal.availableForPurchaseAt, "llll"),
+          date: localizeDate(currVal.availableForPurchaseAt ?? "", "llll"),
         }),
         hiddenSecondLabel: intl.formatMessage(publicationMessages.willBecomePublishedOn, {
-          date: localizeDate(currVal.publishedAt, "llll"),
+          date: localizeDate(currVal.publishedAt ?? "", "llll"),
         }),
         setAvailabilityDateLabel: intl.formatMessage(publicationMessages.setAvailabilityDate),
         unavailableLabel: intl.formatMessage(publicationMessages.unavailableForPurchase),

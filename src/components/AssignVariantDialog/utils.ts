@@ -1,9 +1,11 @@
-// @ts-strict-ignore
 import { SearchProductsQuery } from "@dashboard/graphql";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import { RelayToFlat } from "@dashboard/types";
 
-type SearchVariant = RelayToFlat<SearchProductsQuery["search"]>[0]["variants"][0];
+type SearchProducts = NonNullable<RelayToFlat<SearchProductsQuery["search"]>>;
+type SearchProduct = SearchProducts[number];
+type SearchVariantList = NonNullable<SearchProduct["variants"]>;
+type SearchVariant = SearchVariantList[number];
 
 export interface VariantWithProductLabel extends SearchVariant {
   productName: string;
@@ -19,40 +21,50 @@ export function isVariantSelected(
 }
 
 export const handleProductAssign = (
-  product: RelayToFlat<SearchProductsQuery["search"]>[0],
+  product: SearchProduct,
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
   variants: VariantWithProductLabel[],
   setVariants: SetVariantsAction,
-) =>
-  productsWithAllVariantsSelected[productIndex]
+) => {
+  const productVariants = product.variants ?? [];
+
+  return productsWithAllVariantsSelected[productIndex]
     ? setVariants(
-        variants.filter(selectedVariant => !product.variants.find(getById(selectedVariant.id))),
+        variants.filter(selectedVariant => !productVariants.find(getById(selectedVariant.id))),
       )
     : setVariants([
         ...variants,
-        ...product.variants
-          .filter(productVariant => !variants.find(getById(productVariant.id)))
-          .map(variant => ({ ...variant, productName: product.name })),
+        ...productVariants
+          .filter((productVariant: SearchVariant) => !variants.find(getById(productVariant.id)))
+          .map((variant: SearchVariant) => ({ ...variant, productName: product.name })),
       ]);
+};
 
 export const handleVariantAssign = (
   variant: SearchVariant,
-  product: RelayToFlat<SearchProductsQuery["search"]>[0],
+  product: SearchProduct,
   variantIndex: number,
   productIndex: number,
   variants: VariantWithProductLabel[],
   selectedVariantsToProductsMap: boolean[][],
   setVariants: SetVariantsAction,
-) =>
-  selectedVariantsToProductsMap[productIndex][variantIndex]
+) => {
+  const isSelected = selectedVariantsToProductsMap[productIndex]?.[variantIndex] ?? false;
+
+  return isSelected
     ? setVariants(variants.filter(getByUnmatchingId(variant.id)))
     : setVariants([...variants, { ...variant, productName: product.name }]);
+};
 
 export function hasAllVariantsSelected(
-  productVariants: SearchVariant[],
+  productVariants: SearchVariant[] | null | undefined,
   selectedVariantsToProductsMap: VariantWithProductLabel[],
 ): boolean {
+  if (!productVariants || productVariants.length === 0) {
+    return false;
+  }
+
   return productVariants.reduce(
     (acc, productVariant) =>
       acc && !!selectedVariantsToProductsMap.find(getById(productVariant.id)),

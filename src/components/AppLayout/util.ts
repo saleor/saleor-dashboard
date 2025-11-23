@@ -1,7 +1,6 @@
-// @ts-strict-ignore
-export const extractQueryParams = (queryString: string) => {
+export const extractQueryParams = (queryString: string): Record<string, string | string[]> => {
   const urlSearchParams = new URLSearchParams(queryString);
-  const queryParams = {};
+  const queryParams: Record<string, string | string[]> = {};
 
   urlSearchParams.forEach((value, key) => {
     const arrayKeyRegex = /^(.+)\[\d*\]$/;
@@ -14,7 +13,7 @@ export const extractQueryParams = (queryString: string) => {
         queryParams[arrayKey] = [];
       }
 
-      queryParams[arrayKey].push(value);
+      (queryParams[arrayKey] as string[]).push(value);
     } else {
       queryParams[key] = value;
     }

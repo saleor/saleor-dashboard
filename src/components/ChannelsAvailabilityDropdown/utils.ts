@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { CollectionFragment } from "@dashboard/graphql";
 import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
@@ -8,7 +7,7 @@ import { DotStatus } from "../StatusDot/StatusDot";
 import { channelStatusMessages } from "./messages";
 
 export type CollectionChannels = Pick<
-  CollectionFragment["channelListings"][0],
+  NonNullable<CollectionFragment["channelListings"]>[0],
   "isPublished" | "publishedAt" | "channel"
 >;
 

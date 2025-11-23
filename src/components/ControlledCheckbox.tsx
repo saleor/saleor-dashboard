@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import * as React from "react";
 

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { IMoney } from "@dashboard/utils/intl";
 import { IntlShape } from "react-intl";
 
@@ -6,8 +5,12 @@ import { Locale } from "../Locale";
 import { getMoneyRange } from "./utils";
 
 const intl = {
-  formatMessage: ({ defaultMessage }, params) => {
+  formatMessage: ({ defaultMessage }: any, params?: any) => {
     if (defaultMessage.includes("{money}")) {
+      if (!params) {
+        throw new Error("params is required");
+      }
+
       return defaultMessage.replace("{money}", params.money);
     }
 

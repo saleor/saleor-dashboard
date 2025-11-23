@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Tooltip } from "@saleor/macaw-ui-next";
 import moment from "moment-timezone";
 import ReactMoment from "react-moment";
@@ -14,13 +13,13 @@ interface DateTimeProps {
 
 export const DateTime = ({ date, plain }: DateTimeProps) => {
   const getTitle = (value: string, locale?: string, tz?: string) => {
-    let date = moment(value).locale(locale);
+    let dateObj = locale ? moment(value).locale(locale) : moment(value);
 
     if (tz !== undefined) {
-      date = date.tz(tz);
+      dateObj = dateObj.tz(tz);
     }
 
-    return date.format("lll");
+    return dateObj.format("lll");
   };
 
   return (

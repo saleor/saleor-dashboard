@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getErrorMessage } from "@dashboard/components/Attributes/utils";
 import {
   PageErrorWithAttributesFragment,
@@ -33,8 +32,11 @@ export const DateTimeField = ({ disabled, error, name, onChange, value }: DateTi
         name={`${name}:date`}
         onChange={event => {
           const date = event.target.value;
+          const result = joinDateTime(date, parsedValue.time ?? "");
 
-          onChange(joinDateTime(date, parsedValue.time));
+          if (result) {
+            onChange(result);
+          }
         }}
         type="date"
         value={parsedValue.date}
@@ -49,8 +51,11 @@ export const DateTimeField = ({ disabled, error, name, onChange, value }: DateTi
         name={`${name}:time`}
         onChange={event => {
           const time = event.target.value;
+          const result = joinDateTime(parsedValue.date ?? "", time);
 
-          onChange(joinDateTime(parsedValue.date, time));
+          if (result) {
+            onChange(result);
+          }
         }}
         type="time"
         value={parsedValue.time}

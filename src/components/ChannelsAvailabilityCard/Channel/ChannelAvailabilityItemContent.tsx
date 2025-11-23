@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
 import { StopPropagation } from "@dashboard/components/StopPropagation";
@@ -66,7 +65,7 @@ export const ChannelAvailabilityItemContent = ({
             onChange(id, {
               ...formData,
               isPublished: value === "true",
-              publishedAt: value === "false" ? null : publishedAt,
+              publishedAt: value === "false" ? null : (publishedAt ?? null),
             });
           }}
           disabled={disabled}
@@ -98,7 +97,7 @@ export const ChannelAvailabilityItemContent = ({
         {!isPublished && (
           <Box display="flex" flexDirection="column" alignItems="start" gap={1}>
             <Checkbox
-              onCheckedChange={(checked: boolean) => setPublishedAt(checked)}
+              onCheckedChange={checked => setPublishedAt(checked === true)}
               checked={isPublishedAt}
             >
               {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
@@ -115,7 +114,8 @@ export const ChannelAvailabilityItemContent = ({
                 onChange={dateTime =>
                   onChange(id, {
                     ...formData,
-                    publishedAt: dateTime,
+                    isPublished: formData.isPublished ?? false,
+                    publishedAt: dateTime ?? null,
                   })
                 }
                 fullWidth
@@ -133,7 +133,10 @@ export const ChannelAvailabilityItemContent = ({
               onValueChange={value =>
                 onChange(id, {
                   ...formData,
-                  availableForPurchase: value === "false" ? null : availableForPurchaseAt,
+                  isPublished: formData.isPublished ?? false,
+                  publishedAt: formData.publishedAt ?? null,
+                  availableForPurchase:
+                    value === "false" ? undefined : (availableForPurchaseAt ?? undefined),
                   isAvailableForPurchase: value === "true",
                 })
               }
@@ -167,7 +170,7 @@ export const ChannelAvailabilityItemContent = ({
             {!isAvailable && (
               <Box display="flex" gap={1} flexDirection="column" alignItems="start">
                 <Checkbox
-                  onCheckedChange={(checked: boolean) => setAvailableDate(checked)}
+                  onCheckedChange={checked => setAvailableDate(checked === true)}
                   checked={isAvailableDate}
                 >
                   {messages.setAvailabilityDateLabel}
@@ -181,7 +184,9 @@ export const ChannelAvailabilityItemContent = ({
                     onChange={dateTime =>
                       onChange(id, {
                         ...formData,
-                        availableForPurchase: dateTime,
+                        isPublished: formData.isPublished ?? false,
+                        publishedAt: formData.publishedAt ?? null,
+                        availableForPurchase: dateTime ?? undefined,
                       })
                     }
                     fullWidth
@@ -202,7 +207,9 @@ export const ChannelAvailabilityItemContent = ({
               onCheckedChange={checked => {
                 onChange(id, {
                   ...formData,
-                  visibleInListings: !checked,
+                  isPublished: formData.isPublished ?? false,
+                  publishedAt: formData.publishedAt ?? null,
+                  visibleInListings: checked !== true,
                 });
               }}
             >

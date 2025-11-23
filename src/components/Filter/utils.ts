@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import compact from "lodash/compact";
 
 import { FieldType, FilterElement, InvalidFilters, ValidationErrorCode } from "./types";
@@ -11,6 +10,10 @@ const isAutocompleteFilterFieldValid = function <T extends string>({ value }: Fi
 };
 
 const isNumberFilterFieldValid = function <T extends string>({ value }: FilterElement<T>) {
+  if (!value || !Array.isArray(value)) {
+    return false;
+  }
+
   const [min, max] = value;
 
   if (!min && !max) {
@@ -30,7 +33,7 @@ const isFilterFieldValid = function <T extends string>(filter: FilterElement<T>)
     case FieldType.autocomplete:
       return isAutocompleteFilterFieldValid(filter);
     case FieldType.options:
-      return !!filter.value[0];
+      return !!(filter.value && filter.value[0]);
 
     default:
       return true;
@@ -55,12 +58,12 @@ export const extractInvalidFilters = function <T extends string>(
     const filter = filtersData.find(getByName(name));
     let errors: string[] = [];
 
-    const shouldExtractChildrenFields = filter.active && !!multipleFields?.length;
-
-    // if filter is inactive we skip entire validation
-    if (!filter.active) {
+    // if filter not found or is inactive we skip entire validation
+    if (!filter || !filter.active) {
       return invalidFilters;
     }
+
+    const shouldExtractChildrenFields = filter.active && !!multipleFields?.length;
 
     if (!isFilterValid(filter)) {
       errors.push(ValidationErrorCode.VALUE_REQUIRED);
@@ -69,25 +72,33 @@ export const extractInvalidFilters = function <T extends string>(
     if (shouldExtractChildrenFields) {
       const multipleFieldErrors = multipleFields
         .map(field => {
-          const filter = filtersData.find(getByName(field.name));
+          const foundFilter = filtersData.find(getByName(field.name));
 
-          return { ...filter, active: true };
+          if (!foundFilter) {
+            return null;
+          }
+
+          return { ...foundFilter, active: true } as FilterElement<T>;
         })
-        .filter(el => !isFilterValid(el))
+        .filter((el): el is FilterElement<T> => el !== null && !isFilterValid(el))
         .map(({ name }) => name);
 
       errors = [...errors, ...multipleFieldErrors];
     }
 
     // check if filter depends on other filters
-    if (dependencies?.length > 0) {
+    if (dependencies && dependencies.length > 0) {
       const deps = dependencies
-        .map(name => {
-          const filter = filtersData.find(getByName(name));
+        .map(depName => {
+          const foundFilter = filtersData.find(getByName(depName));
 
-          return { ...filter, required: true };
+          if (!foundFilter) {
+            return null;
+          }
+
+          return { ...foundFilter, required: true } as FilterElement<T>;
         })
-        .filter(el => !isFilterValid(el));
+        .filter((el): el is FilterElement<T> => el !== null && !isFilterValid(el));
 
       if (deps.length > 0) {
         errors.push(ValidationErrorCode.DEPENDENCIES_MISSING);

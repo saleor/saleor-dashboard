@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   FormControl,
   FormControlLabel,
@@ -68,10 +67,12 @@ const RadioGroupField = (props: RadioGroupFieldProps) => {
         name={name}
         value={value}
         onChange={onChange}
-        className={clsx({
-          [classes.radioGroupInline]: variant === "inline",
-          [innerContainerClassName]: !!innerContainerClassName,
-        })}
+        className={clsx(
+          {
+            [classes.radioGroupInline]: variant === "inline",
+          },
+          innerContainerClassName,
+        )}
       >
         {choices.length > 0 ? (
           choices.map(choice => (

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -7,7 +6,6 @@ import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import { maybe } from "@dashboard/misc";
 import { Container, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
@@ -88,14 +86,14 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
 
         return {
           id,
-          name: productDetails?.name,
+          name: productDetails?.name ?? "",
           ...(productDetails ?? {}),
-        };
+        } as Container & Omit<Partial<Products[number]>, "name">;
       }),
     );
   };
 
-  const handleChange = productId => {
+  const handleChange = (productId: string) => {
     const productData = products.find(product => product.id === productId);
 
     if (productData) {
@@ -150,7 +148,7 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
               products.map(product => {
                 const isSelected = productsDict[product.id] || false;
                 const isProductAvailable = isProductAvailableInVoucherChannels(
-                  product.channelListings,
+                  product.channelListings ?? [],
                   selectedChannels,
                 );
 
@@ -165,7 +163,7 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
                     </TableCell>
                     <TableCellAvatar
                       className={classes.avatar}
-                      thumbnail={maybe(() => product.thumbnail.url)}
+                      thumbnail={product.thumbnail?.url}
                       style={{
                         opacity: !isProductAvailable ? 0.5 : 1,
                       }}

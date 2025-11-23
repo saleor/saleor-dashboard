@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getStatusColor } from "@dashboard/misc";
 import { makeStyles, Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
 import { useTheme } from "@saleor/macaw-ui-next";
@@ -22,7 +21,7 @@ export const Pill = forwardRef<HTMLDivElement, PillProps>(({ color: status, ...p
   const { theme: currentTheme } = useTheme();
 
   const color = getStatusColor({
-    status,
+    status: (status ?? "generic") as "error" | "warning" | "info" | "success" | "generic",
     currentTheme,
   }).base;
   const classes = useStyles();

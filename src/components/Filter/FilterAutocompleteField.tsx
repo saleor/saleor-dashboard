@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { toggle } from "@dashboard/utils/lists";
 import { FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -57,7 +56,7 @@ const FilterAutocompleteField = ({
   const classes = useStyles({});
   const fieldDisplayValues = displayValues[filter.name] ?? [];
   const initialFieldDisplayValues = initialDisplayValues[filter.name];
-  const availableOptions = filter.options.filter(option =>
+  const availableOptions = (filter.options ?? []).filter(option =>
     fieldDisplayValues.every(displayValue => displayValue.value !== option.value),
   );
   const displayNoResults = availableOptions.length === 0 && fieldDisplayValues.length === 0;
@@ -107,7 +106,7 @@ const FilterAutocompleteField = ({
               input: classes.input,
             },
           }}
-          onChange={event => filter.onSearchChange(event.target.value)}
+          onChange={event => filter.onSearchChange?.(event.target.value)}
         />
       )}
       {filteredValuesChecked.map(displayValue => (

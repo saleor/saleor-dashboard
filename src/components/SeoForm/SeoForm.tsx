@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CollectionErrorFragment,
   PageErrorFragment,
@@ -60,6 +59,11 @@ export const SeoForm = (props: SeoFormProps) => {
   };
   const getSlugErrorMessage = () => {
     const error = getError(SeoField.slug);
+
+    if (!error) {
+      return "";
+    }
+
     const { __typename: type } = error;
 
     return type === "ProductError"
@@ -73,7 +77,8 @@ export const SeoForm = (props: SeoFormProps) => {
       onChange(event);
     }
   };
-  const completed = slug?.length > 0 && title?.length > 0 && description?.length > 0;
+  const completed =
+    (slug?.length ?? 0) > 0 && (title?.length ?? 0) > 0 && (description?.length ?? 0) > 0;
   const getError = (fieldName: SeoField) => getFieldError(errors, fieldName);
 
   return (
@@ -140,7 +145,7 @@ export const SeoForm = (props: SeoFormProps) => {
                 </Box>
                 <Input
                   size="small"
-                  error={title?.length > maxTitleLength}
+                  error={(title?.length ?? 0) > maxTitleLength}
                   name={SeoField.title}
                   value={title ?? ""}
                   disabled={loading || disabled}
@@ -152,14 +157,14 @@ export const SeoForm = (props: SeoFormProps) => {
                       <Box as="span">
                         <FormattedMessage defaultMessage="Search engine title" id="w2Cewo" />
                       </Box>
-                      {title?.length > 0 && (
+                      {(title?.length ?? 0) > 0 && (
                         <Box as="span">
                           <FormattedMessage
                             defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
                             id="yi1HSj"
                             values={{
                               maxCharacters: maxTitleLength,
-                              numberOfCharacters: title?.length,
+                              numberOfCharacters: title?.length ?? 0,
                             }}
                           />
                         </Box>
@@ -169,7 +174,7 @@ export const SeoForm = (props: SeoFormProps) => {
                 />
 
                 <Textarea
-                  error={description?.length > maxDescriptionLength}
+                  error={(description?.length ?? 0) > maxDescriptionLength}
                   name={SeoField.description}
                   value={description ?? ""}
                   disabled={loading || disabled}
@@ -181,7 +186,7 @@ export const SeoForm = (props: SeoFormProps) => {
                       <span>
                         <FormattedMessage id="CXTIq8" defaultMessage="Search engine description" />
                       </span>
-                      {description?.length > 0 && (
+                      {(description?.length ?? 0) > 0 && (
                         <span>
                           <FormattedMessage
                             id="ChAjJu"
@@ -189,7 +194,7 @@ export const SeoForm = (props: SeoFormProps) => {
                             description="character limit"
                             values={{
                               maxCharacters: maxDescriptionLength,
-                              numberOfCharacters: description.length,
+                              numberOfCharacters: description?.length ?? 0,
                             }}
                           />
                         </span>

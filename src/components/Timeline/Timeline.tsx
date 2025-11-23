@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { Button } from "@dashboard/components/Button";
 import { getUserInitials } from "@dashboard/misc";
@@ -75,7 +74,7 @@ export const TimelineAddNote = (props: TimelineAddNoteProps) => {
   const classes = useStyles(props);
   const { user } = useUser();
   const intl = useIntl();
-  const submit = e => {
+  const submit = (e: React.FormEvent<any>) => {
     reset();
     onSubmit(e);
   };
@@ -85,7 +84,7 @@ export const TimelineAddNote = (props: TimelineAddNoteProps) => {
       <DashboardCard.Content paddingX={0}>
         <UserAvatar
           url={user?.avatar?.url}
-          initials={getUserInitials(user)}
+          initials={getUserInitials(user ?? undefined)}
           className={sprinkles({
             position: "absolute",
             top: 0,

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { AvailableColumn } from "../types";
@@ -12,7 +11,7 @@ const columns: AvailableColumn[] = [
   { id: "sku", title: "SKU", width: 100 },
   { id: "size", title: "Size", width: 100 },
 ];
-const GridContext = ({ children }) => {
+const GridContext = ({ children }: { children: React.ReactNode }) => {
   const stateProps = useDatagridChangeState();
 
   return (

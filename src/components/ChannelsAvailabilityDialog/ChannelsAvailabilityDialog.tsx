@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Channel } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -39,7 +38,11 @@ const ChannelsAvailabilityDialog = ({
 }: ChannelsAvailabilityDialogProps) => {
   const { query, onQueryChange, filteredChannels } = useChannelsSearch(channels);
   const hasChannels = channels.length > 0;
-  const handleToggleAll = () => toggleAll(channels, selected);
+  const handleToggleAll = () => {
+    if (toggleAll && selected !== undefined) {
+      toggleAll(channels, selected);
+    }
+  };
   const hasAllSelected = selected === channels.length;
 
   return (

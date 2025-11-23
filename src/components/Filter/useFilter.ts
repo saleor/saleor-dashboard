@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useEffect, useReducer } from "react";
 
 import reduceFilter, { FilterReducerAction } from "./reducer";
@@ -11,7 +10,7 @@ export type FilterDispatchFunction<K extends string = string> = <T extends Field
 type UseFilter<K extends string> = [Array<FilterElement<K>>, FilterDispatchFunction<K>, () => void];
 
 function getParsedInitialFilter<T extends string>(initialFilter: IFilter<T>): IFilter<T> {
-  return initialFilter.reduce((resultFilter, filterField) => {
+  return initialFilter.reduce<IFilter<T>>((resultFilter, filterField) => {
     if (filterField.multipleFields) {
       return resultFilter.concat(filterField.multipleFields).concat([filterField]);
     }

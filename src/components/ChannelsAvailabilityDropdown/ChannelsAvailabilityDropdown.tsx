@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Popper } from "@material-ui/core";
 import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
@@ -17,7 +16,7 @@ export const ChannelsAvailabilityDropdown = ({ channels }: ChannelsAvailabilityD
   const intl = useIntl();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const anchor = useRef<HTMLDivElement>(null);
-  const dropdownColor = useMemo(() => getDropdownColor(channels), [channels]);
+  const dropdownColor = useMemo(() => getDropdownColor(channels ?? []), [channels]);
 
   if (!channels?.length) {
     return <Pill label={intl.formatMessage(messages.noChannels)} color="error" />;

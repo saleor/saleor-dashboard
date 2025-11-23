@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import MuiCheckbox, { CheckboxProps as MuiCheckboxProps } from "@material-ui/core/Checkbox";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -21,9 +20,16 @@ type CheckboxProps = Omit<
   error?: boolean;
 };
 
-const firefoxHandler = (event, onChange, checked) => {
+const firefoxHandler = (
+  event: React.MouseEvent<HTMLButtonElement>,
+  onChange: MuiCheckboxProps["onChange"],
+  checked: boolean | undefined,
+) => {
   event.preventDefault();
-  onChange(event, checked);
+
+  if (onChange) {
+    onChange(event as any, checked ?? false);
+  }
 };
 const Checkbox = ({ helperText, error, ...props }: CheckboxProps) => {
   const { disableClickPropagation, ...rest } = props;
@@ -42,13 +48,15 @@ const Checkbox = ({ helperText, error, ...props }: CheckboxProps) => {
               Workaround for firefox
               ref: https://bugzilla.mozilla.org/show_bug.cgi?id=62151
             */
-                firefoxHandler(event, rest.onChange, rest.checked);
+                firefoxHandler(event, rest.onChange, !!rest.checked);
               }
             : undefined
         }
       />
       {helperText && (
-        <FormHelperText classes={{ root: error && classes.error }}>{helperText}</FormHelperText>
+        <FormHelperText classes={{ root: error ? classes.error : undefined }}>
+          {helperText}
+        </FormHelperText>
       )}
     </>
   );

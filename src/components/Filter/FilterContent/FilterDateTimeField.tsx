@@ -1,5 +1,3 @@
-// @ts-strict-ignore
-
 import Arrow from "@dashboard/components/Filter/Arrow";
 import { FieldType, FilterFieldBaseProps } from "@dashboard/components/Filter/types";
 import { splitDateTime } from "@dashboard/misc";
@@ -50,11 +48,12 @@ export const FilterDateTimeField = ({
             },
             type: "date",
           }}
-          value={splitDateTime(filter.value[0]).date}
+          value={splitDateTime(filter.value[0] ?? "").date}
           onChange={event => {
-            const value = getDateFilterValue(event.target.value, filter.value[0], isDateTime);
+            const value =
+              getDateFilterValue(event.target.value, filter.value[0] ?? "", isDateTime) ?? "";
 
-            handleChange(isMultiple ? [value, filter.value[1]] : [value]);
+            handleChange(isMultiple ? [value, filter.value[1] ?? ""] : [value]);
           }}
         />
         {isDateTime && (
@@ -67,11 +66,11 @@ export const FilterDateTimeField = ({
               classes: { input: classes.input },
               type: "time",
             }}
-            value={splitDateTime(filter.value[0]).time}
+            value={splitDateTime(filter.value[0] ?? "").time}
             onChange={event => {
-              const value = getDateTimeFilterValue(filter.value[0], event.target.value);
+              const value = getDateTimeFilterValue(filter.value[0] ?? "", event.target.value) ?? "";
 
-              handleChange(isMultiple ? [value, filter.value[1]] : [value]);
+              handleChange(isMultiple ? [value, filter.value[1] ?? ""] : [value]);
             }}
           />
         )}
@@ -101,11 +100,11 @@ export const FilterDateTimeField = ({
                 },
                 type: "date",
               }}
-              value={splitDateTime(filter.value[1]).date}
+              value={splitDateTime(filter.value[1] ?? "").date}
               onChange={event =>
                 handleChange([
-                  filter.value[0],
-                  getDateFilterValue(event.target.value, filter.value[1], isDateTime),
+                  filter.value[0] ?? "",
+                  getDateFilterValue(event.target.value, filter.value[1] ?? "", isDateTime) ?? "",
                 ])
               }
             />
@@ -119,11 +118,11 @@ export const FilterDateTimeField = ({
                   classes: { input: classes.input },
                   type: "time",
                 }}
-                value={splitDateTime(filter.value[1]).time}
+                value={splitDateTime(filter.value[1] ?? "").time}
                 onChange={event =>
                   handleChange([
-                    filter.value[0],
-                    getDateTimeFilterValue(filter.value[1], event.target.value),
+                    filter.value[0] ?? "",
+                    getDateTimeFilterValue(filter.value[1] ?? "", event.target.value) ?? "",
                   ])
                 }
               />

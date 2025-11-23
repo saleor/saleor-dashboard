@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
@@ -102,7 +101,7 @@ export const localeNames: Record<Locale, string> = {
 const dotSeparator = "_dot_";
 const sepRegExp = new RegExp(dotSeparator, "g");
 
-function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
+function getKeyValueJson(messages: LocaleMessages | undefined): Record<string, string> {
   if (messages) {
     const keyValueMessages: Record<string, string> = {};
 
@@ -112,10 +111,12 @@ function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
       return acc;
     }, keyValueMessages);
   }
+
+  return {};
 }
 
 const localeCode = process.env.LOCALE_CODE || "EN";
-const defaultLocale = Locale[localeCode];
+const defaultLocale = Locale[localeCode as keyof typeof Locale];
 
 interface LocaleContextType {
   locale: Locale;

@@ -1,5 +1,3 @@
-// @ts-strict-ignore
-
 import { useStyles } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/styles";
 import { useQuery } from "@dashboard/hooks/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -68,19 +66,24 @@ const DryRunItemsList = ({ object, objectId, setObjectId }: DryRunItemsListProps
             </ListItemCell>
           </ListItem>
         ) : (
-          (mapEdgesToItems<any>(data?.[objectCollection]) || []).map((item, idx) => (
-            <ListItem className={classes.listItem} key={idx} onClick={() => setObjectId(item.id)}>
-              <ListItemCell className={classes.listItemCell}>
-                {item.name || item[objectDocument.displayedAttribute] || item.id || item.__typename}
-              </ListItemCell>
-              <ListItemCell>
-                {item.thumbnail && <Avatar thumbnail={item.thumbnail?.url} />}
-              </ListItemCell>
-              <ListItemCell>
-                <Radio checked={item.id === objectId} />
-              </ListItemCell>
-            </ListItem>
-          ))
+          (mapEdgesToItems<any>((data as any)?.[objectCollection]) || []).map(
+            (item: any, idx: number) => (
+              <ListItem className={classes.listItem} key={idx} onClick={() => setObjectId(item.id)}>
+                <ListItemCell className={classes.listItemCell}>
+                  {item.name ||
+                    item[objectDocument.displayedAttribute as keyof typeof item] ||
+                    item.id ||
+                    item.__typename}
+                </ListItemCell>
+                <ListItemCell>
+                  {item.thumbnail && <Avatar thumbnail={item.thumbnail?.url} />}
+                </ListItemCell>
+                <ListItemCell>
+                  <Radio checked={item.id === objectId} />
+                </ListItemCell>
+              </ListItem>
+            ),
+          )
         )}
       </ListBody>
     </List>

@@ -1,7 +1,8 @@
-// @ts-strict-ignore
+import { ReactNode } from "react";
+
 import { useStyles } from "./styles";
 
-const Container = ({ children }) => {
+const Container = ({ children }: { children: ReactNode[] }) => {
   const classes = useStyles({});
 
   return !!children.length && <div className={classes.container}>{children}</div>;

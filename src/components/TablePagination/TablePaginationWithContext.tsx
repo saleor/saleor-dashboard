@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
 
 import { PaginationProps, TablePagination } from "./TablePagination";
@@ -16,8 +15,8 @@ export const TablePaginationWithContext = (props: TablePaginationWithContextProp
     return (
       <TablePagination
         {...props}
-        hasNextPage={hasNextPage}
-        hasPreviousPage={hasPreviousPage}
+        hasNextPage={hasNextPage ?? false}
+        hasPreviousPage={hasPreviousPage ?? false}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
       />
@@ -30,9 +29,9 @@ export const TablePaginationWithContext = (props: TablePaginationWithContextProp
     <TablePagination
       {...props}
       nextHref={nextHref}
-      hasNextPage={hasNextPage}
+      hasNextPage={hasNextPage ?? false}
       prevHref={prevHref}
-      hasPreviousPage={hasPreviousPage}
+      hasPreviousPage={hasPreviousPage ?? false}
     />
   );
 };

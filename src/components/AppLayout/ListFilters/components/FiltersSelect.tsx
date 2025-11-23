@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FilterContent } from "@dashboard/components/Filter/FilterContent/FilterContent";
 import {
   FilterElement,
@@ -6,7 +5,7 @@ import {
   IFilter,
   InvalidFilters,
 } from "@dashboard/components/Filter/types";
-import useFilter from "@dashboard/components/Filter/useFilter";
+import useFilter, { FilterDispatchFunction } from "@dashboard/components/Filter/useFilter";
 import { extractInvalidFilters } from "@dashboard/components/Filter/utils";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { DropdownButton, sprinkles } from "@saleor/macaw-ui-next";
@@ -30,7 +29,7 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
   onFilterAttributeFocus,
   errorMessages,
 }: FilterProps<TFilterKeys>) => {
-  const anchor = useRef<HTMLDivElement>();
+  const anchor = useRef<HTMLDivElement>(null);
   const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
   const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
   const [data, dispatch, reset] = useFilter(menu);
@@ -103,13 +102,13 @@ export const FiltersSelect = <TFilterKeys extends string = string>({
           {() => (
             <Grow>
               <FilterContent
-                errorMessages={errorMessages}
+                errorMessages={errorMessages as FilterErrorMessages<string>}
                 errors={filterErrors}
-                dataStructure={menu}
+                dataStructure={menu as IFilter<string>}
                 currencySymbol={currencySymbol}
                 filters={data}
                 onClear={handleClear}
-                onFilterPropertyChange={dispatch}
+                onFilterPropertyChange={dispatch as FilterDispatchFunction<string>}
                 onFilterAttributeFocus={onFilterAttributeFocus}
                 onSubmit={handleSubmit}
               />

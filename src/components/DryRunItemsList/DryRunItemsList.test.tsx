@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { productsMocks } from "@test/mocks/products";
@@ -12,7 +11,7 @@ describe("DryRunItemsList", () => {
   it("is available on the webhook page", async () => {
     // Arrange
     const props = {
-      objectId: null,
+      objectId: "",
       setObjectId: jest.fn(),
       object: "PRODUCT",
     };

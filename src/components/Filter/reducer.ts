@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { update } from "@dashboard/utils/lists";
 
 import { FieldType, IFilter, IFilterElementMutableDataGeneric } from "./types";
@@ -24,7 +23,7 @@ function setProperty<K extends string, T extends FieldType>(
     ...updateData,
   };
 
-  return update(updatedField, prevState, (a, b) => a.name === b.name);
+  return update(updatedField, prevState as any, (a, b) => a.name === b.name) as any;
 }
 
 function reduceFilter<K extends string, T extends FieldType>(
@@ -33,9 +32,17 @@ function reduceFilter<K extends string, T extends FieldType>(
 ): IFilter<K> {
   switch (action.type) {
     case "set-property":
+      if (!action.payload.name || !action.payload.update) {
+        return prevState;
+      }
+
       return setProperty<K, T>(prevState, action.payload.name, action.payload.update);
     case "reset":
-      return action.payload.new;
+      if (!action.payload.new) {
+        return prevState;
+      }
+
+      return action.payload.new as any;
 
     default:
       return prevState;

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import RichTextEditor, { RichTextEditorProps } from "./RichTextEditor";
 
 interface RichTextEditorLoadingProps
@@ -14,7 +13,7 @@ export const RichTextEditorLoading = (props: RichTextEditorLoadingProps) => (
     {...props}
     disabled={true}
     readOnly={true}
-    error={null}
+    error={false}
     helperText={props.helperText ?? ""}
     defaultValue={{ blocks: [] }}
     editorRef={{ current: null }}

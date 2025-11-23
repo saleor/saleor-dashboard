@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { StrikethroughIcon } from "@dashboard/icons/StrikethroughIcon";
 import { ToolConstructable, ToolSettings } from "@editorjs/editorjs";
 import Embed from "@editorjs/embed";

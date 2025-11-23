@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getIsFilterMultipleChoices } from "@dashboard/components/Filter/FilterContent/utils";
 import { FilterFieldBaseProps, FilterType } from "@dashboard/components/Filter/types";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -26,7 +25,7 @@ export const FilterSingleSelectField = ({
               update: {
                 multiple: target.value === FilterType.MULTIPLE,
                 ...(target.value !== FilterType.MULTIPLE && {
-                  value: filter.value.slice(0, 1) as string[],
+                  value: (filter.value?.slice(0, 1) ?? []) as string[],
                 }),
               },
             },

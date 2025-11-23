@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
@@ -60,10 +59,11 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [variants, setVariants] = useState<VariantWithProductLabel[]>([]);
-  const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
+  const productChoices =
+    products?.filter(product => product?.variants && product.variants.length > 0) || [];
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
-        product.variants.map(variant => isVariantSelected(variant, variants)),
+        (product.variants ?? []).map(variant => isVariantSelected(variant, variants)),
       )
     : [];
   const productsWithAllVariantsSelected = productChoices
@@ -72,9 +72,8 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
   const handleSubmit = () =>
     onSubmit(
       variants.map(variant => ({
-        name: getCompositeLabel(variant),
-        id: variant.id,
         ...variant,
+        name: getCompositeLabel(variant),
       })),
     );
 
@@ -117,73 +116,81 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
           <TableBody>
             {renderCollection(
               productChoices,
-              (product, productIndex) => (
-                <Fragment key={product ? product.id : "skeleton"}>
-                  <TableRowLink>
-                    <TableCell padding="checkbox" className={classes.productCheckboxCell}>
-                      <Checkbox
-                        checked={productsWithAllVariantsSelected[productIndex]}
-                        disabled={loading}
-                        onChange={() =>
-                          handleProductAssign(
-                            product,
-                            productIndex,
-                            productsWithAllVariantsSelected,
-                            variants,
-                            setVariants,
-                          )
-                        }
-                      />
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.avatar}
-                      thumbnail={maybe(() => product.thumbnail.url)}
-                    />
-                    <TableCell className={classes.colName} colSpan={2}>
-                      {maybe(() => product.name)}
-                    </TableCell>
-                  </TableRowLink>
-                  {maybe(() => product.variants, []).map((variant, variantIndex) => (
-                    <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">
-                      <TableCell />
-                      <TableCell className={classes.colVariantCheckbox}>
+              (product, productIndex) => {
+                if (!product || productIndex === undefined) {
+                  return null;
+                }
+
+                return (
+                  <Fragment key={product.id}>
+                    <TableRowLink>
+                      <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                         <Checkbox
-                          className={classes.variantCheckbox}
-                          checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
+                          checked={productsWithAllVariantsSelected[productIndex] ?? false}
                           disabled={loading}
                           onChange={() =>
-                            handleVariantAssign(
-                              variant,
+                            handleProductAssign(
                               product,
-                              variantIndex,
                               productIndex,
+                              productsWithAllVariantsSelected,
                               variants,
-                              selectedVariantsToProductsMap,
                               setVariants,
                             )
                           }
                         />
                       </TableCell>
-                      <TableCell className={classes.colName}>
-                        <div>{variant.name}</div>
-                        <div className={classes.grayText}>
-                          <FormattedMessage
-                            {...messages.assignVariantDialogSKU}
-                            values={{
-                              sku: variant.sku,
-                            }}
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell className={classes.textRight}>
-                        {variant?.channelListings[0]?.price && (
-                          <Money money={variant.channelListings[0].price} />
-                        )}
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={maybe(() => product.thumbnail?.url)}
+                      />
+                      <TableCell className={classes.colName} colSpan={2}>
+                        {maybe(() => product.name)}
                       </TableCell>
                     </TableRowLink>
-                  ))}
-                </Fragment>
-              ),
+                    {(product.variants ?? []).map((variant, variantIndex) => (
+                      <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">
+                        <TableCell />
+                        <TableCell className={classes.colVariantCheckbox}>
+                          <Checkbox
+                            className={classes.variantCheckbox}
+                            checked={
+                              selectedVariantsToProductsMap[productIndex]?.[variantIndex] ?? false
+                            }
+                            disabled={loading}
+                            onChange={() =>
+                              handleVariantAssign(
+                                variant,
+                                product,
+                                variantIndex,
+                                productIndex,
+                                variants,
+                                selectedVariantsToProductsMap,
+                                setVariants,
+                              )
+                            }
+                          />
+                        </TableCell>
+                        <TableCell className={classes.colName}>
+                          <div>{variant.name}</div>
+                          <div className={classes.grayText}>
+                            <FormattedMessage
+                              {...messages.assignVariantDialogSKU}
+                              values={{
+                                sku: variant.sku,
+                              }}
+                            />
+                          </div>
+                        </TableCell>
+                        <TableCell className={classes.textRight}>
+                          {variant?.channelListings?.[0]?.price && (
+                            <Money money={variant.channelListings[0].price} />
+                          )}
+                        </TableCell>
+                      </TableRowLink>
+                    ))}
+                  </Fragment>
+                );
+              },
               () => (
                 <Text className={classes.noContentText}>
                   {query

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   AddressValidationRulesQuery,
   CountryCode,
@@ -14,9 +13,9 @@ interface AreaChoices {
 
 const prepareChoices = (values: ChoiceValue[]): AreaChoices[] =>
   values.map(v => ({
-    label: v.verbose,
-    value: v.verbose,
-    raw: v.raw,
+    label: v.verbose ?? "",
+    value: v.verbose ?? "",
+    raw: v.raw ?? "",
   }));
 
 export const selectRules = (data: AddressValidationRulesQuery | null | undefined) => {
@@ -28,27 +27,27 @@ export const selectRules = (data: AddressValidationRulesQuery | null | undefined
 };
 
 const useValidationRules = (country?: string) => {
-  const countryCode = CountryCode[country];
+  const countryCode = country ? CountryCode[country as keyof typeof CountryCode] : undefined;
   const { data, loading } = useAddressValidationRulesQuery({
-    variables: { countryCode },
+    variables: { countryCode: countryCode! },
     skip: !countryCode,
   });
 
   return { data, loading };
 };
-const useAreas = (data: AddressValidationRulesQuery) => {
+const useAreas = (data: AddressValidationRulesQuery | undefined) => {
   const rawChoices = selectRules(data)?.countryAreaChoices ?? [];
   const choices = prepareChoices(rawChoices);
 
   return choices;
 };
-const useAllowedFields = (data: AddressValidationRulesQuery) => {
+const useAllowedFields = (data: AddressValidationRulesQuery | undefined) => {
   const isAllowed = (fieldName: string) => {
     if (!data) {
       return false;
     }
 
-    return selectRules(data).allowedFields.includes(fieldName);
+    return (selectRules(data).allowedFields as string[]).includes(fieldName);
   };
 
   return { isAllowed };

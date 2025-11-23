@@ -1,5 +1,5 @@
-// @ts-strict-ignore
 import { Locale } from "@dashboard/components/Locale";
+import { DiscountValueTypeEnum } from "@dashboard/graphql";
 import OrderDiscountCommonModal from "@dashboard/orders/components/OrderDiscountCommonModal/OrderDiscountCommonModal";
 import {
   ORDER_LINE_DISCOUNT,
@@ -26,21 +26,48 @@ const ROW_HEIGHT = cellHeight + DATAGRID_BORDER_WIDTH;
 
 export type MoneyDiscuntedCell = CustomCell<MoneyDiscountedCellProps>;
 
-const MoneyDiscountedCellEditor = ({ onFinishedEditing, value }) => {
+interface MoneyDiscountedCellEditorProps {
+  onFinishedEditing: (value: any) => void;
+  value: MoneyDiscuntedCell;
+}
+
+const MoneyDiscountedCellEditor = ({
+  onFinishedEditing,
+  value,
+}: MoneyDiscountedCellEditorProps) => {
   const getDiscountProviderValues = useOrderLineDiscountContext();
   const editedLineId = value.data.lineItemId;
   const discountProviderValues = editedLineId ? getDiscountProviderValues(editedLineId) : null;
+
   const handleDiscountConfirm = useCallback(
     async (discount: OrderDiscountCommonInput) => {
+      if (!discountProviderValues) {
+        return;
+      }
+
       await discountProviderValues.addOrderLineDiscount(discount);
       onFinishedEditing(undefined);
     },
     [discountProviderValues, onFinishedEditing],
   );
   const handleDiscountRemove = useCallback(async () => {
+    if (!discountProviderValues) {
+      return;
+    }
+
     await discountProviderValues.removeOrderLineDiscount();
     onFinishedEditing(undefined);
   }, [discountProviderValues, onFinishedEditing]);
+
+  if (!discountProviderValues) {
+    return null;
+  }
+
+  const defaultDiscount: OrderDiscountCommonInput = {
+    value: 0,
+    reason: "",
+    calculationMode: DiscountValueTypeEnum.FIXED,
+  };
 
   return (
     <OrderDiscountCommonModal
@@ -49,7 +76,7 @@ const MoneyDiscountedCellEditor = ({ onFinishedEditing, value }) => {
       maxPrice={discountProviderValues.unitUndiscountedPrice}
       onConfirm={handleDiscountConfirm}
       onRemove={handleDiscountRemove}
-      existingDiscount={discountProviderValues.orderLineDiscount}
+      existingDiscount={discountProviderValues.orderLineDiscount ?? defaultDiscount}
       confirmStatus={discountProviderValues.orderLineDiscountUpdateStatus}
       removeStatus={discountProviderValues.orderLineDiscountRemoveStatus}
     />
@@ -64,9 +91,9 @@ export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell
     const { ctx, theme, rect } = args;
     const { currency, value, undiscounted, locale } = cell.data;
     const hasValue = value === 0 ? true : !!value;
-    const formattedValue = getFormattedMoney(value, currency, locale, "-");
+    const formattedValue = getFormattedMoney(value ?? 0, currency, locale, "-");
     const formattedUndiscounted = getFormattedMoney(
-      undiscounted !== value ? undiscounted : "",
+      undiscounted !== value ? (undiscounted ?? "") : "",
       currency,
       locale,
     );

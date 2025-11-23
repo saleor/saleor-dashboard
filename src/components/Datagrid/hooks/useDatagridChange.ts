@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { updateAtIndex } from "@dashboard/utils/lists";
 import { EditableGridCell, Item } from "@glideapps/glide-data-grid";
 import {
@@ -59,9 +58,21 @@ export function useDatagridChangeState(): UseDatagridChangeState {
   };
 }
 
-export const DatagridChangeStateContext = createContext<UseDatagridChangeState>(undefined);
+export const DatagridChangeStateContext = createContext<UseDatagridChangeState | undefined>(
+  undefined,
+);
 
-const useDatagridChangeStateContext = () => useContext(DatagridChangeStateContext);
+const useDatagridChangeStateContext = () => {
+  const context = useContext(DatagridChangeStateContext);
+
+  if (!context) {
+    throw new Error(
+      "useDatagridChangeStateContext must be used within DatagridChangeStateContext.Provider",
+    );
+  }
+
+  return context;
+};
 
 function useDatagridChange(
   availableColumns: readonly AvailableColumn[],
@@ -85,9 +96,9 @@ function useDatagridChange(
       updates: DatagridChange[];
       added: number[];
       removed: number[];
-      currentUpdate: DatagridChange;
+      currentUpdate?: DatagridChange;
     }) => {
-      if (onChange) {
+      if (onChange && setMarkCellsDirty) {
         onChange(
           {
             updates,
