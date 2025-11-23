@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   handleMetadataReferenceAssignment,
@@ -80,7 +79,7 @@ interface ProductUpdatePageProps {
   errors: UseProductUpdateHandlerError[];
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: RelayToFlat<NonNullable<SearchAttributeValuesQuery["attribute"]>["choices"]>;
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
@@ -199,14 +198,14 @@ const ProductUpdatePage = ({
     isMediaUrlModalVisible || false,
   );
   const [selectedCollections, setSelectedCollections] = useStateFromProps(
-    getChoices(maybe(() => product.collections, [])),
+    getChoices(maybe(() => product!.collections, []) as any),
   );
   const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(product?.taxClass?.name ?? "");
-  const categories = getChoicesWithAncestors(categoryChoiceList);
+  const categories = getChoicesWithAncestors(categoryChoiceList as any);
   const selectedProductCategory = product?.category
     ? getChoicesWithAncestors([product.category as ChoiceWithAncestors])[0]
     : undefined;
-  const collections = getChoices(collectionChoiceList);
+  const collections = getChoices(collectionChoiceList as any);
   const hasVariants = product?.productType?.hasVariants;
   const taxClassesChoices =
     taxClasses?.map(taxClass => ({
@@ -220,7 +219,7 @@ const ProductUpdatePage = ({
     handlers: ProductUpdateHandlers,
   ) => {
     handleMetadataReferenceAssignment(
-      assignReferencesAttributeId,
+      assignReferencesAttributeId!,
       attributeValues,
       data.attributes,
       handlers,
@@ -294,7 +293,7 @@ const ProductUpdatePage = ({
       const newProductDescription = productDescriptionField.value;
 
       // cache may be empty if editor was not used before sending event to app
-      const productDescriptionWithFallback = descriptionCache.current ?? product.description;
+      const productDescriptionWithFallback = descriptionCache.current ?? product!.description;
 
       try {
         const parsedEditorJs = JSON.parse(newProductDescription) as OutputData;
@@ -308,7 +307,7 @@ const ProductUpdatePage = ({
           if (richTextRef.current?.editorRef?.current) {
             richTextRef.current.editorRef.current.render(parsedEditorJs).then(() => {
               // Mark as dirty and trigger change after render completes
-              richTextRef.current.handleChange();
+              richTextRef.current!.handleChange();
             });
           }
         }
@@ -349,7 +348,7 @@ const ProductUpdatePage = ({
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
       onSubmit={onSubmit}
-      product={product}
+      product={product!}
       categories={categories}
       collections={collections}
       selectedCollections={selectedCollections}
@@ -357,7 +356,7 @@ const ProductUpdatePage = ({
       setSelectedCollections={setSelectedCollections}
       setSelectedTaxClass={setSelectedTaxClass}
       taxClasses={taxClassesChoices}
-      hasVariants={hasVariants}
+      hasVariants={!!hasVariants}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
       referenceCategories={referenceCategories}
@@ -408,7 +407,7 @@ const ProductUpdatePage = ({
         const listings = data.channels.updateChannels?.map<ChannelData>(byChannel);
 
         const entityType = getReferenceAttributeEntityTypeFromAttribute(
-          assignReferencesAttributeId,
+          assignReferencesAttributeId!,
           data.attributes,
         );
 
@@ -447,7 +446,7 @@ const ProductUpdatePage = ({
                 }}
               />
               <ProductMedia
-                media={media}
+                media={media!}
                 onImageDelete={onImageDelete}
                 onImageReorder={onImageReorder}
                 onImageUpload={onImageUpload}
@@ -457,30 +456,30 @@ const ProductUpdatePage = ({
               {data.attributes.length > 0 && (
                 <Attributes
                   attributes={data.attributes}
-                  attributeValues={attributeValues}
+                  attributeValues={attributeValues as any}
                   errors={productErrors}
                   loading={disabled}
                   disabled={disabled}
-                  onChange={handlers.selectAttribute}
-                  onMultiChange={handlers.selectAttributeMultiple}
+                  onChange={handlers.selectAttribute as any}
+                  onMultiChange={handlers.selectAttributeMultiple as any}
                   onFileChange={handlers.selectAttributeFile}
                   onReferencesRemove={handlers.selectAttributeReference}
                   onReferencesAddClick={onAssignReferencesClick}
                   onReferencesReorder={handlers.reorderAttributeValue}
                   fetchAttributeValues={fetchAttributeValues}
-                  fetchMoreAttributeValues={fetchMoreAttributeValues}
+                  fetchMoreAttributeValues={fetchMoreAttributeValues!}
                   onAttributeSelectBlur={onAttributeSelectBlur}
                   richTextGetters={attributeRichTextGetters}
                 />
               )}
               <ProductVariants
                 productId={productId}
-                productName={product?.name}
+                productName={product?.name!}
                 errors={variantListErrors}
-                channels={listings}
+                channels={listings!}
                 limits={limits}
                 variants={variants}
-                variantAttributes={product?.productType.variantAttributes}
+                variantAttributes={product?.productType.variantAttributes!}
                 onAttributeValuesSearch={onAttributeValuesSearch}
                 onChange={handlers.changeVariants}
                 onRowClick={onVariantShow}
@@ -512,7 +511,7 @@ const ProductUpdatePage = ({
                 categoryInputDisplayValue={selectedCategory}
                 collections={collections}
                 collectionsInputDisplayValue={selectedCollections}
-                data={data}
+                data={data as any}
                 disabled={disabled}
                 errors={productOrganizationErrors}
                 fetchCategories={fetchCategories}
@@ -564,11 +563,11 @@ const ProductUpdatePage = ({
               <AssignAttributeValueDialog
                 entityType={entityType}
                 confirmButtonState={"default"}
-                products={referenceProducts}
+                products={referenceProducts as any}
                 pages={referencePages}
                 collections={referenceCollections}
                 categories={referenceCategories}
-                attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
+                attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)!}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
                 onFetch={handlers.fetchReferences}
@@ -589,7 +588,7 @@ const ProductUpdatePage = ({
             )}
 
             <ProductExternalMediaDialog
-              product={product}
+              product={product!}
               onClose={() => setMediaUrlModalStatus(false)}
               open={mediaUrlModalStatus}
               onSubmit={onMediaUrlUpload}

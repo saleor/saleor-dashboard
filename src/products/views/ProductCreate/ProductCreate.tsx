@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelData, createSortedChannelsData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@dashboard/components/Attributes";
@@ -239,17 +238,17 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
   const fetchMoreProductTypes = {
-    hasMore: searchProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchProductTypesOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchProductTypesOpts.loading,
     onFetchMore: loadMoreProductTypes,
   };
   const fetchMoreCollections = {
-    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
   const fetchMoreCategories = {
-    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchCategoriesOpts.loading,
     onFetchMore: loadMoreCategories,
   };

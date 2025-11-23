@@ -1,10 +1,9 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { ProductErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductShippingProps {
@@ -14,7 +13,7 @@ interface ProductShippingProps {
   disabled: boolean;
   errors: ProductErrorFragment[];
   weightUnit: string;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: FormChange;
 }
 
 export const ProductShipping = (props: ProductShippingProps) => {

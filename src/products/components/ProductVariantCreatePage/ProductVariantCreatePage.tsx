@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
@@ -304,7 +303,9 @@ export const ProductVariantCreatePage = ({
                     data={data}
                     warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
                     fetchMoreWarehouses={fetchMoreWarehouses}
-                    hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
+                    hasMoreWarehouses={
+                      searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage ?? false
+                    }
                     hasVariants={true}
                     onFormDataChange={change}
                     errors={errors}

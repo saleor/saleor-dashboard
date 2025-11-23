@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import {
   DatagridChange,
@@ -27,7 +26,7 @@ const getFractionDigits = (locale: Locale, currency: string) => {
 export const parseCurrency = (value: string, locale: Locale, currency: string): number => {
   // Thousand seperators are not allowedd
   const number = value.replace(/,/, ".");
-  const fractionDigits = getFractionDigits(locale, currency);
+  const fractionDigits = getFractionDigits(locale, currency) ?? 2;
   const lastDecimalPoint = number.lastIndexOf(".");
   const trimmedNumber = number.slice(0, lastDecimalPoint + 1 + fractionDigits);
 
@@ -71,7 +70,7 @@ function getChannelCurrencyCodeById(
   channelId: string,
   channelList: ProductFragment["channelListings"],
 ): string {
-  const channel = channelList.find(({ channel }) => channel.id === channelId);
+  const channel = channelList?.find(({ channel }) => channel.id === channelId);
 
   if (channel) {
     return channel.channel.currencyCode;

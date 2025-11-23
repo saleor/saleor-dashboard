@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { ProductFragment } from "@dashboard/graphql";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
@@ -235,7 +234,7 @@ describe("getBulkVariantUpdateInputs", () => {
             value: 234,
             currency: "USD",
           },
-          column: `channel:${variants[2].channelListings[0].channel.id}`,
+          column: `channel:${variants![2].channelListings![0].channel.id}`,
           row: 2,
         },
         {
@@ -244,7 +243,7 @@ describe("getBulkVariantUpdateInputs", () => {
             value: 565,
             currency: "BHD",
           },
-          column: `channel:${variants[2].channelListings[1].channel.id}`,
+          column: `channel:${variants![2].channelListings![1].channel.id}`,
           row: 2,
         },
         {
@@ -252,7 +251,7 @@ describe("getBulkVariantUpdateInputs", () => {
             kind: "number-cell",
             value: 2344,
           },
-          column: `warehouse:${variants[2].stocks[0].warehouse.id}`,
+          column: `warehouse:${variants![2].stocks![0].warehouse.id}`,
           row: 2,
         },
         {
@@ -265,7 +264,7 @@ describe("getBulkVariantUpdateInputs", () => {
               value: "2l",
             },
           },
-          column: `attribute:${variants[2].attributes[0].attribute.id}`,
+          column: `attribute:${variants![2].attributes![0].attribute.id}`,
           row: 2,
         },
       ],
@@ -283,7 +282,7 @@ describe("getBulkVariantUpdateInputs", () => {
 
     expect(bulkVariantUpdateInput).toEqual([
       {
-        id: variants[1].id,
+        id: variants![1].id,
         attributes: [],
         name: "item 1",
         stocks: {
@@ -298,7 +297,7 @@ describe("getBulkVariantUpdateInputs", () => {
         },
       },
       {
-        id: variants[2].id,
+        id: variants![2].id,
         attributes: [
           {
             id: "QXR0cmlidXRlOjE1",
@@ -312,7 +311,7 @@ describe("getBulkVariantUpdateInputs", () => {
         stocks: {
           update: [
             {
-              stock: variants[2].stocks[0].id,
+              stock: variants![2].stocks![0].id,
               quantity: 2344,
             },
           ],
@@ -322,11 +321,11 @@ describe("getBulkVariantUpdateInputs", () => {
         channelListings: {
           update: [
             {
-              channelListing: variants[2].channelListings[0].id,
+              channelListing: variants![2].channelListings![0].id,
               price: 234,
             },
             {
-              channelListing: variants[2].channelListings[1].id,
+              channelListing: variants![2].channelListings![1].id,
               price: 565,
             },
           ],
@@ -352,7 +351,7 @@ describe("getBulkVariantUpdateInputs", () => {
             value: 234,
             currency: "USD",
           },
-          column: `channel:${variants[0].channelListings[0].channel.id}`,
+          column: `channel:${variants![0].channelListings![0].channel.id}`,
           row: 0, // initially 0
         },
         {
@@ -365,7 +364,7 @@ describe("getBulkVariantUpdateInputs", () => {
             kind: "number-cell",
             value: 2344,
           },
-          column: `warehouse:${variants[2].stocks[0].warehouse.id}`,
+          column: `warehouse:${variants![2].stocks![0].warehouse.id}`,
           row: 1, // initially 2
         },
         // row 2 (initially 4) is unchanged
@@ -391,7 +390,7 @@ describe("getBulkVariantUpdateInputs", () => {
     // Assert
     expect(bulkVariantUpdateInput).toEqual([
       {
-        id: variants[0].id,
+        id: variants![0].id,
         attributes: [],
         sku: "2345555",
         name: undefined,
@@ -401,14 +400,14 @@ describe("getBulkVariantUpdateInputs", () => {
           remove: [],
           update: [
             {
-              channelListing: variants[0].channelListings[0].id,
+              channelListing: variants![0].channelListings![0].id,
               price: 234,
             },
           ],
         },
       },
       {
-        id: variants[2].id,
+        id: variants![2].id,
         attributes: [],
         sku: undefined,
         name: "edited variant",
@@ -416,7 +415,7 @@ describe("getBulkVariantUpdateInputs", () => {
           create: [],
           update: [
             {
-              stock: variants[2].stocks[0].id,
+              stock: variants![2].stocks![0].id,
               quantity: 2344,
             },
           ],

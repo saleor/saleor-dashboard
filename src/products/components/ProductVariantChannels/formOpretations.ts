@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelPriceAndPreorderData } from "@dashboard/channels/utils";
 import { ProductVariantCreateDataQuery } from "@dashboard/graphql";
 import { UseFormsetOutput } from "@dashboard/hooks/useFormset";
@@ -11,7 +10,7 @@ type FormChannels = UseFormsetOutput<ChannelPriceAndPreorderData>;
 export const createChannelsWithPreorderInfo = (
   product: ProductVariantCreateDataQuery["product"],
 ) =>
-  product
+  product && product.channelListings
     ? product.channelListings.map(listing => ({
         ...listing.channel,
         currency: listing.channel.currencyCode,
@@ -33,7 +32,7 @@ export const concatChannelsBySelection = (
 };
 
 export const extractChannelPricesFromVariantChannel = (
-  variantChannel: VariantChannelListing[number],
+  variantChannel: NonNullable<VariantChannelListing>[number],
 ) => {
   const { costPrice, price } = variantChannel;
 

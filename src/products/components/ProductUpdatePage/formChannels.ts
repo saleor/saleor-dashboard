@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import {
   ProductChannelListingAddInput,

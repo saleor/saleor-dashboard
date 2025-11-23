@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { LazyQueryResult } from "@apollo/client/react";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
@@ -94,7 +93,7 @@ export const ProductListDatagrid = ({
 
   const handleColumnChange = useCallback(
     (picked: ProductListColumns[]) => {
-      onUpdateListSettings("columns", picked.filter(Boolean));
+      onUpdateListSettings?.("columns", picked.filter(Boolean));
     },
     [onUpdateListSettings],
   );
@@ -122,7 +121,7 @@ export const ProductListDatagrid = ({
     staticColumns: memoizedStaticColumns,
     columnCategories: productListDynamicColumnAdapter({
       availableAttributesData: getAvailableAttributesData({
-        availableColumnsAttributesData,
+        availableColumnsAttributesData: availableColumnsAttributesData as any,
         gridAttributesOpts,
       }),
       selectedAttributesData: mapEdgesToItems(gridAttributesOpts.data?.selectedAttributes),
@@ -135,13 +134,13 @@ export const ProductListDatagrid = ({
       initialSearch: availableColumnsAttributesData.variables?.search ?? "",
       ...getAttributesFetchMoreProps({
         queryAvailableColumnsAttributes,
-        availableColumnsAttributesData,
+        availableColumnsAttributesData: availableColumnsAttributesData as any,
         gridAttributesOpts,
       }),
       intl,
     }),
-    selectedColumns: settings.columns,
-    onSave: handleColumnChange,
+    selectedColumns: (settings?.columns ?? []) as any,
+    onSave: handleColumnChange as any,
   });
 
   // Logic for updating sort icon in dynamic columns
@@ -150,7 +149,7 @@ export const ProductListDatagrid = ({
   useEffect(() => {
     handlers.onCustomUpdateVisible(prevColumns =>
       prevColumns?.map(column => {
-        if (isAttributeColumnValue(column.id)) {
+        if (column && isAttributeColumnValue(column.id)) {
           if (getAttributeIdFromColumnValue(column.id) === activeAttributeSortId) {
             return {
               ...column,
@@ -181,7 +180,7 @@ export const ProductListDatagrid = ({
   );
   const handleRowClick = useCallback(
     ([col, row]: Item) => {
-      if (!onRowClick) {
+      if (!onRowClick || !products) {
         return;
       }
 
@@ -200,9 +199,9 @@ export const ProductListDatagrid = ({
     [onRowClick, products],
   );
   const handleRowAnchor = useCallback(
-    ([, row]: Item) => {
-      if (!rowAnchor) {
-        return;
+    ([, row]: Item): string => {
+      if (!rowAnchor || !products) {
+        return "";
       }
 
       const rowData = products[row];
@@ -227,10 +226,10 @@ export const ProductListDatagrid = ({
 
       // Sortable but requrie selected channel
       return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-        filterName: filterDependency.label,
+        filterName: filterDependency?.label ?? "",
       });
     },
-    [visibleColumns, filterDependency.label, intl, selectedChannelId],
+    [visibleColumns, filterDependency?.label, intl, selectedChannelId],
   );
   const getCellContent = useMemo(
     () =>
@@ -285,10 +284,10 @@ export const ProductListDatagrid = ({
         <Box paddingX={6}>
           <TablePaginationWithContext
             component="div"
-            colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
-            settings={settings}
+            colSpan={(products?.length === 0 ? 1 : 2) + (settings?.columns?.length ?? 0)}
+            settings={settings!}
             disabled={disabled}
-            onUpdateListSettings={onUpdateListSettings}
+            onUpdateListSettings={onUpdateListSettings as any}
           />
         </Box>
       </DatagridChangeStateContext.Provider>

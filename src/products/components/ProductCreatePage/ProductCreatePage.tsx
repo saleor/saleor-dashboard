@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
@@ -59,7 +58,7 @@ interface ProductCreatePageProps {
   currentChannels: ChannelData[];
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: RelayToFlat<NonNullable<SearchAttributeValuesQuery["attribute"]>["choices"]>;
   loading: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
@@ -156,15 +155,15 @@ const ProductCreatePage = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const closeDialog = () => {
-    onCloseDialog({ "product-type-id": selectedProductType.id });
+    onCloseDialog({ "product-type-id": selectedProductType?.id ?? "" });
   };
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(initial?.category || "");
   const [selectedCollections, setSelectedCollections] = useStateFromProps<Option[]>([]);
   const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(initial?.taxClassId ?? "");
-  const categories = getChoicesWithAncestors(categoryChoiceList);
-  const collections = getChoices(collectionChoiceList);
-  const productTypes = getChoices(productTypeChoiceList);
+  const categories = getChoicesWithAncestors((categoryChoiceList as any) || []);
+  const collections = getChoices(collectionChoiceList || []);
+  const productTypes = getChoices(productTypeChoiceList || []);
   const taxClassChoices =
     taxClasses?.map(taxClass => ({
       label: taxClass.name,
@@ -176,24 +175,27 @@ const ProductCreatePage = ({
     data: ProductCreateData,
     handlers: ProductCreateHandlers,
   ) => {
-    handleContainerReferenceAssignment(
-      assignReferencesAttributeId,
-      attributeValues,
-      data.attributes,
-      handlers,
-    );
+    if (assignReferencesAttributeId) {
+      handleContainerReferenceAssignment(
+        assignReferencesAttributeId,
+        attributeValues,
+        data.attributes,
+        handlers,
+      );
+    }
+
     closeDialog();
   };
 
   return (
     <ProductCreateForm
-      onSubmit={onSubmit}
+      onSubmit={onSubmit || (() => Promise.resolve([]))}
       initial={initial}
       selectedProductType={selectedProductType}
       onSelectProductType={onSelectProductType}
       categories={categories}
       collections={collections}
-      productTypes={productTypeChoiceList}
+      productTypes={productTypeChoiceList as any}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
       referenceCategories={referenceCategories}
@@ -229,7 +231,7 @@ const ProductCreatePage = ({
         const isSimpleProduct = !data.productType?.hasVariants;
         const errors = [...apiErrors, ...validationErrors];
         const entityType = getReferenceAttributeEntityTypeFromAttribute(
-          assignReferencesAttributeId,
+          assignReferencesAttributeId ?? "",
           data.attributes,
         );
 
@@ -238,7 +240,7 @@ const ProductCreatePage = ({
             <TopNav href={productListUrl()} title={header} />
             <DetailPageLayout.Content>
               <ProductDetailsForm
-                data={data}
+                data={data as any}
                 disabled={loading}
                 errors={errors}
                 onChange={change}
@@ -246,18 +248,24 @@ const ProductCreatePage = ({
               {data.attributes.length > 0 && (
                 <Attributes
                   attributes={data.attributes}
-                  attributeValues={attributeValues}
+                  attributeValues={attributeValues as any}
                   loading={loading}
                   disabled={loading}
                   errors={errors}
-                  onChange={handlers.selectAttribute}
-                  onMultiChange={handlers.selectAttributeMultiple}
+                  onChange={handlers.selectAttribute as any}
+                  onMultiChange={handlers.selectAttributeMultiple as any}
                   onFileChange={handlers.selectAttributeFile}
                   onReferencesRemove={handlers.selectAttributeReference}
                   onReferencesAddClick={onAssignReferencesClick}
                   onReferencesReorder={handlers.reorderAttributeValue}
                   fetchAttributeValues={fetchAttributeValues}
-                  fetchMoreAttributeValues={fetchMoreAttributeValues}
+                  fetchMoreAttributeValues={
+                    fetchMoreAttributeValues || {
+                      hasMore: false,
+                      loading: false,
+                      onFetchMore: () => {},
+                    }
+                  }
                   onAttributeSelectBlur={onAttributeSelectBlur}
                   richTextGetters={attributeRichTextGetters}
                 />
@@ -273,15 +281,17 @@ const ProductCreatePage = ({
                   />
                   <ProductVariantPrice
                     productVariantChannelListings={data.channelListings}
-                    errors={[...errors, ...channelsErrors]}
+                    errors={[...errors, ...channelsErrors] as any}
                     loading={loading}
-                    onChange={handlers.changeChannelPrice}
+                    onChange={handlers.changeChannelPrice as any}
                   />
                   <ProductStocks
                     data={data}
                     warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
                     fetchMoreWarehouses={fetchMoreWarehouses}
-                    hasMoreWarehouses={searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage}
+                    hasMoreWarehouses={
+                      searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage ?? false
+                    }
                     hasVariants={false}
                     onFormDataChange={change}
                     errors={errors}
@@ -320,7 +330,7 @@ const ProductCreatePage = ({
                 categories={categories}
                 categoryInputDisplayValue={selectedCategory}
                 collections={collections}
-                data={data}
+                data={data as any}
                 disabled={loading}
                 errors={[...errors, ...channelsErrors]}
                 fetchCategories={fetchCategories}
@@ -329,7 +339,7 @@ const ProductCreatePage = ({
                 fetchMoreCollections={fetchMoreCollections}
                 fetchMoreProductTypes={fetchMoreProductTypes}
                 fetchProductTypes={fetchProductTypes}
-                productType={data.productType}
+                productType={data.productType ?? undefined}
                 productTypeInputDisplayValue={data.productType?.name || ""}
                 productTypes={productTypes}
                 onCategoryChange={handlers.selectCategory}
@@ -387,11 +397,14 @@ const ProductCreatePage = ({
               <AssignAttributeValueDialog
                 entityType={entityType}
                 confirmButtonState={"default"}
-                products={referenceProducts}
+                products={referenceProducts as any}
                 pages={referencePages}
                 collections={referenceCollections}
                 categories={referenceCategories}
-                attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
+                attribute={
+                  data.attributes.find(({ id }) => id === assignReferencesAttributeId) ??
+                  ({} as any)
+                }
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
                 onFetch={handlers.fetchReferences}

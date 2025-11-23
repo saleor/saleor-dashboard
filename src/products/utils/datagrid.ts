@@ -1,11 +1,10 @@
-// @ts-strict-ignore
 function makeGetColumnData(regexp: RegExp): (column: string) => string | null {
   return column => {
     if (!regexp.test(column)) {
       return null;
     }
 
-    return column.match(regexp)[1];
+    return column.match(regexp)![1];
   };
 }
 

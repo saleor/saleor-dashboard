@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { RichTextProps } from "@dashboard/attributes/utils/data";
 import { AttributeInput } from "@dashboard/components/Attributes";
 import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";

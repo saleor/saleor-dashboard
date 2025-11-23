@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import {
   getAttributesAfterFileAttributesUpdate,
@@ -110,19 +109,19 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
           defaultMessage: "Variant removed",
         }),
       });
-      navigate(productUrl(productId));
+      navigate(productUrl(productId ?? ""));
     },
   });
   const [updateVariant, updateVariantOpts] = useVariantUpdateMutation({
     onCompleted: data => {
-      if (data.productVariantUpdate.errors.length === 0) {
+      if (data.productVariantUpdate?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
 
-      setErrors(data.productVariantUpdate.errors);
+      setErrors(data.productVariantUpdate?.errors ?? []);
     },
   });
   const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
@@ -149,9 +148,9 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   );
   const handleDeactivateVariantPreorder = (id: string) => deactivatePreorder({ variables: { id } });
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
-  const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
+  const onSetDefaultVariant = useOnSetDefaultVariant(productId ?? "", variant as any);
   const handleVariantReorder = createVariantReorderHandler(
-    variant?.product,
+    variant?.product as any,
     reorderProductVariants,
   );
   const disableFormSave =
@@ -180,23 +179,23 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     );
     const assignMediaErrors = await handleAssignMedia(
       data.media,
-      variant,
+      variant as any,
       variables => assignMedia({ variables }),
       variables => unassignMedia({ variables }),
     );
     const result = await updateVariant({
       variables: {
-        addStocks: data.addStocks.map(mapFormsetStockToStockInput),
+        addStocks: data.addStocks.map(mapFormsetStockToStockInput as any),
         attributes: prepareAttributesInput({
           attributes: data.attributes,
-          prevAttributes: getAttributeInputFromVariant(variant),
+          prevAttributes: getAttributeInputFromVariant(variant as any),
           updatedFileAttributes,
         }),
         id: variantId,
         removeStocks: data.removeStocks,
         sku: data.sku,
         quantityLimitPerCustomer: Number(data.quantityLimitPerCustomer) || null,
-        stocks: data.updateStocks.map(mapFormsetStockToStockInput),
+        stocks: data.updateStocks.map(mapFormsetStockToStockInput as any),
         trackInventory: data.trackInventory,
         preorder: data.isPreorder
           ? {
@@ -209,21 +208,21 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         name: data.variantName,
       },
     });
-    const channelErrors = await handleSubmitChannels(data, variant);
+    const channelErrors = await handleSubmitChannels(data, variant as any);
 
     return [
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-      ...(result.data?.productVariantStocksCreate.errors ?? []),
-      ...(result.data?.productVariantStocksDelete.errors ?? []),
-      ...(result.data?.productVariantStocksUpdate.errors ?? []),
-      ...(result.data?.productVariantUpdate.errors ?? []),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult as any),
+      ...(result.data?.productVariantStocksCreate?.errors ?? []),
+      ...(result.data?.productVariantStocksDelete?.errors ?? []),
+      ...(result.data?.productVariantStocksUpdate?.errors ?? []),
+      ...(result.data?.productVariantUpdate?.errors ?? []),
       ...assignMediaErrors,
       ...channelErrors,
     ];
   };
   const handleSubmit = createMetadataUpdateHandler(
-    data?.productVariant,
+    data?.productVariant as any,
     handleUpdate,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
@@ -296,19 +295,20 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || [];
 
   if (variant === null) {
-    return <NotFoundPage backHref={productUrl(productId)} />;
+    return <NotFoundPage backHref={productUrl(productId ?? "")} />;
   }
 
   return (
     <>
-      <WindowTitle title={data?.productVariant?.name} />
+      <WindowTitle title={data?.productVariant?.name ?? ""} />
       <ProductVariantPage
-        productId={productId}
-        defaultWeightUnit={shop?.defaultWeightUnit}
-        defaultVariantId={data?.productVariant.product.defaultVariant?.id}
+        productId={productId ?? ""}
+        defaultWeightUnit={shop?.defaultWeightUnit ?? ""}
+        defaultVariantId={data?.productVariant?.product?.defaultVariant?.id}
         errors={errors}
         attributeValues={attributeValues}
         channels={channels}
@@ -318,7 +318,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         loading={disableFormSave}
         placeholderImage={placeholderImg}
         variant={variant}
-        header={variant?.name || variant?.sku}
+        header={variant?.name ?? variant?.sku ?? ""}
         onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
         fetchMoreWarehouses={fetchMoreWarehouses}
@@ -328,20 +328,22 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}
-        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
+        assignReferencesAttributeId={
+          (params.action === "assign-attribute-value" && params.id) || undefined
+        }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
         referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
         referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
-        fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchMoreReferencePages={fetchMoreReferencePages as any}
         fetchReferenceProducts={searchProducts}
-        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts as any}
         fetchReferenceCategories={searchCategories}
-        fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+        fetchMoreReferenceCategories={fetchMoreReferenceCategories as any}
         fetchReferenceCollections={searchCollections}
-        fetchMoreReferenceCollections={fetchMoreReferenceCollections}
+        fetchMoreReferenceCollections={fetchMoreReferenceCollections as any}
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantEditUrl(variantId))}
@@ -358,7 +360,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
           })
         }
         open={params.action === "remove"}
-        name={data?.productVariant?.name}
+        name={data?.productVariant?.name ?? ""}
       />
     </>
   );

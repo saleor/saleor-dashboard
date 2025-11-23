@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -174,6 +173,8 @@ export const ProductStocks = ({
             </TableHead>
             <TableBody>
               {renderCollection(stocks, (stock, index) => {
+                if (!stock) return null;
+
                 const handleQuantityChange = createNonNegativeValueChangeHandler(event =>
                   onChange(stock.id, event.target.value),
                 );
@@ -181,7 +182,7 @@ export const ProductStocks = ({
                 return (
                   <TableRowLink
                     data-test-id={stock.label}
-                    key={`product-stocks-${stock.id}-${index}`}
+                    key={`product-stocks-${stock.id}-${index ?? 0}`}
                   >
                     <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                       <Text>{stock.label}</Text>
@@ -198,7 +199,11 @@ export const ProductStocks = ({
                         size="small"
                         type="number"
                         min={0}
-                        ref={input => stocks.length === index + 1 && handleStockInputFocus(input)}
+                        ref={input => {
+                          if (index !== undefined && stocks.length === index + 1 && input) {
+                            handleStockInputFocus(input as unknown as HTMLDivElement);
+                          }
+                        }}
                       />
                     </TableCell>
                     <TableCell>

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
@@ -85,7 +84,7 @@ export function useProductUpdateHandler(
   const [updateProduct, updateProductOpts] = useProductUpdateMutation();
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdateMutation({
     onCompleted: data => {
-      if (data.productChannelListingUpdate.errors.length) {
+      if (data.productChannelListingUpdate?.errors?.length) {
         data.productChannelListingUpdate.errors.forEach(error =>
           notify({
             status: "error",
@@ -117,7 +116,7 @@ export function useProductUpdateHandler(
         variables: updateProductChannelsData,
       });
 
-      if (updateChannelsResult.data) {
+      if (updateChannelsResult.data?.productChannelListingUpdate?.errors) {
         errors = [...errors, ...updateChannelsResult.data.productChannelListingUpdate.errors];
       }
     }
@@ -125,11 +124,15 @@ export function useProductUpdateHandler(
     if (data.variants.removed.length > 0) {
       const deleteVaraintsResult = await deleteVariants({
         variables: {
-          ids: data.variants.removed.map(index => product.variants[index].id),
+          ids: data.variants.removed
+            .map(index => (product.variants || [])[index]?.id)
+            .filter(Boolean) as string[],
         },
       });
 
-      errors = [...errors, ...deleteVaraintsResult.data.productVariantBulkDelete.errors];
+      if (deleteVaraintsResult.data?.productVariantBulkDelete?.errors) {
+        errors = [...errors, ...deleteVaraintsResult.data.productVariantBulkDelete.errors];
+      }
     }
 
     const updateProductResult = await updateProduct({
@@ -146,7 +149,7 @@ export function useProductUpdateHandler(
               index,
               product?.productType?.variantAttributes ?? [],
             ),
-          })),
+          })) as any,
         },
       });
       const createVariantsErrors = getCreateVariantMutationError(createVariantsResults);
@@ -183,7 +186,7 @@ export function useProductUpdateHandler(
     errors = [
       ...errors,
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult.filter(Boolean)),
       ...(updateProductResult?.data?.productUpdate?.errors ?? []),
     ];
     setVariantListErrors(variantErrors);

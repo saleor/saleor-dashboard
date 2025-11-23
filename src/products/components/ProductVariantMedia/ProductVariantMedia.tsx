@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import MediaTile from "@dashboard/components/MediaTile";
 import { ProductMediaFragment } from "@dashboard/graphql";

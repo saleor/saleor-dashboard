@@ -39,7 +39,7 @@ export const validateProductCreateData = (data?: ProductCreateData) => {
 
   const { productType, channelListings } = data;
 
-  if (!productType.hasVariants && channelListings) {
+  if (productType && !productType.hasVariants && channelListings) {
     const emptyPrices = data.channelListings
       .filter(channel => channel.price?.length === 0)
       .map(({ id }) => createRequiredError(toChannelPriceField(id)));

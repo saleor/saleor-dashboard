@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import {
   AttributeEntityTypeEnum,

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
 import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { AttributeFragment, AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
@@ -48,7 +47,7 @@ export function getAttributeValuesFromParams(
   params: ProductListUrlFilters,
   attribute: Pick<AttributeFragment, "inputType" | "slug">,
 ) {
-  return params[getAttributeFilterParamType(attribute.inputType)]?.[attribute.slug] || [];
+  return params[getAttributeFilterParamType(attribute.inputType!)]?.[attribute.slug!] || [];
 }
 
 interface BaseFilterParam {
@@ -81,31 +80,31 @@ export const parseFilterValue = (
   key: string,
   type: ProductListUrlFiltersAsDictWithMultipleValues,
 ): FilterParam => {
-  const value = params[type][key];
-  const isMulti = params[type][key].length > 1;
+  const value = params[type]?.[key];
+  const isMulti = (params[type]?.[key]?.length ?? 0) > 1;
   const name = { slug: key };
 
   switch (type) {
     case ProductListUrlFiltersAsDictWithMultipleValues.booleanAttributes:
-      return { ...name, boolean: JSON.parse(value[0]) };
+      return { ...name, boolean: JSON.parse(value![0]) };
     case ProductListUrlFiltersAsDictWithMultipleValues.dateAttributes:
       return {
         ...name,
         date: getGteLteVariables({
-          gte: value[0] || null,
-          lte: isMulti ? value[1] || null : value[0],
-        }),
+          gte: value![0] || null,
+          lte: isMulti ? value![1] || null : value![0],
+        }) as Partial<Record<"lte" | "gte", string>>,
       };
     case ProductListUrlFiltersAsDictWithMultipleValues.dateTimeAttributes:
       return {
         ...name,
         dateTime: getGteLteVariables({
-          gte: value[0] || null,
-          lte: isMulti ? value[1] || null : value[0],
-        }),
+          gte: value![0] || null,
+          lte: isMulti ? value![1] || null : value![0],
+        }) as Partial<Record<"lte" | "gte", string>>,
       };
     case ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes: {
-      const [gte, lte] = value.map(v => parseFloat(v));
+      const [gte, lte] = value!.map(v => parseFloat(v));
 
       return {
         ...name,
@@ -116,7 +115,7 @@ export const parseFilterValue = (
       };
     }
     default:
-      return { ...name, values: value };
+      return { ...name, values: value! };
   }
 };
 
@@ -180,6 +179,9 @@ export function getFilterQueryParam(
         filter as FilterElementKeyValue<ProductFilterKeys>,
         ProductListUrlFiltersWithKeyValueValues.metadata,
       );
+
+    default:
+      return {};
   }
 }
 

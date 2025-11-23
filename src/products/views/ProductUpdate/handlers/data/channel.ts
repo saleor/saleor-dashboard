@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   DatagridChange,
   DatagridChangeOpts,
@@ -19,7 +18,7 @@ export function getUpdateVariantChannelInputs(
     .filter(byCurrentRowByIndex(index))
     .map(availabilityToChannelColumn)
     .filter(byChannelColumn)
-    .reduce(byColumn, [])
+    .reduce<DatagridChange[]>(byColumn, [])
     .map(dataGridChangeToFlatChannel)
     .reduce<ProductVariantChannelListingUpdateInput>(toUpdateChannelData(variant), {
       create: [],
@@ -36,7 +35,7 @@ export function getVariantChannelsInputs(
     .filter(byCurrentRowByIndex(index))
     .map(availabilityToChannelColumn)
     .filter(byChannelColumn)
-    .reduce(byColumn, [])
+    .reduce<DatagridChange[]>(byColumn, [])
     .map(dataGridChangeToFlatChannel)
     .filter(byNotNullPrice);
 }
@@ -94,25 +93,27 @@ function toUpdateChannelData(variant: ProductFragment["variants"][number]) {
     acc: ProductVariantChannelListingUpdateInput,
     channel: ReturnType<typeof dataGridChangeToFlatChannel>,
   ) => {
-    const variantChannel = variant.channelListings.find(c => c.channel.id === channel.channelId);
+    const variantChannel = (variant.channelListings || []).find(
+      c => c.channel.id === channel.channelId,
+    );
 
     if (channel.price === null) {
-      if (variantChannel) {
+      if (variantChannel && acc.remove) {
         acc.remove.push(variantChannel.id);
       }
 
       return acc;
     }
 
-    if (variantChannel) {
+    if (variantChannel && acc.update) {
       acc.update.push({
         channelListing: variantChannel.id,
-        price: channel.price,
+        price: channel.price ?? "",
       });
-    } else {
+    } else if (acc.create) {
       acc.create.push({
-        channelId: channel.channelId,
-        price: channel.price,
+        channelId: channel.channelId ?? "",
+        price: channel.price ?? "",
       });
     }
 

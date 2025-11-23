@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ProductOrder, ProductOrderField } from "@dashboard/graphql";
 import { ProductListUrlQueryParams, ProductListUrlSortField } from "@dashboard/products/urls";
 import { getOrderDirection } from "@dashboard/utils/sort";
@@ -22,7 +21,7 @@ export function canBeSorted(sort: ProductListUrlSortField, isChannelSelected: bo
   }
 }
 
-function getSortQueryField(sort: ProductListUrlSortField): ProductOrderField {
+function getSortQueryField(sort: ProductListUrlSortField): ProductOrderField | undefined {
   switch (sort) {
     case ProductListUrlSortField.name:
       return ProductOrderField.NAME;
@@ -46,12 +45,12 @@ function getSortQueryField(sort: ProductListUrlSortField): ProductOrderField {
 export function getSortQueryVariables(
   params: ProductListUrlQueryParams,
   isChannelSelected: boolean,
-): ProductOrder {
-  if (!canBeSorted(params.sort, isChannelSelected)) {
-    return;
+): ProductOrder | undefined {
+  if (!params.sort || !canBeSorted(params.sort, isChannelSelected)) {
+    return undefined;
   }
 
-  const direction = getOrderDirection(params.asc);
+  const direction = getOrderDirection(params.asc ?? false);
 
   if (params.sort === ProductListUrlSortField.attribute) {
     return {

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
