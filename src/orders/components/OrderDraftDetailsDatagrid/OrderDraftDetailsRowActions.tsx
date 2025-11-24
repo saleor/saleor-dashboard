@@ -1,3 +1,4 @@
+import { rightColumnBoxShadow } from "@dashboard/components/Datagrid/ColumnPicker/utils";
 import { IconButton, MoreHorizontalIcon } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
@@ -23,7 +24,12 @@ export const OrderDraftDetailsRowActions = ({
   const classes = useStyles({ showMetadataButton: true });
 
   return (
-    <div className={classes.rowAction}>
+    <div
+      className={classes.rowAction}
+      style={{
+        boxShadow: rightColumnBoxShadow,
+      }}
+    >
       <IconButton
         data-test-id="show-metadata-button"
         disabled={disabled}

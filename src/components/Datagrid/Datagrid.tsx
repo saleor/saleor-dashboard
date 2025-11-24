@@ -103,6 +103,8 @@ interface DatagridProps {
   onClearRecentlyAddedColumn?: () => void;
   renderHeader?: (props: DatagridRenderHeaderProps) => ReactNode;
   navigatorOpts?: NavigatorOpts;
+  showTopBorder?: boolean;
+  themeOverride?: Partial<Theme>;
 }
 
 const Datagrid = ({
@@ -138,11 +140,17 @@ const Datagrid = ({
   rowHeight = cellHeight,
   renderHeader,
   navigatorOpts,
+  showTopBorder = true,
+  themeOverride,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
   const { themeValues, theme } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
+  const finalTheme = useMemo(
+    () => ({ ...datagridTheme, ...themeOverride }),
+    [datagridTheme, themeOverride],
+  );
   const rowMarkerTheme = useMemo(
     () => ({
       accentColor: themeValues.colors.text.default1,
@@ -355,9 +363,9 @@ const Datagrid = ({
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
   const drawHeader: DrawHeaderCallback = useCallback(args => {
-    const { ctx, rect, isSelected, spriteManager, theme } = args;
+    const { ctx, rect, isSelected, spriteManager, theme, column } = args;
 
-    if (isSelected) {
+    if (isSelected && column.id !== "empty") {
       const iconSize = 16;
       const padding = 8;
       const x = rect.x + rect.width - iconSize - padding;
@@ -472,7 +480,7 @@ const Datagrid = ({
                 <div className={classes.editorContainer}>
                   <Box
                     backgroundColor="default1"
-                    borderTopWidth={1}
+                    borderTopWidth={showTopBorder ? 1 : 0}
                     borderTopStyle="solid"
                     borderColor="default1"
                   />
@@ -482,7 +490,7 @@ const Datagrid = ({
                     verticalBorder={verticalBorder}
                     headerIcons={headerIcons}
                     drawHeader={drawHeader}
-                    theme={datagridTheme}
+                    theme={finalTheme}
                     rowMarkerTheme={rowMarkerTheme}
                     className={classes.datagrid}
                     getCellContent={handleGetCellContent}
