@@ -1,6 +1,6 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { parse as parseQs } from "qs";
+import { parseQs } from "@dashboard/url-utils";
 import { useEffect, useState } from "react";
 
 export const useSearchCriteria = () => {

@@ -14,7 +14,7 @@ import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtens
 import { PermissionEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
-import { parse as parseQs } from "qs";
+import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
 import { RouteComponentProps, Switch } from "react-router-dom";
 
