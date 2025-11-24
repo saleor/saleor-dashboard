@@ -31,7 +31,7 @@ export const LegacyPaymentsApiButtons = ({
     <Box>
       {order?.status !== OrderStatus.CANCELED &&
         (canCapture || canRefund || canVoid || canMarkAsPaid) && (
-          <div>
+          <>
             {canCapture && (
               <Button variant="secondary" onClick={onLegacyPaymentsApiCapture}>
                 {intl.formatMessage({
@@ -68,7 +68,7 @@ export const LegacyPaymentsApiButtons = ({
                 })}
               </Button>
             )}
-          </div>
+          </>
         )}
     </Box>
   );

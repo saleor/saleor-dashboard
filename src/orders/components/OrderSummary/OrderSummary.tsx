@@ -86,8 +86,8 @@ export const OrderSummary = (props: Props) => {
 
       <Box display="grid" __gridTemplateColumns="1fr 1fr" gap={3}>
         <OrderValue
-          orderSubtotal={order?.subtotal}
-          shippingMethodName={order?.shippingMethodName}
+          orderSubtotal={order.subtotal}
+          shippingMethodName={order.shippingMethodName}
           shippingPrice={order.shippingPrice}
           orderTotal={order.total}
           discounts={order.discounts}

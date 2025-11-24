@@ -29,7 +29,7 @@ export const OrderPaymentOrTransaction = ({
   onAddManualTransaction,
   onRefundAdd,
 }: OrderPaymentOrTransactionProps) => {
-  // TODO: unify those sections - there should be one `OrderSummary` and then transactions or not  based on `orderShouldUseTransactions`
+  // TODO: unify those sections - there should be one `OrderSummary` and then transactions or not based on `orderShouldUseTransactions`
   if (orderShouldUseTransactions(order)) {
     return (
       <OrderTransactionsWrapper
