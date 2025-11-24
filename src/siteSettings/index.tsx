@@ -1,5 +1,5 @@
 import { Route } from "@dashboard/components/Router";
-import { parse as parseQs } from "qs";
+import { parseQs } from "@dashboard/url-utils";
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 
