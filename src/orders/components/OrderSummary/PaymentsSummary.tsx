@@ -37,6 +37,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
         borderRadius={4}
         borderStyle="solid"
         borderColor="default1"
+        borderWidth={1}
         {...props}
       >
         <PaymentsSummaryHeader
@@ -60,6 +61,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
       borderRadius={4}
       borderStyle="solid"
       borderColor="default1"
+      borderWidth={1}
       {...props}
     >
       <PaymentsSummaryHeader
@@ -119,37 +121,38 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
             id: "Gs86nL",
           })}
         </OrderSummaryListItem>
-      </Box>
 
-      <Box display="grid" placeItems="end">
-        <Box
-          borderStyle="solid"
-          borderColor="default2"
-          borderBottomWidth={0}
-          borderLeftWidth={0}
-          borderRightWidth={0}
-        >
-          {intl.formatMessage(
-            {
-              defaultMessage: "{currency} {totalAmount}",
-              id: "V21v8h",
-            },
-            {
-              currency: (
-                <Text fontWeight="medium" color="default2" size={3}>
-                  {orderAmounts.totalCharged.currency}
-                </Text>
-              ),
-              totalAmount: (
-                <OrderSummaryListAmount
-                  amount={
-                    totalAmountFractional / Math.pow(10, orderAmounts.totalCaptured.fractionDigits)
-                  }
-                  fontWeight="bold"
-                />
-              ),
-            },
-          )}
+        <Box display="grid" placeItems="end">
+          <Box
+            borderStyle="solid"
+            borderColor="default2"
+            borderBottomWidth={0}
+            borderLeftWidth={0}
+            borderRightWidth={0}
+          >
+            {intl.formatMessage(
+              {
+                defaultMessage: "{currency} {totalAmount}",
+                id: "V21v8h",
+              },
+              {
+                currency: (
+                  <Text fontWeight="medium" color="default2" size={3}>
+                    {orderAmounts.totalCharged.currency}
+                  </Text>
+                ),
+                totalAmount: (
+                  <OrderSummaryListAmount
+                    amount={
+                      totalAmountFractional /
+                      Math.pow(10, orderAmounts.totalCaptured.fractionDigits)
+                    }
+                    fontWeight="bold"
+                  />
+                ),
+              },
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>

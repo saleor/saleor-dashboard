@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
+import { OrderValueHeader } from "./OrderValueHeader";
 
 type Props = PropsWithBox<{
   orderSubtotal: OrderDetailsFragment["subtotal"];
@@ -28,21 +29,21 @@ export const OrderValue = ({
   const intl = useIntl();
 
   return (
-    <Box backgroundColor="default2" padding={5} borderRadius={4} {...props}>
-      <Box display="flex" flexDirection="column">
-        <Text fontWeight="medium" fontSize={6}>
-          {intl.formatMessage({
-            defaultMessage: "Order value",
-            id: "fL08MU",
-          })}
-        </Text>
-        <Text color="default2" size={2}>
-          {intl.formatMessage({
-            defaultMessage: "All lines as ordered by the client.",
-            id: "73SSOz",
-          })}
-        </Text>
-      </Box>
+    <Box
+      backgroundColor="default2"
+      padding={5}
+      borderRadius={4}
+      borderStyle="solid"
+      borderColor="transparent"
+      borderWidth={1}
+      {...props}
+    >
+      <OrderValueHeader
+        description={intl.formatMessage({
+          defaultMessage: "All lines as ordered by the client.",
+          id: "73SSOz",
+        })}
+      />
 
       <Box as="ul" display="grid" gap={1} marginTop={4}>
         <OrderSummaryListItem amount={orderSubtotal.gross.amount}>
