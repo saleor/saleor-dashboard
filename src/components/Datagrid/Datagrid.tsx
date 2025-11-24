@@ -491,6 +491,7 @@ const Datagrid = ({
                     headerIcons={headerIcons}
                     drawHeader={drawHeader}
                     theme={finalTheme}
+                    drawFocusRing={false}
                     rowMarkerTheme={rowMarkerTheme}
                     className={classes.datagrid}
                     getCellContent={handleGetCellContent}
