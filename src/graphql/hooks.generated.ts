@@ -2030,6 +2030,7 @@ export const MoneyWithFractionalFragmentDoc = gql`
   currency
   amount
   fractionalAmount
+  fractionDigits
 }
     `;
 export const InvoiceFragmentDoc = gql`

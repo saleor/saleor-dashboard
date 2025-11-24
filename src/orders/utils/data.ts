@@ -422,6 +422,7 @@ export const prepareMoney = (
   amount,
   currency: currency ?? "USD",
   fractionalAmount: amount,
+  fractionDigits: 2,
 });
 
 export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>

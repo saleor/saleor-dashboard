@@ -272,6 +272,7 @@ export const fragmentMoneyWithFractional = gql`
     currency
     amount
     fractionalAmount
+    fractionDigits
   }
 `;
 

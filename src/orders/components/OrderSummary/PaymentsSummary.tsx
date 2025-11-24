@@ -137,11 +137,16 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
             {
               currency: (
                 <Text fontWeight="medium" color="default2" size={3}>
-                  {orderAmounts.total.gross.currency}
+                  {orderAmounts.totalCharged.currency}
                 </Text>
               ),
               totalAmount: (
-                <OrderSummaryListAmount amount={totalAmountFractional} fontWeight="bold" />
+                <OrderSummaryListAmount
+                  amount={
+                    totalAmountFractional / Math.pow(10, orderAmounts.totalCaptured.fractionDigits)
+                  }
+                  fontWeight="bold"
+                />
               ),
             },
           )}
