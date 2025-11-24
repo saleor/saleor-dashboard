@@ -91,7 +91,6 @@ export const OrderSummary = (props: Props) => {
           shippingPrice={order.shippingPrice}
           orderTotal={order.total}
           discounts={order.discounts}
-          orderId={order.id}
           giftCardsAmount={giftCardsAmount ?? null}
           usedGiftCards={usedGiftCards}
         />

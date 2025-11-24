@@ -11,7 +11,6 @@ type Props = PropsWithBox<{
   shippingPrice: OrderDetailsFragment["shippingPrice"];
   orderTotal: OrderDetailsFragment["total"];
   discounts: OrderDetailsFragment["discounts"];
-  orderId: string;
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
 }>;
