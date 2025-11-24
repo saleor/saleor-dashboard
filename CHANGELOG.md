@@ -1,5 +1,37 @@
 # Changelog
 
+## 3.22.13
+
+### Patch Changes
+
+- [#6090](https://github.com/saleor/saleor-dashboard/pull/6090) [`4c24b50`](https://github.com/saleor/saleor-dashboard/commit/4c24b508a69276fb6d7dabb30009a61c7a556796) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Fix visual regressions introduced in 3.22.12: missing sort arrow on datagrid when column is focused and changing order of buttons on order metadata / order line metadata dialogs to match other places in dashboard.
+
+- [#6081](https://github.com/saleor/saleor-dashboard/pull/6081) [`7b2d6d2`](https://github.com/saleor/saleor-dashboard/commit/7b2d6d24688d77bde321b89d98a8b02dbd69874a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Dashboard now uses new API to filter appExtensions query - `mountName` instead `mount`
+
+- [#6097](https://github.com/saleor/saleor-dashboard/pull/6097) [`989aa1d`](https://github.com/saleor/saleor-dashboard/commit/989aa1d66dea035a1b7fc57447b2cb7a0a1a11ac) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Fix row checkbox visibility in DataGrid by overriding rowMarkerTheme accentColor. Previously, checked row checkboxes had light gray background with white checkmark, making them invisible. Now they use dark text color for background, matching header checkbox appearance.
+
+- [#6093](https://github.com/saleor/saleor-dashboard/pull/6093) [`77ce8c2`](https://github.com/saleor/saleor-dashboard/commit/77ce8c23bc863d0da6eedf5219b61a9f34699308) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Add fulfillment metadata editing with button and modal dialog. Replace cancel fulfillment trash icon with dropdown menu. Improve tracking number copy button to show only on hover.
+
+- [#6100](https://github.com/saleor/saleor-dashboard/pull/6100) [`90e5db9`](https://github.com/saleor/saleor-dashboard/commit/90e5db90272170e8b1584c378d02a21df999589d) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improve order details datagrid visual polish
+
+  Enhanced the visual appearance of order details datagrids with the following improvements:
+  - Refined column selection styling to use a more subtle hover color, creating a cleaner visual experience when selecting columns
+  - Improved fulfillment card spacing by making the last card's bottom border white, providing better visual separation from surrounding content
+  - Fixed visual clutter by hiding the drag handle icon on the empty spacing column
+  - Added left padding and adjusted spacing for better content alignment
+  - Enhanced draft order cards with subtle shadows for improved depth perception
+  - Refined font sizing for better readability
+
+  These changes improve the overall visual consistency and polish of the order management interface.
+
+- [#6098](https://github.com/saleor/saleor-dashboard/pull/6098) [`b7b0ed1`](https://github.com/saleor/saleor-dashboard/commit/b7b0ed1c69cce94eeaffae6184b99d82f9116184) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improve draft order line item management with quick actions
+
+  Order draft line items now feature a row action bar for faster access to common operations. Metadata can be viewed via the metadata icon button, while additional actions (product details, remove item) are available through the menu dropdown.
+
+- [#6082](https://github.com/saleor/saleor-dashboard/pull/6082) [`290c67e`](https://github.com/saleor/saleor-dashboard/commit/290c67ed7f4e1e9d447ee3c872c9be5c044a908d) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improved order fulfillment cards with better keyboard accessibility - tracking number copy buttons now work with keyboard navigation. Enhanced screen reader support with proper labels for order status indicators.
+
+- [#6121](https://github.com/saleor/saleor-dashboard/pull/6121) [`2632bf0`](https://github.com/saleor/saleor-dashboard/commit/2632bf0741d87d3790481283d117fae9a6b8a26d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed error when bulk operations on large number of items (over 20) caused runtime error - for example selecting 100 items to be unassigned from collecton, caused page to crash. Now limit is set to 100
+
 ## 3.22.12
 
 ### Patch Changes
