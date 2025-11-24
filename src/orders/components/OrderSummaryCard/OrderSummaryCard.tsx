@@ -30,6 +30,7 @@ const useStyles = makeStyles(
   }),
   { name: "OrderSummaryCard" },
 );
+// TODO: remove this in the next PR
 const OrderSummaryCard = ({ order }: OrderPaymentProps) => {
   const classes = useStyles();
   const intl = useIntl();
