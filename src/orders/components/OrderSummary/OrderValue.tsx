@@ -44,7 +44,7 @@ export const OrderValue = ({
         </Text>
       </Box>
 
-      <Box as="ul" display="grid" gap={1}>
+      <Box as="ul" display="grid" gap={1} marginTop={4}>
         <OrderSummaryListItem amount={orderSubtotal.gross.amount}>
           {intl.formatMessage({
             defaultMessage: "Subtotal",

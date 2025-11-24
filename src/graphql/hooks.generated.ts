@@ -2025,6 +2025,13 @@ export const FulfillmentFragmentDoc = gql`
 }
     ${MetadataFragmentDoc}
 ${OrderLineFragmentDoc}`;
+export const MoneyWithFractionalFragmentDoc = gql`
+    fragment MoneyWithFractional on Money {
+  currency
+  amount
+  fractionalAmount
+}
+    `;
 export const InvoiceFragmentDoc = gql`
     fragment Invoice on Invoice {
   id
@@ -2126,7 +2133,7 @@ export const OrderDetailsFragmentDoc = gql`
     ...Money
   }
   totalRefunded {
-    ...Money
+    ...MoneyWithFractional
   }
   actions
   totalAuthorizePending {
@@ -2136,7 +2143,7 @@ export const OrderDetailsFragmentDoc = gql`
     ...Money
   }
   totalCaptured {
-    ...Money
+    ...MoneyWithFractional
   }
   totalCharged {
     ...Money
@@ -2204,6 +2211,7 @@ ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}
 ${OrderLineFragmentDoc}
 ${MoneyFragmentDoc}
+${MoneyWithFractionalFragmentDoc}
 ${InvoiceFragmentDoc}`;
 export const OrderLineWithMetadataFragmentDoc = gql`
     fragment OrderLineWithMetadata on OrderLine {

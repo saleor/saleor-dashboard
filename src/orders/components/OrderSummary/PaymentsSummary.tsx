@@ -50,6 +50,9 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
     );
   }
 
+  const totalAmountFractional =
+    orderAmounts.totalCaptured.fractionalAmount - orderAmounts.totalRefunded.fractionalAmount;
+
   return (
     <Box
       backgroundColor="default2"
@@ -138,10 +141,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
                 </Text>
               ),
               totalAmount: (
-                <OrderSummaryListAmount
-                  amount={orderAmounts.total.gross.amount}
-                  fontWeight="bold"
-                />
+                <OrderSummaryListAmount amount={totalAmountFractional} fontWeight="bold" />
               ),
             },
           )}

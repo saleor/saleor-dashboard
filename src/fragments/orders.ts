@@ -267,6 +267,14 @@ export const orderDiscount = gql`
   }
 `;
 
+export const fragmentMoneyWithFractional = gql`
+  fragment MoneyWithFractional on Money {
+    currency
+    amount
+    fractionalAmount
+  }
+`;
+
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
@@ -360,7 +368,7 @@ export const fragmentOrderDetails = gql`
       ...Money
     }
     totalRefunded {
-      ...Money
+      ...MoneyWithFractional
     }
     actions
     totalAuthorizePending {
@@ -371,7 +379,7 @@ export const fragmentOrderDetails = gql`
     }
     # TODO: Remove me
     totalCaptured {
-      ...Money
+      ...MoneyWithFractional
     }
     totalCharged {
       ...Money
