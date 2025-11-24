@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { order as orderFixture, payments } from "@dashboard/orders/fixtures";
 
 import { getFilteredPayments } from "./utils";

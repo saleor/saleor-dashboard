@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   AddressFragment,

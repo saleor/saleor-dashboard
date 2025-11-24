@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Text, TextProps } from "@saleor/macaw-ui-next";
 
 import { useManualTransactionContext } from "../context";

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { handleNestedMutationErrors } from "@dashboard/auth";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { MarkAsPaidStrategyEnum } from "@dashboard/graphql";
 import { order as orderFixture, payments, shop } from "@dashboard/orders/fixtures";
 import { render, screen } from "@testing-library/react";

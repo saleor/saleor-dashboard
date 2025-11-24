@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FulfillmentStatus } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { DEFAULT_ICON_SIZE } from "@dashboard/icons/utils";

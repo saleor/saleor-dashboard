@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { SearchOrderVariantQuery } from "@dashboard/graphql";
 
 type SetVariantsAction = (

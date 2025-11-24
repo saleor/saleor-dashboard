@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { OrderRefundDataQuery } from "@dashboard/graphql";
 import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashboard/hooks/useForm";

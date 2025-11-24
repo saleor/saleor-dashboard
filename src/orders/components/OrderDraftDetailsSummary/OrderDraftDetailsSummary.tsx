@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ButtonLink } from "@dashboard/components/ButtonLink";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";

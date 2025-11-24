@@ -1,5 +1,3 @@
-// @ts-strict-ignore
-
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,

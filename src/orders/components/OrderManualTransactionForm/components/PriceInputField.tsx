@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import PriceField, { PriceFieldProps } from "@dashboard/components/PriceField";
 
 import { useManualTransactionContext } from "../context";

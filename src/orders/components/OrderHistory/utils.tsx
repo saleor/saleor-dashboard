@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";

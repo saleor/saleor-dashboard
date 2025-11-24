@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { OrderEventFragment, OrderEventsEmailsEnum, OrderEventsEnum } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
