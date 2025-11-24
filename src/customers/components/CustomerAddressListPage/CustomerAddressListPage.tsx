@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { customerUrl } from "@dashboard/customers/urls";
@@ -128,14 +127,14 @@ const CustomerAddressListPage = (props: CustomerAddressListPageProps) => {
         <div className={classes.root}>
           {renderCollection(customer?.addresses, (address, addressNumber) => (
             <CustomerAddress
-              address={address}
-              addressNumber={addressNumber + 1}
+              address={address!}
+              addressNumber={(addressNumber ?? 0) + 1}
               disabled={disabled}
               isDefaultBillingAddress={customer?.defaultBillingAddress?.id === address?.id}
               isDefaultShippingAddress={customer?.defaultShippingAddress?.id === address?.id}
-              onEdit={() => onEdit(address.id)}
-              onRemove={() => onRemove(address.id)}
-              onSetAsDefault={type => onSetAsDefault(address.id, type)}
+              onEdit={() => onEdit(address!.id)}
+              onRemove={() => onRemove(address!.id)}
+              onSetAsDefault={type => onSetAsDefault(address!.id, type)}
               key={address?.id || "skeleton"}
             />
           ))}

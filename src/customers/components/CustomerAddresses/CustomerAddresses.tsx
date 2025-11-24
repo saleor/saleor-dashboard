@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Hr } from "@dashboard/components/Hr";
@@ -50,8 +49,8 @@ const CustomerAddresses = (props: CustomerAddressesProps) => {
           </Link>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      {maybe(() => customer.defaultBillingAddress.id) !==
-      maybe(() => customer.defaultShippingAddress.id) ? (
+      {maybe(() => customer?.defaultBillingAddress?.id) !==
+      maybe(() => customer?.defaultShippingAddress?.id) ? (
         <>
           {maybe(() => customer.defaultBillingAddress) !== null && (
             <DashboardCard.Content>
@@ -62,7 +61,7 @@ const CustomerAddresses = (props: CustomerAddressesProps) => {
                   description="subsection header"
                 />
               </Text>
-              <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
+              <AddressFormatter address={maybe(() => customer.defaultBillingAddress) as any} />
             </DashboardCard.Content>
           )}
           {maybe(() => customer.defaultBillingAddress && customer.defaultShippingAddress) && <Hr />}
@@ -75,7 +74,7 @@ const CustomerAddresses = (props: CustomerAddressesProps) => {
                   description="subsection header"
                 />
               </Text>
-              <AddressFormatter address={maybe(() => customer.defaultShippingAddress)} />
+              <AddressFormatter address={maybe(() => customer.defaultShippingAddress) as any} />
             </DashboardCard.Content>
           )}
         </>
@@ -95,7 +94,7 @@ const CustomerAddresses = (props: CustomerAddressesProps) => {
               description="subsection header"
             />
           </Text>
-          <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
+          <AddressFormatter address={maybe(() => customer.defaultBillingAddress) as any} />
         </DashboardCard.Content>
       )}
     </DashboardCard>

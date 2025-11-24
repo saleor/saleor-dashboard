@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { AccountErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -58,7 +57,11 @@ const CustomerCreateDetails = (props: CustomerCreateDetailsProps) => {
             fullWidth
             name="customerFirstName"
             label={intl.formatMessage(commonMessages.firstName)}
-            helperText={getAccountErrorMessage(formErrors.customerFirstName, intl)}
+            helperText={
+              formErrors.customerFirstName
+                ? getAccountErrorMessage(formErrors.customerFirstName, intl)
+                : undefined
+            }
             type="text"
             value={data.customerFirstName}
             onChange={onChange}
@@ -73,7 +76,11 @@ const CustomerCreateDetails = (props: CustomerCreateDetailsProps) => {
             fullWidth
             name="customerLastName"
             label={intl.formatMessage(commonMessages.lastName)}
-            helperText={getAccountErrorMessage(formErrors.customerLastName, intl)}
+            helperText={
+              formErrors.customerLastName
+                ? getAccountErrorMessage(formErrors.customerLastName, intl)
+                : undefined
+            }
             type="text"
             value={data.customerLastName}
             onChange={onChange}
@@ -88,7 +95,9 @@ const CustomerCreateDetails = (props: CustomerCreateDetailsProps) => {
             fullWidth
             name="email"
             label={intl.formatMessage(commonMessages.email)}
-            helperText={getAccountErrorMessage(formErrors.email, intl)}
+            helperText={
+              formErrors.email ? getAccountErrorMessage(formErrors.email, intl) : undefined
+            }
             type="email"
             value={data.email}
             onChange={onChange}

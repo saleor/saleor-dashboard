@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AccountErrorFragment } from "@dashboard/graphql";
@@ -49,7 +48,7 @@ const CustomerCreateNote = ({ data, disabled, errors, onChange }: CustomerCreate
           fullWidth
           multiline
           name="note"
-          helperText={getAccountErrorMessage(formErrors.note, intl)}
+          helperText={formErrors.note ? getAccountErrorMessage(formErrors.note, intl) : undefined}
           label={intl.formatMessage({
             id: "uUQ+Al",
             defaultMessage: "Note",

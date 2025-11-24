@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useCreateCustomerMutation, useCustomerCreateDataQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -18,7 +17,7 @@ const CustomerCreate = () => {
   });
   const [createCustomer, createCustomerOpts] = useCreateCustomerMutation({
     onCompleted: data => {
-      if (data.customerCreate.errors.length === 0) {
+      if (data.customerCreate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -26,7 +25,7 @@ const CustomerCreate = () => {
             defaultMessage: "Customer created",
           }),
         });
-        navigate(customerUrl(data.customerCreate.user.id));
+        navigate(customerUrl(data.customerCreate.user!.id));
       }
     },
   });
@@ -56,9 +55,9 @@ const CustomerCreate = () => {
         })}
       />
       <CustomerCreatePage
-        countries={maybe(() => data.shop.countries, [])}
+        countries={maybe(() => data?.shop.countries, []) ?? []}
         disabled={loading || createCustomerOpts.loading}
-        errors={createCustomerOpts.data?.customerCreate.errors || []}
+        errors={createCustomerOpts.data?.customerCreate?.errors || []}
         saveButtonBar={createCustomerOpts.status}
         onSubmit={handleSubmit}
       />

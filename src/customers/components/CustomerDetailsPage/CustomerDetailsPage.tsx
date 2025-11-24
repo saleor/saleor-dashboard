@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -67,7 +66,7 @@ const CustomerDetailsPage = ({
     firstName: customer?.firstName || "",
     isActive: customer?.isActive || false,
     lastName: customer?.lastName || "",
-    metadata: customer?.metadata.map(mapMetadataItemToInput),
+    metadata: customer?.metadata?.map(mapMetadataItemToInput) || [],
     note: customer?.note || "",
     privateMetadata: customer?.privateMetadata
       ? customer?.privateMetadata.map(mapMetadataItemToInput)
@@ -114,7 +113,7 @@ const CustomerDetailsPage = ({
               <CardSpacer />
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                 <CustomerOrders
-                  orders={mapEdgesToItems(customer?.orders)}
+                  orders={mapEdgesToItems(customer?.orders) ?? []}
                   viewAllHref={orderListUrl({
                     customer: customer?.email,
                   })}
@@ -125,7 +124,7 @@ const CustomerDetailsPage = ({
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <CustomerAddresses
-                customer={customer}
+                customer={customer as any}
                 disabled={disabled}
                 manageAddressHref={customerAddressesUrl(customerId)}
               />

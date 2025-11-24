@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -29,7 +28,7 @@ export interface CustomerCreatePageFormData {
   note: string;
 }
 export interface CustomerCreatePageSubmitData extends CustomerCreatePageFormData {
-  address: AddressInput;
+  address: AddressInput | null;
 }
 
 const initialForm: CustomerCreatePageFormData & AddressTypeInput = {

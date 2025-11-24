@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardMenu from "@dashboard/components/CardMenu";
@@ -132,7 +131,7 @@ const CustomerAddress = (props: CustomerAddressProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <AddressFormatter address={address} />
+        <AddressFormatter address={address as any} />
       </DashboardCard.Content>
     </DashboardCard>
   );

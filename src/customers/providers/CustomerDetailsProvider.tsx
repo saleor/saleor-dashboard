@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { CustomerDetailsQuery, useCustomerDetailsQuery } from "@dashboard/graphql";
 import { createContext } from "react";
 import * as React from "react";
@@ -12,7 +11,10 @@ interface CustomerDetailsConsumerProps {
   loading: boolean | null;
 }
 
-export const CustomerDetailsContext = createContext<CustomerDetailsConsumerProps>(null);
+export const CustomerDetailsContext = createContext<CustomerDetailsConsumerProps>({
+  customer: null,
+  loading: null,
+});
 
 export const CustomerDetailsProvider = ({
   children,
@@ -25,7 +27,7 @@ export const CustomerDetailsProvider = ({
     },
   });
   const providerValues: CustomerDetailsConsumerProps = {
-    customer: data,
+    customer: data ?? null,
     loading,
   };
 

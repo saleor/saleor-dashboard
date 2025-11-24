@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -38,7 +37,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
 
   const [removeCustomer, removeCustomerOpts] = useRemoveCustomerMutation({
     onCompleted: data => {
-      if (data.customerDelete.errors.length === 0) {
+      if (data.customerDelete?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -53,7 +52,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
 
   const [updateCustomer, updateCustomerOpts] = useUpdateCustomerMutation({
     onCompleted: data => {
-      if (data.customerUpdate.errors.length === 0) {
+      if (data.customerUpdate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -86,10 +85,12 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
     );
 
   const handleSubmit = createMetadataUpdateHandler(
-    {
-      ...user,
-      privateMetadata: user?.privateMetadata || [],
-    },
+    user
+      ? {
+          ...user,
+          privateMetadata: user.privateMetadata || [],
+        }
+      : null!,
     updateData,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
@@ -97,14 +98,14 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
 
   return (
     <>
-      <WindowTitle title={user?.email} data-test-id="user-email-title" />
+      <WindowTitle title={user?.email ?? ""} data-test-id="user-email-title" />
       <CustomerDetailsPage
         customerId={id}
-        customer={user}
+        customer={user as any}
         disabled={
           customerDetailsLoading || updateCustomerOpts.loading || removeCustomerOpts.loading
         }
-        errors={updateCustomerOpts.data?.customerUpdate.errors || []}
+        errors={updateCustomerOpts.data?.customerUpdate?.errors || []}
         saveButtonBar={updateCustomerOpts.status}
         onSubmit={handleSubmit}
         onDelete={() =>

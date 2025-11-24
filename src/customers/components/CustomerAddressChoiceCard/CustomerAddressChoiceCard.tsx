@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { DashboardCard } from "@dashboard/components/Card";
 import { AddressFragment } from "@dashboard/graphql";
@@ -32,7 +31,7 @@ const CustomerAddressChoiceCard = (props: CustomerAddressChoiceCardProps) => {
       onClick={onSelect}
     >
       <DashboardCard.Content className={classes.cardContent}>
-        <AddressFormatter address={address} />
+        <AddressFormatter address={address as any} />
         {editable && (
           <div onClick={onEditClick}>
             <EditIcon
