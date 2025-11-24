@@ -37,7 +37,7 @@ export const OrderValue = ({
             id: "fL08MU",
           })}
         </Text>
-        <Text color="default2" size={3}>
+        <Text color="default2" size={2}>
           {intl.formatMessage({
             defaultMessage: "All line as ordered by the client.",
             id: "AoCDZi",
@@ -60,7 +60,7 @@ export const OrderValue = ({
             },
             {
               carrierName: (
-                <Text color="default2" fontWeight="medium">
+                <Text color="default2" fontWeight="medium" size={3}>
                   ({shippingMethodName})
                 </Text>
               ),
@@ -72,7 +72,7 @@ export const OrderValue = ({
             defaultMessage: "Taxes ",
             id: "HTiAMm",
           })}
-          <Text fontWeight="medium" color="default2">
+          <Text fontWeight="medium" color="default2" size={3}>
             {intl.formatMessage(
               {
                 defaultMessage: "{taxAmount, plural, =0 {(not applicable)} other {} }",
@@ -95,7 +95,7 @@ export const OrderValue = ({
               },
               {
                 discountName: (
-                  <Text fontWeight="medium" color="default2">
+                  <Text fontWeight="medium" color="default2" size={3}>
                     ({discount.name})
                   </Text>
                 ),
@@ -115,7 +115,7 @@ export const OrderValue = ({
               {
                 usedGiftCards: usedGiftCards.length,
                 giftCardCodesList: (
-                  <Text fontWeight="medium" color="default2">
+                  <Text fontWeight="medium" color="default2" size={3}>
                     ({usedGiftCards.map(card => card.last4CodeChars).join(", ")})
                   </Text>
                 ),
@@ -139,7 +139,7 @@ export const OrderValue = ({
               },
               {
                 currency: (
-                  <Text fontWeight="medium" color="default2">
+                  <Text fontWeight="medium" color="default2" size={3}>
                     {orderTotal.gross.currency}
                   </Text>
                 ),

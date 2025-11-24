@@ -1,99 +1,11 @@
-import { OrderDetailsFragment, PaymentChargeStatusEnum } from "@dashboard/graphql";
-import { PillStatusType } from "@dashboard/misc";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
-import { ReactNode } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import { OrderPaymentStatusPill } from "../OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
-
-const getPaymentStatusPillData = (
-  status: PaymentChargeStatusEnum,
-  intl: IntlShape,
-): {
-  status: PillStatusType;
-  label: ReactNode;
-} => {
-  switch (status) {
-    case PaymentChargeStatusEnum.FULLY_CHARGED: {
-      return {
-        status: "success",
-        label: intl.formatMessage({
-          defaultMessage: "Fully paid",
-          id: "JZKsZF",
-        }),
-      };
-    }
-    case PaymentChargeStatusEnum.NOT_CHARGED: {
-      return {
-        status: "info",
-        label: intl.formatMessage({
-          defaultMessage: "Not charged",
-          id: "n74igO",
-        }),
-      };
-    }
-    case PaymentChargeStatusEnum.PARTIALLY_CHARGED: {
-      return {
-        status: "warning",
-        label: intl.formatMessage({
-          defaultMessage: "Partially charged",
-          id: "ChDAaD",
-        }),
-      };
-    }
-    case PaymentChargeStatusEnum.FULLY_REFUNDED: {
-      return {
-        status: "success",
-        label: intl.formatMessage({
-          defaultMessage: "Fully refunded",
-          id: "VcQV4Z",
-        }),
-      };
-    }
-    case PaymentChargeStatusEnum.PARTIALLY_REFUNDED: {
-      return {
-        status: "warning",
-        label: intl.formatMessage({
-          defaultMessage: "Partially refunded",
-          id: "XvZCaw",
-        }),
-      };
-    }
-    case PaymentChargeStatusEnum.CANCELLED: {
-      return {
-        status: "warning",
-        label: intl.formatMessage({
-          defaultMessage: "Cancelled",
-          id: "3wsVWF",
-        }),
-      };
-    }
-    case PaymentChargeStatusEnum.PENDING: {
-      return {
-        status: "info",
-        label: intl.formatMessage({
-          defaultMessage: "Pending",
-          id: "eKEL/g",
-        }),
-      };
-    }
-    case PaymentChargeStatusEnum.REFUSED: {
-      return {
-        status: "error",
-        label: intl.formatMessage({
-          defaultMessage: "Refused",
-          id: "NT+3fY",
-        }),
-      };
-    }
-    default: {
-      return null;
-    }
-  }
-};
+import { PaymentsSummaryHeader } from "./PaymentsSummaryHeader";
 
 type Props = PropsWithBox<{
   orderAmounts: {
@@ -108,18 +20,11 @@ type Props = PropsWithBox<{
     totalCanceled: OrderDetailsFragment["totalCanceled"];
     totalCancelPending: OrderDetailsFragment["totalCancelPending"];
   };
-  paymentStatus: PaymentChargeStatusEnum;
   order: OrderDetailsFragment;
   hasNoPayment: boolean;
 }>;
 
-export const PaymentsSummary = ({
-  orderAmounts,
-  paymentStatus,
-  order,
-  hasNoPayment,
-  ...props
-}: Props) => {
+export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }: Props) => {
   const intl = useIntl();
 
   const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(orderAmounts);
@@ -134,28 +39,13 @@ export const PaymentsSummary = ({
         borderColor="default1"
         {...props}
       >
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="flex-start"
-        >
-          <Box display="flex" flexDirection="column">
-            <Text fontWeight="medium" fontSize={6}>
-              {intl.formatMessage({
-                defaultMessage: "Payments summary",
-                id: "q7bXR4",
-              })}
-            </Text>
-            <Text color="default2" size={3}>
-              {intl.formatMessage({
-                defaultMessage: "This order has no payment yet",
-                id: "Fcxl/G",
-              })}
-            </Text>
-          </Box>
-          <OrderPaymentStatusPill order={order} />
-        </Box>
+        <PaymentsSummaryHeader
+          order={order}
+          description={intl.formatMessage({
+            defaultMessage: "This order has no payment yet",
+            id: "Fcxl/G",
+          })}
+        />
       </Box>
     );
   }
@@ -169,28 +59,13 @@ export const PaymentsSummary = ({
       borderColor="default1"
       {...props}
     >
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="flex-start"
-      >
-        <Box display="flex" flexDirection="column">
-          <Text fontWeight="medium" fontSize={6}>
-            {intl.formatMessage({
-              defaultMessage: "Payments summary",
-              id: "q7bXR4",
-            })}
-          </Text>
-          <Text color="default2" size={3}>
-            {intl.formatMessage({
-              defaultMessage: "All payments from registered transactions.",
-              id: "9TENcY",
-            })}
-          </Text>
-        </Box>
-        <OrderPaymentStatusPill order={order} />
-      </Box>
+      <PaymentsSummaryHeader
+        order={order}
+        description={intl.formatMessage({
+          defaultMessage: "All payments from registered transactions.",
+          id: "9TENcY",
+        })}
+      />
 
       <Box as="ul" display="grid" gap={1} marginTop={4}>
         <OrderSummaryListItem amount={orderAmounts.totalAuthorized.amount}>
@@ -258,7 +133,7 @@ export const PaymentsSummary = ({
             },
             {
               currency: (
-                <Text fontWeight="medium" color="default2">
+                <Text fontWeight="medium" color="default2" size={3}>
                   {orderAmounts.total.gross.currency}
                 </Text>
               ),
