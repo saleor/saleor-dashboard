@@ -1411,6 +1411,9 @@
     "context": "tax classes name input placeholder",
     "string": "Tax rate name"
   },
+  "73SSOz": {
+    "string": "All lines as ordered by the client."
+  },
   "74Cxe8": {
     "context": "table header product label",
     "string": "Product"
@@ -1943,9 +1946,6 @@
   "AnqH4p": {
     "context": "sale status",
     "string": "Active"
-  },
-  "AoCDZi": {
-    "string": "All line as ordered by the client."
   },
   "AqHafs": {
     "context": "provided email input placeholder",

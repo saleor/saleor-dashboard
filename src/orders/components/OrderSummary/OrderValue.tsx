@@ -38,8 +38,8 @@ export const OrderValue = ({
         </Text>
         <Text color="default2" size={2}>
           {intl.formatMessage({
-            defaultMessage: "All line as ordered by the client.",
-            id: "AoCDZi",
+            defaultMessage: "All lines as ordered by the client.",
+            id: "73SSOz",
           })}
         </Text>
       </Box>
