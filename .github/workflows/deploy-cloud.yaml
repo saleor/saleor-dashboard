@@ -4,6 +4,8 @@ on:
     types: cloud-deployment
 
 jobs:
+  # Workflow supports pre-pnpm (3.21 and below) and pnpm. First we need to determine what to use
+  # TODO Remove these ifs when 3.21 is dropped
   determine-build:
     runs-on: ubuntu-22.04
     outputs:
