@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.22.14
+
+### Patch Changes
+
+- [#6122](https://github.com/saleor/saleor-dashboard/pull/6122) [`62f2911`](https://github.com/saleor/saleor-dashboard/commit/62f29118a7e2cf315d609a42c8575cfa6385c011) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Redesign order details payments and transactions section
+
+  Introduced new `OrderSummary` component that consolidates order value and payments information into a unified, two-column layout. The new design provides:
+  - **Order Value column**: Displays subtotal, shipping, taxes, discounts, and gift cards with clear itemization
+  - **Payments Summary column**: Shows payment status, authorized/captured/refunded amounts, and transaction state
+  - **Improved visual hierarchy**: Card-based layout with clear separation between order value and payment status
+  - **Better payment flow handling**: Distinct UI for legacy payments API vs. transactions API
+  - **Enhanced transaction display**: Consolidated view of all payment transactions with status pills
+
+  This redesign improves clarity when reviewing order financial information and payment states.
+
+- [#6128](https://github.com/saleor/saleor-dashboard/pull/6128) [`787c5fa`](https://github.com/saleor/saleor-dashboard/commit/787c5fab9a58d0b28705601eff53496d9f2aa701) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Remove focus border from datagrid cells while preserving header click highlight
+
+  Previously, clicking on datagrid cells displayed a visible focus border around the cell. The border has been removed by setting `drawFocusRing={false}` on the DataEditor component, while maintaining the header selection color functionality.
+
+- [#6132](https://github.com/saleor/saleor-dashboard/pull/6132) [`75826b1`](https://github.com/saleor/saleor-dashboard/commit/75826b104369678982b28ef057c26053d950a516) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed bug with App (with extensions) installation - now validation on the frontend checks new API fields properly
+
 ## 3.22.13
 
 ### Patch Changes
