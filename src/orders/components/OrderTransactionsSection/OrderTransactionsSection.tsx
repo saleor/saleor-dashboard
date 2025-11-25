@@ -11,33 +11,30 @@ import { FormattedMessage } from "react-intl";
 
 import OrderAddTransaction from "../OrderAddTransaction";
 import { OrderDetailsRefundTable } from "../OrderDetailsRefundTable/OrderDetailsRefundTable";
-import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
 import OrderTransactionPayment from "../OrderTransactionPayment";
 import { getFilteredPayments } from "./utils";
 
-interface OrderTransactionsWrapper {
+interface OrderTransactionsSectionProps {
   order: OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
   onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
   onPaymentCapture: () => any;
-  onMarkAsPaid: () => any;
   onPaymentVoid: () => any;
   onAddManualTransaction: () => any;
   onRefundAdd: () => void;
 }
 
-export const OrderTransactionsWrapper = ({
+export const OrderTransactionsSection = ({
   order,
   shop,
   onTransactionAction,
   onPaymentCapture,
-  onMarkAsPaid,
   onPaymentVoid,
   onAddManualTransaction,
   onRefundAdd,
-}: OrderTransactionsWrapper) => {
+}: OrderTransactionsSectionProps): JSX.Element => {
   const filteredPayments = useMemo(() => getFilteredPayments(order), [order]);
 
   const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCards].some(
@@ -45,15 +42,9 @@ export const OrderTransactionsWrapper = ({
   );
 
   return (
-    <Box data-test-id="OrderTransactionsWrapper">
-      <OrderSummary order={order} onMarkAsPaid={onMarkAsPaid} />
-      {/* TODO: extract to other component: refunds + transactions */}
-      <>
-        <>
-          <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
-          <CardSpacer />
-        </>
-      </>
+    <>
+      <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
+      <CardSpacer />
 
       <Box paddingTop={6}>
         <Box
@@ -105,6 +96,6 @@ export const OrderTransactionsWrapper = ({
           </Box>
         )}
       </Box>
-    </Box>
+    </>
   );
 };
