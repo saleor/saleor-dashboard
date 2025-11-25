@@ -906,9 +906,6 @@
     "context": "attributes, section header",
     "string": "Attributes"
   },
-  "3wsVWF": {
-    "string": "Cancelled"
-  },
   "3xv4ez": {
     "string": "Go to users/staff members"
   },
@@ -1560,6 +1557,9 @@
     "context": "default tax class name for new tax classes",
     "string": "New tax class"
   },
+  "8Cjxdt": {
+    "string": "Overcharged"
+  },
   "8Cve4h": {
     "context": "checkbox label",
     "string": "Send fulfillment email to customer"
@@ -1936,6 +1936,9 @@
     "context": "attribute properties regarding storefront",
     "string": "Storefront Properties"
   },
+  "AiurXc": {
+    "string": "Outstanding authorized"
+  },
   "AjInNW": {
     "context": "dialog description",
     "string": "Choose countries you want to add to shipping zone from list below"
@@ -1971,9 +1974,6 @@
   "Av74Fa": {
     "context": "section description",
     "string": "You can set basic checkout rules that will be applied globally to all your channels"
-  },
-  "Aw2OKG": {
-    "string": "Charged pending"
   },
   "AyQkmp": {
     "string": "Sorting by this column is not available"
@@ -2961,9 +2961,6 @@
     "context": "shipping method description",
     "string": "Description"
   },
-  "Gs86nL": {
-    "string": "Refunded"
-  },
   "GsBRWL": {
     "string": "Languages"
   },
@@ -3373,6 +3370,9 @@
   "JI2Xwp": {
     "context": "dialog title",
     "string": "Delete attribute"
+  },
+  "JIQ7KX": {
+    "string": "Total captured"
   },
   "JJ3PCA": {
     "context": "export card codes structure item",
@@ -3936,9 +3936,6 @@
   "N7tQ9P": {
     "context": "dialog header",
     "string": "Unassign attribute from model type"
-  },
-  "NAepnj": {
-    "string": "Authorized"
   },
   "NBP8uu": {
     "context": "page header",
@@ -5554,6 +5551,9 @@
     "context": "product type",
     "string": "Configurable"
   },
+  "X9tptP": {
+    "string": "Not fully charged"
+  },
   "XAPFHP": {
     "context": "card update success alert title",
     "string": "Successfully updated card balance"
@@ -5820,6 +5820,9 @@
   "Ykw8k5": {
     "context": "dialog title",
     "string": "Delete collections"
+  },
+  "Ynjq+C": {
+    "string": "Fully charged"
   },
   "Yo2kC+": {
     "string": "Couldn't process image"
@@ -7693,6 +7696,9 @@
     "context": "invalid date in expirydate field header",
     "string": "Incorrect date entered"
   },
+  "l1pZJx": {
+    "string": "Not fully authorised"
+  },
   "l2oVCF": {
     "context": "attributes section name",
     "string": "Attributes"
@@ -8056,9 +8062,6 @@
     "context": "Clear filters button text",
     "string": "Reset"
   },
-  "nMwGMj": {
-    "string": "Captured"
-  },
   "nNeWAx": {
     "context": "dialog header",
     "string": "Delete Shipping Method"
@@ -8168,8 +8171,8 @@
   "o/4OCR": {
     "string": "Shipping has already been refunded"
   },
-  "o0AP7/": {
-    "string": "Cancelled pending"
+  "o5GUx9": {
+    "string": "Outstanding balance"
   },
   "o5KXAN": {
     "context": "delete webhook",
@@ -8985,9 +8988,6 @@
   "tWbE34": {
     "string": "Start Hour"
   },
-  "tXOS3M": {
-    "string": "Authorized pending"
-  },
   "tZ/9Sl": {
     "string": "Invite user/staff member"
   },
@@ -9524,6 +9524,9 @@
   "wUQCnQ": {
     "context": "Save filters button text",
     "string": "Save"
+  },
+  "wVjyOX": {
+    "string": "Fully authorised"
   },
   "wWELJW": {
     "context": "search results",
