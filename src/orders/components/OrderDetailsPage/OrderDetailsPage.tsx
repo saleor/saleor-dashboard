@@ -204,6 +204,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   icon={<Code />}
                   onClick={onOrderShowMetadata}
                   data-test-id="show-order-metadata"
+                  title="Edit order metadata"
                 />
                 <Box position="absolute" __top="-4px" __right="-4px">
                   <Ripple model={rippleOrderMetadata} />

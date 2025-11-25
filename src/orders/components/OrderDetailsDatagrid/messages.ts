@@ -42,12 +42,16 @@ export const messages = defineMessages({
     id: "VYK2nN",
     defaultMessage: "Product details",
   },
-  showMetadata: {
-    id: "IpOugE",
-    defaultMessage: "Show metadata",
+  editOrderLineMetadata: {
+    id: "N6s/fl",
+    defaultMessage: "Edit order line metadata",
   },
   openProductDetail: {
     id: "mMOskm",
     defaultMessage: "Open product detail",
+  },
+  showMetadata: {
+    id: "IpOugE",
+    defaultMessage: "Show metadata",
   },
 });

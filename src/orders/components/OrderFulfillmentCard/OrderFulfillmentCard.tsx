@@ -91,6 +91,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                 onClick={onFulfillmentShowMetadata}
                 data-test-id="show-fulfillment-metadata"
                 icon={<Code />}
+                title="Edit fulfillment group metadata"
               />
             )}
             <ActionButtons
@@ -112,6 +113,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                     data-test-id="fulfillment-menu-button"
                     // optical alignment
                     __marginRight={"-16px"}
+                    title="Show more"
                   />
                 </Dropdown.Trigger>
                 <Dropdown.Content align="end">
