@@ -1158,7 +1158,7 @@ function innerTreeToString(tree: RecursiveMenuItem, level: number): string {
     "\n" +
     "··".repeat(level) +
     tree.name +
-    tree.children.reduce((acc, node) => acc + innerTreeToString(node, level + 1), "")
+    tree.children?.reduce((acc, node) => acc + innerTreeToString(node, level + 1), "")
   );
 }
 

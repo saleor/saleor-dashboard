@@ -10,6 +10,7 @@ import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { menuListUrl } from "@dashboard/structures/urls";
+import { UniqueIdentifier } from "@dnd-kit/core";
 import { useState } from "react";
 
 import { MenuItemType } from "../MenuItemDialog";
@@ -32,10 +33,10 @@ interface MenuDetailsPageProps {
   menu: MenuDetailsFragment;
   onDelete: () => void;
   onItemAdd: () => void;
-  onItemClick: (id: string, type: MenuItemType) => void;
-  onItemEdit: (id: string) => void;
+  onItemClick: (id: UniqueIdentifier, type: MenuItemType) => void;
+  onItemEdit: (id: UniqueIdentifier) => void;
   // If not passed, it will not render the button. Use to control permissions
-  onTranslate?: (id: string) => void;
+  onTranslate?: (id: UniqueIdentifier) => void;
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
