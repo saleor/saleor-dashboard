@@ -1,9 +1,8 @@
-import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { extractOrderGiftCardUsedAmount } from "../OrderSummaryCard/utils";
 import { LegacyPaymentsApiButtons } from "./LegacyPaymentsApiButtons";
 import { OrderValue } from "./OrderValue";
 import { PaymentsSummary } from "./PaymentsSummary";
@@ -30,22 +29,23 @@ type Props = PropsWithBox<
 export const OrderSummary = (props: Props) => {
   const { order, onMarkAsPaid, useLegacyPaymentsApi = false, ...restProps } = props;
   const intl = useIntl();
-  // TODO: extract those helpers into OrderDetailsViewModel
-  const giftCardsAmount = extractOrderGiftCardUsedAmount(order);
+  const giftCardsAmount = OrderDetailsViewModel.getGiftCardsAmountUsed({
+    id: order.id,
+    giftCards: order.giftCards,
+  });
   const usedGiftCards = OrderDetailsViewModel.getUsedGiftCards(order.giftCards);
-  const canMarkAsPaid = order.actions.includes(OrderAction.MARK_AS_PAID);
-  const canGrantRefund = order.transactions.length > 0 || order.payments.length > 0;
-  const canSendRefund = order.grantedRefunds.length > 0;
-  const canAnyRefund = canGrantRefund || canSendRefund;
-  const hasGiftCards = (giftCardsAmount ?? 0) > 0;
+  const canMarkAsPaid = OrderDetailsViewModel.canOrderBeMarkedAsPaid(order.actions);
+  const canAnyRefund = OrderDetailsViewModel.canAnyRefund(order);
+  const hasGiftCards = OrderDetailsViewModel.hasGiftCards(giftCardsAmount);
   const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(order);
-
-  const hasNoPayment =
-    !canAnyRefund && !shouldDisplay.charged && !shouldDisplay.authorized && !hasGiftCards;
-
-  const canCapture = order.actions.includes(OrderAction.CAPTURE);
-  const canVoid = order.actions.includes(OrderAction.VOID);
-  const canRefund = order.actions.includes(OrderAction.REFUND);
+  const hasNoPayment = OrderDetailsViewModel.hasNoPayment({
+    canAnyRefund,
+    shouldDisplay,
+    hasGiftCards,
+  });
+  const canCapture = OrderDetailsViewModel.canOrderCapture(order.actions);
+  const canVoid = OrderDetailsViewModel.canOrderVoid(order.actions);
+  const canRefund = OrderDetailsViewModel.canOrderRefund(order.actions);
 
   return (
     <Box padding={6} display="grid" gap={6} {...restProps} data-test-id="OrderSummary">
