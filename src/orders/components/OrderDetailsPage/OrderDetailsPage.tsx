@@ -267,26 +267,30 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 />
               ))}
 
-              <OrderSummary
-                order={order}
-                onMarkAsPaid={onMarkAsPaid}
-                useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
-                onLegacyPaymentsApiCapture={onPaymentCapture}
-                onLegacyPaymentsApiRefund={onPaymentRefund}
-                onLegacyPaymentsApiVoid={onPaymentVoid}
-              />
-              <CardSpacer />
+              {order && (
+                <>
+                  <OrderSummary
+                    order={order}
+                    onMarkAsPaid={onMarkAsPaid}
+                    useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
+                    onLegacyPaymentsApiCapture={onPaymentCapture}
+                    onLegacyPaymentsApiRefund={onPaymentRefund}
+                    onLegacyPaymentsApiVoid={onPaymentVoid}
+                  />
+                  <CardSpacer />
 
-              {orderShouldUseTransactions(order) && (
-                <OrderTransactionsSection
-                  order={order}
-                  shop={shop}
-                  onTransactionAction={onTransactionAction}
-                  onPaymentCapture={onPaymentCapture}
-                  onPaymentVoid={onPaymentVoid}
-                  onAddManualTransaction={onAddManualTransaction}
-                  onRefundAdd={onRefundAdd}
-                />
+                  {orderShouldUseTransactions(order) && (
+                    <OrderTransactionsSection
+                      order={order}
+                      shop={shop}
+                      onTransactionAction={onTransactionAction}
+                      onPaymentCapture={onPaymentCapture}
+                      onPaymentVoid={onPaymentVoid}
+                      onAddManualTransaction={onAddManualTransaction}
+                      onRefundAdd={onRefundAdd}
+                    />
+                  )}
+                </>
               )}
 
               <OrderHistory
