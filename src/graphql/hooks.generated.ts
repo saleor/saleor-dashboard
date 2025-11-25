@@ -2037,6 +2037,7 @@ export const InvoiceFragmentDoc = gql`
 export const OrderDetailsFragmentDoc = gql`
     fragment OrderDetails on Order {
   id
+  displayGrossPrices
   ...Metadata
   billingAddress {
     ...Address

@@ -14,6 +14,7 @@ type Props = PropsWithBox<{
   discounts: OrderDetailsFragment["discounts"];
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
+  displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
 }>;
 
 export const OrderValue = ({
@@ -24,6 +25,7 @@ export const OrderValue = ({
   discounts,
   giftCardsAmount,
   usedGiftCards,
+  displayGrossPrices,
   ...props
 }: Props) => {
   const intl = useIntl();
@@ -67,21 +69,14 @@ export const OrderValue = ({
             },
           )}
         </OrderSummaryListItem>
-        <OrderSummaryListItem amount={orderTotal.tax.amount}>
-          {intl.formatMessage({
-            defaultMessage: "Taxes ",
-            id: "HTiAMm",
-          })}
-          <Text fontWeight="medium" color="default2" size={3}>
-            {intl.formatMessage(
-              {
-                defaultMessage: "{taxAmount, plural, =0 {(not applicable)} other {} }",
-                id: "2ZC9wL",
-              },
-              { taxAmount: orderTotal.tax.amount },
-            )}
-          </Text>
-        </OrderSummaryListItem>
+        {!displayGrossPrices && (
+          <OrderSummaryListItem amount={orderTotal.tax.amount}>
+            {intl.formatMessage({
+              defaultMessage: "Taxes ",
+              id: "HTiAMm",
+            })}
+          </OrderSummaryListItem>
+        )}
 
         {discounts.map(discount => (
           <OrderSummaryListItem
@@ -150,6 +145,17 @@ export const OrderValue = ({
             )}
           </Box>
         </Box>
+        {displayGrossPrices && (
+          <OrderSummaryListItem amount={orderTotal.tax.amount}>
+            {intl.formatMessage({
+              defaultMessage: "Taxes ",
+              id: "HTiAMm",
+            })}
+            <Text color="default2" fontWeight="medium" size={3}>
+              (included)
+            </Text>
+          </OrderSummaryListItem>
+        )}
       </Box>
     </Box>
   );

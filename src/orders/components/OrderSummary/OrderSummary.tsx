@@ -93,6 +93,7 @@ export const OrderSummary = (props: Props) => {
           discounts={order.discounts}
           giftCardsAmount={giftCardsAmount ?? null}
           usedGiftCards={usedGiftCards}
+          displayGrossPrices={order.displayGrossPrices}
         />
         <PaymentsSummary
           hasNoPayment={hasNoPayment}
