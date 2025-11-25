@@ -11,8 +11,7 @@ import { FormattedMessage } from "react-intl";
 
 import OrderAddTransaction from "../OrderAddTransaction";
 import { OrderDetailsRefundTable } from "../OrderDetailsRefundTable/OrderDetailsRefundTable";
-import { OrderPaymentSummaryCard } from "../OrderPaymentSummaryCard";
-import OrderSummaryCard from "../OrderSummaryCard";
+import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
 import OrderTransactionPayment from "../OrderTransactionPayment";
@@ -46,12 +45,9 @@ export const OrderTransactionsWrapper = ({
   );
 
   return (
-    <>
-      <Box display="grid" __gridTemplateColumns="repeat(2, 1fr)" gap={2}>
-        <OrderSummaryCard order={order} />
-        <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
-      </Box>
-      <CardSpacer />
+    <Box data-test-id="OrderTransactionsWrapper">
+      <OrderSummary order={order} onMarkAsPaid={onMarkAsPaid} />
+      {/* TODO: extract to other component: refunds + transactions */}
       <>
         <>
           <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
@@ -109,6 +105,6 @@ export const OrderTransactionsWrapper = ({
           </Box>
         )}
       </Box>
-    </>
+    </Box>
   );
 };

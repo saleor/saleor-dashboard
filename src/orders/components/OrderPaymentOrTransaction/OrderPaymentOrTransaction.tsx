@@ -3,7 +3,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderDetailsFragment, OrderDetailsQuery, TransactionActionEnum } from "@dashboard/graphql";
 import { orderShouldUseTransactions } from "@dashboard/orders/types";
 
-import OrderPayment from "../OrderPayment/OrderPayment";
+import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 
 export interface OrderPaymentOrTransactionProps {
@@ -29,35 +29,33 @@ export const OrderPaymentOrTransaction = ({
   onAddManualTransaction,
   onRefundAdd,
 }: OrderPaymentOrTransactionProps) => {
+  // TODO: unify those sections - there should be one `OrderSummary` and then transactions or not based on `orderShouldUseTransactions`
   if (orderShouldUseTransactions(order)) {
     return (
-      // This section will be unified in the next PR
-      <>
-        <OrderTransactionsWrapper
-          order={order}
-          shop={shop}
-          onTransactionAction={onTransactionAction}
-          onPaymentCapture={onPaymentCapture}
-          onMarkAsPaid={onMarkAsPaid}
-          onPaymentVoid={onPaymentVoid}
-          onAddManualTransaction={onAddManualTransaction}
-          onRefundAdd={onRefundAdd}
-        />
-      </>
+      <OrderTransactionsWrapper
+        order={order}
+        shop={shop}
+        onTransactionAction={onTransactionAction}
+        onPaymentCapture={onPaymentCapture}
+        onMarkAsPaid={onMarkAsPaid}
+        onPaymentVoid={onPaymentVoid}
+        onAddManualTransaction={onAddManualTransaction}
+        onRefundAdd={onRefundAdd}
+      />
     );
   }
 
-  return (
-    // This section will be unified in the next PR
+  return order ? (
     <>
-      <OrderPayment
+      <OrderSummary
         order={order}
-        onCapture={onPaymentCapture}
         onMarkAsPaid={onMarkAsPaid}
-        onRefund={onPaymentRefund}
-        onVoid={onPaymentVoid}
+        useLegacyPaymentsApi
+        onLegacyPaymentsApiCapture={onPaymentCapture}
+        onLegacyPaymentsApiRefund={onPaymentRefund}
+        onLegacyPaymentsApiVoid={onPaymentVoid}
       />
       <CardSpacer />
     </>
-  );
+  ) : null;
 };

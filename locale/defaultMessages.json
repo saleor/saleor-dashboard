@@ -19,10 +19,6 @@
     "context": "voucher status expired",
     "string": "Expired"
   },
-  "+5HkZN": {
-    "context": "order, button",
-    "string": "Mark as paid"
-  },
   "+7OsyM": {
     "context": "button",
     "string": "Set as default shipping address"
@@ -30,6 +26,9 @@
   "+8v1ny": {
     "context": "discount button",
     "string": "Discount"
+  },
+  "+9HL0i": {
+    "string": "Capture"
   },
   "+B25o/": {
     "context": "dialog header",
@@ -730,6 +729,9 @@
     "context": "dialog header",
     "string": "Add postal codes"
   },
+  "2ZC9wL": {
+    "string": "{taxAmount, plural, =0 {(not applicable)} other {} }"
+  },
   "2atspc": {
     "string": "Drafts"
   },
@@ -903,6 +905,9 @@
   "3ukd9/": {
     "context": "attributes, section header",
     "string": "Attributes"
+  },
+  "3wsVWF": {
+    "string": "Cancelled"
   },
   "3xv4ez": {
     "string": "Go to users/staff members"
@@ -1228,6 +1233,9 @@
   "5ixtBQ": {
     "string": "Assign Model Types"
   },
+  "5kODlC": {
+    "string": "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}"
+  },
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
@@ -1403,6 +1411,9 @@
     "context": "tax classes name input placeholder",
     "string": "Tax rate name"
   },
+  "73SSOz": {
+    "string": "All lines as ordered by the client."
+  },
   "74Cxe8": {
     "context": "table header product label",
     "string": "Product"
@@ -1443,10 +1454,6 @@
   },
   "7JlauX": {
     "string": "Explore"
-  },
-  "7KRGqz": {
-    "context": "Payment card title",
-    "string": "Payment balance"
   },
   "7MUx0T": {
     "string": "Discount of {value} through the {channel}"
@@ -1741,6 +1748,9 @@
     "context": "order line discount added title",
     "string": "{productName} discount was added by"
   },
+  "9TENcY": {
+    "string": "All payments from registered transactions."
+  },
   "9TbDQD": {
     "context": "order number label",
     "string": "Order number"
@@ -1962,6 +1972,9 @@
     "context": "section description",
     "string": "You can set basic checkout rules that will be applied globally to all your channels"
   },
+  "Aw2OKG": {
+    "string": "Charged pending"
+  },
   "AyQkmp": {
     "string": "Sorting by this column is not available"
   },
@@ -2073,10 +2086,6 @@
   "BYfAwE": {
     "context": "page title - installing app with manifestUrl provided",
     "string": "Add extension"
-  },
-  "BZ7BkQ": {
-    "context": "capture payment, button",
-    "string": "Capture"
   },
   "BalldE": {
     "string": "Order line"
@@ -2692,6 +2701,9 @@
     "context": "postal codes, header",
     "string": "Postal codes"
   },
+  "Fcxl/G": {
+    "string": "This order has no payment yet"
+  },
   "FemBUF": {
     "context": "header",
     "string": "Translations to {language}"
@@ -2949,6 +2961,9 @@
     "context": "shipping method description",
     "string": "Description"
   },
+  "Gs86nL": {
+    "string": "Refunded"
+  },
   "GsBRWL": {
     "string": "Languages"
   },
@@ -3051,6 +3066,9 @@
     "context": "gift cards section name",
     "string": "Gift Cards"
   },
+  "HTiAMm": {
+    "string": "Taxes"
+  },
   "HVFq//": {
     "context": "button",
     "string": "Copy token"
@@ -3072,10 +3090,6 @@
   },
   "HYK65C": {
     "string": "Order rule"
-  },
-  "HaQ8cg": {
-    "context": "button",
-    "string": "Refund"
   },
   "Hc58JL": {
     "context": "card title",
@@ -3250,6 +3264,9 @@
   "Ic7Wln": {
     "context": "card subtitle",
     "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
+  },
+  "IeUH3/": {
+    "string": "Refund"
   },
   "IeoGgH": {
     "context": "variant created success message",
@@ -3631,6 +3648,9 @@
   "L87bp7": {
     "string": "Order payment successfully voided"
   },
+  "L8seEc": {
+    "string": "Subtotal"
+  },
   "LA13a5": {
     "context": "channel select label",
     "string": "Channel"
@@ -3916,6 +3936,9 @@
   "N7tQ9P": {
     "context": "dialog header",
     "string": "Unassign attribute from model type"
+  },
+  "NAepnj": {
+    "string": "Authorized"
   },
   "NBP8uu": {
     "context": "page header",
@@ -4674,6 +4697,9 @@
   "RrCui3": {
     "string": "Summary"
   },
+  "RsLoDB": {
+    "string": "Mark as Paid"
+  },
   "Rsknyh": {
     "context": "order does not require shipping",
     "string": "does not apply"
@@ -4730,6 +4756,9 @@
   },
   "S8kqP9": {
     "string": "Conditions"
+  },
+  "SB//YQ": {
+    "string": "Order summary"
   },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
@@ -5203,6 +5232,9 @@
   "V1MytH": {
     "context": "shipping zones section name",
     "string": "Shipping Zones"
+  },
+  "V21v8h": {
+    "string": "{currency} {totalAmount}"
   },
   "V22724": {
     "string": "Installed"
@@ -6765,6 +6797,9 @@
   "fKrRhF": {
     "string": "General information"
   },
+  "fL08MU": {
+    "string": "Order value"
+  },
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
@@ -7355,6 +7390,9 @@
     "context": "page header",
     "string": "Primary Address"
   },
+  "jHfCjd": {
+    "string": "Void"
+  },
   "jMzyU8": {
     "context": "tax classes card header",
     "string": "Tax classes"
@@ -7919,6 +7957,9 @@
   "mmcHeH": {
     "string": "Discount Value"
   },
+  "mpkBZc": {
+    "string": "Shipping {carrierName}"
+  },
   "mr9jbO": {
     "string": "Preferred Language"
   },
@@ -8014,6 +8055,9 @@
   "nMojhT": {
     "context": "Clear filters button text",
     "string": "Reset"
+  },
+  "nMwGMj": {
+    "string": "Captured"
   },
   "nNeWAx": {
     "context": "dialog header",
@@ -8123,6 +8167,9 @@
   },
   "o/4OCR": {
     "string": "Shipping has already been refunded"
+  },
+  "o0AP7/": {
+    "string": "Cancelled pending"
   },
   "o5KXAN": {
     "context": "delete webhook",
@@ -8416,6 +8463,9 @@
   "q5Lfp4": {
     "context": "tooltip",
     "string": "Order contains products that have \"Track inventory\" enabled."
+  },
+  "q7bXR4": {
+    "string": "Payments summary"
   },
   "q7v0W7": {
     "context": "save draft button",
@@ -8935,6 +8985,9 @@
   "tWbE34": {
     "string": "Start Hour"
   },
+  "tXOS3M": {
+    "string": "Authorized pending"
+  },
   "tZ/9Sl": {
     "string": "Invite user/staff member"
   },
@@ -9368,6 +9421,9 @@
   "vqu+23": {
     "context": "success notifier message",
     "string": "Saved draft"
+  },
+  "vs0xiH": {
+    "string": "Discount {discountName}"
   },
   "vuKrlW": {
     "string": "Stock"

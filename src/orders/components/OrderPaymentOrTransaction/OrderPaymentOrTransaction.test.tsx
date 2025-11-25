@@ -72,7 +72,7 @@ describe("OrderPaymentOrTransaction", () => {
         }}
       />,
     );
-    expect(screen.queryByTestId("OrderPayment")).toBeInTheDocument();
+    expect(screen.queryByTestId("OrderSummary")).toBeInTheDocument();
   });
   it("renders OrderPayment when payments are used in order", () => {
     render(
@@ -85,7 +85,7 @@ describe("OrderPaymentOrTransaction", () => {
         }}
       />,
     );
-    expect(screen.queryByTestId("OrderPayment")).toBeInTheDocument();
+    expect(screen.queryByTestId("OrderSummary")).toBeInTheDocument();
   });
   it("renders OrderTransaction when transactions are enabled in channel", () => {
     render(
@@ -97,10 +97,10 @@ describe("OrderPaymentOrTransaction", () => {
         }}
       />,
     );
-    expect(screen.queryByTestId("OrderSummaryCard")).toBeInTheDocument();
+    expect(screen.queryByTestId("OrderSummary")).toBeInTheDocument();
   });
   it("renders OrderTransaction when transactions are used in order", () => {
     render(<OrderPaymentOrTransaction {...sharedProps} />);
-    expect(screen.queryByTestId("OrderSummaryCard")).toBeInTheDocument();
+    expect(screen.queryByTestId("OrderSummary")).toBeInTheDocument();
   });
 });

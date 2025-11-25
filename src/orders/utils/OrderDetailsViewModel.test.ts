@@ -53,10 +53,10 @@ describe("OrderModel", () => {
       totalBalance: prepareMoney(15),
       totalCanceled: prepareMoney(0),
       totalCancelPending: prepareMoney(0),
-      totalCaptured: prepareMoney(0),
+      totalCaptured: { ...prepareMoney(0), fractionalAmount: 0, fractionDigits: 2 },
       totalCharged: prepareMoney(0),
       totalChargePending: prepareMoney(0),
-      totalRefunded: prepareMoney(0),
+      totalRefunded: { ...prepareMoney(0), fractionalAmount: 0, fractionDigits: 2 },
     };
 
     it("hides everything when no order is passed", () => {

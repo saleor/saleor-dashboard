@@ -105,6 +105,8 @@ export class OrderFixture {
       __typename: "Money",
       amount: 0,
       currency: "USD",
+      fractionalAmount: 0,
+      fractionDigits: 2,
     },
     totalAuthorizePending: {
       __typename: "Money",
@@ -120,6 +122,8 @@ export class OrderFixture {
       __typename: "Money",
       amount: 110,
       currency: "USD",
+      fractionalAmount: 110,
+      fractionDigits: 2,
     },
     totalCharged: {
       __typename: "Money",
