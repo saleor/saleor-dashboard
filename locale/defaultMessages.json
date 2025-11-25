@@ -729,9 +729,6 @@
     "context": "dialog header",
     "string": "Add postal codes"
   },
-  "2ZC9wL": {
-    "string": "{taxAmount, plural, =0 {(not applicable)} other {} }"
-  },
   "2atspc": {
     "string": "Drafts"
   },
