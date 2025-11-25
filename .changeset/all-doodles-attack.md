@@ -1,5 +1,5 @@
 ---
-"@saleor/dashboard": patch
+"saleor-dashboard": patch
 ---
 
 Redesign order details payments and transactions section
