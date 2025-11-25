@@ -99,14 +99,7 @@ export const OrderSummary = (props: Props) => {
           orderAmounts={{
             totalAuthorized: order.totalAuthorized,
             totalCaptured: order.totalCaptured,
-            totalRefunded: order.totalRefunded,
             totalBalance: order.totalBalance,
-            total: order.total,
-            totalAuthorizePending: order.totalAuthorizePending,
-            totalCharged: order.totalCharged,
-            totalChargePending: order.totalChargePending,
-            totalCanceled: order.totalCanceled,
-            totalCancelPending: order.totalCancelPending,
           }}
           order={order}
         />

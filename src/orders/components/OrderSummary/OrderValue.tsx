@@ -127,7 +127,7 @@ export const OrderValue = ({
         <Box display="grid" placeItems="end">
           <Box
             borderStyle="solid"
-            borderColor="default2"
+            borderColor="default1"
             borderBottomWidth={0}
             borderLeftWidth={0}
             borderRightWidth={0}

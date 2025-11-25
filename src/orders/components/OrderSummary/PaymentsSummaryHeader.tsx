@@ -2,14 +2,12 @@ import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { OrderPaymentStatusPill } from "../OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
-
 type Props = {
   order: OrderDetailsFragment;
   description: string;
 };
 
-export const PaymentsSummaryHeader = ({ order, description }: Props) => {
+export const PaymentsSummaryHeader = ({ description }: Props) => {
   const intl = useIntl();
 
   return (
@@ -21,11 +19,10 @@ export const PaymentsSummaryHeader = ({ order, description }: Props) => {
             id: "q7bXR4",
           })}
         </Text>
-        <Text color="default2" size={2}>
+        <Text color="default2" size={2} marginTop={1}>
           {description}
         </Text>
       </Box>
-      <OrderPaymentStatusPill order={order} />
     </Box>
   );
 };

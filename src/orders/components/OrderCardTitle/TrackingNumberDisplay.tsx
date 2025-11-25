@@ -18,7 +18,7 @@ export const TrackingNumberDisplay = ({
 
   return (
     <>
-      <Text color="default2" size={1} marginRight={1}>
+      <Text color="default2" size={2} marginRight={1}>
         |
       </Text>
       <Box
@@ -30,7 +30,7 @@ export const TrackingNumberDisplay = ({
       >
         <Text
           color="default2"
-          size={1}
+          size={2}
           onFocus={() => setShowCopyButton(true)}
           onBlur={() => setShowCopyButton(false)}
         >
@@ -41,7 +41,7 @@ export const TrackingNumberDisplay = ({
             },
             {
               trackingNumber: (
-                <Text size={1} color="default1" fontWeight="medium">
+                <Text size={2} color="default1" fontWeight="medium">
                   {trackingNumber}
                 </Text>
               ),
