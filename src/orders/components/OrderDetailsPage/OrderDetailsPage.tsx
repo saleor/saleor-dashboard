@@ -25,6 +25,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
+import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Button, Divider } from "@saleor/macaw-ui-next";
@@ -40,7 +41,8 @@ import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDeta
 import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
-import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPaymentOrTransaction";
+import { OrderSummary } from "../OrderSummary/OrderSummary";
+import { OrderTransactionsSection } from "../OrderTransactionsSection/OrderTransactionsSection";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import Title from "./Title";
@@ -264,17 +266,29 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
                 />
               ))}
-              <OrderPaymentOrTransaction
+
+              <OrderSummary
                 order={order}
-                shop={shop}
-                onTransactionAction={onTransactionAction}
-                onPaymentCapture={onPaymentCapture}
-                onPaymentVoid={onPaymentVoid}
-                onPaymentRefund={onPaymentRefund}
                 onMarkAsPaid={onMarkAsPaid}
-                onAddManualTransaction={onAddManualTransaction}
-                onRefundAdd={onRefundAdd}
+                useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
+                onLegacyPaymentsApiCapture={onPaymentCapture}
+                onLegacyPaymentsApiRefund={onPaymentRefund}
+                onLegacyPaymentsApiVoid={onPaymentVoid}
               />
+              <CardSpacer />
+
+              {orderShouldUseTransactions(order) && (
+                <OrderTransactionsSection
+                  order={order}
+                  shop={shop}
+                  onTransactionAction={onTransactionAction}
+                  onPaymentCapture={onPaymentCapture}
+                  onPaymentVoid={onPaymentVoid}
+                  onAddManualTransaction={onAddManualTransaction}
+                  onRefundAdd={onRefundAdd}
+                />
+              )}
+
               <OrderHistory
                 history={order?.events}
                 onNoteUpdateLoading={onNoteUpdateLoading}
