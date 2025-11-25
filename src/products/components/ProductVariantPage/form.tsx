@@ -167,7 +167,6 @@ function useProductVariantUpdateForm(
 
     return {
       ...channel,
-      priorPrice: channel.priorPrice,
       preorderThreshold: variantChannel?.preorderThreshold?.quantity,
       soldUnits: variantChannel?.preorderThreshold?.soldUnits,
     };

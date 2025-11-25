@@ -778,7 +778,7 @@
     "string": "Payment was captured"
   },
   "2zCmiR": {
-    "context": "tabel column header",
+    "context": "table column header",
     "string": "Cost price"
   },
   "3+990c": {
@@ -3350,7 +3350,7 @@
     "string": "Create Product"
   },
   "JFtFgc": {
-    "context": "tabel column header",
+    "context": "table column header",
     "string": "Selling Price"
   },
   "JGm7E5": {
@@ -6365,7 +6365,7 @@
     "string": "Models"
   },
   "c8UT0c": {
-    "context": "tabel column header",
+    "context": "table column header",
     "string": "Channel Name"
   },
   "c8nvms": {

@@ -98,36 +98,36 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
             <TableCell style={{ paddingLeft: vars.spacing[6] }}>
               <Text size={2} color="default2">
                 <FormattedMessage
-                  id="c8UT0c"
+                  id="qe1Thm"
                   defaultMessage="Channel Name"
-                  description="tabel column header"
+                  description="table column header"
                 />
               </Text>
             </TableCell>
             <TableCell style={{ width: 200, verticalAlign: "middle" }}>
               <Text size={2} color="default2">
                 <FormattedMessage
-                  id="JFtFgc"
+                  id="VTovUI"
                   defaultMessage="Selling Price"
-                  description="tabel column header"
+                  description="table column header"
                 />
               </Text>
             </TableCell>
             <TableCell style={{ width: 200, verticalAlign: "middle" }}>
               <Text size={2} color="default2">
                 <FormattedMessage
-                  id="YMkwA1"
+                  id="Aot3Mb"
                   defaultMessage="Prior Price"
-                  description="tabel column header"
+                  description="table column header"
                 />
               </Text>
             </TableCell>
             <TableCell style={{ width: 200, verticalAlign: "middle" }}>
               <Text size={2} color="default2">
                 <FormattedMessage
-                  id="2zCmiR"
+                  id="eH5whQ"
                   defaultMessage="Cost price"
-                  description="tabel column header"
+                  description="table column header"
                 />
               </Text>
             </TableCell>
