@@ -25,6 +25,7 @@ import merge from "lodash/merge";
  */
 export class OrderFixture {
   private static baseOrder = {
+    displayGrossPrices: true,
     __typename: "Order",
     number: "12345",
     created: "2023-10-01T12:00:00Z",

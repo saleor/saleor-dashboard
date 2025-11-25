@@ -1042,6 +1042,7 @@ export const ORDER_AMOUNT = 234.93;
 export const order = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order",
   giftCards: [],
+  displayGrossPrices: true,
   actions: [OrderAction.CAPTURE, OrderAction.MARK_AS_PAID, OrderAction.REFUND, OrderAction.VOID],
   shippingMethods: [
     {
@@ -1952,6 +1953,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
 export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order" as const,
   chargeStatus: OrderChargeStatusEnum.NONE,
+  displayGrossPrices: true,
   authorizeStatus: OrderAuthorizeStatusEnum.NONE,
   giftCards: [],
   actions: [OrderAction.CAPTURE],
