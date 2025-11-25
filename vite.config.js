@@ -132,7 +132,6 @@ export default defineConfig(({ command, mode }) => {
       fs: {
         allow: [searchForWorkspaceRoot(process.cwd()), "../.."],
       },
-      allowedHosts: ["dashboard-30.localcan.dev"],
     },
     define: {
       ...globals,
