@@ -18,12 +18,12 @@ export const AppManifestFragmentDoc = gql`
   homepageUrl
   supportUrl
   extensions {
-    target
+    targetName
     permissions {
       code
       name
     }
-    mount
+    mountName
     url
     label
   }
@@ -2037,6 +2037,7 @@ export const InvoiceFragmentDoc = gql`
 export const OrderDetailsFragmentDoc = gql`
     fragment OrderDetails on Order {
   id
+  displayGrossPrices
   ...Metadata
   billingAddress {
     ...Address
@@ -2192,6 +2193,7 @@ export const OrderDetailsFragmentDoc = gql`
     }
   }
   chargeStatus
+  authorizeStatus
 }
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}

@@ -22,7 +22,7 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
     const current = getAt(position);
     const dependency = Constraint.getDependency(leftOperator.value);
     const currentDependency =
-      FilterElement.isCompatible(current) && Constraint.getDependency(current.value.value);
+      FilterElement.isFilterElement(current) && Constraint.getDependency(current.value.value);
 
     updateAt(position, el => el.updateLeftOperator(leftOperator));
 

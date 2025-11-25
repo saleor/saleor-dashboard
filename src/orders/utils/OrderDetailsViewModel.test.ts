@@ -1,4 +1,9 @@
-import { GiftCardEventsEnum, OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
+import {
+  GiftCardEventsEnum,
+  OrderAction,
+  OrderDetailsFragment,
+  OrderStatus,
+} from "@dashboard/graphql";
 
 import { prepareMoney } from "../fixtures";
 import { OrderDetailsViewModel, OrderTotalAmounts } from "./OrderDetailsViewModel";
@@ -566,6 +571,369 @@ describe("OrderModel", () => {
 
       // Assert
       expect(result).toBe(0);
+    });
+  });
+
+  describe("canOrderCapture", () => {
+    it("should return true when CAPTURE action is included", () => {
+      // Arrange
+      const actions = [OrderAction.CAPTURE, OrderAction.REFUND];
+
+      // Act
+      const result = OrderDetailsViewModel.canOrderCapture(actions);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return false when CAPTURE action is not included", () => {
+      // Arrange
+      const actions = [OrderAction.REFUND, OrderAction.VOID];
+
+      // Act
+      const result = OrderDetailsViewModel.canOrderCapture(actions);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("canOrderVoid", () => {
+    it("should return true when VOID action is included", () => {
+      // Arrange
+      const actions = [OrderAction.VOID, OrderAction.REFUND];
+
+      // Act
+      const result = OrderDetailsViewModel.canOrderVoid(actions);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return false when VOID action is not included", () => {
+      // Arrange
+      const actions = [OrderAction.REFUND, OrderAction.CAPTURE];
+
+      // Act
+      const result = OrderDetailsViewModel.canOrderVoid(actions);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("canOrderRefund", () => {
+    it("should return true when REFUND action is included", () => {
+      // Arrange
+      const actions = [OrderAction.REFUND, OrderAction.CAPTURE];
+
+      // Act
+      const result = OrderDetailsViewModel.canOrderRefund(actions);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return false when REFUND action is not included", () => {
+      // Arrange
+      const actions = [OrderAction.CAPTURE, OrderAction.VOID];
+
+      // Act
+      const result = OrderDetailsViewModel.canOrderRefund(actions);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("canGrantRefund", () => {
+    it("should return true when order has transactions", () => {
+      // Arrange
+      const order = {
+        transactions: [{ id: "tx-1" }] as OrderDetailsFragment["transactions"],
+        payments: [] as OrderDetailsFragment["payments"],
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.canGrantRefund(order);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return true when order has payments", () => {
+      // Arrange
+      const order = {
+        transactions: [] as OrderDetailsFragment["transactions"],
+        payments: [{ id: "pay-1" }] as OrderDetailsFragment["payments"],
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.canGrantRefund(order);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return true when order has both transactions and payments", () => {
+      // Arrange
+      const order = {
+        transactions: [{ id: "tx-1" }] as OrderDetailsFragment["transactions"],
+        payments: [{ id: "pay-1" }] as OrderDetailsFragment["payments"],
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.canGrantRefund(order);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return false when order has no transactions or payments", () => {
+      // Arrange
+      const order = {
+        transactions: [] as OrderDetailsFragment["transactions"],
+        payments: [] as OrderDetailsFragment["payments"],
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.canGrantRefund(order);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("canSendRefund", () => {
+    it("should return true when order has granted refunds", () => {
+      // Arrange
+      const grantedRefunds = [{ id: "refund-1" }] as OrderDetailsFragment["grantedRefunds"];
+
+      // Act
+      const result = OrderDetailsViewModel.canSendRefund(grantedRefunds);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return false when order has no granted refunds", () => {
+      // Arrange
+      const grantedRefunds = [] as OrderDetailsFragment["grantedRefunds"];
+
+      // Act
+      const result = OrderDetailsViewModel.canSendRefund(grantedRefunds);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("canAnyRefund", () => {
+    it("should return true when order can grant refund", () => {
+      // Arrange
+      const order = {
+        transactions: [{ id: "tx-1" }] as OrderDetailsFragment["transactions"],
+        payments: [] as OrderDetailsFragment["payments"],
+        grantedRefunds: [] as OrderDetailsFragment["grantedRefunds"],
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.canAnyRefund(order);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return true when order can send refund", () => {
+      // Arrange
+      const order = {
+        transactions: [] as OrderDetailsFragment["transactions"],
+        payments: [] as OrderDetailsFragment["payments"],
+        grantedRefunds: [{ id: "refund-1" }] as OrderDetailsFragment["grantedRefunds"],
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.canAnyRefund(order);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return true when order can grant and send refund", () => {
+      // Arrange
+      const order = {
+        transactions: [{ id: "tx-1" }] as OrderDetailsFragment["transactions"],
+        payments: [] as OrderDetailsFragment["payments"],
+        grantedRefunds: [{ id: "refund-1" }] as OrderDetailsFragment["grantedRefunds"],
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.canAnyRefund(order);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return false when order cannot grant or send refund", () => {
+      // Arrange
+      const order = {
+        transactions: [] as OrderDetailsFragment["transactions"],
+        payments: [] as OrderDetailsFragment["payments"],
+        grantedRefunds: [] as OrderDetailsFragment["grantedRefunds"],
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.canAnyRefund(order);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("hasGiftCards", () => {
+    it("should return true when giftCardsAmount is positive", () => {
+      // Arrange
+      const giftCardsAmount = 50;
+
+      // Act
+      const result = OrderDetailsViewModel.hasGiftCards(giftCardsAmount);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return false when giftCardsAmount is 0", () => {
+      // Arrange
+      const giftCardsAmount = 0;
+
+      // Act
+      const result = OrderDetailsViewModel.hasGiftCards(giftCardsAmount);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("should return false when giftCardsAmount is null", () => {
+      // Arrange
+      const giftCardsAmount = null;
+
+      // Act
+      const result = OrderDetailsViewModel.hasGiftCards(giftCardsAmount);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("hasNoPayment", () => {
+    it("should return true when no refund possible, nothing charged/authorized, and no gift cards", () => {
+      // Arrange
+      const args = {
+        canAnyRefund: false,
+        shouldDisplay: {
+          charged: false,
+          authorized: false,
+          cancelled: false,
+          authorizedPending: false,
+          chargedPending: false,
+          cancelledPending: false,
+        },
+        hasGiftCards: false,
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.hasNoPayment(args);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("should return false when refund is possible", () => {
+      // Arrange
+      const args = {
+        canAnyRefund: true,
+        shouldDisplay: {
+          charged: false,
+          authorized: false,
+          cancelled: false,
+          authorizedPending: false,
+          chargedPending: false,
+          cancelledPending: false,
+        },
+        hasGiftCards: false,
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.hasNoPayment(args);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("should return false when amount is charged", () => {
+      // Arrange
+      const args = {
+        canAnyRefund: false,
+        shouldDisplay: {
+          charged: true,
+          authorized: false,
+          cancelled: false,
+          authorizedPending: false,
+          chargedPending: false,
+          cancelledPending: false,
+        },
+        hasGiftCards: false,
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.hasNoPayment(args);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("should return false when amount is authorized", () => {
+      // Arrange
+      const args = {
+        canAnyRefund: false,
+        shouldDisplay: {
+          charged: false,
+          authorized: true,
+          cancelled: false,
+          authorizedPending: false,
+          chargedPending: false,
+          cancelledPending: false,
+        },
+        hasGiftCards: false,
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.hasNoPayment(args);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("should return false when gift cards were used", () => {
+      // Arrange
+      const args = {
+        canAnyRefund: false,
+        shouldDisplay: {
+          charged: false,
+          authorized: false,
+          cancelled: false,
+          authorizedPending: false,
+          chargedPending: false,
+          cancelledPending: false,
+        },
+        hasGiftCards: true,
+      };
+
+      // Act
+      const result = OrderDetailsViewModel.hasNoPayment(args);
+
+      // Assert
+      expect(result).toBe(false);
     });
   });
 });

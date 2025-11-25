@@ -7,6 +7,7 @@ import DataEditor, {
   CellClickedEventArgs,
   DataEditorProps,
   DataEditorRef,
+  DrawHeaderCallback,
   EditableGridCell,
   GridCell,
   GridColumn,
@@ -102,6 +103,8 @@ interface DatagridProps {
   onClearRecentlyAddedColumn?: () => void;
   renderHeader?: (props: DatagridRenderHeaderProps) => ReactNode;
   navigatorOpts?: NavigatorOpts;
+  showTopBorder?: boolean;
+  themeOverride?: Partial<Theme>;
 }
 
 const Datagrid = ({
@@ -137,11 +140,23 @@ const Datagrid = ({
   rowHeight = cellHeight,
   renderHeader,
   navigatorOpts,
+  showTopBorder = true,
+  themeOverride,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
   const { themeValues, theme } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
+  const finalTheme = useMemo(
+    () => ({ ...datagridTheme, ...themeOverride }),
+    [datagridTheme, themeOverride],
+  );
+  const rowMarkerTheme = useMemo(
+    () => ({
+      accentColor: themeValues.colors.text.default1,
+    }),
+    [themeValues],
+  );
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
   const { scrolledToRight } = useScrollRight();
@@ -347,6 +362,20 @@ const Datagrid = ({
     },
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
+  const drawHeader: DrawHeaderCallback = useCallback(args => {
+    const { ctx, rect, isSelected, spriteManager, theme, column } = args;
+
+    if (isSelected && column.id !== "empty") {
+      const iconSize = 16;
+      const padding = 8;
+      const x = rect.x + rect.width - iconSize - padding;
+      const y = rect.y + (rect.height - iconSize) / 2;
+
+      spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
+    }
+
+    return false;
+  }, []);
   const handleRemoveRows = useCallback(
     (rows: number[]) => {
       if (selection?.rows) {
@@ -451,7 +480,7 @@ const Datagrid = ({
                 <div className={classes.editorContainer}>
                   <Box
                     backgroundColor="default1"
-                    borderTopWidth={1}
+                    borderTopWidth={showTopBorder ? 1 : 0}
                     borderTopStyle="solid"
                     borderColor="default1"
                   />
@@ -460,7 +489,10 @@ const Datagrid = ({
                     customRenderers={customRenderers}
                     verticalBorder={verticalBorder}
                     headerIcons={headerIcons}
-                    theme={datagridTheme}
+                    drawHeader={drawHeader}
+                    theme={finalTheme}
+                    drawFocusRing={false}
+                    rowMarkerTheme={rowMarkerTheme}
                     className={classes.datagrid}
                     getCellContent={handleGetCellContent}
                     onCellEdited={handleOnCellEdited}

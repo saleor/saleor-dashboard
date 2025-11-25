@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardTitle from "@dashboard/components/CardTitle";
+import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";

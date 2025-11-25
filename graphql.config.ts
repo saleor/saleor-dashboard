@@ -5,15 +5,32 @@ import type { IGraphQLConfig } from "graphql-config";
  * they should use this file for common settings
  *
  * https://the-guild.dev/graphql/config
+ *
+ * Multi-schema support:
+ * - main: Main/production schema
+ * - staging: Staging/preview schema
  */
 const config: IGraphQLConfig = {
-  schema: "schema.graphql",
-  documents: [
-    "./src/**/queries.ts",
-    "./src/**/mutations.ts",
-    "./src/**/fragments/*.ts",
-    "./src/searches/*.ts",
-  ],
+  projects: {
+    main: {
+      schema: "schema-main.graphql",
+      documents: [
+        "./src/**/queries.ts",
+        "./src/**/mutations.ts",
+        "./src/**/fragments/*.ts",
+        "./src/searches/*.ts",
+      ],
+    },
+    staging: {
+      schema: "schema-staging.graphql",
+      documents: [
+        "./src/**/queries.staging.ts",
+        "./src/**/mutations.staging.ts",
+        "./src/**/fragments/*.staging.ts",
+        "./src/searches/*.staging.ts",
+      ],
+    },
+  },
 };
 
 export default config;

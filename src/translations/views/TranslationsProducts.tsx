@@ -9,12 +9,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { commonMessages } from "@dashboard/intl";
-import { stringifyQs } from "@dashboard/utils/urls";
+import { getMultipleUrlValues, stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
-import TranslationsProductsPage from "../components/TranslationsProductsPage";
+import { TranslationsProductsPage } from "../components/TranslationsProductsPage";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from "../utils";
 
@@ -44,7 +44,6 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      navigate("?", { replace: true });
     }
   };
   const [updateTranslations, updateTranslationsOpts] = useUpdateProductTranslationsMutation({
@@ -53,22 +52,41 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
   const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
     onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
   });
-  const onEdit = (field: string) =>
+  const onEdit = (field: string | string[]) =>
     navigate(
       "?" +
-        stringifyQs({
-          activeField: field,
-        }),
+        stringifyQs(
+          {
+            activeField: field,
+          },
+          "repeat",
+        ),
       { replace: true },
     );
-  const onDiscard = () => {
-    navigate("?", { replace: true });
+  const onDiscard = (field?: string) => {
+    if (!field) {
+      return navigate("?", { replace: true });
+    }
+
+    const activeFields = getMultipleUrlValues(new URL(window.location.href).search, "activeField");
+
+    navigate(
+      "?" +
+        stringifyQs(
+          {
+            activeField: activeFields.filter(f => f !== field),
+          },
+          "repeat",
+        ),
+      { replace: true },
+    );
   };
+
   const handleSubmit = (
     { name: fieldName }: TranslationField<TranslationInputFieldName>,
     data: string,
-  ) =>
-    extractMutationErrors(
+  ) => {
+    return extractMutationErrors(
       updateTranslations({
         variables: {
           id,
@@ -79,7 +97,30 @@ const TranslationsProducts = ({ id, languageCode, params }: TranslationsProducts
           language: languageCode,
         },
       }),
-    );
+    ).then(errors => {
+      if (errors.length === 0) {
+        const activeFields = getMultipleUrlValues(
+          new URL(window.location.href).search,
+          "activeField",
+        );
+
+        const newActiveFields = activeFields.filter(f => f !== fieldName);
+
+        navigate(
+          "?" +
+            stringifyQs(
+              {
+                activeField: newActiveFields,
+              },
+              "repeat",
+            ),
+          { replace: true },
+        );
+      }
+
+      return errors;
+    });
+  };
   const handleAttributeValueSubmit = (
     { id, type }: TranslationField<TranslationInputFieldName>,
     data: HandleSubmitAttributeValue,

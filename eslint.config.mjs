@@ -233,6 +233,11 @@ export default tseslint.config(
 
   {
     rules: {
+      /**
+       * Reasoning: This allows to understand what function does without reading it's implementation.
+       * It also protects it's input and output - chanigng function internal will show error in it's body, not in other files that consuming
+       */
+      "@typescript-eslint/explicit-function-return-type": "warn",
       "no-restricted-imports": [
         "warn",
         {

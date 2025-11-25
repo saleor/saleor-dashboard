@@ -90,3 +90,5 @@ export const mergeSelectedColumns = ({
 
   return columns;
 };
+
+export const rightColumnBoxShadow = "-8px 0px 8px -4px rgba(0, 0, 0, 0.12)";

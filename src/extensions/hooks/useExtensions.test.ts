@@ -225,7 +225,7 @@ describe("Extensions / hooks / useExtensions", () => {
       fetchPolicy: "cache-first",
       variables: {
         filter: {
-          mount: mountList,
+          mountName: mountList,
         },
       },
     });

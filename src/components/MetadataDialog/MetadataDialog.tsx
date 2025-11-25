@@ -86,6 +86,9 @@ export const MetadataDialog = ({
           width="100%"
           backgroundColor="default1"
         >
+          <Button data-test-id="back" variant="secondary" onClick={onClose}>
+            <FormattedMessage {...buttonMessages.close} />
+          </Button>
           <ButtonWithLoader
             transitionState={loading ? "loading" : "default"}
             data-test-id="save"
@@ -95,9 +98,6 @@ export const MetadataDialog = ({
           >
             <FormattedMessage {...buttonMessages.save} />
           </ButtonWithLoader>
-          <Button data-test-id="back" variant="secondary" onClick={onClose}>
-            <FormattedMessage {...buttonMessages.close} />
-          </Button>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>

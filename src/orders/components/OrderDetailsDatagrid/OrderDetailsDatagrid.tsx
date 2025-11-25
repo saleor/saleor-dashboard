@@ -1,15 +1,18 @@
 // @ts-strict-ignore
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
+import { ROW_ACTION_BAR_WIDTH } from "@dashboard/components/Datagrid/const";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
+import { Theme } from "@glideapps/glide-data-grid";
 import { ExternalLinkIcon } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -20,25 +23,28 @@ import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagr
 import { messages } from "./messages";
 import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
 
-const ROW_ACTION_BAR_WIDTH = 80;
-
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
-  enableVerticalBorder?: boolean;
+  datagridCustomTheme?: Partial<Theme>;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
   loading,
   onOrderLineShowMetadata,
-  enableVerticalBorder = true,
+  datagridCustomTheme = {},
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
+
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
-  const orderDetailsStaticColumns = useMemo(() => orderDetailsStaticColumnsAdapter(intl), [intl]);
+  const emptyColumn = useEmptyColumn();
+  const orderDetailsStaticColumns = useMemo(
+    () => orderDetailsStaticColumnsAdapter(intl, emptyColumn),
+    [intl, emptyColumn],
+  );
   const handleColumnChange = useCallback(
     picked => {
       if (updateListSettings) {
@@ -103,11 +109,13 @@ export const OrderDetailsDatagrid = ({
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
         showEmptyDatagrid
+        themeOverride={datagridCustomTheme}
         rowMarkers="none"
         columnSelect="single"
-        freezeColumns={1}
+        freezeColumns={2}
         availableColumns={visibleColumns}
-        verticalBorder={enableVerticalBorder}
+        verticalBorder={false}
+        showTopBorder={false}
         emptyText={intl.formatMessage(orderMessages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}

@@ -1,61 +1,67 @@
-import {
-  AppExtensionMountEnum,
-  AppExtensionTargetEnum,
-  AppManifestFragment,
-  PermissionEnum,
-} from "@dashboard/graphql";
+import { AppManifestFragment, PermissionEnum } from "@dashboard/graphql";
 
 import { appManifestSchema } from "./app-manifest";
+
+const getValidManifestBase = (overrides: Partial<AppManifestFragment> = {}) => {
+  const validData: AppManifestFragment = {
+    appUrl: "https://example.com",
+    permissions: [],
+    extensions: [],
+    __typename: "Manifest",
+    identifier: "",
+    version: "",
+    about: "",
+    name: "",
+    configurationUrl: "",
+    tokenTargetUrl: "",
+    dataPrivacy: "",
+    dataPrivacyUrl: "",
+    homepageUrl: "",
+    supportUrl: "",
+    brand: {
+      __typename: "AppManifestBrand",
+      logo: {
+        __typename: "AppManifestBrandLogo",
+        default: "",
+      },
+    },
+    ...overrides,
+  };
+
+  return validData;
+};
 
 describe("App Manifest Schema", () => {
   describe("Valid cases - basic structure", () => {
     it("should accept valid manifest with all optional fields", () => {
       // Arrange
-      const validData = {
-        appUrl: "https://example.com",
-        permissions: [
-          {
-            code: PermissionEnum.MANAGE_PRODUCTS,
-            __typename: "Permission",
-            name: "Manage Products",
-          },
-          { code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission", name: "Manage Products" },
-        ],
-        extensions: [
-          {
-            label: "My Extension",
-            url: "https://example.com/extension",
-            mount: AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-            target: AppExtensionTargetEnum.POPUP,
-            permissions: [
-              {
-                code: PermissionEnum.MANAGE_PRODUCTS,
-                __typename: "Permission",
-                name: "Manage Products",
-              },
-            ],
-            __typename: "AppManifestExtension",
-          },
-        ],
-        __typename: "Manifest",
-        identifier: "",
-        version: "",
-        about: "",
-        name: "",
-        configurationUrl: "",
-        tokenTargetUrl: "",
-        dataPrivacy: "",
-        dataPrivacyUrl: "",
-        homepageUrl: "",
-        supportUrl: "",
-        brand: {
-          __typename: "AppManifestBrand",
-          logo: {
-            __typename: "AppManifestBrandLogo",
-            default: "",
-          },
+      const validData = getValidManifestBase();
+
+      validData.extensions = [
+        {
+          label: "My Extension",
+          url: "https://example.com/extension",
+          mountName: "PRODUCT_OVERVIEW_CREATE",
+          targetName: "POPUP",
+          permissions: [
+            {
+              code: PermissionEnum.MANAGE_PRODUCTS,
+              __typename: "Permission",
+              name: "Manage Products",
+            },
+          ],
+          __typename: "AppManifestExtension",
         },
-      } satisfies AppManifestFragment;
+      ];
+
+      validData.permissions = [
+        {
+          code: PermissionEnum.MANAGE_PRODUCTS,
+          __typename: "Permission",
+          name: "Manage Products",
+        },
+        { code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission", name: "Manage Products" },
+      ];
 
       // Act
       const result = appManifestSchema.safeParse(validData);
@@ -128,19 +134,25 @@ describe("App Manifest Schema", () => {
     });
 
     it("should accept manifest with absolute URL extension and appUrl", () => {
-      // Arrange
-      const validData = {
-        appUrl: "https://example.com",
-        permissions: [{ code: "MANAGE_PRODUCTS" }],
+      const validData = getValidManifestBase({
+        permissions: [
+          {
+            code: PermissionEnum.MANAGE_PRODUCTS,
+            __typename: "Permission",
+            name: "MANAGE_PRODUCTS",
+          },
+        ],
         extensions: [
           {
             label: "Extension",
             url: "https://example.com/ext",
-            mount: "PRODUCT_OVERVIEW_CREATE",
-            target: "POPUP",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "POPUP",
+            permissions: [],
+            __typename: "AppManifestExtension",
           },
         ],
-      };
+      });
 
       // Act
       const result = appManifestSchema.safeParse(validData);
@@ -153,17 +165,18 @@ describe("App Manifest Schema", () => {
   describe("Valid cases - extension URL validation", () => {
     it("should accept absolute URL with NEW_TAB target without appUrl", () => {
       // Arrange
-      const validData = {
-        permissions: [],
-        extensions: [
-          {
-            label: "Extension",
-            url: "https://example.com/ext",
-            mount: "PRODUCT_OVERVIEW_CREATE",
-            target: "NEW_TAB",
-          },
-        ],
-      };
+      const validData = getValidManifestBase();
+
+      validData.extensions = [
+        {
+          label: "Extension",
+          url: "https://example.com/ext",
+          mountName: "PRODUCT_OVERVIEW_CREATE",
+          targetName: "NEW_TAB",
+          __typename: "AppManifestExtension",
+          permissions: [],
+        },
+      ];
 
       // Act
       const result = appManifestSchema.safeParse(validData);
@@ -174,17 +187,18 @@ describe("App Manifest Schema", () => {
 
     it("should accept relative URL with APP_PAGE target without appUrl", () => {
       // Arrange
-      const validData = {
-        permissions: [],
-        extensions: [
-          {
-            label: "Extension",
-            url: "/app/page",
-            mount: "NAVIGATION_CATALOG",
-            target: "APP_PAGE",
-          },
-        ],
-      };
+      const validData = getValidManifestBase();
+
+      validData.extensions = [
+        {
+          label: "Extension",
+          url: "/app/page",
+          mountName: "NAVIGATION_CATALOG",
+          targetName: "APP_PAGE",
+          permissions: [],
+          __typename: "AppManifestExtension",
+        },
+      ];
 
       // Act
       const result = appManifestSchema.safeParse(validData);
@@ -197,26 +211,30 @@ describe("App Manifest Schema", () => {
   describe("Invalid cases - permission subset validation", () => {
     it("should reject when extension permission is not in app permissions", () => {
       // Arrange
-      const invalidData = {
-        permissions: [{ code: "MANAGE_PRODUCTS" }],
-        extensions: [
-          {
-            label: "Extension",
-            url: "https://example.com/ext",
-            mount: "PRODUCT_OVERVIEW_CREATE",
-            permissions: [
-              {
-                code: PermissionEnum.MANAGE_ORDERS,
-                __typename: "Permission",
-                name: "Manage Products",
-              },
-            ], // Not in app permissions
-          },
-        ],
-      };
+      const baseData = getValidManifestBase();
+
+      baseData.permissions = [
+        { code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission", name: "" },
+      ];
+      baseData.extensions = [
+        {
+          label: "Extension",
+          url: "https://example.com/ext",
+          mountName: "PRODUCT_OVERVIEW_CREATE",
+          permissions: [
+            {
+              code: PermissionEnum.MANAGE_ORDERS,
+              __typename: "Permission",
+              name: "Manage Products",
+            },
+          ],
+          __typename: "AppManifestExtension",
+          targetName: "POPUP",
+        },
+      ];
 
       // Act
-      const result = appManifestSchema.safeParse(invalidData);
+      const result = appManifestSchema.safeParse(baseData);
 
       // Assert
       expect(result.success).toBe(false);
@@ -230,13 +248,16 @@ describe("App Manifest Schema", () => {
 
     it("should accept when all extension permissions are subset of app permissions", () => {
       // Arrange
-      const validData = {
-        permissions: [{ code: "MANAGE_PRODUCTS" }, { code: "MANAGE_ORDERS" }],
+      const validData = getValidManifestBase({
+        permissions: [
+          { code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission", name: "" },
+          { code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission", name: "" },
+        ],
         extensions: [
           {
             label: "Extension",
             url: "https://example.com/ext",
-            mount: "PRODUCT_OVERVIEW_CREATE",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
             permissions: [
               {
                 code: PermissionEnum.MANAGE_PRODUCTS,
@@ -244,9 +265,11 @@ describe("App Manifest Schema", () => {
                 name: "Manage Products",
               },
             ],
+            __typename: "AppManifestExtension",
+            targetName: "POPUP",
           },
         ],
-      };
+      });
 
       // Act
       const result = appManifestSchema.safeParse(validData);
@@ -257,17 +280,19 @@ describe("App Manifest Schema", () => {
 
     it("should accept extension with empty permissions", () => {
       // Arrange
-      const validData = {
-        permissions: [{ code: "MANAGE_PRODUCTS" }],
+      const validData = getValidManifestBase({
+        permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission", name: "" }],
         extensions: [
           {
             label: "Extension",
             url: "https://example.com/ext",
-            mount: "PRODUCT_OVERVIEW_CREATE",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
             permissions: [],
+            __typename: "AppManifestExtension",
+            targetName: "POPUP",
           },
         ],
-      };
+      });
 
       // Act
       const result = appManifestSchema.safeParse(validData);
@@ -278,13 +303,16 @@ describe("App Manifest Schema", () => {
 
     it("should reject when any extension permission is not in app permissions", () => {
       // Arrange
-      const invalidData = {
-        permissions: [{ code: "MANAGE_PRODUCTS" }, { code: "MANAGE_ORDERS" }],
+      const invalidData = getValidManifestBase({
+        permissions: [
+          { code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission", name: "" },
+          { code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission", name: "" },
+        ],
         extensions: [
           {
             label: "Extension",
             url: "https://example.com/ext",
-            mount: "PRODUCT_OVERVIEW_CREATE",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
             permissions: [
               {
                 code: PermissionEnum.MANAGE_PRODUCTS,
@@ -296,10 +324,12 @@ describe("App Manifest Schema", () => {
                 __typename: "Permission",
                 name: "Manage Staff",
               },
-            ], // MANAGE_STAFF not in app
+            ],
+            __typename: "AppManifestExtension",
+            targetName: "POPUP",
           },
         ],
-      };
+      });
 
       // Act
       const result = appManifestSchema.safeParse(invalidData);
@@ -318,8 +348,7 @@ describe("App Manifest Schema", () => {
   describe("Smoke tests - extensions field", () => {
     it("should accept manifest with one extension (basic smoke test)", () => {
       // Arrange
-      const validData = {
-        appUrl: "https://example.com",
+      const validData = getValidManifestBase({
         permissions: [
           {
             code: PermissionEnum.MANAGE_PRODUCTS,
@@ -331,8 +360,8 @@ describe("App Manifest Schema", () => {
           {
             label: "Product Extension",
             url: "https://example.com/product-ext",
-            mount: "PRODUCT_OVERVIEW_CREATE",
-            target: "POPUP",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "POPUP",
             permissions: [
               {
                 code: PermissionEnum.MANAGE_PRODUCTS,
@@ -340,9 +369,10 @@ describe("App Manifest Schema", () => {
                 name: "Manage Products",
               },
             ],
+            __typename: "AppManifestExtension",
           },
         ],
-      };
+      });
 
       // Act
       const result = appManifestSchema.safeParse(validData);

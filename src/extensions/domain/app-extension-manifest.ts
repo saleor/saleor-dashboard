@@ -11,16 +11,16 @@ export const appExtensionManifest = z
   .object({
     label: z.string().min(1),
     url: z.string().min(1),
-    mount: ALL_APP_EXTENSION_MOUNTS,
-    target: AppExtensionManifestTarget.default("POPUP"),
+    mountName: ALL_APP_EXTENSION_MOUNTS,
+    targetName: AppExtensionManifestTarget.default("POPUP"),
     permissions: z.array(permissionSchema).optional().default([]),
     options: appExtensionManifestOptionsSchema.optional(),
   })
   .refine(
     data => {
       // Validate that WIDGET target only uses widget-compatible mounts
-      if (data.target === "WIDGET") {
-        return WIDGET_AVAILABLE_MOUNTS.includes(data.mount as any);
+      if (data.targetName === "WIDGET") {
+        return WIDGET_AVAILABLE_MOUNTS.includes(data.mountName as any);
       }
 
       return true;
@@ -32,7 +32,7 @@ export const appExtensionManifest = z
   .refine(
     data => {
       // Validate widgetTarget options only on WIDGET target
-      if (data.options?.widgetTarget && data.target !== "WIDGET") {
+      if (data.options?.widgetTarget && data.targetName !== "WIDGET") {
         return false;
       }
 
@@ -45,7 +45,7 @@ export const appExtensionManifest = z
   .refine(
     data => {
       // Validate newTabTarget options only on NEW_TAB target
-      if (data.options?.newTabTarget && data.target !== "NEW_TAB") {
+      if (data.options?.newTabTarget && data.targetName !== "NEW_TAB") {
         return false;
       }
 
@@ -59,7 +59,7 @@ export const appExtensionManifest = z
     data => {
       // URL validation based on target
       const url = data.url;
-      const target = data.target;
+      const target = data.targetName;
 
       const isAppPage = target === "APP_PAGE";
       const isRelativeUrl = url.startsWith("/");

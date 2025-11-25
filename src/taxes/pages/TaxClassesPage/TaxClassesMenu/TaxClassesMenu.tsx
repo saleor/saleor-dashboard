@@ -1,4 +1,4 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import ListItemLink from "@dashboard/components/ListItemLink";
 import { TaxClassFragment } from "@dashboard/graphql";
 import { taxesMessages } from "@dashboard/taxes/messages";

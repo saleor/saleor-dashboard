@@ -1,9 +1,9 @@
 import { ConditionalProductFilterProvider } from "@dashboard/components/ConditionalFilter/context";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
+import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { getArrayQueryParam } from "@dashboard/utils/urls";
-import { parse as parseQs } from "qs";
 import { useIntl } from "react-intl";
 import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 

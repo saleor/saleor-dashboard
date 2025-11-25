@@ -1,5 +1,86 @@
 # Changelog
 
+## 3.22.14
+
+### Patch Changes
+
+- [#6122](https://github.com/saleor/saleor-dashboard/pull/6122) [`62f2911`](https://github.com/saleor/saleor-dashboard/commit/62f29118a7e2cf315d609a42c8575cfa6385c011) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Redesign order details payments and transactions section
+
+  Introduced new `OrderSummary` component that consolidates order value and payments information into a unified, two-column layout. The new design provides:
+  - **Order Value column**: Displays subtotal, shipping, taxes, discounts, and gift cards with clear itemization
+  - **Payments Summary column**: Shows payment status, authorized/captured/refunded amounts, and transaction state
+  - **Improved visual hierarchy**: Card-based layout with clear separation between order value and payment status
+  - **Better payment flow handling**: Distinct UI for legacy payments API vs. transactions API
+  - **Enhanced transaction display**: Consolidated view of all payment transactions with status pills
+
+  This redesign improves clarity when reviewing order financial information and payment states.
+
+- [#6128](https://github.com/saleor/saleor-dashboard/pull/6128) [`787c5fa`](https://github.com/saleor/saleor-dashboard/commit/787c5fab9a58d0b28705601eff53496d9f2aa701) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Remove focus border from datagrid cells while preserving header click highlight
+
+  Previously, clicking on datagrid cells displayed a visible focus border around the cell. The border has been removed by setting `drawFocusRing={false}` on the DataEditor component, while maintaining the header selection color functionality.
+
+- [#6132](https://github.com/saleor/saleor-dashboard/pull/6132) [`75826b1`](https://github.com/saleor/saleor-dashboard/commit/75826b104369678982b28ef057c26053d950a516) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed bug with App (with extensions) installation - now validation on the frontend checks new API fields properly
+
+## 3.22.13
+
+### Patch Changes
+
+- [#6090](https://github.com/saleor/saleor-dashboard/pull/6090) [`4c24b50`](https://github.com/saleor/saleor-dashboard/commit/4c24b508a69276fb6d7dabb30009a61c7a556796) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Fix visual regressions introduced in 3.22.12: missing sort arrow on datagrid when column is focused and changing order of buttons on order metadata / order line metadata dialogs to match other places in dashboard.
+
+- [#6081](https://github.com/saleor/saleor-dashboard/pull/6081) [`7b2d6d2`](https://github.com/saleor/saleor-dashboard/commit/7b2d6d24688d77bde321b89d98a8b02dbd69874a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Dashboard now uses new API to filter appExtensions query - `mountName` instead `mount`
+
+- [#6097](https://github.com/saleor/saleor-dashboard/pull/6097) [`989aa1d`](https://github.com/saleor/saleor-dashboard/commit/989aa1d66dea035a1b7fc57447b2cb7a0a1a11ac) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Fix row checkbox visibility in DataGrid by overriding rowMarkerTheme accentColor. Previously, checked row checkboxes had light gray background with white checkmark, making them invisible. Now they use dark text color for background, matching header checkbox appearance.
+
+- [#6093](https://github.com/saleor/saleor-dashboard/pull/6093) [`77ce8c2`](https://github.com/saleor/saleor-dashboard/commit/77ce8c23bc863d0da6eedf5219b61a9f34699308) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Add fulfillment metadata editing with button and modal dialog. Replace cancel fulfillment trash icon with dropdown menu. Improve tracking number copy button to show only on hover.
+
+- [#6100](https://github.com/saleor/saleor-dashboard/pull/6100) [`90e5db9`](https://github.com/saleor/saleor-dashboard/commit/90e5db90272170e8b1584c378d02a21df999589d) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improve order details datagrid visual polish
+
+  Enhanced the visual appearance of order details datagrids with the following improvements:
+  - Refined column selection styling to use a more subtle hover color, creating a cleaner visual experience when selecting columns
+  - Improved fulfillment card spacing by making the last card's bottom border white, providing better visual separation from surrounding content
+  - Fixed visual clutter by hiding the drag handle icon on the empty spacing column
+  - Added left padding and adjusted spacing for better content alignment
+  - Enhanced draft order cards with subtle shadows for improved depth perception
+  - Refined font sizing for better readability
+
+  These changes improve the overall visual consistency and polish of the order management interface.
+
+- [#6098](https://github.com/saleor/saleor-dashboard/pull/6098) [`b7b0ed1`](https://github.com/saleor/saleor-dashboard/commit/b7b0ed1c69cce94eeaffae6184b99d82f9116184) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improve draft order line item management with quick actions
+
+  Order draft line items now feature a row action bar for faster access to common operations. Metadata can be viewed via the metadata icon button, while additional actions (product details, remove item) are available through the menu dropdown.
+
+- [#6082](https://github.com/saleor/saleor-dashboard/pull/6082) [`290c67e`](https://github.com/saleor/saleor-dashboard/commit/290c67ed7f4e1e9d447ee3c872c9be5c044a908d) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improved order fulfillment cards with better keyboard accessibility - tracking number copy buttons now work with keyboard navigation. Enhanced screen reader support with proper labels for order status indicators.
+
+- [#6121](https://github.com/saleor/saleor-dashboard/pull/6121) [`2632bf0`](https://github.com/saleor/saleor-dashboard/commit/2632bf0741d87d3790481283d117fae9a6b8a26d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed error when bulk operations on large number of items (over 20) caused runtime error - for example selecting 100 items to be unassigned from collecton, caused page to crash. Now limit is set to 100
+
+## 3.22.12
+
+### Patch Changes
+
+- [#6042](https://github.com/saleor/saleor-dashboard/pull/6042) [`e78b4a1`](https://github.com/saleor/saleor-dashboard/commit/e78b4a14b1ceb4282431300a6f06b30184f8e0f5) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Metadata filters will now omit `value` if none is provided for filters that are using `WHERE` API (Products, Orders, etc.). This way users can filter for metadata key existence instead of key:value pairs.
+
+- [#6074](https://github.com/saleor/saleor-dashboard/pull/6074) [`2aa042d`](https://github.com/saleor/saleor-dashboard/commit/2aa042ddab5f26e8b11e0b73dc473ee0f2927638) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improve datagrid UI styling:
+  - Add drag indicator icon to selected column headers
+  - Change header icons (sorting arrows and grip) to black for better visibility
+  - Add white background to row action sections
+  - Add left border to row actions and column picker
+  - Remove shadow from row action bar
+  - Make backgrounds transparent where needed for cleaner appearance
+
+- [#6065](https://github.com/saleor/saleor-dashboard/pull/6065) [`c1cb87f`](https://github.com/saleor/saleor-dashboard/commit/c1cb87fce895707756859afe668ca4e7804ec0ca) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Increase extension name display width in InstalledExtensionsList from 200px to 400px to improve readability for extensions with longer names
+
+- [#6083](https://github.com/saleor/saleor-dashboard/pull/6083) [`fa7aab9`](https://github.com/saleor/saleor-dashboard/commit/fa7aab97244388967cbe77c7bea13d32002321cc) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Updated dependencies to fix security vulnerabilities in js-yaml (GHSA-mh29-5h37-fv8m, moderate severity) and glob (GHSA-5j98-mcp5-4vw2, high severity). Added pnpm overrides for defense-in-depth protection against these vulnerabilities.
+
+- [#6042](https://github.com/saleor/saleor-dashboard/pull/6042) [`e78b4a1`](https://github.com/saleor/saleor-dashboard/commit/e78b4a14b1ceb4282431300a6f06b30184f8e0f5) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Metadata filter fields will now validate if `key` is provided. Previously users were able to enter data without `key` which resulted in an error. `value` is optional.
+
+- [#6009](https://github.com/saleor/saleor-dashboard/pull/6009) [`f519aa3`](https://github.com/saleor/saleor-dashboard/commit/f519aa3f61f8a1d03c19fc3cd19a7f43e587d4cf) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Add metadata button to order line datagrid for quick access to line item metadata
+
+- [#6066](https://github.com/saleor/saleor-dashboard/pull/6066) [`0c83a47`](https://github.com/saleor/saleor-dashboard/commit/0c83a477cc08cebdd9c2d473adade22165d16e6d) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Add order metadata dialog with Code icon button in order details page. Users can now view and edit order metadata (public and private) directly from the order page by clicking the new Code icon button in the top navigation bar next to the settings menu.
+
+- [#6030](https://github.com/saleor/saleor-dashboard/pull/6030) [`ccc854d`](https://github.com/saleor/saleor-dashboard/commit/ccc854d9bdb81d17497c0c65e85317731c9047dd) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Add support for Translation extensions (popup only) to establish bi-directional communication to update form state.
+
+- [#6079](https://github.com/saleor/saleor-dashboard/pull/6079) [`7834e01`](https://github.com/saleor/saleor-dashboard/commit/7834e01c6d3c5011dbcde7f78c33e020e1b1b417) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Update unfulfilled order card title and move fulfill button to toolbar for better UX
+
 ## 3.22.11
 
 ### Patch Changes

@@ -138,6 +138,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     shopSettings?.fulfillmentAutoApprove && !shopSettings?.fulfillmentAllowUnpaid && !order?.isPaid;
   const areWarehousesSet = formsetData
     .filter(item => !!item?.value) // preorder case
+    .filter(item => item?.value?.[0]?.quantity)
     .every(line => line.value.every(v => v.warehouse));
   const shouldEnableSave = () => {
     if (!order || loading) {
@@ -323,5 +324,4 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   );
 };
 
-OrderFulfillPage.displayName = "OrderFulfillPage";
 export default OrderFulfillPage;

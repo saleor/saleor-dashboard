@@ -1,5 +1,7 @@
 types/
 schema.graphql
+schema-main.graphql
+schema-staging.graphql
 *.generated.*
 .changeset/
 .featureFlags/

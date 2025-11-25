@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -10,7 +11,9 @@ import { LanguageCodeEnum, ProductTranslationFragment } from "@dashboard/graphql
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { createProductTranslateFormPayloadEvent } from "@dashboard/translations/components/TranslationsProductsPage/create-product-translate-form-payload-event";
 import {
+  TranslationField,
   TranslationInputFieldName,
   TranslationsEntitiesPageProps,
 } from "@dashboard/translations/types";
@@ -22,10 +25,13 @@ import {
 } from "@dashboard/translations/urls";
 import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
 import { Box } from "@saleor/macaw-ui-next";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductContextSwitcher } from "../ProductContextSwitcher/ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
+import { useTranslationProductFormAppResponse } from "./use-translation-product-form-app-response";
+import { useTranslationsProductsDataCache } from "./use-translations-products-data-cache";
 
 interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
@@ -33,7 +39,7 @@ interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsProductsPage = ({
+export const TranslationsProductsPage = ({
   translationId,
   productId,
   activeField,
@@ -55,6 +61,67 @@ const TranslationsProductsPage = ({
     productId,
     translationLanguage: languageCode,
   });
+  const { attachFormState, active } = useActiveAppExtension();
+  const {
+    resetCache,
+    cachedProductName,
+    cachedProductDescription,
+    cachedProductSeoDescription,
+    cachedProductSeoName,
+    setCachedFormField,
+  } = useTranslationsProductsDataCache();
+
+  /**
+   * Handle app response and trigger onEdit for dirty fields
+   */
+  const { appResponseFields, resetKey } = useTranslationProductFormAppResponse({
+    productData: data?.product,
+    cachedProductDescription,
+    cachedProductSeoName,
+    cachedProductSeoDescription,
+    cachedProductName,
+    onEdit,
+  });
+
+  function handleValueChange(field: TranslationField, value: string): void {
+    if (field.name === "name") {
+      setCachedFormField("productName", value);
+    }
+
+    if (field.name === "description") {
+      setCachedFormField("productDescription", value);
+    }
+
+    if (field.name === "seoDescription") {
+      setCachedFormField("seoDescription", value);
+    }
+
+    if (field.name === "seoTitle") {
+      setCachedFormField("seoName", value);
+    }
+  }
+
+  // Emit data to app
+  useEffect(() => {
+    if (active && data?.product && data.translation) {
+      attachFormState(
+        createProductTranslateFormPayloadEvent({
+          translationData: data.translation,
+          productData: data.product,
+          cachedProductDescription,
+          cachedProductName,
+          cachedProductSeoName,
+          cachedProductSeoDescription,
+          productId,
+          languageCode,
+        }),
+      );
+    }
+  }, [active, data?.product, productId]);
+
+  useEffect(() => {
+    resetCache();
+  }, [activeField]);
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -111,6 +178,7 @@ const TranslationsProductsPage = ({
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields
+          onValueChange={handleValueChange}
           activeField={activeField}
           disabled={disabled}
           initialState={true}
@@ -122,7 +190,7 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Product Name",
               }),
               name: TranslationInputFieldName.name,
-              translation: data?.translation?.name || null,
+              translation: (appResponseFields.productName ?? data?.translation?.name) || null,
               type: "short",
               value: data?.product?.name,
             },
@@ -132,7 +200,8 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Description",
               }),
               name: TranslationInputFieldName.description,
-              translation: data?.translation?.description || null,
+              translation:
+                (appResponseFields.productDescription ?? data?.translation?.description) || null,
               type: "rich",
               value: data?.product?.description,
             },
@@ -145,6 +214,7 @@ const TranslationsProductsPage = ({
         />
         <CardSpacer />
         <TranslationFields
+          onValueChange={handleValueChange}
           activeField={activeField}
           disabled={disabled}
           initialState={true}
@@ -159,7 +229,7 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Title",
               }),
               name: TranslationInputFieldName.seoTitle,
-              translation: data?.translation?.seoTitle || null,
+              translation: (appResponseFields.seoName ?? data?.translation?.seoTitle) || null,
               type: "short",
               value: data?.product?.seoTitle,
             },
@@ -169,13 +239,14 @@ const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Description",
               }),
               name: TranslationInputFieldName.seoDescription,
-              translation: data?.translation?.seoDescription || null,
+              translation:
+                (appResponseFields.seoDescription ?? data?.translation?.seoDescription) || null,
               type: "long",
               value: data?.product?.seoDescription,
             },
           ]}
           saveButtonState={saveButtonState}
-          richTextResetKey={languageCode}
+          richTextResetKey={languageCode + resetKey.current}
           onEdit={onEdit}
           onDiscard={onDiscard}
           onSubmit={onSubmit}
@@ -190,7 +261,7 @@ const TranslationsProductsPage = ({
               title={intl.formatMessage(commonMessages.translationAttributes)}
               fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
               saveButtonState={saveButtonState}
-              richTextResetKey={languageCode}
+              richTextResetKey={languageCode + resetKey.current}
               onEdit={onEdit}
               onDiscard={onDiscard}
               onSubmit={onAttributeValueSubmit}
@@ -204,4 +275,3 @@ const TranslationsProductsPage = ({
 };
 
 TranslationsProductsPage.displayName = "TranslationsProductsPage";
-export default TranslationsProductsPage;

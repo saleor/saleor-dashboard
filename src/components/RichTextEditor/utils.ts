@@ -1,4 +1,4 @@
-import EditorJS, { OutputBlockData, OutputData } from "@editorjs/editorjs";
+import { OutputBlockData, OutputData } from "@editorjs/editorjs";
 
 interface ListBlockDataNew {
   style: "ordered" | "unordered";
@@ -60,12 +60,4 @@ export function convertEditorJSListBlocks(data: OutputData): OutputData {
       return block;
     }),
   };
-}
-
-export async function clean(editor: EditorJS) {
-  if (editor) {
-    // Prevents race conditions
-    await editor.isReady;
-    editor.destroy();
-  }
 }

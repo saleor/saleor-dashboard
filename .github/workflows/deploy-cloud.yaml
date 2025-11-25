@@ -4,7 +4,28 @@ on:
     types: cloud-deployment
 
 jobs:
+  # Workflow supports pre-pnpm (3.21 and below) and pnpm. First we need to determine what to use
+  # TODO Remove these ifs when 3.21 is dropped
+  determine-build:
+    runs-on: ubuntu-22.04
+    outputs:
+      use-pnpm: ${{ steps.check-version.outputs.use-pnpm }}
+    steps:
+      - name: Check version
+        id: check-version
+        run: |
+          VERSION="${{ github.event.client_payload.ref }}"
+          MAJOR=$(echo "$VERSION" | cut -d. -f1)
+          MINOR=$(echo "$VERSION" | cut -d. -f2)
+
+          if [ "$MAJOR" -gt 3 ] || ([ "$MAJOR" -eq 3 ] && [ "$MINOR" -ge 22 ]); then
+            echo "use-pnpm=true" >> $GITHUB_OUTPUT
+          else
+            echo "use-pnpm=false" >> $GITHUB_OUTPUT
+          fi
+
   build:
+    needs: determine-build
     runs-on: ubuntu-22.04
     permissions:
       id-token: write # needed by aws-actions/configure-aws-credentials
@@ -42,11 +63,22 @@ jobs:
         with:
           ref: ${{ github.event.client_payload.ref }}
       - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
-      - name: Setup Node
+        if: needs.determine-build.outputs.use-pnpm == 'true'
+
+      - name: Setup Node (PNPM)
+        if: needs.determine-build.outputs.use-pnpm == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
+
+      - name: Setup Node (Legacy NPM)
+        if: needs.determine-build.outputs.use-pnpm == 'false'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
       - name: Set sentry release
         run: |
           HASH=$(git rev-parse --short HEAD)
@@ -56,10 +88,10 @@ jobs:
       - name: Package
         timeout-minutes: 15
         run: |
-          pnpm install
+          pnpm install || npm ci
       - name: Build
         run: |
-          pnpm run build
+          pnpm run build || npm run build
 
       - name: Configure AWS Credentials
         if: env.REGION == 'eu'
