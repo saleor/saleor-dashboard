@@ -19,7 +19,7 @@ export const WarehouseInfo = ({
   const intl = useIntl();
 
   return (
-    <Text color="default2" size={1} marginRight={1}>
+    <Text color="default2" size={2} marginRight={1}>
       {intl.formatMessage(orderTitleMessages.fulfilledFrom, {
         warehouseName: (
           <UnderlineLink to={warehouseUrl(warehouseId)}>{warehouseName}</UnderlineLink>

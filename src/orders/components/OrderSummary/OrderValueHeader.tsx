@@ -17,7 +17,7 @@ export const OrderValueHeader = ({ description }: Props) => {
             id: "fL08MU",
           })}
         </Text>
-        <Text color="default2" size={2}>
+        <Text color="default2" size={2} marginTop={1}>
           {description}
         </Text>
       </Box>

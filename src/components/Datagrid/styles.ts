@@ -190,20 +190,18 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const { themeValues } = useTheme();
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: themeValues.colors.background.default1Hovered,
-      accentLight: themeValues.colors.background.default1Hovered,
+      accentColor: "transparent",
+      accentLight: themeValues.colors.background.default2,
       accentFg: "transparent",
       bgCell: themeValues.colors.background.default1,
       bgHeader: themeValues.colors.background.default1,
-      bgHeaderHasFocus: themeValues.colors.background.default1Hovered,
-      bgHeaderHovered: hasHeaderClickable
-        ? themeValues.colors.background.default1Hovered
-        : themeValues.colors.background.default1,
+      bgHeaderHasFocus: "transparent",
+      bgHeaderHovered: "transparent",
       bgBubbleSelected: themeValues.colors.background.default1,
       borderColor: themeValues.colors.border.default1,
       fontFamily: "'Inter var', sans-serif",
       baseFontStyle: `${themeValues.fontWeight.regular} ${themeValues.fontSize[3]}`,
-      headerFontStyle: `${themeValues.fontWeight.medium} ${themeValues.fontSize[1]}`,
+      headerFontStyle: `${themeValues.fontWeight.medium} ${themeValues.fontSize[2]}`,
       editorFontSize: themeValues.fontSize[3],
       textMedium: themeValues.colors.text.default1,
       textGroupHeader: themeValues.colors.text.default1,
@@ -222,8 +220,8 @@ export function useDatagridTheme(readonly?: boolean, hasHeaderClickable?: boolea
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
-      accentColor: themeValues.colors.background.default2,
-      accentLight: themeValues.colors.background.default1Hovered,
+      accentColor: "transparent",
+      accentLight: themeValues.colors.background.default2,
     }),
     [themeValues, datagridTheme],
   );
