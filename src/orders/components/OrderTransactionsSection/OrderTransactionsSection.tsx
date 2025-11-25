@@ -11,34 +11,30 @@ import { FormattedMessage } from "react-intl";
 
 import OrderAddTransaction from "../OrderAddTransaction";
 import { OrderDetailsRefundTable } from "../OrderDetailsRefundTable/OrderDetailsRefundTable";
-import { OrderPaymentSummaryCard } from "../OrderPaymentSummaryCard";
-import OrderSummaryCard from "../OrderSummaryCard";
 import OrderTransaction from "../OrderTransaction";
 import OrderTransactionGiftCard from "../OrderTransactionGiftCard";
 import OrderTransactionPayment from "../OrderTransactionPayment";
 import { getFilteredPayments } from "./utils";
 
-interface OrderTransactionsWrapper {
+interface OrderTransactionsSectionProps {
   order: OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
   onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
   onPaymentCapture: () => any;
-  onMarkAsPaid: () => any;
   onPaymentVoid: () => any;
   onAddManualTransaction: () => any;
   onRefundAdd: () => void;
 }
 
-export const OrderTransactionsWrapper = ({
+export const OrderTransactionsSection = ({
   order,
   shop,
   onTransactionAction,
   onPaymentCapture,
-  onMarkAsPaid,
   onPaymentVoid,
   onAddManualTransaction,
   onRefundAdd,
-}: OrderTransactionsWrapper) => {
+}: OrderTransactionsSectionProps): JSX.Element => {
   const filteredPayments = useMemo(() => getFilteredPayments(order), [order]);
 
   const hasAnyTransactions = [order?.transactions, filteredPayments, order?.giftCards].some(
@@ -47,17 +43,8 @@ export const OrderTransactionsWrapper = ({
 
   return (
     <>
-      <Box display="grid" __gridTemplateColumns="repeat(2, 1fr)" gap={2}>
-        <OrderSummaryCard order={order} />
-        <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
-      </Box>
+      <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
       <CardSpacer />
-      <>
-        <>
-          <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
-          <CardSpacer />
-        </>
-      </>
 
       <Box paddingTop={6}>
         <Box

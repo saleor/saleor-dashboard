@@ -1,13 +1,15 @@
-import { appExtensionManifest } from "./app-extension-manifest";
+import { AppExtensionManifest, appExtensionManifest } from "./app-extension-manifest";
 
 describe("App Extension Manifest Schema", () => {
   describe("Valid cases - basic structure", () => {
     it("should accept valid manifest with required fields only", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "My Extension",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "POPUP",
+        permissions: [],
       };
 
       // Act
@@ -19,19 +21,19 @@ describe("App Extension Manifest Schema", () => {
       if (result.success) {
         expect(result.data.label).toBe("My Extension");
         expect(result.data.url).toBe("https://example.com/extension");
-        expect(result.data.mount).toBe("PRODUCT_OVERVIEW_CREATE");
-        expect(result.data.target).toBe("POPUP"); // default value
+        expect(result.data.mountName).toBe("PRODUCT_OVERVIEW_CREATE");
+        expect(result.data.targetName).toBe("POPUP"); // default value
         expect(result.data.permissions).toEqual([]); // default value
       }
     });
 
     it("should accept manifest with all fields", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "My Extension",
         url: "/app/extension",
-        mount: "NAVIGATION_CATALOG",
-        target: "APP_PAGE" as const,
+        mountName: "NAVIGATION_CATALOG",
+        targetName: "APP_PAGE" as const,
         permissions: [{ code: "MANAGE_PRODUCTS" }],
       };
 
@@ -44,11 +46,12 @@ describe("App Extension Manifest Schema", () => {
 
     it("should accept manifest with POPUP target", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "Popup Extension",
         url: "https://example.com/popup",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        target: "POPUP" as const,
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "POPUP" as const,
+        permissions: [],
       };
 
       // Act
@@ -60,16 +63,17 @@ describe("App Extension Manifest Schema", () => {
 
     it("should accept manifest with NEW_TAB target and options", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "New Tab Extension",
         url: "https://example.com/newtab",
-        mount: "PRODUCT_OVERVIEW_MORE_ACTIONS",
-        target: "NEW_TAB" as const,
+        mountName: "PRODUCT_OVERVIEW_MORE_ACTIONS",
+        targetName: "NEW_TAB" as const,
         options: {
           newTabTarget: {
             method: "GET" as const,
           },
         },
+        permissions: [],
       };
 
       // Act
@@ -81,11 +85,12 @@ describe("App Extension Manifest Schema", () => {
 
     it("should accept manifest with WIDGET target and widget-compatible mount", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "Widget Extension",
         url: "https://example.com/widget",
-        mount: "PRODUCT_DETAILS_WIDGETS",
-        target: "WIDGET" as const,
+        permissions: [],
+        mountName: "PRODUCT_DETAILS_WIDGETS",
+        targetName: "WIDGET" as const,
         options: {
           widgetTarget: {
             method: "POST" as const,
@@ -102,11 +107,12 @@ describe("App Extension Manifest Schema", () => {
 
     it("should accept manifest with relative URL for APP_PAGE target", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "App Page Extension",
         url: "/app/extension",
-        mount: "NAVIGATION_CATALOG",
-        target: "APP_PAGE" as const,
+        mountName: "NAVIGATION_CATALOG",
+        targetName: "APP_PAGE" as const,
+        permissions: [],
       };
 
       // Act
@@ -118,11 +124,12 @@ describe("App Extension Manifest Schema", () => {
 
     it("should accept manifest with absolute URL for non-APP_PAGE target", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "External Extension",
         url: "https://example.com/extension",
-        mount: "ORDER_OVERVIEW_CREATE",
-        target: "POPUP" as const,
+        mountName: "ORDER_OVERVIEW_CREATE",
+        targetName: "POPUP" as const,
+        permissions: [],
       };
 
       // Act
@@ -149,8 +156,8 @@ describe("App Extension Manifest Schema", () => {
         const result = appExtensionManifest.safeParse({
           label: "Widget Extension",
           url: "https://example.com/widget",
-          mount,
-          target: "WIDGET" as const,
+          mountName: mount,
+          targetName: "WIDGET" as const,
         });
 
         expect(result.success).toBe(true);
@@ -164,8 +171,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Widget",
         url: "https://example.com/widget",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        target: "WIDGET" as const,
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "WIDGET" as const,
       };
 
       // Act
@@ -184,8 +191,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Widget",
         url: "https://example.com/widget",
-        mount: "NAVIGATION_CATALOG",
-        target: "WIDGET" as const,
+        mountName: "NAVIGATION_CATALOG",
+        targetName: "WIDGET" as const,
       };
 
       // Act
@@ -204,8 +211,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Widget",
         url: "https://example.com/widget",
-        mount: "ORDER_OVERVIEW_CREATE",
-        target: "WIDGET" as const,
+        mountName: "ORDER_OVERVIEW_CREATE",
+        targetName: "WIDGET" as const,
       };
 
       // Act
@@ -222,8 +229,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Options",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        target: "POPUP" as const,
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "POPUP" as const,
         options: {
           widgetTarget: {
             method: "GET" as const,
@@ -249,8 +256,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Options",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        target: "NEW_TAB" as const,
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "NEW_TAB" as const,
         options: {
           widgetTarget: {
             method: "POST" as const,
@@ -270,8 +277,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Options",
         url: "/app/extension",
-        mount: "NAVIGATION_CATALOG",
-        target: "APP_PAGE" as const,
+        mountName: "NAVIGATION_CATALOG",
+        targetName: "APP_PAGE" as const,
         options: {
           widgetTarget: {
             method: "GET" as const,
@@ -293,8 +300,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Options",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        target: "POPUP" as const,
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "POPUP" as const,
         options: {
           newTabTarget: {
             method: "GET" as const,
@@ -320,8 +327,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Options",
         url: "https://example.com/extension",
-        mount: "PRODUCT_DETAILS_WIDGETS",
-        target: "WIDGET" as const,
+        mountName: "PRODUCT_DETAILS_WIDGETS",
+        targetName: "WIDGET" as const,
         options: {
           newTabTarget: {
             method: "POST" as const,
@@ -341,8 +348,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Options",
         url: "/app/extension",
-        mount: "NAVIGATION_CATALOG",
-        target: "APP_PAGE" as const,
+        mountName: "NAVIGATION_CATALOG",
+        targetName: "APP_PAGE" as const,
         options: {
           newTabTarget: {
             method: "GET" as const,
@@ -364,8 +371,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid URL",
         url: "/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        target: "POPUP" as const,
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "POPUP" as const,
       };
 
       // Act
@@ -380,8 +387,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid URL",
         url: "/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        target: "NEW_TAB" as const,
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "NEW_TAB" as const,
       };
 
       // Act
@@ -396,8 +403,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid URL",
         url: "/widget",
-        mount: "PRODUCT_DETAILS_WIDGETS",
-        target: "WIDGET" as const,
+        mountName: "PRODUCT_DETAILS_WIDGETS",
+        targetName: "WIDGET" as const,
       };
 
       // Act
@@ -412,8 +419,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid URL",
         url: "https://example.com/extension",
-        mount: "NAVIGATION_CATALOG",
-        target: "APP_PAGE" as const,
+        mountName: "NAVIGATION_CATALOG",
+        targetName: "APP_PAGE" as const,
       };
 
       // Act
@@ -436,7 +443,7 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
       };
 
       // Act
@@ -451,7 +458,7 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "My Extension",
         url: "",
-        mount: "PRODUCT_OVERVIEW_CREATE",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
       };
 
       // Act
@@ -465,7 +472,7 @@ describe("App Extension Manifest Schema", () => {
       // Arrange
       const invalidData = {
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
       };
 
       // Act
@@ -479,7 +486,7 @@ describe("App Extension Manifest Schema", () => {
       // Arrange
       const invalidData = {
         label: "My Extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
       };
 
       // Act
@@ -510,7 +517,7 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "My Extension",
         url: "https://example.com/extension",
-        mount: "INVALID_MOUNT",
+        mountName: "INVALID_MOUNT",
       };
 
       // Act
@@ -525,8 +532,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "My Extension",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
-        target: "INVALID_TARGET",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
+        targetName: "INVALID_TARGET",
       };
 
       // Act
@@ -541,7 +548,7 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "My Extension",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
         permissions: 123,
       };
 
@@ -593,7 +600,7 @@ describe("App Extension Manifest Schema", () => {
         {
           label: "Extension",
           url: "https://example.com",
-          mount: "PRODUCT_OVERVIEW_CREATE",
+          mountName: "PRODUCT_OVERVIEW_CREATE",
         },
       ];
 
@@ -609,7 +616,7 @@ describe("App Extension Manifest Schema", () => {
       const dataWithExtra = {
         label: "My Extension",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
         extraField: "should be ignored",
         anotherExtra: 123,
       };
@@ -624,8 +631,8 @@ describe("App Extension Manifest Schema", () => {
         expect(result.data).toEqual({
           label: "My Extension",
           url: "https://example.com/extension",
-          mount: "PRODUCT_OVERVIEW_CREATE",
-          target: "POPUP",
+          mountName: "PRODUCT_OVERVIEW_CREATE",
+          targetName: "POPUP",
           permissions: [],
         });
         expect("extraField" in result.data).toBe(false);
@@ -637,7 +644,7 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "My Extension",
         url: "https://example.com/extension",
-        mount: "PRODUCT_OVERVIEW_CREATE",
+        mountName: "PRODUCT_OVERVIEW_CREATE",
         permissions: "MANAGE_PRODUCTS",
       };
 
@@ -652,11 +659,11 @@ describe("App Extension Manifest Schema", () => {
   describe("Combined validation scenarios", () => {
     it("should validate WIDGET target with widgetTarget options and widget-compatible mount", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "Product Widget",
         url: "https://example.com/widget",
-        mount: "PRODUCT_DETAILS_WIDGETS",
-        target: "WIDGET" as const,
+        mountName: "PRODUCT_DETAILS_WIDGETS",
+        targetName: "WIDGET" as const,
         permissions: [{ code: "MANAGE_PRODUCTS" }],
         options: {
           widgetTarget: {
@@ -674,11 +681,11 @@ describe("App Extension Manifest Schema", () => {
 
     it("should validate NEW_TAB target with newTabTarget options and absolute URL", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "New Tab Extension",
         url: "https://example.com/extension",
-        mount: "ORDER_OVERVIEW_MORE_ACTIONS",
-        target: "NEW_TAB" as const,
+        mountName: "ORDER_OVERVIEW_MORE_ACTIONS",
+        targetName: "NEW_TAB" as const,
         permissions: [{ code: "MANAGE_ORDERS" }],
         options: {
           newTabTarget: {
@@ -696,11 +703,11 @@ describe("App Extension Manifest Schema", () => {
 
     it("should validate APP_PAGE target with relative URL and navigation mount", () => {
       // Arrange
-      const validData = {
+      const validData: AppExtensionManifest = {
         label: "App Page Extension",
         url: "/my-extension",
-        mount: "NAVIGATION_CATALOG",
-        target: "APP_PAGE" as const,
+        mountName: "NAVIGATION_CATALOG",
+        targetName: "APP_PAGE" as const,
         permissions: [{ code: "MANAGE_PRODUCTS" }, { code: "MANAGE_ORDERS" }],
       };
 
@@ -716,8 +723,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "Invalid Widget",
         url: "https://example.com/widget",
-        mount: "PRODUCT_OVERVIEW_CREATE", // Not a widget mount
-        target: "WIDGET" as const,
+        mountName: "PRODUCT_OVERVIEW_CREATE", // Not a widget mount
+        targetName: "WIDGET" as const,
         options: {
           widgetTarget: {
             method: "GET" as const,
@@ -737,8 +744,8 @@ describe("App Extension Manifest Schema", () => {
       const invalidData = {
         label: "", // Empty label
         url: "/relative", // Relative URL on non-APP_PAGE
-        mount: "INVALID_MOUNT",
-        target: "POPUP" as const,
+        mountName: "INVALID_MOUNT",
+        targetName: "POPUP" as const,
         options: {
           newTabTarget: {
             method: "GET" as const,

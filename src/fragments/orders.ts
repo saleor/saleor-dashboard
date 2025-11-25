@@ -427,6 +427,7 @@ export const fragmentOrderDetails = gql`
       }
     }
     chargeStatus
+    authorizeStatus
   }
 `;
 

@@ -1,10 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import { PackageIcon } from "lucide-react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
@@ -29,6 +28,7 @@ const OrderUnfulfilledProductsCard = ({
   loading,
 }: OrderUnfulfilledProductsCardProps) => {
   const classes = useStyles();
+  const intl = useIntl();
 
   if (!lines.length) {
     return null;
@@ -36,7 +36,7 @@ const OrderUnfulfilledProductsCard = ({
 
   return (
     <>
-      <DashboardCard>
+      <DashboardCard gap={0}>
         <OrderCardTitle
           status="unfulfilled"
           className={classes.cardTitle}
@@ -48,15 +48,15 @@ const OrderUnfulfilledProductsCard = ({
                   variant="primary"
                   onClick={onFulfill}
                   disabled={notAllowedToFulfillUnpaid}
+                  title={
+                    notAllowedToFulfillUnpaid
+                      ? intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder)
+                      : undefined
+                  }
                 >
                   <PackageIcon size={16} />
                   <FormattedMessage id="/Xwjww" defaultMessage="Fulfill" description="button" />
                 </Button>
-                {notAllowedToFulfillUnpaid && (
-                  <Text color="critical1" size={2} fontWeight="light">
-                    <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
-                  </Text>
-                )}
               </Box>
             )
           }
@@ -67,9 +67,16 @@ const OrderUnfulfilledProductsCard = ({
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
           />
+          <Box
+            backgroundColor={"default1"}
+            width="100%"
+            height={6}
+            borderBottomStyle={"solid"}
+            borderBottomWidth={1}
+            borderColor={"default1"}
+          />
         </DashboardCard.Content>
       </DashboardCard>
-      <CardSpacer />
     </>
   );
 };

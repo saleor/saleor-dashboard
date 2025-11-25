@@ -19,10 +19,6 @@
     "context": "voucher status expired",
     "string": "Expired"
   },
-  "+5HkZN": {
-    "context": "order, button",
-    "string": "Mark as paid"
-  },
   "+7OsyM": {
     "context": "button",
     "string": "Set as default shipping address"
@@ -30,6 +26,9 @@
   "+8v1ny": {
     "context": "discount button",
     "string": "Discount"
+  },
+  "+9HL0i": {
+    "string": "Capture"
   },
   "+B25o/": {
     "context": "dialog header",
@@ -730,6 +729,9 @@
     "context": "dialog header",
     "string": "Add postal codes"
   },
+  "2ZC9wL": {
+    "string": "{taxAmount, plural, =0 {(not applicable)} other {} }"
+  },
   "2atspc": {
     "string": "Drafts"
   },
@@ -1228,6 +1230,9 @@
   "5ixtBQ": {
     "string": "Assign Model Types"
   },
+  "5kODlC": {
+    "string": "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}"
+  },
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
@@ -1403,6 +1408,9 @@
     "context": "tax classes name input placeholder",
     "string": "Tax rate name"
   },
+  "73SSOz": {
+    "string": "All lines as ordered by the client."
+  },
   "74Cxe8": {
     "context": "table header product label",
     "string": "Product"
@@ -1443,10 +1451,6 @@
   },
   "7JlauX": {
     "string": "Explore"
-  },
-  "7KRGqz": {
-    "context": "Payment card title",
-    "string": "Payment balance"
   },
   "7MUx0T": {
     "string": "Discount of {value} through the {channel}"
@@ -1552,6 +1556,9 @@
   "8BBMRj": {
     "context": "default tax class name for new tax classes",
     "string": "New tax class"
+  },
+  "8Cjxdt": {
+    "string": "Overcharged"
   },
   "8Cve4h": {
     "context": "checkbox label",
@@ -1741,6 +1748,9 @@
     "context": "order line discount added title",
     "string": "{productName} discount was added by"
   },
+  "9TENcY": {
+    "string": "All payments from registered transactions."
+  },
   "9TbDQD": {
     "context": "order number label",
     "string": "Order number"
@@ -1926,6 +1936,9 @@
     "context": "attribute properties regarding storefront",
     "string": "Storefront Properties"
   },
+  "AiurXc": {
+    "string": "Outstanding authorized"
+  },
   "AjInNW": {
     "context": "dialog description",
     "string": "Choose countries you want to add to shipping zone from list below"
@@ -2073,10 +2086,6 @@
   "BYfAwE": {
     "context": "page title - installing app with manifestUrl provided",
     "string": "Add extension"
-  },
-  "BZ7BkQ": {
-    "context": "capture payment, button",
-    "string": "Capture"
   },
   "BalldE": {
     "string": "Order line"
@@ -2692,6 +2701,9 @@
     "context": "postal codes, header",
     "string": "Postal codes"
   },
+  "Fcxl/G": {
+    "string": "This order has no payment yet"
+  },
   "FemBUF": {
     "context": "header",
     "string": "Translations to {language}"
@@ -3051,6 +3063,9 @@
     "context": "gift cards section name",
     "string": "Gift Cards"
   },
+  "HTiAMm": {
+    "string": "Taxes"
+  },
   "HVFq//": {
     "context": "button",
     "string": "Copy token"
@@ -3072,10 +3087,6 @@
   },
   "HYK65C": {
     "string": "Order rule"
-  },
-  "HaQ8cg": {
-    "context": "button",
-    "string": "Refund"
   },
   "Hc58JL": {
     "context": "card title",
@@ -3251,6 +3262,9 @@
     "context": "card subtitle",
     "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
   },
+  "IeUH3/": {
+    "string": "Refund"
+  },
   "IeoGgH": {
     "context": "variant created success message",
     "string": "Variant created"
@@ -3356,6 +3370,9 @@
   "JI2Xwp": {
     "context": "dialog title",
     "string": "Delete attribute"
+  },
+  "JIQ7KX": {
+    "string": "Total captured"
   },
   "JJ3PCA": {
     "context": "export card codes structure item",
@@ -3631,6 +3648,9 @@
   "L87bp7": {
     "string": "Order payment successfully voided"
   },
+  "L8seEc": {
+    "string": "Subtotal"
+  },
   "LA13a5": {
     "context": "channel select label",
     "string": "Channel"
@@ -3901,6 +3921,9 @@
   "N6lfS/": {
     "context": "header",
     "string": "Authorization Field Delete"
+  },
+  "N6s/fl": {
+    "string": "Edit order line metadata"
   },
   "N76zUg": {
     "context": "page header",
@@ -4671,6 +4694,9 @@
   "RrCui3": {
     "string": "Summary"
   },
+  "RsLoDB": {
+    "string": "Mark as Paid"
+  },
   "Rsknyh": {
     "context": "order does not require shipping",
     "string": "does not apply"
@@ -4727,6 +4753,9 @@
   },
   "S8kqP9": {
     "string": "Conditions"
+  },
+  "SB//YQ": {
+    "string": "Order summary"
   },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
@@ -5201,6 +5230,9 @@
     "context": "shipping zones section name",
     "string": "Shipping Zones"
   },
+  "V21v8h": {
+    "string": "{currency} {totalAmount}"
+  },
   "V22724": {
     "string": "Installed"
   },
@@ -5519,6 +5551,9 @@
     "context": "product type",
     "string": "Configurable"
   },
+  "X9tptP": {
+    "string": "Not fully charged"
+  },
   "XAPFHP": {
     "context": "card update success alert title",
     "string": "Successfully updated card balance"
@@ -5785,6 +5820,9 @@
   "Ykw8k5": {
     "context": "dialog title",
     "string": "Delete collections"
+  },
+  "Ynjq+C": {
+    "string": "Fully charged"
   },
   "Yo2kC+": {
     "string": "Couldn't process image"
@@ -6762,6 +6800,9 @@
   "fKrRhF": {
     "string": "General information"
   },
+  "fL08MU": {
+    "string": "Order value"
+  },
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
@@ -7352,6 +7393,9 @@
     "context": "page header",
     "string": "Primary Address"
   },
+  "jHfCjd": {
+    "string": "Void"
+  },
   "jMzyU8": {
     "context": "tax classes card header",
     "string": "Tax classes"
@@ -7652,6 +7696,9 @@
     "context": "invalid date in expirydate field header",
     "string": "Incorrect date entered"
   },
+  "l1pZJx": {
+    "string": "Not fully authorised"
+  },
   "l2oVCF": {
     "context": "attributes section name",
     "string": "Attributes"
@@ -7916,6 +7963,9 @@
   "mmcHeH": {
     "string": "Discount Value"
   },
+  "mpkBZc": {
+    "string": "Shipping {carrierName}"
+  },
   "mr9jbO": {
     "string": "Preferred Language"
   },
@@ -8120,6 +8170,9 @@
   },
   "o/4OCR": {
     "string": "Shipping has already been refunded"
+  },
+  "o5GUx9": {
+    "string": "Outstanding balance"
   },
   "o5KXAN": {
     "context": "delete webhook",
@@ -8413,6 +8466,9 @@
   "q5Lfp4": {
     "context": "tooltip",
     "string": "Order contains products that have \"Track inventory\" enabled."
+  },
+  "q7bXR4": {
+    "string": "Payments summary"
   },
   "q7v0W7": {
     "context": "save draft button",
@@ -9366,6 +9422,9 @@
     "context": "success notifier message",
     "string": "Saved draft"
   },
+  "vs0xiH": {
+    "string": "Discount {discountName}"
+  },
   "vuKrlW": {
     "string": "Stock"
   },
@@ -9465,6 +9524,9 @@
   "wUQCnQ": {
     "context": "Save filters button text",
     "string": "Save"
+  },
+  "wVjyOX": {
+    "string": "Fully authorised"
   },
   "wWELJW": {
     "context": "search results",

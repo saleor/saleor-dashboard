@@ -2192,6 +2192,7 @@ export const OrderDetailsFragmentDoc = gql`
     }
   }
   chargeStatus
+  authorizeStatus
 }
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}

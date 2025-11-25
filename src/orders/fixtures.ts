@@ -8,6 +8,7 @@ import {
   JobStatusEnum,
   MarkAsPaidStrategyEnum,
   OrderAction,
+  OrderAuthorizeStatusEnum,
   OrderChargeStatusEnum,
   OrderDetailsFragment,
   OrderDetailsQuery,
@@ -1847,6 +1848,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
   number: "9",
   paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
   chargeStatus: OrderChargeStatusEnum.NONE,
+  authorizeStatus: OrderAuthorizeStatusEnum.NONE,
   privateMetadata: [],
   shippingAddress: {
     __typename: "Address",
@@ -1950,6 +1952,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
 export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order" as const,
   chargeStatus: OrderChargeStatusEnum.NONE,
+  authorizeStatus: OrderAuthorizeStatusEnum.NONE,
   giftCards: [],
   actions: [OrderAction.CAPTURE],
   shippingMethods: [],

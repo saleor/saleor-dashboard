@@ -46,6 +46,54 @@ export abstract class OrderDetailsViewModel {
     return orderActions.includes(OrderAction.MARK_AS_PAID);
   }
 
+  static canOrderCapture(actions: OrderAction[]): boolean {
+    return actions.includes(OrderAction.CAPTURE);
+  }
+
+  static canOrderVoid(actions: OrderAction[]): boolean {
+    return actions.includes(OrderAction.VOID);
+  }
+
+  static canOrderRefund(actions: OrderAction[]): boolean {
+    return actions.includes(OrderAction.REFUND);
+  }
+
+  static canGrantRefund(order: {
+    transactions: OrderDetailsFragment["transactions"];
+    payments: OrderDetailsFragment["payments"];
+  }): boolean {
+    return order.transactions.length > 0 || order.payments.length > 0;
+  }
+
+  static canSendRefund(grantedRefunds: OrderDetailsFragment["grantedRefunds"]): boolean {
+    return grantedRefunds.length > 0;
+  }
+
+  static canAnyRefund(order: {
+    transactions: OrderDetailsFragment["transactions"];
+    payments: OrderDetailsFragment["payments"];
+    grantedRefunds: OrderDetailsFragment["grantedRefunds"];
+  }): boolean {
+    return this.canGrantRefund(order) || this.canSendRefund(order.grantedRefunds);
+  }
+
+  static hasGiftCards(giftCardsAmount: number | null): boolean {
+    return (giftCardsAmount ?? 0) > 0;
+  }
+
+  static hasNoPayment(args: {
+    canAnyRefund: boolean;
+    shouldDisplay: ReturnType<typeof OrderDetailsViewModel.getShouldDisplayAmounts>;
+    hasGiftCards: boolean;
+  }): boolean {
+    return (
+      !args.canAnyRefund &&
+      !args.shouldDisplay.charged &&
+      !args.shouldDisplay.authorized &&
+      !args.hasGiftCards
+    );
+  }
+
   static getGiftCardsAmountUsed(args: {
     id: string;
     giftCards: OrderDetailsFragment["giftCards"];

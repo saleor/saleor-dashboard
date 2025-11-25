@@ -1,7 +1,7 @@
 import { AccountErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { parseQs } from "@dashboard/url-utils";
 import { useAuth } from "@saleor/sdk";
-import { parse as parseQs } from "qs";
 import { useState } from "react";
 import { RouteComponentProps } from "react-router";
 

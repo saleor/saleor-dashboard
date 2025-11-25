@@ -14,7 +14,7 @@ export const appManifestSchema = z
     data => {
       // Validate extension URLs require appUrl for certain cases
       return data.extensions.every(ext => {
-        if (ext.url.startsWith("/") && ext.target === "NEW_TAB") {
+        if (ext.url.startsWith("/") && ext.targetName === "NEW_TAB") {
           return !!data.appUrl;
         }
 

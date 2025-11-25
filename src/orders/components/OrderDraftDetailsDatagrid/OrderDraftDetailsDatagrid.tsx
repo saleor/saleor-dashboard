@@ -152,9 +152,10 @@ export const OrderDraftDetailsDatagrid = ({
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
         rowMarkers="none"
-        columnSelect="none"
+        columnSelect="single"
         freezeColumns={2}
         verticalBorder={false}
+        showTopBorder={false}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}
