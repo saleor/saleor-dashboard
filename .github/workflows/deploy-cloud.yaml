@@ -42,6 +42,9 @@ jobs:
         with:
           ref: ${{ github.event.client_payload.ref }}
       - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+        # On 3.21 and below it will fail, we need to proceed
+        continue-on-error: true
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -55,11 +58,13 @@ jobs:
           echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
       - name: Package
         timeout-minutes: 15
+        # If pnpm fails, assume < 3.22 and try npm
         run: |
-          pnpm install
+          pnpm install || npm ci
       - name: Build
+        # If pnpm fails, assume < 3.22 and try npm
         run: |
-          pnpm run build
+          pnpm run build || npm run build
 
       - name: Configure AWS Credentials
         if: env.REGION == 'eu'
