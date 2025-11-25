@@ -66,12 +66,14 @@ jobs:
         if: needs.determine-build.outputs.use-pnpm == 'true'
 
       - name: Setup Node (PNPM)
+        if: needs.determine-build.outputs.use-pnpm == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
 
       - name: Setup Node (Legacy NPM)
+        if: needs.determine-build.outputs.use-pnpm == 'false'
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
