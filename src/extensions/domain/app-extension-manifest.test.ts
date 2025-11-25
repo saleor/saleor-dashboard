@@ -19,8 +19,8 @@ describe("App Extension Manifest Schema", () => {
       if (result.success) {
         expect(result.data.label).toBe("My Extension");
         expect(result.data.url).toBe("https://example.com/extension");
-        expect(result.data.mount).toBe("PRODUCT_OVERVIEW_CREATE");
-        expect(result.data.target).toBe("POPUP"); // default value
+        expect(result.data.mountName).toBe("PRODUCT_OVERVIEW_CREATE");
+        expect(result.data.targetName).toBe("POPUP"); // default value
         expect(result.data.permissions).toEqual([]); // default value
       }
     });
