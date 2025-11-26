@@ -68,7 +68,7 @@ import { ProductStockInput } from "../ProductStocks";
 import {
   concatChannelsBySelection,
   extractChannelPricesFromVariantChannel,
-} from "../ProductVariantChannels/formOpretations";
+} from "../ProductVariantChannels/formOperations";
 
 interface ProductVariantUpdateFormData extends MetadataFormData {
   sku: string;

@@ -6,9 +6,9 @@ import { ProductCreateData } from "../components/ProductCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 
-export const validatePrice = (price: string) => price === "" || parseInt(price, 10) < 0;
+export const validatePrice = (price: string) => price === "" || parseFloat(price) < 0;
 
-export const validateCostPrice = (price: string) => price !== "" && parseInt(price, 10) < 0;
+export const validateCostPrice = (price: string) => price !== "" && parseFloat(price) < 0;
 
 export const validatePriorPrice = (priorPrice: string, sellingPrice: string) => {
   if (priorPrice === "" || sellingPrice === "") {
@@ -17,6 +17,11 @@ export const validatePriorPrice = (priorPrice: string, sellingPrice: string) => 
 
   const priorPriceNum = parseFloat(priorPrice);
   const sellingPriceNum = parseFloat(sellingPrice);
+
+  // Check for negative values (invalid)
+  if (priorPriceNum < 0) {
+    return true;
+  }
 
   return !isNaN(priorPriceNum) && !isNaN(sellingPriceNum) && priorPriceNum < sellingPriceNum;
 };

@@ -63,7 +63,7 @@ import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 import {
   concatChannelsBySelection,
   createChannelsWithPreorderInfo,
-} from "../ProductVariantChannels/formOpretations";
+} from "../ProductVariantChannels/formOperations";
 
 interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;

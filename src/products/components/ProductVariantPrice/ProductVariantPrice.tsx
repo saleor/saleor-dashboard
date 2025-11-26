@@ -191,7 +191,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                     {listing ? (
                       <PriceField
                         className={sprinkles({
-                          marginY: 2,
+                          [priorPriceError ? "marginTop" : "marginY"]: 2,
                         })}
                         error={!!priorPriceError}
                         name={`${listing.id}-channel-priorPrice`}
@@ -206,7 +206,9 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                           })
                         }
                         disabled={loading}
-                        hint={priorPriceError ? getProductErrorMessage(priorPriceError, intl) : ""}
+                        helperText={
+                          priorPriceError ? getProductErrorMessage(priorPriceError, intl) : ""
+                        }
                         data-test-id="prior-price-field"
                       />
                     ) : (
@@ -217,7 +219,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                     {listing ? (
                       <PriceField
                         className={sprinkles({
-                          marginY: 2,
+                          [costPriceError ? "marginTop" : "marginY"]: 2,
                         })}
                         error={!!costPriceError}
                         name={`${listing.id}-channel-costPrice`}
@@ -232,7 +234,9 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                           })
                         }
                         disabled={loading}
-                        hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ""}
+                        helperText={
+                          costPriceError ? getProductErrorMessage(costPriceError, intl) : ""
+                        }
                         data-test-id="cost-price-field"
                       />
                     ) : (
