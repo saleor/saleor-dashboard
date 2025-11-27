@@ -1,5 +1,5 @@
 import { AppErrorCode, useAppFetchMutation } from "@dashboard/graphql";
-import errorTracker from "@dashboard/services/errorTracking";
+import { errorTracker } from "@dashboard/services/errorTracking";
 import { useState } from "react";
 import { SubmitHandler, UseFormGetValues, UseFormSetError } from "react-hook-form";
 
