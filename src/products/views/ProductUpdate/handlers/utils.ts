@@ -13,6 +13,7 @@ import {
   ProductVariantBulkUpdateInput,
   VariantAttributeFragment,
 } from "@dashboard/graphql";
+import { weight } from "@dashboard/misc";
 import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
@@ -84,6 +85,10 @@ export function getProductUpdateVariables(
 
   if (data.seoTitle && variables.input["seo"]) {
     variables.input["seo"].title = data.seoTitle;
+  }
+
+  if (data.weight !== undefined) {
+    variables.input["weight"] = weight(data.weight);
   }
 
   return variables;
