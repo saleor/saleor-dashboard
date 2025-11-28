@@ -240,7 +240,7 @@
     "setup-polly-jest": "^0.9.1",
     "ts-jest": "^27.1.5"
   },
-  "packageManager": "pnpm@10.6.3",
+  "packageManager": "pnpm@10.23.0",
   "engines": {
     "node": "^20 || ^22",
     "pnpm": ">=10"
