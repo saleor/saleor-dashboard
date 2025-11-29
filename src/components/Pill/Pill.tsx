@@ -21,10 +21,10 @@ const useStyles = makeStyles(
 export const Pill = forwardRef<HTMLDivElement, PillProps>(({ color: status, ...props }, ref) => {
   const { theme: currentTheme } = useTheme();
 
-  const color = getStatusColor({
+  const colors = getStatusColor({
     status,
     currentTheme,
-  }).base;
+  });
   const classes = useStyles();
 
   return (
@@ -36,7 +36,10 @@ export const Pill = forwardRef<HTMLDivElement, PillProps>(({ color: status, ...p
       ref={ref}
       className={clsx(classes.pill, props.className)}
       style={{
-        backgroundColor: color,
+        backgroundColor: colors.base,
+        borderColor: colors.border,
+        color: colors.text,
+        ...props.style,
       }}
     />
   );

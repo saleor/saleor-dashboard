@@ -1,5 +1,6 @@
 import { OrderChargeStatusEnum } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { getStatusColor } from "@dashboard/misc";
+import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import { BanknoteIcon } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -9,6 +10,16 @@ interface OrderChargeStatusBadgeProps {
 
 export const OrderChargeStatusBadge = ({ status }: OrderChargeStatusBadgeProps) => {
   const intl = useIntl();
+  const { theme: currentTheme } = useTheme();
+  const isDark = currentTheme === "defaultDark";
+
+  const successColors = getStatusColor({ status: "success", currentTheme });
+  const warningColors = getStatusColor({ status: "warning", currentTheme });
+  const transparentColors = {
+    background: "transparent",
+    border: isDark ? "hsla(0, 0%, 100%, 0.15)" : "hsla(0, 0%, 0%, 0.15)",
+    text: isDark ? "hsla(0, 0%, 100%, 0.7)" : "hsla(0, 0%, 0%, 0.7)",
+  };
 
   switch (status) {
     case OrderChargeStatusEnum.FULL:
@@ -17,8 +28,9 @@ export const OrderChargeStatusBadge = ({ status }: OrderChargeStatusBadgeProps) 
           display="flex"
           gap={2}
           alignItems="center"
-          __backgroundColor="hsla(152, 100%, 85%, 1)"
-          __borderColor="hsla(152, 98%, 44%, 1)"
+          __backgroundColor={successColors.base}
+          __borderColor={successColors.border}
+          __color={successColors.text}
           borderStyle="solid"
           borderWidth={1}
           paddingX={2}
@@ -42,8 +54,9 @@ export const OrderChargeStatusBadge = ({ status }: OrderChargeStatusBadgeProps) 
           display="flex"
           gap={2}
           alignItems="center"
-          __backgroundColor="hsla(37, 100%, 85%, 1)"
-          __borderColor="hsla(30, 98%, 44%, 0.37)"
+          __backgroundColor={warningColors.base}
+          __borderColor={warningColors.border}
+          __color={warningColors.text}
           borderStyle="solid"
           borderWidth={1}
           paddingX={2}
@@ -68,8 +81,9 @@ export const OrderChargeStatusBadge = ({ status }: OrderChargeStatusBadgeProps) 
           display="flex"
           gap={2}
           alignItems="center"
-          __backgroundColor="white"
-          __borderColor="hsla(207, 13%, 87%, 1)"
+          __backgroundColor={transparentColors.background}
+          __borderColor={transparentColors.border}
+          __color={transparentColors.text}
           borderStyle="solid"
           borderWidth={1}
           paddingX={2}
