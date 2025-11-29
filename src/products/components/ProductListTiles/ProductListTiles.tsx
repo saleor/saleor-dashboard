@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
-import { CircularProgress } from "@material-ui/core";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
@@ -30,7 +30,7 @@ export const ProductListTiles = ({
     if (loading) {
       return (
         <Box display="flex" justifyContent="center" marginY={9}>
-          <CircularProgress />
+          <SaleorThrobber />
         </Box>
       );
     }

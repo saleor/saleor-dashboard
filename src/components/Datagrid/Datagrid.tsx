@@ -17,7 +17,6 @@ import DataEditor, {
   Theme,
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { CircularProgress } from "@material-ui/core";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
@@ -34,6 +33,7 @@ import {
 
 import { DashboardCard } from "../Card";
 import { CardMenuItem } from "../CardMenu";
+import { SaleorThrobber } from "../Throbber";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
 import { RowActions } from "./components/RowActions";
@@ -450,7 +450,7 @@ const Datagrid = ({
   if (loading) {
     return (
       <Box data-test-id="datagrid-loader" display="flex" justifyContent="center" marginY={9}>
-        <CircularProgress />
+        <SaleorThrobber />
       </Box>
     );
   }
