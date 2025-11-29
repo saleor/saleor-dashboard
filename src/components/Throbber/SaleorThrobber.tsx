@@ -1,0 +1,80 @@
+"use client";
+
+interface SaleorThrobberProps {
+  size?: number;
+  className?: string;
+}
+
+export function SaleorThrobber({ size = 40, className }: SaleorThrobberProps) {
+  const vertices = [
+    { x: 12, y: 15 },
+    { x: 36, y: 15 },
+    { x: 30, y: 25 },
+    { x: 6, y: 25 },
+  ];
+
+  const pathD = `M ${vertices.map(p => `${p.x} ${p.y}`).join(" L ")} Z`;
+  const pathLength = 89;
+  const beamLength = 20;
+
+  return (
+    <div
+      className={className}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 40 40"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-label="Loading"
+        role="img"
+      >
+        <style>
+          {`
+            @keyframes beamMove {
+              0% { stroke-dashoffset: ${pathLength}; opacity: 0.7;}
+              100% { stroke-dashoffset: 0; opacity: 0.9;}
+            }
+            @keyframes pulseOutline {
+              0%, 100% { opacity: 0.1; }
+              50% { opacity: 0.3; }
+            }
+          `}
+        </style>
+
+        {/* Static faint outline */}
+        <path
+          d={pathD}
+          stroke="currentColor"
+          strokeWidth={1}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          style={{
+            animation: "pulseOutline 4s linear infinite",
+          }}
+        />
+
+        {/* Single beam */}
+        <path
+          d={pathD}
+          stroke="currentColor"
+          strokeWidth={1.25}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          style={{
+            strokeDasharray: `${beamLength} ${pathLength - beamLength}`,
+            animation: "beamMove 1.1s linear infinite",
+          }}
+        />
+      </svg>
+    </div>
+  );
+}
