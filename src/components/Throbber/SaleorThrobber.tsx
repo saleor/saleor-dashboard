@@ -38,12 +38,8 @@ export function SaleorThrobber({ size = 40, className }: SaleorThrobberProps) {
         <style>
           {`
             @keyframes beamMove {
-              0% { stroke-dashoffset: ${pathLength}; opacity: 0.7;}
-              100% { stroke-dashoffset: 0; opacity: 0.9;}
-            }
-            @keyframes pulseOutline {
-              0%, 100% { opacity: 0.1; }
-              50% { opacity: 0.3; }
+              0% { stroke-dashoffset: ${pathLength}; }
+              100% { stroke-dashoffset: 0; }
             }
           `}
         </style>
@@ -52,26 +48,24 @@ export function SaleorThrobber({ size = 40, className }: SaleorThrobberProps) {
         <path
           d={pathD}
           stroke="currentColor"
-          strokeWidth={1}
+          strokeWidth={0.75}
           strokeLinecap="round"
           strokeLinejoin="round"
           fill="none"
-          style={{
-            animation: "pulseOutline 4s linear infinite",
-          }}
+          opacity={0.15}
         />
 
-        {/* Single beam */}
+        {/* Main beam */}
         <path
           d={pathD}
           stroke="currentColor"
-          strokeWidth={1.25}
+          strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"
           fill="none"
           style={{
             strokeDasharray: `${beamLength} ${pathLength - beamLength}`,
-            animation: "beamMove 1.1s linear infinite",
+            animation: "beamMove 1s linear infinite",
           }}
         />
       </svg>
