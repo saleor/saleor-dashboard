@@ -37,7 +37,7 @@ export function SaleorThrobber({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="Loading"
-        role="img"
+        role="progressbar"
       >
         <style>
           {`
