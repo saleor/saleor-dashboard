@@ -1,5 +1,3 @@
-"use client";
-
 interface SaleorThrobberProps {
   size?: number;
   className?: string;
