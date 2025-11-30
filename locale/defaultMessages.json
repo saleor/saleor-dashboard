@@ -3423,10 +3423,6 @@
     "context": "add shipping carrier button",
     "string": "Add shipping carrier"
   },
-  "JbHdDi": {
-    "context": "fulfilled fulfillment, section header",
-    "string": "From {warehouseName}: {fulfillmentDate}"
-  },
   "JbUg2b": {
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
@@ -5365,6 +5361,10 @@
   },
   "W2OIhn": {
     "string": "Use app: {name}"
+  },
+  "W2glWk": {
+    "context": "fulfilled fulfillment, warehouse info",
+    "string": "From {warehouseName}"
   },
   "W32xfN": {
     "context": "staff member full name",
