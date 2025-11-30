@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
@@ -85,7 +84,11 @@ const AttributeRow = ({
             loading={loading}
             file={getFileChoice(attribute)}
             onFileUpload={file => onFileChange(attribute.id, file)}
-            onFileDelete={() => onFileChange(attribute.id, undefined)}
+            onFileDelete={() => {
+              if (onFileChange) {
+                onFileChange(attribute.id, null as any);
+              }
+            }}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             inputProps={{
@@ -231,9 +234,11 @@ const AttributeRow = ({
                 <Select
                   name={`attribute:${attribute.label}`}
                   value={booleanAttrValueToValue(attribute.value[0])}
-                  onChange={value =>
-                    onChange(attribute.id, value === "unset" ? undefined : value === "true")
-                  }
+                  onChange={value => {
+                    const newValue = value === "unset" ? undefined : value === "true";
+
+                    onChange(attribute.id, String(newValue) as any);
+                  }}
                   options={getBooleanDropdownOptions(intl)}
                   id={`attribute:${attribute.label}`}
                   disabled={disabled}
@@ -293,7 +298,7 @@ const AttributeRow = ({
             onChange={e => {
               onMultiChange(
                 attribute.id,
-                e.target.value.map(({ value }) => value),
+                e.target.value.map(({ value }: { value: string }) => value),
               );
             }}
             fetchMore={fetchMoreAttributeValues}

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { toggle } from "@dashboard/utils/lists";
 import { FormControlLabel, Radio } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -40,7 +39,7 @@ const FilterOptionField = ({
 
   return (
     <div className={classes.root} {...rest}>
-      {filter.options.map(option => (
+      {(filter.options ?? []).map(option => (
         <div
           className={clsx(classes.option, {
             [classes.optionRadio]: !filter.multiple,

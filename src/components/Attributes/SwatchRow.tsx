@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
 import { getBySlug } from "@dashboard/misc";
@@ -30,17 +29,18 @@ export const SwatchRow = ({
   onChange,
 }: SwatchRowProps) => {
   const intl = useIntl();
-  const value = attribute.data.values.find(getBySlug(attribute.value[0]));
+  const firstValue = attribute.value[0];
+  const value = firstValue ? attribute.data.values.find(getBySlug(firstValue)) : undefined;
   const options = useMemo(
     () =>
       attributeValues.map(({ file, value, slug, name }) => ({
-        label: name,
-        value: slug,
+        label: name ?? "",
+        value: slug ?? "",
         startAdornment: (
           <SwatchPreviewBox
             isFile={!!file}
             backgroundImageUrl={file?.url}
-            backgroundColor={value}
+            backgroundColor={value ?? undefined}
           />
         ),
       })),
@@ -65,7 +65,7 @@ export const SwatchRow = ({
             <SwatchPreviewBox
               isFile={!!value?.file}
               backgroundImageUrl={value?.file?.url}
-              backgroundColor={value?.value}
+              backgroundColor={value?.value ?? undefined}
             />
           ) : null
         }

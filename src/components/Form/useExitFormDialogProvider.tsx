@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
@@ -27,9 +26,9 @@ export function useExitFormDialogProvider() {
   };
   const isSubmitting = useRef(defaultValues.isSubmitting);
   const formsData = useRef<FormsData>({});
-  const blockNav = useRef(defaultValues.blockNav);
-  const navAction = useRef<typeof history.location>(defaultValues.navAction);
-  const enableExitDialog = useRef(defaultValues.enableExitDialog);
+  const blockNav = useRef<boolean>(defaultValues.blockNav);
+  const navAction = useRef<typeof history.location | null>(defaultValues.navAction);
+  const enableExitDialog = useRef<boolean>(defaultValues.enableExitDialog);
   const currentLocation = useRef(history.location);
   const setIsSubmitting = (value: boolean) => {
     setEnableExitDialog(!value);
@@ -107,8 +106,8 @@ export function useExitFormDialogProvider() {
       if (isOnlyQuerying(transition)) {
         // transition type requires this function to return either
         // false | void | string where string opens up the browser prompt
-        // hence we return null
-        return null;
+        // hence we return false (not null) to not show browser prompt
+        return false;
       }
 
       if (shouldBlockNav()) {
@@ -121,7 +120,8 @@ export function useExitFormDialogProvider() {
       setStateDefaultValues();
       setCurrentLocation(transition);
 
-      return null;
+      // Return undefined to allow navigation to proceed
+      return;
     });
 
     return unblock;
@@ -132,11 +132,11 @@ export function useExitFormDialogProvider() {
   const continueNavigation = () => {
     setBlockNav(false);
     setDefaultFormsData();
-    setCurrentLocation(navAction.current);
 
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
     if (navAction.current !== null) {
+      setCurrentLocation(navAction.current);
       routerHistory.push(navAction.current.pathname + navAction.current.search);
     }
 

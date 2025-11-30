@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -240,7 +239,9 @@ const AddressEdit = (props: AddressEditProps) => {
               label: countryDisplayValue,
               value: data.country,
             }}
-            onChange={onCountryChange}
+            onChange={e => {
+              onCountryChange(e as any);
+            }}
           />
         </div>
         <div>
@@ -261,9 +262,11 @@ const AddressEdit = (props: AddressEditProps) => {
               name="countryArea"
               value={{
                 label: getDisplayValue(data.countryArea),
-                value: data.countryArea,
+                value: data.countryArea ?? "",
               }}
-              onChange={onChange}
+              onChange={e => {
+                onChange(e as any);
+              }}
             />
           )}
         </div>

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useLayoutEffect, useRef, useState } from "react";
 
 interface OverflowConfig {
@@ -20,8 +19,10 @@ export const useOverflow = <T extends HTMLElement>(
 
   useLayoutEffect(() => {
     const trigger = () => {
-      setIsHorizontal(getIsHorizontal(ref.current, config));
-      setIsVertical(getIsVertical(ref.current, config));
+      if (!ref.current) return;
+
+      setIsHorizontal(getIsHorizontal(ref.current, config) ?? false);
+      setIsVertical(getIsVertical(ref.current, config) ?? false);
     };
 
     if (ref.current) {

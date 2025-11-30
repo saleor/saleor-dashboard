@@ -1,9 +1,9 @@
-// @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { PermissionEnum, UserPermissionFragment } from "@dashboard/graphql";
 import * as React from "react";
 
-const findPerm = (permList, perm) => permList.find(userPerm => userPerm.code === perm);
+const findPerm = (permList: UserPermissionFragment[], perm: PermissionEnum) =>
+  permList.find(userPerm => userPerm.code === perm);
 
 export function hasPermissions(
   userPermissions: UserPermissionFragment[],

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 
 import { EventData, EventDataAction, EventDataField } from "./types";
@@ -8,10 +7,10 @@ export const nameInputPrefix = EventDataField.name;
 export const valueInputPrefix = EventDataField.value;
 
 export function parseEventData(event: ChangeEvent): EventData {
-  let action: EventDataAction;
-  let field: EventDataField = null;
-  let fieldIndex: number = null;
-  let value: string = null;
+  let action: EventDataAction | undefined;
+  let field: EventDataField | null = null;
+  let fieldIndex: number | null = null;
+  let value: string | null = null;
 
   if (event.target.name.includes(EventDataField.name)) {
     action = EventDataAction.update;
@@ -36,11 +35,15 @@ export function parseEventData(event: ChangeEvent): EventData {
     fieldIndex = event.target.value;
   }
 
+  if (!action) {
+    throw new Error(`Unknown event action for ${event.target.name}`);
+  }
+
   return {
     action,
     field,
     fieldIndex,
-    value,
+    value: value ?? "",
   };
 }
 

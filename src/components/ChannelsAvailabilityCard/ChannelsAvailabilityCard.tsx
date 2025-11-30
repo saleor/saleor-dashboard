@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Channel as ChannelList, ChannelData } from "@dashboard/channels/utils";
 import { PermissionEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
@@ -64,11 +63,15 @@ const ChannelsAvailability = (props: ChannelsAvailabilityCardProps) => {
             const channelErrors = errors?.filter(error => error.channels?.includes(data.id)) || [];
 
             return (
-              <ChannelAvailabilityItemWrapper messages={messages} data={data} key={data.id}>
+              <ChannelAvailabilityItemWrapper
+                messages={messages ?? ({} as Messages)}
+                data={data}
+                key={data.id}
+              >
                 <ChannelAvailabilityItemContent
                   data={data}
-                  onChange={onChange}
-                  messages={channelsMessages[data.id]}
+                  onChange={onChange ?? (() => {})}
+                  messages={(channelsMessages as unknown as Record<string, Messages>)[data.id]}
                   errors={channelErrors}
                 />
               </ChannelAvailabilityItemWrapper>

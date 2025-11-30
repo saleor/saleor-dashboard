@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import RadioSwitchField from "@dashboard/components/RadioSwitchField";
@@ -193,10 +192,10 @@ const VisibilityCard = (props: VisibilityCardProps) => {
         {!isPublished && (
           <Box display="flex" gap={1} flexDirection="column" alignItems="start" marginTop={2}>
             <Checkbox
-              onCheckedChange={(checked: boolean) => setPublishedAt(checked)}
+              onCheckedChange={checked => setPublishedAt(checked === true)}
               checked={isPublishedAt}
             >
-              {messages.setAvailabilityDateLabel}
+              {String(messages.setAvailabilityDateLabel || "")}
             </Checkbox>
 
             {isPublishedAt && (
@@ -204,7 +203,7 @@ const VisibilityCard = (props: VisibilityCardProps) => {
                 label={intl.formatMessage(visibilityCardMessages.publishOn)}
                 disabled={disabled}
                 name="publishedAt"
-                value={publishedAt || ""}
+                value={publishedAt ?? ""}
                 onChange={value =>
                   onChange({
                     target: {
@@ -263,7 +262,7 @@ const VisibilityCard = (props: VisibilityCardProps) => {
             />
             {!isAvailableForPurchase && (
               <DateVisibilitySelector
-                buttonText={messages.setAvailabilityDateLabel}
+                buttonText={messages.setAvailabilityDateLabel ?? ""}
                 onInputClose={() =>
                   onChange({
                     target: { name: "availableForPurchase", value: null },
@@ -276,8 +275,8 @@ const VisibilityCard = (props: VisibilityCardProps) => {
                   label={intl.formatMessage(visibilityCardMessages.setAvailableOn)}
                   name="availableForPurchaseAt"
                   fullWidth
-                  helperText={getFieldError(errors, "startDate")?.message}
-                  value={availableForPurchaseAt || ""}
+                  helperText={getFieldError(errors, "startDate")?.message ?? ""}
+                  value={availableForPurchaseAt ?? ""}
                   onChange={value =>
                     onChange({
                       target: {

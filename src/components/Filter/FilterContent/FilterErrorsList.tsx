@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import InlineAlert from "@dashboard/components/Alert/InlineAlert";
 import { errorTracker } from "@dashboard/services/errorTracking";
 import { alpha, makeStyles } from "@material-ui/core/styles";
@@ -49,9 +48,13 @@ export const FilterErrorsList = ({
   const intl = useIntl();
   const getErrorMessage = (code: string) => {
     try {
-      return intl.formatMessage(errorMessages?.[code] || validationMessages[code], {
-        dependencies: dependencies?.join(),
-      });
+      return intl.formatMessage(
+        (errorMessages as Record<string, any>)?.[code] ||
+          (validationMessages as Record<string, any>)[code],
+        {
+          dependencies: dependencies?.join(),
+        },
+      );
     } catch (e) {
       errorTracker.captureException(e as Error);
       console.warn("Translation missing for filter error code: ", code);

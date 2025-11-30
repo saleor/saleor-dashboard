@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
@@ -19,7 +18,7 @@ interface AppChannelContextData extends UseAppChannel {
 
 const AppChannelContext = createContext<AppChannelContextData>({
   availableChannels: [],
-  channel: undefined,
+  channel: {} as ChannelFragment,
   isPickerActive: false,
   refreshChannels: () => undefined,
   setChannel: () => undefined,
@@ -65,7 +64,7 @@ export const AppChannelProvider = ({ children }: { children: ReactNode }) => {
     <AppChannelContext.Provider
       value={{
         availableChannels,
-        channel,
+        channel: channel!,
         isPickerActive,
         refreshChannels: refetch,
         setChannel: setSelectedChannel,

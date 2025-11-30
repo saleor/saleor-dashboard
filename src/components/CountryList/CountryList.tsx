@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryFragment } from "@dashboard/graphql";

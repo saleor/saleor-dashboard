@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CircularProgress,
   ClickAwayListener,
@@ -138,7 +137,7 @@ const CardMenu = (props: CardMenuProps) => {
       <IconButton
         data-test-id="show-more-button"
         aria-label="More"
-        aria-owns={open ? "long-menu" : null}
+        aria-owns={open ? "long-menu" : undefined}
         aria-haspopup="true"
         disabled={disabled}
         ref={anchorRef}

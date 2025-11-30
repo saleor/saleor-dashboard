@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import * as React from "react";
 
 interface DebounceProps<T> {
@@ -8,7 +7,7 @@ interface DebounceProps<T> {
 }
 
 class Debounce<T> extends React.Component<DebounceProps<T>> {
-  timer = null;
+  timer: ReturnType<typeof setTimeout> | null = null;
 
   handleDebounce = (...args: T[]) => {
     const { debounceFn, time } = this.props;
@@ -21,7 +20,9 @@ class Debounce<T> extends React.Component<DebounceProps<T>> {
   };
 
   componentWillUnmount() {
-    clearTimeout(this.timer);
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   }
 
   render() {

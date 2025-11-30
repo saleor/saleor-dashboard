@@ -1,8 +1,7 @@
-// @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { FetcherOpts, FetcherParams } from "@graphiql/toolkit";
+import { Fetcher, FetcherOpts, FetcherParams } from "@graphiql/toolkit";
 import { useIntl } from "react-intl";
 
 import { ContextualLine } from "../AppLayout/ContextualLinks/ContextualLine";
@@ -18,26 +17,27 @@ export const DevModePanel = () => {
   const { rootStyle } = useDashboardTheme();
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const { isDevModeVisible, variables, devModeContent, setDevModeVisibility } = useDevModeContext();
-  const fetcher = async (graphQLParams: FetcherParams, opts: FetcherOpts) => {
+  const fetcher: Fetcher = async (graphQLParams: FetcherParams, opts?: FetcherOpts) => {
     if (graphQLParams.operationName !== "IntrospectionQuery") {
       markOnboardingStepAsCompleted("graphql-playground");
     }
 
-    const baseFetcher = getFetcher(opts);
+    const baseFetcher = getFetcher(opts ?? ({} as FetcherOpts));
 
-    const result = await baseFetcher(graphQLParams, opts); // Call the base fetcher
+    const result = await baseFetcher(graphQLParams, opts ?? ({} as FetcherOpts)); // Call the base fetcher
 
     return result;
   };
+  const styleWithCustomProps = rootStyle as React.CSSProperties & Record<string, string>;
   const overwriteCodeMirrorCSSVariables = {
     __html: `
       .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
-        --font-size-hint: ${rootStyle["--font-size-hint"]} !important;
-        --font-size-inline-code: ${rootStyle["--font-size-inline-code"]} !important;
-        --font-size-body: ${rootStyle["--font-size-body"]} !important;
-        --font-size-h4: ${rootStyle["--font-size-h4"]} !important;
-        --font-size-h3: ${rootStyle["--font-size-h3"]} !important;
-        --font-size-h2: ${rootStyle["--font-size-h2"]} !important;
+        --font-size-hint: ${styleWithCustomProps["--font-size-hint"]} !important;
+        --font-size-inline-code: ${styleWithCustomProps["--font-size-inline-code"]} !important;
+        --font-size-body: ${styleWithCustomProps["--font-size-body"]} !important;
+        --font-size-h4: ${styleWithCustomProps["--font-size-h4"]} !important;
+        --font-size-h3: ${styleWithCustomProps["--font-size-h3"]} !important;
+        --font-size-h2: ${styleWithCustomProps["--font-size-h2"]} !important;
     `,
   };
 

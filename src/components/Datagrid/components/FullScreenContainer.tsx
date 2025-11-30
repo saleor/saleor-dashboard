@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useTheme } from "@saleor/macaw-ui";
 import { CSSProperties, FC, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
@@ -53,8 +52,8 @@ type FullScreenContainerProps = FC<
 >;
 
 const Portal: FullScreenContainerProps = ({ className, children, open }) => {
-  const { delayedState: delayedOpen, duration } = useDelayedState(open);
-  const styles = useAnimationStyles(open, duration);
+  const { delayedState: delayedOpen, duration } = useDelayedState(open ?? false);
+  const styles = useAnimationStyles(open ?? false, duration);
 
   return ReactDOM.createPortal(
     <div className={className} style={styles}>

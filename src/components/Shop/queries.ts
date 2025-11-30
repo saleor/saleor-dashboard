@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql } from "@apollo/client";
 import {
   RefreshLimitsQuery,
@@ -68,11 +67,14 @@ export const limitInfo = gql`
 `;
 export const useShopLimitsQuery = (
   opts: QueryHookOptions<RefreshLimitsQuery, Partial<RefreshLimitsQueryVariables>>,
-) =>
-  useRefreshLimitsQuery({
+) => {
+  const mergedVariables: RefreshLimitsQueryVariables = {
+    ...limitVariables,
+    ...opts.variables,
+  };
+
+  return useRefreshLimitsQuery({
     ...opts,
-    variables: {
-      ...limitVariables,
-      ...opts.variables,
-    },
-  });
+    variables: mergedVariables,
+  } as any);
+};

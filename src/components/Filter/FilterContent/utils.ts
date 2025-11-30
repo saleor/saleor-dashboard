@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
@@ -66,7 +65,7 @@ export const getDateFilterValue = (
     return date;
   }
 
-  const { time } = splitDateTime(dateTimeString);
+  const { time } = splitDateTime(dateTimeString ?? dateTime);
 
   return joinDateTime(date, time);
 };

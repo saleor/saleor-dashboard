@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { alpha } from "@material-ui/core/styles";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
 import { Text, vars } from "@saleor/macaw-ui-next";
@@ -68,19 +67,19 @@ const ImageUpload = (props: ImageUploadProps) => {
 
   return (
     <Dropzone disableClick={disableClick} onDrop={onImageUpload}>
-      {({ isDragActive, getInputProps, getRootProps }) => (
+      {({ isDragActive, getInputProps, getRootProps }: any) => (
         <>
           <div
             {...getRootProps()}
             className={clsx(className, classes.photosIconContainer, {
               [classes.backdrop]: isDragActive,
-              [isActiveClassName]: isDragActive,
+              [isActiveClassName ?? ""]: isDragActive,
             })}
           >
             {!hideUploadIcon && (
               <div
                 className={clsx(iconContainerClassName, {
-                  [iconContainerActiveClassName]: isDragActive,
+                  [iconContainerActiveClassName ?? ""]: isDragActive,
                 })}
               >
                 <input {...getInputProps()} className={classes.fileField} accept="image/*" />

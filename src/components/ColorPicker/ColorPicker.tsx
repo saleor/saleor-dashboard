@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import { RequireOnlyOne } from "@dashboard/misc";
@@ -68,7 +67,11 @@ export const ColorPicker = ({
     };
 
     setHex(
-      convert.rgb.hex([getValue(rgbColor.r), getValue(rgbColor.g), getValue(rgbColor.b)] as RGB),
+      convert.rgb.hex([
+        getValue(rgbColor.r ?? ""),
+        getValue(rgbColor.g ?? ""),
+        getValue(rgbColor.b ?? ""),
+      ] as RGB),
     );
   };
   const handleHEXChange = (hexColor: string) => setHex(hexColor.replace(/ |#/g, ""));

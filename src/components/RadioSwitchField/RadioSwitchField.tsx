@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -54,7 +53,7 @@ const RadioSwitchField = (props: RadioSwitchFieldProps) => {
   } = props;
   const classes = useStyles(props);
   const initialValue = value ? "true" : "false";
-  const change = event => {
+  const change = (event: React.ChangeEvent<any>) => {
     onChange({
       target: {
         name: event.target.name,

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { TableCell, TableHead as MuiTableHead } from "@material-ui/core";
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
@@ -93,10 +92,10 @@ const TableHead = (props: TableHeadProps) => {
           >
             <Checkbox
               data-test-id="select-all-checkbox"
-              indeterminate={items && items.length > selected && selected > 0}
-              checked={selected !== 0}
+              indeterminate={!!(items && items.length > (selected ?? 0) && (selected ?? 0) > 0)}
+              checked={(selected ?? 0) !== 0}
               disabled={disabled}
-              onChange={() => toggleAll(items, selected)}
+              onChange={() => toggleAll?.(items, selected ?? 0)}
             />
           </TableCell>
         )}
@@ -104,10 +103,10 @@ const TableHead = (props: TableHeadProps) => {
           <>
             <TableCell
               className={clsx(classes.cell, classes.root)}
-              colSpan={getColSpan(colSpan, dragRows)}
+              colSpan={getColSpan(colSpan, !!dragRows)}
             >
               <div className={classes.container}>
-                {selected && (
+                {!!selected && (
                   <Text data-test-id="SelectedText">
                     <FormattedMessage
                       id="qu/hXD"

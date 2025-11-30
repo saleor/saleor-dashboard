@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Locale } from "@dashboard/components/Locale";
 
 import { numberCellEmptyValue, NumberCellProps, numberCellRenderer } from "./NumberCell";
@@ -13,9 +12,17 @@ describe("NumberCell renderer", () => {
     const data = { value: 0 } as NumberCellProps;
 
     // Act
+    if (!onPaste) {
+      throw new Error("onPaste is not defined");
+    }
+
     const result = onPaste(value, data);
 
     // Assert
+    if (!result) {
+      throw new Error("result is undefined");
+    }
+
     expect(result.value).toBe(10);
   });
 
@@ -26,9 +33,17 @@ describe("NumberCell renderer", () => {
     const data = { value: 0 } as NumberCellProps;
 
     // Act
+    if (!onPaste) {
+      throw new Error("onPaste is not defined");
+    }
+
     const result = onPaste(value, data);
 
     // Assert
+    if (!result) {
+      throw new Error("result is undefined");
+    }
+
     expect(result.value).toBe(10.5);
   });
 
@@ -39,9 +54,17 @@ describe("NumberCell renderer", () => {
     const data = { value: 0 } as NumberCellProps;
 
     // Act
+    if (!onPaste) {
+      throw new Error("onPaste is not defined");
+    }
+
     const result = onPaste(value, data);
 
     // Assert
+    if (!result) {
+      throw new Error("result is undefined");
+    }
+
     expect(result.value).toBe(numberCellEmptyValue);
   });
 
@@ -52,9 +75,17 @@ describe("NumberCell renderer", () => {
     const data = { value: 0 } as NumberCellProps;
 
     // Act
+    if (!onPaste) {
+      throw new Error("onPaste is not defined");
+    }
+
     const result = onPaste(value, data);
 
     // Assert
+    if (!result) {
+      throw new Error("result is undefined");
+    }
+
     expect(result.value).toBe(numberCellEmptyValue);
   });
 
@@ -65,9 +96,17 @@ describe("NumberCell renderer", () => {
     const data = { value: 0 } as NumberCellProps;
 
     // Act
+    if (!onPaste) {
+      throw new Error("onPaste is not defined");
+    }
+
     const result = onPaste(value, data);
 
     // Assert
+    if (!result) {
+      throw new Error("result is undefined");
+    }
+
     expect(result.value).toBe(5);
   });
 });

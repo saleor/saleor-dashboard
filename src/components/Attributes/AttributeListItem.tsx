@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
@@ -23,7 +22,7 @@ export const AttributeListItem = ({
   return (
     <AttributeRow
       attribute={attribute}
-      error={error}
+      error={error!}
       onAttributeSelectBlur={onAttributeSelectBlur}
       {...props}
     />

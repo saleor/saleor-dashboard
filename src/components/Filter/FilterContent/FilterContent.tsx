@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { makeStyles, Paper } from "@material-ui/core";
@@ -132,7 +131,7 @@ export const FilterContent = ({
     action: FilterReducerAction<K, T>,
     filter: FilterElement<string>,
   ) {
-    const switchToActive = action.payload.update.active;
+    const switchToActive = action.payload.update?.active;
 
     if (switchToActive && filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
@@ -140,7 +139,7 @@ export const FilterContent = ({
       handleFilterAttributeFocus(undefined);
     }
 
-    if (!switchToActive) {
+    if (!switchToActive && action.payload.update) {
       action.payload.update.value = [];
     }
 
@@ -153,7 +152,7 @@ export const FilterContent = ({
 
     onFilterPropertyChange({
       ...action,
-      payload: { ...action.payload, update: { ...update, active: true } },
+      payload: { ...action.payload, update: { ...(update ?? ({} as any)), active: true } },
     });
   };
   const getFilterFromCurrentData = function <T extends string>(filter: FilterElement<T>) {
@@ -211,25 +210,36 @@ export const FilterContent = ({
                 {filter.multipleFields ? (
                   <CollectionWithDividers
                     collection={filter.multipleFields}
-                    renderItem={filterField => (
-                      <FilterContentBody
-                        {...commonFilterBodyProps}
-                        onFilterPropertyChange={handleMultipleFieldPropertyChange}
-                        filter={{
-                          ...getFilterFromCurrentData(filterField),
-                          active: currentFilter?.active,
-                        }}
-                      >
-                        <Text>{filterField.label}</Text>
-                      </FilterContentBody>
-                    )}
+                    renderItem={filterField => {
+                      if (!filterField) {
+                        return null;
+                      }
+
+                      const fieldData = getFilterFromCurrentData(filterField);
+
+                      return (
+                        <FilterContentBody
+                          {...commonFilterBodyProps}
+                          onFilterPropertyChange={handleMultipleFieldPropertyChange}
+                          filter={{
+                            ...fieldData,
+                            ...filterField,
+                            active: currentFilter?.active ?? false,
+                          }}
+                        >
+                          <Text>{filterField.label ?? ""}</Text>
+                        </FilterContentBody>
+                      );
+                    }}
                   />
                 ) : (
-                  <FilterContentBody
-                    {...commonFilterBodyProps}
-                    onFilterPropertyChange={onFilterPropertyChange}
-                    filter={currentFilter}
-                  />
+                  currentFilter && (
+                    <FilterContentBody
+                      {...commonFilterBodyProps}
+                      onFilterPropertyChange={onFilterPropertyChange}
+                      filter={currentFilter}
+                    />
+                  )
                 )}
               </Accordion>
             );

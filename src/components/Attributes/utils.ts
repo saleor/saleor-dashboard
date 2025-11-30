@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { FileChoiceType } from "@dashboard/components/FileUploadField";
 import { SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
@@ -15,8 +14,8 @@ import { IntlShape } from "react-intl";
 
 export function getSingleChoices(values: AttributeValueFragment[]): Option[] {
   return values.map(value => ({
-    label: value.name,
-    value: value.slug,
+    label: value.name ?? "",
+    value: value.slug ?? "",
   }));
 }
 
@@ -28,20 +27,20 @@ export function getFileChoice(attribute: AttributeInput): FileChoiceType {
 
   if (definedAttributeValue) {
     return {
-      file: definedAttributeValue.file,
-      label: definedAttributeValue.name,
-      value: definedAttributeValue.slug,
+      file: definedAttributeValue.file ?? undefined,
+      label: definedAttributeValue.name ?? "",
+      value: definedAttributeValue.slug ?? "",
     };
   }
 
   return {
-    label: attributeValue,
-    value: attributeValue,
+    label: attributeValue || "",
+    value: attributeValue || "",
   };
 }
 
 export function getReferenceDisplayValue(attribute: AttributeInput): SortableChipsFieldValueType[] {
-  if (!attribute.value) {
+  if (!attribute.value || !attribute.data.references) {
     return [];
   }
 
@@ -59,7 +58,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
 
 export function getSingleReferenceDisplayValue(
   attribute: AttributeInput,
-): SortableChipsFieldValueType {
+): SortableChipsFieldValueType | null {
   if (!attribute.value || attribute.value.length === 0) {
     return null;
   }
@@ -82,8 +81,8 @@ export function getSingleReferenceDisplayValue(
 
 export function getMultiChoices(values: AttributeValueFragment[]): Option[] {
   return values.map(value => ({
-    label: value.name,
-    value: value.slug,
+    label: value.name ?? "",
+    value: value.slug ?? "",
   }));
 }
 
@@ -114,8 +113,8 @@ export function getMultiDisplayValue(
 
     if (definedAttributeValue) {
       return {
-        label: definedAttributeValue.name,
-        value: definedAttributeValue.slug,
+        label: definedAttributeValue.name ?? "",
+        value: definedAttributeValue.slug ?? "",
       };
     }
 
@@ -132,9 +131,11 @@ export function getErrorMessage(
 ): string {
   switch (err?.__typename) {
     case "ProductError":
-      return getProductErrorMessage(err, intl);
+      return getProductErrorMessage(err, intl) ?? "";
     case "PageError":
-      return getPageErrorMessage(err, intl);
+      return getPageErrorMessage(err, intl) ?? "";
+    default:
+      return "";
   }
 }
 

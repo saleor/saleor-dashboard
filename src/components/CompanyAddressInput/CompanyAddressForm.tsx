@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Grid from "@dashboard/components/Grid";
 import { AddressTypeInput } from "@dashboard/customers/types";
@@ -38,16 +37,20 @@ const useStyles = makeStyles(
 );
 
 function getErrorMessage(
-  err: AccountErrorFragment | ShopErrorFragment | WarehouseErrorFragment,
+  err: AccountErrorFragment | ShopErrorFragment | WarehouseErrorFragment | undefined,
   intl: IntlShape,
 ): string {
-  switch (err?.__typename) {
+  if (!err) {
+    return "";
+  }
+
+  switch (err.__typename) {
     case "AccountError":
-      return getAccountErrorMessage(err, intl);
+      return getAccountErrorMessage(err, intl) ?? "";
     case "WarehouseError":
-      return getWarehouseErrorMessage(err, intl);
+      return getWarehouseErrorMessage(err, intl) ?? "";
     default:
-      return getShopErrorMessage(err, intl);
+      return getShopErrorMessage(err, intl) ?? "";
   }
 }
 
@@ -207,8 +210,8 @@ const CompanyAddressForm = (props: CompanyAddressFormProps) => {
             fetchOptions={() => undefined}
             name="countryArea"
             value={{
-              label: getDisplayValue(data.countryArea),
-              value: data.countryArea,
+              label: getDisplayValue(data.countryArea) ?? "",
+              value: data.countryArea ?? "",
             }}
             onChange={onChange}
           />

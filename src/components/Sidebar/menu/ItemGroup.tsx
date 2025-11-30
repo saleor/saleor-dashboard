@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Link } from "react-router-dom";
 
@@ -11,7 +10,8 @@ interface Props {
 }
 
 export const ItemGroup = ({ menuItem }: Props) => {
-  const hasSubmenuActive = menuItem?.children.some(item => isMenuActive(location.pathname, item));
+  const hasSubmenuActive =
+    menuItem?.children?.some(item => isMenuActive(location.pathname, item)) ?? false;
   const isActive = isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
   const isExpanded = isActive || hasSubmenuActive;
 

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import notFoundImage from "@assets/images/what.svg";
 import useAppState from "@dashboard/hooks/useAppState";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -20,7 +19,7 @@ const ErrorPage = ({ onBack, onRefresh }: ErrorPageProps) => {
     navigate("/", { replace: true });
     dispatchAppState({
       payload: {
-        error: null,
+        error: undefined,
       },
       type: "displayError",
     });

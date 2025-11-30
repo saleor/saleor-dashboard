@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Extension } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
@@ -10,7 +9,7 @@ export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMen
   const items: SidebarMenuItem[] = extensions.map(({ label, id, app, url, permissions, open }) => ({
     id: `extension-${id}`,
     label,
-    url: ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl(url, app.appUrl, app.id),
+    url: ExtensionsUrls.resolveDashboardUrlFromAppCompleteUrl(url, app.appUrl ?? "", app.id),
     permissions,
     onClick: open,
     type: "item",
@@ -25,7 +24,7 @@ export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMen
 
 export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   const menuUrlsToCheck = [...(menuItem.matchUrls || []), menuItem.url]
-    .filter(Boolean)
+    .filter((item): item is string => Boolean(item))
     .map(item => item.split("?")[0]);
 
   if (menuUrlsToCheck.length === 0) {
@@ -74,7 +73,7 @@ export const getMenuItemExtension = (
   >,
   id: string,
 ) => {
-  const extensionsList = Object.values(extensions).reduce(
+  const extensionsList = Object.values(extensions).reduce<Extension[]>(
     (list, extensions) => list.concat(extensions),
     [],
   );

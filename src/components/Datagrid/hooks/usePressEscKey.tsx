@@ -1,10 +1,9 @@
-// @ts-strict-ignore
 import { useEffect } from "react";
 
 export const usePressEscKey = (callback?: () => void) => {
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      if (event.code === "Escape") {
+      if (event.code === "Escape" && callback) {
         callback();
       }
     };

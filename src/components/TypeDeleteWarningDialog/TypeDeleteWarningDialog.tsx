@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
@@ -92,11 +91,11 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
           <>
             <DeleteWarningDialogConsentContent
               description={intl.formatMessage(description, {
-                typeName: singleItemSelectedName,
+                typeName: singleItemSelectedName || "",
                 assignedItemsCount,
-                b: (...chunks) => <b>{chunks}</b>,
+                b: (...chunks: any[]) => <b>{chunks}</b>,
               })}
-              consentLabel={consentLabel && intl.formatMessage(consentLabel)}
+              consentLabel={consentLabel ? intl.formatMessage(consentLabel) : ""}
               isConsentChecked={isConsentChecked}
               onConsentChange={setIsConsentChecked}
             />
@@ -104,7 +103,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
             <DashboardModal.Actions>
               {shouldShowViewAssignedItemsButton && (
                 <Link
-                  to={viewAssignedItemsUrl}
+                  to={viewAssignedItemsUrl ?? "#"}
                   style={{ pointerEvents: viewAssignedItemsUrl ? undefined : "none" }}
                 >
                   <ConfirmButton transitionState="default" disabled={!viewAssignedItemsUrl}>

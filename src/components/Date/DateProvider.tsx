@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Component, ReactNode } from "react";
 
 import { Provider } from "./DateContext";
@@ -10,7 +9,7 @@ interface DateProviderState {
 export class DateProvider extends Component<{ children: ReactNode }, DateProviderState> {
   static contextTypes = {};
 
-  intervalId: number;
+  intervalId: number | undefined;
 
   state = {
     date: Date.now(),

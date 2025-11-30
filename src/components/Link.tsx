@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { isExternalURL } from "@dashboard/utils/urls";
 import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -79,7 +78,7 @@ const Link = (props: LinkProps) => {
       },
       className,
     ),
-    onClick: event => {
+    onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
       if (disabled || !onClick) {
         return;
       }
@@ -88,18 +87,18 @@ const Link = (props: LinkProps) => {
       onClick(event);
     },
     target,
-    rel: (rel ?? (opensNewTab && isExternalURL(href))) ? "noopener noreferer" : "",
+    rel: (rel ?? (opensNewTab && isExternalURL(href ?? ""))) ? "noopener noreferer" : "",
     ...linkProps,
   };
-  const urlObject = new URL(href, window.location.origin);
+  const urlObject = new URL(href ?? "", window.location.origin);
 
   return (
     <>
       {!!href && !isExternalURL(href) ? (
-        <RouterLink<LinkState>
+        <RouterLink
           to={
             disabled
-              ? undefined
+              ? "#"
               : {
                   pathname: urlObject.pathname,
                   search: urlObject.search,

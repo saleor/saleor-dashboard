@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FilterDateTimeField } from "@dashboard/components/Filter/FilterContent/FilterDateTimeField";
 import { FilterNumericField } from "@dashboard/components/Filter/FilterContent/FilterNumericField";
 import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterContent/FilterSingleSelectField";
@@ -22,6 +21,7 @@ import {
   isFilterNumericType,
   isFilterType,
 } from "../types";
+import { FilterDispatchFunction } from "../useFilter";
 
 const useStyles = makeStyles(
   theme => ({
@@ -93,21 +93,24 @@ export const FilterContentBody = <K extends string = string>({
       {isFilterDateType(filter) && (
         <>
           <FilterSingleSelectField
-            filter={filter}
-            onFilterPropertyChange={onFilterPropertyChange}
+            filter={filter as any}
+            onFilterPropertyChange={onFilterPropertyChange as FilterDispatchFunction<string>}
           />
-          <FilterDateTimeField filter={filter} onFilterPropertyChange={onFilterPropertyChange} />
+          <FilterDateTimeField
+            filter={filter as any}
+            onFilterPropertyChange={onFilterPropertyChange as FilterDispatchFunction<string>}
+          />
         </>
       )}
       {isFilterNumericType(filter) && (
         <>
           <FilterSingleSelectField
-            filter={filter}
-            onFilterPropertyChange={onFilterPropertyChange}
+            filter={filter as any}
+            onFilterPropertyChange={onFilterPropertyChange as FilterDispatchFunction<string>}
           />
           <FilterNumericField
-            filter={filter}
-            onFilterPropertyChange={onFilterPropertyChange}
+            filter={filter as any}
+            onFilterPropertyChange={onFilterPropertyChange as FilterDispatchFunction<string>}
             currencySymbol={currencySymbol}
           />
         </>
@@ -116,12 +119,12 @@ export const FilterContentBody = <K extends string = string>({
       {isFilterType(filter, FieldType.options) && (
         <FilterOptionField
           data-test-id={filterTestingContext + filter.name}
-          filter={filter}
-          onFilterPropertyChange={onFilterPropertyChange}
+          filter={filter as any}
+          onFilterPropertyChange={onFilterPropertyChange as FilterDispatchFunction<string>}
         />
       )}
       {isFilterType(filter, FieldType.boolean) &&
-        filter.options.map(option => (
+        (filter.options ?? []).map(option => (
           <div className={clsx(classes.option, classes.optionRadio)} key={option.value}>
             <FormControlLabel
               control={
@@ -149,15 +152,18 @@ export const FilterContentBody = <K extends string = string>({
           </div>
         ))}
       {isFilterType(filter, FieldType.keyValue) && (
-        <FilterKeyValueField filter={filter} onFilterPropertyChange={onFilterPropertyChange} />
+        <FilterKeyValueField
+          filter={filter as any}
+          onFilterPropertyChange={onFilterPropertyChange as FilterDispatchFunction<string>}
+        />
       )}
       {isFilterType(filter, FieldType.autocomplete) && (
         <FilterAutocompleteField
           data-test-id={filterTestingContext + filter.name}
           displayValues={autocompleteDisplayValues}
-          filter={filter}
+          filter={filter as any}
           setDisplayValues={setAutocompleteDisplayValues}
-          onFilterPropertyChange={onFilterPropertyChange}
+          onFilterPropertyChange={onFilterPropertyChange as FilterDispatchFunction<string>}
           initialDisplayValues={initialAutocompleteDisplayValues}
         />
       )}

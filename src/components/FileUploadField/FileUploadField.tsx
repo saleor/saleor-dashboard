@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FileFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
@@ -30,14 +29,17 @@ const FileUploadField = (props: FileUploadFieldProps) => {
     props;
   const intl = useIntl();
   const fileInputAnchor = React.createRef<HTMLInputElement>();
-  const clickFileInput = () => fileInputAnchor.current.click();
+  const clickFileInput = () => fileInputAnchor.current?.click();
   const handleFileDelete = () => {
-    fileInputAnchor.current.value = "";
+    if (fileInputAnchor.current) {
+      fileInputAnchor.current.value = "";
+    }
+
     onFileDelete();
   };
 
   React.useEffect(() => {
-    if (!file.value) {
+    if (!file.value && fileInputAnchor.current) {
       fileInputAnchor.current.value = "";
     }
   }, [file]);
@@ -85,7 +87,11 @@ const FileUploadField = (props: FileUploadFieldProps) => {
       <input
         style={{ display: "none" }}
         id="fileUpload"
-        onChange={event => onFileUpload(event.target.files[0])}
+        onChange={event => {
+          if (event.target.files?.[0]) {
+            onFileUpload(event.target.files[0]);
+          }
+        }}
         type="file"
         data-test-id="upload-file-input"
         ref={fileInputAnchor}

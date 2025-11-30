@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { Accordion, Text } from "@saleor/macaw-ui-next";
@@ -23,7 +22,7 @@ export const ChannelAvailabilityItemWrapper = ({
         <Text size={4} fontWeight="medium">
           {name}
         </Text>
-        <Label text={messages.availableDateText} />
+        <Label text={messages.availableDateText ?? ""} />
         <Accordion.TriggerButton dataTestId="expand-icon" />
       </Accordion.Trigger>
       <Accordion.Content paddingLeft={3}>{children}</Accordion.Content>

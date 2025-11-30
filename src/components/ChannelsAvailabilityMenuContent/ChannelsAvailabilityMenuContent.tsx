@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { CollectionFragment } from "@dashboard/graphql";
 import { PillColor } from "@saleor/macaw-ui";
@@ -14,7 +13,7 @@ interface ChannelsAvailabilityMenuContentProps {
   pills: Pill[];
 }
 export interface Pill {
-  channel: CollectionFragment["channelListings"][0]["channel"];
+  channel: NonNullable<CollectionFragment["channelListings"]>[0]["channel"];
   color: PillColor;
   label: MessageDescriptor;
 }

@@ -1,5 +1,4 @@
-// @ts-strict-ignore
-import { createContext } from "react";
+import { createContext, ReactNode } from "react";
 
 import ExitFormDialog from "./ExitFormDialog";
 import { ExitFormDialogData } from "./types";
@@ -18,7 +17,7 @@ export const ExitFormDialogContext = createContext<ExitFormDialogData>({
   setIsSubmitDisabled: () => undefined,
 });
 
-const ExitFormDialogProvider = ({ children }) => {
+const ExitFormDialogProvider = ({ children }: { children: ReactNode }) => {
   const { handleClose, handleLeave, providerData, showDialog, shouldBlockNav } =
     useExitFormDialogProvider();
 
