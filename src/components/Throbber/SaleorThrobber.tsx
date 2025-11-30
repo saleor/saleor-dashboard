@@ -1,9 +1,14 @@
 interface SaleorThrobberProps {
   size?: number;
   className?: string;
+  "data-test-id"?: string;
 }
 
-export function SaleorThrobber({ size = 40, className }: SaleorThrobberProps) {
+export function SaleorThrobber({
+  size = 40,
+  className,
+  "data-test-id": dataTestId,
+}: SaleorThrobberProps) {
   const vertices = [
     { x: 12, y: 15 },
     { x: 36, y: 15 },
@@ -18,6 +23,7 @@ export function SaleorThrobber({ size = 40, className }: SaleorThrobberProps) {
   return (
     <div
       className={className}
+      data-test-id={dataTestId}
       style={{
         display: "inline-flex",
         alignItems: "center",

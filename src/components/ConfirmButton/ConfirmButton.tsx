@@ -81,6 +81,7 @@ export const ConfirmButton = ({
         // TODO: Replace with new component when it will be ready https://github.com/saleor/macaw-ui/issues/443
         <SaleorThrobber
           size={20}
+          data-test-id="button-progress"
           className={sprinkles({
             position: "absolute",
           })}
