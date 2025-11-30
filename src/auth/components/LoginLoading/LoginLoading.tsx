@@ -17,7 +17,7 @@ const LoginLoading = (props: {}) => {
 
   return (
     <div className={classes.root}>
-      <SaleorThrobber size={64} />
+      <SaleorThrobber size={128} />
     </div>
   );
 };
