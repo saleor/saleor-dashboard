@@ -234,7 +234,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
       title={safeStringify(eventData)}
       style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
     >
-      <InfoIcon size={16} color="hsla(0, 0%, 0%, 0.4)" />
+      <InfoIcon size={16} color={ICON_COLOR} />
     </span>
   ) : null;
 

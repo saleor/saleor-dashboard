@@ -137,7 +137,7 @@ export const TimelineNote = ({
       title={safeStringify(eventData)}
       style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
     >
-      <InfoIcon size={16} color="hsla(0, 0%, 0%, 0.4)" />
+      <InfoIcon size={16} color={vars.colors.text.default2} />
     </span>
   ) : null;
 
@@ -279,7 +279,7 @@ export const TimelineNote = ({
                     }
                   }}
                 >
-                  <LinkIcon size={14} color="hsla(0, 0%, 0%, 0.4)" />
+                  <LinkIcon size={14} color={vars.colors.text.default2} />
                   <Text size={2} color="default2" className="timeline-edit-link">
                     <FormattedMessage
                       defaultMessage="Edit of {userName}'s comment"
