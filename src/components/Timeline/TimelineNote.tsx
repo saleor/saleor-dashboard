@@ -5,10 +5,58 @@ import { InfoIcon, LinkIcon, MessageSquareIcon } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { DashboardCard } from "../Card";
 import { DateTime } from "../Date";
 import { UserAvatar } from "../UserAvatar";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
+
+// CSS for hover effect
+const noteCardStyles = `
+  .timeline-note-card:hover {
+    background-color: ${vars.colors.background.default2};
+  }
+  .timeline-note-row .timeline-info-icon {
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+  }
+  .timeline-note-row:hover .timeline-info-icon {
+    opacity: 1;
+  }
+  .timeline-note-card .timeline-edit-button {
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+  }
+  .timeline-note-card:hover .timeline-edit-button {
+    opacity: 1;
+  }
+  .timeline-edit-link {
+    text-decoration: none;
+  }
+  .timeline-edit-link:hover {
+    text-decoration: underline;
+  }
+`;
+
+// Inject styles once
+if (typeof document !== "undefined") {
+  const styleId = "timeline-note-styles-v4";
+
+  // Remove old styles if exist
+  ["timeline-note-styles", "timeline-note-styles-v2", "timeline-note-styles-v3"].forEach(id => {
+    const oldStyle = document.getElementById(id);
+
+    if (oldStyle) {
+      oldStyle.remove();
+    }
+  });
+
+  if (!document.getElementById(styleId)) {
+    const style = document.createElement("style");
+
+    style.id = styleId;
+    style.textContent = noteCardStyles;
+    document.head.appendChild(style);
+  }
+}
 
 type TimelineAppType =
   | NonNullable<GiftCardDetailsQuery["giftCard"]>["events"][0]["app"]
@@ -110,6 +158,7 @@ export const TimelineNote = ({
 
   const infoIcon = eventData ? (
     <span
+      className="timeline-info-icon"
       title={safeStringify(eventData)}
       style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
     >
@@ -118,7 +167,13 @@ export const TimelineNote = ({
   ) : null;
 
   return (
-    <Box display="flex" width="100%" position="relative">
+    <Box
+      display="flex"
+      width="100%"
+      position="relative"
+      className="timeline-note-row"
+      id={id ? `timeline-note-${id}` : undefined}
+    >
       {/* Vertical connecting line - hidden for last item in group */}
       {!isLastInGroup && (
         <Box
@@ -159,76 +214,109 @@ export const TimelineNote = ({
         </Box>
 
         {/* Card content */}
-        <DashboardCard width="100%" backgroundColor="default1">
-          <DashboardCard.Content
-            borderRadius={2}
-            borderStyle="solid"
-            borderWidth={1}
-            borderColor="default1"
-            padding={4}
-          >
-            {/* Header row with avatar, name, date, info icon */}
-            <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={2}>
-              <Box display="flex" alignItems="center" gap={2}>
-                <TimelineAvatar user={user} app={app} />
-                <Text size={3} fontWeight="medium">
-                  {userDisplayName}
-                </Text>
-                <Text size={2} color="default2" display="flex" gap={1} whiteSpace="nowrap">
-                  {relatedId ? (
-                    <FormattedMessage defaultMessage="edited" id="Zx1w1e" />
-                  ) : (
-                    <FormattedMessage defaultMessage="added" id="xJEaxW" />
-                  )}
-                  {dateNode || <DateTime date={date} plain={hasPlainDate} />}
-                </Text>
-              </Box>
-              {infoIcon}
-            </Box>
-
-            {/* Message content */}
-            {showEdit && id ? (
-              <TimelineNoteEdit
-                id={id}
-                note={message!}
-                onSubmit={onNoteUpdate!}
-                loading={onNoteUpdateLoading!}
-                onCancel={() => setShowEdit(false)}
-              />
-            ) : (
-              <>
-                <Box display="flex" justifyContent="space-between" gap={3} wordBreak="break-all">
-                  <NoteMessage message={message} />
-                  {onNoteUpdate && (
-                    <Button
-                      data-test-id="edit-note"
-                      variant="tertiary"
-                      size="small"
-                      onClick={() => {
-                        setShowEdit(true);
-                      }}
-                      icon={<EditIcon size="small" />}
-                    />
-                  )}
-                </Box>
-
-                {/* Edit link for edited notes */}
-                {relatedId && (
-                  <Box marginTop={3} display="flex" alignItems="center" gap={1}>
-                    <LinkIcon size={14} color="hsla(0, 0%, 0%, 0.4)" />
-                    <Text size={2} color="default2">
-                      <FormattedMessage
-                        defaultMessage="Edit of {userName}'s comment"
-                        id="4vU2Q7"
-                        values={{ userName: userDisplayName }}
-                      />
-                    </Text>
-                  </Box>
+        <Box
+          width="100%"
+          backgroundColor="default1"
+          borderRadius={4}
+          borderStyle="solid"
+          borderWidth={1}
+          borderColor="default1"
+          padding={4}
+          className="timeline-note-card"
+          style={{
+            transition: "background-color 0.15s ease-in-out",
+          }}
+        >
+          {/* Header row with avatar, name, info icon, date */}
+          <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={2}>
+            <Box display="flex" alignItems="center" gap={2}>
+              <TimelineAvatar user={user} app={app} />
+              <Text size={3} fontWeight="medium">
+                {userDisplayName}
+              </Text>
+              <Text size={2} color="default2" display="flex" gap={1} whiteSpace="nowrap">
+                {relatedId ? (
+                  <FormattedMessage defaultMessage="edited" id="Zx1w1e" />
+                ) : (
+                  <FormattedMessage defaultMessage="added" id="xJEaxW" />
                 )}
-              </>
-            )}
-          </DashboardCard.Content>
-        </DashboardCard>
+              </Text>
+            </Box>
+            <Box display="flex" alignItems="center" gap={2}>
+              {infoIcon}
+              <Text size={2} color="default2" whiteSpace="nowrap">
+                {dateNode || <DateTime date={date} plain={hasPlainDate} />}
+              </Text>
+            </Box>
+          </Box>
+
+          {/* Message content */}
+          {showEdit && id ? (
+            <TimelineNoteEdit
+              id={id}
+              note={message!}
+              onSubmit={onNoteUpdate!}
+              loading={onNoteUpdateLoading!}
+              onCancel={() => setShowEdit(false)}
+            />
+          ) : (
+            <>
+              <Box display="flex" justifyContent="space-between" gap={3} wordBreak="break-all">
+                <NoteMessage message={message} />
+                {onNoteUpdate && (
+                  <Button
+                    className="timeline-edit-button"
+                    data-test-id="edit-note"
+                    variant="tertiary"
+                    size="small"
+                    onClick={() => {
+                      setShowEdit(true);
+                    }}
+                    icon={<EditIcon size="small" />}
+                  />
+                )}
+              </Box>
+
+              {/* Edit link for edited notes */}
+              {relatedId && (
+                <Box
+                  marginTop={3}
+                  display="flex"
+                  alignItems="center"
+                  gap={1}
+                  cursor="pointer"
+                  onClick={() => {
+                    const element = document.getElementById(`timeline-note-${relatedId}`);
+
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth", block: "center" });
+
+                      // Find the card element inside and animate its border
+                      const card = element.querySelector(".timeline-note-card") as HTMLElement;
+
+                      if (card) {
+                        card.style.transition = "border-color 0.3s ease";
+                        card.style.borderColor = "hsla(0, 0%, 0%, 0.3)";
+                        setTimeout(() => {
+                          card.style.borderColor = "";
+                        }, 2000);
+                      }
+                    }
+                  }}
+                >
+                  <LinkIcon size={14} color="hsla(0, 0%, 0%, 0.4)" />
+                  <Text size={2} color="default2" className="timeline-edit-link">
+                    <FormattedMessage
+                      defaultMessage="Edit of {userName}'s comment"
+                      id="4vU2Q7"
+                      values={{ userName: userDisplayName }}
+                    />
+                  </Text>
+                </Box>
+              )}
+            </>
+          )}
+        </Box>
       </Box>
     </Box>
   );

@@ -194,10 +194,6 @@
     "context": "expired on label",
     "string": "Expired on {date}"
   },
-  "/0JckE": {
-    "context": "order marked as paid event title",
-    "string": "Order was marked as paid by"
-  },
   "/0gMCW": {
     "string": "Try to refresh the page or go navigate to a different page and back."
   },
@@ -251,10 +247,6 @@
   "/ILyIf": {
     "context": "tax classes menu header",
     "string": "Tax class label"
-  },
-  "/KWNJW": {
-    "context": "order discount was updated event title",
-    "string": "Order discount was updated by"
   },
   "/Mcvt4": {
     "context": "section header",
@@ -556,10 +548,6 @@
   "1BNKCZ": {
     "context": "sale channel",
     "string": "Channel"
-  },
-  "1GTU/3": {
-    "context": "replaced event title",
-    "string": "Products were replaced by"
   },
   "1H+V6k": {
     "context": "error message",
@@ -1064,6 +1052,9 @@
     "context": "account information, header",
     "string": "Account Information"
   },
+  "4vU2Q7": {
+    "string": "Edit of {userName}'s comment"
+  },
   "4y3Smi": {
     "string": "Removing permissions may cause extension to break."
   },
@@ -1151,10 +1142,6 @@
     "context": "waiting for export to end, header",
     "string": "Exporting CSV"
   },
-  "5R4VMl": {
-    "context": "draft created from replace event title",
-    "string": "Draft was reissued from order"
-  },
   "5RmuD+": {
     "string": "Manage and update your warehouse information"
   },
@@ -1183,10 +1170,6 @@
   "5ZYUn5": {
     "context": "Filter and element text",
     "string": "And"
-  },
-  "5ZtQ7s": {
-    "context": "button",
-    "string": "Add Comment"
   },
   "5ZvuVw": {
     "string": "No products matching given query"
@@ -1373,6 +1356,9 @@
   "6jyoEd": {
     "context": "section header",
     "string": "About this extension"
+  },
+  "6oxTyq": {
+    "string": "All events related to this order. For more information regarding order events visit our docs {link}."
   },
   "6pPMp9": {
     "string": "Subtotal price"
@@ -1603,6 +1589,10 @@
     "context": "order history message",
     "string": "Payment was voided"
   },
+  "8V1ozm": {
+    "context": "order discount was updated automatically event title",
+    "string": "Order discount was updated automatically"
+  },
   "8a4uf/": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this model?} other{Are you sure you want to delete {displayQuantity} models?}}"
@@ -1742,10 +1732,6 @@
     "context": "channel currency",
     "string": "Currency"
   },
-  "9TAzb5": {
-    "context": "order line discount added title",
-    "string": "{productName} discount was added by"
-  },
   "9TENcY": {
     "string": "All payments from registered transactions."
   },
@@ -1856,10 +1842,6 @@
     "context": "plain text attribute value was truncated",
     "string": "Attribute value too long and truncated at {length} characters."
   },
-  "A0Wlg7": {
-    "context": "product discount removed title",
-    "string": "{productName} discount was removed by"
-  },
   "A7W4KO": {
     "string": "Catalog rule"
   },
@@ -1891,10 +1873,6 @@
     "context": "staff section name",
     "string": "Staff Members"
   },
-  "AQSmqG": {
-    "context": "order discount was updated automatically event title",
-    "string": "Order discount was updated automatically updated"
-  },
   "AR/VVX": {
     "context": "Indicates last login method user used",
     "string": "Last used"
@@ -1906,6 +1884,10 @@
   "AVF5T5": {
     "context": "voucher end date, switch button",
     "string": "Set end date"
+  },
+  "AWGJnU": {
+    "context": "replaced event title",
+    "string": "Products were replaced"
   },
   "AY7Tuz": {
     "string": "The same object cannot be in both lists"
@@ -2574,6 +2556,10 @@
     "context": "bulk remove button label",
     "string": "Delete shipping zones"
   },
+  "EzcZkZ": {
+    "context": "order discount removed title",
+    "string": "Order discount was removed"
+  },
   "F/JMp6": {
     "context": "authorize status full",
     "string": "Full"
@@ -2720,10 +2706,6 @@
   "FkRNk+": {
     "context": "field placeholder",
     "string": "Description of a shipping zone."
-  },
-  "Fl3ORD": {
-    "context": "order history message",
-    "string": "Oversold {quantity} items"
   },
   "FmeBxD": {
     "context": "custom app tokens list - missing token name",
@@ -3008,6 +2990,10 @@
     "context": "button",
     "string": "Create"
   },
+  "H5jL5+": {
+    "context": "button",
+    "string": "Add Comment"
+  },
   "H5yp8O": {
     "context": "label",
     "string": "Product Type Name"
@@ -3015,6 +3001,10 @@
   "H60H6L": {
     "context": "attribute values list: name column header",
     "string": "Default Store View"
+  },
+  "H6SfJd": {
+    "context": "draft created from replace event title",
+    "string": "Draft was reissued from order"
   },
   "HADMte": {
     "context": "onboarding step title",
@@ -3223,6 +3213,10 @@
   "ITYiRy": {
     "string": "Go to collections"
   },
+  "IUWJKt": {
+    "context": "order was discounted event title",
+    "string": "Order was discounted"
+  },
   "IUeGzv": {
     "context": "plugin name",
     "string": "Plugin Name"
@@ -3333,6 +3327,10 @@
     "context": "link",
     "string": "View Orders"
   },
+  "J4pxY1": {
+    "context": "product discount removed title",
+    "string": "{productName} discount was removed"
+  },
   "J7mFhU": {
     "context": "currency code select",
     "string": "{code} - {countries}"
@@ -3411,6 +3409,10 @@
   "JVaz1C": {
     "context": "window title",
     "string": "Create Webhook"
+  },
+  "JYfMRO": {
+    "context": "order discount was updated event title",
+    "string": "Order discount was updated"
   },
   "Ja7gHc": {
     "context": "button",
@@ -3552,10 +3554,6 @@
     "context": "grant refund table, column header",
     "string": "Unit price"
   },
-  "KXkdMH": {
-    "context": "order discount removed title",
-    "string": "Order discount was removed by"
-  },
   "KcsJKm": {
     "context": "error with activatation alert message",
     "string": "Error activating gift {count,plural,one{card} other{cards}}"
@@ -3576,6 +3574,9 @@
   },
   "KmPicj": {
     "string": "Note successfully added"
+  },
+  "KpP/aW": {
+    "string": "Order was marked as"
   },
   "KqbfFa": {
     "context": "expiry date selection info message",
@@ -3625,7 +3626,7 @@
   },
   "L5io1l": {
     "context": "returned products list title",
-    "string": "Products returned"
+    "string": "{count, plural, one {Product returned} other {Products returned}}"
   },
   "L6+p8a": {
     "context": "dialog title",
@@ -3704,6 +3705,9 @@
   "LeJClL": {
     "context": "Popover title",
     "string": "Conditions"
+  },
+  "LgbKvU": {
+    "string": "Comment"
   },
   "Ljtqmt": {
     "context": "page header, order id unknown",
@@ -4002,10 +4006,6 @@
     "context": "content section name",
     "string": "Content"
   },
-  "NgCb99": {
-    "context": "order line discount updated title",
-    "string": "{productName} discount was updated by"
-  },
   "NhQboB": {
     "context": "dialog header",
     "string": "Saleor couldn’t cancel order"
@@ -4048,6 +4048,10 @@
     "context": "Product types search input placeholder",
     "string": "Search product types..."
   },
+  "NrsKic": {
+    "context": "replacement created order history message draft number",
+    "string": "Draft #{orderNumber}"
+  },
   "Nsk5WL": {
     "context": "link",
     "string": "Get support"
@@ -4085,6 +4089,10 @@
   },
   "O+3CZK": {
     "string": "Create new collection"
+  },
+  "O+AjFj": {
+    "context": "order history message",
+    "string": "Oversold {quantity, plural, one {# item} other {# items}}"
   },
   "O22NIZ": {
     "context": "deletion error message",
@@ -4616,6 +4624,10 @@
   "RQUkVW": {
     "string": "Manage your employees and their permissions"
   },
+  "RUS52q": {
+    "context": "order history message",
+    "string": "Restocked {quantity, plural, one {# item} other {# items}}"
+  },
   "RUzdUH": {
     "string": "No shipping rates found"
   },
@@ -4954,6 +4966,10 @@
   "TPW2tP": {
     "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
   },
+  "TQlnsR": {
+    "context": "order marked as paid event title",
+    "string": "Order was marked as paid"
+  },
   "TSJRiZ": {
     "context": "channel status title",
     "string": "Channel Status"
@@ -5240,10 +5256,6 @@
     "context": "link",
     "string": "View Profile"
   },
-  "VDwkEZ": {
-    "context": "refunded event title",
-    "string": "Products were refunded by"
-  },
   "VEE4gD": {
     "context": "error message",
     "string": "Shipping method is not valid for chosen shipping address"
@@ -5325,6 +5337,10 @@
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
+  },
+  "VtlDMr": {
+    "context": "returned event title",
+    "string": "Products were returned"
   },
   "Vu9nol": {
     "context": "header",
@@ -5539,6 +5555,10 @@
   "X8qjg3": {
     "context": "inactive",
     "string": "Inactive"
+  },
+  "X8sLNS": {
+    "context": "order lines section header",
+    "string": "ORDER {count, plural, one {LINE} other {LINES}} ({count})"
   },
   "X90ElB": {
     "context": "dialog header",
@@ -5984,10 +6004,6 @@
     "context": "details title",
     "string": "Details"
   },
-  "Zptsep": {
-    "context": "order was discounted event title",
-    "string": "Order was discounted by"
-  },
   "ZrIt1W": {
     "string": "Delete discount"
   },
@@ -6001,6 +6017,9 @@
   },
   "Zvo5iu": {
     "string": "API reference"
+  },
+  "Zx1w1e": {
+    "string": "edited"
   },
   "a+WuZg": {
     "context": "cta button label",
@@ -6032,7 +6051,7 @@
   },
   "a1uffz": {
     "context": "draft created from replace products list title",
-    "string": "Products replaced"
+    "string": "{count, plural, one {Product replaced} other {Products replaced}}"
   },
   "a2o5uc": {
     "context": "custom extension page create, tooltip",
@@ -6239,6 +6258,10 @@
     "context": "subsection header",
     "string": "Address"
   },
+  "bKCoN5": {
+    "context": "order line discount updated title",
+    "string": "{productName} discount was updated"
+  },
   "bKTEnb": {
     "context": "button to cancel order",
     "string": "Cancel order"
@@ -6370,9 +6393,6 @@
   "bwJc6V": {
     "context": "column title product",
     "string": "Product"
-  },
-  "by": {
-    "string": "by"
   },
   "byP6IC": {
     "string": "Selected"
@@ -6508,9 +6528,6 @@
   "cohh4s": {
     "context": "Refund success status",
     "string": "Success"
-  },
-  "comment": {
-    "string": "Comment"
   },
   "cpZLRH": {
     "context": "dialog header",
@@ -7394,6 +7411,9 @@
     "context": "page header",
     "string": "Primary Address"
   },
+  "jGvclB": {
+    "string": "Transaction Reference"
+  },
   "jHfCjd": {
     "string": "Void"
   },
@@ -7586,9 +7606,6 @@
     "context": "info when addresses search is unsuccessful",
     "string": "No results found"
   },
-  "kRlvOy": {
-    "string": "edited"
-  },
   "kS5Qgk": {
     "context": "used by label",
     "string": "Used by"
@@ -7649,10 +7666,6 @@
   "ki7Mr8": {
     "context": "product export to csv file, header",
     "string": "Export Settings"
-  },
-  "kkIw+l": {
-    "context": "replacement created order history message draft number",
-    "string": "Draft #{orderNumber}"
   },
   "kn7jjd": {
     "context": "section header",
@@ -7938,6 +7951,10 @@
   "mWQt3s": {
     "string": "No. of Products"
   },
+  "mX3Pmy": {
+    "context": "order history message",
+    "string": "Fulfilled {quantity, plural, one {# item} other {# items}}"
+  },
   "mX7zJJ": {
     "context": "header",
     "string": "Create Page"
@@ -8035,10 +8052,6 @@
     "context": "staff members status active",
     "string": "Active"
   },
-  "nHmugP": {
-    "context": "order history message",
-    "string": "Fulfilled {quantity} items"
-  },
   "nIuKz3": {
     "context": "Refund status none",
     "string": "Draft"
@@ -8099,10 +8112,6 @@
     "context": "column header",
     "string": "Customer name"
   },
-  "nayZY0": {
-    "context": "returned event title",
-    "string": "Products were returned by"
-  },
   "nb2FlN": {
     "string": "Extensions"
   },
@@ -8135,7 +8144,7 @@
   },
   "nki0o/": {
     "context": "replaced products list title",
-    "string": "Products replaced"
+    "string": "{count, plural, one {Product replaced} other {Products replaced}}"
   },
   "nngeI3": {
     "context": "amount title",
@@ -8143,9 +8152,6 @@
   },
   "no3Ygn": {
     "string": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
-  },
-  "noteEditOf": {
-    "string": "Edit of {userName}'s comment"
   },
   "nudPsY": {
     "context": "metadata field name, header",
@@ -8274,12 +8280,6 @@
     "context": "discount type",
     "string": "Order"
   },
-  "orderHistory.eventLog.info": {
-    "string": "All events related to this order. For more information regarding order events visit our docs {link}."
-  },
-  "orderHistory.markedAs": {
-    "string": "Order was marked as"
-  },
   "orvpWh": {
     "string": "Go back"
   },
@@ -8388,9 +8388,6 @@
   "paa4m0": {
     "string": "Successfully created product type"
   },
-  "paid": {
-    "string": "Paid"
-  },
   "pc36KX": {
     "context": "PageTypeDeleteWarningDialog multiple consent label",
     "string": "Yes, I want to delete those model types and assigned models"
@@ -8400,6 +8397,10 @@
   },
   "pepgIN": {
     "string": "Choose the Model Type whose extended Models will serve as refund reasons."
+  },
+  "performed.by": {
+    "context": "performed by label",
+    "string": "Performed by"
   },
   "pgTwKM": {
     "context": "section header",
@@ -8837,7 +8838,7 @@
   },
   "sHON47": {
     "context": "refunded products list title",
-    "string": "Products refunded"
+    "string": "{count, plural, one {Product refunded} other {Products refunded}}"
   },
   "sK1FPw": {
     "context": "categories section name",
@@ -9077,6 +9078,9 @@
   "u/hkKO": {
     "context": "voucher has no requirements",
     "string": "None"
+  },
+  "u/vOPu": {
+    "string": "Paid"
   },
   "u0S2be": {
     "context": "order discount",
@@ -9348,6 +9352,10 @@
   "vUY6ir": {
     "string": "Amount must be higher than 0 when you transfer funds"
   },
+  "vV9xwl": {
+    "context": "order line discount added title",
+    "string": "{productName} discount was added"
+  },
   "vVviA2": {
     "string": "Those permissions are out of your scope"
   },
@@ -9524,10 +9532,6 @@
   "wO9wb5": {
     "string": "GitHub"
   },
-  "wOeIR4": {
-    "context": "order history message",
-    "string": "Restocked {quantity} items"
-  },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
   },
@@ -9554,6 +9558,10 @@
   },
   "wbsq7O": {
     "string": "Usage"
+  },
+  "werrDz": {
+    "context": "refunded event title",
+    "string": "Products were refunded"
   },
   "wgA48T": {
     "context": "country selection",
@@ -9724,10 +9732,6 @@
   },
   "xrKHS6": {
     "string": "Success"
-  },
-  "xrPv2K": {
-    "context": "by preposition",
-    "string": "by"
   },
   "xtUXnK": {
     "context": "export all items to csv file",

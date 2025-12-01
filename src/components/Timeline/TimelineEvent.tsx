@@ -32,6 +32,30 @@ import * as React from "react";
 
 import TimelineEventHeader, { TimelineUser, TitleElement } from "./TimelineEventHeader";
 
+// CSS for hover effect on info icon
+const eventStyles = `
+  .timeline-event-row .timeline-info-icon {
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+  }
+  .timeline-event-row:hover .timeline-info-icon {
+    opacity: 1;
+  }
+`;
+
+// Inject styles once
+if (typeof document !== "undefined") {
+  const styleId = "timeline-event-styles";
+
+  if (!document.getElementById(styleId)) {
+    const style = document.createElement("style");
+
+    style.id = styleId;
+    style.textContent = eventStyles;
+    document.head.appendChild(style);
+  }
+}
+
 // Custom icon type that includes both Lucide icons and custom icons
 type IconComponent = LucideIcon | typeof RefundedIcon | typeof ReturnedIcon;
 
@@ -231,6 +255,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
 
   const infoIcon = eventData ? (
     <span
+      className="timeline-info-icon"
       title={safeStringify(eventData)}
       style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
     >
@@ -239,7 +264,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   ) : null;
 
   return (
-    <Box display="flex" width="100%" position="relative">
+    <Box display="flex" width="100%" position="relative" className="timeline-event-row">
       {/* Vertical connecting line - hidden for last item in group */}
       {!isLastInGroup && (
         <Box
@@ -313,9 +338,8 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                     hasPlainDate={hasPlainDate}
                     dateNode={dateNode}
                     user={user}
-                  >
-                    {infoIcon}
-                  </TimelineEventHeader>
+                    tooltip={infoIcon}
+                  />
                 </Box>
               </Box>
               <Accordion.Content>
@@ -324,7 +348,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                   marginTop={3}
                   paddingY={3}
                   paddingX={4}
-                  borderRadius={2}
+                  borderRadius={4}
                   borderStyle="solid"
                   borderWidth={1}
                   borderColor="default1"
@@ -356,9 +380,8 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                 hasPlainDate={hasPlainDate}
                 dateNode={dateNode}
                 user={user}
-              >
-                {infoIcon}
-              </TimelineEventHeader>
+                tooltip={infoIcon}
+              />
             </Box>
           </Box>
         )}
