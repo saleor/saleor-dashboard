@@ -154,10 +154,11 @@ describe("TimelineNote", () => {
       firstName: "Test",
       lastName: "User",
       __typename: "User",
+      __typename: "User",
     } satisfies OrderEventFragment["user"];
 
     // Act
-    render(
+    const { container } = render(
       <TimelineNote
         app={null}
         user={mockedUser}
@@ -175,8 +176,10 @@ describe("TimelineNote", () => {
     expect(screen.getByText("Note")).toBeInTheDocument();
     expect(screen.getByText("TU")).toBeInTheDocument();
     expect(screen.getByText("a few seconds ago")).toBeInTheDocument();
-    expect(screen.getByText(`Note id: ${noteId}`)).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(noteRelatedId))).toBeInTheDocument();
+    // Note id is now used as HTML id attribute instead of displayed text
+    expect(container.querySelector(`#timeline-note-${noteId}`)).toBeInTheDocument();
+    // Related id is shown in the "Edit of user's comment" link
+    expect(screen.getByText(/Edit of.*comment/)).toBeInTheDocument();
   });
 
   it("should edit note", async () => {
