@@ -1,5 +1,5 @@
 import { OrderAuthorizeStatusEnum } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface OrderAuthorizeStatusBadgeProps {
@@ -8,6 +8,19 @@ interface OrderAuthorizeStatusBadgeProps {
 
 export const OrderAuthorizeStatusBadge = ({ status }: OrderAuthorizeStatusBadgeProps) => {
   const intl = useIntl();
+  const { theme: currentTheme } = useTheme();
+  const isDark = currentTheme === "defaultDark";
+
+  const neutralColors = {
+    background: isDark ? "hsla(0, 0%, 100%, 0.08)" : "hsla(0, 0%, 0%, 0.03)",
+    border: isDark ? "hsla(0, 0%, 100%, 0.15)" : "hsla(0, 0%, 0%, 0.12)",
+    text: isDark ? "hsla(0, 0%, 100%, 0.8)" : "hsla(0, 0%, 0%, 0.75)",
+  };
+  const transparentColors = {
+    background: "transparent",
+    border: isDark ? "hsla(0, 0%, 100%, 0.15)" : "hsla(0, 0%, 0%, 0.15)",
+    text: isDark ? "hsla(0, 0%, 100%, 0.7)" : "hsla(0, 0%, 0%, 0.7)",
+  };
 
   switch (status) {
     case OrderAuthorizeStatusEnum.FULL:
@@ -16,8 +29,9 @@ export const OrderAuthorizeStatusBadge = ({ status }: OrderAuthorizeStatusBadgeP
           display="flex"
           gap={2}
           alignItems="center"
-          __backgroundColor="rgba(255, 255, 255, 0.5)"
-          __borderColor="rgba(0, 0, 0, 0.3)"
+          __backgroundColor={neutralColors.background}
+          __borderColor={neutralColors.border}
+          __color={neutralColors.text}
           borderStyle="solid"
           borderWidth={1}
           paddingX={2}
@@ -40,8 +54,9 @@ export const OrderAuthorizeStatusBadge = ({ status }: OrderAuthorizeStatusBadgeP
           display="flex"
           gap={2}
           alignItems="center"
-          __backgroundColor="white"
-          __borderColor="hsla(207, 13%, 87%, 1)"
+          __backgroundColor={transparentColors.background}
+          __borderColor={transparentColors.border}
+          __color={transparentColors.text}
           borderStyle="solid"
           borderWidth={1}
           paddingX={2}
