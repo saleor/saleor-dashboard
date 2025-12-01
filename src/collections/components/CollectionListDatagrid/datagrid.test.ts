@@ -15,7 +15,7 @@ describe("CollectionListDatagrid datagrid utils", () => {
     // Mock CSS.supports to enable OKLCH strings output
     global.CSS = {
       supports: () => true,
-      escape: s => s,
+      escape: (s: string) => s,
     } as any;
   });
 
