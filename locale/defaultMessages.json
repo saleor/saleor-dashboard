@@ -7677,10 +7677,6 @@
     "context": "dialog title",
     "string": "Capture manual transaction"
   },
-  "kv1DqJ": {
-    "context": "unknown user display name",
-    "string": "Unknown user"
-  },
   "kv3FWU": {
     "context": "btn label",
     "string": "Go to orders"
