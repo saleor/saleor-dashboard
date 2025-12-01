@@ -35,21 +35,23 @@ const oklch = (l: number, c: number, h: number, a?: number) => {
 };
 
 export const hueToPillColorLight = (hue: number): PillColor => {
-  const l = 94;
-  const c = hue === 0 ? 0 : 0.05;
-  const base = oklch(l, c, hue, hue === 0 ? 0.5 : undefined); // Add transparency to neutral
-  const border = oklch(l - 8, c, hue, hue === 0 ? 0.5 : undefined);
+  const isNeutral = hue === 0;
+  const l = isNeutral ? 97 : 94;
+  const c = isNeutral ? 0 : 0.05;
+  const base = oklch(l, c, hue, isNeutral ? 0.3 : undefined); // Add transparency to neutral
+  const border = oklch(l - (isNeutral ? 45 : 8), c, hue, isNeutral ? 0.4 : undefined);
   const text = oklch(l - 50, c, hue);
 
   return { base, border, text };
 };
 
 export const hueToPillColorDark = (hue: number): PillColor => {
-  const l = 40;
-  const s = hue === 0 ? 0 : 0.09;
-  const contrast = 55;
-  const base = oklch(l, s, hue, hue === 0 ? 0.5 : undefined); // Add transparency to neutral
-  const border = oklch(l + 3, s, hue, hue === 0 ? 0.5 : undefined);
+  const isNeutral = hue === 0;
+  const l = isNeutral ? 25 : 40;
+  const s = isNeutral ? 0 : 0.09;
+  const contrast = isNeutral ? 70 : 55;
+  const base = oklch(l, s, hue, isNeutral ? 0.3 : undefined); // Add transparency to neutral
+  const border = oklch(l + (isNeutral ? 55 : 3), s, hue, isNeutral ? 0.4 : undefined);
   const text = oklch(l + contrast, s, hue);
 
   return { base, border, text };
