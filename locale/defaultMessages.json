@@ -4108,6 +4108,9 @@
     "context": "conjunction, choice between going to dashboard or refreshing page",
     "string": "or"
   },
+  "OAuXGE": {
+    "string": "Create a product type"
+  },
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
     "string": "Disabled"
@@ -10018,6 +10021,9 @@
   "znbVYT": {
     "context": "product available for purchase date",
     "string": "Will become available on {date}"
+  },
+  "zoUlyR": {
+    "string": "Go to product types"
   },
   "zp9VHt": {
     "context": "cta button label",
