@@ -158,11 +158,18 @@ const OrderHistory = ({
         {history ? (
           <Timeline>
             <Form confirmLeave initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
-              {({ change, data, reset, submit }) => (
+              {({ change, data, reset, submit, triggerChange }) => (
                 <TimelineAddNote
                   message={data.message}
                   reset={reset}
-                  onChange={change}
+                  onChange={e => {
+                    change(e);
+
+                    // Reset dirty state if message is empty (back to initial state)
+                    if (e.target.value === "") {
+                      triggerChange(false);
+                    }
+                  }}
                   onSubmit={submit}
                   label={intl.formatMessage({
                     id: "LgbKvU",
