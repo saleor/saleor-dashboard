@@ -72,4 +72,5 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = ({
 };
 
 Timeline.displayName = "Timeline";
+// eslint-disable-next-line import/no-default-export
 export default Timeline;

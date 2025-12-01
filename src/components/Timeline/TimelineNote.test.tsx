@@ -154,7 +154,6 @@ describe("TimelineNote", () => {
       firstName: "Test",
       lastName: "User",
       __typename: "User",
-      __typename: "User",
     } satisfies OrderEventFragment["user"];
 
     // Act

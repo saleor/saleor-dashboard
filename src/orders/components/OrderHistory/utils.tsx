@@ -1,9 +1,7 @@
 // @ts-strict-ignore
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
-import { getFullName } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";
-import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { IntlShape, MessageDescriptor } from "react-intl";
+import { MessageDescriptor } from "react-intl";
 
 export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescriptor, any?] => {
   switch (event.type) {
@@ -67,33 +65,6 @@ export const isTimelineEventOfType = (
 
 export const isTimelineEventOfDiscountType = (eventType: OrderEventsEnum) =>
   isTimelineEventOfType("discount", eventType);
-
-const selectEmployeeName = ({ firstName, lastName, email }: OrderEventFragment["user"]) => {
-  if (firstName) {
-    return getFullName({ firstName, lastName }).trim();
-  }
-
-  return email;
-};
-
-export const getEmployeeNameLink = (event: OrderEventFragment, intl: IntlShape) => {
-  if (!hasEnsuredOrderEventFields(event, ["user"])) {
-    return null;
-  }
-
-  const { id } = event.user;
-
-  return {
-    link: staffMemberDetailsUrl(id),
-    text:
-      selectEmployeeName(event.user) ||
-      intl.formatMessage({
-        defaultMessage: "Unknown user",
-        id: "kv1DqJ",
-        description: "unknown user display name",
-      }),
-  };
-};
 
 export const hasOrderLineDiscountWithNoPreviousValue = ({ type, lines }: OrderEventFragment) =>
   type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED &&

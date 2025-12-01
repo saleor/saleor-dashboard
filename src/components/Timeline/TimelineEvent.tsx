@@ -31,6 +31,7 @@ import {
 import * as React from "react";
 
 import TimelineEventHeader, { TimelineUser, TitleElement } from "./TimelineEventHeader";
+import { safeStringify } from "./utils";
 
 // CSS for hover effect on info icon
 const eventStyles = `
@@ -178,32 +179,6 @@ export interface TimelineEventProps {
   eventType?: OrderEventsEnum | null;
   isLastInGroup?: boolean;
 }
-
-const safeStringify = (data: any): string => {
-  if (!data) return "";
-
-  try {
-    const seen = new WeakSet();
-
-    return JSON.stringify(
-      data,
-      (key, value) => {
-        if (key === "__typename") return undefined;
-
-        if (typeof value === "object" && value !== null) {
-          if (seen.has(value)) return "[Circular]";
-
-          seen.add(value);
-        }
-
-        return value;
-      },
-      2,
-    );
-  } catch {
-    return "Unable to serialize";
-  }
-};
 
 // Icon color that works in both light and dark mode
 const ICON_COLOR = vars.colors.text.default2;

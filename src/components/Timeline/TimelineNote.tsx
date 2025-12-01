@@ -8,6 +8,7 @@ import { FormattedMessage } from "react-intl";
 import { DateTime } from "../Date";
 import { UserAvatar } from "../UserAvatar";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
+import { safeStringify } from "./utils";
 
 // CSS for hover effect
 const noteCardStyles = `
@@ -111,32 +112,6 @@ const TimelineAvatar = ({
   }
 
   return null;
-};
-
-const safeStringify = (data: any): string => {
-  if (!data) return "";
-
-  try {
-    const seen = new WeakSet();
-
-    return JSON.stringify(
-      data,
-      (key, value) => {
-        if (key === "__typename") return undefined;
-
-        if (typeof value === "object" && value !== null) {
-          if (seen.has(value)) return "[Circular]";
-
-          seen.add(value);
-        }
-
-        return value;
-      },
-      2,
-    );
-  } catch {
-    return "Unable to serialize";
-  }
 };
 
 export const TimelineNote = ({
