@@ -5700,10 +5700,6 @@
     "context": "checkbox label description",
     "string": "All fulfillments will be automatically approved"
   },
-  "Xwpz7N": {
-    "context": "order history message",
-    "string": "Items were oversold"
-  },
   "XwrKOi": {
     "context": "unassign multiple attributes from item",
     "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
@@ -8036,10 +8032,6 @@
     "context": "staff members status active",
     "string": "Active"
   },
-  "nHmugP": {
-    "context": "order history message",
-    "string": "Items were fulfilled"
-  },
   "nIuKz3": {
     "context": "Refund status none",
     "string": "Draft"
@@ -8245,6 +8237,10 @@
   "oboeOT": {
     "string": "Add following permissions"
   },
+  "odpDdj": {
+    "context": "order history message",
+    "string": "Items were oversold"
+  },
   "of/+iV": {
     "context": "transaction event type, refund was reversed, funds are back to store account",
     "string": "Refund reversed"
@@ -8263,10 +8259,6 @@
   "onUvP+": {
     "context": "discount type",
     "string": "Order"
-  },
-  "opnzgO": {
-    "context": "order lines section header",
-    "string": "ORDER {count, plural, one {LINE} other {LINES}} ({count})"
   },
   "orvpWh": {
     "string": "Go back"
@@ -9602,6 +9594,10 @@
   "x0wum5": {
     "context": "home sidebar card title",
     "string": "Your store info"
+  },
+  "x1k81A": {
+    "context": "order history message",
+    "string": "Items were fulfilled"
   },
   "x2mg39": {
     "context": "Transaction event description",
