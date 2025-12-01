@@ -127,7 +127,7 @@ const OrderHistory = ({
   return (
     <DashboardCard>
       <DashboardCard.Header flexDirection="column" alignItems="start">
-        <DashboardCard.Title>
+        <DashboardCard.Title size={6} fontWeight="medium">
           <FormattedMessage id="XBfvKN" defaultMessage="Order History" />
         </DashboardCard.Title>
         <DashboardCard.Subtitle fontSize={3} color="default2">
