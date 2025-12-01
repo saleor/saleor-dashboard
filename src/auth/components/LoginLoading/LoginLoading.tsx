@@ -1,4 +1,4 @@
-import { CircularProgress } from "@material-ui/core";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
@@ -17,7 +17,7 @@ const LoginLoading = (props: {}) => {
 
   return (
     <div className={classes.root}>
-      <CircularProgress size={128} />
+      <SaleorThrobber size={64} />
     </div>
   );
 };

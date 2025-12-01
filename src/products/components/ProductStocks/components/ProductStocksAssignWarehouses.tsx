@@ -4,9 +4,10 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { WarehouseFragment } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import { CircularProgress, TableBody, TableCell, TableRow, TextField } from "@material-ui/core";
+import { TableBody, TableCell, TableRow, TextField } from "@material-ui/core";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import { Button, Option, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
@@ -77,7 +78,7 @@ export const ProductStocksAssignWarehouses = ({
             fullWidth
             InputProps={{
               autoComplete: "off",
-              endAdornment: loading && <CircularProgress size={16} />,
+              endAdornment: loading && <SaleorThrobber size={16} />,
             }}
           />
 
