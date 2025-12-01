@@ -9,7 +9,11 @@ const useStyles = makeStyles(
   {
     pill: {
       borderRadius: "32px",
-      border: "none",
+      border: "1px solid",
+      fontWeight: 500,
+      "& > span": {
+        fontWeight: 500,
+      },
     },
   },
   { name: "Pill" },
@@ -22,7 +26,7 @@ export const Pill = forwardRef<HTMLDivElement, PillProps>(({ color: status, ...p
   const { theme: currentTheme } = useTheme();
 
   const colors = getStatusColor({
-    status,
+    status: status === "generic" ? "neutral" : (status as any),
     currentTheme,
   });
   const classes = useStyles();
@@ -39,6 +43,7 @@ export const Pill = forwardRef<HTMLDivElement, PillProps>(({ color: status, ...p
         backgroundColor: colors.base,
         borderColor: colors.border,
         color: colors.text,
+        fontWeight: 500,
         ...props.style,
       }}
     />

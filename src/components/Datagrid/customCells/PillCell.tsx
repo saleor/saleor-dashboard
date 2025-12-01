@@ -30,7 +30,7 @@ const oklch = (l: number, c: number, h: number) => {
 
 export const hueToPillColorLight = (hue: number): PillColor => {
   const l = 94;
-  const c = 0.05;
+  const c = hue === 0 ? 0 : 0.05;
   const base = oklch(l, c, hue);
   const border = oklch(l - 8, c, hue);
   const text = oklch(l - 50, c, hue);
@@ -40,10 +40,10 @@ export const hueToPillColorLight = (hue: number): PillColor => {
 
 export const hueToPillColorDark = (hue: number): PillColor => {
   const l = 40;
-  const s = 0.09;
+  const s = hue === 0 ? 0 : 0.09;
   const contrast = 55;
   const base = oklch(l, s, hue);
-  const border = oklch(l, s, hue);
+  const border = oklch(l + 3, s, hue);
   const text = oklch(l + contrast, s, hue);
 
   return { base, border, text };
@@ -77,7 +77,8 @@ export const pillCellRenderer = (): CustomRenderer<PillCell> => ({
     const textMetrics = ctx.measureText(label);
     const textWidth = textMetrics.width;
     const textHeight = textMetrics.fontBoundingBoxAscent + textMetrics.fontBoundingBoxDescent;
-    const tileWidth = textWidth + 10;
+    const padding = 10;
+    const tileWidth = textWidth + 2 * padding;
     const tileHeight = textHeight * 1.2;
 
     // Draw the tile
@@ -85,14 +86,15 @@ export const pillCellRenderer = (): CustomRenderer<PillCell> => ({
       ctx.fillStyle = base;
       ctx.strokeStyle = border;
       ctx.beginPath();
-      ctx.roundRect(x + 10, y + height / 2 - tileHeight / 2, tileWidth, tileHeight, 5);
+      ctx.roundRect(x + 10, y + height / 2 - tileHeight / 2, tileWidth, tileHeight, 16);
       ctx.stroke();
       ctx.fill();
     }
 
     // Draw the text
     ctx.fillStyle = text;
-    ctx.fillText(label, x + 15, y + height / 2 + getMiddleCenterBias(ctx, theme));
+    ctx.font = `500 ${theme.fontFamily}`;
+    ctx.fillText(label, x + 10 + padding, y + height / 2 + getMiddleCenterBias(ctx, theme));
 
     return true;
   },

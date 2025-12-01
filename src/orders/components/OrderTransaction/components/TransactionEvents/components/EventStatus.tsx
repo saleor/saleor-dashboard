@@ -31,7 +31,7 @@ export const EventStatus = ({ status }: EventStatusProps) => {
       );
     case "INFO":
       return (
-        <Pill color="generic" size={"small"} label={intl.formatMessage(statusMessages.info)} />
+        <Pill color="neutral" size={"small"} label={intl.formatMessage(statusMessages.info)} />
       );
     default: {
       const _exhaustiveCheck: never = status;

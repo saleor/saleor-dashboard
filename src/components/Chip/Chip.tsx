@@ -38,7 +38,7 @@ const Chip = (props: ChipProps) => {
 
   return (
     <div className={clsx(classes.root, className)}>
-      <Text className={classes.label} size={2} fontWeight="light">
+      <Text className={classes.label} size={2} fontWeight="medium">
         {label}
         {onClose && <CloseIcon className={classes.closeIcon} onClick={onClose} />}
       </Text>
