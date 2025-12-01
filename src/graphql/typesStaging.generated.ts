@@ -244,76 +244,19 @@ export enum AppErrorCode {
 }
 
 export type AppExtensionFilterInput = {
-  mount?: InputMaybe<Array<AppExtensionMountEnum>>;
-  target?: InputMaybe<AppExtensionTargetEnum>;
+  /**
+   * Plain-text mount name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  mountName?: InputMaybe<Array<Scalars['String']>>;
+  /**
+   * Plain-text target name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  targetName?: InputMaybe<Scalars['String']>;
 };
-
-/** All places where app extension can be mounted. */
-export enum AppExtensionMountEnum {
-  CATEGORY_DETAILS_MORE_ACTIONS = 'CATEGORY_DETAILS_MORE_ACTIONS',
-  CATEGORY_OVERVIEW_CREATE = 'CATEGORY_OVERVIEW_CREATE',
-  CATEGORY_OVERVIEW_MORE_ACTIONS = 'CATEGORY_OVERVIEW_MORE_ACTIONS',
-  COLLECTION_DETAILS_MORE_ACTIONS = 'COLLECTION_DETAILS_MORE_ACTIONS',
-  COLLECTION_DETAILS_WIDGETS = 'COLLECTION_DETAILS_WIDGETS',
-  COLLECTION_OVERVIEW_CREATE = 'COLLECTION_OVERVIEW_CREATE',
-  COLLECTION_OVERVIEW_MORE_ACTIONS = 'COLLECTION_OVERVIEW_MORE_ACTIONS',
-  CUSTOMER_DETAILS_MORE_ACTIONS = 'CUSTOMER_DETAILS_MORE_ACTIONS',
-  CUSTOMER_DETAILS_WIDGETS = 'CUSTOMER_DETAILS_WIDGETS',
-  CUSTOMER_OVERVIEW_CREATE = 'CUSTOMER_OVERVIEW_CREATE',
-  CUSTOMER_OVERVIEW_MORE_ACTIONS = 'CUSTOMER_OVERVIEW_MORE_ACTIONS',
-  DISCOUNT_DETAILS_MORE_ACTIONS = 'DISCOUNT_DETAILS_MORE_ACTIONS',
-  DISCOUNT_OVERVIEW_CREATE = 'DISCOUNT_OVERVIEW_CREATE',
-  DISCOUNT_OVERVIEW_MORE_ACTIONS = 'DISCOUNT_OVERVIEW_MORE_ACTIONS',
-  DRAFT_ORDER_DETAILS_MORE_ACTIONS = 'DRAFT_ORDER_DETAILS_MORE_ACTIONS',
-  DRAFT_ORDER_DETAILS_WIDGETS = 'DRAFT_ORDER_DETAILS_WIDGETS',
-  DRAFT_ORDER_OVERVIEW_CREATE = 'DRAFT_ORDER_OVERVIEW_CREATE',
-  DRAFT_ORDER_OVERVIEW_MORE_ACTIONS = 'DRAFT_ORDER_OVERVIEW_MORE_ACTIONS',
-  GIFT_CARD_DETAILS_MORE_ACTIONS = 'GIFT_CARD_DETAILS_MORE_ACTIONS',
-  GIFT_CARD_DETAILS_WIDGETS = 'GIFT_CARD_DETAILS_WIDGETS',
-  GIFT_CARD_OVERVIEW_CREATE = 'GIFT_CARD_OVERVIEW_CREATE',
-  GIFT_CARD_OVERVIEW_MORE_ACTIONS = 'GIFT_CARD_OVERVIEW_MORE_ACTIONS',
-  MENU_DETAILS_MORE_ACTIONS = 'MENU_DETAILS_MORE_ACTIONS',
-  MENU_OVERVIEW_CREATE = 'MENU_OVERVIEW_CREATE',
-  MENU_OVERVIEW_MORE_ACTIONS = 'MENU_OVERVIEW_MORE_ACTIONS',
-  NAVIGATION_CATALOG = 'NAVIGATION_CATALOG',
-  NAVIGATION_CUSTOMERS = 'NAVIGATION_CUSTOMERS',
-  NAVIGATION_DISCOUNTS = 'NAVIGATION_DISCOUNTS',
-  NAVIGATION_ORDERS = 'NAVIGATION_ORDERS',
-  NAVIGATION_PAGES = 'NAVIGATION_PAGES',
-  NAVIGATION_TRANSLATIONS = 'NAVIGATION_TRANSLATIONS',
-  ORDER_DETAILS_MORE_ACTIONS = 'ORDER_DETAILS_MORE_ACTIONS',
-  ORDER_DETAILS_WIDGETS = 'ORDER_DETAILS_WIDGETS',
-  ORDER_OVERVIEW_CREATE = 'ORDER_OVERVIEW_CREATE',
-  ORDER_OVERVIEW_MORE_ACTIONS = 'ORDER_OVERVIEW_MORE_ACTIONS',
-  PAGE_DETAILS_MORE_ACTIONS = 'PAGE_DETAILS_MORE_ACTIONS',
-  PAGE_OVERVIEW_CREATE = 'PAGE_OVERVIEW_CREATE',
-  PAGE_OVERVIEW_MORE_ACTIONS = 'PAGE_OVERVIEW_MORE_ACTIONS',
-  PAGE_TYPE_DETAILS_MORE_ACTIONS = 'PAGE_TYPE_DETAILS_MORE_ACTIONS',
-  PAGE_TYPE_OVERVIEW_CREATE = 'PAGE_TYPE_OVERVIEW_CREATE',
-  PAGE_TYPE_OVERVIEW_MORE_ACTIONS = 'PAGE_TYPE_OVERVIEW_MORE_ACTIONS',
-  PRODUCT_DETAILS_MORE_ACTIONS = 'PRODUCT_DETAILS_MORE_ACTIONS',
-  PRODUCT_DETAILS_WIDGETS = 'PRODUCT_DETAILS_WIDGETS',
-  PRODUCT_OVERVIEW_CREATE = 'PRODUCT_OVERVIEW_CREATE',
-  PRODUCT_OVERVIEW_MORE_ACTIONS = 'PRODUCT_OVERVIEW_MORE_ACTIONS',
-  TRANSLATIONS_MORE_ACTIONS = 'TRANSLATIONS_MORE_ACTIONS',
-  VOUCHER_DETAILS_MORE_ACTIONS = 'VOUCHER_DETAILS_MORE_ACTIONS',
-  VOUCHER_DETAILS_WIDGETS = 'VOUCHER_DETAILS_WIDGETS',
-  VOUCHER_OVERVIEW_CREATE = 'VOUCHER_OVERVIEW_CREATE',
-  VOUCHER_OVERVIEW_MORE_ACTIONS = 'VOUCHER_OVERVIEW_MORE_ACTIONS'
-}
-
-/**
- * All available ways of opening an app extension.
- *
- *     POPUP - app's extension will be mounted as a popup window
- *     APP_PAGE - redirect to app's page
- */
-export enum AppExtensionTargetEnum {
-  APP_PAGE = 'APP_PAGE',
-  NEW_TAB = 'NEW_TAB',
-  POPUP = 'POPUP',
-  WIDGET = 'WIDGET'
-}
 
 export type AppFilterInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -1208,6 +1151,15 @@ export enum CheckoutAuthorizeStatusEnum {
   PARTIAL = 'PARTIAL'
 }
 
+export type CheckoutAutoCompleteInput = {
+  /** Specifies the earliest date on which fully paid checkouts can begin to be automatically completed. Fully paid checkouts dated before this cut-off will not be automatically completed. Must be less than the threshold of the oldest modified checkout eligible for automatic completion. Default is current date time. */
+  cutOffDate?: InputMaybe<Scalars['DateTime']>;
+  /** The time in minutes after which the fully paid checkout will be automatically completed. Default is 30. Set to 0 for immediate completion. Should be less than the threshold for the oldest modified checkout eligible for automatic completion. */
+  delay?: InputMaybe<Scalars['Minute']>;
+  /** Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount. */
+  enabled: Scalars['Boolean'];
+};
+
 /**
  * Determine the current charge status for the checkout.
  *
@@ -1388,9 +1340,16 @@ export type CheckoutSettingsInput = {
    */
   allowLegacyGiftCardUse?: InputMaybe<Scalars['Boolean']>;
   /**
-   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+   * Settings for automatic completion of fully paid checkouts.
+   *
+   * Added in Saleor 3.22.
+   */
+  automaticCompletion?: InputMaybe<CheckoutAutoCompleteInput>;
+  /**
+   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
    *
    * Added in Saleor 3.20.
+   * @deprecated Use `automatic_completion` instead.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']>;
   /**
@@ -2754,11 +2713,6 @@ export type GlobalIdFilterInput = {
   /** The value included in. */
   oneOf?: InputMaybe<Array<Scalars['ID']>>;
 };
-
-export enum HttpMethod {
-  GET = 'GET',
-  POST = 'POST'
-}
 
 /** Thumbnail formats for icon images. */
 export enum IconThumbnailFormatEnum {
