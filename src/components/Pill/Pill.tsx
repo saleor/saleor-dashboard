@@ -11,17 +11,16 @@ const useStyles = makeStyles(
       borderRadius: "32px",
       border: "1px solid",
       fontWeight: 500,
-      paddingLeft: "6px",
-      paddingRight: "6px",
+      paddingLeft: "2px",
+      paddingRight: "2px",
       paddingTop: "0",
       paddingBottom: "0",
       "& > span": {
         fontWeight: 500,
       },
       // Override MacawUI Pill padding when there is an icon
-      "& > div": {
-        marginLeft: "-4px", // Compemsate for the icon internal padding if needed, or adjust based on real DOM
-        marginRight: "8px",
+      "& > div, & > svg": {
+        marginLeft: "8px", // Compemsate for the icon internal padding if needed, or adjust based on real DOM
       },
     },
   },

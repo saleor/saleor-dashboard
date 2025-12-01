@@ -522,11 +522,11 @@ export const getStatusColor = ({
 };
 
 const getStatusHue = (status: PillStatusType): number => {
-  const red = 25;
+  const red = 8;
   const blue = 240;
-  const green = 145;
-  const amber = 85;
-  const orange = 55;
+  const green = 135;
+  const amber = 75;
+  const orange = 40;
   const gray = 0;
 
   switch (status) {
