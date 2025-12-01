@@ -498,7 +498,14 @@ export const getById = (idToCompare: string) => (obj: Node) => obj.id === idToCo
 export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) =>
   obj.id !== idToCompare;
 
-export type PillStatusType = "error" | "warning" | "info" | "success" | "neutral" | "attention";
+export type PillStatusType =
+  | "error"
+  | "warning"
+  | "info"
+  | "success"
+  | "neutral"
+  | "attention"
+  | "generic";
 
 export const getStatusColor = ({
   status,
@@ -532,6 +539,7 @@ const getStatusHue = (status: PillStatusType): number => {
     case "warning":
       return amber;
     case "neutral":
+    case "generic":
       return gray;
     case "attention":
       return orange;
