@@ -38,6 +38,13 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = ({
     onSubmit(e);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && !disabled && message.trim()) {
+      e.preventDefault();
+      submit(e);
+    }
+  };
+
   return (
     <Box marginBottom={6}>
       <Textarea
@@ -51,6 +58,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = ({
           })
         }
         onChange={onChange}
+        onKeyDown={handleKeyDown}
         value={message}
         name="message"
         width="100%"
