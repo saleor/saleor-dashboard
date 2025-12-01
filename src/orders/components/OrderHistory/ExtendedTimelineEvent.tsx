@@ -84,11 +84,6 @@ const messages = defineMessages({
     defaultMessage: "Transaction reference",
     description: "transaction reference subtitle",
   },
-  orderLines: {
-    id: "opnzgO",
-    defaultMessage: "ORDER {count, plural, one {LINE} other {LINES}} ({count})",
-    description: "order lines section header",
-  },
 });
 
 interface ExtendedTimelineEventProps {
@@ -152,7 +147,6 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     );
   }
 
-  const linesCount = lines?.length || 0;
   const hasFooterContent =
     amount || amount === 0 || shippingCostsIncluded || !!transactionReference;
 
@@ -170,18 +164,6 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     >
       {lines && lines.length > 0 && (
         <Box display="flex" flexDirection="column" gap={1}>
-          {/* Order Lines Header */}
-          <Box paddingY={1}>
-            <Text
-              size={2}
-              fontWeight="medium"
-              color="default2"
-              style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
-            >
-              {intl.formatMessage(messages.orderLines, { count: linesCount })}
-            </Text>
-          </Box>
-
           {/* Order Lines */}
           {lines.map(({ orderLine, quantity, itemName }, i) => (
             <Box

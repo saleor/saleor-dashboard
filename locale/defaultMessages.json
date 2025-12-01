@@ -3624,10 +3624,6 @@
   "L5IuDw": {
     "string": "lower"
   },
-  "L5io1l": {
-    "context": "returned products list title",
-    "string": "{count, plural, one {Product returned} other {Products returned}}"
-  },
   "L6+p8a": {
     "context": "dialog title",
     "string": "Delete permission group"
@@ -4089,10 +4085,6 @@
   },
   "O+3CZK": {
     "string": "Create new collection"
-  },
-  "O+AjFj": {
-    "context": "order history message",
-    "string": "Oversold {quantity, plural, one {# item} other {# items}}"
   },
   "O22NIZ": {
     "context": "deletion error message",
@@ -5556,10 +5548,6 @@
     "context": "inactive",
     "string": "Inactive"
   },
-  "X8sLNS": {
-    "context": "order lines section header",
-    "string": "ORDER {count, plural, one {LINE} other {LINES}} ({count})"
-  },
   "X90ElB": {
     "context": "dialog header",
     "string": "Delete Webhook"
@@ -5711,6 +5699,10 @@
   "XwQQ1f": {
     "context": "checkbox label description",
     "string": "All fulfillments will be automatically approved"
+  },
+  "Xwpz7N": {
+    "context": "order history message",
+    "string": "Items were oversold"
   },
   "XwrKOi": {
     "context": "unassign multiple attributes from item",
@@ -6048,10 +6040,6 @@
   "a0TDWs": {
     "context": "search section name",
     "string": "All Search Results"
-  },
-  "a1uffz": {
-    "context": "draft created from replace products list title",
-    "string": "{count, plural, one {Product replaced} other {Products replaced}}"
   },
   "a2o5uc": {
     "context": "custom extension page create, tooltip",
@@ -7951,10 +7939,6 @@
   "mWQt3s": {
     "string": "No. of Products"
   },
-  "mX3Pmy": {
-    "context": "order history message",
-    "string": "Fulfilled {quantity, plural, one {# item} other {# items}}"
-  },
   "mX7zJJ": {
     "context": "header",
     "string": "Create Page"
@@ -8052,6 +8036,10 @@
     "context": "staff members status active",
     "string": "Active"
   },
+  "nHmugP": {
+    "context": "order history message",
+    "string": "Items were fulfilled"
+  },
   "nIuKz3": {
     "context": "Refund status none",
     "string": "Draft"
@@ -8141,10 +8129,6 @@
   "njUQPz": {
     "context": "shipping method price range",
     "string": "Value Range"
-  },
-  "nki0o/": {
-    "context": "replaced products list title",
-    "string": "{count, plural, one {Product replaced} other {Products replaced}}"
   },
   "nngeI3": {
     "context": "amount title",
@@ -8280,6 +8264,10 @@
     "context": "discount type",
     "string": "Order"
   },
+  "opnzgO": {
+    "context": "order lines section header",
+    "string": "ORDER {count, plural, one {LINE} other {LINES}} ({count})"
+  },
   "orvpWh": {
     "string": "Go back"
   },
@@ -8397,10 +8385,6 @@
   },
   "pepgIN": {
     "string": "Choose the Model Type whose extended Models will serve as refund reasons."
-  },
-  "performed.by": {
-    "context": "performed by label",
-    "string": "Performed by"
   },
   "pgTwKM": {
     "context": "section header",
@@ -8835,10 +8819,6 @@
   "sGDsFP": {
     "context": "header name input",
     "string": "Should match `x-*`, `authorization*`, or `brokerproperties`."
-  },
-  "sHON47": {
-    "context": "refunded products list title",
-    "string": "{count, plural, one {Product refunded} other {Products refunded}}"
   },
   "sK1FPw": {
     "context": "categories section name",

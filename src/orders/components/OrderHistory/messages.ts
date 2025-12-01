@@ -155,16 +155,11 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
         description: "order history message",
       });
     case OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS:
-      return intl.formatMessage(
-        {
-          id: "mX3Pmy",
-          defaultMessage: "Fulfilled {quantity, plural, one {# item} other {# items}}",
-          description: "order history message",
-        },
-        {
-          quantity: event.quantity,
-        },
-      );
+      return intl.formatMessage({
+        id: "x1k81A",
+        defaultMessage: "Items were fulfilled",
+        description: "order history message",
+      });
     case OrderEventsEnum.FULFILLMENT_REFUNDED:
       return intl.formatMessage(
         {
@@ -184,7 +179,7 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
           description: "order history message",
         },
         {
-          quantity: event.quantity,
+          quantity: event.quantity ?? 0,
         },
       );
     case OrderEventsEnum.NOTE_ADDED:
@@ -214,16 +209,11 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
     case OrderEventsEnum.OTHER:
       return event.message;
     case OrderEventsEnum.OVERSOLD_ITEMS:
-      return intl.formatMessage(
-        {
-          id: "O+AjFj",
-          defaultMessage: "Oversold {quantity, plural, one {# item} other {# items}}",
-          description: "order history message",
-        },
-        {
-          quantity: event.quantity,
-        },
-      );
+      return intl.formatMessage({
+        id: "odpDdj",
+        defaultMessage: "Items were oversold",
+        description: "order history message",
+      });
     case OrderEventsEnum.PAYMENT_CAPTURED:
       return intl.formatMessage({
         id: "2yV+s8",
