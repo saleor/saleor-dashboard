@@ -1,11 +1,7 @@
 // @ts-strict-ignore
-import { useUser } from "@dashboard/auth";
-import { getUserInitials } from "@dashboard/misc";
 import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { UserAvatar } from "../UserAvatar";
 
 interface TimelineProps {
   children?: React.ReactNode;
@@ -36,7 +32,6 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = ({
   buttonLabel,
   label,
 }) => {
-  const { user } = useUser();
   const intl = useIntl();
   const submit = (e: React.FormEvent<any>) => {
     reset();
@@ -61,8 +56,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = ({
         width="100%"
         rows={3}
       />
-      <Box display="flex" justifyContent="flex-end" alignItems="center" gap={2} marginTop={2}>
-        <UserAvatar url={user?.avatar?.url} initials={getUserInitials(user)} />
+      <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>
         <Button disabled={disabled} onClick={e => submit(e)} variant="secondary">
           {buttonLabel || (
             <FormattedMessage
