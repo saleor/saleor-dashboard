@@ -138,9 +138,9 @@ describe("useGetCellContent", () => {
       cursor: "pointer",
       data: {
         color: {
-          base: "#ffdeea",
-          border: "#eec4cf",
-          text: "#6a4751",
+          base: "#ffdfda",
+          border: "#f0c5c1",
+          text: "#6c4845",
         },
         kind: "auto-tags-cell",
         value: "PAID",

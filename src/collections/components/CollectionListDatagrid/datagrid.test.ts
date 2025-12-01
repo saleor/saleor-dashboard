@@ -48,7 +48,7 @@ describe("getAvailabilityLabelWhenSelectedChannel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "#ffdeea",
+      color: "#ffdfda",
       label: "Unpublished",
     });
   });
@@ -69,7 +69,7 @@ describe("getAvailabilityLabelWhenSelectedChannel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "#ffe6c8",
+      color: "#fbe9c6",
       label: "Scheduled to publish",
     });
   });
@@ -85,7 +85,7 @@ describe("getAvailabilityLabel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "#ffdeea",
+      color: "#ffdfda",
       label: "No channels",
     });
   });
@@ -135,7 +135,7 @@ describe("getAvailabilityLabel", () => {
 
     // Assert
     expect(result).toEqual({
-      color: "#ffdeea",
+      color: "#ffdfda",
       label: "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
     });
   });
