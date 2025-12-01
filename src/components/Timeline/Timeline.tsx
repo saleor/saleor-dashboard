@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
-import { Button } from "@dashboard/components/Button";
 import { getUserInitials } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { sprinkles, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, vars } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,25 +14,23 @@ const useStyles = makeStyles(
   theme => ({
     button: {
       padding: `7px`,
-      borderTopLeftRadius: 0,
-      borderBottomLeftRadius: 0,
     },
     input: {
       "& > div": {
-        padding: "0 0 0 14px",
+        padding: "14px",
+        width: "100%",
       },
       "& textarea": {
         "&::placeholder": {
           opacity: [[1], "!important"] as any,
         },
+        width: "100%",
       },
       background: vars.colors.background.default1,
+      width: "100%",
     },
     noteRoot: {
       marginBottom: theme.spacing(3),
-      top: 0,
-      left: -19,
-      right: 0,
     },
     noteTitle: {
       "&:last-child": {
@@ -43,8 +40,6 @@ const useStyles = makeStyles(
       paddingLeft: 0,
     },
     root: {
-      marginLeft: 20,
-      paddingLeft: 21,
       position: "relative",
     },
   }),
@@ -61,6 +56,9 @@ interface TimelineAddNoteProps {
   reset: () => void;
   onChange: (event: React.ChangeEvent<any>) => any;
   onSubmit: (event: React.FormEvent<any>) => any;
+  placeholder?: string;
+  buttonLabel?: string | React.ReactNode;
+  label?: string;
 }
 
 export const Timeline = (props: TimelineProps) => {
@@ -71,7 +69,7 @@ export const Timeline = (props: TimelineProps) => {
 };
 
 export const TimelineAddNote = (props: TimelineAddNoteProps) => {
-  const { message, onChange, onSubmit, reset, disabled } = props;
+  const { message, onChange, onSubmit, reset, disabled, placeholder, buttonLabel, label } = props;
   const classes = useStyles(props);
   const { user } = useUser();
   const intl = useIntl();
@@ -83,40 +81,37 @@ export const TimelineAddNote = (props: TimelineAddNoteProps) => {
   return (
     <div className={classes.noteRoot}>
       <DashboardCard.Content paddingX={0}>
-        <UserAvatar
-          url={user?.avatar?.url}
-          initials={getUserInitials(user)}
-          className={sprinkles({
-            position: "absolute",
-            top: 0,
-          })}
-          style={{ left: -19 }}
-        />
         <TextField
           disabled={disabled}
           className={classes.input}
-          placeholder={intl.formatMessage({
-            id: "3evXPj",
-            defaultMessage: "Leave your note here...",
-          })}
+          label={label}
+          InputLabelProps={{ shrink: true }}
+          placeholder={
+            placeholder ||
+            intl.formatMessage({
+              id: "3evXPj",
+              defaultMessage: "Leave your note here...",
+            })
+          }
           onChange={onChange}
           value={message}
           name="message"
           fullWidth
           multiline
-          InputProps={{
-            endAdornment: (
-              <Button className={classes.button} disabled={disabled} onClick={e => submit(e)}>
-                <FormattedMessage
-                  id="v/1VA6"
-                  defaultMessage="Send"
-                  description="add order note, button"
-                />
-              </Button>
-            ),
-          }}
           variant="outlined"
         />
+        <Box display="flex" justifyContent="flex-end" alignItems="center" gap={2} marginTop={2}>
+          <UserAvatar url={user?.avatar?.url} initials={getUserInitials(user)} />
+          <Button disabled={disabled} onClick={e => submit(e)} variant="secondary">
+            {buttonLabel || (
+              <FormattedMessage
+                id="v/1VA6"
+                defaultMessage="Send"
+                description="add order note, button"
+              />
+            )}
+          </Button>
+        </Box>
       </DashboardCard.Content>
     </div>
   );

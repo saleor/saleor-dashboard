@@ -157,8 +157,8 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
     case OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS:
       return intl.formatMessage(
         {
-          id: "nHmugP",
-          defaultMessage: "Fulfilled {quantity} items",
+          id: "mX3Pmy",
+          defaultMessage: "Fulfilled {quantity, plural, one {# item} other {# items}}",
           description: "order history message",
         },
         {
@@ -179,8 +179,8 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
     case OrderEventsEnum.FULFILLMENT_RESTOCKED_ITEMS:
       return intl.formatMessage(
         {
-          id: "wOeIR4",
-          defaultMessage: "Restocked {quantity} items",
+          id: "RUS52q",
+          defaultMessage: "Restocked {quantity, plural, one {# item} other {# items}}",
           description: "order history message",
         },
         {
@@ -216,8 +216,8 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
     case OrderEventsEnum.OVERSOLD_ITEMS:
       return intl.formatMessage(
         {
-          id: "Fl3ORD",
-          defaultMessage: "Oversold {quantity} items",
+          id: "O+AjFj",
+          defaultMessage: "Oversold {quantity, plural, one {# item} other {# items}}",
           description: "order history message",
         },
         {

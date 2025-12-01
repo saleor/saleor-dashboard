@@ -5,8 +5,6 @@ import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { defineMessages, useIntl } from "react-intl";
 
-import { getEmployeeNameLink } from "./utils";
-
 const replacementCreatedMessages = defineMessages({
   description: {
     id: "kvSYZh",
@@ -14,21 +12,21 @@ const replacementCreatedMessages = defineMessages({
     description: "replacement created order history message description",
   },
   draftNumber: {
-    id: "kkIw+l",
-    defaultMessage: "Draft #{orderNumber} ",
+    id: "NrsKic",
+    defaultMessage: "Draft #{orderNumber}",
     description: "replacement created order history message draft number",
   },
 });
 
 const discountRemovedMessages = defineMessages({
   orderDiscountRemoved: {
-    id: "KXkdMH",
-    defaultMessage: "Order discount was removed by ",
+    id: "EzcZkZ",
+    defaultMessage: "Order discount was removed",
     description: "order discount removed title",
   },
   productDiscountRemoved: {
-    id: "A0Wlg7",
-    defaultMessage: "{productName} discount was removed by",
+    id: "J4pxY1",
+    defaultMessage: "{productName} discount was removed",
     description: "product discount removed title",
   },
 });
@@ -36,9 +34,16 @@ const discountRemovedMessages = defineMessages({
 interface LinkedTimelineEventProps {
   event: OrderEventFragment;
   hasPlainDate?: boolean;
+  dateNode?: React.ReactNode;
+  isLastInGroup?: boolean;
 }
 
-const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) => {
+const LinkedTimelineEvent = ({
+  event,
+  hasPlainDate,
+  dateNode,
+  isLastInGroup,
+}: LinkedTimelineEventProps) => {
   const intl = useIntl();
   const getTitleElements = (): TitleElement[] => {
     const { type, relatedOrder, lines } = event;
@@ -60,7 +65,6 @@ const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) 
           {
             text: intl.formatMessage(discountRemovedMessages.orderDiscountRemoved),
           },
-          getEmployeeNameLink(event, intl),
         ];
       }
       case OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED: {
@@ -70,7 +74,6 @@ const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) 
               productName: lines[0].itemName,
             }),
           },
-          getEmployeeNameLink(event, intl),
         ];
       }
     }
@@ -81,6 +84,11 @@ const LinkedTimelineEvent = ({ event, hasPlainDate }: LinkedTimelineEventProps) 
       titleElements={getTitleElements()}
       date={event.date}
       hasPlainDate={hasPlainDate}
+      dateNode={dateNode}
+      eventData={event}
+      user={event.user}
+      eventType={event.type}
+      isLastInGroup={isLastInGroup}
     />
   );
 };

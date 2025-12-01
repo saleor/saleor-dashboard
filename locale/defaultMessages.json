@@ -305,9 +305,6 @@
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
   },
-  "/n+NRO": {
-    "string": "Note id"
-  },
   "/nZy6A": {
     "context": "page subtitle",
     "string": "Issue refund"
@@ -1186,6 +1183,10 @@
   "5ZYUn5": {
     "context": "Filter and element text",
     "string": "And"
+  },
+  "5ZtQ7s": {
+    "context": "button",
+    "string": "Add Comment"
   },
   "5ZvuVw": {
     "string": "No products matching given query"
@@ -6370,6 +6371,9 @@
     "context": "column title product",
     "string": "Product"
   },
+  "by": {
+    "string": "by"
+  },
   "byP6IC": {
     "string": "Selected"
   },
@@ -6505,6 +6509,9 @@
     "context": "Refund success status",
     "string": "Success"
   },
+  "comment": {
+    "string": "Comment"
+  },
   "cpZLRH": {
     "context": "dialog header",
     "string": "Delete Shipping Zones"
@@ -6603,9 +6610,6 @@
   "dTkmON": {
     "context": "edit tracking button",
     "string": "Edit tracking"
-  },
-  "dVSBW6": {
-    "string": "Related note id"
   },
   "dVk241": {
     "string": "product configurations"
@@ -6806,9 +6810,6 @@
   "fLhj3a": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated"
-  },
-  "fM7xZh": {
-    "string": "updated"
   },
   "fOXF9A": {
     "string": "Request Extension"
@@ -7585,6 +7586,9 @@
     "context": "info when addresses search is unsuccessful",
     "string": "No results found"
   },
+  "kRlvOy": {
+    "string": "edited"
+  },
   "kS5Qgk": {
     "context": "used by label",
     "string": "Used by"
@@ -8140,6 +8144,9 @@
   "no3Ygn": {
     "string": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
   },
+  "noteEditOf": {
+    "string": "Edit of {userName}'s comment"
+  },
   "nudPsY": {
     "context": "metadata field name, header",
     "string": "Field"
@@ -8267,6 +8274,12 @@
     "context": "discount type",
     "string": "Order"
   },
+  "orderHistory.eventLog.info": {
+    "string": "All events related to this order. For more information regarding order events visit our docs {link}."
+  },
+  "orderHistory.markedAs": {
+    "string": "Order was marked as"
+  },
   "orvpWh": {
     "string": "Go back"
   },
@@ -8374,6 +8387,9 @@
   },
   "paa4m0": {
     "string": "Successfully created product type"
+  },
+  "paid": {
+    "string": "Paid"
   },
   "pc36KX": {
     "context": "PageTypeDeleteWarningDialog multiple consent label",
@@ -8484,9 +8500,6 @@
   "qCH2eZ": {
     "context": "header",
     "string": "Add Value to Authorization Field"
-  },
-  "qD1kvF": {
-    "string": "The timeline below shows the history of all events related to this order. Each entry represents a single event along with its content or readable description. For more information regarding order events, you can find {link}."
   },
   "qDwvZ4": {
     "string": "Unknown error"

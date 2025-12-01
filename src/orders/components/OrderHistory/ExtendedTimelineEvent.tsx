@@ -10,7 +10,6 @@ import { defineMessages, useIntl } from "react-intl";
 import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";
 import Label from "./Label";
 import {
-  getEmployeeNameLink,
   getOrderNumberLink,
   hasOrderLineDiscountWithNoPreviousValue,
   isTimelineEventOfDiscountType,
@@ -65,63 +64,58 @@ const productTitles = defineMessages({
 
 const titles = defineMessages({
   draftCreatedFromReplace: {
-    id: "5R4VMl",
-    defaultMessage: "Draft was reissued from order ",
+    id: "H6SfJd",
+    defaultMessage: "Draft was reissued from order",
     description: "draft created from replace event title",
   },
   fulfillmentRefunded: {
-    id: "VDwkEZ",
-    defaultMessage: "Products were refunded by ",
+    id: "werrDz",
+    defaultMessage: "Products were refunded",
     description: "refunded event title",
   },
   fulfillmentReplaced: {
-    id: "1GTU/3",
-    defaultMessage: "Products were replaced by ",
+    id: "AWGJnU",
+    defaultMessage: "Products were replaced",
     description: "replaced event title",
   },
   fulfillmentReturned: {
-    id: "nayZY0",
-    defaultMessage: "Products were returned by",
+    id: "VtlDMr",
+    defaultMessage: "Products were returned",
     description: "returned event title",
   },
   orderDiscountAdded: {
-    id: "Zptsep",
-    defaultMessage: "Order was discounted by",
+    id: "IUWJKt",
+    defaultMessage: "Order was discounted",
     description: "order was discounted event title",
   },
   orderDiscountAutomaticallyUpdated: {
-    id: "AQSmqG",
-    defaultMessage: "Order discount was updated automatically updated",
+    id: "8V1ozm",
+    defaultMessage: "Order discount was updated automatically",
     description: "order discount was updated automatically event title",
   },
   orderDiscountUpdated: {
-    id: "/KWNJW",
-    defaultMessage: "Order discount was updated by",
+    id: "JYfMRO",
+    defaultMessage: "Order discount was updated",
     description: "order discount was updated event title",
   },
   orderLineDiscountAdded: {
-    id: "9TAzb5",
-    defaultMessage: "{productName} discount was added by ",
+    id: "vV9xwl",
+    defaultMessage: "{productName} discount was added",
     description: "order line discount added title",
   },
   orderLineDiscountUpdated: {
-    id: "NgCb99",
-    defaultMessage: "{productName} discount was updated by ",
+    id: "bKCoN5",
+    defaultMessage: "{productName} discount was updated",
     description: "order line discount updated title",
   },
   orderMarkedAsPaid: {
-    id: "/0JckE",
-    defaultMessage: "Order was marked as paid by",
+    id: "TQlnsR",
+    defaultMessage: "Order was marked as paid",
     description: "order marked as paid event title",
   },
 });
 
 const messages = defineMessages({
-  by: {
-    id: "xrPv2K",
-    defaultMessage: "by",
-    description: "by preposition",
-  },
   refundedAmount: {
     id: "nngeI3",
     defaultMessage: "Refunded amount",
@@ -143,12 +137,16 @@ interface ExtendedTimelineEventProps {
   event: OrderEventFragment;
   orderCurrency: string;
   hasPlainDate?: boolean;
+  dateNode?: React.ReactNode;
+  isLastInGroup?: boolean;
 }
 
 const ExtendedTimelineEvent = ({
   event,
   orderCurrency,
   hasPlainDate,
+  dateNode,
+  isLastInGroup,
 }: ExtendedTimelineEventProps) => {
   const { id, date, type, lines, amount, transactionReference, shippingCostsIncluded } = event;
   const classes = useStyles({});
@@ -169,31 +167,32 @@ const ExtendedTimelineEvent = ({
     return {};
   };
   const titleElements = {
-    by: { text: intl.formatMessage(messages.by) },
-    employeeName: getEmployeeNameLink(event, intl),
     orderNumber: getOrderNumberLink(event),
     title: {
       text: intl.formatMessage(getEventTitleMessageInCamelCase(), getTitleProps()),
     },
   };
   const selectTitleElements = () => {
-    const { title, by, employeeName, orderNumber } = titleElements;
+    const { title, orderNumber } = titleElements;
 
     switch (type) {
       case OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE: {
-        return [title, orderNumber, by, employeeName];
-      }
-      case OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED: {
-        return [title];
+        return [title, orderNumber];
       }
       default: {
-        return [title, employeeName];
+        return [title];
       }
     }
   };
 
   if (isTimelineEventOfDiscountType(type)) {
-    return <ExtendedDiscountTimelineEvent event={event} titleElements={selectTitleElements()} />;
+    return (
+      <ExtendedDiscountTimelineEvent
+        event={event}
+        titleElements={selectTitleElements()}
+        isLastInGroup={isLastInGroup}
+      />
+    );
   }
 
   return (
@@ -202,6 +201,11 @@ const ExtendedTimelineEvent = ({
       titleElements={selectTitleElements()}
       key={id}
       hasPlainDate={hasPlainDate}
+      dateNode={dateNode}
+      eventData={event}
+      user={event.user}
+      eventType={type}
+      isLastInGroup={isLastInGroup}
     >
       {lines && (
         <>

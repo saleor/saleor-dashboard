@@ -1,3 +1,5 @@
+import { getUserName } from "@dashboard/misc";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { ReactNode } from "react";
 import * as React from "react";
@@ -10,6 +12,16 @@ export interface TitleElement {
   link?: string;
 }
 
+export interface TimelineUser {
+  id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  avatar?: {
+    url?: string;
+  } | null;
+}
+
 interface TimelineEventHeaderProps {
   title?: React.ReactNode;
   date: string;
@@ -17,6 +29,9 @@ interface TimelineEventHeaderProps {
   secondaryTitle?: string;
   hasPlainDate?: boolean;
   children?: ReactNode;
+  dateNode?: ReactNode;
+  tooltip?: ReactNode;
+  user?: TimelineUser | null;
 }
 
 const TimelineEventHeader = ({
@@ -26,50 +41,76 @@ const TimelineEventHeader = ({
   secondaryTitle,
   hasPlainDate,
   children,
+  dateNode,
+  tooltip,
+  user,
 }: TimelineEventHeaderProps) => {
   const elements = titleElements?.filter(Boolean) ?? [];
+  const userName = user ? getUserName(user, true) : null;
+
+  const userAttribution =
+    user && userName ? (
+      <Text size={3} color="default2" as="span" marginLeft={1}>
+        by{" "}
+        <Link to={staffMemberDetailsUrl(user.id)}>
+          <Text size={3} color="default2" textDecoration="underline" as="span">
+            {userName}
+          </Text>
+        </Link>
+      </Text>
+    ) : null;
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      flexDirection="row"
-      justifyContent="space-between"
-      width="100%"
-    >
-      {title && (
-        <Text size={3} wordBreak="break-all">
-          {title}
-        </Text>
-      )}
-      {elements.length > 0 && (
-        <Box display="flex" alignItems="center" flexDirection="row" flexWrap="wrap">
-          {elements.map(({ text, link }) => {
-            if (link) {
-              return (
-                <Link to={link} key={`timeline-event-${link}`}>
-                  <Text marginRight={0.5} size={3} color="accent1">
+    <Box display="flex" flexDirection="column" width="100%">
+      <Box
+        display="flex"
+        alignItems="center"
+        flexDirection="row"
+        justifyContent="space-between"
+        width="100%"
+      >
+        <Box display="flex" alignItems="center" flexWrap="wrap">
+          {title && (
+            <Text size={3} color="default1" wordBreak="break-all">
+              {title}
+            </Text>
+          )}
+          {elements.length > 0 && (
+            <Box display="flex" alignItems="center" flexDirection="row" flexWrap="wrap">
+              {elements.map(({ text, link }) => {
+                if (link) {
+                  return (
+                    <Link to={link} key={`timeline-event-${link}`}>
+                      <Text marginRight={0.5} size={3} color="default1" textDecoration="underline">
+                        {text}
+                      </Text>
+                    </Link>
+                  );
+                }
+
+                return (
+                  <Text size={3} color="default1" marginRight={0.5} key={`timeline-event-${text}`}>
                     {text}
                   </Text>
-                </Link>
-              );
-            }
-
-            return (
-              <Text size={3} marginRight={0.5} key={`timeline-event-${text}`}>
-                {text}
-              </Text>
-            );
-          })}
+                );
+              })}
+            </Box>
+          )}
+          {userAttribution}
         </Box>
-      )}
-      <Box display="flex" alignItems="center" gap={5} marginLeft="auto">
-        {children}
-        <Text size={3} color="default2" whiteSpace="nowrap">
-          <DateTime date={date} plain={hasPlainDate} />
-        </Text>
+        <Box display="flex" alignItems="center" gap={2} marginLeft="auto" flexShrink="0">
+          {tooltip}
+          <Text size={2} color="default2" whiteSpace="nowrap">
+            {dateNode || <DateTime date={date} plain={hasPlainDate} />}
+          </Text>
+          {children}
+        </Box>
       </Box>
-      {secondaryTitle && <Text marginTop={2}>{secondaryTitle}</Text>}
+      {secondaryTitle && (
+        <Text size={3} color="default2" marginTop={1}>
+          {secondaryTitle}
+        </Text>
+      )}
     </Box>
   );
 };

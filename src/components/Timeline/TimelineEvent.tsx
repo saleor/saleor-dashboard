@@ -1,7 +1,145 @@
-import { Accordion, Box, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { OrderEventsEnum } from "@dashboard/graphql";
+import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
+import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
+import { Accordion, Box, sprinkles, vars } from "@saleor/macaw-ui-next";
+import {
+  AlertTriangleIcon,
+  BanIcon,
+  CheckCircleIcon,
+  ChevronDownIcon,
+  CircleIcon,
+  ClockIcon,
+  CreditCardIcon,
+  EraserIcon,
+  ExternalLinkIcon,
+  FileIcon,
+  FileTextIcon,
+  InfoIcon,
+  LucideIcon,
+  MailIcon,
+  MapPinIcon,
+  PackageIcon,
+  PercentIcon,
+  RefreshCwIcon,
+  ReplaceIcon,
+  ShoppingCartIcon,
+  SignatureIcon,
+  TagIcon,
+  TruckIcon,
+  XIcon,
+} from "lucide-react";
 import * as React from "react";
 
-import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";
+import TimelineEventHeader, { TimelineUser, TitleElement } from "./TimelineEventHeader";
+
+// Custom icon type that includes both Lucide icons and custom icons
+type IconComponent = LucideIcon | typeof RefundedIcon | typeof ReturnedIcon;
+
+// Colors matching fulfillment group icons (from StatusIndicator.tsx)
+const EVENT_COLORS = {
+  green: "hsla(152, 98%, 44%, 1)", // Fulfilled
+  blue: "hsla(214, 100%, 55%, 1)", // Refunded
+  lightBlue: "hsla(214, 100%, 63.1%, 1)", // Returned
+  red: "hsla(3, 90%, 64%, 1)", // Canceled
+};
+
+// Map event types to colors - matching fulfillment group colors
+const eventColorMap: Partial<Record<OrderEventsEnum, string>> = {
+  // Fulfillment - matching StatusIndicator colors
+  [OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS]: EVENT_COLORS.green,
+  [OrderEventsEnum.FULFILLMENT_CANCELED]: EVENT_COLORS.red,
+  [OrderEventsEnum.FULFILLMENT_REFUNDED]: EVENT_COLORS.blue,
+  [OrderEventsEnum.FULFILLMENT_RETURNED]: EVENT_COLORS.lightBlue,
+
+  // Payment
+  [OrderEventsEnum.PAYMENT_REFUNDED]: EVENT_COLORS.blue,
+  [OrderEventsEnum.PAYMENT_FAILED]: EVENT_COLORS.red,
+  [OrderEventsEnum.ORDER_FULLY_PAID]: EVENT_COLORS.green,
+  [OrderEventsEnum.ORDER_MARKED_AS_PAID]: EVENT_COLORS.green,
+
+  // Transaction
+  [OrderEventsEnum.TRANSACTION_REFUND_REQUESTED]: EVENT_COLORS.blue,
+  [OrderEventsEnum.TRANSACTION_MARK_AS_PAID_FAILED]: EVENT_COLORS.red,
+
+  // Order lifecycle
+  [OrderEventsEnum.CONFIRMED]: EVENT_COLORS.green,
+  [OrderEventsEnum.CANCELED]: EVENT_COLORS.red,
+};
+
+// Map event types to icons - matching fulfillment group icons where applicable
+const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
+  // Order lifecycle
+  [OrderEventsEnum.PLACED]: ShoppingCartIcon,
+  [OrderEventsEnum.PLACED_FROM_DRAFT]: FileTextIcon,
+  [OrderEventsEnum.PLACED_AUTOMATICALLY_FROM_PAID_CHECKOUT]: ShoppingCartIcon,
+  [OrderEventsEnum.CONFIRMED]: CheckCircleIcon,
+  [OrderEventsEnum.CANCELED]: XIcon,
+  [OrderEventsEnum.EXPIRED]: ClockIcon,
+
+  // Draft
+  [OrderEventsEnum.DRAFT_CREATED]: FileTextIcon,
+  [OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE]: FileTextIcon,
+
+  // Fulfillment - matching StatusIndicator icons
+  [OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS]: PackageIcon, // Same as FulfillmentStatus.FULFILLED
+  [OrderEventsEnum.FULFILLMENT_CANCELED]: EraserIcon, // Same as FulfillmentStatus.CANCELED
+  [OrderEventsEnum.FULFILLMENT_AWAITS_APPROVAL]: SignatureIcon, // Same as FulfillmentStatus.WAITING_FOR_APPROVAL
+  [OrderEventsEnum.FULFILLMENT_RESTOCKED_ITEMS]: RefreshCwIcon,
+  [OrderEventsEnum.FULFILLMENT_REFUNDED]: RefundedIcon, // Same as FulfillmentStatus.REFUNDED
+  [OrderEventsEnum.FULFILLMENT_RETURNED]: ReturnedIcon, // Same as FulfillmentStatus.RETURNED
+  [OrderEventsEnum.FULFILLMENT_REPLACED]: ReplaceIcon, // Same as FulfillmentStatus.REPLACED
+
+  // Payment
+  [OrderEventsEnum.PAYMENT_AUTHORIZED]: CreditCardIcon,
+  [OrderEventsEnum.PAYMENT_CAPTURED]: CreditCardIcon,
+  [OrderEventsEnum.PAYMENT_REFUNDED]: RefundedIcon,
+  [OrderEventsEnum.PAYMENT_VOIDED]: BanIcon,
+  [OrderEventsEnum.PAYMENT_FAILED]: AlertTriangleIcon,
+  [OrderEventsEnum.ORDER_FULLY_PAID]: CheckCircleIcon,
+  [OrderEventsEnum.ORDER_MARKED_AS_PAID]: CheckCircleIcon,
+
+  // Transaction
+  [OrderEventsEnum.TRANSACTION_EVENT]: CreditCardIcon,
+  [OrderEventsEnum.TRANSACTION_CHARGE_REQUESTED]: CreditCardIcon,
+  [OrderEventsEnum.TRANSACTION_REFUND_REQUESTED]: RefundedIcon,
+  [OrderEventsEnum.TRANSACTION_CANCEL_REQUESTED]: XIcon,
+  [OrderEventsEnum.TRANSACTION_MARK_AS_PAID_FAILED]: AlertTriangleIcon,
+
+  // Invoice
+  [OrderEventsEnum.INVOICE_REQUESTED]: FileIcon,
+  [OrderEventsEnum.INVOICE_GENERATED]: FileIcon,
+  [OrderEventsEnum.INVOICE_UPDATED]: FileIcon,
+  [OrderEventsEnum.INVOICE_SENT]: MailIcon,
+
+  // Email
+  [OrderEventsEnum.EMAIL_SENT]: MailIcon,
+
+  // Products
+  [OrderEventsEnum.ADDED_PRODUCTS]: PackageIcon,
+  [OrderEventsEnum.REMOVED_PRODUCTS]: XIcon,
+  [OrderEventsEnum.ORDER_LINE_PRODUCT_DELETED]: XIcon,
+  [OrderEventsEnum.ORDER_LINE_VARIANT_DELETED]: XIcon,
+
+  // Discounts
+  [OrderEventsEnum.ORDER_DISCOUNT_ADDED]: PercentIcon,
+  [OrderEventsEnum.ORDER_DISCOUNT_UPDATED]: PercentIcon,
+  [OrderEventsEnum.ORDER_DISCOUNT_DELETED]: PercentIcon,
+  [OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED]: PercentIcon,
+  [OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED]: TagIcon,
+  [OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED]: TagIcon,
+
+  // Shipping
+  [OrderEventsEnum.TRACKING_UPDATED]: TruckIcon,
+
+  // Address
+  [OrderEventsEnum.UPDATED_ADDRESS]: MapPinIcon,
+
+  // Other
+  [OrderEventsEnum.ORDER_REPLACEMENT_CREATED]: ReplaceIcon,
+  [OrderEventsEnum.OVERSOLD_ITEMS]: AlertTriangleIcon,
+  [OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION]: ExternalLinkIcon,
+  [OrderEventsEnum.OTHER]: CircleIcon,
+};
 
 export interface TimelineEventProps {
   children?: React.ReactNode;
@@ -10,55 +148,221 @@ export interface TimelineEventProps {
   title?: React.ReactNode;
   titleElements?: TitleElement[];
   hasPlainDate?: boolean;
+  dateNode?: React.ReactNode;
+  eventData?: any;
+  user?: TimelineUser | null;
+  eventType?: OrderEventsEnum | null;
+  isLastInGroup?: boolean;
 }
 
-export const TimelineEvent = (props: TimelineEventProps) => {
-  const { children, date, secondaryTitle, title, titleElements, hasPlainDate } = props;
-  const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
+const safeStringify = (data: any): string => {
+  if (!data) return "";
+
+  try {
+    const seen = new WeakSet();
+
+    return JSON.stringify(
+      data,
+      (key, value) => {
+        if (key === "__typename") return undefined;
+
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) return "[Circular]";
+
+          seen.add(value);
+        }
+
+        return value;
+      },
+      2,
+    );
+  } catch {
+    return "Unable to serialize";
+  }
+};
+
+// Icon color that works in both light and dark mode
+const ICON_COLOR = vars.colors.text.default2;
+
+// Icon wrapper component with circle background
+const EventIcon = ({ eventType }: { eventType?: OrderEventsEnum | null }) => {
+  const IconComponent = eventType ? eventIconMap[eventType] : undefined;
+  const iconColor = eventType ? eventColorMap[eventType] : undefined;
 
   return (
-    <Box display="flex" alignItems="center" marginBottom={5} position="relative" width="100%">
-      <Box
-        as="span"
-        position="absolute"
-        backgroundColor="default1Pressed"
-        borderRadius="100%"
-        __height="7px"
-        __width="7px"
-        __left="-28px"
-        __top={hasChildren ? "13px" : "5px"}
-      />
-      {hasChildren ? (
-        <Accordion
-          className={sprinkles({
-            width: "100%",
-          })}
-        >
-          <Accordion.Item value="accordionItemId">
-            <Accordion.Trigger>
-              <TimelineEventHeader
-                title={title}
-                date={date}
-                titleElements={titleElements}
-                hasPlainDate={hasPlainDate}
-              >
-                <Accordion.TriggerButton dataTestId="expand-icon" />
-              </TimelineEventHeader>
-            </Accordion.Trigger>
-            <Accordion.Content>
-              <Text>{children}</Text>
-            </Accordion.Content>
-          </Accordion.Item>
-        </Accordion>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      borderRadius="100%"
+      backgroundColor="default1"
+      borderColor="default1"
+      borderStyle="solid"
+      borderWidth={1}
+      __width="32px"
+      __height="32px"
+      flexShrink="0"
+      __color={iconColor || ICON_COLOR}
+    >
+      {IconComponent ? (
+        <IconComponent size={16} color="currentColor" />
       ) : (
-        <TimelineEventHeader
-          title={title}
-          titleElements={titleElements}
-          secondaryTitle={secondaryTitle}
-          date={date}
-          hasPlainDate={hasPlainDate}
+        <CircleIcon size={8} fill="currentColor" color="currentColor" />
+      )}
+    </Box>
+  );
+};
+
+export const TimelineEvent = (props: TimelineEventProps) => {
+  const {
+    children,
+    date,
+    secondaryTitle,
+    title,
+    titleElements,
+    hasPlainDate,
+    dateNode,
+    eventData,
+    user,
+    eventType,
+    isLastInGroup,
+  } = props;
+  const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
+
+  const infoIcon = eventData ? (
+    <span
+      title={safeStringify(eventData)}
+      style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
+    >
+      <InfoIcon size={16} color="hsla(0, 0%, 0%, 0.4)" />
+    </span>
+  ) : null;
+
+  return (
+    <Box display="flex" width="100%" position="relative">
+      {/* Vertical connecting line - hidden for last item in group */}
+      {!isLastInGroup && (
+        <Box
+          position="absolute"
+          __left="19px"
+          __top="32px"
+          __bottom="-20px"
+          __width="1px"
+          backgroundColor="default1Hovered"
         />
       )}
+
+      <Box display="flex" marginBottom={5} width="100%">
+        {hasChildren ? (
+          <Accordion
+            className={sprinkles({
+              width: "100%",
+            })}
+          >
+            <Accordion.Item value="accordionItemId">
+              <Box display="flex" gap={2} alignItems="center" width="100%" __minHeight="32px">
+                {/* Icon */}
+                <Box
+                  width={10}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  flexShrink="0"
+                  position="relative"
+                  __zIndex="1"
+                >
+                  <EventIcon eventType={eventType} />
+                </Box>
+                {/* Chevron */}
+                <Accordion.Trigger
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    color: ICON_COLOR,
+                    height: "32px",
+                  }}
+                >
+                  <Box
+                    as="span"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    __width="20px"
+                    __height="20px"
+                    style={{
+                      transition: "transform 0.2s ease",
+                      transform: "rotate(-90deg)",
+                    }}
+                    data-chevron
+                  >
+                    <ChevronDownIcon size={16} color="currentColor" />
+                  </Box>
+                </Accordion.Trigger>
+                <style>{`
+                  [data-state="open"] [data-chevron] {
+                    transform: rotate(0deg) !important;
+                  }
+                `}</style>
+                {/* Header */}
+                <Box __flex="1" display="flex" alignItems="center" __minHeight="32px">
+                  <TimelineEventHeader
+                    title={title}
+                    date={date}
+                    titleElements={titleElements}
+                    hasPlainDate={hasPlainDate}
+                    dateNode={dateNode}
+                    user={user}
+                  >
+                    {infoIcon}
+                  </TimelineEventHeader>
+                </Box>
+              </Box>
+              <Accordion.Content>
+                <Box
+                  __marginLeft="48px"
+                  marginTop={3}
+                  paddingY={3}
+                  paddingX={4}
+                  borderRadius={2}
+                  borderStyle="solid"
+                  borderWidth={1}
+                  borderColor="default1"
+                  backgroundColor="default1"
+                >
+                  {children}
+                </Box>
+              </Accordion.Content>
+            </Accordion.Item>
+          </Accordion>
+        ) : (
+          <Box display="flex" alignItems="center" width="100%" gap={2}>
+            <Box
+              width={10}
+              display="flex"
+              justifyContent="center"
+              flexShrink="0"
+              position="relative"
+              __zIndex="1"
+            >
+              <EventIcon eventType={eventType} />
+            </Box>
+            <Box width="100%" display="flex" alignItems="center" __minHeight="32px">
+              <TimelineEventHeader
+                title={title}
+                titleElements={titleElements}
+                secondaryTitle={secondaryTitle}
+                date={date}
+                hasPlainDate={hasPlainDate}
+                dateNode={dateNode}
+                user={user}
+              >
+                {infoIcon}
+              </TimelineEventHeader>
+            </Box>
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 };

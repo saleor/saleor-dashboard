@@ -2,6 +2,7 @@
 import { FetchResult } from "@apollo/client";
 import { DashboardCard } from "@dashboard/components/Card";
 import Form from "@dashboard/components/Form";
+import { Pill } from "@dashboard/components/Pill";
 import {
   Timeline,
   TimelineAddNote,
@@ -9,17 +10,83 @@ import {
   TimelineEventProps,
   TimelineNote,
 } from "@dashboard/components/Timeline";
-import { OrderEventFragment, OrderNoteUpdateMutation } from "@dashboard/graphql";
+import { OrderEventFragment, OrderEventsEnum, OrderNoteUpdateMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
-import { Box, vars } from "@saleor/macaw-ui-next";
+import { Box, Text, vars } from "@saleor/macaw-ui-next";
+import moment from "moment-timezone";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
 import { HistoryComponentLoader } from "./HistoryComponentLoader";
 import LinkedTimelineEvent from "./LinkedTimelineEvent";
 import { getEventMessage } from "./messages";
+import { OrderHistoryDate } from "./OrderHistoryDate";
 import { getEventSecondaryTitle, isTimelineEventOfType } from "./utils";
+
+// Helper to get date group key - smart grouping based on age
+const getDateGroupKey = (date: string | null): string => {
+  if (!date) {
+    return "UNKNOWN";
+  }
+
+  const eventDate = moment(date);
+  const now = moment();
+  const today = moment().startOf("day");
+  const yesterday = moment().subtract(1, "day").startOf("day");
+  const daysAgo = now.diff(eventDate, "days");
+
+  // Daily precision for last 48 hours
+  if (eventDate.isSame(today, "day")) {
+    return "TODAY";
+  } else if (eventDate.isSame(yesterday, "day")) {
+    return "YESTERDAY";
+  }
+
+  // Progressive broader buckets for older events
+  if (daysAgo < 7) {
+    return "LAST 7 DAYS";
+  } else if (daysAgo < 30) {
+    return "LAST 30 DAYS";
+  } else {
+    return "OLDER";
+  }
+};
+
+// Group events by date - preserves insertion order
+const groupEventsByDate = (events: OrderEventFragment[]): Array<[string, OrderEventFragment[]]> => {
+  const groups: Array<[string, OrderEventFragment[]]> = [];
+  const groupMap = new Map<string, number>();
+
+  events.forEach(event => {
+    const key = getDateGroupKey(event.date);
+
+    if (!groupMap.has(key)) {
+      groupMap.set(key, groups.length);
+      groups.push([key, []]);
+    }
+
+    const index = groupMap.get(key)!;
+
+    groups[index][1].push(event);
+  });
+
+  return groups;
+};
+
+// Date group header component
+const DateGroupHeader = ({ label }: { label: string }) => (
+  <Box paddingY={3}>
+    <Text
+      size={2}
+      fontWeight="medium"
+      color="default2"
+      style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
+    >
+      {label}
+    </Text>
+  </Box>
+);
 
 export interface FormData {
   message: string;
@@ -65,7 +132,8 @@ const OrderHistory = ({
         </DashboardCard.Title>
         <DashboardCard.Subtitle fontSize={3} color="default2">
           <FormattedMessage
-            defaultMessage="The timeline below shows the history of all events related to this order. Each entry represents a single event along with its content or readable description. For more information regarding order events, you can find {link}."
+            id="6oxTyq"
+            defaultMessage="All events related to this order. For more information regarding order events visit our docs {link}."
             values={{
               link: (
                 <Box
@@ -82,7 +150,6 @@ const OrderHistory = ({
                 </Box>
               ),
             }}
-            id="qD1kvF"
           />
         </DashboardCard.Subtitle>
       </DashboardCard.Header>
@@ -97,14 +164,31 @@ const OrderHistory = ({
                   reset={reset}
                   onChange={change}
                   onSubmit={submit}
+                  label={intl.formatMessage({
+                    id: "LgbKvU",
+                    defaultMessage: "Comment",
+                  })}
+                  buttonLabel={
+                    <FormattedMessage
+                      id="H5jL5+"
+                      defaultMessage="Add Comment"
+                      description="button"
+                    />
+                  }
                 />
               )}
             </Form>
-            {history
-              .slice()
-              .reverse()
-              .map(event => {
+            {(() => {
+              const reversedHistory = history.slice().reverse();
+              const groupedEvents = groupEventsByDate(reversedHistory);
+
+              const renderEvent = (
+                event: OrderEventFragment,
+                index: number,
+                groupEvents: OrderEventFragment[],
+              ) => {
                 const { id, user, date, message, type, app, related } = event;
+                const isLastInGroup = index === groupEvents.length - 1;
 
                 if (isTimelineEventOfType("note", type)) {
                   return (
@@ -113,10 +197,13 @@ const OrderHistory = ({
                       onNoteUpdateLoading={onNoteUpdateLoading!}
                       id={id}
                       date={date}
+                      dateNode={<OrderHistoryDate date={date} />}
                       user={user}
                       message={message}
                       key={id}
                       app={app}
+                      eventData={event}
+                      isLastInGroup={isLastInGroup}
                     />
                   );
                 }
@@ -129,11 +216,57 @@ const OrderHistory = ({
                       relatedId={related.id}
                       id={id}
                       date={date}
+                      dateNode={<OrderHistoryDate date={date} />}
                       user={user}
                       message={message}
                       key={id}
                       app={app}
+                      eventData={event}
+                      isLastInGroup={isLastInGroup}
                     />
+                  );
+                }
+
+                if (
+                  type === OrderEventsEnum.ORDER_MARKED_AS_PAID ||
+                  type === OrderEventsEnum.ORDER_FULLY_PAID
+                ) {
+                  const hasSecondaryInfo =
+                    isTimelineEventOfType("secondaryTitle", type) && event.transactionReference;
+
+                  return (
+                    <TimelineEvent
+                      date={date}
+                      dateNode={<OrderHistoryDate date={date} />}
+                      eventData={event}
+                      user={user}
+                      eventType={type}
+                      isLastInGroup={isLastInGroup}
+                      title={
+                        <Box display="flex" gap={1} alignItems="center" flexWrap="wrap">
+                          <FormattedMessage id="KpP/aW" defaultMessage="Order was marked as" />
+                          <Pill
+                            color="success"
+                            size="small"
+                            label={intl.formatMessage({
+                              id: "u/vOPu",
+                              defaultMessage: "Paid",
+                            })}
+                            style={{ paddingLeft: 4, paddingRight: 4 }}
+                          />
+                        </Box>
+                      }
+                      key={id}
+                    >
+                      {hasSecondaryInfo && (
+                        <Box display="flex" justifyContent="space-between" alignItems="center">
+                          <Text size={2} color="default2">
+                            <FormattedMessage id="jGvclB" defaultMessage="Transaction Reference" />
+                          </Text>
+                          <Text size={2}>{event.transactionReference}</Text>
+                        </Box>
+                      )}
+                    </TimelineEvent>
                   );
                 }
 
@@ -144,12 +277,22 @@ const OrderHistory = ({
                       event={event}
                       orderCurrency={orderCurrency}
                       hasPlainDate={false}
+                      dateNode={<OrderHistoryDate date={date} />}
+                      isLastInGroup={isLastInGroup}
                     />
                   );
                 }
 
                 if (isTimelineEventOfType("linked", type)) {
-                  return <LinkedTimelineEvent event={event} key={id} hasPlainDate={false} />;
+                  return (
+                    <LinkedTimelineEvent
+                      event={event}
+                      key={id}
+                      hasPlainDate={false}
+                      dateNode={<OrderHistoryDate date={date} />}
+                      isLastInGroup={isLastInGroup}
+                    />
+                  );
                 }
 
                 return (
@@ -158,9 +301,22 @@ const OrderHistory = ({
                     hasPlainDate={false}
                     key={id}
                     date={date}
+                    dateNode={<OrderHistoryDate date={date} />}
+                    eventData={event}
+                    user={user}
+                    eventType={type}
+                    isLastInGroup={isLastInGroup}
                   />
                 );
-              })}
+              };
+
+              return groupedEvents.map(([dateLabel, events]) => (
+                <Box key={dateLabel}>
+                  <DateGroupHeader label={dateLabel} />
+                  {events.map((event, index) => renderEvent(event, index, events))}
+                </Box>
+              ));
+            })()}
           </Timeline>
         ) : (
           <HistoryComponentLoader />

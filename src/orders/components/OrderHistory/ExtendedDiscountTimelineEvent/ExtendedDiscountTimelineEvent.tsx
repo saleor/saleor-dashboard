@@ -9,6 +9,7 @@ import { Text } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
 
 import Label from "../Label";
+import { OrderHistoryDate } from "../OrderHistoryDate";
 import MoneySection, { MoneySectionType } from "./MoneySection";
 
 const useStyles = makeStyles(
@@ -35,9 +36,14 @@ const messages = defineMessages({
 interface ExtendedTimelineEventProps {
   event: OrderEventFragment;
   titleElements: TitleElement[];
+  isLastInGroup?: boolean;
 }
 
-const ExtendedDiscountTimelineEvent = ({ event, titleElements }: ExtendedTimelineEventProps) => {
+const ExtendedDiscountTimelineEvent = ({
+  event,
+  titleElements,
+  isLastInGroup,
+}: ExtendedTimelineEventProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const { lines, date, type } = event;
@@ -55,7 +61,15 @@ const ExtendedDiscountTimelineEvent = ({ event, titleElements }: ExtendedTimelin
   const shouldDisplayOldNewSections = !!oldValue;
 
   return (
-    <TimelineEvent date={date} titleElements={titleElements}>
+    <TimelineEvent
+      date={date}
+      titleElements={titleElements}
+      dateNode={<OrderHistoryDate date={date} />}
+      eventData={event}
+      user={event.user}
+      eventType={type}
+      isLastInGroup={isLastInGroup}
+    >
       {shouldDisplayOldNewSections && (
         <div className={classes.horizontalContainer}>
           <MoneySection
