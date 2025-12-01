@@ -9,7 +9,14 @@ export const InstalledBadge = () => {
   const intl = useIntl();
 
   return (
-    <Text __color={SUCCESS_ICON_COLOR} display="flex" alignItems="center" fontSize={2} gap={1}>
+    <Text
+      __color={SUCCESS_ICON_COLOR}
+      display="flex"
+      alignItems="center"
+      fontSize={2}
+      gap={1}
+      fontWeight="medium"
+    >
       <SVG src={CheckIcon} />
       {intl.formatMessage(messages.installed)}
     </Text>
