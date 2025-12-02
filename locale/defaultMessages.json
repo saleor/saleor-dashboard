@@ -5237,6 +5237,10 @@
   "V2BBQu": {
     "string": "Currency in both channels must be the same"
   },
+  "V3aIQv": {
+    "context": "date group header",
+    "string": "Last 30 days"
+  },
   "V8FhTt": {
     "context": "collection label",
     "string": "Hidden"
@@ -5436,6 +5440,10 @@
   },
   "WMNtD2": {
     "string": "The extension will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the extension before you approve."
+  },
+  "WOFMpJ": {
+    "context": "date group header",
+    "string": "Yesterday"
   },
   "WQMTKI": {
     "context": "list of warehouses",
@@ -6297,6 +6305,10 @@
     "context": "voucher",
     "string": "Applies to"
   },
+  "be6eXe": {
+    "context": "date group header",
+    "string": "Last 7 days"
+  },
   "bfj3NC": {
     "context": "Button with Manage app label",
     "string": "Manage extension"
@@ -6614,6 +6626,10 @@
   },
   "dWK/Ck": {
     "string": "Choose countries, you want voucher to be limited to, from the list below"
+  },
+  "dWK4ic": {
+    "context": "date group header",
+    "string": "Older"
   },
   "da1ebU": {
     "string": "Product type"
@@ -7794,6 +7810,10 @@
   "lW5uJO": {
     "context": "money",
     "string": "from {money}"
+  },
+  "lXGmEk": {
+    "context": "date group header",
+    "string": "Unknown"
   },
   "lXq4EE": {
     "context": "checkbox",

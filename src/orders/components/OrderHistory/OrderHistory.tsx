@@ -25,7 +25,7 @@ import { OrderHistoryDate } from "./OrderHistoryDate";
 import { getEventSecondaryTitle, isTimelineEventOfType } from "./utils";
 
 // Helper to get date group key - smart grouping based on age
-const getDateGroupKey = (date: string | null): string => {
+const getDateGroupKey = (date: string | null): DateGroupKey => {
   if (!date) {
     return "UNKNOWN";
   }
@@ -45,9 +45,9 @@ const getDateGroupKey = (date: string | null): string => {
 
   // Progressive broader buckets for older events
   if (daysAgo < 7) {
-    return "LAST 7 DAYS";
+    return "LAST_7_DAYS";
   } else if (daysAgo < 30) {
-    return "LAST 30 DAYS";
+    return "LAST_30_DAYS";
   } else {
     return "OLDER";
   }
@@ -74,19 +74,66 @@ const groupEventsByDate = (events: OrderEventFragment[]): Array<[string, OrderEv
   return groups;
 };
 
-// Date group header component
-const DateGroupHeader = ({ label }: { label: string }) => (
-  <Box paddingY={3}>
-    <Text
-      size={2}
-      fontWeight="medium"
-      color="default2"
-      style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
-    >
-      {label}
-    </Text>
-  </Box>
-);
+// Date group labels - keys are used internally, labels are internationalized in component
+type DateGroupKey = "TODAY" | "YESTERDAY" | "LAST_7_DAYS" | "LAST_30_DAYS" | "OLDER" | "UNKNOWN";
+
+// Date group header component with internationalized labels
+const DateGroupHeader = ({ groupKey }: { groupKey: string }) => {
+  const intl = useIntl();
+
+  const getLabel = (key: string): string => {
+    switch (key) {
+      case "TODAY":
+        return intl.formatMessage({
+          id: "zWgbGg",
+          defaultMessage: "Today",
+        });
+      case "YESTERDAY":
+        return intl.formatMessage({
+          id: "IradBW",
+          defaultMessage: "Yesterday",
+          description: "date group header",
+        });
+      case "LAST_7_DAYS":
+        return intl.formatMessage({
+          id: "0/Y0nG",
+          defaultMessage: "Last 7 days",
+          description: "date group header",
+        });
+      case "LAST_30_DAYS":
+        return intl.formatMessage({
+          id: "4kcpaI",
+          defaultMessage: "Last 30 days",
+          description: "date group header",
+        });
+      case "OLDER":
+        return intl.formatMessage({
+          id: "LU8dtl",
+          defaultMessage: "Older",
+          description: "date group header",
+        });
+      default:
+        return intl.formatMessage({
+          id: "yn7Stx",
+          defaultMessage: "Unknown",
+          description: "date group header",
+        });
+    }
+  };
+
+  return (
+    <Box paddingY={3}>
+      <Text
+        size={2}
+        fontWeight="medium"
+        color="default2"
+        style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
+      >
+        {getLabel(groupKey)}
+      </Text>
+    </Box>
+  );
+};
 
 export interface FormData {
   message: string;
@@ -317,9 +364,9 @@ const OrderHistory = ({
                 );
               };
 
-              return groupedEvents.map(([dateLabel, events]) => (
-                <Box key={dateLabel}>
-                  <DateGroupHeader label={dateLabel} />
+              return groupedEvents.map(([dateKey, events]) => (
+                <Box key={dateKey}>
+                  <DateGroupHeader groupKey={dateKey} />
                   {events.map((event, index) => renderEvent(event, index, events))}
                 </Box>
               ));
