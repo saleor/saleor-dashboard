@@ -31,7 +31,11 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
-import TimelineEventHeader, { TimelineUser, TitleElement } from "./TimelineEventHeader";
+import TimelineEventHeader, {
+  TimelineApp,
+  TimelineUser,
+  TitleElement,
+} from "./TimelineEventHeader";
 import { safeStringify } from "./utils";
 
 // CSS for hover effect on info icon, chevron rotation, and user links
@@ -196,6 +200,7 @@ export interface TimelineEventProps {
   dateNode?: React.ReactNode;
   eventData?: any;
   user?: TimelineUser | null;
+  app?: TimelineApp | null;
   eventType?: OrderEventsEnum | null;
   isLastInGroup?: boolean;
 }
@@ -249,6 +254,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
     dateNode,
     eventData,
     user,
+    app,
     eventType,
     isLastInGroup,
   } = props;
@@ -340,6 +346,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                     hasPlainDate={hasPlainDate}
                     dateNode={dateNode}
                     user={user}
+                    app={app}
                     tooltip={infoIcon}
                   />
                 </Box>
@@ -382,6 +389,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                 hasPlainDate={hasPlainDate}
                 dateNode={dateNode}
                 user={user}
+                app={app}
                 tooltip={infoIcon}
               />
             </Box>

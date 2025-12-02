@@ -294,6 +294,7 @@ const OrderHistory = ({
                       dateNode={<OrderHistoryDate date={date} />}
                       eventData={event}
                       user={user}
+                      app={app}
                       eventType={type}
                       isLastInGroup={isLastInGroup}
                       title={
@@ -358,6 +359,7 @@ const OrderHistory = ({
                     dateNode={<OrderHistoryDate date={date} />}
                     eventData={event}
                     user={user}
+                    app={app}
                     eventType={type}
                     isLastInGroup={isLastInGroup}
                   />

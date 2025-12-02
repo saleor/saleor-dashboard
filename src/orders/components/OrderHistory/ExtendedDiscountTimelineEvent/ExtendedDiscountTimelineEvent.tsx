@@ -67,6 +67,7 @@ const ExtendedDiscountTimelineEvent = ({
       dateNode={<OrderHistoryDate date={date} />}
       eventData={event}
       user={event.user}
+      app={event.app}
       eventType={type}
       isLastInGroup={isLastInGroup}
     >

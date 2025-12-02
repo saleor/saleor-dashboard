@@ -87,6 +87,7 @@ const LinkedTimelineEvent = ({
       dateNode={dateNode}
       eventData={event}
       user={event.user}
+      app={event.app}
       eventType={event.type}
       isLastInGroup={isLastInGroup}
     />

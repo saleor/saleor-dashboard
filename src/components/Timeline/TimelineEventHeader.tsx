@@ -22,6 +22,17 @@ export interface TimelineUser {
   } | null;
 }
 
+export interface TimelineApp {
+  id: string;
+  name?: string | null;
+  appUrl?: string | null;
+  brand?: {
+    logo?: {
+      default?: string | null;
+    } | null;
+  } | null;
+}
+
 interface TimelineEventHeaderProps {
   title?: React.ReactNode;
   date: string;
@@ -32,6 +43,7 @@ interface TimelineEventHeaderProps {
   dateNode?: ReactNode;
   tooltip?: ReactNode;
   user?: TimelineUser | null;
+  app?: TimelineApp | null;
 }
 
 const TimelineEventHeader = ({
@@ -44,21 +56,41 @@ const TimelineEventHeader = ({
   dateNode,
   tooltip,
   user,
+  app,
 }: TimelineEventHeaderProps) => {
   const elements = titleElements?.filter(Boolean) ?? [];
   const userName = user ? getUserName(user, true) : null;
+  const appName = app?.name;
 
-  const userAttribution =
-    user && userName ? (
-      <Text size={3} color="default2" as="span" marginLeft={1}>
-        by{" "}
-        <Link to={staffMemberDetailsUrl(user.id)} className="timeline-user-link">
-          <Text size={3} color="default2" as="span">
-            {userName}
-          </Text>
-        </Link>
-      </Text>
-    ) : null;
+  const appUrl = app?.appUrl;
+
+  const attribution = userName ? (
+    <Text size={3} color="default2" as="span" marginLeft={1}>
+      by{" "}
+      <Link to={staffMemberDetailsUrl(user!.id)} className="timeline-user-link">
+        <Text size={3} color="default2" as="span">
+          {userName}
+        </Text>
+      </Link>
+    </Text>
+  ) : appName ? (
+    <Text size={3} color="default2" as="span" marginLeft={1}>
+      by{" "}
+      {appUrl ? (
+        <a
+          href={appUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="timeline-user-link"
+          style={{ color: "inherit" }}
+        >
+          {appName}
+        </a>
+      ) : (
+        appName
+      )}
+    </Text>
+  ) : null;
 
   return (
     <Box display="flex" flexDirection="column" width="100%">
@@ -96,7 +128,7 @@ const TimelineEventHeader = ({
               })}
             </Box>
           )}
-          {userAttribution}
+          {attribution}
         </Box>
         <Box display="flex" alignItems="center" gap={2} marginLeft="auto" flexShrink="0">
           {tooltip}
