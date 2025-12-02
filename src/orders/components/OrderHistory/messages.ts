@@ -206,8 +206,6 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
         defaultMessage: "Order created automatically from fully paid checkout",
         description: "fully paid checkout automatically completed message",
       });
-    case OrderEventsEnum.OTHER:
-      return event.message;
     case OrderEventsEnum.OVERSOLD_ITEMS:
       return intl.formatMessage({
         id: "odpDdj",
@@ -293,6 +291,45 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
         description: "order history message",
       });
     case OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION:
-      return event.message;
+      return intl.formatMessage({
+        id: "LlbAEg",
+        defaultMessage: "External service notification",
+        description: "order history message",
+      });
+    case OrderEventsEnum.TRANSACTION_EVENT:
+      return intl.formatMessage({
+        id: "bBiDNg",
+        defaultMessage: "Transaction event",
+        description: "order history message",
+      });
+    case OrderEventsEnum.OTHER:
+      return intl.formatMessage({
+        id: "4jcwS2",
+        defaultMessage: "Other event",
+        description: "order history message",
+      });
+    case OrderEventsEnum.ORDER_REPLACEMENT_CREATED:
+      return intl.formatMessage({
+        id: "VxStyU",
+        defaultMessage: "Replacement order was created",
+        description: "order history message",
+      });
+    case OrderEventsEnum.ORDER_DISCOUNT_DELETED:
+      return intl.formatMessage({
+        id: "P7KpCX",
+        defaultMessage: "Order discount was removed",
+        description: "order history message",
+      });
+    case OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED:
+      return intl.formatMessage(
+        {
+          id: "c12l5n",
+          defaultMessage: "{productName} discount was removed",
+          description: "order history message",
+        },
+        {
+          productName: event.lines?.[0]?.itemName ?? "Product",
+        },
+      );
   }
 };

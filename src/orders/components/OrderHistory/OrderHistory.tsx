@@ -1,27 +1,28 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { DashboardCard } from "@dashboard/components/Card";
+import { CopyableText } from "@dashboard/components/CopyableText";
 import Form from "@dashboard/components/Form";
 import { Pill } from "@dashboard/components/Pill";
 import {
   Timeline,
   TimelineAddNote,
   TimelineEvent,
-  TimelineEventProps,
   TimelineNote,
 } from "@dashboard/components/Timeline";
 import { OrderEventFragment, OrderEventsEnum, OrderNoteUpdateMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
+import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { ExtendedTimelineEvent } from "./ExtendedTimelineEvent";
 import { HistoryComponentLoader } from "./HistoryComponentLoader";
-import LinkedTimelineEvent from "./LinkedTimelineEvent";
 import { getEventMessage } from "./messages";
 import { OrderHistoryDate } from "./OrderHistoryDate";
-import { getEventSecondaryTitle, groupEventsByDate, isTimelineEventOfType } from "./utils";
+import { groupEventsByDate, isTimelineEventOfType } from "./utils";
 
 // Date group header component with internationalized labels
 const DateGroupHeader = ({ groupKey }: { groupKey: string }) => {
@@ -101,21 +102,6 @@ const OrderHistory = ({
   onNoteUpdateLoading,
 }: OrderHistoryProps) => {
   const intl = useIntl();
-  const getTimelineEventTitleProps = (event: OrderEventFragment): Partial<TimelineEventProps> => {
-    const { type, message } = event;
-    const title = isTimelineEventOfType("rawMessage", type)
-      ? message
-      : getEventMessage(event, intl);
-
-    if (isTimelineEventOfType("secondaryTitle", type)) {
-      return {
-        secondaryTitle: intl.formatMessage(...getEventSecondaryTitle(event)),
-        title,
-      };
-    }
-
-    return { title };
-  };
 
   return (
     <DashboardCard>
@@ -231,8 +217,8 @@ const OrderHistory = ({
                   type === OrderEventsEnum.ORDER_MARKED_AS_PAID ||
                   type === OrderEventsEnum.ORDER_FULLY_PAID
                 ) {
-                  const hasSecondaryInfo =
-                    isTimelineEventOfType("secondaryTitle", type) && event.transactionReference;
+                  const hasTransactionRef = !!event.transactionReference;
+                  const hasContent = hasTransactionRef || message;
 
                   return (
                     <TimelineEvent
@@ -259,12 +245,24 @@ const OrderHistory = ({
                       }
                       key={id}
                     >
-                      {hasSecondaryInfo && (
-                        <Box display="flex" justifyContent="space-between" alignItems="center">
-                          <Text size={2} color="default2">
-                            <FormattedMessage id="jGvclB" defaultMessage="Transaction Reference" />
-                          </Text>
-                          <Text size={2}>{event.transactionReference}</Text>
+                      {hasContent && (
+                        <Box display="flex" flexDirection="column" gap={1}>
+                          {message && (
+                            <Text size={2} style={{ whiteSpace: "pre-wrap" }}>
+                              {message}
+                            </Text>
+                          )}
+                          {hasTransactionRef && (
+                            <Box display="flex" justifyContent="space-between" alignItems="center">
+                              <Text size={2} color="default2">
+                                <FormattedMessage
+                                  id="jGvclB"
+                                  defaultMessage="Transaction Reference"
+                                />
+                              </Text>
+                              <CopyableText text={event.transactionReference} />
+                            </Box>
+                          )}
                         </Box>
                       )}
                     </TimelineEvent>
@@ -284,21 +282,49 @@ const OrderHistory = ({
                   );
                 }
 
-                if (isTimelineEventOfType("linked", type)) {
+                // Events with message or relatedOrder - make them foldable
+                const hasRelatedOrder = !!event.relatedOrder;
+
+                if (message || hasRelatedOrder) {
                   return (
-                    <LinkedTimelineEvent
-                      event={event}
-                      key={id}
+                    <TimelineEvent
+                      title={getEventMessage(event, intl)}
                       hasPlainDate={false}
+                      key={id}
+                      date={date}
                       dateNode={<OrderHistoryDate date={date} />}
+                      eventData={event}
+                      user={user}
+                      app={app}
+                      eventType={type}
                       isLastInGroup={isLastInGroup}
-                    />
+                    >
+                      <Box display="flex" flexDirection="column" gap={1}>
+                        {message && (
+                          <Text size={2} style={{ whiteSpace: "pre-wrap" }}>
+                            {message}
+                          </Text>
+                        )}
+                        {hasRelatedOrder && (
+                          <Box display="flex" justifyContent="space-between" alignItems="center">
+                            <Text size={2} color="default2">
+                              <FormattedMessage id="pSqXo6" defaultMessage="Related Order" />
+                            </Text>
+                            <Link to={orderUrl(event.relatedOrder.id)}>
+                              <Text size={2} textDecoration="underline">
+                                #{event.relatedOrder.number}
+                              </Text>
+                            </Link>
+                          </Box>
+                        )}
+                      </Box>
+                    </TimelineEvent>
                   );
                 }
 
                 return (
                   <TimelineEvent
-                    {...getTimelineEventTitleProps(event)}
+                    title={getEventMessage(event, intl)}
                     hasPlainDate={false}
                     key={id}
                     date={date}

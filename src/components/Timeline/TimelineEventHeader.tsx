@@ -32,7 +32,6 @@ interface TimelineEventHeaderProps {
   title?: React.ReactNode;
   date: string;
   titleElements?: TitleElement[];
-  secondaryTitle?: string;
   hasPlainDate?: boolean;
   children?: ReactNode;
   dateNode?: ReactNode;
@@ -45,7 +44,6 @@ const TimelineEventHeader = ({
   title,
   date,
   titleElements,
-  secondaryTitle,
   hasPlainDate,
   children,
   dateNode,
@@ -126,11 +124,6 @@ const TimelineEventHeader = ({
           {children}
         </Box>
       </Box>
-      {secondaryTitle && (
-        <Text size={3} color="default2" marginTop={1}>
-          {secondaryTitle}
-        </Text>
-      )}
     </Box>
   );
 };

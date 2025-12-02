@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { CopyableText } from "@dashboard/components/CopyableText";
 import Money from "@dashboard/components/Money";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
@@ -139,7 +140,8 @@ const ExtendedTimelineEvent = ({
   dateNode,
   isLastInGroup,
 }: ExtendedTimelineEventProps) => {
-  const { id, date, type, lines, amount, transactionReference, shippingCostsIncluded } = event;
+  const { id, date, type, message, lines, amount, transactionReference, shippingCostsIncluded } =
+    event;
   const intl = useIntl();
   const eventTypeInCamelCase = camelCase(type);
   const getEventTitleMessageInCamelCase = (): MessageDescriptor => {
@@ -201,44 +203,52 @@ const ExtendedTimelineEvent = ({
       eventType={type}
       isLastInGroup={isLastInGroup}
     >
-      {lines && lines.length > 0 ? (
-        <Box display="flex" flexDirection="column" gap={1}>
-          {lines.map(({ orderLine, quantity, itemName }, i) => (
-            <OrderLineItem
-              key={orderLine?.id || `${itemName}-${quantity}-${i}`}
-              orderLine={orderLine}
-              quantity={quantity}
-              itemName={itemName}
-            />
-          ))}
+      <Box display="flex" flexDirection="column" gap={1}>
+        {/* Message content */}
+        {message && (
+          <Text size={2} style={{ whiteSpace: "pre-wrap" }}>
+            {message}
+          </Text>
+        )}
 
-          {hasFooterContent && (
-            <Box display="flex" flexDirection="column" gap={1} paddingTop={2}>
-              {(amount || amount === 0) && (
-                <LabelValueRow label={intl.formatMessage(messages.refundedAmount)}>
-                  <Text size={2}>
-                    <Money money={{ amount, currency: orderCurrency }} />
-                  </Text>
-                </LabelValueRow>
-              )}
-              {shippingCostsIncluded && (
-                <LabelValueRow label={intl.formatMessage(messages.refundedShipment)}>
-                  <CheckIcon size={14} />
-                </LabelValueRow>
-              )}
-              {!!transactionReference && (
-                <LabelValueRow label={intl.formatMessage(messages.transactionReference)}>
-                  <Text size={2}>{transactionReference}</Text>
-                </LabelValueRow>
-              )}
-            </Box>
-          )}
-        </Box>
-      ) : transactionReference ? (
-        <LabelValueRow label={intl.formatMessage(messages.transactionReference)}>
-          <Text size={2}>{transactionReference}</Text>
-        </LabelValueRow>
-      ) : null}
+        {/* Order lines */}
+        {lines && lines.length > 0 && (
+          <>
+            {message && <Box paddingTop={1} />}
+            {lines.map(({ orderLine, quantity, itemName }, i) => (
+              <OrderLineItem
+                key={orderLine?.id || `${itemName}-${quantity}-${i}`}
+                orderLine={orderLine}
+                quantity={quantity}
+                itemName={itemName}
+              />
+            ))}
+          </>
+        )}
+
+        {/* Footer with metadata */}
+        {hasFooterContent && (
+          <Box display="flex" flexDirection="column" gap={1} paddingTop={2}>
+            {(amount || amount === 0) && (
+              <LabelValueRow label={intl.formatMessage(messages.refundedAmount)}>
+                <Text size={2}>
+                  <Money money={{ amount, currency: orderCurrency }} />
+                </Text>
+              </LabelValueRow>
+            )}
+            {shippingCostsIncluded && (
+              <LabelValueRow label={intl.formatMessage(messages.refundedShipment)}>
+                <CheckIcon size={14} />
+              </LabelValueRow>
+            )}
+            {!!transactionReference && (
+              <LabelValueRow label={intl.formatMessage(messages.transactionReference)}>
+                <CopyableText text={transactionReference} />
+              </LabelValueRow>
+            )}
+          </Box>
+        )}
+      </Box>
     </TimelineEvent>
   );
 };

@@ -12,6 +12,7 @@ import {
   ChevronDownIcon,
   CircleIcon,
   ClockIcon,
+  CopyPlusIcon,
   CreditCardIcon,
   EraserIcon,
   ExternalLinkIcon,
@@ -27,7 +28,6 @@ import {
   ReplaceIcon,
   ShoppingCartIcon,
   SignatureIcon,
-  TagIcon,
   TruckIcon,
   XIcon,
 } from "lucide-react";
@@ -125,8 +125,8 @@ const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
   [OrderEventsEnum.ORDER_DISCOUNT_UPDATED]: PercentIcon,
   [OrderEventsEnum.ORDER_DISCOUNT_DELETED]: PercentIcon,
   [OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED]: PercentIcon,
-  [OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED]: TagIcon,
-  [OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED]: TagIcon,
+  [OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED]: PercentIcon,
+  [OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED]: PercentIcon,
 
   // Shipping
   [OrderEventsEnum.TRACKING_UPDATED]: TruckIcon,
@@ -135,7 +135,7 @@ const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
   [OrderEventsEnum.UPDATED_ADDRESS]: MapPinIcon,
 
   // Other
-  [OrderEventsEnum.ORDER_REPLACEMENT_CREATED]: ReplaceIcon,
+  [OrderEventsEnum.ORDER_REPLACEMENT_CREATED]: CopyPlusIcon,
   [OrderEventsEnum.OVERSOLD_ITEMS]: AlertTriangleIcon,
   [OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION]: ExternalLinkIcon,
   [OrderEventsEnum.OTHER]: CircleIcon,
@@ -144,7 +144,6 @@ const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
 export interface TimelineEventProps {
   children?: React.ReactNode;
   date: string;
-  secondaryTitle?: string;
   title?: React.ReactNode;
   titleElements?: TitleElement[];
   hasPlainDate?: boolean;
@@ -198,7 +197,6 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   const {
     children,
     date,
-    secondaryTitle,
     title,
     titleElements,
     hasPlainDate,
@@ -335,7 +333,6 @@ export const TimelineEvent = (props: TimelineEventProps) => {
               <TimelineEventHeader
                 title={title}
                 titleElements={titleElements}
-                secondaryTitle={secondaryTitle}
                 date={date}
                 hasPlainDate={hasPlainDate}
                 dateNode={dateNode}

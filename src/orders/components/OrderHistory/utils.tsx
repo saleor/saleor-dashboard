@@ -2,7 +2,6 @@
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import moment from "moment-timezone";
-import { MessageDescriptor } from "react-intl";
 
 // Date group labels - keys are used internally, labels are internationalized in component
 export type DateGroupKey =
@@ -66,21 +65,6 @@ export const groupEventsByDate = (
   return groups;
 };
 
-export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescriptor, any?] => {
-  switch (event.type) {
-    case OrderEventsEnum.ORDER_MARKED_AS_PAID: {
-      return [
-        {
-          defaultMessage: "Transaction Reference {transactionReference}",
-          description: "transaction reference",
-          id: "transaction-reference-order-history",
-        },
-        { transactionReference: event.transactionReference },
-      ];
-    }
-  }
-};
-
 const timelineEventTypes = {
   discount: [
     OrderEventsEnum.ORDER_DISCOUNT_ADDED,
@@ -93,36 +77,17 @@ const timelineEventTypes = {
     OrderEventsEnum.FULFILLMENT_REPLACED,
     OrderEventsEnum.FULFILLMENT_RETURNED,
     OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE,
-    OrderEventsEnum.ORDER_MARKED_AS_PAID,
     OrderEventsEnum.ORDER_DISCOUNT_ADDED,
     OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED,
     OrderEventsEnum.ORDER_DISCOUNT_UPDATED,
     OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
   ],
-  linked: [
-    OrderEventsEnum.ORDER_REPLACEMENT_CREATED,
-    OrderEventsEnum.ORDER_DISCOUNT_DELETED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED,
-  ],
   note: [OrderEventsEnum.NOTE_ADDED],
   note_updated: [OrderEventsEnum.NOTE_UPDATED],
-  rawMessage: [
-    OrderEventsEnum.OTHER,
-    OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
-    OrderEventsEnum.TRANSACTION_EVENT,
-  ],
-  secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID],
 };
 
 export const isTimelineEventOfType = (
-  type:
-    | "extendable"
-    | "secondaryTitle"
-    | "rawMessage"
-    | "note"
-    | "note_updated"
-    | "linked"
-    | "discount",
+  type: "extendable" | "note" | "note_updated" | "discount",
   eventType: OrderEventsEnum,
 ) => !!timelineEventTypes[type]?.includes(eventType);
 

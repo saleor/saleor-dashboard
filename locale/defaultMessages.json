@@ -489,6 +489,10 @@
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
   },
+  "1+C7Yt": {
+    "context": "order history message",
+    "string": "Transaction event"
+  },
   "1+ROfp": {
     "string": "Transaction"
   },
@@ -2561,10 +2565,6 @@
     "context": "bulk remove button label",
     "string": "Delete shipping zones"
   },
-  "EzcZkZ": {
-    "context": "order discount removed title",
-    "string": "Order discount was removed"
-  },
   "F/JMp6": {
     "context": "authorize status full",
     "string": "Full"
@@ -2956,6 +2956,10 @@
     "context": "order transaction refund summary label",
     "string": "Shipping"
   },
+  "Gvq2xG": {
+    "context": "order history message",
+    "string": "External service notification"
+  },
   "Gxo/XC": {
     "context": "header",
     "string": "Create model type"
@@ -3338,10 +3342,6 @@
   "J4NBVR": {
     "context": "link",
     "string": "View Orders"
-  },
-  "J4pxY1": {
-    "context": "product discount removed title",
-    "string": "{productName} discount was removed"
   },
   "J7mFhU": {
     "context": "currency code select",
@@ -3809,6 +3809,10 @@
   "MKtgZB": {
     "string": "Only staff users can access the dashboard"
   },
+  "MKzJvJ": {
+    "context": "order history message",
+    "string": "Other event"
+  },
   "MNZY28": {
     "context": "table column header",
     "string": "Channel threshold"
@@ -4059,10 +4063,6 @@
   "Nqh0na": {
     "context": "Product types search input placeholder",
     "string": "Search product types..."
-  },
-  "NrsKic": {
-    "context": "replacement created order history message draft number",
-    "string": "Draft #{orderNumber}"
   },
   "Nsk5WL": {
     "context": "link",
@@ -4538,6 +4538,10 @@
     "context": "years after label",
     "string": "years after issue"
   },
+  "QfrO5W": {
+    "context": "order history message",
+    "string": "{productName} discount was removed"
+  },
   "QiN4hv": {
     "context": "active",
     "string": "Active"
@@ -4638,6 +4642,9 @@
   },
   "RUzdUH": {
     "string": "No shipping rates found"
+  },
+  "RWLssM": {
+    "string": "Related Order"
   },
   "RXPGi/": {
     "context": "page title",
@@ -6083,6 +6090,9 @@
   "aCJwVq": {
     "context": "warehouse",
     "string": "Name"
+  },
+  "aCdAsI": {
+    "string": "Copy to clipboard"
   },
   "aEc9Ar": {
     "context": "gift card history message",
@@ -7701,10 +7711,6 @@
     "context": "btn label",
     "string": "Go to orders"
   },
-  "kvSYZh": {
-    "context": "replacement created order history message description",
-    "string": "was created for replaced products"
-  },
   "l0a2tU": {
     "context": "onboarding step description",
     "string": "Go to all products from where you can create a new product and view it in all product list. View the product in GraphQL"
@@ -8063,6 +8069,10 @@
   "nK68Sg": {
     "context": "model availability date label",
     "string": "Set availability date"
+  },
+  "nK8+8V": {
+    "context": "order history message",
+    "string": "Replacement order was created"
   },
   "nKwgxY": {
     "context": "select label",
@@ -8944,6 +8954,10 @@
   },
   "t1scMK": {
     "string": "Refunds settings"
+  },
+  "t2FkN1": {
+    "context": "order history message",
+    "string": "Order discount was removed"
   },
   "t3aiWF": {
     "context": "section header",
