@@ -1,12 +1,13 @@
 import { GiftCardDetailsQuery, OrderEventFragment } from "@dashboard/graphql";
-import { getUserInitials, getUserName } from "@dashboard/misc";
+import { getUserName } from "@dashboard/misc";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Button, EditIcon, Text, vars } from "@saleor/macaw-ui-next";
 import { InfoIcon, LinkIcon, MessageSquareIcon } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date";
-import { UserAvatar } from "../UserAvatar";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
 import { safeStringify } from "./utils";
 
@@ -29,20 +30,29 @@ const noteCardStyles = `
   .timeline-note-card:hover .timeline-edit-button {
     opacity: 1;
   }
-  .timeline-edit-link {
+  .timeline-edit-link,
+  .timeline-user-link {
     text-decoration: none;
   }
-  .timeline-edit-link:hover {
+  .timeline-edit-link:hover,
+  .timeline-user-link:hover,
+  .timeline-edit-link:hover span,
+  .timeline-user-link:hover span {
     text-decoration: underline;
   }
 `;
 
 // Inject styles once
 if (typeof document !== "undefined") {
-  const styleId = "timeline-note-styles-v4";
+  const styleId = "timeline-note-styles-v5";
 
   // Remove old styles if exist
-  ["timeline-note-styles", "timeline-note-styles-v2", "timeline-note-styles-v3"].forEach(id => {
+  [
+    "timeline-note-styles",
+    "timeline-note-styles-v2",
+    "timeline-note-styles-v3",
+    "timeline-note-styles-v4",
+  ].forEach(id => {
     const oldStyle = document.getElementById(id);
 
     if (oldStyle) {
@@ -93,26 +103,6 @@ const NoteMessage = ({ message }: NoteMessageProps) => (
     })}
   </>
 );
-
-const TimelineAvatar = ({
-  user,
-  app,
-}: {
-  user: OrderEventFragment["user"];
-  app: TimelineAppType;
-}) => {
-  if (user) {
-    return <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} size="small" />;
-  }
-
-  if (app) {
-    return (
-      <UserAvatar initials={app.name?.slice(0, 2)} url={app.brand?.logo?.default} size="small" />
-    );
-  }
-
-  return null;
-};
 
 export const TimelineNote = ({
   date,
@@ -202,16 +192,50 @@ export const TimelineNote = ({
             transition: "background-color 0.15s ease-in-out",
           }}
         >
-          {/* Header row with avatar, name, info icon, date */}
+          {/* Header row with name, info icon, date */}
           <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={2}>
-            <Box display="flex" alignItems="center" gap={2}>
-              <TimelineAvatar user={user} app={app} />
-              <Text size={3} fontWeight="medium">
-                {userDisplayName}
-              </Text>
-              <Text size={2} color="default2" display="flex" gap={1} whiteSpace="nowrap">
+            <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+              {user ? (
+                <Link to={staffMemberDetailsUrl(user.id)} className="timeline-user-link">
+                  <Text size={3} fontWeight="medium" color="default2">
+                    {userDisplayName}
+                  </Text>
+                </Link>
+              ) : (
+                <Text size={3} fontWeight="medium" color="default2">
+                  {userDisplayName}
+                </Text>
+              )}
+              <Text size={2} color="default2" whiteSpace="nowrap">
                 {relatedId ? (
-                  <FormattedMessage defaultMessage="edited" id="Zx1w1e" />
+                  <Box
+                    as="span"
+                    display="inline-flex"
+                    alignItems="center"
+                    gap={1}
+                    cursor="pointer"
+                    className="timeline-edit-link"
+                    onClick={() => {
+                      const element = document.getElementById(`timeline-note-${relatedId}`);
+
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "center" });
+
+                        const card = element.querySelector(".timeline-note-card") as HTMLElement;
+
+                        if (card) {
+                          card.style.transition = "border-color 0.3s ease";
+                          card.style.borderColor = "hsla(0, 0%, 0%, 0.3)";
+                          setTimeout(() => {
+                            card.style.borderColor = "";
+                          }, 2000);
+                        }
+                      }
+                    }}
+                  >
+                    <FormattedMessage defaultMessage="edited" id="Zx1w1e" />
+                    <LinkIcon size={12} />
+                  </Box>
                 ) : (
                   <FormattedMessage defaultMessage="added" id="xJEaxW" />
                 )}
@@ -251,44 +275,6 @@ export const TimelineNote = ({
                   />
                 )}
               </Box>
-
-              {/* Edit link for edited notes */}
-              {relatedId && (
-                <Box
-                  marginTop={3}
-                  display="flex"
-                  alignItems="center"
-                  gap={1}
-                  cursor="pointer"
-                  onClick={() => {
-                    const element = document.getElementById(`timeline-note-${relatedId}`);
-
-                    if (element) {
-                      element.scrollIntoView({ behavior: "smooth", block: "center" });
-
-                      // Find the card element inside and animate its border
-                      const card = element.querySelector(".timeline-note-card") as HTMLElement;
-
-                      if (card) {
-                        card.style.transition = "border-color 0.3s ease";
-                        card.style.borderColor = "hsla(0, 0%, 0%, 0.3)";
-                        setTimeout(() => {
-                          card.style.borderColor = "";
-                        }, 2000);
-                      }
-                    }
-                  }}
-                >
-                  <LinkIcon size={14} color={vars.colors.text.default2} />
-                  <Text size={2} color="default2" className="timeline-edit-link">
-                    <FormattedMessage
-                      defaultMessage="Edit of {userName}'s comment"
-                      id="4vU2Q7"
-                      values={{ userName: userDisplayName }}
-                    />
-                  </Text>
-                </Box>
-              )}
             </>
           )}
         </Box>

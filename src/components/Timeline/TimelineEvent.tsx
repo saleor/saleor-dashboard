@@ -1,7 +1,8 @@
 import { OrderEventsEnum } from "@dashboard/graphql";
 import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
 import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
-import { Accordion, Box, sprinkles, vars } from "@saleor/macaw-ui-next";
+import { getStatusColor, PillStatusType } from "@dashboard/misc";
+import { Accordion, Box, sprinkles, useTheme, vars } from "@saleor/macaw-ui-next";
 import {
   AlertTriangleIcon,
   BanIcon,
@@ -33,7 +34,7 @@ import * as React from "react";
 import TimelineEventHeader, { TimelineUser, TitleElement } from "./TimelineEventHeader";
 import { safeStringify } from "./utils";
 
-// CSS for hover effect on info icon and chevron rotation
+// CSS for hover effect on info icon, chevron rotation, and user links
 const eventStyles = `
   .timeline-event-row .timeline-info-icon {
     opacity: 0;
@@ -53,18 +54,27 @@ const eventStyles = `
   [data-state="open"] .timeline-chevron {
     transform: rotate(0deg);
   }
+  .timeline-user-link {
+    text-decoration: none;
+  }
+  .timeline-user-link:hover,
+  .timeline-user-link:hover span {
+    text-decoration: underline;
+  }
 `;
 
 // Inject styles once
 if (typeof document !== "undefined") {
-  const styleId = "timeline-event-styles-v2";
+  const styleId = "timeline-event-styles-v3";
 
-  // Remove old version if exists
-  const oldStyle = document.getElementById("timeline-event-styles");
+  // Remove old versions if exist
+  ["timeline-event-styles", "timeline-event-styles-v2"].forEach(id => {
+    const oldStyle = document.getElementById(id);
 
-  if (oldStyle) {
-    oldStyle.remove();
-  }
+    if (oldStyle) {
+      oldStyle.remove();
+    }
+  });
 
   if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
@@ -78,35 +88,27 @@ if (typeof document !== "undefined") {
 // Custom icon type that includes both Lucide icons and custom icons
 type IconComponent = LucideIcon | typeof RefundedIcon | typeof ReturnedIcon;
 
-// Colors matching fulfillment group icons (from StatusIndicator.tsx)
-const EVENT_COLORS = {
-  green: "hsla(152, 98%, 44%, 1)", // Fulfilled
-  blue: "hsla(214, 100%, 55%, 1)", // Refunded
-  lightBlue: "hsla(214, 100%, 63.1%, 1)", // Returned
-  red: "hsla(3, 90%, 64%, 1)", // Canceled
-};
-
-// Map event types to colors - matching fulfillment group colors
-const eventColorMap: Partial<Record<OrderEventsEnum, string>> = {
-  // Fulfillment - matching StatusIndicator colors
-  [OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS]: EVENT_COLORS.green,
-  [OrderEventsEnum.FULFILLMENT_CANCELED]: EVENT_COLORS.red,
-  [OrderEventsEnum.FULFILLMENT_REFUNDED]: EVENT_COLORS.blue,
-  [OrderEventsEnum.FULFILLMENT_RETURNED]: EVENT_COLORS.lightBlue,
+// Map event types to pill status types (matching Order status pills)
+const eventStatusMap: Partial<Record<OrderEventsEnum, PillStatusType>> = {
+  // Fulfillment
+  [OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS]: "success",
+  [OrderEventsEnum.FULFILLMENT_CANCELED]: "error",
+  [OrderEventsEnum.FULFILLMENT_REFUNDED]: "info",
+  [OrderEventsEnum.FULFILLMENT_RETURNED]: "info",
 
   // Payment
-  [OrderEventsEnum.PAYMENT_REFUNDED]: EVENT_COLORS.blue,
-  [OrderEventsEnum.PAYMENT_FAILED]: EVENT_COLORS.red,
-  [OrderEventsEnum.ORDER_FULLY_PAID]: EVENT_COLORS.green,
-  [OrderEventsEnum.ORDER_MARKED_AS_PAID]: EVENT_COLORS.green,
+  [OrderEventsEnum.PAYMENT_REFUNDED]: "info",
+  [OrderEventsEnum.PAYMENT_FAILED]: "error",
+  [OrderEventsEnum.ORDER_FULLY_PAID]: "success",
+  [OrderEventsEnum.ORDER_MARKED_AS_PAID]: "success",
 
   // Transaction
-  [OrderEventsEnum.TRANSACTION_REFUND_REQUESTED]: EVENT_COLORS.blue,
-  [OrderEventsEnum.TRANSACTION_MARK_AS_PAID_FAILED]: EVENT_COLORS.red,
+  [OrderEventsEnum.TRANSACTION_REFUND_REQUESTED]: "info",
+  [OrderEventsEnum.TRANSACTION_MARK_AS_PAID_FAILED]: "error",
 
   // Order lifecycle
-  [OrderEventsEnum.CONFIRMED]: EVENT_COLORS.green,
-  [OrderEventsEnum.CANCELED]: EVENT_COLORS.red,
+  [OrderEventsEnum.CONFIRMED]: "success",
+  [OrderEventsEnum.CANCELED]: "error",
 };
 
 // Map event types to icons - matching fulfillment group icons where applicable
@@ -203,8 +205,12 @@ const ICON_COLOR = vars.colors.text.default2;
 
 // Icon wrapper component with circle background
 const EventIcon = ({ eventType }: { eventType?: OrderEventsEnum | null }) => {
+  const { theme: currentTheme } = useTheme();
   const IconComponent = eventType ? eventIconMap[eventType] : undefined;
-  const iconColor = eventType ? eventColorMap[eventType] : undefined;
+  const statusType = eventType ? eventStatusMap[eventType] : undefined;
+
+  // Get colors from pill status system for consistency with Order pills
+  const statusColors = statusType ? getStatusColor({ status: statusType, currentTheme }) : null;
 
   return (
     <Box
@@ -212,14 +218,16 @@ const EventIcon = ({ eventType }: { eventType?: OrderEventsEnum | null }) => {
       alignItems="center"
       justifyContent="center"
       borderRadius="100%"
-      backgroundColor="default1"
-      borderColor="default1"
       borderStyle="solid"
       borderWidth={1}
       __width="32px"
       __height="32px"
       flexShrink="0"
-      __color={iconColor || ICON_COLOR}
+      __backgroundColor={statusColors?.base}
+      __borderColor={statusColors?.border}
+      __color={statusColors?.text || ICON_COLOR}
+      backgroundColor={statusColors ? undefined : "default1"}
+      borderColor={statusColors ? undefined : "default1"}
     >
       {IconComponent ? (
         <IconComponent size={16} color="currentColor" />

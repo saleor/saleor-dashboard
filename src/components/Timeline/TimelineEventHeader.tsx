@@ -52,8 +52,8 @@ const TimelineEventHeader = ({
     user && userName ? (
       <Text size={3} color="default2" as="span" marginLeft={1}>
         by{" "}
-        <Link to={staffMemberDetailsUrl(user.id)}>
-          <Text size={3} color="default2" textDecoration="underline" as="span">
+        <Link to={staffMemberDetailsUrl(user.id)} className="timeline-user-link">
+          <Text size={3} color="default2" as="span">
             {userName}
           </Text>
         </Link>

@@ -173,12 +173,11 @@ describe("TimelineNote", () => {
     // Assert
     expect(screen.getByText("Test User")).toBeInTheDocument();
     expect(screen.getByText("Note")).toBeInTheDocument();
-    expect(screen.getByText("TU")).toBeInTheDocument();
     expect(screen.getByText("a few seconds ago")).toBeInTheDocument();
     // Note id is now used as HTML id attribute instead of displayed text
     expect(container.querySelector(`#timeline-note-${noteId}`)).toBeInTheDocument();
-    // Related id is shown in the "Edit of user's comment" link
-    expect(screen.getByText(/Edit of.*comment/)).toBeInTheDocument();
+    // For edited notes, "edited" text with link icon is shown instead of "added"
+    expect(screen.getByText("edited")).toBeInTheDocument();
   });
 
   it("should edit note", async () => {

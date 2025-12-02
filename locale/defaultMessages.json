@@ -1052,9 +1052,6 @@
     "context": "account information, header",
     "string": "Account Information"
   },
-  "4vU2Q7": {
-    "string": "Edit of {userName}'s comment"
-  },
   "4y3Smi": {
     "string": "Removing permissions may cause extension to break."
   },
