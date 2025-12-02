@@ -33,13 +33,15 @@ export const TimelineAddNote = ({
   label,
 }: TimelineAddNoteProps) => {
   const intl = useIntl();
+  const isMessageEmpty = message.trim().length === 0;
+
   const submit = (e: React.FormEvent<any>) => {
     reset();
     onSubmit(e);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && !disabled && message.trim()) {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && !disabled && !isMessageEmpty) {
       e.preventDefault();
       submit(e);
     }
@@ -65,7 +67,7 @@ export const TimelineAddNote = ({
         rows={3}
       />
       <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>
-        <Button disabled={disabled || !message.trim()} onClick={e => submit(e)} variant="secondary">
+        <Button disabled={disabled || isMessageEmpty} onClick={e => submit(e)} variant="secondary">
           {buttonLabel || (
             <FormattedMessage
               id="v/1VA6"
