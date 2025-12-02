@@ -489,10 +489,6 @@
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
   },
-  "1+C7Yt": {
-    "context": "order history message",
-    "string": "Transaction event"
-  },
   "1+ROfp": {
     "string": "Transaction"
   },
@@ -1040,6 +1036,10 @@
   },
   "4i7ED7": {
     "string": "This refund has been successfully processed and cannot be edited"
+  },
+  "4jcwS2": {
+    "context": "order history message",
+    "string": "Other event"
   },
   "4k9rMQ": {
     "context": "variant attribute checkbox",
@@ -2956,10 +2956,6 @@
     "context": "order transaction refund summary label",
     "string": "Shipping"
   },
-  "Gvq2xG": {
-    "context": "order history message",
-    "string": "External service notification"
-  },
   "Gxo/XC": {
     "context": "header",
     "string": "Create model type"
@@ -3729,6 +3725,10 @@
     "context": "metadata field value, header",
     "string": "Value"
   },
+  "LlbAEg": {
+    "context": "order history message",
+    "string": "External service notification"
+  },
   "Lm2Zw7": {
     "context": "name placeholder",
     "string": "Unnamed webhook"
@@ -3808,10 +3808,6 @@
   },
   "MKtgZB": {
     "string": "Only staff users can access the dashboard"
-  },
-  "MKzJvJ": {
-    "context": "order history message",
-    "string": "Other event"
   },
   "MNZY28": {
     "context": "table column header",
@@ -4240,6 +4236,10 @@
     "context": "attribute's slug short code label",
     "string": "Attribute Code"
   },
+  "P7KpCX": {
+    "context": "order history message",
+    "string": "Order discount was removed"
+  },
   "P7PLVj": {
     "string": "Date"
   },
@@ -4538,10 +4538,6 @@
     "context": "years after label",
     "string": "years after issue"
   },
-  "QfrO5W": {
-    "context": "order history message",
-    "string": "{productName} discount was removed"
-  },
   "QiN4hv": {
     "context": "active",
     "string": "Active"
@@ -4642,9 +4638,6 @@
   },
   "RUzdUH": {
     "string": "No shipping rates found"
-  },
-  "RWLssM": {
-    "string": "Related Order"
   },
   "RXPGi/": {
     "context": "page title",
@@ -5364,6 +5357,10 @@
   "VvhNCi": {
     "context": "command menu shortcut",
     "string": "Command menu"
+  },
+  "VxStyU": {
+    "context": "order history message",
+    "string": "Replacement order was created"
   },
   "VyC+Bm": {
     "context": "radio button label",
@@ -6244,6 +6241,10 @@
     "context": "product price",
     "string": "Price"
   },
+  "bBiDNg": {
+    "context": "order history message",
+    "string": "Transaction event"
+  },
   "bDBiac": {
     "context": "dropdown or column label",
     "string": "Tax class"
@@ -6406,6 +6407,10 @@
   },
   "byP6IC": {
     "string": "Selected"
+  },
+  "c12l5n": {
+    "context": "order history message",
+    "string": "{productName} discount was removed"
   },
   "c24hjq": {
     "context": "status",
@@ -8070,10 +8075,6 @@
     "context": "model availability date label",
     "string": "Set availability date"
   },
-  "nK8+8V": {
-    "context": "order history message",
-    "string": "Replacement order was created"
-  },
   "nKwgxY": {
     "context": "select label",
     "string": "Channel name"
@@ -8379,6 +8380,9 @@
   "pSb46V": {
     "context": "dialog header",
     "string": "Create structure"
+  },
+  "pSqXo6": {
+    "string": "Related Order"
   },
   "pTpx0p": {
     "context": "order history message",
@@ -8954,10 +8958,6 @@
   },
   "t1scMK": {
     "string": "Refunds settings"
-  },
-  "t2FkN1": {
-    "context": "order history message",
-    "string": "Order discount was removed"
   },
   "t3aiWF": {
     "context": "section header",
