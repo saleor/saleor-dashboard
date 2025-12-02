@@ -6,7 +6,6 @@ import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
 import { CheckIcon } from "lucide-react";
-import React from "react";
 import { defineMessages, MessageDescriptor, useIntl } from "react-intl";
 
 import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";
@@ -15,6 +14,44 @@ import {
   hasOrderLineDiscountWithNoPreviousValue,
   isTimelineEventOfDiscountType,
 } from "./utils";
+
+interface OrderLineItemProps {
+  orderLine: OrderEventFragment["lines"][0]["orderLine"];
+  quantity: number;
+  itemName: string;
+}
+
+const OrderLineItem = ({ orderLine, quantity, itemName }: OrderLineItemProps) => (
+  <Box display="flex" alignItems="center" justifyContent="space-between" gap={3}>
+    <Box display="flex" flexDirection="column">
+      <Text size={3} fontWeight="medium">
+        {orderLine?.productName || itemName}
+      </Text>
+      {orderLine?.variantName && (
+        <Text size={2} color="default2">
+          {orderLine.variantName}
+        </Text>
+      )}
+    </Box>
+    <Text size={3} color="default2" whiteSpace="nowrap" flexShrink="0">
+      ×{quantity}
+    </Text>
+  </Box>
+);
+
+interface LabelValueRowProps {
+  label: string;
+  children: React.ReactNode;
+}
+
+const LabelValueRow = ({ label, children }: LabelValueRowProps) => (
+  <Box display="flex" justifyContent="space-between" alignItems="center">
+    <Text size={2} color="default2">
+      {label}
+    </Text>
+    {children}
+  </Box>
+);
 
 const titles: Record<string, MessageDescriptor> = defineMessages({
   draftCreatedFromReplace: {
@@ -166,80 +203,41 @@ const ExtendedTimelineEvent = ({
     >
       {lines && lines.length > 0 ? (
         <Box display="flex" flexDirection="column" gap={1}>
-          {/* Order Lines */}
           {lines.map(({ orderLine, quantity, itemName }, i) => (
-            <Box
+            <OrderLineItem
               key={orderLine?.id || `${itemName}-${quantity}-${i}`}
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              gap={3}
-            >
-              <Box display="flex" flexDirection="column">
-                <Text size={3} fontWeight="medium">
-                  {orderLine?.productName || itemName}
-                </Text>
-                {orderLine?.variantName && (
-                  <Text size={2} color="default2">
-                    {orderLine.variantName}
-                  </Text>
-                )}
-              </Box>
-              <Text size={3} color="default2" whiteSpace="nowrap" flexShrink="0">
-                ×{quantity}
-              </Text>
-            </Box>
+              orderLine={orderLine}
+              quantity={quantity}
+              itemName={itemName}
+            />
           ))}
 
-          {/* Footer section with metadata */}
           {hasFooterContent && (
             <Box display="flex" flexDirection="column" gap={1} paddingTop={2}>
-              {/* Refunded amount */}
               {(amount || amount === 0) && (
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Text size={2} color="default2">
-                    {intl.formatMessage(messages.refundedAmount)}
-                  </Text>
+                <LabelValueRow label={intl.formatMessage(messages.refundedAmount)}>
                   <Text size={2}>
-                    <Money
-                      money={{
-                        amount,
-                        currency: orderCurrency,
-                      }}
-                    />
+                    <Money money={{ amount, currency: orderCurrency }} />
                   </Text>
-                </Box>
+                </LabelValueRow>
               )}
-
-              {/* Shipment refunded */}
               {shippingCostsIncluded && (
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Text size={2} color="default2">
-                    {intl.formatMessage(messages.refundedShipment)}
-                  </Text>
+                <LabelValueRow label={intl.formatMessage(messages.refundedShipment)}>
                   <CheckIcon size={14} />
-                </Box>
+                </LabelValueRow>
               )}
-
-              {/* Transaction reference */}
               {!!transactionReference && (
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Text size={2} color="default2">
-                    {intl.formatMessage(messages.transactionReference)}
-                  </Text>
+                <LabelValueRow label={intl.formatMessage(messages.transactionReference)}>
                   <Text size={2}>{transactionReference}</Text>
-                </Box>
+                </LabelValueRow>
               )}
             </Box>
           )}
         </Box>
       ) : transactionReference ? (
-        <Box display="flex" justifyContent="space-between" alignItems="center" paddingY={2}>
-          <Text size={2} color="default2">
-            {intl.formatMessage(messages.transactionReference)}
-          </Text>
+        <LabelValueRow label={intl.formatMessage(messages.transactionReference)}>
           <Text size={2}>{transactionReference}</Text>
-        </Box>
+        </LabelValueRow>
       ) : null}
     </TimelineEvent>
   );
