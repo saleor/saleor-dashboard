@@ -1,3 +1,5 @@
+import "./Timeline.css";
+
 import { OrderEventsEnum } from "@dashboard/graphql";
 import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
 import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
@@ -37,57 +39,6 @@ import TimelineEventHeader, {
   TitleElement,
 } from "./TimelineEventHeader";
 import { safeStringify } from "./utils";
-
-// CSS for hover effect on info icon, chevron rotation, and user links
-const eventStyles = `
-  .timeline-event-row .timeline-info-icon {
-    opacity: 0;
-    transition: opacity 0.15s ease-in-out;
-  }
-  .timeline-event-row:hover .timeline-info-icon {
-    opacity: 1;
-  }
-  .timeline-chevron {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease;
-    transform: rotate(-90deg);
-  }
-  button[data-state="open"] .timeline-chevron,
-  [data-state="open"] .timeline-chevron {
-    transform: rotate(0deg);
-  }
-  .timeline-user-link {
-    text-decoration: none;
-  }
-  .timeline-user-link:hover,
-  .timeline-user-link:hover span {
-    text-decoration: underline;
-  }
-`;
-
-// Inject styles once
-if (typeof document !== "undefined") {
-  const styleId = "timeline-event-styles-v3";
-
-  // Remove old versions if exist
-  ["timeline-event-styles", "timeline-event-styles-v2"].forEach(id => {
-    const oldStyle = document.getElementById(id);
-
-    if (oldStyle) {
-      oldStyle.remove();
-    }
-  });
-
-  if (!document.getElementById(styleId)) {
-    const style = document.createElement("style");
-
-    style.id = styleId;
-    style.textContent = eventStyles;
-    document.head.appendChild(style);
-  }
-}
 
 // Custom icon type that includes both Lucide icons and custom icons
 type IconComponent = LucideIcon | typeof RefundedIcon | typeof ReturnedIcon;

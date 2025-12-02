@@ -1,0 +1,35 @@
+/* Timeline event styles */
+
+/* Info icon - show on hover */
+.timeline-event-row .timeline-info-icon {
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.timeline-event-row:hover .timeline-info-icon {
+  opacity: 1;
+}
+
+/* Chevron rotation for accordion */
+.timeline-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  transform: rotate(-90deg);
+}
+
+button[data-state="open"] .timeline-chevron,
+[data-state="open"] .timeline-chevron {
+  transform: rotate(0deg);
+}
+
+/* User/app link styling */
+.timeline-user-link {
+  text-decoration: none;
+}
+
+.timeline-user-link:hover,
+.timeline-user-link:hover span {
+  text-decoration: underline;
+}
