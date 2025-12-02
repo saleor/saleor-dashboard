@@ -11,64 +11,6 @@ import { DateTime } from "../Date";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
 import { safeStringify } from "./utils";
 
-// CSS for hover effect
-const noteCardStyles = `
-  .timeline-note-card:hover {
-    background-color: ${vars.colors.background.default2};
-  }
-  .timeline-note-row .timeline-info-icon {
-    opacity: 0;
-    transition: opacity 0.15s ease-in-out;
-  }
-  .timeline-note-row:hover .timeline-info-icon {
-    opacity: 1;
-  }
-  .timeline-note-card .timeline-edit-button {
-    opacity: 0;
-    transition: opacity 0.15s ease-in-out;
-  }
-  .timeline-note-card:hover .timeline-edit-button {
-    opacity: 1;
-  }
-  .timeline-edit-link,
-  .timeline-user-link {
-    text-decoration: none;
-  }
-  .timeline-edit-link:hover,
-  .timeline-user-link:hover,
-  .timeline-edit-link:hover span,
-  .timeline-user-link:hover span {
-    text-decoration: underline;
-  }
-`;
-
-// Inject styles once
-if (typeof document !== "undefined") {
-  const styleId = "timeline-note-styles-v5";
-
-  // Remove old styles if exist
-  [
-    "timeline-note-styles",
-    "timeline-note-styles-v2",
-    "timeline-note-styles-v3",
-    "timeline-note-styles-v4",
-  ].forEach(id => {
-    const oldStyle = document.getElementById(id);
-
-    if (oldStyle) {
-      oldStyle.remove();
-    }
-  });
-
-  if (!document.getElementById(styleId)) {
-    const style = document.createElement("style");
-
-    style.id = styleId;
-    style.textContent = noteCardStyles;
-    document.head.appendChild(style);
-  }
-}
-
 type TimelineAppType =
   | NonNullable<GiftCardDetailsQuery["giftCard"]>["events"][0]["app"]
   | OrderEventFragment["app"];
@@ -88,22 +30,6 @@ interface TimelineNoteProps {
   isLastInGroup?: boolean;
 }
 
-interface NoteMessageProps {
-  message: string | null;
-}
-
-const NoteMessage = ({ message }: NoteMessageProps) => (
-  <>
-    {message?.split("\n").map((string, index) => {
-      if (string === "") {
-        return <br key={`break-${index}`} />;
-      }
-
-      return <Text key={`note-${index}`}>{string}</Text>;
-    })}
-  </>
-);
-
 export const TimelineNote = ({
   date,
   user,
@@ -120,6 +46,7 @@ export const TimelineNote = ({
 }: TimelineNoteProps) => {
   const userDisplayName = getUserName(user, true) ?? app?.name;
   const [showEdit, setShowEdit] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const eventDataString = useMemo(() => {
     if (!eventData) return null;
@@ -131,23 +58,14 @@ export const TimelineNote = ({
     }
   }, [eventData]);
 
-  const infoIcon = eventDataString ? (
-    <span
-      className="timeline-info-icon"
-      title={eventDataString}
-      style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
-    >
-      <InfoIcon size={16} color={vars.colors.text.default2} />
-    </span>
-  ) : null;
-
   return (
     <Box
       display="flex"
       width="100%"
       position="relative"
-      className="timeline-note-row"
       id={id ? `timeline-note-${id}` : undefined}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Vertical connecting line - hidden for last item in group */}
       {!isLastInGroup && (
@@ -197,17 +115,22 @@ export const TimelineNote = ({
           borderWidth={1}
           borderColor="default1"
           padding={4}
-          className="timeline-note-card"
+          data-note-card
           style={{
-            transition: "background-color 0.15s ease-in-out",
+            transition: "border-color 0.3s ease",
           }}
         >
           {/* Header row with name, info icon, date */}
           <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={2}>
             <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
               {user ? (
-                <Link to={staffMemberDetailsUrl(user.id)} className="timeline-user-link">
-                  <Text size={3} fontWeight="medium" color="default2">
+                <Link to={staffMemberDetailsUrl(user.id)} style={{ textDecoration: "none" }}>
+                  <Text
+                    size={3}
+                    fontWeight="medium"
+                    color="default2"
+                    textDecoration={{ hover: "underline" }}
+                  >
                     {userDisplayName}
                   </Text>
                 </Link>
@@ -224,17 +147,15 @@ export const TimelineNote = ({
                     alignItems="center"
                     gap={1}
                     cursor="pointer"
-                    className="timeline-edit-link"
                     onClick={() => {
                       const element = document.getElementById(`timeline-note-${relatedId}`);
 
                       if (element) {
                         element.scrollIntoView({ behavior: "smooth", block: "center" });
 
-                        const card = element.querySelector(".timeline-note-card") as HTMLElement;
+                        const card = element.querySelector("[data-note-card]") as HTMLElement;
 
                         if (card) {
-                          card.style.transition = "border-color 0.3s ease";
                           card.style.borderColor = "hsla(0, 0%, 0%, 0.3)";
                           setTimeout(() => {
                             card.style.borderColor = "";
@@ -252,7 +173,21 @@ export const TimelineNote = ({
               </Text>
             </Box>
             <Box display="flex" alignItems="center" gap={2}>
-              {infoIcon}
+              {eventDataString && (
+                <Box
+                  as="span"
+                  title={eventDataString}
+                  cursor="pointer"
+                  display="inline-flex"
+                  alignItems="center"
+                  style={{
+                    opacity: isHovered ? 1 : 0,
+                    transition: "opacity 0.15s ease-in-out",
+                  }}
+                >
+                  <InfoIcon size={16} color={vars.colors.text.default2} />
+                </Box>
+              )}
               <Text size={2} color="default2" whiteSpace="nowrap">
                 {dateNode || <DateTime date={date} plain={hasPlainDate} />}
               </Text>
@@ -269,23 +204,25 @@ export const TimelineNote = ({
               onCancel={() => setShowEdit(false)}
             />
           ) : (
-            <>
-              <Box display="flex" justifyContent="space-between" gap={3} wordBreak="break-all">
-                <NoteMessage message={message} />
-                {onNoteUpdate && (
+            <Box display="flex" justifyContent="space-between" gap={3} wordBreak="break-all">
+              <Text style={{ whiteSpace: "pre-wrap" }}>{message}</Text>
+              {onNoteUpdate && (
+                <Box
+                  style={{
+                    opacity: isHovered ? 1 : 0,
+                    transition: "opacity 0.15s ease-in-out",
+                  }}
+                >
                   <Button
-                    className="timeline-edit-button"
                     data-test-id="edit-note"
                     variant="tertiary"
                     size="small"
-                    onClick={() => {
-                      setShowEdit(true);
-                    }}
+                    onClick={() => setShowEdit(true)}
                     icon={<EditIcon size="small" />}
                   />
-                )}
-              </Box>
-            </>
+                </Box>
+              )}
+            </Box>
           )}
         </Box>
       </Box>
