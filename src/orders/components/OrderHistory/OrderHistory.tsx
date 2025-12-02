@@ -14,7 +14,6 @@ import { OrderEventFragment, OrderEventsEnum, OrderNoteUpdateMutation } from "@d
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
-import moment from "moment-timezone";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
@@ -22,60 +21,7 @@ import { HistoryComponentLoader } from "./HistoryComponentLoader";
 import LinkedTimelineEvent from "./LinkedTimelineEvent";
 import { getEventMessage } from "./messages";
 import { OrderHistoryDate } from "./OrderHistoryDate";
-import { getEventSecondaryTitle, isTimelineEventOfType } from "./utils";
-
-// Helper to get date group key - smart grouping based on age
-const getDateGroupKey = (date: string | null): DateGroupKey => {
-  if (!date) {
-    return "UNKNOWN";
-  }
-
-  const eventDate = moment(date);
-  const now = moment();
-  const today = moment().startOf("day");
-  const yesterday = moment().subtract(1, "day").startOf("day");
-  const daysAgo = now.diff(eventDate, "days");
-
-  // Daily precision for last 48 hours
-  if (eventDate.isSame(today, "day")) {
-    return "TODAY";
-  } else if (eventDate.isSame(yesterday, "day")) {
-    return "YESTERDAY";
-  }
-
-  // Progressive broader buckets for older events
-  if (daysAgo < 7) {
-    return "LAST_7_DAYS";
-  } else if (daysAgo < 30) {
-    return "LAST_30_DAYS";
-  } else {
-    return "OLDER";
-  }
-};
-
-// Group events by date - preserves insertion order
-const groupEventsByDate = (events: OrderEventFragment[]): Array<[string, OrderEventFragment[]]> => {
-  const groups: Array<[string, OrderEventFragment[]]> = [];
-  const groupMap = new Map<string, number>();
-
-  events.forEach(event => {
-    const key = getDateGroupKey(event.date);
-
-    if (!groupMap.has(key)) {
-      groupMap.set(key, groups.length);
-      groups.push([key, []]);
-    }
-
-    const index = groupMap.get(key)!;
-
-    groups[index][1].push(event);
-  });
-
-  return groups;
-};
-
-// Date group labels - keys are used internally, labels are internationalized in component
-type DateGroupKey = "TODAY" | "YESTERDAY" | "LAST_7_DAYS" | "LAST_30_DAYS" | "OLDER" | "UNKNOWN";
+import { getEventSecondaryTitle, groupEventsByDate, isTimelineEventOfType } from "./utils";
 
 // Date group header component with internationalized labels
 const DateGroupHeader = ({ groupKey }: { groupKey: string }) => {

@@ -1,7 +1,70 @@
 // @ts-strict-ignore
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
+import moment from "moment-timezone";
 import { MessageDescriptor } from "react-intl";
+
+// Date group labels - keys are used internally, labels are internationalized in component
+export type DateGroupKey =
+  | "TODAY"
+  | "YESTERDAY"
+  | "LAST_7_DAYS"
+  | "LAST_30_DAYS"
+  | "OLDER"
+  | "UNKNOWN";
+
+// Helper to get date group key - smart grouping based on age
+export const getDateGroupKey = (date: string | null, now?: moment.Moment): DateGroupKey => {
+  if (!date) {
+    return "UNKNOWN";
+  }
+
+  const eventDate = moment(date);
+  const currentMoment = now || moment();
+  const today = currentMoment.clone().startOf("day");
+  const yesterday = currentMoment.clone().subtract(1, "day").startOf("day");
+  const daysAgo = currentMoment.diff(eventDate, "days");
+
+  // Daily precision for last 48 hours
+  if (eventDate.isSame(today, "day")) {
+    return "TODAY";
+  } else if (eventDate.isSame(yesterday, "day")) {
+    return "YESTERDAY";
+  }
+
+  // Progressive broader buckets for older events
+  if (daysAgo < 7) {
+    return "LAST_7_DAYS";
+  } else if (daysAgo < 30) {
+    return "LAST_30_DAYS";
+  } else {
+    return "OLDER";
+  }
+};
+
+// Group events by date - preserves insertion order
+export const groupEventsByDate = (
+  events: OrderEventFragment[],
+  now?: moment.Moment,
+): Array<[DateGroupKey, OrderEventFragment[]]> => {
+  const groups: Array<[DateGroupKey, OrderEventFragment[]]> = [];
+  const groupMap = new Map<DateGroupKey, number>();
+
+  events.forEach(event => {
+    const key = getDateGroupKey(event.date, now);
+
+    if (!groupMap.has(key)) {
+      groupMap.set(key, groups.length);
+      groups.push([key, []]);
+    }
+
+    const index = groupMap.get(key)!;
+
+    groups[index][1].push(event);
+  });
+
+  return groups;
+};
 
 export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescriptor, any?] => {
   switch (event.type) {
