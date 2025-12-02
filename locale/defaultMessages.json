@@ -3517,10 +3517,6 @@
     "context": "input label",
     "string": "Refund value"
   },
-  "K3F+pJ": {
-    "context": "relative time in minutes",
-    "string": "{minutes}m ago"
-  },
   "K58C4r": {
     "string": "We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}"
   },
@@ -6092,10 +6088,6 @@
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
   },
-  "aFLtki": {
-    "context": "relative time in hours",
-    "string": "{hours}h ago"
-  },
   "aFVFeH": {
     "context": "submit button",
     "string": "Add manual capture"
@@ -6449,13 +6441,13 @@
     "context": "Channel label",
     "string": "Channel"
   },
+  "cIoOf0": {
+    "context": "relative time in minutes",
+    "string": "{minutes}m ago"
+  },
   "cJ5ASN": {
     "context": "attribute position in storefront filters",
     "string": "Position in faceted navigation"
-  },
-  "cJy7lw": {
-    "context": "relative time",
-    "string": "just now"
   },
   "cKCfSW": {
     "context": "dialog header",
@@ -8307,10 +8299,6 @@
     "context": "order send refund, manual transaction refund was created",
     "string": "Manual refund was created successfully"
   },
-  "p4DQcp": {
-    "context": "relative time in days",
-    "string": "{days}d ago"
-  },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
     "string": "Assign and save"
@@ -8373,6 +8361,10 @@
   "pRYGUR": {
     "context": "section description",
     "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
+  },
+  "pSFOFy": {
+    "context": "relative time in days",
+    "string": "{days}d ago"
   },
   "pSb46V": {
     "context": "dialog header",
@@ -8449,6 +8441,10 @@
   "puRlnN": {
     "context": "card subtitle",
     "string": "Entered prices"
+  },
+  "puYVLm": {
+    "context": "relative time in hours",
+    "string": "{hours}h ago"
   },
   "puikeb": {
     "context": "button",
@@ -9531,6 +9527,10 @@
   },
   "wO9wb5": {
     "string": "GitHub"
+  },
+  "wOaLvi": {
+    "context": "relative time",
+    "string": "just now"
   },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
