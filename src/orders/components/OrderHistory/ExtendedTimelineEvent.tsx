@@ -5,6 +5,7 @@ import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
+import { CheckIcon } from "lucide-react";
 import React from "react";
 import { defineMessages, MessageDescriptor, useIntl } from "react-intl";
 
@@ -184,7 +185,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
                 )}
               </Box>
               <Text size={3} color="default2" whiteSpace="nowrap" flexShrink="0">
-                qty: {quantity}
+                ×{quantity}
               </Text>
             </Box>
           ))}
@@ -215,7 +216,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
                   <Text size={2} color="default2">
                     {intl.formatMessage(messages.refundedShipment)}
                   </Text>
-                  <Text size={2}>✓</Text>
+                  <CheckIcon size={14} />
                 </Box>
               )}
 

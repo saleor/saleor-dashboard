@@ -65,7 +65,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = ({
         rows={3}
       />
       <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>
-        <Button disabled={disabled} onClick={e => submit(e)} variant="secondary">
+        <Button disabled={disabled || !message.trim()} onClick={e => submit(e)} variant="secondary">
           {buttonLabel || (
             <FormattedMessage
               id="v/1VA6"
