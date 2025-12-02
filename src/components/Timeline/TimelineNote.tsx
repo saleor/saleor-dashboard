@@ -3,7 +3,7 @@ import { getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Button, EditIcon, Text, vars } from "@saleor/macaw-ui-next";
 import { InfoIcon, LinkIcon, MessageSquareIcon } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -121,10 +121,20 @@ export const TimelineNote = ({
   const userDisplayName = getUserName(user, true) ?? app?.name;
   const [showEdit, setShowEdit] = useState(false);
 
-  const infoIcon = eventData ? (
+  const eventDataString = useMemo(() => {
+    if (!eventData) return null;
+
+    try {
+      return safeStringify(eventData);
+    } catch {
+      return null;
+    }
+  }, [eventData]);
+
+  const infoIcon = eventDataString ? (
     <span
       className="timeline-info-icon"
-      title={safeStringify(eventData)}
+      title={eventDataString}
       style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
     >
       <InfoIcon size={16} color={vars.colors.text.default2} />

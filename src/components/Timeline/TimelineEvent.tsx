@@ -254,10 +254,20 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   } = props;
   const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
 
-  const infoIcon = eventData ? (
+  const eventDataString = React.useMemo(() => {
+    if (!eventData) return null;
+
+    try {
+      return safeStringify(eventData);
+    } catch {
+      return null;
+    }
+  }, [eventData]);
+
+  const infoIcon = eventDataString ? (
     <span
       className="timeline-info-icon"
-      title={safeStringify(eventData)}
+      title={eventDataString}
       style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
     >
       <InfoIcon size={16} color={ICON_COLOR} />
