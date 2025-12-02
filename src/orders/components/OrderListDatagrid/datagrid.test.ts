@@ -7,6 +7,7 @@ import {
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
+import { getStatusColor } from "@dashboard/misc";
 import { RelayToFlat } from "@dashboard/types";
 import { TextCell } from "@glideapps/glide-data-grid";
 import { testIntlInstance } from "@test/intl";
@@ -137,11 +138,7 @@ describe("useGetCellContent", () => {
       copyData: "PAID",
       cursor: "pointer",
       data: {
-        color: {
-          base: "#ffdeea",
-          border: "#eec4cf",
-          text: "#6a4751",
-        },
+        color: getStatusColor({ status: "error", currentTheme: "defaultLight" }),
         kind: "auto-tags-cell",
         value: "PAID",
       },
@@ -153,11 +150,7 @@ describe("useGetCellContent", () => {
       copyData: "Fulfilled",
       cursor: "pointer",
       data: {
-        color: {
-          base: "#d7f5d7",
-          border: "#bddabd",
-          text: "#415a41",
-        },
+        color: getStatusColor({ status: "success", currentTheme: "defaultLight" }),
         kind: "auto-tags-cell",
         value: "Fulfilled",
       },

@@ -1,4 +1,5 @@
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
+import { FormatDate } from "@dashboard/components/Date";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -28,7 +29,7 @@ type OrderCardTitleWithWarehouseProps = BaseOrderCardTitleProps & {
 type OrderCardTitleWithoutWarehouseProps = BaseOrderCardTitleProps & {
   warehouseName?: never;
   warehouseId?: never;
-  createdDate?: never;
+  createdDate?: string;
   trackingNumber?: string;
 };
 
@@ -57,12 +58,13 @@ export const OrderCardTitle = ({
       title={
         <Box>
           <Box display="flex" alignItems="center">
-            {warehouseName && warehouseId && createdDate && (
-              <WarehouseInfo
-                warehouseName={warehouseName}
-                warehouseId={warehouseId}
-                createdDate={createdDate}
-              />
+            {createdDate && (
+              <Text color="default2" size={2}>
+                <FormatDate date={createdDate} />
+              </Text>
+            )}
+            {warehouseName && warehouseId && (
+              <WarehouseInfo warehouseName={warehouseName} warehouseId={warehouseId} />
             )}
             {trackingNumber && <TrackingNumberDisplay trackingNumber={trackingNumber} />}
           </Box>

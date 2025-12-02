@@ -41,9 +41,9 @@ export const orderTitleMessages = defineMessages({
     id: "vcMnX2",
     description: "unfulfilled fulfillment, section header",
   },
-  fulfilledFrom: {
-    id: "JbHdDi",
-    defaultMessage: "From {warehouseName}: {fulfillmentDate}",
-    description: "fulfilled fulfillment, section header",
+  fulfilledFromWarehouse: {
+    id: "W2glWk",
+    defaultMessage: "From {warehouseName}",
+    description: "fulfilled fulfillment, warehouse info",
   },
 });
