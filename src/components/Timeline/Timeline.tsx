@@ -35,9 +35,7 @@ export const TimelineAddNote = ({
   const intl = useIntl();
   const [isFocused, setIsFocused] = useState(false);
   const isMessageEmpty = message.trim().length === 0;
-  const isMac =
-    (navigator as any).userAgentData?.platform?.toLowerCase().includes("mac") ||
-    navigator.platform?.toLowerCase().includes("mac");
+  const isMac = window.navigator.platform?.toLowerCase().includes("mac");
 
   const submit = (e: React.FormEvent<any>) => {
     reset();
