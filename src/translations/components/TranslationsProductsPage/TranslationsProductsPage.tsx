@@ -103,7 +103,7 @@ export const TranslationsProductsPage = ({
 
   // Emit data to app
   useEffect(() => {
-    if (active && data?.product && data.translation) {
+    if (active && data?.product) {
       attachFormState(
         createProductTranslateFormPayloadEvent({
           translationData: data.translation,
