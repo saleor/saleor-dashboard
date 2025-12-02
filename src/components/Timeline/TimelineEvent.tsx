@@ -33,7 +33,7 @@ import * as React from "react";
 import TimelineEventHeader, { TimelineUser, TitleElement } from "./TimelineEventHeader";
 import { safeStringify } from "./utils";
 
-// CSS for hover effect on info icon
+// CSS for hover effect on info icon and chevron rotation
 const eventStyles = `
   .timeline-event-row .timeline-info-icon {
     opacity: 0;
@@ -42,11 +42,29 @@ const eventStyles = `
   .timeline-event-row:hover .timeline-info-icon {
     opacity: 1;
   }
+  .timeline-chevron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    transform: rotate(-90deg);
+  }
+  button[data-state="open"] .timeline-chevron,
+  [data-state="open"] .timeline-chevron {
+    transform: rotate(0deg);
+  }
 `;
 
 // Inject styles once
 if (typeof document !== "undefined") {
-  const styleId = "timeline-event-styles";
+  const styleId = "timeline-event-styles-v2";
+
+  // Remove old version if exists
+  const oldStyle = document.getElementById("timeline-event-styles");
+
+  if (oldStyle) {
+    oldStyle.remove();
+  }
 
   if (!document.getElementById(styleId)) {
     const style = document.createElement("style");
@@ -290,20 +308,11 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                     justifyContent="center"
                     __width="20px"
                     __height="20px"
-                    style={{
-                      transition: "transform 0.2s ease",
-                      transform: "rotate(-90deg)",
-                    }}
-                    data-chevron
+                    className="timeline-chevron"
                   >
                     <ChevronDownIcon size={16} color="currentColor" />
                   </Box>
                 </Accordion.Trigger>
-                <style>{`
-                  [data-state="open"] [data-chevron] {
-                    transform: rotate(0deg) !important;
-                  }
-                `}</style>
                 {/* Header */}
                 <Box __flex="1" display="flex" alignItems="center" __minHeight="32px">
                   <TimelineEventHeader
