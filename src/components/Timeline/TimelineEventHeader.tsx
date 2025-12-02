@@ -1,3 +1,4 @@
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -65,9 +66,17 @@ const TimelineEventHeader = ({
         </Text>
       </Link>
     </Text>
-  ) : appName ? (
+  ) : appName && app ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
-      by {appName}
+      by{" "}
+      <Link
+        to={ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(app.id))}
+        className="timeline-user-link"
+      >
+        <Text size={3} color="default2" as="span">
+          {appName}
+        </Text>
+      </Link>
     </Text>
   ) : null;
 

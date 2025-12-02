@@ -39,15 +39,19 @@ describe("TimelineEventHeader", () => {
     expect(screen.getByRole("link")).toHaveAttribute("href", "/staff/user-123");
   });
 
-  it("renders app attribution without link", () => {
+  it("renders app attribution with link to app dashboard", () => {
     const app: TimelineApp = {
-      id: "app-123",
+      id: "QXBwOjI3OQ==", // Base64 encoded app ID
       name: "My App",
     };
 
     render(<TimelineEventHeader {...defaultProps} app={app} />, { wrapper: Wrapper });
 
-    expect(screen.getByText(/by.*My App/)).toBeInTheDocument();
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    expect(screen.getByText("My App")).toBeInTheDocument();
+
+    const link = screen.getByRole("link", { name: "My App" });
+
+    // ID should be URL-encoded (== becomes %3D%3D)
+    expect(link).toHaveAttribute("href", "/extensions/app/QXBwOjI3OQ%3D%3D");
   });
 });
