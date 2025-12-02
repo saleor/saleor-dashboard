@@ -1,13 +1,12 @@
 import { LocaleConsumer } from "@dashboard/components/Locale";
 import { TimezoneConsumer } from "@dashboard/components/Timezone";
 import moment from "moment-timezone";
-import React from "react";
 
 interface OrderHistoryDateProps {
   date: string;
 }
 
-export const OrderHistoryDate: React.FC<OrderHistoryDateProps> = ({ date }) => {
+export const OrderHistoryDate = ({ date }: OrderHistoryDateProps) => {
   return (
     <TimezoneConsumer>
       {tz => (

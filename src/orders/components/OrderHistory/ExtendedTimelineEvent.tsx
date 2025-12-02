@@ -95,13 +95,13 @@ interface ExtendedTimelineEventProps {
   isLastInGroup?: boolean;
 }
 
-const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
+const ExtendedTimelineEvent = ({
   event,
   orderCurrency,
   hasPlainDate,
   dateNode,
   isLastInGroup,
-}) => {
+}: ExtendedTimelineEventProps) => {
   const { id, date, type, lines, amount, transactionReference, shippingCostsIncluded } = event;
   const intl = useIntl();
   const eventTypeInCamelCase = camelCase(type);

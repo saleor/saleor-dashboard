@@ -18,11 +18,11 @@ interface TimelineAddNoteProps {
   label?: string;
 }
 
-export const Timeline: React.FC<TimelineProps> = ({ children }) => {
+export const Timeline = ({ children }: TimelineProps) => {
   return <Box position="relative">{children}</Box>;
 };
 
-export const TimelineAddNote: React.FC<TimelineAddNoteProps> = ({
+export const TimelineAddNote = ({
   message,
   onChange,
   onSubmit,
@@ -31,7 +31,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = ({
   placeholder,
   buttonLabel,
   label,
-}) => {
+}: TimelineAddNoteProps) => {
   const intl = useIntl();
   const submit = (e: React.FormEvent<any>) => {
     reset();
