@@ -89,7 +89,7 @@ export function useQuery<TData, TVariables>(
     ...allPermissions,
     ...userPermissions,
   } as TVariables & Record<PrefixedPermissions, boolean>;
-  const queryData = useBaseQuery(query, {
+  const queryData = useBaseQuery<TData, TVariables>(query, {
     ...opts,
     context: {
       useBatching: true,
