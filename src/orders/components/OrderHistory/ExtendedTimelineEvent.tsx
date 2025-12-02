@@ -164,12 +164,12 @@ const ExtendedTimelineEvent = ({
       eventType={type}
       isLastInGroup={isLastInGroup}
     >
-      {lines && lines.length > 0 && (
+      {lines && lines.length > 0 ? (
         <Box display="flex" flexDirection="column" gap={1}>
           {/* Order Lines */}
           {lines.map(({ orderLine, quantity, itemName }, i) => (
             <Box
-              key={`${itemName}-${i}`}
+              key={orderLine?.id || `${itemName}-${quantity}-${i}`}
               display="flex"
               alignItems="center"
               justifyContent="space-between"
@@ -233,17 +233,14 @@ const ExtendedTimelineEvent = ({
             </Box>
           )}
         </Box>
-      )}
-
-      {/* Transaction reference only (no lines) */}
-      {(!lines || lines.length === 0) && !!transactionReference && (
+      ) : transactionReference ? (
         <Box display="flex" justifyContent="space-between" alignItems="center" paddingY={2}>
           <Text size={2} color="default2">
             {intl.formatMessage(messages.transactionReference)}
           </Text>
           <Text size={2}>{transactionReference}</Text>
         </Box>
-      )}
+      ) : null}
     </TimelineEvent>
   );
 };

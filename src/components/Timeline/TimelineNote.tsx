@@ -26,7 +26,7 @@ interface TimelineNoteProps {
   onNoteUpdate?: (id: string, message: string) => Promise<unknown>;
   onNoteUpdateLoading?: boolean;
   dateNode?: React.ReactNode;
-  eventData?: any;
+  eventData?: unknown;
   isLastInGroup?: boolean;
 }
 

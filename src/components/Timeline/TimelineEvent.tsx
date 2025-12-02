@@ -198,7 +198,7 @@ export interface TimelineEventProps {
   titleElements?: TitleElement[];
   hasPlainDate?: boolean;
   dateNode?: React.ReactNode;
-  eventData?: any;
+  eventData?: unknown;
   user?: TimelineUser | null;
   app?: TimelineApp | null;
   eventType?: OrderEventsEnum | null;
