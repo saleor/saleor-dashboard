@@ -39,7 +39,7 @@ describe("TimelineEventHeader", () => {
     expect(screen.getByRole("link")).toHaveAttribute("href", "/staff/user-123");
   });
 
-  it("renders app attribution without link when no appUrl", () => {
+  it("renders app attribution without link", () => {
     const app: TimelineApp = {
       id: "app-123",
       name: "My App",
@@ -49,20 +49,5 @@ describe("TimelineEventHeader", () => {
 
     expect(screen.getByText(/by.*My App/)).toBeInTheDocument();
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
-  });
-
-  it("renders app attribution with external link when appUrl exists", () => {
-    const app: TimelineApp = {
-      id: "app-123",
-      name: "My App",
-      appUrl: "https://myapp.example.com",
-    };
-
-    render(<TimelineEventHeader {...defaultProps} app={app} />, { wrapper: Wrapper });
-
-    const link = screen.getByRole("link", { name: "My App" });
-
-    expect(link).toHaveAttribute("href", "https://myapp.example.com");
-    expect(link).toHaveAttribute("target", "_blank");
   });
 });

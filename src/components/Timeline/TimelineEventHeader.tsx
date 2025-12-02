@@ -25,12 +25,6 @@ export interface TimelineUser {
 export interface TimelineApp {
   id: string;
   name?: string | null;
-  appUrl?: string | null;
-  brand?: {
-    logo?: {
-      default?: string | null;
-    } | null;
-  } | null;
 }
 
 interface TimelineEventHeaderProps {
@@ -62,8 +56,6 @@ const TimelineEventHeader = ({
   const userName = user ? getUserName(user, true) : null;
   const appName = app?.name;
 
-  const appUrl = app?.appUrl;
-
   const attribution = userName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
       by{" "}
@@ -75,20 +67,7 @@ const TimelineEventHeader = ({
     </Text>
   ) : appName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
-      by{" "}
-      {appUrl ? (
-        <a
-          href={appUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="timeline-user-link"
-          style={{ color: "inherit" }}
-        >
-          {appName}
-        </a>
-      ) : (
-        appName
-      )}
+      by {appName}
     </Text>
   ) : null;
 
