@@ -62,7 +62,7 @@ export const EventDeliveryStatusChip = ({ status }: { status: EventDeliveryStatu
       backgroundColor={mapDeliveryStatusToBackgroundColor(status)}
       borderColor={mapDeliveryStatusToBorderColor(status)}
     >
-      <Text color={mapDeliveryStatusToTextColor(status)}>
+      <Text fontWeight="medium" color={mapDeliveryStatusToTextColor(status)}>
         <DeliveryStatusDisplay status={status} />
       </Text>
     </Chip>

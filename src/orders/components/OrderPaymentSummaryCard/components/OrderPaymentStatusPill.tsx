@@ -28,7 +28,7 @@ export const OrderPaymentStatusPill = ({ order, className }: OrderPaymentStatusP
           id: "BXKn/d",
           description: "charge status",
         })}
-        color="warning"
+        color="attention"
         style={{ alignSelf: "flex-end" }}
         className={className}
       />
