@@ -10,6 +10,7 @@ import { pageCreateUrl, pageListUrl } from "@dashboard/modeling/urls";
 import { pageTypeAddPath, pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { productTypeAddUrl, productTypeListUrl } from "@dashboard/productTypes/urls";
 import { shippingZoneAddUrl, shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
@@ -105,6 +106,14 @@ const allMessages = defineMessages({
   installExtensionFromManifest: {
     defaultMessage: "Install extension from manifest",
     id: "mvVmbJ",
+  },
+  gotoProductTypes: {
+    defaultMessage: "Go to product types",
+    id: "zoUlyR",
+  },
+  createProductType: {
+    defaultMessage: "Create a product type",
+    id: "OAuXGE",
   },
 });
 
@@ -218,6 +227,34 @@ const allActions: TriggerDescriptor[] = [
       <Box onClick={onClick}>
         <ActionLinkItem href={categoryAddUrl()}>
           <FormattedMessage id="Uqf8Ny" defaultMessage="Create new category" />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: {
+      id: "7NFfmz",
+      defaultMessage: "Products",
+    },
+    name: allMessages.gotoProductTypes,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={productTypeListUrl()}>
+          <FormattedMessage {...allMessages.gotoProductTypes} />
+        </ActionLinkItem>
+      </Box>
+    ),
+  },
+  {
+    section: {
+      id: "7NFfmz",
+      defaultMessage: "Products",
+    },
+    name: allMessages.createProductType,
+    Component: ({ onClick }) => (
+      <Box onClick={onClick}>
+        <ActionLinkItem href={productTypeAddUrl()}>
+          <FormattedMessage {...allMessages.createProductType} />
         </ActionLinkItem>
       </Box>
     ),

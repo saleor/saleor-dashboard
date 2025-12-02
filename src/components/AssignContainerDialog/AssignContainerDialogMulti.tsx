@@ -3,10 +3,11 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { Container, FetchMoreProps } from "@dashboard/types";
-import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 
@@ -87,7 +88,7 @@ export const AssignContainerDialogMulti = (props: AssignContainerDialogMultiProp
         fullWidth
         InputProps={{
           autoComplete: "off",
-          endAdornment: loading && <CircularProgress size={16} />,
+          endAdornment: loading && <SaleorThrobber size={16} />,
         }}
       />
 

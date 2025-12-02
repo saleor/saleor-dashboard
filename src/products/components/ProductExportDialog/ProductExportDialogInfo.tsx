@@ -6,13 +6,14 @@ import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/Chan
 import Checkbox from "@dashboard/components/Checkbox";
 import Chip from "@dashboard/components/Chip";
 import Hr from "@dashboard/components/Hr";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { ChannelFragment, ExportProductsInput, ProductFieldEnum } from "@dashboard/graphql";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { sectionNames } from "@dashboard/intl";
 import { FetchMoreProps } from "@dashboard/types";
 import { toggle } from "@dashboard/utils/lists";
-import { Button, CircularProgress, FormControlLabel, TextField } from "@material-ui/core";
+import { Button, FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
 import { PropsWithChildren } from "react";
@@ -408,7 +409,7 @@ const ProductExportDialogInfo = ({
             fullWidth
             InputProps={{
               autoComplete: "off",
-              endAdornment: loading && <CircularProgress size={16} />,
+              endAdornment: loading && <SaleorThrobber size={16} />,
             }}
           />
           <Hr className={classes.hr} />
@@ -429,7 +430,7 @@ const ProductExportDialogInfo = ({
                   <FormattedMessage id="ZDJEat" defaultMessage="Load More" description="button" />
                 </Button>
               )}
-              {loading && <CircularProgress size={32} />}
+              {loading && <SaleorThrobber size={32} />}
             </div>
           )}
         </Accordion>

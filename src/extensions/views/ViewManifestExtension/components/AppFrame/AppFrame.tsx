@@ -1,7 +1,7 @@
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
-import { CircularProgress } from "@material-ui/core";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
 import { useCallback, useEffect, useRef } from "react";
@@ -98,7 +98,7 @@ export const AppFrame = ({
     <>
       {!handshakeDone && (
         <div className={classes.loader}>
-          <CircularProgress color="primary" />
+          <SaleorThrobber />
         </div>
       )}
       <AppIFrame

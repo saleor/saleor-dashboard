@@ -8,6 +8,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { OrderErrorFragment, SearchOrderVariantQuery } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -16,7 +17,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -113,7 +114,7 @@ const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
             fullWidth
             InputProps={{
               autoComplete: "off",
-              endAdornment: loading && <CircularProgress size={16} />,
+              endAdornment: loading && <SaleorThrobber size={16} />,
             }}
           />
         </Box>

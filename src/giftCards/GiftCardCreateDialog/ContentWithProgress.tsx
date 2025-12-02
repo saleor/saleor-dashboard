@@ -1,4 +1,4 @@
-import { CircularProgress } from "@material-ui/core";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import { PropsWithChildren } from "react";
@@ -31,7 +31,7 @@ const ContentWithProgress = ({
     <>{children}</>
   ) : (
     <div className={clsx(classes.container, containerClassName)}>
-      <CircularProgress />
+      <SaleorThrobber />
     </div>
   );
 };

@@ -1,13 +1,6 @@
 // @ts-strict-ignore
-import {
-  CircularProgress,
-  ClickAwayListener,
-  Grow,
-  MenuItem,
-  MenuList,
-  Paper,
-  Popper,
-} from "@material-ui/core";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@material-ui/core";
 import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -189,7 +182,7 @@ const CardMenu = (props: CardMenuProps) => {
                             <Text fontSize={3}>
                               <FormattedMessage {...messages.cardMenuItemLoading} />
                             </Text>
-                            <CircularProgress size={24} />
+                            <SaleorThrobber size={24} />
                           </>
                         ) : (
                           <Text>
