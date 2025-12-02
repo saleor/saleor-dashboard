@@ -3,7 +3,7 @@
  * and removing __typename fields.
  */
 export const safeStringify = (data: unknown): string => {
-  if (!data) return "";
+  if (data === null || data === undefined) return "";
 
   const seen = new WeakSet();
 
