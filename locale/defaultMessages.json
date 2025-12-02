@@ -346,6 +346,10 @@
   "0+zatS": {
     "string": "Hello {userName}, welcome to your Store Dashboard"
   },
+  "0/Y0nG": {
+    "context": "date group header",
+    "string": "Last 7 days"
+  },
   "01+5kQ": {
     "string": "Mark as paid"
   },
@@ -1036,6 +1040,10 @@
   "4k9rMQ": {
     "context": "variant attribute checkbox",
     "string": "Variant Selection"
+  },
+  "4kcpaI": {
+    "context": "date group header",
+    "string": "Last 30 days"
   },
   "4p3bjX": {
     "context": "tax strategy combobox choice",
@@ -3283,6 +3291,10 @@
     "context": "variant name",
     "string": "New variant"
   },
+  "IradBW": {
+    "context": "date group header",
+    "string": "Yesterday"
+  },
   "Irflxf": {
     "context": "window title",
     "string": "Create category"
@@ -3583,6 +3595,9 @@
     "context": "shipment refund title",
     "string": "Shipment was refunded"
   },
+  "KshTaK": {
+    "string": "Press {key1} {key2} to send"
+  },
   "KszPFx": {
     "context": "dialog header",
     "string": "Void Payment"
@@ -3674,6 +3689,10 @@
   },
   "LR3HlT": {
     "string": "This password is too short"
+  },
+  "LU8dtl": {
+    "context": "date group header",
+    "string": "Older"
   },
   "LVa5ew": {
     "string": "Saleor ran into an unexpected problem"
@@ -5237,10 +5256,6 @@
   "V2BBQu": {
     "string": "Currency in both channels must be the same"
   },
-  "V3aIQv": {
-    "context": "date group header",
-    "string": "Last 30 days"
-  },
   "V8FhTt": {
     "context": "collection label",
     "string": "Hidden"
@@ -5440,10 +5455,6 @@
   },
   "WMNtD2": {
     "string": "The extension will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the extension before you approve."
-  },
-  "WOFMpJ": {
-    "context": "date group header",
-    "string": "Yesterday"
   },
   "WQMTKI": {
     "context": "list of warehouses",
@@ -6305,10 +6316,6 @@
     "context": "voucher",
     "string": "Applies to"
   },
-  "be6eXe": {
-    "context": "date group header",
-    "string": "Last 7 days"
-  },
   "bfj3NC": {
     "context": "Button with Manage app label",
     "string": "Manage extension"
@@ -6626,10 +6633,6 @@
   },
   "dWK/Ck": {
     "string": "Choose countries, you want voucher to be limited to, from the list below"
-  },
-  "dWK4ic": {
-    "context": "date group header",
-    "string": "Older"
   },
   "da1ebU": {
     "string": "Product type"
@@ -7810,10 +7813,6 @@
   "lW5uJO": {
     "context": "money",
     "string": "from {money}"
-  },
-  "lXGmEk": {
-    "context": "date group header",
-    "string": "Unknown"
   },
   "lXq4EE": {
     "context": "checkbox",
@@ -9839,6 +9838,10 @@
   "ymvZrH": {
     "context": "page models",
     "string": "Models"
+  },
+  "yn7Stx": {
+    "context": "date group header",
+    "string": "Unknown"
   },
   "ypW4Mi": {
     "context": "button refreshing page",
