@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-"Allow legacy gift card use" flag is configurable in Channel form
+Added "Allow legacy gift card use" flag to Channel configuration
