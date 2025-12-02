@@ -1,12 +1,15 @@
 import { LocaleConsumer } from "@dashboard/components/Locale";
 import { TimezoneConsumer } from "@dashboard/components/Timezone";
 import moment from "moment-timezone";
+import { useIntl } from "react-intl";
 
 interface OrderHistoryDateProps {
   date: string;
 }
 
 export const OrderHistoryDate = ({ date }: OrderHistoryDateProps) => {
+  const intl = useIntl();
+
   return (
     <TimezoneConsumer>
       {tz => (
@@ -32,13 +35,38 @@ export const OrderHistoryDate = ({ date }: OrderHistoryDateProps) => {
             let dateStr: string;
 
             if (diffMinutes < 1) {
-              dateStr = "just now";
+              dateStr = intl.formatMessage({
+                id: "wOaLvi",
+                defaultMessage: "just now",
+                description: "relative time",
+              });
             } else if (diffMinutes < 60) {
-              dateStr = `${diffMinutes}m ago`;
+              dateStr = intl.formatMessage(
+                {
+                  id: "cIoOf0",
+                  defaultMessage: "{minutes}m ago",
+                  description: "relative time in minutes",
+                },
+                { minutes: diffMinutes },
+              );
             } else if (diffHours < 24) {
-              dateStr = `${diffHours}h ago`;
+              dateStr = intl.formatMessage(
+                {
+                  id: "puYVLm",
+                  defaultMessage: "{hours}h ago",
+                  description: "relative time in hours",
+                },
+                { hours: diffHours },
+              );
             } else if (diffDays < 7) {
-              dateStr = `${diffDays}d ago`;
+              dateStr = intl.formatMessage(
+                {
+                  id: "pSFOFy",
+                  defaultMessage: "{days}d ago",
+                  description: "relative time in days",
+                },
+                { days: diffDays },
+              );
             } else {
               dateStr = m.format("MMM D, YYYY");
             }

@@ -3197,6 +3197,9 @@
     "context": "key-value field button add more key-value pairs",
     "string": "Add more"
   },
+  "ILrXJV": {
+    "string": "Press {key1} {key2} to send"
+  },
   "IN5iJz": {
     "context": "value input helper text",
     "string": "Invalid value"
@@ -3514,6 +3517,10 @@
     "context": "input label",
     "string": "Refund value"
   },
+  "K3F+pJ": {
+    "context": "relative time in minutes",
+    "string": "{minutes}m ago"
+  },
   "K58C4r": {
     "string": "We are working on replacing plugins with apps. Use apps unless no other option. {learnMore}"
   },
@@ -3594,9 +3601,6 @@
   "Krzyo+": {
     "context": "shipment refund title",
     "string": "Shipment was refunded"
-  },
-  "KshTaK": {
-    "string": "Press {key1} {key2} to send"
   },
   "KszPFx": {
     "context": "dialog header",
@@ -6088,6 +6092,10 @@
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
   },
+  "aFLtki": {
+    "context": "relative time in hours",
+    "string": "{hours}h ago"
+  },
   "aFVFeH": {
     "context": "submit button",
     "string": "Add manual capture"
@@ -6444,6 +6452,10 @@
   "cJ5ASN": {
     "context": "attribute position in storefront filters",
     "string": "Position in faceted navigation"
+  },
+  "cJy7lw": {
+    "context": "relative time",
+    "string": "just now"
   },
   "cKCfSW": {
     "context": "dialog header",
@@ -8294,6 +8306,10 @@
   "p1D4Ok": {
     "context": "order send refund, manual transaction refund was created",
     "string": "Manual refund was created successfully"
+  },
+  "p4DQcp": {
+    "context": "relative time in days",
+    "string": "{days}d ago"
   },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
