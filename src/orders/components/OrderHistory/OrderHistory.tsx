@@ -16,7 +16,7 @@ import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ExtendedTimelineEvent from "./ExtendedTimelineEvent";
+import { ExtendedTimelineEvent } from "./ExtendedTimelineEvent";
 import { HistoryComponentLoader } from "./HistoryComponentLoader";
 import LinkedTimelineEvent from "./LinkedTimelineEvent";
 import { getEventMessage } from "./messages";
