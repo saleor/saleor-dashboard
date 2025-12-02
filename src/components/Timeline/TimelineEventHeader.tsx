@@ -40,7 +40,7 @@ interface TimelineEventHeaderProps {
   app?: TimelineApp | null;
 }
 
-const TimelineEventHeader = ({
+export const TimelineEventHeader = ({
   title,
   date,
   titleElements,
@@ -127,5 +127,3 @@ const TimelineEventHeader = ({
     </Box>
   );
 };
-
-export default TimelineEventHeader;

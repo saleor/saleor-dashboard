@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 
-import TimelineEventHeader, { TimelineApp, TimelineUser } from "./TimelineEventHeader";
+import { TimelineApp, TimelineEventHeader, TimelineUser } from "./TimelineEventHeader";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <MemoryRouter>

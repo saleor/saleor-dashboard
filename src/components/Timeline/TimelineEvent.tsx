@@ -33,8 +33,9 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
-import TimelineEventHeader, {
+import {
   TimelineApp,
+  TimelineEventHeader,
   TimelineUser,
   TitleElement,
 } from "./TimelineEventHeader";

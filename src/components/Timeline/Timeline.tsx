@@ -91,5 +91,3 @@ export const TimelineAddNote = ({
 };
 
 Timeline.displayName = "Timeline";
-// eslint-disable-next-line import/no-default-export
-export default Timeline;
