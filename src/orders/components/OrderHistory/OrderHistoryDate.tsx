@@ -11,6 +11,23 @@ export interface RelativeDateResult {
   fullDate: string;
 }
 
+const MINUTE = 60;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+const WEEK = 7 * DAY;
+
+/**
+ * Format date for display using Intl.DateTimeFormat.
+ * Falls back to ISO string if formatting fails.
+ */
+const formatDate = (date: Date, options: Intl.DateTimeFormatOptions, locale: string): string => {
+  try {
+    return new Intl.DateTimeFormat(locale, options).format(date);
+  } catch {
+    return date.toISOString();
+  }
+};
+
 /**
  * Calculate relative date string and full date for tooltip.
  * Extracted for testability.
@@ -22,57 +39,63 @@ export const getRelativeDate = (
   now = new Date(),
 ): RelativeDateResult => {
   const eventDate = new Date(date);
-  const diffInSeconds = (now.getTime() - eventDate.getTime()) / 1000;
+  const diffInSeconds = Math.floor((now.getTime() - eventDate.getTime()) / 1000);
 
   let dateStr: string;
 
-  if (diffInSeconds < 60) {
+  if (diffInSeconds < MINUTE) {
     dateStr = intl.formatMessage({
       id: "wOaLvi",
       defaultMessage: "just now",
       description: "relative time",
     });
+  } else if (diffInSeconds < HOUR) {
+    const minutes = Math.floor(diffInSeconds / MINUTE);
+
+    dateStr = intl.formatMessage(
+      {
+        id: "cIoOf0",
+        defaultMessage: "{minutes}m ago",
+        description: "relative time in minutes",
+      },
+      { minutes },
+    );
+  } else if (diffInSeconds < DAY) {
+    const hours = Math.floor(diffInSeconds / HOUR);
+
+    dateStr = intl.formatMessage(
+      {
+        id: "puYVLm",
+        defaultMessage: "{hours}h ago",
+        description: "relative time in hours",
+      },
+      { hours },
+    );
+  } else if (diffInSeconds < WEEK) {
+    const days = Math.floor(diffInSeconds / DAY);
+
+    dateStr = intl.formatMessage(
+      {
+        id: "pSFOFy",
+        defaultMessage: "{days}d ago",
+        description: "relative time in days",
+      },
+      { days },
+    );
   } else {
-    dateStr = intl.formatRelativeTime(Math.floor(-diffInSeconds), "second", {
-      numeric: "auto",
-      style: "narrow",
-    });
-
-    if (diffInSeconds >= 60) {
-      dateStr = intl.formatRelativeTime(Math.floor(-diffInSeconds / 60), "minute", {
-        numeric: "auto",
-        style: "narrow",
-      });
-    }
-
-    if (diffInSeconds >= 3600) {
-      dateStr = intl.formatRelativeTime(Math.floor(-diffInSeconds / 3600), "hour", {
-        numeric: "auto",
-        style: "narrow",
-      });
-    }
-
-    if (diffInSeconds >= 86400) {
-      dateStr = intl.formatRelativeTime(Math.floor(-diffInSeconds / 86400), "day", {
-        numeric: "auto",
-        style: "narrow",
-      });
-    }
-
-    if (diffInSeconds >= 604800) {
-      dateStr = intl.formatDate(date, {
-        dateStyle: "medium",
-        timeZone: tz,
-      });
-    }
+    dateStr = formatDate(eventDate, { dateStyle: "medium", timeZone: tz }, intl.locale);
   }
 
-  const fullDate = intl.formatDate(date, {
-    dateStyle: "medium",
-    timeStyle: "short",
-    timeZone: tz,
-    timeZoneName: "short",
-  });
+  const fullDate = formatDate(
+    eventDate,
+    {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: tz,
+      timeZoneName: "short",
+    },
+    intl.locale,
+  );
 
   return { dateStr, fullDate };
 };

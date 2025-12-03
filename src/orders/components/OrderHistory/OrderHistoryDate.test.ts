@@ -1,55 +1,137 @@
-import { createIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
-import { getRelativeDate } from "./OrderHistoryDate";
+import { getRelativeDate, RelativeDateResult } from "./OrderHistoryDate";
 
 describe("getRelativeDate", () => {
-  const intl = createIntl({ locale: "en" });
+  // Simple mock - just needs to return strings and track calls
+  const mockIntl = {
+    locale: "en",
+    formatMessage: jest.fn((descriptor, values) =>
+      values ? `${descriptor.defaultMessage}` : descriptor.defaultMessage,
+    ),
+  } as unknown as IntlShape;
 
-  it("returns 'just now' for events less than 1 minute ago", () => {
-    const now = new Date("2024-06-15T14:30:00Z");
-    const result = getRelativeDate("2024-06-15T14:29:30Z", intl, undefined, now);
-
-    expect(result.dateStr).toBe("just now");
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it("returns relative minutes for events less than 1 hour ago", () => {
-    const now = new Date("2024-06-15T14:30:00Z");
-    const result = getRelativeDate("2024-06-15T14:00:00Z", intl, undefined, now);
+  describe("time bucket selection", () => {
+    it("uses formatMessage for 'just now' (< 1 minute)", () => {
+      // Arrange
+      const now = new Date("2024-06-15T14:30:00Z");
 
-    // intl.formatRelativeTime returns localized string like "30 min. ago"
-    expect(result.dateStr).toMatch(/min/i);
+      // Act
+      const result = getRelativeDate("2024-06-15T14:29:30Z", mockIntl, undefined, now);
+
+      // Assert
+      expect(mockIntl.formatMessage).toHaveBeenCalledTimes(1);
+      expect(result.dateStr).toBe("just now");
+    });
+
+    it("uses formatMessage for minutes (1-59 min)", () => {
+      // Arrange
+      const now = new Date("2024-06-15T14:30:00Z");
+
+      // Act
+      getRelativeDate("2024-06-15T14:00:00Z", mockIntl, undefined, now);
+
+      // Assert - called with minutes value
+      expect(mockIntl.formatMessage).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({ minutes: 30 }),
+      );
+    });
+
+    it("uses formatMessage for hours (1-23 hr)", () => {
+      // Arrange
+      const now = new Date("2024-06-15T14:30:00Z");
+
+      // Act
+      getRelativeDate("2024-06-15T12:30:00Z", mockIntl, undefined, now);
+
+      // Assert
+      expect(mockIntl.formatMessage).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({ hours: 2 }),
+      );
+    });
+
+    it("uses formatMessage for days (1-6 days)", () => {
+      // Arrange
+      const now = new Date("2024-06-15T14:30:00Z");
+
+      // Act
+      getRelativeDate("2024-06-13T14:30:00Z", mockIntl, undefined, now);
+
+      // Assert
+      expect(mockIntl.formatMessage).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({ days: 2 }),
+      );
+    });
+
+    it("uses Intl.DateTimeFormat for 7+ days (no formatMessage with values)", () => {
+      // Arrange
+      const now = new Date("2024-06-15T14:30:00Z");
+
+      // Act
+      const result = getRelativeDate("2024-06-01T14:30:00Z", mockIntl, undefined, now);
+
+      // Assert - dateStr comes from DateTimeFormat, not formatMessage
+      expect(result.dateStr).toContain("2024");
+    });
   });
 
-  it("returns relative hours for events less than 24 hours ago", () => {
-    const now = new Date("2024-06-15T14:30:00Z");
-    const result = getRelativeDate("2024-06-15T12:30:00Z", intl, undefined, now);
+  describe("boundary values", () => {
+    it.each([
+      [59, "minutes", { minutes: 59 }],
+      [60, "hours", { hours: 1 }],
+      [23 * 60, "hours", { hours: 23 }],
+      [24 * 60, "days", { days: 1 }],
+      [6 * 24 * 60, "days", { days: 6 }],
+    ])("%d minutes ago falls into %s bucket", (minutesAgo, _bucket, expectedValues) => {
+      // Arrange
+      const now = new Date("2024-06-15T14:30:00Z");
+      const eventDate = new Date(now.getTime() - minutesAgo * 60 * 1000);
 
-    // intl.formatRelativeTime returns localized string like "2 hr. ago"
-    expect(result.dateStr).toMatch(/hr/i);
+      // Act
+      getRelativeDate(eventDate.toISOString(), mockIntl, undefined, now);
+
+      // Assert
+      expect(mockIntl.formatMessage).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining(expectedValues),
+      );
+    });
   });
 
-  it("returns relative days for events less than 7 days ago", () => {
-    const now = new Date("2024-06-15T14:30:00Z");
-    const result = getRelativeDate("2024-06-13T14:30:00Z", intl, undefined, now);
+  describe("return structure", () => {
+    it("returns object with dateStr and fullDate", () => {
+      // Arrange
+      const now = new Date("2024-06-15T14:30:00Z");
 
-    // intl.formatRelativeTime returns localized string like "2 days ago"
-    expect(result.dateStr).toMatch(/day/i);
-  });
+      // Act
+      const result: RelativeDateResult = getRelativeDate(
+        "2024-06-15T14:30:00Z",
+        mockIntl,
+        undefined,
+        now,
+      );
 
-  it("returns formatted date for events older than 7 days", () => {
-    const now = new Date("2024-06-15T14:30:00Z");
-    const result = getRelativeDate("2024-06-01T14:30:00Z", intl, undefined, now);
+      // Assert
+      expect(result).toHaveProperty("dateStr");
+      expect(result).toHaveProperty("fullDate");
+    });
 
-    // intl.formatDate returns localized date string
-    expect(result.dateStr).toContain("Jun");
-    expect(result.dateStr).toContain("2024");
-  });
+    it("fullDate contains the year", () => {
+      // Arrange
+      const now = new Date("2024-06-15T14:30:00Z");
 
-  it("returns fullDate with timezone for tooltip", () => {
-    const now = new Date("2024-06-15T14:30:00Z");
-    const result = getRelativeDate("2024-06-15T14:30:00Z", intl, "UTC", now);
+      // Act
+      const result = getRelativeDate("2024-06-15T14:30:00Z", mockIntl, undefined, now);
 
-    expect(result.fullDate).toContain("Jun");
-    expect(result.fullDate).toContain("2024");
+      // Assert
+      expect(result.fullDate).toContain("2024");
+    });
   });
 });
