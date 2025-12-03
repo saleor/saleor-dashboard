@@ -7,7 +7,7 @@ type DisabledScope = "left" | "right" | "condition";
 export class Constraint {
   constructor(
     public dependsOn: string[],
-    public disabled?: [DisabledScope],
+    public disabled?: DisabledScope[],
     public removable?: boolean,
   ) {}
 
@@ -30,7 +30,7 @@ export class Constraint {
 
     return new Constraint(
       fieldConstraint.dependsOn,
-      fieldConstraint.disabled as [DisabledScope],
+      fieldConstraint.disabled as DisabledScope[],
       fieldConstraint.removable,
     );
   }
