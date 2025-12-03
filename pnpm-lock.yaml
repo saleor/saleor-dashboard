@@ -93,8 +93,8 @@ importers:
         specifier: npm:@saleor/macaw-ui@0.7.4
         version: 0.7.4(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@material-ui/icons@4.11.3(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@material-ui/lab@4.0.0-alpha.61(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react-helmet@6.1.0(react@18.3.1))(react@18.3.1)
       "@saleor/macaw-ui-next":
-        specifier: npm:@saleor/macaw-ui@1.4.0
-        version: "@saleor/macaw-ui@1.4.0(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.17.4(babel-plugin-macros@3.1.0))(lucide-react@0.534.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)"
+        specifier: npm:@saleor/macaw-ui@1.4.1-dev.1
+        version: "@saleor/macaw-ui@1.4.1-dev.1(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.17.4(babel-plugin-macros@3.1.0))(lucide-react@0.534.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)"
       "@saleor/sdk":
         specifier: 0.6.0
         version: 0.6.0(@apollo/client@3.4.17(graphql@16.11.0)(react@18.3.1))(graphql@16.11.0)(react@18.3.1)
@@ -4538,10 +4538,10 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0
       react-helmet: ^6.1.0
 
-  "@saleor/macaw-ui@1.4.0":
+  "@saleor/macaw-ui@1.4.1-dev.1":
     resolution:
       {
-        integrity: sha512-491oI8J6qrAXOsuWDoefdNZh6U42KpuJ4idaRFBMjaIIa2uYMyY+skOTTKGEWT+YMrzkf19FEXxMaIckjSrkJg==,
+        integrity: sha512-LJDRtuKcPhUkQvN+JsKTMzGDZT+PjtkFeJqO50JqCHh0qAPRiNuO4QYSL+Pwv2ddec11qag3bjnEqtZlmNhxcg==,
       }
     engines: { node: 20 || 22, pnpm: "10" }
     peerDependencies:
@@ -16890,7 +16890,7 @@ snapshots:
     transitivePeerDependencies:
       - "@types/react"
 
-  "@saleor/macaw-ui@1.4.0(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.17.4(babel-plugin-macros@3.1.0))(lucide-react@0.534.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
+  "@saleor/macaw-ui@1.4.1-dev.1(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.17.4(babel-plugin-macros@3.1.0))(lucide-react@0.534.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
     dependencies:
       "@dessert-box/react": 0.4.0(react@18.3.1)
       "@floating-ui/react-dom": 2.1.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
