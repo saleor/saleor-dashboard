@@ -1,27 +1,23 @@
 // @ts-strict-ignore
 import { KeyboardShortcutHint } from "@dashboard/components/KeyboardShortcut";
 import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-interface TimelineProps {
-  children?: React.ReactNode;
-}
+export const Timeline = ({ children }: PropsWithChildren) => {
+  return <Box position="relative">{children}</Box>;
+};
 
 interface TimelineAddNoteProps {
   disabled?: boolean;
   message: string;
   reset: () => void;
-  onChange: (event: React.ChangeEvent<any>) => any;
-  onSubmit: (event: React.FormEvent<any>) => any;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSubmit: () => void;
   placeholder?: string;
   buttonLabel?: string | React.ReactNode;
   label?: string;
 }
-
-export const Timeline = ({ children }: TimelineProps) => {
-  return <Box position="relative">{children}</Box>;
-};
 
 export const TimelineAddNote = ({
   message,
@@ -36,18 +32,30 @@ export const TimelineAddNote = ({
   const intl = useIntl();
   const [isFocused, setIsFocused] = useState(false);
   const isMessageEmpty = message.trim().length === 0;
+  const canSubmit = !disabled && !isMessageEmpty;
 
-  const submit = (e: React.FormEvent<any>) => {
-    reset();
-    onSubmit(e);
+  const submit = () => {
+    if (canSubmit) {
+      reset();
+      onSubmit();
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && !disabled && !isMessageEmpty) {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
       e.preventDefault();
-      submit(e);
+      submit();
     }
   };
+
+  const defaultPlaceholder = intl.formatMessage({
+    id: "3evXPj",
+    defaultMessage: "Leave your note here...",
+  });
+
+  const defaultButtonLabel = (
+    <FormattedMessage id="v/1VA6" defaultMessage="Send" description="add order note, button" />
+  );
 
   return (
     <Box marginBottom={6}>
@@ -55,13 +63,7 @@ export const TimelineAddNote = ({
         <Textarea
           disabled={disabled}
           label={label}
-          placeholder={
-            placeholder ||
-            intl.formatMessage({
-              id: "3evXPj",
-              defaultMessage: "Leave your note here...",
-            })
-          }
+          placeholder={placeholder ?? defaultPlaceholder}
           onChange={onChange}
           onKeyDown={handleKeyDown}
           onFocus={() => setIsFocused(true)}
@@ -76,14 +78,8 @@ export const TimelineAddNote = ({
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>
-        <Button disabled={disabled || isMessageEmpty} onClick={e => submit(e)} variant="secondary">
-          {buttonLabel || (
-            <FormattedMessage
-              id="v/1VA6"
-              defaultMessage="Send"
-              description="add order note, button"
-            />
-          )}
+        <Button disabled={!canSubmit} onClick={submit} variant="secondary" type="button">
+          {buttonLabel ?? defaultButtonLabel}
         </Button>
       </Box>
     </Box>
