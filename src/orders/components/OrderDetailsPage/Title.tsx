@@ -29,7 +29,12 @@ const Title = (props: TitleProps) => {
   const { order } = props;
 
   if (!order) {
-    return null;
+    return (
+      <div className={classes.container}>
+        <Skeleton style={{ width: "8em" }} />
+        <Skeleton style={{ width: "10em" }} />
+      </div>
+    );
   }
 
   const { localized, status } = transformOrderStatus(order.status, intl);
