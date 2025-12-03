@@ -1448,8 +1448,10 @@ export type CheckoutRemovePromoCodeFieldPolicy = {
 	checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CheckoutSettingsKeySpecifier = ('automaticallyCompleteFullyPaidCheckouts' | 'useLegacyErrorFlow' | CheckoutSettingsKeySpecifier)[];
+export type CheckoutSettingsKeySpecifier = ('automaticCompletionCutOffDate' | 'automaticCompletionDelay' | 'automaticallyCompleteFullyPaidCheckouts' | 'useLegacyErrorFlow' | CheckoutSettingsKeySpecifier)[];
 export type CheckoutSettingsFieldPolicy = {
+	automaticCompletionCutOffDate?: FieldPolicy<any> | FieldReadFunction<any>,
+	automaticCompletionDelay?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticallyCompleteFullyPaidCheckouts?: FieldPolicy<any> | FieldReadFunction<any>,
 	useLegacyErrorFlow?: FieldPolicy<any> | FieldReadFunction<any>
 };
