@@ -23,7 +23,7 @@ const getNetworkErrors = (error: ApolloError): string[] => {
       });
     }
 
-    if (typeof networkErrors.result === "object" && networkErrors.result?.errors) {
+    if (networkErrors.result?.errors) {
       return networkErrors.result.errors.map(({ message }: { message: string }) => message);
     }
 
