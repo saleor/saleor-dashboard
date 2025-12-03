@@ -158,8 +158,6 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
         />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
-        <OrderChannelSectionCard channel={order?.channel} />
-        <CardSpacer />
         <OrderCustomer
           canEditAddresses={!!order?.user}
           canEditCustomer={true}
@@ -175,6 +173,9 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           onProfileView={onProfileView}
           onShippingAddressEdit={onShippingAddressEdit}
         />
+        <CardSpacer />
+        <Divider />
+        <OrderChannelSectionCard channel={order?.channel} />
         {DRAFT_ORDER_DETAILS_WIDGETS.length > 0 && order.id && (
           <>
             <CardSpacer />
