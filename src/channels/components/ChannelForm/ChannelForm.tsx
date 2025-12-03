@@ -42,6 +42,9 @@ export interface FormData extends StockSettingsInput {
   allowUnpaidOrders: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
   automaticallyCompleteCheckouts: boolean;
+  automaticCompletionDelay: number | string | null;
+  automaticCompletionCutOffDate: string;
+  automaticCompletionCutOffTime: string;
 }
 
 interface ChannelFormProps {
@@ -78,7 +81,14 @@ export const ChannelForm = ({
   const intl = useIntl();
   const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode", "defaultCountry", "deleteExpiredOrdersAfter"],
+    [
+      "name",
+      "slug",
+      "currencyCode",
+      "defaultCountry",
+      "deleteExpiredOrdersAfter",
+      "automaticCompletionDelay",
+    ],
     errors,
   );
   const renderCurrencySelection = currencyCodes && typeof onCurrencyCodeChange === "function";
@@ -217,10 +227,16 @@ export const ChannelForm = ({
         />
         <Box />
         <AutomaticallyCompleteCheckouts
-          onChange={onAutomaticallyCompleteCheckoutsChange}
-          hasError={!!formErrors.automaticallyCompleteCheckouts}
+          hasError={!!formErrors.automaticCompletionDelay}
           isChecked={data.automaticallyCompleteCheckouts}
           disabled={disabled}
+          delay={data.automaticCompletionDelay}
+          cutOffDate={data.automaticCompletionCutOffDate}
+          cutOffTime={data.automaticCompletionCutOffTime}
+          onCheckboxChange={onAutomaticallyCompleteCheckoutsChange}
+          onDelayChange={onChange}
+          onCutOffDateChange={onChange}
+          onCutOffTimeChange={onChange}
         />
       </Box>
     </>

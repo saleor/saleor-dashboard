@@ -102,14 +102,49 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     warehousesIdsToRemove,
     warehousesToDisplay,
     automaticallyCompleteCheckouts,
+    automaticCompletionDelay,
+    automaticCompletionCutOffDate,
+    automaticCompletionCutOffTime,
   }: FormData) => {
+    const getCutOffDateTimeISO = () => {
+      if (!automaticCompletionCutOffDate) {
+        return undefined;
+      }
+
+      const time = automaticCompletionCutOffTime || "00:00";
+
+      return new Date(`${automaticCompletionCutOffDate}T${time}`).toISOString();
+    };
+
+    // Build automaticCompletion input - only include delay and cutOffDate when enabled
+    const automaticCompletionInput: {
+      enabled: boolean;
+      delay?: number | null;
+      cutOffDate?: string;
+    } = {
+      enabled: automaticallyCompleteCheckouts,
+    };
+
+    if (automaticallyCompleteCheckouts) {
+      // Convert delay to number or null (handle empty string case)
+      const delayValue = automaticCompletionDelay;
+
+      if (delayValue === null || delayValue === undefined || delayValue === "") {
+        automaticCompletionInput.delay = null;
+      } else {
+        automaticCompletionInput.delay = Number(delayValue);
+      }
+
+      automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
+    }
+
     const updateChannelMutation = updateChannel({
       variables: {
         id: data?.channel.id,
         input: {
           name,
           checkoutSettings: {
-            automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+            automaticCompletion: automaticCompletionInput,
           },
           slug,
           defaultCountry,

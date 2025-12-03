@@ -2149,6 +2149,10 @@
   "C4hCsD": {
     "string": "App is out of your permissions scope"
   },
+  "C4zBRT": {
+    "context": "automatic completion cut-off date label",
+    "string": "Cut-off date"
+  },
   "C50ahv": {
     "context": "button",
     "string": "Add products"
@@ -4550,6 +4554,10 @@
   },
   "Ql7OM1": {
     "string": "Performing a manual refund will immediately trigger a refund request and decrease the transaction’s charged amount, impacting the order balance."
+  },
+  "Qmbhba": {
+    "context": "automatic completion delay input label",
+    "string": "Delay before completion (minutes)"
   },
   "Qovenh": {
     "string": "Anonymous user"
@@ -7115,6 +7123,10 @@
     "context": "header",
     "string": "Translation structure \"{menuItemName}\" - {languageCode}"
   },
+  "hMQlB4": {
+    "context": "automatic completion cut-off date description",
+    "string": "Only checkouts created after this date will be automatically completed."
+  },
   "hMRP6J": {
     "string": "Default Address"
   },
@@ -8708,6 +8720,10 @@
   },
   "rbrahO": {
     "string": "Close"
+  },
+  "rf9pxi": {
+    "context": "automatic completion delay input description",
+    "string": "Time in minutes to wait after checkout is fully paid before automatically completing it. Set to 0 for immediate completion."
   },
   "rfvBAF": {
     "context": "select all options, button",

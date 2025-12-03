@@ -49,6 +49,25 @@ import {
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
+const parseDateTimeToDateAndTime = (
+  dateTime: string | null | undefined,
+): { date: string; time: string } => {
+  if (!dateTime) {
+    return { date: "", time: "" };
+  }
+
+  const dateObj = new Date(dateTime);
+
+  if (isNaN(dateObj.getTime())) {
+    return { date: "", time: "" };
+  }
+
+  const date = dateObj.toISOString().split("T")[0];
+  const time = dateObj.toTimeString().slice(0, 5);
+
+  return { date, time };
+};
+
 interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
   currencyCodes?: Option[];
@@ -114,6 +133,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
   };
+  const cutOffDateTime = parseDateTimeToDateAndTime(
+    checkoutSettings?.automaticCompletionCutOffDate,
+  );
   const initialData: FormData = {
     currencyCode: "",
     name: "",
@@ -132,7 +154,11 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
-    automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
+    automaticallyCompleteCheckouts:
+      checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
+    automaticCompletionDelay: checkoutSettings?.automaticCompletionDelay ?? null,
+    automaticCompletionCutOffDate: cutOffDateTime.date,
+    automaticCompletionCutOffTime: cutOffDateTime.time,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
