@@ -22,6 +22,7 @@
     "dep-status": "depcruise --config .dependency-cruiser.js src",
     "predev": "pnpm run generate",
     "dev": "vite --host",
+    "dev:no-strict": "cross-env VITE_DISABLE_STRICT_MODE=true vite --host",
     "e2e": "pnpm exec playwright test --grep \"#e2e\"",
     "e2e:ui": "pnpm exec playwright test --ui",
     "extract-messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --out-file locale/defaultMessages.json --format scripts/formatter.cjs",
