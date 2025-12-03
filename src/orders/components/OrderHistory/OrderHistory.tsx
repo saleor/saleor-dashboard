@@ -309,7 +309,7 @@ const OrderHistory = ({
                         {hasLines &&
                           event.lines.map((line, i) => (
                             <Box
-                              key={line.orderLine?.id || `${line.itemName}-${line.quantity}-${i}`}
+                              key={`${id}-line-${line.orderLine?.id || `${line.itemName}-${line.quantity}-${i}`}`}
                               display="flex"
                               alignItems="center"
                               justifyContent="space-between"

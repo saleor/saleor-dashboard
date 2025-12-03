@@ -95,10 +95,10 @@ export const TimelineEventHeader = ({
           )}
           {elements.length > 0 && (
             <Box display="flex" alignItems="center" flexDirection="row" flexWrap="wrap">
-              {elements.map(({ text, link }) => {
+              {elements.map(({ text, link }, index) => {
                 if (link) {
                   return (
-                    <Link to={link} key={`timeline-event-${link}`}>
+                    <Link to={link} key={`timeline-event-${link}-${index}`}>
                       <Text marginRight={0.5} size={3} color="default1" textDecoration="underline">
                         {text}
                       </Text>
@@ -107,7 +107,12 @@ export const TimelineEventHeader = ({
                 }
 
                 return (
-                  <Text size={3} color="default1" marginRight={0.5} key={`timeline-event-${text}`}>
+                  <Text
+                    size={3}
+                    color="default1"
+                    marginRight={0.5}
+                    key={`timeline-event-${text}-${index}`}
+                  >
                     {text}
                   </Text>
                 );
