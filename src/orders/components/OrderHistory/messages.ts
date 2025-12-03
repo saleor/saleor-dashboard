@@ -321,15 +321,10 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
         description: "order history message",
       });
     case OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED:
-      return intl.formatMessage(
-        {
-          id: "c12l5n",
-          defaultMessage: "{productName} discount was removed",
-          description: "order history message",
-        },
-        {
-          productName: event.lines?.[0]?.itemName ?? "Product",
-        },
-      );
+      return intl.formatMessage({
+        id: "qPXvFH",
+        defaultMessage: "Product discount was removed",
+        description: "order history message",
+      });
   }
 };

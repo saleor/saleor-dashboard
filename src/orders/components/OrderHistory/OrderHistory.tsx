@@ -282,10 +282,11 @@ const OrderHistory = ({
                   );
                 }
 
-                // Events with message or relatedOrder - make them foldable
+                // Events with message, relatedOrder, or lines - make them foldable
                 const hasRelatedOrder = !!event.relatedOrder;
+                const hasLines = event.lines && event.lines.length > 0;
 
-                if (message || hasRelatedOrder) {
+                if (message || hasRelatedOrder || hasLines) {
                   return (
                     <TimelineEvent
                       title={getEventMessage(event, intl)}
@@ -305,6 +306,30 @@ const OrderHistory = ({
                             {message}
                           </Text>
                         )}
+                        {hasLines &&
+                          event.lines.map((line, i) => (
+                            <Box
+                              key={line.orderLine?.id || `${line.itemName}-${line.quantity}-${i}`}
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="space-between"
+                              gap={3}
+                            >
+                              <Box display="flex" flexDirection="column">
+                                <Text size={3} fontWeight="medium">
+                                  {line.orderLine?.productName || line.itemName}
+                                </Text>
+                                {line.orderLine?.variantName && (
+                                  <Text size={2} color="default2">
+                                    {line.orderLine.variantName}
+                                  </Text>
+                                )}
+                              </Box>
+                              <Text size={3} color="default2" whiteSpace="nowrap" flexShrink="0">
+                                ×{line.quantity}
+                              </Text>
+                            </Box>
+                          ))}
                         {hasRelatedOrder && (
                           <Box display="flex" justifyContent="space-between" alignItems="center">
                             <Text size={2} color="default2">

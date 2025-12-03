@@ -6410,7 +6410,7 @@
   },
   "c12l5n": {
     "context": "order history message",
-    "string": "{productName} discount was removed"
+    "string": "Product discount was removed"
   },
   "c24hjq": {
     "context": "status",
