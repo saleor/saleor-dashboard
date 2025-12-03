@@ -2427,9 +2427,8 @@ export const AttributeFragmentDoc = gql`
   filterableInStorefront
   unit
   inputType
-  ...Metadata
 }
-    ${MetadataFragmentDoc}`;
+    `;
 export const PageTypeDetailsFragmentDoc = gql`
     fragment PageTypeDetails on PageType {
   ...PageType
@@ -4061,6 +4060,7 @@ export const AttributeDetailsDocument = gql`
     query AttributeDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   attribute(id: $id) {
     ...AttributeDetails
+    ...Metadata
     choices(
       first: $firstValues
       after: $afterValues
@@ -4072,6 +4072,7 @@ export const AttributeDetailsDocument = gql`
   }
 }
     ${AttributeDetailsFragmentDoc}
+${MetadataFragmentDoc}
 ${AttributeValueListFragmentDoc}`;
 
 /**

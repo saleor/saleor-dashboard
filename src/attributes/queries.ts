@@ -10,6 +10,7 @@ export const attributeDetails = gql`
   ) {
     attribute(id: $id) {
       ...AttributeDetails
+      ...Metadata
       choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
         ...AttributeValueList
       }
