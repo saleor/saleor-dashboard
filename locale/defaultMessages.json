@@ -6408,10 +6408,6 @@
   "byP6IC": {
     "string": "Selected"
   },
-  "c12l5n": {
-    "context": "order history message",
-    "string": "Product discount was removed"
-  },
   "c24hjq": {
     "context": "status",
     "string": "Active"
@@ -8558,6 +8554,10 @@
   },
   "qPSWmL": {
     "string": "Enter usage"
+  },
+  "qPXvFH": {
+    "context": "order history message",
+    "string": "Product discount was removed"
   },
   "qQih8j": {
     "context": "voucher status scheduled",
