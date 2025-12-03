@@ -159,6 +159,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     automaticCompletionDelay: checkoutSettings?.automaticCompletionDelay ?? null,
     automaticCompletionCutOffDate: cutOffDateTime.date,
     automaticCompletionCutOffTime: cutOffDateTime.time,
+    // If feature is already enabled (savedIsEnabled) or cutOffDate exists, checkbox should be checked
+    useCutOffDate:
+      !!checkoutSettings?.automaticallyCompleteFullyPaidCheckouts || !!cutOffDateTime.date,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
@@ -252,6 +255,30 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           });
         };
 
+        const handleUseCutOffDateChange = () => {
+          const newUseCutOffDate = !data.useCutOffDate;
+
+          if (newUseCutOffDate) {
+            // When enabling cut-off date, set current date/time as default
+            const now = new Date();
+            const date = now.toISOString().split("T")[0];
+            const time = now.toTimeString().slice(0, 5);
+
+            set({
+              useCutOffDate: true,
+              automaticCompletionCutOffDate: date,
+              automaticCompletionCutOffTime: time,
+            });
+          } else {
+            // When disabling cut-off date, clear the fields
+            set({
+              useCutOffDate: false,
+              automaticCompletionCutOffDate: "",
+              automaticCompletionCutOffTime: "",
+            });
+          }
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -275,12 +302,18 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 countries={countryChoices}
                 selectedCurrencyCode={selectedCurrencyCode}
                 selectedCountryDisplayName={selectedCountryDisplayName}
+                savedAutomaticallyCompleteCheckouts={
+                  checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false
+                }
+                savedAutomaticCompletionCutOffDate={cutOffDateTime.date}
+                savedAutomaticCompletionCutOffTime={cutOffDateTime.time}
                 onChange={change}
                 onCurrencyCodeChange={handleCurrencyCodeSelect}
                 onDefaultCountryChange={handleDefaultCountrySelect}
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
                 onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
                 onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
+                onUseCutOffDateChange={handleUseCutOffDateChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>

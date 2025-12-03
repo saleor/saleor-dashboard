@@ -105,10 +105,12 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     automaticCompletionDelay,
     automaticCompletionCutOffDate,
     automaticCompletionCutOffTime,
+    useCutOffDate,
   }: FormData) => {
-    const getCutOffDateTimeISO = () => {
-      if (!automaticCompletionCutOffDate) {
-        return undefined;
+    const getCutOffDateTimeISO = (): string | null => {
+      // Only return a date if useCutOffDate is checked and there's a date value
+      if (!useCutOffDate || !automaticCompletionCutOffDate) {
+        return null;
       }
 
       const time = automaticCompletionCutOffTime || "00:00";
@@ -120,7 +122,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     const automaticCompletionInput: {
       enabled: boolean;
       delay?: number | null;
-      cutOffDate?: string;
+      cutOffDate?: string | null;
     } = {
       enabled: automaticallyCompleteCheckouts,
     };
@@ -135,6 +137,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         automaticCompletionInput.delay = Number(delayValue);
       }
 
+      // Include cutOffDate only when useCutOffDate is checked
+      // Note: Backend will default to current time if cutOffDate is null when enabled
       automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
     }
 

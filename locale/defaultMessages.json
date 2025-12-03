@@ -19,6 +19,10 @@
     "context": "voucher status expired",
     "string": "Expired"
   },
+  "+6TUY6": {
+    "context": "automatic completion cut-off date description",
+    "string": "Only checkouts created on or after this date will be automatically completed. ({link})"
+  },
   "+7OsyM": {
     "context": "button",
     "string": "Set as default shipping address"
@@ -834,6 +838,10 @@
   "3DGvA/": {
     "string": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
   },
+  "3Gkj+d": {
+    "context": "button to reset cut-off date to saved value",
+    "string": "Reset to saved value"
+  },
   "3PVGWj": {
     "string": "Filter preset"
   },
@@ -1245,6 +1253,10 @@
     "context": "switch button",
     "string": "Product type uses Variant Attributes"
   },
+  "5po9bv": {
+    "context": "automatic completion cut-off date checkbox label",
+    "string": "Use cut-off date"
+  },
   "5sg7KC": {
     "string": "Password"
   },
@@ -1617,6 +1629,10 @@
   "8iUzOU": {
     "context": "allow unpaid orders checbkox description",
     "string": "Enables completing checkout with order before a successful payment."
+  },
+  "8jgfPX": {
+    "context": "automatic completion disabled info message",
+    "string": "Disabling automatic completion will not stop checkouts that are already scheduled for completion."
   },
   "8oIbMI": {
     "string": "Reached limit for this plan"
@@ -2509,6 +2525,10 @@
   "EP+jcU": {
     "context": "checkbox",
     "string": "Refund shipment costs"
+  },
+  "EP9h/F": {
+    "context": "automatic completion cut-off date warning",
+    "string": "Without a cut-off date, ALL existing checkouts in this channel will be automatically completed when they become fully paid."
   },
   "EQfaUv": {
     "context": "onboarding step title",
@@ -3672,6 +3692,10 @@
     "context": "cancelled fulfillment, section header",
     "string": "Refunded and Returned"
   },
+  "LJqVaO": {
+    "context": "automatic completion cut-off date earlier warning message",
+    "string": "Setting cut-off date {timeDifference} earlier (from {previousDate} to {newDate}) will cause checkouts created between these dates to be automatically completed."
+  },
   "LKD6fB": {
     "string": "Remove product"
   },
@@ -4803,6 +4827,10 @@
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
   },
+  "SPGU7Z": {
+    "context": "automatic completion cut-off date later info message",
+    "string": "Setting cut-off date {timeDifference} later (from {previousDate} to {newDate}) will not stop checkouts that are already scheduled for completion."
+  },
   "SPp3cx": {
     "context": "alert message",
     "string": "Orders cannot be placed in an inactive channel."
@@ -5506,6 +5534,10 @@
   "Wm+KUd": {
     "string": "Headers"
   },
+  "WqZk8P": {
+    "context": "tooltip explaining why cut-off date checkbox is disabled",
+    "string": "Cut-off date cannot be disabled once automatic completion is enabled. You can change the date to a different value."
+  },
   "Wr5UOV": {
     "context": "error message",
     "string": "Login went wrong. Please try again."
@@ -5683,6 +5715,10 @@
     "context": "column picker search input placeholder",
     "string": "Search for columns"
   },
+  "XtULua": {
+    "context": "button to set cut-off date to current date and time",
+    "string": "Set to current date and time"
+  },
   "Xtd0AT": {
     "string": "Original String"
   },
@@ -5784,6 +5820,10 @@
   "YQ3EXR": {
     "context": "product types section name",
     "string": "Product Types"
+  },
+  "YTvn5m": {
+    "context": "automatic completion zero delay warning message",
+    "string": "Setting delay to 0 will complete checkouts immediately after payment. This may break your storefront if it expects the Checkout object to remain available. ({link})"
   },
   "YUaalK": {
     "context": "Cancel in progress transaction amount, data display header",
@@ -7122,10 +7162,6 @@
   "hM40BV": {
     "context": "header",
     "string": "Translation structure \"{menuItemName}\" - {languageCode}"
-  },
-  "hMQlB4": {
-    "context": "automatic completion cut-off date description",
-    "string": "Only checkouts created after this date will be automatically completed."
   },
   "hMRP6J": {
     "string": "Default Address"
@@ -9282,6 +9318,10 @@
   },
   "v3WWK+": {
     "string": "Status is invalid"
+  },
+  "v9D1pm": {
+    "context": "automatic completion cut-off date info message",
+    "string": "Setting a cut-off date will not stop checkouts that are already in the process of being completed."
   },
   "vAxm7u": {
     "string": "You must select a channel first and select at least one gift"

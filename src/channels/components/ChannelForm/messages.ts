@@ -129,9 +129,32 @@ export const messages = defineMessages({
     description: "automatic completion disabled info message",
   },
   automaticCompletionZeroDelayWarning: {
-    id: "9zKvQM",
+    id: "YTvn5m",
     defaultMessage:
       "Setting delay to 0 will complete checkouts immediately after payment. This may break your storefront if it expects the Checkout object to remain available. ({link})",
     description: "automatic completion zero delay warning message",
+  },
+  automaticCompletionCutOffDateEarlierWarning: {
+    id: "LJqVaO",
+    defaultMessage:
+      "Setting cut-off date {timeDifference} earlier (from {previousDate} to {newDate}) will cause checkouts created between these dates to be automatically completed.",
+    description: "automatic completion cut-off date earlier warning message",
+  },
+  automaticCompletionCutOffDateLaterInfo: {
+    id: "SPGU7Z",
+    defaultMessage:
+      "Setting cut-off date {timeDifference} later (from {previousDate} to {newDate}) will not stop checkouts that are already scheduled for completion.",
+    description: "automatic completion cut-off date later info message",
+  },
+  automaticCompletionResetToSaved: {
+    id: "3Gkj+d",
+    defaultMessage: "Reset to saved value",
+    description: "button to reset cut-off date to saved value",
+  },
+  automaticCompletionCutOffDateDisabledTooltip: {
+    id: "aWJPo+",
+    defaultMessage:
+      "Cut-off date cannot be disabled once automatic completion is enabled. You can change the date to a different value.",
+    description: "tooltip explaining why cut-off date checkbox is disabled",
   },
 });
