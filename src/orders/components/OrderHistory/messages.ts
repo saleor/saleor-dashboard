@@ -22,8 +22,8 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
       });
     case OrderEventsEnum.ADDED_PRODUCTS:
       return intl.formatMessage({
-        id: "U1eJIw",
-        defaultMessage: "Products were added to an order",
+        id: "mWYRZY",
+        defaultMessage: "Products were added to the order",
         description: "order history message",
       });
     case OrderEventsEnum.DRAFT_CREATED:
@@ -34,8 +34,8 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
       });
     case OrderEventsEnum.REMOVED_PRODUCTS:
       return intl.formatMessage({
-        id: "fehqPs",
-        defaultMessage: "Products were deleted from an order",
+        id: "6GTAm2",
+        defaultMessage: "Products were deleted from the order",
         description: "order history message",
       });
     case OrderEventsEnum.EMAIL_SENT:

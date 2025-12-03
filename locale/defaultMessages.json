@@ -5048,7 +5048,7 @@
   },
   "U1eJIw": {
     "context": "order history message",
-    "string": "Products were added to an order"
+    "string": "Products were added to the order"
   },
   "U2DyeR": {
     "string": "Are you sure you want to delete structure {menuName}?"
@@ -6870,7 +6870,7 @@
   },
   "fehqPs": {
     "context": "order history message",
-    "string": "Products were deleted from an order"
+    "string": "Products were deleted from the order"
   },
   "fg8dzN": {
     "string": "Add condition"
