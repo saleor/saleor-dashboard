@@ -3,7 +3,7 @@ import { getStatusColor, PillStatusType } from "@dashboard/misc";
 import { makeStyles, Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
 import { useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { forwardRef } from "react";
+import { forwardRef, useMemo } from "react";
 
 const useStyles = makeStyles(
   {
@@ -44,6 +44,17 @@ export const Pill = forwardRef<HTMLDivElement, CustomPillProps>(
     });
     const classes = useStyles();
 
+    const style = useMemo(
+      () => ({
+        backgroundColor: colors.base,
+        borderColor: colors.border,
+        color: colors.text,
+        fontWeight: 500,
+        ...props.style,
+      }),
+      [colors.base, colors.border, colors.text, props.style],
+    );
+
     return (
       <MacawuiPill
         placeholder={undefined}
@@ -52,13 +63,7 @@ export const Pill = forwardRef<HTMLDivElement, CustomPillProps>(
         {...(props as any)}
         ref={ref}
         className={clsx(classes.pill, props.className)}
-        style={{
-          backgroundColor: colors.base,
-          borderColor: colors.border,
-          color: colors.text,
-          fontWeight: 500,
-          ...props.style,
-        }}
+        style={style}
       />
     );
   },
