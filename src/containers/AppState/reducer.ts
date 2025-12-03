@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import IAppState, { AppError } from "./state";
 
 type AppStateReducerActionType = "displayError" | "displayLoader";
@@ -37,8 +36,16 @@ function displayLoader(prevState: IAppState, value: boolean): IAppState {
 function reduceAppState(prevState: IAppState, action: AppStateReducerAction): IAppState {
   switch (action.type) {
     case "displayError":
+      if (action.payload.error === undefined) {
+        throw new Error("error is required when displaying error");
+      }
+
       return displayError(prevState, action.payload.error, action.payload.errorId);
     case "displayLoader":
+      if (action.payload.value === undefined) {
+        throw new Error("value is required when displaying loader");
+      }
+
       return displayLoader(prevState, action.payload.value);
     default:
       return prevState;
