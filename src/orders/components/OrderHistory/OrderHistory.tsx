@@ -365,7 +365,7 @@ const OrderHistory = ({
 
               return groupedEvents.map(([dateKey, events]) => (
                 <Box key={dateKey}>
-                  <DateGroupHeader groupKey={dateKey} />
+                  {groupedEvents.length > 1 && <DateGroupHeader groupKey={dateKey} />}
                   {events.map((event, index) => renderEvent(event, index, events))}
                 </Box>
               ));
