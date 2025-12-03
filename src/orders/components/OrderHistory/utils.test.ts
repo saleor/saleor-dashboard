@@ -1,5 +1,4 @@
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
-import moment from "moment-timezone";
 
 import { getDateGroupKey, groupEventsByDate } from "./utils";
 
@@ -9,7 +8,7 @@ describe("getDateGroupKey", () => {
   });
 
   it("returns TODAY for events from today", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const todayMorning = "2024-06-15T08:00:00Z";
     const todayEvening = "2024-06-15T23:59:59Z";
 
@@ -18,7 +17,7 @@ describe("getDateGroupKey", () => {
   });
 
   it("returns YESTERDAY for events from yesterday", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const yesterdayMorning = "2024-06-14T08:00:00Z";
     const yesterdayEvening = "2024-06-14T23:59:59Z";
 
@@ -27,7 +26,7 @@ describe("getDateGroupKey", () => {
   });
 
   it("returns LAST_7_DAYS for events within last 7 days (excluding today and yesterday)", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const threeDaysAgo = "2024-06-12T10:00:00Z";
     const sixDaysAgo = "2024-06-09T10:00:00Z";
 
@@ -36,7 +35,7 @@ describe("getDateGroupKey", () => {
   });
 
   it("returns LAST_30_DAYS for events within 7-30 days", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const tenDaysAgo = "2024-06-05T10:00:00Z";
     const twentyNineDaysAgo = "2024-05-17T10:00:00Z";
 
@@ -45,7 +44,7 @@ describe("getDateGroupKey", () => {
   });
 
   it("returns OLDER for events older than 30 days", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const thirtyOneDaysAgo = "2024-05-15T10:00:00Z";
     const sixtyDaysAgo = "2024-04-16T10:00:00Z";
 
@@ -54,7 +53,7 @@ describe("getDateGroupKey", () => {
   });
 
   it("handles edge case at midnight boundary", () => {
-    const now = moment("2024-06-15T00:01:00Z");
+    const now = new Date("2024-06-15T00:01:00Z");
     const justBeforeMidnight = "2024-06-14T23:59:59Z";
 
     expect(getDateGroupKey(justBeforeMidnight, now)).toBe("YESTERDAY");
@@ -84,7 +83,7 @@ describe("groupEventsByDate", () => {
     }) as OrderEventFragment;
 
   it("groups events by date correctly", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const events: OrderEventFragment[] = [
       createMockEvent("2024-06-15T10:00:00Z", "1"), // TODAY
       createMockEvent("2024-06-15T08:00:00Z", "2"), // TODAY
@@ -110,7 +109,7 @@ describe("groupEventsByDate", () => {
   });
 
   it("preserves insertion order within groups", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const events: OrderEventFragment[] = [
       createMockEvent("2024-06-15T10:00:00Z", "first"),
       createMockEvent("2024-06-15T08:00:00Z", "second"),
@@ -125,7 +124,7 @@ describe("groupEventsByDate", () => {
   });
 
   it("preserves group order based on first occurrence", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const events: OrderEventFragment[] = [
       createMockEvent("2024-06-14T10:00:00Z", "1"), // YESTERDAY first
       createMockEvent("2024-06-15T10:00:00Z", "2"), // TODAY second
@@ -147,7 +146,7 @@ describe("groupEventsByDate", () => {
   });
 
   it("handles events with null dates", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const events: OrderEventFragment[] = [
       createMockEvent("2024-06-15T10:00:00Z", "1"),
       {
@@ -165,7 +164,7 @@ describe("groupEventsByDate", () => {
   });
 
   it("creates single group when all events are from same period", () => {
-    const now = moment("2024-06-15T14:30:00Z");
+    const now = new Date("2024-06-15T14:30:00Z");
     const events: OrderEventFragment[] = [
       createMockEvent("2024-06-15T10:00:00Z", "1"),
       createMockEvent("2024-06-15T08:00:00Z", "2"),

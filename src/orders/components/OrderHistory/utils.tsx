@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
-import moment from "moment-timezone";
 
 // Date group labels - keys are used internally, labels are internationalized in component
 export type DateGroupKey =
@@ -12,22 +11,41 @@ export type DateGroupKey =
   | "OLDER"
   | "UNKNOWN";
 
+// Helper to check if two dates are the same day
+const isSameDay = (date1: Date, date2: Date): boolean =>
+  date1.getFullYear() === date2.getFullYear() &&
+  date1.getMonth() === date2.getMonth() &&
+  date1.getDate() === date2.getDate();
+
+// Helper to get start of day
+const startOfDay = (date: Date): Date => {
+  const result = new Date(date);
+
+  result.setHours(0, 0, 0, 0);
+
+  return result;
+};
+
 // Helper to get date group key - smart grouping based on age
-export const getDateGroupKey = (date: string | null, now?: moment.Moment): DateGroupKey => {
+export const getDateGroupKey = (date: string | null, now?: Date): DateGroupKey => {
   if (!date) {
     return "UNKNOWN";
   }
 
-  const eventDate = moment(date);
-  const currentMoment = now || moment();
-  const today = currentMoment.clone().startOf("day");
-  const yesterday = currentMoment.clone().subtract(1, "day").startOf("day");
-  const daysAgo = currentMoment.diff(eventDate, "days");
+  const eventDate = new Date(date);
+  const currentDate = now || new Date();
+  const today = startOfDay(currentDate);
+  const yesterday = new Date(today);
+
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const diffInMs = currentDate.getTime() - eventDate.getTime();
+  const daysAgo = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
   // Daily precision for last 48 hours
-  if (eventDate.isSame(today, "day")) {
+  if (isSameDay(eventDate, today)) {
     return "TODAY";
-  } else if (eventDate.isSame(yesterday, "day")) {
+  } else if (isSameDay(eventDate, yesterday)) {
     return "YESTERDAY";
   }
 
@@ -44,7 +62,7 @@ export const getDateGroupKey = (date: string | null, now?: moment.Moment): DateG
 // Group events by date - preserves insertion order
 export const groupEventsByDate = (
   events: OrderEventFragment[],
-  now?: moment.Moment,
+  now?: Date,
 ): Array<[DateGroupKey, OrderEventFragment[]]> => {
   const groups: Array<[DateGroupKey, OrderEventFragment[]]> = [];
   const groupMap = new Map<DateGroupKey, number>();
