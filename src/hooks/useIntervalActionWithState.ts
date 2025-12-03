@@ -43,8 +43,13 @@ export const useIntervalActionWithState = ({
     };
 
     if (hasPassedInterval) {
-      action();
-      timeout.current = setTimeout(() => action(), interval);
+      // Defer immediate action to next event loop tick to avoid React error #185
+      // "Cannot update a component from inside the function body of a different component"
+      // This happens with Apollo 3.8+ and React 18's stricter timing via useSyncExternalStore
+      timeout.current = setTimeout(() => {
+        action();
+        timeout.current = setTimeout(() => action(), interval);
+      }, 0);
     } else {
       timeout.current = setTimeout(() => action(), nextDelay);
     }
