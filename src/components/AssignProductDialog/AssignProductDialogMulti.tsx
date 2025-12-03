@@ -5,18 +5,21 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe } from "@dashboard/misc";
 import { Container, FetchMoreProps } from "@dashboard/types";
 import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
+import { ModalFilters } from "./ModalFilters";
+import { useModalProductFilterContext } from "./ModalProductFilterProvider";
 import { useStyles } from "./styles";
 import { Products, SelectedChannel } from "./types";
 import { isProductAvailableInVoucherChannels } from "./utils";
@@ -29,6 +32,7 @@ interface AssignProductDialogMultiProps extends FetchMoreProps {
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
+  onFilterChange?: (filterVariables: ProductWhereInput, channel: string | undefined) => void;
   onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
   onClose: () => void;
   labels?: {
@@ -49,6 +53,7 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
     products,
     onClose,
     onFetch,
+    onFilterChange,
     onFetchMore,
     onSubmit,
     selectedIds,
@@ -59,6 +64,7 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
   const intl = useIntl();
   const [query, onQueryChange, queryReset] = useSearchQuery(onFetch);
   const [productsDict, setProductsDict] = useState(selectedIds || {});
+  const { filterVariables, filterChannel, clearFilters } = useModalProductFilterContext();
 
   // Keep selected product data to send them back when submitting
   const productsData = useRef<Products>([]);
@@ -110,12 +116,27 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
 
   const handleClose = () => {
     queryReset();
+    clearFilters();
     onClose();
   };
+
+  // Serialize filterVariables and channel to detect changes
+  const filterVariablesKey = useMemo(
+    () => JSON.stringify({ filterVariables, filterChannel }),
+    [filterVariables, filterChannel],
+  );
+
+  // Trigger onFilterChange when filterVariables actually changes
+  useEffect(() => {
+    if (open) {
+      onFilterChange?.(filterVariables, filterChannel);
+    }
+  }, [filterVariablesKey, open]);
 
   useModalDialogOpen(open, {
     onOpen: () => {
       queryReset();
+      clearFilters();
       setProductsDict(selectedIds || {});
     },
     onClose: handleClose,
@@ -135,6 +156,8 @@ export const AssignProductDialogMulti = (props: AssignProductDialogMultiProps) =
           endAdornment: loading && <CircularProgress size={16} />,
         }}
       />
+
+      <ModalFilters />
 
       <InfiniteScroll
         id={scrollableTargetId}

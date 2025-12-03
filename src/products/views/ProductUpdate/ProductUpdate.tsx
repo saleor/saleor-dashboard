@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { InitialConstraints } from "@dashboard/components/AssignProductDialog/ModalProductFilterProvider";
 import { AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -8,6 +9,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   ProductMediaCreateMutationVariables,
+  ProductWhereInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaCreateMutation,
@@ -30,6 +32,7 @@ import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
@@ -195,6 +198,24 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       ? product?.attributes?.find(a => a.attribute.id === params.id)?.attribute
       : undefined;
 
+  // Extract productType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo((): InitialConstraints | undefined => {
+    if (!refAttr?.referenceTypes?.length) {
+      return undefined;
+    }
+
+    // Check if reference types are ProductTypes
+    if (refAttr.referenceTypes[0]?.__typename !== "ProductType") {
+      return undefined;
+    }
+
+    return {
+      productTypes: refAttr.referenceTypes
+        .filter((t): t is { __typename: "ProductType"; id: string; name: string } => Boolean(t?.id))
+        .map(t => ({ id: t.id, name: t.name })),
+    };
+  }, [refAttr?.referenceTypes]);
+
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -206,6 +227,27 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     search: searchPages,
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
+
+  const productFilterVariablesRef = useRef<ProductWhereInput>({});
+
+  const handleProductFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+  ) => {
+    productFilterVariablesRef.current = filterVariables;
+
+    // Merge productType constraint from reference attribute with user filters
+    const baseWhere: ProductWhereInput = initialConstraints?.productTypes?.length
+      ? { productType: { oneOf: initialConstraints.productTypes.map(pt => pt.id) } }
+      : {};
+
+    searchProductsOpts.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: { ...baseWhere, ...filterVariables },
+      channel,
+    });
+  };
+
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
@@ -281,6 +323,8 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
+        onProductFilterChange={handleProductFilterChange}
+        initialConstraints={initialConstraints}
       />
       <ActionDialog
         open={params.action === "remove"}

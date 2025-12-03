@@ -1,11 +1,13 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { ProductWhereInput } from "@dashboard/graphql";
 import { Container, DialogProps, FetchMoreProps } from "@dashboard/types";
 import { FormattedMessage } from "react-intl";
 
 import { AssignProductDialogMulti } from "./AssignProductDialogMulti";
 import { AssignProductDialogSingle } from "./AssignProductDialogSingle";
 import { messages } from "./messages";
+import { InitialConstraints, ModalProductFilterProvider } from "./ModalProductFilterProvider";
 import { Products, SelectedChannel } from "./types";
 
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
@@ -16,6 +18,7 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
+  onFilterChange?: (filterVariables: ProductWhereInput, channel: string | undefined) => void;
   // name is part of Container interface
   onSubmit: (data: Array<Container & Omit<Partial<Products[number]>, "name">>) => void;
   labels?: {
@@ -23,10 +26,18 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   };
   selectionMode?: "single" | "multiple";
   selectedId?: string;
+  excludedFilters?: string[];
+  initialConstraints?: InitialConstraints;
 }
 
 const AssignProductDialog = (props: AssignProductDialogProps) => {
-  const { selectionMode = "multiple", ...restProps } = props;
+  const {
+    selectionMode = "multiple",
+    excludedFilters,
+    onFilterChange,
+    initialConstraints,
+    ...restProps
+  } = props;
 
   const { open, onClose } = props;
 
@@ -34,17 +45,28 @@ const AssignProductDialog = (props: AssignProductDialogProps) => {
     onClose();
   };
 
+  const dialogContent = (
+    <>
+      <DashboardModal.Header>
+        <FormattedMessage {...messages.assignVariantDialogHeader} />
+      </DashboardModal.Header>
+      {selectionMode === "single" ? (
+        <AssignProductDialogSingle {...restProps} onFilterChange={onFilterChange} />
+      ) : (
+        <AssignProductDialogMulti {...restProps} onFilterChange={onFilterChange} />
+      )}
+    </>
+  );
+
   return (
     <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
-        <DashboardModal.Header>
-          <FormattedMessage {...messages.assignVariantDialogHeader} />
-        </DashboardModal.Header>
-        {selectionMode === "single" ? (
-          <AssignProductDialogSingle {...restProps} />
-        ) : (
-          <AssignProductDialogMulti {...restProps} />
-        )}
+        <ModalProductFilterProvider
+          excludedFilters={excludedFilters}
+          initialConstraints={initialConstraints}
+        >
+          {dialogContent}
+        </ModalProductFilterProvider>
       </DashboardModal.Content>
     </DashboardModal>
   );

@@ -14,6 +14,7 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   CollectionDetailsQuery,
+  ProductWhereInput,
   useCollectionAssignProductMutation,
   useCollectionProductsQuery,
   useUnassignCollectionProductMutation,
@@ -29,6 +30,7 @@ import { Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListViews } from "../../../types";
@@ -110,6 +112,16 @@ const CollectionProducts = ({
   const { search, loadMore, result } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
+
+  const filterVariablesRef = useRef<ProductWhereInput>({});
+
+  const handleFilterChange = (filterVariables: ProductWhereInput) => {
+    filterVariablesRef.current = filterVariables;
+    result.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: filterVariables,
+    });
+  };
 
   const assignedProductDict = getAssignedProductIdsToCollection(collection, result.data?.search);
 
@@ -224,6 +236,8 @@ const CollectionProducts = ({
         onClose={closeModal}
         onSubmit={handleAssignationChange}
         products={getProductsFromSearchResults(result?.data) ?? []}
+        excludedFilters={["channel"]}
+        onFilterChange={handleFilterChange}
       />
       <ActionDialog
         confirmButtonState={unassignProductOpts.status}

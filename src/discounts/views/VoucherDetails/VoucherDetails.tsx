@@ -31,6 +31,7 @@ import {
   getFilteredProductVariants,
 } from "@dashboard/discounts/utils";
 import {
+  ProductWhereInput,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherCataloguesAddMutation,
@@ -58,7 +59,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button } from "@saleor/macaw-ui-next";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
@@ -98,6 +99,17 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
+
+  const productFilterVariablesRef = useRef<ProductWhereInput>({});
+
+  const handleProductFilterChange = (filterVariables: ProductWhereInput) => {
+    productFilterVariablesRef.current = filterVariables;
+    searchProductsOpts.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: filterVariables,
+    });
+  };
+
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [activeTab, setActiveTab] = useState<VoucherDetailsPageTab>(
@@ -555,6 +567,8 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           })
         }
         products={getFilteredProducts(data, searchProductsOpts)}
+        excludedFilters={["channel"]}
+        onFilterChange={handleProductFilterChange}
       />
       <ActionDialog
         open={params.action === "unassign-category" && canOpenBulkActionDialog}

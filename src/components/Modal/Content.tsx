@@ -25,8 +25,16 @@ export const Content = ({ children, disableAutofocus, size, ...rest }: ContentPr
         onPointerDownOutside: e => {
           // This fixes issues when cursor was clicked on DataGrid x/y coordinates
           // For example: when in modal clicked on "View metadata" button in DataGrid
-          // This doesn't prevent default action from Radix which is to close modal
           e.detail.originalEvent.preventDefault();
+        },
+        onInteractOutside: e => {
+          // Prevent modal from closing when interacting with popovers (e.g., filter dropdowns)
+          // Popovers render in portals outside the modal's DOM tree, so Radix treats them as "outside"
+          const target = e.target as HTMLElement;
+
+          if (target?.closest("[data-radix-popper-content-wrapper]")) {
+            e.preventDefault();
+          }
         },
       }}
     >
