@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.16
+
+### Patch Changes
+
+- [#6155](https://github.com/saleor/saleor-dashboard/pull/6155) [`2cac4ef`](https://github.com/saleor/saleor-dashboard/commit/2cac4ef453a847335aaf88d8419b88cf49e218ce) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed broken permissions on product edit page, if user did not have MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES permission. It was caused by "Attribute" object being fetched with privateMetadata on every page, not only "attribute edit" page
+
 ## 3.22.15
 
 ### Patch Changes
