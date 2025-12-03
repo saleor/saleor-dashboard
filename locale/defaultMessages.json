@@ -6452,6 +6452,10 @@
     "context": "Channel label",
     "string": "Channel"
   },
+  "cIoOf0": {
+    "context": "relative time in minutes",
+    "string": "{minutes}m ago"
+  },
   "cJ5ASN": {
     "context": "attribute position in storefront filters",
     "string": "Position in faceted navigation"
@@ -8365,6 +8369,10 @@
     "context": "section description",
     "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
   },
+  "pSFOFy": {
+    "context": "relative time in days",
+    "string": "{days}d ago"
+  },
   "pSb46V": {
     "context": "dialog header",
     "string": "Create structure"
@@ -8443,6 +8451,10 @@
   "puRlnN": {
     "context": "card subtitle",
     "string": "Entered prices"
+  },
+  "puYVLm": {
+    "context": "relative time in hours",
+    "string": "{hours}h ago"
   },
   "puikeb": {
     "context": "button",
