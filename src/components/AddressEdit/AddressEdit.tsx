@@ -36,7 +36,7 @@ const PossibleFormFields = {
 } as const;
 const formFields: Array<keyof AddressTypeInput> = Object.values(PossibleFormFields);
 
-const AddressEdit = (props: AddressEditProps) => {
+export const AddressEdit = (props: AddressEditProps) => {
   const { countries, countryDisplayValue, data, disabled, errors, onChange, onCountryChange } =
     props;
   const intl = useIntl();
@@ -239,6 +239,3 @@ const AddressEdit = (props: AddressEditProps) => {
     </>
   );
 };
-
-AddressEdit.displayName = "AddressEdit";
-export default AddressEdit;
