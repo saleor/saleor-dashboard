@@ -2,7 +2,7 @@ import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { AppAvatarFragment, StaffMemberAvatarFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, vars } from "@saleor/macaw-ui-next";
-import { LayoutGridIcon, UserIcon } from "lucide-react";
+import { LayoutGridIcon, ZapIcon } from "lucide-react";
 
 interface EventAvatarProps {
   createdBy: StaffMemberAvatarFragment | AppAvatarFragment | null;
@@ -27,8 +27,9 @@ export const EventAvatar = ({ createdBy }: EventAvatarProps) => {
         __height={AVATAR_SIZE}
         flexShrink="0"
         __color={vars.colors.text.default2}
+        title="System"
       >
-        <UserIcon size={ICON_SIZE} color="currentColor" />
+        <ZapIcon size={ICON_SIZE} color="currentColor" />
       </Box>
     );
   }

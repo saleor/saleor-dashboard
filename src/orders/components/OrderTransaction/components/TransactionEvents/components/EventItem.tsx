@@ -21,9 +21,13 @@ interface EventItemProps {
 
 const useStyles = makeStyles(
   theme => ({
-    row: {},
+    row: {
+      "&&&:hover": {
+        backgroundColor: vars.colors.background.default1Hovered,
+      },
+    },
     linkedHighlight: {
-      backgroundColor: vars.colors.background.default1,
+      backgroundColor: vars.colors.background.default1Hovered,
     },
     colAvatar: {
       width: "32px",

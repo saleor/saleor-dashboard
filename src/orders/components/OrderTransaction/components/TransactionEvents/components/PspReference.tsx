@@ -28,7 +28,7 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
       <Tooltip>
         <Tooltip.Trigger>
           <Box
-            backgroundColor="default1"
+            backgroundColor="default2"
             borderRadius={2}
             borderStyle="solid"
             borderWidth={1}
