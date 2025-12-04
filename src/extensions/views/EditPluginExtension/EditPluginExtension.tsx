@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { ExtensionsUrls, PluginUrlDialog, PluginUrlQueryParams } from "@dashboard/extensions/urls";
@@ -18,7 +17,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { PluginDetailsPageFormData, PluginsDetailsPage } from "./components/PluginsDetailsPage";
 import { PluginSecretFieldDialog } from "./components/PluginSecretFieldDialog";
-import { getConfigByChannelId, isPluginGlobal, isSecretField } from "./utils";
+import { isPluginGlobal, isSecretField } from "./utils";
 
 interface PluginsDetailsProps {
   id: string;
@@ -37,7 +36,7 @@ export function getConfigurationInput(
     .filter(field => !isSecretField(config, field.name))
     .map(field => ({
       name: field.name,
-      value: field.value.toString(),
+      value: field.value?.toString() ?? "",
     }));
 }
 
@@ -52,13 +51,16 @@ export const EditPluginExtension = ({ id, params }: PluginsDetailsProps) => {
 
   const plugin = pluginData?.plugin;
   const initialSelectedChannelValue =
-    plugin && !isPluginGlobal(plugin.globalConfiguration)
-      ? plugin.channelConfigurations[0].channel.id
+    plugin && plugin.globalConfiguration && !isPluginGlobal(plugin.globalConfiguration)
+      ? (plugin.channelConfigurations[0]?.channel?.id ?? null)
       : null;
   const [selectedChannelId, setSelectedChannelId] = useStateFromProps(initialSelectedChannelValue);
-  const selectedConfig = isPluginGlobal(plugin?.globalConfiguration)
-    ? plugin?.globalConfiguration
-    : plugin?.channelConfigurations.find(getConfigByChannelId(selectedChannelId));
+  const selectedConfig =
+    plugin?.globalConfiguration && isPluginGlobal(plugin.globalConfiguration)
+      ? plugin.globalConfiguration
+      : plugin?.channelConfigurations.find(
+          config => config.channel?.id === (selectedChannelId ?? ""),
+        );
   const [openModal, closeModal] = createDialogActionHandlers<PluginUrlDialog, PluginUrlQueryParams>(
     navigate,
     params => ExtensionsUrls.resolveEditPluginExtensionUrl(id, params),
@@ -66,7 +68,7 @@ export const EditPluginExtension = ({ id, params }: PluginsDetailsProps) => {
   );
   const [pluginUpdate, pluginUpdateOpts] = usePluginUpdateMutation({
     onCompleted: data => {
-      if (data.pluginUpdate.errors.length === 0) {
+      if (data.pluginUpdate?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -77,32 +79,35 @@ export const EditPluginExtension = ({ id, params }: PluginsDetailsProps) => {
   });
   const isSubmitting = pluginUpdateOpts.loading;
 
-  const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
-  const handleFieldUpdate = (value: string) =>
+  const formErrors = pluginUpdateOpts.data?.pluginUpdate?.errors || [];
+  const handleFieldUpdate = (value: string | null) => {
+    if (!params.id) return;
+
     pluginUpdate({
       variables: {
-        channelId: selectedChannelId,
+        channelId: selectedChannelId ?? null,
         id,
         input: {
           configuration: [
             {
               name: params.id,
-              value,
+              value: value ?? "",
             },
           ],
         },
       },
     });
+  };
   const handleSubmit = async (formData: PluginDetailsPageFormData) =>
     extractMutationErrors(
       pluginUpdate({
         variables: {
-          channelId: selectedChannelId,
+          channelId: selectedChannelId ?? null,
           id,
           input: {
             active: formData.active,
             configuration: getConfigurationInput(
-              selectedConfig?.configuration,
+              selectedConfig?.configuration ?? null,
               formData.configuration,
             ),
           },
@@ -112,12 +117,12 @@ export const EditPluginExtension = ({ id, params }: PluginsDetailsProps) => {
 
   return (
     <>
-      <WindowTitle title={plugin?.name} />
+      <WindowTitle title={plugin?.name ?? ""} />
       <PluginsDetailsPage
         disabled={loading || isSubmitting}
         errors={formErrors}
         saveButtonBarState={!params.action ? pluginUpdateOpts.status : "default"}
-        plugin={plugin}
+        plugin={plugin!}
         onClear={id =>
           openModal("clear", {
             id,
@@ -129,7 +134,7 @@ export const EditPluginExtension = ({ id, params }: PluginsDetailsProps) => {
           })
         }
         onSubmit={handleSubmit}
-        selectedConfig={selectedConfig}
+        selectedConfig={selectedConfig!}
         setSelectedChannelId={setSelectedChannelId}
       />
       {selectedConfig && (
@@ -152,7 +157,7 @@ export const EditPluginExtension = ({ id, params }: PluginsDetailsProps) => {
           </ActionDialog>
           <PluginSecretFieldDialog
             confirmButtonState={params.action ? pluginUpdateOpts.status : "default"}
-            field={selectedConfig?.configuration.find(field => field.name === params.id)}
+            field={selectedConfig?.configuration?.find(field => field.name === params.id)!}
             onClose={closeModal}
             onConfirm={formData => handleFieldUpdate(formData.value)}
             open={params.action === "edit" && !!params.id}

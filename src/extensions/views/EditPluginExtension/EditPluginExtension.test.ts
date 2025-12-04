@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   ConfigurationItemFragment,
   ConfigurationItemInput,
@@ -58,20 +57,20 @@ const input: ConfigurationItemInput[] = [
 ];
 
 test("Ensure that no secret is sent in input", () => {
-  const output: ConfigurationItemInput[] = getConfigurationInput(config, input);
+  const output = getConfigurationInput(config, input);
 
   expect(output).toHaveLength(2);
   expect(
-    output.find(
+    output?.find(
       field =>
-        config.find(configField => configField.name === field.name).type ===
+        config.find(configField => configField.name === field.name)?.type ===
         ConfigurationTypeFieldEnum.PASSWORD,
     ),
   ).toBeFalsy();
   expect(
-    output.find(
+    output?.find(
       field =>
-        config.find(configField => configField.name === field.name).type ===
+        config.find(configField => configField.name === field.name)?.type ===
         ConfigurationTypeFieldEnum.SECRET,
     ),
   ).toBeFalsy();

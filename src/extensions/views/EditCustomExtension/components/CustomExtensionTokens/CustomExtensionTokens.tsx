@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
@@ -12,7 +11,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "./styles";
 
 interface CustomAppTokensProps {
-  tokens: AppUpdateMutation["appUpdate"]["app"]["tokens"] | null;
+  tokens: NonNullable<
+    NonNullable<NonNullable<AppUpdateMutation["appUpdate"]>["app"]>["tokens"]
+  > | null;
   onCreate: () => void;
   onDelete: (id: string) => void;
   hasManagedAppsPermission: boolean;
@@ -57,37 +58,41 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
     }
 
     return renderCollection(
-      tokens,
-      token => (
-        <TableRowLink key={token.id}>
-          <TableCell className={classes.colNote}>
-            {token.name || (
-              <Box as="span" fontStyle="italic">
-                <FormattedMessage
-                  defaultMessage="(unknown)"
-                  description="custom app tokens list - missing token name"
-                  id="FmeBxD"
-                />
-              </Box>
-            )}
-          </TableCell>
-          <TableCell className={classes.colKey}>{`**** ${token?.authToken}`}</TableCell>
-          <TableCell className={classes.colActions}>
-            {hasManagedAppsPermission && (
-              <Box display="flex" justifyContent="flex-end" width="100%">
-                <TableButtonWrapper>
-                  <Button
-                    variant="tertiary"
-                    onClick={() => onDelete(token.id)}
-                    data-test-id={`delete-token-${token.id}`}
-                    icon={<TrashBinIcon />}
+      tokens ?? undefined,
+      token => {
+        if (!token) return null;
+
+        return (
+          <TableRowLink key={token.id}>
+            <TableCell className={classes.colNote}>
+              {token.name || (
+                <Box as="span" fontStyle="italic">
+                  <FormattedMessage
+                    defaultMessage="(unknown)"
+                    description="custom app tokens list - missing token name"
+                    id="FmeBxD"
                   />
-                </TableButtonWrapper>
-              </Box>
-            )}
-          </TableCell>
-        </TableRowLink>
-      ),
+                </Box>
+              )}
+            </TableCell>
+            <TableCell className={classes.colKey}>{`**** ${token.authToken ?? ""}`}</TableCell>
+            <TableCell className={classes.colActions}>
+              {hasManagedAppsPermission && (
+                <Box display="flex" justifyContent="flex-end" width="100%">
+                  <TableButtonWrapper>
+                    <Button
+                      variant="tertiary"
+                      onClick={() => onDelete(token.id)}
+                      data-test-id={`delete-token-${token.id}`}
+                      icon={<TrashBinIcon />}
+                    />
+                  </TableButtonWrapper>
+                </Box>
+              )}
+            </TableCell>
+          </TableRowLink>
+        );
+      },
       () => (
         <TableRowLink>
           <TableCell colSpan={numberOfColumns}>

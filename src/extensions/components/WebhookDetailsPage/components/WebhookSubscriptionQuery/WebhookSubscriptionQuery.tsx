@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import "graphiql/graphiql.min.css";
 
 import { DashboardCard } from "@dashboard/components/Card";
@@ -29,8 +28,18 @@ interface WebhookSubscriptionQueryProps {
 }
 
 const fetcher = createGraphiQLFetcher({
-  url: process.env.API_URL,
+  url: process.env.API_URL ?? "",
 });
+
+// Create a no-op storage implementation to avoid localStorage issues
+const noopStorage: Storage = {
+  length: 0,
+  clear: () => {},
+  getItem: () => null,
+  key: () => null,
+  removeItem: () => {},
+  setItem: () => {},
+};
 
 export const WebhookSubscriptionQuery = ({
   errors,
@@ -50,7 +59,7 @@ export const WebhookSubscriptionQuery = ({
   return (
     <DashboardCard className={classes.card}>
       <DashboardCard.Header>
-        <DashboardCard.Title color={formErrors.subscriptionQuery ? "critical1" : null}>
+        <DashboardCard.Title color={formErrors.subscriptionQuery ? "critical1" : undefined}>
           {intl.formatMessage(messages.title)}
 
           <DashboardCard.Subtitle>{formErrors.subscriptionQuery?.message}</DashboardCard.Subtitle>
@@ -62,7 +71,7 @@ export const WebhookSubscriptionQuery = ({
           defaultEditorToolsVisibility={"headers"}
           fetcher={fetcher}
           query={query}
-          storage={null}
+          storage={noopStorage}
           onEditQuery={setQuery}
           plugins={[explorerPlugin]}
           isHeadersEditorEnabled={false}

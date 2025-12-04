@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -154,6 +153,8 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
     onCompleted: onWebhookDelete,
   });
   const handleRemoveWebhookConfirm = () => {
+    if (!params.id) return;
+
     webhookDelete({
       variables: {
         id: params.id,
@@ -169,15 +170,17 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
     } else {
       const error = data?.appUpdate?.errors[0];
 
-      notify({
-        status: "error",
-        text: getCustomAppErrorMessage(error, intl),
-        apiMessage: parseLogMessage({
-          intl,
-          code: error.code,
-          field: error.field,
-        }),
-      });
+      if (error) {
+        notify({
+          status: "error",
+          text: getCustomAppErrorMessage(error, intl),
+          apiMessage: parseLogMessage({
+            intl,
+            code: error.code,
+            field: error.field ?? undefined,
+          }),
+        });
+      }
     }
   };
   const customApp = data?.app;
@@ -230,12 +233,15 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
         },
       },
     });
-  const handleTokenDelete = () =>
+  const handleTokenDelete = () => {
+    if (!params.id) return;
+
     deleteToken({
       variables: {
         id: params.id,
       },
     });
+  };
   const handleActivateConfirm = () => {
     activateApp({ variables: { id } });
   };

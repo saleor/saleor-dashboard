@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { WebhookFormData } from "@dashboard/extensions/components/WebhookDetailsPage/WebhookDetailsPage";
 import { filterSelectedAsyncEvents, IntrospectionNode } from "@dashboard/extensions/utils";
 import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
@@ -120,14 +119,14 @@ const handleQuery = ({ events, query, setQuery, availableEvents }: HandleQuery) 
       const editedAst: DocumentNode = visit(ast, {
         SelectionSet(node, _key, parent) {
           if ((parent as ObjectFieldNode).name?.value === "event") {
-            const queryEvents = node.selections.map(
-              selection => (selection as InlineFragmentNode).typeCondition.name.value,
-            );
+            const queryEvents = node.selections
+              .map(selection => (selection as InlineFragmentNode).typeCondition?.name.value)
+              .filter((value): value is string => value !== undefined);
             const eventsToRemove = queryEvents.filter(event => !eventsNames.includes(event));
             const selections = [...node.selections].filter(
               selection =>
                 !eventsToRemove.includes(
-                  (selection as InlineFragmentNode).typeCondition.name.value,
+                  (selection as InlineFragmentNode).typeCondition?.name.value ?? "",
                 ),
             );
 

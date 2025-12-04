@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -55,13 +54,15 @@ export const PluginsDetailsPage = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const initialFormData: PluginDetailsPageFormData = {
-    active: selectedConfig?.active,
+    active: selectedConfig?.active ?? false,
     configuration: selectedConfig?.configuration
-      ?.filter(field => !isSecretField(selectedConfig?.configuration || [], field.name))
-      .map(field => ({
-        ...field,
-        value: field.value || "",
-      })),
+      ? selectedConfig.configuration
+          .filter(field => !isSecretField(selectedConfig.configuration ?? [], field.name))
+          .map(field => ({
+            ...field,
+            value: field.value || "",
+          }))
+      : [],
   };
   const selectedChannelId = selectedConfig?.channel?.id;
 
@@ -110,8 +111,8 @@ export const PluginsDetailsPage = ({
               <Grid variant="inverted">
                 <div>
                   <PluginDetailsChannelsCard
-                    plugin={plugin}
-                    selectedChannelId={selectedChannelId}
+                    plugin={plugin!}
+                    selectedChannelId={selectedChannelId ?? ""}
                     setSelectedChannelId={setSelectedChannelId}
                   />
                 </div>
@@ -133,15 +134,16 @@ export const PluginsDetailsPage = ({
                         disabled={disabled}
                         onChange={onChange}
                       />
-                      {selectedConfig?.configuration.some(field =>
-                        isSecretField(selectedConfig?.configuration, field.name),
-                      ) && (
-                        <PluginAuthorization
-                          fields={selectedConfig.configuration}
-                          onClear={onClear}
-                          onEdit={onEdit}
-                        />
-                      )}
+                      {selectedConfig?.configuration &&
+                        selectedConfig.configuration.some(field =>
+                          isSecretField(selectedConfig.configuration!, field.name),
+                        ) && (
+                          <PluginAuthorization
+                            fields={selectedConfig.configuration}
+                            onClear={onClear}
+                            onEdit={onEdit}
+                          />
+                        )}
                     </div>
                   )}
                 </Box>

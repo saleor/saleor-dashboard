@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import { PluginsDetailsFragment } from "@dashboard/graphql";
@@ -59,7 +58,7 @@ export const PluginDetailsChannelsCardContent = ({
     );
   }
 
-  if (isPluginGlobal(plugin.globalConfiguration)) {
+  if (plugin.globalConfiguration && isPluginGlobal(plugin.globalConfiguration)) {
     return (
       <DashboardCard.Content>
         <Text>
@@ -75,24 +74,30 @@ export const PluginDetailsChannelsCardContent = ({
     <>
       <CollectionWithDividers
         collection={plugin.channelConfigurations}
-        renderItem={channel => (
-          <div
-            data-test-id="channel"
-            className={classes.itemContainer}
-            key={channel.channel.id}
-            onClick={() => setSelectedChannelId(channel.channel.id)}
-          >
-            {isChannelSelected(channel.channel.id) && (
-              <div className={classes.itemActiveIndicator}></div>
-            )}
-            <DashboardCard.Content padding={4} display="flex" alignItems="center" gap={2}>
-              <Text>{channel.channel.name}</Text>
-              <Chip backgroundColor={mapPluginStatusToChipColor(getPluginStatusColor(channel))}>
-                {intl.formatMessage(getPluginStatusLabel(channel))}
-              </Chip>
-            </DashboardCard.Content>
-          </div>
-        )}
+        renderItem={channel => {
+          if (!channel?.channel) return null;
+
+          const channelData = channel.channel;
+
+          return (
+            <div
+              data-test-id="channel"
+              className={classes.itemContainer}
+              key={channelData.id}
+              onClick={() => setSelectedChannelId(channelData.id)}
+            >
+              {isChannelSelected(channelData.id) && (
+                <div className={classes.itemActiveIndicator}></div>
+              )}
+              <DashboardCard.Content padding={4} display="flex" alignItems="center" gap={2}>
+                <Text>{channelData.name}</Text>
+                <Chip backgroundColor={mapPluginStatusToChipColor(getPluginStatusColor(channel))}>
+                  {intl.formatMessage(getPluginStatusLabel(channel))}
+                </Chip>
+              </DashboardCard.Content>
+            </div>
+          );
+        }}
       />
     </>
   );

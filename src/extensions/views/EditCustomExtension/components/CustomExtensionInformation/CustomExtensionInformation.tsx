@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { AppErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -45,7 +44,7 @@ export const CustomExtensionInformation = ({
             defaultMessage: "Extension Name",
             description: "custom app name",
           })}
-          helperText={getAppErrorMessage(formErrors.name, intl)}
+          helperText={formErrors.name ? getAppErrorMessage(formErrors.name, intl) : undefined}
           width="100%"
           name="name"
           value={data.name}

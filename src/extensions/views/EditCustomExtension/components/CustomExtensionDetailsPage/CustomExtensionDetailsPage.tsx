@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -38,7 +37,7 @@ interface CustomExtensionDetailsPageProps {
   errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"] | null | undefined;
   saveButtonBarState: ConfirmButtonTransitionState;
-  app: AppUpdateMutation["appUpdate"]["app"] | null | undefined;
+  app: NonNullable<AppUpdateMutation["appUpdate"]>["app"] | null | undefined;
   token: string;
   hasManagedAppsPermission: boolean;
   isLoading: boolean;
@@ -77,18 +76,22 @@ export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProp
   const navigate = useNavigator();
   const webhooks = app?.webhooks || [];
   const formErrors = getFormErrors(["permissions"], errors || []);
-  const permissionsError = getAppInstallErrorMessage(formErrors.permissions, intl);
+  const permissionsError = formErrors.permissions
+    ? getAppInstallErrorMessage(formErrors.permissions, intl)
+    : undefined;
 
   // Ensure all values have safe fallbacks
   const initialForm: CustomExtensionDetailsPageFormData = {
     hasFullAccess:
       Array.isArray(permissions) &&
       Array.isArray(app?.permissions) &&
-      permissions.filter(perm => !app?.permissions?.some(userPerm => userPerm.code === perm.code))
-        .length === 0,
+      permissions.filter(
+        perm =>
+          !app?.permissions?.some((userPerm: { code: string }) => userPerm.code === perm.code),
+      ).length === 0,
     isActive: !!app?.isActive,
     name: app?.name || "",
-    permissions: app?.permissions?.map(perm => perm.code) || [],
+    permissions: app?.permissions?.map((perm: { code: PermissionEnum }) => perm.code) || [],
   };
 
   return (
@@ -122,7 +125,7 @@ export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProp
             <CardSpacer />
 
             <CustomExtensionTokens
-              tokens={app?.tokens}
+              tokens={app?.tokens ?? null}
               isLoading={isLoading}
               onCreate={onTokenCreate}
               onDelete={onTokenDelete}
@@ -148,8 +151,9 @@ export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProp
               // or show message
               permissionsExceeded={false}
               disabledPermissionsTooltip={
-                !hasManagedAppsPermission &&
-                intl.formatMessage(appMessages.missingManageAppsPermission)
+                !hasManagedAppsPermission
+                  ? intl.formatMessage(appMessages.missingManageAppsPermission)
+                  : undefined
               }
               onChange={change}
               fullAccessLabel={intl.formatMessage({
