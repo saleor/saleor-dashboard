@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Form from "@dashboard/components/Form";
-import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/Timeline";
+import { Timeline, TimelineAddNote, TimelineNote } from "@dashboard/components/Timeline";
 import { useGiftCardDetails } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider";
 import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
