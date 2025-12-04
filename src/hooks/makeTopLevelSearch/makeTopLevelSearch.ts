@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { PageInfoFragment } from "@dashboard/graphql";
 import { DocumentNode } from "graphql";
 
@@ -10,7 +9,7 @@ export interface SearchData {
       node: any;
     }>;
     pageInfo: PageInfoFragment;
-  };
+  } | null;
 }
 
 export interface ResultSearchData {
@@ -28,11 +27,15 @@ function makeTopLevelSearch<TData extends SearchData, TVariables extends SearchV
             return prev;
           }
 
+          if (!next.search) {
+            return prev;
+          }
+
           return {
             ...prev,
             search: {
               ...prev.search,
-              edges: [...(prev.search?.edges ?? []), ...(next.search?.edges ?? [])],
+              edges: [...(prev.search?.edges ?? []), ...(next.search.edges ?? [])],
               pageInfo: next.search.pageInfo,
             },
           };
@@ -40,7 +43,7 @@ function makeTopLevelSearch<TData extends SearchData, TVariables extends SearchV
         {
           ...result.variables,
           after: result.data.search.pageInfo.endCursor,
-        },
+        } as Partial<TVariables>,
       );
     }
   });
