@@ -13,7 +13,7 @@ test("TC: SALEOR_29 Correct information on dashboard home page #e2e", async ({ p
   await expect(homePage.channelSelect).toBeVisible({ timeout: 10000 });
   await homePage.expectHomePageElementsToBeVisible();
 
-  //skipping channel switch as it's flaky
+  // Skipping as switching channel is flaky
   // const defaultChannelName = await homePage.channelSelect.innerText();
 
   // await homePage.clickChannelSelectButton();
