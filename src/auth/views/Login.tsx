@@ -1,7 +1,7 @@
 import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
@@ -69,15 +69,25 @@ const LoginView = ({ params }: LoginViewProps) => {
       window.location.href = data.authorizationUrl;
     }
   };
-  const handleExternalAuthentication = async (code: string, state: string) => {
-    await loginByExternalPlugin!(requestedExternalPluginId, {
-      code,
-      state,
-    });
-    setRequestedExternalPluginId(null);
-    navigate(fallbackUri);
-    setFallbackUri(null);
-  };
+  const handleExternalAuthentication = useCallback(
+    async (code: string, state: string) => {
+      await loginByExternalPlugin!(requestedExternalPluginId, {
+        code,
+        state,
+      });
+      setRequestedExternalPluginId(null);
+      navigate(fallbackUri);
+      setFallbackUri(null);
+    },
+    [
+      loginByExternalPlugin,
+      requestedExternalPluginId,
+      navigate,
+      fallbackUri,
+      setRequestedExternalPluginId,
+      setFallbackUri,
+    ],
+  );
 
   // Reset the ref when we're no longer on a callback path, allowing new auth attempts
   useEffect(() => {
@@ -94,7 +104,14 @@ const LoginView = ({ params }: LoginViewProps) => {
       externalAuthProcessedRef.current = true;
       handleExternalAuthentication(code!, state!);
     }
-  }, [isExternalAuthCallback, authenticating, errors.length]);
+  }, [
+    isExternalAuthCallback,
+    authenticating,
+    errors.length,
+    handleExternalAuthentication,
+    code,
+    state,
+  ]);
 
   return (
     <LoginPage
