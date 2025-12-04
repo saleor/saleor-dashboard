@@ -164,7 +164,7 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       sourcemap,
-      minify: false,
+      minify: true,
       emptyOutDir: true,
       outDir: "../build/dashboard",
       assetsDir: ".",
@@ -182,8 +182,91 @@ export default defineConfig(({ command, mode }) => {
         output: {
           sourcemap,
           manualChunks: id => {
+            // Vendor chunks - split by major packages for better caching
             if (id.includes("node_modules")) {
-              return "vendor";
+              // React ecosystem
+              if (id.includes("react") || id.includes("react-dom") || id.includes("react-router")) {
+                return "vendor-react";
+              }
+
+              // Apollo GraphQL
+              if (id.includes("@apollo") || id.includes("graphql")) {
+                return "vendor-apollo";
+              }
+
+              // Material UI
+              if (id.includes("@material-ui") || id.includes("@mui")) {
+                return "vendor-mui";
+              }
+
+              // Saleor Macaw UI
+              if (id.includes("@saleor/macaw-ui")) {
+                return "vendor-macaw";
+              }
+
+              // Form libraries
+              if (id.includes("react-hook-form") || id.includes("formik") || id.includes("yup")) {
+                return "vendor-forms";
+              }
+
+              // Internationalization
+              if (id.includes("react-intl") || id.includes("moment")) {
+                return "vendor-i18n";
+              }
+
+              // Rich text editor
+              if (
+                id.includes("@editorjs") ||
+                id.includes("react-editor-js") ||
+                id.includes("draft-js")
+              ) {
+                return "vendor-editor";
+              }
+
+              // Sentry
+              if (id.includes("@sentry")) {
+                return "vendor-sentry";
+              }
+
+              // Everything else
+              return "vendor-common";
+            }
+
+            // Feature-based chunks for source code
+            const srcMatch = id.match(/src\/([\w-]+)\//);
+            if (srcMatch) {
+              const featureName = srcMatch[1];
+
+              // Major feature modules get their own chunks
+              const majorFeatures = [
+                "products",
+                "orders",
+                "customers",
+                "discounts",
+                "apps",
+                "categories",
+                "collections",
+                "shipping",
+                "taxes",
+                "warehouses",
+                "giftCards",
+                "pages",
+                "attributes",
+                "translations",
+                "plugins",
+                "channels",
+                "permissionGroups",
+              ];
+
+              if (majorFeatures.includes(featureName)) {
+                return `feature-${featureName}`;
+              }
+
+              // Group smaller features
+              const utilityModules = ["components", "hooks", "utils", "services", "containers"];
+              if (utilityModules.includes(featureName)) {
+                return `core-${featureName}`;
+              }
             }
           },
         },
