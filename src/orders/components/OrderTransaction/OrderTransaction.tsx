@@ -75,7 +75,12 @@ const OrderTransaction = ({
             </Accordion.Trigger>
 
             <Accordion.Content>
-              <Box borderTopStyle="solid" borderColor="default1" borderTopWidth={1}>
+              <Box
+                borderTopStyle="solid"
+                borderColor="default1"
+                borderTopWidth={1}
+                backgroundColor="default1"
+              >
                 <TransactionEvents events={events} />
                 {cardFooter}
               </Box>

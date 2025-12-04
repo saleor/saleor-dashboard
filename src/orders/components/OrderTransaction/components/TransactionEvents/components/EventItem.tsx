@@ -3,10 +3,11 @@ import { TransactionEventFragment, TransactionEventTypeEnum } from "@dashboard/g
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 
 import { mapTransactionEvent } from "../../../utils";
-import { EventCreatedBy } from "./EventCreatedBy";
+import { EventAvatar } from "./EventAvatar";
 import { EventStatus } from "./EventStatus";
 import { EventTime } from "./EventTime";
 import { EventType } from "./EventType";
@@ -16,39 +17,35 @@ interface EventItemProps {
   event: TransactionEventFragment | TransactionFakeEvent;
   onHover: (pspReference: string) => void;
   hoveredPspReference: string;
-  hasCreatedBy: boolean;
 }
 
 const useStyles = makeStyles(
   theme => ({
-    cardContent: {
-      paddingLeft: 0,
-      paddingRight: 0,
+    row: {},
+    linkedHighlight: {
+      backgroundColor: vars.colors.background.default1,
     },
-    row: {
-      "&&:hover": {
-        backgroundColor: theme.palette.saleor.active[5],
-      },
-    },
-    hover: {
-      backgroundColor: theme.palette.saleor.active[5],
+    colAvatar: {
+      width: "32px",
+      paddingRight: "0 !important",
     },
     colSmall: {
       [theme.breakpoints.down("md")]: {
-        // Take as little space as possible on mobile
         width: "1%",
         whiteSpace: "nowrap",
       },
     },
     colStatus: {
       [theme.breakpoints.up("md")]: {
-        // Max text with "Success"
-        width: "126px",
+        width: "100px",
       },
     },
+    colAmount: {
+      whiteSpace: "nowrap",
+    },
     colMessage: {
-      minWidth: "200px",
-      maxWidth: "250px",
+      minWidth: "120px",
+      maxWidth: "200px",
       wordBreak: "break-word",
       whiteSpace: "normal",
     },
@@ -56,40 +53,30 @@ const useStyles = makeStyles(
       minWidth: "10px",
       maxWidth: "150px",
     },
-    spacer: {
-      minWidth: "150px",
-      maxWidth: "150px",
-    },
     colDate: {
-      width: "25%",
       whiteSpace: "nowrap",
     },
-    colCreatedBy: {
-      width: "20%",
-    },
     colLast: {
-      // Align with card
       [theme.breakpoints.up("md")]: {
         "&&&": {
-          paddingRight: "32px",
+          paddingRight: "24px",
           textAlign: "right",
         },
       },
       [theme.breakpoints.down("md")]: {
         whiteSpace: "nowrap",
       },
-      "&$colDate": {
-        width: "35%",
-      },
     },
   }),
   { name: "OrderTransactionEvents-EventItem" },
 );
+
 const eventsWithoutAmount = new Set([
   TransactionEventTypeEnum.CANCEL_SUCCESS,
   TransactionEventTypeEnum.CANCEL_REQUEST,
   TransactionEventTypeEnum.CANCEL_FAILURE,
 ]);
+
 const shouldShowAmount = (event: TransactionEventFragment | TransactionFakeEvent) => {
   if (!event || !event.amount?.currency) {
     return false;
@@ -106,44 +93,42 @@ const shouldShowAmount = (event: TransactionEventFragment | TransactionFakeEvent
   return true;
 };
 
-export const EventItem = ({
-  event,
-  onHover,
-  hoveredPspReference,
-  hasCreatedBy,
-}: EventItemProps) => {
+export const EventItem = ({ event, onHover, hoveredPspReference }: EventItemProps) => {
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
   const isHovered = event.pspReference && event.pspReference === hoveredPspReference;
+  const createdBy = event.__typename === "TransactionEvent" ? event.createdBy : null;
 
   return (
     <TableRow
       onMouseOver={() => onHover(event.pspReference)}
-      className={clsx(classes.row, isHovered && classes.hover)}
+      className={clsx(classes.row, isHovered && classes.linkedHighlight)}
       data-ishovered={isHovered}
     >
+      <TableCell className={classes.colAvatar}>
+        <EventAvatar createdBy={createdBy} />
+      </TableCell>
       <TableCell className={clsx(classes.colSmall, classes.colStatus)}>
         <EventStatus status={status} />
       </TableCell>
-      <TableCell>{shouldShowAmount(event) && <Money money={event.amount} />}</TableCell>
+      <TableCell className={classes.colAmount}>
+        {shouldShowAmount(event) && (
+          <Text size={2}>
+            <Money money={event.amount} />
+          </Text>
+        )}
+      </TableCell>
       <TableCell className={clsx(classes.colSmall, classes.colMessage)}>
         <EventType type={type} message={event.message} />
       </TableCell>
       <TableCell className={clsx(classes.colSmall, classes.colPspReference)}>
-        {event.pspReference ? (
+        {event.pspReference && (
           <PspReference reference={event.pspReference} url={event.externalUrl} />
-        ) : (
-          <div className={classes.spacer} />
         )}
       </TableCell>
-      <TableCell className={clsx(classes.colDate, !hasCreatedBy && classes.colLast)}>
+      <TableCell className={clsx(classes.colDate, classes.colLast)}>
         <EventTime date={event.createdAt} />
       </TableCell>
-      {hasCreatedBy && (
-        <TableCell className={clsx(classes.colCreatedBy, classes.colLast)}>
-          <EventCreatedBy createdBy={event.createdBy} />
-        </TableCell>
-      )}
     </TableRow>
   );
 };
