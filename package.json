@@ -58,7 +58,7 @@
     }
   },
   "dependencies": {
-    "@apollo/client": "3.4.17",
+    "@apollo/client": "3.8.10",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
@@ -83,7 +83,7 @@
     "@reach/auto-id": "^0.16.0",
     "@react-editor-js/core": "2.1.0",
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
-    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.4.0",
+    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.4.1-dev.2",
     "@saleor/sdk": "0.6.0",
     "@sentry/react": "^8.55.0",
     "@sentry/vite-plugin": "^2.23.1",
