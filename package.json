@@ -82,7 +82,7 @@
     "@reach/auto-id": "^0.16.0",
     "@react-editor-js/core": "2.1.0",
     "@saleor/macaw-ui": "npm:@saleor/macaw-ui@0.7.4",
-    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.4.1-dev.1",
+    "@saleor/macaw-ui-next": "npm:@saleor/macaw-ui@1.4.1-dev.2",
     "@saleor/sdk": "0.6.0",
     "@sentry/react": "^8.55.0",
     "@sentry/vite-plugin": "^2.23.1",
