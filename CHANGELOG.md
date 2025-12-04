@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.17
+
+### Patch Changes
+
+- [#6154](https://github.com/saleor/saleor-dashboard/pull/6154) [`52b7665`](https://github.com/saleor/saleor-dashboard/commit/52b76653848d0aa7a3ab6ca2c51ef99c8d92637f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fix bug where TRANSLATION_MORE_ACTIONS extension mount didn't send event if translation was empty
+
 ## 3.22.16
 
 ### Patch Changes
