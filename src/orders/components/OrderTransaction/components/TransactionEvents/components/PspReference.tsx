@@ -55,7 +55,7 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
       borderColor="default1"
       paddingX={1.5}
       paddingY={0.5}
-      __maxWidth="150px"
+      __width="150px"
       display="flex"
       alignItems="center"
       gap={1}
@@ -73,13 +73,15 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
       >
         <PspReferenceLink href={url}>{reference}</PspReferenceLink>
       </Text>
-      {url && <ExternalLinkIcon size={12} className={classes.externalIcon} />}
+      <Box __width="12px" __height="12px" flexShrink="0">
+        {url && <ExternalLinkIcon size={12} className={classes.externalIcon} />}
+      </Box>
     </Box>
   );
 
   return (
     <Box
-      display="flex"
+      display="inline-flex"
       alignItems="center"
       gap={1}
       onMouseEnter={() => setShowCopyButton(true)}

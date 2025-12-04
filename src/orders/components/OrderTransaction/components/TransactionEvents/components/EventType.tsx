@@ -19,11 +19,23 @@ export const EventType = ({ type, message }: EventTypeProps) => {
 
   return (
     <Box display="flex" alignItems="center" gap={1}>
-      <Text size={2}>{displayType}</Text>
+      <Text
+        size={2}
+        style={
+          {
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          } as React.CSSProperties
+        }
+      >
+        {displayType}
+      </Text>
       {displayType !== message && message && (
         <Tooltip>
           <Tooltip.Trigger>
-            <Box display="flex" cursor="pointer" padding={1}>
+            <Box display="flex" cursor="pointer" padding={1} flexShrink="0">
               <InfoIcon size="small" />
             </Box>
           </Tooltip.Trigger>

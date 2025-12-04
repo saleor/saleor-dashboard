@@ -20,7 +20,7 @@ interface EventItemProps {
 }
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     row: {
       "&&&:hover": {
         backgroundColor: vars.colors.background.default1Hovered,
@@ -30,45 +30,32 @@ const useStyles = makeStyles(
       backgroundColor: vars.colors.background.default1Hovered,
     },
     colAvatar: {
-      width: "32px",
-      paddingRight: "0 !important",
-    },
-    colSmall: {
-      [theme.breakpoints.down("md")]: {
-        width: "1%",
-        whiteSpace: "nowrap",
+      "&&&": {
+        width: 32,
+        paddingRight: 0,
       },
     },
     colStatus: {
-      [theme.breakpoints.up("md")]: {
-        width: "100px",
-      },
+      whiteSpace: "nowrap",
     },
     colAmount: {
-      whiteSpace: "nowrap",
+      "&&&": {
+        width: 100,
+        whiteSpace: "nowrap",
+        textAlign: "right",
+        fontVariantNumeric: "tabular-nums",
+      },
     },
-    colMessage: {
-      minWidth: "120px",
-      maxWidth: "200px",
-      wordBreak: "break-word",
-      whiteSpace: "normal",
-    },
+    colMessage: {},
     colPspReference: {
-      minWidth: "10px",
-      maxWidth: "150px",
+      textAlign: "right",
     },
     colDate: {
-      whiteSpace: "nowrap",
-    },
-    colLast: {
-      [theme.breakpoints.up("md")]: {
-        "&&&": {
-          paddingRight: "24px",
-          textAlign: "right",
-        },
-      },
-      [theme.breakpoints.down("md")]: {
+      "&&&": {
+        width: 160,
         whiteSpace: "nowrap",
+        textAlign: "right",
+        paddingRight: 24,
       },
     },
   }),
@@ -112,25 +99,29 @@ export const EventItem = ({ event, onHover, hoveredPspReference }: EventItemProp
       <TableCell className={classes.colAvatar}>
         <EventAvatar createdBy={createdBy} />
       </TableCell>
-      <TableCell className={clsx(classes.colSmall, classes.colStatus)}>
+      <TableCell className={classes.colStatus}>
         <EventStatus status={status} />
       </TableCell>
-      <TableCell className={classes.colAmount}>
-        {shouldShowAmount(event) && (
-          <Text size={2}>
-            <Money money={event.amount} />
-          </Text>
-        )}
-      </TableCell>
-      <TableCell className={clsx(classes.colSmall, classes.colMessage)}>
+      <TableCell className={classes.colMessage}>
         <EventType type={type} message={event.message} />
       </TableCell>
-      <TableCell className={clsx(classes.colSmall, classes.colPspReference)}>
+      <TableCell className={classes.colPspReference}>
         {event.pspReference && (
           <PspReference reference={event.pspReference} url={event.externalUrl} />
         )}
       </TableCell>
-      <TableCell className={clsx(classes.colDate, classes.colLast)}>
+      <TableCell className={classes.colAmount}>
+        {shouldShowAmount(event) ? (
+          <Text size={2}>
+            <Money money={event.amount} />
+          </Text>
+        ) : (
+          <Text size={2} color="default2">
+            —
+          </Text>
+        )}
+      </TableCell>
+      <TableCell className={classes.colDate}>
         <EventTime date={event.createdAt} />
       </TableCell>
     </TableRow>
