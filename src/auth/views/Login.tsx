@@ -79,6 +79,13 @@ const LoginView = ({ params }: LoginViewProps) => {
     setFallbackUri(null);
   };
 
+  // Reset the ref when we're no longer on a callback path, allowing new auth attempts
+  useEffect(() => {
+    if (!isExternalAuthCallback) {
+      externalAuthProcessedRef.current = false;
+    }
+  }, [isExternalAuthCallback]);
+
   useEffect(() => {
     const externalAuthNotPerformed = !authenticating && !errors.length;
 
@@ -87,9 +94,6 @@ const LoginView = ({ params }: LoginViewProps) => {
       externalAuthProcessedRef.current = true;
       handleExternalAuthentication(code!, state!);
     }
-    // Note: Cleanup removed - it was causing issues with React Strict Mode by clearing
-    // localStorage during simulated unmount. The auth parameters are already cleared
-    // in handleExternalAuthentication after successful login.
   }, [isExternalAuthCallback, authenticating, errors.length]);
 
   return (
