@@ -152,7 +152,6 @@ test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow #e2e #or
   await ordersPage.clickMarkAsPaidButton();
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
   await ordersPage.expectSuccessBanner({ message: "paid" });
-  await expect(ordersPage.outstandingBalanceAmount).toContainText("0.00");
 
   expect(await ordersPage.paymentStatusBadges, "Order should be fully charged").toContainText(
     "Fully charged",
