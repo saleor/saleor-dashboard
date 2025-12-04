@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AddressTypeInput } from "@dashboard/customers/types";
 import {
   AccountErrorCode,
@@ -24,7 +23,7 @@ function useAddressValidation<TInput, TOutput>(
     __typename: "AccountError",
     code: AccountErrorCode.REQUIRED,
     field: "country",
-    addressType,
+    addressType: addressType ?? null,
     message: "Country required",
   };
 

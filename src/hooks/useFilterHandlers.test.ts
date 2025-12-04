@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useFilterHandlers } from "./useFilterHandlers";
@@ -69,7 +68,7 @@ describe("useFilterHandlers", () => {
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
             [filter.name]: filter.value,
-          })),
+          })) as any,
           createUrl,
           params: {
             activeTab: "tab",
@@ -98,8 +97,8 @@ describe("useFilterHandlers", () => {
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
-            [filter.name]: filter.value[0],
-          })),
+            [filter.name]: filter.value?.[0],
+          })) as any,
           createUrl,
           params: {
             activeTab: "tab",
@@ -145,8 +144,8 @@ describe("useFilterHandlers", () => {
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
-            [filter.name]: filter.value[0],
-          })),
+            [filter.name]: filter.value?.[0],
+          })) as any,
           createUrl,
           params: {
             activeTab: "tab",
@@ -210,8 +209,8 @@ describe("useFilterHandlers", () => {
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
-            [filter.name]: filter.value[0],
-          })),
+            [filter.name]: filter.value?.[0],
+          })) as any,
           createUrl,
           params: {
             activeTab: "tab",
@@ -243,8 +242,8 @@ describe("useFilterHandlers", () => {
       const { result } = renderHook(() =>
         useFilterHandlers({
           getFilterQueryParam: jest.fn(filter => ({
-            [filter.name]: filter.value[0],
-          })),
+            [filter.name]: filter.value?.[0],
+          })) as any,
           createUrl,
           params: {
             activeTab: "tab",

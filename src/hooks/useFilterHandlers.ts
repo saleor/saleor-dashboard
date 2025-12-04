@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { IFilter } from "@dashboard/components/Filter/types";
 import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
 import { GetFilterQueryParam, getFilterQueryParams } from "@dashboard/utils/filters";
@@ -43,7 +42,7 @@ export const useFilterHandlers = <
     const hasQuery = !!params.query?.trim();
 
     if (hasQuery || params.sort === "rank") {
-      prevAsc.current = params.asc;
+      prevAsc.current = params.asc ?? null;
     }
   }, [params.asc, params.query, params.sort]);
 
