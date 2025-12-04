@@ -9,7 +9,6 @@ type Props = PropsWithBox<{
   showSign?: boolean;
   showCurrency?: boolean;
   currency?: string;
-  "data-test-id"?: string;
 }>;
 
 export const OrderSummaryListItem = ({ children, amount, showSign, currency, ...props }: Props) => {

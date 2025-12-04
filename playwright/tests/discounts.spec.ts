@@ -248,7 +248,7 @@ for (const rule of orderRules) {
     await expect(
       discounts.existingRule.filter({ hasText: `Order rule: ${rule.name} ` }),
     ).toBeVisible();
-    await discounts.clickEditRuleButton(`Order rule: ${rule.name} `);
+    await discounts.clickEditRuleButton(`Order rule: ${rule.name}`);
 
     if (await discounts.promotionRuleDialog.ruleConditionRow.isVisible()) {
       await discounts.promotionRuleDialog.clickAddRuleConditionButton();
