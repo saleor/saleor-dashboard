@@ -24,7 +24,6 @@ export class VariantsPage extends BasePage {
     readonly chooseMediaButton = page.getByTestId("choose-media-button"),
     readonly addVariantButton = page.getByTestId("button-add-variant"),
     readonly deleteVariantButton = page.getByTestId("button-bar-delete"),
-    readonly warehouseOption = page.getByRole("menuitem"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly stockInput = page.getByTestId("stock-input"),
     readonly shippingWeightInput = page.locator("[name='weight']"),
@@ -118,7 +117,11 @@ export class VariantsPage extends BasePage {
 
   async selectWarehouse(warehouse = "Oceania") {
     await this.clickAssignWarehouseButton();
-    await this.warehouseOption.locator(`text=${warehouse}`).click();
+    await this.page
+      .locator("tr", { hasText: warehouse })
+      .locator('[data-test-id="checkbox"]')
+      .click();
+    await this.page.getByRole("button", { name: "Confirm" }).click();
   }
 
   async typeQuantityInStock(warehouse = "Oceania", quantity = "10") {

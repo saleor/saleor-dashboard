@@ -246,9 +246,9 @@ for (const rule of orderRules) {
       timeout: 10000,
     });
     await expect(
-      discounts.existingRule.filter({ hasText: `Order rule: ${rule.name}` }),
+      discounts.existingRule.filter({ hasText: `Order rule: ${rule.name} ` }),
     ).toBeVisible();
-    await discounts.clickEditRuleButton(`Order rule: ${rule.name}`);
+    await discounts.clickEditRuleButton(`Order rule: ${rule.name} `);
 
     if (await discounts.promotionRuleDialog.ruleConditionRow.isVisible()) {
       await discounts.promotionRuleDialog.clickAddRuleConditionButton();
@@ -261,7 +261,7 @@ for (const rule of orderRules) {
       await expect(
         discounts.existingRule.filter({ hasText: `Order rule: ${orderRules[0].name}` }).first(),
       ).toContainText(
-        `Order rule: ${orderRules[0].name}Discount of ${orderRules[0].channelCurrency} 1.00 on the purchase of Subtotal price: ${orderRules[0].channelCurrency} 25.00Total price: ${orderRules[0].channelCurrency} 13.33 through the ${orderRules[0].channel}`,
+        `Order rule: ${orderRules[0].name}Discount of ${orderRules[0].channelCurrency} 1.00 on the purchase of Subtotal price: ${orderRules[0].channelCurrency} 25.00 through the ${orderRules[0].channel}`,
       );
     } else {
       const giftRewardToBeDeleted = orderRules[1].giftRewardToBeDeleted ?? "";

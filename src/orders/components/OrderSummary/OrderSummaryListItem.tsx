@@ -21,7 +21,11 @@ export const OrderSummaryListItem = ({ children, amount, showSign, currency, ...
         <Text fontWeight="medium" color="default2" size={3}>
           {currency}
         </Text>{" "}
-        <OrderSummaryListAmount amount={amount} showSign={showSign} />
+        <OrderSummaryListAmount
+          amount={amount}
+          showSign={showSign}
+          data-test-id={`${props["data-test-id"]}-amount`}
+        />
       </Box>
     </Box>
   );

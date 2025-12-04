@@ -60,19 +60,25 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
         })}
       />
 
-      <Box marginTop={2} display="flex" gap={3}>
+      <Box marginTop={2} display="flex" gap={3} data-test-id="payment-status-badges">
         <OrderChargeStatusBadge status={order.chargeStatus} />
         <OrderAuthorizeStatusBadge status={order.authorizeStatus} />
       </Box>
 
       <Box as="ul" display="grid" gap={1} marginTop={4}>
-        <OrderSummaryListItem amount={orderAmounts.totalCaptured.amount}>
+        <OrderSummaryListItem
+          amount={orderAmounts.totalCaptured.amount}
+          data-test-id="total-captured"
+        >
           {intl.formatMessage({
             defaultMessage: "Total captured",
             id: "JIQ7KX",
           })}
         </OrderSummaryListItem>
-        <OrderSummaryListItem amount={orderAmounts.totalAuthorized.amount}>
+        <OrderSummaryListItem
+          amount={orderAmounts.totalAuthorized.amount}
+          data-test-id="total-authorized"
+        >
           {intl.formatMessage({
             defaultMessage: "Outstanding authorized",
             id: "AiurXc",
@@ -83,6 +89,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
           showSign
           showCurrency
           currency={orderAmounts.totalBalance.currency}
+          data-test-id="outstanding-balance"
         >
           {intl.formatMessage({
             defaultMessage: "Outstanding balance",

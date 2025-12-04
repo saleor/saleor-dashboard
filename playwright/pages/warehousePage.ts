@@ -103,7 +103,8 @@ export class WarehousePage extends BasePage {
 
   async clickDeleteWarehouseButton(warehouseName: string) {
     await this.page
-      .getByTestId(`warehouse-entry-${warehouseName}`)
+      // .getByTestId failed to locate because of spaces in warehouse name
+      .locator(`[data-test-id="warehouse-entry-${warehouseName}"]`)
       .locator(this.deleteWarehouseButton)
       .click();
   }
