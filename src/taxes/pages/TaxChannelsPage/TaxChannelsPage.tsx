@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -125,7 +124,10 @@ const TaxChannelsPage = (props: TaxChannelsPageProps) => {
     <Form initial={initialForm} onSubmit={handleSubmit} mergeData={false}>
       {({ data, change, submit, set, triggerChange }) => {
         const countryExceptions = data.updateCountriesConfiguration;
-        const handleExceptionChange = (event, index) => {
+        const handleExceptionChange = (
+          event: React.ChangeEvent<HTMLInputElement>,
+          index: number,
+        ) => {
           const { name, value } = event.target;
           const currentExceptions = [...data.updateCountriesConfiguration];
           const exceptionToChange = {
@@ -254,7 +256,12 @@ const TaxChannelsPage = (props: TaxChannelsPageProps) => {
                                 });
                                 triggerChange();
                               }}
-                              onChange={event => handleExceptionChange(event, countryIndex)}
+                              onChange={event =>
+                                handleExceptionChange(
+                                  event as React.ChangeEvent<HTMLInputElement>,
+                                  countryIndex,
+                                )
+                              }
                             />
                           )) ?? <Skeleton />}
                         </List>

@@ -16,8 +16,11 @@ export const getTaxAppId = (taxCalculationStrategy: string) =>
   isStrategyFlatRates(taxCalculationStrategy) ? null : taxCalculationStrategy;
 
 export const getSelectedTaxStrategy = (
-  currentTaxConfiguration: TaxConfigurationFragment | TaxConfigurationPerCountryFragment,
+  currentTaxConfiguration:
+    | TaxConfigurationFragment
+    | TaxConfigurationPerCountryFragment
+    | undefined,
 ) =>
-  isStrategyFlatRates(currentTaxConfiguration?.taxCalculationStrategy)
+  isStrategyFlatRates(currentTaxConfiguration?.taxCalculationStrategy ?? null)
     ? TaxCalculationStrategy.FLAT_RATES
     : (currentTaxConfiguration?.taxAppId ?? "legacy-flow");

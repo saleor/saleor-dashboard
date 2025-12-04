@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CountryCode,
   TaxCountryConfigurationFragment,
@@ -71,7 +70,7 @@ const TaxCountriesList = ({ id, params }: TaxCountriesListProps) => {
   const [openDialog, closeDialog] = createDialogActionHandlers<TaxesUrlDialog, TaxesUrlQueryParams>(
     navigate,
     params => taxCountriesListUrl(id, params),
-    params,
+    params ?? {},
   );
   const [newCountry, setNewCountry] = useState<TaxCountryConfigurationFragment>();
   const { data, refetch, loading: queryInProgress } = useTaxCountriesListQuery();
@@ -79,8 +78,8 @@ const TaxCountriesList = ({ id, params }: TaxCountriesListProps) => {
     variables: { first: 100 },
   });
   const taxCountryConfigurations = data?.taxCountryConfigurations;
-  const taxClasses = mapEdgesToItems(taxClassesData?.taxClasses);
-  const allCountryTaxes: TaxCountryConfigurationFragment[] = useMemo(() => {
+  const taxClasses = mapEdgesToItems(taxClassesData?.taxClasses) ?? [];
+  const allCountryTaxes: TaxCountryConfigurationFragment[] | undefined = useMemo(() => {
     if (taxClasses && taxCountryConfigurations) {
       return [
         ...(newCountry ? [newCountry] : []),
@@ -119,9 +118,9 @@ const TaxCountriesList = ({ id, params }: TaxCountriesListProps) => {
     <>
       <TaxCountriesPage
         countryTaxesData={allCountryTaxes}
-        selectedCountryId={id!}
-        handleTabChange={handleTabChange}
-        openDialog={openDialog}
+        selectedCountryId={id ?? ""}
+        handleTabChange={(tab: string) => handleTabChange(tab as TaxTab)}
+        openDialog={(action?: string) => openDialog(action as TaxesUrlDialog)}
         onSubmit={async data => {
           const res = await taxCountryConfigurationUpdateMutation({
             variables: {
@@ -142,24 +141,24 @@ const TaxCountriesList = ({ id, params }: TaxCountriesListProps) => {
       {shop?.countries && (
         <TaxCountryDialog
           open={params?.action === "add-country"}
-          countries={excludeExistingCountries(shop?.countries, allCountryTaxes)}
+          countries={excludeExistingCountries(shop?.countries, allCountryTaxes ?? [])}
           onConfirm={data => {
             closeDialog();
 
             const taxClassCountryRates = taxClasses.map(taxClass => ({
               __typename: "TaxClassCountryRate" as const,
-              rate: undefined,
+              rate: null,
               taxClass,
             }));
 
             taxClassCountryRates.unshift({
-              rate: undefined,
-              taxClass: null,
+              rate: null,
+              taxClass: null as any,
               __typename: "TaxClassCountryRate" as const,
             });
             setNewCountry({
               country: data,
-              taxClassCountryRates,
+              taxClassCountryRates: taxClassCountryRates as any,
               __typename: "TaxCountryConfiguration" as const,
             });
             navigate(taxCountriesListUrl(data.code));
