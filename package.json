@@ -145,7 +145,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.7",
-    "@editorjs/embed": "^2.7.6",
+    "@editorjs/embed": "2.7.6",
     "@eslint/js": "^9.39.1",
     "@formatjs/cli": "^4.8.4",
     "@graphql-codegen/cli": "^2.16.5",

@@ -274,8 +274,8 @@ importers:
         specifier: ^2.29.7
         version: 2.29.8(@types/node@20.19.25)
       "@editorjs/embed":
-        specifier: ^2.7.6
-        version: 2.8.0
+        specifier: 2.7.6
+        version: 2.7.6
       "@eslint/js":
         specifier: ^9.39.1
         version: 9.39.1
@@ -1375,22 +1375,10 @@ packages:
     peerDependencies:
       react: ">=16.8.0"
 
-  "@editorjs/caret@1.0.3":
-    resolution:
-      {
-        integrity: sha512-VmgwQJZgL/LQjk049JunzRV1YCa0vDi+BNEpbDmr5cp3lGZllq9QQFO1eI71ZPzvFVn3vvhb+eOif4sAEyGgbw==,
-      }
-
   "@editorjs/dom@0.0.5":
     resolution:
       {
         integrity: sha512-SZ78Gwpkp3EUhjBIp0lSojeQ35V9acF8SubJsMeOH/vlOUE40GOnvvwWZnF05lO7bIB0dOHhhJy4N7IIAWxP2w==,
-      }
-
-  "@editorjs/dom@1.0.1":
-    resolution:
-      {
-        integrity: sha512-yLO+86MYOIUr1Jl7SQw23SYT84ggv6aJW0EIRsI3NTHYgnQzmK7Bt2n5ZFupQlB0GJqmKqA5tCue3NKQb+o7Pw==,
       }
 
   "@editorjs/editorjs@2.30.7":
@@ -1399,18 +1387,11 @@ packages:
         integrity: sha512-FfdeUqrgcKWC+Cy2GW6Dxup6s2TaRKokR4FL+HKXshu6h9Y//rrx4SQkURgkZOCSbV77t9btbmAXdFXWGB+diw==,
       }
 
-  "@editorjs/editorjs@2.31.0":
+  "@editorjs/embed@2.7.6":
     resolution:
       {
-        integrity: sha512-CBcIZXtPlg0dSlC5clO9OfTCmcxelj723jd4d67teFlaFJobjjxU1PmMxFJdhaRep5+nqdD0jr+fdJBqEDqt1g==,
+        integrity: sha512-L3agW/23mOI0L+oksUE9UOR5VSNCqapxLH5lma+5j+idjKCC31nxbx07x53MSJ4rlOTO1L7cFVhkqptEdOliJA==,
       }
-
-  "@editorjs/embed@2.8.0":
-    resolution:
-      {
-        integrity: sha512-GkgL07M1GmRXq+vtYPkP9RLoij19mIMeyr5GrNo/0Km2XHmvDz2h6KHsDbiHXbq/5hZ5UgWi86kr+/aK165OBg==,
-      }
-    engines: { node: ">=24.0.0" }
 
   "@editorjs/header@2.8.8":
     resolution:
@@ -1422,12 +1403,6 @@ packages:
     resolution:
       {
         integrity: sha512-ieg3dzo2m1/ELze/RMNADiAiC5amXxIlVXoJ5vvXITOu/p/dPsrF+Oi3h5gBYvtGk9vg5LJUSG5YWU0tBUO1tw==,
-      }
-
-  "@editorjs/helpers@1.0.1":
-    resolution:
-      {
-        integrity: sha512-Lmr8ImoQvoROXtzhsIJsA1ZtXzH46DmE6O8hMjn9/AvQq62UfjREjn+Ewi6KxjIZMay2PsgDEbLlsVyNJGEaxw==,
       }
 
   "@editorjs/list@2.0.8":
@@ -6572,18 +6547,6 @@ packages:
     resolution:
       {
         integrity: sha512-i5dLDDxwkFCbhjvL2pNjShsojoL3XHyDwsGv1jqETUoW+lzpBKKqNTUWgQwVAOa0tUm4BwekT455ujafi8payA==,
-      }
-
-  codex-notifier@1.1.2:
-    resolution:
-      {
-        integrity: sha512-DCp6xe/LGueJ1N5sXEwcBc3r3PyVkEEDNWCVigfvywAkeXcZMk9K41a31tkEFBW0Ptlwji6/JlAb49E3Yrxbtg==,
-      }
-
-  codex-tooltip@1.0.5:
-    resolution:
-      {
-        integrity: sha512-IuA8LeyLU5p1B+HyhOsqR6oxyFQ11k3i9e9aXw40CrHFTRO2Y1npNBVU3W1SvhKAbUU7R/YikUBdcYFP0RcJag==,
       }
 
   collect-v8-coverage@1.0.3:
@@ -13908,29 +13871,15 @@ snapshots:
       react: 18.3.1
       tslib: 2.8.1
 
-  "@editorjs/caret@1.0.3":
-    dependencies:
-      "@editorjs/dom": 1.0.1
-
   "@editorjs/dom@0.0.5":
     dependencies:
       "@editorjs/helpers": 0.0.4
 
-  "@editorjs/dom@1.0.1":
-    dependencies:
-      "@editorjs/helpers": 1.0.1
-
   "@editorjs/editorjs@2.30.7": {}
 
-  "@editorjs/editorjs@2.31.0":
+  "@editorjs/embed@2.7.6":
     dependencies:
-      "@editorjs/caret": 1.0.3
-      codex-notifier: 1.1.2
-      codex-tooltip: 1.0.5
-
-  "@editorjs/embed@2.8.0":
-    dependencies:
-      "@editorjs/editorjs": 2.31.0
+      "@editorjs/editorjs": 2.30.7
 
   "@editorjs/header@2.8.8":
     dependencies:
@@ -13938,8 +13887,6 @@ snapshots:
       "@editorjs/editorjs": 2.30.7
 
   "@editorjs/helpers@0.0.4": {}
-
-  "@editorjs/helpers@1.0.1": {}
 
   "@editorjs/list@2.0.8":
     dependencies:
@@ -17971,10 +17918,6 @@ snapshots:
       graphql-language-service: 5.5.0(graphql@16.11.0)
 
   codemirror@5.65.20: {}
-
-  codex-notifier@1.1.2: {}
-
-  codex-tooltip@1.0.5: {}
 
   collect-v8-coverage@1.0.3:
     optional: true
