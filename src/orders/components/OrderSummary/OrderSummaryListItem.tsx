@@ -9,6 +9,7 @@ type Props = PropsWithBox<{
   showSign?: boolean;
   showCurrency?: boolean;
   currency?: string;
+  "data-test-id"?: string;
 }>;
 
 export const OrderSummaryListItem = ({ children, amount, showSign, currency, ...props }: Props) => {
@@ -21,11 +22,7 @@ export const OrderSummaryListItem = ({ children, amount, showSign, currency, ...
         <Text fontWeight="medium" color="default2" size={3}>
           {currency}
         </Text>{" "}
-        <OrderSummaryListAmount
-          amount={amount}
-          showSign={showSign}
-          data-test-id={`${props["data-test-id"]}-amount`}
-        />
+        <OrderSummaryListAmount amount={amount} showSign={showSign} />
       </Box>
     </Box>
   );
