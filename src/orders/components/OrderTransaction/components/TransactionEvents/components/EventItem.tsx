@@ -31,11 +31,14 @@ const useStyles = makeStyles(
     },
     colAvatar: {
       "&&&": {
-        width: 32,
+        width: 40,
         paddingRight: 0,
       },
     },
     colStatus: {
+      width: 100,
+      minWidth: 100,
+      maxWidth: 100,
       whiteSpace: "nowrap",
     },
     colAmount: {
@@ -52,7 +55,9 @@ const useStyles = makeStyles(
     },
     colDate: {
       "&&&": {
-        width: 160,
+        width: 220,
+        minWidth: 220,
+        maxWidth: 220,
         whiteSpace: "nowrap",
         textAlign: "right",
         paddingRight: 24,

@@ -73,7 +73,14 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
       >
         <PspReferenceLink href={url}>{reference}</PspReferenceLink>
       </Text>
-      <Box __width="12px" __height="12px" flexShrink="0">
+      <Box
+        __width="12px"
+        __height="12px"
+        flexShrink="0"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         {url && <ExternalLinkIcon size={12} className={classes.externalIcon} />}
       </Box>
     </Box>
