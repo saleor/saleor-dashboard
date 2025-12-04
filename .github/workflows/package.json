@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.9.1",
-    "@octokit/core": "^4.0.4",
+    "@octokit/core": "^7.0.6",
     "commander": "^9.4.0",
     "graphql": "^16.8.1",
     "graphql-request": "^5.0.0",
