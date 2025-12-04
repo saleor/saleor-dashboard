@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fixes order value for tax
+Update app-sdk package to 1.4.0

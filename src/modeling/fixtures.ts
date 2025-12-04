@@ -90,8 +90,6 @@ export const page: PageDetailsFragment = {
         visibleInStorefront: false,
         filterableInDashboard: false,
         filterableInStorefront: false,
-        metadata: [],
-        privateMetadata: [],
       },
       values: [
         {
@@ -212,8 +210,6 @@ export const page: PageDetailsFragment = {
         filterableInDashboard: false,
         filterableInStorefront: false,
         referenceTypes: [],
-        metadata: [],
-        privateMetadata: [],
       },
       values: [
         {

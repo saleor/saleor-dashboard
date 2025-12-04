@@ -30,7 +30,7 @@ export const OrderDetailsRefundTable = ({
   return (
     <DashboardCard data-test-id="order-refund-section">
       <Box paddingTop={6} display="flex" justifyContent="space-between" paddingX={6}>
-        <Text size={5} fontWeight="bold">
+        <Text size={6} fontWeight="medium">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>
 

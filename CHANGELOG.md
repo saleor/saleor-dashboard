@@ -1,5 +1,43 @@
 # Changelog
 
+## 3.22.17
+
+### Patch Changes
+
+- [#6154](https://github.com/saleor/saleor-dashboard/pull/6154) [`52b7665`](https://github.com/saleor/saleor-dashboard/commit/52b76653848d0aa7a3ab6ca2c51ef99c8d92637f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fix bug where TRANSLATION_MORE_ACTIONS extension mount didn't send event if translation was empty
+
+## 3.22.16
+
+### Patch Changes
+
+- [#6155](https://github.com/saleor/saleor-dashboard/pull/6155) [`2cac4ef`](https://github.com/saleor/saleor-dashboard/commit/2cac4ef453a847335aaf88d8419b88cf49e218ce) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed broken permissions on product edit page, if user did not have MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES permission. It was caused by "Attribute" object being fetched with privateMetadata on every page, not only "attribute edit" page
+
+## 3.22.15
+
+### Patch Changes
+
+- [#6149](https://github.com/saleor/saleor-dashboard/pull/6149) [`746184a`](https://github.com/saleor/saleor-dashboard/commit/746184a14578a4072343ad96200770094a337ec4) Thanks [@mirekm](https://github.com/mirekm)! - Fix typo in Delete Draft Order view
+
+- [#6144](https://github.com/saleor/saleor-dashboard/pull/6144) [`4d0d1dc`](https://github.com/saleor/saleor-dashboard/commit/4d0d1dc01936298dfca1158787f79b2e253bdd9c) Thanks [@mirekm](https://github.com/mirekm)! - Fix "Payments summary" pill colors in dark mode
+
+- [#6148](https://github.com/saleor/saleor-dashboard/pull/6148) [`0b242e4`](https://github.com/saleor/saleor-dashboard/commit/0b242e4caad7011cc1d146e8a7a19a6e73a12bde) Thanks [@mirekm](https://github.com/mirekm)! - Fix order related pills consistency and semantics
+
+- [#6145](https://github.com/saleor/saleor-dashboard/pull/6145) [`e28787f`](https://github.com/saleor/saleor-dashboard/commit/e28787f536b24606f2ec3d1dbd8abc792d224ff1) Thanks [@mirekm](https://github.com/mirekm)! - Until we have better support for skeletons, replace the spinning throbber with a dash-based animation.
+
+- [#6139](https://github.com/saleor/saleor-dashboard/pull/6139) [`0cccea0`](https://github.com/saleor/saleor-dashboard/commit/0cccea01da34f99a416cf1e63b4c2a2a803bca4b) Thanks [@kzuraw](https://github.com/kzuraw)! - Fix order fulfillment page - don't require quantity to be set if warehouse is not selected
+
+- [#6014](https://github.com/saleor/saleor-dashboard/pull/6014) [`9ee100d`](https://github.com/saleor/saleor-dashboard/commit/9ee100d3710c475ec39fb6a40f9c831ce688e5ee) Thanks [@mariobrgomes](https://github.com/mariobrgomes)! - Fixed shipping weight field not appearing when editing simple products. The weight field now displays correctly on the product edit page and updates are properly saved to the backend. Users can now also clear the weight by setting it to an empty string, which sends null to the backend. Weight handling is now consistent across product creation, product updates, and variant updates.
+
+- [#6136](https://github.com/saleor/saleor-dashboard/pull/6136) [`84cac1e`](https://github.com/saleor/saleor-dashboard/commit/84cac1e6b1eb541da9132efd45ba85ac30e367f8) Thanks [@kzuraw](https://github.com/kzuraw)! - Refactor PaymentsSummary component to simplify rendering logic and remove unused OrderDetailsViewModel methods
+
+- [#6137](https://github.com/saleor/saleor-dashboard/pull/6137) [`cce1339`](https://github.com/saleor/saleor-dashboard/commit/cce1339a9af15fbcfb18acb801d28299451d38a3) Thanks [@kzuraw](https://github.com/kzuraw)! - Fixes order value for tax
+
+- [#6142](https://github.com/saleor/saleor-dashboard/pull/6142) [`f52e048`](https://github.com/saleor/saleor-dashboard/commit/f52e048970fbe1048567aff09aba47bb19be777e) Thanks [@IKarbowiak](https://github.com/IKarbowiak)! - Adjust the `CustomerDetailsPage` component to trigger a single mutation when metadata changes. This update ensures that only one `customerMetadataUpdated` webhook is generated, preventing duplication.
+
+- [#6146](https://github.com/saleor/saleor-dashboard/pull/6146) [`0cddff8`](https://github.com/saleor/saleor-dashboard/commit/0cddff8c8fe2f10d7ddca3ec88af439dc74d486c) Thanks [@mirekm](https://github.com/mirekm)! - Add `Go to/Create Product Type` entry to the Cmd+K menu
+
+- [#6147](https://github.com/saleor/saleor-dashboard/pull/6147) [`62f5706`](https://github.com/saleor/saleor-dashboard/commit/62f5706dee0bc0dbb68c6017272c051b24b7ef56) Thanks [@mirekm](https://github.com/mirekm)! - Improve additional info that we provide for fulfillment groups
+
 ## 3.22.14
 
 ### Patch Changes

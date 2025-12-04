@@ -164,7 +164,7 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       sourcemap,
-      minify: false,
+      minify: true,
       emptyOutDir: true,
       outDir: "../build/dashboard",
       assetsDir: ".",
