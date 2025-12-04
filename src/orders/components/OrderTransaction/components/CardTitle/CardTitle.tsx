@@ -49,13 +49,19 @@ const TransactionTitle = ({
             display="flex"
             alignItems="center"
             onClick={e => e.stopPropagation()}
+            color={{ default: "default2", hover: "default1" }}
+            __transition="color 0.15s ease-in-out"
+            title={intl.formatMessage({
+              defaultMessage: "View in payment provider",
+              id: "ce2kVF",
+            })}
           >
-            <ExternalLinkIcon size="small" color="default1" />
+            <ExternalLinkIcon size="small" color="inherit" />
           </Box>
         )}
       </Box>
       {transaction.name && (
-        <Text size={2} color="default2">
+        <Text size={2} color="default2" fontWeight="medium">
           {transaction.name}
         </Text>
       )}
