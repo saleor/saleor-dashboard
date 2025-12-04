@@ -7,9 +7,13 @@ interface PspRerefenceLinkProps {
 }
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     link: {
-      color: theme.palette.saleor.active[1],
+      color: "inherit",
+      textDecoration: "none",
+      "&:hover": {
+        textDecoration: "underline",
+      },
     },
   }),
   { name: "PspReferenceLink" },

@@ -59,12 +59,21 @@ export const EventAvatar = ({ createdBy }: EventAvatarProps) => {
   const fullName = getUserName(createdBy, true);
 
   return (
-    <Box title={fullName} display="flex" flexShrink="0">
-      <UserAvatar
-        initials={getUserInitials(createdBy)}
-        url={createdBy?.avatar?.url}
-        size="medium"
-      />
+    <Box
+      title={fullName}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      flexShrink="0"
+      __width={AVATAR_SIZE}
+      __height={AVATAR_SIZE}
+      overflow="hidden"
+      borderRadius="100%"
+      borderStyle="solid"
+      borderWidth={1}
+      borderColor="default1"
+    >
+      <UserAvatar initials={getUserInitials(createdBy)} url={createdBy?.avatar?.url} />
     </Box>
   );
 };

@@ -1,10 +1,27 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { Box, Button, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { CheckIcon, CopyIcon } from "lucide-react";
-import { useState } from "react";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Button, sprinkles, Text, Tooltip, vars } from "@saleor/macaw-ui-next";
+import { CheckIcon, CopyIcon, ExternalLinkIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { PspReferenceLink } from "./PspReferenceLink";
+
+const useStyles = makeStyles(
+  () => ({
+    externalIcon: {
+      flexShrink: 0,
+      color: vars.colors.text.default2,
+      transition: "color 0.15s ease-in-out",
+    },
+    pillHovered: {
+      "& $externalIcon": {
+        color: vars.colors.text.default1,
+      },
+    },
+  }),
+  { name: "PspReference" },
+);
 
 interface PspReferenceProps {
   reference: string;
@@ -13,9 +30,52 @@ interface PspReferenceProps {
 
 export const PspReference = ({ reference, url }: PspReferenceProps) => {
   const intl = useIntl();
+  const classes = useStyles();
   const [copied, copy] = useClipboard();
   const [showCopyButton, setShowCopyButton] = useState(false);
+  const [isTruncated, setIsTruncated] = useState(false);
+  const [isPillHovered, setIsPillHovered] = useState(false);
+  const textRef = useRef<HTMLSpanElement>(null);
   const iconClassName = sprinkles({ color: "default2" });
+
+  useEffect(() => {
+    const el = textRef.current;
+
+    if (el) {
+      setIsTruncated(el.scrollWidth > el.clientWidth);
+    }
+  }, [reference]);
+
+  const content = (
+    <Box
+      backgroundColor="default2"
+      borderRadius={2}
+      borderStyle="solid"
+      borderWidth={1}
+      borderColor="default1"
+      paddingX={1.5}
+      paddingY={0.5}
+      __maxWidth="150px"
+      display="flex"
+      alignItems="center"
+      gap={1}
+      className={isPillHovered ? classes.pillHovered : undefined}
+      onMouseEnter={() => setIsPillHovered(true)}
+      onMouseLeave={() => setIsPillHovered(false)}
+    >
+      <Text
+        ref={textRef}
+        size={2}
+        fontWeight="medium"
+        whiteSpace="nowrap"
+        overflow="hidden"
+        textOverflow="ellipsis"
+      >
+        <PspReferenceLink href={url}>{reference}</PspReferenceLink>
+      </Text>
+      {url && <ExternalLinkIcon size={12} className={classes.externalIcon} />}
+    </Box>
+  );
 
   return (
     <Box
@@ -25,35 +85,17 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
       onMouseEnter={() => setShowCopyButton(true)}
       onMouseLeave={() => setShowCopyButton(false)}
     >
-      <Tooltip>
-        <Tooltip.Trigger>
-          <Box
-            backgroundColor="default2"
-            borderRadius={2}
-            borderStyle="solid"
-            borderWidth={1}
-            borderColor="default1"
-            paddingX={1.5}
-            paddingY={0.5}
-            __maxWidth="150px"
-          >
-            <Text
-              size={2}
-              fontWeight="medium"
-              whiteSpace="nowrap"
-              overflow="hidden"
-              textOverflow="ellipsis"
-              display="block"
-            >
-              <PspReferenceLink href={url}>{reference}</PspReferenceLink>
-            </Text>
-          </Box>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="top">
-          <Tooltip.Arrow />
-          <Text size={2}>{reference}</Text>
-        </Tooltip.Content>
-      </Tooltip>
+      {isTruncated ? (
+        <Tooltip>
+          <Tooltip.Trigger>{content}</Tooltip.Trigger>
+          <Tooltip.Content side="top">
+            <Tooltip.Arrow />
+            <Text size={2}>{reference}</Text>
+          </Tooltip.Content>
+        </Tooltip>
+      ) : (
+        content
+      )}
       <Box
         style={{
           opacity: showCopyButton ? 1 : 0,
