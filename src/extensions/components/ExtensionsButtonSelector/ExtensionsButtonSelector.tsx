@@ -1,14 +1,6 @@
 import { ExtensionMenuItem } from "@dashboard/extensions/getExtensionsItems";
-import {
-  Box,
-  BoxProps,
-  Button,
-  ButtonProps,
-  ChervonDownIcon,
-  Dropdown,
-  List,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 import { ReactNode } from "react";
 
 type ExtensionsButtonSelectorProps = {
