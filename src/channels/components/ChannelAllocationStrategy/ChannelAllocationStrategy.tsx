@@ -3,7 +3,7 @@ import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/Rad
 import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
-import { MessageCircleQuestionMark } from "lucide-react";
+import { CircleQuestionMark } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
@@ -52,7 +52,7 @@ const ChannelAllocationStrategy = ({
               <FormattedMessage {...messages.allocationStrategyDescription} />
               <Tooltip>
                 <Tooltip.Trigger>
-                  <MessageCircleQuestionMark className={classes.tooltipIcon} />
+                  <CircleQuestionMark className={classes.tooltipIcon} />
                 </Tooltip.Trigger>
                 <Tooltip.Content side="bottom">
                   <Tooltip.Arrow />
