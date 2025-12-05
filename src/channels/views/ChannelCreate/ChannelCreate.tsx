@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
@@ -8,6 +7,7 @@ import {
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
 } from "@dashboard/graphql";
+import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -35,8 +35,8 @@ const ChannelCreateView = () => {
     });
   };
   const [createChannel, createChannelOpts] = useChannelCreateMutation({
-    onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
-      if (!errors.length) {
+    onCompleted: ({ channelCreate }: ChannelCreateMutation) => {
+      if (channelCreate && !channelCreate.errors.length) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -47,13 +47,21 @@ const ChannelCreateView = () => {
   const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
     useChannelReorderWarehousesMutation({
       onCompleted: data => {
+        if (!data.channelReorderWarehouses) {
+          return;
+        }
+
         const errors = data.channelReorderWarehouses.errors;
 
         if (errors.length) {
           errors.forEach(error => handleError(error));
         }
 
-        navigate(channelPath(data.channelReorderWarehouses.channel?.id));
+        const channelId = data.channelReorderWarehouses.channel?.id;
+
+        if (channelId) {
+          navigate(channelPath(channelId));
+        }
       },
     });
   const saveChannel = useSaveChannel({
@@ -140,17 +148,20 @@ const ChannelCreateView = () => {
       />
       <>
         <ChannelDetailsPage
-          allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
+          allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount ?? 0}
           searchShippingZones={searchShippingZones}
-          searchShippingZonesData={searchShippingZonesResult.data}
+          searchShippingZonesData={searchShippingZonesResult.data as SearchData | undefined}
           fetchMoreShippingZones={getSearchFetchMoreProps(
-            searchShippingZonesResult,
+            searchShippingZonesResult as any,
             fetchMoreShippingZones,
           )}
-          allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
+          allWarehousesCount={warehousesCountData?.warehouses?.totalCount ?? 0}
           searchWarehouses={searchWarehouses}
-          searchWarehousesData={searchWarehousesResult.data}
-          fetchMoreWarehouses={getSearchFetchMoreProps(searchWarehousesResult, fetchMoreWarehouses)}
+          searchWarehousesData={searchWarehousesResult.data as SearchData | undefined}
+          fetchMoreWarehouses={getSearchFetchMoreProps(
+            searchWarehousesResult as any,
+            fetchMoreWarehouses,
+          )}
           disabled={
             createChannelOpts.loading ||
             reorderChannelWarehousesOpts.loading ||

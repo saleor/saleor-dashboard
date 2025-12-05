@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
@@ -36,6 +35,10 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
     ChannelsListUrlQueryParams
   >(navigate, channelsListUrl, params);
   const onCompleted = (data: ChannelDeleteMutation) => {
+    if (!data.channelDelete) {
+      return;
+    }
+
     const errors = data.channelDelete.errors;
 
     if (errors.length === 0) {
@@ -61,13 +64,17 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
     onCompleted,
   });
-  const channelsChoices = getChannelsCurrencyChoices(params.id, selectedChannel, data?.channels);
+  const channelsChoices = getChannelsCurrencyChoices(
+    params.id ?? "",
+    selectedChannel as any,
+    data?.channels as any,
+  );
   const handleRemoveConfirm = (channelId?: string) => {
     const inputVariables = channelId ? { input: { channelId } } : {};
 
     deleteChannel({
       variables: {
-        id: params.id,
+        id: params.id ?? "",
         ...inputVariables,
       },
     });
@@ -76,8 +83,8 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
   return (
     <>
       <ChannelsListPage
-        channelsList={data?.channels}
-        limits={limitOpts.data?.shop.limits}
+        channelsList={data?.channels as any}
+        limits={limitOpts.data?.shop.limits as any}
         onRemove={id =>
           openModal("remove", {
             id,
