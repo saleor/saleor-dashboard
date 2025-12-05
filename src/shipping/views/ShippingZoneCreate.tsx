@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useCreateShippingZoneMutation, useShopCountriesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -27,7 +26,7 @@ const ShippingZoneCreate = () => {
   });
   const [createShippingZone, createShippingZoneOpts] = useCreateShippingZoneMutation({
     onCompleted: data => {
-      if (data.shippingZoneCreate.errors.length === 0) {
+      if (data.shippingZoneCreate?.errors.length === 0 && data.shippingZoneCreate?.shippingZone) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -50,7 +49,7 @@ const ShippingZoneCreate = () => {
       countries={shop?.countries || []}
       restWorldCountries={mapCountriesToCountriesCodes(restWorldCountries?.shop?.countries) || []}
       disabled={createShippingZoneOpts.loading}
-      errors={createShippingZoneOpts.data?.shippingZoneCreate.errors || []}
+      errors={createShippingZoneOpts.data?.shippingZoneCreate?.errors || []}
       onSubmit={handleSubmit}
       saveButtonBarState={createShippingZoneOpts.status}
     />

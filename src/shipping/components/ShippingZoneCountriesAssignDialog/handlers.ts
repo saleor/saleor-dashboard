@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FormChange } from "@dashboard/hooks/useForm";
 
 export function createCountryChangeHandler(selectedCountries: string[], change: FormChange) {
