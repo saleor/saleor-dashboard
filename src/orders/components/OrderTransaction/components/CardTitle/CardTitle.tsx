@@ -1,6 +1,13 @@
 import { TransactionActionEnum } from "@dashboard/graphql";
-import { MoreHorizontalIcon } from "@saleor/macaw-ui";
-import { Box, Dropdown, ExternalLinkIcon, List, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Button,
+  Dropdown,
+  ExternalLinkIcon,
+  List,
+  MoreOptionsIcon,
+  Text,
+} from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionProps } from "../../OrderTransaction";
@@ -91,6 +98,9 @@ export const OrderTransactionCardTitle = ({
   const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
   const showActionsMenu = showActions && actions.length > 0;
 
+  const isDestructiveAction = (action: TransactionActionEnum) =>
+    action === TransactionActionEnum.CANCEL || action === TransactionActionEnum.REFUND;
+
   // Collect all non-zero amounts for display
   const amounts = [
     { label: messages.charged, money: chargedAmount, show: chargedAmount.amount > 0 },
@@ -131,38 +141,33 @@ export const OrderTransactionCardTitle = ({
         {showActionsMenu && (
           <Dropdown>
             <Dropdown.Trigger>
-              <Box
-                as="button"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                padding={1}
-                borderRadius={2}
-                cursor="pointer"
-                backgroundColor={{ default: "transparent", hover: "default1" }}
-                borderStyle="none"
+              <Button
+                variant="tertiary"
+                icon={<MoreOptionsIcon />}
                 onClick={e => e.stopPropagation()}
-              >
-                <MoreHorizontalIcon
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                />
-              </Box>
+                data-test-id="transaction-menu-button"
+                title="Show more"
+              />
             </Dropdown.Trigger>
             <Dropdown.Content align="end">
-              <List padding={1}>
+              <List
+                padding={2}
+                borderRadius={4}
+                boxShadow="defaultOverlay"
+                backgroundColor="default1"
+              >
                 {actions.map(action => (
                   <Dropdown.Item key={`transaction-action-${action}`}>
                     <List.Item
-                      borderRadius={2}
-                      paddingX={2}
-                      paddingY={1.5}
+                      borderRadius={4}
+                      paddingX={1.5}
+                      paddingY={2}
                       onClick={e => {
                         e.stopPropagation();
                         onTransactionAction(transaction.id, action);
                       }}
                     >
-                      <Text size={2}>
+                      <Text color={isDestructiveAction(action) ? "critical1" : undefined}>
                         <FormattedMessage {...mapActionToMessage[action]} />
                       </Text>
                     </List.Item>
