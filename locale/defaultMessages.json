@@ -6518,6 +6518,9 @@
     "context": "WarehouseSettings no shipping zones assigned",
     "string": "This warehouse has no shipping zones assigned."
   },
+  "ce2kVF": {
+    "string": "View in payment provider"
+  },
   "ce5Hp1": {
     "string": "Failed to copy to clipboard"
   },

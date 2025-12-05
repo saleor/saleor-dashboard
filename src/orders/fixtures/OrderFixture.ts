@@ -12,6 +12,7 @@ import {
   OrderGrantedRefundStatusEnum,
   OrderStatus,
   PaymentChargeStatusEnum,
+  TransactionActionEnum,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 import cloneDeep from "lodash/cloneDeep";
@@ -855,6 +856,227 @@ export class OrderFixture {
             brand: null,
           },
           lines: [],
+        },
+      ],
+    };
+
+    return this;
+  }
+
+  /**
+   * Adds multiple transactions with varied events for testing different scenarios:
+   * - Different event types (charge, refund, authorization)
+   * - Different creators (App, User, System/null)
+   * - Linked PSP references
+   */
+  withMultipleTransactions(): OrderFixture {
+    this.order = {
+      ...this.order,
+      transactions: [
+        // Transaction 1: Stripe with charge + refund flow (App creator)
+        {
+          ...OrderFixture.transaction,
+          id: "mock-transaction-1",
+          name: "Stripe",
+          pspReference: "pi_3ABC123",
+          externalUrl: "https://dashboard.stripe.com/payments/pi_3ABC123",
+          createdAt: "2024-12-01T10:00:00Z",
+          actions: [TransactionActionEnum.REFUND],
+          chargedAmount: { __typename: "Money", amount: 75.5, currency: "USD" },
+          refundedAmount: { __typename: "Money", amount: 25.0, currency: "USD" },
+          authorizedAmount: { __typename: "Money", amount: 0, currency: "USD" },
+          events: [
+            {
+              id: "mock-event-1a",
+              __typename: "TransactionEvent",
+              type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+              amount: { __typename: "Money", amount: 100.5, currency: "USD" },
+              pspReference: "ch_ABC123",
+              externalUrl: "https://dashboard.stripe.com/payments/ch_ABC123",
+              createdAt: "2024-12-01T10:05:00Z",
+              message: "Payment captured successfully",
+              reasonReference: null,
+              createdBy: {
+                __typename: "App",
+                id: "app-stripe",
+                name: "Stripe Payment App",
+                brand: null,
+              },
+            },
+            {
+              id: "mock-event-1b",
+              __typename: "TransactionEvent",
+              type: TransactionEventTypeEnum.REFUND_REQUEST,
+              amount: { __typename: "Money", amount: 25.0, currency: "USD" },
+              pspReference: "re_XYZ789",
+              externalUrl: "https://dashboard.stripe.com/refunds/re_XYZ789",
+              createdAt: "2024-12-02T14:30:00Z",
+              message: "Customer requested partial refund",
+              reasonReference: null,
+              createdBy: {
+                __typename: "User",
+                id: "user-admin-1",
+                email: "admin@example.com",
+                firstName: "John",
+                lastName: "Admin",
+                isActive: true,
+                avatar: null,
+              },
+            },
+            {
+              id: "mock-event-1c",
+              __typename: "TransactionEvent",
+              type: TransactionEventTypeEnum.REFUND_SUCCESS,
+              amount: { __typename: "Money", amount: 25.0, currency: "USD" },
+              pspReference: "re_XYZ789",
+              externalUrl: "https://dashboard.stripe.com/refunds/re_XYZ789",
+              createdAt: "2024-12-02T14:31:00Z",
+              message: "Refund processed",
+              reasonReference: null,
+              createdBy: {
+                __typename: "App",
+                id: "app-stripe",
+                name: "Stripe Payment App",
+                brand: null,
+              },
+            },
+          ],
+        },
+        // Transaction 2: Adyen with authorization flow (mixed creators)
+        {
+          ...OrderFixture.transaction,
+          id: "mock-transaction-2",
+          name: "Adyen",
+          pspReference: "ADYEN-REF-456",
+          externalUrl: "https://ca-test.adyen.com/payments/ADYEN-REF-456",
+          createdAt: "2024-12-03T09:00:00Z",
+          actions: [TransactionActionEnum.CHARGE, TransactionActionEnum.CANCEL],
+          authorizedAmount: { __typename: "Money", amount: 200.0, currency: "USD" },
+          chargedAmount: { __typename: "Money", amount: 0, currency: "USD" },
+          authorizePendingAmount: { __typename: "Money", amount: 0, currency: "USD" },
+          events: [
+            {
+              id: "mock-event-2a",
+              __typename: "TransactionEvent",
+              type: TransactionEventTypeEnum.AUTHORIZATION_REQUEST,
+              amount: { __typename: "Money", amount: 200.0, currency: "USD" },
+              pspReference: "AUTH-456-REQ",
+              externalUrl: "",
+              createdAt: "2024-12-03T09:00:00Z",
+              message: "Authorization requested",
+              reasonReference: null,
+              createdBy: null, // System event
+            },
+            {
+              id: "mock-event-2b",
+              __typename: "TransactionEvent",
+              type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+              amount: { __typename: "Money", amount: 200.0, currency: "USD" },
+              pspReference: "AUTH-456-REQ",
+              externalUrl: "https://ca-test.adyen.com/payments/AUTH-456-REQ",
+              createdAt: "2024-12-03T09:01:00Z",
+              message: "Authorization successful - 3DS verified",
+              reasonReference: null,
+              createdBy: {
+                __typename: "App",
+                id: "app-adyen",
+                name: "Adyen Payments",
+                brand: null,
+              },
+            },
+          ],
+        },
+        // Transaction 3: Manual transaction with long PSP reference (User creator)
+        // Transaction 3: Manual transaction with long PSP reference (User creator)
+        {
+          ...OrderFixture.transaction,
+          id: "mock-transaction-3",
+          name: "Manual Payment",
+          pspReference: "MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
+          externalUrl:
+            "https://dashboard.example.com/payments/MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
+          createdAt: "2024-12-04T16:00:00Z",
+          actions: [TransactionActionEnum.CANCEL, TransactionActionEnum.REFUND],
+          chargedAmount: { __typename: "Money", amount: 50.0, currency: "USD" },
+          events: [
+            {
+              id: "mock-event-3a",
+              __typename: "TransactionEvent",
+              type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+              amount: { __typename: "Money", amount: 50.0, currency: "USD" },
+              pspReference: "MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
+              externalUrl:
+                "https://dashboard.example.com/payments/MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
+              createdAt: "2024-12-04T16:00:00Z",
+              message: "Manual payment recorded by staff",
+              reasonReference: null,
+              createdBy: {
+                __typename: "User",
+                id: "user-staff-2",
+                email: "staff@example.com",
+                firstName: "Jane",
+                lastName: "Staff",
+                isActive: true,
+                avatar: {
+                  __typename: "Image",
+                  url: "https://i.pravatar.cc/150?u=jane-staff",
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+
+    return this;
+  }
+
+  /**
+   * Adds multiple granted refunds with varied statuses for testing
+   */
+  withMultipleGrantedRefunds(): OrderFixture {
+    this.order = {
+      ...this.order,
+      grantedRefunds: [
+        {
+          __typename: "OrderGrantedRefund",
+          id: "mock-granted-refund-1",
+          status: OrderGrantedRefundStatusEnum.SUCCESS,
+          amount: { __typename: "Money", amount: 25.0, currency: "USD" },
+          reason: "Damaged item received",
+          createdAt: "2024-12-02T14:00:00Z",
+          reasonReference: null,
+          shippingCostsIncluded: false,
+          transactionEvents: [],
+          lines: [],
+          user: {
+            __typename: "User",
+            id: "user-admin-1",
+            email: "admin@example.com",
+            firstName: "John",
+            lastName: "Admin",
+            avatar: null,
+          },
+          app: null,
+        },
+        {
+          __typename: "OrderGrantedRefund",
+          id: "mock-granted-refund-2",
+          status: OrderGrantedRefundStatusEnum.PENDING,
+          amount: { __typename: "Money", amount: 15.0, currency: "USD" },
+          reason: "Wrong size shipped",
+          createdAt: "2024-12-05T11:00:00Z",
+          reasonReference: null,
+          shippingCostsIncluded: true,
+          transactionEvents: [],
+          lines: [],
+          user: null,
+          app: {
+            __typename: "App",
+            id: "app-returns",
+            name: "Returns Manager",
+            brand: null,
+          },
         },
       ],
     };

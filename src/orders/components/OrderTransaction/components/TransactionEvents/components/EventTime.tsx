@@ -1,4 +1,5 @@
 import useLocale from "@dashboard/hooks/useLocale";
+import { Text } from "@saleor/macaw-ui-next";
 
 export const EventTime = ({ date }: { date: string }) => {
   const { locale } = useLocale();
@@ -11,5 +12,9 @@ export const EventTime = ({ date }: { date: string }) => {
     minute: "2-digit",
   });
 
-  return <time dateTime={date}>{intl.format(new Date(date))}</time>;
+  return (
+    <Text size={2} whiteSpace="nowrap">
+      <time dateTime={date}>{intl.format(new Date(date))}</time>
+    </Text>
+  );
 };

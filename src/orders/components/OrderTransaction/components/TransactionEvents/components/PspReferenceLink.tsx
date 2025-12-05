@@ -1,26 +1,16 @@
-import { makeStyles } from "@saleor/macaw-ui";
 import * as React from "react";
 
-interface PspRerefenceLinkProps {
-  href: string | null;
+import styles from "./PspReferenceLink.module.css";
+
+interface PspReferenceLinkProps {
+  href: string | null | undefined;
   children: React.ReactChild;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    link: {
-      color: theme.palette.saleor.active[1],
-    },
-  }),
-  { name: "PspReferenceLink" },
-);
-
-export const PspReferenceLink = ({ href, children }: PspRerefenceLinkProps) => {
-  const classes = useStyles();
-
+export const PspReferenceLink = ({ href, children }: PspReferenceLinkProps) => {
   if (href) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={classes.link}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={styles.link}>
         {children}
       </a>
     );
