@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.22.18
+
+### Patch Changes
+
+- [#6170](https://github.com/saleor/saleor-dashboard/pull/6170) [`03fc5a0`](https://github.com/saleor/saleor-dashboard/commit/03fc5a018d2376191015798a188fe66f7a61ba75) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Configured build to minify built code. This change should increase overall performance and loading speed.
+
+- [#6166](https://github.com/saleor/saleor-dashboard/pull/6166) [`10d1d92`](https://github.com/saleor/saleor-dashboard/commit/10d1d925058bd99f386f46ffde4bed373003b9a6) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Enabled React Strict mode for development
+
 ## 3.22.17
 
 ### Patch Changes
