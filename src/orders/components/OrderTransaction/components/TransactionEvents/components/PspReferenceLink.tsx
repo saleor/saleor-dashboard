@@ -2,7 +2,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import * as React from "react";
 
 interface PspRerefenceLinkProps {
-  href: string | null;
+  href: string | null | undefined;
   children: React.ReactChild;
 }
 
