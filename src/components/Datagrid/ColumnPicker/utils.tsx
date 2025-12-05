@@ -1,8 +1,8 @@
+import { ArrowLeft, X } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 import { AvailableColumn } from "../types";
 import { ColumnCategory } from "./useColumns";
-import { ArrowLeft, X } from "lucide-react";
 
 export const filterEmptyColumn = (column: AvailableColumn) => column.title !== "";
 
@@ -18,7 +18,7 @@ export const getExitIcon = (
     return <ArrowLeft />;
   }
 
-  return <C />;
+  return <X />;
 };
 
 export const getExitOnClick = ({

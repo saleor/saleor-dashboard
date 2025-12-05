@@ -1,9 +1,9 @@
 import { Box, Drawer } from "@saleor/macaw-ui-next";
+import { Menu } from "lucide-react";
 
 import { SidebarContent } from "./Content";
 import classes from "./Sidebar.module.css";
 import { useSidebarBreakpointContext } from "./SidebarContext";
-import { Menu } from "lucide-react";
 
 export const Sidebar = () => {
   const { breakpoint } = useSidebarBreakpointContext();
@@ -62,7 +62,7 @@ export const Sidebar = () => {
               cursor="pointer"
               data-test-id="sidebar-drawer-open"
             >
-              <MenuIcon />
+              <Menu />
             </Box>
           </Drawer.Trigger>
           <Drawer.Content
