@@ -9,13 +9,13 @@ import { AttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "../../../types";
 import { AttributeListDatagrid } from "../AttributeListDatagrid";
 import { AttributeFilterKeys, AttributeListFilterOpts } from "./filters";
-import { ChevronRight } from "lucide-react";
 
 interface AttributeListPageProps
   extends PageListProps,

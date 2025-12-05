@@ -7,10 +7,10 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { Box, Button, Paragraph, Text } from "@saleor/macaw-ui-next";
+import { ArrowLeft } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ChangingPasswordWarning } from "../ChangingPasswordWarning";
-import { ArrowLeft } from "lucide-react";
 
 export interface ResetPasswordPageFormData {
   email: string;

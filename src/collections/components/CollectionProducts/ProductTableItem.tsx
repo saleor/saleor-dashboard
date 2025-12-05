@@ -7,10 +7,10 @@ import { productUrl } from "@dashboard/products/urls";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Box, Button, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import * as React from "react";
 
 import { Product } from "./types";
-import { Trash2 } from "lucide-react";
 
 interface ItemProps {
   product: Product;

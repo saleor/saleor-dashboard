@@ -16,12 +16,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagrid";
 import { CustomerFilterKeys, CustomerListFilterOpts } from "./filters";
-import { ChevronRight } from "lucide-react";
 
 interface CustomerListPageProps
   extends PageListProps,

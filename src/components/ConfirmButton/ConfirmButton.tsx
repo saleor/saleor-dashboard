@@ -1,8 +1,8 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { Button, ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
-import { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;

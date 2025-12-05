@@ -1,12 +1,12 @@
 import { Name } from "@dashboard/featureFlags/availableFlags";
 import { Box, Button, Modal } from "@saleor/macaw-ui-next";
+import { X } from "lucide-react";
 
 import { Content } from "./Content";
 import { FlagList } from "./FlagList";
 import { Header } from "./Header";
 import { NoFlags } from "./NoFlags";
 import { useFlagsState } from "./useFlagsState";
-import { X } from "lucide-react";
 
 interface FeatureFlagsModalProps {
   open: boolean;

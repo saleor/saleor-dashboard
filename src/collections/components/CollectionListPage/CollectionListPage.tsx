@@ -24,13 +24,13 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
 import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
-import { ChevronRight } from "lucide-react";
 
 interface CollectionListPageProps
   extends PageListProps,

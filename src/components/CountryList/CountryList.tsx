@@ -6,9 +6,9 @@ import { TableBody, TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { ChevronsDownIcon } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import { ChevronsDownIcon } from "lucide-react";
 
 import { getStringOrPlaceholder } from "../../misc";
 import { DashboardCard } from "../Card";

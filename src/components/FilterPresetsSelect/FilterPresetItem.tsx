@@ -1,7 +1,7 @@
 import { Box, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { Minus } from "lucide-react";
 import { MouseEvent } from "react";
 import * as React from "react";
-import { Minus } from "lucide-react";
 
 interface FilterPresetItemProps {
   onSelect: (e: MouseEvent<HTMLLIElement>) => void;

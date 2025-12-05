@@ -1,8 +1,8 @@
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
+import { GripVertical, X } from "lucide-react";
 import { ReactNode } from "react";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { GripVertical, X } from "lucide-react";
 
 const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
   const labelContent = (

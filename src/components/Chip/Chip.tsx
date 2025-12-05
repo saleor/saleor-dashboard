@@ -1,8 +1,8 @@
 import { alpha } from "@material-ui/core/styles";
-import { X } from "lucide-react";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { X } from "lucide-react";
 import * as React from "react";
 
 interface ChipProps {

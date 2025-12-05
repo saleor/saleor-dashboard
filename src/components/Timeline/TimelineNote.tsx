@@ -1,6 +1,7 @@
 import { GiftCardDetailsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Edit } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -8,7 +9,6 @@ import { DashboardCard } from "../Card";
 import { DateTime } from "../Date";
 import { UserAvatar } from "../UserAvatar";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
-import { Edit } from "lucide-react";
 
 type TimelineAppType =
   | NonNullable<GiftCardDetailsQuery["giftCard"]>["events"][0]["app"]

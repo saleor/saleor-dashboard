@@ -1,6 +1,6 @@
 import { DefaultTheme, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
 import { Moon, Sun } from "lucide-react";
+import { FormattedMessage } from "react-intl";
 
 export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }) => {
   if (theme === "defaultLight") {

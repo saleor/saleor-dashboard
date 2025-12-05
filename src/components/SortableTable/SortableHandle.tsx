@@ -1,7 +1,7 @@
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 import { GripVertical } from "lucide-react";
+import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 
 const useStyles = makeStyles(
   theme => ({

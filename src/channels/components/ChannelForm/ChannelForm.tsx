@@ -19,13 +19,13 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import { Box, Button, Input, Option, Text } from "@saleor/macaw-ui-next";
+import { Copy } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
 import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
 import { MarkAsPaid } from "./MarkAsPaid";
 import { messages } from "./messages";
-import { Copy } from "lucide-react";
 
 export interface FormData extends StockSettingsInput {
   name: string;

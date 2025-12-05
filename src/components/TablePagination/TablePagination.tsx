@@ -7,11 +7,11 @@ import {
   PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { ListSettings } from "../../types";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export type ListSettingsUpdate = <T extends keyof ListSettings>(
   key: T,

@@ -14,9 +14,9 @@ import { TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
+import { MessageCircleQuestionMark } from "lucide-react";
 import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { MessageCircleQuestionMark } from "lucide-react";
 
 const useStyles = makeStyles(
   theme => ({

@@ -9,10 +9,10 @@ import { buttonMessages } from "@dashboard/intl";
 import { TranslationField, TranslationFieldType } from "@dashboard/translations/types";
 import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
-import { ChevronDown } from "lucide-react";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { ChevronDown } from "lucide-react";
 import { Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 

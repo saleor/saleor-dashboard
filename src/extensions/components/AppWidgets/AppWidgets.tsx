@@ -11,9 +11,9 @@ import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/comp
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { ExternalLink } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
-import { ExternalLink } from "lucide-react";
 
 type AppWidgetsProps = {
   extensions: ExtensionWithParams[];

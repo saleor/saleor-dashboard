@@ -1,4 +1,5 @@
 import { Box, Button, DynamicCombobox, Select } from "@saleor/macaw-ui-next";
+import { Minus } from "lucide-react";
 
 import { getItemConstraint } from "./constrains";
 import { ErrorLookup } from "./errors";
@@ -6,7 +7,6 @@ import { FilterEventEmitter } from "./EventEmitter";
 import { RightOperator } from "./RightOperator";
 import { ExperimentalFiltersProps } from "./Root";
 import { LeftOperatorOption, Row } from "./types";
-import { Minus } from "lucide-react";
 
 interface RowProps {
   item: Row;
