@@ -1,27 +1,12 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, sprinkles, Text, Tooltip, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { CheckIcon, CopyIcon, ExternalLinkIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
+import styles from "./PspReference.module.css";
 import { PspReferenceLink } from "./PspReferenceLink";
-
-const useStyles = makeStyles(
-  () => ({
-    externalIcon: {
-      flexShrink: 0,
-      color: vars.colors.text.default2,
-      transition: "color 0.15s ease-in-out",
-    },
-    pillHovered: {
-      "& $externalIcon": {
-        color: vars.colors.text.default1,
-      },
-    },
-  }),
-  { name: "PspReference" },
-);
 
 interface PspReferenceProps {
   reference: string;
@@ -30,7 +15,6 @@ interface PspReferenceProps {
 
 export const PspReference = ({ reference, url }: PspReferenceProps) => {
   const intl = useIntl();
-  const classes = useStyles();
   const [copied, copy] = useClipboard();
   const [showCopyButton, setShowCopyButton] = useState(false);
   const [isTruncated, setIsTruncated] = useState(false);
@@ -59,7 +43,7 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
       display="flex"
       alignItems="center"
       gap={1}
-      className={isPillHovered ? classes.pillHovered : undefined}
+      className={clsx(isPillHovered && styles.pillHovered)}
       onMouseEnter={() => setIsPillHovered(true)}
       onMouseLeave={() => setIsPillHovered(false)}
     >
@@ -73,16 +57,11 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
       >
         <PspReferenceLink href={url}>{reference}</PspReferenceLink>
       </Text>
-      <Box
-        __width="12px"
-        __height="12px"
-        flexShrink="0"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        {url && <ExternalLinkIcon size={12} className={classes.externalIcon} />}
-      </Box>
+      {url && (
+        <a href={url} target="_blank" rel="noopener noreferrer" className={styles.iconLink}>
+          <ExternalLinkIcon size={12} className={styles.externalIcon} />
+        </a>
+      )}
     </Box>
   );
 
