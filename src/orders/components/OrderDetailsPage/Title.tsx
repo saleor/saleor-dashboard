@@ -31,8 +31,8 @@ const Title = (props: TitleProps) => {
   if (!order) {
     return (
       <div className={classes.container}>
-        <Skeleton style={{ width: "8em" }} />
-        <Skeleton style={{ width: "10em" }} />
+        <Skeleton __width="8em" />
+        <Skeleton __width="10em" />
       </div>
     );
   }
@@ -57,7 +57,7 @@ const Title = (props: TitleProps) => {
             <DateTime date={order.created} plain />
           </Text>
         ) : (
-          <Skeleton style={{ width: "10em" }} />
+          <Skeleton __width="10em" />
         )}
       </div>
     </div>
