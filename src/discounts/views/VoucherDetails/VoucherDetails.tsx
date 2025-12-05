@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   ChannelVoucherData,
   createChannelsDataWithDiscountPrice,
@@ -488,7 +487,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       />
       <DiscountCountrySelectDialog
         confirmButtonState={voucherUpdateOpts.status}
-        countries={maybe(() => shop.countries, [])}
+        countries={shop?.countries ?? []}
         onClose={() => navigate(voucherUrl(id))}
         onConfirm={formData =>
           voucherUpdate({

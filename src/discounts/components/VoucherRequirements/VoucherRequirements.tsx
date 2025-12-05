@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import PriceField from "@dashboard/components/PriceField";
@@ -118,7 +117,9 @@ const VoucherRequirements = ({
                   {renderCollection(
                     data.channelListings,
                     (listing, index) => {
-                      const error = formErrors.minSpent?.channels?.find(id => id === listing.id);
+                      const error = listing
+                        ? formErrors.minSpent?.channels?.find(id => id === listing.id)
+                        : undefined;
 
                       return (
                         <TableRowLink

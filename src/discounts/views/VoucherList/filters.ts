@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import {
   VoucherFilterKeys,
@@ -32,7 +31,7 @@ export function getFilterOpts(
     channel: {
       active: params?.channel !== undefined,
       choices: channels,
-      value: params?.channel,
+      value: params?.channel ?? "",
     },
     saleType: {
       active: !!maybe(() => params.type),
@@ -46,8 +45,8 @@ export function getFilterOpts(
         false,
       ),
       value: {
-        max: maybe(() => params.startedTo, ""),
-        min: maybe(() => params.startedFrom, ""),
+        max: params.startedTo ?? "",
+        min: params.startedFrom ?? "",
       },
     },
     status: {
@@ -62,8 +61,8 @@ export function getFilterOpts(
         false,
       ),
       value: {
-        max: maybe(() => params.timesUsedTo, ""),
-        min: maybe(() => params.timesUsedFrom, ""),
+        max: params.timesUsedTo ?? "",
+        min: params.timesUsedFrom ?? "",
       },
     },
   };
@@ -75,14 +74,14 @@ export function getFilterVariables(params: VoucherListUrlFilters): VoucherFilter
       params.type && params.type.map(type => findValueInEnum(type, VoucherDiscountType)),
     search: params.query,
     started: getGteLteVariables({
-      gte: joinDateTime(params.startedFrom),
-      lte: joinDateTime(params.startedTo),
+      gte: params.startedFrom ? joinDateTime(params.startedFrom) : undefined,
+      lte: params.startedTo ? joinDateTime(params.startedTo) : undefined,
     }),
     status:
       params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
     timesUsed: getGteLteVariables({
-      gte: parseInt(params.timesUsedFrom, 10),
-      lte: parseInt(params.timesUsedTo, 10),
+      gte: params.timesUsedFrom ? parseInt(params.timesUsedFrom, 10) : undefined,
+      lte: params.timesUsedTo ? parseInt(params.timesUsedTo, 10) : undefined,
     }),
   };
 }

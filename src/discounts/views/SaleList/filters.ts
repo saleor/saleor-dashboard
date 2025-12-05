@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import { SaleFilterKeys } from "@dashboard/discounts/components/SaleListPage";
 import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from "@dashboard/graphql";
@@ -19,11 +18,11 @@ import {
 
 export function getFilterVariables(params: SaleListUrlFilters): SaleFilterInput {
   return {
-    saleType: params.type && findValueInEnum(params.type, DiscountValueTypeEnum),
+    saleType: params.type ? findValueInEnum(params.type, DiscountValueTypeEnum) : undefined,
     search: params.query,
     started: getGteLteVariables({
-      gte: joinDateTime(params.startedFrom),
-      lte: joinDateTime(params.startedTo),
+      gte: params.startedFrom ? joinDateTime(params.startedFrom) : undefined,
+      lte: params.startedTo ? joinDateTime(params.startedTo) : undefined,
     }),
     status:
       params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),

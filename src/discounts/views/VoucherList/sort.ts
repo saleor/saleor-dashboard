@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import { VoucherSortField } from "@dashboard/graphql";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
@@ -38,7 +37,7 @@ function getSortQueryField(sort: VoucherListUrlSortField): VoucherSortField {
     case VoucherListUrlSortField.value:
       return VoucherSortField.VALUE;
     default:
-      return undefined;
+      return VoucherSortField.CODE;
   }
 }
 
