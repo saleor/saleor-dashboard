@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
@@ -16,6 +15,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/conf
 import {
   AttributeErrorFragment,
   AttributeValueInput,
+  MetadataErrorFragment,
   PageDetailsFragment,
   PageErrorFragment,
   PageInput,
@@ -92,7 +92,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
   const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
     onCompleted: data => {
-      if (data.pageDelete.errors.length === 0) {
+      if (data.pageDelete?.errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -109,26 +109,35 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         id: attribute.id,
       }),
     );
-  const handleUpdate = async (data: PageSubmitData) => {
-    let errors: Array<AttributeErrorFragment | UploadErrorFragment | PageErrorFragment> = [];
+  const handleUpdate = async (data: PageData) => {
+    let errors: Array<
+      AttributeErrorFragment | UploadErrorFragment | PageErrorFragment | MetadataErrorFragment
+    > = [];
+
+    // At runtime, the form passes PageSubmitData even though the type is PageData
+    const submitData = data as any as PageSubmitData;
 
     const uploadFilesResult = await handleUploadMultipleFiles(
-      data.attributesWithNewFileValue,
+      submitData.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
     );
     const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
+      submitData.attributesWithNewFileValue,
       pageDetails?.data?.page?.attributes,
       variables => deleteAttributeValue({ variables }),
     );
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
-      data.attributesWithNewFileValue,
+      submitData.attributesWithNewFileValue,
       uploadFilesResult,
     );
     const updateResult = await pageUpdate({
       variables: {
         id,
-        input: createPageInput(data, pageDetails?.data?.page, updatedFileAttributes),
+        input: createPageInput(
+          data,
+          pageDetails?.data?.page as PageDetailsFragment,
+          updatedFileAttributes,
+        ),
         firstValues: VALUES_PAGINATE_BY,
       },
     });
@@ -136,14 +145,16 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     errors = [
       ...errors,
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-      ...updateResult.data.pageUpdate.errors,
+      ...mergeAttributeValueDeleteErrors(
+        deleteAttributeValuesResult.filter((r): r is NonNullable<typeof r> => r !== undefined),
+      ),
+      ...(updateResult.data?.pageUpdate?.errors ?? []),
     ];
 
     return errors;
   };
   const handleSubmit = createMetadataUpdateHandler(
-    pageDetails.data?.page,
+    pageDetails.data?.page as PageDetailsFragment,
     handleUpdate,
     variables => updateMetadata({ variables }),
     variables => updatePrivateMetadata({ variables }),
@@ -182,24 +193,25 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || [];
   const fetchMoreReferencePages = {
-    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages,
   };
   const fetchMoreReferenceProducts = {
-    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts,
   };
   const fetchMoreReferenceCategories = {
-    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchCategoriesOpts.loading,
     onFetchMore: loadMoreCategories,
   };
   const fetchMoreReferenceCollections = {
-    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
+    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage ?? false,
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
@@ -211,7 +223,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
 
   return (
     <>
-      <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
+      <WindowTitle title={maybe(() => pageDetails.data?.page?.title) ?? ""} />
       <PageDetailsPage
         loading={
           pageDetails.loading ||
@@ -219,9 +231,9 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
           uploadFileOpts.loading ||
           deleteAttributeValueOpts.loading
         }
-        errors={pageUpdateOpts.data?.pageUpdate.errors || []}
+        errors={pageUpdateOpts.data?.pageUpdate?.errors ?? []}
         saveButtonBarState={pageUpdateOpts.status}
-        page={pageDetails.data?.page}
+        page={pageDetails.data?.page as PageDetailsFragment}
         attributeValues={attributeValues}
         onRemove={() =>
           navigate(
@@ -231,7 +243,9 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
           )
         }
         onSubmit={handleSubmit}
-        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
+        assignReferencesAttributeId={
+          (params.action === "assign-attribute-value" && params.id) || undefined
+        }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}

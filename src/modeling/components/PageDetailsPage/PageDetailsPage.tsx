@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   handleContainerReferenceAssignment,
@@ -59,7 +58,7 @@ interface PageDetailsPageProps {
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedPageType?: PageDetailsFragment["pageType"];
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: RelayToFlat<NonNullable<SearchAttributeValuesQuery["attribute"]>["choices"]>;
   onRemove: () => void;
   onSubmit: (data: PageData) => SubmitPromise;
   fetchPageTypes?: (data: string) => void;
@@ -128,7 +127,7 @@ const PageDetailsPage = ({
     handlers: PageUpdateHandlers,
   ) => {
     handleContainerReferenceAssignment(
-      assignReferencesAttributeId,
+      assignReferencesAttributeId ?? "",
       attributeValues,
       data.attributes,
       handlers,
@@ -151,10 +150,10 @@ const PageDetailsPage = ({
       pageTypes={pageTypeChoiceList}
       selectedPageType={selectedPageType}
       onSelectPageType={handleSelectPageType}
-      referencePages={referencePages}
-      referenceProducts={referenceProducts}
-      referenceCollections={referenceCollections}
-      referenceCategories={referenceCategories}
+      referencePages={referencePages as any}
+      referenceProducts={referenceProducts as any}
+      referenceCollections={referenceCollections as any}
+      referenceCategories={referenceCategories as any}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}
@@ -216,18 +215,24 @@ const PageDetailsPage = ({
               {data.attributes.length > 0 && (
                 <Attributes
                   attributes={data.attributes}
-                  attributeValues={attributeValues}
+                  attributeValues={attributeValues as any}
                   disabled={loading}
                   loading={loading}
                   errors={errors}
-                  onChange={handlers.selectAttribute}
-                  onMultiChange={handlers.selectAttributeMulti}
+                  onChange={handlers.selectAttribute as any}
+                  onMultiChange={handlers.selectAttributeMulti as any}
                   onFileChange={handlers.selectAttributeFile}
                   onReferencesRemove={handlers.selectAttributeReference}
                   onReferencesAddClick={onAssignReferencesClick}
                   onReferencesReorder={handlers.reorderAttributeValue}
                   fetchAttributeValues={fetchAttributeValues}
-                  fetchMoreAttributeValues={fetchMoreAttributeValues}
+                  fetchMoreAttributeValues={
+                    fetchMoreAttributeValues ?? {
+                      hasMore: false,
+                      loading: false,
+                      onFetchMore: () => {},
+                    }
+                  }
                   onAttributeSelectBlur={onAttributeSelectBlur}
                   richTextGetters={attributeRichTextGetters}
                 />
@@ -276,16 +281,20 @@ const PageDetailsPage = ({
             </Savebar>
             {canOpenAssignReferencesAttributeDialog && (
               <AssignAttributeValueDialog
-                entityType={getReferenceAttributeEntityTypeFromAttribute(
-                  assignReferencesAttributeId,
-                  data.attributes,
-                )}
-                attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
+                entityType={
+                  getReferenceAttributeEntityTypeFromAttribute(
+                    assignReferencesAttributeId,
+                    data.attributes,
+                  ) as any
+                }
+                attribute={
+                  data.attributes.find(({ id }) => id === assignReferencesAttributeId) as any
+                }
                 confirmButtonState={"default"}
-                products={referenceProducts}
-                pages={referencePages}
-                collections={referenceCollections}
-                categories={referenceCategories}
+                products={referenceProducts as any}
+                pages={referencePages as any}
+                collections={referenceCollections as any}
+                categories={referenceCategories as any}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
                 open={canOpenAssignReferencesAttributeDialog}
                 onFetch={handlers.fetchReferences}

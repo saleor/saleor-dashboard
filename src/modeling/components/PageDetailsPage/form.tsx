@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
@@ -127,11 +126,11 @@ interface PageFormProps extends UsePageFormOpts {
 }
 
 const getInitialFormData = (pageExists: boolean, page?: PageDetailsFragment): PageFormData => ({
-  isPublished: pageExists ? page?.isPublished : true,
+  isPublished: pageExists ? (page?.isPublished ?? false) : true,
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
-  pageType: null,
+  pageType: (page?.pageType ?? null) as PageDetailsFragment["pageType"],
   privateMetadata: page?.privateMetadata?.map(mapMetadataItemToInput) || [],
-  publishedAt: pageExists ? page?.publishedAt : "",
+  publishedAt: pageExists ? (page?.publishedAt ?? "") : "",
   seoDescription: page?.seoDescription || "",
   seoTitle: page?.seoTitle || "",
   slug: page?.slug || "",
@@ -198,7 +197,7 @@ function usePageForm(
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
-    opts.assignReferencesAttributeId,
+    opts.assignReferencesAttributeId ?? "",
     opts.fetchReferencePages,
     opts.fetchReferenceProducts,
     opts.fetchReferenceCategories,
@@ -206,7 +205,7 @@ function usePageForm(
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
-    opts.assignReferencesAttributeId,
+    opts.assignReferencesAttributeId ?? "",
     opts.fetchMoreReferencePages,
     opts.fetchMoreReferenceProducts,
     opts.fetchMoreReferenceCategories,
@@ -214,7 +213,7 @@ function usePageForm(
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
-    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.data as any,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
     triggerChange,
@@ -227,25 +226,27 @@ function usePageForm(
   const data: PageData = {
     ...formData,
     attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
-      pages: opts.referencePages,
-      products: opts.referenceProducts,
-      collections: opts.referenceCollections,
-      categories: opts.referenceCategories,
+      pages: opts.referencePages as any,
+      products: opts.referenceProducts as any,
+      collections: opts.referenceCollections as any,
+      categories: opts.referenceCategories as any,
     }),
-    content: null,
-    pageType: pageExists ? page?.pageType : opts.selectedPageType,
+    content: null as any as OutputData,
+    pageType: ((pageExists ? page?.pageType : opts.selectedPageType) ??
+      null) as PageDetailsFragment["pageType"],
   };
-  const getSubmitData = async (): Promise<PageSubmitData> => ({
-    ...data,
-    ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
-    ...getPublicationData(formData),
-    content: await richText.getValue(),
-    attributes: mergeAttributes(
-      attributes.data,
-      getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
-    ),
-    attributesWithNewFileValue: attributesWithNewFileValue.data,
-  });
+  const getSubmitData = async (): Promise<PageSubmitData> =>
+    ({
+      ...data,
+      ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
+      ...getPublicationData(formData),
+      content: await richText.getValue(),
+      attributes: mergeAttributes(
+        attributes.data,
+        getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
+      ),
+      attributesWithNewFileValue: attributesWithNewFileValue.data as any,
+    }) as PageSubmitData;
   const handleSubmit = async (data: PageData) => {
     let errors = validatePageCreateData(data);
 
@@ -298,7 +299,11 @@ function usePageForm(
     valid,
     handlers: {
       changeMetadata,
-      fetchMoreReferences: handleFetchMoreReferences,
+      fetchMoreReferences: handleFetchMoreReferences ?? {
+        hasMore: false,
+        loading: false,
+        onFetchMore: () => {},
+      },
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,
