@@ -23,11 +23,11 @@ const useStyles = makeStyles(
   () => ({
     row: {
       "&&&:hover": {
-        backgroundColor: vars.colors.background.default1Hovered,
+        backgroundColor: vars.colors.background.default2,
       },
     },
     linkedHighlight: {
-      backgroundColor: vars.colors.background.default1Hovered,
+      backgroundColor: vars.colors.background.default2,
     },
     colAvatar: {
       "&&&": {
