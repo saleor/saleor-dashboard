@@ -6,7 +6,7 @@ import {
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import SingleReferenceField from "./SingleReferenceField";
+import { SingleReferenceField } from "./SingleReferenceField";
 import { getErrorMessage } from "./utils";
 
 jest.mock("./utils", () => {

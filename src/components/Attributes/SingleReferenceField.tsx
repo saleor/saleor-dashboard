@@ -5,10 +5,10 @@ import {
 } from "@dashboard/components/Attributes/utils";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Edit, Plus } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { AttributeRowProps } from "./types";
-import { Edit, Plus } from "lucide-react";
 
 interface SingleReferenceFieldProps {
   attribute: AttributeRowProps["attribute"];
@@ -19,7 +19,7 @@ interface SingleReferenceFieldProps {
   onReferencesRemove: AttributeRowProps["onReferencesRemove"];
 }
 
-const SingleReferenceField = ({
+export const SingleReferenceField = ({
   attribute,
   disabled,
   loading,
@@ -71,6 +71,5 @@ const SingleReferenceField = ({
     </BasicAttributeRow>
   );
 };
-export default SingleReferenceField;
 
 SingleReferenceField.displayName = "SingleReferenceField";
