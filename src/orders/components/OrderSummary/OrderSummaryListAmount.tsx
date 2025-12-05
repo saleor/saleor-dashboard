@@ -1,5 +1,5 @@
 import { Text, TextProps } from "@saleor/macaw-ui-next";
-import React from "react";
+import { CSSProperties } from "react";
 import { useIntl } from "react-intl";
 
 type Props = Omit<TextProps, "children"> & {
@@ -7,7 +7,7 @@ type Props = Omit<TextProps, "children"> & {
   showSign?: boolean;
 };
 
-const tabularNumsStyle: React.CSSProperties = {
+const tabularNumsStyle: CSSProperties = {
   fontVariantNumeric: "tabular-nums",
 };
 
