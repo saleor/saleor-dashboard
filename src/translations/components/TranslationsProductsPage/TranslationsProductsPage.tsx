@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
@@ -168,7 +167,7 @@ export const TranslationsProductsPage = ({
             }}
           />
           <LanguageSwitchWithCaching
-            currentLanguage={LanguageCodeEnum[languageCode]}
+            currentLanguage={LanguageCodeEnum[languageCode as keyof typeof LanguageCodeEnum]}
             languages={languages}
             onLanguageChange={lang => {
               navigate(languageEntityUrl(lang, TranslatableEntities.products, translationId));
@@ -190,9 +189,9 @@ export const TranslationsProductsPage = ({
                 defaultMessage: "Product Name",
               }),
               name: TranslationInputFieldName.name,
-              translation: (appResponseFields.productName ?? data?.translation?.name) || null,
+              translation: appResponseFields.productName ?? data?.translation?.name ?? "",
               type: "short",
-              value: data?.product?.name,
+              value: data?.product?.name ?? "",
             },
             {
               displayName: intl.formatMessage({
@@ -201,9 +200,9 @@ export const TranslationsProductsPage = ({
               }),
               name: TranslationInputFieldName.description,
               translation:
-                (appResponseFields.productDescription ?? data?.translation?.description) || null,
+                appResponseFields.productDescription ?? data?.translation?.description ?? null,
               type: "rich",
-              value: data?.product?.description,
+              value: data?.product?.description ?? "",
             },
           ]}
           saveButtonState={saveButtonState}
@@ -229,9 +228,9 @@ export const TranslationsProductsPage = ({
                 defaultMessage: "Search Engine Title",
               }),
               name: TranslationInputFieldName.seoTitle,
-              translation: (appResponseFields.seoName ?? data?.translation?.seoTitle) || null,
+              translation: appResponseFields.seoName ?? data?.translation?.seoTitle ?? "",
               type: "short",
-              value: data?.product?.seoTitle,
+              value: data?.product?.seoTitle ?? "",
             },
             {
               displayName: intl.formatMessage({
@@ -240,9 +239,9 @@ export const TranslationsProductsPage = ({
               }),
               name: TranslationInputFieldName.seoDescription,
               translation:
-                (appResponseFields.seoDescription ?? data?.translation?.seoDescription) || null,
+                appResponseFields.seoDescription ?? data?.translation?.seoDescription ?? "",
               type: "long",
-              value: data?.product?.seoDescription,
+              value: data?.product?.seoDescription ?? "",
             },
           ]}
           saveButtonState={saveButtonState}

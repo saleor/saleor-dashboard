@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useMenuItemTranslationsQuery } from "@dashboard/graphql";
 import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
@@ -23,17 +22,21 @@ const TranslationsMenuItemList = ({ params, variables }: TranslationsEntityListP
     <PaginatorContext.Provider value={paginationValues}>
       <TranslationsEntitiesList
         disabled={loading}
-        entities={mapEdgesToItems(data?.translations)?.map(
-          node =>
-            node.__typename === "MenuItemTranslatableContent" && {
-              completion: {
-                current: sumCompleted([node.translation?.name]),
-                max: 1,
-              },
-              id: node?.menuItem.id,
-              name: node?.menuItem.name,
-            },
-        )}
+        entities={
+          mapEdgesToItems(data?.translations)
+            ?.map(
+              node =>
+                node.__typename === "MenuItemTranslatableContent" && {
+                  completion: {
+                    current: sumCompleted([node.translation?.name]),
+                    max: 1,
+                  },
+                  id: node?.menuItem?.id ?? "",
+                  name: node?.menuItem?.name ?? "",
+                },
+            )
+            .filter(Boolean) as any
+        }
         getRowHref={id => languageEntityUrl(variables.language, TranslatableEntities.menuItems, id)}
       />
     </PaginatorContext.Provider>

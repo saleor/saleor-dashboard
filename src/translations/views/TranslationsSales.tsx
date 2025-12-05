@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useSaleTranslationDetailsQuery,
@@ -35,7 +34,7 @@ const TranslationsSales = ({ id, languageCode, params }: TranslationsSalesProps)
   });
   const [updateTranslations, updateTranslationsOpts] = useUpdateSaleTranslationsMutation({
     onCompleted: data => {
-      if (data.saleTranslate.errors.length === 0) {
+      if (data.saleTranslate?.errors.length === 0) {
         saleTranslations.refetch();
         notify({
           status: "success",
@@ -82,10 +81,10 @@ const TranslationsSales = ({ id, languageCode, params }: TranslationsSalesProps)
       languages={shop?.languages || []}
       languageCode={languageCode}
       saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
+      onEdit={onEdit as (field: string | string[]) => void}
       onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "SaleTranslatableContent" ? translation : null}
+      onSubmit={handleSubmit as any}
+      data={translation?.__typename === "SaleTranslatableContent" ? translation : null!}
     />
   );
 };

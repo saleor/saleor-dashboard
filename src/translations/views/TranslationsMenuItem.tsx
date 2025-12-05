@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useMenuItemTranslationDetailsQuery,
@@ -80,10 +79,10 @@ const TranslationsMenuItem = ({ id, languageCode, params }: TranslationsMenuItem
       languages={shop?.languages || []}
       languageCode={languageCode}
       saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
+      onEdit={onEdit as (field: string | string[]) => void}
       onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "MenuItemTranslatableContent" ? translation : null}
+      onSubmit={handleSubmit as any}
+      data={translation?.__typename === "MenuItemTranslatableContent" ? translation : null!}
     />
   );
 };
