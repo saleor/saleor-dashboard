@@ -7,6 +7,8 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import { useAutomaticCompletionHandlers } from "./useAutomaticCompletionHandlers";
+import { useAutomaticCompletionWarnings } from "./useAutomaticCompletionWarnings";
 
 interface AutomaticallyCompleteCheckoutsProps {
   isChecked: boolean;
@@ -27,42 +29,6 @@ interface AutomaticallyCompleteCheckoutsProps {
   onUseCutOffDateChange: () => void;
 }
 
-const formatTimeDifference = (milliseconds: number, locale: string): string => {
-  const absMs = Math.abs(milliseconds);
-  const minutes = Math.round(absMs / (1000 * 60));
-  const hours = Math.round(absMs / (1000 * 60 * 60));
-  const days = Math.round(absMs / (1000 * 60 * 60 * 24));
-
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "always", style: "long" });
-
-  // Get absolute duration string (we handle direction in message)
-  if (days >= 1) {
-    return rtf.format(days, "day").replace(/^in /, "").replace(/ ago$/, "");
-  }
-
-  if (hours >= 1) {
-    return rtf.format(hours, "hour").replace(/^in /, "").replace(/ ago$/, "");
-  }
-
-  return rtf.format(minutes, "minute").replace(/^in /, "").replace(/ ago$/, "");
-};
-
-const formatDateTime = (date: string, time: string, locale: string): string => {
-  if (!date) {
-    return "";
-  }
-
-  const dateObj = new Date(`${date}T${time || "00:00"}`);
-
-  return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(dateObj);
-};
-
 export const AutomaticallyCompleteCheckouts = ({
   isChecked,
   hasError,
@@ -82,64 +48,31 @@ export const AutomaticallyCompleteCheckouts = ({
 }: AutomaticallyCompleteCheckoutsProps) => {
   const intl = useIntl();
 
-  const handleMainCheckboxChange = () => {
-    onCheckboxChange();
-  };
+  const { handleMainCheckboxChange, handleSetCurrentDateTime, handleResetToSaved } =
+    useAutomaticCompletionHandlers({
+      savedCutOffDate,
+      savedCutOffTime,
+      onCheckboxChange,
+      onCutOffDateChange,
+      onCutOffTimeChange,
+    });
 
-  const handleSetCurrentDateTime = () => {
-    const now = new Date();
-    const date = now.toISOString().split("T")[0];
-    const time = now.toTimeString().slice(0, 5);
-
-    onCutOffDateChange({ target: { name: "automaticCompletionCutOffDate", value: date } } as any);
-    onCutOffTimeChange({ target: { name: "automaticCompletionCutOffTime", value: time } } as any);
-  };
-
-  const handleResetToSaved = () => {
-    onCutOffDateChange({
-      target: { name: "automaticCompletionCutOffDate", value: savedCutOffDate },
-    } as any);
-    onCutOffTimeChange({
-      target: { name: "automaticCompletionCutOffTime", value: savedCutOffTime },
-    } as any);
-  };
-
-  // Check if form has changes from saved state (to avoid showing warnings on initial load)
-  const hasEnabledChanged = isChecked !== savedIsEnabled;
-
-  // Show info when user disables automatic completion that was previously enabled
-  const showDisabledInfo = !isChecked && savedIsEnabled && hasEnabledChanged;
-
-  // Show warning when user sets delay to 0 (immediate completion)
-  const showZeroDelayWarning = isChecked && (delay === 0 || delay === "0");
-
-  // Calculate date comparison data for warnings
-  const cutOffDateComparison = React.useMemo(() => {
-    if (!isChecked || !cutOffDate || !savedCutOffDate) {
-      return {
-        isEarlier: false,
-        isLater: false,
-        timeDifference: "",
-        previousDate: "",
-        newDate: "",
-      };
-    }
-
-    const savedDate = new Date(`${savedCutOffDate}T${savedCutOffTime || "00:00"}`);
-    const newDate = new Date(`${cutOffDate}T${cutOffTime || "00:00"}`);
-    const diffMs = newDate.getTime() - savedDate.getTime();
-
-    return {
-      isEarlier: diffMs < 0,
-      isLater: diffMs > 0,
-      timeDifference: formatTimeDifference(diffMs, intl.locale),
-      previousDate: formatDateTime(savedCutOffDate, savedCutOffTime, intl.locale),
-      newDate: formatDateTime(cutOffDate, cutOffTime, intl.locale),
-    };
-  }, [isChecked, cutOffDate, cutOffTime, savedCutOffDate, savedCutOffTime, intl.locale]);
-
-  const showCutOffDateEarlierWarning = cutOffDateComparison.isEarlier;
-  const showCutOffDateLaterInfo = cutOffDateComparison.isLater;
+  const {
+    showDisabledInfo,
+    showZeroDelayWarning,
+    showCutOffDateEarlierWarning,
+    showCutOffDateLaterInfo,
+    cutOffDateComparison,
+  } = useAutomaticCompletionWarnings({
+    isChecked,
+    delay,
+    cutOffDate,
+    cutOffTime,
+    savedIsEnabled,
+    savedCutOffDate,
+    savedCutOffTime,
+    intl,
+  });
 
   return (
     <Box paddingX={6}>
@@ -178,14 +111,14 @@ export const AutomaticallyCompleteCheckouts = ({
         <Box paddingLeft={4} paddingTop={3}>
           <Box
             display="flex"
-            alignItems="center"
+            alignItems="flex-start"
             backgroundColor="info1"
             color="default1"
             padding={2}
             gap={2}
             borderRadius={3}
           >
-            <Box flexShrink="0">
+            <Box flexShrink="0" paddingTop={0.5}>
               <CircleAlertIcon size={16} />
             </Box>
             <Text size={2}>
@@ -218,14 +151,14 @@ export const AutomaticallyCompleteCheckouts = ({
             <Box paddingLeft={0}>
               <Box
                 display="flex"
-                alignItems="center"
+                alignItems="flex-start"
                 backgroundColor="warning1"
                 color="default1"
                 padding={2}
                 gap={2}
                 borderRadius={3}
               >
-                <Box flexShrink="0">
+                <Box flexShrink="0" paddingTop={0.5}>
                   <TriangleAlertIcon size={16} />
                 </Box>
                 <Text size={2}>
@@ -311,14 +244,14 @@ export const AutomaticallyCompleteCheckouts = ({
               <Box paddingLeft={4} paddingTop={3}>
                 <Box
                   display="flex"
-                  alignItems="center"
+                  alignItems="flex-start"
                   backgroundColor="warning1"
                   color="default1"
                   padding={2}
                   gap={2}
                   borderRadius={3}
                 >
-                  <Box flexShrink="0">
+                  <Box flexShrink="0" paddingTop={0.5}>
                     <TriangleAlertIcon size={16} />
                   </Box>
                   <Text size={2}>
@@ -379,14 +312,14 @@ export const AutomaticallyCompleteCheckouts = ({
                   <Box paddingLeft={4} paddingTop={3}>
                     <Box
                       display="flex"
-                      alignItems="center"
+                      alignItems="flex-start"
                       backgroundColor="warning1"
                       color="default1"
                       padding={2}
                       gap={2}
                       borderRadius={3}
                     >
-                      <Box flexShrink="0">
+                      <Box flexShrink="0" paddingTop={0.5}>
                         <TriangleAlertIcon size={16} />
                       </Box>
                       <Text size={2}>
@@ -407,14 +340,14 @@ export const AutomaticallyCompleteCheckouts = ({
                   <Box paddingLeft={4} paddingTop={3}>
                     <Box
                       display="flex"
-                      alignItems="center"
+                      alignItems="flex-start"
                       backgroundColor="info1"
                       color="default1"
                       padding={2}
                       gap={2}
                       borderRadius={3}
                     >
-                      <Box flexShrink="0">
+                      <Box flexShrink="0" paddingTop={0.5}>
                         <CircleAlertIcon size={16} />
                       </Box>
                       <Text size={2}>
