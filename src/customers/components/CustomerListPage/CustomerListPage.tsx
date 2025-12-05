@@ -24,7 +24,8 @@ import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagr
 import { CustomerFilterKeys, CustomerListFilterOpts } from "./filters";
 
 interface CustomerListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     FilterPagePropsWithPresets<CustomerFilterKeys, CustomerListFilterOpts>,
     SortPage<CustomerListUrlSortField> {
   customers: Customers | undefined;

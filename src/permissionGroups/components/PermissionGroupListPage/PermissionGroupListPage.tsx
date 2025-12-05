@@ -13,8 +13,7 @@ import { permissionGroupAddUrl, PermissionGroupListUrlSortField } from "../../ur
 import { PermissionGroupListDatagrid } from "../PermissionGroupListDatagrid";
 
 interface PermissionGroupListPageProps
-  extends PageListProps,
-    SortPage<PermissionGroupListUrlSortField> {
+  extends PageListProps, SortPage<PermissionGroupListUrlSortField> {
   permissionGroups: PermissionGroupFragment[];
 }
 

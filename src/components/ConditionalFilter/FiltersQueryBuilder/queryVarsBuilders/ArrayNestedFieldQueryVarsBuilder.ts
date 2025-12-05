@@ -19,9 +19,7 @@ type ArrayNestedFilterQueryPart = {
  * Example:
  * `transactions: [{ paymentMethodDetails: {type: {eq: "CARD"}} }, {paymentMethodDetails: {card: {eq: "SaleorCard"}}}]`
  * is created from two separate inputs for Payment method = "CARD" and Payment method card = "SaleorCard" l*/
-export class ArrayNestedFieldQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<ArrayNestedFilterQueryPart>
-{
+export class ArrayNestedFieldQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<ArrayNestedFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     const type = element.value.type;
 

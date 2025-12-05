@@ -7,9 +7,9 @@ import { BothApiQueryVarsBuilder } from "./types";
  * for MetadataFilterInput use MetadataFilterQueryVarsBuilder
  *
  * E.g. {metadata: [{key: "key", value: "value"}, {key: "anotherkey", value: "anothervalue"}]} */
-export class MetadataFilterQueryVarsBuilder
-  implements BothApiQueryVarsBuilder<{ metadata?: Array<{ key: string; value: string }> }>
-{
+export class MetadataFilterQueryVarsBuilder implements BothApiQueryVarsBuilder<{
+  metadata?: Array<{ key: string; value: string }>;
+}> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "metadata";
   }

@@ -30,11 +30,10 @@ interface UnitData {
   type?: UnitType;
 }
 
-interface NumericUnitsProps
-  extends Pick<
-    UseFormResult<AttributePageFormData>,
-    "set" | "setError" | "data" | "errors" | "clearErrors"
-  > {
+interface NumericUnitsProps extends Pick<
+  UseFormResult<AttributePageFormData>,
+  "set" | "setError" | "data" | "errors" | "clearErrors"
+> {
   disabled: boolean;
 }
 

@@ -10,8 +10,10 @@ import Hr from "../Hr";
 import Link from "../Link";
 import { FieldType, FilterFieldBaseProps } from "./types";
 
-interface FilterAutocompleteFieldProps
-  extends FilterFieldBaseProps<string, FieldType.autocomplete> {
+interface FilterAutocompleteFieldProps extends FilterFieldBaseProps<
+  string,
+  FieldType.autocomplete
+> {
   displayValues: FilterAutocompleteDisplayValues;
   setDisplayValues: (values: FilterAutocompleteDisplayValues) => void;
   initialDisplayValues: FilterAutocompleteDisplayValues;

@@ -103,7 +103,8 @@ export interface ProductCreateData extends ProductCreateFormData {
 }
 
 export interface ProductCreateHandlers
-  extends Record<
+  extends
+    Record<
       | "changeMetadata"
       | "selectCategory"
       | "selectCollection"
@@ -128,8 +129,7 @@ export interface ProductCreateHandlers
   selectAttributeReferenceAdditionalData: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
 }
 interface UseProductCreateFormOutput
-  extends CommonUseFormResultWithHandlers<ProductCreateData, ProductCreateHandlers>,
-    RichTextProps {
+  extends CommonUseFormResultWithHandlers<ProductCreateData, ProductCreateHandlers>, RichTextProps {
   disabled: boolean;
   formErrors: FormErrors<ProductCreateData>;
   validationErrors: ProductErrorWithAttributesFragment[];
@@ -137,8 +137,10 @@ interface UseProductCreateFormOutput
 
 type UseProductCreateFormRenderProps = Omit<UseProductCreateFormOutput, "richText">;
 
-interface UseProductCreateFormOpts
-  extends Record<"categories" | "collections" | "taxClasses", Option[]> {
+interface UseProductCreateFormOpts extends Record<
+  "categories" | "collections" | "taxClasses",
+  Option[]
+> {
   setSelectedCategory: Dispatch<SetStateAction<string>>;
   setSelectedCollections: Dispatch<SetStateAction<Option[]>>;
   setSelectedTaxClass: Dispatch<SetStateAction<string>>;

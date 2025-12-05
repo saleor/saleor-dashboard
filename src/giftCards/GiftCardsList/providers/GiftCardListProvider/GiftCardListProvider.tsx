@@ -41,7 +41,8 @@ interface GiftCardsListProviderProps {
 }
 
 export interface GiftCardsListConsumerProps
-  extends UseFilterPresets,
+  extends
+    UseFilterPresets,
     UseRowSelection,
     UseListSettings<GiftCardListColummns>,
     SortPage<GiftCardUrlSortField> {

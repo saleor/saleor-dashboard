@@ -35,8 +35,10 @@ export enum CategoryPageTab {
   products = "products",
 }
 
-interface CategoryUpdatePageProps
-  extends Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings"> {
+interface CategoryUpdatePageProps extends Pick<
+  ListProps<ListViews.CATEGORY_LIST>,
+  "onUpdateListSettings" | "settings"
+> {
   categoryId: string;
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;

@@ -94,7 +94,8 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
 }
 
 interface VoucherDetailsPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
+  extends
+    Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
       "categoryListToolbar" | "collectionListToolbar" | "productListToolbar" | "variantListToolbar"
     >,
