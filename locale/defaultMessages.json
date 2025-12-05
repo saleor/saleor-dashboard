@@ -834,6 +834,9 @@
   "3DGvA/": {
     "string": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
   },
+  "3Eyq0y": {
+    "string": "Mark as paid manually if the payment is confirmed"
+  },
   "3PVGWj": {
     "string": "Filter preset"
   },
@@ -1313,6 +1316,9 @@
   },
   "6J1m2c": {
     "string": "Create a Model"
+  },
+  "6Jgwpc": {
+    "string": "No payment received"
   },
   "6QjMei": {
     "string": "Preorder end time needs to be set in the future"
@@ -2693,9 +2699,6 @@
   "FcTTvh": {
     "context": "postal codes, header",
     "string": "Postal codes"
-  },
-  "Fcxl/G": {
-    "string": "This order has no payment yet"
   },
   "FemBUF": {
     "context": "header",

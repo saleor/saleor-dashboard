@@ -32,11 +32,10 @@ export const OrderValue = ({
 
   return (
     <Box
-      backgroundColor="default2"
       padding={5}
       borderRadius={4}
       borderStyle="solid"
-      borderColor="transparent"
+      borderColor="default1"
       borderWidth={1}
       {...props}
     >
