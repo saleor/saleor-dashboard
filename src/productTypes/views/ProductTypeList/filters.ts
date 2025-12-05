@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FilterElement } from "@dashboard/components/Filter/types";
 import {
   ProductTypeConfigurable,
