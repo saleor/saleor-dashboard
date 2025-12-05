@@ -1,7 +1,8 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
-import { Box, GenericAppIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Package } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 export const LoadingSkeleton = () => {
@@ -30,7 +31,7 @@ export const LoadingSkeleton = () => {
                 >
                   <Box display="flex" alignItems="center" gap={2}>
                     <ExtensionAvatar>
-                      <GenericAppIcon size="medium" color="default2" />
+                      <Package size="medium" color="default2" />
                     </ExtensionAvatar>
                     <Skeleton
                       data-test-id="loading-skeleton"

@@ -21,7 +21,8 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { Button, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Button } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 

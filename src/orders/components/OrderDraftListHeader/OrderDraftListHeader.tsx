@@ -13,9 +13,9 @@ import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPresetsProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { ChevronRight } from "lucide-react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface OrderDraftListHeaderProps extends FilterPresetsProps {
   limits: RefreshLimitsQuery["shop"]["limits"];

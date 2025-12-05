@@ -10,8 +10,9 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Chip, Skeleton, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";

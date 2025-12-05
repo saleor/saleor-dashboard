@@ -1,7 +1,7 @@
 import { messages } from "@dashboard/discounts/components/DiscountRules/messages";
-import { Box, Button, Text, WarningIcon } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { AlertTriangle } from "lucide-react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface NestedConditionsWarningProps {
   disabled: boolean;

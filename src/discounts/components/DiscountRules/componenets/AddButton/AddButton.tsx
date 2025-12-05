@@ -1,9 +1,9 @@
-import { Button, PlusIcon } from "@saleor/macaw-ui-next";
+import { Button } from "@saleor/macaw-ui-next";
+import { Plus } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { useDiscountRulesContext } from "../../context";
 import { messages } from "../../messages";
-import { Plus } from "lucide-react";
 
 interface AddButtonProps {
   onClick: () => void;

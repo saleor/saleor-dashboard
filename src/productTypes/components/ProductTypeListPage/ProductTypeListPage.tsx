@@ -9,13 +9,13 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPageProps, ListActions, PageListProps, SortPage } from "../../../types";
 import { ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
-import { ChevronRight } from "lucide-react";
 
 interface ProductTypeListPageProps
   extends PageListProps,

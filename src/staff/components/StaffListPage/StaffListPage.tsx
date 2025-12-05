@@ -12,13 +12,13 @@ import { StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import { FilterPagePropsWithPresets, ListProps, SortPage } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { StaffListDatagrid } from "../StaffListDatagrid";
 import { StaffFilterKeys, StaffListFilterOpts } from "./filters";
-import { ChevronRight } from "lucide-react";
 
 interface StaffListPageProps
   extends ListProps,

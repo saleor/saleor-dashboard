@@ -1,5 +1,5 @@
-import { Box, CloseIcon, SearchIcon, Text } from "@saleor/macaw-ui-next";
-import { X } from "lucide-react";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { Search, X } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -59,7 +59,7 @@ export const SearchHistory = ({
               width="100%"
             >
               <Box display="flex" alignItems="center" gap={1}>
-                <SearchIcon size="small" />
+                <Search size="small" />
                 {item}
               </Box>
               <Box

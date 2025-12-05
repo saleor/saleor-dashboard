@@ -12,7 +12,7 @@ import { getArrowDirection } from "@dashboard/utils/sort";
 import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/urls";
 import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";

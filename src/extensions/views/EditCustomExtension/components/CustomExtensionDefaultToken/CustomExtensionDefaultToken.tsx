@@ -1,6 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { Box, Button, CloseIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { X } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { Mono } from "../TokenCreateDialog/Mono";

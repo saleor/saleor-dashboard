@@ -4,7 +4,8 @@ import { MenuItemType } from "@dashboard/structures/components/MenuItemDialog";
 import { RecursiveMenuItem } from "@dashboard/structures/types";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { UniqueIdentifier } from "@dnd-kit/core";
-import { Box, Button, EditIcon, GripIcon, Text, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Edit, GripVertical, Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { getItemId, getItemType } from "./utils";
@@ -69,7 +70,7 @@ export const MenuItemsSortableTreeItem = ({
       >
         <Box display="flex" gap={6} alignItems="center">
           <Button variant="tertiary" __cursor="grab" {...handleProps}>
-            <GripIcon color="default1" />
+            <GripVertical color="default1" />
           </Button>
           <Text>{data.name}</Text>
         </Box>
@@ -81,7 +82,7 @@ export const MenuItemsSortableTreeItem = ({
             data-test-id="edit-menu-item-button"
             variant="secondary"
             onClick={() => onEdit(id)}
-            icon={<EditIcon />}
+            icon={<Edit />}
           />
           <TranslationsButton
             data-test-id="translate-menu-item-button"

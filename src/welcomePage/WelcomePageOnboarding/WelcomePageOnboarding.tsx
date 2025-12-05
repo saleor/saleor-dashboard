@@ -1,10 +1,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Accordion, Box, Button, ChervonDownIcon, Text } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { WelcomePageOnboardingAccordion } from "./components/WelcomePageOnboardingAccordion";
 import { useOnboarding } from "./onboardingContext/OnboardingContext";
-import { ChevronDown } from "lucide-react";
 
 type TitleProps = {
   isOnboardingCompleted: boolean;

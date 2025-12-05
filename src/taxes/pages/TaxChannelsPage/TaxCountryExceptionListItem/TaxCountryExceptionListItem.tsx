@@ -6,7 +6,8 @@ import { FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Box, Button, Option, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, Option } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 
 import { useStyles } from "../styles";
 import { TaxCountryConfiguration } from "../TaxChannelsPage";

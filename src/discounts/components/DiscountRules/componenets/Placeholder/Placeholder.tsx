@@ -1,8 +1,8 @@
-import { Box, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { Plus } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
-import { Plus } from "lucide-react";
 
 export const Placeholder = () => {
   const intl = useIntl();

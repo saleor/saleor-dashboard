@@ -1,11 +1,11 @@
 import completedIcon from "@assets/images/completed.svg";
 import uncompletedIcon from "@assets/images/uncompleted.svg";
-import { Accordion, Box, ChervonDownIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 import SVG from "react-inlinesvg";
 
 import { useOnboardingData } from "../hooks/useOnboardingData";
 import { useOnboarding } from "../onboardingContext/OnboardingContext";
-import { ChevronDown } from "lucide-react";
 
 export const WelcomePageOnboardingAccordion = () => {
   const { toggleExpandedOnboardingStep, extendedStepId, loading } = useOnboarding();

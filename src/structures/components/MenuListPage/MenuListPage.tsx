@@ -12,11 +12,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl, MenuListUrlSortField } from "@dashboard/structures/urls";
 import { ListActions, PageListProps, SortPage } from "@dashboard/types";
-import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import MenuList from "../MenuList";
-import { ChevronRight } from "lucide-react";
 
 interface MenuListPageProps extends PageListProps, ListActions, SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];

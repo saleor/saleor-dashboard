@@ -1,10 +1,10 @@
 import { MenuItem, SubMenu } from "@dashboard/components/SubMenu";
-import { ArrowDownIcon, Box, Button, PlusIcon, Popover } from "@saleor/macaw-ui-next";
+import { Box, Button, Popover } from "@saleor/macaw-ui-next";
+import { ChevronDown, Plus } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
-import { ChevronDown, Plus } from "lucide-react";
 
 interface VoucherCodesAddButtonProps {
   onMultiCodesGenerate: () => void;

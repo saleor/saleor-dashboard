@@ -1,5 +1,5 @@
 import { AppLogo } from "@dashboard/extensions/types";
-import { Box, BoxProps, GenericAppIcon } from "@saleor/macaw-ui-next";
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
 import { Package } from "lucide-react";
 
 type Logo = AppLogo | undefined;
