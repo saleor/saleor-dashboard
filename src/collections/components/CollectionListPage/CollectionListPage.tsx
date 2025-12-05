@@ -33,8 +33,7 @@ import { CollectionListDatagrid } from "../CollectionListDatagrid";
 import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
 
 interface CollectionListPageProps
-  extends
-    PageListProps,
+  extends PageListProps,
     Omit<FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>, "onTabDelete">,
     SortPage<CollectionListUrlSortField> {
   onTabUpdate: (tabName: string) => void;

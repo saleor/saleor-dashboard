@@ -31,7 +31,9 @@ import { useLocation } from "react-router";
 import { DiscountListDatagrid } from "../DiscountListDatagrid";
 
 interface DiscountListPageProps
-  extends PageListProps, FilterPresetsProps, SortPage<DiscountListUrlSortField> {
+  extends PageListProps,
+    FilterPresetsProps,
+    SortPage<DiscountListUrlSortField> {
   onSearchChange: (query: string) => void;
   initialSearch: string;
   promotions: PromotionFragment[];

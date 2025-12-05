@@ -28,8 +28,7 @@ import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
 
 interface PageListPageProps
-  extends
-    PageListProps,
+  extends PageListProps,
     FilterPagePropsWithPresets<PageListFilterKeys, PageListFilterOpts>,
     SortPage<PageListUrlSortField> {
   pages: Pages | undefined;

@@ -17,7 +17,8 @@ import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface AttributeValuesProps
-  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>, PaginateListProps {
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
+    PaginateListProps {
   disabled: boolean;
   values?: RelayToFlat<AttributeValueListFragment>;
   onValueAdd: () => void;

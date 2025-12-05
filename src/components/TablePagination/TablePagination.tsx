@@ -18,10 +18,11 @@ export type ListSettingsUpdate = <T extends keyof ListSettings>(
   value: ListSettings[T],
 ) => void;
 
-export interface PaginationProps extends Omit<
-  MacawPaginationProps,
-  "labels" | "rowNumber" | "nextIconButtonProps" | "prevIconButtonProps"
-> {
+export interface PaginationProps
+  extends Omit<
+    MacawPaginationProps,
+    "labels" | "rowNumber" | "nextIconButtonProps" | "prevIconButtonProps"
+  > {
   component?: React.ElementType;
   colSpan?: number;
   settings?: ListSettings;

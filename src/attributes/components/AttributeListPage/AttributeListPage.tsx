@@ -18,8 +18,7 @@ import { AttributeListDatagrid } from "../AttributeListDatagrid";
 import { AttributeFilterKeys, AttributeListFilterOpts } from "./filters";
 
 interface AttributeListPageProps
-  extends
-    PageListProps,
+  extends PageListProps,
     FilterPagePropsWithPresets<AttributeFilterKeys, AttributeListFilterOpts>,
     SortPage<AttributeListUrlSortField> {
   attributes: AttributeFragment[];
