@@ -1,4 +1,5 @@
-import { Box, Button, ConfigurationIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { Settings } from "lucide-react";
 
 interface TopNavMenuItem {
   label: string;
@@ -14,7 +15,7 @@ interface TopNavMenuProps {
 export const Menu = ({ items, dataTestId }: TopNavMenuProps) => (
   <Dropdown data-test-id={dataTestId}>
     <Dropdown.Trigger>
-      <Button icon={<ConfigurationIcon />} variant="secondary" data-test-id="show-more-button" />
+      <Button icon={<Settings />} variant="secondary" data-test-id="show-more-button" />
     </Dropdown.Trigger>
     <Dropdown.Content align="end">
       <Box>

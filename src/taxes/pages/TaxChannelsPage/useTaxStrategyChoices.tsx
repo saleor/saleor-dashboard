@@ -1,7 +1,8 @@
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Button, ExternalLinkIcon, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Option, Text } from "@saleor/macaw-ui-next";
+import { ExternalLink } from "lucide-react";
 
 import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";
 
@@ -47,7 +48,7 @@ export const useTaxStrategyChoices = () => {
                 {app.identifier}
               </Text>
             )}
-            <ExternalLinkIcon size="small" color="default2" />
+            <ExternalLink size="small" color="default2" />
           </Box>
         </Button>
       ),

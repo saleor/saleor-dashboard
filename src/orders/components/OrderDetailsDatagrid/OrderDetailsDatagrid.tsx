@@ -13,7 +13,7 @@ import useListSettings from "@dashboard/hooks/useListSettings";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { Theme } from "@glideapps/glide-data-grid";
-import { ExternalLinkIcon } from "@saleor/macaw-ui-next";
+import { ExternalLink } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -77,10 +77,10 @@ export const OrderDetailsDatagrid = ({
         label: intl.formatMessage(messages.productDetails),
         Icon: lines[index]?.variant?.product.id ? (
           <Link to={productPath(lines[index].variant.product.id)} target="_blank">
-            <ExternalLinkIcon />
+            <ExternalLink />
           </Link>
         ) : (
-          <ExternalLinkIcon />
+          <ExternalLink />
         ),
         onSelect: () => false,
       },

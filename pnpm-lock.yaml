@@ -68,9 +68,6 @@ importers:
       "@material-ui/core":
         specifier: ^4.12.4
         version: 4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      "@material-ui/icons":
-        specifier: ^4.11.3
-        version: 4.11.3(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@material-ui/lab":
         specifier: 4.0.0-alpha.61
         version: 4.0.0-alpha.61(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -94,7 +91,7 @@ importers:
         version: 0.7.4(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@material-ui/icons@4.11.3(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@material-ui/lab@4.0.0-alpha.61(@material-ui/core@4.12.4(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react-helmet@6.1.0(react@18.3.1))(react@18.3.1)
       "@saleor/macaw-ui-next":
         specifier: npm:@saleor/macaw-ui@1.4.0
-        version: "@saleor/macaw-ui@1.4.0(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.17.5(babel-plugin-macros@3.1.0))(lucide-react@0.534.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)"
+        version: "@saleor/macaw-ui@1.4.0(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.17.5(babel-plugin-macros@3.1.0))(lucide-react@0.555.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)"
       "@saleor/sdk":
         specifier: 0.6.0
         version: 0.6.0(@apollo/client@3.4.17(graphql@16.11.0)(react@18.3.1))(graphql@16.11.0)(react@18.3.1)
@@ -174,8 +171,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       lucide-react:
-        specifier: ^0.534.0
-        version: 0.534.0(react@18.3.1)
+        specifier: 0.555.0
+        version: 0.555.0(react@18.3.1)
       marked:
         specifier: ^4.3.0
         version: 4.3.0
@@ -9926,10 +9923,10 @@ packages:
         integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==,
       }
 
-  lucide-react@0.534.0:
+  lucide-react@0.555.0:
     resolution:
       {
-        integrity: sha512-4Bz7rujQ/mXHqCwjx09ih/Q9SCizz9CjBV5repw9YSHZZZaop9/Oj0RgCDt6WdEaeAPfbcZ8l2b4jzApStqgNw==,
+        integrity: sha512-D8FvHUGbxWBRQM90NZeIyhAvkFfsh3u9ekrMvJ30Z6gnpBHS6HC6ldLg7tL45hwiIz/u66eKDtdA23gwwGsAHA==,
       }
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -16325,7 +16322,7 @@ snapshots:
     transitivePeerDependencies:
       - "@types/react"
 
-  "@saleor/macaw-ui@1.4.0(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.17.5(babel-plugin-macros@3.1.0))(lucide-react@0.534.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
+  "@saleor/macaw-ui@1.4.0(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(@vanilla-extract/css@1.17.5(babel-plugin-macros@3.1.0))(lucide-react@0.555.0(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
     dependencies:
       "@dessert-box/react": 0.4.0(react@18.3.1)
       "@floating-ui/react-dom": 2.1.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -16346,7 +16343,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     optionalDependencies:
-      lucide-react: 0.534.0(react@18.3.1)
+      lucide-react: 0.555.0(react@18.3.1)
     transitivePeerDependencies:
       - "@vanilla-extract/css"
 
@@ -20457,7 +20454,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@0.534.0(react@18.3.1):
+  lucide-react@0.555.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 

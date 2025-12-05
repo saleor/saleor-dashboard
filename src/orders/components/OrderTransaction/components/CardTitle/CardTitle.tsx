@@ -1,6 +1,7 @@
 import { ButtonLink } from "@dashboard/components/ButtonLink";
 import { TransactionActionEnum } from "@dashboard/graphql";
-import { Box, Button, ExternalLinkIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ExternalLink } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionProps } from "../../OrderTransaction";
@@ -82,7 +83,7 @@ export const OrderTransactionCardTitle = ({
           size="large"
           __flex={1}
         >
-          <ExternalLinkIcon size="small" />
+          <ExternalLink size="small" />
 
           <TransactionTitle transaction={transaction} index={index} />
         </ButtonLink>

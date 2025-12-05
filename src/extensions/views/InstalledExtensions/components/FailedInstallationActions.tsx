@@ -1,6 +1,7 @@
 import { buttonLabels } from "@dashboard/extensions/messages";
 import { RetryIcon } from "@dashboard/icons/RetryIcon";
-import { Box, Button, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { useIntl } from "react-intl";
 
 interface FailedInstallationActionsProps {
@@ -22,7 +23,7 @@ export const FailedInstallationActions = ({
         size="small"
         title={intl.formatMessage(buttonLabels.remove)}
       >
-        <TrashBinIcon />
+        <Trash2 />
       </Button>
       <Button onClick={onRetry} variant="secondary" size="small">
         <Box

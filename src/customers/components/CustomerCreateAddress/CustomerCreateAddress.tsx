@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import AddressEdit from "@dashboard/components/AddressEdit";
+import { AddressEdit } from "@dashboard/components/AddressEdit/AddressEdit";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import { AccountErrorFragment } from "@dashboard/graphql";

@@ -2,7 +2,8 @@ import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { fuzzySearch } from "@dashboard/misc";
-import { Box, GenericAppIcon } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
+import { Package } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { FailedInstallationActions } from "../components/FailedInstallationActions";
@@ -23,7 +24,7 @@ const getPendingInstallationLogo = ({ logo, name }: { logo?: string | null; name
     return <Box as="img" src={logo} alt={name} display="block" maxWidth="100%" />;
   }
 
-  return <GenericAppIcon size="medium" color="default2" />;
+  return <Package size="medium" color="default2" />;
 };
 
 export const usePendingInstallation = ({

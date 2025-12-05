@@ -1,4 +1,4 @@
-import AddressEdit from "@dashboard/components/AddressEdit";
+import { AddressEdit } from "@dashboard/components/AddressEdit/AddressEdit";
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";

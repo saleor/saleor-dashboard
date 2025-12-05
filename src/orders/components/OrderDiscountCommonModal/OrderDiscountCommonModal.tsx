@@ -7,7 +7,8 @@ import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
 import { toFixed } from "@dashboard/utils/toFixed";
-import { Button, CloseIcon, Input, Text } from "@saleor/macaw-ui-next";
+import { Button, Input, Text } from "@saleor/macaw-ui-next";
+import { X } from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -221,7 +222,7 @@ const OrderDiscountCommonModal = ({
         </Text>
         <DashboardCard.Toolbar>
           <Button variant="tertiary" onClick={onClose}>
-            <CloseIcon />
+            <X />
           </Button>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>

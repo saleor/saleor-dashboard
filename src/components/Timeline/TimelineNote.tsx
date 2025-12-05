@@ -1,6 +1,7 @@
 import { GiftCardDetailsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
-import { Box, Button, EditIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Edit } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -132,7 +133,7 @@ export const TimelineNote = ({
                   onClick={() => {
                     setShowEdit(true);
                   }}
-                  icon={<EditIcon size="small" />}
+                  icon={<Edit size="small" />}
                 />
               )}
             </DashboardCard.Content>

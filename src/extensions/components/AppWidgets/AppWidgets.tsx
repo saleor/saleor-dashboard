@@ -9,9 +9,9 @@ import { ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import LaunchIcon from "@material-ui/icons/Launch";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { ExternalLink } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
@@ -257,7 +257,7 @@ export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
                             title={intl.formatMessage(extensionActions.openInNewTab)}
                           >
                             {ext.label}{" "}
-                            <LaunchIcon
+                            <ExternalLink
                               style={{ width: 16, height: 16, verticalAlign: "text-bottom" }}
                             />
                           </Link>
