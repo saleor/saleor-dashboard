@@ -1,4 +1,3 @@
-export * from "./EventAvatar";
 export * from "./EventItem";
 export * from "./EventStatus";
 export * from "./EventTime";
