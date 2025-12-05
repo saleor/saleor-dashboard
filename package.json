@@ -108,7 +108,7 @@
     "jwt-decode": "^3.1.2",
     "keycode": "^2.2.1",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.534.0",
+    "lucide-react": "0.555.0",
     "marked": "^4.3.0",
     "moment": "2.30.1",
     "moment-timezone": "^0.5.48",
