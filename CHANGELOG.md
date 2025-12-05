@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.22.19
+
+### Patch Changes
+
+- [#6172](https://github.com/saleor/saleor-dashboard/pull/6172) [`5373ccd`](https://github.com/saleor/saleor-dashboard/commit/5373ccdb3571e1294008224cf911bcd79f1b56b7) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Update app-sdk package to 1.4.0
+
+- [#6177](https://github.com/saleor/saleor-dashboard/pull/6177) [`cdf694d`](https://github.com/saleor/saleor-dashboard/commit/cdf694dd083de4a12ebbe67b86ba56ed50f7d79a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Changed Address component to use modern MacawUI text inputs
+
+- [#6174](https://github.com/saleor/saleor-dashboard/pull/6174) [`dbe7709`](https://github.com/saleor/saleor-dashboard/commit/dbe7709d27287a9280119073f1d4217c15a39210) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated `@saleor/app-sdk` to `1.5.0`.
+  `next` should no longer be automatically installed with Saleor Dashboard. Previously this package installed into `node_modules`, even though it wasn't used.
+
+- [#6179](https://github.com/saleor/saleor-dashboard/pull/6179) [`8584e5f`](https://github.com/saleor/saleor-dashboard/commit/8584e5fee1adff5efb930dc1ebc9a9c3fb967c4d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Icons overhaul part 1: Removed some old icons with fresh Lucide icons
+
 ## 3.22.18
 
 ### Patch Changes
