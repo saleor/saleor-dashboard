@@ -4,12 +4,20 @@ import { transactionEventTypeMap } from "@dashboard/orders/messages";
 import { TransactionEventType } from "@dashboard/orders/types";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 interface EventTypeProps {
   type: TransactionEventType;
   message: string | undefined;
 }
+
+const lineClampStyles: React.CSSProperties = {
+  display: "-webkit-box",
+  WebkitLineClamp: 2,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+};
 
 export const EventType = ({ type, message }: EventTypeProps) => {
   const intl = useIntl();
@@ -20,17 +28,7 @@ export const EventType = ({ type, message }: EventTypeProps) => {
 
   return (
     <Box display="flex" alignItems="center" gap={1}>
-      <Text
-        size={2}
-        style={
-          {
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-          } as React.CSSProperties
-        }
-      >
+      <Text size={2} style={lineClampStyles}>
         {displayType}
       </Text>
       {displayType !== message && message && (
