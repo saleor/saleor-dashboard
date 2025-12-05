@@ -179,7 +179,7 @@ const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
                       onClick={() => onRateRemove(rate.id)}
                       className={classes.buttonColumn}
                     >
-                      <TrashBinIcon data-test-id="delete-button" />
+                      <Trash2 data-test-id="delete-button" />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

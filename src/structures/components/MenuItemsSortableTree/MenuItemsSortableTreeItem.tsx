@@ -91,7 +91,7 @@ export const MenuItemsSortableTreeItem = ({
             data-test-id="remove-menu-item-button"
             variant="secondary"
             onClick={() => onRemove(id)}
-            icon={<TrashBinIcon />}
+            icon={<Trash2 />}
           />
         </Box>
         {clone && childCount && childCount > 1 ? (

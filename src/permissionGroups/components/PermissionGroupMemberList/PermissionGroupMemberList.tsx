@@ -212,7 +212,7 @@ const PermissionGroupMemberList = (props: PermissionGroupProps) => {
                       {user ? (
                         <>
                           <Button
-                            icon={<TrashBinIcon />}
+                            icon={<Trash2 />}
                             variant="secondary"
                             data-test-id="remove-user"
                             disabled={disabled}

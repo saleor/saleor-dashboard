@@ -2,11 +2,12 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Input, Text, Textarea, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text, Textarea, vars } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 import { EventDataAction } from "./types";
 import { nameInputPrefix, nameSeparator, valueInputPrefix } from "./utils";
+import { Trash2 } from "lucide-react";
 
 interface MetadataCardTableProps {
   data: MetadataInput[];
@@ -123,7 +124,7 @@ export const MetadataCardTable = ({
                           })
                         }
                         type="button"
-                        icon={<TrashBinIcon />}
+                        icon={<Trash2 />}
                       />
                     )}
                   </Box>

@@ -80,7 +80,7 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
                     variant="tertiary"
                     onClick={() => onDelete(token.id)}
                     data-test-id={`delete-token-${token.id}`}
-                    icon={<TrashBinIcon />}
+                    icon={<Trash2 />}
                   />
                 </TableButtonWrapper>
               </Box>

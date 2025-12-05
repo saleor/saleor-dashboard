@@ -5,6 +5,7 @@ import SVG from "react-inlinesvg";
 
 import { useOnboardingData } from "../hooks/useOnboardingData";
 import { useOnboarding } from "../onboardingContext/OnboardingContext";
+import { ChevronDown } from "lucide-react";
 
 export const WelcomePageOnboardingAccordion = () => {
   const { toggleExpandedOnboardingStep, extendedStepId, loading } = useOnboarding();
@@ -58,7 +59,7 @@ export const WelcomePageOnboardingAccordion = () => {
                 transition="ease"
                 __transform={`${extendedStepId === step.id ? "rotate(180deg)" : "none"}`}
               >
-                <ChervonDownIcon />
+                <ChevronDown />
               </Box>
             </Box>
           </Accordion.Trigger>

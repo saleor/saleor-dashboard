@@ -169,7 +169,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
         toggleAll={toggleAll}
         toolbar={
           <Button
-            icon={<TrashBinIcon />}
+            icon={<Trash2 />}
             variant="secondary"
             data-test-id="bulk-delete-product-types"
             onClick={() =>

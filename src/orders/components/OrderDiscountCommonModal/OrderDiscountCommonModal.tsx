@@ -13,6 +13,7 @@ import * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ORDER_LINE_DISCOUNT, OrderDiscountCommonInput, OrderDiscountType } from "./types";
+import { X } from "lucide-react";
 
 type GetErrorMessageReturn = string | null;
 
@@ -221,7 +222,7 @@ const OrderDiscountCommonModal = ({
         </Text>
         <DashboardCard.Toolbar>
           <Button variant="tertiary" onClick={onClose}>
-            <CloseIcon />
+            <X />
           </Button>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>

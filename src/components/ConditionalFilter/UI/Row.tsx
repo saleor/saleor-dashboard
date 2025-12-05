@@ -1,4 +1,4 @@
-import { Box, Button, DynamicCombobox, RemoveIcon, Select } from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, Select } from "@saleor/macaw-ui-next";
 
 import { getItemConstraint } from "./constrains";
 import { ErrorLookup } from "./errors";
@@ -6,6 +6,7 @@ import { FilterEventEmitter } from "./EventEmitter";
 import { RightOperator } from "./RightOperator";
 import { ExperimentalFiltersProps } from "./Root";
 import { LeftOperatorOption, Row } from "./types";
+import { Minus } from "lucide-react";
 
 interface RowProps {
   item: Row;
@@ -108,7 +109,7 @@ export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowPr
       <Button
         marginLeft="auto"
         variant="tertiary"
-        icon={<RemoveIcon />}
+        icon={<Minus />}
         onClick={() => emitter.removeRow(index)}
         disabled={constrain.disableRemoveButton}
       />

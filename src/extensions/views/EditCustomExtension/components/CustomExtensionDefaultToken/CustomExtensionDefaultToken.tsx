@@ -29,7 +29,7 @@ export const CustomExtensionDefaultToken = (props: CustomExtensionDefaultTokenPr
           </div>
 
           <Button
-            icon={<CloseIcon />}
+            icon={<X />}
             variant="tertiary"
             onClick={onTokenClose}
             data-test-id="close-token-button"

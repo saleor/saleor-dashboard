@@ -109,7 +109,7 @@ const ButtonGroupWithDropdown = ({
           <Button
             __height="50px"
             variant={variant}
-            icon={<ChervonDownIcon />}
+            icon={<ChevronDown />}
             disabled={disabled}
             borderColor="default1"
             borderLeftWidth={1}

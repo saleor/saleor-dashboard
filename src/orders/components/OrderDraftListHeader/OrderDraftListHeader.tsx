@@ -15,6 +15,7 @@ import { FilterPresetsProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+import { ChevronRight } from "lucide-react";
 
 interface OrderDraftListHeaderProps extends FilterPresetsProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
@@ -66,7 +67,7 @@ export const OrderDraftListHeader = ({
       <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
         <Box display="flex">
           <Box marginX={3} display="flex" alignItems="center">
-            <ChevronRightIcon />
+            <ChevronRight />
           </Box>
 
           <FilterPresetsSelect

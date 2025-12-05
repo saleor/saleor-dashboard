@@ -46,6 +46,7 @@ import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
+import { ChevronRight } from "lucide-react";
 
 interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
@@ -139,7 +140,7 @@ const ProductListPage = (props: ProductListPageProps) => {
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

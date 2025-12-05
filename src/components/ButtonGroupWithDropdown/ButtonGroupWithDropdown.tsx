@@ -8,6 +8,7 @@ import {
   List,
   Text,
 } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 
 interface ButtonGroupWithDropdownProps extends BoxProps {
   onClick?: () => void;
@@ -49,7 +50,7 @@ export const ButtonGroupWithDropdown = ({
         <Dropdown.Trigger>
           <Button
             variant={variant}
-            icon={<ChervonDownIcon />}
+            icon={<ChevronDown />}
             disabled={disabled}
             borderColor="default1"
             borderLeftWidth={1}

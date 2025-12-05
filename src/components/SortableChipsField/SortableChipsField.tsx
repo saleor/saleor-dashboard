@@ -10,7 +10,7 @@ import {
 } from "@dnd-kit/core";
 import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
-import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useIntl } from "react-intl";
@@ -19,6 +19,7 @@ import { Draggable } from "../Draggable/Draggable";
 import { SortableChip } from "../SortableChip/SortableChip";
 import { useActiveDragId } from "./useActiveDragId";
 import { useSortableDragOver } from "./useSortableDragOver";
+import { Plus } from "lucide-react";
 
 export interface SortableChipsFieldValueType {
   label: string;
@@ -165,7 +166,7 @@ const SortableChipsField = ({
             disabled={disabled}
             marginLeft="auto"
             onClick={onAdd}
-            icon={<PlusIcon />}
+            icon={<Plus />}
           />
         ) : null}
       </Box>

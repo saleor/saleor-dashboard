@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 
 import { useDiscountRulesContext } from "../../context";
 import { messages } from "../../messages";
+import { Plus } from "lucide-react";
 
 interface AddButtonProps {
   onClick: () => void;
@@ -20,7 +21,7 @@ export const AddButton = ({ onClick }: AddButtonProps) => {
       variant="primary"
       data-test-id="add-rule"
     >
-      <PlusIcon />
+      <Plus />
       {intl.formatMessage(messages.addRule)}
     </Button>
   );

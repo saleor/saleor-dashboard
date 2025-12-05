@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { WelcomePageOnboardingAccordion } from "./components/WelcomePageOnboardingAccordion";
 import { useOnboarding } from "./onboardingContext/OnboardingContext";
+import { ChevronDown } from "lucide-react";
 
 type TitleProps = {
   isOnboardingCompleted: boolean;
@@ -81,7 +82,7 @@ export const WelcomePageOnboarding = () => {
                 size="small"
                 data-test-id="onboarding-accordion-trigger"
               >
-                <ChervonDownIcon />
+                <ChevronDown />
               </Button>
             </Accordion.Trigger>
           </DashboardCard.Header>

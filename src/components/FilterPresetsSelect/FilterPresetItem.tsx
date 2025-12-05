@@ -1,6 +1,7 @@
-import { Box, Dropdown, List, RemoveIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { MouseEvent } from "react";
 import * as React from "react";
+import { Minus } from "lucide-react";
 
 interface FilterPresetItemProps {
   onSelect: (e: MouseEvent<HTMLLIElement>) => void;
@@ -48,7 +49,7 @@ export const FilterPresetItem = ({
             display="flex"
             alignItems="center"
           >
-            <RemoveIcon
+            <Minus
               data-test-id="preset-delete-button"
               // @ts-expect-error - check why style is not accepted in types, but can be used
               color={{

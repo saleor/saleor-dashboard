@@ -7,6 +7,7 @@ import {
   List,
   Text,
 } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 
 interface ButtonWithDropdownProps extends ButtonProps {
   onClick?: () => void;
@@ -31,7 +32,7 @@ export const ButtonWithDropdown = ({
     <Dropdown.Trigger>
       <Button data-test-id={testId} onClick={onClick} disabled={disabled} {...buttonProps}>
         {children}
-        <ChervonDownIcon />
+        <ChevronDown />
       </Button>
     </Dropdown.Trigger>
     <Dropdown.Content align="end">

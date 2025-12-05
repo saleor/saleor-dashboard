@@ -1,4 +1,5 @@
 import { Box, CloseIcon, SearchIcon, Text } from "@saleor/macaw-ui-next";
+import { X } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -77,7 +78,7 @@ export const SearchHistory = ({
                 cursor="pointer"
                 onClick={(evt: React.MouseEvent<HTMLButtonElement>) => handleRemoveItem(evt, item)}
               >
-                <CloseIcon size="small" />
+                <X size="small" />
               </Box>
             </Box>
           </Box>
@@ -103,7 +104,7 @@ export const SearchHistory = ({
             hover: "default1Hovered",
           }}
         >
-          <CloseIcon size="small" />
+          <X size="small" />
           <FormattedMessage id="zfSKyx" defaultMessage="Clear history" />
         </Box>
       </Box>

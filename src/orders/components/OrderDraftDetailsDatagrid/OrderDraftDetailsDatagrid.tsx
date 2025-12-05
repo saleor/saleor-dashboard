@@ -106,7 +106,7 @@ export const OrderDraftDetailsDatagrid = ({
             __marginLeft="-2px"
             gap={2}
           >
-            <TrashBinIcon />
+            <Trash2 />
             {intl.formatMessage(messages.deleteOrder)}
           </Box>
         ),

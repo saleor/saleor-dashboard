@@ -29,6 +29,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { VoucherListDatagrid } from "../VoucherListDatagrid";
 import { createFilterStructure, VoucherFilterKeys, VoucherListFilterOpts } from "./filters";
+import { ChevronRight } from "lucide-react";
 
 interface VoucherListPageProps
   extends PageListProps,
@@ -82,7 +83,7 @@ const VoucherListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

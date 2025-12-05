@@ -14,6 +14,7 @@ import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Trash2 } from "lucide-react";
 
 const useStyles = makeStyles(
   {
@@ -160,7 +161,7 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
                           disabled={disabled}
                           variant="secondary"
                           onClick={() => onAttributeUnassign(attribute.id)}
-                          icon={<TrashBinIcon />}
+                          icon={<Trash2 />}
                         />
                       </TableButtonWrapper>
                     </TableCell>

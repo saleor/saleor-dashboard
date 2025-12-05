@@ -23,7 +23,7 @@ import { useIntl } from "react-intl";
 
 import { Combobox, Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
-import { SingleReferenceField } from "./SingleReferenceField";
+import SingleReferenceField from "./SingleReferenceField";
 import { AttributeRowProps } from "./types";
 
 const AttributeRow = ({

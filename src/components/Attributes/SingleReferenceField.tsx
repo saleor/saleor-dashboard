@@ -4,10 +4,11 @@ import {
   getSingleReferenceDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
-import { Box, Button, EditIcon, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { AttributeRowProps } from "./types";
+import { Edit, Plus } from "lucide-react";
 
 interface SingleReferenceFieldProps {
   attribute: AttributeRowProps["attribute"];
@@ -18,7 +19,7 @@ interface SingleReferenceFieldProps {
   onReferencesRemove: AttributeRowProps["onReferencesRemove"];
 }
 
-export const SingleReferenceField = ({
+const SingleReferenceField = ({
   attribute,
   disabled,
   loading,
@@ -44,7 +45,7 @@ export const SingleReferenceField = ({
               variant="secondary"
               onClick={() => onReferencesAddClick(attribute)}
               disabled={disabled || loading}
-              icon={<EditIcon />}
+              icon={<Edit />}
               marginLeft="auto"
               data-test-id="single-ref-edit"
             />
@@ -54,7 +55,7 @@ export const SingleReferenceField = ({
             variant="secondary"
             onClick={() => onReferencesAddClick(attribute)}
             disabled={disabled || loading}
-            icon={<PlusIcon />}
+            icon={<Plus />}
             marginLeft="auto"
             data-test-id="single-ref-add"
           />
@@ -70,5 +71,6 @@ export const SingleReferenceField = ({
     </BasicAttributeRow>
   );
 };
+export default SingleReferenceField;
 
 SingleReferenceField.displayName = "SingleReferenceField";

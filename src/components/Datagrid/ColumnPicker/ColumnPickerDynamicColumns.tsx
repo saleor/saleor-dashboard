@@ -1,9 +1,10 @@
-import { Box, Button, PlusIcon, RemoveIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AvailableColumn } from "../types";
 import messages from "./messages";
+import { Minus, Plus } from "lucide-react";
 
 interface ColumnPickerDynamicColumnsProps {
   dynamicColumns?: AvailableColumn[] | null | undefined;
@@ -24,7 +25,7 @@ export const ColumnPickerDynamicColumns = ({
       <Button
         variant="secondary"
         size="small"
-        icon={<PlusIcon size="small" />}
+        icon={<Plus size="small" />}
         onClick={() => setExpanded(true)}
         data-test-id="open-dynamic-search"
       />
@@ -38,7 +39,7 @@ export const ColumnPickerDynamicColumns = ({
             data-test-id={`remove-dynamic-col-button-${column.title}`}
             variant="tertiary"
             size="small"
-            icon={<RemoveIcon color="default1" />}
+            icon={<Minus color="default1" />}
             __width="20px"
             __height="20px"
           />

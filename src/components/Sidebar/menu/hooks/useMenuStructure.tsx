@@ -36,13 +36,14 @@ import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
-import { Box, SearchIcon } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
+import { Search } from "lucide-react";
 
 export function useMenuStructure() {
   const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert();
@@ -105,7 +106,7 @@ export function useMenuStructure() {
       type: "item",
     },
     {
-      icon: renderIcon(<SearchIcon />),
+      icon: renderIcon(<Search />),
       label: (
         <Box display="flex" alignItems="center" gap={2}>
           {intl.formatMessage(sectionNames.search)}

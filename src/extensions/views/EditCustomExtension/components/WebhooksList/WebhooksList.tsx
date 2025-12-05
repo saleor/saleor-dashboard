@@ -124,7 +124,7 @@ export const WebhooksList = ({
                                 webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined
                               }
                               data-test-id={`delete-webhook-${webhook?.id}`}
-                              icon={<TrashBinIcon />}
+                              icon={<Trash2 />}
                             />
                           </TableButtonWrapper>
                         </Box>

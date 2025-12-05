@@ -2,6 +2,7 @@ import { Box, PlusIcon, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
+import { Plus } from "lucide-react";
 
 export const Placeholder = () => {
   const intl = useIntl();
@@ -19,7 +20,7 @@ export const Placeholder = () => {
       borderWidth={1}
       borderStyle="solid"
     >
-      <PlusIcon size="large" color="default2" />
+      <Plus size="large" color="default2" />
       <Text size={5}>{intl.formatMessage(messages.placeholder)}</Text>
     </Box>
   );

@@ -60,7 +60,7 @@ export const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHea
             data-test-id="expand"
             onClick={() => setExpanded(!expanded)}
           >
-            <ChervonDownIcon />
+            <ChevronDown />
           </Button>
         </DashboardCard.Title>
       </DashboardCard.Header>

@@ -66,7 +66,7 @@ const TaxCountriesMenu = ({
                   <div className={classes.spaceBetween}>
                     {config.country.country}
                     <Button
-                      icon={<TrashBinIcon />}
+                      icon={<Trash2 />}
                       variant="tertiary"
                       onClick={event => {
                         event.stopPropagation();

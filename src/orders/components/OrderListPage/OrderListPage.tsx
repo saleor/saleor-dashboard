@@ -30,12 +30,13 @@ import {
   TabPageProps,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
 import { OrderListDatagrid } from "../OrderListDatagrid";
+import { ChevronRight } from "lucide-react";
 
 interface OrderListPageProps
   extends PageListProps,
@@ -111,7 +112,7 @@ const OrderListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

@@ -15,6 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPageProps, ListActions, PageListProps, SortPage } from "../../../types";
 import { ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
+import { ChevronRight } from "lucide-react";
 
 interface ProductTypeListPageProps
   extends PageListProps,
@@ -56,7 +57,7 @@ const ProductTypeListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

@@ -72,7 +72,7 @@ const TaxClassesMenu = ({
                       {taxClass.id !== "new" && (
                         <Button
                           data-test-id="class-delete-button"
-                          icon={<TrashBinIcon />}
+                          icon={<Trash2 />}
                           variant="tertiary"
                           onClick={event => {
                             event.stopPropagation();

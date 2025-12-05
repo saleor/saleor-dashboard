@@ -18,6 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { StaffListDatagrid } from "../StaffListDatagrid";
 import { StaffFilterKeys, StaffListFilterOpts } from "./filters";
+import { ChevronRight } from "lucide-react";
 
 interface StaffListPageProps
   extends ListProps,
@@ -60,7 +61,7 @@ const StaffListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

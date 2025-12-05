@@ -205,7 +205,7 @@ export const ProductStocks = ({
                       <Button
                         type="button"
                         variant="secondary"
-                        icon={<TrashBinIcon />}
+                        icon={<Trash2 />}
                         onClick={() => onWarehouseStockDelete(stock.id)}
                       />
                     </TableCell>

@@ -1,5 +1,6 @@
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Box, Button, EditIcon, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Edit, Trash2 } from "lucide-react";
 
 interface RuleActionsProps {
   onEdit: () => void;
@@ -19,7 +20,7 @@ export const RuleActions = ({ onEdit, onDelete }: RuleActionsProps) => {
         disabled={disabled}
         data-test-id="rule-edit-button"
       >
-        <EditIcon />
+        <Edit />
       </Button>
       <Button
         size="small"
@@ -31,7 +32,7 @@ export const RuleActions = ({ onEdit, onDelete }: RuleActionsProps) => {
           onDelete();
         }}
       >
-        <TrashBinIcon />
+        <Trash2 />
       </Button>
     </Box>
   );

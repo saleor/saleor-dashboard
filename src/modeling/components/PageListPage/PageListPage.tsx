@@ -25,6 +25,7 @@ import { useLocation } from "react-router";
 import { PageListFilterKeys, PageListFilterOpts } from "../../views/PageList/filters";
 import { PageListDatagrid } from "../PageListDatagrid/PageListDatagrid";
 import { pagesListSearchAndFiltersMessages as messages } from "./messages";
+import { ChevronRight } from "lucide-react";
 
 interface PageListPageProps
   extends PageListProps,
@@ -78,7 +79,7 @@ const PageListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={5} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
             <FilterPresetsSelect
               presetsChanged={hasPresetsChanged()}

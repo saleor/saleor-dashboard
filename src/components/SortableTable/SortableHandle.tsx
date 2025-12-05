@@ -1,7 +1,7 @@
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { GripIcon } from "@saleor/macaw-ui-next";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
+import { GripVertical } from "lucide-react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -23,7 +23,7 @@ const SortableHandle = SortableHandleHoc(() => {
 
   return (
     <TableCell className={classes.columnDrag}>
-      <GripIcon />
+      <GripVertical />
     </TableCell>
   );
 });

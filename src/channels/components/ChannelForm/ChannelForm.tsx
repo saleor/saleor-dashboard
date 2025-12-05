@@ -18,13 +18,14 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, CopyIcon, Input, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
 import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
 import { MarkAsPaid } from "./MarkAsPaid";
 import { messages } from "./messages";
+import { Copy } from "lucide-react";
 
 export interface FormData extends StockSettingsInput {
   name: string;
@@ -117,7 +118,7 @@ export const ChannelForm = ({
                 variant="tertiary"
                 onClick={() => copy(data.slug)}
                 textTransform="uppercase"
-                icon={<CopyIcon />}
+                icon={<Copy />}
               />
             }
           />

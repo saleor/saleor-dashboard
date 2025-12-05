@@ -65,7 +65,7 @@ const TaxCountryExceptionListItem = ({
           />
         </ListItemCell>
         <ListItemCell>
-          <Button size="small" onClick={onDelete} variant="secondary" icon={<TrashBinIcon />} />
+          <Button size="small" onClick={onDelete} variant="secondary" icon={<Trash2 />} />
         </ListItemCell>
       </ListItem>
       {divider && <Divider />}

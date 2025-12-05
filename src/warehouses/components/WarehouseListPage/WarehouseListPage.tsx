@@ -17,6 +17,7 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import WarehouseList from "../WarehouseList";
+import { ChevronRight } from "lucide-react";
 
 interface WarehouseListPageProps
   extends PageListProps,
@@ -66,7 +67,7 @@ const WarehouseListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

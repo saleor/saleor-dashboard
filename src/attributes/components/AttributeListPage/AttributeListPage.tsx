@@ -8,13 +8,14 @@ import { configurationMenuUrl } from "@dashboard/configuration";
 import { AttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "../../../types";
 import { AttributeListDatagrid } from "../AttributeListDatagrid";
 import { AttributeFilterKeys, AttributeListFilterOpts } from "./filters";
+import { ChevronRight } from "lucide-react";
 
 interface AttributeListPageProps
   extends PageListProps,
@@ -56,7 +57,7 @@ const AttributeListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

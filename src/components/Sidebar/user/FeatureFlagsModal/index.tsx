@@ -1,11 +1,12 @@
 import { Name } from "@dashboard/featureFlags/availableFlags";
-import { Box, Button, CloseIcon, Modal } from "@saleor/macaw-ui-next";
+import { Box, Button, Modal } from "@saleor/macaw-ui-next";
 
 import { Content } from "./Content";
 import { FlagList } from "./FlagList";
 import { Header } from "./Header";
 import { NoFlags } from "./NoFlags";
 import { useFlagsState } from "./useFlagsState";
+import { X } from "lucide-react";
 
 interface FeatureFlagsModalProps {
   open: boolean;
@@ -35,7 +36,7 @@ export const FeatureFlagsModal = ({ open, onChange }: FeatureFlagsModalProps) =>
         >
           <Header>
             <Modal.Close>
-              <Button variant="tertiary" icon={<CloseIcon />} size="small" />
+              <Button variant="tertiary" icon={<X />} size="small" />
             </Modal.Close>
           </Header>
           <Box display="flex" backgroundColor="default1" height="100%">

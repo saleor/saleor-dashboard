@@ -23,13 +23,14 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
 import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
+import { ChevronRight } from "lucide-react";
 
 interface CollectionListPageProps
   extends PageListProps,
@@ -90,7 +91,7 @@ const CollectionListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

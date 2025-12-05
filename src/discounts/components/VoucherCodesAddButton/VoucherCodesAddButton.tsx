@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import { ChevronDown, Plus } from "lucide-react";
 
 interface VoucherCodesAddButtonProps {
   onMultiCodesGenerate: () => void;
@@ -46,9 +47,9 @@ export const VoucherCodesAddButton = ({
     <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>
       <Popover.Trigger>
         <Button data-test-id="add-code-button" type="button">
-          <PlusIcon />
+          <Plus />
           {intl.formatMessage(messages.addCode)}
-          <ArrowDownIcon />
+          <ChevronDown />
         </Button>
       </Popover.Trigger>
       <Popover.Content align="end">
