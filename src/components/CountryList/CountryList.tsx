@@ -6,7 +6,7 @@ import { TableBody, TableCell } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { ChevronsDownIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -115,7 +115,7 @@ const CountryList = (props: CountryListProps) => {
             </TableCell>
             <TableCell className={clsx(classes.textRight, classes.iconCell)}>
               <IconButton variant="secondary">
-                <ChevronsDownIcon
+                <ChevronDownIcon
                   data-test-id="countries-drop-down-icon"
                   className={clsx({
                     [classes.rotate]: !isCollapsed,
