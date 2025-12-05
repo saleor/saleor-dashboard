@@ -13,7 +13,8 @@ import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productUrl } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
-import { Box, ExternalLinkIcon, sprinkles, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, sprinkles } from "@saleor/macaw-ui-next";
+import { ExternalLink, Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -83,12 +84,12 @@ export const OrderDraftDetailsDatagrid = ({
               gap: 2,
             })}
           >
-            <ExternalLinkIcon />
+            <ExternalLink />
             {intl.formatMessage(messages.productDetails)}
           </Link>
         ) : (
           <Box display="flex" alignItems="center" gap={2}>
-            <ExternalLinkIcon />
+            <ExternalLink />
             {intl.formatMessage(messages.productDetails)}
           </Box>
         ),
@@ -106,7 +107,7 @@ export const OrderDraftDetailsDatagrid = ({
             __marginLeft="-2px"
             gap={2}
           >
-            <TrashBinIcon />
+            <Trash2 />
             {intl.formatMessage(messages.deleteOrder)}
           </Box>
         ),

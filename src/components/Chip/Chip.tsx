@@ -1,8 +1,8 @@
 import { alpha } from "@material-ui/core/styles";
-import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { X } from "lucide-react";
 import * as React from "react";
 
 interface ChipProps {
@@ -40,7 +40,7 @@ const Chip = (props: ChipProps) => {
     <div className={clsx(classes.root, className)}>
       <Text className={classes.label} size={2} fontWeight="medium">
         {label}
-        {onClose && <CloseIcon className={classes.closeIcon} onClick={onClose} />}
+        {onClose && <X className={classes.closeIcon} onClick={onClose} />}
       </Text>
     </div>
   );

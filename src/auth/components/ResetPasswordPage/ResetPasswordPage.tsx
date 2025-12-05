@@ -6,7 +6,8 @@ import { AccountErrorCode } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import { ArrowLeftIcon, Box, Button, Paragraph, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Paragraph, Text } from "@saleor/macaw-ui-next";
+import { ArrowLeft } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ChangingPasswordWarning } from "../ChangingPasswordWarning";
@@ -31,7 +32,7 @@ const ResetPasswordPage = (props: ResetPasswordPageProps) => {
         <Box display="flex" flexDirection="column" alignItems="flex-start">
           <Button
             as="a"
-            icon={<ArrowLeftIcon />}
+            icon={<ArrowLeft />}
             href={getAppMountUri()}
             variant="secondary"
             marginBottom={4}

@@ -18,7 +18,8 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, CopyIcon, Input, Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Option, Text } from "@saleor/macaw-ui-next";
+import { Copy } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
@@ -117,7 +118,7 @@ export const ChannelForm = ({
                 variant="tertiary"
                 onClick={() => copy(data.slug)}
                 textTransform="uppercase"
-                icon={<CopyIcon />}
+                icon={<Copy />}
               />
             }
           />

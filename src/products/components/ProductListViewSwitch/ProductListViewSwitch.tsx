@@ -1,4 +1,5 @@
-import { Switch, ViewListIcon, ViewTilesIcon } from "@saleor/macaw-ui-next";
+import { Switch } from "@saleor/macaw-ui-next";
+import { Grid3x3, List } from "lucide-react";
 
 import { ProductListViewType } from "../ProductListPage";
 
@@ -18,10 +19,10 @@ export const ProductListViewSwitch = ({
     }}
   >
     <Switch.Item id="datagrid" value="datagrid" data-test-id="datagrid-view-button">
-      <ViewListIcon size="medium" />
+      <List size="medium" />
     </Switch.Item>
     <Switch.Item id="tile" value="tile" data-test-id="tile-view-button">
-      <ViewTilesIcon size="medium" />
+      <Grid3x3 size="medium" />
     </Switch.Item>
   </Switch>
 );

@@ -6,7 +6,8 @@ import {
   PaginationRowNumberSelect,
   PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
-import { Box, Button, ChevronLeftIcon, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
@@ -77,14 +78,14 @@ export const TablePagination = ({
             variant="secondary"
             disabled={!hasPreviousPage || disabled}
             onClick={handlers.onPreviousPage}
-            icon={<ChevronLeftIcon />}
+            icon={<ChevronLeft />}
             data-test-id="button-pagination-back"
           />
           <Button
             variant="secondary"
             disabled={!hasNextPage || disabled}
             onClick={handlers.onNextPage}
-            icon={<ChevronRightIcon />}
+            icon={<ChevronRight />}
             data-test-id="button-pagination-next"
           />
         </Box>

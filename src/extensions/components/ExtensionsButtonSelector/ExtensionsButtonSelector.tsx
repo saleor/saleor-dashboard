@@ -1,14 +1,6 @@
 import { ExtensionMenuItem } from "@dashboard/extensions/getExtensionsItems";
-import {
-  Box,
-  BoxProps,
-  Button,
-  ButtonProps,
-  ChervonDownIcon,
-  Dropdown,
-  List,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 import { ReactNode } from "react";
 
 type ExtensionsButtonSelectorProps = {
@@ -109,7 +101,7 @@ const ButtonGroupWithDropdown = ({
           <Button
             __height="50px"
             variant={variant}
-            icon={<ChervonDownIcon />}
+            icon={<ChevronDown />}
             disabled={disabled}
             borderColor="default1"
             borderLeftWidth={1}

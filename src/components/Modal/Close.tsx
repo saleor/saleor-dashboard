@@ -1,11 +1,12 @@
-import { Button, CloseIcon, Modal, PropsWithBox } from "@saleor/macaw-ui-next";
+import { Button, Modal, PropsWithBox } from "@saleor/macaw-ui-next";
+import { X } from "lucide-react";
 
 export const Close = ({ onClose, ...rest }: PropsWithBox<{ onClose: () => void }>) => {
   return (
     <Modal.Close {...rest}>
       <Button
         data-test-id="close-button"
-        icon={<CloseIcon />}
+        icon={<X />}
         size="small"
         variant="tertiary"
         onClick={onClose}

@@ -1,6 +1,7 @@
 import completedIcon from "@assets/images/completed.svg";
 import uncompletedIcon from "@assets/images/uncompleted.svg";
-import { Accordion, Box, ChervonDownIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 import SVG from "react-inlinesvg";
 
 import { useOnboardingData } from "../hooks/useOnboardingData";
@@ -58,7 +59,7 @@ export const WelcomePageOnboardingAccordion = () => {
                 transition="ease"
                 __transform={`${extendedStepId === step.id ? "rotate(180deg)" : "none"}`}
               >
-                <ChervonDownIcon />
+                <ChevronDown />
               </Box>
             </Box>
           </Accordion.Trigger>
