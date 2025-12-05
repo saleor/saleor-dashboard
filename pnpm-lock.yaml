@@ -542,7 +542,7 @@ importers:
         specifier: ^10.5.4
         version: 10.5.4
       prettier:
-        specifier: ^3.7.4
+        specifier: 3.7.4
         version: 3.7.4
       setup-polly-jest:
         specifier: ^0.9.1
