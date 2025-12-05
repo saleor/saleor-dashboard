@@ -45,7 +45,7 @@ export const BasicAttributeRow = ({
           <Tooltip.Trigger>
             <Box>
               <Info
-                size="small"
+                size={20}
                 className={sprinkles({
                   display: "block",
                 })}
