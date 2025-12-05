@@ -1,5 +1,5 @@
 /* Chevron rotation for accordion */
-.transaction-chevron {
+.chevron {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,7 +7,7 @@
   transform: rotate(-90deg);
 }
 
-button[data-state="open"] .transaction-chevron,
-[data-state="open"] .transaction-chevron {
+button[data-state="open"] .chevron,
+[data-state="open"] .chevron {
   transform: rotate(0deg);
 }

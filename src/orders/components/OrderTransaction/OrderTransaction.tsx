@@ -1,6 +1,4 @@
 // @ts-strict-ignore
-import "./OrderTransaction.css";
-
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { Accordion, Box, ChervonDownIcon } from "@saleor/macaw-ui-next";
@@ -9,6 +7,7 @@ import { useState } from "react";
 
 import { OrderTransactionCardTitle } from "./components";
 import { TransactionEvents } from "./components/TransactionEvents";
+import styles from "./OrderTransaction.module.css";
 import { ExtendedOrderTransaction } from "./types";
 import { getTransactionEvents } from "./utils";
 
@@ -62,7 +61,7 @@ const OrderTransaction = ({
                 paddingX={5}
                 width="100%"
               >
-                <Box className="transaction-chevron" marginTop={1}>
+                <Box className={styles.chevron} marginTop={1}>
                   <ChervonDownIcon size="small" color="default1" />
                 </Box>
 
