@@ -25,9 +25,7 @@ type SupportedStaticBooleanKeys =
 
 type StaticBooleanFilterQueryPart = Partial<Record<SupportedStaticBooleanKeys, boolean>>;
 
-export class StaticBooleanQueryVarsBuilder
-  implements BothApiQueryVarsBuilder<StaticBooleanFilterQueryPart>
-{
+export class StaticBooleanQueryVarsBuilder implements BothApiQueryVarsBuilder<StaticBooleanFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     return SUPPORTED_STATIC_BOOLEAN_FILTERS.has(element.value.value as SupportedStaticBooleanKeys);
   }

@@ -18,7 +18,8 @@ type DeleteDialogContentGiftCard = Pick<
 >;
 
 interface GiftCardDeleteDialogContentProps<TGiftCard extends DeleteDialogContentGiftCard>
-  extends Pick<ActionDialogProps, "open" | "onClose" | "onConfirm" | "confirmButtonState">,
+  extends
+    Pick<ActionDialogProps, "open" | "onClose" | "onConfirm" | "confirmButtonState">,
     Partial<Pick<GiftCardsListConsumerProps, "selectedRowIds" | "giftCards" | "loading">> {
   ids?: string[];
   giftCard?: TGiftCard;

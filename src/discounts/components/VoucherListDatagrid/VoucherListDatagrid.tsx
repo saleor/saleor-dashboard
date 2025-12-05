@@ -24,9 +24,7 @@ import { createGetCellContent, vouchersListStaticColumnsAdapter } from "./datagr
 import { messages } from "./messages";
 
 interface VoucherListDatagridProps
-  extends ListProps,
-    SortPage<VoucherListUrlSortField>,
-    ChannelProps {
+  extends ListProps, SortPage<VoucherListUrlSortField>, ChannelProps {
   vouchers: VoucherFragment[];
   onSelectVouchersIds: (rowsIndex: number[], clearSelection: () => void) => void;
 }

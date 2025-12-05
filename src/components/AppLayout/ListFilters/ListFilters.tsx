@@ -15,8 +15,7 @@ interface NewFilterProps extends SearchPageProps {
 }
 
 interface OldFiltersProps<TKeys extends string = string>
-  extends FilterProps<TKeys>,
-    SearchPageProps {
+  extends FilterProps<TKeys>, SearchPageProps {
   type?: "old-filter-select";
   searchPlaceholder: string;
   actions?: ReactNode;

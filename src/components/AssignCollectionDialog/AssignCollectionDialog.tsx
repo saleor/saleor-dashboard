@@ -9,8 +9,10 @@ type Collections = {
   name: string;
 }[];
 
-interface AssignCollectionDialogProps
-  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
+interface AssignCollectionDialogProps extends Omit<
+  AssignContainerDialogProps,
+  "containers" | "labels"
+> {
   collections: Collections | null;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }

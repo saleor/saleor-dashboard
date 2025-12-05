@@ -21,8 +21,7 @@ import { categoryListStaticColumnsAdapter, createGetCellContent } from "./datagr
 import { messages } from "./messages";
 
 interface CategoryListDatagridProps
-  extends PageListProps,
-    Partial<SortPage<CategoryListUrlSortField>> {
+  extends PageListProps, Partial<SortPage<CategoryListUrlSortField>> {
   categories: CategoryFragment[];
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
   selectionActionButton?: ReactNode | null;

@@ -9,8 +9,10 @@ type Categories = {
   name: string;
 }[];
 
-interface AssignCategoryDialogProps
-  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
+interface AssignCategoryDialogProps extends Omit<
+  AssignContainerDialogProps,
+  "containers" | "labels"
+> {
   categories: Categories | null;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
 }

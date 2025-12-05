@@ -48,11 +48,10 @@ const entityTypeMessages = defineMessages({
   },
 });
 
-interface AttributeDetailsProps
-  extends Pick<
-    UseFormResult<AttributePageFormData>,
-    "set" | "setError" | "data" | "clearErrors" | "errors"
-  > {
+interface AttributeDetailsProps extends Pick<
+  UseFormResult<AttributePageFormData>,
+  "set" | "setError" | "data" | "clearErrors" | "errors"
+> {
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];

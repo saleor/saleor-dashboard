@@ -25,7 +25,8 @@ import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import { messages } from "./messages";
 
 interface CategoryTableProps
-  extends PageListProps,
+  extends
+    PageListProps,
     SearchPageProps,
     SortPage<CategoryListUrlSortField>,
     Omit<TabPageProps, "onTabDelete"> {

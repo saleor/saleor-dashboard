@@ -15,8 +15,10 @@ import {
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "./types";
 import { getChannelsAvailabilityMessages } from "./utils";
 
-interface ChannelsAvailability
-  extends Omit<ChannelsAvailabilityWrapperProps, "children" | "selectedChannelsCount"> {
+interface ChannelsAvailability extends Omit<
+  ChannelsAvailabilityWrapperProps,
+  "children" | "selectedChannelsCount"
+> {
   channels: ChannelData[];
   /** Channels that have no settings */
   channelsList: ChannelList[];

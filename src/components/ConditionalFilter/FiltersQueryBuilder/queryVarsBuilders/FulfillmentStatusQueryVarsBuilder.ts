@@ -12,9 +12,7 @@ type FulfillmentStatusFilterQueryPart = {
 /** Builds query for fulfillment status nested in array structure
  *
  * E.g. {fulfilments: [{status: {eq: "abc"}}]} */
-export class FulfillmentStatusQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<FulfillmentStatusFilterQueryPart>
-{
+export class FulfillmentStatusQueryVarsBuilder implements WhereOnlyQueryVarsBuilder<FulfillmentStatusFilterQueryPart> {
   canHandle(element: FilterElement): boolean {
     return element.value.type === "fulfillmentStatus";
   }

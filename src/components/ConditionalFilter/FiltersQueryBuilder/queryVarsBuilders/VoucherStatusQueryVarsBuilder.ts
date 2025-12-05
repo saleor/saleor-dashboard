@@ -10,9 +10,9 @@ import { FilterOnlyQueryVarsBuilder } from "./types";
  * it's not supported in WHERE API
  * we must always returns an array
  * */
-export class VoucherStatusQueryVarsBuilder
-  implements FilterOnlyQueryVarsBuilder<Pick<VoucherFilterInput, "status">>
-{
+export class VoucherStatusQueryVarsBuilder implements FilterOnlyQueryVarsBuilder<
+  Pick<VoucherFilterInput, "status">
+> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "voucherStatus";
   }
