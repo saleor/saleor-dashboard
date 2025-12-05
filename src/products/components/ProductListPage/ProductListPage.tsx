@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { LazyQueryResult } from "@apollo/client/react";
 import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";

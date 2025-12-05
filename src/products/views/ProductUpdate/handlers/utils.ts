@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
@@ -115,7 +114,7 @@ export function getProductChannelsUpdateVariables(
   const channels = inferProductChannelsAfterUpdate(product, data);
   const dataUpdated = new Map<string, ProductChannelListingAddInput>();
 
-  data.channels.updateChannels
+  (data.channels.updateChannels || [])
     .map(listing => {
       const fieldsToPick = [
         "channelId",
@@ -145,12 +144,19 @@ export function getProductChannelsUpdateVariables(
     .map(channelId => {
       const data = dataUpdated.get(channelId);
 
-      return {
+      if (!data) {
+        return undefined;
+      }
+
+      const result: ProductChannelListingAddInput = {
         ...data,
         isAvailableForPurchase:
           data.availableForPurchaseAt !== null ? true : data.isAvailableForPurchase,
       };
-    });
+
+      return result;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== undefined);
 
   return {
     id: product.id,
@@ -172,7 +178,7 @@ export function getBulkVariantUpdateInputs(
 ): ProductVariantBulkUpdateInput[] {
   const toUpdateInput = createToUpdateInput(data, variantsAttributes);
 
-  return variants
+  return (variants || [])
     .filter((_, index) => !data.removed.includes(index))
     .map(toUpdateInput)
     .filter(byAvailability)
@@ -182,7 +188,7 @@ export function getBulkVariantUpdateInputs(
 const createToUpdateInput =
   (data: DatagridChangeOpts, variantsAttributes: VariantAttributeFragment[]) =>
   (
-    variant: ProductFragment["variants"][number],
+    variant: NonNullable<ProductFragment["variants"]>[number],
     variantIndex: number,
   ): ProductVariantBulkUpdateInput => ({
     id: variant.id,
@@ -195,7 +201,7 @@ const createToUpdateInput =
 const getVariantAttributesForUpdate = (
   data: DatagridChangeOpts,
   variantIndex: number,
-  variant: ProductFragment["variants"][number],
+  variant: NonNullable<ProductFragment["variants"]>[number],
   variantsAttributes: VariantAttributeFragment[],
 ) => {
   const updatedAttributes = getAttributeData(data.updates, variantIndex, variantsAttributes);
@@ -205,12 +211,14 @@ const getVariantAttributesForUpdate = (
   }
 
   // Re-send current values for all not-updated attributes, in case some of them were required
-  const notUpdatedAttributes: ReturnType<typeof getAttributeData> = variant.attributes
+  const notUpdatedAttributes = (variant.attributes || [])
     .filter(
-      attribute =>
-        !updatedAttributes.find(updatedAttribute => updatedAttribute.id === attribute.attribute.id),
+      (attribute: any) =>
+        !updatedAttributes.find(
+          (updatedAttribute: any) => updatedAttribute?.id === attribute.attribute.id,
+        ),
     )
-    .map(attribute => {
+    .map((attribute: any) => {
       const attributeType = getAttributeType(variantsAttributes, attribute.attribute.id);
 
       if (!attributeType) {
@@ -221,27 +229,28 @@ const getVariantAttributesForUpdate = (
         id: attribute.attribute.id,
         ...getAttributeInput(attributeType, attribute.values),
       };
-    });
+    })
+    .filter((item: any): item is NonNullable<typeof item> => item !== undefined);
 
   return [...updatedAttributes, ...notUpdatedAttributes];
 };
 const byAvailability = (variant: ProductVariantBulkUpdateInput): boolean =>
   variant.name !== undefined ||
   variant.sku !== undefined ||
-  variant.attributes.length > 0 ||
-  variant.stocks.create.length > 0 ||
-  variant.stocks.update.length > 0 ||
-  variant.stocks.remove.length > 0 ||
-  variant.channelListings.update.length > 0 ||
-  variant.channelListings.remove.length > 0 ||
-  variant.channelListings.create.length > 0;
+  (variant.attributes || []).length > 0 ||
+  (variant.stocks?.create || []).length > 0 ||
+  (variant.stocks?.update || []).length > 0 ||
+  (variant.stocks?.remove || []).length > 0 ||
+  (variant.channelListings?.update || []).length > 0 ||
+  (variant.channelListings?.remove || []).length > 0 ||
+  (variant.channelListings?.create || []).length > 0;
 
 export function inferProductChannelsAfterUpdate(
   product: ProductFragment,
   data: ProductUpdateSubmitData,
 ) {
-  const productChannelsIds = product.channelListings.map(listing => listing.channel.id);
-  const updatedChannelsIds = data.channels.updateChannels?.map(listing => listing.channelId) || [];
+  const productChannelsIds = (product.channelListings || []).map(listing => listing.channel.id);
+  const updatedChannelsIds = (data.channels.updateChannels || []).map(listing => listing.channelId);
   const removedChannelsIds = data.channels.removeChannels || [];
 
   return uniq([

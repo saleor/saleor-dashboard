@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import {
   ProductErrorCode,
@@ -40,10 +39,14 @@ export type ProductVariantListError =
 export function getCreateVariantMutationError(
   result: FetchResult<ProductVariantBulkCreateMutation>,
 ): ProductVariantListError[] {
+  if (!result.data?.productVariantBulkCreate) {
+    return [];
+  }
+
   return result.data.productVariantBulkCreate.errors.map<ProductVariantListError>(error => ({
     __typename: "DatagridError",
     type: "create",
-    index: error.index,
+    index: error.index ?? 0,
     error: error.code,
   }));
 }
@@ -52,9 +55,15 @@ export function getVariantUpdateMutationErrors(
   mutationResult: FetchResult<ProductVariantBulkUpdateMutation>,
   varaintsIds: string[],
 ): ProductVariantListError[] {
+  if (!mutationResult.data?.productVariantBulkUpdate) {
+    return [];
+  }
+
   const { productVariantBulkUpdate } = mutationResult.data;
   const generalErrors = productVariantBulkUpdate.errors;
-  const variantsErrors = productVariantBulkUpdate.results.flatMap(res => res.errors);
+  const variantsErrors = productVariantBulkUpdate.results.flatMap(
+    (res: { errors: ProductVariantBulkErrorFragment[] }) => res.errors,
+  );
   const allErrors = [...generalErrors, ...variantsErrors];
 
   return [
@@ -115,7 +124,7 @@ function getRestOfErrors(errors: ProductVariantBulkErrorFragment[], varaintsIds:
         variantId,
         error: error.code,
         attributes: error.attributes,
-        field: error.field,
+        field: error.field ?? undefined,
       });
     }
 

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { QueryResult } from "@apollo/client";
 import {
   getReferenceAttributeEntityTypeFromAttribute,
@@ -98,7 +97,7 @@ interface ProductVariantPageProps {
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
   referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: RelayToFlat<NonNullable<SearchAttributeValuesQuery["attribute"]>["choices"]>;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreReferenceCategories?: FetchMoreProps;
@@ -176,11 +175,11 @@ export const ProductVariantPage = ({
   const toggleModal = () => setModalStatus(!isModalOpened);
   const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] = useState(false);
   const productMedia = [...(variant?.product?.media ?? [])]?.sort((prev, next) =>
-    prev.sortOrder > next.sortOrder ? 1 : -1,
+    (prev.sortOrder ?? 0) > (next.sortOrder ?? 0) ? 1 : -1,
   );
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
   const handleDeactivatePreorder = async () => {
-    await onVariantPreorderDeactivate(variant.id);
+    await onVariantPreorderDeactivate(variant!.id);
     setIsEndPreorderModalOpened(false);
   };
   const handleAssignReferenceAttribute = (
@@ -189,7 +188,7 @@ export const ProductVariantPage = ({
     handlers: ProductVariantUpdateHandlers,
   ) => {
     handleContainerReferenceAssignment(
-      assignReferencesAttributeId,
+      assignReferencesAttributeId!,
       attributeValues,
       data.attributes,
       handlers,
@@ -208,14 +207,14 @@ export const ProductVariantPage = ({
         {canTranslate && (
           <TranslationsButton
             onClick={() =>
-              navigate(productVariantUrl(lastUsedLocaleOrFallback, productId, variant?.id))
+              navigate(productVariantUrl(lastUsedLocaleOrFallback, productId, variant?.id!))
             }
           />
         )}
       </TopNav>
       <DetailPageLayout.Content>
         <ProductVariantUpdateForm
-          variant={variant}
+          variant={variant!}
           onSubmit={onSubmit}
           currentChannels={channels}
           referencePages={referencePages}
@@ -231,7 +230,7 @@ export const ProductVariantPage = ({
           fetchReferenceCollections={fetchReferenceCollections}
           fetchMoreReferenceCollections={fetchMoreReferenceCollections}
           assignReferencesAttributeId={assignReferencesAttributeId}
-          loading={loading}
+          loading={!!loading}
         >
           {({
             change,
@@ -258,10 +257,10 @@ export const ProductVariantPage = ({
                   <div>
                     <ProductVariantNavigation
                       productId={productId}
-                      current={variant?.id}
+                      current={variant?.id!}
                       defaultVariantId={defaultVariantId}
-                      fallbackThumbnail={variant?.product?.thumbnail?.url}
-                      variants={variant?.product.variants}
+                      fallbackThumbnail={variant?.product?.thumbnail?.url!}
+                      variants={variant?.product.variants as any}
                       onReorder={onVariantReorder}
                     />
                   </div>
@@ -274,9 +273,9 @@ export const ProductVariantPage = ({
                     />
                     <CardSpacer />
                     <VariantDetailsChannelsAvailabilityCard
-                      variant={variant}
+                      variant={variant!}
                       listings={data.channelListings}
-                      disabled={loading}
+                      disabled={!!loading}
                       onManageClick={toggleManageChannels}
                     />
                     {nonSelectionAttributes.length > 0 && (
@@ -284,9 +283,9 @@ export const ProductVariantPage = ({
                         <Attributes
                           title={intl.formatMessage(messages.nonSelectionAttributes)}
                           attributes={nonSelectionAttributes}
-                          attributeValues={attributeValues}
-                          loading={loading}
-                          disabled={loading}
+                          attributeValues={attributeValues as any}
+                          loading={!!loading}
+                          disabled={!!loading}
                           errors={errors}
                           onChange={handlers.selectAttribute}
                           onMultiChange={handlers.selectAttributeMultiple}
@@ -295,7 +294,7 @@ export const ProductVariantPage = ({
                           onReferencesAddClick={onAssignReferencesClick}
                           onReferencesReorder={handlers.reorderAttributeValue}
                           fetchAttributeValues={fetchAttributeValues}
-                          fetchMoreAttributeValues={fetchMoreAttributeValues}
+                          fetchMoreAttributeValues={fetchMoreAttributeValues!}
                           onAttributeSelectBlur={onAttributeSelectBlur}
                           richTextGetters={attributeRichTextGetters}
                         />
@@ -307,9 +306,9 @@ export const ProductVariantPage = ({
                         <Attributes
                           title={intl.formatMessage(messages.selectionAttributesHeader)}
                           attributes={selectionAttributes}
-                          attributeValues={attributeValues}
-                          loading={loading}
-                          disabled={loading}
+                          attributeValues={attributeValues as any}
+                          loading={!!loading}
+                          disabled={!!loading}
                           errors={errors}
                           onChange={handlers.selectAttribute}
                           onMultiChange={handlers.selectAttributeMultiple}
@@ -318,7 +317,7 @@ export const ProductVariantPage = ({
                           onReferencesAddClick={onAssignReferencesClick}
                           onReferencesReorder={handlers.reorderAttributeValue}
                           fetchAttributeValues={fetchAttributeValues}
-                          fetchMoreAttributeValues={fetchMoreAttributeValues}
+                          fetchMoreAttributeValues={fetchMoreAttributeValues!}
                           onAttributeSelectBlur={onAttributeSelectBlur}
                           richTextGetters={attributeRichTextGetters}
                         />
@@ -334,18 +333,20 @@ export const ProductVariantPage = ({
                     <CardSpacer />
                     <ProductVariantPrice
                       disabled={!variant}
-                      productVariantChannelListings={data.channelListings.map(channel => ({
-                        ...channel.data,
-                        ...channel.value,
-                      }))}
+                      productVariantChannelListings={
+                        data.channelListings.map(channel => ({
+                          ...channel.data,
+                          ...channel.value,
+                        })) as any
+                      }
                       errors={priceVariantErrors}
-                      loading={loading}
+                      loading={!!loading}
                       onChange={handlers.changeChannels}
                     />
                     <CardSpacer />
                     <ProductVariantCheckoutSettings
                       data={data}
-                      disabled={loading}
+                      disabled={!!loading}
                       errors={errors}
                       onChange={change}
                     />
@@ -353,24 +354,26 @@ export const ProductVariantPage = ({
 
                     <ProductShipping
                       data={data}
-                      disabled={loading}
+                      disabled={!!loading}
                       errors={errors}
                       weightUnit={variant?.weight?.unit || defaultWeightUnit}
                       onChange={change}
                     />
                     <CardSpacer />
                     <ProductStocks
-                      productVariantChannelListings={data.channelListings.map(channel => ({
-                        ...channel.data,
-                        ...channel.value,
-                      }))}
+                      productVariantChannelListings={
+                        data.channelListings.map(channel => ({
+                          ...channel.data,
+                          ...channel.value,
+                        })) as any
+                      }
                       warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
                       fetchMoreWarehouses={fetchMoreWarehouses}
                       hasMoreWarehouses={
-                        searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage
+                        !!searchWarehousesResult?.data?.search?.pageInfo?.hasNextPage
                       }
                       data={data}
-                      loading={loading}
+                      loading={!!loading}
                       hasVariants={true}
                       errors={errors}
                       stocks={data.stocks}
@@ -398,16 +401,20 @@ export const ProductVariantPage = ({
                 </Savebar>
                 {canOpenAssignReferencesAttributeDialog && (
                   <AssignAttributeValueDialog
-                    entityType={getReferenceAttributeEntityTypeFromAttribute(
-                      assignReferencesAttributeId,
-                      data.attributes,
-                    )}
+                    entityType={
+                      getReferenceAttributeEntityTypeFromAttribute(
+                        assignReferencesAttributeId!,
+                        data.attributes,
+                      )!
+                    }
                     confirmButtonState={"default"}
-                    products={referenceProducts}
+                    products={referenceProducts as any}
                     pages={referencePages}
                     collections={referenceCollections}
                     categories={referenceCategories}
-                    attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
+                    attribute={
+                      data.attributes.find(({ id }) => id === assignReferencesAttributeId)!
+                    }
                     hasMore={handlers.fetchMoreReferences?.hasMore}
                     open={canOpenAssignReferencesAttributeDialog}
                     onFetch={handlers.fetchReferences}

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
@@ -77,10 +76,10 @@ export interface ProductCreateFormData extends MetadataFormData {
   category: string;
   channelListings: ChannelData[];
   collections: Option[];
-  description: OutputData;
+  description: OutputData | null;
   isAvailable: boolean;
   name: string;
-  productType: ProductType;
+  productType: ProductType | null;
   rating: number;
   seoDescription: string;
   seoTitle: string;
@@ -180,7 +179,7 @@ function useProductCreateForm(
   const [validationErrors, setValidationErrors] = useState<ProductErrorWithAttributesFragment[]>(
     [],
   );
-  const defaultInitialFormData: ProductCreateFormData & Record<"productType", string> = {
+  const defaultInitialFormData: ProductCreateFormData = {
     category: "",
     channelListings: opts.currentChannels,
     collections: [],
@@ -195,7 +194,7 @@ function useProductCreateForm(
     seoTitle: "",
     sku: "",
     slug: "",
-    stockQuantity: null,
+    stockQuantity: 0,
     taxClassId: "",
     trackInventory: false,
     weight: "",
@@ -254,7 +253,7 @@ function useProductCreateForm(
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
-    opts.assignReferencesAttributeId,
+    opts.assignReferencesAttributeId ?? "",
     opts.fetchReferencePages,
     opts.fetchReferenceProducts,
     opts.fetchReferenceCategories,
@@ -262,7 +261,7 @@ function useProductCreateForm(
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
-    opts.assignReferencesAttributeId,
+    opts.assignReferencesAttributeId ?? "",
     opts.fetchMoreReferencePages,
     opts.fetchMoreReferenceProducts,
     opts.fetchMoreReferenceCategories,
@@ -270,7 +269,7 @@ function useProductCreateForm(
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
-    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.data as FormsetData<FormsetData<null, File>>,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
     triggerChange,
@@ -327,14 +326,14 @@ function useProductCreateForm(
   const data: ProductCreateData = {
     ...formData,
     attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
-      pages: opts.referencePages,
-      products: opts.referenceProducts,
-      collections: opts.referenceCollections,
-      categories: opts.referenceCategories,
-    }),
+      pages: opts.referencePages || [],
+      products: opts.referenceProducts || [],
+      collections: opts.referenceCollections || [],
+      categories: opts.referenceCategories || [],
+    }) as AttributeInput[],
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     description: null,
-    productType: opts.selectedProductType,
+    productType: opts.selectedProductType || null,
     stocks: stocks.data,
   };
   const getData = async (): Promise<ProductCreateData> => ({
@@ -393,7 +392,7 @@ function useProductCreateForm(
     }
 
     const hasInvalidChannelListingPrices = data.channelListings.some(
-      channel => validatePrice(channel.price) || validateCostPrice(channel.costPrice),
+      channel => validatePrice(channel.price ?? "") || validateCostPrice(channel.costPrice ?? ""),
     );
 
     if (hasInvalidChannelListingPrices) {
@@ -423,7 +422,11 @@ function useProductCreateForm(
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
-      fetchMoreReferences: handleFetchMoreReferences,
+      fetchMoreReferences: handleFetchMoreReferences ?? {
+        hasMore: false,
+        loading: false,
+        onFetchMore: () => {},
+      },
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChange,

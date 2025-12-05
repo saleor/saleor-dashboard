@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@dashboard/components/CreatorSteps";
@@ -114,7 +113,7 @@ const ProductExportDialog = ({
     },
   });
 
-  const attributeChoices = mapNodeToChoice(attributes);
+  const attributeChoices = mapNodeToChoice(attributes as any);
   const warehouseChoices = mapNodeToChoice(warehouses);
   const handleAttributeSelect: FormChange = event => {
     const id = event.target.name.substr(attributeNamePrefix.length);
@@ -124,14 +123,14 @@ const ProductExportDialog = ({
         name: "exportInfo",
         value: {
           ...data.exportInfo,
-          attributes: toggle(id, data.exportInfo.attributes, (a, b) => a === b),
+          attributes: toggle(id, data.exportInfo?.attributes ?? [], (a, b) => a === b),
         },
       },
     });
 
     const choice = attributeChoices.find(choice => choice.value === id);
 
-    setSelectedAttributes(toggle(choice, selectedAttributes, (a, b) => a.value === b.value));
+    setSelectedAttributes(toggle(choice!, selectedAttributes, (a, b) => a!.value === b!.value));
   };
   const handleChannelSelect = (option: ChannelFragment) => {
     change({
@@ -139,17 +138,17 @@ const ProductExportDialog = ({
         name: "exportInfo",
         value: {
           ...data.exportInfo,
-          channels: toggle(option.id, data.exportInfo.channels, (a, b) => a === b),
+          channels: toggle(option.id, data.exportInfo?.channels ?? [], (a, b) => a === b),
         },
       },
     });
 
     const choice = channels.find(choice => choice.id === option.id);
 
-    setSelectedChannels(toggle(choice, selectedChannels, (a, b) => a.id === b.id));
+    setSelectedChannels(toggle(choice!, selectedChannels as any, (a, b) => a!.id === b!.id) as any);
   };
   const handleToggleAllChannels = (items: ChannelFragment[], selected: number) => {
-    setSelectedChannels(selected === items.length ? [] : channels);
+    setSelectedChannels((selected === items.length ? [] : channels) as any);
     change({
       target: {
         name: "exportInfo",
@@ -168,7 +167,7 @@ const ProductExportDialog = ({
           ...data.exportInfo,
           warehouses: toggle(
             event.target.name.substr(warehouseNamePrefix.length),
-            data.exportInfo.warehouses,
+            data.exportInfo?.warehouses ?? [],
             (a, b) => a === b,
           ),
         },
@@ -181,7 +180,7 @@ const ProductExportDialog = ({
         value: {
           ...data.exportInfo,
           warehouses:
-            data.exportInfo.warehouses.length === warehouses.length
+            (data.exportInfo?.warehouses ?? []).length === warehouses.length
               ? []
               : warehouses.map(warehouse => warehouse.id),
         },
