@@ -43,6 +43,10 @@ export interface FormData extends StockSettingsInput {
   allowUnpaidOrders: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
   automaticallyCompleteCheckouts: boolean;
+  automaticCompletionDelay: number | string | null;
+  automaticCompletionCutOffDate: string;
+  automaticCompletionCutOffTime: string;
+  useCutOffDate: boolean;
 }
 
 interface ChannelFormProps {
@@ -53,12 +57,17 @@ interface ChannelFormProps {
   selectedCurrencyCode?: string;
   selectedCountryDisplayName: string;
   countries: Option[];
+  // Saved values from backend for automatic checkout completion warnings
+  savedAutomaticallyCompleteCheckouts: boolean;
+  savedAutomaticCompletionCutOffDate: string;
+  savedAutomaticCompletionCutOffTime: string;
   onChange: FormChange;
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
   onTransactionFlowStrategyChange: () => void;
   onAutomaticallyCompleteCheckoutsChange: () => void;
+  onUseCutOffDateChange: () => void;
 }
 
 export const ChannelForm = ({
@@ -69,17 +78,28 @@ export const ChannelForm = ({
   selectedCurrencyCode,
   selectedCountryDisplayName,
   countries,
+  savedAutomaticallyCompleteCheckouts,
+  savedAutomaticCompletionCutOffDate,
+  savedAutomaticCompletionCutOffTime,
   onChange,
   onCurrencyCodeChange,
   onDefaultCountryChange,
   onMarkAsPaidStrategyChange,
   onTransactionFlowStrategyChange,
   onAutomaticallyCompleteCheckoutsChange,
+  onUseCutOffDateChange,
 }: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode", "defaultCountry", "deleteExpiredOrdersAfter"],
+    [
+      "name",
+      "slug",
+      "currencyCode",
+      "defaultCountry",
+      "deleteExpiredOrdersAfter",
+      "automaticCompletionDelay",
+    ],
     errors,
   );
   const renderCurrencySelection = currencyCodes && typeof onCurrencyCodeChange === "function";
@@ -218,10 +238,21 @@ export const ChannelForm = ({
         />
         <Box />
         <AutomaticallyCompleteCheckouts
-          onChange={onAutomaticallyCompleteCheckoutsChange}
-          hasError={!!formErrors.automaticallyCompleteCheckouts}
+          hasError={!!formErrors.automaticCompletionDelay}
           isChecked={data.automaticallyCompleteCheckouts}
           disabled={disabled}
+          delay={data.automaticCompletionDelay}
+          cutOffDate={data.automaticCompletionCutOffDate}
+          cutOffTime={data.automaticCompletionCutOffTime}
+          useCutOffDate={data.useCutOffDate}
+          savedIsEnabled={savedAutomaticallyCompleteCheckouts}
+          savedCutOffDate={savedAutomaticCompletionCutOffDate}
+          savedCutOffTime={savedAutomaticCompletionCutOffTime}
+          onCheckboxChange={onAutomaticallyCompleteCheckoutsChange}
+          onDelayChange={onChange}
+          onCutOffDateChange={onChange}
+          onCutOffTimeChange={onChange}
+          onUseCutOffDateChange={onUseCutOffDateChange}
         />
       </Box>
     </>
