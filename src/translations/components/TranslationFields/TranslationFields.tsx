@@ -9,7 +9,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { TranslationField, TranslationFieldType } from "@dashboard/translations/types";
 import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
-import ArrowIcon from "@material-ui/icons/ArrowDropDown";
+import { ChevronDown } from "lucide-react";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -126,7 +126,7 @@ const TranslationFields = (props: TranslationFieldsProps) => {
         <DashboardCard.Title>{title}</DashboardCard.Title>
         <DashboardCard.Toolbar>
           <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
-            <ArrowIcon
+            <ChevronDown
               className={clsx({
                 [classes.rotate]: expanded,
               })}

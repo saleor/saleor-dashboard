@@ -1,8 +1,8 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
-import CheckIcon from "@material-ui/icons/Check";
 import { Button, ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
 import { useEffect, useRef, useState } from "react";
+import { Check } from "lucide-react";
 import { useIntl } from "react-intl";
 
 const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
@@ -92,7 +92,7 @@ export const ConfirmButton = ({
     if (transitionState === "success" && isCompleted) {
       return (
         // TODO: Replace with new component when it will be ready https://github.com/saleor/macaw-ui/issues/443
-        <CheckIcon
+        <Check
           data-test-id="button-success"
           className={sprinkles({
             position: "absolute",

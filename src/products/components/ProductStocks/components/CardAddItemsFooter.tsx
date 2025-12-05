@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
-import AddIcon from "@material-ui/icons/Add";
 import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { MutableRefObject, PropsWithChildren } from "react";
+import { Plus } from "lucide-react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -44,7 +44,7 @@ const CardAddItemsFooter = ({
         {title}
       </Link>
       <IconButton variant="secondary" data-test-id={testIds.button} color="primary" onClick={onAdd}>
-        <AddIcon />
+        <Plus />
       </IconButton>
       {children}
     </div>

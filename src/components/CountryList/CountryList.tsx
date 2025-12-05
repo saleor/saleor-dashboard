@@ -3,12 +3,12 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryFragment } from "@dashboard/graphql";
 import { TableBody, TableCell } from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
+import { ChevronsDownIcon } from "lucide-react";
 
 import { getStringOrPlaceholder } from "../../misc";
 import { DashboardCard } from "../Card";
@@ -115,7 +115,7 @@ const CountryList = (props: CountryListProps) => {
             </TableCell>
             <TableCell className={clsx(classes.textRight, classes.iconCell)}>
               <IconButton variant="secondary">
-                <ArrowDropDownIcon
+                <ChevronsDownIcon
                   data-test-id="countries-drop-down-icon"
                   className={clsx({
                     [classes.rotate]: !isCollapsed,
