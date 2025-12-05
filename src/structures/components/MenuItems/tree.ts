@@ -1,5 +1,3 @@
-// @ts-strict-ignore
-
 import { MenuTreeItem } from "@dashboard/structures/types";
 import { getPatch } from "fast-array-diff";
 

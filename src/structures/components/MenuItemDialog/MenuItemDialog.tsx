@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { Combobox } from "@dashboard/components/Combobox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";

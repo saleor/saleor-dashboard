@@ -46,16 +46,16 @@ export const useLinkValue = (linkType: MenuItemTypeWithOptions) => {
   const pages = mapEdgesToItems(pageSearch?.result?.data?.search) || [];
 
   const categoriesOptions = categories?.map(category => ({
-    value: category.id,
-    label: category.name,
+    value: (category as { id: string }).id,
+    label: (category as { name: string }).name,
   }));
   const collectionsOptions = collections?.map(collection => ({
-    value: collection.id,
-    label: collection.name,
+    value: (collection as { id: string }).id,
+    label: (collection as { name: string }).name,
   }));
   const pagesOptions = pages?.map(page => ({
-    value: page.id,
-    label: page.title,
+    value: (page as { id: string }).id,
+    label: (page as { title: string }).title,
   }));
 
   const options = {

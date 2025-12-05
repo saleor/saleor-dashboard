@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { MenuItemFragment } from "@dashboard/graphql";
 import { MenuTreeItem } from "@dashboard/structures/types";
 

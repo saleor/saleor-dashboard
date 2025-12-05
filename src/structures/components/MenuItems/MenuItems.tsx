@@ -1,7 +1,7 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { buttonMessages } from "@dashboard/intl";
 import { RecursiveMenuItem } from "@dashboard/structures/types";
+import { UniqueIdentifier } from "@dnd-kit/core";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,10 +16,10 @@ interface MenuItemsProps {
   items: RecursiveMenuItem[];
   onChange: (operations: TreeOperation[]) => void;
   onItemAdd: () => void;
-  onItemClick: (id: string, type: MenuItemType) => void;
-  onItemEdit: (id: string) => void;
+  onItemClick: (id: UniqueIdentifier, type: MenuItemType) => void;
+  onItemEdit: (id: UniqueIdentifier) => void;
   // If not passed, it will not render the button. Use to control permissions
-  onTranslate?: (id: string) => void;
+  onTranslate?: (id: UniqueIdentifier) => void;
   onUndo: () => void;
 }
 
