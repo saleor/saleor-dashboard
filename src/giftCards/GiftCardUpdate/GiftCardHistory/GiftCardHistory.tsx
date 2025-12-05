@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Form from "@dashboard/components/Form";
 import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/Timeline";
@@ -76,17 +75,17 @@ const GiftCardHistory = () => {
                 if (type === GiftCardEventsEnum.NOTE_ADDED) {
                   return (
                     <TimelineNote
-                      date={date}
-                      user={user}
+                      date={date ?? ""}
+                      user={user ?? null}
                       message={message}
                       key={id}
-                      app={app}
+                      app={app ?? null}
                       hasPlainDate={false}
                     />
                   );
                 }
 
-                return <GiftCardTimelineEvent key={id} date={date} event={event} />;
+                return <GiftCardTimelineEvent key={id} date={date ?? ""} event={event} />;
               })}
           </Timeline>
         ) : (

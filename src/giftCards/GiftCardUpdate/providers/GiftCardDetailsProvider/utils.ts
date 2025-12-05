@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import moment from "moment";
 
 import { ExtendedGiftCard, GiftCardBase } from "./types";
@@ -11,7 +10,9 @@ function isGiftCardExpired<T extends GiftCardBase>(giftCard: T): boolean {
   return moment(giftCard?.expiryDate).isBefore(moment());
 }
 
-export function getExtendedGiftCard<T extends GiftCardBase>(giftCard?: T): ExtendedGiftCard<T> {
+export function getExtendedGiftCard<T extends GiftCardBase>(
+  giftCard?: T,
+): ExtendedGiftCard<T> | undefined {
   if (!giftCard) {
     return undefined;
   }
@@ -20,4 +21,10 @@ export function getExtendedGiftCard<T extends GiftCardBase>(giftCard?: T): Exten
     ...giftCard,
     isExpired: isGiftCardExpired(giftCard),
   };
+}
+
+export function isDefinedExtendedGiftCard<T extends GiftCardBase>(
+  giftCard: ExtendedGiftCard<T> | undefined,
+): giftCard is ExtendedGiftCard<T> {
+  return giftCard !== undefined;
 }

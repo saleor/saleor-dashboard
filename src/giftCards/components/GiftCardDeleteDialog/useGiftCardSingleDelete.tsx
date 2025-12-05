@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import { DeleteGiftCardMutation, useDeleteGiftCardMutation } from "@dashboard/graphql";
 import { MutationResultWithOpts } from "@dashboard/hooks/makeMutation";

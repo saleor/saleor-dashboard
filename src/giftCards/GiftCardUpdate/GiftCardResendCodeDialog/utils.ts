@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { UserError } from "@dashboard/types";
 import { FormErrors, getFormErrors } from "@dashboard/utils/errors";
 import { useEffect, useState } from "react";

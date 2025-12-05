@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import TextWithSelectField from "@dashboard/components/TextWithSelectField";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";

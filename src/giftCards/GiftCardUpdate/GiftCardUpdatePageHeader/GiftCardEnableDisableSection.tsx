@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { commonMessages } from "@dashboard/intl";
 import { useIntl } from "react-intl";

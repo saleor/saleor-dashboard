@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { IMessage } from "@dashboard/components/messages";
 import { GiftCardCreateMutation, TimePeriodTypeEnum } from "@dashboard/graphql";
 import commonErrorMessages from "@dashboard/utils/errors/common";
@@ -41,11 +40,11 @@ const getGiftCardExpiryError = (intl: IntlShape): IMessage => ({
 });
 
 export const getGiftCardCreateOnCompletedMessage = (
-  errors: GiftCardCreateMutation["giftCardCreate"]["errors"],
+  errors: NonNullable<GiftCardCreateMutation["giftCardCreate"]>["errors"] | undefined,
   intl: IntlShape,
   successMessage?: IMessage,
 ): IMessage => {
-  const hasExpiryError = errors.some(error => error.field === "expiryDate");
+  const hasExpiryError = errors?.some(error => error.field === "expiryDate");
   const successGiftCardMessage = successMessage || {
     status: "success",
     text: intl.formatMessage(messages.createdSuccessAlertTitle),
@@ -63,18 +62,14 @@ export const getGiftCardCreateOnCompletedMessage = (
     : successGiftCardMessage;
 };
 
-export const getGiftCardExpiryInputData = (
-  {
-    expirySelected,
-    expiryType,
-    expiryDate,
-    expiryPeriodAmount,
-    expiryPeriodType,
-  }: GiftCardCreateCommonFormData,
+export function getGiftCardExpiryInputData(
+  data: GiftCardCreateCommonFormData,
   currentDate: number,
-): string => {
+): string | undefined {
+  const { expirySelected, expiryType, expiryDate, expiryPeriodAmount, expiryPeriodType } = data;
+
   if (!expirySelected) {
-    return;
+    return undefined;
   }
 
   if (expiryType === "EXPIRY_PERIOD") {
@@ -86,4 +81,4 @@ export const getGiftCardExpiryInputData = (
   }
 
   return expiryDate;
-};
+}

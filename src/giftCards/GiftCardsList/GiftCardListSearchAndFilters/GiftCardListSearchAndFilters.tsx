@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";

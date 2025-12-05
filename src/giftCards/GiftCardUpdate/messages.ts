@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { GiftCardErrorCode, GiftCardErrorFragment } from "@dashboard/graphql";
 import commonErrorMessages, {
   getCommonFormFieldErrorMessage,
@@ -16,7 +15,7 @@ const giftCardErrorMessages = defineMessages({
 export function getGiftCardErrorMessage(
   error: Omit<GiftCardErrorFragment, "__typename" | "message"> | undefined,
   intl: IntlShape,
-): string {
+): string | undefined {
   if (error) {
     switch (error.code) {
       case GiftCardErrorCode.NOT_FOUND:

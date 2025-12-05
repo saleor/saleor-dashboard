@@ -3,7 +3,10 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { IFilter } from "@dashboard/components/Filter/types";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
+import {
+  getExtendedGiftCard,
+  isDefinedExtendedGiftCard,
+} from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import {
   GiftCardListQuery,
@@ -131,7 +134,8 @@ export const GiftCardsListProvider = ({ children, params }: GiftCardsListProvide
     variables: newQueryVariables,
     handleError: handleGiftCardListError,
   });
-  const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) ?? [];
+  const giftCards =
+    mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard).filter(isDefinedExtendedGiftCard) ?? [];
   const providerValues: GiftCardsListConsumerProps = {
     onSort: handleSort,
     sort: getSortParams(params),

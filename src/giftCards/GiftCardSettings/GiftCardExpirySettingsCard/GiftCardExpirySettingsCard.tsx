@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import GiftCardSettingsExpirySelect, {
   GiftCardSettingsExpirySelectProps,

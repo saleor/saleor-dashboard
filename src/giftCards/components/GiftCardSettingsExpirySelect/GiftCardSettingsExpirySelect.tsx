@@ -15,7 +15,7 @@ export interface GiftCardSettingsExpirySelectProps {
   expiryPeriodActive: boolean;
   expiryPeriodType: TimePeriodTypeEnum;
   expiryPeriodAmount: number;
-  errors?: Record<"expiryPeriod", GiftCardSettingsErrorFragment>;
+  errors?: Record<"expiryPeriod", GiftCardSettingsErrorFragment | undefined>;
 }
 
 const GiftCardSettingsExpirySelect = ({

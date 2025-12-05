@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@dashboard/graphql";
 import { createContext } from "react";
 import * as React from "react";
