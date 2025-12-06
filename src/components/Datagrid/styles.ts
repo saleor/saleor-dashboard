@@ -51,8 +51,14 @@ const useStyles = makeStyles<{
       },
       ghostIcon: {
         color: vars.colors.text.default1,
-        padding: vars.spacing[1],
-        margin: vars.spacing[1],
+        // Fixed size with 6px smaller than cell for visual padding
+        width: cellHeight - 8,
+        height: cellHeight - 8,
+        padding: 0,
+        margin: "auto",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
@@ -129,6 +135,8 @@ const useStyles = makeStyles<{
         color: vars.colors.text.default1,
         display: "grid",
         gridTemplateColumns: props => (props.showMetadataButton ? "1fr auto 1fr" : "1fr"),
+        alignItems: "center",
+        justifyItems: "center",
         height: `calc(${cellHeight}px - 1px)`,
         background: vars.colors.background.default1,
         boxShadow: rightColumnBoxShadow,

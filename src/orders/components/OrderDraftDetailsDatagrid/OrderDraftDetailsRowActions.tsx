@@ -1,8 +1,8 @@
 import { rightColumnBoxShadow } from "@dashboard/components/Datagrid/ColumnPicker/utils";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { IconButton, MoreHorizontalIcon } from "@saleor/macaw-ui";
+import { IconButton } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
-import { Code } from "lucide-react";
+import { Code, EllipsisVertical } from "lucide-react";
 import { IntlShape } from "react-intl";
 
 import CardMenu, { CardMenuItem } from "../../../components/CardMenu";
@@ -46,9 +46,12 @@ export const OrderDraftDetailsRowActions = ({
         disabled={disabled}
         autoFocusItem={false}
         showMenuIcon={true}
-        Icon={MoreHorizontalIcon}
+        Icon={() => (
+          <EllipsisVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+        )}
         IconButtonProps={{
           className: classes.ghostIcon,
+          variant: "ghost",
           hoverOutline: false,
           state: "default",
         }}
