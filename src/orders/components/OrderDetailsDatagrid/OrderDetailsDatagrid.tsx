@@ -8,6 +8,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productPath } from "@dashboard/products/urls";
@@ -77,10 +78,10 @@ export const OrderDetailsDatagrid = ({
         label: intl.formatMessage(messages.productDetails),
         Icon: lines[index]?.variant?.product.id ? (
           <Link to={productPath(lines[index].variant.product.id)} target="_blank">
-            <ExternalLink />
+            <ExternalLink size={iconSize.medium} strokeWidth={iconStrokeWidth} />
           </Link>
         ) : (
-          <ExternalLink />
+          <ExternalLink size={iconSize.medium} strokeWidth={iconStrokeWidth} />
         ),
         onSelect: () => false,
       },

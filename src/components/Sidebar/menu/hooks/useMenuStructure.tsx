@@ -1,6 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
@@ -106,7 +107,7 @@ export function useMenuStructure() {
       type: "item",
     },
     {
-      icon: renderIcon(<Search />),
+      icon: renderIcon(<Search size={iconSize.medium} strokeWidth={iconStrokeWidth} />),
       label: (
         <Box display="flex" alignItems="center" gap={2}>
           {intl.formatMessage(sectionNames.search)}

@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { GiftCardDetailsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -133,7 +134,7 @@ export const TimelineNote = ({
                   onClick={() => {
                     setShowEdit(true);
                   }}
-                  icon={<Edit size="small" />}
+                  icon={<Edit size={iconSize.small} strokeWidth={iconStrokeWidth} />}
                 />
               )}
             </DashboardCard.Content>

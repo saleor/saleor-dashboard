@@ -4,6 +4,7 @@ import {
   getSingleReferenceDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Edit, Plus } from "lucide-react";
 import { useIntl } from "react-intl";
@@ -45,7 +46,7 @@ export const SingleReferenceField = ({
               variant="secondary"
               onClick={() => onReferencesAddClick(attribute)}
               disabled={disabled || loading}
-              icon={<Edit />}
+              icon={<Edit size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
               marginLeft="auto"
               data-test-id="single-ref-edit"
             />
@@ -55,7 +56,7 @@ export const SingleReferenceField = ({
             variant="secondary"
             onClick={() => onReferencesAddClick(attribute)}
             disabled={disabled || loading}
-            icon={<Plus />}
+            icon={<Plus size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             marginLeft="auto"
             data-test-id="single-ref-add"
           />

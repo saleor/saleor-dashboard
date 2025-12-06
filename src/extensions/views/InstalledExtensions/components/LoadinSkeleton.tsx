@@ -1,4 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ExtensionAvatar } from "@dashboard/extensions/components/ExtensionAvatar";
 import { messages } from "@dashboard/extensions/messages";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -31,7 +32,7 @@ export const LoadingSkeleton = () => {
                 >
                   <Box display="flex" alignItems="center" gap={2}>
                     <ExtensionAvatar>
-                      <Package size="medium" color="default2" />
+                      <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />
                     </ExtensionAvatar>
                     <Skeleton
                       data-test-id="loading-skeleton"

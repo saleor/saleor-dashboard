@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { Settings } from "lucide-react";
 
@@ -15,7 +16,11 @@ interface TopNavMenuProps {
 export const Menu = ({ items, dataTestId }: TopNavMenuProps) => (
   <Dropdown data-test-id={dataTestId}>
     <Dropdown.Trigger>
-      <Button icon={<Settings />} variant="secondary" data-test-id="show-more-button" />
+      <Button
+        icon={<Settings size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+        variant="secondary"
+        data-test-id="show-more-button"
+      />
     </Dropdown.Trigger>
     <Dropdown.Content align="end">
       <Box>

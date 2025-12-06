@@ -1,4 +1,5 @@
 import { GridTable } from "@dashboard/components/GridTable";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { getUserInitials, getUserName, User } from "@dashboard/misc";
@@ -77,12 +78,19 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
         <Box data-test-id="edit-refund-button" display="flex" justifyContent="flex-end">
           {isEditable ? (
             <Link to={orderTransactionRefundEditUrl(orderId, refund.id)}>
-              <Button icon={<Edit />} variant="secondary" />
+              <Button
+                icon={<Edit size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                variant="secondary"
+              />
             </Link>
           ) : (
             <Tooltip>
               <Tooltip.Trigger>
-                <Button disabled icon={<Edit />} variant="secondary" />
+                <Button
+                  disabled
+                  icon={<Edit size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                  variant="secondary"
+                />
               </Tooltip.Trigger>
               <Tooltip.Content>
                 <Tooltip.Arrow />

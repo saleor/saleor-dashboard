@@ -6,6 +6,7 @@ import {
 import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   ChannelErrorFragment,
   CountryCode,
@@ -118,7 +119,7 @@ export const ChannelForm = ({
                 variant="tertiary"
                 onClick={() => copy(data.slug)}
                 textTransform="uppercase"
-                icon={<Copy />}
+                icon={<Copy size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
               />
             }
           />

@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { TreeItemComponentProps } from "@dashboard/components/SortableTree/types";
 import { buttonMessages } from "@dashboard/intl";
 import { MenuItemType } from "@dashboard/structures/components/MenuItemDialog";
@@ -70,7 +71,7 @@ export const MenuItemsSortableTreeItem = ({
       >
         <Box display="flex" gap={6} alignItems="center">
           <Button variant="tertiary" __cursor="grab" {...handleProps}>
-            <GripVertical color="default1" />
+            <GripVertical size={iconSize.medium} strokeWidth={iconStrokeWidth} />
           </Button>
           <Text>{data.name}</Text>
         </Box>
@@ -82,7 +83,7 @@ export const MenuItemsSortableTreeItem = ({
             data-test-id="edit-menu-item-button"
             variant="secondary"
             onClick={() => onEdit(id)}
-            icon={<Edit />}
+            icon={<Edit size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
           />
           <TranslationsButton
             data-test-id="translate-menu-item-button"
@@ -92,7 +93,7 @@ export const MenuItemsSortableTreeItem = ({
             data-test-id="remove-menu-item-button"
             variant="secondary"
             onClick={() => onRemove(id)}
-            icon={<Trash2 />}
+            icon={<Trash2 size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
           />
         </Box>
         {clone && childCount && childCount > 1 ? (
