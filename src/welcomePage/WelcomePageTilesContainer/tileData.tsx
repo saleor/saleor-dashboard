@@ -5,6 +5,7 @@ import extension from "@assets/images/extension-icon.svg";
 import github from "@assets/images/github-logo.svg";
 import externalLink from "@assets/images/rounded-external-link-icon.svg";
 import star from "@assets/images/star-icon.svg";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   APPS_OVERVIEW_DOCS_URL,
   CHECKOUT_OVERVIEW_DOCS_URL,
@@ -44,7 +45,7 @@ export const getTilesData = ({
     id: "technical-help",
     header: (
       <>
-        <HelpCircle />
+        <HelpCircle size={iconSize.medium} strokeWidth={iconStrokeWidth} />
         <FormattedMessage defaultMessage="Need technical help?" id="g9HrbF" />
       </>
     ),

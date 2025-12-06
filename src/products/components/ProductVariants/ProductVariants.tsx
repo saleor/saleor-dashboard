@@ -3,6 +3,7 @@ import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/Column
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid, { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import {
   AttributeInputTypeEnum,
   ProductDetailsVariantFragment,
@@ -11,13 +12,13 @@ import {
   useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import EditIcon from "@dashboard/icons/Edit";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 import { Option } from "@saleor/macaw-ui-next";
+import { Pencil } from "lucide-react";
 import { useCallback, useEffect, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -187,7 +188,7 @@ const ProductVariants = ({
         {
           label: "Edit Variant",
           onSelect: () => onRowClick(variants[index].id),
-          Icon: <EditIcon />,
+          Icon: <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
         },
       ]}
       rows={variants?.length ?? 0}

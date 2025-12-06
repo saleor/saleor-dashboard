@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { AlertTriangle } from "lucide-react";
 import { useIntl } from "react-intl";
@@ -25,7 +26,7 @@ export const LegacyFlowWarning = ({
       marginTop={1}
       marginBottom={1}
     >
-      <AlertTriangle size="small" color="warning1" />
+      <AlertTriangle size={iconSize.small} strokeWidth={iconStrokeWidth} />
       <Text size={2} color="warning1">
         {intl.formatMessage({
           defaultMessage: "Legacy flow detected -  select tax strategy from dropdown",

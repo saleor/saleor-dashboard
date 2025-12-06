@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
 import { GripVertical, X } from "lucide-react";
 import { ReactNode } from "react";
@@ -72,8 +73,8 @@ export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
             marginRight={1}
           >
             <GripVertical
-              color="default2"
-              size="small"
+              size={iconSize.small}
+              strokeWidth={iconStrokeWidth}
               data-test-id="button-drag-handle"
               style={{ cursor: isDragged ? "grabbing" : "grab", outline: "none" }}
             />
@@ -87,7 +88,7 @@ export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
               data-test-id="button-close"
               disabled={loading}
               type="button"
-              icon={<X size="small" />}
+              icon={<X size={iconSize.small} strokeWidth={iconStrokeWidth} />}
             />
           </Box>
         </Box>

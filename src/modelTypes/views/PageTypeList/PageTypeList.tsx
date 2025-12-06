@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
 import { usePageTypeBulkDeleteMutation, usePageTypeListQuery } from "@dashboard/graphql";
@@ -21,7 +22,8 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { IconButton } from "@saleor/macaw-ui";
+import { Trash2 } from "lucide-react";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -170,7 +172,7 @@ const PageTypeList = ({ params }: PageTypeListProps) => {
               })
             }
           >
-            <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+            <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
           </IconButton>
         }
       />

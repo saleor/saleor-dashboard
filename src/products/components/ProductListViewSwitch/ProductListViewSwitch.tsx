@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Switch } from "@saleor/macaw-ui-next";
 import { Grid3x3, List } from "lucide-react";
 
@@ -19,10 +20,10 @@ export const ProductListViewSwitch = ({
     }}
   >
     <Switch.Item id="datagrid" value="datagrid" data-test-id="datagrid-view-button">
-      <List size="medium" />
+      <List size={iconSize.medium} strokeWidth={iconStrokeWidth} />
     </Switch.Item>
     <Switch.Item id="tile" value="tile" data-test-id="tile-view-button">
-      <Grid3x3 size="medium" />
+      <Grid3x3 size={iconSize.medium} strokeWidth={iconStrokeWidth} />
     </Switch.Item>
   </Switch>
 );

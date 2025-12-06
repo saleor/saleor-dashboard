@@ -1,10 +1,12 @@
-import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Box, Button, Dropdown, List, Text, TextProps } from "@saleor/macaw-ui-next";
 import { Settings } from "lucide-react";
 
 interface TopNavMenuItem {
   label: string;
   testId?: string;
   onSelect: <T extends object>(params: T) => void;
+  color?: TextProps["color"];
 }
 
 interface TopNavMenuProps {
@@ -15,7 +17,11 @@ interface TopNavMenuProps {
 export const Menu = ({ items, dataTestId }: TopNavMenuProps) => (
   <Dropdown data-test-id={dataTestId}>
     <Dropdown.Trigger>
-      <Button icon={<Settings />} variant="secondary" data-test-id="show-more-button" />
+      <Button
+        icon={<Settings size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+        variant="secondary"
+        data-test-id="show-more-button"
+      />
     </Dropdown.Trigger>
     <Dropdown.Content align="end">
       <Box>
@@ -29,7 +35,7 @@ export const Menu = ({ items, dataTestId }: TopNavMenuProps) => (
                 onClick={item.onSelect}
                 data-test-id={item.testId}
               >
-                <Text>{item.label}</Text>
+                <Text color={item.color}>{item.label}</Text>
               </List.Item>
             </Dropdown.Item>
           ))}

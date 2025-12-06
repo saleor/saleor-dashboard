@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
@@ -40,7 +41,14 @@ const Chip = (props: ChipProps) => {
     <div className={clsx(classes.root, className)}>
       <Text className={classes.label} size={2} fontWeight="medium">
         {label}
-        {onClose && <X className={classes.closeIcon} onClick={onClose} />}
+        {onClose && (
+          <X
+            size={iconSize.small}
+            strokeWidth={iconStrokeWidth}
+            className={classes.closeIcon}
+            onClick={onClose}
+          />
+        )}
       </Text>
     </div>
   );

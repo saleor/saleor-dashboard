@@ -1,4 +1,5 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   getLatestFailedAttemptFromWebhooks,
   LatestWebhookDeliveryWithMoment,
@@ -72,7 +73,7 @@ const getExtensionLogo = ({
     return <Box as="img" src={logo} alt={name} display="block" maxWidth="100%" />;
   }
 
-  return <Package size="medium" color="default2" />;
+  return <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />;
 };
 
 const resolveExtensionHref = ({

@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ExtensionMenuItem } from "@dashboard/extensions/getExtensionsItems";
 import { Box, BoxProps, Button, ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { ChevronDown } from "lucide-react";
@@ -101,7 +102,7 @@ const ButtonGroupWithDropdown = ({
           <Button
             __height="50px"
             variant={variant}
-            icon={<ChevronDown />}
+            icon={<ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             disabled={disabled}
             borderColor="default1"
             borderLeftWidth={1}

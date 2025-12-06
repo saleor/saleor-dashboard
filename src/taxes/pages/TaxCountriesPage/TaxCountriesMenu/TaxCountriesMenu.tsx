@@ -1,4 +1,5 @@
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ListItemLink from "@dashboard/components/ListItemLink";
 import { TaxCountryConfigurationFragment } from "@dashboard/graphql";
 import { taxesMessages } from "@dashboard/taxes/messages";
@@ -67,7 +68,9 @@ const TaxCountriesMenu = ({
                   <div className={classes.spaceBetween}>
                     {config.country.country}
                     <Button
-                      icon={<Trash2 />}
+                      icon={
+                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                      }
                       variant="tertiary"
                       onClick={event => {
                         event.stopPropagation();

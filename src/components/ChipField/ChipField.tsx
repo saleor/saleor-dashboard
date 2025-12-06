@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui-next";
 import { X } from "lucide-react";
 import { forwardRef, ReactNode } from "react";
@@ -59,7 +60,7 @@ export const ChipField = forwardRef<HTMLDivElement, ChipFieldProps>(
               data-test-id="button-close"
               disabled={loading}
               type="button"
-              icon={<X size="small" />}
+              icon={<X size={iconSize.small} strokeWidth={iconStrokeWidth} />}
             />
           </Box>
         </Box>

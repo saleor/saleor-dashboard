@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
 import MoneyRange from "@dashboard/components/MoneyRange";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -13,7 +14,7 @@ import { ChannelProps } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
-import { Edit, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -170,7 +171,7 @@ const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
                       onClick={() => navigate(getRateEditHref(rate.id))}
                       className={classes.buttonColumn}
                     >
-                      <Edit />
+                      <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
 
@@ -180,7 +181,11 @@ const ShippingZoneRates = (props: ShippingZoneRatesProps) => {
                       onClick={() => onRateRemove(rate.id)}
                       className={classes.buttonColumn}
                     >
-                      <Trash2 data-test-id="delete-button" />
+                      <Trash2
+                        size={iconSize.small}
+                        strokeWidth={iconStrokeWidthBySize.small}
+                        data-test-id="delete-button"
+                      />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

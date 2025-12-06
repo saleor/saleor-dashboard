@@ -1,7 +1,9 @@
 import { IconButton } from "@dashboard/components/IconButton";
-import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { Pencil, Trash2 } from "lucide-react";
 import * as React from "react";
 
 import { SaleorThrobber } from "../Throbber";
@@ -126,7 +128,7 @@ const MediaTile = (props: MediaTileProps) => {
                 className={classes.controlButton}
                 onClick={onEdit}
               >
-                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
               </IconButton>
             )}
             {onDelete && (
@@ -136,7 +138,7 @@ const MediaTile = (props: MediaTileProps) => {
                 className={classes.controlButton}
                 onClick={onDelete}
               >
-                <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
               </IconButton>
             )}
           </div>

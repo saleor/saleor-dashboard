@@ -1,6 +1,8 @@
-import { EditIcon, ThemeProvider } from "@saleor/macaw-ui";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { ThemeProvider } from "@saleor/macaw-ui";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Pencil } from "lucide-react";
 
 import { RowActions } from "./RowActions";
 
@@ -29,10 +31,10 @@ describe("RowActions", () => {
               label: "Edit",
               onSelect: jest.fn(),
               Icon: (
-                <EditIcon
+                <Pencil
+                  size={iconSize.small}
+                  strokeWidth={iconStrokeWidthBySize.small}
                   data-test-id="edit-icon"
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
                 />
               ),
             },
@@ -111,9 +113,7 @@ describe("RowActions", () => {
             {
               label: "Edit",
               onSelect: onSelectCallback,
-              Icon: (
-                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-              ),
+              Icon: <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
             },
           ]}
           disabled={false}
@@ -191,9 +191,7 @@ describe("RowActions", () => {
             {
               label: "Edit",
               onSelect: jest.fn(),
-              Icon: (
-                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-              ),
+              Icon: <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
             },
           ]}
           disabled={true}

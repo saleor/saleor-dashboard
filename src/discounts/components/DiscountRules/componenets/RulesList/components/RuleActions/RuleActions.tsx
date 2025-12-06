@@ -1,6 +1,7 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import { Edit, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 
 interface RuleActionsProps {
   onEdit: () => void;
@@ -20,7 +21,7 @@ export const RuleActions = ({ onEdit, onDelete }: RuleActionsProps) => {
         disabled={disabled}
         data-test-id="rule-edit-button"
       >
-        <Edit />
+        <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
       </Button>
       <Button
         size="small"
@@ -32,7 +33,7 @@ export const RuleActions = ({ onEdit, onDelete }: RuleActionsProps) => {
           onDelete();
         }}
       >
-        <Trash2 />
+        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
       </Button>
     </Box>
   );

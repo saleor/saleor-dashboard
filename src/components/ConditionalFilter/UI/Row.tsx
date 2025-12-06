@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Button, DynamicCombobox, Select } from "@saleor/macaw-ui-next";
 import { Minus } from "lucide-react";
 
@@ -109,7 +110,7 @@ export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowPr
       <Button
         marginLeft="auto"
         variant="tertiary"
-        icon={<Minus />}
+        icon={<Minus size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
         onClick={() => emitter.removeRow(index)}
         disabled={constrain.disableRemoveButton}
       />

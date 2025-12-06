@@ -1,5 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
@@ -37,7 +38,7 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
             </Text>
             <Button
               variant="secondary"
-              icon={<Plus />}
+              icon={<Plus size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
               onClick={onAssignClick}
               disabled={disabled}
             />

@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { InstalledExtension } from "@dashboard/extensions/types";
 import { JobStatusEnum, useAppsInstallationsQuery } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
@@ -24,7 +25,7 @@ const getPendingInstallationLogo = ({ logo, name }: { logo?: string | null; name
     return <Box as="img" src={logo} alt={name} display="block" maxWidth="100%" />;
   }
 
-  return <Package size="medium" color="default2" />;
+  return <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />;
 };
 
 export const usePendingInstallation = ({

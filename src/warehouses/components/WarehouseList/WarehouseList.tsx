@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
@@ -121,7 +122,9 @@ const WarehouseList = (props: WarehouseListProps) => {
               <TableCell>
                 <TableButtonWrapper>
                   <Button
-                    icon={<Trash2 />}
+                    icon={
+                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                    }
                     variant="secondary"
                     data-test-id="delete-button"
                     onClick={() => onRemove(warehouse?.id)}

@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import Link from "@dashboard/components/Link";
 import { messages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -48,7 +49,7 @@ export const AppActions = ({
           <Button variant="secondary" display="flex" alignItems="center" gap={2}>
             {intl.formatMessage(messages.viewOnGithub)}
             <Box marginTop={1}>
-              <ExternalLink size="small" />
+              <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidth} />
             </Box>
           </Button>
         </Link>
