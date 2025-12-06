@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -81,7 +82,9 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
                     variant="tertiary"
                     onClick={() => onDelete(token.id)}
                     data-test-id={`delete-token-${token.id}`}
-                    icon={<Trash2 />}
+                    icon={
+                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                    }
                   />
                 </TableButtonWrapper>
               </Box>

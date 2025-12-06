@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
@@ -125,7 +126,12 @@ export const WebhooksList = ({
                                 webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined
                               }
                               data-test-id={`delete-webhook-${webhook?.id}`}
-                              icon={<Trash2 />}
+                              icon={
+                                <Trash2
+                                  size={iconSize.small}
+                                  strokeWidth={iconStrokeWidthBySize.small}
+                                />
+                              }
                             />
                           </TableButtonWrapper>
                         </Box>

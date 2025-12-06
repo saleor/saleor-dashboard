@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -124,7 +125,9 @@ export const MetadataCardTable = ({
                           })
                         }
                         type="button"
-                        icon={<Trash2 />}
+                        icon={
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        }
                       />
                     )}
                   </Box>
