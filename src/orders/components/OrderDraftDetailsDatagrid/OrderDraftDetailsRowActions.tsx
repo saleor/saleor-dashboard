@@ -1,5 +1,5 @@
 import { rightColumnBoxShadow } from "@dashboard/components/Datagrid/ColumnPicker/utils";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { IconButton, MoreHorizontalIcon } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
@@ -39,7 +39,7 @@ export const OrderDraftDetailsRowActions = ({
         variant="ghost"
         title={intl.formatMessage(messages.showMetadata)}
       >
-        <Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />
+        <Code size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
       </IconButton>
       <Box height="100%" __width={1} backgroundColor={"default3"} />
       <CardMenu

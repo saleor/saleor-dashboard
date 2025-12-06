@@ -16,8 +16,18 @@ export const iconSize = {
 } as const;
 
 /**
+ * Stroke width mappings for Lucide icons by size.
+ * Smaller icons need thicker strokes for visibility.
+ */
+export const iconStrokeWidthBySize = {
+  small: 2,
+  medium: 1.5,
+  large: 1.5,
+} as const;
+
+/**
  * Default stroke width for icons.
- * Lucide defaults to 2, but 1.5 is lighter.
+ * Lucide defaults to 2, but 1.5 is lighter for medium/large icons.
  */
 export const iconStrokeWidth = 1.5;
 

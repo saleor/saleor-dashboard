@@ -1,4 +1,4 @@
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { IconButton } from "@saleor/macaw-ui";
 import { Box, Popover, PopoverContentProps, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Columns3 } from "lucide-react";
@@ -65,7 +65,7 @@ export const ColumnPicker = ({
             className={classes.ghostIcon}
             title="Pick columns"
           >
-            <Columns3 size={iconSize.medium} strokeWidth={iconStrokeWidth} />
+            <Columns3 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
           </IconButton>
         </Box>
       </Popover.Trigger>
