@@ -6,6 +6,10 @@ import { useMemo } from "react";
 import { rightColumnBoxShadow } from "./ColumnPicker/utils";
 
 export const cellHeight = 40;
+// Width for a single action button container (column picker, single row action)
+export const singleActionWidth = cellHeight;
+// Default width for the row action bar (can be overridden via Datagrid prop)
+export const rowActionBarWidth = singleActionWidth;
 
 const useStyles = makeStyles<{
   actionButtonPosition?: "left" | "right";
@@ -105,7 +109,7 @@ const useStyles = makeStyles<{
       },
       rowActionBar: {
         height: "100%",
-        width: 36,
+        width: rowActionBarWidth,
       },
       rowActionvBarWithItems: {},
       rowActionBarScrolledToRight: {
@@ -130,9 +134,7 @@ const useStyles = makeStyles<{
         boxShadow: rightColumnBoxShadow,
       },
       rowColumnGroup: {
-        height: cellHeight,
-        // aligns row action with column picker
-        marginLeft: "-4px",
+        height: `calc(${cellHeight}px - 1px)`,
       },
       rowActionScrolledToRight: {
         borderLeftColor: vars.colors.border.default1,

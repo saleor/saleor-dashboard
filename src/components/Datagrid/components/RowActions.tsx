@@ -21,13 +21,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
   }
 
   return (
-    <div
-      className={classes.rowAction}
-      style={{
-        // aligns row action with column picker
-        marginLeft: "-4px",
-      }}
-    >
+    <div className={classes.rowAction}>
       {hasSingleMenuItem && firstMenuItem.Icon ? (
         <IconButton
           data-test-id="row-action-button"

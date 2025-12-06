@@ -47,7 +47,12 @@ import { useRowAnchor } from "./hooks/useRowAnchor";
 import { useRowHover } from "./hooks/useRowHover";
 import { useScrollRight } from "./hooks/useScrollRight";
 import { useTooltipContainer } from "./hooks/useTooltipContainer";
-import useStyles, { cellHeight, useDatagridTheme, useFullScreenStyles } from "./styles";
+import useStyles, {
+  cellHeight,
+  rowActionBarWidth as defaultRowActionBarWidth,
+  useDatagridTheme,
+  useFullScreenStyles,
+} from "./styles";
 import { AvailableColumn } from "./types";
 import { preventRowClickOnSelectionCheckbox } from "./utils";
 
@@ -119,7 +124,7 @@ const Datagrid = ({
   onChange,
   renderColumnPicker,
   renderRowActions,
-  rowActionBarWidth = 36,
+  rowActionBarWidth = defaultRowActionBarWidth,
   onRowClick,
   getColumnTooltipContent,
   readonly = false,
