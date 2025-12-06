@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -11,8 +12,9 @@ import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql"
 import { productVariantEditPath } from "@dashboard/products/urls";
 import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { IconButton } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
@@ -134,11 +136,7 @@ const DiscountVariants = (props: SaleVariantsProps) => {
                           onVariantUnassign(variant.id);
                         }}
                       >
-                        <DeleteIcon
-                          color="primary"
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        />
+                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

@@ -1,5 +1,5 @@
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ListItemLink from "@dashboard/components/ListItemLink";
 import { TaxClassFragment } from "@dashboard/graphql";
 import { taxesMessages } from "@dashboard/taxes/messages";
@@ -74,7 +74,12 @@ const TaxClassesMenu = ({
                       {taxClass.id !== "new" && (
                         <Button
                           data-test-id="class-delete-button"
-                          icon={<Trash2 size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                          icon={
+                            <Trash2
+                              size={iconSize.small}
+                              strokeWidth={iconStrokeWidthBySize.small}
+                            />
+                          }
                           variant="tertiary"
                           onClick={event => {
                             event.stopPropagation();

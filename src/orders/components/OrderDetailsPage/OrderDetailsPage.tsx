@@ -166,6 +166,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
       item: {
         label: intl.formatMessage(messages.cancelOrder),
         onSelect: onOrderCancel,
+        color: "critical1" as const,
       },
       shouldExist: canCancel,
     },
