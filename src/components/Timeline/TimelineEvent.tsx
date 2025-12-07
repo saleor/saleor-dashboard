@@ -156,7 +156,6 @@ export interface TimelineEventProps {
   isLastInGroup?: boolean;
 }
 
-// Icon color that works in both light and dark mode
 const ICON_COLOR = vars.colors.text.default2;
 
 // Icon wrapper component with circle background

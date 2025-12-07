@@ -30,12 +30,6 @@ jest.mock("@dashboard/hooks/useClipboard", () => ({
   useClipboard: () => [false, mockCopy],
 }));
 
-// We can mock Card but maybe we want to check if it renders?
-// If DashboardCard uses complex logic, we mock it. It seems largely presentational.
-// For now, I'll keep it mocked to isolate OrderCustomer logic, consistent with unit testing.
-// However, if I remove macaw-ui-next mocks, I might as well try removing this one if it's simple.
-// But DashboardCard comes from @dashboard/components/Card, so let's keep it mocked for now
-// to avoid pulling in its dependencies.
 jest.mock("@dashboard/components/Card", () => ({
   DashboardCard: Object.assign(({ children }: any) => <div>{children}</div>, {
     Header: ({ children }: any) => <div>{children}</div>,
@@ -44,9 +38,6 @@ jest.mock("@dashboard/components/Card", () => ({
     Content: ({ children }: any) => <div>{children}</div>,
   }),
 }));
-
-// Removing manual macaw-ui-next mocks to rely on real components (or global mocks if they exist)
-// This aligns with OrderSummary.test.tsx pattern.
 
 describe("OrderCustomer", () => {
   const defaultProps = {
@@ -112,8 +103,6 @@ describe("OrderCustomer", () => {
       </Wrapper>,
     );
 
-    // There are multiple "Not set" texts (customer, shipping, billing potentially)
-    // We check if at least one exists for customer section or generally in the document
     const notSetElements = screen.getAllByText("Not set");
 
     expect(notSetElements.length).toBeGreaterThan(0);
@@ -186,12 +175,10 @@ describe("OrderCustomer", () => {
 
     const emailText = screen.getByText("customer@example.com");
 
-    // The onMouseEnter is on the parent Box of the email text
     fireEvent.mouseEnter(emailText.parentElement!);
 
     const copyButtons = screen.getAllByLabelText("Copy to clipboard");
 
-    // First one should be email
     fireEvent.click(copyButtons[0]);
 
     expect(mockCopy).toHaveBeenCalledWith("customer@example.com");
