@@ -23,13 +23,16 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
+import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Box, Divider, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
+import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderDraftAlert from "./OrderDraftAlert";
 
 interface OrderDraftPageProps extends FetchMoreProps {
@@ -90,6 +93,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
+  const orderDiscountContext = useContext(OrderDiscountContext);
   const backLinkUrl = useBackLinkWithState({
     path: draftOrderListUrl,
   });
@@ -149,7 +153,23 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           onOrderLineRemove={onOrderLineRemove}
           onShippingMethodEdit={onShippingMethodEdit}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
+          hideSummary
         />
+        {order && orderDiscountContext && (
+          <>
+            <OrderSummary
+              order={order}
+              onMarkAsPaid={() => {
+                // Draft orders cannot be marked as paid
+              }}
+              isEditable
+              onShippingMethodEdit={onShippingMethodEdit}
+              errors={errors}
+              {...orderDiscountContext}
+            />
+            <CardSpacer />
+          </>
+        )}
         <OrderHistory
           history={order?.events}
           orderCurrency={order?.total?.gross.currency}

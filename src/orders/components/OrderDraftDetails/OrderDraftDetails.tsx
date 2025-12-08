@@ -27,6 +27,8 @@ interface OrderDraftDetailsProps {
   onOrderLineRemove: (id: string) => void;
   onShippingMethodEdit: () => void;
   onOrderLineShowMetadata: (id: string) => void;
+  /** Hide the summary section (when using OrderSummary component instead) */
+  hideSummary?: boolean;
 }
 
 const OrderDraftDetails = ({
@@ -39,6 +41,7 @@ const OrderDraftDetails = ({
   onOrderLineRemove,
   onShippingMethodEdit,
   onOrderLineShowMetadata,
+  hideSummary = false,
 }: OrderDraftDetailsProps) => {
   const intl = useIntl();
   const isChannelActive = order?.channel.isActive;
@@ -70,7 +73,7 @@ const OrderDraftDetails = ({
         onOrderLineRemove={onOrderLineRemove}
         onOrderLineShowMetadata={onOrderLineShowMetadata}
       />
-      {maybe(() => order.lines.length) !== 0 && (
+      {!hideSummary && maybe(() => order.lines.length) !== 0 && (
         <DashboardCard.Content>
           <OrderDiscountContext.Consumer>
             {(orderDiscountProps: OrderDiscountContextConsumerProps) => (

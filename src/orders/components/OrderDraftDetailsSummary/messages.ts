@@ -32,9 +32,9 @@ export const messages = defineMessages({
     description: "no shipping carriers title",
   },
   noAlternativeShippingMethods: {
-    id: "8EDRSz",
-    defaultMessage: "no alternatives available",
-    description: "shown when shipping method is selected but no other options exist",
+    id: "gCZYcl",
+    defaultMessage: "No alternative shipping methods available",
+    description: "tooltip shown when shipping method is selected but no other options exist",
   },
   total: {
     id: "S/yAtJ",

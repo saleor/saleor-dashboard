@@ -121,18 +121,16 @@ const OrderDraftDetailsSummary = (props: OrderDraftDetailsSummaryProps) => {
   };
   const getShippingMethodComponent = () => {
     if (hasChosenShippingMethod) {
-      // Shipping method is selected but no alternatives available - show as plain text
+      // Shipping method is selected but no alternatives available - show as plain text with tooltip
       if (!hasShippingMethods) {
         return (
-          <div className={classes.shippingMethodContainer}>
-            <Text size={3} fontWeight="regular">
-              {shippingMethodName}
-            </Text>
-            <HorizontalSpacer />
-            <Text size={2} fontWeight="light">
-              {`(${intl.formatMessage(messages.noAlternativeShippingMethods)})`}
-            </Text>
-          </div>
+          <Text
+            size={3}
+            fontWeight="regular"
+            title={intl.formatMessage(messages.noAlternativeShippingMethods)}
+          >
+            {shippingMethodName}
+          </Text>
         );
       }
 

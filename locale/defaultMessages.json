@@ -519,6 +519,10 @@
     "context": "dialog header",
     "string": "Change customer shipping address"
   },
+  "12K83x": {
+    "context": "shipping method option when name unknown",
+    "string": "Current method"
+  },
   "15PiOX": {
     "context": "button title",
     "string": "Unassign"
@@ -1067,6 +1071,10 @@
     "context": "account information, header",
     "string": "Account Information"
   },
+  "4xZFP4": {
+    "context": "tooltip for shipping amount",
+    "string": "Shipping cost"
+  },
   "4y3Smi": {
     "string": "Removing permissions may cause extension to break."
   },
@@ -1560,6 +1568,10 @@
   "8Cve4h": {
     "context": "checkbox label",
     "string": "Send fulfillment email to customer"
+  },
+  "8EDRSz": {
+    "context": "tooltip shown when shipping method is selected but no other options exist",
+    "string": "No alternative shipping methods available"
   },
   "8EGagh": {
     "context": "search box label",
@@ -2873,6 +2885,10 @@
     "context": "dialog header",
     "string": "Select destination channel:"
   },
+  "GSC7Rw": {
+    "context": "tooltip for taxes amount",
+    "string": "Tax amount"
+  },
   "GTCg9O": {
     "string": "You must add at least one voucher code"
   },
@@ -2937,6 +2953,10 @@
   "GiDxS4": {
     "context": "add metadata field,button",
     "string": "Add Field"
+  },
+  "GiJ1QZ": {
+    "context": "tooltip for total amount",
+    "string": "Order total"
   },
   "GiJm1v": {
     "context": "dialog content",
@@ -3273,6 +3293,10 @@
     "context": "header",
     "string": "Edit Media"
   },
+  "IirEpN": {
+    "context": "tooltip for taxes when showing gross prices",
+    "string": "Gross prices"
+  },
   "Ila7WO": {
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
@@ -3309,6 +3333,10 @@
   "IzEVek": {
     "context": "bulk disable label",
     "string": "Deactivate"
+  },
+  "IzrVyw": {
+    "context": "tooltip for taxes when showing net prices",
+    "string": "Net prices"
   },
   "J/QqOI": {
     "string": "This value already exists within this attribute"
@@ -3490,6 +3518,10 @@
   "K//bUK": {
     "context": "refund button",
     "string": "Refund"
+  },
+  "K/a8rS": {
+    "context": "tooltip for subtotal amount",
+    "string": "Sum of all line items"
   },
   "K/gnGg": {
     "string": "If you want to disable this User please uncheck the box below."
@@ -4290,6 +4322,10 @@
     "context": "back button",
     "string": "Back"
   },
+  "PRlD0A": {
+    "context": "shipping label",
+    "string": "Shipping"
+  },
   "PTW56s": {
     "context": "alert",
     "string": "Channel limit reached"
@@ -4747,7 +4783,7 @@
     "string": "Conditions"
   },
   "SB//YQ": {
-    "string": "Order summary"
+    "string": "Summary"
   },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
@@ -5524,6 +5560,10 @@
     "context": "successfully created gift card alert title",
     "string": "Successfully created gift card"
   },
+  "X1NCdA": {
+    "context": "shipping method not available label",
+    "string": "(not available)"
+  },
   "X6PF8z": {
     "context": "entity (product, collection, shipping method) name",
     "string": "Name"
@@ -5997,6 +6037,10 @@
   "ZuqkSp": {
     "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
+  },
+  "Zvjkx8": {
+    "context": "tooltip for discount amount",
+    "string": "Discount amount"
   },
   "Zvo5iu": {
     "string": "API reference"
@@ -6575,10 +6619,6 @@
   "dJVXIb": {
     "context": "vat included in order price",
     "string": "VAT included"
-  },
-  "dJv+cZ": {
-    "context": "shown when shipping method is selected but no other options exist",
-    "string": "no alternatives available"
   },
   "dLIeRH": {
     "context": "charge status none",
@@ -7967,9 +8007,6 @@
   "mmcHeH": {
     "string": "Discount Value"
   },
-  "mpkBZc": {
-    "string": "Shipping {carrierName}"
-  },
   "mr9jbO": {
     "string": "Preferred Language"
   },
@@ -8794,6 +8831,10 @@
     "context": "limit voucher",
     "string": "Limit of Uses"
   },
+  "s6YKKO": {
+    "context": "set shipping link when no shipping method selected",
+    "string": "Set shipping"
+  },
   "s6lW8R": {
     "context": "option label",
     "string": "Change address"
@@ -9426,11 +9467,12 @@
     "context": "success notifier message",
     "string": "Saved draft"
   },
-  "vs0xiH": {
-    "string": "Discount {discountName}"
-  },
   "vuKrlW": {
     "string": "Stock"
+  },
+  "vuNPLt": {
+    "context": "tooltip for gift card amount",
+    "string": "Gift card amount used"
   },
   "vwA9Fq": {
     "context": "notification",

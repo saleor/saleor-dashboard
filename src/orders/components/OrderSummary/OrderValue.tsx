@@ -1,12 +1,132 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
-import { Box, PropsWithBox, Text } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import {
+  DiscountValueTypeEnum,
+  OrderDetailsFragment,
+  OrderErrorFragment,
+} from "@dashboard/graphql";
+import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import { Box, Popover, PropsWithBox, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
+import { defineMessages, useIntl } from "react-intl";
 
+import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
+import { ORDER_DISCOUNT } from "../OrderDiscountCommonModal/types";
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
 import { OrderValueHeader } from "./OrderValueHeader";
 
-type Props = PropsWithBox<{
+const InlineLink = ({
+  children,
+  onClick,
+  title,
+  "data-test-id": dataTestId,
+}: {
+  children: ReactNode;
+  onClick?: () => void;
+  title?: string;
+  "data-test-id"?: string;
+}): ReactNode => (
+  <Text
+    as="a"
+    color="accent1"
+    onClick={e => {
+      e.preventDefault();
+      onClick?.();
+    }}
+    href="#"
+    title={title}
+    data-test-id={dataTestId}
+    style={{
+      cursor: "pointer",
+      textDecoration: "none",
+    }}
+    __textDecoration={{ hover: "underline" }}
+  >
+    {children}
+  </Text>
+);
+
+const messages = defineMessages({
+  discount: {
+    id: "+8v1ny",
+    defaultMessage: "Discount",
+    description: "discount button",
+  },
+  addDiscount: {
+    id: "Myx1Qp",
+    defaultMessage: "Add Discount",
+    description: "add discount button",
+  },
+  setShipping: {
+    id: "zuWUXf",
+    defaultMessage: "Set shipping",
+    description: "set shipping link when no shipping method selected",
+  },
+  shipping: {
+    id: "glR0om",
+    defaultMessage: "Shipping",
+    description: "shipping label",
+  },
+  noShippingCarriers: {
+    id: "M9LXb5",
+    defaultMessage: "No applicable shipping carriers",
+    description: "no shipping carriers title",
+  },
+  noAlternativeShippingMethods: {
+    id: "gCZYcl",
+    defaultMessage: "No alternative shipping methods available",
+    description: "tooltip shown when shipping method is selected but no other options exist",
+  },
+  addShippingAddressFirst: {
+    id: "BjxQ3u",
+    defaultMessage: "add shipping address first",
+    description: "add shipping address first label",
+  },
+  netPrices: {
+    id: "J/6a1+",
+    defaultMessage: "Net prices",
+    description: "tooltip for taxes when showing net prices",
+  },
+  grossPrices: {
+    id: "TdoAea",
+    defaultMessage: "Gross prices",
+    description: "tooltip for taxes when showing gross prices",
+  },
+  subtotalTitle: {
+    id: "ClUKur",
+    defaultMessage: "Sum of all line items",
+    description: "tooltip for subtotal amount",
+  },
+  shippingTitle: {
+    id: "MHY5da",
+    defaultMessage: "Shipping cost",
+    description: "tooltip for shipping amount",
+  },
+  taxesTitle: {
+    id: "fS2rip",
+    defaultMessage: "Tax amount",
+    description: "tooltip for taxes amount",
+  },
+  totalTitle: {
+    id: "aaj/MI",
+    defaultMessage: "Order total",
+    description: "tooltip for total amount",
+  },
+  discountTitle: {
+    id: "i3Hquc",
+    defaultMessage: "Discount amount",
+    description: "tooltip for discount amount",
+  },
+  giftCardTitle: {
+    id: "ztsvOP",
+    defaultMessage: "Gift card amount used",
+    description: "tooltip for gift card amount",
+  },
+});
+
+type BaseProps = {
   orderSubtotal: OrderDetailsFragment["subtotal"];
   shippingMethodName: OrderDetailsFragment["shippingMethodName"];
   shippingPrice: OrderDetailsFragment["shippingPrice"];
@@ -15,20 +135,270 @@ type Props = PropsWithBox<{
   giftCardsAmount: number | null;
   usedGiftCards: OrderDetailsFragment["giftCards"] | null;
   displayGrossPrices: OrderDetailsFragment["displayGrossPrices"];
-}>;
+};
 
-export const OrderValue = ({
-  orderSubtotal,
-  shippingMethodName,
-  shippingPrice,
-  orderTotal,
-  discounts,
-  giftCardsAmount,
-  usedGiftCards,
-  displayGrossPrices,
-  ...props
-}: Props) => {
+type EditableProps = {
+  isEditable: true;
+  orderDiscount?: OrderDiscountData;
+  addOrderDiscount: OrderDiscountContextConsumerProps["addOrderDiscount"];
+  removeOrderDiscount: OrderDiscountContextConsumerProps["removeOrderDiscount"];
+  openDialog: OrderDiscountContextConsumerProps["openDialog"];
+  closeDialog: OrderDiscountContextConsumerProps["closeDialog"];
+  isDialogOpen: OrderDiscountContextConsumerProps["isDialogOpen"];
+  orderDiscountAddStatus: OrderDiscountContextConsumerProps["orderDiscountAddStatus"];
+  orderDiscountRemoveStatus: OrderDiscountContextConsumerProps["orderDiscountRemoveStatus"];
+  undiscountedPrice: OrderDiscountContextConsumerProps["undiscountedPrice"];
+  onShippingMethodEdit: () => void;
+  shippingMethods: OrderDetailsFragment["shippingMethods"];
+  shippingMethod: OrderDetailsFragment["shippingMethod"];
+  shippingAddress: OrderDetailsFragment["shippingAddress"];
+  isShippingRequired: OrderDetailsFragment["isShippingRequired"];
+  errors?: OrderErrorFragment[];
+};
+
+type ReadOnlyProps = {
+  isEditable?: false;
+};
+
+type Props = PropsWithBox<BaseProps & (EditableProps | ReadOnlyProps)>;
+
+const getOrderDiscountLabel = (
+  orderDiscount: OrderDiscountData | undefined,
+  _currency: string,
+): { value: string; percentage?: string } => {
+  if (!orderDiscount) {
+    return { value: "---" };
+  }
+
+  const { value: discountValue, calculationMode, amount: discountAmount } = orderDiscount;
+
+  if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
+    return {
+      value: discountAmount.amount.toFixed(2),
+      percentage: `${discountValue}%`,
+    };
+  }
+
+  return { value: discountValue.toFixed(2) };
+};
+
+export const OrderValue = (props: Props) => {
+  const {
+    orderSubtotal,
+    shippingMethodName,
+    shippingPrice,
+    orderTotal,
+    discounts,
+    giftCardsAmount,
+    usedGiftCards,
+    displayGrossPrices,
+    isEditable = false,
+    ...restProps
+  } = props;
   const intl = useIntl();
+
+  const editableProps = isEditable ? (props as BaseProps & EditableProps) : null;
+
+  const hasChosenShippingMethod =
+    editableProps?.shippingMethod !== null &&
+    editableProps?.shippingMethod !== undefined &&
+    shippingMethodName !== null;
+  const hasShippingMethods =
+    !!editableProps?.shippingMethods?.length || editableProps?.isShippingRequired;
+
+  const formErrors = editableProps
+    ? getFormErrors(["shipping"], editableProps.errors ?? [])
+    : { shipping: undefined };
+
+  const renderShippingRow = () => {
+    const shippingAmountTitle = intl.formatMessage(messages.shippingTitle);
+
+    if (!isEditable) {
+      return (
+        <OrderSummaryListItem amount={shippingPrice.gross.amount} amountTitle={shippingAmountTitle}>
+          {intl.formatMessage(messages.shipping)}{" "}
+          <Text as="span" color="default2">
+            {shippingMethodName}
+          </Text>
+        </OrderSummaryListItem>
+      );
+    }
+
+    if (hasChosenShippingMethod) {
+      if (!hasShippingMethods) {
+        return (
+          <OrderSummaryListItem
+            amount={shippingPrice.gross.amount}
+            amountTitle={shippingAmountTitle}
+          >
+            {intl.formatMessage(messages.shipping)}{" "}
+            <Text
+              as="span"
+              color="default2"
+              title={intl.formatMessage(messages.noAlternativeShippingMethods)}
+            >
+              {shippingMethodName}
+            </Text>
+          </OrderSummaryListItem>
+        );
+      }
+
+      return (
+        <OrderSummaryListItem amount={shippingPrice.gross.amount} amountTitle={shippingAmountTitle}>
+          {intl.formatMessage(messages.shipping)}{" "}
+          <InlineLink onClick={editableProps?.onShippingMethodEdit}>
+            {shippingMethodName}
+          </InlineLink>
+        </OrderSummaryListItem>
+      );
+    }
+
+    if (!hasShippingMethods) {
+      return (
+        <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
+          <Text as="span" color="default2">
+            {intl.formatMessage(messages.noShippingCarriers)}
+          </Text>
+        </OrderSummaryListItem>
+      );
+    }
+
+    const canSetShipping = !!editableProps?.shippingAddress;
+
+    return (
+      <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
+        {canSetShipping ? (
+          <InlineLink
+            onClick={editableProps?.onShippingMethodEdit}
+            data-test-id="add-shipping-carrier"
+          >
+            {intl.formatMessage(messages.setShipping)}
+          </InlineLink>
+        ) : (
+          <Text
+            as="span"
+            color="default2"
+            title={intl.formatMessage(messages.addShippingAddressFirst)}
+          >
+            {intl.formatMessage(messages.setShipping)}
+          </Text>
+        )}
+      </OrderSummaryListItem>
+    );
+  };
+
+  const renderDiscountRow = () => {
+    const discountAmountTitle = intl.formatMessage(messages.discountTitle);
+
+    if (!isEditable) {
+      return discounts.map(discount => (
+        <OrderSummaryListItem
+          key={`order-value-discount-${discount.id}`}
+          amount={-discount.amount.amount}
+          amountTitle={discountAmountTitle}
+          showSign
+        >
+          {intl.formatMessage(messages.discount)}{" "}
+          <Text as="span" color="default2">
+            {discount.name}
+          </Text>
+        </OrderSummaryListItem>
+      ));
+    }
+
+    const hasDiscount = !!editableProps?.orderDiscount;
+    const discountLabel = getOrderDiscountLabel(
+      editableProps?.orderDiscount,
+      orderTotal.gross.currency,
+    );
+    const discountReason = editableProps?.orderDiscount?.reason;
+
+    if (!hasDiscount) {
+      return (
+        <OrderSummaryListItem amount={0} amountTitle={discountAmountTitle}>
+          <Popover
+            onOpenChange={val => {
+              if (!val) {
+                editableProps?.closeDialog();
+              }
+            }}
+            open={editableProps?.isDialogOpen}
+          >
+            <Popover.Trigger>
+              <Text as="span">
+                <InlineLink onClick={editableProps?.openDialog}>
+                  {intl.formatMessage(messages.addDiscount)}
+                </InlineLink>
+              </Text>
+            </Popover.Trigger>
+            <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
+              <Box boxShadow="defaultOverlay">
+                {editableProps && (
+                  <OrderDiscountCommonModal
+                    modalType={ORDER_DISCOUNT}
+                    existingDiscount={editableProps.orderDiscount}
+                    maxPrice={editableProps.undiscountedPrice}
+                    onConfirm={editableProps.addOrderDiscount}
+                    onClose={editableProps.closeDialog}
+                    onRemove={editableProps.removeOrderDiscount}
+                    confirmStatus={editableProps.orderDiscountAddStatus}
+                    removeStatus={editableProps.orderDiscountRemoveStatus}
+                  />
+                )}
+              </Box>
+            </Popover.Content>
+          </Popover>
+        </OrderSummaryListItem>
+      );
+    }
+
+    const discountDisplayValue = discountLabel.percentage || discountLabel.value;
+    const discountAmount = parseFloat(discountLabel.value) || 0;
+
+    return (
+      <OrderSummaryListItem
+        amount={-discountAmount}
+        amountTitle={discountAmountTitle}
+        showSign={discountAmount > 0}
+      >
+        {intl.formatMessage(messages.discount)}{" "}
+        <Popover
+          onOpenChange={val => {
+            if (!val) {
+              editableProps?.closeDialog();
+            }
+          }}
+          open={editableProps?.isDialogOpen}
+        >
+          <Popover.Trigger>
+            <Text as="span">
+              <InlineLink onClick={editableProps?.openDialog} title={discountReason || undefined}>
+                {discountDisplayValue}
+              </InlineLink>
+            </Text>
+          </Popover.Trigger>
+          <Popover.Content align="start" className={sprinkles({ zIndex: "3" })}>
+            <Box boxShadow="defaultOverlay">
+              {editableProps && (
+                <OrderDiscountCommonModal
+                  modalType={ORDER_DISCOUNT}
+                  existingDiscount={editableProps.orderDiscount}
+                  maxPrice={editableProps.undiscountedPrice}
+                  onConfirm={editableProps.addOrderDiscount}
+                  onClose={editableProps.closeDialog}
+                  onRemove={editableProps.removeOrderDiscount}
+                  confirmStatus={editableProps.orderDiscountAddStatus}
+                  removeStatus={editableProps.orderDiscountRemoveStatus}
+                />
+              )}
+            </Box>
+          </Popover.Content>
+        </Popover>
+      </OrderSummaryListItem>
+    );
+  };
+
+  const { isEditable: _, ...boxProps } = restProps as any;
 
   return (
     <Box
@@ -38,7 +408,7 @@ export const OrderValue = ({
       borderStyle="solid"
       borderColor="transparent"
       borderWidth={1}
-      {...props}
+      {...boxProps}
     >
       <OrderValueHeader
         description={intl.formatMessage({
@@ -48,29 +418,32 @@ export const OrderValue = ({
       />
 
       <Box as="ul" display="grid" gap={1} marginTop={4}>
-        <OrderSummaryListItem amount={orderSubtotal.gross.amount}>
+        <OrderSummaryListItem
+          amount={orderSubtotal.gross.amount}
+          amountTitle={intl.formatMessage(messages.subtotalTitle)}
+        >
           {intl.formatMessage({
             defaultMessage: "Subtotal",
             id: "L8seEc",
           })}
         </OrderSummaryListItem>
-        <OrderSummaryListItem amount={shippingPrice.gross.amount}>
-          {intl.formatMessage(
-            {
-              defaultMessage: "Shipping {carrierName}",
-              id: "mpkBZc",
-            },
-            {
-              carrierName: (
-                <Text color="default2" fontWeight="medium" size={3}>
-                  ({shippingMethodName})
-                </Text>
-              ),
-            },
-          )}
-        </OrderSummaryListItem>
+
+        {renderShippingRow()}
+
+        {formErrors.shipping && (
+          <Box>
+            <Text size={2} color="critical1">
+              {getOrderErrorMessage(formErrors.shipping, intl)}
+            </Text>
+          </Box>
+        )}
+
         {!displayGrossPrices && (
-          <OrderSummaryListItem amount={orderTotal.tax.amount}>
+          <OrderSummaryListItem
+            amount={orderTotal.tax.amount}
+            title={intl.formatMessage(messages.netPrices)}
+            amountTitle={intl.formatMessage(messages.taxesTitle)}
+          >
             {intl.formatMessage({
               defaultMessage: "Taxes ",
               id: "HTiAMm",
@@ -78,48 +451,9 @@ export const OrderValue = ({
           </OrderSummaryListItem>
         )}
 
-        {discounts.map(discount => (
-          <OrderSummaryListItem
-            key={`order-value-discount-${discount.id}`}
-            amount={discount.amount.amount}
-          >
-            {intl.formatMessage(
-              {
-                defaultMessage: "Discount {discountName}",
-                id: "vs0xiH",
-              },
-              {
-                discountName: (
-                  <Text fontWeight="medium" color="default2" size={3}>
-                    ({discount.name})
-                  </Text>
-                ),
-              },
-            )}
-          </OrderSummaryListItem>
-        ))}
+        {renderDiscountRow()}
 
-        {giftCardsAmount && giftCardsAmount > 0 && usedGiftCards && (
-          <OrderSummaryListItem amount={-giftCardsAmount}>
-            {intl.formatMessage(
-              {
-                defaultMessage:
-                  "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}",
-                id: "5kODlC",
-              },
-              {
-                usedGiftCards: usedGiftCards.length,
-                giftCardCodesList: (
-                  <Text fontWeight="medium" color="default2" size={3}>
-                    ({usedGiftCards.map(card => card.last4CodeChars).join(", ")})
-                  </Text>
-                ),
-              },
-            )}
-          </OrderSummaryListItem>
-        )}
-
-        <Box display="grid" placeItems="end">
+        <Box display="grid" placeItems="end" title={intl.formatMessage(messages.totalTitle)}>
           <Box
             borderStyle="solid"
             borderColor="default1"
@@ -145,8 +479,13 @@ export const OrderValue = ({
             )}
           </Box>
         </Box>
+
         {displayGrossPrices && (
-          <OrderSummaryListItem amount={orderTotal.tax.amount}>
+          <OrderSummaryListItem
+            amount={orderTotal.tax.amount}
+            title={intl.formatMessage(messages.grossPrices)}
+            amountTitle={intl.formatMessage(messages.taxesTitle)}
+          >
             {intl.formatMessage({
               defaultMessage: "Taxes ",
               id: "HTiAMm",
@@ -154,6 +493,29 @@ export const OrderValue = ({
             <Text color="default2" fontWeight="medium" size={3}>
               (included)
             </Text>
+          </OrderSummaryListItem>
+        )}
+
+        {giftCardsAmount && giftCardsAmount > 0 && usedGiftCards && (
+          <OrderSummaryListItem
+            amount={-giftCardsAmount}
+            amountTitle={intl.formatMessage(messages.giftCardTitle)}
+          >
+            {intl.formatMessage(
+              {
+                defaultMessage:
+                  "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}",
+                id: "5kODlC",
+              },
+              {
+                usedGiftCards: usedGiftCards.length,
+                giftCardCodesList: (
+                  <Text fontWeight="medium" color="default2" size={3}>
+                    ({usedGiftCards.map(card => card.last4CodeChars).join(", ")})
+                  </Text>
+                ),
+              },
+            )}
           </OrderSummaryListItem>
         )}
       </Box>
