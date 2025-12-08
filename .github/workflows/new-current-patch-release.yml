@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   # Patching current stable version is basically merging commits from main to release branch
-  # Since we ensure main is compatbile with 3.22, instead of cherry-picking and porting, we
+  # Since we ensure main is compatible with 3.22, instead of cherry-picking and porting, we
   # just branch from main to current stable and create a release candidate. On this branch we run tests
   # and release changelogs and tags.
   # This workflow is automating this and ensuring branch protection is omitted for authorized actor.
