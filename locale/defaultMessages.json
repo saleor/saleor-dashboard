@@ -1071,10 +1071,6 @@
     "context": "account information, header",
     "string": "Account Information"
   },
-  "4xZFP4": {
-    "context": "tooltip for shipping amount",
-    "string": "Shipping cost"
-  },
   "4y3Smi": {
     "string": "Removing permissions may cause extension to break."
   },
@@ -1568,10 +1564,6 @@
   "8Cve4h": {
     "context": "checkbox label",
     "string": "Send fulfillment email to customer"
-  },
-  "8EDRSz": {
-    "context": "tooltip shown when shipping method is selected but no other options exist",
-    "string": "No alternative shipping methods available"
   },
   "8EGagh": {
     "context": "search box label",
@@ -2283,6 +2275,10 @@
     "context": "channel publication status",
     "string": "Not published"
   },
+  "ClUKur": {
+    "context": "tooltip for subtotal amount",
+    "string": "Sum of all line items"
+  },
   "CmxKIg": {
     "context": "window title",
     "string": "Grant refund"
@@ -2885,10 +2881,6 @@
     "context": "dialog header",
     "string": "Select destination channel:"
   },
-  "GSC7Rw": {
-    "context": "tooltip for taxes amount",
-    "string": "Tax amount"
-  },
   "GTCg9O": {
     "string": "You must add at least one voucher code"
   },
@@ -2953,10 +2945,6 @@
   "GiDxS4": {
     "context": "add metadata field,button",
     "string": "Add Field"
-  },
-  "GiJ1QZ": {
-    "context": "tooltip for total amount",
-    "string": "Order total"
   },
   "GiJm1v": {
     "context": "dialog content",
@@ -3293,10 +3281,6 @@
     "context": "header",
     "string": "Edit Media"
   },
-  "IirEpN": {
-    "context": "tooltip for taxes when showing gross prices",
-    "string": "Gross prices"
-  },
   "Ila7WO": {
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
@@ -3334,7 +3318,7 @@
     "context": "bulk disable label",
     "string": "Deactivate"
   },
-  "IzrVyw": {
+  "J/6a1+": {
     "context": "tooltip for taxes when showing net prices",
     "string": "Net prices"
   },
@@ -3518,10 +3502,6 @@
   "K//bUK": {
     "context": "refund button",
     "string": "Refund"
-  },
-  "K/a8rS": {
-    "context": "tooltip for subtotal amount",
-    "string": "Sum of all line items"
   },
   "K/gnGg": {
     "string": "If you want to disable this User please uncheck the box below."
@@ -3805,6 +3785,10 @@
   "MHVglr": {
     "context": "deactivate",
     "string": "Deactivate"
+  },
+  "MHY5da": {
+    "context": "tooltip for shipping amount",
+    "string": "Shipping cost"
   },
   "MIC9W7": {
     "context": "WarehouseSettings pickup title",
@@ -4322,10 +4306,6 @@
     "context": "back button",
     "string": "Back"
   },
-  "PRlD0A": {
-    "context": "shipping label",
-    "string": "Shipping"
-  },
   "PTW56s": {
     "context": "alert",
     "string": "Channel limit reached"
@@ -4782,9 +4762,6 @@
   "S8kqP9": {
     "string": "Conditions"
   },
-  "SB//YQ": {
-    "string": "Summary"
-  },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
@@ -5021,6 +4998,10 @@
   },
   "TdTXXf": {
     "string": "Learn more"
+  },
+  "TdoAea": {
+    "context": "tooltip for taxes when showing gross prices",
+    "string": "Gross prices"
   },
   "Tenl9A": {
     "context": "grant refund, refund card toggle",
@@ -6038,10 +6019,6 @@
     "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
   },
-  "Zvjkx8": {
-    "context": "tooltip for discount amount",
-    "string": "Discount amount"
-  },
   "Zvo5iu": {
     "string": "API reference"
   },
@@ -6173,6 +6150,10 @@
   "aZDHYr": {
     "context": "price rates info",
     "string": "This rate will apply to all orders"
+  },
+  "aaj/MI": {
+    "context": "tooltip for total amount",
+    "string": "Order total"
   },
   "aasX8r": {
     "context": "label",
@@ -6861,6 +6842,10 @@
     "context": "input label",
     "string": "Search Attributes"
   },
+  "fS2rip": {
+    "context": "tooltip for taxes amount",
+    "string": "Tax amount"
+  },
   "fU+a9k": {
     "context": "date attribute type",
     "string": "Date"
@@ -6999,6 +6984,10 @@
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
   },
+  "gCZYcl": {
+    "context": "tooltip shown when shipping method is selected but no other options exist",
+    "string": "No alternative shipping methods available"
+  },
   "gE6aiQ": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created models."
@@ -7068,6 +7057,10 @@
   "gksZwp": {
     "context": "button",
     "string": "Create product type"
+  },
+  "glR0om": {
+    "context": "shipping label",
+    "string": "Shipping"
   },
   "glT6fm": {
     "string": "Voucher is limited to these countries"
@@ -7267,6 +7260,10 @@
   "i/ZhxL": {
     "context": "section header returned",
     "string": "Fulfillment waiting for approval"
+  },
+  "i3Hquc": {
+    "context": "tooltip for discount amount",
+    "string": "Discount amount"
   },
   "i3Mvj8": {
     "context": "product attribute error",
@@ -8831,10 +8828,6 @@
     "context": "limit voucher",
     "string": "Limit of Uses"
   },
-  "s6YKKO": {
-    "context": "set shipping link when no shipping method selected",
-    "string": "Set shipping"
-  },
   "s6lW8R": {
     "context": "option label",
     "string": "Change address"
@@ -9470,10 +9463,6 @@
   "vuKrlW": {
     "string": "Stock"
   },
-  "vuNPLt": {
-    "context": "tooltip for gift card amount",
-    "string": "Gift card amount used"
-  },
   "vwA9Fq": {
     "context": "notification",
     "string": "Selected models were deleted."
@@ -10086,9 +10075,17 @@
   "ztQgD8": {
     "string": "No attributes found"
   },
+  "ztsvOP": {
+    "context": "tooltip for gift card amount",
+    "string": "Gift card amount used"
+  },
   "ztvvcm": {
     "context": "swatch attribute type",
     "string": "Swatch type"
+  },
+  "zuWUXf": {
+    "context": "set shipping link when no shipping method selected",
+    "string": "Set shipping"
   },
   "zv9OGI": {
     "string": "No models found"
