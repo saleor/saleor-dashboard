@@ -12,7 +12,14 @@ import { ReactNode } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
-import { ORDER_DISCOUNT } from "../OrderDiscountCommonModal/types";
+import { ORDER_DISCOUNT, OrderDiscountCommonInput } from "../OrderDiscountCommonModal/types";
+
+const emptyDiscount: OrderDiscountCommonInput = {
+  value: 0,
+  reason: "",
+  calculationMode: DiscountValueTypeEnum.PERCENTAGE,
+};
+
 import { OrderSummaryListAmount } from "./OrderSummaryListAmount";
 import { OrderSummaryListItem } from "./OrderSummaryListItem";
 import { OrderValueHeader } from "./OrderValueHeader";
@@ -336,7 +343,7 @@ export const OrderValue = (props: Props): ReactNode => {
                 {editableProps && (
                   <OrderDiscountCommonModal
                     modalType={ORDER_DISCOUNT}
-                    existingDiscount={editableProps.orderDiscount}
+                    existingDiscount={editableProps.orderDiscount ?? emptyDiscount}
                     maxPrice={editableProps.undiscountedPrice}
                     onConfirm={editableProps.addOrderDiscount}
                     onClose={editableProps.closeDialog}
@@ -382,7 +389,7 @@ export const OrderValue = (props: Props): ReactNode => {
               {editableProps && (
                 <OrderDiscountCommonModal
                   modalType={ORDER_DISCOUNT}
-                  existingDiscount={editableProps.orderDiscount}
+                  existingDiscount={editableProps.orderDiscount ?? emptyDiscount}
                   maxPrice={editableProps.undiscountedPrice}
                   onConfirm={editableProps.addOrderDiscount}
                   onClose={editableProps.closeDialog}
