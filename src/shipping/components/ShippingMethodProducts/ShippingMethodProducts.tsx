@@ -2,6 +2,7 @@
 import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableHead from "@dashboard/components/TableHead";
@@ -11,8 +12,9 @@ import { ShippingZoneQuery } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -139,11 +141,7 @@ const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
                   </TableCellAvatar>
                   <TableCell className={classes.colAction}>
                     <IconButton variant="secondary" onClick={() => onProductUnassign([product.id])}>
-                      <DeleteIcon
-                        color="primary"
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

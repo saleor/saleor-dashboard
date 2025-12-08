@@ -2,6 +2,7 @@
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
@@ -11,10 +12,10 @@ import { ProductAttributeType, ProductTypeDetailsQuery } from "@dashboard/graphq
 import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
-import HelpOutline from "@material-ui/icons/HelpOutline";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
+import { CircleQuestionMark, Trash2 } from "lucide-react";
 import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -242,7 +243,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                         {!!variantSelectionDisabled && (
                           <Tooltip>
                             <Tooltip.Trigger>
-                              <HelpOutline className={classes.colVariantDisabled} />
+                              <CircleQuestionMark className={classes.colVariantDisabled} />
                             </Tooltip.Trigger>
                             <Tooltip.Content side="bottom">
                               <Tooltip.Arrow />
@@ -265,10 +266,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                           onClick={() => onAttributeUnassign(attribute.id)}
                           variant="secondary"
                         >
-                          <DeleteIcon
-                            onPointerEnterCapture={undefined}
-                            onPointerLeaveCapture={undefined}
-                          />
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                         </IconButton>
                       </TableButtonWrapper>
                     </TableCell>

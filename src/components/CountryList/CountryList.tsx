@@ -1,12 +1,13 @@
 // @ts-strict-ignore
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryFragment } from "@dashboard/graphql";
 import { TableBody, TableCell } from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { ChevronDownIcon, Trash2 } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -115,7 +116,7 @@ const CountryList = (props: CountryListProps) => {
             </TableCell>
             <TableCell className={clsx(classes.textRight, classes.iconCell)}>
               <IconButton variant="secondary">
-                <ArrowDropDownIcon
+                <ChevronDownIcon
                   data-test-id="countries-drop-down-icon"
                   className={clsx({
                     [classes.rotate]: !isCollapsed,
@@ -145,10 +146,7 @@ const CountryList = (props: CountryListProps) => {
                       disabled={!country || disabled}
                       onClick={() => onCountryUnassign(country.code)}
                     >
-                      <DeleteIcon
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                     </IconButton>
                   </TableCell>
                 </TableRowLink>

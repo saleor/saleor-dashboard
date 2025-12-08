@@ -2,6 +2,7 @@
 import { categoryUrl } from "@dashboard/categories/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
@@ -9,8 +10,9 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CategoryWithTotalProductsFragment } from "@dashboard/graphql";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { IconButton } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
@@ -121,10 +123,7 @@ const DiscountCategories = (props: DiscountCategoriesProps) => {
                           onCategoryUnassign(category.id);
                         }}
                       >
-                        <DeleteIcon
-                          onPointerEnterCapture={undefined}
-                          onPointerLeaveCapture={undefined}
-                        />
+                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                       </IconButton>
                     </TableButtonWrapper>
                   </TableCell>

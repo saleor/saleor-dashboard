@@ -1,8 +1,9 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { GiftCardDetailsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { Box, Button, EditIcon, Text, vars } from "@saleor/macaw-ui-next";
-import { InfoIcon, LinkIcon, MessageSquareIcon } from "lucide-react";
+import { Box, Button, Text, vars } from "@saleor/macaw-ui-next";
+import { InfoIcon, LinkIcon, MessageSquareIcon, Pencil } from "lucide-react";
 import { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
@@ -218,7 +219,9 @@ export const TimelineNote = ({
                     variant="tertiary"
                     size="small"
                     onClick={() => setShowEdit(true)}
-                    icon={<EditIcon size="small" />}
+                    icon={
+                      <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                    }
                   />
                 </Box>
               )}

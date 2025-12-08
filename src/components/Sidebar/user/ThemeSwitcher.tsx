@@ -1,11 +1,12 @@
-import { DarkModeIcon, DefaultTheme, LightModeIcon, Text } from "@saleor/macaw-ui-next";
+import { DefaultTheme, Text } from "@saleor/macaw-ui-next";
+import { Moon, Sun } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }) => {
   if (theme === "defaultLight") {
     return (
       <>
-        <DarkModeIcon color="default2" />
+        <Moon color="default2" />
         <Text>
           <FormattedMessage id="5ObBlW" defaultMessage="Dark Mode" />
         </Text>
@@ -15,7 +16,7 @@ export const ThemeSwitcher = ({ theme }: { theme: DefaultTheme }) => {
 
   return (
     <>
-      <LightModeIcon color="default2" />
+      <Sun color="default2" />
       <Text>
         <FormattedMessage id="hVPucN" defaultMessage="Light Mode" />
       </Text>

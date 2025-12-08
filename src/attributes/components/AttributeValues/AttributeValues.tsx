@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TablePagination } from "@dashboard/components/TablePagination";
@@ -12,7 +13,8 @@ import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { ListProps, PaginateListProps, RelayToFlat, ReorderAction } from "@dashboard/types";
 import { TableCell, TableFooter, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Skeleton, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface AttributeValuesProps
@@ -196,7 +198,9 @@ const AttributeValues = ({
                 <TableCell className={classes.columnStore}>{value?.name ?? <Skeleton />}</TableCell>
                 <TableCell className={classes.iconCell}>
                   <Button
-                    icon={<TrashBinIcon />}
+                    icon={
+                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                    }
                     data-test-id="delete-attribute-value-button"
                     variant="secondary"
                     disabled={disabled}
