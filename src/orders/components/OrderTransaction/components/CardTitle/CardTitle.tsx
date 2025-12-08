@@ -1,13 +1,7 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { TransactionActionEnum } from "@dashboard/graphql";
-import {
-  Box,
-  Button,
-  Dropdown,
-  ExternalLinkIcon,
-  List,
-  MoreOptionsIcon,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { ExternalLink, MoreVertical } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderTransactionProps } from "../../OrderTransaction";
@@ -63,7 +57,7 @@ const TransactionTitle = ({
               id: "ce2kVF",
             })}
           >
-            <ExternalLinkIcon size="small" color="inherit" />
+            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
           </Box>
         )}
       </Box>
@@ -143,7 +137,9 @@ export const OrderTransactionCardTitle = ({
             <Dropdown.Trigger>
               <Button
                 variant="tertiary"
-                icon={<MoreOptionsIcon />}
+                icon={
+                  <MoreVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                }
                 onClick={e => e.stopPropagation()}
                 data-test-id="transaction-menu-button"
                 title="Show more"

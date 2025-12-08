@@ -1,7 +1,9 @@
 // @ts-strict-ignore
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
-import { Accordion, Box, ChervonDownIcon } from "@saleor/macaw-ui-next";
+import { Accordion, Box } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 import * as React from "react";
 import { useState } from "react";
 
@@ -62,7 +64,7 @@ const OrderTransaction = ({
                 width="100%"
               >
                 <Box className={styles.chevron} marginTop={1}>
-                  <ChervonDownIcon size="small" color="default1" />
+                  <ChevronDown size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                 </Box>
 
                 <OrderTransactionCardTitle
