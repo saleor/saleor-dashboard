@@ -186,8 +186,6 @@ for (const attr of ATTRIBUTES.attributesToBeUpdated) {
     await attributesPage.expectSuccessBanner();
     await attributesPage.expectElementIsHidden(attributesPage.successBanner);
 
-    await attributesPage.expandMetadataSection();
-
     await expect(attributesPage.attributeSelect).toBeVisible();
     await expect(attributesPage.attributeSelect).toHaveAttribute("aria-disabled", "true");
     await expect(attributesPage.metadataKeyInput).toBeVisible();
