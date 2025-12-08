@@ -6576,6 +6576,10 @@
     "context": "vat included in order price",
     "string": "VAT included"
   },
+  "dJv+cZ": {
+    "context": "shown when shipping method is selected but no other options exist",
+    "string": "no alternatives available"
+  },
   "dLIeRH": {
     "context": "charge status none",
     "string": "None"

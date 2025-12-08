@@ -121,6 +121,21 @@ const OrderDraftDetailsSummary = (props: OrderDraftDetailsSummaryProps) => {
   };
   const getShippingMethodComponent = () => {
     if (hasChosenShippingMethod) {
+      // Shipping method is selected but no alternatives available - show as plain text
+      if (!hasShippingMethods) {
+        return (
+          <div className={classes.shippingMethodContainer}>
+            <Text size={3} fontWeight="regular">
+              {shippingMethodName}
+            </Text>
+            <HorizontalSpacer />
+            <Text size={2} fontWeight="light">
+              {`(${intl.formatMessage(messages.noAlternativeShippingMethods)})`}
+            </Text>
+          </div>
+        );
+      }
+
       return <ButtonLink onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</ButtonLink>;
     }
 
@@ -193,9 +208,11 @@ const OrderDraftDetailsSummary = (props: OrderDraftDetailsSummaryProps) => {
         </tr>
         <tr data-test-id="order-add-shipping-line">
           <td>
-            {hasShippingMethods && getShippingMethodComponent()}
+            {(hasShippingMethods || hasChosenShippingMethod) && getShippingMethodComponent()}
 
-            {!hasShippingMethods && intl.formatMessage(messages.noShippingCarriers)}
+            {!hasShippingMethods &&
+              !hasChosenShippingMethod &&
+              intl.formatMessage(messages.noShippingCarriers)}
 
             {formErrors.shipping && (
               <Text size={3} fontWeight="regular" className={classes.textError}>
