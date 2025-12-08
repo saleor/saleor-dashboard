@@ -2,6 +2,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
@@ -14,8 +15,9 @@ import { MenuListUrlSortField, menuUrl } from "@dashboard/structures/urls";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
@@ -145,10 +147,7 @@ const MenuList = (props: MenuListProps) => {
                       disabled={disabled}
                       onClick={() => onDelete(menu.id)}
                     >
-                      <DeleteIcon
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
                     </IconButtonTableCell>
                   </TableButtonWrapper>
                 </TableRowLink>

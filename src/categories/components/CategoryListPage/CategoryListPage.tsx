@@ -16,7 +16,8 @@ import { CategoryFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -78,7 +79,7 @@ export const CategoryListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
 
             <FilterPresetsSelect

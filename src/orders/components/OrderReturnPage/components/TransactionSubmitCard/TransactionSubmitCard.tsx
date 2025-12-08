@@ -1,5 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import PriceField from "@dashboard/components/PriceField";
 import {
   OrderDetailsFragment,
@@ -9,7 +10,8 @@ import {
 import { FormChange } from "@dashboard/hooks/useForm";
 import { PaymentSubmitCardValuesProps } from "@dashboard/orders/components/OrderReturnPage/components/PaymentSubmitCard/PaymentSubmitCardValues";
 import { IMoney } from "@dashboard/utils/intl";
-import { Box, InfoIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { Info } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { canSendRefundDuringReturn, getReturnRefundValue } from "../../utils";
@@ -75,7 +77,7 @@ export const TransactionSubmitCard = ({
         </DashboardCard.Header>
         <DashboardCard.Content display="flex" flexDirection="column" gap={2} alignItems="start">
           <Box display="flex" gap={1} alignItems="center" marginBottom={4}>
-            <InfoIcon color="default2" size="small" />
+            <Info size={iconSize.small} strokeWidth={iconStrokeWidth} />
             <Text color="default2">
               <FormattedMessage {...submitCardMessages.descrption} />
             </Text>

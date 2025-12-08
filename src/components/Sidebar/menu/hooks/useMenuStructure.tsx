@@ -1,6 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
+import { iconSize } from "@dashboard/components/icons";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
@@ -36,8 +37,9 @@ import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
-import { Box, SearchIcon } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
+import { Search } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";
 
@@ -105,7 +107,7 @@ export function useMenuStructure() {
       type: "item",
     },
     {
-      icon: renderIcon(<SearchIcon />),
+      icon: renderIcon(<Search size={iconSize.small} strokeWidth={2.4} />),
       label: (
         <Box display="flex" alignItems="center" gap={2}>
           {intl.formatMessage(sectionNames.search)}

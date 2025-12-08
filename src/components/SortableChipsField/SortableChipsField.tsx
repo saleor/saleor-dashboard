@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ReorderAction } from "@dashboard/types";
 import {
   DndContext,
@@ -10,7 +11,8 @@ import {
 } from "@dnd-kit/core";
 import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
-import { Box, Button, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Plus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useIntl } from "react-intl";
@@ -165,7 +167,7 @@ const SortableChipsField = ({
             disabled={disabled}
             marginLeft="auto"
             onClick={onAdd}
-            icon={<PlusIcon />}
+            icon={<Plus size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
           />
         ) : null}
       </Box>

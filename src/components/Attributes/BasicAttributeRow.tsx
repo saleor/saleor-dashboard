@@ -1,4 +1,5 @@
-import { Box, InfoIcon, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Info } from "lucide-react";
 import * as React from "react";
 
 interface BasicAttributeRowProps {
@@ -43,8 +44,8 @@ export const BasicAttributeRow = ({
         <Tooltip>
           <Tooltip.Trigger>
             <Box>
-              <InfoIcon
-                size="small"
+              <Info
+                size={20}
                 className={sprinkles({
                   display: "block",
                 })}

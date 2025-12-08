@@ -1,5 +1,7 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Name } from "@dashboard/featureFlags/availableFlags";
-import { Box, Button, CloseIcon, Modal } from "@saleor/macaw-ui-next";
+import { Box, Button, Modal } from "@saleor/macaw-ui-next";
+import { X } from "lucide-react";
 
 import { Content } from "./Content";
 import { FlagList } from "./FlagList";
@@ -35,7 +37,11 @@ export const FeatureFlagsModal = ({ open, onChange }: FeatureFlagsModalProps) =>
         >
           <Header>
             <Modal.Close>
-              <Button variant="tertiary" icon={<CloseIcon />} size="small" />
+              <Button
+                variant="tertiary"
+                icon={<X size={iconSize.small} strokeWidth={iconStrokeWidth} />}
+                size="small"
+              />
             </Modal.Close>
           </Header>
           <Box display="flex" backgroundColor="default1" height="100%">

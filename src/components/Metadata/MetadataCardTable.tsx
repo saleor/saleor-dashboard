@@ -1,8 +1,10 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Input, Text, Textarea, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text, Textarea, vars } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { EventDataAction } from "./types";
@@ -123,7 +125,9 @@ export const MetadataCardTable = ({
                           })
                         }
                         type="button"
-                        icon={<TrashBinIcon />}
+                        icon={
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        }
                       />
                     )}
                   </Box>

@@ -5,6 +5,7 @@ import extension from "@assets/images/extension-icon.svg";
 import github from "@assets/images/github-logo.svg";
 import externalLink from "@assets/images/rounded-external-link-icon.svg";
 import star from "@assets/images/star-icon.svg";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   APPS_OVERVIEW_DOCS_URL,
   CHECKOUT_OVERVIEW_DOCS_URL,
@@ -13,7 +14,8 @@ import {
   SALEOR_GITHUB_URL,
   TECHNICAL_HELP_CTA_URL,
 } from "@dashboard/links";
-import { Button, HelpIcon, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
+import { Button, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
+import { HelpCircle } from "lucide-react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, IntlShape } from "react-intl";
 
@@ -43,7 +45,7 @@ export const getTilesData = ({
     id: "technical-help",
     header: (
       <>
-        <HelpIcon />
+        <HelpCircle size={iconSize.medium} strokeWidth={iconStrokeWidth} />
         <FormattedMessage defaultMessage="Need technical help?" id="g9HrbF" />
       </>
     ),

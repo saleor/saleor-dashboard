@@ -3,7 +3,8 @@ import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLin
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { Box, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { headerTitles, messages } from "../../messages";
@@ -35,7 +36,7 @@ export const ExploreExtensions = () => {
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
             <Text size={6}>{intl.formatMessage(headerTitles.exploreExtensions)}</Text>
           </Box>
