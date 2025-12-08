@@ -182,7 +182,7 @@ const getOrderDiscountLabel = (
   return { value: discountValue.toFixed(2) };
 };
 
-export const OrderValue = (props: Props) => {
+export const OrderValue = (props: Props): ReactNode => {
   const {
     orderSubtotal,
     shippingMethodName,
@@ -210,7 +210,7 @@ export const OrderValue = (props: Props) => {
     ? getFormErrors(["shipping"], editableProps.errors ?? [])
     : { shipping: undefined };
 
-  const renderShippingRow = () => {
+  const renderShippingRow = (): ReactNode => {
     const shippingAmountTitle = intl.formatMessage(messages.shippingTitle);
 
     if (!isEditable) {
@@ -287,7 +287,7 @@ export const OrderValue = (props: Props) => {
     );
   };
 
-  const renderDiscountRow = () => {
+  const renderDiscountRow = (): ReactNode => {
     const discountAmountTitle = intl.formatMessage(messages.discountTitle);
 
     if (!isEditable) {
