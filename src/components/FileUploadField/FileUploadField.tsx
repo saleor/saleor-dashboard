@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { FileFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -58,7 +59,7 @@ const FileUploadField = (props: FileUploadFieldProps) => {
               )}
             </Text>
             <Button
-              icon={<Trash2 />}
+              icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
               variant="secondary"
               onClick={handleFileDelete}
               disabled={disabled || loading}

@@ -1,6 +1,7 @@
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { GridTable } from "@dashboard/components/GridTable";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Link from "@dashboard/components/Link";
 import Drag from "@dashboard/icons/Drag";
 import { productUrl } from "@dashboard/products/urls";
@@ -121,7 +122,7 @@ export const ProductTableItem = ({
             data-test-id="delete-icon"
             variant="secondary"
             onClick={event => product && onProductUnassign(product.id, event)}
-            icon={<Trash2 />}
+            icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
           />
         </Box>
       </GridTable.Cell>

@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Condition } from "@dashboard/discounts/models";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { Minus } from "lucide-react";
@@ -48,7 +49,7 @@ export const RuleConditionRow = ({
       <Button
         data-test-id={`condition-remove-${conditionIndex}`}
         variant="tertiary"
-        icon={<Minus />}
+        icon={<Minus size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
         onClick={onRemove}
       />
     </Box>

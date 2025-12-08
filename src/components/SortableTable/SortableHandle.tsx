@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { GripVertical } from "lucide-react";
@@ -23,7 +24,7 @@ const SortableHandle = SortableHandleHoc(() => {
 
   return (
     <TableCell className={classes.columnDrag}>
-      <GripVertical />
+      <GripVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
     </TableCell>
   );
 });

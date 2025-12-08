@@ -1,6 +1,7 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createProductTypesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
@@ -170,7 +171,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
         toggleAll={toggleAll}
         toolbar={
           <Button
-            icon={<Trash2 />}
+            icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
             variant="secondary"
             data-test-id="bulk-delete-product-types"
             onClick={() =>

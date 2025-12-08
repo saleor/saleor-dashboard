@@ -2,6 +2,7 @@
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
@@ -161,7 +162,12 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
                           disabled={disabled}
                           variant="secondary"
                           onClick={() => onAttributeUnassign(attribute.id)}
-                          icon={<Trash2 />}
+                          icon={
+                            <Trash2
+                              size={iconSize.small}
+                              strokeWidth={iconStrokeWidthBySize.small}
+                            />
+                          }
                         />
                       </TableButtonWrapper>
                     </TableCell>

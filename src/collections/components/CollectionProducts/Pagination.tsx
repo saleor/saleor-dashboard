@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
 import { Box, Button, Select, Text } from "@saleor/macaw-ui-next";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -50,13 +51,13 @@ export const Pagination = ({ onUpdateListSettings, numberOfRows }: PaginationPro
           variant="secondary"
           disabled={!hasPreviousPage}
           onClick={loadPreviousPage}
-          icon={<ChevronLeft />}
+          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
         />
         <Button
           variant="secondary"
           disabled={!hasNextPage}
           onClick={loadNextPage}
-          icon={<ChevronRight />}
+          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
         />
       </Box>
     </Box>

@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -48,7 +49,7 @@ export const useTaxStrategyChoices = () => {
                 {app.identifier}
               </Text>
             )}
-            <ExternalLink size="small" color="default2" />
+            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidth} />
           </Box>
         </Button>
       ),

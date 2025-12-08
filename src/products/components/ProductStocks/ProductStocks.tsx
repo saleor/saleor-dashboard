@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -206,7 +207,9 @@ export const ProductStocks = ({
                       <Button
                         type="button"
                         variant="secondary"
-                        icon={<Trash2 />}
+                        icon={
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        }
                         onClick={() => onWarehouseStockDelete(stock.id)}
                       />
                     </TableCell>

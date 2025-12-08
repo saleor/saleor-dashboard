@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Minus, Plus } from "lucide-react";
 import * as React from "react";
@@ -25,7 +26,7 @@ export const ColumnPickerDynamicColumns = ({
       <Button
         variant="secondary"
         size="small"
-        icon={<Plus size="small" />}
+        icon={<Plus size={iconSize.small} strokeWidth={iconStrokeWidth} />}
         onClick={() => setExpanded(true)}
         data-test-id="open-dynamic-search"
       />
@@ -39,7 +40,7 @@ export const ColumnPickerDynamicColumns = ({
             data-test-id={`remove-dynamic-col-button-${column.title}`}
             variant="tertiary"
             size="small"
-            icon={<Minus color="default1" />}
+            icon={<Minus size={iconSize.small} strokeWidth={iconStrokeWidth} />}
             __width="20px"
             __height="20px"
           />
