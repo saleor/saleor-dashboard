@@ -259,6 +259,8 @@ export const OrderDraftDetails = ({
         errors={orderShippingMethodUpdate.opts.data?.orderUpdateShipping.errors || []}
         open={params.action === "edit-shipping"}
         shippingMethod={order?.shippingMethod?.id}
+        shippingMethodName={order?.shippingMethodName}
+        shippingPrice={order?.shippingPrice}
         shippingMethods={order?.shippingMethods}
         onClose={closeModal}
         onSubmit={variables =>
