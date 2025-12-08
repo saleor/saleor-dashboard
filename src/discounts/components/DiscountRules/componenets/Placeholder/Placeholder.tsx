@@ -1,4 +1,6 @@
-import { Box, PlusIcon, Text } from "@saleor/macaw-ui-next";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { Plus } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
@@ -19,7 +21,7 @@ export const Placeholder = () => {
       borderWidth={1}
       borderStyle="solid"
     >
-      <PlusIcon size="large" color="default2" />
+      <Plus size={iconSize.large} strokeWidth={iconStrokeWidth} />
       <Text size={5}>{intl.formatMessage(messages.placeholder)}</Text>
     </Box>
   );

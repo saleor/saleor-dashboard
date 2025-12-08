@@ -1,5 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Accordion, Box, Button, ChervonDownIcon, Text } from "@saleor/macaw-ui-next";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Accordion, Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { WelcomePageOnboardingAccordion } from "./components/WelcomePageOnboardingAccordion";
@@ -81,7 +83,7 @@ export const WelcomePageOnboarding = () => {
                 size="small"
                 data-test-id="onboarding-accordion-trigger"
               >
-                <ChervonDownIcon />
+                <ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />
               </Button>
             </Accordion.Trigger>
           </DashboardCard.Header>

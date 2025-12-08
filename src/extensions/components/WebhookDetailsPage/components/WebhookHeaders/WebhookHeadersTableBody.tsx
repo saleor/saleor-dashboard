@@ -1,10 +1,12 @@
 // @ts-strict-ignore
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
+import { Trash2 } from "lucide-react";
 import { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
@@ -104,7 +106,7 @@ export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTab
                 })
               }
             >
-              <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
             </IconButton>
           </TableCell>
         </TableRowLink>

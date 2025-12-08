@@ -3,7 +3,8 @@ import { capitalize } from "@dashboard/misc";
 import { transactionEventTypeMap } from "@dashboard/orders/messages";
 import { TransactionEventType } from "@dashboard/orders/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, InfoIcon, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Tooltip } from "@saleor/macaw-ui-next";
+import { Info } from "lucide-react";
 import { useIntl } from "react-intl";
 
 interface EventTypeProps {
@@ -37,7 +38,7 @@ export const EventType = ({ type, message }: EventTypeProps) => {
         <Tooltip>
           <Tooltip.Trigger>
             <div className={classes.tooltipWrapper}>
-              <InfoIcon />
+              <Info />
             </div>
           </Tooltip.Trigger>
           <Tooltip.Content side="bottom">

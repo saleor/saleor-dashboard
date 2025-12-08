@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
@@ -90,7 +91,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                 variant="secondary"
                 onClick={onFulfillmentShowMetadata}
                 data-test-id="show-fulfillment-metadata"
-                icon={<Code />}
+                icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
                 title="Edit fulfillment group metadata"
               />
             )}

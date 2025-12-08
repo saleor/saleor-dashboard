@@ -1,6 +1,8 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { GiftCardDetailsQuery, OrderEventFragment } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
-import { Box, Button, EditIcon, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -132,7 +134,7 @@ export const TimelineNote = ({
                   onClick={() => {
                     setShowEdit(true);
                   }}
-                  icon={<EditIcon size="small" />}
+                  icon={<Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
                 />
               )}
             </DashboardCard.Content>

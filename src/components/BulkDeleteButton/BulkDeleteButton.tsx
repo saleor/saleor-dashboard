@@ -1,4 +1,6 @@
-import { Button, Tooltip, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { forwardRef, useState } from "react";
 import * as React from "react";
 
@@ -25,7 +27,7 @@ export const BulkDeleteButton = forwardRef<HTMLButtonElement, ProductListDeleteB
               setIsTooltipOpen(false);
             }}
             onClick={onClick}
-            icon={<TrashBinIcon />}
+            icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
             variant="secondary"
             data-test-id="bulk-delete-button"
           />

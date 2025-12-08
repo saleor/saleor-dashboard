@@ -15,7 +15,8 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPagePropsWithPresets, PageListProps, SortPage } from "@dashboard/types";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -70,7 +71,7 @@ const CustomerListPage = ({
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={5} display="flex" alignItems="center">
-              <ChevronRightIcon />
+              <ChevronRight />
             </Box>
             <FilterPresetsSelect
               presetsChanged={hasPresetsChanged()}

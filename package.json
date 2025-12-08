@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.22.17",
+  "version": "3.22.18",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -75,7 +75,6 @@
     "@graphiql/toolkit": "^0.8.4",
     "@hookform/resolvers": "^3.10.0",
     "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.5",
     "@radix-ui/react-portal": "^1.1.10",
@@ -110,7 +109,7 @@
     "jwt-decode": "^3.1.2",
     "keycode": "^2.2.1",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.534.0",
+    "lucide-react": "0.555.0",
     "marked": "^4.3.0",
     "moment": "2.30.1",
     "moment-timezone": "^0.5.48",
@@ -145,7 +144,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.7",
-    "@editorjs/embed": "^2.7.6",
+    "@editorjs/embed": "2.7.6",
     "@eslint/js": "^9.39.1",
     "@formatjs/cli": "^4.8.4",
     "@graphql-codegen/cli": "^2.16.5",
@@ -157,7 +156,7 @@
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@graphql-eslint/eslint-plugin": "^4.4.0",
     "@playwright/test": "1.56.1",
-    "@saleor/app-sdk": "1.4.0",
+    "@saleor/app-sdk": "1.5.0",
     "@sentry/cli": "^2.58.2",
     "@storybook/react-vite": "9.0.18",
     "@swc/jest": "^0.2.39",
@@ -237,7 +236,7 @@
     "jest-file": "^1.0.0",
     "jest-localstorage-mock": "^2.4.26",
     "lint-staged": "^10.5.4",
-    "prettier": "^3.6.2",
+    "prettier": "3.6.2",
     "setup-polly-jest": "^0.9.1",
     "ts-jest": "^27.1.5"
   },

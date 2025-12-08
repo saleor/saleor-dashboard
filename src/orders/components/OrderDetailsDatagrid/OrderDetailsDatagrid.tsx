@@ -8,12 +8,13 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { Theme } from "@glideapps/glide-data-grid";
-import { ExternalLinkIcon } from "@saleor/macaw-ui-next";
+import { ExternalLink } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -77,10 +78,10 @@ export const OrderDetailsDatagrid = ({
         label: intl.formatMessage(messages.productDetails),
         Icon: lines[index]?.variant?.product.id ? (
           <Link to={productPath(lines[index].variant.product.id)} target="_blank">
-            <ExternalLinkIcon />
+            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
           </Link>
         ) : (
-          <ExternalLinkIcon />
+          <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
         ),
         onSelect: () => false,
       },
