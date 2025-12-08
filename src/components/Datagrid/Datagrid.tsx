@@ -490,6 +490,7 @@ const Datagrid = ({
                     borderColor="default1"
                   />
                   <DataEditor
+                    width="100%"
                     {...datagridProps}
                     customRenderers={customRenderers}
                     verticalBorder={verticalBorder}
