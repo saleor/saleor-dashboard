@@ -408,11 +408,10 @@ export const OrderValue = (props: Props): ReactNode => {
 
   return (
     <Box
-      backgroundColor="default2"
       padding={5}
       borderRadius={4}
       borderStyle="solid"
-      borderColor="transparent"
+      borderColor="default1"
       borderWidth={1}
       {...boxProps}
     >

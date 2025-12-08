@@ -24,14 +24,14 @@ export const OrderSummaryListItem = ({
 }: Props): ReactNode => {
   return (
     <Box as="li" display="grid" __gridTemplateColumns="1fr auto" gap={2} title={title} {...props}>
-      <Text fontWeight="medium" size={3}>
+      <Text fontWeight="medium" size={4}>
         {children}
       </Text>
       <Box title={amountTitle}>
         <Text fontWeight="medium" color="default2" size={3}>
           {currency}
         </Text>{" "}
-        <OrderSummaryListAmount amount={amount} showSign={showSign} />
+        <OrderSummaryListAmount amount={amount} showSign={showSign} size={4} />
       </Box>
     </Box>
   );
