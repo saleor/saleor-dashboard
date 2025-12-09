@@ -1935,6 +1935,10 @@
     "context": "attribute properties regarding storefront",
     "string": "Storefront Properties"
   },
+  "Ai4XSg": {
+    "context": "shown when shipping address is required but not set",
+    "string": "No shipping address"
+  },
   "AiurXc": {
     "string": "Outstanding authorized"
   },
@@ -2104,10 +2108,6 @@
   "BfJGij": {
     "context": "header",
     "string": "Address Information"
-  },
-  "BjxQ3u": {
-    "context": "shown when shipping address is required but not set",
-    "string": "No shipping address"
   },
   "Bkxrhw": {
     "context": "no webhooks message",
@@ -2428,6 +2428,10 @@
   },
   "Dd0Dwl": {
     "string": "Go to promotions"
+  },
+  "Dg4Y2p": {
+    "context": "set shipping method link when no shipping method selected",
+    "string": "Set shipping method"
   },
   "Dgp38J": {
     "context": "checkbox label",
@@ -2792,6 +2796,10 @@
   "G+9nOZ": {
     "context": "checkbox description",
     "string": "If selected, this will add all of the countries not selected to other shipping zones"
+  },
+  "G+MtyG": {
+    "context": "no shipping methods available",
+    "string": "No applicable shipping methods"
   },
   "G/pgG3": {
     "context": "dialog header",
@@ -3768,10 +3776,6 @@
   "M8z5WZ": {
     "context": "WarehouseSettings disabled warehouse description",
     "string": "If selected customer won't be able to choose this warehouse as pickup point"
-  },
-  "M9LXb5": {
-    "context": "no shipping methods available",
-    "string": "No applicable shipping methods"
   },
   "MAsLIT": {
     "context": "custom app token key",
@@ -10073,10 +10077,6 @@
   "ztvvcm": {
     "context": "swatch attribute type",
     "string": "Swatch type"
-  },
-  "zuWUXf": {
-    "context": "set shipping method link when no shipping method selected",
-    "string": "Set shipping method"
   },
   "zv9OGI": {
     "string": "No models found"
