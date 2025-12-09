@@ -65,30 +65,30 @@ const messages = defineMessages({
     defaultMessage: "Add Discount",
     description: "add discount button",
   },
-  setShipping: {
-    id: "zuWUXf",
-    defaultMessage: "Set shipping",
-    description: "set shipping link when no shipping method selected",
+  setShippingMethod: {
+    id: "Dg4Y2p",
+    defaultMessage: "Set shipping method",
+    description: "set shipping method link when no shipping method selected",
   },
   shipping: {
     id: "glR0om",
     defaultMessage: "Shipping",
     description: "shipping label",
   },
-  noShippingCarriers: {
-    id: "M9LXb5",
-    defaultMessage: "No applicable shipping carriers",
-    description: "no shipping carriers title",
+  noShippingMethods: {
+    id: "G+MtyG",
+    defaultMessage: "No applicable shipping methods",
+    description: "no shipping methods available",
   },
   noAlternativeShippingMethods: {
     id: "gCZYcl",
     defaultMessage: "No alternative shipping methods available",
     description: "tooltip shown when shipping method is selected but no other options exist",
   },
-  addShippingAddressFirst: {
-    id: "BjxQ3u",
-    defaultMessage: "add shipping address first",
-    description: "add shipping address first label",
+  noShippingAddress: {
+    id: "Ai4XSg",
+    defaultMessage: "No shipping address",
+    description: "shown when shipping address is required but not set",
   },
   netPrices: {
     id: "J/6a1+",
@@ -259,36 +259,36 @@ export const OrderValue = (props: Props): ReactNode => {
       );
     }
 
-    if (!hasShippingMethods) {
+    const hasShippingAddress = !!editableProps?.shippingAddress;
+
+    if (!hasShippingAddress) {
       return (
         <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
           <Text as="span" color="default2">
-            {intl.formatMessage(messages.noShippingCarriers)}
+            {intl.formatMessage(messages.noShippingAddress)}
           </Text>
         </OrderSummaryListItem>
       );
     }
 
-    const canSetShipping = !!editableProps?.shippingAddress;
+    if (!hasShippingMethods) {
+      return (
+        <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
+          <Text as="span" color="default2">
+            {intl.formatMessage(messages.noShippingMethods)}
+          </Text>
+        </OrderSummaryListItem>
+      );
+    }
 
     return (
       <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
-        {canSetShipping ? (
-          <InlineLink
-            onClick={editableProps?.onShippingMethodEdit}
-            data-test-id="add-shipping-carrier"
-          >
-            {intl.formatMessage(messages.setShipping)}
-          </InlineLink>
-        ) : (
-          <Text
-            as="span"
-            color="default2"
-            title={intl.formatMessage(messages.addShippingAddressFirst)}
-          >
-            {intl.formatMessage(messages.setShipping)}
-          </Text>
-        )}
+        <InlineLink
+          onClick={editableProps?.onShippingMethodEdit}
+          data-test-id="add-shipping-carrier"
+        >
+          {intl.formatMessage(messages.setShippingMethod)}
+        </InlineLink>
       </OrderSummaryListItem>
     );
   };

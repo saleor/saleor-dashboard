@@ -2106,8 +2106,8 @@
     "string": "Address Information"
   },
   "BjxQ3u": {
-    "context": "add shipping address first label",
-    "string": "add shipping address first"
+    "context": "shown when shipping address is required but not set",
+    "string": "No shipping address"
   },
   "Bkxrhw": {
     "context": "no webhooks message",
@@ -3770,8 +3770,8 @@
     "string": "If selected customer won't be able to choose this warehouse as pickup point"
   },
   "M9LXb5": {
-    "context": "no shipping carriers title",
-    "string": "No applicable shipping carriers"
+    "context": "no shipping methods available",
+    "string": "No applicable shipping methods"
   },
   "MAsLIT": {
     "context": "custom app token key",
@@ -10075,8 +10075,8 @@
     "string": "Swatch type"
   },
   "zuWUXf": {
-    "context": "set shipping link when no shipping method selected",
-    "string": "Set shipping"
+    "context": "set shipping method link when no shipping method selected",
+    "string": "Set shipping method"
   },
   "zv9OGI": {
     "string": "No models found"
