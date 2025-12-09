@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 
-import { TimelineApp, TimelineEventHeader, TimelineUser } from "./TimelineEventHeader";
+import { TimelineEventHeader } from "./TimelineEventHeader";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <MemoryRouter>
@@ -25,14 +25,15 @@ describe("TimelineEventHeader", () => {
   });
 
   it("renders user attribution with link", () => {
-    const user: TimelineUser = {
-      id: "user-123",
-      email: "john@example.com",
-      firstName: "John",
-      lastName: "Smith",
-    };
-
-    render(<TimelineEventHeader {...defaultProps} user={user} />, { wrapper: Wrapper });
+    render(
+      <TimelineEventHeader
+        {...defaultProps}
+        actorName="John Smith"
+        actorType="user"
+        actorId="user-123"
+      />,
+      { wrapper: Wrapper },
+    );
 
     expect(screen.getByText(/by/)).toBeInTheDocument();
     expect(screen.getByText("John Smith")).toBeInTheDocument();
@@ -40,12 +41,15 @@ describe("TimelineEventHeader", () => {
   });
 
   it("renders app attribution with link to app dashboard", () => {
-    const app: TimelineApp = {
-      id: "QXBwOjI3OQ==", // Base64 encoded app ID
-      name: "My App",
-    };
-
-    render(<TimelineEventHeader {...defaultProps} app={app} />, { wrapper: Wrapper });
+    render(
+      <TimelineEventHeader
+        {...defaultProps}
+        actorName="My App"
+        actorType="app"
+        actorId="QXBwOjI3OQ=="
+      />,
+      { wrapper: Wrapper },
+    );
 
     expect(screen.getByText("My App")).toBeInTheDocument();
 

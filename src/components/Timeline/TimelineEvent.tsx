@@ -1,7 +1,7 @@
 import { OrderEventsEnum } from "@dashboard/graphql";
 import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
 import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
-import { getStatusColor, PillStatusType } from "@dashboard/misc";
+import { getStatusColor, getUserName, PillStatusType } from "@dashboard/misc";
 import { Accordion, Box, sprinkles, useTheme, vars } from "@saleor/macaw-ui-next";
 import {
   AlertTriangleIcon,
@@ -32,12 +32,7 @@ import {
 import * as React from "react";
 
 import styles from "./Timeline.module.css";
-import {
-  TimelineApp,
-  TimelineEventHeader,
-  TimelineUser,
-  TitleElement,
-} from "./TimelineEventHeader";
+import { TimelineEventHeader, TitleElement } from "./TimelineEventHeader";
 import { safeStringify } from "./utils";
 
 // Custom icon type that includes both Lucide icons and custom icons
@@ -141,6 +136,18 @@ const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
   [OrderEventsEnum.OTHER]: CircleIcon,
 };
 
+interface TimelineEventUser {
+  id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+interface TimelineEventApp {
+  id: string;
+  name?: string | null;
+}
+
 export interface TimelineEventProps {
   children?: React.ReactNode;
   date: string;
@@ -149,8 +156,8 @@ export interface TimelineEventProps {
   hasPlainDate?: boolean;
   dateNode?: React.ReactNode;
   eventData?: unknown;
-  user?: TimelineUser | null;
-  app?: TimelineApp | null;
+  user?: TimelineEventUser | null;
+  app?: TimelineEventApp | null;
   eventType?: OrderEventsEnum | null;
   isLastInGroup?: boolean;
 }
@@ -208,6 +215,11 @@ export const TimelineEvent = (props: TimelineEventProps) => {
     isLastInGroup,
   } = props;
   const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
+
+  // Transform user/app to actor props for TimelineEventHeader
+  const actorName = user ? getUserName(user, true) : (app?.name ?? undefined);
+  const actorType = user ? "user" : app ? "app" : undefined;
+  const actorId = user?.id ?? app?.id;
 
   const eventDataString = React.useMemo(() => {
     if (!eventData) return null;
@@ -294,8 +306,9 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                     titleElements={titleElements}
                     hasPlainDate={hasPlainDate}
                     dateNode={dateNode}
-                    user={user}
-                    app={app}
+                    actorName={actorName}
+                    actorType={actorType}
+                    actorId={actorId}
                     tooltip={infoIcon}
                   />
                 </Box>
@@ -336,8 +349,9 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                 date={date}
                 hasPlainDate={hasPlainDate}
                 dateNode={dateNode}
-                user={user}
-                app={app}
+                actorName={actorName}
+                actorType={actorType}
+                actorId={actorId}
                 tooltip={infoIcon}
               />
             </Box>

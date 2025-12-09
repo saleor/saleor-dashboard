@@ -1,5 +1,4 @@
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
-import { getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { ReactNode } from "react";
@@ -14,19 +13,6 @@ export interface TitleElement {
   link?: string;
 }
 
-export interface TimelineUser {
-  id: string;
-  email: string;
-  firstName?: string;
-  lastName?: string;
-  avatarUrl?: string;
-}
-
-export interface TimelineApp {
-  id: string;
-  name?: string;
-}
-
 interface TimelineEventHeaderProps {
   title?: React.ReactNode;
   date: string;
@@ -35,8 +21,9 @@ interface TimelineEventHeaderProps {
   children?: ReactNode;
   dateNode?: ReactNode;
   tooltip?: ReactNode;
-  user?: TimelineUser | null;
-  app?: TimelineApp | null;
+  actorName?: string;
+  actorType?: "user" | "app";
+  actorId?: string;
 }
 
 export const TimelineEventHeader = ({
@@ -47,33 +34,39 @@ export const TimelineEventHeader = ({
   children,
   dateNode,
   tooltip,
-  user,
-  app,
+  actorName,
+  actorType,
+  actorId,
 }: TimelineEventHeaderProps) => {
   const elements = titleElements?.filter(Boolean) ?? [];
-  const userName = user ? getUserName(user, true) : null;
-  const appName = app?.name;
 
-  const attribution = userName ? (
+  const getActorLink = () => {
+    if (!actorId) return null;
+
+    if (actorType === "user") return staffMemberDetailsUrl(actorId);
+
+    if (actorType === "app")
+      return ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(actorId));
+
+    return null;
+  };
+
+  const actorLink = getActorLink();
+
+  const attribution = actorName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
       by{" "}
-      <Link to={staffMemberDetailsUrl(user!.id)} className={styles.userLink}>
+      {actorLink ? (
+        <Link to={actorLink} className={styles.userLink}>
+          <Text size={3} color="default2" as="span">
+            {actorName}
+          </Text>
+        </Link>
+      ) : (
         <Text size={3} color="default2" as="span">
-          {userName}
+          {actorName}
         </Text>
-      </Link>
-    </Text>
-  ) : appName && app ? (
-    <Text size={3} color="default2" as="span" marginLeft={1}>
-      by{" "}
-      <Link
-        to={ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(app.id))}
-        className={styles.userLink}
-      >
-        <Text size={3} color="default2" as="span">
-          {appName}
-        </Text>
-      </Link>
+      )}
     </Text>
   ) : null;
 
