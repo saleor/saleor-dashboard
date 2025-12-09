@@ -19,9 +19,7 @@ export interface TimelineUser {
   email: string;
   firstName?: string;
   lastName?: string;
-  avatar?: {
-    url?: string;
-  } | null;
+  avatarUrl?: string;
 }
 
 export interface TimelineApp {
