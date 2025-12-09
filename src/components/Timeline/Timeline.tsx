@@ -1,5 +1,8 @@
 // @ts-strict-ignore
-import { getModifierKey, KeyboardShortcutHint } from "@dashboard/components/KeyboardShortcut";
+import {
+  getModifierKey,
+  SendFormKeyboardShortcutHint,
+} from "@dashboard/components/KeyboardShortcut/KeyboardShortcut";
 import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
 import { PropsWithChildren, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -74,7 +77,7 @@ export const TimelineAddNote = ({
           rows={3}
         />
         <Box position="absolute" __bottom="8px" __right="8px">
-          <KeyboardShortcutHint visible={isFocused} key1={getModifierKey()} key2="↵" />
+          <SendFormKeyboardShortcutHint visible={isFocused} key1={getModifierKey()} key2="↵" />
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>

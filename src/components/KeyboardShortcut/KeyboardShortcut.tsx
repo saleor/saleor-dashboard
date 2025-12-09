@@ -24,20 +24,20 @@ export const KeyboardKey = ({ children }: KeyboardKeyProps): ReactElement => (
   <kbd style={kbdStyle}>{children}</kbd>
 );
 
-interface KeyboardShortcutHintProps {
+interface SendFormKeyboardShortcutHintProps {
   visible?: boolean;
   key1: string;
   key2: string;
 }
 
 /**
- * Displays a keyboard shortcut hint (e.g., "Press ⌘ ↵ to send").
+ * Displays a keyboard shortcut hint for sending forms (e.g., "Press ⌘ ↵ to send").
  */
-export const KeyboardShortcutHint = ({
+export const SendFormKeyboardShortcutHint = ({
   visible = true,
   key1,
   key2,
-}: KeyboardShortcutHintProps): ReactElement => (
+}: SendFormKeyboardShortcutHintProps): ReactElement => (
   <Box
     display="flex"
     alignItems="center"

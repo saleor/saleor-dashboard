@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
-import { KeyboardKey, KeyboardShortcutHint } from "./KeyboardShortcut";
+import { KeyboardKey, SendFormKeyboardShortcutHint } from "./KeyboardShortcut";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <IntlProvider locale="en" messages={{}}>
@@ -20,12 +20,13 @@ describe("KeyboardKey", () => {
   });
 });
 
-describe("KeyboardShortcutHint", () => {
+describe("SendFormKeyboardShortcutHint", () => {
   it("controls visibility via opacity", () => {
     // Arrange
-    const { container, rerender } = render(<KeyboardShortcutHint visible key1="⌘" key2="↵" />, {
-      wrapper: Wrapper,
-    });
+    const { container, rerender } = render(
+      <SendFormKeyboardShortcutHint visible key1="⌘" key2="↵" />,
+      { wrapper: Wrapper },
+    );
 
     // Assert
     expect((container.firstChild as HTMLElement).style.opacity).toBe("1");
@@ -33,7 +34,7 @@ describe("KeyboardShortcutHint", () => {
     // Act
     rerender(
       <Wrapper>
-        <KeyboardShortcutHint visible={false} key1="⌘" key2="↵" />
+        <SendFormKeyboardShortcutHint visible={false} key1="⌘" key2="↵" />
       </Wrapper>,
     );
 
