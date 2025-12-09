@@ -1,4 +1,5 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
+import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { CheckIcon, CopyIcon, ExternalLinkIcon } from "lucide-react";
@@ -102,10 +103,8 @@ export const PspReference = ({ reference, url }: PspReferenceProps) => {
             )
           }
           onClick={() => copy(reference)}
-          aria-label={intl.formatMessage({
-            defaultMessage: "Copy to clipboard",
-            id: "aCdAsI",
-          })}
+          title={intl.formatMessage(buttonMessages.copyToClipboard)}
+          aria-label={intl.formatMessage(buttonMessages.copyToClipboard)}
         />
       </Box>
     </Box>
