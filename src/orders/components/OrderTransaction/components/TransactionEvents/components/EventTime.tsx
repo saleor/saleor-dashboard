@@ -12,6 +12,14 @@ export const EventTime = ({ date }: { date: string }) => {
     minute: "2-digit",
   });
 
+  if (!date || new Date(date).toString() === "Invalid Date") {
+    return (
+      <Text size={2} color="default2">
+        —
+      </Text>
+    );
+  }
+
   return (
     <Text size={2} whiteSpace="nowrap">
       <time dateTime={date}>{intl.format(new Date(date))}</time>
