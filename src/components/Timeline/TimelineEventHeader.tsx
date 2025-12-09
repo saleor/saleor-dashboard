@@ -24,7 +24,7 @@ export interface TimelineUser {
 
 export interface TimelineApp {
   id: string;
-  name?: string | null;
+  name?: string;
 }
 
 interface TimelineEventHeaderProps {
