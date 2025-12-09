@@ -26,14 +26,17 @@ export const KeyboardKey = ({ children }: KeyboardKeyProps): ReactElement => (
 
 interface KeyboardShortcutHintProps {
   visible?: boolean;
+  key1: string;
+  key2: string;
 }
 
 /**
  * Displays a keyboard shortcut hint (e.g., "Press ⌘ ↵ to send").
- * Automatically uses the correct modifier key for the platform.
  */
 export const KeyboardShortcutHint = ({
   visible = true,
+  key1,
+  key2,
 }: KeyboardShortcutHintProps): ReactElement => (
   <Box
     display="flex"
@@ -50,10 +53,15 @@ export const KeyboardShortcutHint = ({
         id="ILrXJV"
         defaultMessage="Press {key1} {key2} to send"
         values={{
-          key1: <KeyboardKey>{getModifierKey()}</KeyboardKey>,
-          key2: <KeyboardKey>↵</KeyboardKey>,
+          key1: <KeyboardKey>{key1}</KeyboardKey>,
+          key2: <KeyboardKey>{key2}</KeyboardKey>,
         }}
       />
     </Text>
   </Box>
 );
+
+/**
+ * Returns the correct modifier key symbol for the platform (⌘ for Mac, Ctrl for others).
+ */
+export { getModifierKey };

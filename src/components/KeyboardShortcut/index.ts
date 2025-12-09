@@ -1,1 +1,1 @@
-export { KeyboardKey, KeyboardShortcutHint } from "./KeyboardShortcut";
+export { getModifierKey, KeyboardKey, KeyboardShortcutHint } from "./KeyboardShortcut";

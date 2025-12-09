@@ -22,16 +22,22 @@ describe("KeyboardKey", () => {
 
 describe("KeyboardShortcutHint", () => {
   it("controls visibility via opacity", () => {
-    const { container, rerender } = render(<KeyboardShortcutHint visible />, { wrapper: Wrapper });
+    // Arrange
+    const { container, rerender } = render(<KeyboardShortcutHint visible key1="⌘" key2="↵" />, {
+      wrapper: Wrapper,
+    });
 
+    // Assert
     expect((container.firstChild as HTMLElement).style.opacity).toBe("1");
 
+    // Act
     rerender(
       <Wrapper>
-        <KeyboardShortcutHint visible={false} />
+        <KeyboardShortcutHint visible={false} key1="⌘" key2="↵" />
       </Wrapper>,
     );
 
+    // Assert
     expect((container.firstChild as HTMLElement).style.opacity).toBe("0");
   });
 });
