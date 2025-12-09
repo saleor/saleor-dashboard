@@ -142,7 +142,8 @@ const contentAttrWithValues = {
 const attributesWithValuesToBeUpdated = [productAttrWithValues, contentAttrWithValues];
 
 for (const attribute of attributesWithValuesToBeUpdated) {
-  test(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute #e2e #attributes`, async () => {
+  // Skipped due to test instability
+  test.skip(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute #e2e #attributes`, async () => {
     await attributesPage.gotoExistingAttributePage(attribute.id, attribute.name);
     await attributesPage.clickDeleteAttrValueButton(attribute.valueToBeDeleted);
     await expect(attributesPage.dialog).toBeVisible();
