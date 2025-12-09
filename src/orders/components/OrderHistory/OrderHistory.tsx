@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { DashboardCard } from "@dashboard/components/Card";
-import { CopyableText } from "@dashboard/components/CopyableText";
+import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Form from "@dashboard/components/Form";
 import { Pill } from "@dashboard/components/Pill";
 import {

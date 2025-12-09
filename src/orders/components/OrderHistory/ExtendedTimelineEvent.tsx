@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { CopyableText } from "@dashboard/components/CopyableText";
+import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Money from "@dashboard/components/Money";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
