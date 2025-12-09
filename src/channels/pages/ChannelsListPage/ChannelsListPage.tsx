@@ -2,6 +2,7 @@ import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -15,8 +16,8 @@ import { sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { DeleteIcon } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -117,9 +118,9 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
                           variant="secondary"
                           data-test-id="delete-channel"
                           icon={
-                            <DeleteIcon
-                              onPointerEnterCapture={undefined}
-                              onPointerLeaveCapture={undefined}
+                            <Trash2
+                              size={iconSize.small}
+                              strokeWidth={iconStrokeWidthBySize.small}
                             />
                           }
                           onClick={

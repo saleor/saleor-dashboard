@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { TableCell } from "@material-ui/core";
@@ -77,14 +78,14 @@ export const TablePagination = ({
             variant="secondary"
             disabled={!hasPreviousPage || disabled}
             onClick={handlers.onPreviousPage}
-            icon={<ChevronLeft />}
+            icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             data-test-id="button-pagination-back"
           />
           <Button
             variant="secondary"
             disabled={!hasNextPage || disabled}
             onClick={handlers.onNextPage}
-            icon={<ChevronRight />}
+            icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             data-test-id="button-pagination-next"
           />
         </Box>

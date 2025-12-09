@@ -1,6 +1,7 @@
 import { useLastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { getAppMountUri } from "@dashboard/config";
 import { AccountErrorCode } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -32,7 +33,7 @@ const ResetPasswordPage = (props: ResetPasswordPageProps) => {
         <Box display="flex" flexDirection="column" alignItems="flex-start">
           <Button
             as="a"
-            icon={<ArrowLeft />}
+            icon={<ArrowLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             href={getAppMountUri()}
             variant="secondary"
             marginBottom={4}

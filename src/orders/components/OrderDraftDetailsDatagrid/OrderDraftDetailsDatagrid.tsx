@@ -9,6 +9,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import { productUrl } from "@dashboard/products/urls";
@@ -84,12 +85,12 @@ export const OrderDraftDetailsDatagrid = ({
               gap: 2,
             })}
           >
-            <ExternalLink />
+            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
             {intl.formatMessage(messages.productDetails)}
           </Link>
         ) : (
           <Box display="flex" alignItems="center" gap={2}>
-            <ExternalLink />
+            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
             {intl.formatMessage(messages.productDetails)}
           </Box>
         ),
@@ -107,7 +108,7 @@ export const OrderDraftDetailsDatagrid = ({
             __marginLeft="-2px"
             gap={2}
           >
-            <Trash2 />
+            <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
             {intl.formatMessage(messages.deleteOrder)}
           </Box>
         ),

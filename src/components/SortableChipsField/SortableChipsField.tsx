@@ -1,3 +1,4 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ReorderAction } from "@dashboard/types";
 import {
   DndContext,
@@ -166,7 +167,7 @@ const SortableChipsField = ({
             disabled={disabled}
             marginLeft="auto"
             onClick={onAdd}
-            icon={<Plus />}
+            icon={<Plus size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
           />
         ) : null}
       </Box>

@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TablePagination } from "@dashboard/components/TablePagination";
@@ -196,7 +197,9 @@ const AttributeValues = ({
                 <TableCell className={classes.columnStore}>{value?.name ?? <Skeleton />}</TableCell>
                 <TableCell className={classes.iconCell}>
                   <Button
-                    icon={<Trash2 />}
+                    icon={
+                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                    }
                     data-test-id="delete-attribute-value-button"
                     variant="secondary"
                     disabled={disabled}

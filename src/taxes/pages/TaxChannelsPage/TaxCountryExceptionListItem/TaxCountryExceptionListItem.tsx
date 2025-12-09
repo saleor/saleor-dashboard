@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Select } from "@dashboard/components/Select";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
@@ -66,7 +67,12 @@ const TaxCountryExceptionListItem = ({
           />
         </ListItemCell>
         <ListItemCell>
-          <Button size="small" onClick={onDelete} variant="secondary" icon={<Trash2 />} />
+          <Button
+            size="small"
+            onClick={onDelete}
+            variant="secondary"
+            icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          />
         </ListItemCell>
       </ListItem>
       {divider && <Divider />}
