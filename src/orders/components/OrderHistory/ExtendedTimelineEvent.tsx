@@ -217,7 +217,7 @@ const ExtendedTimelineEvent = ({
             {message && <Box paddingTop={1} />}
             {lines.map(({ orderLine, quantity, itemName }, i) => (
               <OrderLineItem
-                key={`${id}-line-${orderLine?.id || `${itemName}-${quantity}-${i}`}`}
+                key={orderLine?.id ? `${id}-line-${orderLine.id}` : `${id}-line-${i}`}
                 orderLine={orderLine}
                 quantity={quantity}
                 itemName={itemName}
