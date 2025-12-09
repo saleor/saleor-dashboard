@@ -151,9 +151,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           onOrderLineAdd={onOrderLineAdd}
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
-          onShippingMethodEdit={onShippingMethodEdit}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
-          hideSummary
         />
         {order && orderDiscountContext && (
           <>

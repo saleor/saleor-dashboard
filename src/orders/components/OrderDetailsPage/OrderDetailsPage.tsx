@@ -252,8 +252,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}
-                    onShippingMethodEdit={onShippingMethodEdit}
-                    hideSummary
                   />
                   <CardSpacer />
                 </>

@@ -6,16 +6,10 @@ import {
   OrderErrorFragment,
   OrderLineInput,
 } from "@dashboard/graphql";
-import {
-  OrderDiscountContext,
-  OrderDiscountContextConsumerProps,
-} from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
-import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
@@ -25,10 +19,7 @@ interface OrderDraftDetailsProps {
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
-  onShippingMethodEdit: () => void;
   onOrderLineShowMetadata: (id: string) => void;
-  /** Hide the summary section (when using OrderSummary component instead) */
-  hideSummary?: boolean;
 }
 
 const OrderDraftDetails = ({
@@ -39,9 +30,7 @@ const OrderDraftDetails = ({
   onOrderLineAdd,
   onOrderLineChange,
   onOrderLineRemove,
-  onShippingMethodEdit,
   onOrderLineShowMetadata,
-  hideSummary = false,
 }: OrderDraftDetailsProps) => {
   const intl = useIntl();
   const isChannelActive = order?.channel.isActive;
@@ -73,20 +62,6 @@ const OrderDraftDetails = ({
         onOrderLineRemove={onOrderLineRemove}
         onOrderLineShowMetadata={onOrderLineShowMetadata}
       />
-      {!hideSummary && maybe(() => order.lines.length) !== 0 && (
-        <DashboardCard.Content>
-          <OrderDiscountContext.Consumer>
-            {(orderDiscountProps: OrderDiscountContextConsumerProps) => (
-              <OrderDraftDetailsSummary
-                order={order}
-                errors={errors}
-                onShippingMethodEdit={onShippingMethodEdit}
-                {...orderDiscountProps}
-              />
-            )}
-          </OrderDiscountContext.Consumer>
-        </DashboardCard.Content>
-      )}
     </DashboardCard>
   );
 };
