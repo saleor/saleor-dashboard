@@ -546,10 +546,6 @@
   "16sza6": {
     "string": "Refund grants reserve a money which later can be sent to customers via original payment methods or a manual transaction."
   },
-  "18wvf7": {
-    "context": "section header",
-    "string": "Order Details"
-  },
   "19/lwV": {
     "string": "Determine attributes used to create product types"
   },
@@ -1347,6 +1343,10 @@
   },
   "6Y1YDn": {
     "string": "Updated extension permissions"
+  },
+  "6YKFVP": {
+    "context": "draft order lines, section header",
+    "string": "Order lines"
   },
   "6ZubLQ": {
     "string": "Manage available refunds reasons"
@@ -3430,10 +3430,6 @@
     "context": "button",
     "string": "Edit"
   },
-  "Jb1/3V": {
-    "context": "add shipping carrier button",
-    "string": "Add shipping carrier"
-  },
   "JbUg2b": {
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
@@ -4726,10 +4722,6 @@
   },
   "RzsKm8": {
     "string": "Shipping methods"
-  },
-  "S/yAtJ": {
-    "context": "total price",
-    "string": "Total"
   },
   "S1u2pa": {
     "context": "app settings error",
@@ -7963,10 +7955,6 @@
   "mMOskm": {
     "string": "Open product detail"
   },
-  "mQtoRO": {
-    "context": "taxes title",
-    "string": "Taxes (VAT included)"
-  },
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
@@ -9694,10 +9682,6 @@
   },
   "xTyg+p": {
     "string": "No options to select"
-  },
-  "xUvWaP": {
-    "context": "subtotal price",
-    "string": "Subtotal"
   },
   "xVn5B0": {
     "context": "added new attribute value",

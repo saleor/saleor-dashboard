@@ -6,9 +6,10 @@ import {
   OrderErrorFragment,
   OrderLineInput,
 } from "@dashboard/graphql";
-import { Button } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { FormattedMessage } from "react-intl";
 
+import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 
 interface OrderDraftDetailsProps {
@@ -32,36 +33,38 @@ const OrderDraftDetails = ({
   onOrderLineRemove,
   onOrderLineShowMetadata,
 }: OrderDraftDetailsProps) => {
-  const intl = useIntl();
   const isChannelActive = order?.channel.isActive;
   const areProductsInChannel = !!channelUsabilityData?.products.totalCount;
 
   return (
-    <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage({
-            id: "18wvf7",
-            defaultMessage: "Order Details",
-            description: "section header",
-          })}
-        </DashboardCard.Title>
-        <DashboardCard.Toolbar>
-          {isChannelActive && areProductsInChannel && (
-            <Button variant="secondary" onClick={onOrderLineAdd} data-test-id="add-products-button">
-              <FormattedMessage id="C50ahv" defaultMessage="Add products" description="button" />
-            </Button>
-          )}
-        </DashboardCard.Toolbar>
-      </DashboardCard.Header>
-      <OrderDraftDetailsProducts
-        order={order}
-        errors={errors}
-        loading={loading}
-        onOrderLineChange={onOrderLineChange}
-        onOrderLineRemove={onOrderLineRemove}
-        onOrderLineShowMetadata={onOrderLineShowMetadata}
+    <DashboardCard gap={0}>
+      <OrderCardTitle
+        status="draft"
+        toolbar={
+          isChannelActive &&
+          areProductsInChannel && (
+            <Box>
+              <Button
+                variant="secondary"
+                onClick={onOrderLineAdd}
+                data-test-id="add-products-button"
+              >
+                <FormattedMessage id="C50ahv" defaultMessage="Add products" description="button" />
+              </Button>
+            </Box>
+          )
+        }
       />
+      <DashboardCard.Content paddingX={0}>
+        <OrderDraftDetailsProducts
+          order={order}
+          errors={errors}
+          loading={loading}
+          onOrderLineChange={onOrderLineChange}
+          onOrderLineRemove={onOrderLineRemove}
+          onOrderLineShowMetadata={onOrderLineShowMetadata}
+        />
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };
