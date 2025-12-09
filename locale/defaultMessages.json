@@ -1492,6 +1492,10 @@
     "context": "model",
     "string": "will be visible from {date}"
   },
+  "7ZKQU3": {
+    "context": "no shipping method option",
+    "string": "No shipping method"
+  },
   "7dhhzL": {
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
@@ -6632,10 +6636,6 @@
   },
   "dWK/Ck": {
     "string": "Choose countries, you want voucher to be limited to, from the list below"
-  },
-  "dYc+5u": {
-    "context": "no shipping method option",
-    "string": "No shipping method"
   },
   "da1ebU": {
     "string": "Product type"
