@@ -75,7 +75,7 @@ test("TC: SALEOR_133 Should be able to create new permission group #permissions 
     await expect(permissionDetails.permissionGroupCheckbox(permission)).toBeChecked();
   }
 });
-test("TC: SALEOR_134 Should be able to edit on existing permission group #permissions #e2e", async () => {
+test("TC: SALEOR_134 Should be able to edit an existing permission group #permissions #e2e", async () => {
   // await permissions.gotoPermissionGroupsView();
 
   const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
@@ -118,7 +118,7 @@ test("TC: SALEOR_134 Should be able to edit on existing permission group #permis
   await expect(permissionDetails.permissionGroupCheckbox("HANDLE_CHECKOUTS")).toBeChecked();
 });
 
-test("TC: SALEOR_217 Should be able to edit members existing permission group #permissions #e2e", async () => {
+test("TC: SALEOR_218 Should be able to edit members of existing permission group #permissions #e2e", async () => {
   const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
 
   await permissions.gotoExistingPermissionGroupPage(permission.id);

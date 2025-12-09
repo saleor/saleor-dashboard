@@ -246,7 +246,7 @@ for (const rule of orderRules) {
       timeout: 10000,
     });
     await expect(
-      discounts.existingRule.filter({ hasText: `Order rule: ${rule.name} ` }),
+      discounts.existingRule.filter({ hasText: `Order rule: ${rule.name}` }),
     ).toBeVisible();
     await discounts.clickEditRuleButton(`Order rule: ${rule.name}`);
 

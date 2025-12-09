@@ -125,8 +125,8 @@ export class OrdersPage extends BasePage {
     console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
     await this.waitForDOMToFullyLoad();
-    await this.waitForGrid();
-    await this.waitForGrid();
+    // await this.waitForGrid();
+    // await this.waitForGrid();
   }
 
   async clickAddRefundButton() {

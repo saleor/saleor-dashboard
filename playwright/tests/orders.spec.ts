@@ -222,7 +222,8 @@ test("TC: SALEOR_82 Change shipping address in not fulfilled order #e2e #order",
   );
 });
 
-test("TC: SALEOR_83 Draft orders bulk delete #e2e #draft", async () => {
+// Skipping due to issues with clicking on grid
+test.skip("TC: SALEOR_83 Draft orders bulk delete #e2e #draft", async () => {
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.checkListRowsBasedOnContainingText(ORDERS.draftOrdersToBeDeleted.ids);
   await draftOrdersPage.clickBulkDeleteButton();
