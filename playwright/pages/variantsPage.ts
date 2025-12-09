@@ -115,7 +115,7 @@ export class VariantsPage extends BasePage {
     await this.attributeOption.last().click();
   }
 
-  async selectWarehouse(warehouse = "Oceania") {
+  async selectWarehouse(warehouse = "Americas") {
     await this.clickAssignWarehouseButton();
     await this.page
       .locator("tr", { hasText: warehouse })
@@ -124,7 +124,7 @@ export class VariantsPage extends BasePage {
     await this.page.getByRole("button", { name: "Confirm" }).click();
   }
 
-  async typeQuantityInStock(warehouse = "Oceania", quantity = "10") {
+  async typeQuantityInStock(warehouse = "Americas", quantity = "10") {
     const quantityInput = await this.page.getByTestId(warehouse).locator(this.stockInput);
 
     await quantityInput.clear();

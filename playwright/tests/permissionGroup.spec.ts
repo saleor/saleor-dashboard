@@ -106,6 +106,7 @@ test("TC: SALEOR_134 Should be able to edit an existing permission group #permis
   await permissionDetails.clickSaveButton();
   await expect(permissions.successBanner).toBeVisible();
 
+  await expect(permissionDetails.permissionGroupCheckbox("HANDLE_CHECKOUTS")).toBeChecked();
   await expect(
     permissionDetails.permissionGroupCheckbox(assignedPermissions.names[2]),
   ).toBeChecked();
@@ -115,7 +116,6 @@ test("TC: SALEOR_134 Should be able to edit an existing permission group #permis
   await expect(
     permissionDetails.permissionGroupCheckbox(assignedPermissions.names[1]),
   ).not.toBeChecked();
-  await expect(permissionDetails.permissionGroupCheckbox("HANDLE_CHECKOUTS")).toBeChecked();
 });
 
 test("TC: SALEOR_218 Should be able to edit members of existing permission group #permissions #e2e", async () => {
