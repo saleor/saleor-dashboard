@@ -3392,10 +3392,6 @@
     "context": "expiry date checkbox label",
     "string": "Gift card expires"
   },
-  "JLH97N": {
-    "context": "add products button tooltip",
-    "string": "Add products from {channelName}"
-  },
   "JMBsrr": {
     "context": "table header available stock label",
     "string": "Available"
@@ -6749,6 +6745,10 @@
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
     "string": "Captured"
+  },
+  "empNV9": {
+    "context": "add products button tooltip",
+    "string": "Add products from {channelName}"
   },
   "epB7b7": {
     "context": "fulfillment status replaced",
