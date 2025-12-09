@@ -18,7 +18,7 @@ type TimelineAppType =
   | OrderEventFragment["app"];
 
 interface TimelineNoteProps {
-  date: string;
+  date: string | React.ReactNode;
   message: string | null;
   user: OrderEventFragment["user"];
   app: TimelineAppType;
@@ -27,7 +27,6 @@ interface TimelineNoteProps {
   relatedId?: string;
   onNoteUpdate?: (id: string, message: string) => Promise<unknown>;
   onNoteUpdateLoading?: boolean;
-  dateNode?: React.ReactNode;
   eventData?: unknown;
   isLastInGroup?: boolean;
 }
@@ -42,13 +41,15 @@ export const TimelineNote = ({
   relatedId,
   onNoteUpdate,
   onNoteUpdateLoading,
-  dateNode,
   eventData,
   isLastInGroup,
 }: TimelineNoteProps) => {
   const userDisplayName = getUserName(user, true) ?? app?.name;
   const [showEdit, setShowEdit] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  const dateToRender =
+    typeof date === "string" ? <DateTime date={date} plain={hasPlainDate} /> : date;
 
   const eventDataString = useMemo(() => {
     if (!eventData) return null;
@@ -195,7 +196,7 @@ export const TimelineNote = ({
                 </Box>
               )}
               <Text size={2} color="default2" whiteSpace="nowrap">
-                {dateNode || <DateTime date={date} plain={hasPlainDate} />}
+                {dateToRender}
               </Text>
             </Box>
           </Box>

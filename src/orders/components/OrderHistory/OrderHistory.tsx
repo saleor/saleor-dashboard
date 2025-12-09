@@ -182,8 +182,7 @@ const OrderHistory = ({
                       onNoteUpdate={onNoteUpdate}
                       onNoteUpdateLoading={onNoteUpdateLoading!}
                       id={id}
-                      date={date}
-                      dateNode={<OrderHistoryDate date={date} />}
+                      date={<OrderHistoryDate date={date} />}
                       user={user}
                       message={message}
                       key={id}
@@ -201,8 +200,7 @@ const OrderHistory = ({
                       onNoteUpdateLoading={onNoteUpdateLoading!}
                       relatedId={related.id}
                       id={id}
-                      date={date}
-                      dateNode={<OrderHistoryDate date={date} />}
+                      date={<OrderHistoryDate date={date} />}
                       user={user}
                       message={message}
                       key={id}
