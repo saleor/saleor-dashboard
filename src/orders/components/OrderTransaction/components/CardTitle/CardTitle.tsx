@@ -14,6 +14,43 @@ import { MoneyDisplay } from "./MoneyDisplay";
 const isDestructiveAction = (action: TransactionActionEnum) =>
   action === TransactionActionEnum.CANCEL || action === TransactionActionEnum.REFUND;
 
+const getTransactionAmounts = ({
+  chargedAmount,
+  authorizedAmount,
+  refundedAmount,
+  canceledAmount,
+  chargePendingAmount,
+  authorizePendingAmount,
+  refundPendingAmount,
+  cancelPendingAmount,
+}: ExtendedOrderTransaction) =>
+  [
+    { label: messages.charged, money: chargedAmount, show: chargedAmount.amount > 0 },
+    { label: messages.authorized, money: authorizedAmount, show: authorizedAmount.amount > 0 },
+    { label: messages.refunded, money: refundedAmount, show: refundedAmount.amount > 0 },
+    { label: messages.canceled, money: canceledAmount, show: canceledAmount.amount > 0 },
+    {
+      label: messages.chargePending,
+      money: chargePendingAmount,
+      show: chargePendingAmount.amount > 0,
+    },
+    {
+      label: messages.authorizePending,
+      money: authorizePendingAmount,
+      show: authorizePendingAmount.amount > 0,
+    },
+    {
+      label: messages.refundPending,
+      money: refundPendingAmount,
+      show: refundPendingAmount.amount > 0,
+    },
+    {
+      label: messages.cancelPending,
+      money: cancelPendingAmount,
+      show: cancelPendingAmount.amount > 0,
+    },
+  ].filter(item => item.show);
+
 interface CardTitleProps {
   transaction: ExtendedOrderTransaction;
   onTransactionAction: OrderTransactionProps["onTransactionAction"];
@@ -82,48 +119,13 @@ export const OrderTransactionCardTitle = ({
 }: CardTitleProps) => {
   const intl = useIntl();
 
-  const {
-    refundedAmount,
-    refundPendingAmount,
-    authorizePendingAmount,
-    cancelPendingAmount,
-    chargePendingAmount,
-    canceledAmount,
-    chargedAmount,
-    authorizedAmount,
-    index = 0,
-  } = transaction;
+  const { index = 0 } = transaction;
 
   const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
   const showActionsMenu = showActions && actions.length > 0;
 
   // Collect all non-zero amounts for display
-  const amounts = [
-    { label: messages.charged, money: chargedAmount, show: chargedAmount.amount > 0 },
-    { label: messages.authorized, money: authorizedAmount, show: authorizedAmount.amount > 0 },
-    { label: messages.refunded, money: refundedAmount, show: refundedAmount.amount > 0 },
-    { label: messages.canceled, money: canceledAmount, show: canceledAmount.amount > 0 },
-    {
-      label: messages.chargePending,
-      money: chargePendingAmount,
-      show: chargePendingAmount.amount > 0,
-    },
-    {
-      label: messages.authorizePending,
-      money: authorizePendingAmount,
-      show: authorizePendingAmount.amount > 0,
-    },
-    {
-      label: messages.refundPending,
-      money: refundPendingAmount,
-      show: refundPendingAmount.amount > 0,
-    },
-    {
-      label: messages.cancelPending,
-      money: cancelPendingAmount,
-      show: cancelPendingAmount.amount > 0,
-    },
-  ].filter(item => item.show);
+  const amounts = getTransactionAmounts(transaction);
 
   return (
     <Box width="100%" display="flex" justifyContent="space-between" alignItems="center" gap={4}>
