@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 
@@ -27,13 +26,13 @@ const startOfDay = (date: Date): Date => {
 };
 
 // Helper to get date group key - smart grouping based on age
-export const getDateGroupKey = (date: string | null, now?: Date): DateGroupKey => {
+export const getDateGroupKey = (date: string | null): DateGroupKey => {
   if (!date) {
     return "UNKNOWN";
   }
 
   const eventDate = new Date(date);
-  const currentDate = now || new Date();
+  const currentDate = new Date();
   const today = startOfDay(currentDate);
   const yesterday = new Date(today);
 
@@ -62,13 +61,12 @@ export const getDateGroupKey = (date: string | null, now?: Date): DateGroupKey =
 // Group events by date - preserves insertion order
 export const groupEventsByDate = (
   events: OrderEventFragment[],
-  now?: Date,
 ): Array<[DateGroupKey, OrderEventFragment[]]> => {
   const groups: Array<[DateGroupKey, OrderEventFragment[]]> = [];
   const groupMap = new Map<DateGroupKey, number>();
 
   events.forEach(event => {
-    const key = getDateGroupKey(event.date, now);
+    const key = getDateGroupKey(event.date);
 
     if (!groupMap.has(key)) {
       groupMap.set(key, groups.length);

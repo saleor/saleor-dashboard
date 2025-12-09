@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TimezoneConsumer } from "@dashboard/components/Timezone";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -28,16 +27,23 @@ const formatDate = (date: Date, options: Intl.DateTimeFormatOptions, locale: str
   }
 };
 
+interface GetRelativeDateParams {
+  date: string;
+  intl: IntlShape;
+  tz?: string;
+  now?: Date;
+}
+
 /**
  * Calculate relative date string and full date for tooltip.
  * Extracted for testability.
  */
-export const getRelativeDate = (
-  date: string,
-  intl: IntlShape,
-  tz?: string,
+export const getRelativeDate = ({
+  date,
+  intl,
+  tz,
   now = new Date(),
-): RelativeDateResult => {
+}: GetRelativeDateParams): RelativeDateResult => {
   const eventDate = new Date(date);
   const diffInSeconds = Math.floor((now.getTime() - eventDate.getTime()) / 1000);
 
@@ -106,7 +112,7 @@ export const OrderHistoryDate = ({ date }: OrderHistoryDateProps) => {
   return (
     <TimezoneConsumer>
       {tz => {
-        const { dateStr, fullDate } = getRelativeDate(date, intl, tz);
+        const { dateStr, fullDate } = getRelativeDate({ date, intl, tz });
 
         return (
           <span title={fullDate} style={{ cursor: "default" }}>
