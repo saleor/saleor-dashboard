@@ -7,13 +7,32 @@ import OrderShippingMethodEditDialog from "./OrderShippingMethodEditDialog";
 
 describe("OrderShippingMethodEditDialog", () => {
   const shippingMethods = order("").shippingMethods!;
+  const mockShippingPrice = {
+    __typename: "TaxedMoney" as const,
+    gross: {
+      __typename: "Money" as const,
+      amount: 10,
+      currency: "USD",
+    },
+    net: {
+      __typename: "Money" as const,
+      amount: 10,
+      currency: "USD",
+    },
+    tax: {
+      __typename: "Money" as const,
+      amount: 0,
+      currency: "USD",
+    },
+  };
+
   const defaultProps = {
     confirmButtonState: "default" as ConfirmButtonTransitionState,
     errors: [],
     open: true,
     shippingMethod: shippingMethods[1].id,
     shippingMethodName: shippingMethods[1].name,
-    shippingPrice: shippingMethods[1].price,
+    shippingPrice: mockShippingPrice,
     shippingMethods,
     onClose: jest.fn(),
     onSubmit: jest.fn(),
