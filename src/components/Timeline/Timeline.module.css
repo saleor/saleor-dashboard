@@ -33,3 +33,15 @@ button[data-state="open"] .chevron,
 .userLink:hover span {
   text-decoration: underline;
 }
+
+/* Note card highlight animation - returns to default border after animation */
+@keyframes noteHighlight {
+  0%,
+  80% {
+    border-color: hsla(0, 0%, 0%, 0.3);
+  }
+}
+
+.noteCardHighlight {
+  animation: noteHighlight 2s ease-out;
+}

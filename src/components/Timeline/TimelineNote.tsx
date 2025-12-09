@@ -4,11 +4,12 @@ import { getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Button, Text, vars } from "@saleor/macaw-ui-next";
 import { InfoIcon, LinkIcon, MessageSquareIcon, Pencil } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date";
+import styles from "./Timeline.module.css";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
 import { safeStringify } from "./utils";
 
@@ -58,6 +59,25 @@ export const TimelineNote = ({
       return null;
     }
   }, [eventData]);
+
+  const handleScrollToRelatedNote = useCallback(() => {
+    if (!relatedId) return;
+
+    const element = document.getElementById(`timeline-note-${relatedId}`);
+
+    if (!element) return;
+
+    element.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    const card = element.querySelector("[data-note-card]") as HTMLElement;
+
+    if (card) {
+      card.classList.add(styles.noteCardHighlight);
+      card.addEventListener("animationend", () => card.classList.remove(styles.noteCardHighlight), {
+        once: true,
+      });
+    }
+  }, [relatedId]);
 
   return (
     <Box
@@ -148,22 +168,7 @@ export const TimelineNote = ({
                     alignItems="center"
                     gap={1}
                     cursor="pointer"
-                    onClick={() => {
-                      const element = document.getElementById(`timeline-note-${relatedId}`);
-
-                      if (element) {
-                        element.scrollIntoView({ behavior: "smooth", block: "center" });
-
-                        const card = element.querySelector("[data-note-card]") as HTMLElement;
-
-                        if (card) {
-                          card.style.borderColor = "hsla(0, 0%, 0%, 0.3)";
-                          setTimeout(() => {
-                            card.style.borderColor = "";
-                          }, 2000);
-                        }
-                      }
-                    }}
+                    onClick={handleScrollToRelatedNote}
                   >
                     <FormattedMessage defaultMessage="edited" id="Zx1w1e" />
                     <LinkIcon size={12} />
