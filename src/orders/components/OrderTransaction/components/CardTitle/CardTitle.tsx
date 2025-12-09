@@ -26,20 +26,22 @@ const TransactionTitle = ({
 }) => {
   const intl = useIntl();
 
+  const transactionTitle = intl.formatMessage(
+    {
+      defaultMessage: "Transaction #{index} on {date}",
+      id: "nYD7NT",
+    },
+    {
+      date: <EventTime date={transaction.createdAt} />,
+      index: index + 1,
+    },
+  );
+
   return (
     <Box display="flex" flexDirection="column" gap={0.5}>
       <Box display="flex" alignItems="center" gap={2}>
         <Text size={4} fontWeight="medium">
-          {intl.formatMessage(
-            {
-              defaultMessage: "Transaction #{index} on {date}",
-              id: "nYD7NT",
-            },
-            {
-              date: <EventTime date={transaction.createdAt} />,
-              index: index + 1,
-            },
-          )}
+          {transactionTitle}
         </Text>
         {transaction.externalUrl && (
           <Box
