@@ -53,7 +53,7 @@ jobs:
           # Delete the remote release branch if it exists
           if git ls-remote --heads origin $CURRENT_RELEASE | grep -q $CURRENT_RELEASE; then
             echo "Deleting remote branch $CURRENT_RELEASE"
-            git push origin --delete $CURRENT_RELEASE
+            git push origin --delete refs/heads/$CURRENT_RELEASE
           fi
 
           # Create new branch from main
@@ -62,6 +62,6 @@ jobs:
 
           # Push the new branch
           echo "Pushing new branch $CURRENT_RELEASE to remote"
-          git push origin $CURRENT_RELEASE
+          git push origin refs/heads/$CURRENT_RELEASE:refs/heads/$CURRENT_RELEASE
 
           echo "✅ Successfully recreated release branch $CURRENT_RELEASE from main"
