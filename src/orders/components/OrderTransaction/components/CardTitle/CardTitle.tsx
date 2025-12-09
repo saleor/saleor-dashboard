@@ -11,6 +11,9 @@ import { EventTime } from "../TransactionEvents/components/EventTime";
 import { messages } from "./messages";
 import { MoneyDisplay } from "./MoneyDisplay";
 
+const isDestructiveAction = (action: TransactionActionEnum) =>
+  action === TransactionActionEnum.CANCEL || action === TransactionActionEnum.REFUND;
+
 interface CardTitleProps {
   transaction: ExtendedOrderTransaction;
   onTransactionAction: OrderTransactionProps["onTransactionAction"];
@@ -93,9 +96,6 @@ export const OrderTransactionCardTitle = ({
 
   const actions = transaction.actions.filter(action => action !== TransactionActionEnum.REFUND);
   const showActionsMenu = showActions && actions.length > 0;
-
-  const isDestructiveAction = (action: TransactionActionEnum) =>
-    action === TransactionActionEnum.CANCEL || action === TransactionActionEnum.REFUND;
 
   // Collect all non-zero amounts for display
   const amounts = [
