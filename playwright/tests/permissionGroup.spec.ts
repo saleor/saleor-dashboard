@@ -76,8 +76,6 @@ test("TC: SALEOR_133 Should be able to create new permission group #permissions 
   }
 });
 test("TC: SALEOR_134 Should be able to edit an existing permission group #permissions #e2e", async () => {
-  // await permissions.gotoPermissionGroupsView();
-
   const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
 
   await permissions.gotoExistingPermissionGroupPage(permission.id);
