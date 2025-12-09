@@ -1344,10 +1344,6 @@
   "6Y1YDn": {
     "string": "Updated extension permissions"
   },
-  "6YKFVP": {
-    "context": "draft order lines, section header",
-    "string": "Order lines"
-  },
   "6ZubLQ": {
     "string": "Manage available refunds reasons"
   },
@@ -3395,6 +3391,10 @@
   "JKbpH9": {
     "context": "expiry date checkbox label",
     "string": "Gift card expires"
+  },
+  "JLH97N": {
+    "context": "add products button tooltip",
+    "string": "Add products from {channelName}"
   },
   "JMBsrr": {
     "context": "table header available stock label",
@@ -9526,6 +9526,10 @@
   },
   "wL7VAE": {
     "string": "Actions"
+  },
+  "wL850U": {
+    "context": "draft order lines, section header",
+    "string": "Order lines"
   },
   "wLB8B3": {
     "context": "column header",
