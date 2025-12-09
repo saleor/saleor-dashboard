@@ -22,13 +22,16 @@ interface OrderShippingMethodEditDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  shippingMethod: string;
+  shippingMethod: string | null | undefined;
   shippingMethodName?: string;
   shippingPrice?: OrderDetailsFragment["shippingPrice"];
   shippingMethods?: OrderDetailsFragment["shippingMethods"];
   onClose: () => any;
-  onSubmit?: (data: FormData) => any;
+  onSubmit?: (data: { shippingMethod: string | null }) => any;
+  isClearable?: boolean;
 }
+
+const NO_SHIPPING_METHOD_ID = "no-shipping-method-selection";
 
 const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps) => {
   const {
@@ -41,6 +44,7 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
     shippingMethods,
     onClose,
     onSubmit,
+    isClearable = false,
   } = props;
   const errors = useModalDialogErrors(apiErrors, open);
   const intl = useIntl();
@@ -116,16 +120,54 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
         ]
       : [];
 
-  const choices = [...unavailableMethodOption, ...availableChoices];
+  const noShippingOption = {
+    label: (
+      <Box display="flex" width="100%" gap={3}>
+        <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
+          <Text>
+            <FormattedMessage
+              id="7ZKQU3"
+              defaultMessage="No shipping method"
+              description="no shipping method option"
+            />
+          </Text>
+        </Box>
+      </Box>
+    ),
+    value: NO_SHIPPING_METHOD_ID,
+    disabled: false,
+  };
+
+  const choices = [
+    ...(isClearable ? [noShippingOption] : []),
+    ...unavailableMethodOption,
+    ...availableChoices,
+  ];
 
   const initialForm: FormData = {
-    shippingMethod: currentMethodInChoices ? shippingMethod : "",
+    shippingMethod:
+      currentMethodInChoices || unavailableMethodOption.length > 0
+        ? (shippingMethod as string)
+        : NO_SHIPPING_METHOD_ID,
+  };
+
+  const handleSubmit = (data: FormData) => {
+    if (onSubmit) {
+      onSubmit({
+        shippingMethod: data.shippingMethod === NO_SHIPPING_METHOD_ID ? null : data.shippingMethod,
+      });
+    }
   };
 
   return (
     <DashboardModal onChange={onClose} open={open}>
       {open && (
-        <Form key={shippingMethod} initial={initialForm} onSubmit={onSubmit} mergeData={false}>
+        <Form
+          key={shippingMethod || "new"}
+          initial={initialForm}
+          onSubmit={handleSubmit}
+          mergeData={false}
+        >
           {({ change, data, submit }) => (
             <>
               <DashboardModal.Content size="sm">
@@ -178,7 +220,6 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
                     data-test-id="confirm-button"
                     transitionState={confirmButtonState}
                     onClick={submit}
-                    disabled={!data.shippingMethod}
                   >
                     <FormattedMessage {...buttonMessages.confirm} />
                   </ConfirmButton>

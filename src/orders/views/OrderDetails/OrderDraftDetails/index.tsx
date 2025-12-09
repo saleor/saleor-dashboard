@@ -257,6 +257,7 @@ export const OrderDraftDetails = ({
       <OrderShippingMethodEditDialog
         confirmButtonState={orderShippingMethodUpdate.opts.status}
         errors={orderShippingMethodUpdate.opts.data?.orderUpdateShipping.errors || []}
+        isClearable
         open={params.action === "edit-shipping"}
         shippingMethod={order?.shippingMethod?.id}
         shippingMethodName={order?.shippingMethodName}
