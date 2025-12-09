@@ -1,17 +1,17 @@
 /* Timeline event styles */
 
 /* Info icon - show on hover */
-.timeline-event-row .timeline-info-icon {
+.eventRow .infoIcon {
   opacity: 0;
   transition: opacity 0.15s ease-in-out;
 }
 
-.timeline-event-row:hover .timeline-info-icon {
+.eventRow:hover .infoIcon {
   opacity: 1;
 }
 
 /* Chevron rotation for accordion */
-.timeline-chevron {
+.chevron {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,17 +19,17 @@
   transform: rotate(-90deg);
 }
 
-button[data-state="open"] .timeline-chevron,
-[data-state="open"] .timeline-chevron {
+button[data-state="open"] .chevron,
+[data-state="open"] .chevron {
   transform: rotate(0deg);
 }
 
 /* User/app link styling */
-.timeline-user-link {
+.userLink {
   text-decoration: none;
 }
 
-.timeline-user-link:hover,
-.timeline-user-link:hover span {
+.userLink:hover,
+.userLink:hover span {
   text-decoration: underline;
 }

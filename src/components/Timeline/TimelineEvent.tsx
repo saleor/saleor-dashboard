@@ -1,5 +1,3 @@
-import "./Timeline.css";
-
 import { OrderEventsEnum } from "@dashboard/graphql";
 import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
 import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
@@ -33,6 +31,7 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
+import styles from "./Timeline.module.css";
 import {
   TimelineApp,
   TimelineEventHeader,
@@ -222,7 +221,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
 
   const infoIcon = eventDataString ? (
     <span
-      className="timeline-info-icon"
+      className={styles.infoIcon}
       title={eventDataString}
       style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
     >
@@ -231,7 +230,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   ) : null;
 
   return (
-    <Box display="flex" width="100%" position="relative" className="timeline-event-row">
+    <Box display="flex" width="100%" position="relative" className={styles.eventRow}>
       {/* Vertical connecting line - hidden for last item in group */}
       {!isLastInGroup && (
         <Box
@@ -282,7 +281,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                     justifyContent="center"
                     __width="20px"
                     __height="20px"
-                    className="timeline-chevron"
+                    className={styles.chevron}
                   >
                     <ChevronDownIcon size={16} color="currentColor" />
                   </Box>

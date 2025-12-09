@@ -7,6 +7,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date";
+import styles from "./Timeline.module.css";
 
 export interface TitleElement {
   text: string;
@@ -58,7 +59,7 @@ export const TimelineEventHeader = ({
   const attribution = userName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
       by{" "}
-      <Link to={staffMemberDetailsUrl(user!.id)} className="timeline-user-link">
+      <Link to={staffMemberDetailsUrl(user!.id)} className={styles.userLink}>
         <Text size={3} color="default2" as="span">
           {userName}
         </Text>
@@ -69,7 +70,7 @@ export const TimelineEventHeader = ({
       by{" "}
       <Link
         to={ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(app.id))}
-        className="timeline-user-link"
+        className={styles.userLink}
       >
         <Text size={3} color="default2" as="span">
           {appName}
