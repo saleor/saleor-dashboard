@@ -1,4 +1,4 @@
-import { DiscountValueTypeEnum, OrderDetailsFragment } from "@dashboard/graphql";
+import { DiscountValueTypeEnum, OrderDetailsFragment, OrderDiscountType } from "@dashboard/graphql";
 import { prepareMoney } from "@dashboard/orders/fixtures";
 import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import Wrapper from "@test/wrapper";
@@ -133,8 +133,8 @@ describe("OrderValue", () => {
             id: "discount-1",
             name: "Summer Sale",
             amount: { __typename: "Money" as const, amount: 15, currency: "USD" },
-            type: DiscountValueTypeEnum.FIXED,
-            valueType: DiscountValueTypeEnum.FIXED,
+            type: OrderDiscountType.MANUAL,
+            calculationMode: DiscountValueTypeEnum.FIXED,
             value: 15,
             reason: null,
           },
@@ -369,7 +369,6 @@ describe("OrderValue", () => {
     it("should show percentage discount value when discount is percentage type", () => {
       // Arrange
       const orderDiscount: OrderDiscountData = {
-        id: "discount-1",
         value: 10,
         calculationMode: DiscountValueTypeEnum.PERCENTAGE,
         amount: { __typename: "Money", amount: 11, currency: "USD" },
@@ -396,7 +395,6 @@ describe("OrderValue", () => {
     it("should show fixed discount value when discount is fixed type", () => {
       // Arrange
       const orderDiscount: OrderDiscountData = {
-        id: "discount-1",
         value: 15,
         calculationMode: DiscountValueTypeEnum.FIXED,
         amount: { __typename: "Money", amount: 15, currency: "USD" },
@@ -423,7 +421,6 @@ describe("OrderValue", () => {
     it("should show discount reason as tooltip on existing discount", () => {
       // Arrange
       const orderDiscount: OrderDiscountData = {
-        id: "discount-1",
         value: 10,
         calculationMode: DiscountValueTypeEnum.PERCENTAGE,
         amount: { __typename: "Money", amount: 11, currency: "USD" },
