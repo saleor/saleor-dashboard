@@ -116,7 +116,7 @@ export const hasOrderLineDiscountWithNoPreviousValue = ({ type, lines }: OrderEv
   !lines?.[0].discount?.oldValue;
 
 export const getOrderNumberLink = (event: OrderEventFragment) => {
-  if (!hasEnsuredOrderEventFields(event, ["relatedOrder"])) {
+  if (!event.relatedOrder) {
     return null;
   }
 
@@ -124,11 +124,6 @@ export const getOrderNumberLink = (event: OrderEventFragment) => {
 
   return getOrderNumberLinkObject({ id, number });
 };
-
-const hasEnsuredOrderEventFields = (
-  event: OrderEventFragment,
-  fields: Array<keyof OrderEventFragment>,
-) => !fields.some((field: keyof OrderEventFragment) => !event[field]);
 
 export const getOrderNumberLinkObject = ({ id, number }: { id: string; number: string }) => ({
   link: orderUrl(id),
