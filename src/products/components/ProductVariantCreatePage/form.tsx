@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
@@ -140,7 +139,7 @@ const initial: ProductVariantCreateFormData = {
   trackInventory: true,
   weight: "",
   isPreorder: false,
-  globalThreshold: null,
+  globalThreshold: "",
   globalSoldUnits: 0,
   hasPreorderEndDate: false,
   preorderEndDateTime: "",
@@ -197,7 +196,7 @@ function useProductVariantCreateForm(
   );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
-    opts.assignReferencesAttributeId,
+    opts.assignReferencesAttributeId ?? "",
     opts.fetchReferencePages,
     opts.fetchReferenceProducts,
     opts.fetchReferenceCategories,
@@ -205,7 +204,7 @@ function useProductVariantCreateForm(
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
-    opts.assignReferencesAttributeId,
+    opts.assignReferencesAttributeId ?? "",
     opts.fetchMoreReferencePages,
     opts.fetchMoreReferenceProducts,
     opts.fetchMoreReferenceCategories,
@@ -213,7 +212,7 @@ function useProductVariantCreateForm(
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
-    attributesWithNewFileValue.data,
+    attributesWithNewFileValue.data as FormsetData<FormsetData<null, File>>,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
     triggerChange,
@@ -258,10 +257,10 @@ function useProductVariantCreateForm(
   const data: ProductVariantCreateData = {
     ...formData,
     attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
-      pages: opts.referencePages,
-      products: opts.referenceProducts,
-      collections: opts.referenceCollections,
-      categories: opts.referenceCategories,
+      pages: opts.referencePages ?? [],
+      products: opts.referenceProducts ?? [],
+      collections: opts.referenceCollections ?? [],
+      categories: opts.referenceCategories ?? [],
     }),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     stocks: stocks.data,
@@ -313,7 +312,11 @@ function useProductVariantCreateForm(
       changeStock: handleStockChange,
       changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
-      fetchMoreReferences: handleFetchMoreReferences,
+      fetchMoreReferences: handleFetchMoreReferences ?? {
+        hasMore: false,
+        loading: false,
+        onFetchMore: () => {},
+      },
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
       selectAttribute: handleAttributeChangeWithName,

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { Combobox, Multiselect } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
@@ -104,9 +103,9 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
           <Combobox
             disabled={disabled}
             data-test-id="product-type"
-            options={productTypes}
+            options={productTypes ?? []}
             value={
-              data.productType?.id
+              data.productType?.id && productTypeInputDisplayValue
                 ? {
                     value: data.productType.id,
                     label: productTypeInputDisplayValue,
@@ -115,8 +114,8 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
             }
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
-            onChange={onProductTypeChange}
-            fetchOptions={fetchProductTypes}
+            onChange={onProductTypeChange ?? (() => {})}
+            fetchOptions={fetchProductTypes ?? (() => {})}
             fetchMore={fetchMoreProductTypes}
             name="productType"
             label={intl.formatMessage({
@@ -146,7 +145,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
         <Box data-test-id="category">
           <Combobox
             disabled={disabled}
-            options={disabled ? [] : categories}
+            options={disabled ? [] : (categories ?? [])}
             value={
               data.category
                 ? {
@@ -156,7 +155,10 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                 : null
             }
             error={!!(formErrors.category || noCategoryError)}
-            helperText={getProductErrorMessage(formErrors.category || noCategoryError, intl)}
+            helperText={getProductErrorMessage(
+              (formErrors.category || noCategoryError) as ProductErrorFragment,
+              intl,
+            )}
             onChange={onCategoryChange}
             fetchOptions={fetchCategories}
             fetchMore={fetchMoreCategories}
@@ -181,12 +183,14 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                 return undefined;
               }
 
-              const availableCategories = selectedProductCategory
-                ? [...categories, selectedProductCategory]
-                : categories;
+              const availableCategories =
+                selectedProductCategory && categories
+                  ? [...categories, selectedProductCategory]
+                  : (categories ?? []);
 
               const adornment = val
-                ? availableCategories.find(category => category.value === val.value)?.startAdornment
+                ? availableCategories?.find(category => category.value === val.value)
+                    ?.startAdornment
                 : null;
 
               if (!adornment) {
@@ -207,7 +211,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
         </Box>
         <Multiselect
           disabled={disabled}
-          options={collections}
+          options={collections ?? []}
           data-test-id="collections"
           value={collectionsInputDisplayValue}
           error={!!formErrors.collections}

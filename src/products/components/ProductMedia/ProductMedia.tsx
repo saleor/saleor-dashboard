@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
@@ -22,7 +21,7 @@ interface SortableMediaProps {
   onDelete: () => void;
 }
 
-const SortableMedia = SortableElement<SortableMediaProps>(({ media, editHref, onDelete }) => (
+const SortableMedia = SortableElement<SortableMediaProps>(({ media, editHref, onDelete }: any) => (
   <MediaTile media={media} editHref={editHref} onDelete={onDelete} />
 ));
 
@@ -35,9 +34,9 @@ interface MediaListContainerProps {
 }
 
 const MediaListContainer = SortableContainer<MediaListContainerProps>(
-  ({ media, preview, onDelete, getEditHref, ...props }) => (
+  ({ media, preview, onDelete, getEditHref, ...props }: MediaListContainerProps) => (
     <div {...props}>
-      {media.map((mediaObj, index) => (
+      {media.map((mediaObj: ProductMediaFragment, index: number) => (
         <SortableMedia
           key={`item-${index}`}
           index={index}
@@ -47,8 +46,10 @@ const MediaListContainer = SortableContainer<MediaListContainerProps>(
         />
       ))}
       {preview
-        .sort((a, b) => (a.sortOrder > b.sortOrder ? 1 : -1))
-        .map((mediaObj, index) => (
+        .sort((a: ProductMediaFragment, b: ProductMediaFragment) =>
+          a.sortOrder! > b.sortOrder! ? 1 : -1,
+        )
+        .map((mediaObj: ProductMediaFragment, index: number) => (
           <MediaTile loading={true} media={mediaObj} key={index} />
         ))}
     </div>
@@ -77,7 +78,7 @@ const ProductMedia = (props: ProductMediaProps) => {
   } = props;
   const intl = useIntl();
   const imagesUpload = React.useRef<HTMLInputElement>(null);
-  const anchor = React.useRef<HTMLButtonElement>();
+  const anchor = React.useRef<HTMLElement>(null);
   const [imagesToUpload, setImagesToUpload] = React.useState<ProductMediaFragment[]>([]);
   const handleImageUpload = createMultiFileUploadHandler(onImageUpload, {
     onAfterUpload: () => setImagesToUpload(prevImagesToUpload => prevImagesToUpload.slice(1)),
@@ -94,7 +95,7 @@ const ProductMedia = (props: ProductMediaProps) => {
               id: "",
               sortOrder: fileIndex,
               type: ProductMediaType.IMAGE,
-              url: event.target.result as string,
+              url: event.target!.result as string,
               oembedData: null,
             },
           ]);
@@ -134,7 +135,7 @@ const ProductMedia = (props: ProductMediaProps) => {
                     borderRadius={4}
                     paddingX={1.5}
                     paddingY={2}
-                    onClick={() => imagesUpload.current.click()}
+                    onClick={() => imagesUpload.current?.click()}
                     data-test-id="upload-images"
                   >
                     <Text>{intl.formatMessage(messages.uploadImages)}</Text>
@@ -163,7 +164,7 @@ const ProductMedia = (props: ProductMediaProps) => {
             display="none"
             id="fileUpload"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              handleImageUpload(event.target.files)
+              handleImageUpload(event.target.files!)
             }
             multiple
             type="file"

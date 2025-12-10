@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   ChannelData,
   ChannelPriceAndPreorderArgs,
@@ -43,7 +42,7 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
   const channelApiErrors = errors.filter(
     e => "channels" in e,
   ) as ProductChannelListingErrorFragment[];
-  const apiErrors = getFormChannelErrors(["price", "costPrice"], channelApiErrors);
+  const apiErrors = getFormChannelErrors(["price", "costPrice"] as const, channelApiErrors);
 
   if (disabled || !productVariantChannelListings.length) {
     return (
@@ -120,6 +119,8 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
           {renderCollection(
             productVariantChannelListings,
             (listing, index) => {
+              if (!listing) return null;
+
               const fieldName = `${listing.id}-channelListing-price`;
               const formErrors = getFormErrors([fieldName], errors);
 
@@ -144,16 +145,21 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                         })}
                         error={!!priceApiError}
                         helperText={
-                          priceApiError ? getProductErrorMessage(priceApiError, intl) : ""
+                          priceApiError
+                            ? getProductErrorMessage(
+                                priceApiError as unknown as ProductErrorFragment,
+                                intl,
+                              )
+                            : ""
                         }
                         name={fieldName}
                         value={listing.price ?? ""}
                         currencySymbol={listing.currency}
                         onChange={e =>
-                          onChange(listing.id, {
+                          onChange?.(listing.id, {
                             costPrice: listing.costPrice,
                             price: e.target.value,
-                            preorderThreshold: listing.preorderThreshold,
+                            preorderThreshold: listing.preorderThreshold ?? null,
                           })
                         }
                         disabled={loading}
@@ -175,14 +181,21 @@ export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
                         value={listing.costPrice ?? ""}
                         currencySymbol={listing.currency}
                         onChange={e =>
-                          onChange(listing.id, {
+                          onChange?.(listing.id, {
                             costPrice: e.target.value,
                             price: listing.price,
-                            preorderThreshold: listing.preorderThreshold,
+                            preorderThreshold: listing.preorderThreshold ?? null,
                           })
                         }
                         disabled={loading}
-                        hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ""}
+                        hint={
+                          costPriceError
+                            ? getProductErrorMessage(
+                                costPriceError as unknown as ProductErrorFragment,
+                                intl,
+                              )
+                            : ""
+                        }
                         data-test-id="cost-price-field"
                       />
                     ) : (

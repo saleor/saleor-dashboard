@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
@@ -62,13 +61,13 @@ export const ProductDetailsForm = ({
             defaultValue={defaultValue}
             onChange={event => {
               // We need explicit handler so parent can access data real time
-              if (onDescriptionChange) {
+              if (onDescriptionChange && event) {
                 onDescriptionChange(event);
               }
 
               handleChange();
             }}
-            disabled={disabled}
+            disabled={disabled ?? false}
             error={!!formErrors.description}
             helperText={getProductErrorMessage(formErrors.description, intl)}
             label={intl.formatMessage(commonMessages.description)}

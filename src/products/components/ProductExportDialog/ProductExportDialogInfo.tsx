@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import Accordion, { AccordionProps } from "@dashboard/components/Accordion";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/ChannelsAvailabilityDialogChannelsList";
@@ -144,8 +143,8 @@ const FieldAccordion = ({
 }) => {
   const classes = useStyles({});
   const getFieldLabel = useProductExportFieldMessages();
-  const selectedAll = fields.every(field => data.exportInfo.fields.includes(field));
-  const selectedFields = data.exportInfo.fields.filter(field => fields.includes(field));
+  const selectedAll = fields.every(field => data.exportInfo?.fields?.includes(field) ?? false);
+  const selectedFields = data.exportInfo?.fields?.filter(field => fields.includes(field)) ?? [];
 
   return (
     <Accordion
@@ -193,7 +192,7 @@ const FieldAccordion = ({
       </Option>
       {fields.map(field => (
         <Option
-          checked={data.exportInfo.fields.includes(field)}
+          checked={data.exportInfo?.fields?.includes(field) ?? false}
           name={field}
           onChange={onChange}
           key={field}
@@ -254,7 +253,7 @@ const ProductExportDialogInfo = ({
         name: "exportInfo",
         value: {
           ...data.exportInfo,
-          fields: toggle(event.target.name, data.exportInfo.fields, (a, b) => a === b),
+          fields: toggle(event.target.name, data.exportInfo?.fields ?? [], (a, b) => a === b),
         },
       },
     });
@@ -266,14 +265,14 @@ const ProductExportDialogInfo = ({
           ...data.exportInfo,
           fields: setTo
             ? [
-                ...data.exportInfo.fields,
-                ...fields.filter(field => !data.exportInfo.fields.includes(field)),
+                ...(data.exportInfo?.fields ?? []),
+                ...fields.filter(field => !(data.exportInfo?.fields?.includes(field) ?? false)),
               ]
-            : data.exportInfo.fields.filter(field => !fields.includes(field)),
+            : (data.exportInfo?.fields ?? []).filter(field => !fields.includes(field)),
         },
       },
     });
-  const selectedInventoryFields = data.exportInfo.fields.filter(field =>
+  const selectedInventoryFields = (data.exportInfo?.fields ?? []).filter(field =>
     inventoryFields.includes(field),
   );
   const selectedAllInventoryFields = selectedInventoryFields.length === inventoryFields.length;
@@ -333,7 +332,7 @@ const ProductExportDialogInfo = ({
               isChannelSelected={option =>
                 !!selectedChannels.find(channel => channel.id === option.id)
               }
-              onChange={onChannelSelect}
+              onChange={onChannelSelect as any}
             />
           </ChannelsAvailabilityDialogContentWrapper>
         </Accordion>
@@ -415,7 +414,7 @@ const ProductExportDialogInfo = ({
           <Hr className={classes.hr} />
           {attributes.map(attribute => (
             <Option
-              checked={data.exportInfo.attributes.includes(attribute.value)}
+              checked={data.exportInfo?.attributes?.includes(attribute.value) ?? false}
               name={attributeNamePrefix + attribute.value}
               onChange={onAttrtibuteSelect}
               key={attribute.value}
@@ -455,7 +454,8 @@ const ProductExportDialogInfo = ({
             description: "informations about product stock, header",
           })}
           quickPeek={
-            (data.exportInfo.warehouses.length > 0 || selectedInventoryFields.length > 0) && (
+            ((data.exportInfo?.warehouses?.length ?? 0) > 0 ||
+              selectedInventoryFields.length > 0) && (
               <div className={classes.quickPeekContainer}>
                 {selectedInventoryFields.slice(0, maxChips).map(field => (
                   <Chip
@@ -472,13 +472,15 @@ const ProductExportDialogInfo = ({
                     }
                   />
                 ))}
-                {data.exportInfo.warehouses
+                {(data.exportInfo?.warehouses ?? [])
                   .slice(0, maxChips - selectedInventoryFields.length)
                   .map(warehouseId => (
                     <Chip
                       key={warehouseId}
                       className={classes.chip}
-                      label={warehouses.find(warehouse => warehouse.value === warehouseId).label}
+                      label={
+                        warehouses.find(warehouse => warehouse.value === warehouseId)?.label ?? ""
+                      }
                       onClose={() =>
                         onWarehouseSelect({
                           target: {
@@ -489,7 +491,8 @@ const ProductExportDialogInfo = ({
                       }
                     />
                   ))}
-                {data.exportInfo.warehouses.length + selectedInventoryFields.length > maxChips && (
+                {(data.exportInfo?.warehouses?.length ?? 0) + selectedInventoryFields.length >
+                  maxChips && (
                   <Text className={classes.moreLabel} size={2} fontWeight="light">
                     <FormattedMessage
                       id="ve/Sph"
@@ -497,7 +500,7 @@ const ProductExportDialogInfo = ({
                       description="there are more elements of list that are hidden"
                       values={{
                         number:
-                          data.exportInfo.warehouses.length +
+                          (data.exportInfo?.warehouses?.length ?? 0) +
                           selectedInventoryFields.length -
                           maxChips,
                       }}
@@ -523,7 +526,7 @@ const ProductExportDialogInfo = ({
             </Option>
             {inventoryFields.map(field => (
               <Option
-                checked={data.exportInfo.fields.includes(field)}
+                checked={data.exportInfo?.fields?.includes(field) ?? false}
                 name={field}
                 onChange={handleFieldChange}
                 key={field}
@@ -538,8 +541,8 @@ const ProductExportDialogInfo = ({
           </Text>
           <div>
             <Option
-              checked={warehouses.every(warehouse =>
-                data.exportInfo.warehouses.includes(warehouse.value),
+              checked={warehouses.every(
+                warehouse => data.exportInfo?.warehouses?.includes(warehouse.value) ?? false,
               )}
               name="all-warehouses"
               onChange={onSelectAllWarehouses}
@@ -561,7 +564,7 @@ const ProductExportDialogInfo = ({
           </Text>
           {warehouses.map(warehouse => (
             <Option
-              checked={data.exportInfo.warehouses.includes(warehouse.value)}
+              checked={data.exportInfo?.warehouses?.includes(warehouse.value) ?? false}
               name={warehouseNamePrefix + warehouse.value}
               onChange={onWarehouseSelect}
               key={warehouse.value}
