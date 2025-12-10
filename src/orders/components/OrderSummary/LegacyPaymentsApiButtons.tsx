@@ -24,7 +24,7 @@ export const LegacyPaymentsApiButtons = ({
   onLegacyPaymentsApiCapture,
   onLegacyPaymentsApiRefund,
   onLegacyPaymentsApiVoid,
-}: Props) => {
+}: Props): JSX.Element | null => {
   const intl = useIntl();
 
   const showButtons =

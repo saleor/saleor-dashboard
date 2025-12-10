@@ -15,6 +15,7 @@ import {
   OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
+  TransactionActionEnum,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
@@ -53,11 +54,11 @@ import { customerUrl } from "../../../../customers/urls";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";
+import { OrderCaptureDialog } from "../../../components/OrderCaptureDialog/OrderCaptureDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage/OrderDetailsPage";
 import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
 import OrderFulfillmentTrackingDialog from "../../../components/OrderFulfillmentTrackingDialog";
 import OrderMarkAsPaidDialog from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
-import OrderPaymentDialog from "../../../components/OrderPaymentDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
   orderFulfillUrl,
@@ -303,10 +304,46 @@ export const OrderNormalDetails = ({
           })
         }
       />
+      {/* Transaction Capture Dialog - for CHARGE action */}
+      {params.action === "transaction-action" && params.type === TransactionActionEnum.CHARGE && (
+        <OrderCaptureDialog
+          confirmButtonState={orderTransactionAction.opts.status}
+          errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
+          orderTotal={order?.total.gross ?? { amount: 0, currency: "USD" }}
+          authorizedAmount={
+            order?.transactions?.find(t => t.id === params.id)?.authorizedAmount ?? {
+              amount: 0,
+              currency: "USD",
+            }
+          }
+          chargedAmount={
+            order?.transactions?.find(t => t.id === params.id)?.chargedAmount ?? {
+              amount: 0,
+              currency: "USD",
+            }
+          }
+          orderBalance={order?.totalBalance ?? { amount: 0, currency: "USD" }}
+          isTransaction
+          open={true}
+          onClose={closeModal}
+          onSubmit={amount =>
+            orderTransactionAction
+              .mutate({
+                action: params.type,
+                transactionId: params.id,
+                amount,
+              })
+              .finally(() => closeModal())
+          }
+        />
+      )}
+      {/* Transaction Action Dialog - for other actions like CANCEL */}
       <OrderTransactionActionDialog
         confirmButtonState={orderTransactionAction.opts.status}
         onClose={closeModal}
-        open={params.action === "transaction-action"}
+        open={
+          params.action === "transaction-action" && params.type !== TransactionActionEnum.CHARGE
+        }
         action={params.type}
         onSubmit={() =>
           orderTransactionAction
@@ -354,15 +391,16 @@ export const OrderNormalDetails = ({
         onClose={closeModal}
         onConfirm={() => orderVoid.mutate({ id })}
       />
-      <OrderPaymentDialog
+      <OrderCaptureDialog
         confirmButtonState={orderPaymentCapture.opts.status}
-        errors={orderPaymentCapture.opts.data?.orderCapture.errors || []}
-        initial={order?.total.gross.amount}
+        errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
+        orderTotal={order?.total.gross ?? { amount: 0, currency: "USD" }}
+        authorizedAmount={order?.totalAuthorized ?? { amount: 0, currency: "USD" }}
         open={params.action === "capture"}
         onClose={closeModal}
-        onSubmit={variables =>
+        onSubmit={amount =>
           orderPaymentCapture.mutate({
-            ...variables,
+            amount,
             id,
           })
         }
