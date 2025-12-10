@@ -1,3 +1,5 @@
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { PermissionEnum } from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -10,10 +12,7 @@ jest.mock("@dashboard/components/AddressFormatter", () => ({
   __esModule: true,
   default: () => <div>AddressFormatter</div>,
 }));
-jest.mock("@dashboard/components/RequirePermissions", () => ({
-  __esModule: true,
-  default: ({ children }: any) => <>{children}</>,
-}));
+jest.mock("@dashboard/auth/hooks/useUserPermissions");
 jest.mock("./CustomerEditForm", () => ({
   CustomerEditForm: () => <div data-test-id="customer-edit-form">CustomerEditForm</div>,
 }));
@@ -54,6 +53,11 @@ describe("OrderCustomer", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    // Default: user has all relevant permissions
+    (useUserPermissions as jest.Mock).mockReturnValue([
+      { code: PermissionEnum.MANAGE_ORDERS },
+      { code: PermissionEnum.MANAGE_USERS },
+    ]);
   });
 
   it("renders customer details in view mode", () => {
@@ -182,5 +186,63 @@ describe("OrderCustomer", () => {
     fireEvent.click(copyButtons[0]);
 
     expect(mockCopy).toHaveBeenCalledWith("customer@example.com");
+  });
+
+  describe("permission-based visibility", () => {
+    it("shows View orders link and View profile link when user has MANAGE_USERS permission", () => {
+      // Arrange
+      (useUserPermissions as jest.Mock).mockReturnValue([
+        { code: PermissionEnum.MANAGE_ORDERS },
+        { code: PermissionEnum.MANAGE_USERS },
+      ]);
+
+      // Act
+      render(
+        <Wrapper>
+          <MemoryRouter>
+            <OrderCustomer {...defaultProps} />
+          </MemoryRouter>
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getByText("View orders")).toBeInTheDocument();
+      expect(screen.getByText("View profile")).toBeInTheDocument();
+    });
+
+    it("shows View orders link but hides View profile link when user has only MANAGE_ORDERS permission", () => {
+      // Arrange
+      (useUserPermissions as jest.Mock).mockReturnValue([{ code: PermissionEnum.MANAGE_ORDERS }]);
+
+      // Act
+      render(
+        <Wrapper>
+          <MemoryRouter>
+            <OrderCustomer {...defaultProps} />
+          </MemoryRouter>
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getByText("View orders")).toBeInTheDocument();
+      expect(screen.queryByText("View profile")).not.toBeInTheDocument();
+    });
+
+    it("hides View profile link when user has no MANAGE_USERS permission", () => {
+      // Arrange
+      (useUserPermissions as jest.Mock).mockReturnValue([]);
+
+      // Act
+      render(
+        <Wrapper>
+          <MemoryRouter>
+            <OrderCustomer {...defaultProps} />
+          </MemoryRouter>
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.queryByText("View profile")).not.toBeInTheDocument();
+    });
   });
 });
