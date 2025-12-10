@@ -44,6 +44,13 @@ jobs:
           publish: "pnpm run release"
         env:
           GITHUB_TOKEN: ${{ steps.get-token.outputs.token }}
+      - name: Update PR title with version from package.json
+        if: steps.changesets.outputs.pullRequestNumber != ''
+        run: |
+          VERSION=$(jq -r .version package.json)
+          gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --title "Prepare release ${VERSION}"
+        env:
+          GH_TOKEN: ${{ steps.get-token.outputs.token }}
 
   build:
     needs: prepare-release
@@ -151,7 +158,7 @@ jobs:
           CDN_DISTRIBUTIONS: ${{ secrets.AWS_CLOUD_STAGING_CDN_DISTRIBUTIONS }}
 
       - name: Update check
-        if: always() && ${{ steps.create-check.outputs.CHECK_ID }}
+        if: always() && steps.create-check.outputs.CHECK_ID
         uses: ./.github/actions/checks/update-pull-request-check
         with:
           CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
