@@ -9,7 +9,7 @@ import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date";
-import styles from "./Timeline.module.css";
+import styles from "./TimelineNote.module.css";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
 import { safeStringify } from "./utils";
 

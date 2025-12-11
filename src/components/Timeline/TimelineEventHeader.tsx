@@ -6,7 +6,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date";
-import styles from "./Timeline.module.css";
+import styles from "./TimelineEvent.module.css";
 
 export interface TitleElement {
   text: string;

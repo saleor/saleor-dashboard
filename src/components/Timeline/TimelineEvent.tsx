@@ -31,7 +31,7 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
-import styles from "./Timeline.module.css";
+import styles from "./TimelineEvent.module.css";
 import { TimelineEventHeader, TitleElement } from "./TimelineEventHeader";
 import { safeStringify } from "./utils";
 
