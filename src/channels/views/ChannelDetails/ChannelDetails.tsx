@@ -73,9 +73,6 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
 
-  const updateChannel = isStagingSchema() ? updateChannelStaging : updateChannelMain;
-  const updateChannelOpts = isStagingSchema() ? updateChannelOptsStaging : updateChannelOptsMain;
-
   const { data: dataMain, loading: loadingMain } = useChannelQuery({
     displayLoader: true,
     variables: { id },
@@ -90,6 +87,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
 
   const data = dataStaging ?? dataMain;
   const loading = loadingMain ?? loadingStaging;
+  const updateChannelOpts = isStagingSchema() ? updateChannelOptsStaging : updateChannelOptsMain;
 
   const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
 
@@ -137,35 +135,64 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     automaticallyCompleteCheckouts,
     allowLegacyGiftCardUse,
   }: FormData) => {
-    const updateChannelMutation = updateChannel({
-      variables: {
-        id: data?.channel.id,
-        input: {
-          name,
-          checkoutSettings: {
-            automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
-            allowLegacyGiftCardUse: isStagingSchema() ? allowLegacyGiftCardUse : undefined,
+    const updateChannelMutation = isStagingSchema()
+      ? updateChannelStaging({
+          variables: {
+            id: data?.channel.id,
+            input: {
+              name,
+              checkoutSettings: {
+                automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+                allowLegacyGiftCardUse,
+              },
+              slug,
+              defaultCountry,
+              addShippingZones: shippingZonesIdsToAdd,
+              removeShippingZones: shippingZonesIdsToRemove,
+              addWarehouses: warehousesIdsToAdd,
+              removeWarehouses: warehousesIdsToRemove,
+              stockSettings: {
+                allocationStrategy,
+              },
+              paymentSettings: {
+                defaultTransactionFlowStrategy,
+              },
+              orderSettings: {
+                markAsPaidStrategy,
+                deleteExpiredOrdersAfter,
+                allowUnpaidOrders,
+              },
+            },
           },
-          slug,
-          defaultCountry,
-          addShippingZones: shippingZonesIdsToAdd,
-          removeShippingZones: shippingZonesIdsToRemove,
-          addWarehouses: warehousesIdsToAdd,
-          removeWarehouses: warehousesIdsToRemove,
-          stockSettings: {
-            allocationStrategy,
+        })
+      : updateChannelMain({
+          variables: {
+            id: data?.channel.id,
+            input: {
+              name,
+              checkoutSettings: {
+                automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+              },
+              slug,
+              defaultCountry,
+              addShippingZones: shippingZonesIdsToAdd,
+              removeShippingZones: shippingZonesIdsToRemove,
+              addWarehouses: warehousesIdsToAdd,
+              removeWarehouses: warehousesIdsToRemove,
+              stockSettings: {
+                allocationStrategy,
+              },
+              paymentSettings: {
+                defaultTransactionFlowStrategy,
+              },
+              orderSettings: {
+                markAsPaidStrategy,
+                deleteExpiredOrdersAfter,
+                allowUnpaidOrders,
+              },
+            },
           },
-          paymentSettings: {
-            defaultTransactionFlowStrategy,
-          },
-          orderSettings: {
-            markAsPaidStrategy,
-            deleteExpiredOrdersAfter,
-            allowUnpaidOrders,
-          },
-        },
-      },
-    });
+        });
 
     const resultChannel = await updateChannelMutation;
     const errors = await extractMutationErrors(updateChannelMutation);
