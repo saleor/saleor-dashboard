@@ -63,9 +63,8 @@ const ExtendedDiscountTimelineEvent = ({
 
   return (
     <TimelineEvent
-      date={date}
+      date={<OrderHistoryDate date={date} />}
       titleElements={titleElements}
-      dateNode={<OrderHistoryDate date={date} />}
       eventData={event}
       actor={toActor(event.user, event.app)}
       eventType={type}

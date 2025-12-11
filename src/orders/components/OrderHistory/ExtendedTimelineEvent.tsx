@@ -130,7 +130,7 @@ interface ExtendedTimelineEventProps {
   event: OrderEventFragment;
   orderCurrency: string;
   hasPlainDate?: boolean;
-  dateNode?: React.ReactNode;
+  date: string | React.ReactNode;
   isLastInGroup?: boolean;
 }
 
@@ -138,11 +138,10 @@ const ExtendedTimelineEvent = ({
   event,
   orderCurrency,
   hasPlainDate,
-  dateNode,
+  date,
   isLastInGroup,
 }: ExtendedTimelineEventProps) => {
-  const { id, date, type, message, lines, amount, transactionReference, shippingCostsIncluded } =
-    event;
+  const { id, type, message, lines, amount, transactionReference, shippingCostsIncluded } = event;
   const intl = useIntl();
   const eventTypeInCamelCase = camelCase(type);
   const getEventTitleMessageInCamelCase = (): MessageDescriptor => {
@@ -197,7 +196,6 @@ const ExtendedTimelineEvent = ({
       titleElements={selectTitleElements()}
       key={id}
       hasPlainDate={hasPlainDate}
-      dateNode={dateNode}
       eventData={event}
       actor={toActor(event.user, event.app)}
       eventType={type}

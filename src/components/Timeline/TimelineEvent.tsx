@@ -139,11 +139,10 @@ const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
 
 export interface TimelineEventProps {
   children?: React.ReactNode;
-  date: string;
+  date: string | React.ReactNode;
   title?: React.ReactNode;
   titleElements?: TitleElement[];
   hasPlainDate?: boolean;
-  dateNode?: React.ReactNode;
   eventData?: unknown;
   actor?: Actor;
   eventType?: OrderEventsEnum | null;
@@ -195,7 +194,6 @@ export const TimelineEvent = (props: TimelineEventProps) => {
     title,
     titleElements,
     hasPlainDate,
-    dateNode,
     eventData,
     actor,
     eventType,
@@ -287,7 +285,6 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                     date={date}
                     titleElements={titleElements}
                     hasPlainDate={hasPlainDate}
-                    dateNode={dateNode}
                     actor={actor}
                     tooltip={infoIcon}
                   />
@@ -328,7 +325,6 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                 titleElements={titleElements}
                 date={date}
                 hasPlainDate={hasPlainDate}
-                dateNode={dateNode}
                 actor={actor}
                 tooltip={infoIcon}
               />

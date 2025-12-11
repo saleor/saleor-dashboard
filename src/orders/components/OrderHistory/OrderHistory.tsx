@@ -216,8 +216,7 @@ const OrderHistory = ({
 
                   return (
                     <TimelineEvent
-                      date={date}
-                      dateNode={<OrderHistoryDate date={date} />}
+                      date={<OrderHistoryDate date={date} />}
                       eventData={event}
                       actor={toActor(user, app)}
                       eventType={type}
@@ -269,7 +268,7 @@ const OrderHistory = ({
                       event={event}
                       orderCurrency={orderCurrency}
                       hasPlainDate={false}
-                      dateNode={<OrderHistoryDate date={date} />}
+                      date={<OrderHistoryDate date={date} />}
                       isLastInGroup={isLastInGroup}
                     />
                   );
@@ -285,8 +284,7 @@ const OrderHistory = ({
                       title={getEventMessage(event, intl)}
                       hasPlainDate={false}
                       key={id}
-                      date={date}
-                      dateNode={<OrderHistoryDate date={date} />}
+                      date={<OrderHistoryDate date={date} />}
                       eventData={event}
                       actor={toActor(user, app)}
                       eventType={type}
@@ -344,8 +342,7 @@ const OrderHistory = ({
                     title={getEventMessage(event, intl)}
                     hasPlainDate={false}
                     key={id}
-                    date={date}
-                    dateNode={<OrderHistoryDate date={date} />}
+                    date={<OrderHistoryDate date={date} />}
                     eventData={event}
                     actor={toActor(user, app)}
                     eventType={type}

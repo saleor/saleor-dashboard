@@ -15,11 +15,10 @@ export interface TitleElement {
 
 interface TimelineEventHeaderProps {
   title?: React.ReactNode;
-  date: string;
+  date: string | React.ReactNode;
   titleElements?: TitleElement[];
   hasPlainDate?: boolean;
   children?: ReactNode;
-  dateNode?: ReactNode;
   tooltip?: ReactNode;
   actor?: Actor;
 }
@@ -30,7 +29,6 @@ export const TimelineEventHeader = ({
   titleElements,
   hasPlainDate,
   children,
-  dateNode,
   tooltip,
   actor,
 }: TimelineEventHeaderProps) => {
@@ -38,6 +36,9 @@ export const TimelineEventHeader = ({
 
   const actorName = getActorDisplayName(actor);
   const actorLink = getActorLink(actor);
+
+  const dateToRender =
+    typeof date === "string" ? <DateTime date={date} plain={hasPlainDate} /> : date;
 
   const attribution = actorName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
@@ -102,7 +103,7 @@ export const TimelineEventHeader = ({
         <Box display="flex" alignItems="center" gap={2} marginLeft="auto" flexShrink="0">
           {tooltip}
           <Text size={2} color="default2" whiteSpace="nowrap">
-            {dateNode || <DateTime date={date} plain={hasPlainDate} />}
+            {dateToRender}
           </Text>
           {children}
         </Box>

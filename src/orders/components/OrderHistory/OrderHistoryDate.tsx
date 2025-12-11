@@ -96,9 +96,8 @@ export const getRelativeDate = ({
     eventDate,
     {
       dateStyle: "medium",
-      timeStyle: "short",
+      timeStyle: "long",
       timeZone: tz,
-      timeZoneName: "short",
     },
     intl.locale,
   );
