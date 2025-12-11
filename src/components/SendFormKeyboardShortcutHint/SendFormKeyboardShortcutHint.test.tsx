@@ -16,17 +16,16 @@ describe("KeyboardKey", () => {
     const kbd = screen.getByText("Ctrl");
 
     expect(kbd.tagName).toBe("KBD");
-    expect(kbd).toHaveStyle({ display: "inline-block" });
+    expect(kbd).toHaveClass("kbd");
   });
 });
 
 describe("SendFormKeyboardShortcutHint", () => {
   it("controls visibility via opacity", () => {
     // Arrange
-    const { container, rerender } = render(
-      <SendFormKeyboardShortcutHint visible key1="⌘" key2="↵" />,
-      { wrapper: Wrapper },
-    );
+    const { container, rerender } = render(<SendFormKeyboardShortcutHint visible />, {
+      wrapper: Wrapper,
+    });
 
     // Assert
     expect((container.firstChild as HTMLElement).style.opacity).toBe("1");
@@ -34,7 +33,7 @@ describe("SendFormKeyboardShortcutHint", () => {
     // Act
     rerender(
       <Wrapper>
-        <SendFormKeyboardShortcutHint visible={false} key1="⌘" key2="↵" />
+        <SendFormKeyboardShortcutHint visible={false} />
       </Wrapper>,
     );
 

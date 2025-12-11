@@ -1,7 +1,4 @@
-import {
-  getModifierKey,
-  SendFormKeyboardShortcutHint,
-} from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";
+import { SendFormKeyboardShortcutHint } from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";
 import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
 import { PropsWithChildren, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -76,7 +73,7 @@ export const TimelineAddNote = ({
           rows={3}
         />
         <Box position="absolute" __bottom="8px" __right="8px">
-          <SendFormKeyboardShortcutHint visible={isFocused} key1={getModifierKey()} key2="↵" />
+          <SendFormKeyboardShortcutHint visible={isFocused} />
         </Box>
       </Box>
       <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>
