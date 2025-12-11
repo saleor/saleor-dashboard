@@ -78,4 +78,16 @@ export const messages = defineMessages({
       "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. ({link})",
     description: "automatically complete checkouts checkbox description",
   },
+
+  allowLegacyGiftCardUseLabel: {
+    id: "sE7fI/",
+    defaultMessage: "Allow legacy gift card use",
+    description: "allow legacy gift card use label",
+  },
+  allowLegacyGiftCardUseDescription: {
+    id: "OqYCQ4",
+    defaultMessage:
+      "When enabled, gift card can be applied to a checkout using addPromoCode mutation.",
+    description: "allow legacy gift card use description",
+  },
 });

@@ -5,9 +5,11 @@ import {
   ChannelCreateInput,
   ChannelCreateMutation,
   ChannelErrorFragment,
+  isStagingSchema,
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
 } from "@dashboard/graphql";
+import { ChannelCreateInput as ChannelCreateInputWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -74,6 +76,7 @@ const ChannelCreateView = () => {
     warehousesIdsToAdd,
     warehousesToDisplay,
     automaticallyCompleteCheckouts,
+    allowLegacyGiftCardUse,
   }: FormData) => {
     const input: ChannelCreateInput = {
       name,
@@ -98,7 +101,18 @@ const ChannelCreateView = () => {
       },
     };
 
-    return saveChannel(input, warehousesToDisplay);
+    const inputWithAllowLegacyGiftCardUse: ChannelCreateInputWithAllowLegacyGiftCardUse = {
+      ...input,
+      checkoutSettings: {
+        automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+        allowLegacyGiftCardUse: allowLegacyGiftCardUse,
+      },
+    };
+
+    return saveChannel(
+      isStagingSchema() ? inputWithAllowLegacyGiftCardUse : input,
+      warehousesToDisplay,
+    );
   };
   const {
     shippingZonesCountData,

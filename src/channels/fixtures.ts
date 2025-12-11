@@ -1,9 +1,9 @@
 import {
   AllocationStrategyEnum,
-  ChannelDetailsFragment,
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
+import { ChannelDetailsFragment } from "@dashboard/graphql/staging";
 
 export const channelsList: ChannelDetailsFragment[] = [
   {
@@ -47,6 +47,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -91,6 +92,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -135,6 +137,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -179,6 +182,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -223,6 +227,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -267,6 +272,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -311,6 +317,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -357,6 +364,7 @@ export const channel: ChannelDetailsFragment = {
   },
   checkoutSettings: {
     automaticallyCompleteFullyPaidCheckouts: true,
+    allowLegacyGiftCardUse: true,
     __typename: "CheckoutSettings",
   },
 };
