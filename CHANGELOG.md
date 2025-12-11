@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.22.20
+
+### Patch Changes
+
+- [#6195](https://github.com/saleor/saleor-dashboard/pull/6195) [`c9ed5f7`](https://github.com/saleor/saleor-dashboard/commit/c9ed5f7d2ac75658218fc860ef4886bd9de95fe1) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Added "Allow legacy gift card use" flag to Channel configuration
+
+- [#6188](https://github.com/saleor/saleor-dashboard/pull/6188) [`7833de8`](https://github.com/saleor/saleor-dashboard/commit/7833de81a816fc4298fd73be58d5377de2b98a00) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated `@saleor/macaw-ui-next` to `1.4.1`. This version should resolve potential issues with React 18+ timing crashes
+
 ## 3.22.19
 
 ### Patch Changes
