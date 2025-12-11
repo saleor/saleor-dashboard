@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-22.04
     # Only run if the push is from merging a PR (not direct commits)
     if: github.event.head_commit.message != '' && contains(github.event.head_commit.message, 'Merge pull request')
+    env:
+      CURRENT_RELEASE: "3.22"
 
     steps:
       - name: Get Token
@@ -40,8 +42,6 @@ jobs:
       - name: Check if merged PR was from changeset-release
         id: check-release
         run: |
-          CURRENT_RELEASE='3.22'
-
           # Get the commit message to check if it's from changeset-release branch
           COMMIT_MSG="${{ github.event.head_commit.message }}"
 
@@ -66,7 +66,6 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.get-token.outputs.token }}
         run: |
-          CURRENT_RELEASE='3.22'
           VERSION="${{ steps.get-version.outputs.version }}"
 
           # Fetch latest changes
@@ -87,3 +86,12 @@ jobs:
               --head "$CURRENT_RELEASE" \
               --title "Clean up after release $VERSION" \
               --body "$(cat <<'EOF'
+          This PR syncs changes from the release branch back to main after a release.
+
+          - Release branch: $CURRENT_RELEASE
+          - Version: $VERSION
+
+          Please review and merge to keep main up to date with the latest release changes.
+          EOF
+          )"
+          fi
