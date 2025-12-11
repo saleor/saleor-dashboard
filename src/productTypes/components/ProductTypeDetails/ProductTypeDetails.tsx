@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { ProductTypeKindEnum } from "@dashboard/graphql";
