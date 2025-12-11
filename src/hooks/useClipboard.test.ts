@@ -129,4 +129,29 @@ describe("useClipboard", () => {
     expect(mockWriteText).toHaveBeenCalledWith("second text");
     expect(result.current[0]).toBe(true);
   });
+
+  it("should handle clipboard write rejection and log warning", async () => {
+    // Arrange
+    const mockError = new Error("Clipboard permission denied");
+
+    mockWriteText.mockRejectedValue(mockError);
+
+    const { result } = renderHook(() => useClipboard());
+    const textToCopy = "Hello, World!";
+
+    // Act
+    const [, copy] = result.current;
+
+    await act(async () => {
+      copy(textToCopy);
+      await Promise.resolve();
+    });
+
+    // Assert
+    expect(mockWriteText).toHaveBeenCalledWith(textToCopy);
+    expect(result.current[0]).toBe(false);
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "Failed to use clipboard, ensure browser permission is enabled.",
+    );
+  });
 });
