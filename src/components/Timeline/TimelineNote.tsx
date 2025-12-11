@@ -4,7 +4,7 @@ import { getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Button, Text, vars } from "@saleor/macaw-ui-next";
 import { InfoIcon, LinkIcon, MessageSquareIcon, Pencil } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -47,6 +47,15 @@ export const TimelineNote = ({
   const userDisplayName = getUserName(user, true) ?? app?.name;
   const [showEdit, setShowEdit] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const highlightTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const dateToRender =
     typeof date === "string" ? <DateTime date={date} plain={hasPlainDate} /> : date;
@@ -74,9 +83,14 @@ export const TimelineNote = ({
 
     if (card) {
       card.classList.add(styles.noteCardHighlight);
-      card.addEventListener("animationend", () => card.classList.remove(styles.noteCardHighlight), {
-        once: true,
-      });
+
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+      }
+
+      highlightTimeoutRef.current = setTimeout(() => {
+        card.classList.remove(styles.noteCardHighlight);
+      }, 2000); // Match CSS animation duration
     }
   }, [relatedId]);
 
