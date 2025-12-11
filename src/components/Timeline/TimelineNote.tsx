@@ -1,7 +1,4 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { GiftCardDetailsQuery, OrderEventFragment } from "@dashboard/graphql";
-import { getUserName } from "@dashboard/misc";
-import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Button, Text, vars } from "@saleor/macaw-ui-next";
 import { InfoIcon, LinkIcon, MessageSquareIcon, Pencil } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -11,17 +8,13 @@ import { Link } from "react-router-dom";
 import { DateTime } from "../Date";
 import styles from "./TimelineNote.module.css";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
-import { safeStringify } from "./utils";
-
-type TimelineAppType =
-  | NonNullable<GiftCardDetailsQuery["giftCard"]>["events"][0]["app"]
-  | OrderEventFragment["app"];
+import { Actor } from "./types";
+import { getActorDisplayName, getActorLink, safeStringify } from "./utils";
 
 interface TimelineNoteProps {
   date: string | React.ReactNode;
   message: string | null;
-  user: OrderEventFragment["user"];
-  app: TimelineAppType;
+  actor?: Actor;
   hasPlainDate?: boolean;
   id?: string;
   relatedId?: string;
@@ -33,10 +26,9 @@ interface TimelineNoteProps {
 
 export const TimelineNote = ({
   date,
-  user,
   message,
   hasPlainDate,
-  app,
+  actor,
   id,
   relatedId,
   onNoteUpdate,
@@ -44,7 +36,8 @@ export const TimelineNote = ({
   eventData,
   isLastInGroup,
 }: TimelineNoteProps) => {
-  const userDisplayName = getUserName(user, true) ?? app?.name;
+  const actorDisplayName = getActorDisplayName(actor);
+  const actorLink = getActorLink(actor);
   const [showEdit, setShowEdit] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const highlightTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -159,20 +152,20 @@ export const TimelineNote = ({
           {/* Header row with name, info icon, date */}
           <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={2}>
             <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-              {user ? (
-                <Link to={staffMemberDetailsUrl(user.id)} style={{ textDecoration: "none" }}>
+              {actorLink ? (
+                <Link to={actorLink} style={{ textDecoration: "none" }}>
                   <Text
                     size={3}
                     fontWeight="medium"
                     color="default2"
                     textDecoration={{ hover: "underline" }}
                   >
-                    {userDisplayName}
+                    {actorDisplayName}
                   </Text>
                 </Link>
               ) : (
                 <Text size={3} fontWeight="medium" color="default2">
-                  {userDisplayName}
+                  {actorDisplayName}
                 </Text>
               )}
               <Text size={2} color="default2" whiteSpace="nowrap">

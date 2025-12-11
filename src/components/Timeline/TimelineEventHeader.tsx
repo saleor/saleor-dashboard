@@ -1,5 +1,3 @@
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
-import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { ReactNode } from "react";
 import * as React from "react";
@@ -7,6 +5,8 @@ import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date";
 import styles from "./TimelineEvent.module.css";
+import { Actor } from "./types";
+import { getActorDisplayName, getActorLink } from "./utils";
 
 export interface TitleElement {
   text: string;
@@ -21,9 +21,7 @@ interface TimelineEventHeaderProps {
   children?: ReactNode;
   dateNode?: ReactNode;
   tooltip?: ReactNode;
-  actorName?: string;
-  actorType?: "user" | "app";
-  actorId?: string;
+  actor?: Actor;
 }
 
 export const TimelineEventHeader = ({
@@ -34,24 +32,12 @@ export const TimelineEventHeader = ({
   children,
   dateNode,
   tooltip,
-  actorName,
-  actorType,
-  actorId,
+  actor,
 }: TimelineEventHeaderProps) => {
   const elements = titleElements?.filter(Boolean) ?? [];
 
-  const getActorLink = () => {
-    if (!actorId) return null;
-
-    if (actorType === "user") return staffMemberDetailsUrl(actorId);
-
-    if (actorType === "app")
-      return ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(actorId));
-
-    return null;
-  };
-
-  const actorLink = getActorLink();
+  const actorName = getActorDisplayName(actor);
+  const actorLink = getActorLink(actor);
 
   const attribution = actorName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>

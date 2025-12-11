@@ -9,6 +9,7 @@ import {
   TimelineAddNote,
   TimelineEvent,
   TimelineNote,
+  toActor,
 } from "@dashboard/components/Timeline";
 import { OrderEventFragment, OrderEventsEnum, OrderNoteUpdateMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -183,10 +184,9 @@ const OrderHistory = ({
                       onNoteUpdateLoading={onNoteUpdateLoading!}
                       id={id}
                       date={<OrderHistoryDate date={date} />}
-                      user={user}
+                      actor={toActor(user, app)}
                       message={message}
                       key={id}
-                      app={app}
                       eventData={event}
                       isLastInGroup={isLastInGroup}
                     />
@@ -201,10 +201,9 @@ const OrderHistory = ({
                       relatedId={related.id}
                       id={id}
                       date={<OrderHistoryDate date={date} />}
-                      user={user}
+                      actor={toActor(user, app)}
                       message={message}
                       key={id}
-                      app={app}
                       eventData={event}
                       isLastInGroup={isLastInGroup}
                     />
@@ -223,8 +222,7 @@ const OrderHistory = ({
                       date={date}
                       dateNode={<OrderHistoryDate date={date} />}
                       eventData={event}
-                      user={user}
-                      app={app}
+                      actor={toActor(user, app)}
                       eventType={type}
                       isLastInGroup={isLastInGroup}
                       title={
@@ -293,8 +291,7 @@ const OrderHistory = ({
                       date={date}
                       dateNode={<OrderHistoryDate date={date} />}
                       eventData={event}
-                      user={user}
-                      app={app}
+                      actor={toActor(user, app)}
                       eventType={type}
                       isLastInGroup={isLastInGroup}
                     >
@@ -353,8 +350,7 @@ const OrderHistory = ({
                     date={date}
                     dateNode={<OrderHistoryDate date={date} />}
                     eventData={event}
-                    user={user}
-                    app={app}
+                    actor={toActor(user, app)}
                     eventType={type}
                     isLastInGroup={isLastInGroup}
                   />

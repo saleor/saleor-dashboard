@@ -3,6 +3,7 @@ import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 
 import { TimelineEventHeader } from "./TimelineEventHeader";
+import { Actor } from "./types";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <MemoryRouter>
@@ -25,32 +26,36 @@ describe("TimelineEventHeader", () => {
   });
 
   it("renders user attribution with link", () => {
-    render(
-      <TimelineEventHeader
-        {...defaultProps}
-        actorName="John Smith"
-        actorType="user"
-        actorId="user-123"
-      />,
-      { wrapper: Wrapper },
-    );
+    // Arrange
+    const userActor: Actor = {
+      type: "user",
+      id: "user-123",
+      email: "john@example.com",
+      firstName: "John",
+      lastName: "Smith",
+    };
 
+    // Act
+    render(<TimelineEventHeader {...defaultProps} actor={userActor} />, { wrapper: Wrapper });
+
+    // Assert
     expect(screen.getByText(/by/)).toBeInTheDocument();
     expect(screen.getByText("John Smith")).toBeInTheDocument();
     expect(screen.getByRole("link")).toHaveAttribute("href", "/staff/user-123");
   });
 
   it("renders app attribution with link to app dashboard", () => {
-    render(
-      <TimelineEventHeader
-        {...defaultProps}
-        actorName="My App"
-        actorType="app"
-        actorId="QXBwOjI3OQ=="
-      />,
-      { wrapper: Wrapper },
-    );
+    // Arrange
+    const appActor: Actor = {
+      type: "app",
+      id: "QXBwOjI3OQ==",
+      name: "My App",
+    };
 
+    // Act
+    render(<TimelineEventHeader {...defaultProps} actor={appActor} />, { wrapper: Wrapper });
+
+    // Assert
     expect(screen.getByText("My App")).toBeInTheDocument();
 
     const link = screen.getByRole("link", { name: "My App" });

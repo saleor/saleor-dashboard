@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import { TimelineEvent } from "@dashboard/components/Timeline";
+import { TimelineEvent, toActor } from "@dashboard/components/Timeline";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -66,8 +66,7 @@ const ExtendedDiscountTimelineEvent = ({
       titleElements={titleElements}
       dateNode={<OrderHistoryDate date={date} />}
       eventData={event}
-      user={event.user}
-      app={event.app}
+      actor={toActor(event.user, event.app)}
       eventType={type}
       isLastInGroup={isLastInGroup}
     >

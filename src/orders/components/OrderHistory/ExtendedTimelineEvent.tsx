@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Money from "@dashboard/components/Money";
-import { TimelineEvent } from "@dashboard/components/Timeline";
+import { TimelineEvent, toActor } from "@dashboard/components/Timeline";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -198,8 +198,7 @@ const ExtendedTimelineEvent = ({
       hasPlainDate={hasPlainDate}
       dateNode={dateNode}
       eventData={event}
-      user={event.user}
-      app={event.app}
+      actor={toActor(event.user, event.app)}
       eventType={type}
       isLastInGroup={isLastInGroup}
     >
