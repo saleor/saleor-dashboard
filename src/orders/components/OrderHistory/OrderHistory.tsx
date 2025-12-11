@@ -274,11 +274,11 @@ const OrderHistory = ({
                   );
                 }
 
-                // Events with message, relatedOrder, or lines - make them foldable
                 const hasRelatedOrder = !!event.relatedOrder;
                 const hasLines = event.lines && event.lines.length > 0;
+                const isFoldable = message || hasRelatedOrder || hasLines;
 
-                if (message || hasRelatedOrder || hasLines) {
+                if (isFoldable) {
                   return (
                     <TimelineEvent
                       title={getEventMessage(event, intl)}
