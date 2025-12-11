@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
-import { KeyboardKey, SendFormKeyboardShortcutHint } from "./KeyboardShortcut";
+import { KeyboardKey, SendFormKeyboardShortcutHint } from "./SendFormKeyboardShortcutHint";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <IntlProvider locale="en" messages={{}}>
