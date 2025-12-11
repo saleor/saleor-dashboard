@@ -79,6 +79,11 @@ export const useAppActions = (
           return scope;
         });
 
+        console.warn(
+          `${actionType} action is invalid. Check docs: https://docs.saleor.io/developer/extending/apps/developing-apps/app-sdk/app-bridge#actions`,
+        );
+        console.warn(`Dashboard received action from app:`, action);
+
         notifier({
           title: "Invalid app event",
           status: "error",
