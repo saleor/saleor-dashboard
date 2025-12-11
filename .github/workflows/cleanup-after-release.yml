@@ -57,7 +57,7 @@ jobs:
         if: steps.check-release.outputs.is_release_merge == 'true'
         id: get-version
         run: |
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION=$(jq -r .version package.json)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "📦 Version: $VERSION"
 
