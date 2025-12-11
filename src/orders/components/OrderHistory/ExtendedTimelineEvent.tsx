@@ -1,8 +1,9 @@
 // @ts-strict-ignore
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Money from "@dashboard/components/Money";
-import { TimelineEvent, toActor } from "@dashboard/components/Timeline";
+import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
+import { toActor } from "@dashboard/components/Timeline/utils";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";

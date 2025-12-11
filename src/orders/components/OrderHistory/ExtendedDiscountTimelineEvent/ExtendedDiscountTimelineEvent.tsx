@@ -1,8 +1,9 @@
 // @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import { TimelineEvent, toActor } from "@dashboard/components/Timeline";
+import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
+import { toActor } from "@dashboard/components/Timeline/utils";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";

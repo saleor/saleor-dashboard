@@ -4,13 +4,10 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Form from "@dashboard/components/Form";
 import { Pill } from "@dashboard/components/Pill";
-import {
-  Timeline,
-  TimelineAddNote,
-  TimelineEvent,
-  TimelineNote,
-  toActor,
-} from "@dashboard/components/Timeline";
+import { Timeline, TimelineAddNote } from "@dashboard/components/Timeline/Timeline";
+import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
+import { TimelineNote } from "@dashboard/components/Timeline/TimelineNote";
+import { toActor } from "@dashboard/components/Timeline/utils";
 import { OrderEventFragment, OrderEventsEnum, OrderNoteUpdateMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
