@@ -404,6 +404,11 @@ export const buttonMessages = defineMessages({
     id: "rbrahO",
     defaultMessage: "Close",
   },
+  copyToClipboard: {
+    id: "ZGmd4h",
+    defaultMessage: "Copy to clipboard",
+    description: "button",
+  },
   proceed: {
     id: "VNX4fn",
     defaultMessage: "Proceed",

@@ -1,0 +1,13 @@
+/* Chevron rotation for accordion */
+.chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  transform: rotate(-90deg);
+}
+
+button[data-state="open"] .chevron,
+[data-state="open"] .chevron {
+  transform: rotate(0deg);
+}

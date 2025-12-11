@@ -1,4 +1,5 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
+import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { useState } from "react";
@@ -42,10 +43,8 @@ export const CopyableText = ({ text }: CopyableTextProps): JSX.Element => {
             )
           }
           onClick={() => copy(text)}
-          aria-label={intl.formatMessage({
-            defaultMessage: "Copy to clipboard",
-            id: "aCdAsI",
-          })}
+          title={intl.formatMessage(buttonMessages.copyToClipboard)}
+          aria-label={intl.formatMessage(buttonMessages.copyToClipboard)}
         />
       </Box>
     </Box>

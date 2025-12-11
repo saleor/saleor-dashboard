@@ -12,10 +12,13 @@ import {
   OrderGrantedRefundStatusEnum,
   OrderStatus,
   PaymentChargeStatusEnum,
+  TransactionActionEnum,
   TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 import cloneDeep from "lodash/cloneDeep";
 import merge from "lodash/merge";
+
+import { TransactionFixture } from "./TransactionFixture";
 
 /**
  * Builder for creating `OrderDetailsFragment` fixtures
@@ -485,57 +488,6 @@ export class OrderFixture {
     },
   ] satisfies OrderDetailsFragment["giftCards"];
 
-  private static transaction = {
-    __typename: "TransactionItem" as const,
-    id: "transaction-id",
-    pspReference: "psp-ref",
-    externalUrl: "https://example.com/transaction",
-    createdAt: "2023-01-01T12:00:00Z",
-    name: "Transaction",
-    events: [],
-    actions: [],
-    authorizedAmount: {
-      __typename: "Money" as const,
-      amount: 100,
-      currency: "USD",
-    },
-    chargedAmount: {
-      __typename: "Money" as const,
-      amount: 100,
-      currency: "USD",
-    },
-    refundedAmount: {
-      __typename: "Money" as const,
-      amount: 0,
-      currency: "USD",
-    },
-    canceledAmount: {
-      __typename: "Money" as const,
-      amount: 0,
-      currency: "USD",
-    },
-    authorizePendingAmount: {
-      __typename: "Money" as const,
-      amount: 0,
-      currency: "USD",
-    },
-    chargePendingAmount: {
-      __typename: "Money" as const,
-      amount: 0,
-      currency: "USD",
-    },
-    refundPendingAmount: {
-      __typename: "Money" as const,
-      amount: 0,
-      currency: "USD",
-    },
-    cancelPendingAmount: {
-      __typename: "Money" as const,
-      amount: 0,
-      currency: "USD",
-    },
-  } satisfies OrderDetailsFragment["transactions"][number];
-
   private order: OrderDetailsFragment;
 
   private constructor(initialOrder: OrderDetailsFragment) {
@@ -753,7 +705,7 @@ export class OrderFixture {
       ...this.order,
       transactions: [
         {
-          ...OrderFixture.transaction,
+          ...TransactionFixture.transaction,
           pspReference: "manual-refund-psp-ref",
           events: [
             {
@@ -812,7 +764,7 @@ export class OrderFixture {
   withTransaction() {
     this.order = {
       ...this.order,
-      transactions: [OrderFixture.transaction],
+      transactions: [TransactionFixture.transaction],
     };
 
     return this;
@@ -855,6 +807,152 @@ export class OrderFixture {
             brand: null,
           },
           lines: [],
+        },
+      ],
+    };
+
+    return this;
+  }
+
+  /**
+   * Adds multiple transactions with varied events for testing different scenarios:
+   * - Different event types (charge, refund, authorization)
+   * - Different creators (App, User, System/null)
+   * - Linked PSP references
+   */
+  withMultipleTransactions(): OrderFixture {
+    this.order = {
+      ...this.order,
+      transactions: [
+        // Transaction 1: Stripe with charge + refund flow (App creator)
+        TransactionFixture.stripeTransaction({
+          id: "mock-transaction-1",
+          chargedAmount: { __typename: "Money", amount: 75.5, currency: "USD" },
+          refundedAmount: { __typename: "Money", amount: 25.0, currency: "USD" },
+          events: [
+            TransactionFixture.stripeTransactionEvent.chargeSuccess({
+              id: "mock-event-1a",
+              amount: { __typename: "Money", amount: 100.5, currency: "USD" },
+            }),
+            TransactionFixture.stripeTransactionEvent.refundRequest({
+              id: "mock-event-1b",
+              createdBy: {
+                __typename: "User",
+                id: "user-admin-1",
+                email: "admin@example.com",
+                firstName: "John",
+                lastName: "Admin",
+                isActive: true,
+                avatar: null,
+              },
+            }),
+            TransactionFixture.stripeTransactionEvent.refundSuccess({
+              id: "mock-event-1c",
+            }),
+          ],
+        }),
+        // Transaction 2: Adyen with authorization flow (mixed creators)
+        TransactionFixture.adyenTransaction({
+          id: "mock-transaction-2",
+          events: [
+            TransactionFixture.adyenTransactionEvent.authorizationRequest({
+              id: "mock-event-2a",
+            }),
+            TransactionFixture.adyenTransactionEvent.authorizationSuccess({
+              id: "mock-event-2b",
+            }),
+          ],
+        }),
+        // Transaction 3: Manual transaction with long PSP reference (User creator)
+        {
+          ...TransactionFixture.transaction,
+          id: "mock-transaction-3",
+          name: "Manual Payment",
+          pspReference: "MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
+          externalUrl:
+            "https://dashboard.example.com/payments/MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
+          createdAt: "2024-12-04T16:00:00Z",
+          actions: [TransactionActionEnum.CANCEL, TransactionActionEnum.REFUND],
+          chargedAmount: { __typename: "Money", amount: 50.0, currency: "USD" },
+          events: [
+            {
+              id: "mock-event-3a",
+              __typename: "TransactionEvent",
+              type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+              amount: { __typename: "Money", amount: 50.0, currency: "USD" },
+              pspReference: "MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
+              externalUrl:
+                "https://dashboard.example.com/payments/MANUAL-PAYMENT-VERY-LONG-REFERENCE-12345678901234567890",
+              createdAt: "2024-12-04T16:00:00Z",
+              message: "Manual payment recorded by staff",
+              reasonReference: null,
+              createdBy: {
+                __typename: "User",
+                id: "user-staff-2",
+                email: "staff@example.com",
+                firstName: "Jane",
+                lastName: "Staff",
+                isActive: true,
+                avatar: {
+                  __typename: "Image",
+                  url: "https://i.pravatar.cc/150?u=jane-staff",
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
+
+    return this;
+  }
+
+  /**
+   * Adds multiple granted refunds with varied statuses for testing
+   */
+  withMultipleGrantedRefunds(): OrderFixture {
+    this.order = {
+      ...this.order,
+      grantedRefunds: [
+        {
+          __typename: "OrderGrantedRefund",
+          id: "mock-granted-refund-1",
+          status: OrderGrantedRefundStatusEnum.SUCCESS,
+          amount: { __typename: "Money", amount: 25.0, currency: "USD" },
+          reason: "Damaged item received",
+          createdAt: "2024-12-02T14:00:00Z",
+          reasonReference: null,
+          shippingCostsIncluded: false,
+          transactionEvents: [],
+          lines: [],
+          user: {
+            __typename: "User",
+            id: "user-admin-1",
+            email: "admin@example.com",
+            firstName: "John",
+            lastName: "Admin",
+            avatar: null,
+          },
+          app: null,
+        },
+        {
+          __typename: "OrderGrantedRefund",
+          id: "mock-granted-refund-2",
+          status: OrderGrantedRefundStatusEnum.PENDING,
+          amount: { __typename: "Money", amount: 15.0, currency: "USD" },
+          reason: "Wrong size shipped",
+          createdAt: "2024-12-05T11:00:00Z",
+          reasonReference: null,
+          shippingCostsIncluded: true,
+          transactionEvents: [],
+          lines: [],
+          user: null,
+          app: {
+            __typename: "App",
+            id: "app-returns",
+            name: "Returns Manager",
+            brand: null,
+          },
         },
       ],
     };

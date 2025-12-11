@@ -2,49 +2,41 @@
 import { capitalize } from "@dashboard/misc";
 import { transactionEventTypeMap } from "@dashboard/orders/messages";
 import { TransactionEventType } from "@dashboard/orders/types";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
 import { useIntl } from "react-intl";
+
+import styles from "./EventType.module.css";
 
 interface EventTypeProps {
   type: TransactionEventType;
   message: string | undefined;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    tooltipWrapper: {
-      padding: theme.spacing(1),
-      display: "flex",
-      cursor: "pointer",
-    },
-  }),
-  { name: "EventType" },
-);
-
 export const EventType = ({ type, message }: EventTypeProps) => {
   const intl = useIntl();
-  const classes = useStyles();
   const mapEventToMessage = transactionEventTypeMap[type];
   const displayType = capitalize(
     mapEventToMessage ? intl.formatMessage(mapEventToMessage) : message || type,
   );
 
   return (
-    <Box display="flex" alignItems="center">
-      {displayType}
+    <Box display="flex" alignItems="center" gap={1}>
+      <Text size={2} className={styles.lineClamp}>
+        {displayType}
+      </Text>
       {displayType !== message && message && (
         <Tooltip>
           <Tooltip.Trigger>
-            <div className={classes.tooltipWrapper}>
-              <Info />
-            </div>
+            <Box display="flex" cursor="pointer" padding={1} flexShrink="0">
+              <Info size={16} />
+            </Box>
           </Tooltip.Trigger>
           <Tooltip.Content side="bottom">
             <Tooltip.Arrow />
-            {/* Set to explicit value in order to avoid long message from overflowing */}
-            <Box __maxWidth="500px">{message}</Box>
+            <Box __maxWidth="500px">
+              <Text size={2}>{message}</Text>
+            </Box>
           </Tooltip.Content>
         </Tooltip>
       )}

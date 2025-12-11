@@ -12,79 +12,82 @@ jest.mock("@dashboard/featureFlags", () => ({
 
 describe("EventItem", () => {
   it("displays correct event data", () => {
+    // Arrange
     const onHover = jest.fn();
 
+    // Act
+    render(
+      <MemoryRouter>
+        <Wrapper>
+          <EventItem event={transactionEvent} onHover={onHover} hoveredPspReference={"PSP"} />
+        </Wrapper>
+      </MemoryRouter>,
+    );
+
+    // Assert
+    const row = screen.getByRole("row");
+
+    expect(row).toHaveTextContent("Success"); // Transaction event status
+    expect(row).toHaveTextContent("Capture"); // Transaction event type
+    expect(row).toHaveTextContent(transactionEvent.amount.amount.toString());
+    expect(row).toHaveTextContent(transactionEvent.amount.currency);
+    expect(row).toHaveTextContent(transactionEvent.pspReference);
+    expect(row).toHaveTextContent("Aug 12, 2022, 02:40 PM"); // date from transactionEvent
+    expect(onHover).not.toHaveBeenCalled();
+  });
+
+  it("displays avatar with title for app creator", () => {
+    // Arrange & Act
     render(
       <MemoryRouter>
         <Wrapper>
           <EventItem
             event={transactionEvent}
-            onHover={onHover}
+            onHover={() => undefined}
             hoveredPspReference={"PSP"}
-            hasCreatedBy={true}
           />
         </Wrapper>
       </MemoryRouter>,
     );
 
-    const row = screen.getByRole("row");
+    // Assert - app name should be in title attribute, not visible text
+    const avatarWithTitle = screen.getByTitle(transactionEvent.createdBy.name as string);
 
-    expect(row).toHaveTextContent("Success"); // Transaction event
-    expect(row).toHaveTextContent("Capture");
-    expect(row).toHaveTextContent(transactionEvent.amount.amount.toString());
-    expect(row).toHaveTextContent(transactionEvent.amount.currency);
-    expect(row).toHaveTextContent(transactionEvent.pspReference);
-    expect(row).toHaveTextContent("Aug 12, 2022, 02:40 PM"); // date from transactionEvent
-    expect(row).toHaveTextContent(transactionEvent.createdBy.name as string);
-    expect(onHover).not.toHaveBeenCalled();
+    expect(avatarWithTitle).toBeInTheDocument();
   });
-  it("hides created by cell if prop is passed", () => {
-    render(
-      <Wrapper>
-        <EventItem
-          event={transactionEvent}
-          onHover={() => undefined}
-          hoveredPspReference={"PSP"}
-          hasCreatedBy={false}
-        />
-      </Wrapper>,
-    );
 
-    const row = screen.getByRole("row");
-
-    expect(row).not.toHaveTextContent(transactionEvent.createdBy.name as string);
-  });
   it("calls onHover function when hovered", async () => {
+    // Arrange
     const onHover = jest.fn();
 
     render(
       <Wrapper>
-        <EventItem
-          event={transactionEvent}
-          onHover={onHover}
-          hoveredPspReference={"PSP"}
-          hasCreatedBy={false}
-        />
+        <EventItem event={transactionEvent} onHover={onHover} hoveredPspReference={"PSP"} />
       </Wrapper>,
     );
 
+    // Act
     const row = screen.getByRole("row");
 
     await userEvent.hover(row);
+
+    // Assert
     expect(onHover).toHaveBeenCalledWith(transactionEvent.pspReference);
   });
+
   it("applies hover styles if passed pspReference matches event's pspReference", () => {
+    // Arrange & Act
     render(
       <Wrapper>
         <EventItem
           event={transactionEvent}
           onHover={() => undefined}
           hoveredPspReference={transactionEvent.pspReference}
-          hasCreatedBy={false}
         />
       </Wrapper>,
     );
 
+    // Assert
     const row = screen.getByRole("row");
 
     expect(row).toHaveAttribute("data-ishovered", "true");
