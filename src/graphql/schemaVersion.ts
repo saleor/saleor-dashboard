@@ -14,6 +14,7 @@ export type SchemaVersion = "main" | "staging";
  * Get the current schema version based on the FF_USE_STAGING_SCHEMA feature flag
  */
 export const getSchemaVersion = (): SchemaVersion => {
+  // Flags is Vite-specific global, it's reasolved build time from env variables
   return FLAGS["FF_USE_STAGING_SCHEMA"] === "true" ? "staging" : "main";
 };
 
