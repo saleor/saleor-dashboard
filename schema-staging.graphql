@@ -3026,21 +3026,21 @@ type AppExtension implements Node @doc(category: "Apps") {
   url: String!
 
   """
-  Name of the extension mount point in the dashboard. Replaces `mount`. Value returned in UPPERCASE.
+  Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
   
   Added in Saleor 3.22.
   """
   mountName: String!
 
   """
-  Name of the extension target in the dashboard. Replaces `target`. Value returned in UPPERCASE.
+  Name of the extension target in the dashboard. Value returned in UPPERCASE.
   
   Added in Saleor 3.22.
   """
   targetName: String!
 
   """
-  App extension settings. Replaces options field.
+  App extension settings.
   
   Added in Saleor 3.22.
   """
@@ -5704,13 +5704,13 @@ type Product implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(ca
   """Get a single product media by ID."""
   mediaById(
     """ID of a product media."""
-    id: ID
+    id: ID!
   ): ProductMedia
 
   """Get a single product image by ID."""
   imageById(
     """ID of a product image."""
-    id: ID
+    id: ID!
   ): ProductImage @deprecated(reason: "Use the `mediaById` field instead.")
 
   """Get a single variant by SKU or ID."""
@@ -29857,21 +29857,21 @@ type AppManifestExtension @doc(category: "Apps") {
   url: String!
 
   """
-  Name of the extension mount point in the dashboard. Replaces `mount`. Value returned in UPPERCASE.
+  Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
   
   Added in Saleor 3.22.
   """
   mountName: String!
 
   """
-  Name of the extension target in the dashboard. Replaces `target`. Value returned in UPPERCASE.
+  Name of the extension target in the dashboard. Value returned in UPPERCASE.
   
   Added in Saleor 3.22.
   """
   targetName: String!
 
   """
-  App extension settings. Replaces options field.
+  App extension settings.
   
   Added in Saleor 3.22.
   """

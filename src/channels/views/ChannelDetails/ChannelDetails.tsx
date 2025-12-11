@@ -15,11 +15,12 @@ import {
   useChannelDeleteMutation,
   useChannelQuery,
   useChannelsQuery,
+  useChannelUpdateMutation,
 } from "@dashboard/graphql";
 import {
   useChannelQuery as useChannelQueryStaging,
   useChannelsQuery as useChannelsQueryStaging,
-  useChannelUpdateMutation,
+  useChannelUpdateMutation as useChannelUpdateMutationStaging,
 } from "@dashboard/graphql/staging";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -62,10 +63,18 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     ChannelUrlQueryParams
   >(navigate, params => channelUrl(id, params), params);
 
-  const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
+  const [updateChannelMain, updateChannelOptsMain] = useChannelUpdateMutation({
     onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
+
+  const [updateChannelStaging, updateChannelOptsStaging] = useChannelUpdateMutationStaging({
+    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
+      notify(getDefaultNotifierSuccessErrorData(errors, intl)),
+  });
+
+  const updateChannel = isStagingSchema() ? updateChannelStaging : updateChannelMain;
+  const updateChannelOpts = isStagingSchema() ? updateChannelOptsStaging : updateChannelOptsMain;
 
   const { data: dataMain, loading: loadingMain } = useChannelQuery({
     displayLoader: true,
