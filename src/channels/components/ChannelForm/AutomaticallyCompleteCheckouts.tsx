@@ -8,7 +8,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import { useAutomaticCompletionHandlers } from "./useAutomaticCompletionHandlers";
-import { useAutomaticCompletionWarnings } from "./useAutomaticCompletionWarnings";
+import {
+  CutOffDateComparison,
+  useAutomaticCompletionWarnings,
+} from "./useAutomaticCompletionWarnings";
 
 interface AutomaticallyCompleteCheckoutsProps {
   isChecked: boolean;
@@ -28,6 +31,142 @@ interface AutomaticallyCompleteCheckoutsProps {
   onCutOffTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onUseCutOffDateChange: () => void;
 }
+
+const CutOffDateEarlyWarning = ({
+  cutOffDateComparison,
+}: {
+  cutOffDateComparison: CutOffDateComparison;
+}) => {
+  return (
+    <Box
+      display="flex"
+      alignItems="flex-start"
+      backgroundColor="warning1"
+      color="default1"
+      padding={2}
+      gap={2}
+      borderRadius={3}
+    >
+      <Box flexShrink="0" paddingTop={0.5}>
+        <TriangleAlertIcon size={16} />
+      </Box>
+      <Text size={2}>
+        <FormattedMessage
+          {...messages.automaticCompletionCutOffDateEarlierWarning}
+          values={{
+            timeDifference: cutOffDateComparison.timeDifference,
+            previousDate: cutOffDateComparison.previousDate,
+            newDate: cutOffDateComparison.newDate,
+          }}
+        />
+      </Text>
+    </Box>
+  );
+};
+
+const NoCutOffDateWarning = () => (
+  <Box
+    display="flex"
+    alignItems="flex-start"
+    backgroundColor="warning1"
+    color="default1"
+    padding={2}
+    gap={2}
+    borderRadius={3}
+  >
+    <Box flexShrink="0" paddingTop={0.5}>
+      <TriangleAlertIcon size={16} />
+    </Box>
+    <Text size={2}>
+      <FormattedMessage {...messages.automaticCompletionCutOffDateWarning} />
+    </Text>
+  </Box>
+);
+
+const CutOffDateLaterWarning = ({
+  cutOffDateComparison,
+}: {
+  cutOffDateComparison: CutOffDateComparison;
+}) => {
+  return (
+    <Box
+      display="flex"
+      alignItems="flex-start"
+      backgroundColor="info1"
+      color="default1"
+      padding={2}
+      gap={2}
+      borderRadius={3}
+    >
+      <Box flexShrink="0" paddingTop={0.5}>
+        <CircleAlertIcon size={16} />
+      </Box>
+      <Text size={2}>
+        <FormattedMessage
+          {...messages.automaticCompletionCutOffDateLaterInfo}
+          values={{
+            timeDifference: cutOffDateComparison.timeDifference,
+            previousDate: cutOffDateComparison.previousDate,
+            newDate: cutOffDateComparison.newDate,
+          }}
+        />
+      </Text>
+    </Box>
+  );
+};
+
+const DelayZeroWarning = () => {
+  return (
+    <Box
+      display="flex"
+      alignItems="flex-start"
+      backgroundColor="warning1"
+      color="default1"
+      padding={2}
+      gap={2}
+      borderRadius={3}
+    >
+      <Box flexShrink="0" paddingTop={0.5}>
+        <TriangleAlertIcon size={16} />
+      </Box>
+      <Text size={2}>
+        <FormattedMessage
+          {...messages.automaticCompletionZeroDelayWarning}
+          values={{
+            link: (
+              <Link
+                href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
+                target="_blank"
+                rel="noopener noreferer"
+              >
+                <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
+              </Link>
+            ),
+          }}
+        />
+      </Text>
+    </Box>
+  );
+};
+
+const AutocompleteDisabledAfterEnablingWarning = () => (
+  <Box
+    display="flex"
+    alignItems="flex-start"
+    backgroundColor="info1"
+    color="default1"
+    padding={2}
+    gap={2}
+    borderRadius={3}
+  >
+    <Box flexShrink="0" paddingTop={0.5}>
+      <CircleAlertIcon size={16} />
+    </Box>
+    <Text size={2}>
+      <FormattedMessage {...messages.automaticCompletionDisabledInfo} />
+    </Text>
+  </Box>
+);
 
 export const AutomaticallyCompleteCheckouts = ({
   isChecked,
@@ -109,22 +248,7 @@ export const AutomaticallyCompleteCheckouts = ({
 
       {showDisabledInfo && (
         <Box paddingLeft={4} paddingTop={3}>
-          <Box
-            display="flex"
-            alignItems="flex-start"
-            backgroundColor="info1"
-            color="default1"
-            padding={2}
-            gap={2}
-            borderRadius={3}
-          >
-            <Box flexShrink="0" paddingTop={0.5}>
-              <CircleAlertIcon size={16} />
-            </Box>
-            <Text size={2}>
-              <FormattedMessage {...messages.automaticCompletionDisabledInfo} />
-            </Text>
-          </Box>
+          <AutocompleteDisabledAfterEnablingWarning />
         </Box>
       )}
 
@@ -148,35 +272,7 @@ export const AutomaticallyCompleteCheckouts = ({
 
           {showZeroDelayWarning && (
             <Box paddingLeft={0}>
-              <Box
-                display="flex"
-                alignItems="flex-start"
-                backgroundColor="warning1"
-                color="default1"
-                padding={2}
-                gap={2}
-                borderRadius={3}
-              >
-                <Box flexShrink="0" paddingTop={0.5}>
-                  <TriangleAlertIcon size={16} />
-                </Box>
-                <Text size={2}>
-                  <FormattedMessage
-                    {...messages.automaticCompletionZeroDelayWarning}
-                    values={{
-                      link: (
-                        <Link
-                          href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
-                          target="_blank"
-                          rel="noopener noreferer"
-                        >
-                          <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
-                        </Link>
-                      ),
-                    }}
-                  />
-                </Text>
-              </Box>
+              <DelayZeroWarning />
             </Box>
           )}
 
@@ -241,22 +337,7 @@ export const AutomaticallyCompleteCheckouts = ({
 
             {!useCutOffDate && !savedIsEnabled && (
               <Box paddingLeft={4} paddingTop={3}>
-                <Box
-                  display="flex"
-                  alignItems="flex-start"
-                  backgroundColor="warning1"
-                  color="default1"
-                  padding={2}
-                  gap={2}
-                  borderRadius={3}
-                >
-                  <Box flexShrink="0" paddingTop={0.5}>
-                    <TriangleAlertIcon size={16} />
-                  </Box>
-                  <Text size={2}>
-                    <FormattedMessage {...messages.automaticCompletionCutOffDateWarning} />
-                  </Text>
-                </Box>
+                <NoCutOffDateWarning />
               </Box>
             )}
 
@@ -309,57 +390,13 @@ export const AutomaticallyCompleteCheckouts = ({
 
                 {showCutOffDateEarlierWarning && (
                   <Box paddingLeft={4} paddingTop={3}>
-                    <Box
-                      display="flex"
-                      alignItems="flex-start"
-                      backgroundColor="warning1"
-                      color="default1"
-                      padding={2}
-                      gap={2}
-                      borderRadius={3}
-                    >
-                      <Box flexShrink="0" paddingTop={0.5}>
-                        <TriangleAlertIcon size={16} />
-                      </Box>
-                      <Text size={2}>
-                        <FormattedMessage
-                          {...messages.automaticCompletionCutOffDateEarlierWarning}
-                          values={{
-                            timeDifference: cutOffDateComparison.timeDifference,
-                            previousDate: cutOffDateComparison.previousDate,
-                            newDate: cutOffDateComparison.newDate,
-                          }}
-                        />
-                      </Text>
-                    </Box>
+                    <CutOffDateEarlyWarning cutOffDateComparison={cutOffDateComparison} />
                   </Box>
                 )}
 
                 {showCutOffDateLaterInfo && (
                   <Box paddingLeft={4} paddingTop={3}>
-                    <Box
-                      display="flex"
-                      alignItems="flex-start"
-                      backgroundColor="info1"
-                      color="default1"
-                      padding={2}
-                      gap={2}
-                      borderRadius={3}
-                    >
-                      <Box flexShrink="0" paddingTop={0.5}>
-                        <CircleAlertIcon size={16} />
-                      </Box>
-                      <Text size={2}>
-                        <FormattedMessage
-                          {...messages.automaticCompletionCutOffDateLaterInfo}
-                          values={{
-                            timeDifference: cutOffDateComparison.timeDifference,
-                            previousDate: cutOffDateComparison.previousDate,
-                            newDate: cutOffDateComparison.newDate,
-                          }}
-                        />
-                      </Text>
-                    </Box>
+                    <CutOffDateLaterWarning cutOffDateComparison={cutOffDateComparison} />
                   </Box>
                 )}
               </>
