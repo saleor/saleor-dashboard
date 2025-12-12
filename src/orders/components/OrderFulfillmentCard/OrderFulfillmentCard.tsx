@@ -75,7 +75,15 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   };
 
   return (
-    <Box data-test-id={dataTestId} backgroundColor={"default2"}>
+    <Box
+      data-test-id={dataTestId}
+      backgroundColor={"default2"}
+      margin={4}
+      borderColor="default1"
+      borderStyle="solid"
+      borderWidth={1}
+      __borderRadius={10}
+    >
       <OrderCardTitle
         withStatus
         status={fulfillment?.status}
@@ -142,7 +150,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           </Box>
         }
       />
-      <DashboardCard.Content paddingX={0}>
+      <DashboardCard.Content paddingX={0} __borderRadius={10}>
         <OrderDetailsDatagrid
           lines={getLines()}
           loading={false}
@@ -155,9 +163,10 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           backgroundColor={"default1"}
           width="100%"
           height={6}
-          borderBottomStyle={"solid"}
-          borderBottomWidth={1}
-          borderColor={"default1"}
+          // borderBottomStyle={"solid"}
+          // borderBottomWidth={1}
+          // borderColor={"default1"}
+          __borderRadius={10}
         />
       </DashboardCard.Content>
     </Box>

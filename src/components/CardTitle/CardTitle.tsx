@@ -31,6 +31,7 @@ export const CardTitle = ({
     style={{
       backgroundColor: vars.colors.background[backgroundColor],
       paddingBottom: "13px",
+      borderRadius: 10,
     }}
   >
     {children}
