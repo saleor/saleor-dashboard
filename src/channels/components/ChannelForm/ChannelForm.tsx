@@ -1,4 +1,4 @@
-import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/AutomaticallyCompleteCheckouts";
+import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/automatic-checkout-complete/AutomaticallyCompleteCheckouts";
 import {
   ChannelShippingZones,
   ChannelWarehouses,

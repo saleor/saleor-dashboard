@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { IntlShape } from "react-intl";
 
+import { IntlShape } from "../../../../../react-intl";
 import {
   CutOffDateComparison,
   useAutomaticCompletionWarnings,
