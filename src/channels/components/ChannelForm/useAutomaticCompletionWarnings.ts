@@ -11,7 +11,7 @@ export interface CutOffDateComparison {
   newDate: string;
 }
 
-interface UseAutomaticCompletionWarningsParams {
+export interface UseAutomaticCompletionWarningsParams {
   isChecked: boolean;
   delay: number | string | null;
   cutOffDate: string;
