@@ -1,6 +1,6 @@
 import { useMemo } from "react";
+import { IntlShape } from "react-intl";
 
-import { IntlShape } from "../../../../../react-intl";
 import { formatDateTime, formatTimeDifference } from "./utils";
 
 export interface CutOffDateComparison {

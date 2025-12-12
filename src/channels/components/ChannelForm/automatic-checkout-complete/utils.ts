@@ -1,4 +1,4 @@
-import { IntlShape } from "../../../../../react-intl";
+import { IntlShape } from "react-intl";
 
 export type RelativeTimeUnit = "day" | "hour" | "minute";
 

@@ -155,7 +155,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
-    automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
     allowLegacyGiftCardUse: checkoutSettings
       ? "allowLegacyGiftCardUse" in checkoutSettings
         ? checkoutSettings.allowLegacyGiftCardUse
