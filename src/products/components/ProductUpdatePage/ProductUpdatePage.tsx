@@ -65,6 +65,7 @@ import { useIntl } from "react-intl";
 import { AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
+import { ProductShipping } from "../ProductShipping";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";
@@ -472,6 +473,18 @@ const ProductUpdatePage = ({
                   onAttributeSelectBlur={onAttributeSelectBlur}
                   richTextGetters={attributeRichTextGetters}
                 />
+              )}
+              {isSimpleProduct && (
+                <>
+                  <ProductShipping
+                    data={data}
+                    disabled={disabled}
+                    errors={productErrors}
+                    weightUnit={product?.weight?.unit}
+                    onChange={change}
+                  />
+                  <CardSpacer />
+                </>
               )}
               <ProductVariants
                 productId={productId}

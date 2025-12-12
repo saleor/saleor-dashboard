@@ -1,16 +1,11 @@
-import {
-  Box,
-  Button,
-  Popover,
-  PopoverContentProps,
-  sprinkles,
-  TableEditIcon,
-  Text,
-  vars,
-} from "@saleor/macaw-ui-next";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { IconButton } from "@saleor/macaw-ui";
+import { Box, Popover, PopoverContentProps, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Columns3 } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
+import useStyles, { cellHeight, singleActionWidth } from "../styles";
 import { AvailableColumn } from "../types";
 import { ColumnPickerCategories } from "./ColumnPickerCategories";
 import { ColumnPickerDynamicColumns } from "./ColumnPickerDynamicColumns";
@@ -40,6 +35,7 @@ export const ColumnPicker = ({
 }: ColumnPickerProps) => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const classes = useStyles({});
 
   return (
     <Popover
@@ -52,22 +48,25 @@ export const ColumnPicker = ({
     >
       <Popover.Trigger>
         <Box
-          __margin={-1}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          __width={singleActionWidth - 1}
+          __height={cellHeight}
           backgroundColor="default1"
           borderLeftStyle="solid"
           borderLeftWidth={1}
           borderColor="default1"
           __boxShadow={rightColumnBoxShadow}
         >
-          <Button
+          <IconButton
             data-test-id="open-column-picker-button"
-            variant="tertiary"
-            icon={<TableEditIcon />}
-            pointerEvents={pickerOpen ? "none" : undefined}
-            __backgroundColor={pickerOpen ? vars.colors.background.default1Pressed : undefined}
-            __borderColor={pickerOpen ? vars.colors.border.default2 : undefined}
+            variant="ghost"
+            className={classes.ghostIcon}
             title="Pick columns"
-          />
+          >
+            <Columns3 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+          </IconButton>
         </Box>
       </Popover.Trigger>
       <Popover.Content

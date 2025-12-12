@@ -5,13 +5,14 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { AvailableAttributeFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { FetchMoreProps } from "@dashboard/types";
-import { CircularProgress, TableBody, TableCell, TextField } from "@material-ui/core";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -94,7 +95,7 @@ const AssignAttributeDialog = ({
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />,
+            endAdornment: loading && <SaleorThrobber size={16} />,
           }}
         />
 

@@ -1,5 +1,6 @@
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { Box, Button, PlusIcon, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Plus } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { addTransactionMessages } from "./messages";
@@ -24,7 +25,7 @@ const OrderAddTransaction = ({ order, onAddTransaction }: OrderAddTransactionPro
       onClick={onAddTransaction}
       data-test-id="captureManualTransactionButton"
     >
-      <PlusIcon />
+      <Plus />
       <FormattedMessage {...addTransactionMessages.captureTransaction} />
     </Button>
   );

@@ -1,9 +1,12 @@
 import { IconButton } from "@dashboard/components/IconButton";
-import { CircularProgress } from "@material-ui/core";
-import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { Pencil, Trash2 } from "lucide-react";
 import * as React from "react";
+
+import { SaleorThrobber } from "../Throbber";
 
 const useStyles = makeStyles(
   theme => ({
@@ -114,7 +117,7 @@ const MediaTile = (props: MediaTileProps) => {
         })}
       >
         {loading ? (
-          <CircularProgress size={32} />
+          <SaleorThrobber size={32} />
         ) : (
           <div className={classes.mediaOverlayToolbar}>
             {(onEdit || editHref) && (
@@ -125,7 +128,7 @@ const MediaTile = (props: MediaTileProps) => {
                 className={classes.controlButton}
                 onClick={onEdit}
               >
-                <EditIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
               </IconButton>
             )}
             {onDelete && (
@@ -135,7 +138,7 @@ const MediaTile = (props: MediaTileProps) => {
                 className={classes.controlButton}
                 onClick={onDelete}
               >
-                <DeleteIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
               </IconButton>
             )}
           </div>

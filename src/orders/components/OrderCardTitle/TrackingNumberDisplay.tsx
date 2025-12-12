@@ -19,7 +19,7 @@ export const TrackingNumberDisplay = ({
   return (
     <>
       <Text color="default2" size={2} marginRight={1}>
-        |
+        {", "}
       </Text>
       <Box
         display="flex"

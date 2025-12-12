@@ -1,4 +1,5 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   getLatestFailedAttemptFromWebhooks,
   LatestWebhookDeliveryWithMoment,
@@ -17,7 +18,8 @@ import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsP
 import { PluginIcon } from "@dashboard/icons/PluginIcon";
 import { WebhookIcon } from "@dashboard/icons/WebhookIcon";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, GenericAppIcon, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@saleor/macaw-ui-next";
+import { Package } from "lucide-react";
 import { useMemo } from "react";
 
 import { AppDisabledInfo } from "../components/InfoLabels/AppDisabledInfo";
@@ -71,7 +73,7 @@ const getExtensionLogo = ({
     return <Box as="img" src={logo} alt={name} display="block" maxWidth="100%" />;
   }
 
-  return <GenericAppIcon size="medium" color="default2" />;
+  return <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />;
 };
 
 const resolveExtensionHref = ({

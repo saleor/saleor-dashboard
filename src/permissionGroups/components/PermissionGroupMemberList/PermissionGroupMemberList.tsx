@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
@@ -15,8 +16,9 @@ import { ListActions, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Skeleton, Text, TrashBinIcon, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -212,7 +214,12 @@ const PermissionGroupMemberList = (props: PermissionGroupProps) => {
                       {user ? (
                         <>
                           <Button
-                            icon={<TrashBinIcon />}
+                            icon={
+                              <Trash2
+                                size={iconSize.small}
+                                strokeWidth={iconStrokeWidthBySize.small}
+                              />
+                            }
                             variant="secondary"
                             data-test-id="remove-user"
                             disabled={disabled}

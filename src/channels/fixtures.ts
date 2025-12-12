@@ -1,9 +1,9 @@
 import {
   AllocationStrategyEnum,
-  ChannelDetailsFragment,
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
+import { ChannelDetailsFragment } from "@dashboard/graphql/staging";
 
 export const channelsList: ChannelDetailsFragment[] = [
   {
@@ -47,6 +47,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       automaticCompletionDelay: 30,
       automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       __typename: "CheckoutSettings",
@@ -95,6 +96,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       automaticallyCompleteFullyPaidCheckouts: true,
       automaticCompletionDelay: 30,
       automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -139,6 +141,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       automaticCompletionDelay: 30,
       automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       __typename: "CheckoutSettings",
@@ -187,6 +190,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       automaticallyCompleteFullyPaidCheckouts: true,
       automaticCompletionDelay: 30,
       automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -231,6 +235,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
+      allowLegacyGiftCardUse: true,
       automaticCompletionDelay: 30,
       automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
       __typename: "CheckoutSettings",
@@ -279,6 +284,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       automaticallyCompleteFullyPaidCheckouts: true,
       automaticCompletionDelay: 30,
       automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -325,6 +331,7 @@ export const channelsList: ChannelDetailsFragment[] = [
       automaticallyCompleteFullyPaidCheckouts: true,
       automaticCompletionDelay: 30,
       automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
+      allowLegacyGiftCardUse: true,
       __typename: "CheckoutSettings",
     },
   },
@@ -373,6 +380,7 @@ export const channel: ChannelDetailsFragment = {
     automaticallyCompleteFullyPaidCheckouts: true,
     automaticCompletionDelay: 30,
     automaticCompletionCutOffDate: "2024-01-01T00:00:00Z",
+    allowLegacyGiftCardUse: true,
     __typename: "CheckoutSettings",
   },
 };

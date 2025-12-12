@@ -1,12 +1,14 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Select } from "@dashboard/components/Select";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Box, Button, Option, TrashBinIcon } from "@saleor/macaw-ui-next";
+import { Box, Button, Option } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 
 import { useStyles } from "../styles";
 import { TaxCountryConfiguration } from "../TaxChannelsPage";
@@ -65,7 +67,12 @@ const TaxCountryExceptionListItem = ({
           />
         </ListItemCell>
         <ListItemCell>
-          <Button size="small" onClick={onDelete} variant="secondary" icon={<TrashBinIcon />} />
+          <Button
+            size="small"
+            onClick={onDelete}
+            variant="secondary"
+            icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          />
         </ListItemCell>
       </ListItem>
       {divider && <Divider />}

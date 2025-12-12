@@ -1899,10 +1899,6 @@
   "AN+zaK": {
     "string": "Structures"
   },
-  "APcoSA": {
-    "context": "dialog header",
-    "string": "Delete Daft Order"
-  },
   "AQ+9Ez": {
     "string": "We’ve encountered an unexpected error"
   },
@@ -3447,10 +3443,6 @@
     "context": "add shipping carrier button",
     "string": "Add shipping carrier"
   },
-  "JbHdDi": {
-    "context": "fulfilled fulfillment, section header",
-    "string": "From {warehouseName}: {fulfillmentDate}"
-  },
   "JbUg2b": {
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
@@ -4144,6 +4136,9 @@
     "context": "conjunction, choice between going to dashboard or refreshing page",
     "string": "or"
   },
+  "OAuXGE": {
+    "string": "Create a product type"
+  },
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
     "string": "Disabled"
@@ -4209,6 +4204,10 @@
   "OhdPS1": {
     "context": "amount of refunded money",
     "string": "Amount"
+  },
+  "OqYCQ4": {
+    "context": "allow legacy gift card use description",
+    "string": "When enabled, gift card can be applied to a checkout using addPromoCode mutation."
   },
   "OrMr/k": {
     "context": "window title",
@@ -5402,6 +5401,10 @@
   "W2OIhn": {
     "string": "Use app: {name}"
   },
+  "W2glWk": {
+    "context": "fulfilled fulfillment, warehouse info",
+    "string": "From {warehouseName}"
+  },
   "W32xfN": {
     "context": "staff member full name",
     "string": "Name"
@@ -5857,6 +5860,10 @@
   "YjcN9w": {
     "context": "time during voucher is active, header",
     "string": "Active Dates"
+  },
+  "Yk0avO": {
+    "context": "dialog header",
+    "string": "Delete Draft Order"
   },
   "YkOzse": {
     "context": "used warehouses counter",
@@ -8859,6 +8866,10 @@
     "context": "bulk issue structure item",
     "string": "Bulk Issue"
   },
+  "sE7fI/": {
+    "context": "allow legacy gift card use label",
+    "string": "Allow legacy gift card use"
+  },
   "sFynTT": {
     "context": "grant refund, refund card title",
     "string": "Refund"
@@ -10074,6 +10085,9 @@
   "znbVYT": {
     "context": "product available for purchase date",
     "string": "Will become available on {date}"
+  },
+  "zoUlyR": {
+    "string": "Go to product types"
   },
   "zp9VHt": {
     "context": "cta button label",

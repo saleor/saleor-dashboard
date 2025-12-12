@@ -1,5 +1,5 @@
 import { AttributeEntityTypeEnum } from "@dashboard/graphql";
-import errorTracker from "@dashboard/services/errorTracking";
+import { errorTracker } from "@dashboard/services/errorTracking";
 
 import { InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";

@@ -2,8 +2,9 @@ import { DashboardCard } from "@dashboard/components/Card";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Table, TableCell, TableHead } from "@material-ui/core";
-import { Button, ChervonDownIcon, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { ChevronDown } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -60,7 +61,7 @@ export const WebhookHeaders = ({ data: { customHeaders }, onChange }: WebhookHea
             data-test-id="expand"
             onClick={() => setExpanded(!expanded)}
           >
-            <ChervonDownIcon />
+            <ChevronDown />
           </Button>
         </DashboardCard.Title>
       </DashboardCard.Header>
