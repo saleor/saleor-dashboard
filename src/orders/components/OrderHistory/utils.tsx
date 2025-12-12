@@ -1,23 +1,84 @@
-// @ts-strict-ignore
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
-import { getFullName } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";
-import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { IntlShape, MessageDescriptor } from "react-intl";
 
-export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescriptor, any?] => {
-  switch (event.type) {
-    case OrderEventsEnum.ORDER_MARKED_AS_PAID: {
-      return [
-        {
-          defaultMessage: "Transaction Reference {transactionReference}",
-          description: "transaction reference",
-          id: "transaction-reference-order-history",
-        },
-        { transactionReference: event.transactionReference },
-      ];
-    }
+// Date group labels - keys are used internally, labels are internationalized in component
+export type DateGroupKey =
+  | "TODAY"
+  | "YESTERDAY"
+  | "LAST_7_DAYS"
+  | "LAST_30_DAYS"
+  | "OLDER"
+  | "UNKNOWN";
+
+// Helper to check if two dates are the same day
+const isSameDay = (date1: Date, date2: Date): boolean =>
+  date1.getFullYear() === date2.getFullYear() &&
+  date1.getMonth() === date2.getMonth() &&
+  date1.getDate() === date2.getDate();
+
+// Helper to get start of day
+const startOfDay = (date: Date): Date => {
+  const result = new Date(date);
+
+  result.setHours(0, 0, 0, 0);
+
+  return result;
+};
+
+// Helper to get date group key - smart grouping based on age
+export const getDateGroupKey = (date: string | null): DateGroupKey => {
+  if (!date) {
+    return "UNKNOWN";
   }
+
+  const eventDate = new Date(date);
+  const currentDate = new Date();
+  const today = startOfDay(currentDate);
+  const yesterday = new Date(today);
+
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const diffInMs = currentDate.getTime() - eventDate.getTime();
+  const daysAgo = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+  // Daily precision for last 48 hours
+  if (isSameDay(eventDate, today)) {
+    return "TODAY";
+  } else if (isSameDay(eventDate, yesterday)) {
+    return "YESTERDAY";
+  }
+
+  // Progressive broader buckets for older events
+  if (daysAgo < 7) {
+    return "LAST_7_DAYS";
+  } else if (daysAgo < 30) {
+    return "LAST_30_DAYS";
+  } else {
+    return "OLDER";
+  }
+};
+
+// Group events by date - preserves insertion order
+export const groupEventsByDate = (
+  events: OrderEventFragment[],
+): Array<[DateGroupKey, OrderEventFragment[]]> => {
+  const groups: Array<[DateGroupKey, OrderEventFragment[]]> = [];
+  const groupMap = new Map<DateGroupKey, number>();
+
+  events.forEach(event => {
+    const key = getDateGroupKey(event.date);
+
+    if (!groupMap.has(key)) {
+      groupMap.set(key, groups.length);
+      groups.push([key, []]);
+    }
+
+    const index = groupMap.get(key)!;
+
+    groups[index][1].push(event);
+  });
+
+  return groups;
 };
 
 const timelineEventTypes = {
@@ -32,68 +93,22 @@ const timelineEventTypes = {
     OrderEventsEnum.FULFILLMENT_REPLACED,
     OrderEventsEnum.FULFILLMENT_RETURNED,
     OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE,
-    OrderEventsEnum.ORDER_MARKED_AS_PAID,
     OrderEventsEnum.ORDER_DISCOUNT_ADDED,
     OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED,
     OrderEventsEnum.ORDER_DISCOUNT_UPDATED,
     OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
   ],
-  linked: [
-    OrderEventsEnum.ORDER_REPLACEMENT_CREATED,
-    OrderEventsEnum.ORDER_DISCOUNT_DELETED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED,
-  ],
   note: [OrderEventsEnum.NOTE_ADDED],
   note_updated: [OrderEventsEnum.NOTE_UPDATED],
-  rawMessage: [
-    OrderEventsEnum.OTHER,
-    OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
-    OrderEventsEnum.TRANSACTION_EVENT,
-  ],
-  secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID],
 };
 
 export const isTimelineEventOfType = (
-  type:
-    | "extendable"
-    | "secondaryTitle"
-    | "rawMessage"
-    | "note"
-    | "note_updated"
-    | "linked"
-    | "discount",
+  type: "extendable" | "note" | "note_updated" | "discount",
   eventType: OrderEventsEnum,
 ) => !!timelineEventTypes[type]?.includes(eventType);
 
 export const isTimelineEventOfDiscountType = (eventType: OrderEventsEnum) =>
   isTimelineEventOfType("discount", eventType);
-
-const selectEmployeeName = ({ firstName, lastName, email }: OrderEventFragment["user"]) => {
-  if (firstName) {
-    return getFullName({ firstName, lastName }).trim();
-  }
-
-  return email;
-};
-
-export const getEmployeeNameLink = (event: OrderEventFragment, intl: IntlShape) => {
-  if (!hasEnsuredOrderEventFields(event, ["user"])) {
-    return null;
-  }
-
-  const { id } = event.user;
-
-  return {
-    link: staffMemberDetailsUrl(id),
-    text:
-      selectEmployeeName(event.user) ||
-      intl.formatMessage({
-        defaultMessage: "Unknown user",
-        id: "kv1DqJ",
-        description: "unknown user display name",
-      }),
-  };
-};
 
 export const hasOrderLineDiscountWithNoPreviousValue = ({ type, lines }: OrderEventFragment) =>
   type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED &&
@@ -101,7 +116,7 @@ export const hasOrderLineDiscountWithNoPreviousValue = ({ type, lines }: OrderEv
   !lines?.[0].discount?.oldValue;
 
 export const getOrderNumberLink = (event: OrderEventFragment) => {
-  if (!hasEnsuredOrderEventFields(event, ["relatedOrder"])) {
+  if (!event.relatedOrder) {
     return null;
   }
 
@@ -109,11 +124,6 @@ export const getOrderNumberLink = (event: OrderEventFragment) => {
 
   return getOrderNumberLinkObject({ id, number });
 };
-
-const hasEnsuredOrderEventFields = (
-  event: OrderEventFragment,
-  fields: Array<keyof OrderEventFragment>,
-) => !fields.some((field: keyof OrderEventFragment) => !event[field]);
 
 export const getOrderNumberLinkObject = ({ id, number }: { id: string; number: string }) => ({
   link: orderUrl(id),
