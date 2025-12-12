@@ -139,7 +139,41 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     automaticCompletionCutOffTime,
     useCutOffDate,
   }: FormData) => {
-    // todo add logic from checkout auto complete
+    const getCutOffDateTimeISO = (): string | null => {
+      // Only return a date if useCutOffDate is checked and there's a date value
+      if (!useCutOffDate || !automaticCompletionCutOffDate) {
+        return null;
+      }
+
+      const time = automaticCompletionCutOffTime || "00:00";
+
+      return new Date(`${automaticCompletionCutOffDate}T${time}`).toISOString();
+    };
+
+    // Build automaticCompletion input - only include delay and cutOffDate when enabled
+    const automaticCompletionInput: {
+      enabled: boolean;
+      delay?: number | null;
+      cutOffDate?: string | null;
+    } = {
+      enabled: automaticallyCompleteCheckouts,
+    };
+
+    if (automaticallyCompleteCheckouts) {
+      // Convert delay to number or null (handle empty string case)
+      const delayValue = automaticCompletionDelay;
+
+      if (delayValue === null || delayValue === undefined || delayValue === "") {
+        automaticCompletionInput.delay = null;
+      } else {
+        automaticCompletionInput.delay = Number(delayValue);
+      }
+
+      // Include cutOffDate only when useCutOffDate is checked
+      // Note: Backend will default to current time if cutOffDate is null when enabled
+      automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
+    }
+
     const updateChannelMutation = isStagingSchema()
       ? updateChannelStaging({
           variables: {
