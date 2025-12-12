@@ -245,21 +245,11 @@ export enum AppErrorCode {
 
 export type AppExtensionFilterInput = {
   /**
-   * DEPRECATED: Use `mountName` instead.
-   * @deprecated Field no longer supported
-   */
-  mount?: InputMaybe<Array<AppExtensionMountEnum>>;
-  /**
    * Plain-text mount name (case insensitive)
    *
    * Added in Saleor 3.22.
    */
-  mountName?: InputMaybe<Scalars['String']>;
-  /**
-   * DEPRECATED: Use `targetName` instead.
-   * @deprecated Field no longer supported
-   */
-  target?: InputMaybe<AppExtensionTargetEnum>;
+  mountName?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Plain-text target name (case insensitive)
    *
@@ -267,73 +257,6 @@ export type AppExtensionFilterInput = {
    */
   targetName?: InputMaybe<Scalars['String']>;
 };
-
-/** All places where app extension can be mounted. */
-export enum AppExtensionMountEnum {
-  CATEGORY_DETAILS_MORE_ACTIONS = 'CATEGORY_DETAILS_MORE_ACTIONS',
-  CATEGORY_OVERVIEW_CREATE = 'CATEGORY_OVERVIEW_CREATE',
-  CATEGORY_OVERVIEW_MORE_ACTIONS = 'CATEGORY_OVERVIEW_MORE_ACTIONS',
-  COLLECTION_DETAILS_MORE_ACTIONS = 'COLLECTION_DETAILS_MORE_ACTIONS',
-  COLLECTION_DETAILS_WIDGETS = 'COLLECTION_DETAILS_WIDGETS',
-  COLLECTION_OVERVIEW_CREATE = 'COLLECTION_OVERVIEW_CREATE',
-  COLLECTION_OVERVIEW_MORE_ACTIONS = 'COLLECTION_OVERVIEW_MORE_ACTIONS',
-  CUSTOMER_DETAILS_MORE_ACTIONS = 'CUSTOMER_DETAILS_MORE_ACTIONS',
-  CUSTOMER_DETAILS_WIDGETS = 'CUSTOMER_DETAILS_WIDGETS',
-  CUSTOMER_OVERVIEW_CREATE = 'CUSTOMER_OVERVIEW_CREATE',
-  CUSTOMER_OVERVIEW_MORE_ACTIONS = 'CUSTOMER_OVERVIEW_MORE_ACTIONS',
-  DISCOUNT_DETAILS_MORE_ACTIONS = 'DISCOUNT_DETAILS_MORE_ACTIONS',
-  DISCOUNT_OVERVIEW_CREATE = 'DISCOUNT_OVERVIEW_CREATE',
-  DISCOUNT_OVERVIEW_MORE_ACTIONS = 'DISCOUNT_OVERVIEW_MORE_ACTIONS',
-  DRAFT_ORDER_DETAILS_MORE_ACTIONS = 'DRAFT_ORDER_DETAILS_MORE_ACTIONS',
-  DRAFT_ORDER_DETAILS_WIDGETS = 'DRAFT_ORDER_DETAILS_WIDGETS',
-  DRAFT_ORDER_OVERVIEW_CREATE = 'DRAFT_ORDER_OVERVIEW_CREATE',
-  DRAFT_ORDER_OVERVIEW_MORE_ACTIONS = 'DRAFT_ORDER_OVERVIEW_MORE_ACTIONS',
-  GIFT_CARD_DETAILS_MORE_ACTIONS = 'GIFT_CARD_DETAILS_MORE_ACTIONS',
-  GIFT_CARD_DETAILS_WIDGETS = 'GIFT_CARD_DETAILS_WIDGETS',
-  GIFT_CARD_OVERVIEW_CREATE = 'GIFT_CARD_OVERVIEW_CREATE',
-  GIFT_CARD_OVERVIEW_MORE_ACTIONS = 'GIFT_CARD_OVERVIEW_MORE_ACTIONS',
-  MENU_DETAILS_MORE_ACTIONS = 'MENU_DETAILS_MORE_ACTIONS',
-  MENU_OVERVIEW_CREATE = 'MENU_OVERVIEW_CREATE',
-  MENU_OVERVIEW_MORE_ACTIONS = 'MENU_OVERVIEW_MORE_ACTIONS',
-  NAVIGATION_CATALOG = 'NAVIGATION_CATALOG',
-  NAVIGATION_CUSTOMERS = 'NAVIGATION_CUSTOMERS',
-  NAVIGATION_DISCOUNTS = 'NAVIGATION_DISCOUNTS',
-  NAVIGATION_ORDERS = 'NAVIGATION_ORDERS',
-  NAVIGATION_PAGES = 'NAVIGATION_PAGES',
-  NAVIGATION_TRANSLATIONS = 'NAVIGATION_TRANSLATIONS',
-  ORDER_DETAILS_MORE_ACTIONS = 'ORDER_DETAILS_MORE_ACTIONS',
-  ORDER_DETAILS_WIDGETS = 'ORDER_DETAILS_WIDGETS',
-  ORDER_OVERVIEW_CREATE = 'ORDER_OVERVIEW_CREATE',
-  ORDER_OVERVIEW_MORE_ACTIONS = 'ORDER_OVERVIEW_MORE_ACTIONS',
-  PAGE_DETAILS_MORE_ACTIONS = 'PAGE_DETAILS_MORE_ACTIONS',
-  PAGE_OVERVIEW_CREATE = 'PAGE_OVERVIEW_CREATE',
-  PAGE_OVERVIEW_MORE_ACTIONS = 'PAGE_OVERVIEW_MORE_ACTIONS',
-  PAGE_TYPE_DETAILS_MORE_ACTIONS = 'PAGE_TYPE_DETAILS_MORE_ACTIONS',
-  PAGE_TYPE_OVERVIEW_CREATE = 'PAGE_TYPE_OVERVIEW_CREATE',
-  PAGE_TYPE_OVERVIEW_MORE_ACTIONS = 'PAGE_TYPE_OVERVIEW_MORE_ACTIONS',
-  PRODUCT_DETAILS_MORE_ACTIONS = 'PRODUCT_DETAILS_MORE_ACTIONS',
-  PRODUCT_DETAILS_WIDGETS = 'PRODUCT_DETAILS_WIDGETS',
-  PRODUCT_OVERVIEW_CREATE = 'PRODUCT_OVERVIEW_CREATE',
-  PRODUCT_OVERVIEW_MORE_ACTIONS = 'PRODUCT_OVERVIEW_MORE_ACTIONS',
-  TRANSLATIONS_MORE_ACTIONS = 'TRANSLATIONS_MORE_ACTIONS',
-  VOUCHER_DETAILS_MORE_ACTIONS = 'VOUCHER_DETAILS_MORE_ACTIONS',
-  VOUCHER_DETAILS_WIDGETS = 'VOUCHER_DETAILS_WIDGETS',
-  VOUCHER_OVERVIEW_CREATE = 'VOUCHER_OVERVIEW_CREATE',
-  VOUCHER_OVERVIEW_MORE_ACTIONS = 'VOUCHER_OVERVIEW_MORE_ACTIONS'
-}
-
-/**
- * All available ways of opening an app extension.
- *
- *     POPUP - app's extension will be mounted as a popup window
- *     APP_PAGE - redirect to app's page
- */
-export enum AppExtensionTargetEnum {
-  APP_PAGE = 'APP_PAGE',
-  NEW_TAB = 'NEW_TAB',
-  POPUP = 'POPUP',
-  WIDGET = 'WIDGET'
-}
 
 export type AppFilterInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -1228,6 +1151,15 @@ export enum CheckoutAuthorizeStatusEnum {
   PARTIAL = 'PARTIAL'
 }
 
+export type CheckoutAutoCompleteInput = {
+  /** Specifies the earliest date on which fully paid checkouts can begin to be automatically completed. Fully paid checkouts dated before this cut-off will not be automatically completed. Must be less than the threshold of the oldest modified checkout eligible for automatic completion. Default is current date time. */
+  cutOffDate?: InputMaybe<Scalars['DateTime']>;
+  /** The time in minutes after which the fully paid checkout will be automatically completed. Default is 30. Set to 0 for immediate completion. Should be less than the threshold for the oldest modified checkout eligible for automatic completion. */
+  delay?: InputMaybe<Scalars['Minute']>;
+  /** Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount. */
+  enabled: Scalars['Boolean'];
+};
+
 /**
  * Determine the current charge status for the checkout.
  *
@@ -1402,9 +1334,22 @@ export type CheckoutLineUpdateInput = {
 
 export type CheckoutSettingsInput = {
   /**
-   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+   * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+   *
+   * Added in Saleor 3.23.
+   */
+  allowLegacyGiftCardUse?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Settings for automatic completion of fully paid checkouts.
+   *
+   * Added in Saleor 3.22.
+   */
+  automaticCompletion?: InputMaybe<CheckoutAutoCompleteInput>;
+  /**
+   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
    *
    * Added in Saleor 3.20.
+   * @deprecated Use `automatic_completion` instead.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']>;
   /**
@@ -2768,11 +2713,6 @@ export type GlobalIdFilterInput = {
   /** The value included in. */
   oneOf?: InputMaybe<Array<Scalars['ID']>>;
 };
-
-export enum HttpMethod {
-  GET = 'GET',
-  POST = 'POST'
-}
 
 /** Thumbnail formats for icon images. */
 export enum IconThumbnailFormatEnum {
@@ -8849,3 +8789,49 @@ export enum WeightUnitsEnum {
   OZ = 'OZ',
   TONNE = 'TONNE'
 }
+
+export type ChannelCreateMutationVariables = Exact<{
+  input: ChannelCreateInput;
+}>;
+
+
+export type ChannelCreateMutation = { __typename: 'Mutation', channelCreate: { __typename: 'ChannelCreate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
+
+export type ChannelUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: ChannelUpdateInput;
+}>;
+
+
+export type ChannelUpdateMutation = { __typename: 'Mutation', channelUpdate: { __typename: 'ChannelUpdate', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null, errors: Array<{ __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null }> } | null };
+
+export type BaseChannelsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BaseChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
+
+export type ChannelsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
+
+export type ChannelQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ChannelQuery = { __typename: 'Query', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null };
+
+export type AddressFragment = { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } };
+
+export type ChannelErrorFragment = { __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null };
+
+export type ChannelFragment = { __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
+
+export type ChannelDetailsFragment = { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, deleteExpiredOrdersAfter: any, allowUnpaidOrders: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
+
+export type WarehouseFragment = { __typename: 'Warehouse', id: string, name: string };
+
+export type WarehouseWithShippingFragment = { __typename: 'Warehouse', id: string, name: string, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };
+
+export type WarehouseDetailsFragment = { __typename: 'Warehouse', isPrivate: boolean, clickAndCollectOption: WarehouseClickAndCollectOptionEnum, email: string, id: string, name: string, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string } }> } };

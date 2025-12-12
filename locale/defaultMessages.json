@@ -4196,6 +4196,10 @@
     "context": "amount of refunded money",
     "string": "Amount"
   },
+  "OqYCQ4": {
+    "context": "allow legacy gift card use description",
+    "string": "When enabled, gift card can be applied to a checkout using addPromoCode mutation."
+  },
   "OrMr/k": {
     "context": "window title",
     "string": "Create Channel"
@@ -8846,6 +8850,10 @@
   "sDMNfc": {
     "context": "bulk issue structure item",
     "string": "Bulk Issue"
+  },
+  "sE7fI/": {
+    "context": "allow legacy gift card use label",
+    "string": "Allow legacy gift card use"
   },
   "sFynTT": {
     "context": "grant refund, refund card title",

@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.22.20
+
+### Patch Changes
+
+- [#6195](https://github.com/saleor/saleor-dashboard/pull/6195) [`c9ed5f7`](https://github.com/saleor/saleor-dashboard/commit/c9ed5f7d2ac75658218fc860ef4886bd9de95fe1) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Added "Allow legacy gift card use" flag to Channel configuration
+
+- [#6188](https://github.com/saleor/saleor-dashboard/pull/6188) [`7833de8`](https://github.com/saleor/saleor-dashboard/commit/7833de81a816fc4298fd73be58d5377de2b98a00) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated `@saleor/macaw-ui-next` to `1.4.1`. This version should resolve potential issues with React 18+ timing crashes
+
+## 3.22.19
+
+### Patch Changes
+
+- [#6172](https://github.com/saleor/saleor-dashboard/pull/6172) [`5373ccd`](https://github.com/saleor/saleor-dashboard/commit/5373ccdb3571e1294008224cf911bcd79f1b56b7) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Update app-sdk package to 1.4.0
+
+- [#6177](https://github.com/saleor/saleor-dashboard/pull/6177) [`cdf694d`](https://github.com/saleor/saleor-dashboard/commit/cdf694dd083de4a12ebbe67b86ba56ed50f7d79a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Changed Address component to use modern MacawUI text inputs
+
+- [#6174](https://github.com/saleor/saleor-dashboard/pull/6174) [`dbe7709`](https://github.com/saleor/saleor-dashboard/commit/dbe7709d27287a9280119073f1d4217c15a39210) Thanks [@witoszekdev](https://github.com/witoszekdev)! - Updated `@saleor/app-sdk` to `1.5.0`.
+  `next` should no longer be automatically installed with Saleor Dashboard. Previously this package installed into `node_modules`, even though it wasn't used.
+
+- [#6185](https://github.com/saleor/saleor-dashboard/pull/6185) [`995c330`](https://github.com/saleor/saleor-dashboard/commit/995c330af5564c110d6226239289ece3281a8b43) Thanks [@mirekm](https://github.com/mirekm)! - Improve replaced icons visual consistency
+
+- [#6180](https://github.com/saleor/saleor-dashboard/pull/6180) [`4de2650`](https://github.com/saleor/saleor-dashboard/commit/4de265041e98106868c79b2b86113fdbf517704e) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed attribute tooltip icon size
+
+- [#6179](https://github.com/saleor/saleor-dashboard/pull/6179) [`8584e5f`](https://github.com/saleor/saleor-dashboard/commit/8584e5fee1adff5efb930dc1ebc9a9c3fb967c4d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Icons overhaul part 1: Removed some old icons with fresh Lucide icons
+
+- [#6186](https://github.com/saleor/saleor-dashboard/pull/6186) [`adddfde`](https://github.com/saleor/saleor-dashboard/commit/adddfde2b97f31e7a7b0b0f63fd4a684dcbdcd47) Thanks [@mirekm](https://github.com/mirekm)! - Fix sizing of the main datagrid based views
+
 ## 3.22.18
 
 ### Patch Changes
