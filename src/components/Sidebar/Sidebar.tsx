@@ -1,4 +1,5 @@
-import { Box, Drawer, MenuIcon } from "@saleor/macaw-ui-next";
+import { Box, Drawer } from "@saleor/macaw-ui-next";
+import { Menu } from "lucide-react";
 
 import { SidebarContent } from "./Content";
 import classes from "./Sidebar.module.css";
@@ -25,7 +26,7 @@ export const Sidebar = () => {
                 cursor="pointer"
                 data-test-id="sidebar-drawer-open"
               >
-                <MenuIcon />
+                <Menu />
               </Box>
             </Drawer.Trigger>
             <Drawer.Content
@@ -61,7 +62,7 @@ export const Sidebar = () => {
               cursor="pointer"
               data-test-id="sidebar-drawer-open"
             >
-              <MenuIcon />
+              <Menu />
             </Box>
           </Drawer.Trigger>
           <Drawer.Content

@@ -1,18 +1,10 @@
-import { Box, Text, vars } from "@saleor/macaw-ui-next";
-import { CSSProperties, ReactElement, ReactNode } from "react";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { ReactElement, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
-const isMac = window.navigator.platform?.toLowerCase().includes("mac");
+import styles from "./SendFormKeyboardShortcutHint.module.css";
 
-const kbdStyle: CSSProperties = {
-  display: "inline-block",
-  padding: "2px 5px",
-  fontSize: "10px",
-  fontFamily: "inherit",
-  backgroundColor: vars.colors.background.default2,
-  borderRadius: "3px",
-  border: `1px solid ${vars.colors.border.default1}`,
-};
+const isMac = window.navigator.platform?.toLowerCase().includes("mac");
 
 const getModifierKey = (): string => (isMac ? "⌘" : "Ctrl");
 
@@ -21,20 +13,19 @@ interface KeyboardKeyProps {
 }
 
 export const KeyboardKey = ({ children }: KeyboardKeyProps): ReactElement => (
-  <kbd style={kbdStyle}>{children}</kbd>
+  <kbd className={styles.kbd}>{children}</kbd>
 );
 
-interface KeyboardShortcutHintProps {
+interface SendFormKeyboardShortcutHintProps {
   visible?: boolean;
 }
 
 /**
- * Displays a keyboard shortcut hint (e.g., "Press ⌘ ↵ to send").
- * Automatically uses the correct modifier key for the platform.
+ * Displays a keyboard shortcut hint for sending forms (e.g., "Press ⌘ ↵ to send").
  */
-export const KeyboardShortcutHint = ({
+export const SendFormKeyboardShortcutHint = ({
   visible = true,
-}: KeyboardShortcutHintProps): ReactElement => (
+}: SendFormKeyboardShortcutHintProps): ReactElement => (
   <Box
     display="flex"
     alignItems="center"

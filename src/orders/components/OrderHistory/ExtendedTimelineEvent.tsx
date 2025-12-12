@@ -1,8 +1,9 @@
 // @ts-strict-ignore
-import { CopyableText } from "@dashboard/components/CopyableText";
+import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Money from "@dashboard/components/Money";
-import { TimelineEvent } from "@dashboard/components/Timeline";
+import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
+import { toActor } from "@dashboard/components/Timeline/utils";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import camelCase from "lodash/camelCase";
@@ -129,7 +130,7 @@ interface ExtendedTimelineEventProps {
   event: OrderEventFragment;
   orderCurrency: string;
   hasPlainDate?: boolean;
-  dateNode?: React.ReactNode;
+  date: string | React.ReactNode;
   isLastInGroup?: boolean;
 }
 
@@ -137,11 +138,10 @@ const ExtendedTimelineEvent = ({
   event,
   orderCurrency,
   hasPlainDate,
-  dateNode,
+  date,
   isLastInGroup,
 }: ExtendedTimelineEventProps) => {
-  const { id, date, type, message, lines, amount, transactionReference, shippingCostsIncluded } =
-    event;
+  const { id, type, message, lines, amount, transactionReference, shippingCostsIncluded } = event;
   const intl = useIntl();
   const eventTypeInCamelCase = camelCase(type);
   const getEventTitleMessageInCamelCase = (): MessageDescriptor => {
@@ -196,10 +196,8 @@ const ExtendedTimelineEvent = ({
       titleElements={selectTitleElements()}
       key={id}
       hasPlainDate={hasPlainDate}
-      dateNode={dateNode}
       eventData={event}
-      user={event.user}
-      app={event.app}
+      actor={toActor(event.user, event.app)}
       eventType={type}
       isLastInGroup={isLastInGroup}
     >
@@ -217,7 +215,7 @@ const ExtendedTimelineEvent = ({
             {message && <Box paddingTop={1} />}
             {lines.map(({ orderLine, quantity, itemName }, i) => (
               <OrderLineItem
-                key={`${id}-line-${orderLine?.id || `${itemName}-${quantity}-${i}`}`}
+                key={orderLine?.id ? `${id}-line-${orderLine.id}` : `${id}-line-${i}`}
                 orderLine={orderLine}
                 quantity={quantity}
                 itemName={itemName}

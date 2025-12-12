@@ -1,4 +1,6 @@
-import { Box, CloseIcon, SearchIcon, Text } from "@saleor/macaw-ui-next";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { Search, X } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -58,7 +60,7 @@ export const SearchHistory = ({
               width="100%"
             >
               <Box display="flex" alignItems="center" gap={1}>
-                <SearchIcon size="small" />
+                <Search size={iconSize.small} strokeWidth={iconStrokeWidth} />
                 {item}
               </Box>
               <Box
@@ -77,7 +79,7 @@ export const SearchHistory = ({
                 cursor="pointer"
                 onClick={(evt: React.MouseEvent<HTMLButtonElement>) => handleRemoveItem(evt, item)}
               >
-                <CloseIcon size="small" />
+                <X size={iconSize.small} strokeWidth={iconStrokeWidth} />
               </Box>
             </Box>
           </Box>
@@ -103,7 +105,7 @@ export const SearchHistory = ({
             hover: "default1Hovered",
           }}
         >
-          <CloseIcon size="small" />
+          <X size={iconSize.small} strokeWidth={iconStrokeWidth} />
           <FormattedMessage id="zfSKyx" defaultMessage="Clear history" />
         </Box>
       </Box>

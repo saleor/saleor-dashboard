@@ -114,6 +114,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
                 description: "button",
               }),
               onSelect: onDraftRemove,
+              color: "critical1" as const,
             },
             ...extensionMenuItems,
           ]}

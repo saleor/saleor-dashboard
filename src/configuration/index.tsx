@@ -25,7 +25,7 @@ import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
-import { PaymentOutlined } from "@material-ui/icons";
+import { CreditCard } from "lucide-react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { ConfigurationPage } from "./ConfigurationPage";
@@ -186,7 +186,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "rUnw7n",
             defaultMessage: "Configure refunds behavior",
           }),
-          icon: <PaymentOutlined />,
+          icon: <CreditCard />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.refundsSettings),
           url: refundsSettingsPath,

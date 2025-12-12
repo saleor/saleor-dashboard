@@ -1,4 +1,6 @@
-import { IconButton, MoreHorizontalIcon } from "@saleor/macaw-ui";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { IconButton } from "@saleor/macaw-ui";
+import { EllipsisVertical } from "lucide-react";
 
 import CardMenu, { CardMenuItem } from "../../CardMenu";
 import useStyles from "../styles";
@@ -21,13 +23,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
   }
 
   return (
-    <div
-      className={classes.rowAction}
-      style={{
-        // aligns row action with column picker
-        marginLeft: "-4px",
-      }}
-    >
+    <div className={classes.rowAction}>
       {hasSingleMenuItem && firstMenuItem.Icon ? (
         <IconButton
           data-test-id="row-action-button"
@@ -43,9 +39,12 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
           disabled={disabled}
           autoFocusItem={false}
           showMenuIcon={true}
-          Icon={MoreHorizontalIcon}
+          Icon={() => (
+            <EllipsisVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+          )}
           IconButtonProps={{
             className: classes.ghostIcon,
+            variant: "ghost",
             hoverOutline: false,
             state: "default",
           }}

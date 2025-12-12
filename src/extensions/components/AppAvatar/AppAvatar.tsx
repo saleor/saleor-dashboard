@@ -1,5 +1,7 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { AppLogo } from "@dashboard/extensions/types";
-import { Box, BoxProps, GenericAppIcon } from "@saleor/macaw-ui-next";
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
+import { Package } from "lucide-react";
 
 type Logo = AppLogo | undefined;
 type Size = 4 | 6 | 8 | 12;
@@ -31,6 +33,6 @@ export const AppAvatar = ({ logo, size = 8, ...props }: { logo?: Logo; size?: Si
       overflow="hidden"
       {...props}
     >
-      <GenericAppIcon size="medium" color="default2" />
+      <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />
     </Box>
   );

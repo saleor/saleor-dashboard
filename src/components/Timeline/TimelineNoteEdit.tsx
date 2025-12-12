@@ -1,30 +1,10 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Textarea, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
-// CSS for white background on textarea in edit mode
-const editTextareaStyles = `
-  .timeline-edit-textarea,
-  .timeline-edit-textarea > div,
-  .timeline-edit-textarea textarea {
-    background-color: ${vars.colors.background.default1} !important;
-  }
-`;
-
-// Inject styles once
-if (typeof document !== "undefined") {
-  const styleId = "timeline-edit-textarea-styles";
-
-  if (!document.getElementById(styleId)) {
-    const style = document.createElement("style");
-
-    style.id = styleId;
-    style.textContent = editTextareaStyles;
-    document.head.appendChild(style);
-  }
-}
+import styles from "./TimelineNoteEdit.module.css";
 
 interface TimelineNoteEditProps {
   id: string;
@@ -62,7 +42,7 @@ export const TimelineNoteEdit = ({
         autoFocus
         width="100%"
         rows={3}
-        className="timeline-edit-textarea"
+        className={styles.editTextarea}
         {...register("note")}
       />
       <Box marginTop={2} display="flex" alignItems="center" justifyContent="flex-end" gap={2}>

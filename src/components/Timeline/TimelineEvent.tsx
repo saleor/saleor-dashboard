@@ -1,5 +1,3 @@
-import "./Timeline.css";
-
 import { OrderEventsEnum } from "@dashboard/graphql";
 import { RefundedIcon } from "@dashboard/icons/RefundedIcon";
 import { ReturnedIcon } from "@dashboard/icons/ReturnedIcon";
@@ -33,12 +31,9 @@ import {
 } from "lucide-react";
 import * as React from "react";
 
-import {
-  TimelineApp,
-  TimelineEventHeader,
-  TimelineUser,
-  TitleElement,
-} from "./TimelineEventHeader";
+import styles from "./TimelineEvent.module.css";
+import { TimelineEventHeader, TitleElement } from "./TimelineEventHeader";
+import { Actor } from "./types";
 import { safeStringify } from "./utils";
 
 // Custom icon type that includes both Lucide icons and custom icons
@@ -144,14 +139,12 @@ const eventIconMap: Partial<Record<OrderEventsEnum, IconComponent>> = {
 
 export interface TimelineEventProps {
   children?: React.ReactNode;
-  date: string;
+  date: string | React.ReactNode;
   title?: React.ReactNode;
   titleElements?: TitleElement[];
   hasPlainDate?: boolean;
-  dateNode?: React.ReactNode;
   eventData?: unknown;
-  user?: TimelineUser | null;
-  app?: TimelineApp | null;
+  actor?: Actor;
   eventType?: OrderEventsEnum | null;
   isLastInGroup?: boolean;
 }
@@ -200,10 +193,8 @@ export const TimelineEvent = (props: TimelineEventProps) => {
     title,
     titleElements,
     hasPlainDate,
-    dateNode,
     eventData,
-    user,
-    app,
+    actor,
     eventType,
     isLastInGroup,
   } = props;
@@ -221,7 +212,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
 
   const infoIcon = eventDataString ? (
     <span
-      className="timeline-info-icon"
+      className={styles.infoIcon}
       title={eventDataString}
       style={{ cursor: "pointer", display: "inline-flex", alignItems: "center" }}
     >
@@ -230,7 +221,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   ) : null;
 
   return (
-    <Box display="flex" width="100%" position="relative" className="timeline-event-row">
+    <Box display="flex" width="100%" position="relative" className={styles.eventRow}>
       {/* Vertical connecting line - hidden for last item in group */}
       {!isLastInGroup && (
         <Box
@@ -281,7 +272,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                     justifyContent="center"
                     __width="20px"
                     __height="20px"
-                    className="timeline-chevron"
+                    className={styles.chevron}
                   >
                     <ChevronDownIcon size={16} color="currentColor" />
                   </Box>
@@ -293,9 +284,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                     date={date}
                     titleElements={titleElements}
                     hasPlainDate={hasPlainDate}
-                    dateNode={dateNode}
-                    user={user}
-                    app={app}
+                    actor={actor}
                     tooltip={infoIcon}
                   />
                 </Box>
@@ -335,9 +324,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                 titleElements={titleElements}
                 date={date}
                 hasPlainDate={hasPlainDate}
-                dateNode={dateNode}
-                user={user}
-                app={app}
+                actor={actor}
                 tooltip={infoIcon}
               />
             </Box>

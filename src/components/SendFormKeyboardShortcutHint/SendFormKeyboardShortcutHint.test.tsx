@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
-import { KeyboardKey, KeyboardShortcutHint } from "./KeyboardShortcut";
+import { KeyboardKey, SendFormKeyboardShortcutHint } from "./SendFormKeyboardShortcutHint";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <IntlProvider locale="en" messages={{}}>
@@ -16,22 +16,28 @@ describe("KeyboardKey", () => {
     const kbd = screen.getByText("Ctrl");
 
     expect(kbd.tagName).toBe("KBD");
-    expect(kbd).toHaveStyle({ display: "inline-block" });
+    expect(kbd).toHaveClass("kbd");
   });
 });
 
-describe("KeyboardShortcutHint", () => {
+describe("SendFormKeyboardShortcutHint", () => {
   it("controls visibility via opacity", () => {
-    const { container, rerender } = render(<KeyboardShortcutHint visible />, { wrapper: Wrapper });
+    // Arrange
+    const { container, rerender } = render(<SendFormKeyboardShortcutHint visible />, {
+      wrapper: Wrapper,
+    });
 
+    // Assert
     expect((container.firstChild as HTMLElement).style.opacity).toBe("1");
 
+    // Act
     rerender(
       <Wrapper>
-        <KeyboardShortcutHint visible={false} />
+        <SendFormKeyboardShortcutHint visible={false} />
       </Wrapper>,
     );
 
+    // Assert
     expect((container.firstChild as HTMLElement).style.opacity).toBe("0");
   });
 });
