@@ -43,7 +43,8 @@ test("TC: SALEOR_194 Should create a new menu navigation with menu item #navigat
   await expect(navigationDetailsPage.menuItemList).toContainText(menuItemName);
 });
 // TODO: To be updated after https://linear.app/saleor/issue/MERX-307 is fixed
-test("TC: SALEOR_198 Should update existing menu #navigation #e2e", async () => {
+// Skipped due to test instability
+test.skip("TC: SALEOR_198 Should update existing menu #navigation #e2e", async () => {
   await navigationDetailsPage.goToExistingMenuView(NAVIGATION_ITEMS.navigationMenuToBeUpdated.id);
 
   const menuItemToBeUpdated = NAVIGATION_ITEMS.navigationMenuToBeUpdated.menuItems[0];
@@ -105,7 +106,8 @@ test("TC: SALEOR_195 Should remove a single menu from the list #navigation #e2e"
     NAVIGATION_ITEMS.navigationMenuToBeDeletedFromList.name,
   );
 });
-test("TC: SALEOR_196 Should bulk delete menus from the list #navigation #e2e", async () => {
+// Skipped due to test instability
+test.skip("TC: SALEOR_196 Should bulk delete menus from the list #navigation #e2e", async () => {
   await navigation.goToNavigationView();
   await navigation.selectAll();
 

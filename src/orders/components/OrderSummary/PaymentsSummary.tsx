@@ -60,7 +60,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
         })}
       />
 
-      <Box marginTop={2} display="flex" gap={3}>
+      <Box marginTop={2} display="flex" gap={3} data-test-id="payment-status-badges">
         <OrderChargeStatusBadge status={order.chargeStatus} />
         <OrderAuthorizeStatusBadge status={order.authorizeStatus} />
       </Box>
