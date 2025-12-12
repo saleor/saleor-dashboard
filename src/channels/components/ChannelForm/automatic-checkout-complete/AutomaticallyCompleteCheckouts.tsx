@@ -4,8 +4,8 @@ import { DOCS_ULRS } from "@dashboard/links";
 import { Box, Button, Checkbox, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CircleAlertIcon, TriangleAlertIcon } from "lucide-react";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { FormattedMessage, useIntl } from "../../../../../react-intl";
 import { messages } from "../messages";
 import { useAutomaticCompletionHandlers } from "./useAutomaticCompletionHandlers";
 import {
@@ -168,6 +168,54 @@ const AutocompleteDisabledAfterEnablingWarning = () => (
   </Box>
 );
 
+const FeatureDescription = () => (
+  <Text size={2} color="default2">
+    <FormattedMessage
+      {...messages.automaticallyCompleteCheckoutsDescription}
+      values={{
+        link: (
+          <Link
+            style={{ fontSize: "inherit" }}
+            href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
+            target="_blank"
+            rel="noopener noreferer"
+          >
+            <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
+          </Link>
+        ),
+      }}
+    />
+  </Text>
+);
+
+const DisabledCutOffCheckbox = ({ checked }: { checked: boolean }) => (
+  <Tooltip>
+    <Tooltip.Trigger>
+      <Box display="inline-block">
+        <Checkbox
+          name="useCutOffDate"
+          data-test-id="use-cutoff-date-checkbox"
+          checked={checked}
+          onCheckedChange={() => {
+            // no op - disabled
+          }}
+          disabled={true}
+        >
+          <Text>
+            <FormattedMessage {...messages.automaticCompletionCutOffDateCheckboxLabel} />
+          </Text>
+        </Checkbox>
+      </Box>
+    </Tooltip.Trigger>
+    <Tooltip.Content side="bottom">
+      <Tooltip.Arrow />
+      <Box __maxWidth="280px">
+        <FormattedMessage {...messages.automaticCompletionCutOffDateDisabledTooltip} />
+      </Box>
+    </Tooltip.Content>
+  </Tooltip>
+);
+
 export const AutomaticallyCompleteCheckouts = ({
   isChecked,
   hasError,
@@ -214,7 +262,7 @@ export const AutomaticallyCompleteCheckouts = ({
   });
 
   return (
-    <Box paddingX={6}>
+    <Box paddingX={6} paddingBottom={6}>
       <Checkbox
         name="automaticallyCompleteCheckouts"
         data-test-id="automatically-complete-checkouts-checkbox"
@@ -227,23 +275,8 @@ export const AutomaticallyCompleteCheckouts = ({
           <FormattedMessage {...messages.automaticallyCompleteCheckoutsLabel} />
         </Text>
       </Checkbox>
-      <Box paddingLeft={4}>
-        <Text size={2} color="default2" paddingLeft={0.5}>
-          <FormattedMessage
-            {...messages.automaticallyCompleteCheckoutsDescription}
-            values={{
-              link: (
-                <Link
-                  href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
-                  target="_blank"
-                  rel="noopener noreferer"
-                >
-                  <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
-                </Link>
-              ),
-            }}
-          />
-        </Text>
+      <Box paddingLeft={4} marginLeft={0.5}>
+        <FeatureDescription />
       </Box>
 
       {showDisabledInfo && (
@@ -278,31 +311,7 @@ export const AutomaticallyCompleteCheckouts = ({
 
           <Box>
             {savedIsEnabled ? (
-              <Tooltip>
-                <Tooltip.Trigger>
-                  <Box display="inline-block">
-                    <Checkbox
-                      name="useCutOffDate"
-                      data-test-id="use-cutoff-date-checkbox"
-                      checked={useCutOffDate}
-                      onCheckedChange={onUseCutOffDateChange}
-                      disabled={true}
-                    >
-                      <Text>
-                        <FormattedMessage
-                          {...messages.automaticCompletionCutOffDateCheckboxLabel}
-                        />
-                      </Text>
-                    </Checkbox>
-                  </Box>
-                </Tooltip.Trigger>
-                <Tooltip.Content side="bottom">
-                  <Tooltip.Arrow />
-                  <Box __maxWidth="280px">
-                    <FormattedMessage {...messages.automaticCompletionCutOffDateDisabledTooltip} />
-                  </Box>
-                </Tooltip.Content>
-              </Tooltip>
+              <DisabledCutOffCheckbox checked={useCutOffDate} />
             ) : (
               <Checkbox
                 name="useCutOffDate"
@@ -325,6 +334,7 @@ export const AutomaticallyCompleteCheckouts = ({
                       <Link
                         href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
                         target="_blank"
+                        style={{ fontSize: "inherit" }}
                         rel="noopener noreferer"
                       >
                         <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />

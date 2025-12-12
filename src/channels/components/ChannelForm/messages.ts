@@ -73,9 +73,9 @@ export const messages = defineMessages({
     description: "automatically complete checkouts checkbox label",
   },
   automaticallyCompleteCheckoutsDescription: {
-    id: "hIh8bm",
+    id: "ZZb4E+",
     defaultMessage:
-      "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. ({link})",
+      "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. {link}",
     description: "automatically complete checkouts checkbox description",
   },
 
@@ -91,8 +91,8 @@ export const messages = defineMessages({
     description: "allow legacy gift card use description",
   },
   automaticCompletionDelayLabel: {
-    id: "Qmbhba",
-    defaultMessage: "Delay before completion (minutes)",
+    id: "YL8K/3",
+    defaultMessage: "Delay before completion (minutes). Default is 30.",
     description: "automatic completion delay input label",
   },
   automaticCompletionDelayDescription: {
@@ -107,20 +107,20 @@ export const messages = defineMessages({
     description: "automatic completion cut-off date label",
   },
   automaticCompletionCutOffDateDescription: {
-    id: "+6TUY6",
+    id: "jp2Jjs",
     defaultMessage:
-      "Only checkouts created on or after this date will be automatically completed. ({link})",
+      "Only checkouts created on or after this date will be automatically completed. If not set, current time will be used. {link}",
     description: "automatic completion cut-off date description",
   },
   automaticCompletionCutOffDateCheckboxLabel: {
-    id: "5po9bv",
-    defaultMessage: "Use cut-off date",
+    id: "wo7tA9",
+    defaultMessage: "Custom cut-off date",
     description: "automatic completion cut-off date checkbox label",
   },
   automaticCompletionCutOffDateWarning: {
-    id: "EP9h/F",
+    id: "Gt5T8I",
     defaultMessage:
-      "Without a cut-off date, ALL existing checkouts in this channel will be automatically completed when they become fully paid.",
+      "If cut-off date is not set, system will automatically use current date & time. If you want to customize this behavior, you can provide custom time (past or the future)",
     description: "automatic completion cut-off date warning",
   },
   automaticCompletionCutOffDateInfo: {
