@@ -8,8 +8,10 @@ import { messages } from "./messages";
 
 export type ReferenceTypes = { id: string; name: string }[];
 
-interface AssignCollectionDialogProps
-  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
+interface AssignCollectionDialogProps extends Omit<
+  AssignContainerDialogProps,
+  "containers" | "labels"
+> {
   selectedReferenceTypesIds: string[];
   referenceTypes: ReferenceTypes;
   entityType: AttributeEntityTypeEnum | null;

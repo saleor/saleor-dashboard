@@ -8,8 +8,10 @@ export type SimpleRadioGroupFieldChoice = {
   disabled?: boolean;
 };
 
-interface SimpleRadioGroupFieldProps
-  extends Omit<RadioGroupRootProps, "onChange" | "children" | "name"> {
+interface SimpleRadioGroupFieldProps extends Omit<
+  RadioGroupRootProps,
+  "onChange" | "children" | "name"
+> {
   name: string;
   onChange: (event: ChangeEvent) => void;
   choices: SimpleRadioGroupFieldChoice[];

@@ -9,8 +9,10 @@ import { FormattedMessage } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 
-interface CategorySubcategoriesProps
-  extends Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings"> {
+interface CategorySubcategoriesProps extends Pick<
+  ListProps<ListViews.CATEGORY_LIST>,
+  "onUpdateListSettings" | "settings"
+> {
   categoryId: string;
   disabled: boolean;
   subcategories: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["children"]>;

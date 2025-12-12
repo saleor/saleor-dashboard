@@ -69,10 +69,8 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
 }
 
 export interface ProductUpdateHandlers
-  extends Record<
-      "changeMetadata" | "selectCategory" | "selectCollection" | "selectTaxClass",
-      FormChange
-    >,
+  extends
+    Record<"changeMetadata" | "selectCategory" | "selectCollection" | "selectTaxClass", FormChange>,
     Record<"selectAttribute" | "selectAttributeMultiple", FormsetChange<string>> {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
@@ -86,16 +84,17 @@ export interface ProductUpdateHandlers
 }
 
 export interface UseProductUpdateFormOutput
-  extends CommonUseFormResultWithHandlers<ProductUpdateData, ProductUpdateHandlers>,
-    RichTextProps {
+  extends CommonUseFormResultWithHandlers<ProductUpdateData, ProductUpdateHandlers>, RichTextProps {
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
 type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;
 
-export interface UseProductUpdateFormOpts
-  extends Record<"categories" | "collections" | "taxClasses", Option[]> {
+export interface UseProductUpdateFormOpts extends Record<
+  "categories" | "collections" | "taxClasses",
+  Option[]
+> {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;

@@ -46,11 +46,10 @@ export interface OrderCustomerAddressesEditHandlers {
   selectBillingCountry: FormChange;
 }
 
-interface UseOrderCustomerAddressesEditFormResult
-  extends CommonUseFormResultWithHandlers<
-    OrderCustomerAddressesEditData,
-    OrderCustomerAddressesEditHandlers
-  > {
+interface UseOrderCustomerAddressesEditFormResult extends CommonUseFormResultWithHandlers<
+  OrderCustomerAddressesEditData,
+  OrderCustomerAddressesEditHandlers
+> {
   submit: (event: React.FormEvent<any>) => SubmitPromise<any[]>;
 }
 

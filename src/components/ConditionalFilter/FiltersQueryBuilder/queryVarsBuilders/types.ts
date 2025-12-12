@@ -21,8 +21,9 @@ interface BaseQueryVarsBuilder {
   ): Handler;
 }
 
-export interface WhereOnlyQueryVarsBuilder<TQuery extends FilterQuery>
-  extends BaseQueryVarsBuilder {
+export interface WhereOnlyQueryVarsBuilder<
+  TQuery extends FilterQuery,
+> extends BaseQueryVarsBuilder {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for WHERE API.
    * This method MUST treat the input query as immutable and return a new one.
@@ -30,8 +31,9 @@ export interface WhereOnlyQueryVarsBuilder<TQuery extends FilterQuery>
   updateWhereQueryVariables(query: Readonly<TQuery>, element: FilterElement): TQuery;
 }
 
-export interface FilterOnlyQueryVarsBuilder<TQuery extends FilterQuery>
-  extends BaseQueryVarsBuilder {
+export interface FilterOnlyQueryVarsBuilder<
+  TQuery extends FilterQuery,
+> extends BaseQueryVarsBuilder {
   /**
    * Processes a filter element and returns a new query object with the element's contribution for FILTER API.
    * This method MUST treat the input query as immutable and return a new one.

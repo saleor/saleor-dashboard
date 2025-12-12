@@ -39,7 +39,8 @@ import OrderLimitReached from "../OrderLimitReached";
 import { OrderListDatagrid } from "../OrderListDatagrid";
 
 interface OrderListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     SearchPageProps,
     Omit<TabPageProps, "onTabDelete">,
     SortPage<OrderListUrlSortField> {

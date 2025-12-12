@@ -4,9 +4,9 @@ import { isItemOption } from "../../FilterElement/ConditionValue";
 import { QueryVarsBuilderUtils } from "../utils";
 import { BothApiQueryVarsBuilder } from "./types";
 
-export class CustomerNumberOfOrdersQueryVarsBuilder
-  implements BothApiQueryVarsBuilder<{ numberOfOrders?: { gte?: string; lte?: string } }>
-{
+export class CustomerNumberOfOrdersQueryVarsBuilder implements BothApiQueryVarsBuilder<{
+  numberOfOrders?: { gte?: string; lte?: string };
+}> {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "numberOfOrders";
   }

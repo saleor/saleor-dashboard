@@ -10,8 +10,7 @@ import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
 export interface MetadataProps
-  extends Omit<MetadataCardProps, "data" | "isPrivate">,
-    Omit<BoxProps, `on${string}` | "data"> {
+  extends Omit<MetadataCardProps, "data" | "isPrivate">, Omit<BoxProps, `on${string}` | "data"> {
   data: {
     metadata: MetadataInput[];
     privateMetadata: MetadataInput[] | undefined;

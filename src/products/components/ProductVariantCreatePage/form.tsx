@@ -101,7 +101,8 @@ interface UseProductVariantCreateFormOpts {
 }
 
 export interface ProductVariantCreateHandlers
-  extends Record<
+  extends
+    Record<
       "changeStock" | "selectAttribute" | "selectAttributeMultiple" | "changeChannels",
       FormsetChange
     >,
@@ -119,7 +120,8 @@ export interface ProductVariantCreateHandlers
 }
 
 interface UseProductVariantCreateFormOutput
-  extends CommonUseFormResultWithHandlers<ProductVariantCreateData, ProductVariantCreateHandlers>,
+  extends
+    CommonUseFormResultWithHandlers<ProductVariantCreateData, ProductVariantCreateHandlers>,
     Omit<RichTextProps, "richText"> {
   formErrors: FormErrors<ProductVariantCreateData>;
   validationErrors: ProductErrorWithAttributesFragment[];

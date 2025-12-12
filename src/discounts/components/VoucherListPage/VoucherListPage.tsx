@@ -32,7 +32,8 @@ import { VoucherListDatagrid } from "../VoucherListDatagrid";
 import { createFilterStructure, VoucherFilterKeys, VoucherListFilterOpts } from "./filters";
 
 interface VoucherListPageProps
-  extends PageListProps,
+  extends
+    PageListProps,
     FilterPagePropsWithPresets<VoucherFilterKeys, VoucherListFilterOpts>,
     SortPage<VoucherListUrlSortField>,
     ChannelProps {

@@ -42,9 +42,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductTypeListProps
-  extends ListProps,
-    ListActions,
-    SortPage<ProductTypeListUrlSortField> {
+  extends ListProps, ListActions, SortPage<ProductTypeListUrlSortField> {
   productTypes: ProductTypeFragment[];
 }
 
