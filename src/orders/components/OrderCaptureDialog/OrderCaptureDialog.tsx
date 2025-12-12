@@ -379,7 +379,7 @@ export const OrderCaptureDialog = ({
 
             <RadioGroup
               value={selectedOption}
-              onValueChange={(value: CaptureAmountOption) => setSelectedOption(value)}
+              onValueChange={value => setSelectedOption(value as CaptureAmountOption)}
             >
               <Box display="flex" flexDirection="column" gap={4}>
                 {/* Order Total / Remaining Balance / Remaining Max option */}
