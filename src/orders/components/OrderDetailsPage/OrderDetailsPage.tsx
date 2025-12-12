@@ -317,8 +317,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                 onProfileView={onProfileView}
               />
               <CardSpacer />
+              <Divider />
               <OrderChannelSectionCard channel={order?.channel} />
               <CardSpacer />
+              <Divider />
               {!isOrderUnconfirmed && (
                 <>
                   <OrderInvoiceList
@@ -328,6 +330,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                     onInvoiceSend={onInvoiceSend}
                   />
                   <CardSpacer />
+                  <Divider />
                 </>
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />

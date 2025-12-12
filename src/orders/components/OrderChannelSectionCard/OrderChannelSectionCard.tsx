@@ -15,7 +15,7 @@ const OrderChannelSectionCard = ({ channel }: OrderChannelSectionCardProps) => {
   return (
     <DashboardCard data-test-id="order-sales-channel">
       <DashboardCard.Header>
-        <DashboardCard.Title>
+        <DashboardCard.Title size={6} fontWeight="medium">
           {intl.formatMessage({
             id: "aY0HAT",
             defaultMessage: "Sales channel",

@@ -53,7 +53,7 @@ const OrderInvoiceList = (props: OrderInvoiceListProps) => {
   return (
     <DashboardCard className={classes.card}>
       <DashboardCard.Header>
-        <DashboardCard.Title>
+        <DashboardCard.Title size={6} fontWeight="medium">
           {intl.formatMessage({
             id: "Gzg8hy",
             defaultMessage: "Invoices",
