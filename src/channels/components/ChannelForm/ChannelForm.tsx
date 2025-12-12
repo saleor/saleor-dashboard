@@ -1,5 +1,4 @@
-import { AllowLegacyGiftCardUse } from "@dashboard/channels/components/ChannelForm/AllowLegacyGiftCardUse";
-import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/AutomaticallyCompleteCheckouts";
+import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/automatic-checkout-complete/AutomaticallyCompleteCheckouts";
 import {
   ChannelShippingZones,
   ChannelWarehouses,
@@ -25,6 +24,7 @@ import { Box, Button, Input, Option, Text } from "@saleor/macaw-ui-next";
 import { Copy } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { AllowLegacyGiftCardUse } from "./AllowLegacyGiftCardUse";
 import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
 import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
 import { MarkAsPaid } from "./MarkAsPaid";
@@ -46,6 +46,10 @@ export interface FormData extends StockSettingsInput {
   allowUnpaidOrders: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
   automaticallyCompleteCheckouts: boolean;
+  automaticCompletionDelay: number | string | null;
+  automaticCompletionCutOffDate: string;
+  automaticCompletionCutOffTime: string;
+  useCutOffDate: boolean;
   allowLegacyGiftCardUse?: boolean;
 }
 
@@ -57,6 +61,10 @@ interface ChannelFormProps {
   selectedCurrencyCode?: string;
   selectedCountryDisplayName: string;
   countries: Option[];
+  // Saved values from backend for automatic checkout completion warnings
+  savedAutomaticallyCompleteCheckouts: boolean;
+  savedAutomaticCompletionCutOffDate: string;
+  savedAutomaticCompletionCutOffTime: string;
   onChange: FormChange;
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
@@ -64,6 +72,7 @@ interface ChannelFormProps {
   onTransactionFlowStrategyChange: () => void;
   onAutomaticallyCompleteCheckoutsChange: () => void;
   onAllowLegacyGiftCardUseChange?: () => void;
+  onUseCutOffDateChange: () => void;
 }
 
 export const ChannelForm = ({
@@ -74,6 +83,9 @@ export const ChannelForm = ({
   selectedCurrencyCode,
   selectedCountryDisplayName,
   countries,
+  savedAutomaticallyCompleteCheckouts,
+  savedAutomaticCompletionCutOffDate,
+  savedAutomaticCompletionCutOffTime,
   onChange,
   onCurrencyCodeChange,
   onDefaultCountryChange,
@@ -81,11 +93,19 @@ export const ChannelForm = ({
   onTransactionFlowStrategyChange,
   onAutomaticallyCompleteCheckoutsChange,
   onAllowLegacyGiftCardUseChange,
+  onUseCutOffDateChange,
 }: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode", "defaultCountry", "deleteExpiredOrdersAfter"],
+    [
+      "name",
+      "slug",
+      "currencyCode",
+      "defaultCountry",
+      "deleteExpiredOrdersAfter",
+      "automaticCompletionDelay",
+    ],
     errors,
   );
   const renderCurrencySelection = currencyCodes && typeof onCurrencyCodeChange === "function";
@@ -224,10 +244,21 @@ export const ChannelForm = ({
         />
         <Box />
         <AutomaticallyCompleteCheckouts
-          onChange={onAutomaticallyCompleteCheckoutsChange}
-          hasError={!!formErrors.automaticallyCompleteCheckouts}
+          hasError={!!formErrors.automaticCompletionDelay}
           isChecked={data.automaticallyCompleteCheckouts}
           disabled={disabled}
+          delay={data.automaticCompletionDelay}
+          cutOffDate={data.automaticCompletionCutOffDate}
+          cutOffTime={data.automaticCompletionCutOffTime}
+          useCutOffDate={data.useCutOffDate}
+          savedIsEnabled={savedAutomaticallyCompleteCheckouts}
+          savedCutOffDate={savedAutomaticCompletionCutOffDate}
+          savedCutOffTime={savedAutomaticCompletionCutOffTime}
+          onCheckboxChange={onAutomaticallyCompleteCheckoutsChange}
+          onDelayChange={onChange}
+          onCutOffDateChange={onChange}
+          onCutOffTimeChange={onChange}
+          onUseCutOffDateChange={onUseCutOffDateChange}
         />
         <Box />
         {isStagingSchema() && (

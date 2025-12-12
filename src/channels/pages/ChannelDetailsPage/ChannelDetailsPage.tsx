@@ -50,6 +50,25 @@ import {
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
+const parseDateTimeToDateAndTime = (
+  dateTime: string | null | undefined,
+): { date: string; time: string } => {
+  if (!dateTime) {
+    return { date: "", time: "" };
+  }
+
+  const dateObj = new Date(dateTime);
+
+  if (isNaN(dateObj.getTime())) {
+    return { date: "", time: "" };
+  }
+
+  const date = dateObj.toISOString().split("T")[0];
+  const time = dateObj.toTimeString().slice(0, 5);
+
+  return { date, time };
+};
+
 interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
   currencyCodes?: Option[];
@@ -115,6 +134,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
   };
+  const cutOffDateTime = parseDateTimeToDateAndTime(
+    checkoutSettings?.automaticCompletionCutOffDate,
+  );
   const initialData: FormData = {
     currencyCode: "",
     name: "",
@@ -133,12 +155,19 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
-    automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
     allowLegacyGiftCardUse: checkoutSettings
       ? "allowLegacyGiftCardUse" in checkoutSettings
         ? checkoutSettings.allowLegacyGiftCardUse
         : undefined
       : undefined,
+    automaticallyCompleteCheckouts:
+      checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
+    automaticCompletionDelay: checkoutSettings?.automaticCompletionDelay ?? null,
+    automaticCompletionCutOffDate: cutOffDateTime.date,
+    automaticCompletionCutOffTime: cutOffDateTime.time,
+    // If feature is already enabled (savedIsEnabled) or cutOffDate exists, checkbox should be checked
+    useCutOffDate:
+      !!checkoutSettings?.automaticallyCompleteFullyPaidCheckouts || !!cutOffDateTime.date,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
@@ -238,6 +267,30 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           });
         };
 
+        const handleUseCutOffDateChange = () => {
+          const newUseCutOffDate = !data.useCutOffDate;
+
+          if (newUseCutOffDate) {
+            // When enabling cut-off date, set current date/time as default
+            const now = new Date();
+            const date = now.toISOString().split("T")[0];
+            const time = now.toTimeString().slice(0, 5);
+
+            set({
+              useCutOffDate: true,
+              automaticCompletionCutOffDate: date,
+              automaticCompletionCutOffTime: time,
+            });
+          } else {
+            // When disabling cut-off date, clear the fields
+            set({
+              useCutOffDate: false,
+              automaticCompletionCutOffDate: "",
+              automaticCompletionCutOffTime: "",
+            });
+          }
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -261,6 +314,11 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 countries={countryChoices}
                 selectedCurrencyCode={selectedCurrencyCode}
                 selectedCountryDisplayName={selectedCountryDisplayName}
+                savedAutomaticallyCompleteCheckouts={
+                  checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false
+                }
+                savedAutomaticCompletionCutOffDate={cutOffDateTime.date}
+                savedAutomaticCompletionCutOffTime={cutOffDateTime.time}
                 onChange={change}
                 onCurrencyCodeChange={handleCurrencyCodeSelect}
                 onDefaultCountryChange={handleDefaultCountrySelect}
@@ -268,6 +326,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
                 onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
                 onAllowLegacyGiftCardUseChange={handleAllowLegacyGiftCardUseChange}
+                onUseCutOffDateChange={handleUseCutOffDateChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>
