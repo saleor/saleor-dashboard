@@ -28,15 +28,5 @@ export const validateChannelFormData = (data: FormData) => {
     errors = [...errors, createEmptyRequiredError("defaultCountry")];
   }
 
-  // Validate automatic completion delay when automatic completion is enabled
-  if (
-    data.automaticallyCompleteCheckouts &&
-    (data.automaticCompletionDelay === null ||
-      data.automaticCompletionDelay === undefined ||
-      data.automaticCompletionDelay === "")
-  ) {
-    errors = [...errors, createEmptyRequiredError("automaticCompletionDelay")];
-  }
-
   return errors;
 };

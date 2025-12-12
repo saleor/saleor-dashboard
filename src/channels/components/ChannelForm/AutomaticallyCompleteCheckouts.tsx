@@ -139,7 +139,6 @@ export const AutomaticallyCompleteCheckouts = ({
               value={delay ?? ""}
               onChange={onDelayChange}
               disabled={disabled}
-              min={0}
               error={hasError}
             />
             <Text size={2} color="default2" paddingTop={1}>

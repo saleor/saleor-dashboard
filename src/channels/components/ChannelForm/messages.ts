@@ -96,9 +96,9 @@ export const messages = defineMessages({
     description: "automatic completion delay input label",
   },
   automaticCompletionDelayDescription: {
-    id: "rf9pxi",
+    id: "FjywW1",
     defaultMessage:
-      "Time in minutes to wait after checkout is fully paid before automatically completing it. Set to 0 for immediate completion.",
+      "Time in minutes to wait after checkout is fully paid before automatically completing it. Set to 0 for immediate completion. Default is 30 minutes.",
     description: "automatic completion delay input description",
   },
   automaticCompletionCutOffDateLabel: {
