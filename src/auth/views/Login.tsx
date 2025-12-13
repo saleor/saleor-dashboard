@@ -1,7 +1,7 @@
-import { useAvailableExternalAuthenticationsLazyQuery } from "@dashboard/graphql";
+import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
@@ -21,10 +21,6 @@ const LoginView = ({ params }: LoginViewProps) => {
   const { location } = useRouter();
   const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } =
     useUser();
-  const [
-    queryExternalAuthentications,
-    { data: externalAuthentications, loading: externalAuthenticationsLoading },
-  ] = useAvailableExternalAuthenticationsLazyQuery();
   const {
     fallbackUri,
     requestedExternalPluginId,
@@ -32,7 +28,19 @@ const LoginView = ({ params }: LoginViewProps) => {
     setFallbackUri,
     setRequestedExternalPluginId,
   } = useAuthParameters();
+
+  // Determine if we should skip the query (when we're on callback path with auth params)
+  const { code, state } = params;
+  const isExternalAuthCallback = !!(code && state && isCallbackPath);
+
+  const { data: externalAuthentications, loading: externalAuthenticationsLoading } =
+    useAvailableExternalAuthenticationsQuery({
+      skip: isExternalAuthCallback,
+    });
+
   const { lastLoginMethod, setLastLoginMethod } = useLastLoginMethod();
+  // Track if external auth callback has been processed to avoid double-processing in Strict Mode
+  const externalAuthProcessedRef = useRef(false);
 
   const handleSubmit = async (data: LoginFormData) => {
     if (!login) {
@@ -61,38 +69,49 @@ const LoginView = ({ params }: LoginViewProps) => {
       window.location.href = data.authorizationUrl;
     }
   };
-  const handleExternalAuthentication = async (code: string, state: string) => {
-    await loginByExternalPlugin!(requestedExternalPluginId, {
-      code,
-      state,
-    });
-    setRequestedExternalPluginId(null);
-    navigate(fallbackUri);
-    setFallbackUri(null);
-  };
+  const handleExternalAuthentication = useCallback(
+    async (code: string, state: string) => {
+      await loginByExternalPlugin!(requestedExternalPluginId, {
+        code,
+        state,
+      });
+      setRequestedExternalPluginId(null);
+      navigate(fallbackUri);
+      setFallbackUri(null);
+    },
+    [
+      loginByExternalPlugin,
+      requestedExternalPluginId,
+      navigate,
+      fallbackUri,
+      setRequestedExternalPluginId,
+      setFallbackUri,
+    ],
+  );
 
+  // Reset the ref when we're no longer on a callback path, allowing new auth attempts
   useEffect(() => {
-    const { code, state } = params;
-    const externalAuthParamsExist = code && state && isCallbackPath;
-
-    if (!externalAuthParamsExist) {
-      queryExternalAuthentications();
+    if (!isExternalAuthCallback) {
+      externalAuthProcessedRef.current = false;
     }
-  }, [isCallbackPath, params, queryExternalAuthentications]);
+  }, [isExternalAuthCallback]);
+
   useEffect(() => {
-    const { code, state } = params;
-    const externalAuthParamsExist = code && state && isCallbackPath;
     const externalAuthNotPerformed = !authenticating && !errors.length;
 
-    if (externalAuthParamsExist && externalAuthNotPerformed) {
-      handleExternalAuthentication(code, state);
+    // Guard against double-processing in React Strict Mode
+    if (isExternalAuthCallback && externalAuthNotPerformed && !externalAuthProcessedRef.current) {
+      externalAuthProcessedRef.current = true;
+      handleExternalAuthentication(code!, state!);
     }
-
-    return () => {
-      setRequestedExternalPluginId(null);
-      setFallbackUri(null);
-    };
-  }, []);
+  }, [
+    isExternalAuthCallback,
+    authenticating,
+    errors.length,
+    handleExternalAuthentication,
+    code,
+    state,
+  ]);
 
   return (
     <LoginPage
