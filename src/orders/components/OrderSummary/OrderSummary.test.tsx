@@ -71,7 +71,7 @@ const transaction = {
 
 describe("OrderSummary", () => {
   describe("Basic Rendering", () => {
-    it("should render order summary title", () => {
+    it("should render summary title", () => {
       // Arrange
       const mockOrder = orderFixture("test-id");
       const onMarkAsPaid = jest.fn();
@@ -84,7 +84,7 @@ describe("OrderSummary", () => {
       );
 
       // Assert
-      expect(screen.getByText("Order summary")).toBeInTheDocument();
+      expect(screen.getByText("Summary")).toBeInTheDocument();
     });
   });
 

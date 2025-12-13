@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 type Props = {
   order: OrderDetailsFragment;
-  description: string;
+  description?: string;
 };
 
 export const PaymentsSummaryHeader = ({ description }: Props) => {
@@ -19,9 +19,11 @@ export const PaymentsSummaryHeader = ({ description }: Props) => {
             id: "q7bXR4",
           })}
         </Text>
-        <Text color="default2" size={2} marginTop={1}>
-          {description}
-        </Text>
+        {description && (
+          <Text color="default2" size={2} marginTop={1}>
+            {description}
+          </Text>
+        )}
       </Box>
     </Box>
   );

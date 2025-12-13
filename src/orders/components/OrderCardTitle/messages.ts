@@ -41,6 +41,11 @@ export const orderTitleMessages = defineMessages({
     id: "vcMnX2",
     description: "unfulfilled fulfillment, section header",
   },
+  draft: {
+    defaultMessage: "Order lines",
+    id: "wL850U",
+    description: "draft order lines, section header",
+  },
   fulfilledFromWarehouse: {
     id: "W2glWk",
     defaultMessage: "From {warehouseName}",

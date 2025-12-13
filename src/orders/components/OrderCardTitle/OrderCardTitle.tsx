@@ -9,7 +9,7 @@ import { TrackingNumberDisplay } from "./TrackingNumberDisplay";
 import { getOrderTitleMessage } from "./utils";
 import { WarehouseInfo } from "./WarehouseInfo";
 
-export type CardTitleStatus = FulfillmentStatus | "unfulfilled";
+export type CardTitleStatus = FulfillmentStatus | "unfulfilled" | "draft";
 
 type BaseOrderCardTitleProps = {
   status?: CardTitleStatus;

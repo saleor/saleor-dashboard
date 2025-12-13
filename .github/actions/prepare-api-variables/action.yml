@@ -55,16 +55,25 @@ runs:
           echo "POOL_NAME=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           echo "POOL_INSTANCE=https://${PREFIX}${PULL_REQUEST_NUMBER}.staging.saleor.cloud" >> $GITHUB_OUTPUT
 
-          if [[ "$DESTINATION_BRANCH" == 'main' ]]; then
-            echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
-            echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
-            echo "RUN_SLUG=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
-          else
-            # it handles pull requests to the other branches than main, e.g. release branches
+          if [[ "$DESTINATION_BRANCH" =~ ^[0-9]+\.[0-9]+$ ]]; then
+            # handles pull requests to the other branches than main, e.g. release branches
             VERSION_SLUG=$(echo "${DESTINATION_BRANCH}" | sed "s/\.//")
             echo "BACKUP_NAMESPACE=snapshot-automation-tests-${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
             echo "SALEOR_CLOUD_SERVICE=saleor-staging-v${VERSION_SLUG}" >> $GITHUB_OUTPUT
             echo "RUN_SLUG=${DESTINATION_BRANCH}" >> $GITHUB_OUTPUT
+          else
+            # fallback to "saleor-master-staging" (i.e., 'main' branch) when the base
+            # branch isn't a version number (e.g., 3.21).
+            # We expect this to occur in two cases:
+            # 1. The base branch is `main`
+            # 2. The base branch is a feature branch, e.g., "unify-order-value-sections",
+            #    in which case it makes sense to fallback and to treat the PR as targeting
+            #    the `main` branch as `main` is an unstable (dev) branch, whereas
+            #    version number branches are stable branches thus we do not expect anyone
+            #    to be using feature branches against these.
+            echo "BACKUP_NAMESPACE=snapshot-automation-tests" >> $GITHUB_OUTPUT
+            echo "SALEOR_CLOUD_SERVICE=saleor-master-staging" >> $GITHUB_OUTPUT
+            echo "RUN_SLUG=${PREFIX}${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
           fi
 
           exit 0
