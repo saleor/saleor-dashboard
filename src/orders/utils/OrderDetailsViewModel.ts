@@ -46,8 +46,10 @@ export abstract class OrderDetailsViewModel {
     return orderActions.includes(OrderAction.MARK_AS_PAID);
   }
 
-  static canOrderCapture(actions: OrderAction[]): boolean {
-    return actions.includes(OrderAction.CAPTURE);
+  static canOrderCapture(_actions: OrderAction[]): boolean {
+    // TODO: Remove this override - temporary for testing capture dialog
+    return true;
+    // return actions.includes(OrderAction.CAPTURE);
   }
 
   static canOrderVoid(actions: OrderAction[]): boolean {
