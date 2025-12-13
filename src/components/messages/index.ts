@@ -1,33 +1,17 @@
 import { createContext } from "react";
 
 type Status = "success" | "error" | "info" | "warning";
+
 export interface IMessage {
   actionBtn?: {
     label: string;
     action: () => void;
   };
   autohide?: number;
-  expandText?: string;
   title?: string;
   text?: React.ReactNode;
-  onUndo?: () => void;
   status?: Status;
   apiMessage?: string;
-}
-
-export interface INotification {
-  id: number;
-  message: IMessage;
-  timeout: number;
-  close: () => void;
-}
-
-export interface ITimer {
-  id: number;
-  notification: INotification;
-  remaining: number;
-  start: number;
-  timeoutId: number;
 }
 
 export interface INotificationContext {
