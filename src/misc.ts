@@ -293,7 +293,16 @@ export function getMutationStatus<TData extends Record<string, SaleorMutationRes
 ): ConfirmButtonTransitionState {
   const errors = getMutationErrors(opts);
 
-  return getMutationState(opts.called, opts.loading, errors);
+  // Also check for Apollo errors (network errors, GraphQL execution errors)
+  // These are stored in opts.error, not in the mutation response data
+  const hasApolloError = !!opts.error;
+
+  return getMutationState(
+    opts.called,
+    opts.loading,
+    errors,
+    hasApolloError ? [{ error: opts.error }] : [],
+  );
 }
 
 export function getMutationProviderData<TData extends object, TVariables extends object>(

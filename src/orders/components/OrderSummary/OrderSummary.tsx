@@ -78,6 +78,9 @@ export const OrderSummary = (props: Props) => {
     onLegacyPaymentsApiCapture: _onLegacyPaymentsApiCapture,
     onLegacyPaymentsApiRefund: _onLegacyPaymentsApiRefund,
     onLegacyPaymentsApiVoid: _onLegacyPaymentsApiVoid,
+    onTestCaptureFull: _onTestCaptureFull,
+    onTestCapturePartial: _onTestCapturePartial,
+    onTestCaptureNone: _onTestCaptureNone,
     ...boxProps
   } = restProps as any;
 
