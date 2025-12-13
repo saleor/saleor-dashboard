@@ -3283,6 +3283,7 @@
   "IU1lif": {
     "context": "radio option for custom capture amount",
     "string": "Custom amount"
+  },
   "IUWJKt": {
     "context": "order was discounted event title",
     "string": "Order was discounted"
@@ -5137,10 +5138,6 @@
     "context": "label for authorized amount",
     "string": "Authorized"
   },
-  "U1eJIw": {
-    "context": "order history message",
-    "string": "Products were added to an order"
-  },
   "U2DyeR": {
     "string": "Are you sure you want to delete structure {menuName}?"
   },
@@ -5452,6 +5449,7 @@
   "VwCTbx": {
     "context": "outcome prediction when order will be fully charged",
     "string": "This will result in a {status} order"
+  },
   "VxStyU": {
     "context": "order history message",
     "string": "Replacement order was created"
