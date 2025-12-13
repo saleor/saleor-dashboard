@@ -16,7 +16,7 @@ import { getOrderTransactionErrorMessage } from "@dashboard/utils/errors/transac
 import { IMoney } from "@dashboard/utils/intl";
 import { Box, Input, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import { AlertTriangle, Box as BoxIcon, CheckCircle2, CircleAlert, CreditCard } from "lucide-react";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -112,15 +112,11 @@ export const OrderCaptureDialog = ({
   const canCaptureOrderTotal = availableToCapture >= remainingToPay && remainingToPay > 0;
   const shortfall = remainingToPay - availableToCapture;
 
-  // Default selection based on status
+  // Default selection: always prefer "orderTotal" unless it's disabled
+  const isFirstOptionDisabled = authStatus === "none" || authStatus === "charged";
   const getDefaultOption = (): CaptureAmountOption => {
-    // For full and partial, default to the first option
-    // For "none" or "charged" we can't select anything meaningful
-    if (authStatus === "full" || authStatus === "partial") {
-      return "orderTotal";
-    }
-
-    return "custom";
+    // Always default to orderTotal (first option) unless it's disabled
+    return isFirstOptionDisabled ? "custom" : "orderTotal";
   };
 
   const getDefaultCustomAmount = (): string => {
@@ -139,6 +135,15 @@ export const OrderCaptureDialog = ({
 
   const [selectedOption, setSelectedOption] = useState<CaptureAmountOption>(getDefaultOption);
   const [customAmount, setCustomAmount] = useState<string>(getDefaultCustomAmount);
+
+  // Reset state when dialog opens to ensure correct defaults based on current props
+  useEffect(() => {
+    if (open) {
+      setSelectedOption(getDefaultOption());
+      setCustomAmount(getDefaultCustomAmount());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   // Get max decimal places for this currency (e.g., 2 for USD, 0 for JPY, 3 for KWD)
   const maxDecimalPlaces = useMemo(() => getCurrencyDecimalPoints(currency), [currency]);
@@ -393,15 +398,9 @@ export const OrderCaptureDialog = ({
                     <RadioGroup.Item
                       id="orderTotal"
                       value="orderTotal"
-                      disabled={authStatus === "none" || authStatus === "charged"}
+                      disabled={isFirstOptionDisabled}
                     >
-                      <Text
-                        color={
-                          authStatus === "none" || authStatus === "charged"
-                            ? "default2"
-                            : "default1"
-                        }
-                      >
+                      <Text color={isFirstOptionDisabled ? "default2" : "default1"}>
                         <FormattedMessage
                           {...(authStatus === "partial"
                             ? messages.remainingMax
@@ -413,9 +412,7 @@ export const OrderCaptureDialog = ({
                     </RadioGroup.Item>
                     <Text
                       fontWeight="medium"
-                      color={
-                        authStatus === "none" || authStatus === "charged" ? "default2" : "default1"
-                      }
+                      color={isFirstOptionDisabled ? "default2" : "default1"}
                     >
                       {formatMoney(authStatus === "partial" ? availableToCapture : remainingToPay)}
                     </Text>
