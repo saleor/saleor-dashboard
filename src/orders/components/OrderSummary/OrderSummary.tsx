@@ -22,7 +22,7 @@ type ReadOnlyOrderSummary = {
 type Props = PropsWithBox<
   {
     order: OrderDetailsFragment;
-    onMarkAsPaid: () => any;
+    onMarkAsPaid?: () => void;
     useLegacyPaymentsApi?: boolean;
     onLegacyPaymentsApiCapture?: () => any;
     onLegacyPaymentsApiRefund?: () => any;

@@ -157,9 +157,6 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           <>
             <OrderSummary
               order={order}
-              onMarkAsPaid={() => {
-                // Draft orders cannot be marked as paid
-              }}
               isEditable
               onShippingMethodEdit={onShippingMethodEdit}
               errors={errors}
