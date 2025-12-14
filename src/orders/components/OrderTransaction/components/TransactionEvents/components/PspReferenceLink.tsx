@@ -1,6 +1,5 @@
+import { Box } from "@saleor/macaw-ui-next";
 import * as React from "react";
-
-import styles from "./PspReferenceLink.module.css";
 
 interface PspReferenceLinkProps {
   href: string | null | undefined;
@@ -10,9 +9,16 @@ interface PspReferenceLinkProps {
 export const PspReferenceLink = ({ href, children }: PspReferenceLinkProps) => {
   if (href) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={styles.link}>
+      <Box
+        as="a"
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        color="inherit"
+        textDecoration={{ default: "none", hover: "underline" }}
+      >
         {children}
-      </a>
+      </Box>
     );
   }
 
