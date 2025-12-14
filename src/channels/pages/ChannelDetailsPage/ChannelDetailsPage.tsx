@@ -22,6 +22,7 @@ import {
   SearchWarehousesQuery,
   StockSettingsInput,
 } from "@dashboard/graphql";
+import { ChannelDetailsFragment as ChannelDetailsFragmentWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
 import {
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
@@ -109,7 +110,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     paymentSettings,
     checkoutSettings,
     ...formData
-  } = channel || ({} as ChannelDetailsFragment);
+  } = channel || ({} as ChannelDetailsFragment | ChannelDetailsFragmentWithAllowLegacyGiftCardUse);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
@@ -133,6 +134,11 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
     automaticallyCompleteCheckouts: checkoutSettings?.automaticallyCompleteFullyPaidCheckouts,
+    allowLegacyGiftCardUse: checkoutSettings
+      ? "allowLegacyGiftCardUse" in checkoutSettings
+        ? checkoutSettings.allowLegacyGiftCardUse
+        : undefined
+      : undefined,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
@@ -226,6 +232,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           });
         };
 
+        const handleAllowLegacyGiftCardUseChange = () => {
+          set({
+            allowLegacyGiftCardUse: !data.allowLegacyGiftCardUse,
+          });
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -255,6 +267,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
                 onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
                 onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
+                onAllowLegacyGiftCardUseChange={handleAllowLegacyGiftCardUseChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>

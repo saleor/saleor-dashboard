@@ -4194,6 +4194,10 @@
     "context": "amount of refunded money",
     "string": "Amount"
   },
+  "OqYCQ4": {
+    "context": "allow legacy gift card use description",
+    "string": "When enabled, gift card can be applied to a checkout using addPromoCode mutation."
+  },
   "OrMr/k": {
     "context": "window title",
     "string": "Create Channel"
@@ -5942,6 +5946,10 @@
     "context": "ProductTypeDeleteWarningDialog single assigned items description",
     "string": "You are about to delete product type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{product} other{products}}. Deleting this product type will also delete those products. Are you sure you want to do this?"
   },
+  "ZGmd4h": {
+    "context": "button",
+    "string": "Copy to clipboard"
+  },
   "ZHF4Z9": {
     "context": "delete product dialog subtitle",
     "string": "Are you sure you want to delete {name}?"
@@ -6087,10 +6095,6 @@
   "aCJwVq": {
     "context": "warehouse",
     "string": "Name"
-  },
-  "aCdAsI": {
-    "context": "button",
-    "string": "Copy to clipboard"
   },
   "aEc9Ar": {
     "context": "gift card history message",
@@ -8841,6 +8845,10 @@
   "sDMNfc": {
     "context": "bulk issue structure item",
     "string": "Bulk Issue"
+  },
+  "sE7fI/": {
+    "context": "allow legacy gift card use label",
+    "string": "Allow legacy gift card use"
   },
   "sFynTT": {
     "context": "grant refund, refund card title",
