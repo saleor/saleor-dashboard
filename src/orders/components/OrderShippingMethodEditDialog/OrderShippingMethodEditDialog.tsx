@@ -187,8 +187,10 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
                   data-test-id="shipping-method-select"
                   value={data.shippingMethod}
                   onChange={({ target }) => {
-                    const newValue = target.value;
-                    const isDisabled = choices.find(choice => choice.value === newValue)?.disabled;
+                    const targetValue = target.value;
+                    const isDisabled = choices.find(
+                      choice => choice.value === targetValue,
+                    )?.disabled;
 
                     if (isDisabled) {
                       return;
@@ -198,7 +200,9 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
                       target: {
                         name: "shippingMethod",
                         value:
-                          typeof newValue === "string" ? newValue : (newValue as Option)?.value,
+                          typeof targetValue === "string"
+                            ? targetValue
+                            : (targetValue as Option)?.value,
                       },
                     });
                   }}
