@@ -21,7 +21,7 @@ describe("getRelativeDate", () => {
       const now = new Date("2024-06-15T14:30:00Z");
 
       // Act
-      const result = getRelativeDate("2024-06-15T14:29:30Z", mockIntl, undefined, now);
+      const result = getRelativeDate({ date: "2024-06-15T14:29:30Z", intl: mockIntl, now });
 
       // Assert
       expect(mockIntl.formatMessage).toHaveBeenCalledTimes(1);
@@ -33,7 +33,7 @@ describe("getRelativeDate", () => {
       const now = new Date("2024-06-15T14:30:00Z");
 
       // Act
-      getRelativeDate("2024-06-15T14:00:00Z", mockIntl, undefined, now);
+      getRelativeDate({ date: "2024-06-15T14:00:00Z", intl: mockIntl, now });
 
       // Assert - called with minutes value
       expect(mockIntl.formatMessage).toHaveBeenCalledWith(
@@ -47,7 +47,7 @@ describe("getRelativeDate", () => {
       const now = new Date("2024-06-15T14:30:00Z");
 
       // Act
-      getRelativeDate("2024-06-15T12:30:00Z", mockIntl, undefined, now);
+      getRelativeDate({ date: "2024-06-15T12:30:00Z", intl: mockIntl, now });
 
       // Assert
       expect(mockIntl.formatMessage).toHaveBeenCalledWith(
@@ -61,7 +61,7 @@ describe("getRelativeDate", () => {
       const now = new Date("2024-06-15T14:30:00Z");
 
       // Act
-      getRelativeDate("2024-06-13T14:30:00Z", mockIntl, undefined, now);
+      getRelativeDate({ date: "2024-06-13T14:30:00Z", intl: mockIntl, now });
 
       // Assert
       expect(mockIntl.formatMessage).toHaveBeenCalledWith(
@@ -75,7 +75,7 @@ describe("getRelativeDate", () => {
       const now = new Date("2024-06-15T14:30:00Z");
 
       // Act
-      const result = getRelativeDate("2024-06-01T14:30:00Z", mockIntl, undefined, now);
+      const result = getRelativeDate({ date: "2024-06-01T14:30:00Z", intl: mockIntl, now });
 
       // Assert - dateStr comes from DateTimeFormat, not formatMessage
       expect(result.dateStr).toContain("2024");
@@ -95,7 +95,7 @@ describe("getRelativeDate", () => {
       const eventDate = new Date(now.getTime() - minutesAgo * 60 * 1000);
 
       // Act
-      getRelativeDate(eventDate.toISOString(), mockIntl, undefined, now);
+      getRelativeDate({ date: eventDate.toISOString(), intl: mockIntl, now });
 
       // Assert
       expect(mockIntl.formatMessage).toHaveBeenCalledWith(
@@ -111,12 +111,11 @@ describe("getRelativeDate", () => {
       const now = new Date("2024-06-15T14:30:00Z");
 
       // Act
-      const result: RelativeDateResult = getRelativeDate(
-        "2024-06-15T14:30:00Z",
-        mockIntl,
-        undefined,
+      const result: RelativeDateResult = getRelativeDate({
+        date: "2024-06-15T14:30:00Z",
+        intl: mockIntl,
         now,
-      );
+      });
 
       // Assert
       expect(result).toHaveProperty("dateStr");
@@ -128,7 +127,7 @@ describe("getRelativeDate", () => {
       const now = new Date("2024-06-15T14:30:00Z");
 
       // Act
-      const result = getRelativeDate("2024-06-15T14:30:00Z", mockIntl, undefined, now);
+      const result = getRelativeDate({ date: "2024-06-15T14:30:00Z", intl: mockIntl, now });
 
       // Assert
       expect(result.fullDate).toContain("2024");

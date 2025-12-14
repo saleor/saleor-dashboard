@@ -1,43 +1,26 @@
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
-import { getUserName } from "@dashboard/misc";
-import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { ReactNode } from "react";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date";
+import styles from "./TimelineEvent.module.css";
+import { Actor } from "./types";
+import { getActorDisplayName, getActorLink } from "./utils";
 
 export interface TitleElement {
   text: string;
   link?: string;
 }
 
-export interface TimelineUser {
-  id: string;
-  email: string;
-  firstName?: string;
-  lastName?: string;
-  avatar?: {
-    url?: string;
-  } | null;
-}
-
-export interface TimelineApp {
-  id: string;
-  name?: string | null;
-}
-
 interface TimelineEventHeaderProps {
   title?: React.ReactNode;
-  date: string;
+  date: string | React.ReactNode;
   titleElements?: TitleElement[];
   hasPlainDate?: boolean;
   children?: ReactNode;
-  dateNode?: ReactNode;
   tooltip?: ReactNode;
-  user?: TimelineUser | null;
-  app?: TimelineApp | null;
+  actor?: Actor;
 }
 
 export const TimelineEventHeader = ({
@@ -46,35 +29,31 @@ export const TimelineEventHeader = ({
   titleElements,
   hasPlainDate,
   children,
-  dateNode,
   tooltip,
-  user,
-  app,
+  actor,
 }: TimelineEventHeaderProps) => {
   const elements = titleElements?.filter(Boolean) ?? [];
-  const userName = user ? getUserName(user, true) : null;
-  const appName = app?.name;
 
-  const attribution = userName ? (
+  const actorName = getActorDisplayName(actor);
+  const actorLink = getActorLink(actor);
+
+  const dateToRender =
+    typeof date === "string" ? <DateTime date={date} plain={hasPlainDate} /> : date;
+
+  const attribution = actorName ? (
     <Text size={3} color="default2" as="span" marginLeft={1}>
       by{" "}
-      <Link to={staffMemberDetailsUrl(user!.id)} className="timeline-user-link">
+      {actorLink ? (
+        <Link to={actorLink} className={styles.userLink}>
+          <Text size={3} color="default2" as="span">
+            {actorName}
+          </Text>
+        </Link>
+      ) : (
         <Text size={3} color="default2" as="span">
-          {userName}
+          {actorName}
         </Text>
-      </Link>
-    </Text>
-  ) : appName && app ? (
-    <Text size={3} color="default2" as="span" marginLeft={1}>
-      by{" "}
-      <Link
-        to={ExtensionsPaths.resolveViewManifestExtension(encodeURIComponent(app.id))}
-        className="timeline-user-link"
-      >
-        <Text size={3} color="default2" as="span">
-          {appName}
-        </Text>
-      </Link>
+      )}
     </Text>
   ) : null;
 
@@ -124,7 +103,7 @@ export const TimelineEventHeader = ({
         <Box display="flex" alignItems="center" gap={2} marginLeft="auto" flexShrink="0">
           {tooltip}
           <Text size={2} color="default2" whiteSpace="nowrap">
-            {dateNode || <DateTime date={date} plain={hasPlainDate} />}
+            {dateToRender}
           </Text>
           {children}
         </Box>

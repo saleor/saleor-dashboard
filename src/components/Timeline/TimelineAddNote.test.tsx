@@ -1,8 +1,7 @@
+import { TimelineAddNote } from "@dashboard/components/Timeline/Timeline";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { IntlProvider } from "react-intl";
-
-import { TimelineAddNote } from "./Timeline";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <IntlProvider locale="en" messages={{}}>

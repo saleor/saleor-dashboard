@@ -22,6 +22,8 @@ export const CopyableText = ({ text }: CopyableTextProps): JSX.Element => {
       gap={1}
       onMouseEnter={() => setShowCopyButton(true)}
       onMouseLeave={() => setShowCopyButton(false)}
+      onFocus={() => setShowCopyButton(true)}
+      onBlur={() => setShowCopyButton(false)}
     >
       <Text size={2}>{text}</Text>
       <Box
@@ -29,7 +31,6 @@ export const CopyableText = ({ text }: CopyableTextProps): JSX.Element => {
           opacity: showCopyButton ? 1 : 0,
           transition: "opacity 0.15s ease-in-out",
         }}
-        pointerEvents={showCopyButton ? "auto" : "none"}
       >
         <Button
           variant="tertiary"

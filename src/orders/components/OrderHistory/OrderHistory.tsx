@@ -1,15 +1,13 @@
 // @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import { DashboardCard } from "@dashboard/components/Card";
-import { CopyableText } from "@dashboard/components/CopyableText";
+import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Form from "@dashboard/components/Form";
 import { Pill } from "@dashboard/components/Pill";
-import {
-  Timeline,
-  TimelineAddNote,
-  TimelineEvent,
-  TimelineNote,
-} from "@dashboard/components/Timeline";
+import { Timeline, TimelineAddNote } from "@dashboard/components/Timeline/Timeline";
+import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
+import { TimelineNote } from "@dashboard/components/Timeline/TimelineNote";
+import { toActor } from "@dashboard/components/Timeline/utils";
 import { OrderEventFragment, OrderEventsEnum, OrderNoteUpdateMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
@@ -182,12 +180,10 @@ const OrderHistory = ({
                       onNoteUpdate={onNoteUpdate}
                       onNoteUpdateLoading={onNoteUpdateLoading!}
                       id={id}
-                      date={date}
-                      dateNode={<OrderHistoryDate date={date} />}
-                      user={user}
+                      date={<OrderHistoryDate date={date} />}
+                      actor={toActor(user, app)}
                       message={message}
                       key={id}
-                      app={app}
                       eventData={event}
                       isLastInGroup={isLastInGroup}
                     />
@@ -201,12 +197,10 @@ const OrderHistory = ({
                       onNoteUpdateLoading={onNoteUpdateLoading!}
                       relatedId={related.id}
                       id={id}
-                      date={date}
-                      dateNode={<OrderHistoryDate date={date} />}
-                      user={user}
+                      date={<OrderHistoryDate date={date} />}
+                      actor={toActor(user, app)}
                       message={message}
                       key={id}
-                      app={app}
                       eventData={event}
                       isLastInGroup={isLastInGroup}
                     />
@@ -222,11 +216,9 @@ const OrderHistory = ({
 
                   return (
                     <TimelineEvent
-                      date={date}
-                      dateNode={<OrderHistoryDate date={date} />}
+                      date={<OrderHistoryDate date={date} />}
                       eventData={event}
-                      user={user}
-                      app={app}
+                      actor={toActor(user, app)}
                       eventType={type}
                       isLastInGroup={isLastInGroup}
                       title={
@@ -276,27 +268,25 @@ const OrderHistory = ({
                       event={event}
                       orderCurrency={orderCurrency}
                       hasPlainDate={false}
-                      dateNode={<OrderHistoryDate date={date} />}
+                      date={<OrderHistoryDate date={date} />}
                       isLastInGroup={isLastInGroup}
                     />
                   );
                 }
 
-                // Events with message, relatedOrder, or lines - make them foldable
                 const hasRelatedOrder = !!event.relatedOrder;
                 const hasLines = event.lines && event.lines.length > 0;
+                const isFoldable = message || hasRelatedOrder || hasLines;
 
-                if (message || hasRelatedOrder || hasLines) {
+                if (isFoldable) {
                   return (
                     <TimelineEvent
                       title={getEventMessage(event, intl)}
                       hasPlainDate={false}
                       key={id}
-                      date={date}
-                      dateNode={<OrderHistoryDate date={date} />}
+                      date={<OrderHistoryDate date={date} />}
                       eventData={event}
-                      user={user}
-                      app={app}
+                      actor={toActor(user, app)}
                       eventType={type}
                       isLastInGroup={isLastInGroup}
                     >
@@ -352,11 +342,9 @@ const OrderHistory = ({
                     title={getEventMessage(event, intl)}
                     hasPlainDate={false}
                     key={id}
-                    date={date}
-                    dateNode={<OrderHistoryDate date={date} />}
+                    date={<OrderHistoryDate date={date} />}
                     eventData={event}
-                    user={user}
-                    app={app}
+                    actor={toActor(user, app)}
                     eventType={type}
                     isLastInGroup={isLastInGroup}
                   />

@@ -1,4 +1,3 @@
-import { OrderEventFragment } from "@dashboard/graphql/types.generated";
 import Wrapper from "@test/wrapper";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -6,6 +5,7 @@ import { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import { TimelineNote } from "./TimelineNote";
+import { Actor } from "./types";
 
 const wrapperFriendlyDate = new Date("2018-08-07T14:30:40+00:00").toISOString();
 
@@ -19,20 +19,18 @@ const WrapperWithRouter = ({ children }: { children: ReactNode }) => (
 describe("TimelineNote", () => {
   it("renders user", () => {
     // Arrange
-    const mockedUser = {
-      avatar: null,
+    const userActor: Actor = {
+      type: "user",
       id: "1",
       email: "test@test.com",
       firstName: "Test",
       lastName: "User",
-      __typename: "User",
-    } satisfies OrderEventFragment["user"];
+    };
 
     // Act
     render(
       <TimelineNote
-        app={null}
-        user={mockedUser}
+        actor={userActor}
         date={wrapperFriendlyDate}
         message="Note"
         hasPlainDate={false}
@@ -48,24 +46,21 @@ describe("TimelineNote", () => {
 
   it("renders app", () => {
     // Arrange
-    const mockedApp = {
-      __typename: "App",
+    const appActor: Actor = {
+      type: "app",
       id: "1",
       name: "Test App",
-      appUrl: "http://example.com",
-      brand: null,
-    } satisfies OrderEventFragment["app"];
+    };
 
     // Act
     render(
       <TimelineNote
-        app={mockedApp}
-        user={null}
+        actor={appActor}
         date={wrapperFriendlyDate}
         message="Note"
         hasPlainDate={false}
       />,
-      { wrapper: Wrapper },
+      { wrapper: WrapperWithRouter },
     );
 
     // Assert
@@ -78,20 +73,18 @@ describe("TimelineNote", () => {
     // Arrange
     const noteId = "T3JkZXJFdmVudDozNDM3";
     const noteRelatedId = "T3JkZXJFdmVudDozNDQx";
-    const mockedUser = {
-      avatar: null,
+    const userActor: Actor = {
+      type: "user",
       id: "1",
       email: "test@test.com",
       firstName: "Test",
       lastName: "User",
-      __typename: "User",
-    } satisfies OrderEventFragment["user"];
+    };
 
     // Act
     const { container } = render(
       <TimelineNote
-        app={null}
-        user={mockedUser}
+        actor={userActor}
         date={wrapperFriendlyDate}
         message="Note"
         hasPlainDate={false}
@@ -117,19 +110,17 @@ describe("TimelineNote", () => {
     const noteRelatedId = "T3JkZXJFdmVudDozNDQx";
     const onNoteUpdate = jest.fn();
     const onNoteUpdateLoading = false;
-    const mockedUser = {
-      avatar: null,
+    const userActor: Actor = {
+      type: "user",
       id: "1",
       email: "test@test.com",
       firstName: "Test",
       lastName: "User",
-      __typename: "User",
-    } satisfies OrderEventFragment["user"];
+    };
 
     render(
       <TimelineNote
-        app={null}
-        user={mockedUser}
+        actor={userActor}
         date={wrapperFriendlyDate}
         message="Note"
         hasPlainDate={false}
