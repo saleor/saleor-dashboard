@@ -3,7 +3,9 @@ import { IntlShape } from "react-intl";
 import {
   formatDateTime,
   formatTimeDifference,
+  getMinimumCutoffDate,
   getRelativeTimeUnit,
+  isCutoffDateTooOld,
   MS_PER_DAY,
   MS_PER_HOUR,
   MS_PER_MINUTE,
@@ -201,6 +203,120 @@ describe("utils", () => {
 
       expect(calledDate.getHours()).toBe(0);
       expect(calledDate.getMinutes()).toBe(0);
+    });
+  });
+
+  describe("getMinimumCutoffDate", () => {
+    it("returns a date 30 days before current date in YYYY-MM-DD format", () => {
+      // Arrange
+      const today = new Date();
+      const expectedDate = new Date(today);
+
+      expectedDate.setDate(today.getDate() - 30);
+
+      const expectedYear = expectedDate.getFullYear();
+      const expectedMonth = String(expectedDate.getMonth() + 1).padStart(2, "0");
+      const expectedDay = String(expectedDate.getDate()).padStart(2, "0");
+      const expectedString = `${expectedYear}-${expectedMonth}-${expectedDay}`;
+
+      // Act
+      const result = getMinimumCutoffDate();
+
+      // Assert
+      expect(result).toBe(expectedString);
+    });
+
+    it("returns properly formatted date string", () => {
+      // Arrange & Act
+      const result = getMinimumCutoffDate();
+
+      // Assert
+      expect(result).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    });
+  });
+
+  describe("isCutoffDateTooOld", () => {
+    it("returns true when date is more than 30 days in the past", () => {
+      // Arrange
+      const oldDate = new Date();
+
+      oldDate.setDate(oldDate.getDate() - 31);
+
+      const dateString = oldDate.toISOString().split("T")[0];
+
+      // Act
+      const result = isCutoffDateTooOld(dateString);
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it("returns false when date is exactly 30 days in the past", () => {
+      // Arrange
+      const thirtyDaysAgo = new Date();
+
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      const dateString = thirtyDaysAgo.toISOString().split("T")[0];
+
+      // Act
+      const result = isCutoffDateTooOld(dateString);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("returns false when date is less than 30 days in the past", () => {
+      // Arrange
+      const recentDate = new Date();
+
+      recentDate.setDate(recentDate.getDate() - 15);
+
+      const dateString = recentDate.toISOString().split("T")[0];
+
+      // Act
+      const result = isCutoffDateTooOld(dateString);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("returns false when date is today", () => {
+      // Arrange
+      const today = new Date();
+      const dateString = today.toISOString().split("T")[0];
+
+      // Act
+      const result = isCutoffDateTooOld(dateString);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("returns false when date is in the future", () => {
+      // Arrange
+      const futureDate = new Date();
+
+      futureDate.setDate(futureDate.getDate() + 10);
+
+      const dateString = futureDate.toISOString().split("T")[0];
+
+      // Act
+      const result = isCutoffDateTooOld(dateString);
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it("returns false when date is empty string", () => {
+      // Arrange
+      const dateString = "";
+
+      // Act
+      const result = isCutoffDateTooOld(dateString);
+
+      // Assert
+      expect(result).toBe(false);
     });
   });
 });

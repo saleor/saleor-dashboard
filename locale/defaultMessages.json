@@ -7417,6 +7417,10 @@
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
   },
+  "j+lQWT": {
+    "context": "error message when cut-off date is older than 30 days",
+    "string": "Cut-off date cannot be more than 30 days in the past"
+  },
   "j/Oo0B": {
     "context": "bulk actions button label",
     "string": "Publish"

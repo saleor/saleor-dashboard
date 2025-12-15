@@ -169,4 +169,9 @@ export const messages = defineMessages({
       "Cut-off date cannot be disabled once automatic completion is enabled. You can change the date to a different value.",
     description: "tooltip explaining why cut-off date checkbox is disabled",
   },
+  automaticCompletionCutOffDateTooOldError: {
+    id: "j+lQWT",
+    defaultMessage: "Cut-off date cannot be more than 30 days in the past",
+    description: "error message when cut-off date is older than 30 days",
+  },
 });
