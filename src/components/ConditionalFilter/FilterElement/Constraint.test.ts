@@ -1,4 +1,4 @@
-import { Constraint } from "./Constraint";
+import { Constraint, GLOBAL } from "./Constraint";
 
 describe("ConditionalFilter / FilterElement / Constraint", () => {
   it("should get dependency for a valid slug", () => {
@@ -29,6 +29,7 @@ describe("ConditionalFilter / FilterElement / Constraint", () => {
       dependsOn: ["price", "isVisibleInListing", "isAvailable", "isPublished", "published"],
       disabled: ["left", "condition"],
       removable: false,
+      isGlobal: false,
     });
   });
 
@@ -41,16 +42,48 @@ describe("ConditionalFilter / FilterElement / Constraint", () => {
     expect(constraint).toBeNull();
   });
 
-  it("should treat empty dependsOn as always existing (so it won't be auto-cleared)", () => {
+  it("should return false for empty dependsOn (subject to cleanup)", () => {
     // Arrange
-    // If `dependsOn` is empty, this constraint isn't tied to any filter row.
-    // We treat it as always present so it won't be removed during cleanup.
+    // If `dependsOn` is empty and not GLOBAL, the constraint can be cleaned up.
     const constraint = new Constraint([]);
 
     // Act
     const exists = constraint.existIn([]);
 
     // Assert
+    expect(exists).toBe(false);
+    expect(constraint.isGlobal).toBe(false);
+  });
+
+  it("should always return true for GLOBAL constraint (exempt from cleanup)", () => {
+    // Arrange
+    // GLOBAL constraints are never cleaned up, regardless of container state.
+    const constraint = new Constraint(GLOBAL, ["left", "right", "condition"], false);
+
+    // Act
+    const exists = constraint.existIn([]);
+
+    // Assert
     expect(exists).toBe(true);
+    expect(constraint.isGlobal).toBe(true);
+    expect(constraint.dependsOn).toEqual([]);
+  });
+
+  it("should set isGlobal to true when created with GLOBAL", () => {
+    // Arrange & Act
+    const constraint = new Constraint(GLOBAL);
+
+    // Assert
+    expect(constraint.isGlobal).toBe(true);
+    expect(constraint.dependsOn).toEqual([]);
+  });
+
+  it("should set isGlobal to false when created with array", () => {
+    // Arrange & Act
+    const constraint = new Constraint(["price", "category"]);
+
+    // Assert
+    expect(constraint.isGlobal).toBe(false);
+    expect(constraint.dependsOn).toEqual(["price", "category"]);
   });
 });

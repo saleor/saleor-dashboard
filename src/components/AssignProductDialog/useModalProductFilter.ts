@@ -9,7 +9,7 @@ import { Condition } from "../ConditionalFilter/FilterElement/Condition";
 import { ConditionOptions } from "../ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "../ConditionalFilter/FilterElement/ConditionSelected";
 import { ItemOption } from "../ConditionalFilter/FilterElement/ConditionValue";
-import { Constraint } from "../ConditionalFilter/FilterElement/Constraint";
+import { Constraint, GLOBAL } from "../ConditionalFilter/FilterElement/Constraint";
 import {
   ExpressionValue,
   FilterContainer,
@@ -96,7 +96,7 @@ const createProductTypeConstraintElement = (
 
   // Override the constraint with our fully locked constraint AFTER construction
   // This ensures our disabled fields are respected in the UI
-  element.setConstraint(new Constraint([], ["left", "right", "condition"], false));
+  element.setConstraint(new Constraint(GLOBAL, ["left", "right", "condition"], false));
 
   return element;
 };
