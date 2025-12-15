@@ -236,21 +236,13 @@ export const OrderValue = (props: Props): ReactNode => {
 
     const hasShippingAddress = !!editableProps?.shippingAddress;
 
-    if (!hasShippingAddress) {
+    if (!hasShippingAddress || !hasShippingMethods) {
       return (
         <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
           <Text as="span" color="default2">
-            {intl.formatMessage(messages.noShippingAddress)}
-          </Text>
-        </OrderSummaryListItem>
-      );
-    }
-
-    if (!hasShippingMethods) {
-      return (
-        <OrderSummaryListItem amount={0} amountTitle={shippingAmountTitle}>
-          <Text as="span" color="default2">
-            {intl.formatMessage(messages.noShippingMethods)}
+            {intl.formatMessage(
+              !hasShippingAddress ? messages.noShippingAddress : messages.noShippingMethods,
+            )}
           </Text>
         </OrderSummaryListItem>
       );
