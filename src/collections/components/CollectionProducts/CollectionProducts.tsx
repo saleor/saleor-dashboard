@@ -112,10 +112,11 @@ const CollectionProducts = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const handleFilterChange = (filterVariables: ProductWhereInput) => {
+  const handleFilterChange = (filterVariables: ProductWhereInput, channel: string | undefined) => {
     result.refetch({
       ...DEFAULT_INITIAL_SEARCH_DATA,
       where: filterVariables,
+      channel,
     });
   };
 

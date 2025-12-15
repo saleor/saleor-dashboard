@@ -100,10 +100,14 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const handleProductFilterChange = (filterVariables: ProductWhereInput) => {
+  const handleProductFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+  ) => {
     searchProductsOpts.refetch({
       ...DEFAULT_INITIAL_SEARCH_DATA,
       where: filterVariables,
+      channel,
     });
   };
 
