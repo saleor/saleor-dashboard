@@ -181,7 +181,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
             input: {
               name,
               checkoutSettings: {
-                automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+                automaticCompletion: automaticCompletionInput,
                 allowLegacyGiftCardUse,
               },
               slug,
@@ -210,7 +210,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
             input: {
               name,
               checkoutSettings: {
-                automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
+                automaticCompletion: automaticCompletionInput,
               },
               slug,
               defaultCountry,
