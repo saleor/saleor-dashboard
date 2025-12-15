@@ -30,7 +30,6 @@ describe("validateChannelFormData", () => {
     automaticCompletionDelay: null,
     automaticCompletionCutOffDate: "",
     automaticCompletionCutOffTime: "",
-    useCutOffDate: false,
   };
 
   it("should return no errors when all required fields are provided", () => {
