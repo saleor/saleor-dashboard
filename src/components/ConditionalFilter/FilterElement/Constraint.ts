@@ -36,6 +36,10 @@ export class Constraint {
   }
 
   public existIn(container: FilterContainer) {
+    if (this.dependsOn.length === 0) {
+      return true;
+    }
+
     return container.some(s => {
       if (!FilterElement.isFilterElement(s)) return false;
 

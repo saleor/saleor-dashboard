@@ -1,57 +1,43 @@
+import { parseQs } from "@dashboard/url-utils";
 import { stringify } from "qs";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialProductAPIState } from "../ConditionalFilter/API/initialState/product/useProductInitialAPIState";
 import { FilterContainer, FilterElement } from "../ConditionalFilter/FilterElement";
 import { FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
 import { TokenArray } from "../ConditionalFilter/ValueProvider/TokenArray";
-import {
-  FetchingParams,
-  getEmptyFetchingPrams,
-} from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { FetchingParams } from "../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
+import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import { prepareStructure } from "../ConditionalFilter/ValueProvider/utils";
 
-/**
- * Helper to get preserved params from URL search string
- */
-const getPreservedParams = (search: string) => {
-  const params = new URLSearchParams(search);
+const isFilterKey = (key: string): boolean => /^\d+$/.test(key);
 
-  return {
-    action: params.get("action"),
-    id: params.get("id"),
-    ids: params.getAll("ids"),
-    activeTab: params.get("activeTab"),
-    query: params.get("query"),
-    before: params.get("before"),
-    after: params.get("after"),
-  };
-};
+const stripLeadingQuestionMark = (search: string): string =>
+  search.startsWith("?") ? search.slice(1) : search;
 
-/**
- * Helper to get filter-only params (removes non-filter params)
- */
-const getFilterParams = (search: string) => {
-  const params = new URLSearchParams(search);
+const splitSearchIntoFilterAndPreserved = (
+  search: string,
+): { filterParams: Record<string, unknown>; preservedParams: Record<string, unknown> } => {
+  const parsed = parseQs(stripLeadingQuestionMark(search)) as Record<string, unknown>;
+  const filterParams: Record<string, unknown> = {};
+  const preservedParams: Record<string, unknown> = {};
 
-  params.delete("asc");
-  params.delete("sort");
-  params.delete("activeTab");
-  params.delete("query");
-  params.delete("before");
-  params.delete("after");
-  params.delete("action");
-  params.delete("id");
-  params.delete("ids");
+  for (const [key, value] of Object.entries(parsed)) {
+    if (isFilterKey(key)) {
+      filterParams[key] = value;
+    } else {
+      preservedParams[key] = value;
+    }
+  }
 
-  return params;
+  return { filterParams, preservedParams };
 };
 
 /**
  * A modified URL value provider for modal contexts.
  * This preserves the `action` and `ids` URL params that control modal open state.
- * Reads URL directly from router instead of relying on prop threading.
+ * Reads URL directly from router instead of relying on prop-drilling
  */
 export const useModalUrlValueProvider = (
   initialState?: InitialProductAPIState,
@@ -59,82 +45,75 @@ export const useModalUrlValueProvider = (
   const router = useRouter();
   const [value, setValue] = useState<FilterContainer>([]);
 
-  // Read location search directly from router (not from props)
   const locationSearch = router.location.search;
-
-  const filterParams = useMemo(() => getFilterParams(locationSearch), [locationSearch]);
-  const tokenizedUrl = useMemo(() => new TokenArray(filterParams.toString()), [filterParams]);
-  const paramsFromType = getEmptyFetchingPrams("product");
-  const fetchingParams = paramsFromType
-    ? tokenizedUrl.getFetchingParams(paramsFromType, "product")
-    : null;
-
-  useEffect(() => {
-    if (initialState) {
-      initialState.fetchQueries(fetchingParams as FetchingParams);
-    }
-  }, [locationSearch]);
-
-  useEffect(() => {
-    if (!initialState) return;
-
-    const { data, loading } = initialState;
-
-    if (loading) return;
-
-    setValue(tokenizedUrl.asFilterValuesFromResponse(data));
-  }, [initialState?.data, initialState?.loading]);
-
-  useEffect(() => {
-    if (initialState) return;
-
-    setValue(tokenizedUrl.asFilterValueFromEmpty());
-  }, [locationSearch, tokenizedUrl, initialState]);
-
-  const persist = (filterValue: FilterContainer) => {
-    // Read preserved params from CURRENT URL (not the stale locationSearch prop)
-    const currentSearch = router.location.search;
-    const { action, id, ids, activeTab, query, before, after } = getPreservedParams(currentSearch);
-
-    // Build preserved params object
-    const preservedParams: Record<string, string | string[] | undefined> = {
-      activeTab: activeTab || undefined,
-      query: query || undefined,
-      before: before || undefined,
-      after: after || undefined,
-      action: action || undefined,
-      id: id || undefined,
+  const { filterParams } = useMemo(
+    () => splitSearchIntoFilterAndPreserved(locationSearch),
+    [locationSearch],
+  );
+  const filterQueryString = useMemo(() => stringify(filterParams), [filterParams]);
+  const tokenizedUrl = useMemo(() => new TokenArray(filterQueryString), [filterQueryString]);
+  const fetchingParams = useMemo(() => {
+    const paramsFromType: FetchingParams = {
+      category: [],
+      collection: [],
+      channel: [],
+      productType: [],
+      attribute: {},
+      attributeReference: {},
     };
 
-    // Handle ids array
-    if (ids.length > 0) {
-      preservedParams.ids = ids;
-    }
+    return tokenizedUrl.getFetchingParams(paramsFromType, "product") as FetchingParams;
+  }, [tokenizedUrl]);
+
+  const fetchQueriesRef = useRef<InitialProductAPIState["fetchQueries"] | undefined>(
+    initialState?.fetchQueries,
+  );
+  const hasInitialState = Boolean(initialState);
+  const data = initialState?.data;
+  const loading = initialState?.loading || false;
+
+  useEffect(() => {
+    fetchQueriesRef.current = initialState?.fetchQueries;
+  }, [initialState?.fetchQueries]);
+
+  useEffect(() => {
+    if (!fetchQueriesRef.current) return;
+
+    fetchQueriesRef.current(fetchingParams);
+  }, [fetchingParams]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    if (!data) return;
+
+    setValue(tokenizedUrl.asFilterValuesFromResponse(data));
+  }, [data, loading, tokenizedUrl]);
+
+  useEffect(() => {
+    if (hasInitialState) return;
+
+    setValue(tokenizedUrl.asFilterValueFromEmpty());
+  }, [hasInitialState, tokenizedUrl]);
+
+  const persist = (filterValue: FilterContainer): void => {
+    const currentSearch = router.location.search;
+    const { preservedParams } = splitSearchIntoFilterAndPreserved(currentSearch);
+    const filterStructureParams = { ...prepareStructure(filterValue) } as Record<string, unknown>;
 
     router.history.replace({
       pathname: router.location.pathname,
       search: stringify({
-        ...prepareStructure(filterValue),
         ...preservedParams,
+        ...filterStructureParams,
       }),
     });
     setValue(filterValue);
   };
 
-  const clear = () => {
-    // Read preserved params from CURRENT URL
+  const clear = (): void => {
     const currentSearch = router.location.search;
-    const { action, id, ids } = getPreservedParams(currentSearch);
-
-    // When clearing, preserve modal-related params
-    const preservedParams: Record<string, string | string[] | undefined> = {
-      action: action || undefined,
-      id: id || undefined,
-    };
-
-    if (ids.length > 0) {
-      preservedParams.ids = ids;
-    }
+    const { preservedParams } = splitSearchIntoFilterAndPreserved(currentSearch);
 
     router.history.replace({
       pathname: router.location.pathname,
@@ -143,11 +122,11 @@ export const useModalUrlValueProvider = (
     setValue([]);
   };
 
-  const isPersisted = (element: FilterElement) => {
+  const isPersisted = (element: FilterElement): boolean => {
     return value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
   };
 
-  const getTokenByName = (name: string) => {
+  const getTokenByName = (name: string): UrlToken => {
     return tokenizedUrl.asFlatArray().find(token => token.name === name);
   };
 

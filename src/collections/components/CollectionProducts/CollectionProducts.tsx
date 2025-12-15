@@ -30,7 +30,6 @@ import { Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
-import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListViews } from "../../../types";
@@ -113,10 +112,7 @@ const CollectionProducts = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const filterVariablesRef = useRef<ProductWhereInput>({});
-
   const handleFilterChange = (filterVariables: ProductWhereInput) => {
-    filterVariablesRef.current = filterVariables;
     result.refetch({
       ...DEFAULT_INITIAL_SEARCH_DATA,
       where: filterVariables,

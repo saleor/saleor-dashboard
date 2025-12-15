@@ -59,7 +59,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button } from "@saleor/macaw-ui-next";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
@@ -100,10 +100,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
-  const productFilterVariablesRef = useRef<ProductWhereInput>({});
-
   const handleProductFilterChange = (filterVariables: ProductWhereInput) => {
-    productFilterVariablesRef.current = filterVariables;
     searchProductsOpts.refetch({
       ...DEFAULT_INITIAL_SEARCH_DATA,
       where: filterVariables,

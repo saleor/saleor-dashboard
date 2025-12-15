@@ -40,19 +40,27 @@ const getFilteredProductOptions = (
   excludedFilters?: string[],
   initialConstraints?: InitialConstraints,
 ): LeftOperand[] => {
-  // Combine explicit exclusions with constraint-based exclusions
-  const exclusions = [...(excludedFilters ?? [])];
+  const exclusions = new Set<string>(excludedFilters ?? []);
 
   // If productType constraint is active, exclude productType from options
   if (initialConstraints?.productTypes?.length) {
-    exclusions.push("productType");
+    exclusions.add("productType");
   }
 
-  if (exclusions.length === 0) {
+  if (exclusions.size === 0) {
     return STATIC_PRODUCT_OPTIONS;
   }
 
-  return STATIC_PRODUCT_OPTIONS.filter(option => !exclusions.includes(option.value));
+  // Also exclude any options that depend on an excluded option (e.g. `price` depends on `channel`)
+  return STATIC_PRODUCT_OPTIONS.filter(option => {
+    if (exclusions.has(option.value)) {
+      return false;
+    }
+
+    const dependency = Constraint.getDependency(option.value);
+
+    return !dependency || !exclusions.has(dependency);
+  });
 };
 
 /**
@@ -93,6 +101,34 @@ const createProductTypeConstraintElement = (
   return element;
 };
 
+const stripProductTypeFromPersistedValue = (filterValue: FilterContainer): FilterContainer => {
+  const collectElements = (container: FilterContainer): FilterElement[] => {
+    const collected: FilterElement[] = [];
+
+    for (const item of container) {
+      if (FilterElement.isFilterElement(item)) {
+        if (item.value.value !== "productType") {
+          collected.push(item);
+        }
+
+        continue;
+      }
+
+      if (Array.isArray(item)) {
+        collected.push(...collectElements(item));
+      }
+    }
+
+    return collected;
+  };
+
+  const remainingElements = collectElements(filterValue);
+
+  return remainingElements.flatMap((element, index) =>
+    index === 0 ? [element] : (["AND", element] as const),
+  );
+};
+
 export const useModalProductFilter = ({
   excludedFilters,
   initialConstraints,
@@ -106,8 +142,8 @@ export const useModalProductFilter = ({
   const initialState = useProductInitialAPIState();
   const valueProvider = useModalUrlValueProvider(initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(filteredOptions);
-  const baseContainerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();
+  const hasProductTypeConstraint = Boolean(initialConstraints?.productTypes?.length);
 
   // Create constraint element if productTypes are provided
   const constraintElement = useMemo(() => {
@@ -118,32 +154,55 @@ export const useModalProductFilter = ({
     return createProductTypeConstraintElement(initialConstraints.productTypes);
   }, [initialConstraints?.productTypes]);
 
+  const persistedValueWithoutProductType = useMemo<FilterContainer>(() => {
+    if (!hasProductTypeConstraint) {
+      return valueProvider.value;
+    }
+
+    return stripProductTypeFromPersistedValue(valueProvider.value);
+  }, [hasProductTypeConstraint, valueProvider.value]);
+
+  const wrappedValueProvider = useMemo(() => {
+    if (!hasProductTypeConstraint) {
+      return valueProvider;
+    }
+
+    return {
+      ...valueProvider,
+      count: persistedValueWithoutProductType.filter(v => typeof v !== "string").length,
+      value: persistedValueWithoutProductType,
+      persist: (filterValue: FilterContainer) => {
+        valueProvider.persist(stripProductTypeFromPersistedValue(filterValue));
+      },
+      isPersisted: (element: FilterElement) => {
+        return persistedValueWithoutProductType.some(
+          p => FilterElement.isFilterElement(p) && p.equals(element),
+        );
+      },
+      getTokenByName: (name: string) => {
+        if (name === "productType") {
+          return undefined;
+        }
+
+        return valueProvider.getTokenByName(name);
+      },
+    };
+  }, [hasProductTypeConstraint, persistedValueWithoutProductType, valueProvider]);
+
+  const baseContainerState = useContainerState(wrappedValueProvider);
+
   // Wrap container state to inject constraint element
   const containerState = useMemo(() => {
     if (!constraintElement) {
       return baseContainerState;
     }
 
-    // Filter out any productType elements from base value to prevent duplication
-    // (productType may have been persisted to URL and loaded back)
-    const filteredBaseValue = baseContainerState.value.filter(item => {
-      if (item instanceof FilterElement) {
-        return item.value.value !== "productType";
-      }
+    const hasUserFilters = baseContainerState.value.length > 0;
+    const offset = hasUserFilters ? 2 : 1;
 
-      return true;
-    });
-
-    // Remove leading "AND" if present after filtering
-    const cleanedBaseValue =
-      filteredBaseValue.length > 0 && filteredBaseValue[0] === "AND"
-        ? filteredBaseValue.slice(1)
-        : filteredBaseValue;
-
-    // Prepend constraint element to the container value
     const valueWithConstraint: FilterContainer = [
       constraintElement,
-      ...(cleanedBaseValue.length > 0 ? ["AND" as const, ...cleanedBaseValue] : []),
+      ...(hasUserFilters ? ["AND" as const, ...baseContainerState.value] : []),
     ];
 
     return {
@@ -158,8 +217,12 @@ export const useModalProductFilter = ({
           return;
         }
 
-        // Adjust the position for the underlying state (subtract 2 for constraint + AND)
-        const adjustedPosition = String(index - 2);
+        // Index 1 is "AND" separator when there are user filters
+        if (hasUserFilters && index === 1) {
+          return;
+        }
+
+        const adjustedPosition = String(index - offset);
 
         baseContainerState.removeAt(adjustedPosition);
       },
@@ -172,8 +235,12 @@ export const useModalProductFilter = ({
           return;
         }
 
-        // Adjust the position for the underlying state
-        const adjustedPosition = String(index - 2);
+        // Index 1 is "AND" separator when there are user filters
+        if (hasUserFilters && index === 1) {
+          return;
+        }
+
+        const adjustedPosition = String(index - offset);
 
         baseContainerState.updateAt(adjustedPosition, cb);
       },
@@ -185,45 +252,16 @@ export const useModalProductFilter = ({
           return constraintElement;
         }
 
-        if (index === 1) {
+        if (hasUserFilters && index === 1) {
           return "AND";
         }
 
-        const adjustedPosition = String(index - 2);
+        const adjustedPosition = String(index - offset);
 
         return baseContainerState.getAt(adjustedPosition);
       },
     };
   }, [baseContainerState, constraintElement]);
-
-  // Wrap valueProvider to filter out productType constraints before persisting
-  const wrappedValueProvider = useMemo(() => {
-    if (!constraintElement) {
-      return valueProvider;
-    }
-
-    return {
-      ...valueProvider,
-      persist: (filterValue: FilterContainer) => {
-        // Filter out productType elements before persisting to URL
-        const filteredValue = filterValue.filter(item => {
-          if (item instanceof FilterElement) {
-            return item.value.value !== "productType";
-          }
-
-          return true;
-        });
-
-        // Remove leading "AND" if present after filtering
-        const cleanedValue =
-          filteredValue.length > 0 && filteredValue[0] === "AND"
-            ? filteredValue.slice(1)
-            : filteredValue;
-
-        valueProvider.persist(cleanedValue);
-      },
-    };
-  }, [valueProvider, constraintElement]);
 
   const filterContext = useMemo(
     () => ({
@@ -237,24 +275,36 @@ export const useModalProductFilter = ({
     [apiProvider, wrappedValueProvider, leftOperandsProvider, containerState, filterWindow],
   );
 
+  const persistedValueWithConstraints = useMemo<FilterContainer>(() => {
+    if (!constraintElement) {
+      return wrappedValueProvider.value;
+    }
+
+    if (wrappedValueProvider.value.length === 0) {
+      return [constraintElement];
+    }
+
+    return [constraintElement, "AND" as const, ...wrappedValueProvider.value];
+  }, [constraintElement, wrappedValueProvider.value]);
+
   // Extract channel separately from where variables (channel is not valid in ProductWhereInput)
   const { filterVariables, filterChannel } = useMemo(() => {
-    const queryVars = createProductQueryVariables(valueProvider.value);
+    const queryVars = createProductQueryVariables(persistedValueWithConstraints);
     const { channel, ...where } = queryVars;
 
     return {
       filterVariables: where,
       filterChannel: channel?.eq,
     };
-  }, [valueProvider.value]);
+  }, [persistedValueWithConstraints]);
 
   const clearFilters = () => {
-    valueProvider.clear();
+    wrappedValueProvider.clear();
     baseContainerState.clear();
   };
 
   // Count active filters (excluding constraint)
-  const hasActiveFilters = valueProvider.count > 0;
+  const hasActiveFilters = wrappedValueProvider.count > 0;
 
   return {
     filterContext,

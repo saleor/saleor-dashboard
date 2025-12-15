@@ -32,7 +32,7 @@ import { getProductErrorMessage } from "@dashboard/utils/errors";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
@@ -228,14 +228,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
-  const productFilterVariablesRef = useRef<ProductWhereInput>({});
-
   const handleProductFilterChange = (
     filterVariables: ProductWhereInput,
     channel: string | undefined,
   ) => {
-    productFilterVariablesRef.current = filterVariables;
-
     // Merge productType constraint from reference attribute with user filters
     const baseWhere: ProductWhereInput = initialConstraints?.productTypes?.length
       ? { productType: { oneOf: initialConstraints.productTypes.map(pt => pt.id) } }
