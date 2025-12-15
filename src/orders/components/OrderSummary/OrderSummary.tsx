@@ -24,9 +24,9 @@ type Props = PropsWithBox<
     order: OrderDetailsFragment;
     onMarkAsPaid?: () => void;
     useLegacyPaymentsApi?: boolean;
-    onLegacyPaymentsApiCapture?: () => any;
-    onLegacyPaymentsApiRefund?: () => any;
-    onLegacyPaymentsApiVoid?: () => any;
+    onLegacyPaymentsApiCapture?: () => void;
+    onLegacyPaymentsApiRefund?: () => void;
+    onLegacyPaymentsApiVoid?: () => void;
   } & (EditableOrderSummary | ReadOnlyOrderSummary)
 >;
 
