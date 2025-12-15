@@ -130,6 +130,11 @@ const messages = defineMessages({
     defaultMessage: "Gift card amount used",
     description: "tooltip for gift card amount",
   },
+  fixedAmount: {
+    id: "YPCB7b",
+    defaultMessage: "Fixed amount",
+    description: "label for fixed amount discount type",
+  },
 });
 
 type BaseProps = {
@@ -300,13 +305,15 @@ export const OrderValue = (props: Props): ReactNode => {
       return discounts.map(discount => (
         <OrderSummaryListItem
           key={`order-value-discount-${discount.id}`}
-          amount={-discount.amount.amount}
+          amount={discount.amount.amount}
           amountTitle={discountAmountTitle}
-          showSign
         >
           {intl.formatMessage(messages.discount)}{" "}
           <Text as="span" color="default2">
             {discount.name}
+          </Text>{" "}
+          <Text color="default2" fontWeight="medium" size={3}>
+            (applied)
           </Text>
         </OrderSummaryListItem>
       ));
@@ -358,15 +365,12 @@ export const OrderValue = (props: Props): ReactNode => {
       );
     }
 
-    const discountDisplayValue = discountLabel.percentage || discountLabel.value;
+    const discountDisplayValue =
+      discountLabel.percentage || intl.formatMessage(messages.fixedAmount);
     const discountAmount = parseFloat(discountLabel.value) || 0;
 
     return (
-      <OrderSummaryListItem
-        amount={-discountAmount}
-        amountTitle={discountAmountTitle}
-        showSign={discountAmount > 0}
-      >
+      <OrderSummaryListItem amount={discountAmount} amountTitle={discountAmountTitle}>
         {intl.formatMessage(messages.discount)}{" "}
         <Popover
           onOpenChange={val => {
@@ -399,7 +403,10 @@ export const OrderValue = (props: Props): ReactNode => {
               )}
             </Box>
           </Popover.Content>
-        </Popover>
+        </Popover>{" "}
+        <Text color="default2" fontWeight="medium" size={3}>
+          (applied)
+        </Text>
       </OrderSummaryListItem>
     );
   };
@@ -456,8 +463,6 @@ export const OrderValue = (props: Props): ReactNode => {
           </OrderSummaryListItem>
         )}
 
-        {renderDiscountRow()}
-
         <Box display="grid" placeItems="end" title={intl.formatMessage(messages.totalTitle)}>
           <Box
             borderStyle="solid"
@@ -484,6 +489,8 @@ export const OrderValue = (props: Props): ReactNode => {
             )}
           </Box>
         </Box>
+
+        {renderDiscountRow()}
 
         {displayGrossPrices && (
           <OrderSummaryListItem
