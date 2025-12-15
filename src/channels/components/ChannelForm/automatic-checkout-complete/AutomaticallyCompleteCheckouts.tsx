@@ -135,7 +135,7 @@ const DelayZeroWarning = () => {
               <Link
                 href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
                 target="_blank"
-                rel="noopener noreferer"
+                rel="noopener noreferrer"
               >
                 <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
               </Link>
@@ -176,7 +176,7 @@ const FeatureDescription = () => (
             style={{ fontSize: "inherit" }}
             href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
             target="_blank"
-            rel="noopener noreferer"
+            rel="noopener noreferrer"
           >
             <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
           </Link>
