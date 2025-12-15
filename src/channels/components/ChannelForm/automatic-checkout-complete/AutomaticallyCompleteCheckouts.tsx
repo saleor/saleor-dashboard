@@ -279,7 +279,9 @@ export const AutomaticallyCompleteCheckouts = ({
 
           <Box>
             <Box>
-              <Paragraph marginBottom={2}>Cut-off date</Paragraph>
+              <Paragraph marginBottom={2}>
+                <FormattedMessage defaultMessage="Cut-off date" id="0Kz+nM" />
+              </Paragraph>
               <Text size={2} color="default2">
                 <FormattedMessage
                   {...messages.automaticCompletionCutOffDateDescription}

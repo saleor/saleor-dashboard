@@ -396,6 +396,9 @@
   "0KVj6r": {
     "string": "Copy tracking number"
   },
+  "0Kz+nM": {
+    "string": "Cut-off date"
+  },
   "0MetrR": {
     "context": "webhook input help text",
     "string": "This URL will receive webhook POST requests"
