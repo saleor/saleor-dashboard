@@ -79,6 +79,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
           showSign
           showCurrency
           currency={orderAmounts.totalBalance.currency}
+          bold
         >
           {intl.formatMessage({
             defaultMessage: "Outstanding balance",

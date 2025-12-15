@@ -473,7 +473,7 @@ export const OrderValue = (props: Props): ReactNode => {
               },
               {
                 currency: (
-                  <Text fontWeight="medium" color="default2" size={3}>
+                  <Text fontWeight="bold" color="default2" size={3}>
                     {orderTotal.gross.currency}
                   </Text>
                 ),
