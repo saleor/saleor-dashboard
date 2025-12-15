@@ -49,7 +49,6 @@ export interface FormData extends StockSettingsInput {
   automaticCompletionDelay: number | string | null;
   automaticCompletionCutOffDate: string;
   automaticCompletionCutOffTime: string;
-  useCutOffDate: boolean;
   allowLegacyGiftCardUse?: boolean;
 }
 
@@ -72,7 +71,6 @@ interface ChannelFormProps {
   onTransactionFlowStrategyChange: () => void;
   onAutomaticallyCompleteCheckoutsChange: () => void;
   onAllowLegacyGiftCardUseChange?: () => void;
-  onUseCutOffDateChange: () => void;
 }
 
 export const ChannelForm = ({
@@ -93,7 +91,6 @@ export const ChannelForm = ({
   onTransactionFlowStrategyChange,
   onAutomaticallyCompleteCheckoutsChange,
   onAllowLegacyGiftCardUseChange,
-  onUseCutOffDateChange,
 }: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
@@ -250,7 +247,6 @@ export const ChannelForm = ({
           delay={data.automaticCompletionDelay}
           cutOffDate={data.automaticCompletionCutOffDate}
           cutOffTime={data.automaticCompletionCutOffTime}
-          useCutOffDate={data.useCutOffDate}
           savedIsEnabled={savedAutomaticallyCompleteCheckouts}
           savedCutOffDate={savedAutomaticCompletionCutOffDate}
           savedCutOffTime={savedAutomaticCompletionCutOffTime}
@@ -258,7 +254,6 @@ export const ChannelForm = ({
           onDelayChange={onChange}
           onCutOffDateChange={onChange}
           onCutOffTimeChange={onChange}
-          onUseCutOffDateChange={onUseCutOffDateChange}
         />
         <Box />
         {isStagingSchema() && (

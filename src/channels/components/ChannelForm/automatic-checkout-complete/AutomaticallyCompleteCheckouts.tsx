@@ -28,7 +28,6 @@ interface AutomaticallyCompleteCheckoutsProps {
   onDelayChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onCutOffDateChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onCutOffTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onUseCutOffDateChange: () => void;
 }
 
 const CutOffDateEarlyWarning = ({
