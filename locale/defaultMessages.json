@@ -8963,10 +8963,6 @@
     "context": "search label",
     "string": "Search products"
   },
-  "s8FlDW": {
-    "context": "hide error log label in notification",
-    "string": "Hide log"
-  },
   "s9sOcC": {
     "context": "button",
     "string": "OK"
@@ -9659,10 +9655,6 @@
   },
   "w7jT4W": {
     "string": "No channels selected"
-  },
-  "w9xgN9": {
-    "context": "see error log label in notification",
-    "string": "See error log"
   },
   "wAGThK": {
     "context": "dialog header",
