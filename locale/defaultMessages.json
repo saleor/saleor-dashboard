@@ -5825,6 +5825,10 @@
   "YIT1XP": {
     "string": "Create voucher"
   },
+  "YPCB7b": {
+    "context": "label for fixed amount discount type",
+    "string": "Fixed amount"
+  },
   "YQ3EXR": {
     "context": "product types section name",
     "string": "Product Types"
