@@ -103,6 +103,10 @@
   "+a+2ug": {
     "string": "Members"
   },
+  "+ahkGr": {
+    "context": "section header",
+    "string": "Customer details"
+  },
   "+b/qJ9": {
     "string": "Delete draft orders"
   },
@@ -979,10 +983,6 @@
     "context": "button",
     "string": "Invite staff member"
   },
-  "4Jp83O": {
-    "context": "subheader",
-    "string": "Contact Information"
-  },
   "4KRhwm": {
     "context": "link in infoCardText, to Saleor docs",
     "string": "Learn more about data privacy."
@@ -1377,6 +1377,9 @@
     "context": "section header",
     "string": "About this extension"
   },
+  "6orx1c": {
+    "string": "Billing address"
+  },
   "6oxTyq": {
     "string": "All events related to this order. For more information regarding order events visit our docs {link}."
   },
@@ -1426,6 +1429,10 @@
   "750Ymk": {
     "context": "apps about permissions",
     "string": "This extension has permissions to:"
+  },
+  "7A+FJl": {
+    "context": "link",
+    "string": "View profile"
   },
   "7Chrsf": {
     "string": "Passwords do not match"
@@ -2388,9 +2395,6 @@
   },
   "DOkfyZ": {
     "string": "Insufficient permissions"
-  },
-  "DP5VOH": {
-    "string": "Shipping Address"
   },
   "DP6b8U": {
     "context": "section header",
@@ -3362,10 +3366,6 @@
   "J4E+jp": {
     "string": "Variant name"
   },
-  "J4NBVR": {
-    "context": "link",
-    "string": "View Orders"
-  },
   "J7mFhU": {
     "context": "currency code select",
     "string": "{code} - {countries}"
@@ -4240,6 +4240,10 @@
   "OtMtzH": {
     "string": "Product unavailable in collection channels"
   },
+  "Oy1LhB": {
+    "context": "button error state label",
+    "string": "Try again"
+  },
   "OzHN0Z": {
     "context": "order history message",
     "string": "Links to the order's digital goods were sent"
@@ -4349,10 +4353,6 @@
   "PV0SQd": {
     "context": "WarehousesSection select field label",
     "string": "Warehouse"
-  },
-  "PX2zWy": {
-    "context": "customer is not set in draft order",
-    "string": "Not set"
   },
   "PXatmC": {
     "string": "Customer Removed"
@@ -4597,9 +4597,6 @@
   },
   "Ql7OM1": {
     "string": "Performing a manual refund will immediately trigger a refund request and decrease the transaction’s charged amount, impacting the order balance."
-  },
-  "Qovenh": {
-    "string": "Anonymous user"
   },
   "Qox+kb": {
     "string": "on field {fieldName}"
@@ -5295,10 +5292,6 @@
     "context": "collection label",
     "string": "Hidden"
   },
-  "VCzrEZ": {
-    "context": "link",
-    "string": "View Profile"
-  },
   "VEE4gD": {
     "context": "error message",
     "string": "Shipping method is not valid for chosen shipping address"
@@ -5798,10 +5791,6 @@
     "context": "dialog header",
     "string": "Ending preorder"
   },
-  "Y7M1YQ": {
-    "context": "section header",
-    "string": "Customer"
-  },
   "Y7UlMR": {
     "context": "app extensions subsection",
     "string": "Apps"
@@ -5960,6 +5949,10 @@
     "context": "stock exceeded dialog description",
     "string": "Stock for items shown below are not enough to prepare fulfillment:"
   },
+  "Z7YrIb": {
+    "context": "no customer assigned to order",
+    "string": "Not set"
+  },
   "Z7lX6t": {
     "context": "canceled fulfillment, section header",
     "string": "Canceled"
@@ -6062,6 +6055,9 @@
   "Zj/7QZ": {
     "context": "details title",
     "string": "Details"
+  },
+  "ZpVtCa": {
+    "string": "Shipping address"
   },
   "ZrIt1W": {
     "string": "Delete discount"
@@ -6477,9 +6473,6 @@
   "c5pMZ8": {
     "string": "API error"
   },
-  "c7/79+": {
-    "string": "Billing Address"
-  },
   "c7cakc": {
     "context": "model attribute entity type",
     "string": "Models"
@@ -6502,6 +6495,10 @@
   "cEO6Yx": {
     "context": "dialog header",
     "string": "Activate Extension"
+  },
+  "cFA9vl": {
+    "context": "link",
+    "string": "View orders"
   },
   "cFVgOo": {
     "context": "Channel label",
