@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import { commonMessages } from "@dashboard/intl";
 import { DOCS_ULRS } from "@dashboard/links";
-import { Box, Button, Checkbox, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Checkbox, Input, Paragraph, Text } from "@saleor/macaw-ui-next";
 import { CircleAlertIcon, TriangleAlertIcon } from "lucide-react";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -20,7 +20,6 @@ interface AutomaticallyCompleteCheckoutsProps {
   delay: number | string | null;
   cutOffDate: string;
   cutOffTime: string;
-  useCutOffDate: boolean;
   // Saved values from backend - used to track initial state for warnings
   savedIsEnabled: boolean;
   savedCutOffDate: string;
@@ -188,34 +187,6 @@ const FeatureDescription = () => (
   </Text>
 );
 
-const DisabledCutOffCheckbox = ({ checked }: { checked: boolean }) => (
-  <Tooltip>
-    <Tooltip.Trigger>
-      <Box display="inline-block">
-        <Checkbox
-          name="useCutOffDate"
-          data-test-id="use-cutoff-date-checkbox"
-          checked={checked}
-          onCheckedChange={() => {
-            // no op - disabled
-          }}
-          disabled={true}
-        >
-          <Text>
-            <FormattedMessage {...messages.automaticCompletionCutOffDateCheckboxLabel} />
-          </Text>
-        </Checkbox>
-      </Box>
-    </Tooltip.Trigger>
-    <Tooltip.Content side="bottom">
-      <Tooltip.Arrow />
-      <Box __maxWidth="280px">
-        <FormattedMessage {...messages.automaticCompletionCutOffDateDisabledTooltip} />
-      </Box>
-    </Tooltip.Content>
-  </Tooltip>
-);
-
 export const AutomaticallyCompleteCheckouts = ({
   isChecked,
   hasError,
@@ -223,7 +194,6 @@ export const AutomaticallyCompleteCheckouts = ({
   delay,
   cutOffDate,
   cutOffTime,
-  useCutOffDate,
   savedIsEnabled,
   savedCutOffDate,
   savedCutOffTime,
@@ -231,7 +201,6 @@ export const AutomaticallyCompleteCheckouts = ({
   onDelayChange,
   onCutOffDateChange,
   onCutOffTimeChange,
-  onUseCutOffDateChange,
 }: AutomaticallyCompleteCheckoutsProps) => {
   const intl = useIntl();
 
@@ -275,7 +244,7 @@ export const AutomaticallyCompleteCheckouts = ({
           <FormattedMessage {...messages.automaticallyCompleteCheckoutsLabel} />
         </Text>
       </Checkbox>
-      <Box paddingLeft={4} marginLeft={0.5}>
+      <Box paddingLeft={4} marginLeft={0.5} marginTop={1}>
         <FeatureDescription />
       </Box>
 
@@ -298,7 +267,7 @@ export const AutomaticallyCompleteCheckouts = ({
               disabled={disabled}
               error={hasError}
             />
-            <Text size={2} color="default2" paddingTop={1}>
+            <Text size={2} color="default2" marginTop={1} display="block">
               <FormattedMessage {...messages.automaticCompletionDelayDescription} />
             </Text>
           </Box>
@@ -310,23 +279,9 @@ export const AutomaticallyCompleteCheckouts = ({
           )}
 
           <Box>
-            {savedIsEnabled ? (
-              <DisabledCutOffCheckbox checked={useCutOffDate} />
-            ) : (
-              <Checkbox
-                name="useCutOffDate"
-                data-test-id="use-cutoff-date-checkbox"
-                checked={useCutOffDate}
-                onCheckedChange={onUseCutOffDateChange}
-                disabled={disabled}
-              >
-                <Text>
-                  <FormattedMessage {...messages.automaticCompletionCutOffDateCheckboxLabel} />
-                </Text>
-              </Checkbox>
-            )}
-            <Box paddingLeft={4}>
-              <Text size={2} color="default2" paddingLeft={0.5}>
+            <Box>
+              <Paragraph marginBottom={2}>Cut-off date</Paragraph>
+              <Text size={2} color="default2">
                 <FormattedMessage
                   {...messages.automaticCompletionCutOffDateDescription}
                   values={{
@@ -335,7 +290,7 @@ export const AutomaticallyCompleteCheckouts = ({
                         href={DOCS_ULRS.TRANSACTIONS_AUTOMATIC_CHECKOUT_COMPLETION}
                         target="_blank"
                         style={{ fontSize: "inherit" }}
-                        rel="noopener noreferer"
+                        rel="noopener noreferrer"
                       >
                         <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
                       </Link>
@@ -345,72 +300,70 @@ export const AutomaticallyCompleteCheckouts = ({
               </Text>
             </Box>
 
-            {!useCutOffDate && !savedIsEnabled && (
-              <Box paddingLeft={4} paddingTop={3}>
+            {!savedIsEnabled && (
+              <Box paddingTop={3}>
                 <NoCutOffDateWarning />
               </Box>
             )}
 
-            {useCutOffDate && (
-              <>
-                <Box paddingLeft={4} paddingTop={3} display="flex" flexDirection="column" gap={2}>
-                  <Box display="flex" gap={4}>
-                    <Input
-                      type="date"
-                      name="automaticCompletionCutOffDate"
-                      data-test-id="automatic-completion-cutoff-date-input"
-                      label={intl.formatMessage(commonMessages.date)}
-                      value={cutOffDate}
-                      onChange={onCutOffDateChange}
-                      disabled={disabled}
-                      width="100%"
-                    />
-                    <Input
-                      type="time"
-                      name="automaticCompletionCutOffTime"
-                      data-test-id="automatic-completion-cutoff-time-input"
-                      label={intl.formatMessage(commonMessages.time)}
-                      value={cutOffTime}
-                      onChange={onCutOffTimeChange}
-                      disabled={disabled}
-                      width="100%"
-                    />
-                  </Box>
-                  <Box display="flex" gap={2}>
+            <>
+              <Box paddingTop={3} display="flex" flexDirection="column" gap={2}>
+                <Box display="flex" gap={4}>
+                  <Input
+                    type="date"
+                    name="automaticCompletionCutOffDate"
+                    data-test-id="automatic-completion-cutoff-date-input"
+                    label={intl.formatMessage(commonMessages.date)}
+                    value={cutOffDate}
+                    onChange={onCutOffDateChange}
+                    disabled={disabled}
+                    width="100%"
+                  />
+                  <Input
+                    type="time"
+                    name="automaticCompletionCutOffTime"
+                    data-test-id="automatic-completion-cutoff-time-input"
+                    label={intl.formatMessage(commonMessages.time)}
+                    value={cutOffTime}
+                    onChange={onCutOffTimeChange}
+                    disabled={disabled}
+                    width="100%"
+                  />
+                </Box>
+                <Box display="flex" gap={2}>
+                  <Button
+                    variant="secondary"
+                    size="small"
+                    onClick={handleSetCurrentDateTime}
+                    disabled={disabled}
+                  >
+                    <FormattedMessage {...messages.automaticCompletionSetCurrentDateTime} />
+                  </Button>
+                  {(showCutOffDateEarlierWarning || showCutOffDateLaterInfo) && (
                     <Button
                       variant="secondary"
                       size="small"
-                      onClick={handleSetCurrentDateTime}
+                      onClick={handleResetToSaved}
                       disabled={disabled}
                     >
-                      <FormattedMessage {...messages.automaticCompletionSetCurrentDateTime} />
+                      <FormattedMessage {...messages.automaticCompletionResetToSaved} />
                     </Button>
-                    {(showCutOffDateEarlierWarning || showCutOffDateLaterInfo) && (
-                      <Button
-                        variant="secondary"
-                        size="small"
-                        onClick={handleResetToSaved}
-                        disabled={disabled}
-                      >
-                        <FormattedMessage {...messages.automaticCompletionResetToSaved} />
-                      </Button>
-                    )}
-                  </Box>
+                  )}
                 </Box>
+              </Box>
 
-                {showCutOffDateEarlierWarning && (
-                  <Box paddingLeft={4} paddingTop={3}>
-                    <CutOffDateEarlyWarning cutOffDateComparison={cutOffDateComparison} />
-                  </Box>
-                )}
+              {showCutOffDateEarlierWarning && (
+                <Box paddingTop={3}>
+                  <CutOffDateEarlyWarning cutOffDateComparison={cutOffDateComparison} />
+                </Box>
+              )}
 
-                {showCutOffDateLaterInfo && (
-                  <Box paddingLeft={4} paddingTop={3}>
-                    <CutOffDateLaterWarning cutOffDateComparison={cutOffDateComparison} />
-                  </Box>
-                )}
-              </>
-            )}
+              {showCutOffDateLaterInfo && (
+                <Box paddingTop={3}>
+                  <CutOffDateLaterWarning cutOffDateComparison={cutOffDateComparison} />
+                </Box>
+              )}
+            </>
           </Box>
         </Box>
       )}
