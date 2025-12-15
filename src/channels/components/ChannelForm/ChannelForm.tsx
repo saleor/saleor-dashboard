@@ -102,6 +102,7 @@ export const ChannelForm = ({
       "defaultCountry",
       "deleteExpiredOrdersAfter",
       "automaticCompletionDelay",
+      "automaticCompletionCutOffDate",
     ],
     errors,
   );
@@ -247,6 +248,7 @@ export const ChannelForm = ({
           delay={data.automaticCompletionDelay}
           cutOffDate={data.automaticCompletionCutOffDate}
           cutOffTime={data.automaticCompletionCutOffTime}
+          cutOffDateError={!!formErrors.automaticCompletionCutOffDate}
           savedIsEnabled={savedAutomaticallyCompleteCheckouts}
           savedCutOffDate={savedAutomaticCompletionCutOffDate}
           savedCutOffTime={savedAutomaticCompletionCutOffTime}

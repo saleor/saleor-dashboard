@@ -51,3 +51,33 @@ export const formatDateTime = (date: string, time: string, intl: IntlShape): str
     minute: "2-digit",
   });
 };
+
+/**
+ * Get the minimum allowed cutoff date (30 days before current date)
+ * Returns date in YYYY-MM-DD format for HTML date input
+ */
+export const getMinimumCutoffDate = (): string => {
+  const today = new Date();
+  const minDate = new Date(today);
+
+  minDate.setDate(today.getDate() - 30);
+
+  const year = minDate.getFullYear();
+  const month = String(minDate.getMonth() + 1).padStart(2, "0");
+  const day = String(minDate.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+/**
+ * Check if the cutoff date is before the minimum allowed date (30 days before current date)
+ */
+export const isCutoffDateTooOld = (cutOffDate: string): boolean => {
+  if (!cutOffDate) {
+    return false;
+  }
+
+  const minDate = getMinimumCutoffDate();
+
+  return cutOffDate < minDate;
+};

@@ -12,6 +12,7 @@ import {
   CutOffDateComparison,
   useAutomaticCompletionWarnings,
 } from "./useAutomaticCompletionWarnings";
+import { getMinimumCutoffDate } from "./utils";
 
 interface AutomaticallyCompleteCheckoutsProps {
   isChecked: boolean;
@@ -20,6 +21,7 @@ interface AutomaticallyCompleteCheckoutsProps {
   delay: number | string | null;
   cutOffDate: string;
   cutOffTime: string;
+  cutOffDateError?: boolean;
   // Saved values from backend - used to track initial state for warnings
   savedIsEnabled: boolean;
   savedCutOffDate: string;
@@ -193,6 +195,7 @@ export const AutomaticallyCompleteCheckouts = ({
   delay,
   cutOffDate,
   cutOffTime,
+  cutOffDateError,
   savedIsEnabled,
   savedCutOffDate,
   savedCutOffTime,
@@ -202,6 +205,7 @@ export const AutomaticallyCompleteCheckouts = ({
   onCutOffTimeChange,
 }: AutomaticallyCompleteCheckoutsProps) => {
   const intl = useIntl();
+  const minCutoffDate = getMinimumCutoffDate();
 
   const { handleMainCheckboxChange, handleSetCurrentDateTime, handleResetToSaved } =
     useAutomaticCompletionHandlers({
@@ -320,6 +324,13 @@ export const AutomaticallyCompleteCheckouts = ({
                     onChange={onCutOffDateChange}
                     disabled={disabled}
                     width="100%"
+                    min={minCutoffDate}
+                    error={cutOffDateError}
+                    helperText={
+                      cutOffDateError
+                        ? intl.formatMessage(messages.automaticCompletionCutOffDateTooOldError)
+                        : undefined
+                    }
                   />
                   <Input
                     type="time"
