@@ -265,6 +265,7 @@ export const AutomaticallyCompleteCheckouts = ({
               onChange={onDelayChange}
               disabled={disabled}
               error={hasError}
+              min={0}
             />
             <Text size={2} color="default2" marginTop={1} display="block">
               <FormattedMessage {...messages.automaticCompletionDelayDescription} />
