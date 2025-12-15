@@ -282,15 +282,18 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   <CardSpacer />
 
                   {orderShouldUseTransactions(order) && (
-                    <OrderTransactionsSection
-                      order={order}
-                      shop={shop}
-                      onTransactionAction={onTransactionAction}
-                      onPaymentCapture={onPaymentCapture}
-                      onPaymentVoid={onPaymentVoid}
-                      onAddManualTransaction={onAddManualTransaction}
-                      onRefundAdd={onRefundAdd}
-                    />
+                    <>
+                      <OrderTransactionsSection
+                        order={order}
+                        shop={shop}
+                        onTransactionAction={onTransactionAction}
+                        onPaymentCapture={onPaymentCapture}
+                        onPaymentVoid={onPaymentVoid}
+                        onAddManualTransaction={onAddManualTransaction}
+                        onRefundAdd={onRefundAdd}
+                      />
+                      <CardSpacer />
+                    </>
                   )}
                 </>
               )}

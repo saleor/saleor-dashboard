@@ -1,0 +1,9 @@
+.kbd {
+  display: inline-block;
+  padding: 2px 5px;
+  font-size: 10px;
+  font-family: inherit;
+  background-color: var(--mu-colors-background-default2);
+  border-radius: 3px;
+  border: 1px solid var(--mu-colors-border-default1);
+}
