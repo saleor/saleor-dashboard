@@ -20,6 +20,7 @@ import { createProductQueryVariables, QUERY_API_TYPES } from "../ConditionalFilt
 import { useContainerState } from "../ConditionalFilter/useContainerState";
 import { useFilterLeftOperandsProvider } from "../ConditionalFilter/useFilterLeftOperands";
 import { useFilterWindow } from "../ConditionalFilter/useFilterWindow";
+import { UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import { InitialConstraints, ProductTypeConstraint } from "./ModalProductFilterProvider";
 import { useModalUrlValueProvider } from "./useModalUrlValueProvider";
 
@@ -51,15 +52,8 @@ const getFilteredProductOptions = (
     return STATIC_PRODUCT_OPTIONS;
   }
 
-  // Also exclude any options that depend on an excluded option (e.g. `price` depends on `channel`)
   return STATIC_PRODUCT_OPTIONS.filter(option => {
-    if (exclusions.has(option.value)) {
-      return false;
-    }
-
-    const dependency = Constraint.getDependency(option.value);
-
-    return !dependency || !exclusions.has(dependency);
+    return !exclusions.has(option.value);
   });
 };
 
@@ -70,14 +64,12 @@ const getFilteredProductOptions = (
 const createProductTypeConstraintElement = (
   productTypes: ProductTypeConstraint[],
 ): FilterElement => {
-  // Create expression value for productType
   const expressionValue = new ExpressionValue("productType", "ProductType", "productType");
 
-  // Convert ProductTypeConstraint[] to ItemOption[]
-  const productTypeLabels: ItemOption[] = productTypes.map(pt => ({
-    label: pt.name,
-    value: pt.id,
-    slug: pt.id,
+  const productTypeLabels: ItemOption[] = productTypes.map(productTypeConstraint => ({
+    label: productTypeConstraint.name,
+    value: productTypeConstraint.id,
+    slug: productTypeConstraint.id,
   }));
 
   // Create condition with "in" operator and the selected productType IDs
@@ -171,15 +163,15 @@ export const useModalProductFilter = ({
       ...valueProvider,
       count: persistedValueWithoutProductType.filter(v => typeof v !== "string").length,
       value: persistedValueWithoutProductType,
-      persist: (filterValue: FilterContainer) => {
+      persist: (filterValue: FilterContainer): void => {
         valueProvider.persist(stripProductTypeFromPersistedValue(filterValue));
       },
-      isPersisted: (element: FilterElement) => {
+      isPersisted: (element: FilterElement): boolean => {
         return persistedValueWithoutProductType.some(
           p => FilterElement.isFilterElement(p) && p.equals(element),
         );
       },
-      getTokenByName: (name: string) => {
+      getTokenByName: (name: string): UrlToken => {
         if (name === "productType") {
           return undefined;
         }
@@ -298,7 +290,7 @@ export const useModalProductFilter = ({
     };
   }, [persistedValueWithConstraints]);
 
-  const clearFilters = () => {
+  const clearFilters = (): void => {
     wrappedValueProvider.clear();
     baseContainerState.clear();
   };
